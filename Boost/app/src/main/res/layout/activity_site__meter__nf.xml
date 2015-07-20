@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ff747674"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar"></include>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ProgressBar
+            android:id="@+id/ProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="42dp"
+            android:layout_gravity="center"
+            android:layout_margin="11dp"
+            android:indeterminate="false"
+            android:maxHeight="10dip"
+            android:minHeight="10dip"
+            android:progress="50"
+            android:progressDrawable="@drawable/greenprogress" />
+
+        <com.nowfloats.CustomWidget.roboto_lt_38_white
+            android:id="@+id/site_meter_reading"
+            android:layout_width="fill_parent"
+            android:layout_height="27dp"
+            android:layout_alignBottom="@id/ProgressBar"
+            android:layout_alignLeft="@id/ProgressBar"
+            android:layout_alignRight="@id/ProgressBar"
+            android:layout_alignTop="@id/ProgressBar"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="7dp"
+            android:text=""
+
+            />
+
+
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#DCDCDC"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#e0e0e0"
+                android:gravity="center"
+                android:orientation="vertical">
+                >
+
+                <com.nowfloats.CustomWidget.roboto_lt_28_565656
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="11dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="11dp"
+                    android:gravity="left"
+                    android:text="Complete the task below to increase your site score."
+
+                    />
+
+                <com.nowfloats.CustomWidget.roboto_lt_28_565656
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+
+                    android:layout_marginLeft="11dp"
+                    android:layout_marginRight="11dp"
+                    android:gravity="left"
+                    android:text="Heigher scores translates more traffic to your site."
+
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/site_meter_buy_domain_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/change_password_btn_bkg"
+                android:orientation="horizontal">
+
+                <com.nowfloats.CustomWidget.roboto_md_34_primarycolor
+                    android:id="@+id/site_meter_buy_domain"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".2"
+                    android:gravity="center"
+                    android:text="+10%" />
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center"
+                    android:layout_weight=".6"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="3dp">
+
+                    <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
+                        android:id="@+id/site_meter_buy_domain_text1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Get your own identity" />
+
+                    <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
+                        android:id="@+id/site_meter_buy_domain_text2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Buy a.com" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_weight=".1"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_marginRight="5dp"
+                    android:paddingLeft="20dp"
+                    android:src="@drawable/right_arrow"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/site_meter_phone_number_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+
+                android:background="@drawable/change_password_btn_bkg"
+                android:orientation="horizontal">
+
+                <com.nowfloats.CustomWidget.roboto_md_34_primarycolor
+                    android:id="@+id/site_meter_phone_number"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".2"
+                    android:gravity="center"
+                    android:text="+5%" />
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center"
+                    android:layout_weight=".6"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="3dp">
+
+                    <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
+                        android:id="@+id/site_meter_phone_number_text1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Phone number" />
+
+                    <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
+                        android:id="@+id/site_meter_phone_number_text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Help customers reach you instantly" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+android:layout_marginRight="5dp"
+                    android:layout_weight=".1"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:src="@drawable/right_arrow"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/site_meter_business_category_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+
+                android:background="@drawable/change_password_btn_bkg"
+
+                android:orientation="horizontal">
+
+                <com.nowfloats.CustomWidget.roboto_md_34_primarycolor
+                    android:id="@+id/site_meter_business_category"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".2"
+                    android:gravity="center"
+                    android:text="+5%" />
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center"
+                    android:layout_weight=".6"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="3dp">
+
+                    <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
+                        android:id="@+id/site_meter_business_category_text1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Business Category" />
+
+                    <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
+                        android:id="@+id/site_meter_business_category_text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Choose business category" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight=".1"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:src="@drawable/right_arrow"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/site_meter_featured_image_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/change_password_btn_bkg"
+
+                android:orientation="horizontal">
+
+                <com.nowfloats.CustomWidget.roboto_md_34_primarycolor
+                    android:id="@+id/site_meter_featured_image"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".2"
+                    android:gravity="center"
+                    android:text="+10%" />
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center"
+                    android:layout_weight=".6"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="3dp">
+
+                    <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
+                        android:id="@+id/site_meter_featured_image_text1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Featured Image" />
+
+                    <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
+                        android:id="@+id/site_meter_featured_image_text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add a relevant image" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight=".1"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:src="@drawable/right_arrow"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/site_meter_business_name_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+
+                android:background="@drawable/change_password_btn_bkg"
+
+                android:orientation="horizontal">
+
+                <com.nowfloats.CustomWidget.roboto_md_34_primarycolor
+                    android:id="@+id/site_meter_business_name"
+                    android:layout_width="40dp"
+                    android:layout_height="64dp"
+                    android:layout_weight=".2"
+                    android:gravity="center"
+                    android:text="+5%" />
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight=".6"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="3dp">
+
+                    <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
+                        android:id="@+id/site_meter_business_name_text1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Business Name" />
+
+                    <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
+                        android:id="@+id/site_meter_business_name_text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add email" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight=".1"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:src="@drawable/right_arrow"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/site_meter_description_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+
+                android:background="@drawable/change_password_btn_bkg"
+
+                android:orientation="horizontal">
+
+                <com.nowfloats.CustomWidget.roboto_md_34_primarycolor
+                    android:id="@+id/site_meter_description"
+                    android:layout_width="40dp"
+                    android:layout_height="64dp"
+                    android:layout_weight=".2"
+                    android:gravity="center"
+                    android:text="+10%" />
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight=".6"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="3dp">
+
+                    <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
+                        android:id="@+id/site_meter_description_text1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Business Description" />
+
+                    <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
+                        android:id="@+id/site_meter_description_text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Help your customers find you" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight=".1"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:src="@drawable/right_arrow"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/site_meter_customer_help_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:visibility="gone"
+                android:background="@drawable/change_password_btn_bkg"
+                android:orientation="horizontal">
+
+                <com.nowfloats.CustomWidget.roboto_md_34_primarycolor
+                    android:id="@+id/site_meter_customer_help"
+                    android:layout_width="40dp"
+                    android:layout_height="64dp"
+                    android:layout_weight=".2"
+                    android:gravity="center"
+                    android:text="+10%" />
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight=".6"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="3dp">
+
+                    <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
+                        android:id="@+id/site_meter_customer_help_text1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Help your customers find you" />
+
+                    <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
+                        android:layout_width="wrap_content"
+                        android:id="@+id/site_meter_customer_help_text2"
+                        android:layout_height="wrap_content"
+                        android:text="Help your customers find you" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight=".1"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:src="@drawable/right_arrow"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/site_meter_social_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+
+                android:background="@drawable/change_password_btn_bkg"
+                android:orientation="horizontal">
+
+                <com.nowfloats.CustomWidget.roboto_md_34_primarycolor
+                    android:id="@+id/site_meter_social"
+                    android:layout_width="40dp"
+                    android:layout_height="64dp"
+                    android:layout_weight=".2"
+                    android:gravity="center"
+                    android:text="+10%" />
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight=".6"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="3dp">
+
+                    <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
+                        android:id="@+id/site_meter_social_text1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Get Social" />
+
+                    <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
+                        android:id="@+id/site_meter_social_text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Connect to facebook/twitter" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight=".1"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:src="@drawable/right_arrow"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/site_meter_business_address_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/change_password_btn_bkg"
+
+                android:orientation="horizontal">
+
+                <com.nowfloats.CustomWidget.roboto_md_34_primarycolor
+                    android:id="@+id/site_meter_business_address"
+                    android:layout_width="40dp"
+                    android:layout_height="64dp"
+                    android:layout_weight=".2"
+                    android:gravity="center"
+                    android:text="+10%" />
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight=".6"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="3dp">
+
+                    <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
+                        android:id="@+id/site_meter_business_address_text1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Business Address" />
+
+                    <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
+                        android:id="@+id/site_meter_business_address_text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add Address" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight=".1"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:src="@drawable/right_arrow"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/site_meter_email_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/change_password_btn_bkg"
+                android:orientation="horizontal">
+
+                <com.nowfloats.CustomWidget.roboto_md_34_primarycolor
+                    android:id="@+id/site_meter_email"
+                    android:layout_width="40dp"
+                    android:layout_height="64dp"
+                    android:layout_weight=".2"
+                    android:gravity="center"
+                    android:text="+5%" />
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight=".6"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="3dp">
+
+                    <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
+                        android:id="@+id/site_meter_email_text1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email" />
+
+                    <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
+                        android:id="@+id/site_meter_email_text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add email" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight=".1"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:src="@drawable/right_arrow"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/site_meter_post_update_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/change_password_btn_bkg"
+                android:orientation="horizontal">
+
+                <com.nowfloats.CustomWidget.roboto_md_34_primarycolor
+                    android:id="@+id/site_meter_post_update"
+                    android:layout_width="40dp"
+                    android:layout_height="64dp"
+                    android:layout_weight=".2"
+                    android:gravity="center"
+                    android:text="+25%" />
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight=".6"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="3dp">
+
+                    <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
+                        android:id="@+id/site_meter_post_update_text1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Post 5 Updates" />
+
+                    <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
+                        android:id="@+id/site_meter_post_update_text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Message regularly and relevantly" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight=".1"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:src="@drawable/right_arrow"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/site_meter_share_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:background="@drawable/change_password_btn_bkg"
+                android:orientation="horizontal">
+
+                <com.nowfloats.CustomWidget.roboto_md_34_primarycolor
+                    android:id="@+id/site_meter_share"
+                    android:layout_width="40dp"
+                    android:layout_height="64dp"
+                    android:layout_weight=".2"
+                    android:gravity="center"
+                    android:text="+5%" />
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight=".6"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:padding="3dp">
+
+                    <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
+                        android:id="@+id/site_meter_share_text1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Share" />
+
+                    <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
+                        android:id="@+id/site_meter_share_text2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Share website" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight=".1"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:src="@drawable/right_arrow"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout><!-- From: file:/C:/Vinay/prashant772-boostcode-d282cb67240e/app/src/main/res/layout/activity_site__meter.xml --><!-- From: file:/C:/Users/NowFloatsDev/Documents/vinaykg-vinayrepo-0122ccab72e5/vinaykg-vinayrepo-0122ccab72e5/app/src/main/res/layout-xhdpi/activity_site__meter.xml --><!-- From: file:/C:/Users/NowFloatsDev/Documents/vinaykg-vinayrepo-0122ccab72e5/vinaykg-vinayrepo-0122ccab72e5/app/src/main/res/layout-xhdpi/activity_site__meter.xml --><!-- From: file:/C:/Users/NowFloatsDev/Documents/vinaykg-vinayrepo-0122ccab72e5/vinaykg-vinayrepo-0122ccab72e5/app/src/main/res/layout-xhdpi/activity_site__meter.xml --><!-- From: file:/D:/VinayRepo/whitelabelRepo/app/src/main/res/layout/activity_site__meter__nf.xml -->

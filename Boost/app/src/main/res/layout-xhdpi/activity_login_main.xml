@@ -1,0 +1,144 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingPrefix">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/actionbar_login_screen" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:id="@+id/mainContainer"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+
+
+            android:layout_marginLeft="2dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:gravity="bottom"
+                >
+
+                <ImageView
+                    android:id="@+id/userNameIcon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/username_icon"
+                    android:scaleType="fitXY"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="17dp"
+                    />
+
+                <EditText
+                    fontPath="Roboto-Light.ttf"
+                    android:textColor="@color/text_color_roboto_lt_30_edittext"
+                    android:textColorHint="@color/hint_color_roboto_lt_30_edittext"
+                    android:textSize="17sp"
+                    android:id="@+id/userNameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:inputType="text"
+
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:hint="username"
+
+                    />
+
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:gravity="bottom"
+                >
+
+                <ImageView
+                    android:id="@+id/passwordIcon"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/password_icon"
+                    android:scaleType="fitXY"
+                    android:layout_marginLeft="17dp"
+                    android:layout_marginRight="30dp"
+                    />
+
+
+                <EditText
+                    fontPath="Roboto-Light.ttf"
+                    android:textColor="@color/text_color_roboto_lt_30_edittext"
+                    android:textColorHint="@color/hint_color_roboto_lt_30_edittext"
+                    android:textSize="17sp"
+
+                    android:id="@+id/passwordEditText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:inputType="textPassword"
+                    android:hint="password"
+                   />
+
+            </LinearLayout>
+
+
+            <com.gc.materialdesign.views.ButtonRectangle
+                android:id="@+id/loginButton"
+                android:layout_width="280dp"
+                android:layout_height="50dp"
+                android:text="LOG IN"
+                android:textSize="6sp"
+                fontPath="Roboto-Medium.ttf"
+                android:layout_marginTop="40dp"
+                android:background="@color/primaryColor"
+                android:layout_gravity="center_horizontal"
+                />
+
+            <TextView
+                fontPath="Roboto-Light.ttf"
+                android:id="@+id/forgotPwdTextView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Forgot your password?"
+                android:textSize="13sp"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:textColor="#969696"/>
+
+            <TextView
+                fontPath="Roboto-Light.ttf"
+                android:id="@+id/loginStatus"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="18sp"
+                android:textColor="@color/primaryColor"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                />
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
+    <!-- From: file:/C:/Users/Kamal/Documents/NowFloatsUI/app/src/main/res/layout-xhdpi/activity_login_main.xml -->

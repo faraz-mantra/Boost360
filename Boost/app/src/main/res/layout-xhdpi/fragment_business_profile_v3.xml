@@ -1,0 +1,146 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="#DCDCDC">
+<ScrollView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/business_profile_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="2dp">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_gravity="center_horizontal"
+            card_view:cardCornerRadius="0dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.makeramen.RoundedImageView
+                    android:id="@+id/businessProfileIcon_ProfileV2"
+                    android:src="@drawable/business_edit_profile_icon"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="24dp"
+                    android:scaleType="fitXY"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_gravity="left"
+                    app:riv_corner_radius="30dip"
+                    app:riv_border_width="0dip"
+                    app:riv_border_color="#333333"
+                    app:riv_mutate_background="true"
+                    app:riv_oval="true" />
+
+                <TextView
+                    android:id="@+id/websiteTitleTextView_ProfileV2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/businessProfileIcon_ProfileV2"
+                    android:textSize="19sp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="41dp"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/primaryColor"
+                    android:layout_marginRight="16dp"
+                    android:maxLines="2"
+                    android:ellipsize="end" />
+
+                <TextView
+                    android:id="@+id/categoryTextView_ProfileV2"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/websiteTitleTextView_ProfileV2"
+                    android:layout_toRightOf="@id/businessProfileIcon_ProfileV2"
+                    android:layout_toEndOf="@+id/websiteTitleTextView_ProfileV2"
+                    android:singleLine="true"
+                    android:textColor="#949494"
+                    android:textSize="12sp"
+                    android:ellipsize="end"
+                    android:layout_gravity="center_horizontal" />
+
+
+                <LinearLayout
+                    android:id="@+id/editProfile"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="right"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="6dp"
+                        android:src="@drawable/pencil_grey" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/businessInfoTextView_ProfileV2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_below="@id/businessProfileIcon_ProfileV2"
+                    android:layout_gravity="left"
+                    android:textSize="13sp"
+                    android:ellipsize="end"
+                    android:maxLines="4"
+                    android:textColor="#3B3B3B" />
+
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fillViewport="true">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+
+                android:background="#DCDCDC"
+
+                >
+
+                <include
+                    android:id="@+id/businessProfile_List_ProfileV2"
+                    layout="@layout/business_profile_list_view_v2"
+                    android:layout_height="match_parent"
+                    android:layout_width="fill_parent" />
+            </android.support.v7.widget.CardView>
+        </ScrollView>
+    </LinearLayout>
+</ScrollView>
+    <LinearLayout
+        android:id="@+id/progress_layout"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone"
+        android:gravity="center">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/visits_progressBar" />
+    </LinearLayout>
+</FrameLayout><!-- From: file:/C:/Users/Kamal/Documents/NowFloatsUI/app/src/main/res/layout-xhdpi/fragment_business_profile_v3.xml -->

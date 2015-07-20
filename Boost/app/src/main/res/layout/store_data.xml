@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ECECEC">
+
+    <include
+        android:id="@+id/store_data_action_bar"
+        layout="@layout/store_data_action_bar" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:id="@+id/scrollView">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:background="@android:color/white">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        fontPath="Roboto-Medium.ttf"
+                        android:text="About this plan"
+                        android:layout_marginLeft="6dp"
+                        android:textColor="@color/light_black"
+                        android:textSize="@dimen/medium_text_size"
+                        tools:ignore="MissingPrefix" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/storeProductDesc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        fontPath="Roboto-Light.ttf"
+                        android:text="About this plan"
+                        android:layout_marginLeft="6dp"
+                        android:textColor="@color/light_black"
+                        android:textSize="@dimen/small_text_size"
+                        android:lineSpacingExtra="1dp"
+                        tools:ignore="MissingPrefix" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:background="@android:color/white">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        fontPath="Roboto-Medium.ttf"
+                        android:text="Screenshots"
+                        android:textColor="@color/light_black"
+                        android:textSize="@dimen/medium_text_size"
+                        tools:ignore="MissingPrefix" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="125dp"
+                    android:paddingBottom="4dp">
+
+                    <com.nowfloats.util.TwoWayView
+                        android:orientation="horizontal"
+                        android:id="@+id/imageList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:background="@android:color/white">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        fontPath="Roboto-Medium.ttf"
+                        android:text="Features"
+                        android:layout_marginLeft="6dp"
+                        android:textColor="@color/light_black"
+                        android:textSize="@dimen/medium_text_size"
+                        tools:ignore="MissingPrefix" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ExpandableListView
+                        android:id="@+id/expandableListView"
+                        android:layout_width="match_parent"
+                        android:groupIndicator="@android:color/transparent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp" />
+            </LinearLayout>
+        </ScrollView>
+        <LinearLayout
+            android:id="@+id/product_payment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:background="@drawable/drop_shadow">
+            <TextView
+                android:id="@+id/product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fontPath="Roboto-Medium.ttf"
+                android:textColor="@color/white"
+                android:textSize="@dimen/large_text_size"
+                tools:ignore="MissingPrefix" />
+            <TextView
+                android:id="@+id/product_validity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fontPath="Roboto-Medium.ttf"
+                android:text="(Inclusive of all taxes)"
+                android:textColor="@color/white"
+                android:textSize="@dimen/medium_text_size"
+                tools:ignore="MissingPrefix" />
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

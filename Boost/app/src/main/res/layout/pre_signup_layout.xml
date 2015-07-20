@@ -1,0 +1,30 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <com.biz2.nowfloats.custom.widget.CustomViewPager
+        android:id="@+id/pager"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/indicator"
+        android:padding="16dip"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:background="#FFF"
+        app:radius="3dp"
+        app:fillColor="@color/home_yellow"
+        app:pageColor="@color/signup_back_grey"
+        app:strokeWidth="0dp"
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+        />
+
+
+
+</LinearLayout>

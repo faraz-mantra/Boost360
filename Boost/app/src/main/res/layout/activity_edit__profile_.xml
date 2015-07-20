@@ -1,0 +1,140 @@
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/tool_bar_business_profile" />
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="16dp"
+            android:layout_marginLeft="2dp">
+
+            <com.makeramen.RoundedImageView
+
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/editbusinessprofileimage"
+                android:src="@drawable/business_edit_profile_icon"
+                android:layout_marginTop="26dp"
+                android:layout_marginBottom="26dp"
+                android:layout_width="105dp"
+                android:layout_height="105dp"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"
+                app:riv_corner_radius="30dip"
+                app:riv_border_width="0dip"
+                app:riv_oval="true"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="bottom"
+                >
+
+                <TextView
+                    android:id="@+id/yourName_textline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Your Name"
+                    android:textSize="10sp"
+                    android:paddingLeft="5dp"
+                    android:textColor="#BDBDBD"
+                    android:visibility="gone"/>
+
+                <EditText
+                    android:id="@+id/profileName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom"
+                    android:hint="Your Name"
+                    android:minLines="1"
+                    android:text=""
+                    android:textSize="14sp"
+                    android:textColor="#575757"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="bottom"
+                >
+
+                <TextView
+                    android:id="@+id/businessName_textline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Business Name"
+                    android:textSize="10sp"
+                    android:paddingLeft="5dp"
+                    android:textColor="#BDBDBD"
+                    android:visibility="gone"/>
+                <EditText
+                    android:id="@+id/businessName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Name"
+                    android:minLines="1"
+                    android:textSize="14sp"
+                    android:gravity="bottom"
+                    android:textColor="#575757"
+                    />
+            </LinearLayout>
+
+
+
+            <EditText
+                android:id="@+id/businessCategory"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:hint="Category"
+                android:gravity="bottom"
+                android:editable="false"
+                android:drawableRight="@drawable/dropselect"
+                android:textColor="#575757"
+                android:textSize="14sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="bottom"
+                >
+
+                <TextView
+                    android:id="@+id/businessDesciption_textline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Business Description"
+                    android:textSize="10sp"
+                    android:paddingLeft="5dp"
+                    android:textColor="#BDBDBD"
+                    android:visibility="gone"/>
+                <EditText
+                    android:id="@+id/businessDesciption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Description"
+                    android:gravity="top"
+                    android:minLines="3"
+                    android:textColor="#575757"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout><!-- From: file:/D:/VinayRepo/whitelabelRepo/app/src/main/res/layout/activity_edit__profile_.xml -->

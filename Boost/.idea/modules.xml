@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ZoomImageLibrary/ZoomImageLibrary.iml" filepath="$PROJECT_DIR$/ZoomImageLibrary/ZoomImageLibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/boost-vinay-guru.iml" filepath="$PROJECT_DIR$/boost-vinay-guru.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cropper/cropper.iml" filepath="$PROJECT_DIR$/cropper/cropper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/libs/libraries/libraries.iml" filepath="$PROJECT_DIR$/app/libs/libraries/libraries.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/libs/libs.iml" filepath="$PROJECT_DIR$/app/libs/libs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mixpanel/mixpanel.iml" filepath="$PROJECT_DIR$/mixpanel/mixpanel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mobihelp_sdk_android_v1.3.1/mobihelp_sdk_android_v1.3.1.iml" filepath="$PROJECT_DIR$/mobihelp_sdk_android_v1.3.1/mobihelp_sdk_android_v1.3.1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/libs/libraries/volley/volley.iml" filepath="$PROJECT_DIR$/app/libs/libraries/volley/volley.iml" />
+    </modules>
+  </component>
+</project>
+
