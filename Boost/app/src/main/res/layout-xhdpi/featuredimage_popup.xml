@@ -111,7 +111,7 @@
         android:layout_marginLeft="26dp"
         android:layout_marginTop="13dp"
         android:layout_marginBottom="20dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:orientation="horizontal"
         >
         <FrameLayout
@@ -131,8 +131,7 @@
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_gravity="center"
-                android:src="@drawable/featured_camera"
-                />
+                android:src="@drawable/delete_dustbin_button" />
         </FrameLayout>
         <com.nowfloats.CustomWidget.roboto_lt_24_212121
             android:id="@+id/deleteBackgroundImageText"
@@ -144,7 +143,5 @@
             android:textColor="#878787"
             android:layout_weight=".6"/>
 
-
     </LinearLayout>
-
 </LinearLayout>
