@@ -37,9 +37,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity android:name="com.mixpanel.android.surveys.SurveyActivity" />
-
         <service android:name="com.nowfloats.Volley.GCMIntentService" />
-
         <receiver android:name="com.appsflyer.MultipleInstallBroadcastReceiver"
             android:exported="true">
             <intent-filter>
