@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/rec_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="customer"
+        android:textColor="@color/primaryColor"
+        android:textSize="14sp"
+       />
+
+        <TextView
+            android:id="@+id/rec_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/text_color_brown"
+            android:textSize="18sp"
+        />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/send_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="right"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You"
+            android:textColor="@color/primaryColor"
+            android:textSize="14sp"
+            />
+
+        <TextView
+            android:id="@+id/send_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/text_color_brown"
+            android:textSize="18sp"
+            />
+    </LinearLayout>
+</LinearLayout>

@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.nowfloats.Login.Fetch_Home_Data;
+import com.nowfloats.Login.Login_Interface;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
@@ -26,6 +27,10 @@ import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
 import java.util.ArrayList;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.Fetch_Home_Data_Interface{
     UserSessionManager session;
@@ -46,6 +51,8 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         session = new UserSessionManager(getApplicationContext(),SplashScreen_Activity.this);
         Start();
     }
+
+
 
     private void Start() {
         new Thread(new Runnable() {

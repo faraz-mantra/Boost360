@@ -77,6 +77,9 @@ public class Constants {
 	public final static String HTTP_DEL				=	"DELETE";
 
     //Retrofit Single Instance
+    public static final RestAdapter chatRestAdapter = new RestAdapter.Builder().setEndpoint("http://dbapi.fostergem.com").build();
+    public static final RestAdapter chatsendRestAdapter = new RestAdapter.Builder().setEndpoint("http://api.fostergem.com").build();
+    //
     public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL).build();
     public static final NotificationInterface alertInterface = restAdapter.create(NotificationInterface.class);
     public static final RestAdapter validEmailAdapter = new RestAdapter.Builder().setEndpoint("https://bpi.briteverify.com").build();

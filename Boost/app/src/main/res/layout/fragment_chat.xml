@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@color/background_grey"
+    tools:context="com.nowfloats.NavigationDrawer.Analytics_Fragment">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_gravity="bottom"
+    android:layout_weight="1">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/chat_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:scrollbars="vertical" />
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:gravity="center"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/chat_msg"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:singleLine="false"
+            android:maxHeight="100dp"
+            android:focusable="true"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:gravity="center"
+            fontPath="Roboto-Light.ttf"
+            android:textColor="@color/text_color_roboto_lt_30_edittext"
+            android:textColorHint="@color/hint_color_roboto_lt_30_edittext"
+            android:textSize="17sp"
+            android:inputType="text"
+            android:focusableInTouchMode="true"
+            android:hint="Type a message"
+            tools:ignore="MissingPrefix" />
+        <Button
+            android:id="@+id/chat_send"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corner_button"
+            android:text="send"
+            android:textColor="@color/white"/>
+        </LinearLayout>
+</LinearLayout>

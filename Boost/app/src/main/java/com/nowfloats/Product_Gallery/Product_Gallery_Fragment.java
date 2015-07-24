@@ -87,11 +87,11 @@ public class Product_Gallery_Fragment extends Fragment{
                     }
                 }
             }
-                try{
-                    currencyValue = Constants.Currency_Country_Map.get(
-                            session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).toLowerCase());
-                    getProducts("0");
-                }catch (Exception e){e.printStackTrace();}
+            try{
+                currencyValue = Constants.Currency_Country_Map.get(
+                        session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).toLowerCase());
+                getProducts("0");
+            }catch (Exception e){e.printStackTrace();}
             }
         }).start();
     }

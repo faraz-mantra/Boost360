@@ -40,6 +40,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         StrictMode.setThreadPolicy(policy);
 
         String deviceId = Settings.Secure.getString(this.getContentResolver(),Settings.Secure.ANDROID_ID);
+
         Log.d("Device ID","Device ID : "+deviceId);
 
         /*CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()

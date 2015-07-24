@@ -50,11 +50,14 @@ import com.nowfloats.BusinessProfile.UI.UI.Settings_Fragment;
 import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.Business_Enquiries.Business_Enquiries_Fragment;
 import com.nowfloats.Image_Gallery.Image_Gallery_Fragment;
+import com.nowfloats.Login.Login_Interface;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.Ria_Register;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.App_Update_Async_Task;
 import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
+import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
+import com.nowfloats.NavigationDrawer.Chat.ChatRegResponse;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.nowfloats.Store.DomainLookup;
@@ -81,6 +84,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Map;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class HomeActivity extends AppCompatActivity implements  SidePanelFragment.OnItemClickListener,DeepLinkInterface {
@@ -96,6 +102,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     Business_Enquiries_Fragment businessEnquiriesFragment;
     Image_Gallery_Fragment imageGalleryFragment ;
     Product_Gallery_Fragment productGalleryFragment ;
+    ChatFragment chatFragment;
     Store_Fragment storeFragment;
     UserSessionManager session;
     Typeface robotoMedium ;
@@ -108,6 +115,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     private boolean showLookupDomain = false ;
     private int clickCnt = 0;
     public static Activity activity;
+    public static String FPID;
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -129,7 +138,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
         deepLinkUrl = GCMReceiver.deeplinkUrl;
         session = new UserSessionManager(getApplicationContext(),HomeActivity.this);
-
+        FPID = session.getFPID();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -219,6 +228,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         businessEnquiriesFragment = new Business_Enquiries_Fragment();
         imageGalleryFragment = new Image_Gallery_Fragment();
         productGalleryFragment = new Product_Gallery_Fragment();
+        chatFragment = new ChatFragment();
         storeFragment = new Store_Fragment();
         siteMeterFragment = new Site_Meter_Fragment();
 
@@ -309,12 +319,33 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.mainFrame, homeFragment, "homeFragment");
         ft.commit();
-//        deepLinkUrl = "update";
         DeepLinkPage(deepLinkUrl);
     }
 
     public static void setGCMId(String id){
         new Ria_Register(activity,Constants.clientId,"ANDROID",id);
+        registerChat(FPID,id);
+    }
+
+    public static void registerChat(String fpid,String reg) {
+        try{
+            Login_Interface chat = Constants.chatRestAdapter.create(Login_Interface.class);
+            chat.chat(fpid,reg,new Callback<ChatRegResponse>() {
+                @Override
+                public void success(ChatRegResponse s, Response response) {
+                    Log.i("GCM chat ", "reg success");
+                    Log.d("Response","Response : "+s.Status);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Log.i("GCM chat ","reg FAILed");
+                }
+            });
+        }catch(Exception e){
+            Log.i("GCM chat ","reg exp");
+            e.printStackTrace();
+        }
     }
 
     public void DeepLinkPage(String url) {
@@ -403,6 +434,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame,productGalleryFragment).
                         commit();
+            }else if(url.contains("chatWindow")){
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.mainFrame,chatFragment,"chatFragment").commit();
             }else if(url.contains(getResources().getString(R.string.deeplink_gplaces))){//TODO
              }
         }deepLinkUrl = null; GCMReceiver.deeplinkUrl = null;

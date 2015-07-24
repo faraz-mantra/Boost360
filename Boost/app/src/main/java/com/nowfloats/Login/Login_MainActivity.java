@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,6 +51,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Date;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class Login_MainActivity extends AppCompatActivity implements
@@ -188,7 +192,7 @@ public class Login_MainActivity extends AppCompatActivity implements
             MixPanelController.setProperties("LoggedIn", "True");
 
             getFPDetails(Login_MainActivity.this, session.getFPID(), Constants.clientId, bus);
-
+            HomeActivity.registerChat(session.getFPID(),Constants.gcmRegistrationID);
         } else {
             if(progressDialog != null) {
                 progressDialog.dismiss();
