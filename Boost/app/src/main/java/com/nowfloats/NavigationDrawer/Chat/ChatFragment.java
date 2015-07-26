@@ -60,6 +60,17 @@ public class ChatFragment extends Fragment{
         super.onResume();
         HomeActivity.headerText.setText("PRO CHAT");
         ChatFragmentPage = "";
+        if (chatModels.size()>0)
+            if(chatRecyclerView!=null)
+                chatRecyclerView.scrollToPosition(chatModels.size() - 1);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (chatModels.size()>0)
+            if(chatRecyclerView!=null)
+                chatRecyclerView.scrollToPosition(chatModels.size() - 1);
     }
 
     @Override
@@ -77,7 +88,8 @@ public class ChatFragment extends Fragment{
        chatRecyclerView.setItemAnimator(new FadeInUpAnimator());
        chatAdapter = new ChatAdapter(activity,chatModels);
        chatRecyclerView.setAdapter(chatAdapter);
-
+       if (chatModels.size()>0)
+        chatRecyclerView.scrollToPosition(chatModels.size() - 1);
        final ImageView sendBtn = (ImageView)view.findViewById(R.id.chat_send);
        PorterDuffColorFilter primaryLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_IN);
        sendBtn.setColorFilter(primaryLabelFilter);
@@ -86,7 +98,7 @@ public class ChatFragment extends Fragment{
        chatSend_layout.setVisibility(View.INVISIBLE);
 
         final EditText chatMsg = (EditText)view.findViewById(R.id.chat_msg);
-       chatMsg.addTextChangedListener(new TextWatcher() {
+        chatMsg.addTextChangedListener(new TextWatcher() {
            @Override
            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
            @Override
