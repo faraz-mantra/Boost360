@@ -4,6 +4,7 @@ package com.nowfloats.Volley;
  * Created by NowFloatsDev on 29/04/2015.
  */
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -16,16 +17,20 @@ import com.demach.konotor.Konotor;
 import com.demach.konotor.access.K;
 import com.google.android.gcm.GCMBaseIntentService;
 import com.mixpanel.android.mpmetrics.GCMReceiver;
+import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.Chat.ChatModel;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 public class GCMIntentService extends GCMBaseIntentService
 {
     public static final String TAG = GCMIntentService.class.getName();
     Handler handler = new Handler();
+    private DeepLinkInterface linkInterface;
+
     public GCMIntentService()
     {
         super(K.ANDROID_PROJECT_SENDER_ID);
@@ -36,23 +41,29 @@ public class GCMIntentService extends GCMBaseIntentService
     {
         Log.i("","Push NOtif came.....");
         if(intent!=null){
-            if(intent.hasExtra("message")){
-                String message = intent.getExtras().getString("message");
-                ChatFragment.chatModels.add(new ChatModel(message,true));
-                if(ChatFragment.ChatFragmentPage!=null){
-                    if(ChatFragment.chatAdapter!=null){
-                        Runnable runnable = new Runnable() {
-                            @Override
-                            public void run() {
-                                ChatFragment.chatAdapter.notifyDataSetChanged();
-                            }
-                        };
-                        handler.post(runnable);
+            if(intent.hasExtra("ChatMessage")){
+                try{
+                    String message = intent.getExtras().getString("ChatMessage");
+                    ChatFragment.chatModels.add(new ChatModel(message,true, Methods.getCurrentTime()));
+                    if(ChatFragment.ChatFragmentPage!=null){
+                        if(ChatFragment.chatAdapter!=null){
+                            Runnable runnable = new Runnable() {
+                                @Override
+                                public void run() {
+                                    ChatFragment.chatAdapter.notifyDataSetChanged();
+                                    ChatFragment.chatRecyclerView.scrollToPosition(ChatFragment.chatModels.size() - 1);
+                                }
+                            };
+                            handler.post(runnable);
+                        }
+                    }else{
+                        generateNotification(context,message);
+                        Constants.GCM_Msg = true;
+                        GCMReceiver.deeplinkUrl = "chatWindow";
+//                        linkInterface = (DeepLinkInterface)HomeActivity.activity;
+//                        linkInterface.deepLink("chatWindow");
                     }
-                }else{
-                    generateNotification(context,message);
-                    GCMReceiver.deeplinkUrl = "chatWindow";
-                }
+                }catch(Exception e){e.printStackTrace();}
             }else{
                 Konotor.getInstance(context).handleGcmOnMessage(intent);
             }
@@ -107,6 +118,5 @@ public class GCMIntentService extends GCMBaseIntentService
         // Vibrate if vibrate is enabled
         notification.defaults |= Notification.DEFAULT_VIBRATE;
         notificationManager.notify(0, notification);
-
     }
 }

@@ -325,6 +325,7 @@ public class Constants {
     public static String facebookPageDescription;
     public static boolean createMsg = false;
     public static boolean gotoStore =false;
+    public static boolean GCM_Msg = false;
 
     public static void clearStore() {
 		StoreAddress 		= null;

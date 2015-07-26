@@ -57,11 +57,13 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.App_Update_Async_Task;
 import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
+import com.nowfloats.NavigationDrawer.Chat.ChatModel;
 import com.nowfloats.NavigationDrawer.Chat.ChatRegResponse;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.Store_Fragment;
+import com.nowfloats.Volley.GCMIntentService;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DefaultArtifactVersion;
@@ -133,7 +135,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         activity = HomeActivity.this;
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-
+//        GCMIntentService.setHomeActivity(HomeActivity.this);
         Methods.isOnline(HomeActivity.this);
 
         deepLinkUrl = GCMReceiver.deeplinkUrl;
@@ -315,6 +317,10 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
         mDrawerLayout.closeDrawer(Gravity.LEFT);
 
+//        ChatFragment.chatModels.add(new ChatModel("New Message",true,Methods.getCurrentTime()));
+//        ChatFragment.chatModels.add(new ChatModel("Next Message",false,Methods.getCurrentTime()));
+//        ChatFragment.chatModels.add(new ChatModel("New Message",true,Methods.getCurrentTime()));
+//        ChatFragment.chatModels.add(new ChatModel("Next Message",false,Methods.getCurrentTime()));
         setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.mainFrame, homeFragment, "homeFragment");
@@ -350,6 +356,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
     public void DeepLinkPage(String url) {
         Log.d("Deep Link URL","Deep Link URL : "+url);
+        Constants.GCM_Msg = false;
         if(!Util.isNullOrEmpty(url)){
             if(url.contains(getResources().getString(R.string.deeplink_update)) || url.contains(getResources().getString(R.string.deeplink_featuredimage))){
 //                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -667,12 +674,18 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         else
             setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
         plusAddButton.setVisibility(View.GONE);
+        if(Constants.GCM_Msg){
+            DeepLinkPage(GCMReceiver.deeplinkUrl);
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         Log.d("HomeActivity","onStart");
+        if(Constants.GCM_Msg){
+            DeepLinkPage(GCMReceiver.deeplinkUrl);
+        }
     }
 
     @Override

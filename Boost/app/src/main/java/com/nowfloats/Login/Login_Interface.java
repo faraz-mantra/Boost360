@@ -35,7 +35,8 @@ public interface Login_Interface {
     public void post_RegisterRia(@Body HashMap<String,String> map, Callback<String> callback);
 
     //http://dbapi.fostergem.com
-    @GET("/v1/saveDeviceId/{fpId}/{device_id}")
+    //http://dbapi.fostergem.com/v1/saveDeviceId/{fp_id}/{device_id}/android
+    @GET("/v1/saveDeviceId/{fpId}/{device_id}/android")
     public void chat(@Path("fpId") String fpId,@Path("device_id") String device_id, Callback<ChatRegResponse> callback);
 
     /*http://api.fostergem.com/v1/sendMessages/fpId/6c350c809e3acef7a38421b86c6619e3
@@ -44,5 +45,4 @@ data : {"message":"hey","source":"merchant"}*/
 
     @POST("/v1/sendMessages/{fpId}/6c350c809e3acef7a38421b86c6619e3")
     public void sendChat(@Path("fpId") String fpId,@Body HashMap<String,String> map, Callback<ChatRegResponse> callback);
-
 }

@@ -31,6 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -274,5 +275,17 @@ public class Methods {
             bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
         }
         return bos.toByteArray();
+    }
+
+    public static String getCurrentTime() {
+        String result = "";
+        try{
+            DateFormat dateFormat = new SimpleDateFormat("hh:mm aa");//dd/MM/yyyy HH:mm:ss
+            dateFormat.setTimeZone(TimeZone.getDefault());
+            result = dateFormat.format(Calendar.getInstance().getTime());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return result;
     }
 }

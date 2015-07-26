@@ -6,8 +6,11 @@ package com.nowfloats.NavigationDrawer.Chat;
 public class ChatModel {
      public String message;
      public boolean incoming;
-    public ChatModel(String message,boolean val){
+     public String time;
+
+    public ChatModel(String message,boolean val,String time){
         this.message = message;
         this.incoming = val;
+        this.time = time;
     }
 }

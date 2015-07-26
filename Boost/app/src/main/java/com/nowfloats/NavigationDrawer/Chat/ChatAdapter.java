@@ -31,13 +31,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder>{
 public class ViewHolder extends RecyclerView.ViewHolder {
     // each data item is just a string in this case
     public ImageView imageView;
-    public TextView sendText,recText;
+    public TextView sendText,recText,send_time,rec_time;
     public LinearLayout send_layout;
     public LinearLayout rec_layout;
     public ViewHolder(View v) {
         super(v);
         sendText = (TextView)itemView.findViewById(R.id.send_txt);
         recText = (TextView)itemView.findViewById(R.id.rec_txt);
+        send_time = (TextView)itemView.findViewById(R.id.send_time_stamp);
+        rec_time = (TextView)itemView.findViewById(R.id.rec_time_stamp);
         send_layout = (LinearLayout)itemView.findViewById(R.id.send_layout);
         rec_layout = (LinearLayout)itemView.findViewById(R.id.rec_layout);
     }
@@ -57,11 +59,13 @@ public class ViewHolder extends RecyclerView.ViewHolder {
                 if(chatData.get(position).incoming){
                     holder.rec_layout.setVisibility(View.VISIBLE);
                     holder.recText.setText(chatData.get(position).message);
+                    holder.rec_time.setText(chatData.get(position).time);
                     holder.send_layout.setVisibility(View.GONE);
                 }else{
                     holder.rec_layout.setVisibility(View.GONE);
                     holder.send_layout.setVisibility(View.VISIBLE);
                     holder.sendText.setText(chatData.get(position).message);
+                    holder.send_time.setText(chatData.get(position).time);
                 }
             }
         }catch(Exception e){e.printStackTrace();}
