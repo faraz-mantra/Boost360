@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.viewpagerindicator.IconPagerAdapter;
 
 class PreSignupFragmentAdapter extends FragmentPagerAdapter implements IconPagerAdapter {
-
 	FragmentOne one;
 	FragmentTwo two;
 	FragmentThree three;
@@ -17,6 +16,7 @@ class PreSignupFragmentAdapter extends FragmentPagerAdapter implements IconPager
 	FragmentSeven seven;
 
 	int mCount = 7;
+
     public PreSignupFragmentAdapter(FragmentManager fm) {
         super(fm);
         one		=	new FragmentOne();
@@ -32,7 +32,6 @@ class PreSignupFragmentAdapter extends FragmentPagerAdapter implements IconPager
     public Fragment getItem(int position) {
     	Fragment	frag	=	null;
     	switch (position) {
-
 		case 0:
 			frag = one;
 			break;
