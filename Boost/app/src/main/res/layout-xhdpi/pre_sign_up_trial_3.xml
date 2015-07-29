@@ -126,14 +126,13 @@
                     android:layout_marginBottom="4dp"
                     />
 
-                <EditText
+                <com.nowfloats.signup.UI.Places.CustomAutoCompleteTextView
                     fontPath="Roboto-Light.ttf"
                     android:id="@+id/editText_city"
                     style="@style/SignUp_EditText_Style"
                     android:inputType="textCapWords"
                     android:hint="City"
                     tools:ignore="MissingPrefix" />
-
 
             </LinearLayout>
 
