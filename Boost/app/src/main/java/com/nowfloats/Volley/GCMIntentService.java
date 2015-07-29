@@ -41,7 +41,7 @@ public class GCMIntentService extends GCMBaseIntentService
     {
         Log.i("","Push NOtif came.....");
         if(intent!=null){
-            if(intent.hasExtra("ChatMessage")){
+            /*if(intent.hasExtra("ChatMessage")){
                 try{
                     String message = intent.getExtras().getString("ChatMessage");
                     ChatFragment.chatModels.add(new ChatModel(message,true, Methods.getCurrentTime()));
@@ -64,9 +64,9 @@ public class GCMIntentService extends GCMBaseIntentService
 //                        linkInterface.deepLink("chatWindow");
                     }
                 }catch(Exception e){e.printStackTrace();}
-            }else{
+            }else{*/
                 Konotor.getInstance(context).handleGcmOnMessage(intent);
-            }
+//            }
         }
     }
 
