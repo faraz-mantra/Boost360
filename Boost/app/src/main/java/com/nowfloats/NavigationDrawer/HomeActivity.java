@@ -330,11 +330,11 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
     public static void setGCMId(String id){
         new Ria_Register(activity,Constants.clientId,"ANDROID",id);
-//        registerChat(FPID,id);
+        registerChat(FPID,id);
     }
 
     public static void registerChat(String fpid,String reg) {
-        try{
+        /*try{
             Login_Interface chat = Constants.chatRestAdapter.create(Login_Interface.class);
             chat.chat(fpid,reg,new Callback<ChatRegResponse>() {
                 @Override
@@ -351,7 +351,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         }catch(Exception e){
             Log.i("GCM chat ","reg exp");
             e.printStackTrace();
-        }
+        }*/
     }
 
     public void DeepLinkPage(String url) {
