@@ -780,6 +780,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 Constants.clearStore();
                 Constants.StorebizQueries 		= new ArrayList<>();
                 Constants.storeSecondaryImages = null ;
+                Constants.storeActualSecondaryImages = new ArrayList<>();
                 Constants.StoreUserSearch		= new DataMap();
                 Constants.StorebizEnterpriseQueries 		= new ArrayList<Entity_model>();
                 Constants.StorePackageIds = new ArrayList<>();
@@ -792,8 +793,10 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 ChatFragment.chatModels = new ArrayList<ChatModel>();
                 Analytics_Fragment.subscriberCount.setText("0");
                 Analytics_Fragment.visitCount.setText("0");
-                System.gc();
+
                 MixPanelController.track("LogoutSuccess", null);
+
+                activity.finish();
                 Intent i = new Intent(activity, Login_MainActivity.class);
                 // Closing all the Activities
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -803,8 +806,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
                 // Staring Login Activity
                 activity.startActivity(i);
-
-
+                System.gc();
             }
 
             @Override

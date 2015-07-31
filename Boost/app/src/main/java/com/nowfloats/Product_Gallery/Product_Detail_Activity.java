@@ -488,7 +488,6 @@ public class Product_Detail_Activity extends AppCompatActivity{
                 new ProductImageReplace(url,imageBytes,Product_Detail_Activity.this).execute();
             }else {
                 uploadProductImage(productId);
-//                Methods.showSnackBarNegative(activity, "Something went wrong, Try again...");
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -545,7 +544,6 @@ public class Product_Detail_Activity extends AppCompatActivity{
         return currencyType;
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         if (resultCode == RESULT_OK && (Constants.GALLERY_PHOTO == requestCode)) {
             if (data != null) {
                 picUri = data.getData();

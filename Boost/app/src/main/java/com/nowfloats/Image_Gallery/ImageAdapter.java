@@ -34,8 +34,8 @@ public class ImageAdapter extends PagerAdapter{
     public ImageAdapter(Activity context){
         this.context=context;
       //  imageInterface = (ImageAdapter_interface) context;
-        if (Constants.storeSecondaryImages != null) {
-            imagesList = Constants.storeSecondaryImages;
+        if (Constants.storeActualSecondaryImages != null) {
+            imagesList = Constants.storeActualSecondaryImages;
             size = imagesList.size();
 
         }

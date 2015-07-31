@@ -65,7 +65,6 @@ public class Image_Gallery_Fragment extends Fragment implements
     Activity activity;
     private LinearLayout progressLayout,emptyGalleryLayout;
 
-
     @Override
     public void onResume() {
         super.onResume();
@@ -123,15 +122,10 @@ public class Image_Gallery_Fragment extends Fragment implements
                             emptyGalleryLayout.setVisibility(View.GONE);
                         }
                         grid.setAdapter(gridViewAdapter);
-                        progressLayout.setVisibility(View.GONE);
-                        grid.invalidate();
-                        gridViewAdapter.notifyDataSetChanged();
+
                         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Log.d("Grid View On Click","View : "+view+" Position : "+position+" Id : "+id);
-//                Log.d("Grid View On Click", Constants.storeSecondaryImages.get(position));
-//                showFullScaleImage(Constants.storeSecondaryImages.get(position),position);
                                 Intent fullImage = new Intent(activity, FullScreen_Gallery_Image.class);
                                 fullImage.putExtra("currentPositon", position);
                                 startActivity(fullImage);
@@ -156,6 +150,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                                 return true;
                             }
                         });
+                        progressLayout.setVisibility(View.GONE);
                     }
                 });
             }

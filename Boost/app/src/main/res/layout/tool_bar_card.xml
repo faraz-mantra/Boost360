@@ -17,7 +17,7 @@
     fontPath = "Roboto-Medium.ttf"
     android:visibility="gone"
     android:textSize="17sp"
-    tools:ignore="MissingPrefix"></TextView>
+    tools:ignore="MissingPrefix"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"

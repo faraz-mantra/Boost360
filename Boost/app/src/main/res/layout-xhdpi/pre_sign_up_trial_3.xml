@@ -132,7 +132,15 @@
                     style="@style/SignUp_EditText_Style"
                     android:inputType="textCapWords"
                     android:hint="City"
-                    tools:ignore="MissingPrefix" />
+                    tools:ignore="MissingPrefix"
+                    android:layout_weight="1"/>
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingRight="3dp"
+                    android:id="@+id/city_progressbar" />
 
             </LinearLayout>
 

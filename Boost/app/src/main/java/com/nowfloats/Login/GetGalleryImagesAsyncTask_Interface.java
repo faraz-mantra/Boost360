@@ -73,6 +73,7 @@ public class GetGalleryImagesAsyncTask_Interface extends AsyncTask<Void,String, 
 				JSONObject store 				= new JSONObject(response);
 				if(response.contains("TileImageUri"))
 					Constants.storePrimaryImage 	= store.getString("TileImageUri");
+
 				if (response.contains("SecondaryTileImages")) {
 					try {
                         if (store!=null && store.getJSONArray("SecondaryTileImages")!=null){
@@ -92,6 +93,26 @@ public class GetGalleryImagesAsyncTask_Interface extends AsyncTask<Void,String, 
 						e.printStackTrace();
 					}
 				}
+
+                if (response.contains("SecondaryImages")) {
+                    try {
+                        if (store!=null && store.getJSONArray("SecondaryImages")!=null){
+                            JSONArray array = store.getJSONArray("SecondaryImages");
+                            if(array != null){
+                                int len = array.length();
+                                Log.d("Gallery","Length : "+len);
+                                Constants.storeActualSecondaryImages = new ArrayList<String>();
+                                if (len != 0) {
+                                    for(int i =0 ; i < len ; i++){
+                                        Constants.storeActualSecondaryImages.add(array.getString(i));
+                                    }
+                                }
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -74,7 +75,6 @@ import java.util.Locale;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-
 public class PreSignUpActivity extends AppCompatActivity implements
         PreSignUpDialog.Dialog_Activity_Interface,
         API_Layer_Signup.SignUp_Interface, View.OnClickListener,
@@ -88,7 +88,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
     HeaderText title;
     ImageView forwardButton;
     Bus bus;
-
+    public static ProgressBar cityProgress;
     private static EditText businessNameEditText, businessCategoryEditText,  countryEditText, emailEditText, phoneEditText;
     private Toolbar toolbar;
     public static CustomAutoCompleteTextView cityEditText;
@@ -140,6 +140,9 @@ public class PreSignUpActivity extends AppCompatActivity implements
         phoneEditText = (EditText) findViewById(R.id.editText_Phone);
         forwardButton = (ImageView) findViewById(R.id.forward_button_signup_screen);
         countryPhoneCode = (TextView) findViewById(R.id.countrycode_signupscreen);
+        cityProgress = (ProgressBar) findViewById(R.id.city_progressbar);
+        cityProgress.setVisibility(View.GONE);
+
         sessionManager = new UserSessionManager(activity,activity);
         Typeface robotoLight = Typeface.createFromAsset(activity.getAssets(),"Roboto-Light.ttf");
 
@@ -150,7 +153,6 @@ public class PreSignUpActivity extends AppCompatActivity implements
         emailEditText.setTypeface(robotoLight);
         phoneEditText.setTypeface(robotoLight);
         countryPhoneCode.setTypeface(robotoLight);
-
 
         Util.addBackgroundImages();
         LoadCountryData countryData = new LoadCountryData(activity);
@@ -180,6 +182,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 if(s.toString().trim().length()>=3){
+                    cityProgress.setVisibility(View.VISIBLE);
                     PlacesTask placesTask = new PlacesTask(activity);
                     placesTask.execute(s.toString());
                 }

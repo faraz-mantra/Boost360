@@ -31,7 +31,7 @@ public class Home_Fragment_Tab extends Fragment {
     TextView alertCountTv;
     public static String alertCountVal = "0";
     private Bus bus;
-    private Activity activity;
+    public Activity activity;
     LinearLayout progressLayout;
     @Override
     public void onResume() {
@@ -109,7 +109,9 @@ public class Home_Fragment_Tab extends Fragment {
                     @Override
                     public void run() {
                         viewPager.setAdapter(tabPagerAdapter);
-                        activity.setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+                        try{
+                            activity.setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+                        }catch(Exception e){e.printStackTrace();}
                         tabs.setDistributeEvenly(true);
                         tabs.setCustomTabView(R.layout.tab_text,R.id.tab_textview);
 //                        tabs.setSelectedIndicatorColors(getResources().getColor(R.color.white));

@@ -402,6 +402,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
             {
 
                 //Util.toast("Business Name has to be more than 3 characters", this);
+                Methods.showSnackBarNegative(Edit_Profile_Activity.this,"Business Name should be more than 3 letters");
                 allBoundaryCondtn=false;
             }
             try {

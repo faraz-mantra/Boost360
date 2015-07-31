@@ -255,7 +255,8 @@ public class SidePanelFragment extends Fragment {
                         .show();
 
                 View view = dialog.getCustomView();
-                LinearLayout  deleteImage = (LinearLayout) view.findViewById(R.id.deletebackgroundImage); ;
+                LinearLayout  deleteImage = (LinearLayout) view.findViewById(R.id.deletebackgroundImage);
+                deleteImage.setVisibility(View.GONE);
                 TextView title = (TextView) view.findViewById(R.id.textview_heading);
                 title.setText("Upload Background Image");
                 LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
@@ -268,6 +269,7 @@ public class SidePanelFragment extends Fragment {
                 if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)) && session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE).length()>0) {
                     deleteImage.setVisibility(View.VISIBLE);
                 }
+
                 cameraImg.setColorFilter(whiteLabelFilter1);
                 galleryImg.setColorFilter(whiteLabelFilter1);
                 deleteImg.setColorFilter(whiteLabelFilter1);

@@ -148,12 +148,14 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
 
         }
         else if(success && isBackgroundImage){
-
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            try{
+                Util.GettingBackGroundId(session);
+            } catch(Exception e){e.printStackTrace();}
             pd.dismiss();
             Bitmap bmp = Util.getBitmap(path, appContext);
             SidePanelFragment.containerImage.setImageBitmap(bmp);
@@ -319,7 +321,6 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
                     }
                     if (response.contains("SecondaryTileImages")) {
                         try {
-
                             JSONArray array = store.getJSONArray("SecondaryTileImages");
                             if(array != null){
                                 int len = array.length();

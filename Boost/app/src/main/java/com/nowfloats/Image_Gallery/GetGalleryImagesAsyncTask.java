@@ -71,7 +71,6 @@ public class GetGalleryImagesAsyncTask extends AsyncTask<Void,String, String>{
 							if (len != 0) {
 								for(int i =0 ; i < len ; i++){
 									Constants.storeSecondaryImages.add(array.getString(i));
-
 								}
 							}
 						}
@@ -80,7 +79,6 @@ public class GetGalleryImagesAsyncTask extends AsyncTask<Void,String, String>{
 					}
 				}
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
