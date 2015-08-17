@@ -41,15 +41,12 @@ public class Business_Queries_Enterprise_Adapter extends RecyclerView.Adapter<Bu
     String headerValue;
 
 
-
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-
         TextView fromTextView;
         TextView dateTextView;
         TextView queryTextView;
         TextView contactText;
-        LinearLayout contactButton ;
-
+        LinearLayout contactButton,entityLayout;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -58,6 +55,7 @@ public class Business_Queries_Enterprise_Adapter extends RecyclerView.Adapter<Bu
             this.queryTextView = (TextView) itemView.findViewById(R.id.queryTexView);
             this.contactText = (TextView) itemView.findViewById(R.id.contactText);
             this.contactButton = (LinearLayout) itemView.findViewById(R.id.contactButton);
+            this.entityLayout = (LinearLayout)itemView.findViewById(R.id.entity_layout);
         }
     }
 
@@ -82,8 +80,7 @@ public class Business_Queries_Enterprise_Adapter extends RecyclerView.Adapter<Bu
         TextView queryTextView = holder.queryTextView;
         TextView contactText = holder.contactText;
         LinearLayout contactButton = holder.contactButton;
-
-
+        holder.entityLayout.setVisibility(View.GONE);
         Typeface myCustomFont = Typeface.createFromAsset(appContext.getAssets(),"Roboto-Medium.ttf");
         Typeface myCustomFontLight = Typeface.createFromAsset(appContext.getAssets(),"Roboto-Light.ttf");
 

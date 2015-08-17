@@ -42,7 +42,6 @@ import java.util.ArrayList;
 import oauth.signpost.OAuth;
 
 public class Social_Sharing_Activity extends ActionBarActivity {
-
     private Toolbar toolbar;
     int size = 0;
     boolean[] checkedPages;

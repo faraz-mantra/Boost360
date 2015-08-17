@@ -21,7 +21,9 @@ public class MaterialProgressBar {
     }
 
     public static void dismissProgressBar()
-    {
-        progressDialog.dismiss();
+    {   try{
+            if(progressDialog!=null && progressDialog.isShowing())
+                progressDialog.dismiss();
+        }catch(Exception e){e.printStackTrace();}
     }
 }

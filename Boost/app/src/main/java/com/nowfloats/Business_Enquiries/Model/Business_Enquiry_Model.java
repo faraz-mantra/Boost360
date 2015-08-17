@@ -7,4 +7,7 @@ public class Business_Enquiry_Model {
     public String contact;
     public String createdOn;
     public String message;
+    public String entityId;
+    public String entityMessage;
+    public String entityType;
 }

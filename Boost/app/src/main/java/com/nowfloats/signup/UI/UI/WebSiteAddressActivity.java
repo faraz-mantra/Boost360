@@ -189,7 +189,6 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
 
                     if(addressTagValid){
                         MixPanelController.track("CreateMyWebsite", null);
-
                          createStore_retrofit(WebSiteAddressActivity.this,getJSONData(),bus);
 //                        CreateStoreTask createStore = new CreateStoreTask(getJSONData(),WebSiteAddressActivity.this);
 //                        createStore.setCreateTaskInterfaceListener(WebSiteAddressActivity.this);

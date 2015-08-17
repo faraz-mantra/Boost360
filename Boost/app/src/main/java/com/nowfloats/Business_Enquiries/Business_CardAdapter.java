@@ -8,6 +8,8 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +52,8 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
         TextView queryTextView;
         TextView contactText;
         ImageView contactIcon;
-        LinearLayout contactButton ;
+        TextView entityTexView;
+        LinearLayout contactButton,entityLayout;
 
 
         public MyViewHolder(View itemView) {
@@ -59,8 +62,10 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
             this.dateTextView = (TextView) itemView.findViewById(R.id.enquiry_dateTextView);
             this.queryTextView = (TextView) itemView.findViewById(R.id.queryTexView);
             this.contactText = (TextView) itemView.findViewById(R.id.contactText);
+            this.entityTexView = (TextView) itemView.findViewById(R.id.entityTexView);
             this.contactIcon = (ImageView)itemView.findViewById(R.id.contact_icon);
             this.contactButton = (LinearLayout) itemView.findViewById(R.id.contactButton);
+            this.entityLayout = (LinearLayout) itemView.findViewById(R.id.entity_layout);
         }
     }
 
@@ -70,8 +75,7 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                           int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent,int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.business_enquires_cards_layout, parent, false);
 
@@ -85,6 +89,8 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
         TextView dateTextView = holder.dateTextView;
         TextView queryTextView = holder.queryTextView;
         TextView contactText = holder.contactText;
+        TextView entityText = holder.entityTexView;
+        holder.entityLayout.setVisibility(View.GONE);
 
         Typeface myCustomFont = Typeface.createFromAsset(appContext.getAssets(),"Roboto-Medium.ttf");
         Typeface myCustomFontLight = Typeface.createFromAsset(appContext.getAssets(),"Roboto-Light.ttf");
@@ -93,6 +99,7 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
         dateTextView.setTypeface(myCustomFontLight);
         queryTextView.setTypeface(myCustomFontLight);
         contactText.setTypeface(myCustomFont);
+        entityText.setTypeface(myCustomFontLight);
 
         Log.d("$$$$$$","Biz Data : "+listPosition+" Data : "+ Constants.StorebizQueries.size());
         data = Constants.StorebizQueries.get(listPosition);
@@ -117,26 +124,29 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
             }
             dateTextView.setText(data.createdOn);
             queryTextView.setText(data.message);
+            try{
+                if (data.entityMessage!=null && !data.entityMessage.equals("null") && data.entityMessage.trim().length()>0){
+                    holder.entityLayout.setVisibility(View.VISIBLE);
+                    SpannableString content = new SpannableString("In response to your update: '"+ data.entityMessage +"'");
+                    content.setSpan(new UnderlineSpan(), 20, 26, 0);
+                    entityText.setText(content);
+                }
+            }catch(Exception e){e.printStackTrace();}
 //            holder.setIsRecyclable(false);
 
             holder.contactButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     v.getId();
-
                     headerValue = (String) holder.fromTextView.getText();
-
                     Pattern p = Pattern.compile(".+@.+\\.[a-z]+");
                     Matcher m = p.matcher(headerValue);
                     boolean matchFound = m.matches();
 
                     if(matchFound){
-
                         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                                 "mailto", headerValue, null));
                         appContext.startActivity(Intent.createChooser(emailIntent, "Send email..."));
-
                     }else{
                         Intent call = new Intent(Intent.ACTION_DIAL);
                     call.setData(Uri.parse("tel:"+headerValue));

@@ -51,7 +51,6 @@ public class Business_Enquiries_Fragment extends Fragment {
         activity = getActivity();
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(activity.getApplicationContext(),activity);
-
     }
 
     @Override

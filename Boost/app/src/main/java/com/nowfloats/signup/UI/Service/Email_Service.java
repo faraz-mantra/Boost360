@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.service.media.MediaBrowserService;
 import android.util.Log;
 
+import com.nowfloats.CustomWidget.MaterialProgressBar;
 import com.nowfloats.signup.UI.API.Retro_Signup_Interface;
 import com.nowfloats.signup.UI.Model.Email_Validation_Model;
 import com.nowfloats.signup.UI.Model.ValidationEvent;
@@ -25,17 +26,14 @@ import retrofit.client.Response;
 public class Email_Service {
 
     public Email_Service(final Activity activity, String email, String apiKey, final Bus bus) {
-
         try {
             Map<String, String> params = new HashMap<String, String>();
             params.put("address", email);
             params.put("apikey", apiKey);
-            Log.i("STORE data", "API call Started");
+            Log.i("email verification data", "API call Started");
            // final Email_Validation_Model email_validation = "" ;
             Retro_Signup_Interface emailValidation = Constants.validEmailAdapter.create(Retro_Signup_Interface.class);
             emailValidation.get_IsValidEmail(params, new Callback<Email_Validation_Model>() {
-
-
                 @Override
                 public void success(Email_Validation_Model email_validation_models, Response response) {
                       bus.post(new ValidationEvent(email_validation_models));
@@ -43,9 +41,9 @@ public class Email_Service {
 
                 @Override
                 public void failure(RetrofitError error) {
-
+                    MaterialProgressBar.dismissProgressBar();
                   //  bus.post(new ValidationEvent(email_validation));
-                    Methods.showSnackBarNegative(activity, "Failed");
+                    Methods.showSnackBarNegative(activity, "Email validation failed");
                 }
             });
         } catch (Exception e) {
