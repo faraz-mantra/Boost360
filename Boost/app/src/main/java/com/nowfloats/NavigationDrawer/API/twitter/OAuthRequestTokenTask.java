@@ -1,6 +1,7 @@
 package com.nowfloats.NavigationDrawer.API.twitter;
 
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -16,25 +17,37 @@ import oauth.signpost.OAuthProvider;
 public class OAuthRequestTokenTask extends AsyncTask<Void, Void, String> {
 
 	final String TAG = getClass().getName();
-	private Context context;
+	private Activity context;
 	private OAuthProvider provider;
 	private OAuthConsumer consumer;
 	ProgressDialog pd;
 
-	public OAuthRequestTokenTask(Context context, OAuthConsumer consumer,OAuthProvider provider) {
+	public OAuthRequestTokenTask(Activity context, OAuthConsumer consumer,OAuthProvider provider) {
 		this.context = context;
 		this.consumer = consumer;
 		this.provider = provider;
 	}
 	@Override
 	protected void onPreExecute() {
-		pd= ProgressDialog.show(context, null, "Taking you to twitter authentication...");
+        context.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                pd= ProgressDialog.show(context, null, "Taking you to twitter authentication...");
+            }
+        });
 	}
 	
 	@Override
 	protected void onPostExecute(String abc) {
-		if(pd != null)
-			pd.dismiss();		
+        try {
+            context.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (pd != null)
+                        pd.dismiss();
+                }
+            });
+        }catch (Exception e){e.printStackTrace();}
 	}
 	@Override
 	protected String doInBackground(Void... params) {

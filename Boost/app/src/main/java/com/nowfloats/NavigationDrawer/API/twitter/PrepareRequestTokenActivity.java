@@ -46,7 +46,7 @@ public class PrepareRequestTokenActivity extends Activity {
 		{
 			
 		}
-		new OAuthRequestTokenTask(this, consumer, provider).execute();
+		new OAuthRequestTokenTask(PrepareRequestTokenActivity.this, consumer, provider).execute();
 	}
 
 	@Override

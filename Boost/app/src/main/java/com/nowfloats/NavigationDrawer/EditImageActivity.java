@@ -79,12 +79,14 @@ public class EditImageActivity extends Activity {
                 try{
                     if (cropImageView.getCropOverlayViewVisible()){
                         croppedImage = cropImageView.getCroppedImage();
-                        cropImageView.setImageBitmap(croppedImage);
-                        cropImageView.setCropOverlayViewVisible(false);
+                        if(croppedImage!=null) {
+                            cropImageView.setImageBitmap(croppedImage);
+                            cropImageView.setCropOverlayViewVisible(false);
+                        }
                     }else{
                         cropImageView.setCropOverlayViewVisible(true);
                     }
-                }catch(Exception e){e.printStackTrace();}
+                }catch(Exception e){System.gc();e.printStackTrace();}
             }
         });
 
@@ -94,12 +96,14 @@ public class EditImageActivity extends Activity {
             public void onClick(View v) {
                 try{
                     croppedImage = cropImageView.getCroppedImage();
-                    Intent in =new Intent();
-                    String path = Util.saveCameraBitmap(croppedImage, EditImageActivity.this, "Edit" + System.currentTimeMillis());
-                    in.putExtra("edit_image",path);
-                    setResult(RESULT_OK, in);
-                    finish();
-                }catch(Exception e){e.printStackTrace();}
+                    if(croppedImage!=null) {
+                        Intent in = new Intent();
+                        String path = Util.saveCameraBitmap(croppedImage, EditImageActivity.this, "Edit" + System.currentTimeMillis());
+                        in.putExtra("edit_image", path);
+                        setResult(RESULT_OK, in);
+                        finish();
+                    }
+                }catch(Exception e){System.gc();e.printStackTrace();}
             }
         });
     }

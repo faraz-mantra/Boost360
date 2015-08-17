@@ -59,6 +59,9 @@ public class Business_Logo_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_business__logo);
         Methods.isOnline(Business_Logo_Activity.this);
         toolbar = (Toolbar) findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setTitle("Logo");
 
@@ -67,19 +70,17 @@ public class Business_Logo_Activity extends AppCompatActivity {
         session = new UserSessionManager(getApplicationContext(),Business_Logo_Activity.this);
         logoimageView = (ImageView) findViewById(R.id.logoimageView);
 
-       if(Constants.LOGOUPLOADED == false)
-        {
-            String baseNameProfileImage = "https://api.withfloats.com/"+ session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
-            Picasso.with(this).load(baseNameProfileImage).placeholder(R.drawable.logo_default_image).into(logoimageView);
-        }
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         uploadButton = (Button) findViewById(R.id.addLogoButton);
 
         backgroundImageView = (ImageView) findViewById(R.id.imageView);
+        try {
+            if (Constants.LOGOUPLOADED == false) {
+                String baseNameProfileImage = "https://api.withfloats.com/" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
+                Picasso.with(this).load(baseNameProfileImage).placeholder(R.drawable.logo_default_image).into(logoimageView);
+            }
+        }catch(Exception e){e.printStackTrace();System.gc();}
 
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
