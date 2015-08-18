@@ -43,10 +43,7 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
     PorterDuffColorFilter whiteLabelFilter;
     String headerValue;
 
-
-
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-
         TextView fromTextView;
         TextView dateTextView;
         TextView queryTextView;
@@ -54,7 +51,6 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
         ImageView contactIcon;
         TextView entityTexView;
         LinearLayout contactButton,entityLayout;
-
 
         public MyViewHolder(View itemView) {
             super(itemView);
