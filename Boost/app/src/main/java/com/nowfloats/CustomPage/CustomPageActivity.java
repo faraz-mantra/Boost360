@@ -117,10 +117,6 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
 
         recyclerView = (RecyclerView) findViewById(R.id.custompage_recycler_view);
         recyclerView.setHasFixedSize(true);
-        String[] arrayList = null;
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.design_child_store_feature, R.id.text, arrayList);
-
         emptylayout = (LinearLayout) findViewById(R.id.emptycustompage);
         progress_layout = (LinearLayout) findViewById(R.id.progress_custom_page);
         progress_layout.setVisibility(View.VISIBLE);
