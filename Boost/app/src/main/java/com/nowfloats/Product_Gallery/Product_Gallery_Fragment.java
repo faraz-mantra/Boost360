@@ -244,5 +244,4 @@ public class Product_Gallery_Fragment extends Fragment{
         super.onPause();
         bus.unregister(this);
     }
-
 }

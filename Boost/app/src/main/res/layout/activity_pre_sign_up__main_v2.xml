@@ -27,7 +27,7 @@
             android:background="@drawable/transparent"
             app:radius="3dp"
             app:fillColor="#ffffff"
-            app:pageColor="#d9a007"
+            app:pageColor="@color/primaryColorDark"
             app:strokeWidth="0dp"
             android:focusableInTouchMode="false"
             android:focusable="false"

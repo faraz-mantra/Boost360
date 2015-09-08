@@ -65,7 +65,7 @@ public class API_Login {
                                     && response_Data.sourceClientId.equals(Constants.clientIdThinksity))
                             {
                                 session.storeIsThinksity("true");
-                                session.storeIsRestricted(response_Data.isRestricted);
+//                                session.storeIsRestricted(response_Data.isRestricted);
                                 session.storeISEnterprise(response_Data.isEnterprise);
                                 DataBase dataBase = new DataBase(appContext);
                                 dataBase.insertLoginStatus(response_Data, fpId);
@@ -79,7 +79,7 @@ public class API_Login {
                         else{
                             //BOost Login
                             session.storeIsThinksity("false");
-                            session.storeIsRestricted(response_Data.isRestricted);
+//                            session.storeIsRestricted(response_Data.isRestricted);
                             session.storeISEnterprise(response_Data.isEnterprise);
                             DataBase dataBase = new DataBase(appContext);
                             dataBase.insertLoginStatus(response_Data, fpId);

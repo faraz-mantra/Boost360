@@ -22,6 +22,7 @@ public class ProcessFPDetails {
     private static String WIDGET_IMAGE_TIMINGS = "TIMINGS";
     private static String WIDGET_PRODUCT_GALLERY = "PRODUCTCATALOGUE";
     private static String WIDGET_FB_LIKE_BOX = "FbLikeBox";
+    private static String WIDGET_CUSTOMPAGES = "CUSTOMPAGES";
 
     public static void storeFPDetails(Activity activity,Get_FP_Details_Model get_fp_details_model)
     {
@@ -35,6 +36,7 @@ public class ProcessFPDetails {
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TILE_IMAGE_URI, get_fp_details_model.TileImageUri);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI, get_fp_details_model.ImageUri);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON,get_fp_details_model.CreatedOn);
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE, get_fp_details_model.PaymentState);
             //String category = get_fp_details_model.Category.get(0);
             try{
                 if(get_fp_details_model.Category!=null && get_fp_details_model.Category.size()>0){
@@ -79,18 +81,19 @@ public class ProcessFPDetails {
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE, get_fp_details_model.Uri);
             try {
                 Util.GettingBackGroundId(session);
-            }catch(Exception e){e.printStackTrace();}
-            if (get_fp_details_model.Contacts.size() == 1) {
-                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER, get_fp_details_model.Contacts.get(0).ContactNumber);
-            } else if (get_fp_details_model.Contacts.size() == 2) {
-                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER, get_fp_details_model.Contacts.get(0).ContactNumber);
-                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1, get_fp_details_model.Contacts.get(1).ContactNumber);
-            } else if (get_fp_details_model.Contacts.size() == 3) {
-                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER, get_fp_details_model.Contacts.get(0).ContactNumber);
-                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1, get_fp_details_model.Contacts.get(1).ContactNumber);
-                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_2, get_fp_details_model.Contacts.get(2).ContactNumber);
+            if(get_fp_details_model.Contacts!=null) {
+                if (get_fp_details_model.Contacts.size() == 1) {
+                    session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER, get_fp_details_model.Contacts.get(0).ContactNumber);
+                } else if (get_fp_details_model.Contacts.size() == 2) {
+                    session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER, get_fp_details_model.Contacts.get(0).ContactNumber);
+                    session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1, get_fp_details_model.Contacts.get(1).ContactNumber);
+                } else if (get_fp_details_model.Contacts.size() == 3) {
+                    session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER, get_fp_details_model.Contacts.get(0).ContactNumber);
+                    session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1, get_fp_details_model.Contacts.get(1).ContactNumber);
+                    session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_2, get_fp_details_model.Contacts.get(2).ContactNumber);
+                }
             }
-
+            }catch(Exception e){e.printStackTrace();}
 
             ArrayList<String> widgetsList = get_fp_details_model.FPWebWidgets;
             Constants.StorePackageIds = get_fp_details_model.PackageIds;
@@ -144,6 +147,15 @@ public class ProcessFPDetails {
             else {
                 MixPanelController.setProperties("FBLikeBox", "False");
                 session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_FB_LIKE_BOX,"");
+            }
+            if(widgetsList.contains(WIDGET_CUSTOMPAGES))
+            {
+                MixPanelController.setProperties("CustomPages", "True");
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_CUSTOMPAGES,WIDGET_CUSTOMPAGES);
+            }
+            else {
+                MixPanelController.setProperties("CustomPages", "False");
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_CUSTOMPAGES,"");
             }
 //        }
 

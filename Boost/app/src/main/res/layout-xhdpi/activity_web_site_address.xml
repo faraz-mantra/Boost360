@@ -27,8 +27,7 @@
             android:layout_width="340dp"
             android:layout_height="120dp"
             android:layout_gravity="center_horizontal"
-            card_view:cardCornerRadius="1dp"
-            >
+            card_view:cardCornerRadius="1dp">
 
             <EditText
                 android:id="@+id/websiteTitleTextView"
@@ -42,7 +41,6 @@
                 fontPath="Roboto-Light.ttf"
                 android:text="website_name"
                 android:background="#00000000"/>
-
 
             <TextView
                 android:id="@+id/domainNameTextView"
@@ -101,12 +99,9 @@
             android:orientation="horizontal"
             android:layout_marginTop="25dp">
         <TextView
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:textSize="12sp"
-
             fontPath="Roboto-Light.ttf"
             android:textColor="#545454"
             android:text="By Pressing above button,You agree to our"/>

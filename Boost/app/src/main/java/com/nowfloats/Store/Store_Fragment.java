@@ -35,9 +35,6 @@ import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 
-/**
- * A simple {@link android.support.v4.app.Fragment} subclass.
- */
 public class Store_Fragment extends Fragment {
     private RecyclerView recyclerView;
     private StoreAdapter storeAdapter;
@@ -47,6 +44,7 @@ public class Store_Fragment extends Fragment {
     private String countryPhoneCode;
     UserSessionManager session;
     Activity activity;
+
     @Override
     public void onResume() {
         MixPanelController.track(EventKeysWL.STORE_FRAGMENT, null);
@@ -75,20 +73,22 @@ public class Store_Fragment extends Fragment {
         UserSessionManager sessionManager =new UserSessionManager(activity,activity);
         countryPhoneCode = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE);
         LoadStoreList(activity, bus);
-        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources()
-                .getColor(R.color.white), PorterDuff.Mode.SRC_IN);
-        HomeActivity.shareButton.setImageResource(R.drawable.account_info_icon);
-        HomeActivity.shareButton.setVisibility(View.VISIBLE);
-        HomeActivity.shareButton.setColorFilter(whiteLabelFilter_pop_ip);
-        HomeActivity.shareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MixPanelController.track("AccountInfo", null);
-                Intent intent = new Intent(activity,AccountInfoActivity.class);
-                startActivity(intent);
-                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
-        });
+        try {
+            final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources()
+                    .getColor(R.color.white), PorterDuff.Mode.SRC_IN);
+            HomeActivity.shareButton.setImageResource(R.drawable.account_info_icon);
+            HomeActivity.shareButton.setVisibility(View.VISIBLE);
+            HomeActivity.shareButton.setColorFilter(whiteLabelFilter_pop_ip);
+            HomeActivity.shareButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MixPanelController.track("AccountInfo", null);
+                    Intent intent = new Intent(activity, AccountInfoActivity.class);
+                    startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+            });
+        }catch (Exception e) {e.printStackTrace();}
         return view;
     }
 

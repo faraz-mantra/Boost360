@@ -74,7 +74,7 @@ public class Social_Sharing_Activity extends ActionBarActivity {
         prefsEditor = pref.edit();
         activity = Social_Sharing_Activity.this;
 
-        toolbar = (Toolbar) findViewById(R.id.app_bar);
+        toolbar = (Toolbar) findViewById(R.id.app_bar_social);
 
         Typeface myCustomFont = Typeface.createFromAsset(this.getAssets(),"Roboto-Light.ttf");
         Typeface myCustomFont_Medium = Typeface.createFromAsset(this.getAssets(),"Roboto-Medium.ttf");

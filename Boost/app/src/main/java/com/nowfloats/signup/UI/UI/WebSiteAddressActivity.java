@@ -62,7 +62,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class WebSiteAddressActivity extends AppCompatActivity  {
-
     private Toolbar toolbar;
     Button createButton ;
     boolean domainCheck, firstCheck = true;

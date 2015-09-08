@@ -103,5 +103,4 @@ public class ProductGalleryAdapter extends BaseAdapter {
         }
         return vi;
     }
-
 }

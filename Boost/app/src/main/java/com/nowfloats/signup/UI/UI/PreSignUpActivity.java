@@ -299,8 +299,9 @@ public class PreSignUpActivity extends AppCompatActivity implements
     private void validateEmail(PreSignUpActivity preSignUpActivity,String email,String apiKey,final Bus bus) {
         // Open Progress Dialog
         MaterialProgressBar.startProgressBar(preSignUpActivity,"Validating Data",false);
-        new Email_Service(preSignUpActivity,email,apiKey,bus);
+//        new Email_Service(preSignUpActivity,email,apiKey,bus);
 
+        verifyUniqueNumber(PreSignUpActivity.this,data_phone,bus);
     }
 
     private void verifyUniqueNumber(PreSignUpActivity preSignUpActivity,String mobileNumber,final Bus bus)
@@ -320,12 +321,11 @@ public class PreSignUpActivity extends AppCompatActivity implements
         emailModel = (Email_Validation_Model)response.model;
 
         String value = emailModel.status ;
-         value = "valid";
+//         value = "valid";
 
         if(value.equals("valid"))
         {
             verifyUniqueNumber(PreSignUpActivity.this,data_phone,bus);
-
 
 
             //String tagName = API_Layer_Signup.getTag(activity, data_businessName, data_country, data_city, data_businessCategory);

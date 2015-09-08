@@ -49,21 +49,18 @@ import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Settings_Fragment;
 import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.Business_Enquiries.Business_Enquiries_Fragment;
+import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.Image_Gallery.Image_Gallery_Fragment;
-import com.nowfloats.Login.Login_Interface;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.Ria_Register;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.App_Update_Async_Task;
 import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
-import com.nowfloats.NavigationDrawer.Chat.ChatModel;
-import com.nowfloats.NavigationDrawer.Chat.ChatRegResponse;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.Store_Fragment;
-import com.nowfloats.Volley.GCMIntentService;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DefaultArtifactVersion;
@@ -86,9 +83,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Map;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class HomeActivity extends AppCompatActivity implements  SidePanelFragment.OnItemClickListener,DeepLinkInterface {
@@ -238,8 +232,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             @Override
             public void run() {
                 try {
-                    PackageInfo info = getPackageManager().getPackageInfo(
-                            "com.thinksity",
+                    PackageInfo info = getPackageManager().getPackageInfo("com.thinksity",
                             PackageManager.GET_SIGNATURES);
                     for (Signature signature : info.signatures) {
                         MessageDigest md = MessageDigest.getInstance("SHA");
@@ -474,7 +467,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         }
     }
 
-
     @Override
     protected void onStop() {
         super.onStop();
@@ -654,7 +646,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
     }
 
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -831,6 +822,10 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             shareButton.setVisibility(View.VISIBLE);
             plusAddButton.setVisibility(View.GONE);
             getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, storeFragment).commit();
+        }else if(nextScreen.equals("csp")){
+//            getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, customPageActivity).commit();
+            Intent in = new Intent(HomeActivity.this, CustomPageActivity.class);
+            startActivity(in);
         }
     }
 
@@ -880,6 +875,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 //            }
 //        }
     }
+
     private boolean get_VersionUpdate() {
         try {
             String new_version = Jsoup.connect("https://play.google.com/store/apps/details?id=" + getPackageName() + "&hl=it")
@@ -906,4 +902,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     public void deepLink(String url) {
         DeepLinkPage(url);
     }
+
+
 }

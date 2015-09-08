@@ -56,6 +56,7 @@
 -keep class com.nowfloats.signup.UI.Model.** { *; }
 -keep class com.nowfloats.Product_Gallery.Model.** { *; }
 -keep class com.nowfloats.NotificationCenter.Model.** { *; }
+-keep class com.nowfloats.CustomPage.Model.**{ *; }
 -keep class sun.misc.Unsafe { *; }
 -keepattributes Signature
 

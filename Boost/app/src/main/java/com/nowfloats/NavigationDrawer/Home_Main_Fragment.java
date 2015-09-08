@@ -312,11 +312,8 @@ public class Home_Main_Fragment extends Fragment implements
             public void onClick(View v) {
 
                // MixPanelController.track(EventKeysWL.CONTENT_CREATION_BUTTON,null);
-                if(session.getIsRestricted().equals("false")) {
-                    Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
-                    startActivity(webIntent);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                } else {
+//                if(session.getIsRestricted().equals("false")) {
+                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
                     final MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
                             .customView(R.layout.pop_up_restrict_post_message, true)
                             .positiveColorRes(R.color.primaryColor)
@@ -363,16 +360,20 @@ public class Home_Main_Fragment extends Fragment implements
                         }
                     });
 
-                   Button notInterestedButton = (Button) view.findViewById(R.id.notInterestedButton);
-                   notInterestedButton.setOnClickListener(new View.OnClickListener() {
-                       @Override
-                       public void onClick(View v) {
-                           String planType = "CustomerNotInterested";
-                           sendIsInterested(getActivity(),session.getFPID(),planType,bus);
-                           dialog.dismiss();
-                       }
-                   });
-            }
+                    Button notInterestedButton = (Button) view.findViewById(R.id.notInterestedButton);
+                    notInterestedButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String planType = "CustomerNotInterested";
+                            sendIsInterested(getActivity(),session.getFPID(),planType,bus);
+                            dialog.dismiss();
+                        }
+                    });
+                } else {
+                    Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
+                    startActivity(webIntent);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
             }
         });
 

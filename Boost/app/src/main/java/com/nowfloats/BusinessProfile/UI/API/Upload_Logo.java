@@ -7,14 +7,9 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
-import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
-import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
-import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.RoundCorners_image;
-import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 
 import java.io.BufferedReader;
@@ -51,26 +46,41 @@ public class Upload_Logo extends AsyncTask<Void,String, String> {
 
     @Override
     protected void onPreExecute() {
-
-        pd= ProgressDialog.show(appContext, "", "Uploading Logo...");
-        pd.setCancelable(false);
+        appContext.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                pd= ProgressDialog.show(appContext, "", "Uploading Logo...");
+                pd.setCancelable(false);
+            }
+        });
     }
 
 
     @Override
     protected void onPostExecute(String result) {
-
-        pd.dismiss();
-        if (isUploadingSuccess) {
-            Methods.showSnackBarPositive(appContext, "Image updated successfully");
-            Constants.LOGOUPLOADED = true ;
-            try {
-                Bitmap bmp = Util.getBitmap(path, appContext);
-                bmp = RoundCorners_image.getRoundedCornerBitmap(bmp, 15);
-                Business_Logo_Activity.logoimageView.setImageBitmap(bmp);
-            } catch (Exception e) {
-                e.printStackTrace();
+        appContext.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                pd.dismiss();
             }
+        });
+
+        if (isUploadingSuccess) {
+            appContext.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Methods.showSnackBarPositive(appContext, "Image updated successfully");
+                        Constants.LOGOUPLOADED = true ;
+                        Bitmap bmp = Util.getBitmap(path, appContext);
+                        bmp = RoundCorners_image.getRoundedCornerBitmap(bmp, 15);
+                        Business_Logo_Activity.logoimageView.setImageBitmap(bmp);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
         } else {
 
         }
@@ -85,67 +95,71 @@ public class Upload_Logo extends AsyncTask<Void,String, String> {
     {
         String response = "";
         if(!Util.isNullOrEmpty(path)){
-            uploadImage(path);}
+            uploadImage(path);
+        }
 
         return response ;
     }
 
 
     public void uploadImage(String imagePath){
-        FileInputStream fileInputStream = null;
-        File img = new File(imagePath);
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        byte[] buf = new byte[1024];
-        File f = new File(img.getAbsolutePath() + File.separator );
         try {
-            f.createNewFile();
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        Bitmap bmp = BitmapFactory.decodeFile(imagePath,options);
-        if((f.length()/1024)>100){
-            bmp.compress(Bitmap.CompressFormat.JPEG, 70, bos);}else{
-            bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-        }
-
-        byte[] bitmapdata = bos.toByteArray();
-
-        try {
-            if (!Util.isNullOrEmpty(imagePath)) {
-                fileInputStream = new FileInputStream(img);
-            }
-
-            int bytesAvailable = fileInputStream.available();
-
-        } catch (Exception e) {
-
-
-        } finally {
+            FileInputStream fileInputStream = null;
+            File img = new File(imagePath);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] buf = new byte[1024];
+            File f = new File(img.getAbsolutePath() + File.separator);
             try {
-                fileInputStream.close();
-            } catch (Exception e) {
+                f.createNewFile();
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
             }
-        }
 
-        UUID uuid;
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            Bitmap bmp = BitmapFactory.decodeFile(imagePath, options);
+            if ((f.length() / 1024) > 100) {
+                bmp.compress(Bitmap.CompressFormat.JPEG, 70, bos);
+            } else {
+                bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            }
 
-        uuid = UUID.randomUUID();
-        String s_uuid = uuid.toString();
-        s_uuid = s_uuid.replace("-", "");
-        String uri;
-        String param = "createLogoImage/";
-        uri = Constants.LoadStoreURI+
-                param+"?clientId="+
-                Constants.clientId+
-                "&fpId="+fpID+
-                "&reqType=sequential&reqtId=" +
-                s_uuid + "&";
+            byte[] bitmapdata = bos.toByteArray();
 
-        String temp = uri + "totalChunks=1&currentChunkNumber=1" ;
-        sendDataToServer(temp,bitmapdata);
+            try {
+                if (!Util.isNullOrEmpty(imagePath)) {
+                    fileInputStream = new FileInputStream(img);
+                }
+
+                int bytesAvailable = fileInputStream.available();
+
+            } catch (Exception e) {
+
+
+            } finally {
+                try {
+                    fileInputStream.close();
+                } catch (Exception e) {
+                }
+            }
+
+            UUID uuid;
+
+            uuid = UUID.randomUUID();
+            String s_uuid = uuid.toString();
+            s_uuid = s_uuid.replace("-", "");
+            String uri;
+            String param = "createLogoImage/";
+            uri = Constants.LoadStoreURI +
+                    param + "?clientId=" +
+                    Constants.clientId +
+                    "&fpId=" + fpID +
+                    "&reqType=sequential&reqtId=" +
+                    s_uuid + "&";
+
+            String temp = uri + "totalChunks=1&currentChunkNumber=1";
+            sendDataToServer(temp, bitmapdata);
+        }catch(Exception e){e.printStackTrace();System.gc();}
 
 
 

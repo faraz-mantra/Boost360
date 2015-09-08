@@ -8,6 +8,7 @@
 
     <color name="primaryColor">#F79421</color>
     <color name="primaryColorDark">#e6881c</color>
+    <color name="tabOnclickColor">#FFE5A0</color>
     <color name="accentColor">#615b5b</color>
 
 

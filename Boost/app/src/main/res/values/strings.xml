@@ -70,6 +70,7 @@
     <string name="title_activity_create__message_">Post an Update</string>
     <string name="side_panel_row_one">Dashboard</string>
     <string name="side_panel_row_two">Profile</string>
+    <string name="side_panel_row_csp">Custom Pages</string>
     <string name="side_panel_row_three">Enquiries</string>
     <string name="side_panel_row_four">Photo Gallery</string>
     <string name="side_panel_row_five">Settings</string>
@@ -415,4 +416,5 @@
     <string name="title_activity_product_gallery">ProductGalleryActivity</string>
     <string name="store">Store</string>
     <string name="empty_alert">We will notify you as soon as\nyou have a new alert</string>
+
 </resources>

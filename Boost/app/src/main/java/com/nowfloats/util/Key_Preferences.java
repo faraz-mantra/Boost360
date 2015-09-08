@@ -66,4 +66,6 @@ public class Key_Preferences {
     public static String GET_FP_DETAILS_BG_IMAGE= "GET_FP_DETAILS_BG_IMG";
     public static String GET_FP_DETAILS_APPLICATION_ID = "GET_FP_DETAILS_APPLICATION_ID";
 
+    public static String GET_FP_DETAILS_PAYMENTSTATE = "GET_FP_DETAILS_PAYMENTSTATE";
+    public static String GET_FP_DETAILS_WIDGET_CUSTOMPAGES = "GET_FP_DETAILS_CUSTOMPAGES";
 }

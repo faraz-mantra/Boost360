@@ -39,9 +39,9 @@ public class MixPanelController {
         /**New Test Id**/
         mixPanel = MixpanelAPI.getInstance(app,"21d1bf26130e59cc8a0189372c010c25");
 
+        /**Not been used**/
 //        mixPanel = MixpanelAPI.getInstance(app,       // Test Account
 //                "b18441b030208ce549b868df8bd2dca0");
-
 //        mixPanel = MixpanelAPI.getInstance(app,
 //                "5c0cca3bbce2eba6ad747cef23d6ff61");  // Thinksity
 

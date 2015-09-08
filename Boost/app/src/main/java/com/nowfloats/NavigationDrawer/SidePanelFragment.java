@@ -76,6 +76,7 @@ public class SidePanelFragment extends Fragment {
     TextView imageGalleryTextView;
     TextView productGalleryTextView;
     TextView StoreTextView;
+    TextView cspTextView;
     TextView settingsText,chatText,callText,shareText;
     public static TextView fpNameTextView;
     UserSessionManager session;
@@ -98,7 +99,7 @@ public class SidePanelFragment extends Fragment {
 
 //    protected ImageLoader imageLoader = ImageLoader.getInstance();
 
-    LinearLayout homeLayout,profileLayout,analyticsLayout,storeLayout,customerQueriesLayout,imageGalleryLayout,
+    LinearLayout homeLayout,profileLayout,analyticsLayout,storeLayout,customerQueriesLayout,imageGalleryLayout,cspLayout,
             productGalleryLayout,Store_Layout,settingsLayout,chatLayout,callLayout,shareLayout;
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
@@ -108,10 +109,10 @@ public class SidePanelFragment extends Fragment {
     private int onUpdate = 5;
     private String originalSite1;
 
-    private ImageView lockWidgetImageView, lockWidget_ProductGallery, lockWidgetImageView_BusinessEnq;
+    private ImageView lockWidgetImageView, lockWidget_ProductGallery, lockWidgetImageView_BusinessEnq, lockWidgetImageView_CSP;
 
     private static HashMap<String,Integer > backgroundImages = new HashMap<String,Integer>();
-    private ImageView shareImageView,businessProfileImageView,dasbBoardImageView,callImageView,chatImageView,
+    private ImageView shareImageView,businessProfileImageView,dasbBoardImageView,callImageView,chatImageView,cspImageView,
             settingsImageView,StoreImageView,productGalleryImageView,imageGalleryImageView,customerQueriesImageView;
     private PorterDuffColorFilter defaultLabelFilter,whiteLabelFilter;
 
@@ -309,6 +310,7 @@ public class SidePanelFragment extends Fragment {
 
         homeLayout = (LinearLayout) card.findViewById(R.id.firstRow_Layout);
         profileLayout = (LinearLayout) card.findViewById(R.id.secondRow_Layout);
+        cspLayout = (LinearLayout) card.findViewById(R.id.csp_Layout);
         customerQueriesLayout = (LinearLayout) card.findViewById(R.id.thirdRow_Layout);
         imageGalleryLayout = (LinearLayout) card.findViewById(R.id.fourthRow_Layout);
         productGalleryLayout = (LinearLayout) card.findViewById(R.id.product_gal_Layout);
@@ -328,6 +330,7 @@ public class SidePanelFragment extends Fragment {
         if(session.getISEnterprise().equals("true"))
         {
             profileLayout.setVisibility(View.GONE);
+            cspLayout.setVisibility(View.GONE);
             imageGalleryLayout.setVisibility(View.GONE);
             chatLayout.setVisibility(View.GONE);
             siteMeter.setVisibility(View.GONE);
@@ -344,6 +347,7 @@ public class SidePanelFragment extends Fragment {
         dashBoardTextView = (TextView) homeLayout.findViewById(R.id.firstrow_TextView);
         settingsText = (TextView) settingsLayout.findViewById(R.id.fifthRow_TextView);
         businessProfileTextView = (TextView) profileLayout.findViewById(R.id.secondRow_TextView);
+        cspTextView = (TextView) cspLayout.findViewById(R.id.csp_TextView);
         chatText = (TextView) chatLayout.findViewById(R.id.sixthRow_TextView);
         callText = (TextView) callLayout.findViewById(R.id.seventhRow_TextView);
         shareText = (TextView) shareLayout.findViewById(R.id.eighthRow_TextView);
@@ -351,8 +355,8 @@ public class SidePanelFragment extends Fragment {
 
         lockWidgetImageView = (ImageView) imageGalleryLayout.findViewById(R.id.lock_widget);
         lockWidget_ProductGallery = (ImageView) productGalleryLayout.findViewById(R.id.lock_product_gal);
-
         lockWidgetImageView_BusinessEnq = (ImageView) customerQueriesLayout.findViewById(R.id.lock_widget_business_enquiries);
+        lockWidgetImageView_CSP = (ImageView) cspLayout.findViewById(R.id.lock_widget_csp);
         //Constants.ImageGalleryWidget = false ;
 
         // Constants.BusinessEnquiryWidget = true;
@@ -379,12 +383,21 @@ public class SidePanelFragment extends Fragment {
             lockWidgetImageView_BusinessEnq.setVisibility(View.GONE);
         }
 
+        if(!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_CUSTOMPAGES).contains("CUSTOMPAGES"))
+        {
+            lockWidgetImageView_CSP.setVisibility(View.VISIBLE);
+
+        } else {
+            lockWidgetImageView_CSP.setVisibility(View.GONE);
+        }
+
         dasbBoardImageView = (ImageView) homeLayout.findViewById(R.id.firstrow_ImageView);
         businessProfileImageView = (ImageView) profileLayout.findViewById(R.id.secondRow_ImageView);
         customerQueriesImageView = (ImageView) customerQueriesLayout.findViewById(R.id.thirdRow_ImageView);
         imageGalleryImageView = (ImageView) imageGalleryLayout.findViewById(R.id.fourthRow_ImageView);
         productGalleryImageView = (ImageView) productGalleryLayout.findViewById(R.id.Product_Gal_ImageView);
         StoreImageView = (ImageView) Store_Layout.findViewById(R.id.storeRow_ImageView);
+        cspImageView = (ImageView) cspLayout.findViewById(R.id.csp_ImageView);
         settingsImageView = (ImageView) settingsLayout.findViewById(R.id.fifthRow_ImageView);
         chatImageView =(ImageView) chatLayout.findViewById(R.id.sixthRow_ImageView);
         callImageView = (ImageView) callLayout.findViewById(R.id.seventhRow_ImageView);
@@ -454,6 +467,18 @@ public class SidePanelFragment extends Fragment {
                 onclickColorChange(StoreImageView,StoreTextView);
                 ((OnItemClickListener) mainActivity).onClick("Store");
                 MixPanelController.track(EventKeysWL.SIDE_PANEL_PRODUCT_GALLERY, null);
+            }
+        });
+
+        cspTextView.setTypeface(robotoMedium);
+        cspLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_CUSTOMPAGES).contains("CUSTOMPAGES") ) {
+                    onclickColorChange(cspImageView,cspTextView);
+                    ((OnItemClickListener) mainActivity).onClick("csp");
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_PRODUCT_GALLERY, null);
+                } else { showAlertMaterialDialog(); }
             }
         });
 
@@ -738,7 +763,12 @@ public class SidePanelFragment extends Fragment {
                 } else {
                     lockWidgetImageView_BusinessEnq.setVisibility(View.GONE);
                 }
-
+                if(!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_CUSTOMPAGES).contains("CUSTOMPAGES"))
+                {
+                    lockWidgetImageView_CSP.setVisibility(View.VISIBLE);
+                } else {
+                    lockWidgetImageView_CSP.setVisibility(View.GONE);
+                }
                 if(!mUserLearnedDrawer){
                     mUserLearnedDrawer=true;
                     saveToPreferences(getActivity(), KEY_USER_LEARNED_DRAWER, mUserLearnedDrawer + "");
@@ -1075,6 +1105,7 @@ public class SidePanelFragment extends Fragment {
         customerQueries.setTextColor(getResources().getColor(R.color.cell_text_color));
         imageGalleryTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
         StoreTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+        cspTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
         productGalleryTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
         settingsText.setTextColor(getResources().getColor(R.color.cell_text_color));
         chatText.setTextColor(getResources().getColor(R.color.cell_text_color));
@@ -1088,6 +1119,7 @@ public class SidePanelFragment extends Fragment {
         imageGalleryImageView.setColorFilter(defaultLabelFilter);
         productGalleryImageView.setColorFilter(defaultLabelFilter);
         StoreImageView.setColorFilter(defaultLabelFilter);
+        cspImageView.setColorFilter(defaultLabelFilter);
         settingsImageView.setColorFilter(defaultLabelFilter);
         callImageView.setColorFilter(defaultLabelFilter);
 

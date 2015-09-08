@@ -29,7 +29,7 @@ import java.net.URL;
 import java.util.UUID;
 
 /**
- * Created by NowFloatsDev on 29/05/2015.
+ * Created by guru on 29/05/2015.
  */
 public class uploadIMAGEURI extends AsyncTask<Void,String, String> {
 
@@ -37,7 +37,6 @@ public class uploadIMAGEURI extends AsyncTask<Void,String, String> {
     String path;
     String fpID ;
     ProgressDialog pd = null;
-
     boolean isUploadingSuccess = false ;
 
     public uploadIMAGEURI(Activity context ,String path,String fpID) {
@@ -48,34 +47,45 @@ public class uploadIMAGEURI extends AsyncTask<Void,String, String> {
     }
 
 
-
     @Override
     protected void onPreExecute() {
-
+        appContext.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
             pd= ProgressDialog.show(appContext, "", "Uploading image...");
-            pd.setCancelable(false);
+            pd.setCancelable(false);    }
+        });
+
     }
 
 
     @Override
     protected void onPostExecute(String result) {
+        appContext.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    pd.dismiss();
+                    if (isUploadingSuccess) {
+                        Methods.showSnackBarPositive(appContext, "Image updated successfully");
+                        Constants.IMAGEURIUPLOADED = true;
+                        try {
+                            Bitmap bmp = Util.getBitmap(path, appContext);
+                            bmp = RoundCorners_image.getRoundedCornerBitmap(bmp, 15);
+                            Business_Profile_Fragment_V2.businessProfileImageView.setImageBitmap(bmp);
+                            Edit_Profile_Activity.editProfileImageView.setImageBitmap(bmp);
+                            SidePanelFragment.iconImage.setImageBitmap(bmp);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
 
-        pd.dismiss();
-        if (isUploadingSuccess) {
-            Methods.showSnackBarPositive(appContext, "Image updated successfully");
-            Constants.IMAGEURIUPLOADED = true ;
-            try {
-                Bitmap bmp = Util.getBitmap(path, appContext);
-                bmp = RoundCorners_image.getRoundedCornerBitmap(bmp, 15);
-                Business_Profile_Fragment_V2.businessProfileImageView.setImageBitmap(bmp);
-                Edit_Profile_Activity.editProfileImageView.setImageBitmap(bmp);
-                SidePanelFragment.iconImage.setImageBitmap(bmp);
-            } catch (Exception e) {
-                e.printStackTrace();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        } else {
-
-        }
+        });
      }
 
 
