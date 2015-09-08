@@ -99,7 +99,7 @@ public class GCMReceiver extends BroadcastReceiver {
         try{
             if(notificationIconBitmap==null)
                 notificationIconBitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.app_launcher);
-        }catch(Exception e){e.printStackTrace(); notificationIconBitmap.recycle();}
+        }catch(Exception e){e.printStackTrace(); notificationIconBitmap.recycle(); System.gc();}
 
         if ("com.google.android.c2dm.intent.REGISTRATION".equals(action)) {
             handleRegistrationIntent(intent);
@@ -150,23 +150,22 @@ public class GCMReceiver extends BroadcastReceiver {
         if (message == null) return;
         if (MPConfig.DEBUG) Log.d(LOGTAG, "MP GCM notification received: " + message);
 
-
         // Old code --can be removed
-
         final PackageManager manager = context.getPackageManager();
         final Intent appIntent = manager.getLaunchIntentForPackage(context.getPackageName());
         appIntent.putExtra("payload", payload);
         appIntent.putExtra("notification", notificationClick);
 
         CharSequence notificationTitle = "";
-        int notificationIcon = android.R.drawable.sym_def_app_icon;
-        try {
-            final ApplicationInfo appInfo = manager.getApplicationInfo(context.getPackageName(), 0);
-            notificationTitle = manager.getApplicationLabel(appInfo);
-            notificationIcon = appInfo.icon;
-        } catch (final NameNotFoundException e) {
-            // In this case, use a blank title and default icon
-        }
+        int notificationIcon = R.drawable.app_launcher;
+//        int notificationIcon = android.R.drawable.sym_def_app_icon;
+//        try {
+//            final ApplicationInfo appInfo = manager.getApplicationInfo(context.getPackageName(), 0);
+//            notificationTitle = manager.getApplicationLabel(appInfo);
+//            notificationIcon = appInfo.icon;
+//        } catch (final NameNotFoundException e) {
+            //In this case, use a blank title and default icon
+//        }
 
         final PendingIntent contentIntent = PendingIntent.getActivity(
                 context.getApplicationContext(),
@@ -220,7 +219,7 @@ public class GCMReceiver extends BroadcastReceiver {
         builder.setAutoCancel(true);
         builder.setContentTitle(title);
         builder.setContentText(message);
-        builder.setSmallIcon(notificationIcon);
+        builder.setSmallIcon(0);
         if(notificationIconBitmap!=null)
             builder.setLargeIcon(notificationIconBitmap);
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(message));
