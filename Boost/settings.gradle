@@ -7,3 +7,4 @@ include ':mixpanel'
 include ':app:libs:libraries:volley'
 
 include ':library'
+include ':DragList'
