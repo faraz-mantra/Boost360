@@ -77,197 +77,196 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources()
-                                .getColor(R.color.white), PorterDuff.Mode.SRC_IN);
-                        Typeface robotoMedium = Typeface.createFromAsset(activity.getAssets(),"Roboto-Medium.ttf");
-                        robotoLight = Typeface.createFromAsset(activity.getAssets(),"Roboto-Light.ttf");
-                        HomeActivity.shareButton.setImageResource(R.drawable.share_with_apps);
-                        HomeActivity.shareButton.setColorFilter(whiteLabelFilter_pop_ip);
-                        HomeActivity.shareButton.setVisibility(View.VISIBLE);
-                        HomeActivity.shareButton.setOnClickListener(new View.OnClickListener() {
+                        try {
+                            final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources()
+                                    .getColor(R.color.white), PorterDuff.Mode.SRC_IN);
+                            Typeface robotoMedium = Typeface.createFromAsset(activity.getAssets(), "Roboto-Medium.ttf");
+                            robotoLight = Typeface.createFromAsset(activity.getAssets(), "Roboto-Light.ttf");
+                            HomeActivity.shareButton.setImageResource(R.drawable.share_with_apps);
+                            HomeActivity.shareButton.setColorFilter(whiteLabelFilter_pop_ip);
+                            HomeActivity.shareButton.setVisibility(View.VISIBLE);
+                            HomeActivity.shareButton.setOnClickListener(new View.OnClickListener() {
 
-                            @Override
-                            public void onClick(View v) {
-                                String url = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-                                if (!Util.isNullOrEmpty(url)) {
-                                    String eol = System.getProperty("line.separator");
-                                    url = "Woohoo! We have a new website. Visit it at "
-                                            + eol + url.toLowerCase();
+                                @Override
+                                public void onClick(View v) {
+                                    String url = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+                                    if (!Util.isNullOrEmpty(url)) {
+                                        String eol = System.getProperty("line.separator");
+                                        url = "Woohoo! We have a new website. Visit it at "
+                                                + eol + url.toLowerCase();
+                                    } else {
+                                        String eol = System.getProperty("line.separator");
+                                        url = "Woohoo! We have a new website. Visit it at "
+                                                + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
+                                                + activity.getResources().getString(R.string.tag_for_partners);
+                                    }
+
+                                    shareWebsite(url);
                                 }
-                                else{
-                                    String eol = System.getProperty("line.separator");
-                                    url = "Woohoo! We have a new website. Visit it at "
-                                            + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
-                                            + activity.getResources().getString(R.string.tag_for_partners);
+                            });
+
+                            websiteTextView = (TextView) mainView.findViewById(R.id.websiteTitleTextView_ProfileV2);
+                            websiteTextView.setTypeface(robotoMedium);
+                            websiteTextView.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+
+                            businessProfileImageView = (ImageView) mainView.findViewById(R.id.businessProfileIcon_ProfileV2);
+                            if (Constants.IMAGEURIUPLOADED == false) {
+
+                                String baseNameProfileImage = "https://api.withfloats.com/" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
+                                Picasso.with(activity)
+                                        .load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
+
+                            }
+                            //session.getIsSignUpFromFacebook().contains("true")
+                            if (session.getIsSignUpFromFacebook().contains("true")) {
+                                Picasso.with(activity)
+                                        .load(session.getFacebookPageURL()).placeholder(R.drawable.business_edit_profile_icon)
+                                        // optional
+                                        .rotate(90)                     // optional
+                                        .into(businessProfileImageView);
+                            }
+
+                            category = (TextView) mainView.findViewById(R.id.categoryTextView_ProfileV2);
+                            category.setTypeface(robotoLight);
+                            category.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY));
+
+                            businessInfoTextView = (TextView) mainView.findViewById(R.id.businessInfoTextView_ProfileV2);
+                            businessInfoTextView.setTypeface(robotoLight);
+                            businessInfoTextView.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION));
+
+                            LinearLayout editProfileImageView = (LinearLayout) mainView.findViewById(R.id.editProfile);
+                            editProfileImageView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent businessAddress = new Intent(activity, Edit_Profile_Activity.class);
+                                    startActivity(businessAddress);
+                                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 }
+                            });
 
-                                shareWebsite(url);
+
+                            View businessProfileList = mainView.findViewById(R.id.businessProfile_List_ProfileV2);
+
+                            businessAddressLayout = (TextView) businessProfileList.findViewById(R.id.businessAddress_Layout_ProfileV2);
+                            //TextView businessAddressTextView = (TextView) businessAddressLayout.findViewById(R.id.firstrow_TextView_ProfileV2);
+                            businessAddressLayout.setTypeface(robotoMedium);
+
+                            contactInformationLayout = (TextView) businessProfileList.findViewById(R.id.contactInformation_Layout_ProfileV2);
+                            //TextView contactInfoTextView = (TextView) contactInformationLayout.findViewById(R.id.secondrow_TextView_ProfileV2);
+                            contactInformationLayout.setTypeface(robotoMedium);
+
+                            businessHoursLayout = (TextView) businessProfileList.findViewById(R.id.businessHours_Layout_ProfileV2);
+                            // TextView businessHoursText = (TextView) businessHoursLayout.findViewById(R.id.thirdrow_TextView_ProfileV2);
+                            businessHoursLayout.setTypeface(robotoMedium);
+
+
+                            ImageView businessHoursImageView = (ImageView) businessProfileList.findViewById(R.id.thirdrow_ImageView_ProfileV2);
+                            LinearLayout businessHoursLinearLayout = (LinearLayout) businessProfileList.findViewById(R.id.businessHoursLinearLayout);
+
+                            if (session.getIsThinksity().equals("true")) {
+                                businessHoursLayout.setVisibility(View.GONE);
+                                businessHoursLinearLayout.setVisibility(View.GONE);
+                                businessHoursImageView.setVisibility(View.GONE);
                             }
-                        });
+                            ImageView lockWidgetImageView_BusinessEnq = (ImageView) businessProfileList.findViewById(R.id.lock_widget_business_hours);
 
-                        websiteTextView = (TextView) mainView.findViewById(R.id.websiteTitleTextView_ProfileV2);
-                        websiteTextView.setTypeface(robotoMedium);
-                        websiteTextView.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-
-                        businessProfileImageView = (ImageView) mainView.findViewById(R.id.businessProfileIcon_ProfileV2);
-                        if(Constants.IMAGEURIUPLOADED == false) {
-
-                            String baseNameProfileImage = "https://api.withfloats.com/" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
-                            Picasso.with(activity)
-                                    .load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
-
-                        }
-                        //session.getIsSignUpFromFacebook().contains("true")
-                        if(session.getIsSignUpFromFacebook().contains("true"))
-                        {
-                            Picasso.with(activity)
-                                    .load(session.getFacebookPageURL()).placeholder(R.drawable.business_edit_profile_icon)
-                                            // optional
-                                    .rotate(90)                     // optional
-                                    .into(businessProfileImageView);
-                        }
-
-                        category = (TextView) mainView.findViewById(R.id.categoryTextView_ProfileV2);
-                        category.setTypeface(robotoLight);
-                        category.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY));
-
-                        businessInfoTextView = (TextView) mainView.findViewById(R.id.businessInfoTextView_ProfileV2);
-                        businessInfoTextView.setTypeface(robotoLight);
-                        businessInfoTextView.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION));
-
-                        LinearLayout editProfileImageView = (LinearLayout) mainView.findViewById(R.id.editProfile);
-                        editProfileImageView.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent businessAddress = new Intent(activity, Edit_Profile_Activity.class);
-                                startActivity(businessAddress);
-                                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS).equals("TIMINGS")) {
+                                lockWidgetImageView_BusinessEnq.setVisibility(View.VISIBLE);
                             }
-                        });
+                            businessLogoLayout = (TextView) businessProfileList.findViewById(R.id.businessLogo_Layout_ProfileV2);
+                            //TextView businessLogoText = (TextView) businessLogoLayout.findViewById(R.id.fourth_TextView_ProfileV2);
+                            businessLogoLayout.setTypeface(robotoMedium);
+
+                            socialSharingLayout = (TextView) businessProfileList.findViewById(R.id.socialSharing_Layout_ProfileV2);
+                            //TextView socialSharingTextView = (TextView) socialSharingLayout.findViewById(R.id.fifth_TextView_ProfileV2);
+                            socialSharingLayout.setTypeface(robotoMedium);
 
 
-                        View businessProfileList = mainView.findViewById(R.id.businessProfile_List_ProfileV2);
+                            businessAddressLayout.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
 
-                        businessAddressLayout = (TextView) businessProfileList.findViewById(R.id.businessAddress_Layout_ProfileV2);
-                        //TextView businessAddressTextView = (TextView) businessAddressLayout.findViewById(R.id.firstrow_TextView_ProfileV2);
-                        businessAddressLayout.setTypeface(robotoMedium);
-
-                        contactInformationLayout = (TextView) businessProfileList.findViewById(R.id.contactInformation_Layout_ProfileV2);
-                        //TextView contactInfoTextView = (TextView) contactInformationLayout.findViewById(R.id.secondrow_TextView_ProfileV2);
-                        contactInformationLayout.setTypeface(robotoMedium);
-
-                        businessHoursLayout = (TextView) businessProfileList.findViewById(R.id.businessHours_Layout_ProfileV2);
-                        // TextView businessHoursText = (TextView) businessHoursLayout.findViewById(R.id.thirdrow_TextView_ProfileV2);
-                        businessHoursLayout.setTypeface(robotoMedium);
-
-
-                        ImageView businessHoursImageView = (ImageView) businessProfileList.findViewById(R.id.thirdrow_ImageView_ProfileV2);
-                        LinearLayout businessHoursLinearLayout = (LinearLayout) businessProfileList.findViewById(R.id.businessHoursLinearLayout);
-
-                        if(session.getIsThinksity().equals("true")) {
-                            businessHoursLayout.setVisibility(View.GONE);
-                            businessHoursLinearLayout.setVisibility(View.GONE);
-                            businessHoursImageView.setVisibility(View.GONE);
-                        }
-                        ImageView lockWidgetImageView_BusinessEnq = (ImageView) businessProfileList.findViewById(R.id.lock_widget_business_hours);
-
-                        if(!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS).equals("TIMINGS"))
-                        {
-                            lockWidgetImageView_BusinessEnq.setVisibility(View.VISIBLE);
-                        }
-                        businessLogoLayout = (TextView) businessProfileList.findViewById(R.id.businessLogo_Layout_ProfileV2);
-                        //TextView businessLogoText = (TextView) businessLogoLayout.findViewById(R.id.fourth_TextView_ProfileV2);
-                        businessLogoLayout.setTypeface(robotoMedium);
-
-                        socialSharingLayout = (TextView) businessProfileList.findViewById(R.id.socialSharing_Layout_ProfileV2);
-                        //TextView socialSharingTextView = (TextView) socialSharingLayout.findViewById(R.id.fifth_TextView_ProfileV2);
-                        socialSharingLayout.setTypeface(robotoMedium);
-
-
-                        businessAddressLayout.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-
-                                MixPanelController.track(EventKeysWL.BUSINESS_ADDRESS, null);
-                                Intent businessAddress = new Intent(activity,Business_Address_Activity.class);
-                                startActivity(businessAddress);
-                                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                    MixPanelController.track(EventKeysWL.BUSINESS_ADDRESS, null);
+                                    Intent businessAddress = new Intent(activity, Business_Address_Activity.class);
+                                    startActivity(businessAddress);
+                                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
 //                activity.getSupportFragmentManager().beginTransaction()
 //                        .replace(R.id.mainFrame, businessAddressFragment)
 //                                // Add this transaction to the back stack
 //
 //                        .commit();
-                            }
-                        });
-
-                        contactInformationLayout.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                MixPanelController.track(EventKeysWL.CONTACT_INFO,null);
-                                Intent contactInfo = new Intent(activity, Contact_Info_Activity.class);
-                                startActivity(contactInfo);
-                                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            }
-                        });
-
-                        businessHoursLinearLayout.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS).equals("TIMINGS")) {
-                                    Intent businessHoursIntent = new Intent(activity, Business_Hours_Activity.class);
-                                    startActivity(businessHoursIntent);
-                                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                } else {
-                                    new MaterialDialog.Builder(activity)
-                                            .title("Feature not available")
-                                            .content("Check the store for more information on upgrade plans")
-                                            .positiveText("Go to Store")
-                                            .negativeText("Cancel")
-                                            .positiveColorRes(R.color.primaryColor)
-                                            .negativeColorRes(R.color.light_gray)
-                                            .callback(new MaterialDialog.ButtonCallback() {
-                                                @Override
-                                                public void onNegative(MaterialDialog dialog) {
-                                                    super.onNegative(dialog);
-                                                    dialog.dismiss();
-                                                }
-
-                                                @Override
-                                                public void onPositive(MaterialDialog dialog) {
-                                                    super.onPositive(dialog);
-//                                                    Constants.showStoreScreen = true ;
-                                                    Home_Fragment_Tab.viewPager = null;
-                                                    dialog.dismiss();
-//                                                    activity.getSupportFragmentManager().popBackStack();
-                                                    ((SidePanelFragment.OnItemClickListener) activity).onClick("Store");
-                                                }
-                                            }).show();
                                 }
-                            }
-                        });
+                            });
 
-                        businessLogoLayout.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                MixPanelController.track(EventKeysWL.LOGO,null);
-                                Intent businessLogoIntent = new Intent(activity,Business_Logo_Activity.class);
-                                startActivity(businessLogoIntent);
-                                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            }
-                        });
+                            contactInformationLayout.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    MixPanelController.track(EventKeysWL.CONTACT_INFO, null);
+                                    Intent contactInfo = new Intent(activity, Contact_Info_Activity.class);
+                                    startActivity(contactInfo);
+                                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                }
+                            });
 
-                        socialSharingLayout.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                MixPanelController.track(EventKeysWL.SOCIAL_SHARING,null);
-                                Intent socialSharingIntent = new Intent(activity,Social_Sharing_Activity.class);
-                                startActivity(socialSharingIntent);
-                                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            }
-                        });
-                        progressLayout.setVisibility(View.GONE);
-                        profileLayout.setVisibility(View.VISIBLE);
+                            businessHoursLinearLayout.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS).equals("TIMINGS")) {
+                                        Intent businessHoursIntent = new Intent(activity, Business_Hours_Activity.class);
+                                        startActivity(businessHoursIntent);
+                                        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                    } else {
+                                        new MaterialDialog.Builder(activity)
+                                                .title("Feature not available")
+                                                .content("Check the store for more information on upgrade plans")
+                                                .positiveText("Go to Store")
+                                                .negativeText("Cancel")
+                                                .positiveColorRes(R.color.primaryColor)
+                                                .negativeColorRes(R.color.light_gray)
+                                                .callback(new MaterialDialog.ButtonCallback() {
+                                                    @Override
+                                                    public void onNegative(MaterialDialog dialog) {
+                                                        super.onNegative(dialog);
+                                                        dialog.dismiss();
+                                                    }
+
+                                                    @Override
+                                                    public void onPositive(MaterialDialog dialog) {
+                                                        super.onPositive(dialog);
+//                                                    Constants.showStoreScreen = true ;
+                                                        Home_Fragment_Tab.viewPager = null;
+                                                        dialog.dismiss();
+//                                                    activity.getSupportFragmentManager().popBackStack();
+                                                        ((SidePanelFragment.OnItemClickListener) activity).onClick("Store");
+                                                    }
+                                                }).show();
+                                    }
+                                }
+                            });
+
+                            businessLogoLayout.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    MixPanelController.track(EventKeysWL.LOGO, null);
+                                    Intent businessLogoIntent = new Intent(activity, Business_Logo_Activity.class);
+                                    startActivity(businessLogoIntent);
+                                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                }
+                            });
+
+                            socialSharingLayout.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    MixPanelController.track(EventKeysWL.SOCIAL_SHARING, null);
+                                    Intent socialSharingIntent = new Intent(activity, Social_Sharing_Activity.class);
+                                    startActivity(socialSharingIntent);
+                                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                }
+                            });
+                            progressLayout.setVisibility(View.GONE);
+                            profileLayout.setVisibility(View.VISIBLE);
+                        }catch(Exception e){e.printStackTrace();}
                     }
                 });
             }

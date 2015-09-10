@@ -66,22 +66,23 @@ public class SetBusinessCategoryAsyncTask extends AsyncTask<Void, String, String
 
 	@Override
 	protected void onPostExecute(String result) {
-		if(!(pd==null)){
-            pd.dismiss();
-			
-			Edit_Profile_Activity.category.setText(category);
-            Business_Profile_Fragment_V2.category.setText(category);
-			//NewBusinessDetailsFragment.businessCategory.setText(category);
-			
-			if(flag4upateprofile){
-                Edit_Profile_Activity.saveTextView.setVisibility(View.GONE);
-                Util.changeDefaultBackgroundImage(category.toString());
-			}
-			  
-		   // pd.dismiss();
-		  //  Util.toast("Data Saved", appContext);
-			
-		}
+        try{
+            if(!(pd==null)) {
+                pd.dismiss();
+
+                Edit_Profile_Activity.category.setText(category);
+                Business_Profile_Fragment_V2.category.setText(category);
+                //NewBusinessDetailsFragment.businessCategory.setText(category);
+
+                if (flag4upateprofile) {
+                    Edit_Profile_Activity.saveTextView.setVisibility(View.GONE);
+                    Util.changeDefaultBackgroundImage(category.toString());
+                }
+
+                // pd.dismiss();
+                //  Util.toast("Data Saved", appContext);
+            }
+        }catch(Exception e){e.printStackTrace();}
 	}
 
 	@Override

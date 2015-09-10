@@ -20,7 +20,7 @@ import java.util.List;
 public class ReverseGeoCoderAsyncTask extends AsyncTask<Void, Void, Address> {
 
     Context appContext;
-    Address lastKnownAddress;
+    Address lastKnownAddress = null;
     Location location;
 
     public ReverseGeoCoderAsyncTask(Context context, Location location) {
@@ -30,7 +30,7 @@ public class ReverseGeoCoderAsyncTask extends AsyncTask<Void, Void, Address> {
 
     @Override
     protected Address doInBackground(Void... params) {
-
+    try {
         List<Address> locations = null;
         Address address = null;
 
@@ -54,7 +54,7 @@ public class ReverseGeoCoderAsyncTask extends AsyncTask<Void, Void, Address> {
             if (locations != null) {
                 lastKnownAddress = locations.get(0);
                 Constants.lastKnownAddress = lastKnownAddress;
-                Constants.latlng = new LatLng(lastKnownAddress.getLatitude(),lastKnownAddress.getLongitude());
+                Constants.latlng = new LatLng(lastKnownAddress.getLatitude(), lastKnownAddress.getLongitude());
             }
             // Address[addressLines=[0:"54, 31A Main Rd, PWD Quarters, Sector 1, HSR Layout",1:"Bangalore, Karnataka 560102",2:"India"],feature=54,admin=Karnataka,sub-admin=Bangalore
             // Urban,locality=Bangalore,thoroughfare=31A Main
@@ -75,6 +75,7 @@ public class ReverseGeoCoderAsyncTask extends AsyncTask<Void, Void, Address> {
         } else {
             // Last Known Location not available
         }
+    }catch (Exception e) {e.printStackTrace();}
         return lastKnownAddress;
     }
 }

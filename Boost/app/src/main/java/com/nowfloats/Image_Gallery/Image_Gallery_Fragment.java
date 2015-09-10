@@ -333,7 +333,6 @@ public class Image_Gallery_Fragment extends Fragment implements
         // Toast.makeText(Image_Gallery_MainActivity.this,"Camera : "+requestCode+" Data : "+data.getData(),Toast.LENGTH_SHORT).show();
 
         if (requestCode == PICK_FROM_CAMERA) {
-
             try {
                 CameraBitmap = MediaStore.Images.Media.getBitmap(activity.getContentResolver(), imageUri);
                 imageUrl = getRealPathFromURI(imageUri);
@@ -356,29 +355,41 @@ public class Image_Gallery_Fragment extends Fragment implements
             }
 
             if (!Util.isNullOrEmpty(path)) {
+                try {
+                    CameraBitmap = Util.getBitmap(path, activity);
+                    if (CameraBitmap != null) {
+                        // bmp = Bitmap.createScaledBitmap(bmp, 300, 300,true);
+                        //RoundCorners_image roundCorner = new RoundCorners_image();
+                        CameraBitmap = RoundCorners_image.getRoundedCornerBitmap(CameraBitmap, 30);
 
-                CameraBitmap = Util.getBitmap(path, activity);
-                if (CameraBitmap != null) {
-                    // bmp = Bitmap.createScaledBitmap(bmp, 300, 300,true);
-                    //RoundCorners_image roundCorner = new RoundCorners_image();
-                    CameraBitmap = RoundCorners_image.getRoundedCornerBitmap(CameraBitmap, 30);
-
-                    String eol = System.getProperty("line.separator");
-                    // updateHint.setText("CHANGE" + eol + "PHOTO");
+                        String eol = System.getProperty("line.separator");
+                        // updateHint.setText("CHANGE" + eol + "PHOTO");
+                    }
+                } catch(Exception e){e.printStackTrace();
+                } catch(OutOfMemoryError E){
+                    E.printStackTrace();
+                    System.gc();
                 }
             }
         }
 
         if (requestCode == PICK_FROM_GALLERY) {
-            Uri extras2 = data.getData();
-            // if (extras2 != null) {
+            try {
+                Uri extras2 = data.getData();
+                // if (extras2 != null) {
 
-            String filepath = getGalleryImagePath(data);
+                String filepath = getGalleryImagePath(data);
 
-            UploadPictureAsyncTask upload = new UploadPictureAsyncTask(activity,filepath);
-            upload.setOnUploadListener(Image_Gallery_Fragment.this);
-            upload.execute();
-            // Check if the specified image exists.
+                UploadPictureAsyncTask upload = new UploadPictureAsyncTask(activity, filepath);
+                upload.setOnUploadListener(Image_Gallery_Fragment.this);
+                upload.execute();
+                // Check if the specified image exists.
+            }catch(Exception e){e.printStackTrace();
+            } catch(OutOfMemoryError E){
+                E.printStackTrace();
+                System.gc();
+            }
+
         }
 
 

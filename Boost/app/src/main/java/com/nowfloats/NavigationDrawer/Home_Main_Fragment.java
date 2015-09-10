@@ -130,14 +130,16 @@ public class Home_Main_Fragment extends Fragment implements
 
     @Subscribe
     public void uploadProcess(UploadPostEvent event){
-        Log.i("upload msg ...","TRIGeREd");
-        recentPostEvent = event;
-        progressCrd.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
-        retryLayout.setVisibility(View.GONE);
-        fetch_home_data.setNewPostListener(true);
-        fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
-        uploadPicture(event.path, event.msg, getActivity(), new SampleUploadListener(), new UserSessionManager(getActivity(), getActivity()));
+        try {
+            Log.i("upload msg ...", "TRIGeREd");
+            recentPostEvent = event;
+            progressCrd.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
+            retryLayout.setVisibility(View.GONE);
+            fetch_home_data.setNewPostListener(true);
+            fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
+            uploadPicture(event.path, event.msg, getActivity(), new SampleUploadListener(), new UserSessionManager(getActivity(), getActivity()));
+        }catch(Exception e){e.printStackTrace();}
     }
 
     @Subscribe
@@ -392,10 +394,12 @@ public class Home_Main_Fragment extends Fragment implements
     }
 
     private void sendIsInterested(FragmentActivity activity, String fpid, String planType,final Bus bus) {
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("clientId", Constants.clientId);
-        params.put("plantype",planType);
-       new Restricted_FP_Service(activity,fpid,params,bus);
+        try {
+            HashMap<String, String> params = new HashMap<String, String>();
+            params.put("clientId", Constants.clientId);
+            params.put("plantype", planType);
+            new Restricted_FP_Service(activity, fpid, params, bus);
+        }catch(Exception e){e.printStackTrace();}
     }
 
     @Override
@@ -551,34 +555,86 @@ public class Home_Main_Fragment extends Fragment implements
             }
 
             if(Create_Message_Activity.facbookEnabled)
-            postOnFacebookWall(msg, act, uploadListener,session);
+                postOnFacebookWall(msg, act, uploadListener,session);
             if(Create_Message_Activity.isFacebookPageShareLoggedIn)
-            postOnFacebookPage(msg, session, act);
+                postOnFacebookPage(msg, session, act);
         }
         UploadMessageTask upa =new UploadMessageTask(act, path, task,session);
         upa.UploadPostService();
     }
 
     private void postOnFacebookWall(String msg, Activity act, SampleUploadListener uploadlistener,UserSessionManager session) {
-        byte[] data = null;
-        String FACEBOOK_ACCESS_TOKEN = session.getFacebookAccessToken();
-        if(FACEBOOK_ACCESS_TOKEN == null)
-        {
+        try {
+            byte[] data = null;
+            String FACEBOOK_ACCESS_TOKEN = session.getFacebookAccessToken();
+            if (FACEBOOK_ACCESS_TOKEN == null) {
 
-        } else if(msg.length() >= 1 ){
-            if(Create_Message_Activity.path==null || Create_Message_Activity.path.trim().length()==0) {
-                Bundle params = new Bundle();
-                params.putString(Facebook.TOKEN, FACEBOOK_ACCESS_TOKEN);
-                params.putString("message", msg);
+            } else if (msg.length() >= 1) {
+                if (Create_Message_Activity.path == null || Create_Message_Activity.path.trim().length() == 0) {
+                    Bundle params = new Bundle();
+                    params.putString(Facebook.TOKEN, FACEBOOK_ACCESS_TOKEN);
+                    params.putString("message", msg);
 //                Create_Message_Activity.facebook.setAccessToken(FACEBOOK_ACCESS_TOKEN);
 //                AsyncFacebookRunner mAsyncRunner = new AsyncFacebookRunner(Create_Message_Activity.facebook);
 //                mAsyncRunner.request("me/feed", params, "POST", uploadlistener, null);
 
+                    Request.Callback callback = new Request.Callback() {
+                        public void onCompleted(Response response) {
+                            FacebookRequestError error = response.getError();
+                            if (error != null) {
+                                Log.e("FACEBOOK WALL ERROR", "" + error.getErrorMessage());
+                            } else {
+                                JSONObject graphResponse = response
+                                        .getGraphObject()
+                                        .getInnerJSONObject();
+                                String postId = null;
+                                try {
+                                    postId = graphResponse.getString("id");
+                                } catch (JSONException e) {
+                                }
+                            }
+                        }
+                    };
+
+                    Request request = new Request(null, "me/feed", params, HttpMethod.POST, callback);
+                    RequestAsyncTask task = new RequestAsyncTask(request);
+                    task.execute();
+                } else {
+                    Bitmap bmp = Util.getBitmap(Create_Message_Activity.path, act);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    data = baos.toByteArray();
+                    Bundle params = new Bundle();
+                    params.putString(Facebook.TOKEN, FACEBOOK_ACCESS_TOKEN);
+                    params.putString("message", msg);
+                    //params.putString("method", "photos.upload");
+                    params.putByteArray("picture", data); // image to post
+
+                    Create_Message_Activity.facebook.setAccessToken(FACEBOOK_ACCESS_TOKEN);
+                    AsyncFacebookRunner mAsyncRunner = new AsyncFacebookRunner(Create_Message_Activity.facebook);
+                    mAsyncRunner.request("me/photos", params, "POST", uploadlistener, null);
+                }
+            }
+        }catch(Exception e){e.printStackTrace();}
+        //param.putByteArray("picture", ImageBytes);
+        // mAsyncRunner.request("me/photos", param, "POST", new SampleUploadListener());
+    }
+
+    public void postOnFacebookPage(String msg, UserSessionManager session, Activity act)
+    {
+        try {
+            if (Create_Message_Activity.path == null || Create_Message_Activity.path.trim().length() == 0) {
+                Bundle postParams = new Bundle();
+                postParams.putString("message", msg);
+                postParams.putString("name", msg);
+                postParams.putString("access_token", session.getPageAccessToken());
+
                 Request.Callback callback = new Request.Callback() {
-                   public void onCompleted(Response response) {
+
+                    public void onCompleted(Response response) {
                         FacebookRequestError error = response.getError();
                         if (error != null) {
-                            Log.e("FACEBOOK WALL ERROR", "" + error.getErrorMessage());
+                            Log.e("FACEBOOK PAGE ERROR", "" + error.getErrorMessage());
                         } else {
                             JSONObject graphResponse = response
                                     .getGraphObject()
@@ -591,92 +647,43 @@ public class Home_Main_Fragment extends Fragment implements
                         }
                     }
                 };
-
-                Request request = new Request(null, "me/feed", params, HttpMethod.POST, callback);
+                //postParams.putString("");
+                Request request = new Request(null, session.getFacebookPageID() + "/feed", postParams, HttpMethod.POST, callback);
                 RequestAsyncTask task = new RequestAsyncTask(request);
                 task.execute();
             } else {
+                Bundle postParams = new Bundle();
                 Bitmap bmp = Util.getBitmap(Create_Message_Activity.path, act);
+                postParams.putString("message", msg);
+                postParams.putString("name", msg);
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                data = baos.toByteArray();
-                Bundle params = new Bundle();
-                params.putString(Facebook.TOKEN, FACEBOOK_ACCESS_TOKEN);
-                params.putString("message", msg);
-                //params.putString("method", "photos.upload");
-                params.putByteArray("picture", data); // image to post
+                byte[] data = baos.toByteArray();
+                //  postParams.putString("link",link);
+                postParams.putByteArray("picture", data);
+                postParams.putString("access_token", session.getPageAccessToken());
 
-                Create_Message_Activity.facebook.setAccessToken(FACEBOOK_ACCESS_TOKEN);
-                AsyncFacebookRunner mAsyncRunner = new AsyncFacebookRunner(Create_Message_Activity.facebook);
-                mAsyncRunner.request("me/photos", params, "POST", uploadlistener, null);
+                Request.Callback callback = new Request.Callback() {
+
+                    public void onCompleted(Response response) {
+                        FacebookRequestError error = response.getError();
+                        if (error != null) {
+                            Log.e("FACEBOOK PAGE ERROR", "" + error.getErrorMessage());
+                        } else {
+                            JSONObject graphResponse = response.getGraphObject().getInnerJSONObject();
+                            String postId = null;
+                            try {
+                                postId = graphResponse.getString("id");
+                            } catch (JSONException e) {
+                            }
+                        }
+                    }
+                };
+                //postParams.putString("");
+                Request request = new Request(null, session.getFacebookPageID() + "/photos", postParams, HttpMethod.POST, callback);
+                RequestAsyncTask task = new RequestAsyncTask(request);
+                task.execute();
             }
-        }
-        //param.putByteArray("picture", ImageBytes);
-        // mAsyncRunner.request("me/photos", param, "POST", new SampleUploadListener());
-    }
-
-    public void postOnFacebookPage(String msg, UserSessionManager session, Activity act)
-    {
-        if(Create_Message_Activity.path==null || Create_Message_Activity.path.trim().length()==0) {
-            Bundle postParams = new Bundle();
-            postParams.putString("message", msg);
-            postParams.putString("name", msg);
-            postParams.putString("access_token", session.getPageAccessToken());
-
-            Request.Callback callback = new Request.Callback() {
-
-                public void onCompleted(Response response) {
-                    FacebookRequestError error = response.getError();
-                    if (error != null) {
-                        Log.e("FACEBOOK PAGE ERROR", "" + error.getErrorMessage());
-                    } else {
-                        JSONObject graphResponse = response
-                                .getGraphObject()
-                                .getInnerJSONObject();
-                        String postId = null;
-                        try {
-                            postId = graphResponse.getString("id");
-                        } catch (JSONException e) {
-                        }
-                    }
-                }
-            };
-            //postParams.putString("");
-            Request request = new Request(null, session.getFacebookPageID() + "/feed", postParams, HttpMethod.POST, callback);
-            RequestAsyncTask task = new RequestAsyncTask(request);
-            task.execute();
-        } else {
-            Bundle postParams = new Bundle();
-            Bitmap bmp = Util.getBitmap(Create_Message_Activity.path, act);
-            postParams.putString("message", msg);
-            postParams.putString("name", msg);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            byte[] data = baos.toByteArray();
-            //  postParams.putString("link",link);
-            postParams.putByteArray("picture", data);
-            postParams.putString("access_token",  session.getPageAccessToken());
-
-            Request.Callback callback = new Request.Callback() {
-
-                public void onCompleted(Response response) {
-                    FacebookRequestError error = response.getError();
-                    if (error != null) {
-                        Log.e("FACEBOOK PAGE ERROR", "" + error.getErrorMessage());
-                    } else {
-                        JSONObject graphResponse = response.getGraphObject().getInnerJSONObject();
-                        String postId = null;
-                        try {
-                            postId = graphResponse.getString("id");
-                        } catch (JSONException e) {
-                        }
-                    }
-                }
-            };
-            //postParams.putString("");
-            Request request = new Request(null,  session.getFacebookPageID() + "/photos", postParams, HttpMethod.POST, callback);
-            RequestAsyncTask task = new RequestAsyncTask(request);
-            task.execute();
-        }
+        }catch (Exception e){e.printStackTrace();}
     }
 }

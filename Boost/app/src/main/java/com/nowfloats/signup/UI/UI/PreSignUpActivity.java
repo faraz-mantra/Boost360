@@ -299,9 +299,9 @@ public class PreSignUpActivity extends AppCompatActivity implements
     private void validateEmail(PreSignUpActivity preSignUpActivity,String email,String apiKey,final Bus bus) {
         // Open Progress Dialog
         MaterialProgressBar.startProgressBar(preSignUpActivity,"Validating Data",false);
-//        new Email_Service(preSignUpActivity,email,apiKey,bus);
+        new Email_Service(preSignUpActivity,email,apiKey,bus);
 
-        verifyUniqueNumber(PreSignUpActivity.this,data_phone,bus);
+//        verifyUniqueNumber(PreSignUpActivity.this,data_phone,bus);
     }
 
     private void verifyUniqueNumber(PreSignUpActivity preSignUpActivity,String mobileNumber,final Bus bus)

@@ -291,20 +291,22 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
     }
 
     private void getEditTextBundle() {
-        Intent signUpIntent = getIntent();
-        businessDetails_jsonData = new JSONObject();
-        data_businessName = signUpIntent.getStringExtra("signup_business_name");
-        data_businessCategory = signUpIntent.getStringExtra("signup_business_category");
-        data_city = signUpIntent.getStringExtra("signup_city");
-        data_country = signUpIntent.getStringExtra("signup_country");
-        data_email = signUpIntent.getStringExtra("signup_email");
-        data_phone = signUpIntent.getStringExtra("signup_phone");
-        websiteTag = signUpIntent.getStringExtra("tag");
-        countrycodeTag = signUpIntent.getStringExtra("signup_country_code");
+        try {
+            Intent signUpIntent = getIntent();
+            businessDetails_jsonData = new JSONObject();
+            data_businessName = signUpIntent.getStringExtra("signup_business_name");
+            data_businessCategory = signUpIntent.getStringExtra("signup_business_category");
+            data_city = signUpIntent.getStringExtra("signup_city");
+            data_country = signUpIntent.getStringExtra("signup_country");
+            data_email = signUpIntent.getStringExtra("signup_email");
+            data_phone = signUpIntent.getStringExtra("signup_phone");
+            websiteTag = signUpIntent.getStringExtra("tag");
+            countrycodeTag = signUpIntent.getStringExtra("signup_country_code");
 
-        beforeEdit = websiteTag.toLowerCase();
-        webSiteTextView.setText(websiteTag.toLowerCase());
-        webSiteTextView.setSelection(webSiteTextView.getText().length());
+            beforeEdit = websiteTag.toLowerCase();
+            webSiteTextView.setText(websiteTag.toLowerCase());
+            webSiteTextView.setSelection(webSiteTextView.getText().length());
+        }catch (Exception e){e.printStackTrace();}
     }
 
 

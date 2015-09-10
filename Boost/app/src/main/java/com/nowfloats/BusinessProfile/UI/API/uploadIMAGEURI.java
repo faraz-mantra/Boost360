@@ -65,7 +65,8 @@ public class uploadIMAGEURI extends AsyncTask<Void,String, String> {
             @Override
             public void run() {
                 try {
-                    pd.dismiss();
+                    if (pd!=null)
+                        pd.dismiss();
                     if (isUploadingSuccess) {
                         Methods.showSnackBarPositive(appContext, "Image updated successfully");
                         Constants.IMAGEURIUPLOADED = true;

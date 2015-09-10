@@ -26,7 +26,8 @@ public class ProductAPIService {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Product_Gallery_Fragment.progressLayout.setVisibility(View.VISIBLE);
+                if (Product_Gallery_Fragment.progressLayout!=null)
+                    Product_Gallery_Fragment.progressLayout.setVisibility(View.VISIBLE);
             }
         });
         try {
@@ -39,7 +40,8 @@ public class ProductAPIService {
                         activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Product_Gallery_Fragment.progressLayout.setVisibility(View.GONE);
+                                if (Product_Gallery_Fragment.progressLayout!=null)
+                                    Product_Gallery_Fragment.progressLayout.setVisibility(View.GONE);
                             }
                         });
                     }
@@ -57,8 +59,10 @@ public class ProductAPIService {
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Product_Gallery_Fragment.empty_layout.setVisibility(View.VISIBLE);
-                            Product_Gallery_Fragment.progressLayout.setVisibility(View.GONE);
+                            if (Product_Gallery_Fragment.empty_layout!=null)
+                                Product_Gallery_Fragment.empty_layout.setVisibility(View.VISIBLE);
+                            if (Product_Gallery_Fragment.progressLayout!=null)
+                                Product_Gallery_Fragment.progressLayout.setVisibility(View.GONE);
                             Methods.showSnackBarNegative(activity, "Something went wrong, Try again...!");
                         }
                     });
@@ -69,12 +73,16 @@ public class ProductAPIService {
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Product_Gallery_Fragment.progressLayout.setVisibility(View.GONE);
-                    if (Product_Gallery_Fragment.productItemModelList.size() == 0) {
-                        Product_Gallery_Fragment.empty_layout.setVisibility(View.VISIBLE);
-                    } else {
-                        Product_Gallery_Fragment.empty_layout.setVisibility(View.GONE);
-                    }
+                    if (Product_Gallery_Fragment.progressLayout!=null)
+                        Product_Gallery_Fragment.progressLayout.setVisibility(View.GONE);
+                    if (Product_Gallery_Fragment.productItemModelList!=null)
+                        if (Product_Gallery_Fragment.productItemModelList.size() == 0) {
+                            if (Product_Gallery_Fragment.empty_layout!=null)
+                                Product_Gallery_Fragment.empty_layout.setVisibility(View.VISIBLE);
+                        } else {
+                            if (Product_Gallery_Fragment.empty_layout!=null)
+                                Product_Gallery_Fragment.empty_layout.setVisibility(View.GONE);
+                        }
                     Methods.showSnackBarNegative(activity, "Something went wrong, Try again...!");
                 }
             });

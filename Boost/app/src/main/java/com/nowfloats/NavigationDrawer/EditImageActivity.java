@@ -52,9 +52,10 @@ public class EditImageActivity extends Activity {
         final CropImageView cropImageView = (CropImageView) findViewById(R.id.CropImageView);
 
         if(getIntent().hasExtra("image")){
-            try{
+            try {
                 String picUri = getIntent().getStringExtra("image");
                 cropImageView.setImageBitmap(BitmapFactory.decodeFile(picUri));
+            }catch(OutOfMemoryError error){error.printStackTrace(); System.gc();
             }catch(Exception e){e.printStackTrace();}
         }
         

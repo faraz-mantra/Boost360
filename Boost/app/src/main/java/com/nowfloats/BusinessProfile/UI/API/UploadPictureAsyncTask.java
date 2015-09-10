@@ -186,97 +186,87 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
 
 
     public void uploadImage(String imagePath){
-        FileInputStream fileInputStream = null;
-        File img = new File(imagePath);
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        byte[] buf = new byte[1024];
-        File f = new File(img.getAbsolutePath() + File.separator );
         try {
-            f.createNewFile();
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        Bitmap bmp = BitmapFactory.decodeFile(imagePath,options);
-        if((f.length()/1024)>100){
-            bmp.compress(CompressFormat.JPEG, 70, bos);}else{
-            bmp.compress(CompressFormat.JPEG, 100, bos);
-        }
-
-        byte[] bitmapdata = bos.toByteArray();
-
-        try {
-            if (!Util.isNullOrEmpty(imagePath)) {
-                fileInputStream = new FileInputStream(img);
-            }
-
-            int bytesAvailable = fileInputStream.available();
-            if(!isParallel)
-            {
-                chunkLength = bytesAvailable;
-            }
-        } catch (Exception e) {
-
-
-        } finally {
+            FileInputStream fileInputStream = null;
+            File img = new File(imagePath);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] buf = new byte[1024];
+            File f = new File(img.getAbsolutePath() + File.separator);
             try {
-                fileInputStream.close();
+                f.createNewFile();
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            Bitmap bmp = BitmapFactory.decodeFile(imagePath, options);
+            if ((f.length() / 1024) > 100) {
+                bmp.compress(CompressFormat.JPEG, 70, bos);
+            } else {
+                bmp.compress(CompressFormat.JPEG, 100, bos);
+            }
+
+            byte[] bitmapdata = bos.toByteArray();
+
+            try {
+                if (!Util.isNullOrEmpty(imagePath)) {
+                    fileInputStream = new FileInputStream(img);
+                }
+
+                int bytesAvailable = fileInputStream.available();
+                if (!isParallel) {
+                    chunkLength = bytesAvailable;
+                }
             } catch (Exception e) {
+
+
+            } finally {
+                try {
+                    fileInputStream.close();
+                } catch (Exception e) {
+                }
             }
-        }
 
-        UUID uuid;
+            UUID uuid;
 
-        uuid = UUID.randomUUID();
-        String s_uuid = uuid.toString();
-        s_uuid = s_uuid.replace("-", "");
-        String uri;
-        String param = "createSecondaryImage/";
-        if(isPrimary){
-            param = "createImage";
-        }
-        else if(isLogo)
-        {
-            param = "createLogoImage/";
-        }
-        else if(isBackgroundImage)
-        {
-            param= "createBackgroundImage/";
-        }
+            uuid = UUID.randomUUID();
+            String s_uuid = uuid.toString();
+            s_uuid = s_uuid.replace("-", "");
+            String uri;
+            String param = "createSecondaryImage/";
+            if (isPrimary) {
+                param = "createImage";
+            } else if (isLogo) {
+                param = "createLogoImage/";
+            } else if (isBackgroundImage) {
+                param = "createBackgroundImage/";
+            }
 
-        if(isPrimary || isLogo)    // change for other cases
-        {
-            uri = Constants.LoadStoreURI+
-                    param+"?clientId="+
-                    Constants.clientId+
-                    "&fpId="+fpID+
-                    "&reqType=sequential&reqtId=" +
-                    s_uuid + "&";
-
-            String temp = uri + "totalChunks=1&currentChunkNumber=1" ;
-            sendDataToServer(temp,bitmapdata);
-
-        }
-        else
-        {
-            if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)) && isLogo == false)
+            if (isPrimary || isLogo)    // change for other cases
             {
-                //removebackgroundImg();
-                String backgroundimgid = (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)).replace("/Backgrounds/", "");
-                uri = Constants.ReplaceBackImg+"?clientId="+Constants.clientId+"&fpId="+fpID+"&existingBackgroundImageUri="+backgroundimgid+"&identifierType=SINGLE";
-                sendDataToServer(uri,  bitmapdata);
+                uri = Constants.LoadStoreURI +
+                        param + "?clientId=" +
+                        Constants.clientId +
+                        "&fpId=" + fpID +
+                        "&reqType=sequential&reqtId=" +
+                        s_uuid + "&";
+
+                String temp = uri + "totalChunks=1&currentChunkNumber=1";
+                sendDataToServer(temp, bitmapdata);
+
+            } else {
+                if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)) && isLogo == false) {
+                    //removebackgroundImg();
+                    String backgroundimgid = (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)).replace("/Backgrounds/", "");
+                    uri = Constants.ReplaceBackImg + "?clientId=" + Constants.clientId + "&fpId=" + fpID + "&existingBackgroundImageUri=" + backgroundimgid + "&identifierType=SINGLE";
+                    sendDataToServer(uri, bitmapdata);
+                } else {
+                    uri = Constants.LoadStoreURI + param + "/?clientId=" + Constants.clientId + "&fpId=" + fpID;
+                    sendDataToServer(uri, bitmapdata);
+                }
             }
-            else
-            {
-                uri = Constants.LoadStoreURI+param+"/?clientId="+Constants.clientId+"&fpId="+fpID;
-                sendDataToServer(uri,  bitmapdata);
-            }
-
-
-
-        }
+        }catch (Exception e){e.printStackTrace(); System.gc();}
     }
     public void getFpData(){
 

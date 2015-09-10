@@ -183,75 +183,88 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                     Thread mThread = new Thread() {
                         @Override
                         public void run() {
-                            final Intent shareIntent = new Intent();
-                            if (!imageShare.contains("/Tile/deal.png") && !Util.isNullOrEmpty(imageShare)) {
-                                URL url = null;
-                                Uri uri = null;
+                            try {
+                                final Intent shareIntent = new Intent();
+                                if (!imageShare.contains("/Tile/deal.png") && !Util.isNullOrEmpty(imageShare)) {
+                                    URL url = null;
+                                    Uri uri = null;
 
 
+                                    try {
 
-                                try {
+                                        if (imageShare.contains("BizImages")) {
+                                            url = new URL("https://api.withfloats.com/" + imageShare);
+                                        } else {
+                                            url = new URL(imageShare);
+                                        }
 
-                                    if (imageShare.contains("BizImages")) {
-                                        url = new URL("https://api.withfloats.com/" + imageShare);
-                                    } else {
-                                        url = new URL(imageShare);
+                                    } catch (MalformedURLException e) {
+                                        e.printStackTrace();
                                     }
 
-                                } catch (MalformedURLException e) {
-                                    e.printStackTrace();
+
+                                    HttpURLConnection connection = null;
+                                    try {
+                                        connection = (HttpURLConnection) url.openConnection();
+
+
+                                        connection.setDoInput(true);
+
+                                        connection.connect();
+
+                                        InputStream input = connection.getInputStream();
+
+
+                                        Bitmap immutableBpm = BitmapFactory.decodeStream(input);
+
+                                        Bitmap mutableBitmap = immutableBpm.copy(Bitmap.Config.ARGB_8888, true);
+
+
+                                        View view = new View(appContext);
+
+                                        view.draw(new Canvas(mutableBitmap));
+
+                                        String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
+
+                                        uri = Uri.parse(path);
+                                        shareIntent.setType("image/png");
+
+                                        //  Uri uri = Uri.parse("https://api.withfloats.com/" +imageShare);
+                                        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+
+                                        //   shareIntentToPackages("image/png",HomeActivity.StorebizFloats.get(position).message,uri);
+
+                                        //}
+
+                                        //}
+                                    } catch (IOException e) {
+                                        appContext.runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Methods.showSnackBarNegative(appContext, "Error in Sharing");
+                                            }
+                                        });
+                                        e.printStackTrace();
+                                    } catch (Exception e) {
+                                        appContext.runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Methods.showSnackBarNegative(appContext, "Error in Sharing");
+                                            }
+                                        });
+                                        e.printStackTrace();
+                                    }
+
+                                } else {
+                                    shareIntent.setType("text/plain");
+                                    // shareIntentToPackages("text/plain",HomeActivity.StorebizFloats.get(position).message,null);
                                 }
 
+                                shareIntent.setAction(Intent.ACTION_SEND);
+                                shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message);
 
-                                HttpURLConnection connection = null;
-                                try {
-                                    connection = (HttpURLConnection) url.openConnection();
-
-
-                                    connection.setDoInput(true);
-
-                                    connection.connect();
-
-                                    InputStream input = connection.getInputStream();
-
-
-                                    Bitmap immutableBpm = BitmapFactory.decodeStream(input);
-
-                                    Bitmap mutableBitmap = immutableBpm.copy(Bitmap.Config.ARGB_8888, true);
-
-
-                                    View view = new View(appContext);
-
-                                    view.draw(new Canvas(mutableBitmap));
-
-                                    String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
-
-                                    uri = Uri.parse(path);
-                                    shareIntent.setType("image/png");
-
-                                    //  Uri uri = Uri.parse("https://api.withfloats.com/" +imageShare);
-                                    shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-
-                                 //   shareIntentToPackages("image/png",HomeActivity.StorebizFloats.get(position).message,uri);
-
-                                    //}
-
-                                    //}
-
-                                } catch (IOException e) {
-                                    Methods.showSnackBarNegative(appContext, "Error in Sharing");
-                                    e.printStackTrace();
-                                }
-
-                            } else {
-                                shareIntent.setType("text/plain");
-                               // shareIntentToPackages("text/plain",HomeActivity.StorebizFloats.get(position).message,null);
-                            }
-
-                            shareIntent.setAction(Intent.ACTION_SEND);
-                            shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message);
-
-                            appContext.startActivityForResult(Intent.createChooser(shareIntent, "Share your message"), 1);
+                                appContext.startActivityForResult(Intent.createChooser(shareIntent, "Share your message"), 1);
+                            }catch (Exception e) {e.printStackTrace();}
                         }
                     };
                     mThread.start();

@@ -61,12 +61,12 @@ public class BusinessAddressLatLongUpdateAsyncTask extends AsyncTask<Void,String
 	@Override
 	protected String doInBackground(Void... arg0) {
 		// TODO Auto-generated method stub
-		
-		setLatLong(latlongaddress);
-		if(lat==0.0 && lng == 0.0)
-		{
-			setLatLong(latlongaddress.replace(Business_Address_Activity.text1.replaceAll(" ", "+")+",", ""));
-		}
+		try {
+            setLatLong(latlongaddress);
+            if (lat == 0.0 && lng == 0.0) {
+                setLatLong(latlongaddress.replace(Business_Address_Activity.text1.replaceAll(" ", "+") + ",", ""));
+            }
+        }catch(Exception e){e.printStackTrace();}
 		
 		String location = lat+","+lng;
 		JSONObject obj = new JSONObject();
