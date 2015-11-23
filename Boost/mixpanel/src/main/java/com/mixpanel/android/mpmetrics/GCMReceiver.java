@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -203,7 +204,8 @@ public class GCMReceiver extends BroadcastReceiver {
         nm.notify(0, n);
     }
 
-    private void showNotificationSDK11OrHigher(Context context, PendingIntent intent, int notificationIcon, CharSequence title, CharSequence message, String payload) {
+    private void showNotificationSDK11OrHigher(Context context, PendingIntent intent, int notificationIcon,
+                                               CharSequence title, CharSequence message, String payload) {
 //        final NotificationManager nm = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
 //        final Notification n = new Notification.Builder(context).
 //                    setSmallIcon(notificationIcon).
@@ -214,12 +216,15 @@ public class GCMReceiver extends BroadcastReceiver {
 //                    setContentIntent(intent).
 //                    build();
 //        n.flags |= Notification.FLAG_AUTO_CANCEL;
-
+        Log.i("Notification triggered","...!!");
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setAutoCancel(true);
         builder.setContentTitle(title);
         builder.setContentText(message);
-        builder.setSmallIcon(0);
+        builder.setColor(Color.parseColor("#ffb900"));
+        try {
+            builder.setSmallIcon(R.drawable.app_launcher2);
+        }catch(Exception e){e.printStackTrace();}
         if(notificationIconBitmap!=null)
             builder.setLargeIcon(notificationIconBitmap);
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(message));
@@ -263,7 +268,6 @@ public class GCMReceiver extends BroadcastReceiver {
             else if(payload.contains("logo")){
                 builder.addAction(com.mixpanel.android.R.drawable.notification_pic, " Update Now", intent);
             }
-
         }
 
         builder.setContentIntent(intent);
