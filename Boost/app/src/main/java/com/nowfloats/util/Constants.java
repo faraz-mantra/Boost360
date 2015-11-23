@@ -125,7 +125,6 @@ public class Constants {
 	public static int UPLOAD_TYPE_FILE 			= 123;	
 	public static int UPLOAD_TYPE_STRING 			= 120;
 
-   // public static test.com.vinay.Analytics_Screen.DataMap StoreUserSearch		= new DataMap();
 	
 	public static final String BG_SERVICE_CONTENT_TYPE_OCTET_STREAM = 	"binary/octet-stream";
 	public static final String BG_SERVICE_CONTENT_TYPE_JSON 		= 	"application/json";
