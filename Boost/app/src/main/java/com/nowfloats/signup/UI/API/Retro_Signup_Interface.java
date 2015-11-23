@@ -12,6 +12,8 @@ import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.http.Body;
+import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;
@@ -61,16 +63,9 @@ public interface Retro_Signup_Interface {
     @POST("/Discover/v1/floatingPoint/verifyUniqueTag")
     void post_verifyTag(@Body HashMap<String,String> map, Callback<String> callback);
 
-
-    //https://api.withfloats.com/Discover/v1/floatingPoint/nf-app/5251ce9e4ec0a46f74595938
-
-    @Headers({"Content-Type: application/json","Accept: application/json"})
-    @POST("/Discover/v1/floatingPoint/nf-app/{fpid}")
-    void post_getFPDetails(@Path("fpid") String fpid,@Body String map, Callback<Get_FP_Details_Model> callback);
-
-
-
-
+    //    @Headers({"Content-Type: application/json","Accept: application/json"})
+    @GET("/Discover/v2/floatingPoint/nf-app/{fpid}")
+    void post_getFPDetails(@Path("fpid") String fpid,@QueryMap Map<String,String> map, Callback<Get_FP_Details_Model> callback);
 
 
 

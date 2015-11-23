@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#E0E0E0">
+    android:background="@color/screen_bg">
 
     <android.support.v7.widget.CardView
 
@@ -43,7 +43,7 @@
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/search_icon" />
+                    android:src="@drawable/analytics_search" />
             </FrameLayout>
 
             <LinearLayout

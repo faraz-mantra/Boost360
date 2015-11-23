@@ -1,9 +1,6 @@
 package com.nowfloats.Store;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +11,8 @@ import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
 
-import com.nowfloats.AccountDetails.AccountInfoActivity;
+import com.nowfloats.AccountDetails.AccountInfoAdapter;
+import com.nowfloats.AccountDetails.Model.AccountDetailModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.Store.Adapters.StoreAdapter;
@@ -22,6 +20,7 @@ import com.nowfloats.Store.Model.StoreEvent;
 import com.nowfloats.Store.Model.StoreModel;
 import com.nowfloats.Store.Service.API_Service;
 import com.nowfloats.util.BusProvider;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
@@ -30,10 +29,17 @@ import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import retrofit.http.GET;
+import retrofit.http.QueryMap;
 
 public class Store_Fragment extends Fragment {
     private RecyclerView recyclerView;
@@ -44,11 +50,10 @@ public class Store_Fragment extends Fragment {
     private String countryPhoneCode;
     UserSessionManager session;
     Activity activity;
+    String args = "";
 
     @Override
     public void onResume() {
-        MixPanelController.track(EventKeysWL.STORE_FRAGMENT, null);
-        HomeActivity.headerText.setText("Store");
         super.onResume();
         bus.register(this);
     }
@@ -59,11 +64,21 @@ public class Store_Fragment extends Fragment {
         bus.unregister(this);
     }
 
+    public static Fragment newInstance(String args){
+        Store_Fragment fragment = new Store_Fragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("key",args);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = getActivity();
         session = new UserSessionManager(activity.getApplicationContext(),activity);
+        Bundle bundle = getArguments();
+        args = bundle.getString("key");
     }
 
     @Override
@@ -72,13 +87,20 @@ public class Store_Fragment extends Fragment {
         bus = BusProvider.getInstance().getBus();
         UserSessionManager sessionManager =new UserSessionManager(activity,activity);
         countryPhoneCode = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE);
-        LoadStoreList(activity, bus);
+        progress_storelayout = (LinearLayout) view.findViewById(R.id.progress_storelayout);
+
+        /*if (args.equals("inactive")){
+            LoadStoreList(activity, bus);
+        }else if(args.equals("active")){
+            LoadActivePlans(activity);
+        }*/
+
         try {
-            final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources()
-                    .getColor(R.color.white), PorterDuff.Mode.SRC_IN);
-            HomeActivity.shareButton.setImageResource(R.drawable.account_info_icon);
-            HomeActivity.shareButton.setVisibility(View.VISIBLE);
-            HomeActivity.shareButton.setColorFilter(whiteLabelFilter_pop_ip);
+//            final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources()
+//                    .getColor(R.color.white), PorterDuff.Mode.SRC_IN);
+//            HomeActivity.shareButton.setImageResource(R.drawable.account_info_icon);
+            HomeActivity.shareButton.setVisibility(View.GONE);
+           /* HomeActivity.shareButton.setColorFilter(whiteLabelFilter_pop_ip);
             HomeActivity.shareButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -87,7 +109,7 @@ public class Store_Fragment extends Fragment {
                     startActivity(intent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
-            });
+            });*/
         }catch (Exception e) {e.printStackTrace();}
         return view;
     }
@@ -98,15 +120,52 @@ public class Store_Fragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.store_recycler_view);
         recyclerView.setHasFixedSize(true);
         emptystorelayout = (LinearLayout) view.findViewById(R.id.emptystorelayout);
+        emptystorelayout.setVisibility(View.GONE);
         progress_storelayout = (LinearLayout) view.findViewById(R.id.progress_storelayout);
         progress_storelayout.setVisibility(View.VISIBLE);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.setItemAnimator(new FadeInUpAnimator());
+
+        storeAdapter = new StoreAdapter(activity, StoreFragmentTab.additionalWidgetModels,"all");
+//        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(storeAdapter);
+//        ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(alphaAdapter);
+//        scaleAdapter.setFirstOnly(false);
+//        scaleAdapter.setInterpolator(new OvershootInterpolator());
+        recyclerView.setAdapter(storeAdapter);
+        progress_storelayout.setVisibility(View.GONE);
+        if (StoreFragmentTab.additionalWidgetModels.size()==0){
+            emptystorelayout.setVisibility(View.VISIBLE);
+        }else {
+            emptystorelayout.setVisibility(View.GONE);
+        }
+    }
+
+    private void LoadActivePlans(final Activity activity) {
+        try {
+            AccInfoInterface infoInterface = Constants.restAdapter.create(AccInfoInterface.class);
+            HashMap<String,String> values = new HashMap<>();
+            values.put("clientId", Constants.clientId);
+            values.put("fpId",session.getFPID());
+            infoInterface.getAccDetails(values,new Callback<ArrayList<AccountDetailModel>>() {
+                @Override
+                public void success(ArrayList<AccountDetailModel> accountDetailModels, Response response) {
+                    AccountInfoAdapter adapter = new AccountInfoAdapter(activity,accountDetailModels);
+                    recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    progress_storelayout.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    progress_storelayout.setVisibility(View.GONE);
+                }
+            });
+        }catch (Exception e){e.printStackTrace(); progress_storelayout.setVisibility(View.GONE);}
     }
 
     @Subscribe
     public void getStoreList(StoreEvent response){
-        storeModel = (ArrayList<StoreModel>)response.model;
+        storeModel = (ArrayList<StoreModel>)response.model.AllPackages;
 //        storeModel = filterData(storeModel);
         if(storeModel!=null){
             if (storeModel.size()==0){
@@ -115,7 +174,7 @@ public class Store_Fragment extends Fragment {
                 emptystorelayout.setVisibility(View.GONE);
             }
             progress_storelayout.setVisibility(View.GONE);
-            storeAdapter = new StoreAdapter(activity, storeModel);
+            storeAdapter = new StoreAdapter(activity, storeModel,"all");
             AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(storeAdapter);
             ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(alphaAdapter);
             scaleAdapter.setFirstOnly(false);
@@ -124,6 +183,14 @@ public class Store_Fragment extends Fragment {
         }else{
             emptystorelayout.setVisibility(View.VISIBLE);
         }
+    }
+
+    public interface AccInfoInterface{
+        //https://api.withfloats.com/Discover/v1/FloatingPoint/GetPaidWidgetDetailsForFP?clientId={clientId}&fpId={fpId}
+        // https://api.withfloats.com/Discover/v1/FloatingPoint/GetPaidWidgetDetailsForFP?
+        // clientId=""&fpId=""
+        @GET("/Discover/v1/FloatingPoint/GetPaidWidgetDetailsForFP")
+        public void getAccDetails(@QueryMap Map<String,String> map, Callback<ArrayList<AccountDetailModel>> callback);
     }
 
     private ArrayList<StoreModel> filterData(ArrayList<StoreModel> storeModel) {
@@ -151,6 +218,6 @@ public class Store_Fragment extends Fragment {
     }
 
     private void LoadStoreList(final Activity act,final Bus bus) {
-        new API_Service(act, session.getSourceClientId(),session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY),bus);
+//        new API_Service(act, session.getSourceClientId(), session.getSourceClientId(),session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY),session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), ,bus, );
     }
 }

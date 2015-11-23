@@ -186,51 +186,57 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     private void onClickMethod(View v,int position) {
         boolean blogChk = false;
-        final int pos = Integer.parseInt(v.getTag().toString());
-        for (int i = 0; i < alertData.get(pos).NotificationData.size(); i++) {
-            String key = alertData.get(pos).NotificationData.get(i).Key;
-            if (key.equals("notificationType") || key.equals("Type")){
-                String alertType = alertData.get(pos).NotificationData.get(i).Value;
-                if (alertType!=null && alertType.trim().length()>0) {
-                    MixPanelController.track("AlertType-" + alertType, null);
-                    if (alertType.equals("BLOG")){
-                        blogChk = true;
+        try {
+            final int pos = Integer.parseInt(v.getTag().toString());
+            for (int i = 0; i < alertData.get(pos).NotificationData.size(); i++) {
+                String key = alertData.get(pos).NotificationData.get(i).Key;
+                if (key.equals("notificationType") || key.equals("Type")) {
+                    String alertType = alertData.get(pos).NotificationData.get(i).Value;
+                    if (alertType != null && alertType.trim().length() > 0) {
+                        MixPanelController.track("AlertType-" + alertType, null);
+                        if (alertType.equals("BLOG")) {
+                            blogChk = true;
+                        }
                     }
+                } else if (key.equals("url")) {
+                    currentUrl = alertData.get(position).NotificationData.get(i).Value;
+                } else if (key.equals("ruleId")) {
+                    ruleId = alertData.get(position).NotificationData.get(i).Value;
                 }
-            }else if (key.equals("url")){currentUrl = alertData.get(position).NotificationData.get(i).Value;
-            }else if (key.equals("ruleId")){ ruleId = alertData.get(position).NotificationData.get(i).Value; }
-        }
-        if (blogChk){
-            Intent showWebSiteIntent = new Intent(appContext,Mobile_Site_Activity.class);
-            showWebSiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            showWebSiteIntent.putExtra("WEBSITE_NAME", currentUrl);
-            appContext.startActivity(showWebSiteIntent);
-        }else{
-            HashMap<String,String> value = new HashMap<String, String>();
-            value.put("fpId",session.getFPID());
-            value.put("clientId", Constants.clientId);
-            value.put("notificationId",alertData.get(pos)._id);
-            value.put("isRead","true");
-            alertInterface.setRead(value,new Callback<String>() {
-                @Override
-                public void success(String s, Response response) {
-                    Log.i("setRead  Success---", "" + s);
-                    alertData.get(pos).isRead = "true";
-                    notifyDataSetChanged();
-                    //google analytics
-                    updateGoogleAnalytics(ruleId);
-                    //update alert count
-                    NotificationFragment.getAlertCount(session,alertInterface,bus);
-                    //deep linking
-                    if (currentUrl!=null && currentUrl.trim().length()>0)
-                        linkInterface.deepLink(currentUrl);
-                }
-                @Override
-                public void failure(RetrofitError error) {
-                    Methods.showSnackBarNegative(appContext, "Something went wrong, please try again");
-                }
-            });
-        }
+            }
+            if (blogChk) {
+                Intent showWebSiteIntent = new Intent(appContext, Mobile_Site_Activity.class);
+                showWebSiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                showWebSiteIntent.putExtra("WEBSITE_NAME", currentUrl);
+                appContext.startActivity(showWebSiteIntent);
+            } else {
+                HashMap<String, String> value = new HashMap<String, String>();
+                value.put("fpId", session.getFPID());
+                value.put("clientId", Constants.clientId);
+                value.put("notificationId", alertData.get(pos)._id);
+                value.put("isRead", "true");
+                alertInterface.setRead(value, new Callback<String>() {
+                    @Override
+                    public void success(String s, Response response) {
+                        Log.i("setRead  Success---", "" + s);
+                        alertData.get(pos).isRead = "true";
+                        notifyDataSetChanged();
+                        //google analytics
+                        updateGoogleAnalytics(ruleId);
+                        //update alert count
+                        NotificationFragment.getAlertCount(session, alertInterface, bus);
+                        //deep linking
+                        if (currentUrl != null && currentUrl.trim().length() > 0)
+                            linkInterface.deepLink(currentUrl);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Methods.showSnackBarNegative(appContext, "Something went wrong, please try again");
+                    }
+                });
+            }
+        }catch (Exception e){e.printStackTrace();}
     }
 
     private void updateGoogleAnalytics(String ruleId) {

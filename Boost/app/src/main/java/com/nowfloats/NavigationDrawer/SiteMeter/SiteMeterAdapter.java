@@ -51,6 +51,7 @@ public class SiteMeterAdapter extends RecyclerView.Adapter<SiteMeterAdapter.View
 
     @Override
     public void onBindViewHolder(final ViewHolder holder,final int position) {
+        holder.sitemeter_layout.setTag(position+"");
         holder.titleText.setText(siteData.get(position).Title);
         holder.descText.setText(siteData.get(position).Desc);
         holder.value.setText(siteData.get(position).Percentage);
@@ -67,8 +68,9 @@ public class SiteMeterAdapter extends RecyclerView.Adapter<SiteMeterAdapter.View
         holder.sitemeter_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            if (!siteData.get(position).status)
-                fragment.SiteMeterOnClick(position);
+                int pos = Integer.parseInt(v.getTag().toString());
+            if (!siteData.get(pos).status)
+                fragment.SiteMeterOnClick(siteData.get(pos).position);
             }
         });
     }

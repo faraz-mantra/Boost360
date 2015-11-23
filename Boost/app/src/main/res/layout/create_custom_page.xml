@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#ececec"
+    android:background="@color/screen_bg"
     android:orientation="vertical">
     <include
         android:id="@+id/tool_bar_product_detail"
@@ -27,7 +27,8 @@
                 android:layout_marginLeft="16dp"
                 android:hint="Write page title (e.g. About Us, Why Us? etc.)"
                 android:textColorHint="#d1d1d1"
-                android:textSize="16dp"
+                android:textSize="14dp"
+                android:singleLine="true"
                 android:background="@null"
                 fontPath = "Roboto-Medium.ttf"
                 tools:ignore="MissingPrefix" />

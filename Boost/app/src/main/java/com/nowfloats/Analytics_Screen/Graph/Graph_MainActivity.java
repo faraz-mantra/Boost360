@@ -5,6 +5,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -36,7 +37,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 
-public class Graph_MainActivity extends ActionBarActivity implements View.OnClickListener {
+public class Graph_MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int MODE_WEEK = 0;
     private static final int MODE_MONTH = 1;
@@ -90,12 +91,10 @@ public class Graph_MainActivity extends ActionBarActivity implements View.OnClic
         monthButton.setOnClickListener(this);
         yearButton.setOnClickListener(this);
 
-
         dateArray = new ArrayList<String>();
         valueArray = new ArrayList<Integer>();
 
         initialiseGraph();
-
 
        dateArray = getMonthEndPoints();
        for(int i=0; i<dateArray.size(); i++)

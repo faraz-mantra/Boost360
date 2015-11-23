@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:fillViewport="true"
-    android:background="@color/cell_background_color"
-    >
+    android:background="@color/cell_background_color">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"

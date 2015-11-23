@@ -1,6 +1,7 @@
 package com.nowfloats.Store.Service;
 
 import com.nowfloats.Store.Model.EnablePackageResponse;
+import com.nowfloats.Store.Model.StoreMainModel;
 import com.nowfloats.Store.Model.StoreModel;
 
 import java.util.ArrayList;
@@ -24,8 +25,12 @@ import retrofit.http.QueryMap;
             clientId=DB96EA35A6E44C0F8FB4A6BAA94DB017C0DFBE6F9944B14AA6C3C48641B3D70*/
     //?identifier=DB96EA35A6E44C0F8FB4A6BAA94DB017C0DFBE6F9944B14AA6C3C48641B3D70&clientId=DB96EA35A6E44C0F8FB4A6BAA94DB017C0DFBE6F9944B14AA6C3C48641B3D70
 public interface StoreInterface {
-    @GET("/Support/v1/GetFloatingPointPackages")
-    void getStoreList(@QueryMap Map<String,String> map, Callback<ArrayList<StoreModel>> callback);
+    //https://api.withfloats.com/Support/v1/floatingpoint/getpackages?
+    // identifier={IDENTIFIER}&clientId={CLIENTID}&fpId={FPID}&country={COUNTRY}
+    ///Support/v1/floatingpoint/getpackages?identifier=524304ad4ec0a40d1c9a93f3&clientId=217FF5B9CE214CDDAC4985C853AE7F75AAFA11AF2C4B47CB877BCA26EC217E6D
+//    @GET("/Support/v1/GetFloatingPointPackages")
+    @GET("/Support/v1/floatingpoint/getpackages")
+    void getStoreList(@QueryMap Map<String,String> map, Callback<StoreMainModel> callback);
 
     //https://api.withfloats.com/Discover/v1/floatingPoint/5406bd254ec0a40d409f2b2b/requestplan?
     // clientId=2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21&plantype=mach3

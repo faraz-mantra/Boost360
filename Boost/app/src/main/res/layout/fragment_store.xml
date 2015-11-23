@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="horizontal"
-    android:background="@color/background_grey"
+    android:background="@color/screen_bg"
     tools:context="com.nowfloats.NavigationDrawer.Analytics_Fragment">
 
     <android.support.v7.widget.RecyclerView
@@ -30,9 +30,8 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         android:gravity="center">
-
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,6 +43,7 @@
             android:textStyle="bold"
             android:layout_marginTop="@dimen/dgts__padding_title"
             android:layout_marginBottom="@dimen/dgts__padding_title"
+            android:visibility="gone"
             android:textColor="@color/zeroth_grey_title"
             android:text="@string/store_coming_soon"/>
         <TextView
@@ -52,6 +52,7 @@
             android:textSize="15sp"
             android:textColor="@color/zeroth_grey"
             android:gravity="center"
-            android:text="@string/store_empty"/>
+            android:padding="12dp"
+            android:text="Sorry, Currently you haven't opted for any package.\nUpgrade to get more features."/>
     </LinearLayout>
 </FrameLayout>

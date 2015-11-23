@@ -12,6 +12,7 @@
     <color name="primaryColorDark">#F9A825</color>
     <color name="tabOnclickColor">#FFE5A0</color>
 
+    <color name="screen_bg">#E3E3E3</color>
     <color name="greenDark">#458b00</color>
     <color name="product_delete_btn">#ff3f3f</color>
 

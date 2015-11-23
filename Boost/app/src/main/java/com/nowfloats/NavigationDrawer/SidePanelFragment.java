@@ -65,7 +65,7 @@ public class SidePanelFragment extends Fragment {
 
     private boolean mUserLearnedDrawer;
     private View containerView;
-    private ActionBarDrawerToggle mDrawerToggle;
+    public ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private boolean mFromSavedInstanceState;
     public static final String KEY_USER_LEARNED_DRAWER="user_learned_drawer";
@@ -169,7 +169,10 @@ public class SidePanelFragment extends Fragment {
 
         if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE).length()>0)
         {
-            String baseNameProfileImage = "https://api.withfloats.com/"+ session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
+            String baseNameProfileImage = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
+            if(!baseNameProfileImage.contains("http")){
+                baseNameProfileImage = "https://api.withfloats.com/"+ session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
+            }
             Picasso.with(getActivity()).load(baseNameProfileImage).placeholder(R.drawable.general_services_background_img).into(containerImage);
 //            imageLoader.displayImage(baseNameProfileImage, containerImage);//
         } else {
@@ -187,17 +190,19 @@ public class SidePanelFragment extends Fragment {
             }
         });
         if(Constants.IMAGEURIUPLOADED == false) {
-            String baseNameProfileImage = "https://api.withfloats.com/" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
-            Picasso.with(getActivity()).load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(iconImage);
-//            imageLoader.displayImage(baseNameProfileImage, iconImage);
+            String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
+            if(iconUrl.length()>0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
+                String baseNameProfileImage = "https://api.withfloats.com/" + iconUrl;
+                Picasso.with(getActivity()).load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(iconImage);
+            }else{
+                Picasso.with(getActivity()).load(iconUrl).placeholder(R.drawable.business_edit_profile_icon).into(iconImage);
+            }
         }
 
         if(session.getIsSignUpFromFacebook().contains("true"))
         {
             Picasso.with(getActivity())
                     .load(session.getFacebookPageURL())
-                            // optional
-                            //.resize(150, 100)                        // optional
                     .rotate(90)                             // optional
                     .into(iconImage);
         }

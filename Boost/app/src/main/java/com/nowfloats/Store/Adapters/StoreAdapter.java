@@ -28,16 +28,18 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
     View displayView;
     ArrayList<StoreModel> storeData;
     private LayoutInflater mInflater;
-    public StoreAdapter(Activity appContext, ArrayList<StoreModel> storeData) {
+    String modelKey = "";
+    public StoreAdapter(Activity appContext, ArrayList<StoreModel> storeData, String key) {
         this.appContext = appContext;
         this.storeData = storeData;
+        this.modelKey = key;
         mInflater = (LayoutInflater) appContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public ImageView imageView;
-        public TextView titleText,descText,readmore;
+        public TextView titleText,descText,readmore,priceText,knowMoreText;
         public LinearLayout store_product_layout;
         public ViewHolder(View v) {
             super(v);
@@ -45,6 +47,8 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
             titleText = (TextView)itemView.findViewById(R.id.titleText);
             descText = (TextView)itemView.findViewById(R.id.descText);
             readmore = (TextView)itemView.findViewById(R.id.readMore);
+            priceText = (TextView)itemView.findViewById(R.id.priceText);
+            knowMoreText = (TextView)itemView.findViewById(R.id.knowMoreText);
             store_product_layout = (LinearLayout)itemView.findViewById(R.id.store_product_layout);
         }
     }
@@ -72,17 +76,37 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
                 if (storeData.get(position).Desc!=null)
                     holder.descText.setText(storeData.get(position).Desc);
                 holder.readmore.setPaintFlags(holder.readmore.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-                holder.readmore.setText("Know more");
+                holder.readmore.setText("Read more");
+                if(modelKey.equals("active")){
+                    holder.priceText.setVisibility(View.GONE);
+                    holder.readmore.setVisibility(View.GONE);
+                    holder.knowMoreText.setVisibility(View.VISIBLE);
+                    holder.knowMoreText.setText("KNOW MORE");
+//                    holder.validityText.setVisibility(View.VISIBLE);
+//                    holder.validityText.setText("("+storeData.get(position).ExpiryInMths+" months plan,"
+//                            +storeData.get(position).ValiditiyInMths+" months left"+")");
+                }else{
+                    holder.priceText.setVisibility(View.VISIBLE);
+                    holder.readmore.setVisibility(View.VISIBLE);
+                    holder.knowMoreText.setVisibility(View.GONE);
+//                    holder.validityText.setVisibility(View.GONE);
+                    String currency = " ";
+                    if (storeData.get(position).CurrencyCode!=null && !storeData.get(position).CurrencyCode.equals("null") && storeData.get(position).CurrencyCode.length()>0)
+                        currency = " "+storeData.get(position).CurrencyCode;
 
+                    holder.priceText.setText(""+storeData.get(position).Price+ currency
+                    /*+"/"+storeData.get(position).ExpiryInMths+" months"*/);
+                }
                 holder.store_product_layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                     Intent intent = new Intent(appContext,StoreDataActivity.class);
                     intent.putExtra("key",position+"");
+                    intent.putExtra("type",modelKey+"");
                     appContext.startActivity(intent);
                     appContext.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
-            });
+                });
             }
         }catch(Exception e){e.printStackTrace();}
     }

@@ -51,7 +51,6 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-
                 new MaterialDialog.Builder(Card_Full_View_MainActivity.this)
                         .customView(R.layout.exit_dialog, true)
                         .positiveText("Delete")

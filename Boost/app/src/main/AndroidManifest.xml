@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.thinksity"
-    android:versionCode="3"
-    android:versionName="2.1" >
+    android:versionCode="2015030021"
+    android:versionName="4.4" >
 
     <permission
         android:name="com.biz2.nowfloats.permission.C2D_MESSAGE"
@@ -138,7 +138,8 @@
         <activity
             android:name="com.nowfloats.NavigationDrawer.HomeActivity"
             android:label="@string/title_activity_home"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
+
         </activity>
 
         <activity
@@ -294,7 +295,9 @@
             android:screenOrientation="portrait" ></activity>
         <activity android:name="com.nowfloats.CustomPage.CreateCustomPageActivity"
             android:screenOrientation="portrait" ></activity>
-        <activity android:name="com.nowfloats.CustomPage.CustomPageActivity"
+        <!--<activity android:name="com.nowfloats.CustomPage.CustomPageActivity"
+            android:screenOrientation="portrait" ></activity>-->
+        <activity android:name="com.nowfloats.Business_Enquiries.BusinessEnqUpdateDetails"
             android:screenOrientation="portrait" ></activity>
     </application>
 

@@ -5,6 +5,7 @@ package com.nowfloats.util;
  */
 public class Key_Preferences {
 
+
     public static  String GET_FP_DETAILS_CITY = "GET_FP_DETAILS_CITY";
     public static  String GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG";
     public static  String GET_FP_DETAILS_ADDRESS ="GET_FP_DETAILS_ADDRESS" ;
@@ -68,4 +69,5 @@ public class Key_Preferences {
 
     public static String GET_FP_DETAILS_PAYMENTSTATE = "GET_FP_DETAILS_PAYMENTSTATE";
     public static String GET_FP_DETAILS_WIDGET_CUSTOMPAGES = "GET_FP_DETAILS_CUSTOMPAGES";
+    public static final String GET_FP_DETAILS_ACCOUNTMANAGERID = "AccountManagerId";
 }

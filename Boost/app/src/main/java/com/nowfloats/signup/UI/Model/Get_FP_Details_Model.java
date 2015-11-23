@@ -47,7 +47,7 @@ public class Get_FP_Details_Model {
     public String lat;
     public String lng;
     public String EnterpriseEmailContact;
-    public String FPLocalWidgets;
+    public ArrayList<FPLocal>  FPLocalWidgets;
     public ArrayList<String> FPWebWidgets;
 
     public String IsStoreFront;
@@ -70,7 +70,5 @@ public class Get_FP_Details_Model {
     public String PaymentState;
     public String PinCode;
     public String SMSGatewayUri;
-
-
-
+    public String AccountManagerId;
 }

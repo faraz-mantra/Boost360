@@ -24,6 +24,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 import java.util.HashMap;
@@ -73,7 +74,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
         TextView title = (TextView) toolbar.findViewById(R.id.titleProduct);
         title.setVisibility(View.VISIBLE);
         title.setText("New Page");
-        save.setImageResource(R.drawable.product_tick);
+        save.setImageResource(R.drawable.checkmark_icon);
         session = new UserSessionManager(getApplicationContext(),activity);
 
         editor = (HorizontalScrollView)findViewById(R.id.rich_editer);
@@ -157,6 +158,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                                     materialProgress.dismiss();
                                     if (s!=null &&s.toString().trim().length()>0){
                                         Log.d("Create page success", "");
+                                        MixPanelController.track("CreateCustomPage", null);
                                         long time = System.currentTimeMillis();
                                         CustomPageActivity.dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
                                         Methods.showSnackBarPositive(activity, "Page Successfully created");
@@ -185,6 +187,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                                 @Override
                                 public void success(String s, Response response) {
                                     materialProgress.dismiss();
+                                    MixPanelController.track("UpdateCustomPage", null);
                                     Log.d("Update page success", "");
                                     CustomPageActivity.dataModel.get(curPos).DisplayName = name;
                                     Methods.showSnackBarPositive(activity, "Page updated ");

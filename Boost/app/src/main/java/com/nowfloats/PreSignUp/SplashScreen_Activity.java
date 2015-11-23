@@ -52,8 +52,6 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         Start();
     }
 
-
-
     private void Start() {
         new Thread(new Runnable() {
             @Override

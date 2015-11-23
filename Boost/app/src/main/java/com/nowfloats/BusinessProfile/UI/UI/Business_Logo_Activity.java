@@ -69,16 +69,17 @@ public class Business_Logo_Activity extends AppCompatActivity {
         titleTextView.setText("Logo");
         session = new UserSessionManager(getApplicationContext(),Business_Logo_Activity.this);
         logoimageView = (ImageView) findViewById(R.id.logoimageView);
-
-
-
         uploadButton = (Button) findViewById(R.id.addLogoButton);
-
         backgroundImageView = (ImageView) findViewById(R.id.imageView);
         try {
             if (Constants.LOGOUPLOADED == false) {
-                String baseNameProfileImage = "https://api.withfloats.com/" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
-                Picasso.with(this).load(baseNameProfileImage).placeholder(R.drawable.logo_default_image).into(logoimageView);
+                String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
+                if(iconUrl.length()>0 && !iconUrl.contains("http")) {
+                    String baseNameProfileImage = "https://api.withfloats.com/" + iconUrl;
+                    Picasso.with(this).load(baseNameProfileImage).placeholder(R.drawable.logo_default_image).into(logoimageView);
+                }else{
+                    Picasso.with(this).load(iconUrl).placeholder(R.drawable.logo_default_image).into(logoimageView);
+                }
             }
         }catch(Exception e){e.printStackTrace();System.gc();}
 

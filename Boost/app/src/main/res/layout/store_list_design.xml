@@ -4,7 +4,7 @@
     android:orientation="horizontal"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background_grey"
+    android:background="@color/screen_bg"
     android:paddingRight="10dp"
     android:paddingLeft="10dp"
     android:paddingBottom="10dp">
@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card_view:cardBackgroundColor="@color/white"
-        card_view:cardCornerRadius="0dp">
+        card_view:cardCornerRadius="3dp"
+        card_view:cardElevation="3dp">
 
         <LinearLayout
             android:id="@+id/store_product_layout"
@@ -50,11 +51,37 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     fontPath="Roboto-Medium.ttf"
-                    android:textColor="@color/primaryColor"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/medium_text_size"
+                    android:text="okmdfoskfm"
                     android:id="@+id/titleText"
                     tools:ignore="MissingPrefix" />
+                <!--<TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:textColor="@color/light_black"
+                    fontPath="Roboto-Light.ttf"
+                    android:textSize="@dimen/small_text_size"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginBottom="5dp"
+                    android:id="@+id/validityText"
+                    android:text="isjdnfsjdnfisjdn"
+                    tools:ignore="MissingPrefix" />-->
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:textColor="@color/primaryColor"
+                    fontPath="Roboto-Light.ttf"
+                    android:textSize="@dimen/small_text_size"
+                    android:layout_marginTop="@dimen/margin_top"
+                    android:background="@drawable/rounded_corner_white"
+                    android:id="@+id/priceText"
+                    android:text="25000/year"
+                    android:padding="5dp"
+                    tools:ignore="MissingPrefix" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -63,8 +90,9 @@
                     fontPath="Roboto-Light.ttf"
                     android:textSize="@dimen/small_text_size"
                     android:layout_marginTop="@dimen/margin_top"
-                    android:layout_marginBottom="@dimen/margin_top"
+                    android:layout_marginBottom="2dp"
                     android:id="@+id/descText"
+                    android:text="isjdnfsjdnfisjdn"
                     tools:ignore="MissingPrefix" />
 
                 <TextView
@@ -73,8 +101,21 @@
                     android:textColor="@color/light_black"
                     fontPath="Roboto-Light.ttf"
                     android:textSize="@dimen/small_text_size"
-                    android:text="Know more"
+                    android:text="Read more"
                     android:id="@+id/readMore"
+                    tools:ignore="MissingPrefix" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:textColor="@color/primaryColor"
+                    fontPath="Roboto-Light.ttf"
+                    android:textSize="@dimen/small_text_size"
+                    android:layout_marginTop="@dimen/margin_top"
+                    android:background="@drawable/rounded_corner_white"
+                    android:id="@+id/knowMoreText"
+                    android:text="KNOW MORE"
+                    android:padding="5dp"
                     tools:ignore="MissingPrefix" />
             </LinearLayout>
         </LinearLayout>

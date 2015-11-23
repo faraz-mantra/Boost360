@@ -3,6 +3,8 @@ package com.nowfloats.CustomPage;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.squareup.otto.Bus;
 import com.thinksity.R;
 
 import java.text.SimpleDateFormat;
@@ -41,19 +44,24 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
     private SimpleDateFormat format;
     public UserSessionManager session;
     public CustomPageInterface pageInterface;
-    public CustomPageDeleteInterface pageDeleteInterface;
+//    public CustomPageDeleteInterface pageDeleteInterface;
     private View prev_view = null;
     public static boolean deleteCheck = false;
-
-    public CustomPageAdapter(Activity appContext, ArrayList<CustomPageModel> storeData, UserSessionManager session, CustomPageInterface pageInterface) {
+    public Bus bus;
+//    PorterDuffColorFilter greyBg;
+    public CustomPageAdapter(Activity appContext, ArrayList<CustomPageModel> storeData,
+                             UserSessionManager session, CustomPageInterface pageInterface, Bus bus) {
         this.appContext = appContext;
         this.storeData = storeData;
         this.session = session;
         this.pageInterface = pageInterface;
-        pageDeleteInterface = (CustomPageDeleteInterface)appContext;
+        this.bus = bus;
+//        pageDeleteInterface = (CustomPageDeleteInterface)appContext;
         mInflater = (LayoutInflater) appContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         format = new SimpleDateFormat("MMM dd,yyyy hh:mm aa");
         format.setTimeZone(TimeZone.getDefault());
+//        greyBg = new PorterDuffColorFilter(appContext.getResources()
+//                .getColor(R.color.white), PorterDuff.Mode.SRC_IN);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -83,7 +91,17 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
             if (storeData.get(position)!=null){
                 holder.fullLayout.setTag(position+"");
                 holder.imageView.setTag(position+"");
-                holder.fullLayout.setBackgroundColor(android.R.attr.selectableItemBackground);
+
+                if (storeData.get(position).getSel()==0){
+                    holder.imageView.setVisibility(View.INVISIBLE);
+                    holder.fullLayout.setBackgroundColor(android.R.attr.selectableItemBackground);
+//                    holder.imageView.setColorFilter(greyBg);
+                }else{
+                    holder.imageView.setVisibility(View.VISIBLE);
+                    holder.fullLayout.setBackgroundColor(appContext.getResources().getColor(R.color.gray_transparent));
+                }
+
+//                holder.fullLayout.setBackgroundColor(android.R.attr.selectableItemBackground);
                 holder.titleText.setText(storeData.get(position).DisplayName);
                 try {
                     String dateString = storeData.get(position).CreatedOn;
@@ -113,16 +131,26 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
                                 if(CustomPageActivity.posList.size()==1){
                                     deleteCheck = false;
                                 }
-                                v.setBackgroundColor(android.R.attr.selectableItemBackground);
+//                                v.setBackgroundColor(android.R.attr.selectableItemBackground);
                                 CustomPageActivity.posList.remove(POs+"");
-                                pageDeleteInterface.DeletePageTrigger(POs,false,v);
+                                bus.post(new DeletePageTriggerEvent(POs,false,v));
+//                                pageDeleteInterface.DeletePageTrigger(POs,false,v);
+//                                holder.imageView.setVisibility(View.INVISIBLE);
+                                storeData.get(position).setSel(0);
                             }else{
-                                v.setBackgroundColor(appContext.getResources().getColor(R.color.gray_transparent));
+//                                v.setBackgroundColor(appContext.getResources().getColor(R.color.gray_transparent));
                                 deleteCheck =true;
                                 if (!(CustomPageActivity.posList.contains(POs+"")))
                                     CustomPageActivity.posList.add(POs+"");
-                                pageDeleteInterface.DeletePageTrigger(POs,true,v);
+//                                pageDeleteInterface.DeletePageTrigger(POs,true,v);
+                                bus.post(new DeletePageTriggerEvent(POs,true,v));
+//                                holder.imageView.setVisibility(View.VISIBLE);
+                                storeData.get(position).setSel(1);
                             }
+                            if (CustomPageActivity.custompageAdapter!=null)
+                                CustomPageActivity.custompageAdapter.notifyDataSetChanged();
+                            if (CustomPageActivity.recyclerView!=null)
+                                CustomPageActivity.recyclerView.invalidate();
                         }else {
                             editPage(storeData.get(POs).PageId, POs);
                         }
@@ -142,16 +170,26 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
                             if(CustomPageActivity.posList.size()==1){
                                 deleteCheck = false;
                             }
-                            v.setBackgroundColor(android.R.attr.selectableItemBackground);
+//                            v.setBackgroundColor(android.R.attr.selectableItemBackground);
                             CustomPageActivity.posList.remove(POs+"");
-                            pageDeleteInterface.DeletePageTrigger(POs,false,v);
+//                            pageDeleteInterface.DeletePageTrigger(POs,false,v);
+                            bus.post(new DeletePageTriggerEvent(POs,false,v));
+//                            holder.imageView.setVisibility(View.INVISIBLE);
+                            storeData.get(position).setSel(0);
                         }else{
-                            v.setBackgroundColor(appContext.getResources().getColor(R.color.gray_transparent));
+//                            v.setBackgroundColor(appContext.getResources().getColor(R.color.gray_transparent));
                             deleteCheck =true;
                             if (!(CustomPageActivity.posList.contains(POs+"")))
                                 CustomPageActivity.posList.add(POs+"");
-                            pageDeleteInterface.DeletePageTrigger(POs,true,v);
+//                            pageDeleteInterface.DeletePageTrigger(POs,true,v);
+                            bus.post(new DeletePageTriggerEvent(POs,true,v));
+//                            holder.imageView.setVisibility(View.VISIBLE);
+                            storeData.get(position).setSel(1);
                         }
+                        if (CustomPageActivity.custompageAdapter!=null)
+                            CustomPageActivity.custompageAdapter.notifyDataSetChanged();
+                        if (CustomPageActivity.recyclerView!=null)
+                            CustomPageActivity.recyclerView.invalidate();
 //                        Methods.showSnackBarPositive(appContext, "Long press...." + POs);
                         return true;
                     }
@@ -171,6 +209,15 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
             }
         }catch(Exception e){e.printStackTrace();}
     }
+        public void updateSelection(int position){
+            if (position==0){
+                for (int i = 0; i < storeData.size(); i++) {
+                    storeData.get(i).setSel(0);
+                }
+            }else{
+                storeData.get(position).setSel(0);
+            }
+        }
 
 //    private void showPopup(final int pOs) {
 //        final MaterialDialog dialog = new MaterialDialog.Builder(appContext)

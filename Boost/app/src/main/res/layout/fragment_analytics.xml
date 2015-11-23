@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
     tools:context="test.com.nowfloats.NavigationDrawer.Analytics_Fragment"
-    android:background="#ECECEC"
+    android:background="@color/screen_bg"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -15,7 +15,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         card_view:cardBackgroundColor="#FFFFFF"
-        card_view:cardCornerRadius="1dp"
+        card_view:cardCornerRadius="3dp"
+        android:elevation="3dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp">
 
@@ -106,7 +107,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         card_view:cardBackgroundColor="#FFFFFF"
-        card_view:cardCornerRadius="1dp"
+        card_view:cardCornerRadius="3dp"
+        android:elevation="3dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp">
 
@@ -189,7 +191,8 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         card_view:cardBackgroundColor="#FFFFFF"
-        card_view:cardCornerRadius="1dp"
+        card_view:cardCornerRadius="3dp"
+        android:elevation="3dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp">
 

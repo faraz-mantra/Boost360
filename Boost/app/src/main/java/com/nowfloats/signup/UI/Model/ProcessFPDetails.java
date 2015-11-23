@@ -37,6 +37,8 @@ public class ProcessFPDetails {
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI, get_fp_details_model.ImageUri);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON,get_fp_details_model.CreatedOn);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE, get_fp_details_model.PaymentState);
+            if (get_fp_details_model.AccountManagerId!=null && !get_fp_details_model.AccountManagerId.equals("null"))
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID,get_fp_details_model.AccountManagerId);
             //String category = get_fp_details_model.Category.get(0);
             try{
                 if(get_fp_details_model.Category!=null && get_fp_details_model.Category.size()>0){

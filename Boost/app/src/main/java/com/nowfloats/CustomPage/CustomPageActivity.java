@@ -2,15 +2,21 @@ package com.nowfloats.CustomPage;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,7 +43,7 @@ import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 /**
  * Created by guru on 25/08/2015.
  */
-public class CustomPageActivity extends AppCompatActivity implements CustomPageDeleteInterface {
+public class CustomPageActivity extends Fragment  {
     public static RecyclerView recyclerView;
     public static CustomPageAdapter custompageAdapter;
     public CustomPageInterface pageInterface;
@@ -47,39 +53,42 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
     private LinearLayout emptylayout,progress_layout;
     UserSessionManager session;
     Activity activity;
-    private boolean customPageDeleteCheck = false;
+    public static boolean customPageDeleteCheck = false;
     private TextView titleTextView;
     private ImageView delete;
-    private Toolbar toolbar;
-    private Drawable defaultColor;
+//    private Toolbar toolbar;
+//    private Drawable defaultColor;
 //    private View deleteView = null;
-
+    public CustomPageDeleteInterface deleteInterface;
     @Override
     public void onResume() {
         MixPanelController.track("CustomPages", null);
         super.onResume();
         bus.register(this);
-        if (custompageAdapter!=null)
+        if (custompageAdapter!=null){
+            custompageAdapter.updateSelection(0);
             custompageAdapter.notifyDataSetChanged();
+        }
         if (recyclerView!=null)
             recyclerView.invalidate();
-        if (dataModel.size()==0){
-            emptylayout.setVisibility(View.VISIBLE);
-        }else {
-            emptylayout.setVisibility(View.GONE);
-        }
+//        if (dataModel.size()==0){
+//            emptylayout.setVisibility(View.VISIBLE);
+//        }else {
+//            emptylayout.setVisibility(View.GONE);
+//        }
+
 //        if (deleteView!=null){
 //            deleteView.setBackgroundColor(android.R.attr.selectableItemBackground);
 //            deleteView = null;
 //        }
 
         posList = new ArrayList<String>();
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
-        getSupportActionBar().setBackgroundDrawable(defaultColor);
+        deleteInterface.DeletePageTrigger(0,false,null);
+//        getSupportActionBar().setDisplayShowTitleEnabled(true);
+//        getSupportActionBar().setBackgroundDrawable(defaultColor);
         titleTextView.setText("Custom Pages");
         delete.setVisibility(View.GONE);
         customPageDeleteCheck = false;
-
     }
 
     @Override
@@ -89,43 +98,28 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_custom_page);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View mainView = inflater.inflate(R.layout.fragment_custom_page, container, false);
+        return mainView;
+    }
 
-        activity = CustomPageActivity.this;
-        pageInterface = Constants.restAdapter.create(CustomPageInterface.class);
-        session = new UserSessionManager(activity.getApplicationContext(),activity);
-        bus = BusProvider.getInstance().getBus();
-
-        toolbar = (Toolbar) findViewById(R.id.tool_bar_product_detail);
-       // defaultColor = activity.getResources().getColor(R.color.primaryColor);
-//        toolbar.setBackgroundResource(defaultColor);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
-        defaultColor = new ColorDrawable(getResources().getColor(R.color.primaryColor));
-        getSupportActionBar().setBackgroundDrawable(defaultColor);
-        getSupportActionBar().setTitle("Custom Pages");
-        //Title
-        titleTextView = (TextView) toolbar.findViewById(R.id.titleProduct);
-        titleTextView.setText("Custom Pages");
-        delete = (ImageView)toolbar.findViewById(R.id.home_view_delete_card);
-        delete.setBackgroundResource(0);
-        delete.setVisibility(View.GONE);
-
-        recyclerView = (RecyclerView) findViewById(R.id.custompage_recycler_view);
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        recyclerView = (RecyclerView) view.findViewById(R.id.custompage_recycler_view);
         recyclerView.setHasFixedSize(true);
-        emptylayout = (LinearLayout) findViewById(R.id.emptycustompage);
-        progress_layout = (LinearLayout) findViewById(R.id.progress_custom_page);
+        final LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(mLinearLayoutManager);
+        recyclerView.setItemAnimator(new FadeInUpAnimator());
+        emptylayout = (LinearLayout) view.findViewById(R.id.emptycustompage);
+        progress_layout = (LinearLayout) view.findViewById(R.id.progress_custom_page);
         progress_layout.setVisibility(View.VISIBLE);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.setItemAnimator(new FadeInUpAnimator());
 
         LoadPageList(activity, bus);
 
-        final FloatingActionButton addProduct =(FloatingActionButton)findViewById(R.id.fab_custom_page);
+        final FloatingActionButton addProduct =(FloatingActionButton)view.findViewById(R.id.fab_custom_page);
         addProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,34 +131,43 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
         });
     }
 
-    private void LoadPageList(Activity activity, Bus bus) {
-        new CustomPageService().GetPages(activity,session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG),
-                Constants.clientId,pageInterface,bus);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.fragment_custom_page);
+
+        activity = getActivity();
+        pageInterface = Constants.restAdapter.create(CustomPageInterface.class);
+        session = new UserSessionManager(activity.getApplicationContext(),activity);
+        bus = BusProvider.getInstance().getBus();
+        deleteInterface = (CustomPageDeleteInterface)activity;
+
+//        toolbar = (Toolbar) findViewById(R.id.tool_bar_product_detail);
+       // defaultColor = activity.getResources().getColor(R.color.primaryColor);
+//        toolbar.setBackgroundResource(defaultColor);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setDisplayShowTitleEnabled(true);
+//        defaultColor = new ColorDrawable(getResources().getColor(R.color.white));
+//        getSupportActionBar().setBackgroundDrawable(defaultColor);
+//        getSupportActionBar().setTitle("Custom Pages");
+
+        //Title
+        titleTextView = HomeActivity.headerText;
+        titleTextView.setText("Custom Pages");
+        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources()
+                .getColor(R.color.white), PorterDuff.Mode.SRC_IN);
+        HomeActivity.shareButton.setImageResource(R.drawable.delete_dustbin_small);
+        HomeActivity.shareButton.setColorFilter(whiteLabelFilter_pop_ip);
+        delete = HomeActivity.shareButton;
+        delete.setBackgroundResource(0);
+        delete.setVisibility(View.GONE);
     }
 
-//    @Override
-//    public void onViewCreated(View view, Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-
-//        String[] columns = new String[] { "_id", "text", "description" };
-//        MatrixCursor matrixCursor= new MatrixCursor(columns);
-//        startManagingCursor(matrixCursor);
-
-//        matrixCursor.addRow(new Object[] { 1, "Item A", "...." });
-//        matrixCursor.addRow(new Object[] { 2, "Item B", "...." });
-//        matrixCursor.addRow(new Object[] { 3, "Item C", "...." });
-//        matrixCursor.addRow(new Object[] { 4, "Item D", "...." });
-//        DragNDropListView list = (DragNDropListView)view.findViewById(R.id.custompage_recycler_view);
-
-//        DragNDropCursorAdapter adapter = new DragNDropCursorAdapter(activity,
-//                R.layout.custom_page_list_design,
-//                matrixCursor,
-//                new String[]{"text"},
-//                new int[]{R.id.page_name},
-//                R.id.full_layout_card);
-//
-//        list.setDragNDropAdapter(adapter);
-//    }
+    private void LoadPageList(Activity activity, Bus bus) {
+        new CustomPageService().GetPages(activity,session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG),Constants.clientId,pageInterface,bus);
+    }
 
     @Subscribe
     public void getPageList(CustomPageEvent response){
@@ -176,7 +179,7 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
                 emptylayout.setVisibility(View.GONE);
             }
             progress_layout.setVisibility(View.GONE);
-            custompageAdapter = new CustomPageAdapter(activity, dataModel, session, pageInterface);
+            custompageAdapter = new CustomPageAdapter(activity, dataModel, session, pageInterface,bus);
 //            AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(custompageAdapter);
 //            ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(alphaAdapter);
 //            scaleAdapter.setFirstOnly(false);
@@ -199,8 +202,9 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
 //            }
             CustomPageAdapter.deleteCheck = false;
             posList = new ArrayList<String>();
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-            getSupportActionBar().setBackgroundDrawable(defaultColor);
+            deleteInterface.DeletePageTrigger(0,false,null);
+//            getSupportActionBar().setDisplayShowTitleEnabled(false);
+//            getSupportActionBar().setBackgroundDrawable(defaultColor);
             titleTextView.setText("Custom Pages");
             delete.setVisibility(View.GONE);
             customPageDeleteCheck = false;
@@ -211,13 +215,13 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
                 recyclerView.invalidate();
 
         }else if(id==android.R.id.home){
-            finish();
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+//            finish();
+//            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+//    @Override
     public void onBackPressed() {
         if(customPageDeleteCheck){
 //            if (deleteView!=null){
@@ -226,8 +230,8 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
 //            }
             CustomPageAdapter.deleteCheck = false;
             posList = new ArrayList<String>();
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
-            getSupportActionBar().setBackgroundDrawable(defaultColor);
+//            getSupportActionBar().setDisplayShowTitleEnabled(false);
+//            getSupportActionBar().setBackgroundDrawable(defaultColor);
             titleTextView.setText("Custom Pages");
             delete.setVisibility(View.GONE);
             customPageDeleteCheck = false;
@@ -237,23 +241,27 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
             if (recyclerView!=null)
                 recyclerView.invalidate();
         }else {
-            super.onBackPressed();
-            finish();
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+//            super.onBackPressed();
+//            finish();
+//            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         }
     }
 
-    @Override
-    public void DeletePageTrigger(final int position, boolean chk,View v) {
+    @Subscribe
+    public void DeletePageTrigger(DeletePageTriggerEvent event) {
+        final int position = event.position;
+        boolean chk = event.b; View v = event.v;
+        deleteInterface.DeletePageTrigger(0,true,v);
         if (chk){
 //        deleteView = v;
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+//        getSupportActionBar().setDisplayShowTitleEnabled(false);
 //        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.gray_transparent)));
         String size = "";
         if (posList.size()>0){
             size = posList.size()+"";
         }
         titleTextView.setText(size+" PAGE SELECTED");
+        delete.setImageResource(R.drawable.delete_dustbin_small);
         delete.setVisibility(View.VISIBLE);
         customPageDeleteCheck = true;
         delete.setOnClickListener(new View.OnClickListener() {
@@ -281,8 +289,9 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
                                         new PageDeleteAsyncTaask(url, activity,session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG),pageInterface,bus).execute();
                                     }
                                     dialog.dismiss();
-                                    getSupportActionBar().setDisplayShowTitleEnabled(false);
-                                    getSupportActionBar().setBackgroundDrawable(defaultColor);
+                                    deleteInterface.DeletePageTrigger(0,false,null);
+//                                    getSupportActionBar().setDisplayShowTitleEnabled(false);
+//                                    getSupportActionBar().setBackgroundDrawable(defaultColor);
                                     titleTextView.setText("Custom Pages");
                                     delete.setVisibility(View.GONE);
                                     customPageDeleteCheck = false;
@@ -290,8 +299,9 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     posList = new ArrayList<String>();
-                                    getSupportActionBar().setDisplayShowTitleEnabled(false);
-                                    getSupportActionBar().setBackgroundDrawable(defaultColor);
+                                    deleteInterface.DeletePageTrigger(0,false,null);
+//                                    getSupportActionBar().setDisplayShowTitleEnabled(false);
+//                                    getSupportActionBar().setBackgroundDrawable(defaultColor);
                                     titleTextView.setText("Custom Pages");
                                     delete.setVisibility(View.GONE);
                                     customPageDeleteCheck = false;
@@ -309,8 +319,9 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
                                 super.onNegative(dialog);
                                 dialog.dismiss();
                                 posList = new ArrayList<String>();
-                                getSupportActionBar().setDisplayShowTitleEnabled(false);
-                                getSupportActionBar().setBackgroundDrawable(defaultColor);
+                                deleteInterface.DeletePageTrigger(0,false,null);
+//                                getSupportActionBar().setDisplayShowTitleEnabled(false);
+//                                getSupportActionBar().setBackgroundDrawable(defaultColor);
                                 titleTextView.setText("Custom Pages");
                                 delete.setVisibility(View.GONE);
                                 customPageDeleteCheck = false;
@@ -332,8 +343,9 @@ public class CustomPageActivity extends AppCompatActivity implements CustomPageD
             }
             if(posList.size()==0){
                 posList = new ArrayList<String>();
-                getSupportActionBar().setDisplayShowTitleEnabled(false);
-                getSupportActionBar().setBackgroundDrawable(defaultColor);
+                deleteInterface.DeletePageTrigger(0,false,null);
+//                getSupportActionBar().setDisplayShowTitleEnabled(false);
+//                getSupportActionBar().setBackgroundDrawable(defaultColor);
                 titleTextView.setText("Custom Pages");
                 delete.setVisibility(View.GONE);
                 customPageDeleteCheck = false;

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/primaryColor"
+    android:elevation="4dp"
     app:theme="@style/MyCustomToolBarTheme"
     tools:context=".PreSignUpActivity">
 
@@ -14,7 +15,7 @@
         android:layout_height="wrap_content"
         android:lines="1"
         android:gravity="left"
-        android:layout_marginLeft="28dp"
+        android:layout_marginLeft="25dp"
         />
 
 </android.support.v7.widget.Toolbar>

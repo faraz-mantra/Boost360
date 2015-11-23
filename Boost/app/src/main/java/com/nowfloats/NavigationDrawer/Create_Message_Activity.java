@@ -519,7 +519,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         View view = dialog.getCustomView();
         TextView header = (TextView) view.findViewById(R.id.textview_heading);
         header.setTypeface(robotoMedium);
-        header.setText("Upload Image");
+        header.setText("Upload Photo");
         LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
         LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
         ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);

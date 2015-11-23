@@ -29,9 +29,10 @@ public class ScreenshotZoomActivity extends AppCompatActivity {
             ImageView rightArrow = (ImageView) findViewById(R.id.product_rightArrow);
             ImageView close = (ImageView) findViewById(R.id.product_close);
             ViewCompat.setTransitionName(productViewPager, "imageKey");
-            ArrayList<StoreModel> productDetailModel = Store_Fragment.storeModel;
+            StoreModel productDetailModel = StoreDataActivity.product;
+
             if (productDetailModel != null) {
-                final ArrayList<Screenshots> imageModelArray = productDetailModel.get(storePos).Screenshots;
+                final ArrayList<Screenshots> imageModelArray = productDetailModel.Screenshots;
                 int layout = R.layout.product_zoom_image;
                 ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(ScreenshotZoomActivity.this, imageModelArray, layout);
                 productViewPager.setAdapter(pagerAdapter);
@@ -47,7 +48,6 @@ public class ScreenshotZoomActivity extends AppCompatActivity {
                         }
                     }
                 });
-
                 rightArrow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

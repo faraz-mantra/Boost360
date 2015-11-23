@@ -28,9 +28,12 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.ProgressBarAnimation;
 import com.thinksity.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 
@@ -147,132 +150,161 @@ public class Site_Meter_Fragment extends Fragment {
         //Set percentage according to the partners
         //0
         if (!(getResources().getString(R.string.buydomain_percentage).equals("0")))
-            siteData.add(new SiteMeterModel("Get your own identity","Buy a .com","+10%",false));
+            siteData.add(new SiteMeterModel(domain,"Get your own identity","Buy a .com","+10%",false,1));
         //1
         if (!(getResources().getString(R.string.phoneNumber_percentage).equals("0")))
-            siteData.add(new SiteMeterModel("Phone number","Help customers reach you instantly","+5%",false));
+            siteData.add(new SiteMeterModel(phone,"Phone number","Help customers reach you instantly","+5%",false,2));
         //2
         if (!(getResources().getString(R.string.businessCategory_percentage).equals("0")))
-            siteData.add(new SiteMeterModel("Business Category","Choose a Business category","+5%",false));
+            siteData.add(new SiteMeterModel(category,"Business Category","Choose a Business category","+5%",false,3));
         //3
         if (!(getResources().getString(R.string.featuredImage_percentage).equals("0")))
-            siteData.add(new SiteMeterModel("Featured Image","Add relevant image","+10%",false));
+            siteData.add(new SiteMeterModel(image,"Featured Photo","Add relevant image","+10%",false,4));
         //4
         if (!(getResources().getString(R.string.businessName_percentage).equals("0")))
-            siteData.add(new SiteMeterModel("Business Name","Add Business name","+5%",false));
+            siteData.add(new SiteMeterModel(businessName,"Business Name","Add Business name","+5%",false,5));
         //5
         if (!(getResources().getString(R.string.businessdescription_percentage).equals("0")))
-            siteData.add(new SiteMeterModel("Business Description","Describe your business","+10%",false));
+            siteData.add(new SiteMeterModel(description,"Business Description","Describe your business","+10%",false,6));
         //6
         if (!(getResources().getString(R.string.social_percentage).equals("0")))
-            siteData.add(new SiteMeterModel("Get Social","Connect to Facebook/Twitter","+10%",false));
+            siteData.add(new SiteMeterModel(social,"Get Social","Connect to Facebook/Twitter","+10%",false,7));
         //7
-        siteData.add(new SiteMeterModel("Help your customers find you","Add address","+10%",false));
+        siteData.add(new SiteMeterModel(address,"Help your customers find you","Add address","+10%",false,8));
         //8
         if (!(getResources().getString(R.string.email_percentage).equals("0")))
-            siteData.add(new SiteMeterModel("Add Email","Add email","+5%",false));
+            siteData.add(new SiteMeterModel(email,"Add Email","Add email","+5%",false,9));
         //9
         if (!(getResources().getString(R.string.postUpdate_percentage).equals("0")))
-            siteData.add(new SiteMeterModel("Post 5 Updates","Message regularly and relevantly","+25%",false));
+            siteData.add(new SiteMeterModel(post,"Post 5 Updates","Message regularly and relevantly","+25%",false,10));
         //10
         if (!(getResources().getString(R.string.share_percentage).equals("0")))
-            siteData.add(new SiteMeterModel("Share","Promote your website","+5%",false));
+            siteData.add(new SiteMeterModel(share,"Share","Promote your website","+5%",false,11));
         return siteData;
     }
 
     public void siteMeterCalculation(){
         siteMeterTotalWeight = 0;
-        if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))){
-            siteMeterTotalWeight += 10 ;
-            siteData.get(domain).setStatus(true);
-        }
-        if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER))  && !getResources().getString(R.string.phoneNumber_percentage).equals("0")){
-            siteMeterTotalWeight+=phoneWeight;
-            siteData.get(phone).setStatus(true);
-        }else{
-            siteData.get(phone).setStatus(false);
+
+        for (int i = 0; i < siteData.size(); i++) {
+            if(siteData.get(i).position==domain){
+                if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))){
+                    siteMeterTotalWeight += 10 ;
+                    siteData.get(domain).setStatus(true);
+                    siteData.get(domain).setSortChar(1);
+                }
+            }else if(siteData.get(i).position==phone){
+                if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER))  && !getResources().getString(R.string.phoneNumber_percentage).equals("0")){
+                    siteMeterTotalWeight+=phoneWeight;
+                    siteData.get(phone).setStatus(true);
+                    siteData.get(phone).setSortChar(1);
+                }else{
+                    siteData.get(phone).setStatus(false);
+                    siteData.get(phone).setSortChar(2);
+                }
+            }else if(siteData.get(i).position==category) {
+                if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY)) && !getResources().getString(R.string.businessCategory_percentage).equals("0")) {
+                    siteMeterTotalWeight += businessCategoryWeight;
+                    siteData.get(category).setStatus(true);
+                    siteData.get(category).setSortChar(1);
+                } else {
+                    siteData.get(category).setStatus(false);
+                    siteData.get(category).setSortChar(2);
+                }
+            }else if(siteData.get(i).position==image) {
+                if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)) && !getResources().getString(R.string.featuredImage_percentage).equals("0")) {
+                    siteMeterTotalWeight += featuredImageWeight;
+                    siteData.get(image).setStatus(true);
+                    siteData.get(image).setSortChar(1);
+                } else {
+                    siteData.get(image).setStatus(false);
+                    siteData.get(image).setSortChar(2);
+                }
+            }else if(siteData.get(i).position==businessName) {
+                if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)) && !getResources().getString(R.string.businessName_percentage).equals("0")) {
+                    siteMeterTotalWeight += businessNameWeight;
+                    siteData.get(businessName).setStatus(true);
+                    siteData.get(businessName).setSortChar(1);
+                } else {
+                    siteData.get(businessName).setStatus(false);
+                    siteData.get(businessName).setSortChar(2);
+                }
+            }else if(siteData.get(i).position==description) {
+                if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)) && !getResources().getString(R.string.businessdescription_percentage).equals("0")) {
+                    siteMeterTotalWeight += businessDescriptionWeight;
+                    siteData.get(description).setStatus(true);
+                    siteData.get(description).setSortChar(1);
+                } else {
+                    siteData.get(description).setStatus(false);
+                    siteData.get(description).setSortChar(2);
+                }
+            }else if(siteData.get(i).position==social) {
+                if (Constants.twitterShareEnabled == false && Util.isNullOrEmpty(session.getFacebookAccessToken()) && !getResources().getString(R.string.social_percentage).equals("0")) {
+                    siteData.get(social).setStatus(false);
+                    siteData.get(social).setSortChar(2);
+                } else {
+                    siteMeterTotalWeight += twitterWeight;
+                    siteData.get(social).setStatus(true);
+                    siteData.get(social).setSortChar(1);
+                }
+            }else if(siteData.get(i).position==address) {
+                if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)) && !getResources().getString(R.string.address_percentage).equals("0")) {
+                    siteMeterTotalWeight += businessAddressWeight;
+                    siteData.get(address).setStatus(true);
+                    siteData.get(address).setSortChar(1);
+                } else {
+                    siteData.get(address).setStatus(false);
+                    siteData.get(address).setSortChar(2);
+                }
+            }else if(siteData.get(i).position==email) {
+                if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL)) && !getResources().getString(R.string.email_percentage).equals("0")) {
+                    siteMeterTotalWeight += emailWeight;
+                    siteData.get(email).setStatus(true);
+                    siteData.get(email).setSortChar(1);
+                } else {
+                    siteData.get(email).setStatus(false);
+                    siteData.get(email).setSortChar(2);
+                }
+            }else if (siteData.get(i).position==post) {
+                if (HomeActivity.StorebizFloats.size() < 5 && fiveUpdatesDone == false) {
+                    siteMeterTotalWeight += onUpdate;
+                    siteData.get(post).setStatus(false);
+                    siteData.get(post).setSortChar(2);
+                } else {
+                    fiveUpdatesDone = true;
+                    siteMeterTotalWeight += 25;
+                    siteData.get(post).setStatus(true);
+                    siteData.get(post).setSortChar(1);
+                }
+            }else if(siteData.get(i).position==share) {
+                if (session.getWebsiteshare()) {
+                    siteMeterTotalWeight += businessNameWeight;
+                    siteData.get(share).setStatus(true);
+                    siteData.get(share).setSortChar(1);
+                } else {
+                    siteData.get(share).setStatus(false);
+                    siteData.get(share).setSortChar(2);
+                }
+            }
         }
 
-        if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY)) && !getResources().getString(R.string.businessCategory_percentage).equals("0")){
-            siteMeterTotalWeight+=businessCategoryWeight;
-            siteData.get(category).setStatus(true);
-        }else{
-            siteData.get(category).setStatus(false);
-        }
-
-        if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI))&& !getResources().getString(R.string.featuredImage_percentage).equals("0")){
-            siteMeterTotalWeight+=featuredImageWeight;
-            siteData.get(image).setStatus(true);
-        }else{
-            siteData.get(image).setStatus(false);
-        }
-
-        if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)) && !getResources().getString(R.string.businessName_percentage).equals("0")) {
-            siteMeterTotalWeight += businessNameWeight;
-            siteData.get(businessName).setStatus(true);
-        }else{
-            siteData.get(businessName).setStatus(false);
-        }
-
-        if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)) && !getResources().getString(R.string.businessdescription_percentage).equals("0")){
-            siteMeterTotalWeight+=businessDescriptionWeight;
-            siteData.get(description).setStatus(true);
-        }else{
-            siteData.get(description).setStatus(false);
-        }
-
-        if(Constants.twitterShareEnabled == false && Util.isNullOrEmpty(session.getFacebookAccessToken())&& !getResources().getString(R.string.social_percentage).equals("0"))
-        {
-            siteData.get(social).setStatus(false);
-        }else{
-            siteMeterTotalWeight += twitterWeight;
-            siteData.get(social).setStatus(true);
-        }
-
-        if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)) && !getResources().getString(R.string.address_percentage).equals("0")){
-            siteMeterTotalWeight+=businessAddressWeight;
-            siteData.get(address).setStatus(true);
-        }else{
-            siteData.get(address).setStatus(false);
-        }
-
-        if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL)) && !getResources().getString(R.string.email_percentage).equals("0")){
-            siteMeterTotalWeight+=emailWeight;
-            siteData.get(email).setStatus(true);
-        }else{
-            siteData.get(email).setStatus(false);
-        }
-
-        if(HomeActivity.StorebizFloats.size()<5 && fiveUpdatesDone == false)
-        {
-            siteMeterTotalWeight+=onUpdate;
-            siteData.get(post).setStatus(false);
-        }else{
-            fiveUpdatesDone = true;
-            siteMeterTotalWeight+=25;
-            siteData.get(post).setStatus(true);
-        }
-
-        if(session.getWebsiteshare()){
-            siteMeterTotalWeight += businessNameWeight;
-            siteData.get(share).setStatus(true);
-        }
-        else{
-            siteData.get(share).setStatus(false);
-        }
 
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (progressBar!=null)
-                    progressBar.setProgress(siteMeterTotalWeight);
+                if (progressBar!=null){
+//                    progressBar.setProgress(siteMeterTotalWeight);
+                    progressBar.setProgress(0);
+                    ProgressBarAnimation mProgressAnimation = new ProgressBarAnimation(progressBar, 1000);
+                    mProgressAnimation.setProgress(siteMeterTotalWeight);
+                }
                 if(meterReading!=null)
                     meterReading.setText(siteMeterTotalWeight+"% site completed");
                 }
         });
-
 //        if (scaleAdapter!=null)
 //            scaleAdapter.notifyDataSetChanged();
+//        Collections.sort(siteData);
         if (adapter!=null)
             adapter.notifyDataSetChanged();
         if(recyclerView!=null)
@@ -282,11 +314,11 @@ public class Site_Meter_Fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        HomeActivity.headerText.setText("Site Meter");
+        HomeActivity.headerText.setText("Site Health");
         try{
             siteMeterCalculation();
         }catch(Exception e){e.printStackTrace();}
-        MixPanelController.setProperties("SiteScore", ""+siteMeterTotalWeight);
+        MixPanelController.setProperties("SiteHealth", ""+siteMeterTotalWeight);
     }
 
     public void SiteMeterOnClick(int value) {

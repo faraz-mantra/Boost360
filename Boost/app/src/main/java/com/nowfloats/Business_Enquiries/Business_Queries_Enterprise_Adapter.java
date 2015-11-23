@@ -13,9 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.mixpanel.android.java_websocket.framing.FrameBuilder;
 import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.NavigationDrawer.CardData;
 import com.nowfloats.util.Constants;
@@ -28,9 +30,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-/*created using Android Studio (Beta) 0.8.14
-www.101apps.co.za*/
-
 public class Business_Queries_Enterprise_Adapter extends RecyclerView.Adapter<Business_Queries_Enterprise_Adapter.MyViewHolder> {
 
     private ArrayList<CardData> peopleDataSet;
@@ -40,13 +39,13 @@ public class Business_Queries_Enterprise_Adapter extends RecyclerView.Adapter<Bu
     PorterDuffColorFilter whiteLabelFilter;
     String headerValue;
 
-
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView fromTextView;
         TextView dateTextView;
         TextView queryTextView;
         TextView contactText;
-        LinearLayout contactButton,entityLayout;
+        LinearLayout entityLayout;
+        FrameLayout contactButton;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -54,7 +53,7 @@ public class Business_Queries_Enterprise_Adapter extends RecyclerView.Adapter<Bu
             this.dateTextView = (TextView) itemView.findViewById(R.id.enquiry_dateTextView);
             this.queryTextView = (TextView) itemView.findViewById(R.id.queryTexView);
             this.contactText = (TextView) itemView.findViewById(R.id.contactText);
-            this.contactButton = (LinearLayout) itemView.findViewById(R.id.contactButton);
+            this.contactButton = (FrameLayout) itemView.findViewById(R.id.contactButton);
             this.entityLayout = (LinearLayout)itemView.findViewById(R.id.entity_layout);
         }
     }
@@ -79,15 +78,14 @@ public class Business_Queries_Enterprise_Adapter extends RecyclerView.Adapter<Bu
         TextView dateTextView = holder.dateTextView;
         TextView queryTextView = holder.queryTextView;
         TextView contactText = holder.contactText;
-        LinearLayout contactButton = holder.contactButton;
         holder.entityLayout.setVisibility(View.GONE);
-        Typeface myCustomFont = Typeface.createFromAsset(appContext.getAssets(),"Roboto-Medium.ttf");
-        Typeface myCustomFontLight = Typeface.createFromAsset(appContext.getAssets(),"Roboto-Light.ttf");
+//        Typeface myCustomFont = Typeface.createFromAsset(appContext.getAssets(),"Roboto-Medium.ttf");
+//        Typeface myCustomFontLight = Typeface.createFromAsset(appContext.getAssets(),"Roboto-Light.ttf");
 
-        fromTextView.setTypeface(myCustomFont);
-        dateTextView.setTypeface(myCustomFontLight);
-        queryTextView.setTypeface(myCustomFontLight);
-        contactText.setTypeface(myCustomFont);
+//        fromTextView.setTypeface(myCustomFont);
+//        dateTextView.setTypeface(myCustomFontLight);
+//        queryTextView.setTypeface(myCustomFontLight);
+//        contactText.setTypeface(myCustomFont);
 
         Log.d("$$$$$$","Biz Data : "+listPosition+" Data : "+ Constants.StorebizEnterpriseQueries.size());
         data = Constants.StorebizEnterpriseQueries.get(listPosition);
@@ -98,9 +96,9 @@ public class Business_Queries_Enterprise_Adapter extends RecyclerView.Adapter<Bu
             Matcher m = p.matcher(email);
             boolean matchFound = m.matches();
             if (matchFound) {
-                Drawable img = appContext.getResources().getDrawable( R.drawable.ic_action_email );
-                img.setBounds( 0, 0, 60, 60 );
-                contactText.setCompoundDrawables( img, null, null, null );
+//                Drawable img = appContext.getResources().getDrawable( R.drawable.ic_action_email );
+//                img.setBounds( 0, 0, 60, 60 );
+//                contactText.setCompoundDrawables( img, null, null, null );
                 contactText.setText("EMAIL");
                 fromTextView.setText(data.Phone);
                 holder.setIsRecyclable(false);
@@ -108,7 +106,7 @@ public class Business_Queries_Enterprise_Adapter extends RecyclerView.Adapter<Bu
                 fromTextView.setText("+"+Constants.StoreCountryCode+data.Phone);
             }
             dateTextView.setText(data.CreatedDate);
-            queryTextView.setText(data.Message);
+            queryTextView.setText("\""+data.Message+"\"");
             holder.setIsRecyclable(false);
 
             holder.contactButton.setOnClickListener(new View.OnClickListener() {

@@ -50,6 +50,8 @@ import com.nowfloats.BusinessProfile.UI.UI.Settings_Fragment;
 import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.Business_Enquiries.Business_Enquiries_Fragment;
 import com.nowfloats.CustomPage.CustomPageActivity;
+import com.nowfloats.CustomPage.CustomPageAdapter;
+import com.nowfloats.CustomPage.CustomPageDeleteInterface;
 import com.nowfloats.Image_Gallery.Image_Gallery_Fragment;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.Ria_Register;
@@ -60,6 +62,7 @@ import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.nowfloats.Store.DomainLookup;
+import com.nowfloats.Store.StoreFragmentTab;
 import com.nowfloats.Store.Store_Fragment;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
@@ -82,10 +85,13 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class HomeActivity extends AppCompatActivity implements  SidePanelFragment.OnItemClickListener,DeepLinkInterface {
+public class HomeActivity extends AppCompatActivity implements  SidePanelFragment.OnItemClickListener
+        ,DeepLinkInterface,CustomPageDeleteInterface {
     private Toolbar toolbar;
     private DrawerLayout mDrawerLayout;
     private Fragment fragmentNavigationDrawer;
@@ -99,7 +105,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     Image_Gallery_Fragment imageGalleryFragment ;
     Product_Gallery_Fragment productGalleryFragment ;
     ChatFragment chatFragment;
-    Store_Fragment storeFragment;
+    StoreFragmentTab storeFragment;
     UserSessionManager session;
     Typeface robotoMedium ;
     Typeface robotoLight ;
@@ -112,6 +118,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     private int clickCnt = 0;
     public static Activity activity;
     public static String FPID;
+    public CustomPageActivity customPageActivity;
+    private boolean backChk = false;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -225,8 +233,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         imageGalleryFragment = new Image_Gallery_Fragment();
         productGalleryFragment = new Product_Gallery_Fragment();
         chatFragment = new ChatFragment();
-        storeFragment = new Store_Fragment();
+        storeFragment = new StoreFragmentTab();
         siteMeterFragment = new Site_Meter_Fragment();
+        customPageActivity = new CustomPageActivity();
 
         new Thread(new Runnable() {
             @Override
@@ -319,6 +328,31 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         ft.replace(R.id.mainFrame, homeFragment, "homeFragment");
         ft.commit();
         DeepLinkPage(deepLinkUrl);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("cek", "home selected");
+                if (drawerFragment.mDrawerToggle.isDrawerIndicatorEnabled()){
+                    ((DrawerLayout) findViewById(R.id.drawer_layout)).openDrawer(Gravity.LEFT);
+                } else {
+                    try{
+                        drawerFragment.mDrawerToggle.setDrawerIndicatorEnabled(true);
+                        headerText.setText("Custom Pages");
+                        shareButton.setVisibility(View.GONE);
+                        CustomPageActivity.customPageDeleteCheck = false;
+                        CustomPageAdapter.deleteCheck = false;
+                        CustomPageActivity.posList = new ArrayList<String>();
+                        if (CustomPageActivity.custompageAdapter!=null){
+                            CustomPageActivity.custompageAdapter.updateSelection(0);
+                            CustomPageActivity.custompageAdapter.notifyDataSetChanged();
+                        }
+                        if (CustomPageActivity.recyclerView!=null)
+                            CustomPageActivity.recyclerView.invalidate();
+                    }catch(Exception e){e.printStackTrace();}
+                }
+            }
+        });
     }
 
     public static void setGCMId(String id){
@@ -482,8 +516,31 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     @Override
     public void onBackPressed() {
        // super.onBackPressed();
-        Methods.isOnline(HomeActivity.this);
+//        Methods.isOnline(HomeActivity.this);
+        Log.i("back---",""+backChk);
+        if(backChk){finish();}
+        if (!backChk){
+            start_backclick();
+            backChk = true;
+            Methods.showSnackBar(HomeActivity.this,"Please click again to exit...");
+        }
     }
+
+    private void start_backclick() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(4000);
+                    backChk = false;
+                    Log.i("INSIDE---",""+backChk);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
     public void appUpdateAlertDilog(final Activity mContext) {
         new MaterialDialog.Builder(mContext)
                 .title("App update available")
@@ -819,13 +876,13 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             plusAddButton.setVisibility(View.GONE);
             getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, settingsFragment).commit();
         }else if(nextScreen.equals("Store")){
-            shareButton.setVisibility(View.VISIBLE);
+            shareButton.setVisibility(View.GONE);
             plusAddButton.setVisibility(View.GONE);
             getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, storeFragment).commit();
         }else if(nextScreen.equals("csp")){
-//            getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, customPageActivity).commit();
-            Intent in = new Intent(HomeActivity.this, CustomPageActivity.class);
-            startActivity(in);
+            getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, customPageActivity).commit();
+//            Intent in = new Intent(HomeActivity.this, CustomPageActivity.class);
+//            startActivity(in);
         }
     }
 
@@ -903,5 +960,16 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         DeepLinkPage(url);
     }
 
-
+    @Override
+    public void DeletePageTrigger(int position, boolean chk, View view) {
+//        if(chk) getSupportActionBar().setDisplayHomeAsUpEnabled(chk);
+//        if(!chk) getSupportActionBar().setDisplayShowHomeEnabled(!chk);
+        if(chk){
+            drawerFragment.mDrawerToggle.setDrawerIndicatorEnabled(false);
+            drawerFragment.mDrawerToggle.setHomeAsUpIndicator(R.drawable.icon_action_back);}
+        if(!chk){ drawerFragment.mDrawerToggle.setDrawerIndicatorEnabled(!chk); }
+//        if (!chk){
+//            drawerFragment.mDrawerToggle.setHomeAsUpIndicator(R.drawable.ic);
+//        }
+    }
 }

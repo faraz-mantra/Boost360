@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#ECECEC">
+    android:background="@color/screen_bg">
 
     <include
         android:id="@+id/accountinfo_action_bar"

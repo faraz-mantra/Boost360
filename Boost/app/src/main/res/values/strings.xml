@@ -367,6 +367,7 @@
 
 
     <string name="business_enquiries_title">Enquiries</string>
+    <string name="double_quotes"> &quot; </string>
     <string name="business_profile_title">Profile</string>
     <string name="tag_for_partners">.nowfloats.com</string>
     <string name="title_activity_splash_screen_">Thinksity</string>
@@ -388,7 +389,7 @@
     <string name="onboarding_screen_2_desc">Update your website twice a week. Just press the plus button at the bottom and simply tell your customers about your products, services or offers</string>
     <string name="faq">FAQs</string>
     <string name="feedback">Need Help? Get in touch with us.</string>
-    <string name="edit_image">Tap on the image above to edit.</string>
+    <string name="edit_image">Tap on the photo above to edit.</string>
     <string name="close">close</string>
     <string name="noInternet">No Internet Connection</string>
     <string name="inbox_empty">Inbox is empty!</string>

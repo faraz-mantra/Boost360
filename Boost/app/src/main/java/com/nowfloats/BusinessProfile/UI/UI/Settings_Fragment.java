@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,7 +38,8 @@ import org.json.JSONObject;
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
 public class Settings_Fragment extends Fragment{
-    LinearLayout signOutLayout,changePaswordLayout,feedbackLayout,likeusFacebookLayout,aboutUsLayout,rateUsLayout,faqLayout,accountLayout;
+    FrameLayout signOutLayout,changePaswordLayout,feedbackLayout,likeusFacebookLayout,aboutUsLayout,
+            rateUsLayout,faqLayout,accountLayout;
     private EditText old_pwd,new_pwd,confirm_pwd;
     Boolean confirmCheckerActive = false;
     private ImageView confirmChecker;
@@ -87,10 +89,10 @@ public class Settings_Fragment extends Fragment{
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        accountLayout = (LinearLayout) view.findViewById(R.id.account_info_Layout);
-        signOutLayout = (LinearLayout) view.findViewById(R.id.logout_Layout);
-        changePaswordLayout = (LinearLayout) view.findViewById(R.id.change_password_Layout);
-        faqLayout = (LinearLayout) view.findViewById(R.id.faq_Layout);
+        accountLayout = (FrameLayout) view.findViewById(R.id.account_info_Layout);
+        signOutLayout = (FrameLayout) view.findViewById(R.id.logout_Layout);
+        changePaswordLayout = (FrameLayout) view.findViewById(R.id.change_password_Layout);
+        faqLayout = (FrameLayout) view.findViewById(R.id.faq_Layout);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -136,7 +138,7 @@ public class Settings_Fragment extends Fragment{
             }
         });
 
-        feedbackLayout = (LinearLayout) view.findViewById(R.id.feedback_Layout);
+        feedbackLayout = (FrameLayout) view.findViewById(R.id.feedback_Layout);
         feedbackLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -150,7 +152,7 @@ public class Settings_Fragment extends Fragment{
             }
         });
 
-        likeusFacebookLayout = (LinearLayout) view.findViewById(R.id.like_us_Layout);
+        likeusFacebookLayout = (FrameLayout) view.findViewById(R.id.like_us_Layout);
         likeusFacebookLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,7 +167,7 @@ public class Settings_Fragment extends Fragment{
             }
         });
 
-        aboutUsLayout = (LinearLayout) view.findViewById(R.id.about_us_Layout);
+        aboutUsLayout = (FrameLayout) view.findViewById(R.id.about_us_Layout);
         aboutUsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,7 +181,7 @@ public class Settings_Fragment extends Fragment{
             }
         });
 
-        rateUsLayout = (LinearLayout) view.findViewById(R.id.rate_us_Layout);
+        rateUsLayout = (FrameLayout) view.findViewById(R.id.rate_us_Layout);
         rateUsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -17,6 +17,7 @@ import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -303,7 +304,6 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                         Picasso.with(appContext).load(baseName).placeholder(R.drawable.default_product_image).into(imageView);
 //                        imageLoader.displayImage(baseName,imageView,options);
                     }
-
                     else if(imageUri.contains("/storage/emulated") || imageUri.contains("/mnt/sdcard") )
                     {
                         imagePresent = true;

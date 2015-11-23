@@ -71,15 +71,33 @@ public class FullScreen_Gallery_Image extends Activity {
         maxCountTextView.setText(Integer.toString(maxNumberofImages));
         //currentTextView.setId(R.id.custom_view_pager);
         // viewPager.setId(R.id.custom_view_pager);
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                currentTextView.setText(""+(position+1));
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         previousImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Log.d("Image_Gallery_Fragment","Current POS : "+selectedPOS);
                 int selectedPosition = getItem(-1);
                 viewPager.setCurrentItem(selectedPosition, true);
-                currentTextView.setText(Integer.toString(selectedPosition));
-
+                if (viewPager.getCurrentItem()==0){
+                    currentTextView.setText("1");
+                }else{
+                    currentTextView.setText(""+(Integer.parseInt(currentTextView.getText().toString())-1));
+                }
             }
         });
 
@@ -89,7 +107,11 @@ public class FullScreen_Gallery_Image extends Activity {
                 Log.d("Image_Gallery_Fragment", "Current POS : " + currentPos);
                 int selectedPosition = getItem(+1);
                 viewPager.setCurrentItem(selectedPosition, true);
-                currentTextView.setText(Integer.toString(selectedPosition));
+                if(viewPager.getAdapter().getCount()-1== viewPager.getCurrentItem()){
+                    currentTextView.setText(""+(viewPager.getAdapter().getCount()));
+                }else{
+                    currentTextView.setText(""+(Integer.parseInt(currentTextView.getText().toString())+1));
+                }
             }
         });
 
@@ -142,7 +164,8 @@ public class FullScreen_Gallery_Image extends Activity {
     }
 
     private int getItem(int i) {
-        return viewPager.getCurrentItem() + i;
+        int position = viewPager.getCurrentItem() + i;
+        return position;
     }
 
     public void deleteImage(int deletePosition){

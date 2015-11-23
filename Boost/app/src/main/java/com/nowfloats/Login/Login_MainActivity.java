@@ -9,16 +9,19 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.NetworkResponse;
@@ -29,7 +32,6 @@ import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.gc.materialdesign.views.Button;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
 import com.nowfloats.NavigationDrawer.HomeActivity;
@@ -63,7 +65,7 @@ public class Login_MainActivity extends AppCompatActivity implements
         API_Login.API_Login_Interface,View.OnClickListener{
     Bus bus;
     EditText userName, password ;
-    Button loginButton ;
+    CardView loginButton ;
 
     UserSessionManager session;
     String userNameText,passwordText ;
@@ -96,6 +98,30 @@ public class Login_MainActivity extends AppCompatActivity implements
 
         userName = (EditText) findViewById(R.id.userNameEditText);
         password = (EditText) findViewById(R.id.passwordEditText);
+
+        password.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                if (arg1.getAction()== MotionEvent.ACTION_DOWN) {
+                    int tot_width = password.getWidth();
+                    float cur_x = arg1.getX();
+                    float res = (cur_x / Float.parseFloat(tot_width + "") * (Float.parseFloat("100")));
+                    if (res >= 85) {
+                        String d = password.getTag().toString();
+                        if (d.equals("pwd")) {
+                            password.setTag("show");
+                            password.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                            password.setCompoundDrawablesWithIntrinsicBounds(0, 0,R.drawable.pwd_hide, 0);
+                        }else {
+                            password.setTag("pwd");
+                            password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                            password.setCompoundDrawablesWithIntrinsicBounds(0, 0,R.drawable.pwd_show, 0);
+                        }
+                    }
+                }
+                return false;
+            }
+        });
         forgotPassword = (TextView) findViewById(R.id.forgotPwdTextView);
         forgotPassword.setOnClickListener(this);
 
@@ -110,7 +136,7 @@ public class Login_MainActivity extends AppCompatActivity implements
         userNameIcon.setColorFilter(whiteLabelFilter);
         passwordIcon.setColorFilter(whiteLabelFilter);
 
-        loginButton = (Button) findViewById(R.id.loginButton);
+        loginButton = (CardView) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,184 +155,6 @@ public class Login_MainActivity extends AppCompatActivity implements
                 }
             }
         });
-
-
-       /* //////////////////////////////////
-        mEditor = (RichEditor) findViewById(R.id.editor);
-        mEditor.setEditorHeight(200);
-        mEditor.setPlaceholder("Insert text here...");
-
-        mPreview = (TextView) findViewById(R.id.preview);
-        mEditor.setOnTextChangeListener(new RichEditor.OnTextChangeListener() {
-            @Override
-            public void onTextChange(String text) {
-                mPreview.setText(text);
-            }
-        });
-
-        findViewById(R.id.action_undo).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.undo();
-            }
-        });
-
-        findViewById(R.id.action_redo).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.redo();
-            }
-        });
-
-        findViewById(R.id.action_bold).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setBold();
-            }
-        });
-
-        findViewById(R.id.action_italic).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setItalic();
-            }
-        });
-
-
-        findViewById(R.id.action_subscript).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setSubscript();
-            }
-        });
-
-        findViewById(R.id.action_superscript).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setSuperscript();
-            }
-        });
-
-        findViewById(R.id.action_strikethrough).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setStrikeThrough();
-            }
-        });
-
-        findViewById(R.id.action_underline).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setUnderline();
-            }
-        });
-
-        findViewById(R.id.action_heading1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setHeading(1);
-            }
-        });
-
-        findViewById(R.id.action_heading2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setHeading(2);
-            }
-        });
-
-        findViewById(R.id.action_heading3).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setHeading(3);
-            }
-        });
-
-        findViewById(R.id.action_heading4).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setHeading(4);
-            }
-        });
-
-        findViewById(R.id.action_heading5).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setHeading(5);
-            }
-        });
-
-        findViewById(R.id.action_heading6).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setHeading(6);
-            }
-        });
-
-        findViewById(R.id.action_txt_color).setOnClickListener(new View.OnClickListener() {
-            boolean isChanged;
-
-            @Override
-            public void onClick(View v) {
-                mEditor.setTextColor(isChanged ? Color.BLACK : Color.RED);
-                isChanged = !isChanged;
-            }
-        });
-
-        findViewById(R.id.action_bg_color).setOnClickListener(new View.OnClickListener() {
-            boolean isChanged;
-
-            @Override
-            public void onClick(View v) {
-                mEditor.setTextBackgroundColor(isChanged ? Color.WHITE : Color.YELLOW);
-                isChanged = !isChanged;
-            }
-        });
-
-        findViewById(R.id.action_indent).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setIndent();
-            }
-        });
-
-        findViewById(R.id.action_outdent).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setOutdent();
-            }
-        });
-
-        findViewById(R.id.action_align_left).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setAlignLeft();
-            }
-        });
-
-        findViewById(R.id.action_align_center).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setAlignCenter();
-            }
-        });
-
-        findViewById(R.id.action_align_right).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setAlignRight();
-            }
-        });
-
-        findViewById(R.id.action_blockquote).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mEditor.setBlockquote();
-            }
-        });
-
-        ///////////////////////////////////
-*/
     }
 
     @Override
@@ -363,10 +211,6 @@ public class Login_MainActivity extends AppCompatActivity implements
     public void authenticationStatus(String value) {
         if(value.equals("Success"))
         {
-            if(progressDialog != null) {
-                progressDialog.dismiss();
-                progressDialog = null ;
-            }
 
             Date date = new Date(System.currentTimeMillis());
             String dateString = date.toString();
@@ -393,10 +237,6 @@ public class Login_MainActivity extends AppCompatActivity implements
     public void post_getFPDetails(Get_FP_Details_Event response)
     {
         // Close of Progress Bar
-        if(progressDialog != null) {
-                progressDialog.dismiss();
-                progressDialog = null ;
-            }
 
 //        API_Business_enquiries businessEnquiries = new API_Business_enquiries(null,session);
 //        businessEnquiries.getMessages();
@@ -405,6 +245,11 @@ public class Login_MainActivity extends AppCompatActivity implements
         //VISITOR and SUBSCRIBER COUNT API
         GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(Login_MainActivity.this,session);
         visit_subcribersCountAsyncTask.execute();
+
+        if(progressDialog != null) {
+            progressDialog.dismiss();
+            progressDialog = null ;
+        }
 
         dashboardIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(dashboardIntent);
@@ -499,13 +344,13 @@ public class Login_MainActivity extends AppCompatActivity implements
         };
         queue.add(req);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_login__main, menu);
         return true;
     }
-
 
     @Override
     public void onBackPressed() {
@@ -530,11 +375,6 @@ public class Login_MainActivity extends AppCompatActivity implements
 //            finish();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         }
-
-
-
         return super.onOptionsItemSelected(item);
     }
-
-
 }

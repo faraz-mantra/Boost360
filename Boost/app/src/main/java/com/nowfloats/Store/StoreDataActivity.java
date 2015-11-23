@@ -47,6 +47,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import it.sephiroth.android.library.easing.Linear;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -63,7 +64,7 @@ public class StoreDataActivity extends AppCompatActivity {
     private TwoWayView mRecyclerImageView;
     protected PhotoAdapter mAdapter;
     protected ArrayList<PhotoItem> mPhotoListItem;
-    StoreModel product;
+    public static StoreModel product;
     IabHelper mHelper;
     public static TextView ProductPrice;
     private String ProductPrice_Value;
@@ -113,7 +114,13 @@ public class StoreDataActivity extends AppCompatActivity {
             scrollView = (ScrollView)findViewById(R.id.scrollView);
             if (getIntent().hasExtra("key")){
                 final int StorePosition = Integer.parseInt(getIntent().getExtras().getString("key"));
-                product = Store_Fragment.storeModel.get(StorePosition);
+                product_pay = (LinearLayout) findViewById(R.id.product_payment);
+                if(getIntent().getExtras().getString("type").equals("all")){
+                    product = StoreFragmentTab.additionalWidgetModels.get(StorePosition);
+                }else{
+                    product = StoreFragmentTab.activeWidgetModels.get(StorePosition);
+                    product_pay.setVisibility(View.GONE);
+                }
                 //Title
                 TextView titleTextView = (TextView) toolbar.findViewById(R.id.store_title);
                 titleTextView.setText(product.Name);
@@ -121,7 +128,7 @@ public class StoreDataActivity extends AppCompatActivity {
                 //Price
                 ProductPrice = (TextView) findViewById(R.id.product_price);
                 product_validity = (TextView) findViewById(R.id.product_validity);
-                product_pay = (LinearLayout) findViewById(R.id.product_payment);
+
 
 //                if (("91").equals(countryPhoneCode)){
                 if (product.ExternalApplicationDetails==null || product.ExternalApplicationDetails.equals("null")
@@ -272,10 +279,22 @@ public class StoreDataActivity extends AppCompatActivity {
 
                 // Set up screen shots picture Adapter
                 mRecyclerImageView = (TwoWayView) findViewById(R.id.imageList);
+                LinearLayout emptyScreen = (LinearLayout)findViewById(R.id.emptyscreenslayout);
+                if (product.Screenshots==null || product.Screenshots.size()==0){
+                    emptyScreen.setVisibility(View.VISIBLE);
+                }else {
+                    emptyScreen.setVisibility(View.GONE);
+                }
                 mPhotoListItem = new ArrayList<PhotoItem>() ;
                 for (int i = 0; i < product.Screenshots.size(); i++) {
-                    Uri uri= Uri.parse(Constants.NOW_FLOATS_API_URL+ product.Screenshots.get(i).imageUri);
-                    mPhotoListItem.add(new PhotoItem(uri));
+                    String urlStr = product.Screenshots.get(i).imageUri;
+                    if(urlStr!=null && urlStr.length()>0 && !urlStr.equals("null")) {
+                        if (!urlStr.contains("http")) {
+                            urlStr = Constants.NOW_FLOATS_API_URL + product.Screenshots.get(i).imageUri;
+                        }
+                        Uri uri = Uri.parse(urlStr);
+                        mPhotoListItem.add(new PhotoItem(uri));
+                    }
                 }
 
                 mAdapter = new PhotoAdapter(StoreDataActivity.this, R.layout.photo_item, mPhotoListItem, false);
@@ -294,6 +313,15 @@ public class StoreDataActivity extends AppCompatActivity {
 
                 //Product details list setup
                 expandableList = (ExpandableListView) findViewById(R.id.expandableListView);
+                LinearLayout emptyFeature = (LinearLayout)findViewById(R.id.emptyfeatureslayout);
+                LinearLayout expLayout = (LinearLayout)findViewById(R.id.exp_layout);
+                if (product.WidgetPacks==null || product.WidgetPacks.size()==0){
+                    expLayout.setVisibility(View.GONE);
+                    emptyFeature.setVisibility(View.VISIBLE);
+                }else {
+                    expLayout.setVisibility(View.VISIBLE);
+                    emptyFeature.setVisibility(View.GONE);
+                }
                 prepareListData(product.WidgetPacks);
 
                 expandableList.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {

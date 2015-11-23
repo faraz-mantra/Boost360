@@ -9,11 +9,13 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Model;
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.GetStoreFrontImageAsyncTask;
 import com.thinksity.R;
@@ -48,9 +51,10 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
         TextView dateTextView;
         TextView queryTextView;
         TextView contactText;
-        ImageView contactIcon;
+//        ImageView contactIcon;
         TextView entityTexView;
-        LinearLayout contactButton,entityLayout;
+        LinearLayout entityLayout;
+        FrameLayout contactButton;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -59,8 +63,8 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
             this.queryTextView = (TextView) itemView.findViewById(R.id.queryTexView);
             this.contactText = (TextView) itemView.findViewById(R.id.contactText);
             this.entityTexView = (TextView) itemView.findViewById(R.id.entityTexView);
-            this.contactIcon = (ImageView)itemView.findViewById(R.id.contact_icon);
-            this.contactButton = (LinearLayout) itemView.findViewById(R.id.contactButton);
+//            this.contactIcon = (ImageView)itemView.findViewById(R.id.contact_icon);
+            this.contactButton = (FrameLayout) itemView.findViewById(R.id.contactButton);
             this.entityLayout = (LinearLayout) itemView.findViewById(R.id.entity_layout);
         }
     }
@@ -87,15 +91,15 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
         TextView contactText = holder.contactText;
         TextView entityText = holder.entityTexView;
         holder.entityLayout.setVisibility(View.GONE);
+        holder.entityLayout.setTag(listPosition+"");
+//        Typeface myCustomFont = Typeface.createFromAsset(appContext.getAssets(),"Roboto-Medium.ttf");
+//        Typeface myCustomFontLight = Typeface.createFromAsset(appContext.getAssets(),"Roboto-Light.ttf");
 
-        Typeface myCustomFont = Typeface.createFromAsset(appContext.getAssets(),"Roboto-Medium.ttf");
-        Typeface myCustomFontLight = Typeface.createFromAsset(appContext.getAssets(),"Roboto-Light.ttf");
-
-        fromTextView.setTypeface(myCustomFont);
-        dateTextView.setTypeface(myCustomFontLight);
-        queryTextView.setTypeface(myCustomFontLight);
-        contactText.setTypeface(myCustomFont);
-        entityText.setTypeface(myCustomFontLight);
+//        fromTextView.setTypeface(myCustomFont);
+//        dateTextView.setTypeface(myCustomFontLight);
+//        queryTextView.setTypeface(myCustomFontLight);
+//        contactText.setTypeface(myCustomFont);
+//        entityText.setTypeface(myCustomFontLight);
 
         Log.d("$$$$$$","Biz Data : "+listPosition+" Data : "+ Constants.StorebizQueries.size());
         data = Constants.StorebizQueries.get(listPosition);
@@ -109,23 +113,45 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
 //                Drawable img = appContext.getResources().getDrawable( R.drawable.ic_mail_white_48dp );
 //                img.setBounds( 0, 0, 60, 60 );
 //                contactText.setCompoundDrawables( img, null, null, null );
-                holder.contactIcon.setImageResource(R.drawable.ic_mail_white_48dp);
+//                holder.contactIcon.setImageResource(R.drawable.ic_mail_white_48dp);
                 contactText.setText("EMAIL");
                 fromTextView.setText(data.contact);
 //                holder.setIsRecyclable(false);
             }else {
-                holder.contactIcon.setImageResource(R.drawable.ic_call_white_48dp);
+//                holder.contactIcon.setImageResource(R.drawable.ic_call_white_48dp);
                 contactText.setText("CALL");
                 fromTextView.setText(data.contact);
             }
             dateTextView.setText(data.createdOn);
-            queryTextView.setText(data.message);
+            queryTextView.setText("\""+data.message+"\"");
             try{
                 if (data.entityMessage!=null && !data.entityMessage.equals("null") && data.entityMessage.trim().length()>0){
                     holder.entityLayout.setVisibility(View.VISIBLE);
-                    SpannableString content = new SpannableString("In response to your update: '"+ data.entityMessage +"'");
-                    content.setSpan(new UnderlineSpan(), 20, 26, 0);
+//                    SpannableString content = new SpannableString("In response to your update: '"+ data.entityMessage +"'");
+//                    content.setSpan(new UnderlineSpan(), 20, 26, 0);
+                    SpannableString content = new SpannableString("\""+data.entityMessage+"\"");
+                    content.setSpan(new UnderlineSpan(),0,data.entityMessage.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                     entityText.setText(content);
+
+                    holder.entityLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String value = "";
+                            int pos = Integer.parseInt(v.getTag().toString());
+                            Business_Enquiry_Model Cur_data = Constants.StorebizQueries.get(pos);
+                            value = Cur_data.entityMessage;
+//                            Intent i = new Intent(appContext,BusinessEnqUpdateDetails.class);
+//                            i.putExtra("key",value);
+                            if (Cur_data.entityUrl!=null && !Cur_data.entityUrl.equals("null") && Cur_data.entityUrl.length()>0){
+                                Intent i = new Intent(appContext,Mobile_Site_Activity.class);
+                                i.putExtra("WEBSITE_NAME",Cur_data.entityUrl);
+                                appContext.startActivity(i);
+                                /*Intent i = new Intent(Intent.ACTION_VIEW);
+                                i.setData(Uri.parse(Cur_data.entityUrl));
+                                appContext.startActivity(i);*/
+                            }
+                        }
+                    });
                 }
             }catch(Exception e){e.printStackTrace();}
 //            holder.setIsRecyclable(false);
@@ -154,8 +180,6 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     private Bitmap getBitmapImage(String id) {

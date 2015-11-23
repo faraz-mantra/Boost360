@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:background="#D1D1D1">
+    android:background="@color/screen_bg">
 
     <include
         android:id="@+id/app_bar"
@@ -24,6 +24,7 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:cardElevation="3dp"
             card_view:cardCornerRadius="1dp"
 
             >
@@ -236,7 +237,8 @@
             android:layout_marginLeft="10dp"
             android:background="@color/white"
             android:layout_marginRight="10dp"
-            card_view:cardCornerRadius="1dp"
+            card_view:cardCornerRadius="3dp"
+            app:cardElevation="3dp"
             android:layout_marginBottom="10dp">
 
             <fragment

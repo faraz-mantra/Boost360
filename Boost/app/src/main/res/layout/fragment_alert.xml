@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="horizontal"
-    android:background="@color/background_grey"
+    android:background="@color/screen_bg"
     tools:context="com.nowfloats.NavigationDrawer.Analytics_Fragment">
 
     <android.support.v7.widget.RecyclerView
@@ -50,6 +50,7 @@
             android:textSize="15sp"
             android:textColor="@color/zeroth_grey"
             android:gravity="center"
+            android:padding="4dp"
             android:text="@string/empty_alert"/>
     </LinearLayout>
 </FrameLayout>

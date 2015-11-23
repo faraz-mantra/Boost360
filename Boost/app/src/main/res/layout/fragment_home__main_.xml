@@ -3,7 +3,7 @@
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ECECEC"
+    android:background="@color/screen_bg"
     tools:context="recycle.card.com.cardview.mainpackage.tab_Home_Fragment">
 
 
@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#ECECEC"
+        android:background="@color/screen_bg"
         android:orientation="vertical">
         <com.nowfloats.util.ButteryProgressBar
             android:id="@+id/progressbar"
@@ -81,7 +81,7 @@
             android:id="@+id/my_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ECECEC"
+            android:background="@color/screen_bg"
             android:scrollbars="vertical" />
 
     </LinearLayout>

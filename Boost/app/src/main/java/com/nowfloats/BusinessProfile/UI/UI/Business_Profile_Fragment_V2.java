@@ -62,10 +62,15 @@ public class Business_Profile_Fragment_V2 extends Fragment {
     @Override
     public void onViewCreated(final View mainView, Bundle savedInstanceState) {
         super.onViewCreated(mainView, savedInstanceState);
+        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources()
+                .getColor(R.color.white), PorterDuff.Mode.SRC_IN);
         final LinearLayout progressLayout = (LinearLayout)mainView.findViewById(R.id.progress_layout);
         final LinearLayout profileLayout =(LinearLayout)mainView.findViewById(R.id.business_profile_layout);
         profileLayout.setVisibility(View.INVISIBLE);
         progressLayout.setVisibility(View.VISIBLE);
+        HomeActivity.shareButton.setImageResource(R.drawable.share_with_apps);
+        HomeActivity.shareButton.setColorFilter(whiteLabelFilter_pop_ip);
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -78,12 +83,9 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                     @Override
                     public void run() {
                         try {
-                            final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources()
-                                    .getColor(R.color.white), PorterDuff.Mode.SRC_IN);
+
                             Typeface robotoMedium = Typeface.createFromAsset(activity.getAssets(), "Roboto-Medium.ttf");
                             robotoLight = Typeface.createFromAsset(activity.getAssets(), "Roboto-Light.ttf");
-                            HomeActivity.shareButton.setImageResource(R.drawable.share_with_apps);
-                            HomeActivity.shareButton.setColorFilter(whiteLabelFilter_pop_ip);
                             HomeActivity.shareButton.setVisibility(View.VISIBLE);
                             HomeActivity.shareButton.setOnClickListener(new View.OnClickListener() {
 
@@ -111,11 +113,15 @@ public class Business_Profile_Fragment_V2 extends Fragment {
 
                             businessProfileImageView = (ImageView) mainView.findViewById(R.id.businessProfileIcon_ProfileV2);
                             if (Constants.IMAGEURIUPLOADED == false) {
-
-                                String baseNameProfileImage = "https://api.withfloats.com/" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
-                                Picasso.with(activity)
-                                        .load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
-
+                                String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
+                                if(iconUrl.length()>0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
+                                    String baseNameProfileImage = "https://api.withfloats.com/" + iconUrl;
+                                    Picasso.with(activity)
+                                            .load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
+                                }else {
+                                    Picasso.with(activity)
+                                            .load(iconUrl).placeholder(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
+                                }
                             }
                             //session.getIsSignUpFromFacebook().contains("true")
                             if (session.getIsSignUpFromFacebook().contains("true")) {

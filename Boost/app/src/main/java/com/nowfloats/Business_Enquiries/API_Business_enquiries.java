@@ -161,69 +161,71 @@ public class API_Business_enquiries {
                     Long epochTime = Long.parseLong(dateString);
 
                     Date date = new Date(epochTime);
-                    DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");//dd/MM/yyyy HH:mm:ss
+//                    DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");//dd/MM/yyyy HH:mm:ss
+                    DateFormat format = new SimpleDateFormat("MMMM dd, yyyy  |  HH:mm aa");
                     format.setTimeZone(TimeZone.getDefault());
                     if(date != null)
                         dateTime = format.format(date);
-                    if(!Util.isNullOrEmpty(dateTime)){
-                        temp = dateTime.split(" ");
-                        temp = temp[0].split("-");
-                    }
-                    if(temp.length >0){
-                        int month = Integer.parseInt(temp[1]);
-                        switch (month) {
-                            case 01:
-                                temp[0] = Util.AddSuffixForDay(temp[0]);
-                                formatted = temp[0]+" January, "+temp[2];
-                                break;
-                            case 2:
-                                temp[0] = Util.AddSuffixForDay(temp[0]);
-                                formatted = temp[0]+" February, "+temp[2];
-                                break;
-                            case 3:
-                                temp[0] = Util.AddSuffixForDay(temp[0]);
-                                formatted = temp[0]+" March, "+temp[2];
-                                break;
-                            case 4:
-                                temp[0] = Util.AddSuffixForDay(temp[0]);
-                                formatted = temp[0]+" April, "+temp[2];
-                                break;
-                            case 5:
-                                temp[0] = Util.AddSuffixForDay(temp[0]);
-                                formatted = temp[0]+" May, "+temp[2];
-                                break;
-                            case 6:
-                                temp[0] = Util.AddSuffixForDay(temp[0]);
-                                formatted = temp[0]+" June, "+temp[2];
-                                break;
-                            case 7:
-                                temp[0] = Util.AddSuffixForDay(temp[0]);
-                                formatted = temp[0]+" July, "+temp[2];
-                                break;
-                            case 8:
-                                temp[0] = Util.AddSuffixForDay(temp[0]);
-                                formatted = temp[0]+" August, "+temp[2];
-                                break;
-                            case 9:
-                                temp[0] = Util.AddSuffixForDay(temp[0]);
-                                formatted = temp[0]+" September, "+temp[2];
-                                break;
-                            case 10:
-                                temp[0] = Util.AddSuffixForDay(temp[0]);
-                                formatted = temp[0]+" October, "+temp[2];
-                                break;
-                            case 11:
-                                temp[0] = Util.AddSuffixForDay(temp[0]);
-                                formatted = temp[0]+" November, "+temp[2];
-                                break;
-                            case 12:
-                                temp[0] = Util.AddSuffixForDay(temp[0]);
-                                formatted = temp[0]+" December, "+temp[2];
-                                break;
-                        }
-                    }
+                    formatted = dateTime;
+//                    if(!Util.isNullOrEmpty(dateTime)){
+//                        temp = dateTime.split(" ");
+//                        temp = temp[0].split("-");
+//                    }
+//                    if(temp.length >0){
+//                        int month = Integer.parseInt(temp[1]);
+//                        switch (month) {
+//                            case 01:
+//                                temp[0] = Util.AddSuffixForDay(temp[0]);
+//                                formatted = temp[0]+" January, "+temp[2];
+//                                break;
+//                            case 2:
+//                                temp[0] = Util.AddSuffixForDay(temp[0]);
+//                                formatted = temp[0]+" February, "+temp[2];
+//                                break;
+//                            case 3:
+//                                temp[0] = Util.AddSuffixForDay(temp[0]);
+//                                formatted = temp[0]+" March, "+temp[2];
+//                                break;
+//                            case 4:
+//                                temp[0] = Util.AddSuffixForDay(temp[0]);
+//                                formatted = temp[0]+" April, "+temp[2];
+//                                break;
+//                            case 5:
+//                                temp[0] = Util.AddSuffixForDay(temp[0]);
+//                                formatted = temp[0]+" May, "+temp[2];
+//                                break;
+//                            case 6:
+//                                temp[0] = Util.AddSuffixForDay(temp[0]);
+//                                formatted = temp[0]+" June, "+temp[2];
+//                                break;
+//                            case 7:
+//                                temp[0] = Util.AddSuffixForDay(temp[0]);
+//                                formatted = temp[0]+" July, "+temp[2];
+//                                break;
+//                            case 8:
+//                                temp[0] = Util.AddSuffixForDay(temp[0]);
+//                                formatted = temp[0]+" August, "+temp[2];
+//                                break;
+//                            case 9:
+//                                temp[0] = Util.AddSuffixForDay(temp[0]);
+//                                formatted = temp[0]+" September, "+temp[2];
+//                                break;
+//                            case 10:
+//                                temp[0] = Util.AddSuffixForDay(temp[0]);
+//                                formatted = temp[0]+" October, "+temp[2];
+//                                break;
+//                            case 11:
+//                                temp[0] = Util.AddSuffixForDay(temp[0]);
+//                                formatted = temp[0]+" November, "+temp[2];
+//                                break;
+//                            case 12:
+//                                temp[0] = Util.AddSuffixForDay(temp[0]);
+//                                formatted = temp[0]+" December, "+temp[2];
+//                                break;
+//                        }
+//                    }
 
-                    data.CreatedDate = formatted;
+                    data.CreatedDate = formatted.replace("am","AM").replace("pm","PM");
                     Constants.StorebizEnterpriseQueries.add(data);
                 }
                 }
@@ -249,68 +251,70 @@ public class API_Business_enquiries {
                 Long epochTime = Long.parseLong(dateString);
 
                 Date date = new Date(epochTime);
-                DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");//dd/MM/yyyy HH:mm:ss
+//                DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");//dd/MM/yyyy HH:mm:ss
+                DateFormat format = new SimpleDateFormat("MMMM dd, yyyy  |  HH:mm aa");
                 format.setTimeZone(TimeZone.getDefault());
                 if(date != null)
                     dateTime = format.format(date);
-                if(!Util.isNullOrEmpty(dateTime)){
-                    temp = dateTime.split(" ");
-                    temp = temp[0].split("-");
-                }
-                if(temp.length >0){
-                    int month = Integer.parseInt(temp[1]);
-                    switch (month) {
-                        case 01:
-                            temp[0] = Util.AddSuffixForDay(temp[0]);
-                            formatted = temp[0]+" January, "+temp[2];
-                            break;
-                        case 2:
-                            temp[0] = Util.AddSuffixForDay(temp[0]);
-                            formatted = temp[0]+" February, "+temp[2];
-                            break;
-                        case 3:
-                            temp[0] = Util.AddSuffixForDay(temp[0]);
-                            formatted = temp[0]+" March, "+temp[2];
-                            break;
-                        case 4:
-                            temp[0] = Util.AddSuffixForDay(temp[0]);
-                            formatted = temp[0]+" April, "+temp[2];
-                            break;
-                        case 5:
-                            temp[0] = Util.AddSuffixForDay(temp[0]);
-                            formatted = temp[0]+" May, "+temp[2];
-                            break;
-                        case 6:
-                            temp[0] = Util.AddSuffixForDay(temp[0]);
-                            formatted = temp[0]+" June, "+temp[2];
-                            break;
-                        case 7:
-                            temp[0] = Util.AddSuffixForDay(temp[0]);
-                            formatted = temp[0]+" July, "+temp[2];
-                            break;
-                        case 8:
-                            temp[0] = Util.AddSuffixForDay(temp[0]);
-                            formatted = temp[0]+" August, "+temp[2];
-                            break;
-                        case 9:
-                            temp[0] = Util.AddSuffixForDay(temp[0]);
-                            formatted = temp[0]+" September, "+temp[2];
-                            break;
-                        case 10:
-                            temp[0] = Util.AddSuffixForDay(temp[0]);
-                            formatted = temp[0]+" October, "+temp[2];
-                            break;
-                        case 11:
-                            temp[0] = Util.AddSuffixForDay(temp[0]);
-                            formatted = temp[0]+" November, "+temp[2];
-                            break;
-                        case 12:
-                            temp[0] = Util.AddSuffixForDay(temp[0]);
-                            formatted = temp[0]+" December, "+temp[2];
-                            break;
-                    }
-                }
-                data.createdOn = formatted;
+                formatted = dateTime;
+//                if(!Util.isNullOrEmpty(dateTime)){
+//                    temp = dateTime.split(" ");
+//                    temp = temp[0].split("-");
+//                }
+//                if(temp.length >0){
+//                    int month = Integer.parseInt(temp[1]);
+//                    switch (month) {
+//                        case 01:
+//                            temp[0] = Util.AddSuffixForDay(temp[0]);
+//                            formatted = temp[0]+" January, "+temp[2];
+//                            break;
+//                        case 2:
+//                            temp[0] = Util.AddSuffixForDay(temp[0]);
+//                            formatted = temp[0]+" February, "+temp[2];
+//                            break;
+//                        case 3:
+//                            temp[0] = Util.AddSuffixForDay(temp[0]);
+//                            formatted = temp[0]+" March, "+temp[2];
+//                            break;
+//                        case 4:
+//                            temp[0] = Util.AddSuffixForDay(temp[0]);
+//                            formatted = temp[0]+" April, "+temp[2];
+//                            break;
+//                        case 5:
+//                            temp[0] = Util.AddSuffixForDay(temp[0]);
+//                            formatted = temp[0]+" May, "+temp[2];
+//                            break;
+//                        case 6:
+//                            temp[0] = Util.AddSuffixForDay(temp[0]);
+//                            formatted = temp[0]+" June, "+temp[2];
+//                            break;
+//                        case 7:
+//                            temp[0] = Util.AddSuffixForDay(temp[0]);
+//                            formatted = temp[0]+" July, "+temp[2];
+//                            break;
+//                        case 8:
+//                            temp[0] = Util.AddSuffixForDay(temp[0]);
+//                            formatted = temp[0]+" August, "+temp[2];
+//                            break;
+//                        case 9:
+//                            temp[0] = Util.AddSuffixForDay(temp[0]);
+//                            formatted = temp[0]+" September, "+temp[2];
+//                            break;
+//                        case 10:
+//                            temp[0] = Util.AddSuffixForDay(temp[0]);
+//                            formatted = temp[0]+" October, "+temp[2];
+//                            break;
+//                        case 11:
+//                            temp[0] = Util.AddSuffixForDay(temp[0]);
+//                            formatted = temp[0]+" November, "+temp[2];
+//                            break;
+//                        case 12:
+//                            temp[0] = Util.AddSuffixForDay(temp[0]);
+//                            formatted = temp[0]+" December, "+temp[2];
+//                            break;
+//                    }
+//                }
+                data.createdOn = formatted.replace("am","AM").replace("pm","PM");
                 Constants.StorebizQueries.add(data);
             }
         }

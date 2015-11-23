@@ -26,7 +26,6 @@ public class MixPanelController {
 			messageFloat = "MessageFloat", feedback = "SendEmailActivity",
 			MessageDetailView = "MessageDetailView";
 	private static String KEY = "";
-
 	public static MixpanelAPI.People people = null;
 
 	public static void setMixPanel(Activity app, String key) {
@@ -34,10 +33,10 @@ public class MixPanelController {
 		if (mixPanel != null)
 			mixPanel.flush();
         /** Boost App **/
-//		mixPanel = MixpanelAPI.getInstance(app,"7d962760bccee86ab026331478d49bab");
+		mixPanel = MixpanelAPI.getInstance(app,"7d962760bccee86ab026331478d49bab");
 
         /**New Test Id**/
-        mixPanel = MixpanelAPI.getInstance(app,"21d1bf26130e59cc8a0189372c010c25");
+//        mixPanel = MixpanelAPI.getInstance(app,"21d1bf26130e59cc8a0189372c010c25");
 
         /**Not been used**/
 //        mixPanel = MixpanelAPI.getInstance(app,       // Test Account

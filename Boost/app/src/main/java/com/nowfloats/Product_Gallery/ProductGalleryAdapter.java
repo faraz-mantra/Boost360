@@ -78,8 +78,16 @@ public class ProductGalleryAdapter extends BaseAdapter {
             viewHolder.Product_Name.setText(productItemModel.Name);
             ImageView imageView = viewHolder.ProductImageView;
             Picasso picasso = Picasso.with(activity);
-            String image_url = Constants.NOW_FLOATS_API_URL+productItemModel.TileImageUri;
-            picasso.load(image_url).placeholder(R.drawable.default_product_image).into(imageView);
+            String image_url = productItemModel.TileImageUri;
+            if(image_url!=null && image_url.length()>0 && !image_url.equals("null")) {
+                if (!image_url.contains("http")) {
+                    image_url = Constants.NOW_FLOATS_API_URL + productItemModel.TileImageUri;
+                }
+                picasso.load(image_url).placeholder(R.drawable.default_product_image).into(imageView);
+            }else{
+                picasso.load(R.drawable.default_product_image).into(imageView);
+            }
+
             String originalPrice = productItemModel.Price;
             String disc = productItemModel.DiscountAmount;
             if (disc!=null && disc.trim().length()>0

@@ -5,11 +5,11 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#ECECEC"
+    android:background="@color/screen_bg"
     tools:context="com.nowfloats.CustomPage.CustomPageActivity">
-    <include
+    <!--<include
         android:id="@+id/tool_bar_product_detail"
-        layout="@layout/tool_bar_card" />
+        layout="@layout/tool_bar_card" />-->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -17,7 +17,7 @@
             android:id="@+id/custompage_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:scrollbars="vertical" />
         <LinearLayout
             android:id="@+id/emptycustompage"
@@ -45,8 +45,9 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:textColor="@color/zeroth_grey"
+                android:padding="8dp"
                 android:gravity="center"
-                android:text="Use custom pages to describe your business\nofferings in detail. You can add and format\nparagraphs of text, links and images!"/>
+                android:text="Use custom pages to describe your business offerings in detail. You can add and format paragraphs of text, links and images!"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/progress_custom_page"

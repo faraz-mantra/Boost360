@@ -35,23 +35,25 @@ public class ProductAPIService {
             PDinterface.getProducts(map, new Callback<ArrayList<ProductListModel>>() {
                 @Override
                 public void success(ArrayList<ProductListModel> data, Response response) {
-                    if (map.get("skipBy").equals("0") && Product_Detail_Activity.replaceImage) {
-                        Product_Gallery_Fragment.productItemModelList = data;
-                        activity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (Product_Gallery_Fragment.progressLayout!=null)
-                                    Product_Gallery_Fragment.progressLayout.setVisibility(View.GONE);
-                            }
-                        });
-                    }
-                    if(bus!=null){
-                        if (map.get("skipBy").equals("0")){
-                            bus.post(data);
-                        }else {
-                            bus.post(new LoadMoreProductEvent(data));
+                    try {
+                        if (map.get("skipBy").equals("0") && Product_Detail_Activity.replaceImage) {
+                            Product_Gallery_Fragment.productItemModelList = data;
+                            activity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (Product_Gallery_Fragment.progressLayout != null)
+                                        Product_Gallery_Fragment.progressLayout.setVisibility(View.GONE);
+                                }
+                            });
                         }
-                    }
+                        if (bus != null) {
+                            if (map.get("skipBy").equals("0")) {
+                                bus.post(data);
+                            } else {
+                                bus.post(new LoadMoreProductEvent(data));
+                            }
+                        }
+                    }catch(Exception e){e.printStackTrace();}
                 }
 
                 @Override

@@ -66,19 +66,23 @@ public class ImageAdapter extends PagerAdapter{
         Log.d("ImageAdapter","server position : "+serverImage);
         //Log.d(TAG, "Server Image : "+serverImage);
         String baseName = serverImage;
-        if(!serverImage.contains("Android"))
-        {
-            baseName = "https://api.withfloats.com"+serverImage;
-            Log.d("ImageAdapter","Base Name : "+baseName);
-//            imageLoader.displayImage(baseName, imageView, options);
+        if(serverImage!=null && serverImage.length()>0 && !serverImage.equals("null")) {
+            if (!serverImage.contains("http")) {
+                if (!serverImage.contains("Android")) {
+                    baseName = "https://api.withfloats.com" + serverImage;
+                    Log.d("ImageAdapter", "Base Name : " + baseName);
+                    //            imageLoader.displayImage(baseName, imageView, options);
+                } else {
+                    //baseName = imagesList.get(position).substring(imagesList.get(position).lastIndexOf('/')+1).trim();
+                    //baseName = OtherImagesFragment.imageUrl;
+                    //            imageLoader.displayImage("file://"+	baseName, imageView, options);
+                }
+            } else {
+                baseName = serverImage;
+            }
+            Picasso.with(context).load(baseName).placeholder(R.drawable.default_product_image).into(imageView);
+            container.addView(imageView, 0);
         }
-        else{
-            //baseName = imagesList.get(position).substring(imagesList.get(position).lastIndexOf('/')+1).trim();
-            //baseName = OtherImagesFragment.imageUrl;
-//            imageLoader.displayImage("file://"+	baseName, imageView, options);
-        }
-        Picasso.with(context).load(baseName).placeholder(R.drawable.default_product_image).into(imageView);
-        container.addView(imageView, 0);
         return imageView;
     }
 

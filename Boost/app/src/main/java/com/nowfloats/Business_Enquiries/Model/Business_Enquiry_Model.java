@@ -10,4 +10,7 @@ public class Business_Enquiry_Model {
     public String entityId;
     public String entityMessage;
     public String entityType;
+    public String messageUrl;
+    public String entityUrl;
 }
+

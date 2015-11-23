@@ -31,7 +31,6 @@ public class ViewPagerAdapter extends PagerAdapter {
         this.activity = activity;
         this.imagePaths = imagePaths;
         this.designLayout=layout;
-
         inflater = (LayoutInflater) activity
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -54,7 +53,10 @@ public class ViewPagerAdapter extends PagerAdapter {
         try {
             Picasso picasso = Picasso.with(activity);
             ImageViewTouch imgDisplay = (ImageViewTouch) viewLayout.findViewById(R.id.pinchImage);
-            String url = Constants.NOW_FLOATS_API_URL  + imagePaths.get(position).imageUri;
+            String url = imagePaths.get(position).imageUri;
+            if(!url.contains("http")){
+                url = Constants.NOW_FLOATS_API_URL  + imagePaths.get(position).imageUri;
+            }
             picasso.load(url).into(imgDisplay);
             ((ViewPager) container).addView(viewLayout);
         } catch (Exception exp) {

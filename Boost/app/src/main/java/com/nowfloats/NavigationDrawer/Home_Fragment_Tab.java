@@ -5,17 +5,20 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.AlertCountEvent;
 import com.nowfloats.NotificationCenter.NotificationFragment;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -33,6 +36,8 @@ public class Home_Fragment_Tab extends Fragment {
     private Bus bus;
     public Activity activity;
     LinearLayout progressLayout;
+    private MaterialDialog materialDialog;
+
     @Override
     public void onResume() {
         super.onResume();
@@ -65,6 +70,7 @@ public class Home_Fragment_Tab extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                if(activity==null){activity = getActivity();}
                 tabPagerAdapter = new TabPagerAdapter(getChildFragmentManager(), activity);
             }
         }).start();
@@ -100,6 +106,53 @@ public class Home_Fragment_Tab extends Fragment {
         viewPager = (ViewPager) view.findViewById(R.id.homeTabViewpager);
         alertCountTv = (TextView)view.findViewById(R.id.alert_count_textview);
         alertCountTv.setVisibility(View.GONE);
+        viewPager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(Home_Main_Fragment.recentPostEvent!=null){
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+
+                    try{
+                        if (materialDialog!=null && materialDialog.isShowing()){
+                            materialDialog.dismiss();
+                        }
+                        materialDialog = new MaterialDialog.Builder(activity)
+                                .title("Update not fully done!!!")
+                                .content("Do you want to cancel?")
+                                .positiveText("Yes")
+                                .negativeText("No")
+                                .positiveColorRes(R.color.primaryColor)
+                                .callback(new MaterialDialog.ButtonCallback() {
+                                    @Override
+                                    public void onPositive(MaterialDialog dialog) {
+                                        super.onPositive(dialog);
+                                        try {
+                                            Home_Main_Fragment.facebookPostCount = 0;
+                                            Home_Main_Fragment.recentPostEvent = null;
+                                            Home_Main_Fragment.progressBar.setVisibility(View.GONE);
+                                            Home_Main_Fragment.retryLayout.setVisibility(View.GONE);
+                                            Home_Main_Fragment.progressCrd.setVisibility(View.GONE);
+                                            Constants.createMsg = false;
+                                        }catch(Exception e){e.printStackTrace();}
+                                        dialog.dismiss();
+                                    }
+
+                                    @Override
+                                    public void onNegative(MaterialDialog dialog) {
+                                        super.onNegative(dialog);
+                                        dialog.dismiss();
+                                    }
+                                }).show();
+                        materialDialog.setCancelable(false);
+
+                    }catch(Exception e){e.printStackTrace();}
+                    return true;
+                }else {
+                    return false;
+                }
+            }
+        });
+
         new Thread(new Runnable() {
             @Override
             public void run() {

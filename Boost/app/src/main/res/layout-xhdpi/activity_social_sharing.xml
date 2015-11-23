@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:background="#D1D1D1">
+    android:background="@color/screen_bg">
 
 
     <include
@@ -29,7 +29,8 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
-            card_view:cardCornerRadius="1dp"
+            card_view:cardCornerRadius="3dp"
+            app:cardElevation="3dp"
             android:background="@color/white">
 
             <LinearLayout
@@ -211,7 +212,8 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
-            card_view:cardCornerRadius="1dp"
+            card_view:cardCornerRadius="3dp"
+            android:elevation="3dp"
             android:background="@color/white">
 
             <LinearLayout

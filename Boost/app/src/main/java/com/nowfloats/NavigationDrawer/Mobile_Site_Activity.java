@@ -3,6 +3,9 @@ package com.nowfloats.NavigationDrawer;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -10,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nowfloats.util.Methods;
@@ -32,19 +36,28 @@ public class Mobile_Site_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mobile__site);
         Methods.isOnline(Mobile_Site_Activity.this);
+        PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.MULTIPLY);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             url = extras.getString("WEBSITE_NAME");
         }
 
-        TextView close = (TextView)findViewById(R.id.close_web);
+        /*TextView close = (TextView)findViewById(R.id.close_web);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
-        });
+        });*/
 
+        ImageView back = (ImageView)findViewById(R.id.back_web);
+        back.setColorFilter(whiteLabelFilter);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         webView = (WebView)findViewById(R.id.webView1);
         startWebView(url);
     }

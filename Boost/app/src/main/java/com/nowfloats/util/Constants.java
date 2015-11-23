@@ -113,7 +113,7 @@ public class Constants {
 	public static String BackgroundImageUpload      = NOW_FLOATS_API_URL + "/Discover/v1/floatingpoint/createBackgroundImage/";
 	public static String GetBackgroundImage         = NOW_FLOATS_API_URL + "/discover/v1/floatingpoint/getBackgroundImages/";
 	public static String DelBackgroundImage         = NOW_FLOATS_API_URL + "/discover/v1/floatingpoint/backgroundImage/delete";
-	public static String DelBackImg                 = NOW_FLOATS_API_URL + "/discover/v1/floatingpoint/backgroundImage/delete";;
+	public static String DelBackImg                 = NOW_FLOATS_API_URL + "/discover/v1/floatingpoint/backgroundImage/delete";
 	public static String ReplaceBackImg             = NOW_FLOATS_API_URL + "/discover/v1/floatingpoint/replaceBackgroundImage/";
     public static String DeleteCard                 = NOW_FLOATS_API_URL + "/Discover/v1/floatingPoint/archiveMessage";
 

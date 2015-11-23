@@ -8,6 +8,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.CustomWidget.HttpDeleteWithBody;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 import org.apache.http.HttpResponse;
@@ -86,6 +87,7 @@ public class SinglePageDeleteAsyncTask extends AsyncTask<String,String,String>{
             StatusLine status = response.getStatusLine();
             Log.i("Delete Page---", "status----" + status);
             if (status.getStatusCode() == 200) {
+                MixPanelController.track("DeleteCustomPage", null);
                 Log.i("Delete page...","Success");
                 flag = true;
             }else{

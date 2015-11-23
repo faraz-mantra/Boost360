@@ -59,6 +59,7 @@ public class PhotoAdapter extends ArrayAdapter<PhotoItem>{
 
         // Set the thumbnail
 //        int width = Integer.parseInt(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 90, context.getResources().getDisplayMetrics())+"");
+
         Picasso.with(context).load(photoItem.getmageUri().toString()).into(holder.photoImageView);
         return viewToUse;
     }

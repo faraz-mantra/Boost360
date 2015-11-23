@@ -2,8 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#ff747674">
-<LinearLayout
+    android:background="@color/screen_bg">
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -25,7 +25,7 @@
             android:indeterminate="false"
             android:maxHeight="10dip"
             android:minHeight="10dip"
-            android:progress="50"
+            android:progress="0"
             android:progressDrawable="@drawable/greenprogress" />
 
         <com.nowfloats.CustomWidget.roboto_lt_38_white
@@ -59,9 +59,10 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="11dp"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:layout_marginRight="11dp"
             android:gravity="left"
-            android:text="Complete the task below to increase your site score."
+            android:text="Complete the task below to increase your site health. Higher percentage translates more traffic to your site."
 
             />
 
@@ -72,6 +73,7 @@
             android:layout_marginLeft="11dp"
             android:layout_marginRight="11dp"
             android:gravity="left"
+            android:visibility="gone"
             android:text="Higher scores translates more traffic to your site."
             />
     </LinearLayout>

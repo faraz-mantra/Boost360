@@ -21,7 +21,22 @@
 
 -dontwarn org.apache.commons.codec.binary.Base64
 
+-dontwarn com.demach.konotor
+-dontwarn com.demach.konotor.KonotorFeedbackActivity
 -dontwarn com.demach.konotor.service.model.GetAllConversationResponse
+# Demach GSON files
+-keep class com.google.gson.demach.** {
+    <fields>;
+    <methods>;
+}
+
+-keep class com.demach.konotor.** { *; }
+
+# Demach model
+-keep class com.demach.** {
+    <fields>;
+    <methods>;
+}
 
  -keep class **.R$* {
     <fields>;

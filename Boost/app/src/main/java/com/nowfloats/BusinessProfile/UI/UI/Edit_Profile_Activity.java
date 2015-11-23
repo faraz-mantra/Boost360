@@ -51,7 +51,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
     public static String msgtxt4_name , msgtxt4buzzname ,msgtxt4buzzdescriptn ,msgtxtcategory;
     String[] profilesattr =new String[20];
     private String[] businessCategoryList;
-    public static TextView saveTextView;
+    public static ImageView saveTextView;
     ContentValues values;
     Uri imageUri ;
     private static final int GALLERY_PHOTO = 2;
@@ -59,9 +59,9 @@ public class Edit_Profile_Activity extends AppCompatActivity {
     Bitmap CameraBitmap;
     String path = null;
     String imageUrl ="";
-    public static ImageView editProfileImageView;
+    public static ImageView editProfileImageView,select_pic;
     UserSessionManager session ;
-    TextView yourName_textlineTextView,businessName_textlineTextView,businessDesciption_textlineTextView ;
+//    TextView yourName_textlineTextView,businessName_textlineTextView,businessDesciption_textlineTextView ;
 
 
     @Override
@@ -71,18 +71,19 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         Methods.isOnline(Edit_Profile_Activity.this);
 
         final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
-
+        final PorterDuffColorFilter whitecolorFilter = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_IN);
 
         session = new UserSessionManager(getApplicationContext(),Edit_Profile_Activity.this);
         editProfileImageView = (ImageView) findViewById(R.id.editbusinessprofileimage);
+        select_pic = (ImageView)findViewById(R.id.select_businessprofileimage);
         yourname = (EditText)findViewById(R.id.profileName);
         buzzname = (EditText)findViewById(R.id.businessName);
         category = (EditText)findViewById(R.id.businessCategory);
         buzzdescription = (EditText) findViewById(R.id.businessDesciption);
 
-        yourName_textlineTextView = (TextView) findViewById(R.id.yourName_textline);
-        businessName_textlineTextView = (TextView) findViewById(R.id.businessName_textline);
-        businessDesciption_textlineTextView = (TextView) findViewById(R.id.businessDesciption_textline);
+//        yourName_textlineTextView = (TextView) findViewById(R.id.yourName_textline);
+//        businessName_textlineTextView = (TextView) findViewById(R.id.businessName_textline);
+//        businessDesciption_textlineTextView = (TextView) findViewById(R.id.businessDesciption_textline);
 
         //category_text = (EditText) findViewById(R.id.buss_address_select_buzz_category);
 
@@ -93,7 +94,8 @@ public class Edit_Profile_Activity extends AppCompatActivity {
             }
         });
         toolbar = (Toolbar) findViewById(R.id.app_bar);
-        saveTextView = (TextView) toolbar.findViewById(R.id.saveTextView);
+        saveTextView = (ImageView) toolbar.findViewById(R.id.saveTextView);
+        saveTextView.setColorFilter(whitecolorFilter);
         TextView titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
         titleTextView.setText("Basic Information");
 
@@ -113,7 +115,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
 
 
 
-        editProfileImageView.setOnClickListener(new View.OnClickListener() {
+        select_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -163,11 +165,11 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                     msgtxt4_name = yourname.getText().toString().trim();
                     int len = s.length();//msgtxt4_name.length();
                     if (len > 0) {
-                        yourName_textlineTextView.setVisibility(View.VISIBLE);
+//                        yourName_textlineTextView.setVisibility(View.VISIBLE);
                         saveTextView.setVisibility(View.VISIBLE);
 //                        findViewById(R.id.buzz_profile_save_txt).setVisibility(View.VISIBLE);
                     } else {
-                        yourName_textlineTextView.setVisibility(View.GONE);
+//                        yourName_textlineTextView.setVisibility(View.GONE);
                         saveTextView.setVisibility(View.GONE);
 //                        findViewById(R.id.buzz_profile_save_txt).setVisibility(View.GONE);
                     }
@@ -231,11 +233,11 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                             .trim();
                     int len = s.length();//msgtxt4buzzname.length();
                     if (len > 0) {
-                        businessName_textlineTextView.setVisibility(View.VISIBLE);
+//                        businessName_textlineTextView.setVisibility(View.VISIBLE);
                         saveTextView.setVisibility(View.VISIBLE);
 //                        findViewById(R.id.buzz_profile_save_txt).setVisibility(View.VISIBLE);
                     } else {
-                        businessName_textlineTextView.setVisibility(View.GONE);
+//                        businessName_textlineTextView.setVisibility(View.GONE);
                         saveTextView.setVisibility(View.GONE);
 //                        findViewById(R.id.buzz_profile_save_txt).setVisibility(View.GONE);
                     }
@@ -266,11 +268,11 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                             .toString().trim();
                     int len = s.length();//msgtxt4buzzdescriptn.length();
                     if (len > 0) {
-                        businessDesciption_textlineTextView.setVisibility(View.VISIBLE);
+//                        businessDesciption_textlineTextView.setVisibility(View.VISIBLE);
                         saveTextView.setVisibility(View.VISIBLE);
 //                        findViewById(R.id.buzz_profile_save_txt).setVisibility(View.VISIBLE);
                     } else {
-                        businessDesciption_textlineTextView.setVisibility(View.GONE);
+//                        businessDesciption_textlineTextView.setVisibility(View.GONE);
                         saveTextView.setVisibility(View.GONE);
 //                        findViewById(R.id.buzz_profile_save_txt).setVisibility(View.GONE);
                     }
@@ -510,14 +512,19 @@ public class Edit_Profile_Activity extends AppCompatActivity {
        // String baseNameProfileImage = "https://api.withfloats.com/"+ Constants.storePrimaryImage;
         if(Constants.IMAGEURIUPLOADED == false)
         {
-            String baseNameProfileImage = "https://api.withfloats.com/" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
-            Picasso.with(Edit_Profile_Activity.this).load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(editProfileImageView);
+            String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
+            if(iconUrl.length()>0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
+                String baseNameProfileImage = "https://api.withfloats.com/" + iconUrl;
+                Picasso.with(Edit_Profile_Activity.this).load(baseNameProfileImage).placeholder(R.drawable.featured_photo_default).into(editProfileImageView);
+            }else{
+                Picasso.with(Edit_Profile_Activity.this).load(iconUrl).placeholder(R.drawable.featured_photo_default).into(editProfileImageView);
+            }
         }
 
         if(session.getIsSignUpFromFacebook().contains("true"))
         {
             Picasso.with(Edit_Profile_Activity.this)
-                    .load(session.getFacebookPageURL()).placeholder(R.drawable.business_edit_profile_icon)
+                    .load(session.getFacebookPageURL()).placeholder(R.drawable.featured_photo_default)
                             // optional
                    // .resize(150, 100)                        // optional
                     .rotate(90)                             // optional

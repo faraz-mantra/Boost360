@@ -353,7 +353,7 @@ public class PageFragment extends Fragment {
             BarDataSet barDataSet = new BarDataSet(entryList,"");
             barDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
             barDataSet.setColors(colorArray);
-            barDataSet.setValueTextSize(15.0f);
+            barDataSet.setValueTextSize(12.0f);
             barDataSet.setValueTypeface(customFont);
             //barDataSet.setValueTextColor(Color.argb(0,0,0,0));
 
@@ -390,7 +390,7 @@ public class PageFragment extends Fragment {
             BarDataSet barDataSet = new BarDataSet(entryList,"");
             barDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
             barDataSet.setColors(colorArray);
-            barDataSet.setValueTextSize(15.0f);
+            barDataSet.setValueTextSize(12.0f);
             barDataSet.setValueTypeface(customFont);
             //barDataSet.setValueTextColor(Color.argb(0,0,0,0));
 
@@ -412,6 +412,7 @@ public class PageFragment extends Fragment {
         }
         else if(mode == MODE_YEAR)
         {
+            boolean sizeBoolean = false;
             ArrayList<BarEntry> entryList = new ArrayList<BarEntry>();
             int[] monthWiseNumbers = { 0,0,0,0,0,0,0,0,0,0,0,0 };
             for(int i=0; i<valueArray.size(); i++)
@@ -419,14 +420,22 @@ public class PageFragment extends Fragment {
                 int k = Integer.parseInt(dateArray.get(i).substring(5,7)) - 1;
                 monthWiseNumbers[k] += valueArray.get(i);
             }
-            for(int i=0; i<12; i++)
+            for(int i=0; i<12; i++){
+                int lengthchk = (monthWiseNumbers[i]+"").length();
+                if(lengthchk>=6) {sizeBoolean = true;}
                 entryList.add(new BarEntry(monthWiseNumbers[i],i));
+            }
 
             BarDataSet barDataSet = new BarDataSet(entryList,"");
             barDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
             barDataSet.setColors(colorArray);
             barDataSet.setValueTypeface(customFont);
-            barDataSet.setValueTextSize(12.0f);
+            Log.d("Boo---",""+sizeBoolean);
+            if (sizeBoolean) {
+                barDataSet.setValueTextSize(7.0f);
+            }else {
+                barDataSet.setValueTextSize(10.0f);
+            }
            // barDataSet.setValueTextColor(Color.argb(0,0,0,0));
 
 

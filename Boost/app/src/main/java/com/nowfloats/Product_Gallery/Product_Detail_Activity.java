@@ -166,8 +166,13 @@ public class Product_Detail_Activity extends AppCompatActivity{
                 save.setVisibility(View.GONE);
                 title.setText("Edit Product");
                 //load image
-                String image_url = Constants.NOW_FLOATS_API_URL+product_data.TileImageUri;
-                Picasso.with(activity).load(image_url).placeholder(R.drawable.default_product_image).into(productImage);
+                String image_url = product_data.TileImageUri;
+                if(image_url!=null && image_url.length()>0 && !image_url.equals("null")) {
+                    if (!image_url.contains("http")) {
+                        image_url = Constants.NOW_FLOATS_API_URL + product_data.TileImageUri;
+                    }
+                    Picasso.with(activity).load(image_url).placeholder(R.drawable.default_product_image).into(productImage);
+                }
                 ViewCompat.setTransitionName(productImage, "imageKey");
                 //productName
                 String name = product_data.Name;
@@ -616,7 +621,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
 
         View view = dialog.getCustomView();
         TextView header = (TextView) view.findViewById(R.id.textview_heading);
-        if (replaceImage) header.setText("Replace Image"); else header.setText("Upload Image");
+        if (replaceImage) header.setText("Replace Photo"); else header.setText("Upload Photo");
         LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
         LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
         ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);

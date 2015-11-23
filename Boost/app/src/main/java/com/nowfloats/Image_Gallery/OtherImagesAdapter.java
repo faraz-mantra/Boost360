@@ -1,6 +1,12 @@
 package com.nowfloats.Image_Gallery;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Shader;
 import android.os.Handler;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -15,6 +21,7 @@ import android.widget.ImageView;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -124,24 +131,54 @@ public class OtherImagesAdapter extends BaseAdapter {
         //  Log.d(TAG,"server position : "+serverImage);
         //Log.d(TAG, "Server Image : "+serverImage);
         String baseName = serverImage;
+        if(serverImage!=null && serverImage.length()>0 && !serverImage.equals("null")) {
+            if (!serverImage.contains("http")) {
+                if (!serverImage.contains("Android")) {
+                    baseName = "https://api.withfloats.com/" + serverImage;
 
-        if(!serverImage.contains("Android"))
-        {
-            baseName = "https://api.withfloats.com/"+serverImage;
-
-            // Log.d(TAG,"Base Name : "+baseName);
-        }
-        else{
-            String fileName = imagesList.get(position).substring(imagesList.get(position).lastIndexOf('/')+1).trim();
-            //baseName = OtherImagesFragment.imageUrl;
+                    // Log.d(TAG,"Base Name : "+baseName);
+                } else {
+                    String fileName = imagesList.get(position).substring(imagesList.get(position).lastIndexOf('/') + 1).trim();
+                    //baseName = OtherImagesFragment.imageUrl;
 //            imageLoader.displayImage("file://"+	baseName, imageView, options);
-            Picasso.with(mContext).load("file://"+baseName).placeholder(R.drawable.gal).into(imageView);
-            return convertView;
-        }
+                    final int radius = 50;
+                    final int margin = 0;
+                    Transformation t = new Transformation() {
+                        @Override
+                        public Bitmap transform(Bitmap source) {
+                            final Paint paint = new Paint();
+                            paint.setAntiAlias(true);
+                            paint.setShader(new BitmapShader(source, Shader.TileMode.CLAMP,
+                                    Shader.TileMode.CLAMP));
 
+                            Bitmap output = Bitmap.createBitmap(source.getWidth(),
+                                    source.getHeight(), Bitmap.Config.ARGB_8888);
+                            Canvas canvas = new Canvas(output);
+                            canvas.drawRoundRect(new RectF(margin, margin, source.getWidth()
+                                    - margin, source.getHeight() - margin), radius, radius, paint);
+
+                            if (source != output) {
+                                source.recycle();
+                            }
+                            return output;
+                        }
+
+                        @Override
+                        public String key() {
+                            return "rounded";
+                        }
+                    };
+                    Picasso.with(mContext).load("file://" + baseName).transform(t).placeholder(R.drawable.gal).into(imageView);
+                    return convertView;
+                }
+            } else {
+                baseName = serverImage;
+            }
 //        imageLoader.displayImage(baseName, imageView, options);
-        Picasso.with(mContext).load(baseName).placeholder(R.drawable.gal).into(imageView);
-
+            Picasso.with(mContext).load(baseName).placeholder(R.drawable.gal).into(imageView);
+        }else{
+            Picasso.with(mContext).load(R.drawable.gal).into(imageView);
+        }
         return convertView;
     }
     OnCheckedChangeListener mCheckedChangeListener = new OnCheckedChangeListener() {
