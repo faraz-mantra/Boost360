@@ -86,6 +86,7 @@ public class GetGalleryImagesAsyncTask_Interface extends AsyncTask<Void,String, 
                                     for(int i =0 ; i < len ; i++){
                                         Constants.storeSecondaryImages.add(array.getString(i));
                                     }
+                                    Constants.storeActualSecondaryImages = Constants.storeSecondaryImages;
                                 }
                             }
                         }
@@ -94,7 +95,7 @@ public class GetGalleryImagesAsyncTask_Interface extends AsyncTask<Void,String, 
 					}
 				}
 
-                if (response.contains("SecondaryImages")) {
+                /*if (response.contains("SecondaryImages")) {
                     try {
                         if (store!=null && store.getJSONArray("SecondaryImages")!=null){
                             JSONArray array = store.getJSONArray("SecondaryImages");
@@ -112,7 +113,7 @@ public class GetGalleryImagesAsyncTask_Interface extends AsyncTask<Void,String, 
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }
+                }*/
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
