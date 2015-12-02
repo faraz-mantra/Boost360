@@ -15,6 +15,7 @@ import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.NotificationCenter.NotificationInterface;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -26,6 +27,7 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import retrofit.Callback;
@@ -43,6 +45,15 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         setContentView(R.layout.activity_splash_screen_);
         Methods.isOnline(SplashScreen_Activity.this);
         Log.d("Splash Screen", "Splash Screen");
+
+       /* try {
+            Constants.restAdapter = Methods.createAdapter(this,Constants.NOW_FLOATS_API_URL);
+            Constants.validEmailAdapter = Methods.createAdapter(this,"https://bpi.briteverify.com");
+            Constants.alertInterface = Constants.restAdapter.create(NotificationInterface.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
 
         Constants.deviceId = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
         Log.d("Device ID","Device ID : "+Constants.deviceId);

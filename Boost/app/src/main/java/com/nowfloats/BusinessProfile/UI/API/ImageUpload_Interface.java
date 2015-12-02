@@ -1,5 +1,7 @@
 package com.nowfloats.BusinessProfile.UI.API;
 
+import com.nowfloats.util.Constants;
+
 import java.util.HashMap;
 
 import retrofit.Callback;
@@ -18,7 +20,7 @@ import retrofit.mime.TypedFile;
  */
 public interface ImageUpload_Interface {
 
-    public static final String BASE_URL = "https://api.withfloats.com";
+    public static final String BASE_URL = Constants.NOW_FLOATS_API_URL+"";
 
 
 //    @Multipart

@@ -55,7 +55,7 @@ public class ViewPagerAdapter extends PagerAdapter {
             ImageViewTouch imgDisplay = (ImageViewTouch) viewLayout.findViewById(R.id.pinchImage);
             String url = imagePaths.get(position).imageUri;
             if(!url.contains("http")){
-                url = Constants.NOW_FLOATS_API_URL  + imagePaths.get(position).imageUri;
+                url = Constants.BASE_IMAGE_URL  + imagePaths.get(position).imageUri;
             }
             picasso.load(url).into(imgDisplay);
             ((ViewPager) container).addView(viewLayout);

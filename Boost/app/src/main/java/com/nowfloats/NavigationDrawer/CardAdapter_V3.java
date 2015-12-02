@@ -194,7 +194,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                                     try {
 
                                         if (imageShare.contains("BizImages")) {
-                                            url = new URL("https://api.withfloats.com/" + imageShare);
+                                            url = new URL(Constants.NOW_FLOATS_API_URL+"" + imageShare);
                                         } else {
                                             url = new URL(imageShare);
                                         }
@@ -300,7 +300,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                     {
                         imagePresent = true ;
                         imageView.setVisibility(View.VISIBLE);
-                        baseName = "https://api.withfloats.com/" + imageUri;
+                        baseName = Constants.BASE_IMAGE_URL + imageUri;
                         Picasso.with(appContext).load(baseName).placeholder(R.drawable.default_product_image).into(imageView);
 //                        imageLoader.displayImage(baseName,imageView,options);
                     }

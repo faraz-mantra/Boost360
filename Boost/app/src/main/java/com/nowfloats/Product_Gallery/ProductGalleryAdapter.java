@@ -81,7 +81,7 @@ public class ProductGalleryAdapter extends BaseAdapter {
             String image_url = productItemModel.TileImageUri;
             if(image_url!=null && image_url.length()>0 && !image_url.equals("null")) {
                 if (!image_url.contains("http")) {
-                    image_url = Constants.NOW_FLOATS_API_URL + productItemModel.TileImageUri;
+                    image_url = Constants.BASE_IMAGE_URL + productItemModel.TileImageUri;
                 }
                 picasso.load(image_url).placeholder(R.drawable.default_product_image).into(imageView);
             }else{

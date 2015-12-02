@@ -72,7 +72,7 @@ public class MessageTag_Async_Task extends AsyncTask<Void, String, String>{
 	{
 		
 		 
-		 String serverUri = "https://api.withfloats.com/Discover/v1/bizFloatForWeb/"+id+"?clientId="+ Constants.clientId;
+		 String serverUri = Constants.NOW_FLOATS_API_URL+"/Discover/v1/bizFloatForWeb/"+id+"?clientId="+ Constants.clientId;
 		//String serverUri = Constants.NOW_FLOATS_API_URL+"/"+Discover/v1/bizFloatForWeb/"+id+"?clientId="+Constants.clientId;
 		 
 		try {

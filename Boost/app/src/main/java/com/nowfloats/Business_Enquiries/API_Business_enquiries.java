@@ -246,7 +246,7 @@ public class API_Business_enquiries {
             for(int i = 0 ; i < response.size() ;i++)
             {
                 Business_Enquiry_Model data = response.get(i);
-                dateString = data.createdOn.replace("/Date(", "").replace("+0530)/", "");
+                dateString = data.createdOn.replace("/Date(", "").replace("+0000)/", "").replace("+0530)/", "");
 
                 Long epochTime = Long.parseLong(dateString);
 

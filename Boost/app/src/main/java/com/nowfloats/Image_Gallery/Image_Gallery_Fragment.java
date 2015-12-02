@@ -36,6 +36,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.RoundCorners_image;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
@@ -164,7 +165,7 @@ public class Image_Gallery_Fragment extends Fragment implements
 
         // File imgFile = new  File(imageFile);
         Bitmap myBitmap = null;
-        String baseName = "https://api.withfloats.com/"+imageFile;
+        String baseName = Constants.NOW_FLOATS_API_URL+""+imageFile;
 
 
 

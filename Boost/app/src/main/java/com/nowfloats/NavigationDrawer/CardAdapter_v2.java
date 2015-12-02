@@ -207,7 +207,7 @@ public class CardAdapter_v2 extends RecyclerView.Adapter<CardAdapter_v2.MyViewHo
                     imageView.setVisibility(View.GONE);
                 }
 
-                String baseName = "https://api.withfloats.com/" + imageUri;
+                String baseName = Constants.BASE_IMAGE_URL+"" + imageUri;
                 textViewName.setText(msg);
                 textViewEmail.setText(date);
 

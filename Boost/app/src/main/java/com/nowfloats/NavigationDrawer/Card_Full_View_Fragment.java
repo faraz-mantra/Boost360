@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.nowfloats.NavigationDrawer.API.MessageTag_Async_Task;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.Constants;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
@@ -212,7 +213,7 @@ public class Card_Full_View_Fragment extends Fragment {
         else if(imageUri.contains("BizImages") )
         {
             imageView.setVisibility(View.VISIBLE);
-            baseName = "https://api.withfloats.com/" + imageUri;
+            baseName = Constants.BASE_IMAGE_URL+"" + imageUri;
             Picasso.with(getActivity()).load(baseName).noPlaceholder().into(imageView);
 //                        imageLoader.displayImage(baseName,imageView,options);
         }

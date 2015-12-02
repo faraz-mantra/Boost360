@@ -169,7 +169,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
                 String image_url = product_data.TileImageUri;
                 if(image_url!=null && image_url.length()>0 && !image_url.equals("null")) {
                     if (!image_url.contains("http")) {
-                        image_url = Constants.NOW_FLOATS_API_URL + product_data.TileImageUri;
+                        image_url = Constants.BASE_IMAGE_URL + product_data.TileImageUri;
                     }
                     Picasso.with(activity).load(image_url).placeholder(R.drawable.default_product_image).into(productImage);
                 }

@@ -11,6 +11,7 @@ import com.nowfloats.util.DataBase;
 import com.nowfloats.util.Methods;
 import com.squareup.otto.Bus;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -49,7 +50,11 @@ public class API_Login {
         params.put("loginKey", userName);
         params.put("loginSecret", password);
         params.put("clientId", clientId);
-
+       /* try {
+            Constants.restAdapter = Methods.createAdapter(appContext,Constants.NOW_FLOATS_API_URL);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
         Login_Interface api_login_request = Constants.restAdapter.create(Login_Interface.class);
         api_login_request.authenticationProcess(params, new Callback<Login_Data_Model>() {
             @Override

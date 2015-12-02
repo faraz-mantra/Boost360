@@ -28,7 +28,6 @@ import retrofit.RestAdapter;
 
 
 public class Constants {
-
     public static  boolean LOGOUPLOADED = false ;
     public static  boolean IS_SUNDAY_CHECKED = false;
     public static  boolean IS_MONDAY_CHECKED = false;
@@ -69,7 +68,8 @@ public class Constants {
 	public static Activity home = null;
 
    // public final static String NOW_FLOATS_API_URL		=	"https://api.nowfloatsdev.com";
-    public final static String NOW_FLOATS_API_URL		=	"https://api.withfloats.com";
+    public final static String NOW_FLOATS_API_URL		=	"http://api.withfloats.com";
+    public final static String BASE_IMAGE_URL		    =	"http://content.withfloats.com";
    // public final static String NOW_FLOATS_API_URL		=	"https://nftestbed.azurewebsites.net";
 	public final static String HTTP_PUT				=	"PUT";
 	public final static String HTTP_POST				=	"POST";
@@ -78,10 +78,12 @@ public class Constants {
     //Retrofit Single Instance
     public static final RestAdapter chatRestAdapter = new RestAdapter.Builder().setEndpoint("http://dbapi.fostergem.com").build();
     public static final RestAdapter chatsendRestAdapter = new RestAdapter.Builder().setEndpoint("http://api.fostergem.com").build();
-    //
-    public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL).build();
-    public static final NotificationInterface alertInterface = restAdapter.create(NotificationInterface.class);
+
+//    public static RestAdapter validEmailAdapter = null;
     public static final RestAdapter validEmailAdapter = new RestAdapter.Builder().setEndpoint("https://bpi.briteverify.com").build();
+//    public static RestAdapter restAdapter = null;
+    public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL).build();
+    public static NotificationInterface alertInterface = Constants.restAdapter.create(NotificationInterface.class);
 
     //http://api.withfloats.com/Discover/v3/FloatingPoint/create
 	

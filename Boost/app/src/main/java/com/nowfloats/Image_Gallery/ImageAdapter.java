@@ -69,7 +69,7 @@ public class ImageAdapter extends PagerAdapter{
         if(serverImage!=null && serverImage.length()>0 && !serverImage.equals("null")) {
             if (!serverImage.contains("http")) {
                 if (!serverImage.contains("Android")) {
-                    baseName = "https://api.withfloats.com" + serverImage;
+                    baseName = Constants.BASE_IMAGE_URL+"" + serverImage;
                     Log.d("ImageAdapter", "Base Name : " + baseName);
                     //            imageLoader.displayImage(baseName, imageView, options);
                 } else {

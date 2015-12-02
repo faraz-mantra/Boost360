@@ -149,7 +149,7 @@ public class OtherImagesAdapter_Interface extends BaseAdapter {
 			String baseName = serverImage;
 			if(!serverImage.contains("Android"))
 			{
-				baseName = "https://api.withfloats.com/"+serverImage;
+				baseName = Constants.NOW_FLOATS_API_URL+""+serverImage;
 
                 Log.d(TAG,"Base Name : "+baseName);
 			}

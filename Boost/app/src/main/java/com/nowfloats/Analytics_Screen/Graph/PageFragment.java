@@ -698,7 +698,7 @@ public class PageFragment extends Fragment {
                     endDate = URLEncoder.encode(dateArray.get(dateArray.size()-1), "UTF-8");
 
                 String clientID = Constants.clientId;//URLEncoder.encode("DB96EA35A6E44C0F8FB4A6BAA94DB017C0DFBE6F9944B14AA6C3C48641B3D70", "UTF-8");
-                String starting = "https://api.withfloats.com/Dashboard/v1/"+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)+"/details?";
+                String starting = Constants.NOW_FLOATS_API_URL+"/Dashboard/v1/"+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)+"/details?";
                 String detailsType = URLEncoder.encode("0", "UTF-8");
                 String scope = URLEncoder.encode("0", "UTF-8");
 
@@ -845,7 +845,7 @@ public class PageFragment extends Fragment {
             try {
 
                 String clientID = URLEncoder.encode("DB96EA35A6E44C0F8FB4A6BAA94DB017C0DFBE6F9944B14AA6C3C48641B3D70", "UTF-8");
-                String starting = "https://api.withfloats.com/Dashboard/v1/TECHNEWS/details?";
+                String starting = Constants.NOW_FLOATS_API_URL+"/Dashboard/v1/TECHNEWS/details?";
                 String detailsType = URLEncoder.encode("0", "UTF-8");
                 String scope = URLEncoder.encode("0", "UTF-8");
 

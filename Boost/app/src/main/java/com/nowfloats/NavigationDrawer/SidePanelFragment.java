@@ -164,16 +164,19 @@ public class SidePanelFragment extends Fragment {
 
         //containerImage.setIm
         String category = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY);
-
         int Imagedrawable = getCategoryBackgroundImage(category);
 
         if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE).length()>0)
         {
             String baseNameProfileImage = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
             if(!baseNameProfileImage.contains("http")){
-                baseNameProfileImage = "https://api.withfloats.com/"+ session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
+                baseNameProfileImage = Constants.BASE_IMAGE_URL+""+ session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
             }
-            Picasso.with(getActivity()).load(baseNameProfileImage).placeholder(R.drawable.general_services_background_img).into(containerImage);
+            if (baseNameProfileImage!=null && baseNameProfileImage.length()>0) {
+                Picasso.with(getActivity()).load(baseNameProfileImage).placeholder(R.drawable.general_services_background_img).into(containerImage);
+            }else{
+                Picasso.with(getActivity()).load(R.drawable.general_services_background_img).into(containerImage);
+            }
 //            imageLoader.displayImage(baseNameProfileImage, containerImage);//
         } else {
             containerImage.setImageDrawable(getResources().getDrawable(Imagedrawable));
@@ -189,13 +192,18 @@ public class SidePanelFragment extends Fragment {
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
+
         if(Constants.IMAGEURIUPLOADED == false) {
             String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
             if(iconUrl.length()>0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
-                String baseNameProfileImage = "https://api.withfloats.com/" + iconUrl;
+                String baseNameProfileImage = Constants.BASE_IMAGE_URL + iconUrl;
                 Picasso.with(getActivity()).load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(iconImage);
             }else{
-                Picasso.with(getActivity()).load(iconUrl).placeholder(R.drawable.business_edit_profile_icon).into(iconImage);
+                if (iconUrl!=null && iconUrl.length()>0){
+                    Picasso.with(getActivity()).load(iconUrl).placeholder(R.drawable.business_edit_profile_icon).into(iconImage);
+                }else{
+                    Picasso.with(getActivity()).load(R.drawable.business_edit_profile_icon).into(iconImage);
+                }
             }
         }
 

@@ -514,10 +514,14 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         {
             String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
             if(iconUrl.length()>0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
-                String baseNameProfileImage = "https://api.withfloats.com/" + iconUrl;
+                String baseNameProfileImage = Constants.BASE_IMAGE_URL+"" + iconUrl;
                 Picasso.with(Edit_Profile_Activity.this).load(baseNameProfileImage).placeholder(R.drawable.featured_photo_default).into(editProfileImageView);
             }else{
-                Picasso.with(Edit_Profile_Activity.this).load(iconUrl).placeholder(R.drawable.featured_photo_default).into(editProfileImageView);
+                if(iconUrl!=null && iconUrl.length()>0){
+                    Picasso.with(Edit_Profile_Activity.this).load(iconUrl).placeholder(R.drawable.featured_photo_default).into(editProfileImageView);
+                }else{
+                    Picasso.with(Edit_Profile_Activity.this).load(R.drawable.featured_photo_default).into(editProfileImageView);
+                }
             }
         }
 

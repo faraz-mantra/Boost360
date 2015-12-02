@@ -104,7 +104,6 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         }
     }
     public static boolean deleteDir(File dir) {
-
         if (dir != null && dir.isDirectory()) {
             String[] children = dir.list();
             for (int i = 0; i < children.length; i++) {

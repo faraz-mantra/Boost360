@@ -290,7 +290,7 @@ public class StoreDataActivity extends AppCompatActivity {
                     String urlStr = product.Screenshots.get(i).imageUri;
                     if(urlStr!=null && urlStr.length()>0 && !urlStr.equals("null")) {
                         if (!urlStr.contains("http")) {
-                            urlStr = Constants.NOW_FLOATS_API_URL + product.Screenshots.get(i).imageUri;
+                            urlStr = Constants.BASE_IMAGE_URL + product.Screenshots.get(i).imageUri;
                         }
                         Uri uri = Uri.parse(urlStr);
                         mPhotoListItem.add(new PhotoItem(uri));

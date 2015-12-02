@@ -75,10 +75,14 @@ public class Business_Logo_Activity extends AppCompatActivity {
             if (Constants.LOGOUPLOADED == false) {
                 String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
                 if(iconUrl.length()>0 && !iconUrl.contains("http")) {
-                    String baseNameProfileImage = "https://api.withfloats.com/" + iconUrl;
+                    String baseNameProfileImage = Constants.BASE_IMAGE_URL+"" + iconUrl;
                     Picasso.with(this).load(baseNameProfileImage).placeholder(R.drawable.logo_default_image).into(logoimageView);
                 }else{
-                    Picasso.with(this).load(iconUrl).placeholder(R.drawable.logo_default_image).into(logoimageView);
+                    if(iconUrl!=null && iconUrl.length()>0) {
+                        Picasso.with(this).load(iconUrl).placeholder(R.drawable.logo_default_image).into(logoimageView);
+                    }else{
+                        Picasso.with(this).load(R.drawable.logo_default_image).into(logoimageView);
+                    }
                 }
             }
         }catch(Exception e){e.printStackTrace();System.gc();}

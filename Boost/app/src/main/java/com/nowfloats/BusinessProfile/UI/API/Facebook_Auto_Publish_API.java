@@ -26,7 +26,7 @@ public class Facebook_Auto_Publish_API {
 
         JSONObject obj = new JSONObject();
 
-        String url = "https://api.withfloats.com/Discover/v1/FloatingPoint/" +
+        String url = Constants.NOW_FLOATS_API_URL+"/Discover/v1/FloatingPoint/" +
                 "GetFacebookPullRegistrations/" +
                 fpID+"/" +
                 Constants.clientId;

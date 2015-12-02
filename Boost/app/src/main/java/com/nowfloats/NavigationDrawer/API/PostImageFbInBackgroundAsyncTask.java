@@ -66,7 +66,7 @@ public final class PostImageFbInBackgroundAsyncTask extends AsyncTask<Void,Strin
 			if(postUser!=null || postPage !=null)
 			{
 						
-						String url = "https://api.withfloats.com/Discover/v1/bizFloatForWeb/"+dealId+"?clientId="+ Constants.clientId;
+						String url = Constants.NOW_FLOATS_API_URL+"/Discover/v1/bizFloatForWeb/"+dealId+"?clientId="+ Constants.clientId;
 						try{
 							Thread.sleep(5000);
 						}

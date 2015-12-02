@@ -115,12 +115,16 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                             if (Constants.IMAGEURIUPLOADED == false) {
                                 String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
                                 if(iconUrl.length()>0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
-                                    String baseNameProfileImage = "https://api.withfloats.com/" + iconUrl;
+                                    String baseNameProfileImage = Constants.BASE_IMAGE_URL+"" + iconUrl;
                                     Picasso.with(activity)
                                             .load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
                                 }else {
-                                    Picasso.with(activity)
-                                            .load(iconUrl).placeholder(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
+                                    if(iconUrl!=null && iconUrl.length()>0) {
+                                        Picasso.with(activity)
+                                                .load(iconUrl).placeholder(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
+                                    }else{
+                                        Picasso.with(activity).load(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
+                                    }
                                 }
                             }
                             //session.getIsSignUpFromFacebook().contains("true")

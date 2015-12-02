@@ -621,7 +621,7 @@ public class Util {
     public static void storeImageInTemp(String storeImageUri, Context ctx) throws IOException {
 
         File outputFile = null;
-        String baseName = "https://api.withfloats.com/"+ storeImageUri;
+        String baseName = Constants.NOW_FLOATS_API_URL+""+ storeImageUri;
         URL wallpaperURL = null;
         try {
             wallpaperURL = new URL(baseName);
