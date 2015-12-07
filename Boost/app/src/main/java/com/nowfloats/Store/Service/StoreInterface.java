@@ -1,6 +1,7 @@
 package com.nowfloats.Store.Service;
 
 import com.nowfloats.Store.Model.EnablePackageResponse;
+import com.nowfloats.Store.Model.MailModel;
 import com.nowfloats.Store.Model.StoreMainModel;
 import com.nowfloats.Store.Model.StoreModel;
 
@@ -49,4 +50,8 @@ public interface StoreInterface {
     @Headers({"Content-Type: application/json","Accept: application/json"})
     @POST("/Support/v1/floatingpont/enablePackage")
     void enableWidgetPack(@Body HashMap<String,String> map, Callback<EnablePackageResponse> callback);
+
+    @Headers({"Content-Type: application/json","Accept: application/json"})
+    @POST("/Discover/v1/FloatingPoint/SendEmailWithPriority")
+    void mail(@Body MailModel data,Callback<String> callback);
 }

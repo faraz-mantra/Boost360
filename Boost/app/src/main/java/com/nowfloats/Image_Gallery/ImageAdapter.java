@@ -56,7 +56,7 @@ public class ImageAdapter extends PagerAdapter{
     public Object instantiateItem(ViewGroup container, int position) {
         Log.d("ImageAdapter","instantiateItem : Position "+position);
         ImageView imageView = new ImageView(context);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         int padding = context.getResources().getDimensionPixelSize(R.dimen.padding_medium);
 //        imageView.setPadding(padding, padding, padding, padding);
       //  imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);

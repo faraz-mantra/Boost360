@@ -2,7 +2,7 @@
 <resources>
 
     <string name="package_name_aviary">com.thinksity.AviaryCdsProvider</string>
-    <string name="app_name">Boost</string>
+    <string name="app_name">BedBath</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="next">Next</string>

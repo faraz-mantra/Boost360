@@ -21,6 +21,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Adapters.ExpandableListAdapter;
 import com.nowfloats.Store.Adapters.PhotoAdapter;
 import com.nowfloats.Store.Model.EnablePackageResponse;
+import com.nowfloats.Store.Model.MailModel;
 import com.nowfloats.Store.Model.PhotoItem;
 import com.nowfloats.Store.Model.StoreModel;
 import com.nowfloats.Store.Model.WidgetPacks;
@@ -129,7 +130,6 @@ public class StoreDataActivity extends AppCompatActivity {
                 ProductPrice = (TextView) findViewById(R.id.product_price);
                 product_validity = (TextView) findViewById(R.id.product_validity);
 
-
 //                if (("91").equals(countryPhoneCode)){
                 if (product.ExternalApplicationDetails==null || product.ExternalApplicationDetails.equals("null")
                         || product.ExternalApplicationDetails.size()==0){
@@ -149,10 +149,58 @@ public class StoreDataActivity extends AppCompatActivity {
 //                        if (sessionManager.getWildFirePurchase()){ProductPrice.setText("Already requested");
 //                            product_pay.setBackgroundColor(getResources().getColor(R.color.greenDark));}
 //                    }
+                    try {
+                        if (product.Name.equalsIgnoreCase("NowFloats Dictate") || product.Name.equalsIgnoreCase("NowFloats WildFire")) {
+                            ProductPrice.setText("Contact Us");
+                        }
+                    }catch(Exception e){e.printStackTrace();}
 
                     product_pay.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            if(ProductPrice.getText().toString().equalsIgnoreCase("Contact Us")){
+                                try {
+                                    StoreInterface anInterface = Constants.restAdapter.create(StoreInterface.class);
+                                    ArrayList<String> emailList = new ArrayList<String>();
+                                    emailList.add("leads@nowfloats.com");
+
+                                    String tag = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toString().toUpperCase();
+                                    String subj = "Request to activate "+product.Name +" "+ tag+ " site";
+                                    String mailMsg = "Tag: "+tag+"<br>Package Name: "+product.Name+"<br>Package Id: "+product._id
+                                            +"<br>Account Manager Id: "+ soureClientId;
+                                    anInterface.mail(new MailModel(soureClientId, mailMsg,subj, emailList),
+                                            new Callback<String>() {
+                                                @Override
+                                                public void success(String s, Response response) {
+                                                    ProductPrice.setText("Already requested");
+                                                    product_pay.setBackgroundColor(getResources().getColor(R.color.greenDark));
+                                                    new MaterialDialog.Builder(StoreDataActivity.this)
+                                                            .title("Thank you for your interest!")
+                                                            .content("Our team will get in touch with you within 48 hours to tell you more about our pricing plans.")
+                                                            .negativeText("Ok")
+                                                            .negativeColorRes(R.color.light_gray)
+                                                            .callback(new MaterialDialog.ButtonCallback() {
+                                                                @Override
+                                                                public void onNegative(MaterialDialog dialog) {
+                                                                    super.onNegative(dialog);
+                                                                    dialog.dismiss();
+                                                                }
+                                                            }).show();
+                                                }
+
+                                                @Override
+                                                public void failure(RetrofitError error) {
+                                                    Log.d("Mail", "" + error.getMessage());
+                                                    runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            Methods.showSnackBarNegative(StoreDataActivity.this, "Please try again...");
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                }catch(Exception e){e.printStackTrace();}
+                            }else {
 //                                boolean storeClick = false;
                                 Map<String, String> params = new HashMap<String, String>();
                                 params.put("clientId", soureClientId);
@@ -166,49 +214,50 @@ public class StoreDataActivity extends AppCompatActivity {
 //                                    sessionManager.setWildFirePurchase(true);
 //                                }
 //                            if (!storeClick){
-                            if (!ClickedValues.contains(product.Name)){
-                                ClickedValues+="#"+product.Name;
-                                sessionManager.setLocalStorePurchase(ClickedValues);
+                                if (!ClickedValues.contains(product.Name)) {
+                                    ClickedValues += "#" + product.Name;
+                                    sessionManager.setLocalStorePurchase(ClickedValues);
 
-                                StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
-                                storeInterface.requestWidget(fpID, params, new Callback<String>() {
-                                    @Override
-                                    public void success(String s, Response response) {
-                                        ProductPrice.setText("Already requested");
-                                        product_pay.setBackgroundColor(getResources().getColor(R.color.greenDark));
+                                    StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
+                                    storeInterface.requestWidget(fpID, params, new Callback<String>() {
+                                        @Override
+                                        public void success(String s, Response response) {
+                                            ProductPrice.setText("Already requested");
+                                            product_pay.setBackgroundColor(getResources().getColor(R.color.greenDark));
 
-                                        new MaterialDialog.Builder(StoreDataActivity.this)
-                                                .title("Thank you for your interest!")
-                                                .content("Our team will get in touch with you within 48 hours to tell you more about our pricing plans.")
-                                                .negativeText("Ok")
-                                                .negativeColorRes(R.color.light_gray)
-                                                .callback(new MaterialDialog.ButtonCallback() {
-                                                    @Override
-                                                    public void onNegative(MaterialDialog dialog) {
-                                                        super.onNegative(dialog);
-                                                        dialog.dismiss();
-                                                    }
-                                        }).show();
-                                    }
+                                            new MaterialDialog.Builder(StoreDataActivity.this)
+                                                    .title("Thank you for your interest!")
+                                                    .content("Our team will get in touch with you within 48 hours to tell you more about our pricing plans.")
+                                                    .negativeText("Ok")
+                                                    .negativeColorRes(R.color.light_gray)
+                                                    .callback(new MaterialDialog.ButtonCallback() {
+                                                        @Override
+                                                        public void onNegative(MaterialDialog dialog) {
+                                                            super.onNegative(dialog);
+                                                            dialog.dismiss();
+                                                        }
+                                                    }).show();
+                                        }
 
-                                    @Override
-                                    public void failure(RetrofitError error) {
-                                        Methods.showSnackBarNegative(StoreDataActivity.this, "Uh oh! Something went wrong. Please try again.");
-                                    }
-                                });
-                            }else{
-                                new MaterialDialog.Builder(StoreDataActivity.this)
-                                        .title("Processing your request")
-                                        .content("We are processing your request. We will get back to you on this as soon as we can. Thank you for your patience")
-                                        .negativeText("Ok")
-                                        .negativeColorRes(R.color.light_gray)
-                                        .callback(new MaterialDialog.ButtonCallback() {
-                                            @Override
-                                            public void onNegative(MaterialDialog dialog) {
-                                                super.onNegative(dialog);
-                                                dialog.dismiss();
-                                            }
-                                }).show();
+                                        @Override
+                                        public void failure(RetrofitError error) {
+                                            Methods.showSnackBarNegative(StoreDataActivity.this, "Uh oh! Something went wrong. Please try again.");
+                                        }
+                                    });
+                                } else {
+                                    new MaterialDialog.Builder(StoreDataActivity.this)
+                                            .title("Processing your request")
+                                            .content("We are processing your request. We will get back to you on this as soon as we can. Thank you for your patience")
+                                            .negativeText("Ok")
+                                            .negativeColorRes(R.color.light_gray)
+                                            .callback(new MaterialDialog.ButtonCallback() {
+                                                @Override
+                                                public void onNegative(MaterialDialog dialog) {
+                                                    super.onNegative(dialog);
+                                                    dialog.dismiss();
+                                                }
+                                            }).show();
+                                }
                             }
                         }
                     });
@@ -226,48 +275,99 @@ public class StoreDataActivity extends AppCompatActivity {
 //                    ProductPrice_Value = "Pay " + product.CurrencyCode + " " + product.Price;
 //TODO remove this line after testing
 //                    SKU_PACKAGE = "android.test.purchased";
-                    product_validity.setVisibility(View.VISIBLE);
-                    getInAppProductPrize();
+                    try {
+                        if (product.Name.equalsIgnoreCase("NowFloats Dictate") || product.Name.equalsIgnoreCase("NowFloats WildFire")) {
+                            ProductPrice.setText("Contact Us");
+                        }
+                    }catch(Exception e){e.printStackTrace();}
+                    if(!(ProductPrice.getText().toString().equalsIgnoreCase("Contact Us"))){
+                        product_validity.setVisibility(View.VISIBLE);
+                        getInAppProductPrize();
+                    }
+
                     product_pay.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (!SKU_PACKAGE.equals("empty")){
-                                if (Constants.StorePackageIds !=null &&  Constants.StorePackageIds.size()>0){
+                            if(ProductPrice.getText().toString().equalsIgnoreCase("Contact Us")){
+                                try {
+                                    StoreInterface anInterface = Constants.restAdapter.create(StoreInterface.class);
+                                    ArrayList<String> emailList = new ArrayList<String>();
+                                    emailList.add("leads@nowfloats.com");
+                                    String tag = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toString().toUpperCase();
+                                    String subj = "Request to activate "+product.Name +" "+ tag+ " site";
+                                    String mailMsg = "Tag: "+tag+"<br>Package Name: "+product.Name+"<br>Package Id: "+product._id
+                                            +"<br>Account Manager Id: "+ soureClientId;
+                                    anInterface.mail(new MailModel(soureClientId, mailMsg,subj, emailList),
+                                            new Callback<String>() {
+                                                @Override
+                                                public void success(String s, Response response) {
+                                                    ProductPrice.setText("Already requested");
+                                                    product_pay.setBackgroundColor(getResources().getColor(R.color.greenDark));
+                                                    new MaterialDialog.Builder(StoreDataActivity.this)
+                                                            .title("Thank you for your interest!")
+                                                            .content("Our team will get in touch with you within 48 hours to tell you more about our pricing plans.")
+                                                            .negativeText("Ok")
+                                                            .negativeColorRes(R.color.light_gray)
+                                                            .callback(new MaterialDialog.ButtonCallback() {
+                                                                @Override
+                                                                public void onNegative(MaterialDialog dialog) {
+                                                                    super.onNegative(dialog);
+                                                                    dialog.dismiss();
+                                                                }
+                                                            }).show();
+                                                }
+
+                                                @Override
+                                                public void failure(RetrofitError error) {
+                                                    Log.d("Mail", "" + error.getMessage());
+                                                    runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            Methods.showSnackBarNegative(StoreDataActivity.this, "Please try again...");
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                }catch(Exception e){e.printStackTrace();}
+                            }else {
+                                if (!SKU_PACKAGE.equals("empty")) {
+                                    if (Constants.StorePackageIds != null && Constants.StorePackageIds.size() > 0) {
                                     /*for (int i = 0; i < Constants.StorePackageIds.size(); i++) {
                                         if (!product._id.equals(Constants.StorePackageIds.get(i))){
                                             purchaseCheck = true;
                                             break;
                                         }
                                     }*/
-                                    if(Constants.StorePackageIds.contains(product._id)){
-                                        purchaseCheck = false;
-                                    }else{
+                                        if (Constants.StorePackageIds.contains(product._id)) {
+                                            purchaseCheck = false;
+                                        } else {
+                                            purchaseCheck = true;
+                                        }
+                                    } else {
                                         purchaseCheck = true;
                                     }
-                                }else{
-                                    purchaseCheck = true;
-                                }
-                                //TODO remove this line after testing
+                                    //TODO remove this line after testing
 //                                purchaseCheck = true; SKU_PACKAGE = "android.test.purchased";
-                                if (Methods.isOnline(StoreDataActivity.this)&&purchaseCheck){
-                                    purchaseCheck = false;
-                                    launchIAPurchaseFlow();
+                                    if (Methods.isOnline(StoreDataActivity.this) && purchaseCheck) {
+                                        purchaseCheck = false;
+                                        launchIAPurchaseFlow();
+                                    }
+                                } else {
+                                    new MaterialDialog.Builder(StoreDataActivity.this)
+                                            .title("Unable to process your purchase")
+                                            .content("Please reach out to us at ria@nowfloats.com and will be get back to immediately.")
+                                            .negativeText("Close")
+                                            .positiveColorRes(R.color.primaryColor)
+                                            .negativeColorRes(R.color.light_gray)
+                                            .callback(new MaterialDialog.ButtonCallback() {
+                                                @Override
+                                                public void onNegative(MaterialDialog dialog) {
+                                                    super.onNegative(dialog);
+                                                    dialog.dismiss();
+                                                }
+                                            })
+                                            .show();
                                 }
-                            }else{
-                                new MaterialDialog.Builder(StoreDataActivity.this)
-                                        .title("Unable to process your purchase")
-                                        .content("Please reach out to us at ria@nowfloats.com and will be get back to immediately.")
-                                        .negativeText("Close")
-                                        .positiveColorRes(R.color.primaryColor)
-                                        .negativeColorRes(R.color.light_gray)
-                                        .callback(new MaterialDialog.ButtonCallback() {
-                                            @Override
-                                            public void onNegative(MaterialDialog dialog) {
-                                                super.onNegative(dialog);
-                                                dialog.dismiss();
-                                            }
-                                        })
-                                        .show();
                             }
                         }
                     });

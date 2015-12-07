@@ -358,6 +358,10 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     public static void setGCMId(String id){
         new Ria_Register(activity,Constants.clientId,"ANDROID",id);
         registerChat(FPID,id);
+        /*SdkConfig config = new SdkConfig();
+        config.setGcmSenderId(id);
+        config.setAnalyticsTrackingAllowedState(true);
+        config.setDebuggingStateAllowed(true);*/
     }
 
     public static void registerChat(String fpid,String reg) {

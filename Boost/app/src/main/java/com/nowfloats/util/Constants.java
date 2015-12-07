@@ -68,8 +68,8 @@ public class Constants {
 	public static Activity home = null;
 
    // public final static String NOW_FLOATS_API_URL		=	"https://api.nowfloatsdev.com";
-    public final static String NOW_FLOATS_API_URL		=	"http://api.withfloats.com";
-    public final static String BASE_IMAGE_URL		    =	"http://content.withfloats.com";
+    public final static String NOW_FLOATS_API_URL		=	"https://api.withfloats.com";
+    public final static String BASE_IMAGE_URL		    =	"https://content.withfloats.com";
    // public final static String NOW_FLOATS_API_URL		=	"https://nftestbed.azurewebsites.net";
 	public final static String HTTP_PUT				=	"PUT";
 	public final static String HTTP_POST				=	"POST";

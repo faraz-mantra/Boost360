@@ -31,6 +31,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     public void onCreate() {
         super.onCreate();
 
+//        ContextApplication.initSdk(this, this);
+
         AppsFlyerLib.setAppsFlyerKey("drr3ek3vNxVmxJZgtBpfnR");
         try {
             Fabric.with(this, new Crashlytics());
