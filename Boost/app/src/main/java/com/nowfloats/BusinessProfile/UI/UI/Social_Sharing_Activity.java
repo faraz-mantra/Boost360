@@ -54,8 +54,8 @@ public class Social_Sharing_Activity extends ActionBarActivity {
     private ImageView facebookHome;
     private ImageView facebookPage;
     private ImageView twitter;
-    private TextView facebookHomeStatus,facebookPageStatus,twitterStatus;
-    private CheckBox facebookHomeCheckBox,facebookPageCheckBox,twitterCheckBox;
+    private TextView facebookHomeStatus, facebookPageStatus, twitterStatus;
+    private CheckBox facebookHomeCheckBox, facebookPageCheckBox, twitterCheckBox;
     private CheckBox facebookautopost;
     private TextView headerText;
     ArrayList<String> items;
@@ -63,12 +63,13 @@ public class Social_Sharing_Activity extends ActionBarActivity {
     private boolean numberOfUpdatesSelected = false;
     private Activity activity;
     private MaterialDialog materialProgress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_social_sharing);
-        session = new UserSessionManager(getApplicationContext(),Social_Sharing_Activity.this);
-       // Facebook_Auto_Publish_API.autoPublish(Social_Sharing_Activity.this,session.getFPID());
+        session = new UserSessionManager(getApplicationContext(), Social_Sharing_Activity.this);
+        // Facebook_Auto_Publish_API.autoPublish(Social_Sharing_Activity.this,session.getFPID());
         Methods.isOnline(Social_Sharing_Activity.this);
         pref = this.getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
         prefsEditor = pref.edit();
@@ -76,8 +77,8 @@ public class Social_Sharing_Activity extends ActionBarActivity {
 
         toolbar = (Toolbar) findViewById(R.id.app_bar_social);
 
-        Typeface myCustomFont = Typeface.createFromAsset(this.getAssets(),"Roboto-Light.ttf");
-        Typeface myCustomFont_Medium = Typeface.createFromAsset(this.getAssets(),"Roboto-Medium.ttf");
+        Typeface myCustomFont = Typeface.createFromAsset(this.getAssets(), "Roboto-Light.ttf");
+        Typeface myCustomFont_Medium = Typeface.createFromAsset(this.getAssets(), "Roboto-Medium.ttf");
 
         setSupportActionBar(toolbar);
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
@@ -114,11 +115,11 @@ public class Social_Sharing_Activity extends ActionBarActivity {
         facebookPageCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(facebookPageCheckBox.isChecked()) {
-                   fbPageData();
+                if (facebookPageCheckBox.isChecked()) {
+                    fbPageData();
                 } else {
                     DataBase dataBase = new DataBase(activity);
-                    dataBase.updateFacebookPage("","","");
+                    dataBase.updateFacebookPage("", "", "");
                     session.storeFacebookPage("");
                     session.storeFacebookPageID("");
                     session.storeFacebookAccessToken("");
@@ -131,11 +132,11 @@ public class Social_Sharing_Activity extends ActionBarActivity {
         facebookHomeCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(facebookHomeCheckBox.isChecked()){
-                        fbData();
+                if (facebookHomeCheckBox.isChecked()) {
+                    fbData();
                 } else {
                     DataBase dataBase = new DataBase(activity);
-                    dataBase.updateFacebookNameandToken("","");
+                    dataBase.updateFacebookNameandToken("", "");
 
                     session.storeFacebookName("");
                     session.storeFacebookAccessToken("");
@@ -148,29 +149,27 @@ public class Social_Sharing_Activity extends ActionBarActivity {
         facebookautopost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(facebookautopost.isChecked()){
+                if (facebookautopost.isChecked()) {
 
-                    if(session.getShowUpdates() && !Util.isNullOrEmpty(Constants.fbPageFullUrl))
+                    if (session.getShowUpdates() && !Util.isNullOrEmpty(Constants.fbPageFullUrl))
                         selectNumberUpdatesDialog();
 
                     boolean FbRegistered = pref.getBoolean("FacebookFeedRegd", false);
-                    if(FbRegistered == false){
-                        if(!Util.isNullOrEmpty(Constants.fbPageFullUrl)){
-                           pullFacebookFeedDialog();
-                        }
-                        else{
+                    if (FbRegistered == false) {
+                        if (!Util.isNullOrEmpty(Constants.fbPageFullUrl)) {
+                            pullFacebookFeedDialog();
+                        } else {
                             Util.toast("Please select a Facebook page", getApplicationContext());
                             facebookautopost.setChecked(false);
                         }
-                    }
-                    else{
+                    } else {
                         final JSONObject obj = new JSONObject();
                         try {
                             obj.put("fpId", session.getFPID());
                             obj.put("autoPublish", true);
                             obj.put("clientId", Constants.clientId);
                             obj.put("FacebookPageName", Constants.fbFromWhichPage);
-                        }catch(Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                         FacebookFeedPullAutoPublishAsyncTask fap = new FacebookFeedPullAutoPublishAsyncTask(Social_Sharing_Activity.this, obj, true, facebookPageStatus);
@@ -178,7 +177,7 @@ public class Social_Sharing_Activity extends ActionBarActivity {
                     }
 
                 } else {
-                    Toast.makeText(Social_Sharing_Activity.this,"Auto Post Updates are turned OFF",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Social_Sharing_Activity.this, "Auto Post Updates are turned OFF", Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -188,8 +187,8 @@ public class Social_Sharing_Activity extends ActionBarActivity {
         twitterCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(twitterCheckBox.isChecked()){
-                    if(!Util.isNullOrEmpty(Constants.TWITTER_TOK) && !Util.isNullOrEmpty(Constants.TWITTER_SEC) ){
+                if (twitterCheckBox.isChecked()) {
+                    if (!Util.isNullOrEmpty(Constants.TWITTER_TOK) && !Util.isNullOrEmpty(Constants.TWITTER_SEC)) {
                         twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
                         twitterStatus.setText("Connected");
                         twitterCheckBox.setHighlightColor(getResources().getColor(R.color.primaryColor));
@@ -217,10 +216,9 @@ public class Social_Sharing_Activity extends ActionBarActivity {
                             prefsEditor.putString(OAuth.OAUTH_TOKEN_SECRET, "");
                             prefsEditor.putString("TWITUName", "");
                         }
-                        prefsEditor.putBoolean("twitterShareEnabled",Constants.twitterShareEnabled);
+                        prefsEditor.putBoolean("twitterShareEnabled", Constants.twitterShareEnabled);
                         prefsEditor.commit();
-                    }
-                    else{
+                    } else {
                         twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
                         //twitter_txt.setText("Twitter");
                         Constants.twitterShareEnabled = true;
@@ -228,27 +226,26 @@ public class Social_Sharing_Activity extends ActionBarActivity {
                         twitterCheckBox.setHighlightColor(getResources().getColor(R.color.primaryColor));
 
 
-                        if(Util.isNullOrEmpty(Constants.TWITTER_TOK) || Util.isNullOrEmpty(Constants.TWITTER_SEC) )
-                        {
+                        if (Util.isNullOrEmpty(Constants.TWITTER_TOK) || Util.isNullOrEmpty(Constants.TWITTER_SEC)) {
                             twitterData();
                         }
                     }
                     prefsEditor.putBoolean("twitterShareEnabled", Constants.twitterShareEnabled);
                     prefsEditor.commit();
-                }else{
-                 //   if(Util.isNullOrEmpty(Constants.TWITTER_TOK) && Util.isNullOrEmpty(Constants.TWITTER_SEC) ){
-                        twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
-                        twitterStatus.setText("Disconnected");
-                        Constants.twitterShareEnabled = false;
-                        Constants.TWITTER_TOK 				="";
-                        Constants.TWITTER_SEC 				= "";
-                        twitterCheckBox.setHighlightColor(getResources().getColor(R.color.primaryColor));
+                } else {
+                    //   if(Util.isNullOrEmpty(Constants.TWITTER_TOK) && Util.isNullOrEmpty(Constants.TWITTER_SEC) ){
+                    twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
+                    twitterStatus.setText("Disconnected");
+                    Constants.twitterShareEnabled = false;
+                    Constants.TWITTER_TOK = "";
+                    Constants.TWITTER_SEC = "";
+                    twitterCheckBox.setHighlightColor(getResources().getColor(R.color.primaryColor));
 
-                        prefsEditor.putString(OAuth.OAUTH_TOKEN, "");
-                        prefsEditor.putString(OAuth.OAUTH_TOKEN_SECRET, "");
-                        prefsEditor.putString("TWITUName", "");
-                        prefsEditor.commit();
-                  //  }
+                    prefsEditor.putString(OAuth.OAUTH_TOKEN, "");
+                    prefsEditor.putString(OAuth.OAUTH_TOKEN_SECRET, "");
+                    prefsEditor.putString("TWITUName", "");
+                    prefsEditor.commit();
+                    //  }
                 }
             }
         });
@@ -257,8 +254,8 @@ public class Social_Sharing_Activity extends ActionBarActivity {
     }
 
     private void selectNumberUpdatesDialog() {
-       final String[] array = {"Post 5 Updates","Post 10 Updates"};
-       new MaterialDialog.Builder(Social_Sharing_Activity.this)
+        final String[] array = {"Post 5 Updates", "Post 10 Updates"};
+        new MaterialDialog.Builder(Social_Sharing_Activity.this)
                 .title("Post to Facebook Page")
                 .items(array)
                 .negativeText("Cancel")
@@ -270,40 +267,38 @@ public class Social_Sharing_Activity extends ActionBarActivity {
                         dialog.dismiss();
                     }
                 })
-               .widgetColorRes(R.color.primaryColor)
-               .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
-                   @Override
-                   public boolean onSelection(MaterialDialog dialog, View view, int position, CharSequence text) {
-                       numberOfUpdatesSelected = true ;
-                       session.storeShowUpdates(false);
-                       if(position == 0)
-                       {
-                           numberOfUpdates = 5 ;
-                       }
+                .widgetColorRes(R.color.primaryColor)
+                .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int position, CharSequence text) {
+                        numberOfUpdatesSelected = true;
+                        session.storeShowUpdates(false);
+                        if (position == 0) {
+                            numberOfUpdates = 5;
+                        }
 
-                       if(position == 1)
-                       {
-                           numberOfUpdates = 10 ;
-                       }
-                       dialog.dismiss();
-                       return true;
-                   }
-               }).show();
+                        if (position == 1) {
+                            numberOfUpdates = 10;
+                        }
+                        dialog.dismiss();
+                        return true;
+                    }
+                }).show();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         facebook.authorizeCallback(requestCode, resultCode, data);
-        if (materialProgress!=null){
+        if (materialProgress != null) {
             materialProgress.dismiss();
         }
     }
 
     public void fbPageData() {
-        final String[] PERMISSIONS = new String[] { "photo_upload",
+        final String[] PERMISSIONS = new String[]{"photo_upload",
                 "user_photos", "publish_stream", "read_stream",
-                "offline_access", "manage_pages", "publish_actions" };
+                "offline_access", "manage_pages", "publish_actions"};
         materialProgress = new MaterialDialog.Builder(this)
                 .widgetColorRes(R.color.accentColor)
                 .content("Please Wait...")
@@ -324,7 +319,7 @@ public class Social_Sharing_Activity extends ActionBarActivity {
                                 if (size > 0) {
                                     items = new ArrayList<String>();
                                     for (int i = 0; i < size; i++) {
-                                        items.add(i,(String)((JSONObject) Constants.FbPageList
+                                        items.add(i, (String) ((JSONObject) Constants.FbPageList
                                                 .get(i)).get("name"));
                                     }
 
@@ -336,12 +331,11 @@ public class Social_Sharing_Activity extends ActionBarActivity {
                             }
                         } catch (Exception e1) {
                             e1.printStackTrace();
-                        }
-                        finally {
+                        } finally {
                             Social_Sharing_Activity.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    if (items!=null && items.size()>0){
+                                    if (items != null && items.size() > 0) {
                                         final String[] array = items.toArray(new String[items.size()]);
                                         new MaterialDialog.Builder(Social_Sharing_Activity.this)
                                                 .title("Select a Page")
@@ -359,13 +353,13 @@ public class Social_Sharing_Activity extends ActionBarActivity {
                                                         } catch (JSONException e) {
                                                             e.printStackTrace();
                                                         }
-                                                        pageSeleted(position,strName,session.getFacebookPageID(),session.getPageAccessToken());
+                                                        pageSeleted(position, strName, session.getFacebookPageID(), session.getPageAccessToken());
                                                         dialog.dismiss();
                                                         return true;
                                                     }
                                                 }).show();
-                                    }else {
-                                        Methods.materialDialog(activity,"Uh oh~","Looks like there is no Facebook page\nlinked to this account.");
+                                    } else {
+                                        Methods.materialDialog(activity, "Uh oh~", "Looks like there is no Facebook page\nlinked to this account.");
                                     }
                                 }
                             });
@@ -390,11 +384,10 @@ public class Social_Sharing_Activity extends ActionBarActivity {
             }
 
 
-
         });
     }
 
-    public void pageSeleted(int id,final String pageName, String pageID, String pageAccessToken) {
+    public void pageSeleted(int id, final String pageName, String pageID, String pageAccessToken) {
         String s = "";
         JSONObject obj;
         session.storeFacebookPage(pageName);
@@ -408,13 +401,13 @@ public class Social_Sharing_Activity extends ActionBarActivity {
         });
 
 
-        DataBase dataBase =new DataBase(activity);
+        DataBase dataBase = new DataBase(activity);
         dataBase.updateFacebookPage(pageName, pageID, pageAccessToken);
 
         obj = new JSONObject();
         try {
             obj.put("id", pageID);
-            obj.put("access_token",pageAccessToken);
+            obj.put("access_token", pageAccessToken);
             data.put(obj);
 
             Constants.fbPageFullUrl = "https://www.facebook.com/pages/" + pageName + "/" + pageID;
@@ -473,14 +466,14 @@ public class Social_Sharing_Activity extends ActionBarActivity {
     }
 
     public void fbData() {
-        final String[] PERMISSIONS = new String[] { "photo_upload",
+        final String[] PERMISSIONS = new String[]{"photo_upload",
                 "user_photos", "publish_stream", "read_stream",
-                "offline_access", "publish_actions" };
+                "offline_access", "publish_actions"};
         materialProgress = new MaterialDialog.Builder(this)
                 .widgetColorRes(R.color.accentColor)
                 .content("Please Wait...")
                 .progress(true, 0).show();
-        facebook.authorize(this, PERMISSIONS,  new Facebook.DialogListener() {
+        facebook.authorize(this, PERMISSIONS, new Facebook.DialogListener() {
 
             public void onComplete(Bundle values) {
 
@@ -499,7 +492,7 @@ public class Social_Sharing_Activity extends ActionBarActivity {
                             session.storeFacebookName(FACEBOOK_USER_NAME);
                             session.storeFacebookAccessToken(FACEBOOK_ACCESS_TOKEN);
                             DataBase dataBase = new DataBase(activity);
-                            dataBase.updateFacebookNameandToken(FACEBOOK_USER_NAME,FACEBOOK_ACCESS_TOKEN);
+                            dataBase.updateFacebookNameandToken(FACEBOOK_USER_NAME, FACEBOOK_ACCESS_TOKEN);
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -524,12 +517,12 @@ public class Social_Sharing_Activity extends ActionBarActivity {
 //                            }
 
 
-                      //      facebookHomeStatus.setText(Constants.FACEBOOK_USER_NAME);
+                            //      facebookHomeStatus.setText(Constants.FACEBOOK_USER_NAME);
                             Constants.fbShareEnabled = true;
                             prefsEditor.putBoolean("fbShareEnabled", true);
                             prefsEditor.putString("fbId", Constants.FACEBOOK_USER_ID);
-                            prefsEditor.putString("fbAccessId",Constants.FACEBOOK_USER_ACCESS_ID);
-                            prefsEditor.putString("fbUserName",FACEBOOK_USER_NAME);
+                            prefsEditor.putString("fbAccessId", Constants.FACEBOOK_USER_ACCESS_ID);
+                            prefsEditor.putString("fbUserName", FACEBOOK_USER_NAME);
                             prefsEditor.commit();
 
                         } catch (Exception e1) {
@@ -554,7 +547,7 @@ public class Social_Sharing_Activity extends ActionBarActivity {
 //                            }
 //
 
-                        }
+                    }
 
                 }).start();
 
@@ -577,7 +570,6 @@ public class Social_Sharing_Activity extends ActionBarActivity {
             }
 
         });
-
 
 
 //        facebookHome.setImageDrawable(getResources().getDrawable(
@@ -605,22 +597,22 @@ public class Social_Sharing_Activity extends ActionBarActivity {
     }
 
 
-    public void InitShareResources(){
-        Constants.FACEBOOK_USER_ID 			= pref.getString("fbId", "");
-        Constants.FACEBOOK_USER_ACCESS_ID 	= pref.getString("fbAccessId", "");
-        Constants.fbShareEnabled 			= pref.getBoolean("fbShareEnabled", false);
+    public void InitShareResources() {
+        Constants.FACEBOOK_USER_ID = pref.getString("fbId", "");
+        Constants.FACEBOOK_USER_ACCESS_ID = pref.getString("fbAccessId", "");
+        Constants.fbShareEnabled = pref.getBoolean("fbShareEnabled", false);
 //        Constants.FACEBOOK_PAGE_ID 			= pref.getString("fbPageId", "");
-        Constants.FACEBOOK_PAGE_ACCESS_ID 	= pref.getString("fbPageAccessId", "");
-        Constants.fbPageShareEnabled 		= pref.getBoolean("fbPageShareEnabled", false);
-        Constants.twitterShareEnabled 		= pref.getBoolean("twitterShareEnabled", false);
-        Constants.TWITTER_TOK 				= pref.getString(OAuth.OAUTH_TOKEN, "");
-        Constants.TWITTER_SEC 				= pref.getString(OAuth.OAUTH_TOKEN_SECRET, "");
-        Constants.FbFeedPullAutoPublish     = pref.getBoolean("FBFeedPullAutoPublish", false);
-        Constants.fbPageFullUrl             = pref.getString("fbPageFullUrl", "");
-        Constants.fbFromWhichPage           = pref.getString("fbFromWhichPage", "");
+        Constants.FACEBOOK_PAGE_ACCESS_ID = pref.getString("fbPageAccessId", "");
+        Constants.fbPageShareEnabled = pref.getBoolean("fbPageShareEnabled", false);
+        Constants.twitterShareEnabled = pref.getBoolean("twitterShareEnabled", false);
+        Constants.TWITTER_TOK = pref.getString(OAuth.OAUTH_TOKEN, "");
+        Constants.TWITTER_SEC = pref.getString(OAuth.OAUTH_TOKEN_SECRET, "");
+        Constants.FbFeedPullAutoPublish = pref.getBoolean("FBFeedPullAutoPublish", false);
+        Constants.fbPageFullUrl = pref.getString("fbPageFullUrl", "");
+        Constants.fbFromWhichPage = pref.getString("fbFromWhichPage", "");
 
 
-        if(!Util.isNullOrEmpty(Constants.TWITTER_TOK) || !Util.isNullOrEmpty(Constants.TWITTER_SEC) ){
+        if (!Util.isNullOrEmpty(Constants.TWITTER_TOK) || !Util.isNullOrEmpty(Constants.TWITTER_SEC)) {
             twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
             //twitter_txt.setText("Twitter");
             //twitterName.setText("connected");
@@ -637,14 +629,14 @@ public class Social_Sharing_Activity extends ActionBarActivity {
             facebookHomeStatus.setText("connected");
             String fbUName = pref.getString("fbUserName", "");
             prefsEditor.putBoolean("fbShareEnabled", true);
-         //   facebookHomeCheckBox.setChecked(true);
+            //   facebookHomeCheckBox.setChecked(true);
             prefsEditor.commit();
         }
 
     }
 
 
-    public void createFacebookAutoPost(){
+    public void createFacebookAutoPost() {
         final JSONObject obj = new JSONObject();
         try {
             obj.put("ClientId", Constants.clientId);
@@ -652,7 +644,7 @@ public class Social_Sharing_Activity extends ActionBarActivity {
             obj.put("Tag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
             obj.put("FacebookPageName", Constants.fbFromWhichPage);
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -667,16 +659,16 @@ public class Social_Sharing_Activity extends ActionBarActivity {
             obj.put("Tag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
             obj.put("FacebookPageName", Constants.fbPageFullUrl);
             obj.put("AutoPublish", true);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        FacebookFeedPullRegistrationAsyncTask fpa = new FacebookFeedPullRegistrationAsyncTask(Social_Sharing_Activity.this,obj,facebookPageStatus,facebookautopost);
+        FacebookFeedPullRegistrationAsyncTask fpa = new FacebookFeedPullRegistrationAsyncTask(Social_Sharing_Activity.this, obj, facebookPageStatus, facebookautopost);
         fpa.execute();
     }
 
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         Methods.isOnline(Social_Sharing_Activity.this);
         facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon_inactive));
@@ -687,22 +679,20 @@ public class Social_Sharing_Activity extends ActionBarActivity {
         facebookPageCheckBox.setChecked(false);
         facebookHomeStatus.setText("Disconnected");
 
-        if(!Util.isNullOrEmpty(session.getFacebookName()))
-        {
+        if (!Util.isNullOrEmpty(session.getFacebookName())) {
             facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
             facebookHomeCheckBox.setChecked(true);
             facebookHomeStatus.setText(session.getFacebookName());
 
         }
-        if(!Util.isNullOrEmpty(session.getFacebookPage()))
-        {
+        if (!Util.isNullOrEmpty(session.getFacebookPage())) {
             facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
             facebookPageCheckBox.setChecked(true);
             String text = session.getFacebookPage();
             facebookPageStatus.setText(session.getFacebookPage());
         }
 
-        if(Util.isNullOrEmpty(Constants.TWITTER_TOK) || Util.isNullOrEmpty(Constants.TWITTER_SEC) ){
+        if (Util.isNullOrEmpty(Constants.TWITTER_TOK) || Util.isNullOrEmpty(Constants.TWITTER_SEC)) {
             twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
             //twitter_txt.setText("Twitter");
             //twitterName.setText("connected");
@@ -711,9 +701,9 @@ public class Social_Sharing_Activity extends ActionBarActivity {
             twitterCheckBox.setChecked(false);
             prefsEditor.putBoolean("twitterShareEnabled", false);
             prefsEditor.commit();
-        }else{
+        } else {
             String twitterName = pref.getString("TWITUName", "");
-            twitterStatus.setText("@"+twitterName);
+            twitterStatus.setText("@" + twitterName);
         }
 //        if (Util.isNullOrEmpty(Constants.FACEBOOK_USER_ACCESS_ID)) {
 //            facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon_inactive));

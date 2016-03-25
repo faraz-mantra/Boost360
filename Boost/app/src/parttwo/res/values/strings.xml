@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Thinksity</string>
+    <string name="package_name_aviary">com.sibername.AviaryCdsProvider</string>
+    <string name="app_name">Sibername Boost</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="next">Next</string>
@@ -22,8 +23,8 @@
     <string name="title_activity_pre_sign_up__main">PreSignUp_MainActivity</string>
     <string name="ps_create_lbl">CREATE</string>
     <string name="ps_login_lbl">LOG IN</string>
-    <string name="ps_create_lbl_tag">a website with NowFloats</string>
-    <string name="ps_login_lbl_tag">to manage NowFloats website</string>
+    <string name="ps_create_lbl_tag">a website with Sibername</string>
+    <string name="ps_login_lbl_tag">to manage Sibername website</string>
     <string name="ps_sc2_lbl1">Instant Website</string>
     <string name="ps_sc2_lbl2">Creation</string>
     <string name="ps_sc2_lbl3">Get a business website \nthat is instantly created and \neasily managed using this app.</string>
@@ -35,13 +36,13 @@
     <string name="ps_sc4_lbl3">With Location-Based-SEO<sup><small>TM</small></sup>, get \ndiscovered for relevant keywords and \nimprove your ranking on search engines</string>
     <string name="ps_sc5_lbl1">Get your own</string>
     <string name="ps_sc5_lbl2">Domain</string>
-    <string name="ps_sc5_lbl3">Take the next step in growing your personal online identity.</string>
-    <string name="ps_sc6_lbl1">Generate Employment</string>
-    <string name="ps_sc6_lbl2">Opportunities</string>
+    <string name="ps_sc5_lbl3">Take the next step in growing your business. Give it an identity of its own</string>
+    <string name="ps_sc6_lbl1">Generate Business</string>
+    <string name="ps_sc6_lbl2">Leads</string>
     <string name="ps_sc6_lbl3">Let customers contact you directly \nand reply to them instantly!</string>
     <string name="ps_sc8_lbl1">Premium features in</string>
-    <string name="ps_sc8_lbl2">NOWFLOATS</string>
-    <string name="ps_sc8_lbl3">Get additional features \nfor your business website \nfrom the in-app NowFloats Store.</string>
+    <string name="ps_sc8_lbl2">Sibername</string>
+    <string name="ps_sc8_lbl3">Get additional features \nfor your business website \nfrom the in-app Store.</string>
     <string name="ps_sc8_lbl4">Store</string>
     <string name="ps_sc1_lbl1_tf">HN53exd.ttf</string>
     <string name="ps_sc1_lbl2_tf">HN53exd.ttf</string>
@@ -62,14 +63,15 @@
         <item>11:00</item>
     </string-array>
 
-    <string name="facebook_app_id">851630411569235</string>
+    <string name="facebook_app_id">849017471893722</string>
     <string name="title_activity_image__gallery__main">Image Gallery</string>
     <string name="title_activity_home__main">Home_MainActivity</string>
     <string name="title_activity_card__full__view__main">Home</string>
     <string name="title_activity_create__message_">Post an Update</string>
     <string name="side_panel_row_one">Dashboard</string>
-    <string name="side_panel_row_two">Profile</string>
-    <string name="side_panel_row_three">Enquiries</string>
+    <string name="side_panel_row_two">Business Profile</string>
+    <string name="side_panel_row_csp">Custom Pages</string>
+    <string name="side_panel_row_three">Business Enquiries</string>
     <string name="side_panel_row_four">Photo Gallery</string>
     <string name="side_panel_row_five">Settings</string>
     <string name="setting_change_pwd">Change password</string>
@@ -80,6 +82,35 @@
     <string name="setting_logout">Logout</string>
     <string name="signup_subd">^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]$</string>
 
+
+    <!-- Deep Linking URLs  -->
+
+    <string name="deeplink_update">update</string>
+    <string name="deeplink_upgrade">upgrade</string>
+    <string name="deeplink_featuredimage">featuredimage</string>
+    <string name="deeplink_analytics">analytics</string>
+    <string name="deeplink_bizenquiry">ttb</string>
+    <string name="deeplink_store">nfstore</string>
+    <string name="deeplink_searchqueries">searchqueries</string>
+    <string name="deeplink_setings">settings</string>
+    <string name="deeplink_socailsharing">social</string>
+    <string name="deeplink_profile">profile</string>
+    <string name="deeplink_contact">contact</string>
+    <string name="deeplink_bizaddress">bizAddress</string>
+    <string name="deeplink_bizhours">bizhours</string>
+    <string name="deeplink_bizlogo">bizlogo</string>
+    <string name="deeplink_nfstoreDomainTTBCombo">ttbDomainCombo</string>
+    <string name="deeplink_imageGallery">gallery</string>
+    <string name="deeplink_propack">proPack</string>
+    <string name="deeplink_nfstoreseo">nfstoreseo</string>
+    <string name="deeplink_nfstorettb">nfstorettb</string>
+    <string name="deeplink_nfstoreimage">nfstoreimage</string>
+    <string name="deeplink_gplaces">gplaces</string>
+    <string name="deeplink_nfstorebiztiming">nfstorebiztiming</string>
+    <string name="deeplink_nfstorenoads">nfstorenoads</string>
+    <string name="deeplink_ProductGallery">ProductGallery</string>
+
+    <!-- Deep Linking URLs  -->
 
     <!-- SITE-Meter Percentage  -->
 
@@ -99,52 +130,26 @@
     <string name="buydomain_text1">Get your own identity</string>
     <string name="phoneNumber_text1">Phone number</string>
     <string name="featuredImage_text1">Featured Image</string>
-    <string name="businessName_text1">Name</string>
-    <string name="businessdescription_text1">Profile Description</string>
+    <string name="businessName_text1">Business Name</string>
+    <string name="businessdescription_text1">Business Description</string>
     <string name="social_text1">Get Social</string>
-    <string name="businessCategory_text1">Category</string>
-    <string name="address_text1">Help your employers find you</string>
+    <string name="businessCategory_text1">Business Category</string>
+    <string name="address_text1">Help your customers find you</string>
     <string name="email_text1">Add Email</string>
     <string name="postUpdate_text1">Post 5 Updates</string>
     <string name="share_text1">Share</string>
 
     <string name="buydomain_text2">Buy a.com</string>
-    <string name="phoneNumber_text2">Ensure recruiters reach you instantly</string>
+    <string name="phoneNumber_text2">Help customers reach you instantly</string>
     <string name="featuredImage_text2">Add relevant image</string>
-    <string name="businessName_text2">Add name</string>
-    <string name="businessdescription_text2">Tell the world about you</string>
+    <string name="businessName_text2">Add Business name</string>
+    <string name="businessdescription_text2">Describe your business</string>
     <string name="social_text2">Connect to Facebook/Twitter</string>
-    <string name="businessCategory_text2">Choose category</string>
+    <string name="businessCategory_text2">Choose a Business category</string>
     <string name="address_text2">Add address</string>
     <string name="email_text2">Add email</string>
     <string name="postUpdate_text2">Message regularly and relevantly</string>
     <string name="share_text2">Promote your website</string>
-
-
-    <!-- Deep Linking URLs  -->
-
-    <string name="deeplink_update">update</string>
-    <string name="deeplink_upgrade">upgrade</string>
-    <string name="deeplink_featuredimage">featuredImage</string>
-    <string name="deeplink_analytics">analytics</string>
-    <string name="deeplink_ttb">ttb</string>
-    <string name="deeplink_store">store</string>
-    <string name="deeplink_searchqueries">searchqueries</string>
-    <string name="deeplink_setings">settings</string>
-    <string name="deeplink_socailsharing">socialsharing</string>
-    <string name="deeplink_profile">profile</string>
-    <string name="deeplink_contact">contact</string>
-    <string name="deeplink_address">address</string>
-    <string name="deeplink_bizhours">bizhours</string>
-    <string name="deeplink_logo">logo</string>
-    <string name="deeplink_sitescore">sitescore</string>
-    <string name="deeplink_nfstoreDomainTTBCombo">nfstoreDomainTTBCombo</string>
-    <string name="deeplink_nfstoreGallery">gallery</string>
-
-    <!-- Deep Linking URLs  -->
-
-
-
 
     <string-array name="CountryCodes">
         <item>93,AF</item>
@@ -354,25 +359,34 @@
         <item>260,ZM</item>
         <item>263,ZW</item>
     </string-array>
-
-    <string name="tag_for_partners">.thinksity.com</string>
-    <string name="title_activity_splash_screen_">Thinksity</string>
+    <string name="business_enquiries_title">Business Enquiries</string>
+    <string name="business_profile_title">Business Profile</string>
+    <string name="tag_for_partners">.canadian.website</string>
+    <string name="title_activity_splash_screen_">Boost</string>
     <string name="title_activity_edit__profile_">Edit_Profile_Activity</string>
-    <string name="pre_signup_screen_one_text">Now create and manage your personal branded website to attract employers or entrepreneurs</string>
-    <string name="pre_signup_screen_two_text">Demonstrate your creativity to build your digital brand to be discovered by potential employers</string>
-    <string name="pre_signup_screen_three_text">String belongs to Screen Three</string>
-    <string name="pre_signup_screen_four_text">String belongs to Screen Four</string>
-    <string name="pre_signup_screen_five_text">String belongs to Screen Five</string>
-    <string name="pre_signup_screen_six_text">Get startup, entrepreneurs and employers to connect with your directly</string>
-    <string name="pre_signup_screen_seven_text">Special student offers in the Thinksity store – logs onto the www.thinksity site.</string>
+    <string name="pre_signup_screen_one_text">Now Create, Manage and Update A Business website that draws more Customers</string>
+    <string name="pre_signup_screen_two_text">Get a business website \nthat is instantly created and \neasily managed using this app</string>
+    <string name="pre_signup_screen_three_text">Sign in with your Facebook page to \ncreate and update your website instantly. \nHighly recommended!</string>
+    <string name="pre_signup_screen_four_text">With Location-Based-SEO<sup><small>TM</small></sup>, get \ndiscovered for relevant keywords and \nimprove your ranking on search engines</string>
+    <string name="pre_signup_screen_five_text">Take the next step in growing your \nbusiness. Give it an identity of its own</string>
+    <string name="pre_signup_screen_six_text">Let customers contact you directly \nand reply to them instantly!</string>
+    <string name="pre_signup_screen_seven_text">Get additional features \nfor your business website \nfrom the in-app Store..</string>
     <string name="pre_signup_screen_eight_text">String belongs to Screen Eight</string>
     <string name="title_activity_mobile__site_">Mobile_Site_Activity</string>
     <string name="title_activity_site__meter__nf">Site_Meter_NF</string>
-    <string name="presignup_login_text">Already have a Thinksity account?</string>
+    <string name="presignup_login_text">Already have a Sibername boost account?</string>
 
-    <string name="settings_feedback_link">create@prostinnovation.com</string>
-    <string name="settings_facebook_like_link">https://www.facebook.com/thinksity</string>
-    <string name="settings_about_us_link">http://prostinnovation.com/</string>
-    <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.thinksity</string>
+    <string name="onboarding_screen_1_title">Congratulations!</string>
+    <string name="onboarding_screen_1_desc">We\'re here to help you through the way. Here are two most basic yet important things you should know</string>
+    <string name="onboarding_screen_3_title">Discovery is Revenue</string>
+    <string name="onboarding_screen_3_desc">People around your business are searching for stuff you sell, so keep your updates relevant and fresh. This will you lead to attract more customers and generate more revenue</string>
+    <string name="onboarding_screen_2_title">Content is King</string>
+    <string name="onboarding_screen_2_desc">Update your website twice a week. Just press the plus button at the bottom and simply tell your customers about your products, services or offers</string>
+
+
+    <string name="settings_feedback_link">ria@Sibername.com</string>
+    <string name="settings_facebook_like_link">https://www.facebook.com/Sibername</string>
+    <string name="settings_about_us_link">http://Sibername.com/</string>
+    <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.biz2.sibername</string>
 
 </resources>

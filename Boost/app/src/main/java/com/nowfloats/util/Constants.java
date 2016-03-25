@@ -57,10 +57,10 @@ public class Constants {
 	public static Boolean hasSearchData = false;
 	public static int FontSizeT = 13;
 	public static int FontSizeE =  16;
-	
+
 	public static String prevDataDirectory = "NowFloatsBiz";
 	public static String dataDirectory = "NowFloatsBoost";
-	
+
 	public static String[] days = {"SUNDAY","MONDAY","TUESDAY","WEDNESDAY","THURSDAY","FRIDAY","SATURDAY"};
     public static Map<String,String> Currency_Country_Map = new HashMap<String,String>();
     public static ArrayList<String> currencyArray = new ArrayList<>();
@@ -86,11 +86,11 @@ public class Constants {
     public static NotificationInterface alertInterface = Constants.restAdapter.create(NotificationInterface.class);
 
     //http://api.withfloats.com/Discover/v3/FloatingPoint/create
-	
+
 	public static String createStoreV3				= NOW_FLOATS_API_URL + "/Discover/v3/FloatingPoint/create";
 	public static String createStoreV2				= NOW_FLOATS_API_URL + "/Discover/v2/FloatingPoint/create";
 	public static String loginUrl					= NOW_FLOATS_API_URL + "/discover/v1/login/";
-	public static String verifyLoginUrl			    = NOW_FLOATS_API_URL + "/discover/v1/floatingPoint/verifyLogin";	
+	public static String verifyLoginUrl			    = NOW_FLOATS_API_URL + "/discover/v1/floatingPoint/verifyLogin";
 	public static String FloatCreationURI			= NOW_FLOATS_API_URL + "/Discover/v1/FloatingPoint/create";
 	public static String PictureFloatCreationURI 	= NOW_FLOATS_API_URL + "/Discover/v1/FloatingPoint/createBizMessage";
 	public static String PictureFloatImgCreationURI = NOW_FLOATS_API_URL + "/Discover/v1/FloatingPoint/createBizImage";
@@ -124,16 +124,16 @@ public class Constants {
 	public static String picTypeGallery			= "picType_Gallery";
 	public static String callInitiatedFrom  		= null;
 	public static String serviceResponse    		= "";
-	public static int UPLOAD_TYPE_FILE 			= 123;	
+	public static int UPLOAD_TYPE_FILE 			= 123;
 	public static int UPLOAD_TYPE_STRING 			= 120;
 
-	
+
 	public static final String BG_SERVICE_CONTENT_TYPE_OCTET_STREAM = 	"binary/octet-stream";
 	public static final String BG_SERVICE_CONTENT_TYPE_JSON 		= 	"application/json";
 	public final static String BG_SERVICE_DATA_ROW_ID				=	"rowId_bizApp";
 	public final static String NEW_LINE 		= "\n";
 	public static final String CLIENT_ID_KEY 	= "clientId_bizAPP";
-	
+
 	public static final String CONSUMER_KEY 		= "h5lB3rvjU66qOXHgrZK41Q";
 	public static final String CONSUMER_SECRET 		= "L0Bo08aevt2U1fLjuuYAMtANSAzWWi8voGuvbrdtcY4";
 	//public static final String FACEBOOK_API_KEY 	= "193559690753525";
@@ -141,7 +141,7 @@ public class Constants {
    // public static final String FACEBOOK_API_KEY 	= "539836972828386";  // Boost
 
     public static final String FACEBOOK_API_KEY 	= Specific.FACEBOOK_API_KEY;
-	
+
 	// test facebook app id 544632525682164
 	//public static final String FACEBOOK_API_KEY 	= "544632525682164";
 	public static String FACEBOOK_USER_ID 			= "";
@@ -151,7 +151,7 @@ public class Constants {
 	public static String FACEBOOK_PAGE_ACCESS_ID 	= "";
 	public static String TWITTER_TOK 				= "";
 	public static String TWITTER_SEC 				= "";
-	
+
 	public static final String[] FACEBOOK_PERMISSIONS 	= new String[] {"email", "user_birthday", "user_interests", "publish_actions", "photo_upload","publish_stream"};
     public static final String REQUEST_URL 				= "https://api.twitter.com/oauth/request_token";
 	public static final String ACCESS_URL 				= "https://api.twitter.com/oauth/access_token";
@@ -160,8 +160,8 @@ public class Constants {
 	public static final String OAUTH_CALLBACK_SCHEME 	= "x-oauthflow-twitter";
 	public static final String OAUTH_CALLBACK_HOST 		= "callback";
 	public static final String OAUTH_CALLBACK_URL 		= OAUTH_CALLBACK_SCHEME + "://" + OAUTH_CALLBACK_HOST;
-	
-	public static String shortUrl		= "";	
+
+	public static String shortUrl		= "";
 	public static final String SUCCESS 	= "Success";
 	public static final String FAILURE 	= "Failure";
 
@@ -178,7 +178,7 @@ public class Constants {
 	public static String StoreCity			= null;
 	public static String StoreFPCountry		= null;
 	public static String StorePinCode		= null;
-	
+
 	public static String StorePrimaryNumber	= null;
 	public static String StoreName 			= null;
 	public static String StoreLogoUri		= null;
@@ -253,16 +253,16 @@ public class Constants {
 	public static String requestedDomainType;
 	public static Boolean isDirectlyCameToMainScreen = false;
 //	public static Boolean websiteShared = false;
-	
+
 	// Database Version
 	public static final int DATABASE_VERSION = 1;
 	// Database Name
 	public static final String DATABASE_NAME = "NFBoostDB";
-	
+
 	// Table Names
 	public static final String TABLE_DRAFTS_UPDATES		= "drafts_updates";
 	public static final String TABLE_CONTACTS 			= "contacts";
-	
+
 	// Update Matchers
 	public static int update_drafts 	= 100000001;
 	public static int update_contacts = 100000002;
@@ -359,28 +359,28 @@ public class Constants {
 	public static interface BROADCAST_RECEIVERS_INFO
 	{
 		String BACKGROUND_SERVICE_BROADCAST_RECEIVER_KEY = "BIZ_APP_REC_KEY";
-		String FLOAT_CREATION_BACKGROUND_SERVICE_BROADCAST_RECEIVER_ACTION = "com.biz2.nowfloats.FLOAT_CREATION_ACTION";		
-		String BACKGROUND_SERVICE_RESPONSE = "response";			
+		String FLOAT_CREATION_BACKGROUND_SERVICE_BROADCAST_RECEIVER_ACTION = "com.biz2.nowfloats.FLOAT_CREATION_ACTION";
+		String BACKGROUND_SERVICE_RESPONSE = "response";
 	}
 	public Constants(Activity app){
 		this.app = app;
 	}
 	public Constants(Context app){
 	}
-	
-	
+
+
 	public static boolean isImgUploaded = false;
 	public static String uploadedImg = "";
-	
+
 	public static int featureImgReqCode = 6767;
 	public static int secondaryImgReqCode = 50505;
-	
+
 	public static int logoImgReqCode = 4545;
 	public static int BackgroundImgReqCode = 9898;
 	public static String BackGoundImgReqCode = "Background";
-	
+
 	public static int imgUploadReqCode = 789;
-	
+
 	public static boolean isGalleryUpdated = false;
 
 	//widgets
@@ -399,5 +399,5 @@ public class Constants {
 
 
 
-	
+
 }

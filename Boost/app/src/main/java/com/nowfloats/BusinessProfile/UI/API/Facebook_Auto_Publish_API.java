@@ -12,7 +12,6 @@ import com.android.volley.toolbox.Volley;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.MixPanelController;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -20,37 +19,32 @@ import org.json.JSONObject;
  */
 public class Facebook_Auto_Publish_API {
 
-    public static String autoPublish(Context context,String fpID)
-    {
+    public static String autoPublish(Context context, String fpID) {
         RequestQueue queue = Volley.newRequestQueue(context);
 
         JSONObject obj = new JSONObject();
 
-        String url = Constants.NOW_FLOATS_API_URL+"/Discover/v1/FloatingPoint/" +
+        String url = Constants.NOW_FLOATS_API_URL + "/Discover/v1/FloatingPoint/" +
                 "GetFacebookPullRegistrations/" +
-                fpID+"/" +
+                fpID + "/" +
                 Constants.clientId;
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET,
                 url, null, new Response.Listener<JSONObject>() {
 
             @Override
-            public void onResponse(JSONObject response)
-            {
+            public void onResponse(JSONObject response) {
                 // TODO Auto-generated method stub
-                try
-                {
+                try {
                     //Log.d("Email Valid : ", "Email : " + response.getString("status"));
                     //Log.d("Email Valid : ","Email : "+response.getString("status"));
 
                     MixPanelController.setProperties("FacebookAutoPublish", response.getString("AutoPublish"));
-                      //Log.d("PullRegistrations","GetFacebookPullRegistrations "+response.getString("AutoPublish"));
-                      //Log.d("Valid Email","Valid Email Response: "+response);
+                    //Log.d("PullRegistrations","GetFacebookPullRegistrations "+response.getString("AutoPublish"));
+                    //Log.d("Valid Email","Valid Email Response: "+response);
 
 
-                }
-                catch(Exception e)
-                {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -61,7 +55,7 @@ public class Facebook_Auto_Publish_API {
                 // TODO Auto-generated method stub
 
 
-                Log.d("Error","Error : "+error);
+                Log.d("Error", "Error : " + error);
                 // signUp.tagStatus("Success",tag);
 
             }

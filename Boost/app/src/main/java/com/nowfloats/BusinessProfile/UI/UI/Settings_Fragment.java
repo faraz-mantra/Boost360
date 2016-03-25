@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -37,24 +36,25 @@ import org.json.JSONObject;
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
-public class Settings_Fragment extends Fragment{
-    FrameLayout signOutLayout,changePaswordLayout,feedbackLayout,likeusFacebookLayout,aboutUsLayout,
-            rateUsLayout,faqLayout,accountLayout;
-    private EditText old_pwd,new_pwd,confirm_pwd;
+public class Settings_Fragment extends Fragment {
+    FrameLayout signOutLayout, changePaswordLayout, feedbackLayout, likeusFacebookLayout, aboutUsLayout,
+            rateUsLayout, faqLayout, accountLayout;
+    private EditText old_pwd, new_pwd, confirm_pwd;
     Boolean confirmCheckerActive = false;
     private ImageView confirmChecker;
     String oldPass, newPass, confirmPass;
     UserSessionManager session;
     private String versionName;
     public Activity activity;
+
     @Override
     public void onResume() {
         super.onResume();
-        if(Constants.gotoStore){
+        if (Constants.gotoStore) {
             Constants.gotoStore = false;
             ((SidePanelFragment.OnItemClickListener) activity).onClick("Store");
         }
-        if (HomeActivity.headerText!=null)
+        if (HomeActivity.headerText != null)
             HomeActivity.headerText.setText("Settings");
     }
 
@@ -67,12 +67,12 @@ public class Settings_Fragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = getActivity();
-        session = new UserSessionManager( activity.getApplicationContext(), activity);
+        session = new UserSessionManager(activity.getApplicationContext(), activity);
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    versionName =  activity.getPackageManager().getPackageInfo( activity.getPackageName(), 0).versionName;
+                    versionName = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0).versionName;
                 } catch (PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -101,7 +101,7 @@ public class Settings_Fragment extends Fragment{
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                 activity.runOnUiThread(new Runnable() {
+                activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         // settingsInterface = (Settings_Interface)  activity;
@@ -116,7 +116,7 @@ public class Settings_Fragment extends Fragment{
             @Override
             public void onClick(View v) {
                 MixPanelController.track("AccountInfo", null);
-                Intent  intent = new Intent(activity,AccountInfoActivity.class);
+                Intent intent = new Intent(activity, AccountInfoActivity.class);
                 startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
@@ -143,7 +143,7 @@ public class Settings_Fragment extends Fragment{
             @Override
             public void onClick(View v) {
                 MixPanelController.track("NeedHelp", null);
-                Mobihelp.showFeedback( activity);
+                Mobihelp.showFeedback(activity);
                 /*String headerValue = getResources().getString(R.string.settings_feedback_link);     //"create@prostinnovation.com";
 
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
@@ -157,12 +157,13 @@ public class Settings_Fragment extends Fragment{
             @Override
             public void onClick(View v) {
                 MixPanelController.track("LikeUsOnFacebook", null);
-                String url =   getResources().getString(R.string.settings_facebook_like_link);   ;//"https://www.facebook.com/thinksity";
-                Intent showWebSiteIntent = new Intent( activity,Mobile_Site_Activity.class);
+                String url = getResources().getString(R.string.settings_facebook_like_link);
+                ;//"https://www.facebook.com/thinksity";
+                Intent showWebSiteIntent = new Intent(activity, Mobile_Site_Activity.class);
                 // showWebSiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 showWebSiteIntent.putExtra("WEBSITE_NAME", url);
-                 activity.startActivity(showWebSiteIntent);
-                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                activity.startActivity(showWebSiteIntent);
+                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
             }
         });
@@ -172,12 +173,13 @@ public class Settings_Fragment extends Fragment{
             @Override
             public void onClick(View v) {
                 MixPanelController.track("AboutUs", null);
-                String url =  getResources().getString(R.string.settings_about_us_link);  ;//"http://prostinnovation.com/";
-                Intent showWebSiteIntent = new Intent( activity,Mobile_Site_Activity.class);
+                String url = getResources().getString(R.string.settings_about_us_link);
+                ;//"http://prostinnovation.com/";
+                Intent showWebSiteIntent = new Intent(activity, Mobile_Site_Activity.class);
                 // showWebSiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 showWebSiteIntent.putExtra("WEBSITE_NAME", url);
-                 activity.startActivity(showWebSiteIntent);
-                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                activity.startActivity(showWebSiteIntent);
+                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -188,27 +190,26 @@ public class Settings_Fragment extends Fragment{
                 MixPanelController.track("RateOnPlayStore", null);
                 // String url = "https://play.google.com/store/apps/details?id=com.thinksity&hl=en";
                 String url = getResources().getString(R.string.settings_rate_us_link);
-                Intent showWebSiteIntent = new Intent( activity,Mobile_Site_Activity.class);
+                Intent showWebSiteIntent = new Intent(activity, Mobile_Site_Activity.class);
                 // showWebSiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 showWebSiteIntent.putExtra("WEBSITE_NAME", url);
-                 activity.startActivity(showWebSiteIntent);
-                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                activity.startActivity(showWebSiteIntent);
+                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
         faqLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MixPanelController.track("FAQs", null);
-                Mobihelp.showSupport( activity);
+                Mobihelp.showSupport(activity);
             }
         });
     }
 
-    public void logoutAlertDialog_Material()
-    {
+    public void logoutAlertDialog_Material() {
 
-        new MaterialDialog.Builder( activity)
-                .customView(R.layout.exit_dialog,true)
+        new MaterialDialog.Builder(activity)
+                .customView(R.layout.exit_dialog, true)
                 .positiveText("Logout")
                 .negativeText("Cancel")
                 .positiveColorRes(R.color.primaryColor)
@@ -217,11 +218,11 @@ public class Settings_Fragment extends Fragment{
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         session.logoutUser();
-                        DataBase db =new DataBase( activity);
+                        DataBase db = new DataBase(activity);
                         db.deleteLoginStatus();
                         //Constants.IS_LOGIN = false;
 
-                  //      SharedPreferences.Editor editor;
+                        //      SharedPreferences.Editor editor;
                         dialog.dismiss();
 //                        Intent i = new Intent( activity, Login_MainActivity.class);
 //                        // Closing all the Activities
@@ -244,9 +245,8 @@ public class Settings_Fragment extends Fragment{
                 .show();
     }
 
-    public void changePassword()
-    {
-        new MaterialDialog.Builder( activity)
+    public void changePassword() {
+        new MaterialDialog.Builder(activity)
                 .customView(R.layout.change_password, true)
                 .positiveText("Ok")
                 .negativeText("Cancel")
