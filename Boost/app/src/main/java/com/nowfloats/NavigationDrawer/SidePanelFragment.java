@@ -18,6 +18,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -150,6 +151,9 @@ public class SidePanelFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Log.d("ILUD", "Hello");
+
         progressbar = (ProgressBar) view.findViewById(R.id.ProgressBar);
         meterValue = (TextView) view.findViewById(R.id.fragment_side_panel_progress_meter_value);
         containerImage = (ImageView) view.findViewById(R.id.backgroundImage);
@@ -187,6 +191,7 @@ public class SidePanelFragment extends Fragment {
         iconImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("ILUD", "Clicked Hello");
                 Intent businessAddress = new Intent(getActivity(),Edit_Profile_Activity.class);
                 startActivity(businessAddress);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -195,7 +200,12 @@ public class SidePanelFragment extends Fragment {
 
         if(Constants.IMAGEURIUPLOADED == false) {
             String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
+<<<<<<< HEAD
             if(iconUrl.length()>0 && !iconUrl.contains("http") && (iconUrl != "https://api.withfloats.com/FP/Actual/default.png")) {
+=======
+            Log.i("ILUD iconURI", iconUrl);
+            if(iconUrl.length()>0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
+>>>>>>> 860f34a89e33951ef0486bcd95275b92e2b18ce2
                 String baseNameProfileImage = Constants.BASE_IMAGE_URL + iconUrl;
                 Picasso.with(getActivity()).load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(iconImage);
             }else{

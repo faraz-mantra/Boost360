@@ -1,0 +1,95 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+package="com.semusi.semusi_sdk_lib">
+
+     <uses-sdk
+        android:minSdkVersion="9"
+        android:targetSdkVersion="9" />
+
+    <!-- gcm permission -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <permission
+        android:name="com.biz2.nowfloats.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.biz2.nowfloats.permission.C2D_MESSAGE" />
+    <!-- gcm end -->
+
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <application>
+
+        <!-- Semusi setup start -->
+        <service android:name="semusi.activitysdk.Api" />
+
+        <activity
+            android:name="semusi.context.utility.UIEeventsHandler"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="com.biz2.nowfloats" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="semusi.ruleengine.pushmanager.SdkGcmListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="semusi.ruleengine.pushmanager.SdkGcmIDListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="semusi.context.counthandler.DataBackupReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter android:priority="9999" >
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <action android:name="com.semusi.NotificationEvent" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+        <!-- Semusi setup end -->
+
+	<!-- Play service meta-data -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <!-- Required Meta-Data keys for SemusiSDK -->
+        <meta-data
+            android:name="com.semusi.analytics.appid"
+            android:value="565eb8ab1bfe15847b000001" />
+        <meta-data
+            android:name="com.semusi.analytics.appkey"
+            android:value="44069eae95db59b250860b2c4b7a1107c11c1145" />
+        <meta-data
+            android:name="com.semusi.analytics.apikey"
+            android:value="ed8752538a77ce02961cbfe3be5df9b0" />
+    </application>
+
+</manifest>

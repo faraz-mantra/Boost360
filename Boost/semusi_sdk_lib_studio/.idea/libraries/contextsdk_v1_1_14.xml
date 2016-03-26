@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="contextsdk_v1.1.14">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/semusi_sdk_lib/libs/contextsdk_v1.1.14.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

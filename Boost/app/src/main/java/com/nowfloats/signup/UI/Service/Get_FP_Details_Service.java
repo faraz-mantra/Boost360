@@ -3,6 +3,7 @@ package com.nowfloats.signup.UI.Service;
 import android.app.Activity;
 import android.util.Log;
 
+import com.nowfloats.PreSignUp.SplashScreen_Activity;
 import com.nowfloats.signup.UI.API.Retro_Signup_Interface;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
@@ -40,6 +41,10 @@ public class Get_FP_Details_Service {
                         if (WebSiteAddressActivity.pd != null) {
                             WebSiteAddressActivity.pd.dismiss();
                         }
+                        if (SplashScreen_Activity.pd!=null)
+                        {
+                            SplashScreen_Activity.pd.dismiss();
+                        }
                     }
                 });}
             }
@@ -53,6 +58,11 @@ public class Get_FP_Details_Service {
                         if (WebSiteAddressActivity.pd != null) {
                             WebSiteAddressActivity.pd.dismiss();
                         }
+                        if (SplashScreen_Activity.pd!=null)
+                        {
+                            SplashScreen_Activity.pd.dismiss();
+                        }
+
                     }
                 });
             }
