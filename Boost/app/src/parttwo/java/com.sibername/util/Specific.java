@@ -24,5 +24,7 @@ public class Specific {
 
     public static String access_level = "30";
 
-    public static final String FACEBOOK_API_KEY 	= "849017471893722"; // Thinksity
+    public static final String FACEBOOK_API_KEY = "849017471893722"; // Thinksity
+    public static final String TWITTER_TOK 	= "5HNCg1Sx1dJMmUt1NuFXMiSST";
+    public static final String TWITTER_SEC 	= "MfMT1qgmmCQ22irEXmUGzHL9aE1bgCo3hlrAekZ1rX5kMKr6WD";
 }

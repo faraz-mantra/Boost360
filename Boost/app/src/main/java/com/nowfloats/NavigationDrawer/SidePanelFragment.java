@@ -195,7 +195,7 @@ public class SidePanelFragment extends Fragment {
 
         if(Constants.IMAGEURIUPLOADED == false) {
             String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
-            if(iconUrl.length()>0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
+            if(iconUrl.length()>0 && !iconUrl.contains("http") && (iconUrl != "https://api.withfloats.com/FP/Actual/default.png")) {
                 String baseNameProfileImage = Constants.BASE_IMAGE_URL + iconUrl;
                 Picasso.with(getActivity()).load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(iconImage);
             }else{
