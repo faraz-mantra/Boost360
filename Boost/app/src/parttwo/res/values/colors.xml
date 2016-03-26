@@ -8,7 +8,7 @@
 
     <color name="primaryColor">#1b497a</color>
     <color name="primaryColorDark">#1b497a</color>
-    <color name="tabOnclickColor">#000000</color>
+    <color name="tabOnclickColor">#33ffffff</color>
 
     <color name="greenDark">#458b00</color>
     <color name="product_delete_btn">#ff3f3f</color>

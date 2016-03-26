@@ -37,7 +37,7 @@ import retrofit.client.Response;
 public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.Fetch_Home_Data_Interface{
     UserSessionManager session;
     Bus bus;
-    ProgressDialog pd ;
+    public static ProgressDialog pd ;
     private String loginCheck = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
