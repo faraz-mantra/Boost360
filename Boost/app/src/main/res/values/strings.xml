@@ -115,7 +115,7 @@
 
     <!-- Deep Linking URLs  -->
 
-  <!-- SITE-Meter Percentage  -->
+    <!-- SITE-Meter Percentage  -->
 
     <string name="buydomain_percentage">10</string>
     <string name="phoneNumber_percentage">5</string>
@@ -153,7 +153,6 @@
     <string name="email_text2">Add email</string>
     <string name="postUpdate_text2">Message regularly and relevantly</string>
     <string name="share_text2">Promote your website</string>
-
 
 
     <string-array name="CountryCodes">

@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.freshdesk.mobihelp.Mobihelp;
 import com.nowfloats.AccountDetails.AccountInfoActivity;
+import com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQMainAcivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
@@ -200,8 +201,8 @@ public class Settings_Fragment extends Fragment {
         faqLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MixPanelController.track("FAQs", null);
-                Mobihelp.showSupport(activity);
+                Intent i = new Intent(getActivity(), FAQMainAcivity.class);
+                startActivity(i);
             }
         });
     }
