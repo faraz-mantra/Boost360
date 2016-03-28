@@ -348,7 +348,7 @@ public class Home_Main_Fragment extends Fragment implements
                         @Override
                         public void onClick(View v) {
                             Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                                    "mailto", "accounts@nowfloats.com", null));
+                                    "mailto", "leads@nowfloats.com", null));
                             emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Hello, \n" +
                                     "\n" +
                                     "I am interested in renewing my subscription. " +

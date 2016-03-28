@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -116,7 +117,14 @@ public class Social_Sharing_Activity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (facebookPageCheckBox.isChecked()) {
-                    fbPageData();
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            fbPageData();
+                        }
+                    }, 200);
+
                 } else {
                     DataBase dataBase = new DataBase(activity);
                     dataBase.updateFacebookPage("", "", "");
@@ -133,7 +141,14 @@ public class Social_Sharing_Activity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (facebookHomeCheckBox.isChecked()) {
-                    fbData();
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            //Do something after 100ms
+                            fbData();
+                        }
+                    }, 200);
                 } else {
                     DataBase dataBase = new DataBase(activity);
                     dataBase.updateFacebookNameandToken("", "");
@@ -299,10 +314,10 @@ public class Social_Sharing_Activity extends ActionBarActivity {
         final String[] PERMISSIONS = new String[]{"photo_upload",
                 "user_photos", "publish_stream", "read_stream",
                 "offline_access", "manage_pages", "publish_actions"};
-        materialProgress = new MaterialDialog.Builder(this)
-                .widgetColorRes(R.color.accentColor)
-                .content("Please Wait...")
-                .progress(true, 0).show();
+//        materialProgress = new MaterialDialog.Builder(this)
+//                .widgetColorRes(R.color.accentColor)
+//                .content("Please Wait...")
+//                .progress(true, 0).show();
 
         facebook.authorize(this, PERMISSIONS, new Facebook.DialogListener() {
             public void onComplete(Bundle values) {
@@ -469,10 +484,10 @@ public class Social_Sharing_Activity extends ActionBarActivity {
         final String[] PERMISSIONS = new String[]{"photo_upload",
                 "user_photos", "publish_stream", "read_stream",
                 "offline_access", "publish_actions"};
-        materialProgress = new MaterialDialog.Builder(this)
-                .widgetColorRes(R.color.accentColor)
-                .content("Please Wait...")
-                .progress(true, 0).show();
+//        materialProgress = new MaterialDialog.Builder(this)
+//                .widgetColorRes(R.color.accentColor)
+//                .content("Please Wait...")
+//                .progress(true, 0).show();
         facebook.authorize(this, PERMISSIONS, new Facebook.DialogListener() {
 
             public void onComplete(Bundle values) {

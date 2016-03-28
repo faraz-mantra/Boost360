@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -788,106 +789,112 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     }
 
     @Override
-    public void onClick(String nextScreen) {
+    public void onClick(final String nextScreen) {
         Methods.isOnline(HomeActivity.this);
         mDrawerLayout.closeDrawer(Gravity.LEFT);
         shareButton.setVisibility(View.GONE);
-        if (nextScreen.equals("Business Profile"))
-        {
-            //Intent businessProfileIntent = new Intent(HomeActivity.this, BusinessProfile_HomeActivity.class);
-            //startActivity(businessProfileIntent)
-            // ;
-            //slidingTabLayout.setVisibility(View.GONE);
-            shareButton.setVisibility(View.VISIBLE);
-            plusAddButton.setVisibility(View.GONE);
-            getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, businessFragment,"Profile")
-            .addToBackStack(null)
-            .commit();
-            // getSupportFragmentManager().beginTransaction().
-            //        replace(R.id.mainFrame, businessFragment).commit();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (nextScreen.equals("Business Profile"))
+                {
+                    //Intent businessProfileIntent = new Intent(HomeActivity.this, BusinessProfile_HomeActivity.class);
+                    //startActivity(businessProfileIntent)
+                    // ;
+                    //slidingTabLayout.setVisibility(View.GONE);
+                    shareButton.setVisibility(View.VISIBLE);
+                    plusAddButton.setVisibility(View.GONE);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, businessFragment,"Profile")
+                            .addToBackStack(null)
+                            .commit();
+                    // getSupportFragmentManager().beginTransaction().
+                    //        replace(R.id.mainFrame, businessFragment).commit();
 
 //            getSupportFragmentManager().beginTransaction()
 //                    .add(R.id.mainFrame, businessFragment)
 //                            // Add this transaction to the back stack
 //                    .addToBackStack("Profile")
 //                    .commit();
-        }else if (nextScreen.equals("Image Gallery"))
-        {
-            // Intent imageGalleryIntent = new Intent(HomeActivity.this, Image_Gallery_MainActivity.class);
-            // startActivity(imageGalleryIntent);
-            getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,imageGalleryFragment).
-            commit();
-        }else if (nextScreen.equals("Product Gallery"))
-        {
-            getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,productGalleryFragment).commit();
-        }else if (nextScreen.equals("Site Meter"))
-        {
-            // Intent imageGalleryIntent = new Intent(HomeActivity.this, Image_Gallery_MainActivity.class);
-            // startActivity(imageGalleryIntent);
-            getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,siteMeterFragment).addToBackStack(null).commit();
-        }else if(nextScreen.equals("Home")) {
-           headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-            setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-            plusAddButton.setVisibility(View.GONE);
+                }else if (nextScreen.equals("Image Gallery"))
+                {
+                    // Intent imageGalleryIntent = new Intent(HomeActivity.this, Image_Gallery_MainActivity.class);
+                    // startActivity(imageGalleryIntent);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,imageGalleryFragment).
+                            commit();
+                }else if (nextScreen.equals("Product Gallery"))
+                {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,productGalleryFragment).commit();
+                }else if (nextScreen.equals("Site Meter"))
+                {
+                    // Intent imageGalleryIntent = new Intent(HomeActivity.this, Image_Gallery_MainActivity.class);
+                    // startActivity(imageGalleryIntent);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,siteMeterFragment).addToBackStack(null).commit();
+                }else if(nextScreen.equals("Home")) {
+                    headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+                    setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+                    plusAddButton.setVisibility(View.GONE);
             /*
             if(Home_Fragment_Tab.viewPager!=null && Constants.showStoreScreen){
                 Constants.showStoreScreen=false;
                 Home_Fragment_Tab.viewPager.setCurrentItem(2,true);
             }*/
-            getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,homeFragment, "homeFragment").commit();
-            //   getSupportFragmentManager().beginTransaction().
-            //           replace(R.id.mainFrame, homeFragment).addToBackStack("Home").commit();
-        }else if(nextScreen.equals("Chat"))
-        {
-            Konotor.getInstance(getApplicationContext()).launchFeedbackScreen(HomeActivity.this);
-        }else  if(nextScreen.equals("Call"))
-        {
-            Intent call = new Intent(Intent.ACTION_DIAL);
-            String callString = "tel:"+getString(R.string.contact_us_number);
-            call.setData(Uri.parse(callString));
-            startActivity(call);
-        }else if(nextScreen.equals("Share"))
-        {
-            String url = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-            if (!Util.isNullOrEmpty(url)) {
-                String eol = System.getProperty("line.separator");
-                url = "Woohoo! We have a new website. Visit it at "
-                        + eol + url.toLowerCase();
-            }
-            else{
-                String eol = System.getProperty("line.separator");
-                url = "Woohoo! We have a new website. Visit it at "
-                        + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
-                        + getResources().getString(R.string.tag_for_partners);
-            }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,homeFragment, "homeFragment").commit();
+                    //   getSupportFragmentManager().beginTransaction().
+                    //           replace(R.id.mainFrame, homeFragment).addToBackStack("Home").commit();
+                }else if(nextScreen.equals("Chat"))
+                {
+                    Konotor.getInstance(getApplicationContext()).launchFeedbackScreen(HomeActivity.this);
+                }else  if(nextScreen.equals("Call"))
+                {
+                    Intent call = new Intent(Intent.ACTION_DIAL);
+                    String callString = "tel:"+getString(R.string.contact_us_number);
+                    call.setData(Uri.parse(callString));
+                    startActivity(call);
+                }else if(nextScreen.equals("Share"))
+                {
+                    String url = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+                    if (!Util.isNullOrEmpty(url)) {
+                        String eol = System.getProperty("line.separator");
+                        url = "Woohoo! We have a new website. Visit it at "
+                                + eol + url.toLowerCase();
+                    }
+                    else{
+                        String eol = System.getProperty("line.separator");
+                        url = "Woohoo! We have a new website. Visit it at "
+                                + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
+                                + getResources().getString(R.string.tag_for_partners);
+                    }
 //            pref = getSharedPreferences(
 //                    Constants.PREF_NAME, Activity.MODE_PRIVATE);
 //            prefsEditor = pref.edit();
-            shareWebsite(url);
-        }else if(nextScreen.equals("Business Enquiries"))
-        {
-            // ft.remove(homeFragment);
+                    shareWebsite(url);
+                }else if(nextScreen.equals("Business Enquiries"))
+                {
+                    // ft.remove(homeFragment);
 
-            //  ft.add(R.id.mainFrame,businessEnquiriesFragment);
-            //  ft.commit();
-            plusAddButton.setVisibility(View.GONE);
+                    //  ft.add(R.id.mainFrame,businessEnquiriesFragment);
+                    //  ft.commit();
+                    plusAddButton.setVisibility(View.GONE);
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, businessEnquiriesFragment).commit();
-        }else if(nextScreen.equals("Settings"))
-        {
-            //ft.replace(R.id.homeTabViewpager, settingsFragment);
-            //ft.commit();
-            plusAddButton.setVisibility(View.GONE);
-            getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, settingsFragment).commit();
-        }else if(nextScreen.equals("Store")){
-            shareButton.setVisibility(View.GONE);
-            plusAddButton.setVisibility(View.GONE);
-            getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, storeFragment).commit();
-        }else if(nextScreen.equals("csp")){
-            getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, customPageActivity).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, businessEnquiriesFragment).commit();
+                }else if(nextScreen.equals("Settings"))
+                {
+                    //ft.replace(R.id.homeTabViewpager, settingsFragment);
+                    //ft.commit();
+                    plusAddButton.setVisibility(View.GONE);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, settingsFragment).commit();
+                }else if(nextScreen.equals("Store")){
+                    shareButton.setVisibility(View.GONE);
+                    plusAddButton.setVisibility(View.GONE);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, storeFragment).commit();
+                }else if(nextScreen.equals("csp")){
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, customPageActivity).commit();
 //            Intent in = new Intent(HomeActivity.this, CustomPageActivity.class);
 //            startActivity(in);
-        }
+                }
+            }
+        }, 200);
+
     }
 
     public void shareWebsite(String text) {

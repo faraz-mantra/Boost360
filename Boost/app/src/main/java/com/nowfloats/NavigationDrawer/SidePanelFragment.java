@@ -69,7 +69,7 @@ public class SidePanelFragment extends Fragment {
     public ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private boolean mFromSavedInstanceState;
-    public static final String KEY_USER_LEARNED_DRAWER="user_learned_drawer";
+    public static final String KEY_USER_LEARNED_DRAWER = "user_learned_drawer";
     private Activity mainActivity;
     TextView dashBoardTextView;
     TextView businessProfileTextView;
@@ -78,30 +78,30 @@ public class SidePanelFragment extends Fragment {
     TextView productGalleryTextView;
     TextView StoreTextView;
     TextView cspTextView;
-    TextView settingsText,chatText,callText,shareText;
+    TextView settingsText, chatText, callText, shareText;
     public static TextView fpNameTextView;
     UserSessionManager session;
     public static ImageView iconImage;
     public static TextView storeName;
     public static ImageView containerImage;
-    public ImageView backgroundImageButton ;
+    public ImageView backgroundImageButton;
     private Toolbar toolbar;
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_GALLERY = 2;
     Bitmap CameraBitmap;
     String path = null;
-    String imageUrl ="";
+    String imageUrl = "";
     DisplayImageOptions options;
     private TextView titleTextView;
     ContentValues values;
-    Uri imageUri ;
+    Uri imageUri;
     private static final int GALLERY_PHOTO = 2;
     private static final int CAMERA_PHOTO = 1;
 
 //    protected ImageLoader imageLoader = ImageLoader.getInstance();
 
-    LinearLayout homeLayout,profileLayout,analyticsLayout,storeLayout,customerQueriesLayout,imageGalleryLayout,cspLayout,
-            productGalleryLayout,Store_Layout,settingsLayout,chatLayout,callLayout,shareLayout;
+    LinearLayout homeLayout, profileLayout, analyticsLayout, storeLayout, customerQueriesLayout, imageGalleryLayout, cspLayout,
+            productGalleryLayout, Store_Layout, settingsLayout, chatLayout, callLayout, shareLayout;
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
     private ProgressBar progressbar;
@@ -112,10 +112,10 @@ public class SidePanelFragment extends Fragment {
 
     private ImageView lockWidgetImageView, lockWidget_ProductGallery, lockWidgetImageView_BusinessEnq, lockWidgetImageView_CSP;
 
-    private static HashMap<String,Integer > backgroundImages = new HashMap<String,Integer>();
-    private ImageView shareImageView,businessProfileImageView,dasbBoardImageView,callImageView,chatImageView,cspImageView,
-            settingsImageView,StoreImageView,productGalleryImageView,imageGalleryImageView,customerQueriesImageView;
-    private PorterDuffColorFilter defaultLabelFilter,whiteLabelFilter;
+    private static HashMap<String, Integer> backgroundImages = new HashMap<String, Integer>();
+    private ImageView shareImageView, businessProfileImageView, dasbBoardImageView, callImageView, chatImageView, cspImageView,
+            settingsImageView, StoreImageView, productGalleryImageView, imageGalleryImageView, customerQueriesImageView;
+    private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
 
     public interface OnItemClickListener {
         public void onClick(String nextScreen);
@@ -128,24 +128,24 @@ public class SidePanelFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        mainActivity = activity ;
+        mainActivity = activity;
 //        imageLoader.init(ImageLoaderConfiguration.createDefault(mainActivity));
-        session = new UserSessionManager(activity.getApplicationContext(),activity);
+        session = new UserSessionManager(activity.getApplicationContext(), activity);
     }
 
-    public static void saveToPreferences(Context context, String preferenceName, String preferenceValue){
-        SharedPreferences sharedPreferences=context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor=sharedPreferences.edit();
+    public static void saveToPreferences(Context context, String preferenceName, String preferenceValue) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(preferenceName, preferenceValue);
         editor.apply();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View layout= inflater.inflate(R.layout.fragment_side_panel2, container, false);
+        View layout = inflater.inflate(R.layout.fragment_side_panel2, container, false);
         addBackgroundImages();
-        return layout ;
+        return layout;
     }
 
     @Override
@@ -159,9 +159,9 @@ public class SidePanelFragment extends Fragment {
         containerImage = (ImageView) view.findViewById(R.id.backgroundImage);
         siteMeterCalculation();
 
-        Typeface robotoMedium = Typeface.createFromAsset(getActivity().getAssets(),"Roboto-Medium.ttf");
+        Typeface robotoMedium = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Medium.ttf");
 
-        Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"Roboto-Light.ttf");
+        Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Light.ttf");
 
         whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.black), PorterDuff.Mode.SRC_IN);
         defaultLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.dark_grey), PorterDuff.Mode.SRC_IN);
@@ -170,15 +170,14 @@ public class SidePanelFragment extends Fragment {
         String category = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY);
         int Imagedrawable = getCategoryBackgroundImage(category);
 
-        if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE).length()>0)
-        {
+        if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE).length() > 0) {
             String baseNameProfileImage = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
-            if(!baseNameProfileImage.contains("http")){
-                baseNameProfileImage = Constants.BASE_IMAGE_URL+""+ session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
+            if (!baseNameProfileImage.contains("http")) {
+                baseNameProfileImage = Constants.BASE_IMAGE_URL + "" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
             }
-            if (baseNameProfileImage!=null && baseNameProfileImage.length()>0) {
+            if (baseNameProfileImage != null && baseNameProfileImage.length() > 0) {
                 Picasso.with(getActivity()).load(baseNameProfileImage).placeholder(R.drawable.general_services_background_img).into(containerImage);
-            }else{
+            } else {
                 Picasso.with(getActivity()).load(R.drawable.general_services_background_img).into(containerImage);
             }
 //            imageLoader.displayImage(baseNameProfileImage, containerImage);//
@@ -192,33 +191,28 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.i("ILUD", "Clicked Hello");
-                Intent businessAddress = new Intent(getActivity(),Edit_Profile_Activity.class);
+                Intent businessAddress = new Intent(getActivity(), Edit_Profile_Activity.class);
                 startActivity(businessAddress);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
-        if(Constants.IMAGEURIUPLOADED == false) {
+        if (Constants.IMAGEURIUPLOADED == false) {
             String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
-<<<<<<< HEAD
-            if(iconUrl.length()>0 && !iconUrl.contains("http") && (iconUrl != "https://api.withfloats.com/FP/Actual/default.png")) {
-=======
-            Log.i("ILUD iconURI", iconUrl);
-            if(iconUrl.length()>0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
->>>>>>> 860f34a89e33951ef0486bcd95275b92e2b18ce2
+
+            if (iconUrl.length() > 0 && !iconUrl.contains("http") && (iconUrl != "https://api.withfloats.com/FP/Actual/default.png")) {
                 String baseNameProfileImage = Constants.BASE_IMAGE_URL + iconUrl;
                 Picasso.with(getActivity()).load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(iconImage);
-            }else{
-                if (iconUrl!=null && iconUrl.length()>0){
+            } else {
+                if (iconUrl != null && iconUrl.length() > 0) {
                     Picasso.with(getActivity()).load(iconUrl).placeholder(R.drawable.business_edit_profile_icon).into(iconImage);
-                }else{
+                } else {
                     Picasso.with(getActivity()).load(R.drawable.business_edit_profile_icon).into(iconImage);
                 }
             }
         }
 
-        if(session.getIsSignUpFromFacebook().contains("true"))
-        {
+        if (session.getIsSignUpFromFacebook().contains("true")) {
             Picasso.with(getActivity())
                     .load(session.getFacebookPageURL())
                     .rotate(90)                             // optional
@@ -235,7 +229,7 @@ public class SidePanelFragment extends Fragment {
             public void onClick(View v) {
                 MixPanelController.track("SiteScore", null);
                 ((OnItemClickListener) mainActivity).onClick("Site Meter");
-                onclickColorChange(null,null);
+                onclickColorChange(null, null);
             }
         });
 
@@ -243,8 +237,8 @@ public class SidePanelFragment extends Fragment {
         fpNameTextView.setVisibility(View.VISIBLE);
 
         String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-        String normalURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()+ getActivity().getResources().getString(R.string.tag_for_partners);
-        if (rootAlisasURI!=null && !rootAlisasURI.equals("null") && rootAlisasURI.trim().length()>0)
+        String normalURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getActivity().getResources().getString(R.string.tag_for_partners);
+        if (rootAlisasURI != null && !rootAlisasURI.equals("null") && rootAlisasURI.trim().length() > 0)
             fpNameTextView.setText(rootAlisasURI);
         else
             fpNameTextView.setText(normalURI);
@@ -253,17 +247,17 @@ public class SidePanelFragment extends Fragment {
         fpNameTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            String url = "";
-            if (!Util.isNullOrEmpty(url)) {
-                url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-            } else{
-                url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
-                        + getActivity().getResources().getString(R.string.tag_for_partners);
-            }
-            Uri uri = Uri.parse(url);
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);
-            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                String url = "";
+                if (!Util.isNullOrEmpty(url)) {
+                    url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+                } else {
+                    url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
+                            + getActivity().getResources().getString(R.string.tag_for_partners);
+                }
+                Uri uri = Uri.parse(url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -275,22 +269,22 @@ public class SidePanelFragment extends Fragment {
                         (getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
 
                 final MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
-                        .customView(R.layout.featuredimage_popup,true)
+                        .customView(R.layout.featuredimage_popup, true)
                         .show();
 
                 View view = dialog.getCustomView();
-                LinearLayout  deleteImage = (LinearLayout) view.findViewById(R.id.deletebackgroundImage);
+                LinearLayout deleteImage = (LinearLayout) view.findViewById(R.id.deletebackgroundImage);
                 deleteImage.setVisibility(View.GONE);
                 TextView title = (TextView) view.findViewById(R.id.textview_heading);
                 title.setText("Upload Background Image");
                 LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
                 LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
 
-                ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
+                ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
                 ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
                 ImageView deleteImg = (ImageView) view.findViewById(R.id.pop_up_delete_img);
 
-                if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)) && session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE).length()>0) {
+                if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)) && session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE).length() > 0) {
                     deleteImage.setVisibility(View.VISIBLE);
                 }
 
@@ -301,7 +295,7 @@ public class SidePanelFragment extends Fragment {
                 takeCamera.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MixPanelController.track(EventKeysWL.SIDE_PANEL_CHANGE_BACKGROUND_CAMERA,null);
+                        MixPanelController.track(EventKeysWL.SIDE_PANEL_CHANGE_BACKGROUND_CAMERA, null);
                         cameraIntent();
                         dialog.dismiss();
                     }
@@ -310,7 +304,7 @@ public class SidePanelFragment extends Fragment {
                 takeGallery.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MixPanelController.track(EventKeysWL.SIDE_PANEL_CHANGE_BACKGROUND_GALLERY,null);
+                        MixPanelController.track(EventKeysWL.SIDE_PANEL_CHANGE_BACKGROUND_GALLERY, null);
                         galleryIntent();
                         dialog.dismiss();
 
@@ -343,15 +337,13 @@ public class SidePanelFragment extends Fragment {
         callLayout = (LinearLayout) card.findViewById(R.id.seventhRow_Layout);
         shareLayout = (LinearLayout) card.findViewById(R.id.eigthRow_Layout);
 
-        if(session.getIsThinksity().equals("true"))
-        {
+        if (session.getIsThinksity().equals("true")) {
             chatLayout.setVisibility(View.GONE);
             callLayout.setVisibility(View.GONE);
             productGalleryLayout.setVisibility(View.GONE);
         }
 
-        if(session.getISEnterprise().equals("true"))
-        {
+        if (session.getISEnterprise().equals("true")) {
             profileLayout.setVisibility(View.GONE);
             cspLayout.setVisibility(View.GONE);
             imageGalleryLayout.setVisibility(View.GONE);
@@ -384,30 +376,26 @@ public class SidePanelFragment extends Fragment {
 
         // Constants.BusinessEnquiryWidget = true;
 
-        if(!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_GALLERY).contains("IMAGEGALLERY"))
-        {
+        if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_GALLERY).contains("IMAGEGALLERY")) {
             lockWidgetImageView.setVisibility(View.VISIBLE);
         } else {
             lockWidgetImageView.setVisibility(View.GONE);
         }
 
-        if(!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_PRODUCT_GALLERY).contains("PRODUCTCATALOGUE"))
-        {
+        if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_PRODUCT_GALLERY).contains("PRODUCTCATALOGUE")) {
             lockWidget_ProductGallery.setVisibility(View.VISIBLE);
         } else {
             lockWidget_ProductGallery.setVisibility(View.GONE);
         }
 
-        if(!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TOB).contains("TOB"))
-        {
+        if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TOB).contains("TOB")) {
             lockWidgetImageView_BusinessEnq.setVisibility(View.VISIBLE);
 
         } else {
             lockWidgetImageView_BusinessEnq.setVisibility(View.GONE);
         }
 
-        if(!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_CUSTOMPAGES).contains("CUSTOMPAGES"))
-        {
+        if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_CUSTOMPAGES).contains("CUSTOMPAGES")) {
             lockWidgetImageView_CSP.setVisibility(View.VISIBLE);
 
         } else {
@@ -422,7 +410,7 @@ public class SidePanelFragment extends Fragment {
         StoreImageView = (ImageView) Store_Layout.findViewById(R.id.storeRow_ImageView);
         cspImageView = (ImageView) cspLayout.findViewById(R.id.csp_ImageView);
         settingsImageView = (ImageView) settingsLayout.findViewById(R.id.fifthRow_ImageView);
-        chatImageView =(ImageView) chatLayout.findViewById(R.id.sixthRow_ImageView);
+        chatImageView = (ImageView) chatLayout.findViewById(R.id.sixthRow_ImageView);
         callImageView = (ImageView) callLayout.findViewById(R.id.seventhRow_ImageView);
         shareImageView = (ImageView) shareLayout.findViewById(R.id.eigthRow_ImageView);
 
@@ -432,8 +420,8 @@ public class SidePanelFragment extends Fragment {
             public void onClick(View v) {
                 //dashBoardTextView.setTextColor(Color.);
                 ((OnItemClickListener) mainActivity).onClick("Home");
-                MixPanelController.track(EventKeysWL.SIDE_PANEL_DASHBOARD,null);
-                onclickColorChange(dasbBoardImageView,dashBoardTextView);
+                MixPanelController.track(EventKeysWL.SIDE_PANEL_DASHBOARD, null);
+                onclickColorChange(dasbBoardImageView, dashBoardTextView);
             }
         });
 
@@ -442,8 +430,8 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((OnItemClickListener) mainActivity).onClick("Business Profile");
-                onclickColorChange(businessProfileImageView,businessProfileTextView);
-                MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_PROFILE,null);
+                onclickColorChange(businessProfileImageView, businessProfileTextView);
+                MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_PROFILE, null);
             }
         });
 
@@ -451,11 +439,13 @@ public class SidePanelFragment extends Fragment {
         customerQueriesLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-           onclickColorChange(customerQueriesImageView,customerQueries);
-                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TOB).contains("TOB") ) {
+                onclickColorChange(customerQueriesImageView, customerQueries);
+                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TOB).contains("TOB")) {
                     ((OnItemClickListener) mainActivity).onClick("Business Enquiries");
                     MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_ENQUIRIES, null);
-                } else { showAlertMaterialDialog(); }
+                } else {
+                    showAlertMaterialDialog();
+                }
             }
         });
 
@@ -463,11 +453,13 @@ public class SidePanelFragment extends Fragment {
         imageGalleryLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onclickColorChange(imageGalleryImageView,imageGalleryTextView);
-                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_GALLERY).contains("IMAGEGALLERY") ) {
+                onclickColorChange(imageGalleryImageView, imageGalleryTextView);
+                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_GALLERY).contains("IMAGEGALLERY")) {
                     ((OnItemClickListener) mainActivity).onClick("Image Gallery");
                     MixPanelController.track(EventKeysWL.SIDE_PANEL_IMAGE_GALLERY, null);
-                } else {showAlertMaterialDialog();}
+                } else {
+                    showAlertMaterialDialog();
+                }
             }
         });
 
@@ -475,11 +467,13 @@ public class SidePanelFragment extends Fragment {
         productGalleryLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onclickColorChange(productGalleryImageView,productGalleryTextView);
-                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_PRODUCT_GALLERY).contains("PRODUCTCATALOGUE")){
+                onclickColorChange(productGalleryImageView, productGalleryTextView);
+                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_PRODUCT_GALLERY).contains("PRODUCTCATALOGUE")) {
                     ((OnItemClickListener) mainActivity).onClick("Product Gallery");
                     MixPanelController.track(EventKeysWL.SIDE_PANEL_PRODUCT_GALLERY, null);
-                }else {showAlertMaterialDialog();}
+                } else {
+                    showAlertMaterialDialog();
+                }
             }
         });
 
@@ -487,7 +481,7 @@ public class SidePanelFragment extends Fragment {
         Store_Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onclickColorChange(StoreImageView,StoreTextView);
+                onclickColorChange(StoreImageView, StoreTextView);
                 ((OnItemClickListener) mainActivity).onClick("Store");
                 MixPanelController.track(EventKeysWL.SIDE_PANEL_PRODUCT_GALLERY, null);
             }
@@ -497,11 +491,13 @@ public class SidePanelFragment extends Fragment {
         cspLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_CUSTOMPAGES).contains("CUSTOMPAGES") ) {
-                    onclickColorChange(cspImageView,cspTextView);
+                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_CUSTOMPAGES).contains("CUSTOMPAGES")) {
+                    onclickColorChange(cspImageView, cspTextView);
                     ((OnItemClickListener) mainActivity).onClick("csp");
                     MixPanelController.track(EventKeysWL.SIDE_PANEL_PRODUCT_GALLERY, null);
-                } else { showAlertMaterialDialog(); }
+                } else {
+                    showAlertMaterialDialog();
+                }
             }
         });
 
@@ -513,18 +509,18 @@ public class SidePanelFragment extends Fragment {
         settingsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onclickColorChange(settingsImageView,settingsText);
+                onclickColorChange(settingsImageView, settingsText);
                 ((OnItemClickListener) mainActivity).onClick("Settings");
-                MixPanelController.track(EventKeysWL.SIDE_PANEL_SETTINGS,null);
+                MixPanelController.track(EventKeysWL.SIDE_PANEL_SETTINGS, null);
             }
         });
 
         chatLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onclickColorChange(null,chatText);
+                onclickColorChange(null, chatText);
                 ((OnItemClickListener) mainActivity).onClick("Chat");
-                MixPanelController.track("ChatWithRia",null);
+                MixPanelController.track("ChatWithRia", null);
             }
         });
 
@@ -533,7 +529,7 @@ public class SidePanelFragment extends Fragment {
             public void onClick(View v) {
                 MixPanelController.track("ContactUs", null);
                 ((OnItemClickListener) mainActivity).onClick("Call");
-                onclickColorChange(callImageView,callText);
+                onclickColorChange(callImageView, callText);
             }
         });
 
@@ -541,8 +537,8 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MixPanelController.track("ShareFromSidepanel", null);
-             ((OnItemClickListener) mainActivity).onClick("Share");
-             onclickColorChange(shareImageView,shareText);
+                ((OnItemClickListener) mainActivity).onClick("Share");
+                onclickColorChange(shareImageView, shareText);
             }
         });
     }
@@ -757,43 +753,39 @@ public class SidePanelFragment extends Fragment {
     }
 
     private void deleteBackgroundImage() {
-        DeleteBackgroundImageAsyncTask deleteBackgroundImageAsyncTask = new DeleteBackgroundImageAsyncTask(getActivity(),session);
+        DeleteBackgroundImageAsyncTask deleteBackgroundImageAsyncTask = new DeleteBackgroundImageAsyncTask(getActivity(), session);
         deleteBackgroundImageAsyncTask.execute();
     }
 
     public void setUp(int fragmentId, DrawerLayout drawerLayout, final Toolbar toolbar) {
         containerView = getActivity().findViewById(fragmentId);
         mDrawerLayout = drawerLayout;
-        mDrawerToggle = new ActionBarDrawerToggle(getActivity(),drawerLayout,toolbar, R.string.drawer_open, R.string.drawer_close){
+        mDrawerToggle = new ActionBarDrawerToggle(getActivity(), drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close) {
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                if(!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_GALLERY).contains("IMAGEGALLERY"))
-                {
+                if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_GALLERY).contains("IMAGEGALLERY")) {
                     lockWidgetImageView.setVisibility(View.VISIBLE);
                 } else {
                     lockWidgetImageView.setVisibility(View.GONE);
                 }
-                if(!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_PRODUCT_GALLERY).contains("PRODUCTCATALOGUE"))
-                {
+                if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_PRODUCT_GALLERY).contains("PRODUCTCATALOGUE")) {
                     lockWidget_ProductGallery.setVisibility(View.VISIBLE);
                 } else {
                     lockWidget_ProductGallery.setVisibility(View.GONE);
                 }
-                if(!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TOB).contains("TOB"))
-                {
+                if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TOB).contains("TOB")) {
                     lockWidgetImageView_BusinessEnq.setVisibility(View.VISIBLE);
                 } else {
                     lockWidgetImageView_BusinessEnq.setVisibility(View.GONE);
                 }
-                if(!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_CUSTOMPAGES).contains("CUSTOMPAGES"))
-                {
+                if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_CUSTOMPAGES).contains("CUSTOMPAGES")) {
                     lockWidgetImageView_CSP.setVisibility(View.VISIBLE);
                 } else {
                     lockWidgetImageView_CSP.setVisibility(View.GONE);
                 }
-                if(!mUserLearnedDrawer){
-                    mUserLearnedDrawer=true;
+                if (!mUserLearnedDrawer) {
+                    mUserLearnedDrawer = true;
                     saveToPreferences(getActivity(), KEY_USER_LEARNED_DRAWER, mUserLearnedDrawer + "");
                 }
                 getActivity().invalidateOptionsMenu();
@@ -819,7 +811,7 @@ public class SidePanelFragment extends Fragment {
 //                }
             }
         };
-        if(!mUserLearnedDrawer&& !mFromSavedInstanceState){
+        if (!mUserLearnedDrawer && !mFromSavedInstanceState) {
             mDrawerLayout.openDrawer(containerView);
         }
         mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -831,11 +823,11 @@ public class SidePanelFragment extends Fragment {
         });
     }
 
-    public static void addBackgroundImages(){
+    public static void addBackgroundImages() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (backgroundImages.size()==0){
+                if (backgroundImages.size() == 0) {
                     backgroundImages.put("GENERALSERVICES", R.drawable.general_services_background_img);
                   /*backgroundImages.put("ARCHITECTURE",R.drawable.architecture_background_img);
                     backgroundImages.put("AUTOMOTIVE",R.drawable.automotive_background_img);
@@ -877,14 +869,13 @@ public class SidePanelFragment extends Fragment {
     }
 
 
-
-    public void cameraIntent(){
+    public void cameraIntent() {
         try {
             // use standard intent to capture an image
             values = new ContentValues();
             values.put(MediaStore.Images.Media.TITLE, "New Picture");
             values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-            imageUri =getActivity().getContentResolver().insert(
+            imageUri = getActivity().getContentResolver().insert(
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
             Intent captureIntent = new Intent(
                     MediaStore.ACTION_IMAGE_CAPTURE);
@@ -897,15 +888,14 @@ public class SidePanelFragment extends Fragment {
             Toast toast = Toast.makeText(getActivity().getApplicationContext(),
                     errorMessage, Toast.LENGTH_SHORT);
             toast.show();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void galleryIntent(){
+    public void galleryIntent() {
         try {
-            Intent i = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(i, GALLERY_PHOTO);
         } catch (ActivityNotFoundException anfe) {
             // display an error message
@@ -921,21 +911,21 @@ public class SidePanelFragment extends Fragment {
             if (resultCode == getActivity().RESULT_OK && (CAMERA_PHOTO == requestCode)) {
                 try {
                     path = null;
-                    if (imageUri!=null){
+                    if (imageUri != null) {
                         path = getRealPathFromURI(imageUri);
                         CameraBitmap = Util.getBitmap(path, getActivity());
                         imageUrl = getRealPathFromURI(imageUri);
                         path = Util.saveBitmap(path, getActivity(), "ImageFloat" + System.currentTimeMillis());
-                    }else{
+                    } else {
                         if (data != null) {
                             imageUri = data.getData();
                             if (imageUri == null) {
                                 CameraBitmap = (Bitmap) data.getExtras().get("data");
-                                if(CameraBitmap!=null){
-                                    path = Util.saveCameraBitmap(CameraBitmap,getActivity(),"ImageFloat" + System.currentTimeMillis());
+                                if (CameraBitmap != null) {
+                                    path = Util.saveCameraBitmap(CameraBitmap, getActivity(), "ImageFloat" + System.currentTimeMillis());
                                     imageUri = Uri.parse(path);
                                 }
-                            }else{
+                            } else {
                                 path = getRealPathFromURI(imageUri);
                                 CameraBitmap = Util.getBitmap(path, getActivity());
                                 imageUrl = getRealPathFromURI(imageUri);
@@ -954,9 +944,8 @@ public class SidePanelFragment extends Fragment {
 
                 if (!Util.isNullOrEmpty(path)) {
                     uploadPrimaryPicture(path);
-                }  else Methods.showSnackBar(getActivity(), "Please select an image to upload");
-            }
-            else if (resultCode == getActivity().RESULT_OK && (GALLERY_PHOTO == requestCode)) {
+                } else Methods.showSnackBar(getActivity(), "Please select an image to upload");
+            } else if (resultCode == getActivity().RESULT_OK && (GALLERY_PHOTO == requestCode)) {
                 {
                     Uri picUri = data.getData();
                     if (picUri != null) {
@@ -966,7 +955,7 @@ public class SidePanelFragment extends Fragment {
                         if (!Util.isNullOrEmpty(path)) {
                             uploadPrimaryPicture(path);
                         } else
-                            Toast.makeText(getActivity().getApplicationContext(), "Please select an image to upload",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity().getApplicationContext(), "Please select an image to upload", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -976,7 +965,7 @@ public class SidePanelFragment extends Fragment {
     }
 
     public String getRealPathFromURI(Uri contentUri) {
-        String[] proj = { MediaStore.Images.Media.DATA };
+        String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = getActivity().managedQuery(contentUri, proj, null, null, null);
         int column_index = cursor
                 .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
@@ -986,7 +975,7 @@ public class SidePanelFragment extends Fragment {
 
     public String getPath(Uri uri) {
         try {
-            String[] projection = { MediaStore.Images.Media.DATA };
+            String[] projection = {MediaStore.Images.Media.DATA};
             Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
@@ -999,7 +988,7 @@ public class SidePanelFragment extends Fragment {
     public void uploadPrimaryPicture(String path) {
         mDrawerLayout.openDrawer(Gravity.LEFT);
         Constants.isImgUploaded = false;
-        UploadPictureAsyncTask upa = new UploadPictureAsyncTask(getActivity(), path,true,session.getFPID());
+        UploadPictureAsyncTask upa = new UploadPictureAsyncTask(getActivity(), path, true, session.getFPID());
         upa.execute();
     }
 
@@ -1007,8 +996,7 @@ public class SidePanelFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(session.getISEnterprise().equals("true"))
-        {
+        if (session.getISEnterprise().equals("true")) {
             profileLayout.setVisibility(View.GONE);
             imageGalleryLayout.setVisibility(View.GONE);
             chatLayout.setVisibility(View.GONE);
@@ -1016,7 +1004,7 @@ public class SidePanelFragment extends Fragment {
         }
 
         siteMeterCalculation();
-       // mDrawerLayout.openDrawer(Gravity.LEFT);
+        // mDrawerLayout.openDrawer(Gravity.LEFT);
     }
 
     /*public void siteMeterCalculation(){
@@ -1067,62 +1055,60 @@ public class SidePanelFragment extends Fragment {
         progressbar.setProgress(siteMeterTotalWeight);
         meterValue.setText(siteMeterTotalWeight+"%");
     }*/
-    public void siteMeterCalculation(){
+    public void siteMeterCalculation() {
         siteMeterTotalWeight = 0;
-        if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))){
-            siteMeterTotalWeight += 10 ;
+        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
+            siteMeterTotalWeight += 10;
         }
-        if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER))  && !getResources().getString(R.string.phoneNumber_percentage).equals("0")){
-            siteMeterTotalWeight+=phoneWeight;
-        }
-
-        if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY)) && !getResources().getString(R.string.businessCategory_percentage).equals("0")){
-            siteMeterTotalWeight+=businessCategoryWeight;
+        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER)) && !getResources().getString(R.string.phoneNumber_percentage).equals("0")) {
+            siteMeterTotalWeight += phoneWeight;
         }
 
-        if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI))&& !getResources().getString(R.string.featuredImage_percentage).equals("0")){
-            siteMeterTotalWeight+=featuredImageWeight;
+        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY)) && !getResources().getString(R.string.businessCategory_percentage).equals("0")) {
+            siteMeterTotalWeight += businessCategoryWeight;
         }
 
-        if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)) && !getResources().getString(R.string.businessName_percentage).equals("0")) {
+        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)) && !getResources().getString(R.string.featuredImage_percentage).equals("0")) {
+            siteMeterTotalWeight += featuredImageWeight;
+        }
+
+        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)) && !getResources().getString(R.string.businessName_percentage).equals("0")) {
             siteMeterTotalWeight += businessNameWeight;
         }
 
-        if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)) && !getResources().getString(R.string.businessdescription_percentage).equals("0")){
-            siteMeterTotalWeight+=businessDescriptionWeight;
+        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)) && !getResources().getString(R.string.businessdescription_percentage).equals("0")) {
+            siteMeterTotalWeight += businessDescriptionWeight;
         }
 
-        if(Constants.twitterShareEnabled == false && Util.isNullOrEmpty(session.getFacebookAccessToken())&& !getResources().getString(R.string.social_percentage).equals("0"))
-        {
-        }else{
+        if (Constants.twitterShareEnabled == false && Util.isNullOrEmpty(session.getFacebookAccessToken()) && !getResources().getString(R.string.social_percentage).equals("0")) {
+        } else {
             siteMeterTotalWeight += twitterWeight;
         }
 
-        if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)) && !getResources().getString(R.string.address_percentage).equals("0")){
-            siteMeterTotalWeight+=businessAddressWeight;
+        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)) && !getResources().getString(R.string.address_percentage).equals("0")) {
+            siteMeterTotalWeight += businessAddressWeight;
         }
 
-        if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL)) && !getResources().getString(R.string.email_percentage).equals("0")){
-            siteMeterTotalWeight+=emailWeight;
+        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL)) && !getResources().getString(R.string.email_percentage).equals("0")) {
+            siteMeterTotalWeight += emailWeight;
         }
 
-        if(HomeActivity.StorebizFloats.size()<5 && fiveUpdatesDone == false)
-        {
-            siteMeterTotalWeight+=onUpdate;
-        }else{
+        if (HomeActivity.StorebizFloats.size() < 5 && fiveUpdatesDone == false) {
+            siteMeterTotalWeight += onUpdate;
+        } else {
             fiveUpdatesDone = true;
-            siteMeterTotalWeight+=25;
+            siteMeterTotalWeight += 25;
         }
 
-        if(session.getWebsiteshare()){
+        if (session.getWebsiteshare()) {
             siteMeterTotalWeight += businessNameWeight;
         }
 
         progressbar.setProgress(siteMeterTotalWeight);
-        meterValue.setText(siteMeterTotalWeight+"%");
+        meterValue.setText(siteMeterTotalWeight + "%");
     }
 
-    private void onclickColorChange(ImageView img,TextView tv){
+    private void onclickColorChange(ImageView img, TextView tv) {
         dashBoardTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
         businessProfileTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
         customerQueries.setTextColor(getResources().getColor(R.color.cell_text_color));
@@ -1146,9 +1132,9 @@ public class SidePanelFragment extends Fragment {
         settingsImageView.setColorFilter(defaultLabelFilter);
         callImageView.setColorFilter(defaultLabelFilter);
 
-        if (tv!=null)
+        if (tv != null)
             tv.setTextColor(getResources().getColor(R.color.black));
-        if(img!=null)
+        if (img != null)
             img.setColorFilter(whiteLabelFilter);
     }
 }
