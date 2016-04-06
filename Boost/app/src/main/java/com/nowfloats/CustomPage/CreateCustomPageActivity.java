@@ -1,26 +1,39 @@
 package com.nowfloats.CustomPage;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.CustomPage.Model.CreatePageModel;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -51,6 +64,8 @@ public class CreateCustomPageActivity extends AppCompatActivity{
     String curName,curHtml,curPageid;
     int curPos;
     private ImageView deletePage;
+
+    private int GALLERY_PHOTO =5;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -374,29 +389,20 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                 richText.setBlockquote();
             }
         });
-        /*findViewById(R.id.action_insert_image).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.action_insert_image).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mEditor.insertImage(
-                        "http://www.1honeywan.com/dachshund/image/7.21/7.21_3_thumb.JPG",
-                        "dachshund");
-            }
-        });*/
+                showUrlDialog("Enter Image Url", 1);
 
-       /* findViewById(R.id.action_insert_link).setOnClickListener(new View.OnClickListener() {
+            }
+        });
+
+       findViewById(R.id.action_insert_link).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-                if (!Util.isNullOrEmpty(url)) {
-                    url =  url.toLowerCase();
-                }
-                else{
-                    url = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
-                            + activity.getResources().getString(R.string.tag_for_partners);
-                }
-                richText.insertLink(url, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
+                showUrlDialog("Enter Hyperlink Url", 2);
             }
-        });*/
+        });
     }
 
     @Override
@@ -420,4 +426,78 @@ public class CreateCustomPageActivity extends AppCompatActivity{
         super.onBackPressed();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
+    private void showUrlDialog(String msg, final int url_id){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View v = inflater.inflate(R.layout.dialog_url, null);
+        final EditText et_url = (EditText) v.findViewById(R.id.et_url);
+        final EditText et_tag = (EditText) v.findViewById(R.id.et_tag);
+        if(url_id==2)
+        {
+            et_tag.setVisibility(View.VISIBLE);
+        }
+        et_url.setHint(msg);
+        builder.setView(v).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String url = et_url.getText().toString().trim();
+                if(url_id==1 && !url.isEmpty())
+                {
+                    richText.insertImage(url, "No image");
+                }
+                else if(url_id==2 && !url.isEmpty())
+                {
+                   String tag = et_tag.getText().toString().trim();
+                    if(!tag.isEmpty())
+                    {
+                        richText.insertLink(url, tag);
+                    }
+                }
+
+            }
+              })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        Dialog d  = builder.create();
+        d.show();
+
+    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        try {
+//             if (resultCode == RESULT_OK && (GALLERY_PHOTO == requestCode)) {
+//                {
+//                    Uri picUri = data.getData();
+//                    if (picUri != null) {
+//                        String path = getPath(picUri);
+//                        //path = Util.saveBitmap(path, this, "ImageFloat" + System.currentTimeMillis());
+//
+//                        if (!Util.isNullOrEmpty(path)) {
+//                            richText.insertImage(path, "dachshund");
+//                        } else
+//                            Toast.makeText(getApplicationContext(), "Please select an image to upload", Toast.LENGTH_SHORT).show();
+//
+//                    }
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//    public String getPath(Uri uri) {
+//        try {
+//            String[] projection = {MediaStore.Images.Media.DATA};
+//            Cursor cursor = managedQuery(uri, projection, null, null, null);
+//            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+//            cursor.moveToFirst();
+//            return cursor.getString(column_index);
+//        } catch (Exception e) {
+//        }
+//        return null;
+//    }
+
 }

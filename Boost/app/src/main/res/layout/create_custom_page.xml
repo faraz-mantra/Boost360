@@ -243,21 +243,21 @@
                     android:contentDescription="@null"
                     android:src="@drawable/blockquote" />
 
-               <!-- <ImageButton
+                <ImageButton
                     android:id="@+id/action_insert_image"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:background="@null"
                     android:contentDescription="@null"
                     android:src="@drawable/insert_image" />
--->
-               <!-- <ImageButton
+
+                <ImageButton
                     android:id="@+id/action_insert_link"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:background="@null"
                     android:contentDescription="@null"
-                    android:src="@drawable/insert_link" />-->
+                    android:src="@drawable/insert_link" />
             </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>

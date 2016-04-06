@@ -95,7 +95,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
                 holder.stencil.setColorFilter(primary);
                 if (storeData.get(position).getSel()==0){
                     holder.imageView.setVisibility(View.INVISIBLE);
-                    holder.fullLayout.setBackgroundColor(android.R.attr.selectableItemBackground);
+                    holder.fullLayout.setBackgroundColor( android.R.attr.selectableItemBackground);
 //                    holder.imageView.setColorFilter(greyBg);
                 }else{
                     holder.imageView.setVisibility(View.VISIBLE);
