@@ -134,8 +134,8 @@ public class Constants {
     public final static String NEW_LINE = "\n";
     public static final String CLIENT_ID_KEY = "clientId_bizAPP";
 
-    public static final String CONSUMER_KEY = "h5lB3rvjU66qOXHgrZK41Q";
-    public static final String CONSUMER_SECRET = "L0Bo08aevt2U1fLjuuYAMtANSAzWWi8voGuvbrdtcY4";
+    public static final String CONSUMER_KEY = Specific.TWITTER_TOK;
+    public static final String CONSUMER_SECRET = Specific.TWITTER_SEC;
 
     //public static final String FACEBOOK_API_KEY 	= "193559690753525";
     //public static final String FACEBOOK_API_KEY 	= "851630411569235"; // Thinksity

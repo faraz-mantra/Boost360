@@ -145,6 +145,7 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
                             if (Cur_data.entityUrl!=null && !Cur_data.entityUrl.equals("null") && Cur_data.entityUrl.length()>0){
                                 Intent i = new Intent(appContext,Mobile_Site_Activity.class);
                                 i.putExtra("WEBSITE_NAME",Cur_data.entityUrl);
+                                i.putExtra("tag",Cur_data.entityUrl);
                                 appContext.startActivity(i);
                                 /*Intent i = new Intent(Intent.ACTION_VIEW);
                                 i.setData(Uri.parse(Cur_data.entityUrl));

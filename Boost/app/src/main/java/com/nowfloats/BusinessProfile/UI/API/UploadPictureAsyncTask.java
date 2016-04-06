@@ -190,7 +190,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
             FileInputStream fileInputStream = null;
             File img = new File(imagePath);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            byte[] buf = new byte[1024];
+            //byte[] buf = new byte[1024];
             File f = new File(img.getAbsolutePath() + File.separator);
             try {
                 f.createNewFile();

@@ -3,8 +3,11 @@ package com.nowfloats.Image_Gallery;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import com.nowfloats.Login.UserSessionManager;
@@ -21,9 +24,12 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -339,52 +345,66 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
     public void uploadImage(String imagePath){
         // Toast.makeText(appContext,"Image Path : "+imagePath,Toast.LENGTH_SHORT).show();
         //  Log.d(TAG,"Image Path : "+imagePath);
-        Handler handler =  new Handler(appContext.getMainLooper());
-        handler.post( new Runnable(){
-            public void run(){
-                // Toast.makeText(appContext, "Image Path : "+imagePath,Toast.LENGTH_LONG).show();
-            }
-        });
-        FileInputStream fileInputStream = null;
-        File img = new File(imagePath);
-        int _totalChunks = 0;
-
-        ArrayList<byte[]> _chunks = new ArrayList<byte[]>();
-
+//        Handler handler =  new Handler(appContext.getMainLooper());
+//        handler.post( new Runnable(){
+//            public void run(){
+//                // Toast.makeText(appContext, "Image Path : "+imagePath,Toast.LENGTH_LONG).show();
+//            }
+//        });
+//        FileInputStream fileInputStream = null;
+//        File img = new File(imagePath);
+//        int _totalChunks = 0;
+//
+//        ArrayList<byte[]> _chunks = new ArrayList<byte[]>();
+//
+//        try {
+//            if (!Util.isNullOrEmpty(imagePath)) {
+//                fileInputStream = new FileInputStream(img);
+//            }
+//
+//            int bytesAvailable = fileInputStream.available();
+//            if(!isParallel)
+//            {
+//                chunkLength = bytesAvailable;
+//            }
+//            _totalChunks = (int) Math
+//                    .ceil(((double) bytesAvailable / (double) chunkLength));
+//
+//            for (int i = 0; i < _totalChunks; i++) {
+//                int startPosition = i * chunkLength;
+//                int dataLength = (int) (Math.min(bytesAvailable
+//                        - startPosition, chunkLength));
+//                byte[] buffer = new byte[dataLength];
+//
+//                fileInputStream.read(buffer, 0, dataLength);
+//                _chunks.add(buffer);
+//            }
+//
+//        } catch (Exception e) {
+//            Log.d(TAG,"E : "+e.getMessage());
+//
+//        } finally {
+//            try {
+//                fileInputStream.close();
+//            } catch (Exception e) {
+//            }
+//        }
+//
+//        int _totalCallsMade = _chunks.size();
+        //Path path = Paths.get("path/to/file");
+        //String filepath = "/sdcard/temp.png";
+        File imagefile = new File(imagePath);
+        FileInputStream fis = null;
         try {
-            if (!Util.isNullOrEmpty(imagePath)) {
-                fileInputStream = new FileInputStream(img);
-            }
-
-            int bytesAvailable = fileInputStream.available();
-            if(!isParallel)
-            {
-                chunkLength = bytesAvailable;
-            }
-            _totalChunks = (int) Math
-                    .ceil(((double) bytesAvailable / (double) chunkLength));
-
-            for (int i = 0; i < _totalChunks; i++) {
-                int startPosition = i * chunkLength;
-                int dataLength = (int) (Math.min(bytesAvailable
-                        - startPosition, chunkLength));
-                byte[] buffer = new byte[dataLength];
-
-                fileInputStream.read(buffer, 0, dataLength);
-                _chunks.add(buffer);
-            }
-
-        } catch (Exception e) {
-            Log.d(TAG,"E : "+e.getMessage());
-
-        } finally {
-            try {
-                fileInputStream.close();
-            } catch (Exception e) {
-            }
+            fis = new FileInputStream(imagefile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
 
-        int _totalCallsMade = _chunks.size();
+        Bitmap bm = BitmapFactory.decodeStream(fis);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 100 , baos);
+        byte[] bitmapdata = baos.toByteArray();
 
         UUID uuid = null;
 
@@ -405,18 +425,23 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
             param= "createBackgroundImage/";
         }
 
-        Constants con = new Constants(appContext);
+        //Constants con = new Constants(appContext);
         if(isParallel)
         {
-            uri = Constants.LoadStoreURI+param+
-                    "?clientId="+ Constants.clientId+
-                    "&fpId="+ session.getFPID()+"&reqType=parallel&reqtId=" + s_uuid + "&";
+//            uri = Constants.LoadStoreURI+param+
+//                    "?clientId="+ Constants.clientId+
+//                    "&fpId="+ session.getFPID()+"&reqType=sequential&reqtId=" + s_uuid + "&";
+            uri = Constants.LoadStoreURI +
+                    param + "?clientId=" +
+                    Constants.clientId +
+                    "&fpId=" + session.getFPID() +
+                    "&reqType=sequential&reqtId=" +
+                    s_uuid + "&";
 
-            for (int i = 1; i <= _totalCallsMade; i++) {
-                String temp = uri + "totalChunks="
-                        + _totalChunks + "&currentChunkNumber=" + i ;
-                sendDataToServer(temp,  _chunks.get(i-1));
-            }
+            String temp = uri + "totalChunks=1&currentChunkNumber=1";
+            sendDataToServer(temp, bitmapdata);
+
+                //sendDataToServer(uri,  bitmapdata);
         }
         else
         {
@@ -428,13 +453,13 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
                         "?clientId="+
                         Constants.clientId+"&fpId="+ session.getFPID()+
                         "&existingBackgroundImageUri="+backgroundimgid+"&identifierType=SINGLE";
-                sendDataToServer(uri,  _chunks.get(0));
+                sendDataToServer(uri,  bitmapdata);
             }
             else
             {
                 uri = Constants.LoadStoreURI+param+"/?clientId="+
                         Constants.clientId+"&fpId="+ session.getFPID();
-                sendDataToServer(uri,  _chunks.get(0));
+                sendDataToServer(uri,  bitmapdata);
             }
 
 

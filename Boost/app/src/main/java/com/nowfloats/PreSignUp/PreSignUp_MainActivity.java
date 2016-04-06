@@ -13,6 +13,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -37,6 +38,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.signup.UI.API.API_Layer;
 import com.nowfloats.signup.UI.API.LoadCountryData;
 import com.nowfloats.signup.UI.Model.Facebook_Event;
+import com.nowfloats.signup.UI.Model.LocationProvider;
 import com.nowfloats.signup.UI.Service.Facebook_Pages_Service;
 import com.nowfloats.signup.UI.UI.PreSignUpActivity;
 import com.nowfloats.util.BusProvider;
@@ -78,8 +80,12 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
     private JSONArray FbPageList;
     private String facebook_email;
     private String facebook_contact_name;
+    private int permision_request_id=0;
     ProgressDialog progressDialog;
     Typeface robotoRegular;
+
+
+    private LocationProvider loc_provider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +118,7 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getLastKnownLocation();
                 MixPanelController.track(EventKeysWL.CREATE_WEBSITE_BUTTON, null);
                 API_Layer.getBusinessCategories(PreSignUp_MainActivity.this);
                 Intent signUpIntent = new Intent(PreSignUp_MainActivity.this, PreSignUpActivity.class);
@@ -124,6 +131,7 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
         facebookSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getLastKnownLocation();
                 MixPanelController.track("SignUpWithFacebook", null);
                 String aToken = accessTokenFacebook();
             }
@@ -329,12 +337,24 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
             }
 
             public void onFacebookError(FacebookError error) {
+                if(progressDialog!=null)
+                {
+                    progressDialog.dismiss();
+                }
             }
 
             public void onError(DialogError e) {
+                if(progressDialog!=null)
+                {
+                    progressDialog.dismiss();
+                }
             }
 
             public void onCancel() {
+                if(progressDialog!=null)
+                {
+                    progressDialog.dismiss();
+                }
             }
         });
         //     }
@@ -438,43 +458,67 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
 
         facebook.authorizeCallback(requestCode, resultCode, data);
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+
+        switch (requestCode) {
+            case 0: {
+
+                   getLastKnownLocation();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+
 
     private void getLastKnownLocation() {
 
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        // Log.d("getLastKnownloc", "Loc mgr : "+locationManager);
-
-        String locationProvider = LocationManager.NETWORK_PROVIDER;
-        // Or use LocationManager.GPS_PROVIDER
-        // Log.d("getLastKnownloc", "Loc mgr : "+locationProvider);
+//        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//        // Log.d("getLastKnownloc", "Loc mgr : "+locationManager);
+//
+//        String locationProvider = LocationManager.NETWORK_PROVIDER;
+//        // Or use LocationManager.GPS_PROVIDER
+//        // Log.d("getLastKnownloc", "Loc mgr : "+locationProvider);
+        loc_provider = new LocationProvider(PreSignUp_MainActivity.this);
+        if (!loc_provider.canGetLocation()) {
+            loc_provider.showSettingsAlert();
+           }
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
+            ActivityCompat.requestPermissions(PreSignUp_MainActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    permision_request_id);
 
-        Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-        //Log.d("getLastKnownloc", "Loc mgr : "+lastKnownLocation);
-        ReverseGeoCoderAsyncTask task = new ReverseGeoCoderAsyncTask(this, lastKnownLocation);
-        try {
-            task.execute().get();
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        }else {
+            Location location =null;
+            if(loc_provider.canGetLocation()){
+                location = loc_provider.getLocation();
+                loc_provider.stopUsingGPS();
+            }
+//        Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
+//        //Log.d("getLastKnownloc", "Loc mgr : "+lastKnownLocation);
+            if (location != null) {
+                ReverseGeoCoderAsyncTask task = new ReverseGeoCoderAsyncTask(this, location);
+                Log.d("ILUD location", String.valueOf(location.getLatitude()) + " " + String.valueOf(location.getLongitude()));
+                try {
+                    task.execute().get();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                lastKnownAddress = Constants.lastKnownAddress;
+                //Log.d("Last known Address","lastAddr : "+lastKnownAddress);
+                if (lastKnownAddress != null)
+                    GetCountryZipCode(lastKnownAddress.getCountryCode());
+            }
         }
-        lastKnownAddress = Constants.lastKnownAddress;
-        //Log.d("Last known Address","lastAddr : "+lastKnownAddress);
-        if (lastKnownAddress != null)
-            GetCountryZipCode(lastKnownAddress.getCountryCode());
     }
 
     public void GetCountryZipCode(String countryid) {

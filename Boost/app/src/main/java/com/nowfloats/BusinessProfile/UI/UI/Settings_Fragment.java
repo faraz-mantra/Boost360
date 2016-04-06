@@ -3,6 +3,7 @@ package com.nowfloats.BusinessProfile.UI.UI;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.freshdesk.mobihelp.Mobihelp;
 import com.nowfloats.AccountDetails.AccountInfoActivity;
+import com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQMainAcivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
@@ -143,12 +145,12 @@ public class Settings_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MixPanelController.track("NeedHelp", null);
-                Mobihelp.showFeedback(activity);
-                /*String headerValue = getResources().getString(R.string.settings_feedback_link);     //"create@prostinnovation.com";
+//                Mobihelp.showFeedback(activity);
+                String headerValue = getResources().getString(R.string.settings_feedback_link);     //"create@prostinnovation.com";
 
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                         "mailto", headerValue, null));
-                 activity.startActivity(Intent.createChooser(emailIntent, "Send email..."));*/
+                 activity.startActivity(Intent.createChooser(emailIntent, "Send email..."));
             }
         });
 
@@ -200,8 +202,8 @@ public class Settings_Fragment extends Fragment {
         faqLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MixPanelController.track("FAQs", null);
-                Mobihelp.showSupport(activity);
+                Intent i = new Intent(getActivity(), FAQMainAcivity.class);
+                startActivity(i);
             }
         });
     }

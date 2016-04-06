@@ -62,8 +62,9 @@ public class API_Layer_Signup {
                 try
                 {
 
-                   // signUp.tagStatus("Success");
-
+                   //signUp.tagStatus("Success");
+                    tag = response.toString();
+                    signUp.tagStatus("Success", tag);
 
                 }
                 catch(Exception e)

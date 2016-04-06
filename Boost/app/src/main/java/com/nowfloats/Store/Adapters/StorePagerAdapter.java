@@ -17,7 +17,7 @@ public class StorePagerAdapter extends FragmentPagerAdapter  {
     int currentItem ;
     private FragmentManager mFragmentManager;
 
-    CharSequence Titles[]={"ACTIVE PLANS","ADDITIONAL PLANS"};
+    CharSequence Titles[]={"ADDITIONAL PLANS", "ACTIVE PLANS"};
     public StorePagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         Log.d("STORE Pager Adapter"," STORE Pager Adapter ");
@@ -38,11 +38,11 @@ public class StorePagerAdapter extends FragmentPagerAdapter  {
         Fragment selectedFragment = null;
         // if(selectedFragment == null) {
         switch (index) {
-            case 0:
+            case 1:
                 selectedFragment = new AccountDetailsFragment();
                 currentItem = 0;
                 break;
-            case 1:
+            case 0:
                 selectedFragment = Store_Fragment.newInstance("inactive");
                 currentItem = 1;
                 break;

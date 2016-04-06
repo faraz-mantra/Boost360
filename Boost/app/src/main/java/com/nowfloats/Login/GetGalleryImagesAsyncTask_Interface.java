@@ -67,17 +67,17 @@ public class GetGalleryImagesAsyncTask_Interface extends AsyncTask<Void,String, 
                     Constants.HTTP_POST,
                     Constants.LoadStoreURI + session.getFPID(),
                     Constants.BG_SERVICE_CONTENT_TYPE_JSON);
-         //   Log.d("GetGalleryImagesAsyncTask","Response : "+response);
+            Log.d("GetGalleryImages","Response : "+response);
 			if (response.length() >= 1) {
 				Constants.hasStoreData = true;
 				JSONObject store 				= new JSONObject(response);
-				if(response.contains("TileImageUri"))
-					Constants.storePrimaryImage 	= store.getString("TileImageUri");
+				if(response.contains("ImageUri"))
+					Constants.storePrimaryImage 	= store.getString("ImageUri");
 
 				if (response.contains("SecondaryTileImages")) {
 					try {
-                        if (store!=null && store.getJSONArray("SecondaryTileImages")!=null){
-                            JSONArray array = store.getJSONArray("SecondaryTileImages");
+                        if (store!=null && store.getJSONArray("SecondaryImages")!=null){
+                            JSONArray array = store.getJSONArray("SecondaryImages");
                             if(array != null){
                                 int len = array.length();
                                 Log.d("Gallery","Length : "+len);

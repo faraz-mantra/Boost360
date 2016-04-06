@@ -1,5 +1,6 @@
 package com.nowfloats.NavigationDrawer;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
@@ -18,6 +19,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
@@ -113,6 +116,9 @@ public class Create_Message_Activity extends AppCompatActivity {
     Uri picUri;
     private Activity activity;
     DataBase dataBase;
+
+
+    private int media_req_id = 5;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -559,22 +565,60 @@ public class Create_Message_Activity extends AppCompatActivity {
             //Util.toast(errorMessage, FloatAnImage.this);
         }
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+    {
+        if(requestCode==media_req_id)
+        {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                cameraIntent();
 
+            }
+
+        }
+    }
     public void cameraIntent() {
+//        try {
+//            // use standard intent to capture an image
+//            values = new ContentValues();
+//            Intent captureIntent;
+//                values.put(MediaStore.Images.Media.TITLE, "New Picture");
+//                values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+//                imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+//                captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+//                startActivityForResult(captureIntent, Constants.CAMERA_PHOTO);
+//        } catch (ActivityNotFoundException anfe) {
+//           // display an error message
+//           String errorMessage = "Whoops - your device doesn't support capturing images!";
+//           Methods.showSnackBarNegative(this,errorMessage);
+//        }
         try {
             // use standard intent to capture an image
-            values = new ContentValues();
-            Intent captureIntent;
+            if (ContextCompat.checkSelfPermission(Create_Message_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
+                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(Create_Message_Activity.this, Manifest.permission.CAMERA)!=
+                    PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(Create_Message_Activity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
+                        media_req_id);
+            }
+            else {
+                ContentValues values = new ContentValues();
                 values.put(MediaStore.Images.Media.TITLE, "New Picture");
                 values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-                imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-                captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                imageUri = activity.getContentResolver().insert(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+                Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                 startActivityForResult(captureIntent, Constants.CAMERA_PHOTO);
+            }
         } catch (ActivityNotFoundException anfe) {
-           // display an error message
-           String errorMessage = "Whoops - your device doesn't support capturing images!";
-           Methods.showSnackBarNegative(this,errorMessage);
+            // display an error message
+            String errorMessage = "Whoops - your device doesn't support capturing images!";
+            // Util.toast(errorMessage, FloatAnImage.this);
+
         }
     }
 

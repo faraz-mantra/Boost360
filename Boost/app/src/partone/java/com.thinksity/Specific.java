@@ -23,4 +23,7 @@ public class Specific {
     public static String access_level = "20";
 
     public static final String FACEBOOK_API_KEY 	= "539836972828386";  // Boost
+
+    public static String TWITTER_TOK 				= "h5lB3rvjU66qOXHgrZK41Q";
+    public static String TWITTER_SEC 				= "L0Bo08aevt2U1fLjuuYAMtANSAzWWi8voGuvbrdtcY4";
 }

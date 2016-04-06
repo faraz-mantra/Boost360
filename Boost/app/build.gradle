@@ -27,9 +27,9 @@ allprojects {
             url "https://jitpack.io"
             //url "${project.rootDir}/app/creativesdk-repo"  //ADD THE CORRECT LOCATION OF THE CREATIVESDK LIBRARY FILES
         }
-       /* maven {
-            url "https://repo.commonsware.com.s3.amazonaws.com"
-        }*/
+        /* maven {
+             url "https://repo.commonsware.com.s3.amazonaws.com"
+         }*/
     }
 }
 
@@ -40,8 +40,8 @@ android {
         applicationId 'com.thinksity'
         minSdkVersion 14
         targetSdkVersion 23
-        versionName "4.4.1"
-        versionCode 2016030021
+        versionName "4.4.2"
+        versionCode 2016040004
         multiDexEnabled true
     }
     buildTypes {

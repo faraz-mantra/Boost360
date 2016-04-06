@@ -35,7 +35,7 @@ public class ProductGalleryAdapter extends BaseAdapter {
 
     public ProductGalleryAdapter(Activity activity,String currency) {
         this.activity=activity;
-        this.currencyType = currency;
+        //this.currencyType = currency;
     }
 
     @Override
@@ -101,7 +101,7 @@ public class ProductGalleryAdapter extends BaseAdapter {
                 }
             }
             if (originalPrice!=null){
-                viewHolder.Currency_Type.setText(currencyType);
+                viewHolder.Currency_Type.setText(productItemModel.CurrencyCode);
                 DecimalFormat formatter = new DecimalFormat("#,##,##,##,##,##,##,###");
                 String yourFormattedString = formatter.format(Float.parseFloat(originalPrice));
                 viewHolder.OriginalPrice.setText(yourFormattedString);

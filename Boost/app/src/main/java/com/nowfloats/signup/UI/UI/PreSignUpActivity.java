@@ -43,7 +43,6 @@ import com.nowfloats.signup.UI.Model.Suggest_Tag_Event;
 import com.nowfloats.signup.UI.Model.ValidationEvent;
 import com.nowfloats.signup.UI.Places.CustomAutoCompleteTextView;
 import com.nowfloats.signup.UI.Places.PlacesTask;
-import com.nowfloats.signup.UI.Service.Email_Service;
 import com.nowfloats.signup.UI.Service.Primary_Number_Service;
 import com.nowfloats.signup.UI.Service.Suggest_Tag_Service;
 import com.nowfloats.signup.UI.Validation.Signup_Validation;
@@ -79,7 +78,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
         PreSignUpDialog.Dialog_Activity_Interface,
         API_Layer_Signup.SignUp_Interface, View.OnClickListener,
         LoadCountryData.LoadCountryData_Interface,
-        Valid_Email.Valid_Email_Interface{
+        Valid_Email.Valid_Email_Interface {
     static UserSessionManager sessionManager;
     private static final String TAG = "PreSignUp";
     public String[] cat = null;
@@ -89,11 +88,11 @@ public class PreSignUpActivity extends AppCompatActivity implements
     ImageView forwardButton;
     Bus bus;
     public static ProgressBar cityProgress;
-    private static EditText businessNameEditText, businessCategoryEditText,  countryEditText, emailEditText, phoneEditText;
+    private static EditText businessNameEditText, businessCategoryEditText, countryEditText, emailEditText, phoneEditText;
     private Toolbar toolbar;
     public static CustomAutoCompleteTextView cityEditText;
     private static TextView countryPhoneCode;
-    String data_businessName, data_businessCategory, data_city, data_country, data_email, data_phone,data_country_code;
+    String data_businessName, data_businessCategory, data_city, data_country, data_email, data_phone, data_country_code;
 
     ImageView bizzName, bizzCat, bizCity, bizzCtry, bizzEmail, bizPh;
 
@@ -111,7 +110,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
     private double lng, lat;
     private LatLng latlong;
 
-    public static final String MyPREFERENCES = "PrefsSignUp" ;
+    public static final String MyPREFERENCES = "PrefsSignUp";
     public static final String Save_Name = "nameKey";
     public static final String Save_Cat = "categoryKey";
     public static final String Save_Phone = "phoneKey";
@@ -119,12 +118,13 @@ public class PreSignUpActivity extends AppCompatActivity implements
     public static final String Save_Country = "countryKey";
     public static final String Save_City = "cityKey";
 
-    public static Email_Validation_Model emailModel ;
-    String facebookPageURL ;
+    public static Email_Validation_Model emailModel;
+    String facebookPageURL;
 
-    HashMap<String,String> Country_CodeMap,Code_PhoneMap;
+    HashMap<String, String> Country_CodeMap, Code_PhoneMap;
     private String Validate_Email_API_KEY = "e5f5fb5a-8e1f-422e-9d25-a67a16018d47";
     public Activity activity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,8 +143,8 @@ public class PreSignUpActivity extends AppCompatActivity implements
         cityProgress = (ProgressBar) findViewById(R.id.city_progressbar);
         cityProgress.setVisibility(View.GONE);
 
-        sessionManager = new UserSessionManager(activity,activity);
-        Typeface robotoLight = Typeface.createFromAsset(activity.getAssets(),"Roboto-Light.ttf");
+        sessionManager = new UserSessionManager(activity, activity);
+        Typeface robotoLight = Typeface.createFromAsset(activity.getAssets(), "Roboto-Light.ttf");
 
         businessNameEditText.setTypeface(robotoLight);
         businessCategoryEditText.setTypeface(robotoLight);
@@ -181,7 +181,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
         cityEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if(s.toString().trim().length()>=3){
+                if (s.toString().trim().length() >= 3) {
                     cityProgress.setVisibility(View.VISIBLE);
                     PlacesTask placesTask = new PlacesTask(activity);
                     placesTask.execute(s.toString());
@@ -199,8 +199,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
             }
         });
 
-        if(sessionManager.getIsSignUpFromFacebook().contains("true"))
-        {
+        if (sessionManager.getIsSignUpFromFacebook().contains("true")) {
             Bundle extras = getIntent().getExtras();
             if (extras != null) {
                 businessNameEditText.setText(extras.getString("facebook_businessName"));
@@ -216,7 +215,6 @@ public class PreSignUpActivity extends AppCompatActivity implements
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-
             }
 
             @Override
@@ -230,12 +228,11 @@ public class PreSignUpActivity extends AppCompatActivity implements
                 if (!s.toString().equals(result)) {
                     emailEditText.setText(result);
                     emailEditText.setSelection(result.length());
-                   // validateEmail(activity,result,Validate_Email_API_KEY,bus);
-                   // Valid_Email.validateEmail(activity,result);
+                    // validateEmail(activity,result,Validate_Email_API_KEY,bus);
+                    // Valid_Email.validateEmail(activity,result);
                 }
             }
         });
-
 
         countryEditText.setOnClickListener(new View.OnClickListener() {
 
@@ -243,7 +240,6 @@ public class PreSignUpActivity extends AppCompatActivity implements
             public void onClick(View v) {
                 selectC();
                 //Util.hideInput(getActivity());
-
             }
         });
 
@@ -255,12 +251,12 @@ public class PreSignUpActivity extends AppCompatActivity implements
                 String country = s.split("\\,")[1];
                 cityEditText.setText(city);
                 countryEditText.setText(country);
-                try{
+                try {
                     String country_code = Country_CodeMap.get(country.toString());
                     String phone_code = Code_PhoneMap.get(country_code);
                     countryPhoneCode.setText("+" + phone_code);
-                    sessionManager.storeFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE,phone_code);
-                }catch(Exception e){
+                    sessionManager.storeFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE, phone_code);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -272,7 +268,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
                 businessCategory_Selected = true;
                 country_Selected = false;
 
-                if (Constants.storeBusinessCategories ==  null) {
+                if (Constants.storeBusinessCategories == null) {
                     Constants.storeBusinessCategories = API_Layer.getBusinessCategories(activity);
                 } else {
 
@@ -290,42 +286,40 @@ public class PreSignUpActivity extends AppCompatActivity implements
                             })
                             .show();
                 }
-
             }
         });
         updateBasedOnMostRecentLocation(Constants.lastKnownAddress);
     }
 
-    private void validateEmail(PreSignUpActivity preSignUpActivity,String email,String apiKey,final Bus bus) {
+    private void validateEmail(PreSignUpActivity preSignUpActivity, String email, String apiKey, final Bus bus) {
         // Open Progress Dialog
-        MaterialProgressBar.startProgressBar(preSignUpActivity,"Validating Data",false);
-        new Email_Service(preSignUpActivity,email,apiKey,bus);
-
+//        MaterialProgressBar.startProgressBar(preSignUpActivity,"Validating Data",false);
+//        new Email_Service(preSignUpActivity,email,apiKey,bus);
 //        verifyUniqueNumber(PreSignUpActivity.this,data_phone,bus);
+        String tagName = API_Layer_Signup.getTag(activity, data_businessName, data_country, data_city, data_businessCategory);
+        fpTag = tagName;
+        API_Layer_Signup.checkUniqueNumber(activity, data_phone);
     }
 
-    private void verifyUniqueNumber(PreSignUpActivity preSignUpActivity,String mobileNumber,final Bus bus)
-    {
-        new Primary_Number_Service(preSignUpActivity,Constants.clientId,mobileNumber,bus);
+    private void verifyUniqueNumber(PreSignUpActivity preSignUpActivity, String mobileNumber, final Bus bus) {
+        new Primary_Number_Service(preSignUpActivity, Constants.clientId, mobileNumber, bus);
     }
 
     private void suggestTag(PreSignUpActivity preSignUpActivity, String data_businessName, String data_country, String data_city, String data_businessCategory, Bus bus) {
 
-       new Suggest_Tag_Service(preSignUpActivity,data_businessName,data_country,data_city,data_businessCategory,Constants.clientId,bus);
+        new Suggest_Tag_Service(preSignUpActivity, data_businessName, data_country, data_city, data_businessCategory, Constants.clientId, bus);
     }
 
 
     @Subscribe
-    public void get_IsValidEmail(ValidationEvent response)
-    {
-        emailModel = (Email_Validation_Model)response.model;
+    public void get_IsValidEmail(ValidationEvent response) {
+        emailModel = (Email_Validation_Model) response.model;
 
-        String value = emailModel.status ;
+        String value = emailModel.status;
 //         value = "valid";
 
-        if(value.equals("valid"))
-        {
-            verifyUniqueNumber(PreSignUpActivity.this,data_phone,bus);
+        if (value.equals("valid")) {
+            verifyUniqueNumber(PreSignUpActivity.this, data_phone, bus);
 
 
             //String tagName = API_Layer_Signup.getTag(activity, data_businessName, data_country, data_city, data_businessCategory);
@@ -333,31 +327,23 @@ public class PreSignUpActivity extends AppCompatActivity implements
 
         } else {
             MaterialProgressBar.dismissProgressBar();
-           Methods.showSnackBarNegative(activity,"Invalid Email. Please enter again");
+            Methods.showSnackBarNegative(activity, "Invalid Email. Please enter again");
             //Toast.makeText(activity, "Invalid Email. Please enter Again", Toast.LENGTH_SHORT).show();
         }
     }
 
-
-
-
     @Subscribe
-    public void post_verifyUniqueNumber(Primary_Number_Event response)
-    {
+    public void post_verifyUniqueNumber(Primary_Number_Event response) {
 
-        boolean isNumberUnique = response.model ;
+        boolean isNumberUnique = response.model;
 
-        if(!isNumberUnique)
-        {
+        if (!isNumberUnique) {
 
 
-            suggestTag(PreSignUpActivity.this,data_businessName, data_country, data_city, data_businessCategory,bus);
+            suggestTag(PreSignUpActivity.this, data_businessName, data_country, data_city, data_businessCategory, bus);
 
 
-
-        }
-
-        else {
+        } else {
             boolean wrapInScrollView = true;
             new MaterialDialog.Builder(this)
                     .title("Number already registered")
@@ -383,9 +369,8 @@ public class PreSignUpActivity extends AppCompatActivity implements
 
 
     @Subscribe
-    public void post_SuggestTag(Suggest_Tag_Event response)
-    {
-        fpTag = response.fpTag ;
+    public void post_SuggestTag(Suggest_Tag_Event response) {
+        fpTag = response.fpTag;
 
         // Close Progress Dialog
 
@@ -435,13 +420,13 @@ public class PreSignUpActivity extends AppCompatActivity implements
         String[] locales = Locale.getISOCountries();
         for (String countryCode : locales) {
             Locale obj = new Locale("", countryCode);
-            Country_CodeMap.put(obj.getDisplayCountry(),obj.getCountry());
+            Country_CodeMap.put(obj.getDisplayCountry(), obj.getCountry());
         }
         String[] string_array = getResources().getStringArray(R.array.CountryCodes);
         for (int i = 0; i < string_array.length; i++) {
-            String phoneCode=string_array[i].split(",")[0];
-            String countryCode=string_array[i].split(",")[1];
-            Code_PhoneMap.put(countryCode,phoneCode);
+            String phoneCode = string_array[i].split(",")[0];
+            String countryCode = string_array[i].split(",")[1];
+            Code_PhoneMap.put(countryCode, phoneCode);
         }
     }
 
@@ -451,81 +436,76 @@ public class PreSignUpActivity extends AppCompatActivity implements
 
         bus.register(this);
 
-        if (sharedpreferences.contains(Save_Name))
-        {
+        if (sharedpreferences.contains(Save_Name)) {
             businessNameEditText.setText(sharedpreferences.getString(Save_Name, ""));
 
         }
 
-        if (sharedpreferences.contains(Save_Cat))
-        {
+        if (sharedpreferences.contains(Save_Cat)) {
             businessCategoryEditText.setText(sharedpreferences.getString(Save_Cat, ""));
 
         }
 
-        if (sharedpreferences.contains(Save_City))
-        {
+        if (sharedpreferences.contains(Save_City)) {
             cityEditText.setText(sharedpreferences.getString(Save_City, ""));
 
         }
-        if (sharedpreferences.contains(Save_Country))
-        {
+        if (sharedpreferences.contains(Save_Country)) {
             countryEditText.setText(sharedpreferences.getString(Save_Country, ""));
 
         }
-        if (sharedpreferences.contains(Save_Email))
-        {
+        if (sharedpreferences.contains(Save_Email)) {
             emailEditText.setText(sharedpreferences.getString(Save_Email, ""));
 
         }
-        if (sharedpreferences.contains(Save_Phone))
-        {
+        if (sharedpreferences.contains(Save_Phone)) {
             phoneEditText.setText(sharedpreferences.getString(Save_Phone, ""));
         }
     }
 
     private boolean getEditTextData() {
-        try{
-            MixPanelController.track("EnterDetailsNext",null);
-        data_businessName = businessNameEditText.getText().toString();
-        data_businessCategory = businessCategoryEditText.getText().toString();
-        data_city = cityEditText.getText().toString();
-        data_country = countryEditText.getText().toString();
-        data_email = emailEditText.getText().toString();
-        data_phone = phoneEditText.getText().toString();
-        allFieldsValid = true;
-            if(data_businessName.trim().length()==0)
-            {
+        try {
+            MixPanelController.track("EnterDetailsNext", null);
+            data_businessName = businessNameEditText.getText().toString();
+            data_businessCategory = businessCategoryEditText.getText().toString();
+            data_city = cityEditText.getText().toString();
+            data_country = countryEditText.getText().toString();
+            data_email = emailEditText.getText().toString();
+            data_phone = phoneEditText.getText().toString();
+            allFieldsValid = true;
+            if (data_businessName.trim().length() == 0) {
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(businessNameEditText);
                 Methods.showSnackBarNegative(activity, "Enter business name");
             }
-            if(data_businessCategory.trim().length()==0){
+            if (data_businessCategory.trim().length() == 0) {
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(businessCategoryEditText);
-                Methods.showSnackBarNegative(activity,"Select business category");
+                Methods.showSnackBarNegative(activity, "Select business category");
             }
-            if(data_city.trim().length()==0){
+            if (data_city.trim().length() == 0) {
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(cityEditText);
-                Methods.showSnackBarNegative(activity,"Enter city");
+                Methods.showSnackBarNegative(activity, "Enter city");
             }
-            if(data_country.trim().length()==0){
+            if (data_country.trim().length() == 0) {
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(countryEditText);
-                Methods.showSnackBarNegative(activity,"Select country");
+                Methods.showSnackBarNegative(activity, "Select country");
             }
             if (!(Signup_Validation.isValidEmail(emailEditText.getText().toString()))) {
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(emailEditText);
-                Methods.showSnackBarNegative(activity,"Enter the valid email");
+                Methods.showSnackBarNegative(activity, "Enter the valid email");
             }
             if (!Signup_Validation.isValidPhoneNumber(data_phone)) {
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(phoneEditText);
-                Methods.showSnackBarNegative(activity,"Phone number should be between 6 - 12 ");
+                Methods.showSnackBarNegative(activity, "Phone number should be between 6 - 12 ");
             }
-        }catch(Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return allFieldsValid;
     }
 
@@ -551,7 +531,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
 //            String tagName = API_Layer_Signup.getTag(activity, data_businessName, data_country, data_city, data_businessCategory);
 //            API_Layer_Signup.checkUniqueNumber(activity, data_phone);
 
-         //   suggestTag(activity,data_businessName, data_country, data_city, data_businessCategory,bus);
+            //   suggestTag(activity,data_businessName, data_country, data_city, data_businessCategory,bus);
 
 
             editTextBundle.putString("signup_business_name", data_businessName);
@@ -618,11 +598,11 @@ public class PreSignUpActivity extends AppCompatActivity implements
             editTextBundle.putString("signup_country", data_country);
             editTextBundle.putString("signup_email", data_email);
             editTextBundle.putString("signup_phone", data_phone);
-            editTextBundle.putString("signup_country_code",countryPhoneCode.getText().toString());
+            editTextBundle.putString("signup_country_code", countryPhoneCode.getText().toString());
             editTextBundle.putString("tag", fpTag);
             editor.commit();
-            String setLatLong = data_city.replaceAll(" ","+")+","+data_country.replaceAll(" ","+");
-            setLatLong.replaceAll(" ","+");
+            String setLatLong = data_city.replaceAll(" ", "+") + "," + data_country.replaceAll(" ", "+");
+            setLatLong.replaceAll(" ", "+");
 
             setLatLong(setLatLong);
             Intent webSiteCreationIntent = new Intent(activity, WebSiteAddressActivity.class);
@@ -676,7 +656,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-        sessionManager.storeFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE,"91");
+        sessionManager.storeFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE, "91");
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.clear();
         editor.commit();
@@ -718,30 +698,32 @@ public class PreSignUpActivity extends AppCompatActivity implements
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         countryEditText.setText(text);
-                        try{
+                        try {
                             String country_code = Country_CodeMap.get(text.toString());
                             String phone_code = Code_PhoneMap.get(country_code);
                             countryPhoneCode.setText("+" + phone_code);
-                            sessionManager.storeFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE,phone_code);
-                        }catch(Exception e){
+                            sessionManager.storeFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE, phone_code);
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                         return false;
                     }
                 })
-        .show();
+                .show();
     }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.forward_button_signup_screen) {
-            try{
-                if(getEditTextData()) {
+            try {
+                if (getEditTextData()) {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(forwardButton.getWindowToken(), 0);
                     validateEmail(PreSignUpActivity.this, emailEditText.getText().toString(), Validate_Email_API_KEY, bus);
                 }
-            }catch(Exception e){e.printStackTrace();}
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -778,6 +760,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
         if (result.equals("failure")) {
             countryEditText.setEnabled(true);
             countryEditText.setOnClickListener(null);
+            countryEditText.setText("Canada");
         } else if (result.equals("success")) {
             countryEditText.setOnClickListener(new View.OnClickListener() {
 
@@ -796,7 +779,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
 
 
         new Thread(new Runnable() {
-            public double lng,lat;
+            public double lng, lat;
             public LatLng latlong;
 
             @Override
@@ -853,7 +836,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
     @Override
     public void emailValidated(String emailResult) {
 
-        if(emailResult.equals("valid")) {
+        if (emailResult.equals("valid")) {
             String tagName = API_Layer_Signup.getTag(activity, data_businessName, data_country, data_city, data_businessCategory);
             API_Layer_Signup.checkUniqueNumber(activity, data_phone);
         } else {

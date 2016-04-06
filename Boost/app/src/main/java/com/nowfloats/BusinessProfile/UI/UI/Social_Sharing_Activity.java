@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -49,6 +50,8 @@ public class Social_Sharing_Activity extends ActionBarActivity {
 
     TextView connectTextView, autoPostTextView, bottomFeatureTextView;
     final Facebook facebook = new Facebook(Constants.FACEBOOK_API_KEY);
+    public String TWITTER_TOK = Constants.TWITTER_TOK;
+    public String TWITTER_SEC = Constants.TWITTER_SEC;
     private SharedPreferences pref = null;
     SharedPreferences.Editor prefsEditor;
     private ImageView facebookHome;
@@ -116,7 +119,14 @@ public class Social_Sharing_Activity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (facebookPageCheckBox.isChecked()) {
-                    fbPageData();
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            fbPageData();
+                        }
+                    }, 200);
+
                 } else {
                     DataBase dataBase = new DataBase(activity);
                     dataBase.updateFacebookPage("", "", "");
@@ -133,7 +143,14 @@ public class Social_Sharing_Activity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (facebookHomeCheckBox.isChecked()) {
-                    fbData();
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            //Do something after 100ms
+                            fbData();
+                        }
+                    }, 200);
                 } else {
                     DataBase dataBase = new DataBase(activity);
                     dataBase.updateFacebookNameandToken("", "");
@@ -188,7 +205,7 @@ public class Social_Sharing_Activity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (twitterCheckBox.isChecked()) {
-                    if (!Util.isNullOrEmpty(Constants.TWITTER_TOK) && !Util.isNullOrEmpty(Constants.TWITTER_SEC)) {
+                    if (!Util.isNullOrEmpty(TWITTER_TOK) && !Util.isNullOrEmpty(TWITTER_SEC)) {
                         twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
                         twitterStatus.setText("Connected");
                         twitterCheckBox.setHighlightColor(getResources().getColor(R.color.primaryColor));
@@ -199,8 +216,8 @@ public class Social_Sharing_Activity extends ActionBarActivity {
                             Create_Message_Activity.twittersharingenabled = true;
                             twitter.setImageDrawable(getResources().getDrawable(
                                     R.drawable.twitter_icon_active));
-                            if (Util.isNullOrEmpty(Constants.TWITTER_TOK)
-                                    || Util.isNullOrEmpty(Constants.TWITTER_SEC))
+                            if (Util.isNullOrEmpty(TWITTER_TOK)
+                                    || Util.isNullOrEmpty(TWITTER_SEC))
                                 Constants.twitterShareEnabled = false;
                             Intent it = new Intent(Social_Sharing_Activity.this, PrepareRequestTokenActivity.class);
                             startActivity(it);
@@ -210,8 +227,8 @@ public class Social_Sharing_Activity extends ActionBarActivity {
                             Constants.twitterShareEnabled = false;
                             Create_Message_Activity.twittersharingenabled = false;
 
-                            Constants.TWITTER_TOK = "";
-                            Constants.TWITTER_SEC = "";
+                            TWITTER_TOK = "";
+                            TWITTER_SEC = "";
                             prefsEditor.putString(OAuth.OAUTH_TOKEN, "");
                             prefsEditor.putString(OAuth.OAUTH_TOKEN_SECRET, "");
                             prefsEditor.putString("TWITUName", "");
@@ -225,20 +242,19 @@ public class Social_Sharing_Activity extends ActionBarActivity {
                         twitterStatus.setText("Connected");
                         twitterCheckBox.setHighlightColor(getResources().getColor(R.color.primaryColor));
 
-
-                        if (Util.isNullOrEmpty(Constants.TWITTER_TOK) || Util.isNullOrEmpty(Constants.TWITTER_SEC)) {
+                        if (Util.isNullOrEmpty(TWITTER_TOK) || Util.isNullOrEmpty(TWITTER_SEC)) {
                             twitterData();
                         }
                     }
                     prefsEditor.putBoolean("twitterShareEnabled", Constants.twitterShareEnabled);
                     prefsEditor.commit();
                 } else {
-                    //   if(Util.isNullOrEmpty(Constants.TWITTER_TOK) && Util.isNullOrEmpty(Constants.TWITTER_SEC) ){
+                    //   if(Util.isNullOrEmpty(TWITTER_TOK) && Util.isNullOrEmpty(TWITTER_SEC) ){
                     twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
                     twitterStatus.setText("Disconnected");
                     Constants.twitterShareEnabled = false;
-                    Constants.TWITTER_TOK = "";
-                    Constants.TWITTER_SEC = "";
+                    TWITTER_TOK = "";
+                    TWITTER_SEC = "";
                     twitterCheckBox.setHighlightColor(getResources().getColor(R.color.primaryColor));
 
                     prefsEditor.putString(OAuth.OAUTH_TOKEN, "");
@@ -299,10 +315,10 @@ public class Social_Sharing_Activity extends ActionBarActivity {
         final String[] PERMISSIONS = new String[]{"photo_upload",
                 "user_photos", "publish_stream", "read_stream",
                 "offline_access", "manage_pages", "publish_actions"};
-        materialProgress = new MaterialDialog.Builder(this)
-                .widgetColorRes(R.color.accentColor)
-                .content("Please Wait...")
-                .progress(true, 0).show();
+//        materialProgress = new MaterialDialog.Builder(this)
+//                .widgetColorRes(R.color.accentColor)
+//                .content("Please Wait...")
+//                .progress(true, 0).show();
 
         facebook.authorize(this, PERMISSIONS, new Facebook.DialogListener() {
             public void onComplete(Bundle values) {
@@ -469,10 +485,10 @@ public class Social_Sharing_Activity extends ActionBarActivity {
         final String[] PERMISSIONS = new String[]{"photo_upload",
                 "user_photos", "publish_stream", "read_stream",
                 "offline_access", "publish_actions"};
-        materialProgress = new MaterialDialog.Builder(this)
-                .widgetColorRes(R.color.accentColor)
-                .content("Please Wait...")
-                .progress(true, 0).show();
+//        materialProgress = new MaterialDialog.Builder(this)
+//                .widgetColorRes(R.color.accentColor)
+//                .content("Please Wait...")
+//                .progress(true, 0).show();
         facebook.authorize(this, PERMISSIONS, new Facebook.DialogListener() {
 
             public void onComplete(Bundle values) {
@@ -605,14 +621,14 @@ public class Social_Sharing_Activity extends ActionBarActivity {
         Constants.FACEBOOK_PAGE_ACCESS_ID = pref.getString("fbPageAccessId", "");
         Constants.fbPageShareEnabled = pref.getBoolean("fbPageShareEnabled", false);
         Constants.twitterShareEnabled = pref.getBoolean("twitterShareEnabled", false);
-        Constants.TWITTER_TOK = pref.getString(OAuth.OAUTH_TOKEN, "");
-        Constants.TWITTER_SEC = pref.getString(OAuth.OAUTH_TOKEN_SECRET, "");
+        TWITTER_TOK = pref.getString(OAuth.OAUTH_TOKEN, "");
+        TWITTER_SEC = pref.getString(OAuth.OAUTH_TOKEN_SECRET, "");
         Constants.FbFeedPullAutoPublish = pref.getBoolean("FBFeedPullAutoPublish", false);
         Constants.fbPageFullUrl = pref.getString("fbPageFullUrl", "");
         Constants.fbFromWhichPage = pref.getString("fbFromWhichPage", "");
 
 
-        if (!Util.isNullOrEmpty(Constants.TWITTER_TOK) || !Util.isNullOrEmpty(Constants.TWITTER_SEC)) {
+        if (!Util.isNullOrEmpty(TWITTER_TOK) || !Util.isNullOrEmpty(TWITTER_SEC)) {
             twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
             //twitter_txt.setText("Twitter");
             //twitterName.setText("connected");
@@ -692,7 +708,7 @@ public class Social_Sharing_Activity extends ActionBarActivity {
             facebookPageStatus.setText(session.getFacebookPage());
         }
 
-        if (Util.isNullOrEmpty(Constants.TWITTER_TOK) || Util.isNullOrEmpty(Constants.TWITTER_SEC)) {
+        if (Util.isNullOrEmpty(TWITTER_TOK) || Util.isNullOrEmpty(TWITTER_SEC)) {
             twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
             //twitter_txt.setText("Twitter");
             //twitterName.setText("connected");

@@ -80,6 +80,7 @@ public class FullScreen_Gallery_Image extends Activity {
             @Override
             public void onPageSelected(int position) {
                 currentTextView.setText(""+(position+1));
+                currentPos = position;
             }
 
             @Override
@@ -91,6 +92,7 @@ public class FullScreen_Gallery_Image extends Activity {
             @Override
             public void onClick(View v) {
                 // Log.d("Image_Gallery_Fragment","Current POS : "+selectedPOS);
+                currentPos -=1;
                 int selectedPosition = getItem(-1);
                 viewPager.setCurrentItem(selectedPosition, true);
                 if (viewPager.getCurrentItem()==0){
@@ -104,6 +106,7 @@ public class FullScreen_Gallery_Image extends Activity {
         nextImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                currentPos+=1;
                 Log.d("Image_Gallery_Fragment", "Current POS : " + currentPos);
                 int selectedPosition = getItem(+1);
                 viewPager.setCurrentItem(selectedPosition, true);

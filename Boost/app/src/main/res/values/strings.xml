@@ -64,6 +64,8 @@
     </string-array>
 
     <string name="facebook_app_id">539836972828386</string>
+
+
     <string name="title_activity_image__gallery__main">Image Gallery</string>
     <string name="title_activity_home__main">Home_MainActivity</string>
     <string name="title_activity_card__full__view__main">Home</string>
@@ -115,7 +117,7 @@
 
     <!-- Deep Linking URLs  -->
 
-  <!-- SITE-Meter Percentage  -->
+    <!-- SITE-Meter Percentage  -->
 
     <string name="buydomain_percentage">10</string>
     <string name="phoneNumber_percentage">5</string>
@@ -153,7 +155,6 @@
     <string name="email_text2">Add email</string>
     <string name="postUpdate_text2">Message regularly and relevantly</string>
     <string name="share_text2">Promote your website</string>
-
 
 
     <string-array name="CountryCodes">
