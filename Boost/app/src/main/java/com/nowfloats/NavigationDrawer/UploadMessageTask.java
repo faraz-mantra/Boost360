@@ -77,7 +77,7 @@ public final class UploadMessageTask {
                     } else if (txtId != null && txtId.length() > 1) {
                         success = true;
                         if (Constants.twitterShareEnabled && Home_Main_Fragment.facebookPostCount == 0) {
-                            Constants.twitterShareEnabled = false;
+                            //Constants.twitterShareEnabled = false;
                             String tweetData = "";
                             try {
                                 tweetData = obj.message;

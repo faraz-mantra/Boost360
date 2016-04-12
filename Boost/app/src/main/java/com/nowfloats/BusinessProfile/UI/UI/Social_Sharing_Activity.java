@@ -212,8 +212,7 @@ public class Social_Sharing_Activity extends ActionBarActivity {
 
                         if (!Constants.twitterShareEnabled) {
                             MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_TWITTER, null);
-                            Constants.twitterShareEnabled = true;
-                            Create_Message_Activity.twittersharingenabled = true;
+
                             twitter.setImageDrawable(getResources().getDrawable(
                                     R.drawable.twitter_icon_active));
                             if (Util.isNullOrEmpty(TWITTER_TOK)
@@ -232,9 +231,10 @@ public class Social_Sharing_Activity extends ActionBarActivity {
                             prefsEditor.putString(OAuth.OAUTH_TOKEN, "");
                             prefsEditor.putString(OAuth.OAUTH_TOKEN_SECRET, "");
                             prefsEditor.putString("TWITUName", "");
+                            prefsEditor.putBoolean("twitterShareEnabled", Constants.twitterShareEnabled);
+                            prefsEditor.commit();
                         }
-                        prefsEditor.putBoolean("twitterShareEnabled", Constants.twitterShareEnabled);
-                        prefsEditor.commit();
+
                     } else {
                         twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
                         //twitter_txt.setText("Twitter");
@@ -268,6 +268,7 @@ public class Social_Sharing_Activity extends ActionBarActivity {
 
         InitShareResources();
     }
+
 
     private void selectNumberUpdatesDialog() {
         final String[] array = {"Post 5 Updates", "Post 10 Updates"};
@@ -729,6 +730,15 @@ public class Social_Sharing_Activity extends ActionBarActivity {
 //            facebookHomeCheckBox.setChecked(false);
 //            prefsEditor.commit();
 //        }
+        if(Constants.twitterShareEnabled)
+        {
+            String twitterName = pref.getString("TWITUName", "");
+            twitterStatus.setText("@" + twitterName);
+            twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
+            twitterCheckBox.setChecked(true);
+            prefsEditor.putBoolean("twitterShareEnabled", true);
+            prefsEditor.commit();
+        }
     }
 
 

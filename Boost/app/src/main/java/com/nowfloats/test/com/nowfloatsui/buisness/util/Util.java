@@ -250,6 +250,21 @@ public class Util {
 
 
     public static String shortUrl(String serverDataFetchUri) {
+//        Urlshortener.Builder builder = new Urlshortener.Builder (AndroidHttp.newCompatibleTransport(),
+//                AndroidJsonFactory.getDefaultInstance(), null);
+//        Urlshortener urlshortener = builder.build();
+//
+//        com.google.api.services.urlshortener.model.Url url = new com.google.api.services.urlshortener.model.Url();
+//        url.setLongUrl(serverDataFetchUri);
+//        try {
+//            Urlshortener.Url.Insert insert=urlshortener.url().insert(url);
+//            insert.setKey("AIzaSyCNXhsp0uvfEyS7RVXpDws4cjkpSWbo8iE ");
+//            url = insert.execute();
+//            return url.getId();
+//        } catch (IOException e) {
+//            //LogUtil.e(TAG, Log.getStackTraceString(e));
+//            return serverDataFetchUri;
+//        }
         String shortUrl = "";
         String serverResponse = "";
         try {
@@ -267,7 +282,7 @@ public class Util {
 //                    "https://www.googleapis.com/urlshortener/v1/url");
 
             HttpPost request = new HttpPost(
-                    "https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyDYn2Yqvsdt_wphv_UCaXymfpdhENqyyJE");
+                    "https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyABcphoQlcCQnpMTSMhf1vNMWznZbHqwG8");
             request.setHeader("Content-type", "application/json");
             //request.setHeader("Content-type", "application/json");
             request.setHeader("Accept", "application/json");
@@ -284,7 +299,7 @@ public class Util {
                 out.close();
                 serverResponse = out.toString();
             } else {
-                return null;
+                return serverDataFetchUri;
             }
 
             if (!Util.isNullOrEmpty(serverResponse)) {

@@ -3,19 +3,13 @@ package com.nowfloats.Analytics_Screen.API;
 import android.app.Activity;
 import android.util.Log;
 
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.nowfloats.Volley.AppController;
-import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.Methods;
-import com.thinksity.Specific;
 
 import org.json.JSONArray;
 import org.json.JSONException;

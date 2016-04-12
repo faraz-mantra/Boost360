@@ -1,6 +1,7 @@
 package com.thinksity;
 
 /**
+ *
  * Created by NowFloatsDev on 03/04/2015.
  */
 public class Specific {
@@ -25,6 +26,14 @@ public class Specific {
     public static String access_level = "30";
 
     public static final String FACEBOOK_API_KEY = "849017471893722"; // Thinksity
-    public static final String TWITTER_TOK 	= "5HNCg1Sx1dJMmUt1NuFXMiSST";
-    public static final String TWITTER_SEC 	= "MfMT1qgmmCQ22irEXmUGzHL9aE1bgCo3hlrAekZ1rX5kMKr6WD";
+//    public static String TWITTER_TOK 	= "5HNCg1Sx1dJMmUt1NuFXMiSST";
+//    public static String TWITTER_SEC 	= "MfMT1qgmmCQ22irEXmUGzHL9aE1bgCo3hlrAekZ1rX5kMKr6WD";
+
+    ////Below are my(Romeo) keys whick work fine.
+    public static String TWITTER_TOK 	= "oaFiZusQM3YiMzdqNEAByxiKA";
+    public static String TWITTER_SEC 	= "deOu5p3YyLLa9rHn5PwerBB5aixnMay8RQ2jITTpB6ZwzsNipt";
+
+//    public static String TWITTER_TOK 	= "WDywxgL8XzrjTRLbIk8pu5KXB";
+//    public static String TWITTER_SEC 	= "KwKxeHM0ZYqXxcmBIcRlVM1keJW8ZmBdIjC5gufc3ErmJWQpTo";
+
 }

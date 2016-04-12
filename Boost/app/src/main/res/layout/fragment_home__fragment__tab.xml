@@ -14,7 +14,7 @@
            android:layout_gravity="top"/>  <!-->
 
 
-    <!-- <com.nowfloats.util.PagerSlidingTabStrip
+    <!-- <com.nowfloats.com.thinksity.PagerSlidingTabStrip
          android:id="@+id/tabs"
          app:pstsShouldExpand="true"
          android:layout_width="match_parent"
@@ -23,7 +23,7 @@
          app:pstsTabPaddingLeftRight="14dp"
          app:pstsUnderlineColor="@android:color/white"
          app:pstsIndicatorColor="#F79421">
-     </com.nowfloats.util.PagerSlidingTabStrip>  <! -->
+     </com.nowfloats.com.thinksity.PagerSlidingTabStrip>  <! -->
 
     <LinearLayout
     android:layout_width="fill_parent"

@@ -1,5 +1,7 @@
 package com.nowfloats.NavigationDrawer.API.twitter;
 
+import android.util.Log;
+
 import com.nowfloats.util.Constants;
 
 import java.io.File;
@@ -19,6 +21,7 @@ public class TwitterShare {
 				Constants.CONSUMER_SECRET);
 		twitter.setOAuthAccessToken(a);
 		twitter.updateStatus(tweetMessage);
+		Log.d("ILUD, Twitter", "Posted to Twitter");
 	}
 	
 	public static void sendImageTweet(String token, String secretToken, String tweetMessage,String path,boolean flag)

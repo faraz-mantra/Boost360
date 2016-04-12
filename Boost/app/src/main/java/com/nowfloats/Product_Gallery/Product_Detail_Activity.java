@@ -1,10 +1,12 @@
 package com.nowfloats.Product_Gallery;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
@@ -12,6 +14,8 @@ import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -88,6 +92,11 @@ public class Product_Detail_Activity extends AppCompatActivity{
     public static boolean replaceImage = false;
     public ProductAPIService apiService;
     public int retryImage =0;
+
+    private final int gallery_req_id = 6;
+    private final int media_req_id = 5;
+
+
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -648,13 +657,43 @@ public class Product_Detail_Activity extends AppCompatActivity{
             }
         });
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+    {
+        if(requestCode==media_req_id)
+        {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                cameraIntent();
+
+            }
+
+        }
+        else if(requestCode==gallery_req_id)
+        {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                galleryIntent();
+
+            }
+
+        }
+    }
 
     public void galleryIntent() {
         try {
-            Intent i = new Intent(
-                    Intent.ACTION_PICK,
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(i, Constants.GALLERY_PHOTO);
+            if (ActivityCompat.checkSelfPermission(Product_Detail_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
+                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(Product_Detail_Activity.this, Manifest.permission.CAMERA)!=
+                    PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(Product_Detail_Activity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
+                        gallery_req_id);
+            }
+            else {
+                Intent i = new Intent(
+                        Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, Constants.GALLERY_PHOTO);
+            }
         } catch (ActivityNotFoundException anfe) {
             // display an error message
             String errorMessage = "Whoops - your device doesn't support capturing images!";
@@ -665,14 +704,22 @@ public class Product_Detail_Activity extends AppCompatActivity{
     public void cameraIntent() {
         try {
             // use standard intent to capture an image
-            ContentValues Cvalues = new ContentValues();
-            Intent captureIntent;
-            Cvalues.put(MediaStore.Images.Media.TITLE, "New Picture");
-            Cvalues.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-            picUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Cvalues);
-            captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, picUri);
-            startActivityForResult(captureIntent, Constants.CAMERA_PHOTO);
+            if (ActivityCompat.checkSelfPermission(Product_Detail_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
+                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(Product_Detail_Activity.this, Manifest.permission.CAMERA)!=
+                    PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(Product_Detail_Activity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
+                        media_req_id);
+            }
+            else {
+                ContentValues Cvalues = new ContentValues();
+                Intent captureIntent;
+                Cvalues.put(MediaStore.Images.Media.TITLE, "New Picture");
+                Cvalues.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+                picUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Cvalues);
+                captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, picUri);
+                startActivityForResult(captureIntent, Constants.CAMERA_PHOTO);
+            }
         } catch (ActivityNotFoundException anfe) {
             // display an error message
             String errorMessage = "Whoops - your device doesn't support capturing images!";

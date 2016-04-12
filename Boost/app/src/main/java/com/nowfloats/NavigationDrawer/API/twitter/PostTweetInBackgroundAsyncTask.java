@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -56,7 +57,7 @@ public final class PostTweetInBackgroundAsyncTask extends
 	protected String doInBackground(Void... params) {
 		String response = "",tweetMessage = "";
 		String shortUrl = Util.shortUrl(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG) + ".nowfloats.com/bizFloat/" + id);
-		if (!Util.isNullOrEmpty(shareText)){
+		if (!Util.isNullOrEmpty(shareText) && !Util.isNullOrEmpty(shortUrl)){
 			int len = shareText.length();
 
 			int mlen = 140-(shortUrl.length()+8);
@@ -81,6 +82,8 @@ public final class PostTweetInBackgroundAsyncTask extends
 				}
 				if(!Util.isNullOrEmpty(Constants.TWITTER_TOK) && !Util.isNullOrEmpty(Constants.TWITTER_SEC))
 					TwitterShare.sendTweet(Constants.TWITTER_TOK, Constants.TWITTER_SEC, tweetMessage);
+				else
+					Log.d("ILUD TOKEN", "Token seems to be null");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -119,6 +119,7 @@ public class Create_Message_Activity extends AppCompatActivity {
 
 
     private int media_req_id = 5;
+    private int gallery_req_id=6;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -233,9 +234,10 @@ public class Create_Message_Activity extends AppCompatActivity {
             isFacebookPageShareLoggedIn = true;
             facebookPageShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
         }
-
-        if(Constants.twitterShareEnabled) {
+        Log.d("ILUD CreateMsgAct", String.valueOf(pref.getBoolean("twitterShareEnabled", false)));
+        if(pref.getBoolean("twitterShareEnabled", false)) {
             twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
+            Constants.twitterShareEnabled = true;
         }
 
 
@@ -554,11 +556,20 @@ public class Create_Message_Activity extends AppCompatActivity {
 
     public void galleryIntent() {
         try {
-            Intent i = new Intent(
-                    Intent.ACTION_PICK,
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-            startActivityForResult(i, Constants.GALLERY_PHOTO);
+            if (ContextCompat.checkSelfPermission(Create_Message_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
+                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(Create_Message_Activity.this, Manifest.permission.CAMERA)!=
+                    PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(Create_Message_Activity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
+                        gallery_req_id);
+            }
+            else {
+                Intent intent = new Intent();
+// Show only images, no videos or anything else
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+// Always show the chooser (if there are multiple options available)
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), Constants.GALLERY_PHOTO);
+            }
         } catch (ActivityNotFoundException anfe) {
             // display an error message
             String errorMessage = "Whoops - your device doesn't support capturing images!";
@@ -576,6 +587,14 @@ public class Create_Message_Activity extends AppCompatActivity {
 
             }
 
+        }
+        else if(requestCode==gallery_req_id)
+        {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                galleryIntent();
+
+            }
         }
     }
     public void cameraIntent() {
@@ -738,7 +757,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                 }
             }
         }
-        if (resultCode == RESULT_OK && (Constants.GALLERY_PHOTO == requestCode)) {
+        if (resultCode == RESULT_OK && (Constants.GALLERY_PHOTO == requestCode) && data!=null) {
             if (android.os.Build.VERSION.SDK_INT >15)
                 Methods.showSnackBar(Create_Message_Activity.this,getString(R.string.edit_image));
             if (data != null) {
@@ -748,8 +767,10 @@ public class Create_Message_Activity extends AppCompatActivity {
                     path = Util.saveBitmap(bitmap, this,tagName + System.currentTimeMillis());
                     picUri = Uri.parse(path);
                     setPicture(bitmap);
+                    Log.d("ILUD CMSAct", "bitmapset");
                 } else {
                     setPicture(picUri);
+                    Log.d("ILUD CMSAct", "bitmapset thgrough uri");
                 }
             }
         }

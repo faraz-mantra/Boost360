@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,11 +16,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -34,6 +32,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.melnykov.fab.FloatingActionButton;
@@ -72,6 +71,7 @@ public class Image_Gallery_Fragment extends Fragment implements
     Activity activity;
     private LinearLayout progressLayout,emptyGalleryLayout;
     private final int media_req_id=5;
+    private final int gallery_req_id = 6;
 
     @Override
     public void onResume() {
@@ -278,6 +278,15 @@ public class Image_Gallery_Fragment extends Fragment implements
             }
 
         }
+        else if(requestCode==gallery_req_id)
+        {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                galleryIntent();
+
+            }
+
+        }
     }
     public void cameraIntent() {
         try {
@@ -320,7 +329,7 @@ public class Image_Gallery_Fragment extends Fragment implements
         LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
         LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
         ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
-        ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
+        final ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
         cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
         galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
 
@@ -337,6 +346,22 @@ public class Image_Gallery_Fragment extends Fragment implements
             @Override
             public void onClick(View v) {
                 MixPanelController.track(EventKeysWL.IMAGE_GALLERY_IMAGE_GALLERY,null);
+                galleryIntent();
+                dialog.hide();
+            }
+        });
+    }
+
+    private void galleryIntent()
+    {
+        try {
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
+                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)!=
+                    PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
+                        gallery_req_id);
+            }
+            else {
                 Intent intent = new Intent(
                         Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -344,9 +369,14 @@ public class Image_Gallery_Fragment extends Fragment implements
                 startActivityForResult(
                         Intent.createChooser(intent, "Select File"),
                         PICK_FROM_GALLERY);
-                dialog.hide();
             }
-        });
+        } catch (ActivityNotFoundException anfe) {
+            // display an error message
+            String errorMessage = "Whoops - your device doesn't support capturing images!";
+            Toast toast = Toast.makeText(getActivity(),
+                    errorMessage, Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 
     @Override

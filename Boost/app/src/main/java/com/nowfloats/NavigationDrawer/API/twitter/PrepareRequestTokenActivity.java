@@ -3,10 +3,10 @@ package com.nowfloats.NavigationDrawer.API.twitter;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.nowfloats.NavigationDrawer.Create_Message_Activity;
 import com.nowfloats.util.Constants;
@@ -94,7 +94,7 @@ public class PrepareRequestTokenActivity extends Activity {
 			try {
 				provider.retrieveAccessToken(consumer, oauth_verifier);
 				
-				final Editor edit = prefs.edit();
+				final SharedPreferences.Editor edit = prefs.edit();
 				edit.putString(OAuth.OAUTH_TOKEN, consumer.getToken());
 				edit.putString(OAuth.OAUTH_TOKEN_SECRET,
 						consumer.getTokenSecret());
@@ -102,6 +102,8 @@ public class PrepareRequestTokenActivity extends Activity {
 						consumer.getTokenSecret());
 					
 			          Twitter twitter = new TwitterFactory().getInstance();
+//				      Log.d("ILUD consumer key", Constants.CONSUMER_KEY);
+//				      Log.d("ILUD consumer sec", Constants.CONSUMER_SECRET);
 			          twitter.setOAuthConsumer(Constants.CONSUMER_KEY, Constants.CONSUMER_SECRET);
 
 			          twitter.setOAuthAccessToken(accessToken);
@@ -111,10 +113,12 @@ public class PrepareRequestTokenActivity extends Activity {
 			          edit.putString("TWITUName", name);
 			          edit.putBoolean("twitterShareEnabled", true);
 			          edit.commit();
+				Log.d("ILUD SP4TwtrFlag", String.valueOf(prefs.getBoolean("twitterShareEnabled", false)));
                 Create_Message_Activity.isFirstTimeTwitter = true;
 				Constants.TWITTER_TOK = prefs.getString(OAuth.OAUTH_TOKEN, "");
 				Constants.TWITTER_SEC = prefs.getString(OAuth.OAUTH_TOKEN_SECRET, "");
 				Constants.twitterShareEnabled = true;
+				Create_Message_Activity.twittersharingenabled = true;
 				consumer.setTokenWithSecret(Constants.TWITTER_TOK, Constants.TWITTER_SEC);
 				
 

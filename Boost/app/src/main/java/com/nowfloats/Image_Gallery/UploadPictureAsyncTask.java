@@ -36,7 +36,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.UUID;
 
-//import java.util.logging.Handler;
+//import java.com.thinksity.logging.Handler;
 
 
 public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String> {

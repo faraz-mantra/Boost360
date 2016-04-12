@@ -69,6 +69,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
 
 
     private final int media_req_id = 5;
+    private final int gallery_req_id = 6;
 
 
     @Override
@@ -581,6 +582,15 @@ public class Edit_Profile_Activity extends AppCompatActivity {
             }
 
         }
+        else if(requestCode==gallery_req_id)
+        {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                galleryIntent();
+
+            }
+
+        }
     }
 
     public void cameraIntent(){
@@ -634,11 +644,19 @@ public class Edit_Profile_Activity extends AppCompatActivity {
 
     public void galleryIntent(){
         try {
-            Intent i = new Intent(
-                    Intent.ACTION_PICK,
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            if (ActivityCompat.checkSelfPermission(Edit_Profile_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
+                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(Edit_Profile_Activity.this, Manifest.permission.CAMERA)!=
+                    PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(Edit_Profile_Activity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
+                        gallery_req_id);
+            }
+            else {
+                Intent i = new Intent(
+                        Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-            startActivityForResult(i, GALLERY_PHOTO);
+                startActivityForResult(i, GALLERY_PHOTO);
+            }
         } catch (ActivityNotFoundException anfe) {
             // display an error message
             String errorMessage = "Whoops - your device doesn't support capturing images!";
