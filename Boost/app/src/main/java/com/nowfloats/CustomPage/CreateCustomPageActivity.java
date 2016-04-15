@@ -2,38 +2,28 @@ package com.nowfloats.CustomPage;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.CustomPage.Model.CreatePageModel;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -172,7 +162,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                                 public void success(String s, Response response) {
                                     materialProgress.dismiss();
                                     if (s!=null &&s.toString().trim().length()>0){
-                                        Log.d("Create page success", "");
+                                        //Log.d("Create page success", "");
                                         MixPanelController.track("CreateCustomPage", null);
                                         long time = System.currentTimeMillis();
                                         CustomPageActivity.dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
@@ -180,7 +170,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                                         finish();
                                     }else{
                                         Methods.showSnackBarNegative(activity, "Enter different Title and try again");
-                                        Log.d("Create page Fail", "");
+                                        //Log.d("Create page Fail", "");
                                     }
                                 }
 
@@ -188,7 +178,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                                 public void failure(RetrofitError error) {
                                     materialProgress.dismiss();
                                     Methods.showSnackBarNegative(activity, "Something went wrong,Try again");
-                                    Log.d("Create page Fail", "" + error.getMessage());
+                                    //Log.d("Create page Fail", "" + error.getMessage());
                                 }
                             });
                         } else {
@@ -203,7 +193,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                                 public void success(String s, Response response) {
                                     materialProgress.dismiss();
                                     MixPanelController.track("UpdateCustomPage", null);
-                                    Log.d("Update page success", "");
+                                    //Log.d("Update page success", "");
                                     CustomPageActivity.dataModel.get(curPos).DisplayName = name;
                                     Methods.showSnackBarPositive(activity, "Page updated ");
                                     finish();
@@ -213,7 +203,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                                 public void failure(RetrofitError error) {
                                     materialProgress.dismiss();
                                     Methods.showSnackBarNegative(activity, "Something went wrong,Try again");
-                                    Log.d("Update page Fail", "" + error.getMessage());
+                                    //Log.d("Update page Fail", "" + error.getMessage());
                                 }
                             });
                         }

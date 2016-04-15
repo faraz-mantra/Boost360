@@ -62,13 +62,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/parttwo/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/parttwo/jni" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/parttwo/rs" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestParttwo/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestParttwo/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestParttwo/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestParttwo/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestParttwo/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestParttwo/jni" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestParttwo/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testParttwo/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testParttwo/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testParttwo/assets" type="java-test-resource" />
@@ -76,6 +69,13 @@
       <sourceFolder url="file://$MODULE_DIR$/src/testParttwo/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testParttwo/jni" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testParttwo/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestParttwo/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestParttwo/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestParttwo/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestParttwo/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestParttwo/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestParttwo/jni" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestParttwo/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" type="java-resource" />

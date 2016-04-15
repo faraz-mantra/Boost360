@@ -158,7 +158,7 @@ public class SidePanelFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Log.d("ILUD", "Hello");
+        //Log.d("ILUD", "Hello");
 
         progressbar = (ProgressBar) view.findViewById(R.id.ProgressBar);
         meterValue = (TextView) view.findViewById(R.id.fragment_side_panel_progress_meter_value);

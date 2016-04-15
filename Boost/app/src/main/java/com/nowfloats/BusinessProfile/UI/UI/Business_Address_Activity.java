@@ -10,7 +10,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -378,7 +377,8 @@ public class Business_Address_Activity extends ActionBarActivity {
 
         if(id==android.R.id.home ){
 
-            Log.d("Back","Back Pressed");
+
+            // Log.d("Back","Back Pressed");
 
             Business_Profile_Fragment_V2 f1 = (Business_Profile_Fragment_V2) getSupportFragmentManager().findFragmentByTag("A");
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
