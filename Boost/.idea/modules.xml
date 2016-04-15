@@ -11,7 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/libs/libs.iml" filepath="$PROJECT_DIR$/app/libs/libs.iml" />
       <module fileurl="file://$PROJECT_DIR$/mixpanel/mixpanel.iml" filepath="$PROJECT_DIR$/mixpanel/mixpanel.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mobihelp_sdk_android_v1.3.1/mobihelp_sdk_android_v1.3.1.iml" filepath="$PROJECT_DIR$/mobihelp_sdk_android_v1.3.1/mobihelp_sdk_android_v1.3.1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mobihelp_sdk_android_v1.5.4/mobihelp_sdk_android_v1.5.4.iml" filepath="$PROJECT_DIR$/mobihelp_sdk_android_v1.5.4/mobihelp_sdk_android_v1.5.4.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/libs/libraries/volley/volley.iml" filepath="$PROJECT_DIR$/app/libs/libraries/volley/volley.iml" />
     </modules>
   </component>

@@ -1,6 +1,5 @@
-include ':app', ':cropper', ':ZoomImageLibrary'
+include ':app', ':cropper', ':ZoomImageLibrary', ':mobihelp_sdk_android_v1.5.4'
 
-include ':mobihelp_sdk_android_v1.3.1'
 
 include ':mixpanel'
 
