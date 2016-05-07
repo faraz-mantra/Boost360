@@ -291,7 +291,9 @@
             android:name="com.nowfloats.Business_Enquiries.BusinessEnqUpdateDetails"
             android:screenOrientation="portrait" />
         <activity android:name="com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQMainAcivity" />
-        <activity android:name="com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQ_QandA_Activity"></activity>
+        <activity android:name="com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQ_QandA_Activity" />
+        <activity android:name="com.nowfloats.BusinessProfile.UI.UI.TwitterAuthenticationActivity"  android:launchMode="singleInstance"/>
+        <activity android:name="com.nowfloats.BusinessProfile.UI.UI.TwitterLoginActivity" android:launchMode="singleInstance"></activity>
     </application>
 
 </manifest>

@@ -7,9 +7,11 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.nowfloats.BusinessProfile.UI.UI.TwitterLoginActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.Home_View_Card_Delete;
 import com.nowfloats.NavigationDrawer.API.twitter.PostImageTweetInBackgroundAsyncTask;
+import com.nowfloats.NavigationDrawer.API.twitter.PostTweet;
 import com.nowfloats.NavigationDrawer.API.twitter.PostTweetInBackgroundAsyncTask;
 import com.nowfloats.NavigationDrawer.model.PostImageSuccessEvent;
 import com.nowfloats.NavigationDrawer.model.PostTaskModel;
@@ -81,8 +83,9 @@ public final class UploadMessageTask {
                             String tweetData = "";
                             try {
                                 tweetData = obj.message;
-                                PostTweetInBackgroundAsyncTask ptb = new PostTweetInBackgroundAsyncTask(appContext, tweetData, txtId,session);
-                                ptb.execute();
+                                //PostTweetInBackgroundAsyncTask ptb = new PostTweetInBackgroundAsyncTask(appContext, tweetData, txtId,session);
+                                new PostTweet(appContext).execute(tweetData);
+                                //ptb.execute();
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

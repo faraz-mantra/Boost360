@@ -41,6 +41,7 @@ import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
+import com.nowfloats.BusinessProfile.UI.UI.TwitterLoginActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.PostModel;
 import com.nowfloats.NavigationDrawer.API.twitter.PrepareRequestTokenActivity;
@@ -270,24 +271,14 @@ public class Create_Message_Activity extends AppCompatActivity {
                                         twittersharingenabled = true ;
                                         twitterloginButton.setImageDrawable(getResources().getDrawable(
                                                 R.drawable.twitter_icon_active));
-                                        if (Util.isNullOrEmpty(Constants.TWITTER_TOK)
-                                                || Util.isNullOrEmpty(Constants.TWITTER_SEC))
                                             Constants.twitterShareEnabled = false;
-                                        Intent it = new Intent(Create_Message_Activity.this, PrepareRequestTokenActivity.class);
-                                        startActivity(it);
+                                        Intent in = new Intent(Create_Message_Activity.this, TwitterLoginActivity.class);
+                                        startActivity(in);
                                     } else {
                                         twitterloginButton.setImageDrawable(getResources().getDrawable(
                                                 R.drawable.twitter_icon_inactive));
                                         Constants.twitterShareEnabled = false;
-                                        Constants.TWITTER_TOK = "";
-                                        Constants.TWITTER_SEC = "";
-                                        prefsEditor.putString(OAuth.OAUTH_TOKEN, "");
-                                        prefsEditor.putString(OAuth.OAUTH_TOKEN_SECRET, "");
-                                        prefsEditor.putString("TWITUName", "");
                                     }
-                                    prefsEditor.putBoolean("twitterShareEnabled",
-                                            Constants.twitterShareEnabled);
-                                    prefsEditor.commit();
                                     dialog.dismiss();
                                 }
                             })
