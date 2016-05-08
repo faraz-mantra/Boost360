@@ -155,6 +155,12 @@ public class Constants {
 
     public static String TWITTER_TOK = Specific.TWITTER_TOK;
     public static String TWITTER_SEC = Specific.TWITTER_SEC;
+    public static final String PREF_KEY_OAUTH_TOKEN = "oauth_token";
+    public static final String PREF_KEY_OAUTH_SECRET = "oauth_token_secret";
+    public static final String PREF_KEY_TWITTER_LOGIN = "is_twitter_loggedin";
+    public static final String PREF_USER_NAME = "twitter_user_name";
+
+
 
     public static final String[] FACEBOOK_PERMISSIONS = new String[]{"email", "user_birthday", "user_interests", "publish_actions", "photo_upload", "publish_stream"};
     public static final String REQUEST_URL = "https://api.twitter.com/oauth/request_token";
