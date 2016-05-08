@@ -847,9 +847,13 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     //           replace(R.id.mainFrame, homeFragment).addToBackStack("Home").commit();
                 }else if(nextScreen.equals("Chat"))
                 {
+<<<<<<< HEAD
 
                     //Konotor.getInstance(getApplicationContext()).launchFeedbackScreen(HomeActivity.this);
                     Mobihelp.showConversations(HomeActivity.this);
+=======
+                    Konotor.getInstance(getApplicationContext()).launchFeedbackScreen(HomeActivity.this);
+>>>>>>> origin/master
                 }else  if(nextScreen.equals("Call"))
                 {
                     Intent call = new Intent(Intent.ACTION_DIAL);

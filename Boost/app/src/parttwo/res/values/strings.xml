@@ -394,12 +394,21 @@
     <!--this part is for FAQ harcoded strings -->
     <string-array name="faqmain">
         <item>WELCOME TO THE ONLINE WORLD</item>
+<<<<<<< HEAD
         <item>WHAT\'S SIBERNAME BOOST</item>
         <item>UPDATING CONTENT</item>
         <item>ENGAGING CUSTOMERS</item>
         <item>SIBERNAME BOOST APPS, WEB, SMS</item>
         <item>SIBERNAME BOOST DISCOVERY METHOD</item>
         <item>GROWING YOUR BUSINESS WITH SIBERNAME BOOST</item>
+=======
+        <item>WHAT\'S NOWFLOATS</item>
+        <item>UPDATING CONTENT</item>
+        <item>ENGAGING CUSTOMERS</item>
+        <item>NOWFLOATS APPS, WEB, SMS</item>
+        <item>NOWFLOATS DISCOVERY METHOD</item>
+        <item>GROWING YOUR BUSINESS WITH NOWFLOATS</item>
+>>>>>>> origin/master
         <item>NOT A FIRST TIME WEBSITE CREATOR?</item>
         <item>PLANS</item>
         <item>OTHER INFO</item>
@@ -412,6 +421,7 @@
             <item>Why is location so important for online?</item>
     </string-array>
     <string-array name="answer_0">
+<<<<<<< HEAD
         <item><![CDATA[You might have a small business that does well and have your steady customers, however you possibly couldn\'t have captured all the possible customers - around your business.<br/> And with the advent of mobile browsers, customers now look for businesses on the go. So it has becomes important to be (a) present and (b) relevant to them in order to attract them to your physical business.]]></item>
         <item><![CDATA[SEO or Search Engine Optimization, is the technique of laying out data on a website in a manner that is ideal for a search engine to pick up. Every popular search engine has defined how it looks at, measures, stacks and stores information from millions of websites around the world. For it to perform its task in the best and most efficient manner, it measures websites on certain criteria. Meeting the criteria - by laying down your content accordingly, is search-engine-optimizing your website.<br/> Whereas this is a somewhat complex task that must be performed consistently, with SIBERNAME BOOST, we reduce to it a bare minimum, if not zero.]]></item>
         <item><![CDATA[For a business that has retail presence, it is pointless to be on the net and try to attract customers from another city or country. On the SIBERNAME BOOST platform, the physical location of your business is the crux of the solution. By pinning your business to the actual physical location of the business, we ensure that only customers who could drive across, take a bus or walk to your business would be exposed to your website in the search results. Of course, this will work well when consumers are searching for your services/products within a location too.<br/> So for example: people are looking for ice cream cafes in Seattle too. But it\'s pointless if you manage to attract someone from there when your business is actually in Sevilla, Spain.<br/> However if the person from Seattle is going to be in Sevilla and wants to taste the gelato there, he would search \'Ice cream café in Sevilla\' and your business result would show up.]]></item>
@@ -447,10 +457,48 @@
         <item><![CDATA[Sure! If you already have a Facebook© page, creating a \"full\" website is a cinch. We pull the last 10-15 feeds from your Facebook page and create entries on your SIBERNAME BOOST business website. You can also choose to keep pulling feed from the Facebook page. So that every time you update it, your SIBERNAME BOOST website gets updated too.<br/> The advantage? Your Facebook entries now become discoverable by location.]]></item>
         <item><![CDATA[Absolutely. You can make one update on your SIBERNAME BOOST business website and ensure the word spreads on your other social media platforms. All automatically. All instantly.<br/> All you need to do is go to the \"Social Settings\" of the SIBERNAME BOOST Boost app and activate the various social options available there.]]></item>
         <item><![CDATA[What we advise our customers is that they should update what their business does - in long term, and in short term too. The most important thing is that you DO NOT worry about keywords, or anything technical. But rather update messages as if you were in a conversation with an actual customer. Our technology takes care of the rest.<br/> For instance if it is a interior decorator, the long term message - which can also be the \'business description\' too, could be what they specialize in. Eg.: We are specialist in art-deco style interior decoration based in the Bay area.<br/> A short term message/update could be a promotion or an announcement.Eg.: Get high discounts on art-deco wallpapers for the pre-holiday run-up. Eg.: We have now started specializing in Minimalist styled interiors too.]]></item>
+=======
+        <item>You might have a small business that does well and have your steady customers, however you possibly couldn\'t have captured all the possible customers - around your business. And with the advent of mobile browsers, customers now look for businesses on the go. So it has becomes important to be (a) present and (b) relevant to them in order to attract them to your physical business.</item>
+        <item>SEO or Search Engine Optimization, is the technique of laying out data on a website in a manner that is ideal for a search engine to pick up. Every popular search engine has defined how it looks at, measures, stacks and stores information from millions of websites around the world. For it to perform its task in the best and most efficient manner, it measures websites on certain criteria. Meeting the criteria - by laying down your content accordingly, is search-engine-optimizing your website. Whereas this is a somewhat complex task that must be performed consistently, with NowFloats, we reduce to it a bare minimum, if not zero.</item>
+        <item>For a business that has retail presence, it is pointless to be on the net and try to attract customers from another city or country. On the NowFloats platform, the physical location of your business is the crux of the solution. By pinning your business to the actual physical location of the business, we ensure that only customers who could drive across, take a bus or walk to your business would be exposed to your website in the search results. Of course, this will work well when consumers are searching for your services/products within a location too. So for example: people are looking for ice cream cafes in Seattle too. But it\'s pointless if you manage to attract someone from there when your business is actually in Sevilla, Spain. However if the person from Seattle is going to be in Sevilla and wants to taste the gelato there, he would search \'Ice cream café in Sevilla\' and your business result would show up.</item>
+        <item>Well, because we would like to pin your website to a physical location. Why? Because search engines now give more weight to local websites because consumers search like that. To take it a step further, it\'s also where customers can be guided to, when they are searching on the go on their mobile phones.</item>
+        <item>Well just think about it... consumers want convenience and they search for whatever they want to purchase - around them! Think about it a little harder: When consumers want to research, they search for products or services. But when consumers have intent to purchase, they search for the products or services in particular locations. Read a bit more at: http://blog.nowfloats.com/2014/05/why-should-small-business-care-about.html</item>
+    </string-array>
+    <string-array name="questions_1">
+        <item>So what does NowFloats do?</item>
+        <item>What is NowFloats?</item>
+        <item>But the NowFloats website, doesn\'t look like a traditional website!</item>
+        <item>How does a \'website\' get more customers for Small and Medium Businesses?</item>
+        <item>So does NowFloats do search-engine optimization (SEO) for my business website?</item>
+    </string-array>
+    <string-array name="answer_1">
+        <item>Simplified, NowFloats works in two parts: (1) It makes the creation of business websites - very, very simple. These websites can be updated with equal amount of ease and speed. It can be done through an app, the web or SMS (only in India). And it is VERY simple. (2) After you start updating the website (also as easy) with business content, NowFloats\' patent pending technology kicks in, does the keyword extraction (automatically) and ensures that the search engine crawls your website and offers it up relevantly to potential customers searching for businesses like yours. Simply put, we ensure what you are saying on your website, is read by your potential customers. And as long as that is relevant information, we create opportunities for your customers to get in touch with you.</item>
+        <item>NowFloats is a location-based platform that helps smaller and medium-sized businesses grow bigger by getting them online and getting discovered by potential customers around them. All without the need of any technical knowledge.</item>
+        <item>Whereas that can be argued, we will go with, \"That might be true.\" We feel the important thing is that NowFloats tries to bring customers to your website and what you have to say (read: sell) and eventually, and more importantly, to your store\'s doorstep. The question that must be asked is, \"If it succeeds in getting your business more customers, which would you prefer - UI customization or functional success?\" Having said this, NowFloats is constantly working ahead and trying to create website templates that keep with the time and technology, if not ahead.</item>
+        <item>As mentioned earlier, the NowFloats website is not a regular \"static\" website that isn\'t updated after creation. No. When you start updating your website regularly and relevantly (to your business), the NowFloats technology ensures that when your potential customers do a web-search around your business, your website comes up ahead of others. When you get discovered first, you have a lead over others in getting this potential customer. Be it through a phone call, a message or simply the customer walking into your business premises.</item>
+        <item>Technically speaking, yes. NowFloats takes care of the SEO for the website and the content you create on it. Normally businesses have to fork out money to digital agencies to do the SEO for the website - to maintain it on a monthly or an annual basis. However with a NowFloats business website, you get the SEO built-in already. So all you need to worry about is what you want to tell the customers about your business.</item>
+    </string-array>
+    <string-array name="questions_2">
+        <item>Isn\'t updating a website technical? Do I need to interact with people to get it done?</item>
+        <item>Can NowFloats create the content for me?</item>
+        <item>Why is it so important to update the content on the business website?</item>
+        <item>Fine. But is there a simpler way of creating content for my website?</item>
+        <item>What about the other way around? Can my NowFloats page push content to my Twitter© and Facebook page?</item>
+        <item>What kind of content should I update for my business?</item>
+    </string-array>
+    <string-array name="answer_2">
+        <item>Mostly the answer would be yes. But with NowFloats it\'s a resounding NO! All you need to do is be able to type and press \"update\". We take care of the rest. That means design, SEO, etc. So say that you have a sale or have an offer or an announcement to make regarding your business, you don\'t need to find a developer or a designer. You simply have to update your website using the app or through the management portal or even a plain old SMS (in India).</item>
+        <item>You, as the owner or manager of the business, are the best judge of what your business does and what your customers look for. NowFloats could not possibly do justice to that. Therefore NowFloats does not create any content for the business. But it highly encourages business to do small updates twice or thrice a week to build the in-coming traffic.</item>
+        <item>Well for starters, a fresh website is one that customers trust. It shows the business is engaged online and that the information is fresh. For example a coffee shop that updates it\'s offers every day, a bit like a traditional chalkboard, is more likely to draw customers more regularly because they have interesting offers. And that\'s not all. Even search engines which crawl websites give sites which are updated regularly with relevant data more importance when it comes to search queries and results.</item>
+        <item>Sure! If you already have a Facebook© page, creating a \"full\" website is a cinch. We pull the last 10-15 feeds from your Facebook page and create entries on your NowFloats business website. You can also choose to keep pulling feed from the Facebook page. So that every time you update it, your NowFloats website gets updated too.The advantage? Your Facebook entries now become discoverable by location.</item>
+        <item>Absolutely. You can make one update on your NowFloats business website and ensure the word spreads on your other social media platforms. All automatically. All instantly. All you need to do is go to the \"Social Settings\" of the NowFloats Boost app and activate the various social options available there.</item>
+        <item>What we advise our customers is that they should update what their business does - in long term, and in short term too. The most important thing is that you DO NOT worry about keywords, or anything technical. But rather update messages as if you were in a conversation with an actual customer. Our technology takes care of the rest. For instance if it is a interior decorator, the long term message - which can also be the \'business description\' too, could be what they specialize in. Eg.: We are specialist in art-deco style interior decoration based in the Bay area. A short term message/update could be a promotion or an announcement.Eg.: Get high discounts on art-deco wallpapers for the pre-holiday run-up. Eg.: We have now started specializing in Minimalist styled interiors too.</item>
+>>>>>>> origin/master
     </string-array>
     <string-array name="questions_3">
         <item>Can the potential customer contact the business?</item>
         <item>How else can I engage the customers?</item>
+<<<<<<< HEAD
         <item>Can I sell through a SIBERNAME BOOST website? Do you provide for e-commerce?</item>
     </string-array>
     <string-array name="answer_3">
@@ -467,10 +515,29 @@
         <item><![CDATA[SIBERNAME BOOST Boost or Boost (as we call it), is the website management app that makes creating, updating, analyzing the website a walk in the park. Highly intuitive, and built on common app logic, Boost will get you going and ensure your website is well maintained by you. You can also update the store information and check the analytics of your website. It is available for iPhone and Android smartphones currently (the Windows Phone version is coming soon). For more information visit <a href="http://sibername.com/boost">http://sibername.com/boost</a>.]]></item>
         <item><![CDATA[SIBERNAME BOOST has a web management portal with which you can update your SIBERNAME BOOST business website. You can also manage the store information and check more in-depth analytics of your website. If you have multiple stores, you can manage them all from this one portal.]]></item>
         <item><![CDATA[Yes, it\'s true. In India, you can send a message to 56767878 with the word \"FLOAT\" and it will trigger three more messages at the end of which, your business website will be ready. Every message you send after that will be an update on your website.<br/> Best thing is, we just made your SMS - search engine optimized for your business.]]></item>
+=======
+        <item>Can I sell through a NowFloats website? Do you provide for e-commerce?</item>
+    </string-array>
+    <string-array name="answer_3">
+        <item>Yes! There are widgets on the website that are meant to increase customer engagement. For instance the \"Make an Enquiry\" widget allows the customers on the website to send a direct business enquiry to you. The enquiry is delivered to your phone or email address, giving you the potential lead.</item>
+        <item>NowFloats has a subscription facility, which your customers can use. After subscription, every time the business updates the website, the update is delivered in an email to the customer. So that there is less chance of the customer missing an update.</item>
+        <item>At the moment NowFloats provides a product catalogue feature, which promotes your best selling items further by SEO\'ing them. The product catalogue allows for customers to show interest and contact the merchant in regards to a particular product - generating a hot lead. However the option of e-commerce doesn\'t exist as of now. Having said that, we are working on providing e-commerce on the NowFloats websites soon enough. Stay tuned.</item>
+    </string-array>
+    <string-array name="questions_4">
+        <item>So what is NowFloats Boost?</item>
+        <item>How can we make an update through the web?</item>
+        <item>Can I actually make a business website with 4 SMSs through NowFloats?</item>
+    </string-array>
+    <string-array name="answer_4">
+        <item>NowFloats Boost or Boost (as we call it), is the website management app that makes creating, updating, analyzing the website a walk in the park. Highly intuitive, and built on common app logic, Boost will get you going and ensure your website is well maintained by you. You can also update the store information and check the analytics of your website. It is available for iPhone and Android smartphones currently (the Windows Phone version is coming soon). For more information visit http://nowfloats.com/boost.</item>
+        <item>NowFloats has a web management portal with which you can update your NowFloats business website. You can also manage the store information and check more in-depth analytics of your website. If you have multiple stores, you can manage them all from this one portal.</item>
+        <item>Yes, it\'s true. In India, you can send a message to 56767878 with the word \"FLOAT\" and it will trigger three more messages at the end of which, your business website will be ready. Every message you send after that will be an update on your website. Best thing is, we just made your SMS - search engine optimized for your business.</item>
+>>>>>>> origin/master
     </string-array>
     <string-array name="questions_5">
         <item>How does the search engine optimization work for my specific business?</item>
         <item>How long does it take before my SEO improves and my website starts showing up in the results?</item>
+<<<<<<< HEAD
         <item>But what if the business is in a hurry? Does SIBERNAME BOOST also provide \'inorganic\' growth?</item>
         <item>What is \'organic\' web traffic? How does SIBERNAME BOOST build that for me?</item>
     </string-array>
@@ -482,10 +549,24 @@
     </string-array>
     <string-array name="questions_6">
         <item>How do I know that SIBERNAME BOOST is working for me?</item>
+=======
+        <item>But what if the business is in a hurry? Does NowFloats also provide \'inorganic\' growth?</item>
+        <item>What is \'organic\' web traffic? How does NowFloats build that for me?</item>
+    </string-array>
+    <string-array name="answer_5">
+        <item>Well the trick is in the language of your business. You don\'t have to worry about anything technological. Just pitch it like you would to your customers. That\'s all. We will do the heavy lifting of finding the right keywords from your language and ensuring the search engines recognize it. This enables relevant and better rankings in search results.</item>
+        <item>We\'ll be honest with you: There is no exact answer to this. However we have seen that with 2-3 updates a week, which are relevant and consistent with your business, our customers\' websites start showing up in local searches on popular search engines like Google in 3-4 weeks. This of course is what is called organic web traffic. Of course this requires you to create content. Think of it like fuel that\'ll make the car run. If you don\'t fill\'er up, the car won\'t take you anywhere.</item>
+        <item>We have 2 plans, one that is entirely organic SEO, and the other which is a mix of organic and inorganic SEO. You can always opt for NowFloats Direct which has an \'inorganic\' element to it. We match the keywords from your messages and push them out as advertising to popular advertising networks online and then \"push\" potential customers to your website. Remember that even this method is exact and not random. People searching for what your business is talking about are the ones brought to your website.</item>
+        <item>Organic traffic is people landing up on your site without you having to apply any external stimulus like online advertising or offline advertising for that matter. People land up on your site because of the content that you have written and the search engines pointing at you for a relevant search query. With your effort of updating your NowFloats website regularly and relevantly, we ensure that you start getting established as someone who is an expert in your business (within the location for maximum impact and thus start rising in the search results. Please note that this DOES NOT happen overnight. It takes time (but no more money : ) and effort to curate the website.</item>
+    </string-array>
+    <string-array name="questions_6">
+        <item>How do I know that NowFloats is working for me?</item>
+>>>>>>> origin/master
         <item>If there are two businesses of the same nature and category on your platform within the same area/location, who will you show up first on the search results?</item>
         <item>How does it compare to let\'s say a business listing site?</item>
     </string-array>
     <string-array name="answer_6">
+<<<<<<< HEAD
         <item><![CDATA[The best measure will be more customers over time.<br/> But more instant than that will be the number of people visiting your website. That number upsurges when you are regular with your updates.]]></item>
         <item><![CDATA[This is a very interesting question and the answer is fairly straightforward:<br/> Whichever business updates its website regularly and more relevantly will show up first.<br/> SIBERNAME BOOST doesn\'t play favourites. We are merely a platform. What the customer does on it, defines what they can make of it. Also, what you must understand is that search engines apply weights to websites by various actions - how often is it updated, how focused it is, what the location is, etc. If you talk relevantly about your business, its products or services, consistently - give advice around it, provide updates, etc., it\'s quite likely that your site will come up first.<br/> Imagine two salesmen trying to sell you an ironing board. One says to you, \"You can iron your clothes on this.\" Whereas the second salesman says, \"This is designed for your maximum comfort, as you stand and iron clothes daily. It also comes in various colours to match your house décor. And I have a great deal for you.\" Who would you go to/purchase from? Yeah, it\'s pretty much like that online too.<br/> So if you want to show up ahead of other similar businesses in the location (both based on SIBERNAME BOOST platform) the trick is to put in a little bit of effort and update your website regularly with messages, images, product/service news, etc. That\'s it.]]></item>
         <item><![CDATA[SIBERNAME BOOST is not like a listing site in many ways. To begin, you own your website with SIBERNAME BOOST, whereas on a listing site, you are one of the many businesses listed there. Second, on a listing site, you\'re exactly that - a listing. There is little context to your business besides the category you are listed under. With SIBERNAME BOOST you can give your customers context of your business - with content in form of messages, pictures, deals, subscriptions, enquiry forms, point of contacts, etc. Last, the SEO of a listing site, goes to the listing site. With SIBERNAME BOOST, when you write your content, it\'s your website the SEO is going to. You benefit from it first and foremost.]]></item>
@@ -514,6 +595,41 @@
         <item><![CDATA[SIBERNAME BOOST has won many awards over time. You can see them at <a href="http://sibername.com/boost/#accolades">http://sibername.com/boost/#accolades.</a>]]></item>
         <item><![CDATA[Get more information about SIBERNAME BOOST at <a href="http://sibername.com/boost/#aboutus">http://sibername.com/boost/#aboutus</a>.<br/> Get our whitepaper at <a href="http://sibername.com/boost/whyonline">http://sibername.com/boost/whyonline</a>.]]></item>
     </string-array>
+=======
+        <item>The best measure will be more customers over time. But more instant than that will be the number of people visiting your website. That number upsurges when you are regular with your updates.</item>
+        <item>This is a very interesting question and the answer is fairly straightforward: Whichever business updates its website regularly and more relevantly will show up first. NowFloats doesn\'t play favourites. We are merely a platform. What the customer does on it, defines what they can make of it. Also, what you must understand is that search engines apply weights to websites by various actions - how often is it updated, how focused it is, what the location is, etc. If you talk relevantly about your business, its products or services, consistently - give advice around it, provide updates, etc., it\'s quite likely that your site will come up first. Imagine two salesmen trying to sell you an ironing board. One says to you, \"You can iron your clothes on this.\" Whereas the second salesman says, \"This is designed for your maximum comfort, as you stand and iron clothes daily. It also comes in various colours to match your house décor. And I have a great deal for you.\" Who would you go to/purchase from? Yeah, it\'s pretty much like that online too. So if you want to show up ahead of other similar businesses in the location (both based on NowFloats platform) the trick is to put in a little bit of effort and update your website regularly with messages, images, product/service news, etc. That\'s it.</item>
+        <item>NowFloats is not like a listing site in many ways. To begin, you own your website with NowFloats, whereas on a listing site, you are one of the many businesses listed there. Second, on a listing site, you\'re exactly that - a listing. There is little context to your business besides the category you are listed under. With NowFloats you can give your customers context of your business - with content in form of messages, pictures, deals, subscriptions, enquiry forms, point of contacts, etc. Last, the SEO of a listing site, goes to the listing site. With NowFloats, when you write your content, it\'s your website the SEO is going to. You benefit from it first and foremost.</item>
+    </string-array>
+    <string-array name="questions_7">
+        <item>I bought a domain name but did nothing with it. Can the NowFloats website be built with it?</item>
+        <item>What if I already have a website? Can NowFloats still help me get more customers?</item>
+    </string-array>
+    <string-array name="answer_7">
+        <item>Yes indeed. In fact, you can build the NowFloats website (almost instantly) and then contact our customer care at ria@nowfloats.com and they can ensure that your purchased domain name/URL begins to point to the website. If you\'ve been waiting for the right opportunity, this is the time to build it.</item>
+        <item>Absolutely! If you already have a website for your business, but it isn\'t updated often enough, chances are it won\'t be doing much for your business. The NowFloats website can plug-in to your existing website as a sub-domain page where you can update your deals, offers, launches or messages. To find out more, download our detailed integration tutorial PDF here. With regular updates, your page rank begins to rise and the SEO gets added on to your main site too.</item>
+    </string-array>
+    <string-array name="questions_8">
+        <item>What are the charges? Does NowFloats have different plans?</item>
+    </string-array>
+    <string-array name="answer_8">
+        <item>We have two plans. NowFloats LightHouse and NowFloats WildFire. \'LightHouse\', draws in the organic traffic. And depending on the regularity of your updates, it can start drawing in web traffic fast. You can get more information and charges here. The second plan is \'WildFire\' - a combination of garnering inorganic and organic traffic for your website. This plan tends to spread your information faster in your target market. It uses adwords and online advertising to bring in traffic quicker. Depending on your convenience you can choose to pay a fixed amount per month on an annual plan. You can get more information here. All plans are on an annual basis. Wildfire\'s adwords balance can be topped up whenever the it runs low.</item>
+    </string-array>
+    <string-array name="questions_9">
+        <item>Who founded NowFloats? And when?</item>
+        <item>Has NowFloats won any awards?</item>
+        <item>Where can I read up more about NowFloats?</item>
+    </string-array>
+    <string-array name="answer_9">
+        <item>NowFloats was founded by Jasminder Singh Gulati, Ronak Kumar Samantray, Nitin Jain and Neeraj Sabharwal in the year 2012. Whereas the first three come from a technology background, having worked in corporates like Microsoft, Computer Associates, GE, etc., Neeraj comes from a consumerist background having worked in global advertising agencies like Havas and Saatchi and Saatchi. And if it matters in anyway, they have a combined experience of 62 years. :)</item>
+        <item>NowFloats has won many awards over time. You can see them at http://nowfloats.com/#accolades.</item>
+        <item>Get more information about NowFloats at http://nowfloats.com/#aboutus. Get our whitepaper at http://nowfloats.com/boost/whyonline.</item>
+    </string-array>
+
+
+
+
+
+>>>>>>> origin/master
     <!--FAQ hardcoded string end-->
 
 </resources>

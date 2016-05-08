@@ -884,6 +884,7 @@ public class SidePanelFragment extends Fragment {
 
             }
 
+<<<<<<< HEAD
         }
         else if(requestCode==gallery_req_id)
         {
@@ -923,11 +924,35 @@ public class SidePanelFragment extends Fragment {
             String errorMessage = "Whoops - your device doesn't support capturing images!";
             // Util.toast(errorMessage, FloatAnImage.this);
 
+=======
+    public void cameraIntent() {
+        try {
+            // use standard intent to capture an image
+            values = new ContentValues();
+            values.put(MediaStore.Images.Media.TITLE, "New Picture");
+            values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+            imageUri = getActivity().getContentResolver().insert(
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            Intent captureIntent = new Intent(
+                    MediaStore.ACTION_IMAGE_CAPTURE);
+            captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            // we will handle the returned data in onActivityResult
+            startActivityForResult(captureIntent, CAMERA_PHOTO);
+        } catch (ActivityNotFoundException anfe) {
+            // display an error message
+            String errorMessage = "Whoops - your device doesn't support capturing images!";
+            Toast toast = Toast.makeText(getActivity().getApplicationContext(),
+                    errorMessage, Toast.LENGTH_SHORT);
+            toast.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+>>>>>>> origin/master
         }
     }
 
     public void galleryIntent() {
         try {
+<<<<<<< HEAD
             if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
                     PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)!=
                     PackageManager.PERMISSION_GRANTED) {
@@ -938,6 +963,10 @@ public class SidePanelFragment extends Fragment {
                 Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, GALLERY_PHOTO);
             }
+=======
+            Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(i, GALLERY_PHOTO);
+>>>>>>> origin/master
         } catch (ActivityNotFoundException anfe) {
             // display an error message
             String errorMessage = "Whoops - your device doesn't support capturing images!";
