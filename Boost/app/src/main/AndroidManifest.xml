@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.thinksity"
-<<<<<<< HEAD
-    android:versionCode="2016040004"
-    android:versionName="4.4.1.1">
-=======
     android:versionCode="2016030021"
     android:versionName="4.4.1">
->>>>>>> origin/master
 
     <permission
         android:name="com.biz2.nowfloats.permission.C2D_MESSAGE"
@@ -45,11 +40,6 @@
         android:theme="@style/AppTheme">
         <activity android:name="com.mixpanel.android.surveys.SurveyActivity" />
 
-<<<<<<< HEAD
-        <receiver
-            android:name="com.appsflyer.MultipleInstallBroadcastReceiver"
-            android:exported="true">
-=======
         <service android:name="com.nowfloats.Volley.GCMIntentService" />
 
         <receiver
@@ -62,9 +52,11 @@
         <receiver
             android:name="com.nowfloats.Volley.AndroidGCMBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
->>>>>>> origin/master
             <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.biz2.nowfloats" />
             </intent-filter>
         </receiver>
 
@@ -300,7 +292,7 @@
             android:screenOrientation="portrait" />
         <activity android:name="com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQMainAcivity" />
         <activity android:name="com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQ_QandA_Activity" />
-        <activity android:name="com.nowfloats.BusinessProfile.UI.UI.TwitterAuthenticationActivity"  android:launchMode="singleInstance"/>
+        <activity android:name="com.nowfloats.Twitter.TwitterAuthenticationActivity"  android:launchMode="singleInstance"/>
         <activity android:name="com.nowfloats.BusinessProfile.UI.UI.TwitterLoginActivity" android:launchMode="singleInstance"></activity>
     </application>
 

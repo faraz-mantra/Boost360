@@ -11,11 +11,11 @@ import com.nowfloats.BusinessProfile.UI.UI.TwitterLoginActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.Home_View_Card_Delete;
 import com.nowfloats.NavigationDrawer.API.twitter.PostImageTweetInBackgroundAsyncTask;
-import com.nowfloats.NavigationDrawer.API.twitter.PostTweet;
 import com.nowfloats.NavigationDrawer.API.twitter.PostTweetInBackgroundAsyncTask;
 import com.nowfloats.NavigationDrawer.model.PostImageSuccessEvent;
 import com.nowfloats.NavigationDrawer.model.PostTaskModel;
 import com.nowfloats.NavigationDrawer.model.PostTextSuccessEvent;
+import com.nowfloats.Twitter.PostTweet;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
@@ -79,7 +79,7 @@ public final class UploadMessageTask {
                     } else if (txtId != null && txtId.length() > 1) {
                         success = true;
                         if (Constants.twitterShareEnabled && Home_Main_Fragment.facebookPostCount == 0) {
-                            //Constants.twitterShareEnabled = false;
+                            Constants.twitterShareEnabled = false;
                             String tweetData = "";
                             try {
                                 tweetData = obj.message;

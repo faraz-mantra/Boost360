@@ -1,6 +1,5 @@
 package com.nowfloats.NavigationDrawer;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
@@ -19,8 +18,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
@@ -44,12 +41,14 @@ import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
+import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.TwitterLoginActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.PostModel;
 import com.nowfloats.NavigationDrawer.API.twitter.PrepareRequestTokenActivity;
 import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
 import com.nowfloats.NotificationCenter.AlertArchive;
+import com.nowfloats.Twitter.TwitterConstants;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
@@ -117,10 +116,6 @@ public class Create_Message_Activity extends AppCompatActivity {
     Uri picUri;
     private Activity activity;
     DataBase dataBase;
-
-
-    private int media_req_id = 5;
-    private int gallery_req_id=6;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -235,10 +230,9 @@ public class Create_Message_Activity extends AppCompatActivity {
             isFacebookPageShareLoggedIn = true;
             facebookPageShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
         }
-        Log.d("ILUD CreateMsgAct", String.valueOf(pref.getBoolean("twitterShareEnabled", false)));
-        if(pref.getBoolean("twitterShareEnabled", false)) {
+        SharedPreferences mSharedPreferences = getSharedPreferences(TwitterConstants.PREF_NAME, MODE_PRIVATE);
+        if(mSharedPreferences.getBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false)) {
             twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
-            Constants.twitterShareEnabled = true;
         }
 
 
@@ -275,17 +269,17 @@ public class Create_Message_Activity extends AppCompatActivity {
                                     super.onPositive(dialog);
                                     if (!Constants.twitterShareEnabled) {
                                         MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_TWITTER, null);
-                                        Constants.twitterShareEnabled = true;
+                                       // Constants.twitterShareEnabled = true;
                                         twittersharingenabled = true ;
                                         twitterloginButton.setImageDrawable(getResources().getDrawable(
                                                 R.drawable.twitter_icon_active));
-                                            Constants.twitterShareEnabled = false;
-                                        Intent in = new Intent(Create_Message_Activity.this, TwitterLoginActivity.class);
+                                           // Constants.twitterShareEnabled = false;
+                                        Intent in = new Intent(Create_Message_Activity.this, Social_Sharing_Activity.class);
                                         startActivity(in);
                                     } else {
                                         twitterloginButton.setImageDrawable(getResources().getDrawable(
                                                 R.drawable.twitter_icon_inactive));
-                                        Constants.twitterShareEnabled = false;
+                                        //Constants.twitterShareEnabled = false;
                                     }
                                     dialog.dismiss();
                                 }
