@@ -324,30 +324,35 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         }
 
         //Rahul Twitter
-        if (data != null)
-            mTwitterVerifier = data.getExtras().getString(mAuthVerifier);
-        AccessToken accessToken;
-        try {
-            accessToken = mTwitter.getOAuthAccessToken(mRequestToken,mTwitterVerifier);
-            long userID = accessToken.getUserId();
-            final User user = mTwitter.showUser(userID);
-            String username = user.getName();
-            saveTwitterInformation(accessToken);
-        } catch (Exception e) {
-           // Toast.makeText(Social_Sharing_Activity.this, "Exception ", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
-        //Rahul Twitter
+        if(TwitterConstants.WEBVIEW_REQUEST_CODE == requestCode) {
+            if (data != null)
+                mTwitterVerifier = data.getExtras().getString(mAuthVerifier);
+            AccessToken accessToken;
+            try {
+                if (mTwitter == null) {
+                    final ConfigurationBuilder builder = new ConfigurationBuilder();
+                    builder.setOAuthConsumerKey(mConsumerKey);
+                    builder.setOAuthConsumerSecret(mConsumerSecret);
+                    final Configuration configuration = builder.build();
+                    final TwitterFactory factory = new TwitterFactory(configuration);
+                    mTwitter = factory.getInstance();
+                }
+                accessToken = mTwitter.getOAuthAccessToken(mRequestToken, mTwitterVerifier);
+                long userID = accessToken.getUserId();
+                final User user = mTwitter.showUser(userID);
+                String username = user.getName();
+                saveTwitterInformation(accessToken);
+            } catch (Exception e) {
+                // Toast.makeText(Social_Sharing_Activity.this, "Exception ", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        }   //Rahul Twitter
     }
 
     public void fbPageData() {
         final String[] PERMISSIONS = new String[]{"photo_upload",
                 "user_photos", "publish_stream", "read_stream",
                 "offline_access", "manage_pages", "publish_actions"};
-//        materialProgress = new MaterialDialog.Builder(this)
-//                .widgetColorRes(R.color.accentColor)
-//                .content("Please Wait...")
-//                .progress(true, 0).show();
 
         facebook.authorize(this, PERMISSIONS, new Facebook.DialogListener() {
             public void onComplete(Bundle values) {
@@ -760,6 +765,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         }
         mSharedPreferences = context.getSharedPreferences(TwitterConstants.PREF_NAME, context.MODE_PRIVATE);
         if (isAuthenticated()) {
+            Constants.twitterShareEnabled = true;
             //Toast.makeText(getApplicationContext(), "Already you are authorise to use", Toast.LENGTH_SHORT).show();
         } else {
            // Toast.makeText(Social_Sharing_Activity.this, "MainActivity else case for verification", Toast.LENGTH_SHORT).show();

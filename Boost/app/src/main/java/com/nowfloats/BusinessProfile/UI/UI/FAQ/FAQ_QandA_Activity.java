@@ -5,10 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-<<<<<<< HEAD
 import android.text.Html;
-=======
->>>>>>> origin/master
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -94,20 +91,17 @@ public class FAQ_QandA_Activity extends ActionBarActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
 // 2. Chain together various setter methods to set the dialog characteristics
-<<<<<<< HEAD
-        builder.setMessage(Html.fromHtml(ans))
-=======
+
+        builder.setMessage(Html.fromHtml(ans));
+
         builder.setMessage(ans)
->>>>>>> origin/master
+
                 .setTitle("Answer")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-<<<<<<< HEAD
-                        if (dialog != null)
-=======
+
                         if(dialog!=null)
->>>>>>> origin/master
                             dialog.dismiss();
                     }
                 });

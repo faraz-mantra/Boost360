@@ -1,5 +1,6 @@
 package com.nowfloats.NavigationDrawer;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
@@ -18,6 +19,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
@@ -30,6 +33,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
@@ -116,6 +120,9 @@ public class Create_Message_Activity extends AppCompatActivity {
     Uri picUri;
     private Activity activity;
     DataBase dataBase;
+    private final int gallery_req_id = 0;
+    private final int media_req_id = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -263,7 +270,6 @@ public class Create_Message_Activity extends AppCompatActivity {
                                     super.onNegative(dialog);
                                     dialog.dismiss();
                                 }
-
                                 @Override
                                 public void onPositive(MaterialDialog dialog) {
                                     super.onPositive(dialog);
@@ -549,10 +555,8 @@ public class Create_Message_Activity extends AppCompatActivity {
             }
             else {
                 Intent intent = new Intent();
-// Show only images, no videos or anything else
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-// Always show the chooser (if there are multiple options available)
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), Constants.GALLERY_PHOTO);
             }
         } catch (ActivityNotFoundException anfe) {
@@ -570,6 +574,8 @@ public class Create_Message_Activity extends AppCompatActivity {
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 cameraIntent();
 
+            }else{
+                Toast.makeText(Create_Message_Activity.this, "Permission not granted", Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -579,25 +585,12 @@ public class Create_Message_Activity extends AppCompatActivity {
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 galleryIntent();
 
+            }else {
+                Toast.makeText(Create_Message_Activity.this, "Permission not granted", Toast.LENGTH_SHORT).show();
             }
         }
     }
     public void cameraIntent() {
-//        try {
-//            // use standard intent to capture an image
-//            values = new ContentValues();
-//            Intent captureIntent;
-//                values.put(MediaStore.Images.Media.TITLE, "New Picture");
-//                values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-//                imageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-//                captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-//                startActivityForResult(captureIntent, Constants.CAMERA_PHOTO);
-//        } catch (ActivityNotFoundException anfe) {
-//           // display an error message
-//           String errorMessage = "Whoops - your device doesn't support capturing images!";
-//           Methods.showSnackBarNegative(this,errorMessage);
-//        }
         try {
             // use standard intent to capture an image
             if (ContextCompat.checkSelfPermission(Create_Message_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
@@ -610,10 +603,8 @@ public class Create_Message_Activity extends AppCompatActivity {
                 ContentValues values = new ContentValues();
                 values.put(MediaStore.Images.Media.TITLE, "New Picture");
                 values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-
                 imageUri = activity.getContentResolver().insert(
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-
                 Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                 startActivityForResult(captureIntent, Constants.CAMERA_PHOTO);

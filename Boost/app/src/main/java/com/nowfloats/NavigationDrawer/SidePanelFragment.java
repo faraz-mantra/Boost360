@@ -883,8 +883,6 @@ public class SidePanelFragment extends Fragment {
                 cameraIntent();
 
             }
-
-<<<<<<< HEAD
         }
         else if(requestCode==gallery_req_id)
         {
@@ -922,160 +920,132 @@ public class SidePanelFragment extends Fragment {
         } catch (ActivityNotFoundException anfe) {
             // display an error message
             String errorMessage = "Whoops - your device doesn't support capturing images!";
-            // Util.toast(errorMessage, FloatAnImage.this);
-
-=======
-    public void cameraIntent() {
-        try {
-            // use standard intent to capture an image
-            values = new ContentValues();
-            values.put(MediaStore.Images.Media.TITLE, "New Picture");
-            values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-            imageUri = getActivity().getContentResolver().insert(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-            Intent captureIntent = new Intent(
-                    MediaStore.ACTION_IMAGE_CAPTURE);
-            captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-            // we will handle the returned data in onActivityResult
-            startActivityForResult(captureIntent, CAMERA_PHOTO);
-        } catch (ActivityNotFoundException anfe) {
-            // display an error message
-            String errorMessage = "Whoops - your device doesn't support capturing images!";
-            Toast toast = Toast.makeText(getActivity().getApplicationContext(),
-                    errorMessage, Toast.LENGTH_SHORT);
-            toast.show();
-        } catch (Exception e) {
-            e.printStackTrace();
->>>>>>> origin/master
         }
     }
 
-    public void galleryIntent() {
-        try {
-<<<<<<< HEAD
-            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)!=
-                    PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
-                        gallery_req_id);
-            }
-            else {
+        public void galleryIntent() {
+            try {
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
+                        PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)!=
+                        PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
+                            gallery_req_id);
+                }
+                else {
+                    Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(i, GALLERY_PHOTO);
+                }
                 Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, GALLERY_PHOTO);
+            } catch (ActivityNotFoundException anfe) {
+                // display an error message
+                String errorMessage = "Whoops - your device doesn't support capturing images!";
+                Toast toast = Toast.makeText(getActivity().getApplicationContext(), errorMessage, Toast.LENGTH_SHORT);
+                toast.show();
             }
-=======
-            Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(i, GALLERY_PHOTO);
->>>>>>> origin/master
-        } catch (ActivityNotFoundException anfe) {
-            // display an error message
-            String errorMessage = "Whoops - your device doesn't support capturing images!";
-            Toast toast = Toast.makeText(getActivity().getApplicationContext(), errorMessage, Toast.LENGTH_SHORT);
-            toast.show();
         }
-    }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        try {
-            if (resultCode == getActivity().RESULT_OK && (CAMERA_PHOTO == requestCode)) {
-                try {
-                    path = null;
-                    if (imageUri != null) {
-                        path = getRealPathFromURI(imageUri);
-                        CameraBitmap = Util.getBitmap(path, getActivity());
-                        imageUrl = getRealPathFromURI(imageUri);
-                        path = Util.saveBitmap(path, getActivity(), "ImageFloat" + System.currentTimeMillis());
-                    } else {
-                        if (data != null) {
-                            imageUri = data.getData();
-                            if (imageUri == null) {
-                                CameraBitmap = (Bitmap) data.getExtras().get("data");
-                                if (CameraBitmap != null) {
-                                    path = Util.saveCameraBitmap(CameraBitmap, getActivity(), "ImageFloat" + System.currentTimeMillis());
-                                    imageUri = Uri.parse(path);
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            try {
+                if (resultCode == getActivity().RESULT_OK && (CAMERA_PHOTO == requestCode)) {
+                    try {
+                        path = null;
+                        if (imageUri != null) {
+                            path = getRealPathFromURI(imageUri);
+                            CameraBitmap = Util.getBitmap(path, getActivity());
+                            imageUrl = getRealPathFromURI(imageUri);
+                            path = Util.saveBitmap(path, getActivity(), "ImageFloat" + System.currentTimeMillis());
+                        } else {
+                            if (data != null) {
+                                imageUri = data.getData();
+                                if (imageUri == null) {
+                                    CameraBitmap = (Bitmap) data.getExtras().get("data");
+                                    if (CameraBitmap != null) {
+                                        path = Util.saveCameraBitmap(CameraBitmap, getActivity(), "ImageFloat" + System.currentTimeMillis());
+                                        imageUri = Uri.parse(path);
+                                    }
+                                } else {
+                                    path = getRealPathFromURI(imageUri);
+                                    CameraBitmap = Util.getBitmap(path, getActivity());
+                                    imageUrl = getRealPathFromURI(imageUri);
+                                    path = Util.saveBitmap(path, getActivity(), "ImageFloat" + System.currentTimeMillis());
                                 }
-                            } else {
-                                path = getRealPathFromURI(imageUri);
-                                CameraBitmap = Util.getBitmap(path, getActivity());
-                                imageUrl = getRealPathFromURI(imageUri);
-                                path = Util.saveBitmap(path, getActivity(), "ImageFloat" + System.currentTimeMillis());
                             }
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } catch (OutOfMemoryError E) {
+                        E.printStackTrace();
+                        CameraBitmap.recycle();
+                        System.gc();
+                        Methods.showSnackBar(getActivity(), "Try again....");
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } catch (OutOfMemoryError E) {
-                    E.printStackTrace();
-                    CameraBitmap.recycle();
-                    System.gc();
-                    Methods.showSnackBar(getActivity(), "Try again....");
-                }
 
-                if (!Util.isNullOrEmpty(path)) {
-                    uploadPrimaryPicture(path);
-                } else Methods.showSnackBar(getActivity(), "Please select an image to upload");
-            } else if (resultCode == getActivity().RESULT_OK && (GALLERY_PHOTO == requestCode)) {
-                {
-                    Uri picUri = data.getData();
-                    if (picUri != null) {
-                        path = getPath(picUri);
-                        path = Util.saveBitmap(path, getActivity(), "ImageFloat" + System.currentTimeMillis());
+                    if (!Util.isNullOrEmpty(path)) {
+                        uploadPrimaryPicture(path);
+                    } else Methods.showSnackBar(getActivity(), "Please select an image to upload");
+                } else if (resultCode == getActivity().RESULT_OK && (GALLERY_PHOTO == requestCode)) {
+                    {
+                        Uri picUri = data.getData();
+                        if (picUri != null) {
+                            path = getPath(picUri);
+                            path = Util.saveBitmap(path, getActivity(), "ImageFloat" + System.currentTimeMillis());
 
-                        if (!Util.isNullOrEmpty(path)) {
-                            uploadPrimaryPicture(path);
-                        } else
-                            Toast.makeText(getActivity().getApplicationContext(), "Please select an image to upload", Toast.LENGTH_SHORT).show();
+                            if (!Util.isNullOrEmpty(path)) {
+                                uploadPrimaryPicture(path);
+                            } else
+                                Toast.makeText(getActivity().getApplicationContext(), "Please select an image to upload", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-    }
 
-    public String getRealPathFromURI(Uri contentUri) {
-        String[] proj = {MediaStore.Images.Media.DATA};
-        Cursor cursor = getActivity().managedQuery(contentUri, proj, null, null, null);
-        int column_index = cursor
-                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
-    }
-
-    public String getPath(Uri uri) {
-        try {
-            String[] projection = {MediaStore.Images.Media.DATA};
-            Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        public String getRealPathFromURI(Uri contentUri) {
+            String[] proj = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getActivity().managedQuery(contentUri, proj, null, null, null);
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
             return cursor.getString(column_index);
-        } catch (Exception e) {
-        }
-        return null;
-    }
-
-    public void uploadPrimaryPicture(String path) {
-        mDrawerLayout.openDrawer(Gravity.LEFT);
-        Constants.isImgUploaded = false;
-        UploadPictureAsyncTask upa = new UploadPictureAsyncTask(getActivity(), path, true, session.getFPID());
-        upa.execute();
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (session.getISEnterprise().equals("true")) {
-            profileLayout.setVisibility(View.GONE);
-            imageGalleryLayout.setVisibility(View.GONE);
-            chatLayout.setVisibility(View.GONE);
-            siteMeter.setVisibility(View.GONE);
         }
 
-        siteMeterCalculation();
-        // mDrawerLayout.openDrawer(Gravity.LEFT);
-    }
+        public String getPath(Uri uri) {
+            try {
+                String[] projection = {MediaStore.Images.Media.DATA};
+                Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                cursor.moveToFirst();
+                return cursor.getString(column_index);
+            } catch (Exception e) {
+            }
+            return null;
+        }
+
+        public void uploadPrimaryPicture(String path) {
+            mDrawerLayout.openDrawer(Gravity.LEFT);
+            Constants.isImgUploaded = false;
+            UploadPictureAsyncTask upa = new UploadPictureAsyncTask(getActivity(), path, true, session.getFPID());
+            upa.execute();
+        }
+
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            if (session.getISEnterprise().equals("true")) {
+                profileLayout.setVisibility(View.GONE);
+                imageGalleryLayout.setVisibility(View.GONE);
+                chatLayout.setVisibility(View.GONE);
+                siteMeter.setVisibility(View.GONE);
+            }
+
+            siteMeterCalculation();
+            // mDrawerLayout.openDrawer(Gravity.LEFT);
+        }
 
     /*public void siteMeterCalculation(){
 
@@ -1125,86 +1095,88 @@ public class SidePanelFragment extends Fragment {
         progressbar.setProgress(siteMeterTotalWeight);
         meterValue.setText(siteMeterTotalWeight+"%");
     }*/
-    public void siteMeterCalculation() {
-        siteMeterTotalWeight = 0;
-        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
-            siteMeterTotalWeight += 10;
-        }
-        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER)) && !getResources().getString(R.string.phoneNumber_percentage).equals("0")) {
-            siteMeterTotalWeight += phoneWeight;
+        public void siteMeterCalculation() {
+            siteMeterTotalWeight = 0;
+            if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
+                siteMeterTotalWeight += 10;
+            }
+            if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER)) && !getResources().getString(R.string.phoneNumber_percentage).equals("0")) {
+                siteMeterTotalWeight += phoneWeight;
+            }
+
+            if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY)) && !getResources().getString(R.string.businessCategory_percentage).equals("0")) {
+                siteMeterTotalWeight += businessCategoryWeight;
+            }
+
+            if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)) && !getResources().getString(R.string.featuredImage_percentage).equals("0")) {
+                siteMeterTotalWeight += featuredImageWeight;
+            }
+
+            if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)) && !getResources().getString(R.string.businessName_percentage).equals("0")) {
+                siteMeterTotalWeight += businessNameWeight;
+            }
+
+            if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)) && !getResources().getString(R.string.businessdescription_percentage).equals("0")) {
+                siteMeterTotalWeight += businessDescriptionWeight;
+            }
+
+            if (Constants.twitterShareEnabled == false && Util.isNullOrEmpty(session.getFacebookAccessToken()) && !getResources().getString(R.string.social_percentage).equals("0")) {
+            } else {
+                siteMeterTotalWeight += twitterWeight;
+            }
+
+            if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)) && !getResources().getString(R.string.address_percentage).equals("0")) {
+                siteMeterTotalWeight += businessAddressWeight;
+            }
+
+            if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL)) && !getResources().getString(R.string.email_percentage).equals("0")) {
+                siteMeterTotalWeight += emailWeight;
+            }
+
+            if (HomeActivity.StorebizFloats.size() < 5 && fiveUpdatesDone == false) {
+                siteMeterTotalWeight += onUpdate;
+            } else {
+                fiveUpdatesDone = true;
+                siteMeterTotalWeight += 25;
+            }
+
+            if (session.getWebsiteshare()) {
+                siteMeterTotalWeight += businessNameWeight;
+            }
+
+            progressbar.setProgress(siteMeterTotalWeight);
+            meterValue.setText(siteMeterTotalWeight + "%");
         }
 
-        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY)) && !getResources().getString(R.string.businessCategory_percentage).equals("0")) {
-            siteMeterTotalWeight += businessCategoryWeight;
-        }
+        private void onclickColorChange(ImageView img, TextView tv) {
+            dashBoardTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+            businessProfileTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+            customerQueries.setTextColor(getResources().getColor(R.color.cell_text_color));
+            imageGalleryTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+            StoreTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+            cspTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+            productGalleryTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+            settingsText.setTextColor(getResources().getColor(R.color.cell_text_color));
+            chatText.setTextColor(getResources().getColor(R.color.cell_text_color));
+            callText.setTextColor(getResources().getColor(R.color.cell_text_color));
+            shareText.setTextColor(getResources().getColor(R.color.cell_text_color));
 
-        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)) && !getResources().getString(R.string.featuredImage_percentage).equals("0")) {
-            siteMeterTotalWeight += featuredImageWeight;
-        }
+            shareImageView.setColorFilter(defaultLabelFilter);
+            dasbBoardImageView.setColorFilter(defaultLabelFilter);
+            businessProfileImageView.setColorFilter(defaultLabelFilter);
+            customerQueriesImageView.setColorFilter(defaultLabelFilter);
+            imageGalleryImageView.setColorFilter(defaultLabelFilter);
+            productGalleryImageView.setColorFilter(defaultLabelFilter);
+            StoreImageView.setColorFilter(defaultLabelFilter);
+            cspImageView.setColorFilter(defaultLabelFilter);
+            settingsImageView.setColorFilter(defaultLabelFilter);
+            callImageView.setColorFilter(defaultLabelFilter);
 
-        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)) && !getResources().getString(R.string.businessName_percentage).equals("0")) {
-            siteMeterTotalWeight += businessNameWeight;
+            if (tv != null){
+                tv.setTextColor(getResources().getColor(R.color.black));
+            }
+            if (img != null) {
+                img.setColorFilter(whiteLabelFilter);
+            }
         }
-
-        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)) && !getResources().getString(R.string.businessdescription_percentage).equals("0")) {
-            siteMeterTotalWeight += businessDescriptionWeight;
-        }
-
-        if (Constants.twitterShareEnabled == false && Util.isNullOrEmpty(session.getFacebookAccessToken()) && !getResources().getString(R.string.social_percentage).equals("0")) {
-        } else {
-            siteMeterTotalWeight += twitterWeight;
-        }
-
-        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)) && !getResources().getString(R.string.address_percentage).equals("0")) {
-            siteMeterTotalWeight += businessAddressWeight;
-        }
-
-        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL)) && !getResources().getString(R.string.email_percentage).equals("0")) {
-            siteMeterTotalWeight += emailWeight;
-        }
-
-        if (HomeActivity.StorebizFloats.size() < 5 && fiveUpdatesDone == false) {
-            siteMeterTotalWeight += onUpdate;
-        } else {
-            fiveUpdatesDone = true;
-            siteMeterTotalWeight += 25;
-        }
-
-        if (session.getWebsiteshare()) {
-            siteMeterTotalWeight += businessNameWeight;
-        }
-
-        progressbar.setProgress(siteMeterTotalWeight);
-        meterValue.setText(siteMeterTotalWeight + "%");
     }
-
-    private void onclickColorChange(ImageView img, TextView tv) {
-        dashBoardTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-        businessProfileTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-        customerQueries.setTextColor(getResources().getColor(R.color.cell_text_color));
-        imageGalleryTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-        StoreTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-        cspTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-        productGalleryTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-        settingsText.setTextColor(getResources().getColor(R.color.cell_text_color));
-        chatText.setTextColor(getResources().getColor(R.color.cell_text_color));
-        callText.setTextColor(getResources().getColor(R.color.cell_text_color));
-        shareText.setTextColor(getResources().getColor(R.color.cell_text_color));
-
-        shareImageView.setColorFilter(defaultLabelFilter);
-        dasbBoardImageView.setColorFilter(defaultLabelFilter);
-        businessProfileImageView.setColorFilter(defaultLabelFilter);
-        customerQueriesImageView.setColorFilter(defaultLabelFilter);
-        imageGalleryImageView.setColorFilter(defaultLabelFilter);
-        productGalleryImageView.setColorFilter(defaultLabelFilter);
-        StoreImageView.setColorFilter(defaultLabelFilter);
-        cspImageView.setColorFilter(defaultLabelFilter);
-        settingsImageView.setColorFilter(defaultLabelFilter);
-        callImageView.setColorFilter(defaultLabelFilter);
-
-        if (tv != null)
-            tv.setTextColor(getResources().getColor(R.color.black));
-        if (img != null)
-            img.setColorFilter(whiteLabelFilter);
-    }
-}

@@ -100,7 +100,7 @@ public final class PostImageTweetInBackgroundAsyncTask extends
         String shortUrl = shortUrl(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG) + ".nowfloats.com/bizFloat/" + id);
         len = shareText.length();
         //  shortUrl = "10" ;
-        mlen = 140 - (shortUrl.length() + 8);
+        mlen = 140 - ((shortUrl!=null)?shortUrl.length() + 8:0);
         tlen = Math.min(len, mlen);
         separator = " ... ";
         if (tlen != mlen) {
@@ -109,7 +109,7 @@ public final class PostImageTweetInBackgroundAsyncTask extends
 
         if (!Util.isNullOrEmpty(path) && shareText.length() > 30) {
             shareText = shortUrl(shareText);
-        }
+         }
         //tweetMessage = shareText.substring(0, tlen)+separator+shortUrl;
         tweetMessage = shareText + separator + shortUrl;
 
