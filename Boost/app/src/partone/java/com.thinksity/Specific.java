@@ -24,11 +24,8 @@ public class Specific {
 
     public static final String FACEBOOK_API_KEY 	= "539836972828386";  // Boost
 
-<<<<<<< HEAD
+
     public static String TWITTER_TOK 				= "h5lB3rvjU66qOXHgrZK41Q";
     public static String TWITTER_SEC 				= "L0Bo08aevt2U1fLjuuYAMtANSAzWWi8voGuvbrdtcY4";
-=======
-    public static String TWITTER_TOK 				= "";
-    public static String TWITTER_SEC 				= "";
->>>>>>> origin/master
+
 }
