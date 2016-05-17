@@ -10,6 +10,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
@@ -29,6 +30,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -71,8 +74,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import oauth.signpost.OAuth;
@@ -122,6 +123,7 @@ public class Create_Message_Activity extends AppCompatActivity {
     DataBase dataBase;
     private final int gallery_req_id = 0;
     private final int media_req_id = 1;
+    private SharedPreferences mSharedPreferences = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,21 +160,6 @@ public class Create_Message_Activity extends AppCompatActivity {
 //            }
 //        }
 
-        // Add code to print out the key hash
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    "com.biz2.nowfloats",
-                    PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-
-        } catch (NoSuchAlgorithmException e) {
-
-        }
 
         msg = (EditText) findViewById(R.id.createMessageEditText);
         toolbar = (Toolbar) findViewById(R.id.app_bar);
@@ -237,9 +224,13 @@ public class Create_Message_Activity extends AppCompatActivity {
             isFacebookPageShareLoggedIn = true;
             facebookPageShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
         }
-        SharedPreferences mSharedPreferences = getSharedPreferences(TwitterConstants.PREF_NAME, MODE_PRIVATE);
+        mSharedPreferences = getSharedPreferences(TwitterConstants.PREF_NAME, MODE_PRIVATE);
         if(mSharedPreferences.getBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false)) {
             twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
+            Constants.twitterShareEnabled = true;
+        }else{
+            Constants.twitterShareEnabled = false;
+            twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
         }
 
 
@@ -250,13 +241,15 @@ public class Create_Message_Activity extends AppCompatActivity {
 //                if (isFirstTimeTwitter == false)
 
                 if (Constants.twitterShareEnabled) {
-                    twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
+                    twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
                     Constants.twitterShareEnabled = false;
+                    logoutFromTwitter();
                 } else {
-                    if (twittersharingenabled) {
+                    twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
+                   /* if (twittersharingenabled) {
                         Constants.twitterShareEnabled = true ;
                         twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
-                    } else {
+                    } else {*/
                     new MaterialDialog.Builder(Create_Message_Activity.this)
                             .title("Post to Twitter")
                             .content("Connect to post website updates to your Twitter Page")
@@ -268,6 +261,8 @@ public class Create_Message_Activity extends AppCompatActivity {
                                 @Override
                                 public void onNegative(MaterialDialog dialog) {
                                     super.onNegative(dialog);
+                                    Constants.twitterShareEnabled = false;
+                                    twittersharingenabled = false ;
                                     dialog.dismiss();
                                 }
                                 @Override
@@ -275,23 +270,23 @@ public class Create_Message_Activity extends AppCompatActivity {
                                     super.onPositive(dialog);
                                     if (!Constants.twitterShareEnabled) {
                                         MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_TWITTER, null);
-                                       // Constants.twitterShareEnabled = true;
+                                         Constants.twitterShareEnabled = true;
                                         twittersharingenabled = true ;
                                         twitterloginButton.setImageDrawable(getResources().getDrawable(
                                                 R.drawable.twitter_icon_active));
-                                           // Constants.twitterShareEnabled = false;
+                                           Constants.twitterShareEnabled = false;
                                         Intent in = new Intent(Create_Message_Activity.this, Social_Sharing_Activity.class);
                                         startActivity(in);
                                     } else {
                                         twitterloginButton.setImageDrawable(getResources().getDrawable(
                                                 R.drawable.twitter_icon_inactive));
-                                        //Constants.twitterShareEnabled = false;
+                                        Constants.twitterShareEnabled = false;
                                     }
                                     dialog.dismiss();
                                 }
                             })
                             .show();
-                }
+                //}
             }
             }
         });
@@ -467,7 +462,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                choosePictureOptionDilog();
+                choosePicture();
             }
         });
 
@@ -504,6 +499,38 @@ public class Create_Message_Activity extends AppCompatActivity {
                         .setMessage(e.getMessage()).show();
             }
         }*/
+    }
+    public void choosePicture() {
+        final MaterialDialog dialog = new MaterialDialog.Builder(activity)
+                .customView(R.layout.featuredimage_popup,true)
+                .show();
+        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+
+        View view = dialog.getCustomView();
+        TextView header = (TextView) view.findViewById(R.id.textview_heading);
+        LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
+        LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
+        ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
+        ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
+        cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
+        galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
+
+        takeCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cameraIntent();
+                dialog.dismiss();
+            }
+        });
+
+        takeGallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                galleryIntent();
+                dialog.dismiss();
+
+            }
+        });
     }
 
     public void choosePictureOptionDilog() {
@@ -547,22 +574,22 @@ public class Create_Message_Activity extends AppCompatActivity {
 
     public void galleryIntent() {
         try {
-            if (ContextCompat.checkSelfPermission(Create_Message_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(Create_Message_Activity.this, Manifest.permission.CAMERA)!=
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
+                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!=
                     PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(Create_Message_Activity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                         gallery_req_id);
             }
             else {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), Constants.GALLERY_PHOTO);
+                Intent i = new Intent(
+                        Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i, Constants.GALLERY_PHOTO);
             }
         } catch (ActivityNotFoundException anfe) {
             // display an error message
             String errorMessage = "Whoops - your device doesn't support capturing images!";
-            //Util.toast(errorMessage, FloatAnImage.this);
+            Methods.showSnackBarNegative(activity,errorMessage);
         }
     }
     @Override
@@ -574,8 +601,6 @@ public class Create_Message_Activity extends AppCompatActivity {
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 cameraIntent();
 
-            }else{
-                Toast.makeText(Create_Message_Activity.this, "Permission not granted", Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -585,35 +610,33 @@ public class Create_Message_Activity extends AppCompatActivity {
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 galleryIntent();
 
-            }else {
-                Toast.makeText(Create_Message_Activity.this, "Permission not granted", Toast.LENGTH_SHORT).show();
             }
+
         }
     }
     public void cameraIntent() {
         try {
             // use standard intent to capture an image
-            if (ContextCompat.checkSelfPermission(Create_Message_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(Create_Message_Activity.this, Manifest.permission.CAMERA)!=
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
+                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!=
                     PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(Create_Message_Activity.this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                         media_req_id);
             }
             else {
-                ContentValues values = new ContentValues();
-                values.put(MediaStore.Images.Media.TITLE, "New Picture");
-                values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-                imageUri = activity.getContentResolver().insert(
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-                Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                ContentValues Cvalues = new ContentValues();
+                Intent captureIntent;
+                Cvalues.put(MediaStore.Images.Media.TITLE, "New Picture");
+                Cvalues.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+                picUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, Cvalues);
+                captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, picUri);
                 startActivityForResult(captureIntent, Constants.CAMERA_PHOTO);
             }
         } catch (ActivityNotFoundException anfe) {
             // display an error message
             String errorMessage = "Whoops - your device doesn't support capturing images!";
-            // Util.toast(errorMessage, FloatAnImage.this);
-
+            Methods.showSnackBarNegative(activity,errorMessage);
         }
     }
 
@@ -701,81 +724,47 @@ public class Create_Message_Activity extends AppCompatActivity {
     };
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        facebook.authorizeCallback(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK){
-            if (requestCode== ACTION_REQUEST_IMAGE_EDIT) {
-               /* boolean changed = true;
-                if (null != data) {
-                    Bundle extra = data.getExtras();
-                    if (null != extra) {
-                        // image was changed by the user?
-                        changed = extra.getBoolean(com.aviary.android.feather.sdk.internal.Constants.EXTRA_OUT_BITMAP_CHANGED);
-                    }
-                }
-
-                if (!changed) {
-                    Log.w("Photo Effects", "User did not modify the image, but just clicked on 'Done' button");
-                }
-*/
-//                picUri = data.getData();
-                try {
-//                    path = picUri.toString();
-//                    bitmap = Util.getBitmap(path, activity);
-//                    setPicture(bitmap);
-//                    CameraBitmap = (Bitmap) data.getParcelableExtra("edit_image");
-
-                    path = data.getStringExtra("edit_image");
-                    CameraBitmap = Util.getBitmap(path, this);
-                    picUri = Uri.parse(path);
-                    setPicture(CameraBitmap);
-                }  catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        }
-        if (resultCode == RESULT_OK && (Constants.GALLERY_PHOTO == requestCode) && data!=null) {
-            if (android.os.Build.VERSION.SDK_INT >15)
-                Methods.showSnackBar(Create_Message_Activity.this,getString(R.string.edit_image));
+        if (resultCode == RESULT_OK && (Constants.GALLERY_PHOTO == requestCode)) {
             if (data != null) {
                 picUri = data.getData();
                 if (picUri == null) {
-                    Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                    path = Util.saveBitmap(bitmap, this,tagName + System.currentTimeMillis());
+                    CameraBitmap = (Bitmap) data.getExtras().get("data");
+                    path = Util.saveBitmap(CameraBitmap, activity,tagName + System.currentTimeMillis());
                     picUri = Uri.parse(path);
-                    setPicture(bitmap);
-                    Log.d("ILUD CMSAct", "bitmapset");
+                    setPicture(CameraBitmap);
+                    //if (replaceImage) replaceProductImage(product_data._id);
                 } else {
-                    setPicture(picUri);
-                    Log.d("ILUD CMSAct", "bitmapset thgrough uri");
+                    path = getRealPathFromURI(picUri);
+                    CameraBitmap = Util.getBitmap(path, activity);
+                    setPicture(CameraBitmap);
+                   // if (replaceImage) replaceProductImage(product_data._id);
                 }
             }
-        }
-
-        if (resultCode == RESULT_OK && (Constants.CAMERA_PHOTO == requestCode)) {
-            if (android.os.Build.VERSION.SDK_INT >15)
-                Methods.showSnackBar(Create_Message_Activity.this,getString(R.string.edit_image));
+        }else if (resultCode == RESULT_OK && (Constants.CAMERA_PHOTO == requestCode)) {
             try {
-                if (imageUri==null){
-                   if (data != null) {
+                if (picUri==null){
+                    if (data != null) {
                         picUri = data.getData();
                         if (picUri == null) {
                             CameraBitmap = (Bitmap) data.getExtras().get("data");
-                            path = Util.saveCameraBitmap(CameraBitmap,this,tagName + System.currentTimeMillis());
+                            path = Util.saveCameraBitmap(CameraBitmap,activity,tagName + System.currentTimeMillis());
                             picUri = Uri.parse(path);
                             setPicture(CameraBitmap);
+                           // if (replaceImage) replaceProductImage(product_data._id);
                         }else{
-                            setPicture(picUri);
+                            path = getRealPathFromURI(picUri);
+                            CameraBitmap = Util.getBitmap(path, activity);
+                            setPicture(CameraBitmap);
+                            //if (replaceImage) replaceProductImage(product_data._id);
                         }
-                       msg.setHint("Add some text to give context to the picture.");
-                   }else{
-                       Methods.showSnackBar(this,"Try again....");
-                   }
+                    }else{
+                        Methods.showSnackBar(activity,"Try again....");
+                    }
                 }else{
-                    picUri = imageUri;
-                    path = getRealPathFromURI(imageUri);
-                    CameraBitmap = Util.getBitmap(path, this);
+                    path = getRealPathFromURI(picUri);
+                    CameraBitmap = Util.getBitmap(path, activity);
                     setPicture(CameraBitmap);
-                    msg.setHint("Add some text to give context to the picture.");
+                   // if (replaceImage) replaceProductImage(product_data._id);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -783,20 +772,8 @@ public class Create_Message_Activity extends AppCompatActivity {
                 E.printStackTrace();
                 CameraBitmap.recycle();
                 System.gc();
-                Methods.showSnackBar(this,"Try again....");
+                Methods.showSnackBar(activity,"Try again....");
             }
-        }
-
-        if (resultCode == RESULT_OK){
-            // make keyboard visible
-            findViewById(R.id.relativeLayout1).postDelayed(
-                    new Runnable() {
-                        public void run() {
-                            InputMethodManager inputMethodManager =  (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-                            inputMethodManager.toggleSoftInputFromWindow(msg.getApplicationWindowToken(),     InputMethodManager.SHOW_FORCED, 0);
-                            msg.requestFocus();
-                        }
-                    },500);
         }
     }
 
@@ -1032,8 +1009,9 @@ public class Create_Message_Activity extends AppCompatActivity {
         if (Util.isNullOrEmpty(Constants.TWITTER_TOK)
                 || Util.isNullOrEmpty(Constants.TWITTER_SEC))
         {
-            twitterloginButton.setImageDrawable(getResources().getDrawable(
-                    R.drawable.twitter_icon_inactive));
+            //rahul comments
+           /* twitterloginButton.setImageDrawable(getResources().getDrawable(
+                    R.drawable.twitter_icon_inactive));*/
         }
     }
 
@@ -1218,7 +1196,7 @@ public class Create_Message_Activity extends AppCompatActivity {
     /**
      * Once you've chosen an image you can start the feather activity
      *
-     * @param uri
+     * @param
      */
     /*@SuppressWarnings ("deprecation")
     private void startFeather(Uri uri) {
@@ -1257,4 +1235,16 @@ public class Create_Message_Activity extends AppCompatActivity {
         // ..and start feather
         startActivityForResult(newIntent, ACTION_REQUEST_IMAGE_EDIT);
     }*/
+    public  void logoutFromTwitter() {
+        SharedPreferences.Editor e = mSharedPreferences.edit();
+        e.remove(TwitterConstants.PREF_KEY_OAUTH_TOKEN);
+        e.remove(TwitterConstants.PREF_KEY_OAUTH_SECRET);
+        e.remove(TwitterConstants.PREF_KEY_TWITTER_LOGIN);
+        e.remove(TwitterConstants.PREF_USER_NAME);
+        e.commit();
+        Constants.twitterShareEnabled = false;
+        CookieSyncManager cookieSyncMngr = CookieSyncManager.createInstance(this);
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.removeAllCookie();
+    }
 }

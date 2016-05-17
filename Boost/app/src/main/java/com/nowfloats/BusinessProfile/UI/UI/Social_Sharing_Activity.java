@@ -119,6 +119,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         Methods.isOnline(Social_Sharing_Activity.this);
         pref = this.getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
         prefsEditor = pref.edit();
+        mSharedPreferences = this.getSharedPreferences(TwitterConstants.PREF_NAME,MODE_PRIVATE);
         activity = Social_Sharing_Activity.this;
 
         toolbar = (Toolbar) findViewById(R.id.app_bar_social);
@@ -268,6 +269,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                     }
                      //Rahul twitter
                 }else {
+                    twitterStatus.setText("Disconnected");
+                    twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
                     logoutFromTwitter();
                     twitterCheckBox.setChecked(false);
                 }
@@ -278,9 +281,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
         InitShareResources();
     }
-    private void twitterCheckBoxState(){
 
-    }
 
     private void selectNumberUpdatesDialog() {
         final String[] array = {"Post 5 Updates", "Post 10 Updates"};
@@ -341,9 +342,9 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 long userID = accessToken.getUserId();
                 final User user = mTwitter.showUser(userID);
                 String username = user.getName();
+                twitterStatus.setText(username);
                 saveTwitterInformation(accessToken);
             } catch (Exception e) {
-                // Toast.makeText(Social_Sharing_Activity.this, "Exception ", Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         }   //Rahul Twitter
@@ -740,16 +741,18 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             facebookPageStatus.setText(session.getFacebookPage());
         }
 
-        if (!isAuthenticated()) {
+       if (!isAuthenticated()) {
             twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
            // String fbUName = pref.getString(TwitterConstants.PREF_USER_NAME, "");
-            twitterCheckBox.setChecked(false);
-            twitterStatus.setText("@");
+           twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
+           twitterCheckBox.setChecked(false);
+            twitterStatus.setText("Disconnected");
         } else {
             twitterCheckBox.setChecked(true);
-            String twitterName = pref.getString(TwitterConstants.PREF_USER_NAME, "");
+            String twitterName = mSharedPreferences.getString(TwitterConstants.PREF_USER_NAME, "");
             twitterStatus.setText("@" + twitterName);
-        }
+            twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
+       }
     }
 
 
@@ -763,9 +766,10 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         if (TextUtils.isEmpty(mConsumerKey) || TextUtils.isEmpty(mConsumerSecret)) {
             return;
         }
-        mSharedPreferences = context.getSharedPreferences(TwitterConstants.PREF_NAME, context.MODE_PRIVATE);
         if (isAuthenticated()) {
             Constants.twitterShareEnabled = true;
+            String twitterName = mSharedPreferences.getString(TwitterConstants.PREF_USER_NAME, "");
+            twitterStatus.setText("@" + twitterName);
             //Toast.makeText(getApplicationContext(), "Already you are authorise to use", Toast.LENGTH_SHORT).show();
         } else {
            // Toast.makeText(Social_Sharing_Activity.this, "MainActivity else case for verification", Toast.LENGTH_SHORT).show();
@@ -776,9 +780,9 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                     AccessToken accessToken = mTwitter.getOAuthAccessToken(
                             mRequestToken, verifier);
                     saveTwitterInformation(accessToken);
-                    //Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
-                   // Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
                     Log.d("Failed to login ",
                             e.getMessage());
                 }
@@ -801,9 +805,9 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 e.putString(TwitterConstants.PREF_KEY_OAUTH_SECRET, accessToken.getTokenSecret());
                 e.putBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, true);
                 e.putString(TwitterConstants.PREF_USER_NAME, username);
-                Constants.twitterShareEnabled = true;
                 e.commit();
-
+                Constants.twitterShareEnabled = true;
+                twitterStatus.setText("@" + username);
             } catch (TwitterException e1) {
                 Log.d("Failed to Save", e1.getMessage());
             }

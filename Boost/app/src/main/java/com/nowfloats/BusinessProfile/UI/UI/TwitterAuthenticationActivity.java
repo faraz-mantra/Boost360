@@ -113,7 +113,6 @@ public class TwitterAuthenticationActivity extends AppCompatActivity {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             Uri uri = Uri.parse(url);
             String verifier = uri.getQueryParameter("oauth_verifier");
-            Log.d("Rahul",verifier);
             Intent resultIntent = new Intent();
             resultIntent.putExtra("oauth_verifier", verifier);
             setResult(RESULT_OK, resultIntent);
