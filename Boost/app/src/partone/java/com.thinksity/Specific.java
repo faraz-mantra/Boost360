@@ -4,6 +4,7 @@ package com.thinksity;
  * Created by NowFloatsDev on 03/04/2015.
  */
 public class Specific {
+
     public static String clientId2 	= "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21";
     public static String client_ID_1 = "39EB5FD120DC4394A10301B108030CB70FA553E91F984C829AB6ADE23B6767B7";
     public static String client_ID_2_webcreatorservice = "DA92AD580F614449B2B7B8B62DFC7AE72D201733A6D74E73B8050C541579A26C";
@@ -25,7 +26,10 @@ public class Specific {
     public static final String FACEBOOK_API_KEY 	= "539836972828386";  // Boost
 
 
-    public static String TWITTER_TOK 				= "h5lB3rvjU66qOXHgrZK41Q";
-    public static String TWITTER_SEC 				= "L0Bo08aevt2U1fLjuuYAMtANSAzWWi8voGuvbrdtcY4";
+//    public static String TWITTER_TOK 				= "h5lB3rvjU66qOXHgrZK41Q";
+//    public static String TWITTER_SEC 				= "L0Bo08aevt2U1fLjuuYAMtANSAzWWi8voGuvbrdtcY4";
+
+    public static String TWITTER_TOK 				= "4CiUg5gcIbvYre8XjGd8GsElV";
+    public static String TWITTER_SEC 				= "4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9";
 
 }

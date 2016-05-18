@@ -97,7 +97,17 @@ public final class PostImageTweetInBackgroundAsyncTask extends
         int mlen = 140 - (20 + 8);
         int tlen = Math.min(len, mlen);
         String separator = " ... ";
-        String shortUrl = shortUrl(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG) + ".nowfloats.com/bizFloat/" + id);
+
+        String tag = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG);
+        String rootAliasUri = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+        String siteUrl = (rootAliasUri!=null && rootAliasUri!="" && rootAliasUri.length()>0)?rootAliasUri:("http://"+tag+".nowfloats.com");
+        String messageUrl = siteUrl + "/bizFloat/" + id;
+        String shortUrl = shortUrl(messageUrl);
+
+        if(shortUrl==null || shortUrl=="" || shortUrl.length()==0){
+            shortUrl = messageUrl;
+        }
+
         len = shareText.length();
         //  shortUrl = "10" ;
         mlen = 140 - ((shortUrl!=null)?shortUrl.length() + 8:0);
@@ -129,8 +139,10 @@ public final class PostImageTweetInBackgroundAsyncTask extends
 
             //twitter.updateStatus(tweetMessage);
             StatusUpdate update = new StatusUpdate(tweetMessage);
-           	File file = new File(path);
+            if(path!=null&& path!="" && path.length()>0) {
+                File file = new File(path);
                 update.setMedia(file);
+            }
             try {
                 twitter.updateStatus(update);
             } catch (TwitterException e) {
@@ -163,7 +175,7 @@ public final class PostImageTweetInBackgroundAsyncTask extends
             HttpClient hc = new DefaultHttpClient(mgr, httpParameters);
 
             HttpPost request = new HttpPost(
-                    "https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyDYn2Yqvsdt_wphv_UCaXymfpdhENqyyJE");
+                    "https://www.googleapis.com/urlshortener/v1/url?key=AIzaSyCo9zb7OlpbObma7PEPwJv189qOtw-FtGM");
             request.setHeader("Content-type", "application/json");
             request.setHeader("Accept", "application/json");
 

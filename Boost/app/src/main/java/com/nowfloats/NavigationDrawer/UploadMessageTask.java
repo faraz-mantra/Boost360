@@ -83,9 +83,9 @@ public final class UploadMessageTask {
                             String tweetData = "";
                             try {
                                 tweetData = obj.message;
-                                //PostTweetInBackgroundAsyncTask ptb = new PostTweetInBackgroundAsyncTask(appContext, tweetData, txtId,session);
-                                new PostTweet(appContext).execute(tweetData);
-                                //ptb.execute();
+                                PostImageTweetInBackgroundAsyncTask tweet = new PostImageTweetInBackgroundAsyncTask(appContext,obj.message,txtId,path,session);
+                                tweet.execute();
+                                //new PostTweet(appContext).execute(tweetData);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }

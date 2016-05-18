@@ -206,8 +206,6 @@ public class MainActivity extends AppCompatActivity implements ITwitterCallbacks
             case R.id.twitter_tweet:
                 if (!Utils.isNetworkConnected(this)) {
                     showAlertBox();
-                } else {
-                    new PostTweet(this).execute("Rahul is ready to go");
                 }
                 break;
             case R.id.twitter_logout:
