@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -88,14 +91,16 @@ public class FAQ_QandA_Activity extends ActionBarActivity {
     }
     private void InflateAnsView(String ans)
     {
+        final TextView message = new TextView(this);
+        message.setPadding(48,16,48,16);
+        final SpannableString s =
+                new SpannableString(Html.fromHtml(ans));
+
+        message.setText(Html.fromHtml(ans));
+        message.setMovementMethod(LinkMovementMethod.getInstance());
+        Linkify.addLinks(s, Linkify.WEB_URLS);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-// 2. Chain together various setter methods to set the dialog characteristics
-
-        builder.setMessage(Html.fromHtml(ans));
-
-        builder.setMessage(ans)
-
+        builder.setView(message)
                 .setTitle("Answer")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
