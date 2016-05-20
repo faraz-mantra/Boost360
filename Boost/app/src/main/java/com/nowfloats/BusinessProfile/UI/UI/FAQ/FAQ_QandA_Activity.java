@@ -92,15 +92,15 @@ public class FAQ_QandA_Activity extends ActionBarActivity {
     private void InflateAnsView(String ans)
     {
         final TextView message = new TextView(this);
-        message.setPadding(48,16,48,16);
+        //message.setPadding(48,16,48,16);
         final SpannableString s =
                 new SpannableString(Html.fromHtml(ans));
-
+        float dpi = getResources().getDisplayMetrics().density;
         message.setText(Html.fromHtml(ans));
         message.setMovementMethod(LinkMovementMethod.getInstance());
         Linkify.addLinks(s, Linkify.WEB_URLS);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(message)
+        builder.setView(message,(int)(25*dpi), (int)(5*dpi), (int)(14*dpi), (int)(5*dpi))
                 .setTitle("Answer")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
