@@ -476,17 +476,8 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
 
 
     private void getLastKnownLocation() {
-
-//        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//        // Log.d("getLastKnownloc", "Loc mgr : "+locationManager);
-//
-//        String locationProvider = LocationManager.NETWORK_PROVIDER;
-//        // Or use LocationManager.GPS_PROVIDER
-//        // Log.d("getLastKnownloc", "Loc mgr : "+locationProvider);
         loc_provider = new LocationProvider(PreSignUp_MainActivity.this);
-        if (!loc_provider.canGetLocation()) {
-            loc_provider.showSettingsAlert();
-           }
+
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(PreSignUp_MainActivity.this,
@@ -494,13 +485,14 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
                     permision_request_id);
 
         }else {
+            if (!loc_provider.canGetLocation()) {
+                loc_provider.showSettingsAlert();
+            }
             Location location =null;
             if(loc_provider.canGetLocation()){
                 location = loc_provider.getLocation();
                 loc_provider.stopUsingGPS();
             }
-//        Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-//        //Log.d("getLastKnownloc", "Loc mgr : "+lastKnownLocation);
             if (location != null) {
                 ReverseGeoCoderAsyncTask task = new ReverseGeoCoderAsyncTask(this, location);
                 Log.d("ILUD location", String.valueOf(location.getLatitude()) + " " + String.valueOf(location.getLongitude()));
