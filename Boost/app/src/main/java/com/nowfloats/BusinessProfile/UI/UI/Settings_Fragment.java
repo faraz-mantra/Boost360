@@ -50,6 +50,10 @@ public class Settings_Fragment extends Fragment {
     UserSessionManager session;
     private String versionName;
     public Activity activity;
+    //facebook page constant
+    public static String FACEBOOK_URL = "https://www.facebook.com/nowfloats";
+    public static String FACEBOOK_PAGE_ID = "nowfloats";
+    //facebook page constant
 
     @Override
     public void onResume() {
@@ -160,15 +164,7 @@ public class Settings_Fragment extends Fragment {
         likeusFacebookLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MixPanelController.track("LikeUsOnFacebook", null);
-                String url = getResources().getString(R.string.settings_facebook_like_link);
-                ;//"https://www.facebook.com/thinksity";
-                Intent showWebSiteIntent = new Intent(activity, Mobile_Site_Activity.class);
-                // showWebSiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                showWebSiteIntent.putExtra("WEBSITE_NAME", url);
-                activity.startActivity(showWebSiteIntent);
-                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
+               likeUsFacebook();
             }
         });
 
@@ -375,8 +371,35 @@ public class Settings_Fragment extends Fragment {
         try {
             startActivity(goToMarket);
         } catch (ActivityNotFoundException e) {
-            startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("http://play.google.com/store/apps/details?id=" + context.getPackageName())));
+            String url = getResources().getString(R.string.settings_rate_us_link);
+            Intent showWebSiteIntent = new Intent(activity, Mobile_Site_Activity.class);
+            showWebSiteIntent.putExtra("WEBSITE_NAME", url);
+            activity.startActivity(showWebSiteIntent);
+            activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
     }
+    private void likeUsFacebook(){
+        MixPanelController.track("LikeUsOnFacebook", null);
+        Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
+        String facebookUrl = getFacebookPageURL(getActivity().getApplicationContext());
+        facebookIntent.setData(Uri.parse(facebookUrl));
+        startActivity(facebookIntent);
+    }
+
+
+
+    public String getFacebookPageURL(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        try {
+            int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
+            if (versionCode >= 3002850) {                              //newer versions of fb app
+                return "fb://facewebmodal/f?href=" + FACEBOOK_URL;
+            } else {                                                  //older versions of fb app
+                return "fb://page/" + FACEBOOK_PAGE_ID;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            return FACEBOOK_URL;                        //normal web url
+        }
+    }
+
 }
