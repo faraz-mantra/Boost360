@@ -1,6 +1,8 @@
 package com.nowfloats.BusinessProfile.UI.UI;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -191,12 +193,13 @@ public class Settings_Fragment extends Fragment {
             public void onClick(View v) {
                 MixPanelController.track("RateOnPlayStore", null);
                 // String url = "https://play.google.com/store/apps/details?id=com.thinksity&hl=en";
-                String url = getResources().getString(R.string.settings_rate_us_link);
+                /*String url = getResources().getString(R.string.settings_rate_us_link);
                 Intent showWebSiteIntent = new Intent(activity, Mobile_Site_Activity.class);
                 // showWebSiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 showWebSiteIntent.putExtra("WEBSITE_NAME", url);
                 activity.startActivity(showWebSiteIntent);
-                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
+                rateUsPlayStore(getActivity().getApplicationContext());
             }
         });
         faqLayout.setOnClickListener(new View.OnClickListener() {
@@ -361,5 +364,19 @@ public class Settings_Fragment extends Fragment {
                                           int after) {
             }
         });
+    }
+    private void rateUsPlayStore(Context context){
+        Uri uri = Uri.parse("market://details?id=" + context.getPackageName());
+        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        // To count with Play market backstack, After pressing back button,
+        // to taken back to our application, we need to add following flags to intent.
+        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        try {
+            startActivity(goToMarket);
+        } catch (ActivityNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://play.google.com/store/apps/details?id=" + context.getPackageName())));
+        }
     }
 }
