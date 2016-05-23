@@ -137,6 +137,14 @@ public class Product_Detail_Activity extends AppCompatActivity{
         ButtonRectangle deleteProduct = (ButtonRectangle)findViewById(R.id.delete_product);
         deleteProduct.setVisibility(View.GONE);
         //Currency
+        final String[] array = Constants.currencyArray.toArray(new String[Constants.currencyArray.size()]);
+        Arrays.sort(array);
+        productCurrency.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCurrencyList(activity,array);
+            }
+        });
 
         productImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,18 +172,18 @@ public class Product_Detail_Activity extends AppCompatActivity{
                 title.setText("Edit Product");
                 //load image
 
-                try{
+              /*  try{
                     //currencyType = Constants.Currency_Country_Map.get(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).toLowerCase());
                     productCurrency.setText(product_data.CurrencyCode);
-                    final String[] array = Constants.currencyArray.toArray(new String[Constants.currencyArray.size()]);
-                    Arrays.sort(array);
+                    //final String[] array = Constants.currencyArray.toArray(new String[Constants.currencyArray.size()]);
+                    //Arrays.sort(array);
                     productCurrency.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             showCurrencyList(activity,array);
                         }
                     });
-                }catch(Exception e){e.printStackTrace();}
+                }catch(Exception e){e.printStackTrace();}*/
 
                 String image_url = product_data.TileImageUri;
                 if(image_url!=null && image_url.length()>0 && !image_url.equals("null")) {
