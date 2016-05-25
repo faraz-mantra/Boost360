@@ -1,6 +1,7 @@
 package com.nowfloats.Twitter;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.thinksity.R;
 
 public class TwitterAuthenticationActivity extends AppCompatActivity {
@@ -20,6 +22,7 @@ public class TwitterAuthenticationActivity extends AppCompatActivity {
     private static final String TAG = TwitterAuthenticationActivity.class.getSimpleName();
     private WebView mWebView = null;
     private ProgressDialog mDialog = null;
+    static ITwitterCallbacks  mcallback = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,9 @@ public class TwitterAuthenticationActivity extends AppCompatActivity {
         }
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.loadUrl(url);
+    }
+    public static void  setListener(Context context){
+        mcallback = (Social_Sharing_Activity)context;
     }
 
     @Override
@@ -57,7 +63,8 @@ public class TwitterAuthenticationActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        this.onRestart();
+        super.onResume();
+        //this.onRestart();
     }
 
     private class MyWebViewClient extends WebViewClient {
@@ -72,11 +79,11 @@ public class TwitterAuthenticationActivity extends AppCompatActivity {
                 }
             } catch (Exception exception) {
             }
-            CookieManager cookieManager = CookieManager.getInstance();
+           /* CookieManager cookieManager = CookieManager.getInstance();
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                 CookieSyncManager.createInstance(TwitterAuthenticationActivity.this);
             }
-            cookieManager.setAcceptCookie(true);
+            cookieManager.setAcceptCookie(true);*/
         }
 
         @Override
@@ -102,19 +109,25 @@ public class TwitterAuthenticationActivity extends AppCompatActivity {
             }
         }
 
-
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             Uri uri = Uri.parse(url);
             String verifier = uri.getQueryParameter("oauth_verifier");
-            Log.d("Rahul", verifier);
+            //Log.d("Rahul", verifier);
             Intent resultIntent = new Intent();
             resultIntent.putExtra("oauth_verifier", verifier);
-            setResult(RESULT_OK, resultIntent);
+            //setResult(RESULT_OK, resultIntent);
+            mcallback.returnToken(resultIntent);
             finish();
             return true;
 
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mWebView = null;
     }
 }
 
