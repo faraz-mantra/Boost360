@@ -36,6 +36,7 @@ import com.nowfloats.NavigationDrawer.API.twitter.FacebookFeedPullRegistrationAs
 import com.nowfloats.NavigationDrawer.API.twitter.PrepareRequestTokenActivity;
 import com.nowfloats.NavigationDrawer.Create_Message_Activity;
 import com.nowfloats.Twitter.*;
+import com.nowfloats.Twitter.TwitterAuthenticationActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
@@ -119,6 +120,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         Methods.isOnline(Social_Sharing_Activity.this);
         pref = this.getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
         prefsEditor = pref.edit();
+        TwitterAuthenticationActivity.setListener(this);
         mSharedPreferences = this.getSharedPreferences(TwitterConstants.PREF_NAME,MODE_PRIVATE);
         activity = Social_Sharing_Activity.this;
 
@@ -317,17 +319,12 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        facebook.authorizeCallback(requestCode, resultCode, data);
+    public void returnToken(Intent data) {
         if (materialProgress != null) {
             materialProgress.dismiss();
         }
-
-        //Rahul Twitter
-        if(TwitterConstants.WEBVIEW_REQUEST_CODE == requestCode) {
-            if (data != null)
-                mTwitterVerifier = data.getExtras().getString(mAuthVerifier);
+        if (data != null) {
+            mTwitterVerifier = data.getExtras().getString(mAuthVerifier);
             AccessToken accessToken;
             try {
                 if (mTwitter == null) {
@@ -347,7 +344,18 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }   //Rahul Twitter
+        }else{
+            Toast.makeText(Social_Sharing_Activity.this, "Some problem with network or twitter ,Please try after some time...", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        facebook.authorizeCallback(requestCode, resultCode, data);
+        if (materialProgress != null) {
+            materialProgress.dismiss();
+        }            
     }
 
     public void fbPageData() {
@@ -772,7 +780,6 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             twitterStatus.setText("@" + twitterName);
             //Toast.makeText(getApplicationContext(), "Already you are authorise to use", Toast.LENGTH_SHORT).show();
         } else {
-           // Toast.makeText(Social_Sharing_Activity.this, "MainActivity else case for verification", Toast.LENGTH_SHORT).show();
             Uri uri = getIntent().getData();
             if (uri != null && uri.toString().startsWith(mCallbackUrl)) {
                 String verifier = uri.getQueryParameter(mAuthVerifier);
