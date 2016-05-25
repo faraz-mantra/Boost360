@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
+
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Twitter.TwitterConstants;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -33,7 +34,6 @@ import java.io.File;
 
 import javax.net.ssl.HostnameVerifier;
 
-import oauth.signpost.OAuth;
 import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -58,14 +58,14 @@ public final class PostImageTweetInBackgroundAsyncTask extends
     String shareText = "";
     String id = null;
     String mesgUrl = null;
-    String path = null;
+    String mTweetImage = null;
     UserSessionManager session;
 
     public PostImageTweetInBackgroundAsyncTask(Activity context, String shareText, String id, String path, UserSessionManager session) {
         this.appContext = context;
         this.shareText = shareText;
         this.id = id;
-        this.path = path;
+        this.mTweetImage = path;
         this.session = session;
         if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG) != null && path != null)
             mesgUrl = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG) + ".nowfloats.com/bizFloat/" + id;
@@ -93,7 +93,7 @@ public final class PostImageTweetInBackgroundAsyncTask extends
     protected String doInBackground(Void... params) {
         String response = "", tweetMessage = "";
 
-        int len = shareText.length();
+        int len = shareText.length(); //text entered
         int mlen = 140 - (20 + 8);
         int tlen = Math.min(len, mlen);
         String separator = " ... ";
@@ -108,20 +108,9 @@ public final class PostImageTweetInBackgroundAsyncTask extends
             shortUrl = messageUrl;
         }
 
-        len = shareText.length();
-        //  shortUrl = "10" ;
-        mlen = 140 - ((shortUrl!=null)?shortUrl.length() + 8:0);
-        tlen = Math.min(len, mlen);
-        separator = " ... ";
-        if (tlen != mlen) {
-            separator = " - ";
-        }
 
-        if (!Util.isNullOrEmpty(path) && shareText.length() > 30) {
-            shareText = shortUrl(shareText);
-         }
         //tweetMessage = shareText.substring(0, tlen)+separator+shortUrl;
-        tweetMessage = shareText + separator + shortUrl;
+
 
 
         if (prefs.getBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN,false)) {
@@ -136,14 +125,32 @@ public final class PostImageTweetInBackgroundAsyncTask extends
             AccessToken accessToken = new AccessToken(access_token, access_token_secret);
             Twitter twitter = new TwitterFactory(builder.build()).getInstance(accessToken);
             twitter.setOAuthAccessToken(accessToken);
-
-            //twitter.updateStatus(tweetMessage);
-            StatusUpdate update = new StatusUpdate(tweetMessage);
-            if(path!=null&& path!="" && path.length()>0) {
-                File file = new File(path);
-                update.setMedia(file);
+            File file = null;
+            boolean imgPresent = false;
+            if(mTweetImage !=null&& mTweetImage !="" && mTweetImage.length()>0) {
+               file = new File(mTweetImage);
+                imgPresent = true;
             }
+            len = shareText.length();
+            separator = " ... ";
+           /* if (!Util.isNullOrEmpty(mTweetImage) && shareText.length() > 30) {
+                shareText = shortUrl(shareText);
+            }*/
+            if(imgPresent){
+                mlen = 140 - (((shortUrl!=null)?shortUrl.length() + 8:8));
+                if(len>68){
+                    mlen = mlen-24;
+                }
+            }else{
+                mlen = 140 - ((shortUrl!=null)?shortUrl.length() + 8:8);
+            }
+            tlen = Math.min(len, mlen);
+            tweetMessage = shareText.substring(0,tlen-1) + separator + shortUrl;
+            StatusUpdate update = new StatusUpdate(tweetMessage);
             try {
+                if(imgPresent) {
+                    update.setMedia(file);
+                }
                 twitter.updateStatus(update);
             } catch (TwitterException e) {
                 e.printStackTrace();
