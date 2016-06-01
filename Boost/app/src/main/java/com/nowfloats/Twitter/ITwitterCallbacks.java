@@ -1,5 +1,7 @@
 package com.nowfloats.Twitter;
 
+import android.content.Intent;
+
 import twitter4j.auth.RequestToken;
 
 /**
@@ -7,4 +9,5 @@ import twitter4j.auth.RequestToken;
  */
 public interface ITwitterCallbacks {
     public void startWebAuthentication(String url, RequestToken mRequestToken);
+    public void returnToken(Intent data);
 }
