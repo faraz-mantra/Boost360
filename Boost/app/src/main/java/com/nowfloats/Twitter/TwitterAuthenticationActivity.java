@@ -27,7 +27,6 @@ public class TwitterAuthenticationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("Rahul", "Twitter service onCreate()");
         setContentView(R.layout.activity_twitter_authentication);
         mWebView = (WebView) findViewById(R.id.webview);
         final String url = this.getIntent().getStringExtra(EXTRA_URL);
@@ -37,7 +36,7 @@ public class TwitterAuthenticationActivity extends AppCompatActivity {
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.loadUrl(url);
     }
-    public static void  setListener(Context context){
+    public static void setListener(Context context){
         mcallback = (Social_Sharing_Activity)context;
     }
 
@@ -100,9 +99,6 @@ public class TwitterAuthenticationActivity extends AppCompatActivity {
 
         @Override
         public void onLoadResource(WebView view, String url) {
-            Log.i(TAG, "Loading Resources");
-            Log.i(TAG,
-                    "Resource Loading Progress : " + view.getProgress());
             if (view.getProgress() >= 70) {
                 cancelProgressDialog();
                 isLoaded = true;
@@ -113,10 +109,8 @@ public class TwitterAuthenticationActivity extends AppCompatActivity {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             Uri uri = Uri.parse(url);
             String verifier = uri.getQueryParameter("oauth_verifier");
-            //Log.d("Rahul", verifier);
             Intent resultIntent = new Intent();
             resultIntent.putExtra("oauth_verifier", verifier);
-            //setResult(RESULT_OK, resultIntent);
             mcallback.returnToken(resultIntent);
             finish();
             return true;
