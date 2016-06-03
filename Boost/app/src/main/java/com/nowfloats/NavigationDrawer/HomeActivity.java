@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -32,6 +33,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.appsflyer.AppsFlyerConversionListener;
@@ -40,6 +42,8 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.freshdesk.mobihelp.Mobihelp;
 import com.freshdesk.mobihelp.MobihelpConfig;
+import com.gc.materialdesign.views.Button;
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.mixpanel.android.mpmetrics.GCMReceiver;
 import com.nineoldandroids.animation.Animator;
 import com.nowfloats.Analytics_Screen.SearchQueries;
@@ -54,6 +58,8 @@ import com.nowfloats.Business_Enquiries.Business_Enquiries_Fragment;
 import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.CustomPage.CustomPageAdapter;
 import com.nowfloats.CustomPage.CustomPageDeleteInterface;
+import com.nowfloats.CustomWidget.roboto_lt_24_212121;
+import com.nowfloats.CustomWidget.roboto_md_60_212121;
 import com.nowfloats.Image_Gallery.Image_Gallery_Fragment;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.Ria_Register;
@@ -64,14 +70,21 @@ import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.nowfloats.Store.DomainLookup;
+import com.nowfloats.Store.Model.ActiveWidget;
+import com.nowfloats.Store.Model.StoreEvent;
+import com.nowfloats.Store.Model.StoreModel;
+import com.nowfloats.Store.Service.API_Service;
 import com.nowfloats.Store.StoreFragmentTab;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DefaultArtifactVersion;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
 import org.json.JSONException;
@@ -84,14 +97,18 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class HomeActivity extends AppCompatActivity implements  SidePanelFragment.OnItemClickListener
-        ,DeepLinkInterface,CustomPageDeleteInterface {
+        ,DeepLinkInterface,CustomPageDeleteInterface,Home_Main_Fragment.OnRenewPlanClickListener {
     private Toolbar toolbar;
+    private SharedPreferences pref = null;
     private DrawerLayout mDrawerLayout;
     private Fragment fragmentNavigationDrawer;
     SidePanelFragment drawerFragment;
@@ -108,10 +125,12 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     UserSessionManager session;
     Typeface robotoMedium ;
     Typeface robotoLight ;
+    MaterialDialog mExpireDailog;
     public static TextView headerText;
     public static ImageView plusAddButton;
     public static ImageView  shareButton;
     public String deepLinkUrl = null;
+    private boolean isExpiredCheck = false;
     public static ArrayList<FloatsMessageModel> StorebizFloats = new ArrayList<FloatsMessageModel>();
     private boolean showLookupDomain = false ;
     private int clickCnt = 0;
@@ -119,6 +138,12 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     public static String FPID;
     public CustomPageActivity customPageActivity;
     private boolean backChk = false;
+    private final int LIGHT_HOUSE_EXPIRE = 0;
+    private final int WILD_FIRE_EXPIRE = 1;
+    private final int DEMO_EXPIRE = 3;
+    SharedPreferences.Editor prefsEditor;
+
+
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -129,9 +154,10 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_v3);
-
+        pref = getSharedPreferences(Constants.PREF_NAME,Activity.MODE_PRIVATE);
         AppsFlyerLib.sendTracking(getApplicationContext());
         Log.d("HomeActivity ONcreate","onCreate");
+        bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(),HomeActivity.this);
         activity = HomeActivity.this;
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -424,7 +450,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     url.contains(getResources().getString(R.string.deeplink_nfstorebiztiming)) ||
                     url.contains(getResources().getString(R.string.deeplink_nfstoreimage)) ||
                     url.contains(getResources().getString(R.string.deeplink_nfstoreimage))){
-
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame, storeFragment)
                         .commit();
@@ -514,12 +539,16 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     protected void onStop() {
         super.onStop();
         Constants.fromLogin = false ;
+        isExpiredCheck = false;
     }
 
     @Override
     protected void onDestroy() {
        MixPanelController.flushMixPanel(MixPanelController.mainActivity);
        super.onDestroy();
+        prefsEditor = pref.edit();
+        prefsEditor.putBoolean("EXPIRE_DIALOG",false);
+        prefsEditor.commit();
     }
 
     @Override
@@ -715,17 +744,18 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     @Override
     protected void onPause() {
         super.onPause();
+        bus.unregister(this);
         if(CardAdapter_V3.pd != null)
         CardAdapter_V3.pd.dismiss();
     }
-
+    private Bus bus;
     @Override
     protected void onResume() {
         super.onResume();
         Log.d("HomeActivity", "onResume");
         Methods.isOnline(HomeActivity.this);
         com.facebook.AppEventsLogger.activateApp(HomeActivity.this, getResources().getString(R.string.facebook_app_id));
-
+        bus.register(this);
         if(session.getISEnterprise().equals("true"))
             headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
         else
@@ -733,6 +763,27 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         plusAddButton.setVisibility(View.GONE);
         if(Constants.GCM_Msg){
             DeepLinkPage(GCMReceiver.deeplinkUrl);
+        }
+        checkExipre();
+    }
+    private void checkExipre(){
+        isExpiredCheck = pref.getBoolean("EXPIRE_DIALOG",false);
+        if(!isExpiredCheck) {
+            String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
+            String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
+            if (paymentState.equals("-1")) {
+                if (Integer.parseInt(paymentLevel) > 10) {
+                    //LH expire
+                    renewPlanDialog(LIGHT_HOUSE_EXPIRE);
+                } else if (Integer.parseInt(paymentLevel) == 0) {
+                    //Demo expire
+                    renewPlanDialog(DEMO_EXPIRE);
+                }
+            } else {
+                // LH is active ,check for wildfire
+                new API_Service(activity, session.getSourceClientId(), session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY),
+                        session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session.getFPID(), bus);
+            }
         }
     }
 
@@ -743,6 +794,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         if(Constants.GCM_Msg){
             DeepLinkPage(GCMReceiver.deeplinkUrl);
         }
+        isExpiredCheck = true;
     }
 
     @Override
@@ -989,4 +1041,149 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 //            drawerFragment.mDrawerToggle.setHomeAsUpIndicator(R.drawable.ic);
 //        }
     }
+
+    @Override
+    public void onRenewPlanSelected() {
+        checkExipre();
+    }
+
+    private void openStore(){
+        if(mExpireDailog!=null && !mExpireDailog.isCancelled()){
+            mExpireDailog.dismiss();
+        }
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.mainFrame, storeFragment)
+                .commit();
+    }
+
+    @Subscribe
+    public void getStoreList(StoreEvent response){
+        ArrayList<StoreModel> allModels = response.model.AllPackages;
+        ArrayList<ActiveWidget> activeIdArray = response.model.ActivePackages;
+        ArrayList<StoreModel> additionalPlans = response.model.AllPackages;
+
+        if(allModels!=null && activeIdArray!=null){
+            printPlan(activeIdArray);
+        }else{
+            Methods.showSnackBarNegative(activity,"Something went wrong");
+        }
+    }
+
+    private void printPlan(ArrayList<ActiveWidget> allModels) {
+        for(int i=0;i<allModels.size();i++){
+            if(mExpireDailog!=null && mExpireDailog.isShowing()){
+                return;
+            }
+            String temp = allModels.get(i).NameOfWidget;
+            if(temp!=null && !temp.isEmpty() && temp.contains("NowFloats WildFire")){
+                String date = allModels.get(i).CreatedOn;
+                int totalMonthsValidity = Integer.parseInt(allModels.get(i).totalMonthsValidity);
+                int remainingDay = verifyTime(date.substring(date.indexOf("(")+1,date.indexOf(")")),totalMonthsValidity);
+                if(remainingDay>0 && remainingDay<7){
+                    prefsEditor = pref.edit();
+                    prefsEditor.putInt("Days_remain", remainingDay);
+                    prefsEditor.commit();
+                }else if(remainingDay<0){
+                    prefsEditor = pref.edit();
+                    prefsEditor.putInt("Days_remain", -1);
+                    prefsEditor.commit();
+                }
+                renewPlanDialog(WILD_FIRE_EXPIRE);
+            }
+        }
+    }
+
+    private int verifyTime(String unixtime, int months)
+    {
+        Long createdunixtime = Long.parseLong(unixtime);
+        Calendar cal = Calendar.getInstance();
+        Date currdate = cal.getTime();
+        cal.setTimeInMillis(createdunixtime);
+        cal.add(Calendar.MONTH, months);
+        Date dateaftersixmonths = cal.getTime();
+        long diff = dateaftersixmonths.getTime() - currdate.getTime();
+        int diffInDays = (int) ((diff) / (1000 * 60 * 60 * 24));
+        return diffInDays;
+    }
+
+    private void renewPlanDialog(final int expireAccount) {
+        String dialogTitle = null;
+        String dialogMessage = null;
+        String callUsButtonText = "";
+        String cancelButtonText = null;
+        int dialogImage;
+        int days;
+        prefsEditor = pref.edit();
+        prefsEditor.putBoolean("EXPIRE_DIALOG",true);
+        prefsEditor.commit();
+        switch (expireAccount) {
+            case LIGHT_HOUSE_EXPIRE:
+                callUsButtonText = "BUY";
+                cancelButtonText = "CANCEL";
+                dialogTitle = "Renew Lighthouse plan to get all the features";
+                dialogMessage = "Your Lighthouse plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others";
+                dialogImage = R.drawable.androidexpiryxxxhdpi;
+                break;
+
+            case WILD_FIRE_EXPIRE:
+                days = pref.getInt("Days_remain", 0);
+                if (days <= 0) {
+                    dialogTitle = "Renew Wildfire plan";
+                    dialogMessage = "Your Wildfire plan has expired. Continue auto-promoting your website using digital marketing channels like Google and Facebook. Please renew your plan to ensure that your business messages spread like wildfire.";
+                } else {
+                    dialogTitle = "Wildfire plan will expire in " + days + "days";
+                    dialogMessage = "Continue auto-promoting your website using digital marketing channels like Google and Facebook. Please renew your plan to ensure that your business messages spread like wildfire.";
+                }
+                callUsButtonText = "RENEW";
+                cancelButtonText = "IGNORE";
+                dialogImage = R.drawable.wild_fire_expire;
+                break;
+            case DEMO_EXPIRE:
+                dialogImage = R.drawable.androidexpiryxxxhdpi;
+                callUsButtonText = "BUY";
+                cancelButtonText = "CANCEL";
+                dialogTitle = "Buy Lighthouse plan to get all the features";
+                dialogMessage = "Your demo plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.";
+                break;
+            default:
+                callUsButtonText = "";
+                cancelButtonText = "";
+                dialogTitle = "";
+                dialogMessage = "";
+                dialogImage = -1;
+                break;
+        }
+
+        mExpireDailog = new MaterialDialog.Builder(this)
+                .customView(R.layout.pop_up_restrict_post_message, false)
+                .backgroundColorRes(R.color.white)
+                .positiveText(callUsButtonText)
+                .negativeText(cancelButtonText)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog mExpireDailog) {
+                        super.onPositive(mExpireDailog);
+                        openStore();
+                        mExpireDailog.dismiss();
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog mExpireDailog) {
+                        super.onNegative(mExpireDailog);
+                        mExpireDailog.dismiss();
+                    }
+                }).show();
+        mExpireDailog.setCancelable(true);
+        View view = mExpireDailog.getCustomView();
+
+        roboto_md_60_212121 title = (roboto_md_60_212121) view.findViewById(R.id.textView1);
+        title.setText(dialogTitle);
+
+        ImageView expireImage = (ImageView)view.findViewById(R.id.img_warning);
+        expireImage.setImageDrawable(getResources().getDrawable(dialogImage));
+
+        roboto_lt_24_212121 message = (roboto_lt_24_212121) view.findViewById(R.id.pop_up_create_message_body);
+        message.setText(dialogMessage);
+    }
 }
+

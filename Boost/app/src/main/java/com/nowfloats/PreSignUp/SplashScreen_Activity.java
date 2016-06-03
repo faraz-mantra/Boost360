@@ -60,7 +60,6 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
 
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(),SplashScreen_Activity.this);
-        Start();
     }
 
     private void Start() {
@@ -134,6 +133,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     @Override
     protected void onResume() {
         super.onResume();
+        Start();
         bus.register(this);
     }
 

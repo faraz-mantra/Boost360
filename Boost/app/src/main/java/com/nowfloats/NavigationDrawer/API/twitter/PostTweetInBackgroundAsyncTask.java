@@ -60,7 +60,7 @@ public final class PostTweetInBackgroundAsyncTask extends
 		if (!Util.isNullOrEmpty(shareText) && !Util.isNullOrEmpty(shortUrl)){
 			int len = shareText.length();
 
-			int mlen = 140-(shortUrl.length()+8);
+			int mlen = 140-(shortUrl.length()+8);  //image case should handled
 			int tlen = Math.min(len, mlen);
 			String separator = " ... ";
 			if(tlen!=mlen)

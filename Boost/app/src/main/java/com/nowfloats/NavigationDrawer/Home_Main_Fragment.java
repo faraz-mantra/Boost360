@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -21,8 +20,8 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.facebook.FacebookRequestError;
@@ -47,6 +46,10 @@ import com.nowfloats.NavigationDrawer.model.PostTaskModel;
 import com.nowfloats.NavigationDrawer.model.PostTextSuccessEvent;
 import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
 import com.nowfloats.NavigationDrawer.model.Welcome_Card_Model;
+import com.nowfloats.Store.Model.ActiveWidget;
+import com.nowfloats.Store.Model.StoreEvent;
+import com.nowfloats.Store.Model.StoreModel;
+import com.nowfloats.Store.Service.API_Service;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.ButteryProgressBar;
@@ -97,6 +100,7 @@ public class Home_Main_Fragment extends Fragment implements
     String imageUri = "";
     //UserSessionManager session;
     public static Bus bus;
+    OnRenewPlanClickListener mCallback = null;
 
     private ArrayList<Object> mNewWelcomeTextImageList = new ArrayList<Object>();
     private int visibilityFlag = 1;
@@ -139,7 +143,9 @@ public class Home_Main_Fragment extends Fragment implements
             fetch_home_data.setNewPostListener(true);
             fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
             uploadPicture(event.path, event.msg, getActivity(), new SampleUploadListener(), new UserSessionManager(getActivity(), getActivity()));
-        }catch(Exception e){e.printStackTrace();}
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     @Subscribe
@@ -162,6 +168,17 @@ public class Home_Main_Fragment extends Fragment implements
             fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
             fetch_home_data.getMessages(session.getFPID(),"0");
             Create_Message_Activity.path = "";
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mCallback = (HomeActivity) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnHeadlineSelectedListener");
         }
     }
 
@@ -200,7 +217,6 @@ public class Home_Main_Fragment extends Fragment implements
         cancelPost.setColorFilter(whiteLabelFilter);
         recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
-
         retryPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -313,64 +329,9 @@ public class Home_Main_Fragment extends Fragment implements
             @Override
             public void onClick(View v) {
 
-               // MixPanelController.track(EventKeysWL.CONTENT_CREATION_BUTTON,null);
-//                if(session.getIsRestricted().equals("false")) {
-                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
-                    final MaterialDialog dialog = new MaterialDialog.Builder(getActivity())
-                            .customView(R.layout.pop_up_restrict_post_message, true)
-                            .positiveColorRes(R.color.primaryColor)
-                            .negativeColorRes(R.color.light_gray)
-                            .callback(new MaterialDialog.ButtonCallback() {
-                            }).show();
-                    dialog.setCancelable(false);
-                    View view = dialog.getCustomView();
-                    TextView header = (TextView) view.findViewById(R.id.textView1);
-                    TextView body = (TextView) view.findViewById(R.id.pop_up_create_message_body);
-                    header.setText("Renew Now");
-                    body.setText("You can no longer update your website as your subscription has expired. Let us know if you would like to renew your subscription.");
-                    Button callUsButton = (Button) view.findViewById(R.id.callUsButton);
 
-                    callUsButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            String planType = "WebsiteExpired";
-                            sendIsInterested(getActivity(),session.getFPID(),planType,bus);
-                            dialog.dismiss();
-//                            Intent call = new Intent(Intent.ACTION_DIAL);
-//                            String callString = "tel:"+getString(R.string.contact_us_number);
-//                            call.setData(Uri.parse(callString));
-//                            getActivity().startActivity(call);
-                        }
-                    });
-
-                    Button emailUsButton = (Button) view.findViewById(R.id.emailUsButton);
-                    emailUsButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                                    "mailto", "leads@nowfloats.com", null));
-                            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Hello, \n" +
-                                    "\n" +
-                                    "I am interested in renewing my subscription. " +
-                                    "Please get in touch with me. My username is "+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)+"\n" +
-                                    "\n" +
-                                    "Regards,\n" +
-                                    "\n" +
-                                    Constants.StoreName);
-                            emailIntent.putExtra(Intent.EXTRA_TEXT   , "body of email");
-                            getActivity().startActivity(Intent.createChooser(emailIntent, "Send email..."));
-                        }
-                    });
-
-                    Button notInterestedButton = (Button) view.findViewById(R.id.notInterestedButton);
-                    notInterestedButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            String planType = "CustomerNotInterested";
-                            sendIsInterested(getActivity(),session.getFPID(),planType,bus);
-                            dialog.dismiss();
-                        }
-                    });
+                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1") /*|| session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("0")*/) {
+                    mCallback.onRenewPlanSelected();
                 } else {
                     Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
                     startActivity(webIntent);
@@ -685,5 +646,51 @@ public class Home_Main_Fragment extends Fragment implements
                 task.execute();
             }
         }catch (Exception e){e.printStackTrace();}
+    }
+    /*
+    * This listener for callback to home
+    * */
+
+    public interface OnRenewPlanClickListener {
+         void onRenewPlanSelected();
+    }
+    @Subscribe
+    public void getStoreList(StoreEvent response){
+        ArrayList<StoreModel> allModels = response.model.AllPackages;
+        ArrayList<ActiveWidget> activeIdArray = response.model.ActivePackages;
+        ArrayList<StoreModel> additionalPlans = response.model.AllPackages;
+        if(allModels!=null && activeIdArray!=null){
+            LoadActivePlans(getActivity(),allModels,additionalPlans,activeIdArray);
+        }else{
+            Methods.showSnackBarNegative(getActivity(),"Something went wrong");
+        }
+    }
+    public static ArrayList<StoreModel> activeWidgetModels = new ArrayList<>();
+    public static ArrayList<StoreModel> additionalWidgetModels = new ArrayList<>();
+
+    private void LoadActivePlans(final Activity activity, ArrayList<StoreModel> allModels, final ArrayList<StoreModel> additionalPlan, ArrayList<ActiveWidget> acIdarray) {
+        try {
+            if (acIdarray!=null && acIdarray.size()>0){
+                for (int i = 0; i < allModels.size(); i++) {
+                    for (int j=0; j < acIdarray.size(); j++){
+                        if (allModels.get(i)._id.equals(acIdarray.get(j).clientProductId)){
+                            activeWidgetModels.add(allModels.get(i));
+                            Log.d("Load Plans",activeWidgetModels.get(i).ExpiryInMths);
+                        }
+                    }
+                }
+                for (int i = 0; i < acIdarray.size(); i++) {
+                    for (int j = 0; j < allModels.size(); j++) {
+                        if (allModels.get(j)._id.equals(acIdarray.get(i).clientProductId)){
+                            additionalPlan.remove(allModels.get(j));
+                            Log.d("Load Plans",additionalPlan.get(i).ExpiryInMths);
+                        }
+                    }
+                }
+                additionalWidgetModels = additionalPlan;
+            }else {
+                additionalWidgetModels = allModels;
+            }
+        }catch (Exception e){e.printStackTrace(); Methods.showSnackBarNegative(activity,"Something went wrong,Please try again");}
     }
 }

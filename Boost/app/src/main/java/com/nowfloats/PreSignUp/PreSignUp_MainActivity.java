@@ -476,8 +476,6 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
 
 
     private void getLastKnownLocation() {
-        loc_provider = new LocationProvider(PreSignUp_MainActivity.this);
-
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(PreSignUp_MainActivity.this,
@@ -485,6 +483,7 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
                     permision_request_id);
 
         }else {
+            loc_provider = new LocationProvider(PreSignUp_MainActivity.this);
             if (!loc_provider.canGetLocation()) {
                 loc_provider.showSettingsAlert();
             }
