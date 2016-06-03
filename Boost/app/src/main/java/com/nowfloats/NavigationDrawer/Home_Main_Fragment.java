@@ -177,8 +177,7 @@ public class Home_Main_Fragment extends Fragment implements
         try {
             mCallback = (HomeActivity) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()
-                    + " must implement OnHeadlineSelectedListener");
+           e.printStackTrace();
         }
     }
 
@@ -330,7 +329,7 @@ public class Home_Main_Fragment extends Fragment implements
             public void onClick(View v) {
 
 
-                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1") /*|| session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("0")*/) {
+                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1") || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("0")) {
                     mCallback.onRenewPlanSelected();
                 } else {
                     Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
@@ -651,7 +650,7 @@ public class Home_Main_Fragment extends Fragment implements
     * This listener for callback to home
     * */
 
-    public interface OnRenewPlanClickListener {
+     interface OnRenewPlanClickListener {
          void onRenewPlanSelected();
     }
     @Subscribe

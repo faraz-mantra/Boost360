@@ -548,9 +548,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     protected void onDestroy() {
        MixPanelController.flushMixPanel(MixPanelController.mainActivity);
        super.onDestroy();
-        prefsEditor = pref.edit();
-        prefsEditor.putBoolean("EXPIRE_DIALOG",false);
-        prefsEditor.commit();
     }
 
     @Override
@@ -1046,6 +1043,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
     @Override
     public void onRenewPlanSelected() {
+        prefsEditor = pref.edit();
+        prefsEditor.putBoolean("EXPIRE_DIALOG",false);
+        prefsEditor.commit();
         checkExipre();
     }
 
@@ -1134,10 +1134,10 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 days = pref.getInt("Days_remain", 0);
                 if (days <= 0) {
                     dialogTitle = "Renew Wildfire plan";
-                    dialogMessage = "Your Wildfire plan has expired. Continue auto-promoting your website using digital marketing channels like Google and Facebook. Please renew your plan to ensure that your business messages spread like wildfire.";
+                    dialogMessage = "Your Wildfire plan has expired. Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.";
                 } else {
                     dialogTitle = "Wildfire plan will expire in " + days + "days";
-                    dialogMessage = "Continue auto-promoting your website using digital marketing channels like Google and Facebook. Please renew your plan to ensure that your business messages spread like wildfire.";
+                    dialogMessage = "Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.";
                 }
                 callUsButtonText = "RENEW";
                 cancelButtonText = "IGNORE";
@@ -1172,12 +1172,18 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                         super.onPositive(mExpireDailog);
                         openStore();
                         mExpireDailog.dismiss();
+                        prefsEditor = pref.edit();
+                        prefsEditor.putBoolean("EXPIRE_DIALOG",true);
+                        prefsEditor.commit();
                     }
 
                     @Override
                     public void onNegative(MaterialDialog mExpireDailog) {
                         super.onNegative(mExpireDailog);
                         mExpireDailog.dismiss();
+                        prefsEditor = pref.edit();
+                        prefsEditor.putBoolean("EXPIRE_DIALOG",true);
+                        prefsEditor.commit();
                     }
                 }).show();
         mExpireDailog.setCancelable(true);
