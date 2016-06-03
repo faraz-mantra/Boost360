@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -142,6 +143,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     private final int WILD_FIRE_EXPIRE = 1;
     private final int DEMO_EXPIRE = 3;
     SharedPreferences.Editor prefsEditor;
+    private boolean isShownExpireDialog = false;
 
 
 
@@ -1060,12 +1062,13 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     public void getStoreList(StoreEvent response){
         ArrayList<StoreModel> allModels = response.model.AllPackages;
         ArrayList<ActiveWidget> activeIdArray = response.model.ActivePackages;
-        ArrayList<StoreModel> additionalPlans = response.model.AllPackages;
-
-        if(allModels!=null && activeIdArray!=null){
-            printPlan(activeIdArray);
-        }else{
-            Methods.showSnackBarNegative(activity,"Something went wrong");
+        if (!isShownExpireDialog) {
+            if (allModels != null && activeIdArray != null) {
+                printPlan(activeIdArray);
+                isShownExpireDialog = true;
+            } else {
+                Methods.showSnackBarNegative(activity, "Something went wrong");
+            }
         }
     }
 
@@ -1112,6 +1115,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         String callUsButtonText = "";
         String cancelButtonText = null;
         int dialogImage;
+        int dialogImageBgColor = 0;
         int days;
         prefsEditor = pref.edit();
         prefsEditor.putBoolean("EXPIRE_DIALOG",true);
@@ -1123,6 +1127,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 dialogTitle = "Renew Lighthouse plan to get all the features";
                 dialogMessage = "Your Lighthouse plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others";
                 dialogImage = R.drawable.androidexpiryxxxhdpi;
+                dialogImageBgColor = Color.parseColor("#ff0010");
                 break;
 
             case WILD_FIRE_EXPIRE:
@@ -1137,9 +1142,11 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 callUsButtonText = "RENEW";
                 cancelButtonText = "IGNORE";
                 dialogImage = R.drawable.wild_fire_expire;
+                dialogImageBgColor = Color.parseColor("#ffffff");
                 break;
             case DEMO_EXPIRE:
                 dialogImage = R.drawable.androidexpiryxxxhdpi;
+                dialogImageBgColor = Color.parseColor("#ff0010");
                 callUsButtonText = "BUY";
                 cancelButtonText = "CANCEL";
                 dialogTitle = "Buy Lighthouse plan to get all the features";
@@ -1180,6 +1187,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         title.setText(dialogTitle);
 
         ImageView expireImage = (ImageView)view.findViewById(R.id.img_warning);
+        expireImage.setBackgroundColor(dialogImageBgColor);
         expireImage.setImageDrawable(getResources().getDrawable(dialogImage));
 
         roboto_lt_24_212121 message = (roboto_lt_24_212121) view.findViewById(R.id.pop_up_create_message_body);

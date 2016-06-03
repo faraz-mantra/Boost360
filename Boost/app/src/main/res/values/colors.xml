@@ -4,6 +4,7 @@
 
 
     <color name="whiteLable">#ffb900</color>
+    <color name="expire_dialog_img_bg">#ff0010</color>
 
     <drawable name="focused">#30000000</drawable>
     <drawable name="selected">#30000000</drawable>
