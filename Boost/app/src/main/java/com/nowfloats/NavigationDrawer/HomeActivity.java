@@ -34,7 +34,6 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.appsflyer.AppsFlyerConversionListener;
@@ -43,8 +42,6 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.freshdesk.mobihelp.Mobihelp;
 import com.freshdesk.mobihelp.MobihelpConfig;
-import com.gc.materialdesign.views.Button;
-import com.gc.materialdesign.views.ButtonRectangle;
 import com.mixpanel.android.mpmetrics.GCMReceiver;
 import com.nineoldandroids.animation.Animator;
 import com.nowfloats.Analytics_Screen.SearchQueries;
@@ -98,7 +95,6 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -386,6 +382,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 }
             }
         });
+        checkExpire();
     }
 
     public static void setGCMId(String id){
@@ -548,6 +545,11 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     protected void onDestroy() {
        MixPanelController.flushMixPanel(MixPanelController.mainActivity);
        super.onDestroy();
+        prefsEditor = pref.edit();
+        prefsEditor.putBoolean("EXPIRE_DIALOG",false);
+        prefsEditor.commit();
+        Log.d("ILUD HomeActivity", "value false");
+
     }
 
     @Override
@@ -763,9 +765,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         if(Constants.GCM_Msg){
             DeepLinkPage(GCMReceiver.deeplinkUrl);
         }
-        checkExipre();
+
     }
-    private void checkExipre(){
+    private void checkExpire(){
         isExpiredCheck = pref.getBoolean("EXPIRE_DIALOG",false);
         if(!isExpiredCheck) {
             String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
@@ -1046,7 +1048,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         prefsEditor = pref.edit();
         prefsEditor.putBoolean("EXPIRE_DIALOG",false);
         prefsEditor.commit();
-        checkExipre();
+        checkExpire();
     }
 
     private void openStore(){
@@ -1114,12 +1116,13 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         String dialogMessage = null;
         String callUsButtonText = "";
         String cancelButtonText = null;
-        int dialogImage;
+        int dialogImage = 0;
         int dialogImageBgColor = 0;
         int days;
         prefsEditor = pref.edit();
         prefsEditor.putBoolean("EXPIRE_DIALOG",true);
         prefsEditor.commit();
+        boolean dialogShowFlag = true;
         switch (expireAccount) {
             case LIGHT_HOUSE_EXPIRE:
                 callUsButtonText = "BUY";
@@ -1131,18 +1134,24 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 break;
 
             case WILD_FIRE_EXPIRE:
-                days = pref.getInt("Days_remain", 0);
-                if (days <= 0) {
-                    dialogTitle = "Renew Wildfire plan";
-                    dialogMessage = "Your Wildfire plan has expired. Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.";
-                } else {
-                    dialogTitle = "Wildfire plan will expire in " + days + "days";
-                    dialogMessage = "Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.";
+                boolean ignoreclicked = pref.getBoolean("IGNORE_CLICKED", false);
+                Log.d("ILUD Boolean Vals: ", String.valueOf(ignoreclicked) + "   " + String.valueOf(dialogShowFlag));
+                if(!ignoreclicked) {
+                    days = pref.getInt("Days_remain", 0);
+                    if (days <= 0) {
+                        dialogTitle = "Renew Wildfire plan";
+                        dialogMessage = "Your Wildfire plan has expired. Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.";
+                    } else {
+                        dialogTitle = "Wildfire plan will expire in " + days + "days";
+                        dialogMessage = "Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.";
+                    }
+                    callUsButtonText = "RENEW";
+                    cancelButtonText = "IGNORE";
+                    dialogImage = R.drawable.wild_fire_expire;
+                    dialogImageBgColor = Color.parseColor("#ffffff");
+                }else {
+                    dialogShowFlag= false;
                 }
-                callUsButtonText = "RENEW";
-                cancelButtonText = "IGNORE";
-                dialogImage = R.drawable.wild_fire_expire;
-                dialogImageBgColor = Color.parseColor("#ffffff");
                 break;
             case DEMO_EXPIRE:
                 dialogImage = R.drawable.androidexpiryxxxhdpi;
@@ -1161,43 +1170,47 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 break;
         }
 
-        mExpireDailog = new MaterialDialog.Builder(this)
-                .customView(R.layout.pop_up_restrict_post_message, false)
-                .backgroundColorRes(R.color.white)
-                .positiveText(callUsButtonText)
-                .negativeText(cancelButtonText)
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog mExpireDailog) {
-                        super.onPositive(mExpireDailog);
-                        openStore();
-                        mExpireDailog.dismiss();
-                        prefsEditor = pref.edit();
-                        prefsEditor.putBoolean("EXPIRE_DIALOG",true);
-                        prefsEditor.commit();
-                    }
+        if(dialogShowFlag) {
+            mExpireDailog = new MaterialDialog.Builder(this)
+                    .customView(R.layout.pop_up_restrict_post_message, false)
+                    .backgroundColorRes(R.color.white)
+                    .positiveText(callUsButtonText)
+                    .negativeText(cancelButtonText)
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog mExpireDailog) {
+                            super.onPositive(mExpireDailog);
+                            openStore();
+                            mExpireDailog.dismiss();
+                            prefsEditor = pref.edit();
+                            prefsEditor.putBoolean("EXPIRE_DIALOG", true);
+                            prefsEditor.commit();
+                        }
 
-                    @Override
-                    public void onNegative(MaterialDialog mExpireDailog) {
-                        super.onNegative(mExpireDailog);
-                        mExpireDailog.dismiss();
-                        prefsEditor = pref.edit();
-                        prefsEditor.putBoolean("EXPIRE_DIALOG",true);
-                        prefsEditor.commit();
-                    }
-                }).show();
-        mExpireDailog.setCancelable(true);
-        View view = mExpireDailog.getCustomView();
+                        @Override
+                        public void onNegative(MaterialDialog mExpireDailog) {
+                            super.onNegative(mExpireDailog);
+                            mExpireDailog.dismiss();
+                            prefsEditor = pref.edit();
+                            prefsEditor.putBoolean("EXPIRE_DIALOG", true);
+                            prefsEditor.putBoolean("IGNORE_CLICKED", true);
+                            prefsEditor.commit();
+                        }
+                    }).show();
 
-        roboto_md_60_212121 title = (roboto_md_60_212121) view.findViewById(R.id.textView1);
-        title.setText(dialogTitle);
+            mExpireDailog.setCancelable(true);
+            View view = mExpireDailog.getCustomView();
 
-        ImageView expireImage = (ImageView)view.findViewById(R.id.img_warning);
-        expireImage.setBackgroundColor(dialogImageBgColor);
-        expireImage.setImageDrawable(getResources().getDrawable(dialogImage));
+            roboto_md_60_212121 title = (roboto_md_60_212121) view.findViewById(R.id.textView1);
+            title.setText(dialogTitle);
 
-        roboto_lt_24_212121 message = (roboto_lt_24_212121) view.findViewById(R.id.pop_up_create_message_body);
-        message.setText(dialogMessage);
+            ImageView expireImage = (ImageView) view.findViewById(R.id.img_warning);
+            expireImage.setBackgroundColor(dialogImageBgColor);
+            expireImage.setImageDrawable(getResources().getDrawable(dialogImage));
+
+            roboto_lt_24_212121 message = (roboto_lt_24_212121) view.findViewById(R.id.pop_up_create_message_body);
+            message.setText(dialogMessage);
+        }
     }
 }
 
