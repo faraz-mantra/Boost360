@@ -581,7 +581,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     }
 
     public void appUpdateAlertDilog(final Activity mContext) {
-        new MaterialDialog.Builder(mContext)
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(mContext)
                 .title("App update available")
                 .content("You are using an old version of NowFloats Boost. Update the app to get new features and enhancements")
                 .positiveText("Update")
@@ -602,8 +602,11 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                         }
                     }
 
-                })
-                .show();
+                });
+                if(!isFinishing()) {
+                    builder.show();
+                }
+
     }
     private void isAppUpdatedNeeded() {
         if(session.get_FIRST_TIME() == true)
@@ -1068,9 +1071,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             if (allModels != null && activeIdArray != null) {
                 printPlan(activeIdArray);
                 isShownExpireDialog = true;
-            } else {
-                Methods.showSnackBarNegative(activity, "Something went wrong");
             }
+            
+            // TODO: 06-06-2016 need to handle multilple wildfire expire cases with support of api team.
         }
     }
 

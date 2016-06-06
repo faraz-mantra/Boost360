@@ -20,7 +20,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -32,7 +31,6 @@ import com.facebook.Response;
 import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
-import com.gc.materialdesign.views.Button;
 import com.gc.materialdesign.views.Card;
 import com.melnykov.fab.FloatingActionButton;
 import com.nowfloats.Login.Fetch_Home_Data;
@@ -46,10 +44,6 @@ import com.nowfloats.NavigationDrawer.model.PostTaskModel;
 import com.nowfloats.NavigationDrawer.model.PostTextSuccessEvent;
 import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
 import com.nowfloats.NavigationDrawer.model.Welcome_Card_Model;
-import com.nowfloats.Store.Model.ActiveWidget;
-import com.nowfloats.Store.Model.StoreEvent;
-import com.nowfloats.Store.Model.StoreModel;
-import com.nowfloats.Store.Service.API_Service;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.ButteryProgressBar;
@@ -653,43 +647,43 @@ public class Home_Main_Fragment extends Fragment implements
      interface OnRenewPlanClickListener {
          void onRenewPlanSelected();
     }
-    @Subscribe
-    public void getStoreList(StoreEvent response){
-        ArrayList<StoreModel> allModels = response.model.AllPackages;
-        ArrayList<ActiveWidget> activeIdArray = response.model.ActivePackages;
-        ArrayList<StoreModel> additionalPlans = response.model.AllPackages;
-        if(allModels!=null && activeIdArray!=null){
-            LoadActivePlans(getActivity(),allModels,additionalPlans,activeIdArray);
-        }else{
-            Methods.showSnackBarNegative(getActivity(),"Something went wrong");
-        }
-    }
-    public static ArrayList<StoreModel> activeWidgetModels = new ArrayList<>();
-    public static ArrayList<StoreModel> additionalWidgetModels = new ArrayList<>();
+//    @Subscribe
+//    public void getStoreList(StoreEvent response){
+//        ArrayList<StoreModel> allModels = response.model.AllPackages;
+//        ArrayList<ActiveWidget> activeIdArray = response.model.ActivePackages;
+//        ArrayList<StoreModel> additionalPlans = response.model.AllPackages;
+//        if(allModels!=null && activeIdArray!=null){
+//            LoadActivePlans(getActivity(),allModels,additionalPlans,activeIdArray);
+//        }else{
+//            Methods.showSnackBarNegative(getActivity(),"Something went wrong");
+//        }
+//    }
+//    public static ArrayList<StoreModel> activeWidgetModels = new ArrayList<>();
+//    public static ArrayList<StoreModel> additionalWidgetModels = new ArrayList<>();
 
-    private void LoadActivePlans(final Activity activity, ArrayList<StoreModel> allModels, final ArrayList<StoreModel> additionalPlan, ArrayList<ActiveWidget> acIdarray) {
-        try {
-            if (acIdarray!=null && acIdarray.size()>0){
-                for (int i = 0; i < allModels.size(); i++) {
-                    for (int j=0; j < acIdarray.size(); j++){
-                        if (allModels.get(i)._id.equals(acIdarray.get(j).clientProductId)){
-                            activeWidgetModels.add(allModels.get(i));
-                            Log.d("Load Plans",activeWidgetModels.get(i).ExpiryInMths);
-                        }
-                    }
-                }
-                for (int i = 0; i < acIdarray.size(); i++) {
-                    for (int j = 0; j < allModels.size(); j++) {
-                        if (allModels.get(j)._id.equals(acIdarray.get(i).clientProductId)){
-                            additionalPlan.remove(allModels.get(j));
-                            Log.d("Load Plans",additionalPlan.get(i).ExpiryInMths);
-                        }
-                    }
-                }
-                additionalWidgetModels = additionalPlan;
-            }else {
-                additionalWidgetModels = allModels;
-            }
-        }catch (Exception e){e.printStackTrace(); Methods.showSnackBarNegative(activity,"Something went wrong,Please try again");}
-    }
+//    private void LoadActivePlans(final Activity activity, ArrayList<StoreModel> allModels, final ArrayList<StoreModel> additionalPlan, ArrayList<ActiveWidget> acIdarray) {
+//        try {
+//            if (acIdarray!=null && acIdarray.size()>0){
+//                for (int i = 0; i < allModels.size(); i++) {
+//                    for (int j=0; j < acIdarray.size(); j++){
+//                        if (allModels.get(i)._id.equals(acIdarray.get(j).clientProductId)){
+//                            activeWidgetModels.add(allModels.get(i));
+//                            Log.d("Load Plans",activeWidgetModels.get(i).ExpiryInMths);
+//                        }
+//                    }
+//                }
+//                for (int i = 0; i < acIdarray.size(); i++) {
+//                    for (int j = 0; j < allModels.size(); j++) {
+//                        if (allModels.get(j)._id.equals(acIdarray.get(i).clientProductId)){
+//                            additionalPlan.remove(allModels.get(j));
+//                            Log.d("Load Plans",additionalPlan.get(i).ExpiryInMths);
+//                        }
+//                    }
+//                }
+//                additionalWidgetModels = additionalPlan;
+//            }else {
+//                additionalWidgetModels = allModels;
+//            }
+//        }catch (Exception e){e.printStackTrace(); Methods.showSnackBarNegative(activity,"Something went wrong,Please try again");}
+//    }
 }
