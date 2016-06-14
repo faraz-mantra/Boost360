@@ -322,14 +322,16 @@ public class Home_Main_Fragment extends Fragment implements
             @Override
             public void onClick(View v) {
 
-
-                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1") || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("0")) {
+                Log.d("ILUD Home_Fragment:", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE));
+                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
                     mCallback.onRenewPlanSelected();
-                } else {
+                }
+                else {
                     Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
                     startActivity(webIntent);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
+
             }
         });
 

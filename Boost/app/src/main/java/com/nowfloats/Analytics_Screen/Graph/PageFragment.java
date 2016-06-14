@@ -37,11 +37,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by tushar on 18-05-2015.
@@ -124,8 +127,9 @@ public class PageFragment extends Fragment {
                 // totalCountTv[0] = (TextView) view.findViewById(R.id.totalNumber);
                 initialiseGraph(barChart[0]);
                 dateArray = getWeekEndPoints();
-                CallingTask ct = new CallingTask();
-                ct.execute(MODE_WEEK+"");
+//                GetWeekData ct = new CallingTask();
+//                ct.execute(MODE_WEEK+"");
+                new GetWeekData().execute();
                 //GetTotalTask gtt = new GetTotalTask();
                 //gtt.execute();
                 barChart[0].setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
@@ -141,6 +145,10 @@ public class PageFragment extends Fragment {
 
                     }
                 });
+
+
+
+
             }
             else if(mPage == 2)
             {
@@ -345,10 +353,11 @@ public class PageFragment extends Fragment {
             int l = valueArray.size();
             if(l>7)
                 l = 7;
-            for(int i=0; i<l; i++)
-                entryList.add(new BarEntry(valueArray.get(i),i));
-            for(int i=l; i<7; i++)
-                entryList.add(new BarEntry(0,i));
+
+            for(int i=0; i<dateArray.size(); i++) {
+                entryList.add(new BarEntry(valueArray.get(i), i));
+                //Log.d("ILUD Array:", String.valueOf(valueArray.get(i) + " " + dateArray.get(i)));
+            }
 
             BarDataSet barDataSet = new BarDataSet(entryList,"");
             barDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -360,7 +369,12 @@ public class PageFragment extends Fragment {
             ArrayList<BarDataSet> barDataSetArray = new ArrayList<BarDataSet>();
             barDataSetArray.add(barDataSet);
 
-            BarData barData = new BarData(dayNameArray,barDataSetArray);
+            String[] newDayArray = new String[entryList.size()];
+            for(int i= 0; i<dateArray.size();i++){
+                newDayArray[i] = dayNameArray[i];
+            }
+
+            BarData barData = new BarData(newDayArray,barDataSetArray);
             barData.setValueFormatter(new CustomValueFormatter());
 
             barChart.setData(barData);
@@ -369,13 +383,19 @@ public class PageFragment extends Fragment {
             CustomMarkerClass mv = new CustomMarkerClass (context, R.layout.graph_custom_marker_view,dateArray,valueArray,MODE_WEEK);
             // set the marker to the chart
             //barChart[MODE_WEEK].setMarkerView(mv);
+            for(int i=0 ; i<dateArray.size(); i++){
+                Log.d("ILUD DATE Array:", dateArray.get(i));
+            }
+            for(int i =0 ; i<valueArray.size(); i++){
+                Log.d("ILUD DATE Array:", valueArray.get(i) + "");
+            }
 
 
         }
         else if(mode == MODE_MONTH)
         {
             ArrayList<BarEntry> entryList = new ArrayList<BarEntry>();
-            int[] weekWiseNumbers = { 0,0,0,0 };
+            int[] weekWiseNumbers = { -1,-1,-1,-1 };
             for(int i=0; i<valueArray.size(); i++)
             {
                 int k = i/7;
@@ -384,8 +404,14 @@ public class PageFragment extends Fragment {
                 else
                     weekWiseNumbers[3] += valueArray.get(i);
             }
-            for(int i=0; i<4; i++)
-                entryList.add(new BarEntry(weekWiseNumbers[i],i));
+            for(int i=0; i<4; i++) {
+                if(weekWiseNumbers[i]!=-1)
+                        entryList.add(new BarEntry(weekWiseNumbers[i], i));
+            }
+
+            String[] newWeekArray = new String[entryList.size()];
+            for(int i=0; i<entryList.size(); i++)
+                newWeekArray[i] = weekNameArray[i];
 
             BarDataSet barDataSet = new BarDataSet(entryList,"");
             barDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -398,7 +424,7 @@ public class PageFragment extends Fragment {
             ArrayList<BarDataSet> barDataSetArray = new ArrayList<BarDataSet>();
             barDataSetArray.add(barDataSet);
 
-            BarData barData = new BarData(weekNameArray,barDataSetArray);
+            BarData barData = new BarData(newWeekArray,barDataSetArray);
             barData.setValueFormatter(new CustomValueFormatter());
 
             barChart.setData(barData);
@@ -414,7 +440,10 @@ public class PageFragment extends Fragment {
         {
             boolean sizeBoolean = false;
             ArrayList<BarEntry> entryList = new ArrayList<BarEntry>();
-            int[] monthWiseNumbers = { 0,0,0,0,0,0,0,0,0,0,0,0 };
+            //int[] monthWiseNumbers = { 0,0,0,0,0,0,0,0,0,0,0,0 };
+            int[] monthWiseNumbers = { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 };
+            //List<Integer> monthData = new ArrayList<>();
+            //Log.d("ILUD Year Mode", y.size()+"");
             for(int i=0; i<valueArray.size(); i++)
             {
                 int k = Integer.parseInt(dateArray.get(i).substring(5,7)) - 1;
@@ -423,8 +452,11 @@ public class PageFragment extends Fragment {
             for(int i=0; i<12; i++){
                 int lengthchk = (monthWiseNumbers[i]+"").length();
                 if(lengthchk>=6) {sizeBoolean = true;}
-                entryList.add(new BarEntry(monthWiseNumbers[i],i));
+                if(monthWiseNumbers[i]!=-1) {
+                    entryList.add(new BarEntry(monthWiseNumbers[i], i));
+                }
             }
+
 
             BarDataSet barDataSet = new BarDataSet(entryList,"");
             barDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -437,12 +469,14 @@ public class PageFragment extends Fragment {
                 barDataSet.setValueTextSize(10.0f);
             }
            // barDataSet.setValueTextColor(Color.argb(0,0,0,0));
-
+            String[] newMonthArray = new String[entryList.size()];
+            for(int i=0; i<entryList.size(); i++){
+                newMonthArray[i] = monthNameArray[i];
+            }
 
             ArrayList<BarDataSet> barDataSetArray = new ArrayList<BarDataSet>();
             barDataSetArray.add(barDataSet);
-
-            BarData barData = new BarData(monthNameArray,barDataSetArray);
+            BarData barData = new BarData(newMonthArray,barDataSetArray);
             barData.setValueFormatter(new CustomValueFormatter());
 
             barChart.setData(barData);
@@ -670,6 +704,71 @@ public class PageFragment extends Fragment {
         }
 
         return 0;
+    }
+
+    private class GetWeekData extends AsyncTask<String, Void, String>{
+
+        String data = null;
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat currDf = new SimpleDateFormat("yyyy-MM-dd");
+            Date currentdate = calendar.getTime();
+            String currDate = currDf.format(currentdate);
+
+            int curDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+            int diff = (curDayOfWeek - calendar.getFirstDayOfWeek());
+            Date date = calendar.getTime();
+            date.setDate(calendar.getTime().getDate()-diff);
+            String firstDateOfWeek = currDf.format(date);
+            String[] firstdateOfWeekArray = firstDateOfWeek.split("-");
+            String[] currdateOfWeek = currDate.split("-");
+            dateArray = getDateArray(Integer.parseInt(firstdateOfWeekArray[2]), Integer.parseInt(firstdateOfWeekArray[1]),Integer.parseInt(firstdateOfWeekArray[0]),
+                    Integer.parseInt(currdateOfWeek[2]),Integer.parseInt(currdateOfWeek[1]),Integer.parseInt(currdateOfWeek[0]) );
+            Log.d("ILUD Dates:", currDate + "   " + firstDateOfWeek);
+            try {
+                String startDate = URLEncoder.encode(firstDateOfWeek, "UTF-8");
+                String endDate = URLEncoder.encode(String.format(currDate), "UTF-8");
+                String clientID = Constants.clientId;//URLEncoder.encode("DB96EA35A6E44C0F8FB4A6BAA94DB017C0DFBE6F9944B14AA6C3C48641B3D70", "UTF-8");
+                String starting = Constants.NOW_FLOATS_API_URL+"/Dashboard/v1/"+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)+"/details?";
+                String detailsType = URLEncoder.encode("0", "UTF-8");
+                String scope = URLEncoder.encode("0", "UTF-8");
+
+                // Building the url to the web service
+                String url = starting + "clientId=" + clientID + "&" + "startDate=" + startDate + "&" + "endDate=" + endDate
+                        + "&detailstype=" + detailsType + "&scope=" + scope;
+
+
+
+                try {
+                    // Fetching the data from we service
+                    data = downloadUrl(url);
+                } catch (Exception e) {
+                    Log.d("Background Task", e.toString());
+                }
+            }catch (UnsupportedEncodingException e){
+                e.printStackTrace();
+            }
+
+
+            return data;
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            // Creating ParserTask
+            //tv.setText("Result: "+result);
+            try{
+                ParserTask pt = new ParserTask();
+                pt.execute(result);
+            }catch(Exception e){e.printStackTrace();}
+
+
+
+        }
     }
 
 

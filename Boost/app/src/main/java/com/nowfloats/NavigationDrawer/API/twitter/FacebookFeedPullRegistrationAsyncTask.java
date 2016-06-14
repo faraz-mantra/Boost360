@@ -55,7 +55,7 @@ public class FacebookFeedPullRegistrationAsyncTask extends AsyncTask<Void, Strin
 		if(pd!=null){
 			pd.dismiss();
 		}
-		if(!Util.isNullOrEmpty(result)){
+		if(success){
 			//Util.toast("success", appContext);
 			prefsEditor.putBoolean("FacebookFeedRegd", true);
 			prefsEditor.commit();

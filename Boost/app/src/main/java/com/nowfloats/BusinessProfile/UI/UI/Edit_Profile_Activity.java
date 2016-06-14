@@ -304,6 +304,12 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         selectCats();
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        Initdata();
+    }
+
     private void businessCategoryDialog() {
 
 //        if (cat != null) {
@@ -594,26 +600,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
     }
 
     public void cameraIntent(){
-//        try {
-//            // use standard intent to capture an image
-//            values = new ContentValues();
-//            values.put(MediaStore.Images.Media.TITLE, "New Picture");
-//            values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-//            imageUri =getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-//            Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//            captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-//            // we will handle the returned data in onActivityResult
-//            startActivityForResult(captureIntent, CAMERA_PHOTO);
-//        } catch (ActivityNotFoundException anfe) {
-//            // display an error message
-//            String errorMessage = "Whoops - your device doesn't support capturing images!";
-//            Toast toast = Toast.makeText(getApplicationContext(),
-//                    errorMessage, Toast.LENGTH_SHORT);
-//            toast.show();
-//        }
-//        catch(Exception e){
-//            e.printStackTrace();
-//        }
+
         try {
             // use standard intent to capture an image
             if (ActivityCompat.checkSelfPermission(Edit_Profile_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=

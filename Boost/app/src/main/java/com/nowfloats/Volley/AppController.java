@@ -59,6 +59,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         }catch(Exception e){e.printStackTrace();}
     }
 
+
+
     public static synchronized AppController getInstance() {
         return mInstance;
     }

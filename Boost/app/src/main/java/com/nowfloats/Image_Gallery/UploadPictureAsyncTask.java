@@ -6,8 +6,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.provider.MediaStore;
 import android.util.Log;
 
 import com.nowfloats.Login.UserSessionManager;
@@ -29,11 +27,9 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.UUID;
 
 //import java.com.thinksity.logging.Handler;
@@ -140,6 +136,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
         {
             pd= ProgressDialog.show(appContext, "", "Uploading image...");
             //	pd.setCancelable(true);
+            Log.d("ILUD Upload Asynctask", "Uploading Immage");
         }
         else
         {
@@ -156,7 +153,17 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
     protected void onPostExecute(String result) {
 //        Log.d("UploadPicAsyncTask","onPostExecute : "+Constants.storeSecondaryImages.size());
 //        Toast.makeText(appContext,"Success  "+result,Toast.LENGTH_SHORT).show();
-        Methods.showSnackBarPositive(appContext,"Image successfully uploaded");
+        if(success) {
+            Methods.showSnackBarPositive(appContext, "Image successfully uploaded");
+            if (pd.isShowing()) {
+                pd.dismiss();
+            }
+        }else {
+            Methods.showSnackBarNegative(appContext, "Can't Upload Image");
+            if (pd.isShowing()) {
+                pd.dismiss();
+            }
+        }
         //  Log.d("UploadPictureInterface","uploadInterface : "+uploadInterface);
         uploadInterface.uploadedPictureListener(path);
         onPost();
@@ -403,7 +410,10 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
 
         Bitmap bm = BitmapFactory.decodeStream(fis);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.JPEG, 100 , baos);
+        if((imagefile.length()/1024)>100){
+            bm.compress(Bitmap.CompressFormat.JPEG, 70, baos);}else{
+            bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        }
         byte[] bitmapdata = baos.toByteArray();
 
         UUID uuid = null;
@@ -431,8 +441,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
 //            uri = Constants.LoadStoreURI+param+
 //                    "?clientId="+ Constants.clientId+
 //                    "&fpId="+ session.getFPID()+"&reqType=sequential&reqtId=" + s_uuid + "&";
-            uri = Constants.LoadStoreURI +
-                    param + "?clientId=" +
+            uri = "http://api.withfloats.com/Discover/v1/FloatingPoint/createSecondaryImage/?clientId=" +
                     Constants.clientId +
                     "&fpId=" + session.getFPID() +
                     "&reqType=sequential&reqtId=" +
@@ -551,15 +560,12 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
 
 
 
-    public void sendDataToServer(String url, byte[] BytesToBeSent){
-        //  Log.d("UploadPic","URL : "+url);
+    public void sendDataToServer(String url, byte[] imageData){
+        Log.d("Ilud Upload Image:", url);
         DataOutputStream outputStream = null;
-        success = false;
         try {
-
             URL new_url = new URL(url);
-            HttpURLConnection connection = (HttpURLConnection) new_url
-                    .openConnection();
+            HttpURLConnection connection = (HttpURLConnection) new_url.openConnection();
 
             // Allow Inputs & Outputs
             connection.setDoInput(true);
@@ -568,25 +574,23 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
             // Enable PUT method
             connection.setRequestMethod(Constants.HTTP_PUT);
             connection.setRequestProperty("Connection", "Keep-Alive");
+            connection.setRequestProperty("Content-Type",Constants.BG_SERVICE_CONTENT_TYPE_OCTET_STREAM);
 
-
-            connection.setRequestProperty("Content-Type",
-                    Constants.BG_SERVICE_CONTENT_TYPE_OCTET_STREAM);
-
-            if (BytesToBeSent != null) {
-                outputStream = new DataOutputStream(
-                        connection.getOutputStream());
-                outputStream.write(BytesToBeSent, 0, BytesToBeSent.length);
+            if (imageData != null) {
+                outputStream = new DataOutputStream(connection.getOutputStream());
+                outputStream.write(imageData, 0, imageData.length);
             }
-
-
-            int responseCode = connection.getResponseCode();
-
-            String responseMessage = connection.getResponseMessage();
-
-            if (responseCode	== 200  || responseCode	== 202)
+            int responseCode = 0;
+            try {
+                 responseCode = connection.getResponseCode();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            if (responseCode == 200 || responseCode == 202)
             {
                 success = true;
+            }else {
+                success = false;
             }
 
             InputStreamReader inputStreamReader = null;
@@ -595,13 +599,9 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
             {
                 inputStreamReader = new InputStreamReader(connection.getInputStream());
                 bufferedReader = new BufferedReader(inputStreamReader);
-
                 StringBuilder responseContent = new StringBuilder();
-
                 String temp = null;
-
                 boolean isFirst = true;
-
                 while((temp = bufferedReader.readLine())!=null)
                 {
                     if(!isFirst)
@@ -609,19 +609,15 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
                     responseContent.append(temp);
                     isFirst = false;
                 }
-
-                String response = responseContent.toString();
-                if(!Util.isNullOrEmpty(response)){
-                    Constants.serviceResponse = response;
-//                    if (success)
-//                    else MixPanelController.track("AddImageFailure",null);
-                }
-                else{
-                    Constants.serviceResponse = "";
-//                    MixPanelController.track("AddImageFailure",null);
+                if (responseContent!=null || responseContent.length()==0){
+                    String response = responseContent.toString();
+                    Log.d("Product IMage", "Upload Response : " + response);
+                    if (response==null || response.trim().length()==0) success =false;
+                }else{
+                    success =false;
                 }
             }
-            catch(Exception e){}
+            catch(Exception e){e.printStackTrace();success = false;}
             finally
             {
                 try{
@@ -632,9 +628,6 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
                 }catch (Exception e) {}
 
             }
-
-
-
         } catch (Exception ex) {
             success = false;
         } finally {
@@ -644,5 +637,6 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
             } catch (Exception e) {
             }
         }
+        //return null;
     }
 }

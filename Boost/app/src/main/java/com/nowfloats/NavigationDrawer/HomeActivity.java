@@ -548,7 +548,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         prefsEditor = pref.edit();
         prefsEditor.putBoolean("EXPIRE_DIALOG",false);
         prefsEditor.commit();
-        Log.d("ILUD HomeActivity", "value false");
 
     }
 
@@ -779,11 +778,12 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 if (Integer.parseInt(paymentLevel) > 10) {
                     //LH expire
                     renewPlanDialog(LIGHT_HOUSE_EXPIRE);
-                } else if (Integer.parseInt(paymentLevel) == 0) {
+                } else if (Integer.parseInt(paymentLevel) == 0 ) {
                     //Demo expire
                     renewPlanDialog(DEMO_EXPIRE);
                 }
-            } else {
+            }
+            else {
                 // LH is active ,check for wildfire
                 new API_Service(activity, session.getSourceClientId(), session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY),
                         session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session.getFPID(), bus);

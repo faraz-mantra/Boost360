@@ -327,6 +327,11 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
         return pref.getBoolean(KEY_SHOW_UPDATES, true);
     }
+    public void setShowUpdates(boolean val)
+    {
+        editor.putBoolean(KEY_SHOW_UPDATES, val);
+        editor.commit();
+    }
 
 
     public void storeFacebookName(String facebookName)

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
@@ -40,8 +41,8 @@ public class FacebookFeedPullAutoPublishAsyncTask extends AsyncTask<Void, String
 
 	@Override
 	protected void onPreExecute() {
-//		pd = ProgressDialog.show(appContext, null, "Please wait");
-//		pd.setCancelable(true);
+		pd = ProgressDialog.show(appContext, null, "Please wait");
+		//pd.setCancelable(true);
 		pref = appContext.getSharedPreferences(Constants.PREF_NAME,Activity.MODE_PRIVATE);
 		prefsEditor = pref.edit();
 	}
@@ -61,6 +62,7 @@ public class FacebookFeedPullAutoPublishAsyncTask extends AsyncTask<Void, String
 				//fromPage.setText("From "+ Constants.fbFromWhichPage);
 			    			}
 			else{
+				Toast.makeText(appContext, "Auto Post Updates will be turned OFF", Toast.LENGTH_SHORT).show();
 				prefsEditor.putBoolean("FBFeedPullAutoPublish", false);
 				prefsEditor.commit();
 				fromPage.setText("");

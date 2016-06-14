@@ -11,7 +11,6 @@ import com.nowfloats.util.DataBase;
 import com.nowfloats.util.Methods;
 import com.squareup.otto.Bus;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -103,8 +102,12 @@ public class API_Login {
 
             @Override
             public void failure(RetrofitError error) {
+                StringBuffer networkError = new StringBuffer("Please check your credentials");
+                if(error.getKind() == RetrofitError.Kind.HTTP || error.getKind() == RetrofitError.Kind.NETWORK ){
+                    networkError.delete(0, networkError.length()).append("Something Went Wrong!!");
+                }
                 apiInterface.authenticationFailure("true");
-                Methods.showSnackBarNegative(appContext, "Please check your credentials");
+                Methods.showSnackBarNegative(appContext, networkError.toString());
             }
         });
     }
