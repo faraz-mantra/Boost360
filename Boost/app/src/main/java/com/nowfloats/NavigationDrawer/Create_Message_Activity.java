@@ -722,6 +722,7 @@ public class Create_Message_Activity extends AppCompatActivity {
     };
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        facebook.authorizeCallback(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && (Constants.GALLERY_PHOTO == requestCode)) {
             if (data != null) {
                 picUri = data.getData();
