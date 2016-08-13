@@ -3,15 +3,15 @@ package com.nowfloats.NavigationDrawer;
 import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
@@ -24,19 +24,16 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
@@ -55,6 +52,7 @@ import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
 import com.nowfloats.NotificationCenter.AlertArchive;
 import com.nowfloats.Twitter.TwitterConstants;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
@@ -73,8 +71,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import oauth.signpost.OAuth;
+
 
 public class Create_Message_Activity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -122,6 +121,8 @@ public class Create_Message_Activity extends AppCompatActivity {
     private final int gallery_req_id = 0;
     private final int media_req_id = 1;
     private SharedPreferences mSharedPreferences = null;
+
+    private int mFbPageShare = 0, mFbProfileShare = 0, mTwitterShare = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,33 +177,55 @@ public class Create_Message_Activity extends AppCompatActivity {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            if(!Util.isNullOrEmpty(msg.getText().toString())) {
-                Methods.hideKeyboard(msg, Create_Message_Activity.this);
-                // MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_TEXT,null);
-                if (!imageIconButtonSelected) {
-                    // Log.d("Create_Message_Activity","imageIconButton : "+imageIconButton);
-                    MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_NOT_SELECTED, null);
-                    Constants.imageNotSet = true;
+                if(!Methods.isOnline(Create_Message_Activity.this)){
+                    //Methods.showSnackBarNegative(Create_Message_Activity.this, "");
+                    return;
+                }
+                if(!Util.isNullOrEmpty(msg.getText().toString())) {
+                    Methods.hideKeyboard(msg, Create_Message_Activity.this);
+                    // MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_TEXT,null);
+                    if (!imageIconButtonSelected) {
+                        // Log.d("Create_Message_Activity","imageIconButton : "+imageIconButton);
+                        MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_NOT_SELECTED, null);
+                        Constants.imageNotSet = true;
+                        HashMap<String, String> eventKey = new HashMap<String, String>();
+                        eventKey.put(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_NOT_SELECTED, "Posted Update with only text");
+                        //ContextSdk.tagEvent(Create_Message_Activity.class.getCanonicalName(),eventKey);
+                    } else {
+                        // Log.d("Create_Message_Activity","imageIconButton : "+imageIconButton);
+                        MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_SELECTED, null);
+                        Constants.imageNotSet = false;
+                        //imageIconButtonSelected = false;
+                        HashMap<String, String> eventKey = new HashMap<String, String>();
+                        eventKey.put(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_SELECTED, "Posted Update with text and image");
+                        //ContextSdk.tagEvent(Create_Message_Activity.class.getCanonicalName(),eventKey);
+                    }
+                    // MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_POST,null);
+                    if (Home_Main_Fragment.bus==null){Home_Main_Fragment.bus = BusProvider.getInstance().getBus();}
+                    Constants.createMsg = true;
+                    String socialShare = "";
+                    if(mFbProfileShare==1){
+                        socialShare +="FACEBOOK.";
+                        //String.valueOf(mFbProfileShare) + "." + String.valueOf(mFbPageShare) + "." + String.valueOf(mTwitterShare);
+                    }
+                    if(mFbPageShare==1){
+                        socialShare +="FACEBOOK_PAGE.";
+                    }
+                    if (mTwitterShare == 1) {
+                        socialShare+="TWITTER.";
+                    }
+                    Home_Main_Fragment.bus.post(new UploadPostEvent(path, msg.getText().toString(), socialShare));
+                    if (path!=null && path.trim().length()>0){
+                        new AlertArchive(Constants.alertInterface,"FEATURE IMAGE",session.getFPID());
+                    }else{
+                        new AlertArchive(Constants.alertInterface,"UPDATE",session.getFPID());
+                    }
+                    finish();
+                    overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 } else {
-                    // Log.d("Create_Message_Activity","imageIconButton : "+imageIconButton);
-                    MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_IMAGE_SELECTED, null);
-                    Constants.imageNotSet = false;
+                    YoYo.with(Techniques.Shake).playOn(msg);
+                    Methods.showSnackBarNegative(Create_Message_Activity.this,"Please enter a message");
                 }
-                // MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_POST,null);
-                if (Home_Main_Fragment.bus==null){Home_Main_Fragment.bus = BusProvider.getInstance().getBus();}
-                Constants.createMsg = true;
-                Home_Main_Fragment.bus.post(new UploadPostEvent(path, msg.getText().toString()));
-                if (path!=null && path.trim().length()>0){
-                    new AlertArchive(Constants.alertInterface,"FEATURE IMAGE",session.getFPID());
-                }else{
-                    new AlertArchive(Constants.alertInterface,"UPDATE",session.getFPID());
-                }
-                finish();
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-            } else {
-                YoYo.with(Techniques.Shake).playOn(msg);
-                Methods.showSnackBarNegative(Create_Message_Activity.this,"Please enter a message");
-            }
             }
         });
 
@@ -215,19 +238,23 @@ public class Create_Message_Activity extends AppCompatActivity {
 
         if(!Util.isNullOrEmpty(session.getFacebookName())) {
             facbookEnabled = true;
+            mFbProfileShare = 1;
             facebookShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
         }
 
         if(!Util.isNullOrEmpty(session.getFacebookPage())) {
             isFacebookPageShareLoggedIn = true;
+            mFbPageShare = 1;
             facebookPageShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
         }
         mSharedPreferences = getSharedPreferences(TwitterConstants.PREF_NAME, MODE_PRIVATE);
         if(mSharedPreferences.getBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false)) {
             twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
             Constants.twitterShareEnabled = true;
+            mTwitterShare = 1;
         }else{
             Constants.twitterShareEnabled = false;
+            mTwitterShare = 0;
             twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
         }
 
@@ -237,17 +264,33 @@ public class Create_Message_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                if (isFirstTimeTwitter == false)
+                if(mSharedPreferences.getBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false)){
+                    if(Constants.twitterShareEnabled){
+                        Constants.twitterShareEnabled = false;
+                        mTwitterShare = 0;
+                        twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
+                    }else {
+                        Constants.twitterShareEnabled = true;
+                        mTwitterShare = 1;
+                        twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
+                    }
 
-                if (Constants.twitterShareEnabled) {
-                    twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
+                }else {
+                    Intent i = new Intent(Create_Message_Activity.this, Social_Sharing_Activity.class);
+                    startActivity(i);
+                    overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                }
+
+                /*if (Constants.twitterShareEnabled) {
+                    twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
                     Constants.twitterShareEnabled = false;
                     logoutFromTwitter();
                 } else {
-                    twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
-                   /* if (twittersharingenabled) {
+                    //twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
+                   *//* if (twittersharingenabled) {
                         Constants.twitterShareEnabled = true ;
                         twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
-                    } else {*/
+                    } else {*//*
                     new MaterialDialog.Builder(Create_Message_Activity.this)
                             .title("Post to Twitter")
                             .content("Connect to post website updates to your Twitter Page")
@@ -266,26 +309,26 @@ public class Create_Message_Activity extends AppCompatActivity {
                                 @Override
                                 public void onPositive(MaterialDialog dialog) {
                                     super.onPositive(dialog);
-                                    if (!Constants.twitterShareEnabled) {
+                                    //if (!Constants.twitterShareEnabled) {
                                         MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_TWITTER, null);
-                                         Constants.twitterShareEnabled = true;
-                                        twittersharingenabled = true ;
-                                        twitterloginButton.setImageDrawable(getResources().getDrawable(
-                                                R.drawable.twitter_icon_active));
-                                           Constants.twitterShareEnabled = false;
+                                         //Constants.twitterShareEnabled = true;
+                                        //twittersharingenabled = true ;
+                                        *//*twitterloginButton.setImageDrawable(getResources().getDrawable(
+                                                R.drawable.twitter_icon_active));*//*
+                                           //Constants.twitterShareEnabled = false;
                                         Intent in = new Intent(Create_Message_Activity.this, Social_Sharing_Activity.class);
                                         startActivity(in);
-                                    } else {
-                                        twitterloginButton.setImageDrawable(getResources().getDrawable(
-                                                R.drawable.twitter_icon_inactive));
-                                        Constants.twitterShareEnabled = false;
-                                    }
+                                    //} else {
+                                        //twitterloginButton.setImageDrawable(getResources().getDrawable(
+                                                //R.drawable.twitter_icon_inactive));
+                                        //Constants.twitterShareEnabled = false;
+                                    //}
                                     dialog.dismiss();
                                 }
                             })
                             .show();
                 //}
-            }
+            }*/
             }
         });
 
@@ -347,7 +390,21 @@ public class Create_Message_Activity extends AppCompatActivity {
             public void onClick(View v) {
 
                 // boolean isFacebookPageShareLoggedIn = false;
-                if(!isFacebookPageShareLoggedIn)
+                if(!Util.isNullOrEmpty(session.getFacebookPage())){
+                    if(mFbPageShare==1){
+                        mFbPageShare = 0;
+                        facebookPageShare.setImageDrawable(getResources().getDrawable(R.drawable.facebookpage_icon_inactive));
+                    }else {
+                        mFbPageShare = 1;
+                        facebookPageShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
+                    }
+
+                }else {
+                    Intent i = new Intent(Create_Message_Activity.this, Social_Sharing_Activity.class);
+                    startActivity(i);
+                    overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                }
+                /*if(!isFacebookPageShareLoggedIn)
                 {
 
                     MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_FACEBOOK_PAGE, null);
@@ -393,16 +450,33 @@ public class Create_Message_Activity extends AppCompatActivity {
                 } else {
                     isFacebookPageShareLoggedIn = false;
                     facebookPageShare.setImageDrawable(getResources().getDrawable(R.drawable.facebookpage_icon_inactive));
-                }
+                }*/
             }
         });
 
-
+        /*
+         *Calling App Ice Code
+         */
+        //AppICECode();
 
         facebookShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Util.isNullOrEmpty(session.getFacebookName())) {
+                if(!Util.isNullOrEmpty(session.getFacebookName())){
+                    if(mFbProfileShare==1){
+                        mFbProfileShare = 0;
+                        facebookShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon_inactive));
+                    }else {
+                        mFbProfileShare = 1;
+                        facebookShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
+                    }
+
+                }else {
+                    Intent i = new Intent(Create_Message_Activity.this, Social_Sharing_Activity.class);
+                    startActivity(i);
+                    overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                }
+                /*if (Util.isNullOrEmpty(session.getFacebookName())) {
                     if (facbookEnabled) {
                         facbookEnabled = false ;
                         facebookShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon_inactive));
@@ -429,7 +503,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                                     @Override
                                     public void onPositive(MaterialDialog dialog) {
                                         super.onPositive(dialog);
-                                        facbookEnabled = true ;
+
                                         fbData();
                                         //  }
                                         dialog.dismiss();
@@ -451,7 +525,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                         facbookEnabled = true ;
                         facebookShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
                     }
-                }
+                }*/
             }
         });
 
@@ -583,6 +657,12 @@ public class Create_Message_Activity extends AppCompatActivity {
                         Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, Constants.GALLERY_PHOTO);
+                /*Intent i = new Intent();
+                i.setType("image*//*");
+                i.setAction(Intent.ACTION_GET_CONTENT);
+                i.addCategory(Intent.CATEGORY_OPENABLE);
+                i.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                startActivityForResult(Intent.createChooser(i,"Select an Image" ), Constants.GALLERY_PHOTO);*/
             }
         } catch (ActivityNotFoundException anfe) {
             // display an error message
@@ -721,23 +801,50 @@ public class Create_Message_Activity extends AppCompatActivity {
         }
     };
 
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         facebook.authorizeCallback(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && (Constants.GALLERY_PHOTO == requestCode)) {
             if (data != null) {
                 picUri = data.getData();
-                if (picUri == null) {
-                    CameraBitmap = (Bitmap) data.getExtras().get("data");
-                    path = Util.saveBitmap(CameraBitmap, activity,tagName + System.currentTimeMillis());
-                    picUri = Uri.parse(path);
-                    setPicture(CameraBitmap);
-                    //if (replaceImage) replaceProductImage(product_data._id);
-                } else {
-                    path = getRealPathFromURI(picUri);
-                    CameraBitmap = Util.getBitmap(path, activity);
-                    setPicture(CameraBitmap);
-                   // if (replaceImage) replaceProductImage(product_data._id);
+                /*try {
+                    BoostLog.d("Uri Image:", Uri.decode(picUri.toString()));
+                    path = getPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI ,"_id=?",new String[]{Uri.decode(picUri.toString()).split(":")[2]});
+                    setPicture(BitmapFactory.decodeFile(path));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    String[] projection = { MediaStore.Images.Media.DATA };
+                    Cursor cursor = managedQuery(picUri, projection, null, null, null);
+                    if( cursor != null ){
+                        int column_index = cursor
+                                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                        cursor.moveToFirst();
+                        path = cursor.getString(column_index);
+                    }else {
+                        path  =picUri.getPath();
+                    }
+                    setPicture(BitmapFactory.decodeFile(path));
+                    // this is our fallback here
+
+                }*/
+                try {
+                    if (picUri == null) {
+                        CameraBitmap = (Bitmap) data.getExtras().get("data");
+                        path = Util.saveBitmap(CameraBitmap, activity, tagName + System.currentTimeMillis());
+                        picUri = Uri.parse(path);
+                        setPicture(CameraBitmap);
+                        //if (replaceImage) replaceProductImage(product_data._id);
+                    } else {
+                        path = getRealPathFromURI(picUri);
+                        CameraBitmap = Util.getBitmap(path, activity);
+                        setPicture(CameraBitmap);
+                        // if (replaceImage) replaceProductImage(product_data._id);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Methods.showSnackBarNegative(Create_Message_Activity.this, "Please Select Offline Images Only");
                 }
+
             }
         }else if (resultCode == RESULT_OK && (Constants.CAMERA_PHOTO == requestCode)) {
             try {
@@ -776,10 +883,33 @@ public class Create_Message_Activity extends AppCompatActivity {
         }
     }
 
+    public String getPath( Uri uri, String selection,
+                                       String[] selectionArgs) {
+
+        Cursor cursor = null;
+        final String column = "_data";
+        final String[] projection = {
+                column
+        };
+
+        try {
+            cursor = getContentResolver().query(uri, projection, selection, selectionArgs,
+                    null);
+            if (cursor != null && cursor.moveToFirst()) {
+                final int column_index = cursor.getColumnIndexOrThrow(column);
+                return cursor.getString(column_index);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return null;
+    }
+
     public String getRealPathFromURI(Uri contentUri) {
         try{
-            String[] proj = { MediaStore.Images.Media.DATA };
-            Cursor cursor = managedQuery(contentUri, proj, null, null, null);
+            String[] projection = { MediaStore.Images.Media.DATA };
+            Cursor cursor = managedQuery(contentUri, projection, null, null, null);
             int column_index = cursor
                     .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
@@ -992,25 +1122,10 @@ public class Create_Message_Activity extends AppCompatActivity {
         super.onResume();
         uiHelper.onResume();
 
-//        if(!Util.isNullOrEmpty(session.getFacebookName())) {
-//            facbookEnabled = true;
-//            facebookShare.setImageDrawable(getResources().getDrawable(
-//                    R.drawable.facebook_icon));
-//        }
-//
-//        if(!Util.isNullOrEmpty(session.getFacebookPage())) {
-//            isFacebookPageShareLoggedIn = true;
-//            facebookPageShare.setImageDrawable(getResources().getDrawable(
-//                    R.drawable.facebook_page));
-//        }
 
         MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY,null);
-        if (Util.isNullOrEmpty(Constants.TWITTER_TOK)
-                || Util.isNullOrEmpty(Constants.TWITTER_SEC))
-        {
-            //rahul comments
-           /* twitterloginButton.setImageDrawable(getResources().getDrawable(
-                    R.drawable.twitter_icon_inactive));*/
+        if(Constants.twitterShareEnabled) {
+            twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
         }
     }
 
@@ -1024,6 +1139,7 @@ public class Create_Message_Activity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        imageIconButtonSelected = false;
         uiHelper.onDestroy();
     }
 
@@ -1056,6 +1172,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                             session.storeFacebookAccessToken(FACEBOOK_ACCESS_TOKEN);
                             dataBase.updateFacebookNameandToken(FACEBOOK_USER_NAME,FACEBOOK_ACCESS_TOKEN);
 
+                            facbookEnabled = true ;
                             Constants.fbShareEnabled = true;
                             prefsEditor.putBoolean("fbShareEnabled", true);
                             prefsEditor.putString("fbId", Constants.FACEBOOK_USER_ID);
@@ -1246,4 +1363,12 @@ public class Create_Message_Activity extends AppCompatActivity {
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.removeAllCookie();
     }
+    /*private void AppICECode() {
+        boolean isSemusiSensing = ContextSdk.isSemusiSensing(getApplicationContext());
+        if (isSemusiSensing == false) {
+            SdkConfig config = new SdkConfig();
+            config.setAnalyticsTrackingAllowedState(true);
+            Api.startContext(getApplicationContext(), config);
+        }
+    }*/
 }

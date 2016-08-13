@@ -32,6 +32,7 @@ public class Upload_Logo extends AsyncTask<Void,String, String> {
     String path;
     String fpID ;
     ProgressDialog pd = null;
+    private int imageSize = 4194304;
 
     boolean isUploadingSuccess = false ;
 
@@ -115,14 +116,17 @@ public class Upload_Logo extends AsyncTask<Void,String, String> {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
+            if(f.length()>imageSize){
+                throw new Exception("Large File Size");
+            }
 
             BitmapFactory.Options options = new BitmapFactory.Options();
             Bitmap bmp = BitmapFactory.decodeFile(imagePath, options);
-            if ((f.length() / 1024) > 100) {
+            /*if ((f.length() / 1024) > 100) {
                 bmp.compress(Bitmap.CompressFormat.JPEG, 70, bos);
-            } else {
+            } else {*/
                 bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-            }
+            //}
 
             byte[] bitmapdata = bos.toByteArray();
 
@@ -159,7 +163,11 @@ public class Upload_Logo extends AsyncTask<Void,String, String> {
 
             String temp = uri + "totalChunks=1&currentChunkNumber=1";
             sendDataToServer(temp, bitmapdata);
-        }catch(Exception e){e.printStackTrace();System.gc();}
+        }catch(Exception e){
+            Methods.showSnackBarNegative(appContext, e.getMessage());
+            e.printStackTrace();
+            System.gc();
+        }
 
 
 

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.nowfloats.Analytics_Screen.API.Search_Queries_Enterprise_API;
@@ -16,6 +15,7 @@ import com.nowfloats.NavigationDrawer.Analytics_Fragment;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.Chat.ChatModel;
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.Twitter.TwitterConstants;
 import com.nowfloats.Volley.AppController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.DataMap;
 import com.nowfloats.util.Constants;
@@ -111,6 +111,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     private String KEY_FACEBOOK_PROFILE_DESCRIPTION = "FacebookProfileDescription";
     private String KEY_IS_THINKSITY = "isThinksity";
     private String KEY_IS_FREE_DOMAIN = "isFreeDomain";
+    private String KEY_FP_TAG = "fptag";
 
     //public boolean showUpdates;
 
@@ -162,6 +163,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         editor.commit();
     }
 
+
     public String getSubcribersCount()
     {
 
@@ -184,6 +186,11 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         editor.putString(KEY_LS, cnt);
         editor.commit();
     }
+    public void storeFpTag(String tag){
+        editor.putString(KEY_FP_TAG, tag);
+        editor.commit();
+    }
+
     public String getLocalStorePurchase()
     {
         return pref.getString(KEY_LS, "");
@@ -225,6 +232,9 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     {
 
         return pref.getString(KEY_FP_NAME,null);
+    }
+    public String getFpTag(){
+        return pref.getString(KEY_FP_TAG,null);
     }
 
     public boolean getShareWebsite(){
@@ -709,7 +719,6 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
 
 
-
 //        AppController.getInstance().clearApplicationData();
 //
 //        Date date = new Date(System.currentTimeMillis());
@@ -773,6 +782,10 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 editor.clear();
                 editor.commit();
 
+                SharedPreferences.Editor twitterEditor = _context.getSharedPreferences(TwitterConstants.PREF_NAME,_context.MODE_PRIVATE).edit();
+                twitterEditor.clear();
+                twitterEditor.commit();
+
                 AppController.getInstance().clearApplicationData();
 
                 Date date = new Date(System.currentTimeMillis());
@@ -794,24 +807,25 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 Constants.ImageGalleryWidget = false ;
                 Constants.BusinessTimingsWidget = false ;
                 Constants.BusinessEnquiryWidget = false ;
-                HomeActivity.StorebizFloats = new ArrayList<FloatsMessageModel>();
+                HomeActivity.StorebizFloats.clear();
+                HomeActivity.StorebizFloats= null;
+                HomeActivity.StorebizFloats= new ArrayList<FloatsMessageModel>();
                 ChatFragment.chatModels = new ArrayList<ChatModel>();
                 Analytics_Fragment.subscriberCount.setText("0");
                 Analytics_Fragment.visitCount.setText("0");
 
                 MixPanelController.track("LogoutSuccess", null);
 
-                activity.finish();
-                Intent i = new Intent(activity, Login_MainActivity.class);
+                //activity.finish();
+                /*Intent i = new Intent(activity, Login_MainActivity.class);
                 // Closing all the Activities
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                // Add new Flag to start new Activity
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
                 // Staring Login Activity
-                activity.startActivity(i);
+                activity.startActivity(i);*/
+                activity.finish();
                 System.gc();
+                System.exit(0);
             }
 
             @Override
@@ -831,7 +845,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     }
 
     @Override
-    public void dataFetched() {
+    public void dataFetched(int skip, boolean isNewMessage) {
 
         if(pd != null)
         pd.dismiss();
@@ -844,9 +858,9 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
         Intent i = new Intent(_context, HomeActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("message",HomeActivity.StorebizFloats);
-        i.putExtras(bundle);
+        //Bundle bundle = new Bundle();
+        //bundle.putParcelableArrayList("message",HomeActivity.StorebizFloats);
+        //i.putExtras(bundle);
         // Staring Login Activity
         _context.startActivity(i);
     }

@@ -1,6 +1,7 @@
 package com.nowfloats.BusinessProfile.UI.UI.FAQ;
 
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -39,7 +40,7 @@ public class FAQ_QandA_Activity extends ActionBarActivity {
         toolbar = (Toolbar)findViewById(R.id.app_bar_faq_qnada);
         setSupportActionBar(toolbar);
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
-        headerText.setText("FAQ");
+        headerText.setText("FAQs");
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -53,7 +54,7 @@ public class FAQ_QandA_Activity extends ActionBarActivity {
             int ans_resourceId = R.array.class.getField("answer_" + String.valueOf(item_no)).getInt(null);
             q_and_a_faq_values = getResources().getStringArray(quest_resourceId);
             ans_values = getResources().getStringArray(ans_resourceId);
-            adapter = new ArrayAdapter<String>(this, R.layout.tv_row_for_lv, R.id.tv_row_val, q_and_a_faq_values);
+            adapter = new ArrayAdapter<String>(this, R.layout.tv_row_for_lv, q_and_a_faq_values);
             lv_q_and_a.setAdapter(adapter);
             lv_q_and_a.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -97,6 +98,8 @@ public class FAQ_QandA_Activity extends ActionBarActivity {
                 new SpannableString(Html.fromHtml(ans));
         float dpi = getResources().getDisplayMetrics().density;
         message.setText(Html.fromHtml(ans));
+        Typeface face = Typeface.createFromAsset(getAssets(), "Roboto-Regular.ttf");
+        message.setTypeface(face);
         message.setMovementMethod(LinkMovementMethod.getInstance());
         Linkify.addLinks(s, Linkify.WEB_URLS);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

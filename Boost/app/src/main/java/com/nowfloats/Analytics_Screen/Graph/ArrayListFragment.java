@@ -2,7 +2,6 @@ package com.nowfloats.Analytics_Screen.Graph;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.nowfloats.util.BoostLog;
 import com.thinksity.R;
 
 /**
@@ -60,6 +60,6 @@ public class ArrayListFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        Log.i("FragmentList", "Item clicked: " + id);
+        BoostLog.i("FragmentList", "Item clicked: " + id);
     }
 }

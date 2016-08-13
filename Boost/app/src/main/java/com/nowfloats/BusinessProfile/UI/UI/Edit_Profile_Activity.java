@@ -1,6 +1,7 @@
 package com.nowfloats.BusinessProfile.UI.UI;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -301,7 +303,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
 
 
         Initdata();
-        selectCats();
+        //selectCats();
     }
 
     @Override
@@ -362,7 +364,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
 //            }
 //        });
 
-        if(businessCategoryList == null)
+        /*if(businessCategoryList == null)
         {
             businessCategoryList = API_Layer.getBusinessCategories(Edit_Profile_Activity.this);
         }
@@ -382,7 +384,8 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                         }
                     })
                     .show();
-        }
+        }*/
+        new FetchCategory().execute();
 
     }
 
@@ -524,8 +527,8 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         category.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY));
 
        // String baseNameProfileImage = "https://api.withfloats.com/"+ Constants.storePrimaryImage;
-        if(Constants.IMAGEURIUPLOADED == false)
-        {
+        /*if(!Constants.IMAGEURIUPLOADED)
+        {*/
             String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
             if(iconUrl.length()>0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
                 String baseNameProfileImage = Constants.BASE_IMAGE_URL+"" + iconUrl;
@@ -537,7 +540,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                     Picasso.with(Edit_Profile_Activity.this).load(R.drawable.featured_photo_default).into(editProfileImageView);
                 }
             }
-        }
+        //}
 
         if(session.getIsSignUpFromFacebook().contains("true"))
         {
@@ -641,6 +644,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                 Intent i = new Intent(
                         Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                i.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
 
                 startActivityForResult(i, GALLERY_PHOTO);
             }
@@ -739,7 +743,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         return null;
     }
     public void uploadPrimaryPicture(String path) {
-
+        //Picasso.with(Edit_Profile_Activity.this).load(path).placeholder(R.drawable.featured_photo_default).into(editProfileImageView);
         uploadIMAGEURI uploadAsyncTask = new uploadIMAGEURI(Edit_Profile_Activity.this,
                 path,session.getFPID());
         uploadAsyncTask.execute();
@@ -781,6 +785,47 @@ public class Edit_Profile_Activity extends AppCompatActivity {
 
 //        UploadPictureAsyncTask upa = new UploadPictureAsyncTask(Edit_Profile_Activity.this, path, true,false,session.getFPID());
 //        upa.execute();
+    }
+    private class FetchCategory extends AsyncTask<String, Void, String> {
+
+        ProgressDialog pd = null;
+
+        @Override
+        protected void onPreExecute() {
+
+            pd = ProgressDialog.show(Edit_Profile_Activity.this, "", "Wait While Loading Categories...");
+            //return
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            API_Layer.getBusinessCategories(Edit_Profile_Activity.this);
+            return null;
+        }
+
+
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            if(pd!=null && pd.isShowing()){
+                pd.dismiss();
+            }
+            new MaterialDialog.Builder(Edit_Profile_Activity.this)
+                    .title("Select a Category")
+                    .items(Constants.storeBusinessCategories)
+                    .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                        @Override
+                        public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                            category.setText(text);
+                            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY,category.getText().toString());
+                            //Util.changeDefaultBackgroundImage(text.toString());
+                            return false;
+                        }
+                    })
+                    .show();
+            //return
+        }
     }
 
 }

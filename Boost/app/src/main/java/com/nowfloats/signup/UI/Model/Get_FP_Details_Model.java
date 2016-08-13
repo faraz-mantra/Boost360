@@ -65,6 +65,7 @@ public class Get_FP_Details_Model {
     public String GAToken;
     public String IsBulkSubscription;
     public String LanguageCode ;
+    public ArrayList<NfxTokenModel> NFXAccessTokens;
     public ArrayList<String> PackageIds ;
     public String PaymentLevel ;
     public String PaymentState;

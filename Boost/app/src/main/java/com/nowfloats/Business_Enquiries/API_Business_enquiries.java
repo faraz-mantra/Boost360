@@ -1,7 +1,6 @@
 package com.nowfloats.Business_Enquiries;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Enterprise_Model;
@@ -10,7 +9,7 @@ import com.nowfloats.Business_Enquiries.Model.BzQueryEvent;
 import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Volley.AppController;
-import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.squareup.otto.Bus;
@@ -111,7 +110,7 @@ public class API_Business_enquiries {
 
                         @Override
                         public void failure(RetrofitError error) {
-                            Log.i("Enterprise_enquiry", "" + error.getMessage());
+                            BoostLog.i("Enterprise_enquiry", "" + error.getMessage());
                         }
                     });
                 }catch (Exception e){e.printStackTrace();}
@@ -130,7 +129,7 @@ public class API_Business_enquiries {
 
                         @Override
                         public void failure(RetrofitError error) {
-                            Log.d("Business_enquiry", " Error : " + error.getMessage());
+                            BoostLog.d("Business_enquiry", " Error : " + error.getMessage());
                         }
                     });
                 }catch (Exception e)

@@ -21,6 +21,7 @@ import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
@@ -112,8 +113,9 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                             websiteTextView.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
 
                             businessProfileImageView = (ImageView) mainView.findViewById(R.id.businessProfileIcon_ProfileV2);
-                            if (Constants.IMAGEURIUPLOADED == false) {
+                            //if (Constants.IMAGEURIUPLOADED == false) {
                                 String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
+                                BoostLog.d("TAG", iconUrl);
                                 if(iconUrl.length()>0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
                                     String baseNameProfileImage = Constants.BASE_IMAGE_URL+"" + iconUrl;
                                     Picasso.with(activity)
@@ -126,7 +128,8 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                                         Picasso.with(activity).load(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
                                     }
                                 }
-                            }
+                            //}
+
                             //session.getIsSignUpFromFacebook().contains("true")
                             if (session.getIsSignUpFromFacebook().contains("true")) {
                                 Picasso.with(activity)
@@ -282,7 +285,9 @@ public class Business_Profile_Fragment_V2 extends Fragment {
             }
         }).start();
 
+        BoostLog.d("Test", "OnCeate View is called");
     }
+
 
     private int getCategoryBackgroundImage(String category) {
 //        backgroundImages.put("GENERALSERVICES", R.drawable.general_services_background_img);

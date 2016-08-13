@@ -20,6 +20,7 @@ import com.nowfloats.NavigationDrawer.RoundCorners_image;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -431,6 +432,8 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
 
     public void sendDataToServer(String url, byte[] BytesToBeSent){
         DataOutputStream outputStream = null;
+
+        BoostLog.d("BackGroundImage Url", url);
 
         try {
 

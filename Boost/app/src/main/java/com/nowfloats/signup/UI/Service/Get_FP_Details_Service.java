@@ -54,12 +54,13 @@ public class Get_FP_Details_Service {
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Methods.showSnackBarNegative(activity, "Something went wrong! Please try again.");
+                        //Methods.showSnackBarNegative(activity, "Something went wrong! Please try again.");
                         if (WebSiteAddressActivity.pd != null) {
                             WebSiteAddressActivity.pd.dismiss();
                         }
                         if (SplashScreen_Activity.pd!=null)
                         {
+                            bus.post(new Get_FP_Details_Event(new Get_FP_Details_Model()));
                             SplashScreen_Activity.pd.dismiss();
                         }
 

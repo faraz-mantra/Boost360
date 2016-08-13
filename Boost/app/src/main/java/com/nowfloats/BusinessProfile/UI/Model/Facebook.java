@@ -88,7 +88,7 @@ public class Facebook {
 //                                    }
 //                                });
 //                            } catch (final Exception ex) {
-//                                Log.i("---", "Exception in thread");
+//                                BoostLog.i("---", "Exception in thread");
 //                            }
 //
 

@@ -21,7 +21,7 @@ public class API_Layer {
     public static String[] cat = null;
 
 
-    public static String[] getBusinessCategories(Context context) {
+    public static void getBusinessCategories(Context context) {
         RequestQueue queue = newRequestQueue(context);
         String url = Constants.NOW_FLOATS_API_URL+"/Discover/v1/floatingPoint/categories";
         JsonArrayRequest jsObjRequest = new JsonArrayRequest(url,
@@ -35,12 +35,14 @@ public class API_Layer {
                             try {
                                 cat[i] = (String) response.get(i);
                                 // Toast.makeText(PreSignUpActivity.this,"Cat : "+cat[i],Toast.LENGTH_SHORT).show();
+                                //BoostLog.d("Test: ", cat[i]);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
 
-                      //  Constants.storeBusinessCategories = cat ;
+                       Constants.storeBusinessCategories = cat ;
+                        //BoostLog.d("Test", "Hello");
                         // selectCats();
                     }
                 }, new Response.ErrorListener() {
@@ -53,7 +55,7 @@ public class API_Layer {
         });
 
         queue.add(jsObjRequest);
-        return Constants.storeBusinessCategories;
+        //return Constants.storeBusinessCategories;
     }
 
 }

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.NavigationDrawer.API.Home_View_Card_Delete;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
@@ -46,11 +47,17 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         position = extras.getInt("POSITION");
+        BoostLog.d("POSITION: ", position + "");
 
         deleteButton = (ImageView) toolbar.findViewById(R.id.home_view_delete_card);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
+
+                if(!Methods.isOnline(Card_Full_View_MainActivity.this)){
+                    return;
+                }
+
                 new MaterialDialog.Builder(Card_Full_View_MainActivity.this)
                         .customView(R.layout.exit_dialog, true)
                         .positiveText("Delete")
@@ -63,14 +70,14 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
                             MixPanelController.track(EventKeysWL.MESSAGE_FULL_VIEW_DELETE, null);
 
                                 try {
-                                    cardId = HomeActivity.StorebizFloats.get(position)._id;
+                                    cardId = HomeActivity.StorebizFloats.get(viewPager.getCurrentItem())._id;
                                     JSONObject content = new JSONObject();
                                     content.put("dealId", cardId);
                                     content.put("clientId", Constants.clientId1);
 
 
                                     Home_View_Card_Delete obj =  new Home_View_Card_Delete(Card_Full_View_MainActivity.this,
-                                            Constants.DeleteCard,content,position,v,0);
+                                            Constants.DeleteCard,content,viewPager.getCurrentItem(),v,0);
                                     //obj.CardRefresh_Listener(this);
                                     obj.execute();
 

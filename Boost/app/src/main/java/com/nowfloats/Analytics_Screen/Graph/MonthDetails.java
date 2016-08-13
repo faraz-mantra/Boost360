@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
@@ -17,6 +16,7 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.thinksity.R;
@@ -525,7 +525,7 @@ public class MonthDetails extends ActionBarActivity implements View.OnClickListe
                     // Fetching the data from we service
                     data = downloadUrl(url);
                 } catch (Exception e) {
-                    Log.d("Background Task", e.toString());
+                    BoostLog.d("Background Task", e.toString());
                 }
             }
             catch(Exception e){
@@ -567,7 +567,7 @@ public class MonthDetails extends ActionBarActivity implements View.OnClickListe
                 valArray = visitCountParser.parse(jObject,dateArray);
 
             }catch(Exception e){
-                Log.d("Exception",e.toString());
+                BoostLog.d("Exception",e.toString());
             }
             return valArray;
         }

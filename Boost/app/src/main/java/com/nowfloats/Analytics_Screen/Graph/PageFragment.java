@@ -9,7 +9,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +26,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.Highlight;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.thinksity.R;
@@ -356,7 +356,7 @@ public class PageFragment extends Fragment {
 
             for(int i=0; i<dateArray.size(); i++) {
                 entryList.add(new BarEntry(valueArray.get(i), i));
-                //Log.d("ILUD Array:", String.valueOf(valueArray.get(i) + " " + dateArray.get(i)));
+                //BoostLog.d("ILUD Array:", String.valueOf(valueArray.get(i) + " " + dateArray.get(i)));
             }
 
             BarDataSet barDataSet = new BarDataSet(entryList,"");
@@ -384,10 +384,10 @@ public class PageFragment extends Fragment {
             // set the marker to the chart
             //barChart[MODE_WEEK].setMarkerView(mv);
             for(int i=0 ; i<dateArray.size(); i++){
-                Log.d("ILUD DATE Array:", dateArray.get(i));
+                BoostLog.d("ILUD DATE Array:", dateArray.get(i));
             }
             for(int i =0 ; i<valueArray.size(); i++){
-                Log.d("ILUD DATE Array:", valueArray.get(i) + "");
+                BoostLog.d("ILUD DATE Array:", valueArray.get(i) + "");
             }
 
 
@@ -443,7 +443,7 @@ public class PageFragment extends Fragment {
             //int[] monthWiseNumbers = { 0,0,0,0,0,0,0,0,0,0,0,0 };
             int[] monthWiseNumbers = { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 };
             //List<Integer> monthData = new ArrayList<>();
-            //Log.d("ILUD Year Mode", y.size()+"");
+            //BoostLog.d("ILUD Year Mode", y.size()+"");
             for(int i=0; i<valueArray.size(); i++)
             {
                 int k = Integer.parseInt(dateArray.get(i).substring(5,7)) - 1;
@@ -462,7 +462,7 @@ public class PageFragment extends Fragment {
             barDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
             barDataSet.setColors(colorArray);
             barDataSet.setValueTypeface(customFont);
-            Log.d("Boo---",""+sizeBoolean);
+            BoostLog.d("Boo---",""+sizeBoolean);
             if (sizeBoolean) {
                 barDataSet.setValueTextSize(7.0f);
             }else {
@@ -727,7 +727,7 @@ public class PageFragment extends Fragment {
             String[] currdateOfWeek = currDate.split("-");
             dateArray = getDateArray(Integer.parseInt(firstdateOfWeekArray[2]), Integer.parseInt(firstdateOfWeekArray[1]),Integer.parseInt(firstdateOfWeekArray[0]),
                     Integer.parseInt(currdateOfWeek[2]),Integer.parseInt(currdateOfWeek[1]),Integer.parseInt(currdateOfWeek[0]) );
-            Log.d("ILUD Dates:", currDate + "   " + firstDateOfWeek);
+            BoostLog.d("ILUD Dates:", currDate + "   " + firstDateOfWeek);
             try {
                 String startDate = URLEncoder.encode(firstDateOfWeek, "UTF-8");
                 String endDate = URLEncoder.encode(String.format(currDate), "UTF-8");
@@ -746,7 +746,7 @@ public class PageFragment extends Fragment {
                     // Fetching the data from we service
                     data = downloadUrl(url);
                 } catch (Exception e) {
-                    Log.d("Background Task", e.toString());
+                    BoostLog.d("Background Task", e.toString());
                 }
             }catch (UnsupportedEncodingException e){
                 e.printStackTrace();
@@ -811,7 +811,7 @@ public class PageFragment extends Fragment {
                     // Fetching the data from we service
                     data = downloadUrl(url);
                 } catch (Exception e) {
-                    Log.d("Background Task", e.toString());
+                    BoostLog.d("Background Task", e.toString());
                 }
             }
             catch(Exception e){
@@ -856,7 +856,7 @@ public class PageFragment extends Fragment {
                 valArray = visitCountParser.parse(jObject,dateArray);
 
             }catch(Exception e){
-                Log.d("Exception",e.toString());
+                BoostLog.d("Exception",e.toString());
             }
             return valArray;
         }
@@ -958,7 +958,7 @@ public class PageFragment extends Fragment {
                     // Fetching the data from we service
                     data = downloadUrl(url);
                 } catch (Exception e) {
-                    Log.d("Background Task", e.toString());
+                    BoostLog.d("Background Task", e.toString());
                 }
             }
             catch(Exception e){
@@ -999,7 +999,7 @@ public class PageFragment extends Fragment {
                 totalCount = totalCountParser.parse(jObject);
 
             }catch(Exception e){
-                Log.d("Exception",e.toString());
+                BoostLog.d("Exception",e.toString());
             }
             return totalCount;
         }

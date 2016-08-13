@@ -6,6 +6,7 @@ import android.provider.Settings;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
@@ -33,6 +34,9 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
 
 //        ContextApplication.initSdk(this, this);
 
+        //AppIce SDk
+ //       ContextApplication.initSdk(getApplicationContext(), this);
+
         AppsFlyerLib.setAppsFlyerKey("drr3ek3vNxVmxJZgtBpfnR");
         try {
             Fabric.with(this, new Crashlytics());
@@ -43,7 +47,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
 
         String deviceId = Settings.Secure.getString(this.getContentResolver(),Settings.Secure.ANDROID_ID);
 
-        Log.d("Device ID","Device ID : "+deviceId);
+        //Log.d("Device ID","Device ID : "+deviceId);
 
         /*CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("Roboto-Light.ttf")
@@ -139,6 +143,10 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
                 break;
             }
         }
+    }
+
+    public void addToRequstQueue(Request request){
+        mRequestQueue.add(request);
     }
 
     /* Image editing sdk methods*/

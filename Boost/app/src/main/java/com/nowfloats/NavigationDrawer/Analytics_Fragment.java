@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.nowfloats.Analytics_Screen.Graph.VisitsPage;
 import com.nowfloats.Analytics_Screen.SearchQueries;
+import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -84,6 +85,16 @@ public class Analytics_Fragment extends Fragment {
                 MixPanelController.track("OverallVisitsDetailedView",null);
                 Intent q = new Intent(getActivity(), VisitsPage.class);
                 startActivity(q);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
+        LinearLayout subscribeLinearLayout = (LinearLayout) rootView.findViewById(R.id.subscribers_details);
+        subscribeLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), SubscribersActivity.class);
+                startActivity(i);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });

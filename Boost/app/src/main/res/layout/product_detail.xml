@@ -140,6 +140,40 @@
                 app:met_primaryColor="@color/primaryColor"
                 app:met_singleLineEllipsis="true" />
 
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/product_priority"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primaryColor"
+                android:hint="Select Priority"
+                android:textColorHint="@color/primaryColor"
+                android:layout_marginBottom="12dp"
+
+                android:focusableInTouchMode="false"
+                android:focusable="false"
+                android:imeOptions="flagNoExtractUi"
+                android:drawableRight="@drawable/dropselect"
+                android:textSize="15sp"
+                fontPath="Roboto-Light.ttf"
+                tools:ignore="MissingPrefix"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="@color/primaryColor" />
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/et_shipping_days"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/main_text_color"
+                android:textSize="15sp"
+                android:inputType="number|numberDecimal"
+                fontPath="Roboto-Light.ttf"
+                tools:ignore="MissingPrefix"
+                android:layout_marginBottom="5dp"
+                android:textColorHint="@color/primaryColor"
+                android:hint="Shipment Duration In Days"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="@color/primaryColor"
+                app:met_singleLineEllipsis="true" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -172,6 +206,48 @@
                         android:checked="true"
                         android:textColorHighlight="@color/product_price"
                         android:id="@+id/switchView" />
+                </LinearLayout>
+
+                <!--<Switch
+                    android:id="@+id/SwitchView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:switchTextAppearance="@color/primaryColor"
+                    android:showText="true"
+                    android:background="@color/primaryColor" />-->
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/product_price"
+                    android:text="Free Shipping"
+                    android:singleLine="true"
+                    fontPath="Roboto-Light.ttf"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_gravity="center"
+                    android:textSize="14sp"
+                    tools:ignore="MissingPrefix" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:gravity="right">
+
+                    <Switch
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:checked="false"
+                        android:textColorHighlight="@color/product_price"
+                        android:id="@+id/sv_free_shipping" />
                 </LinearLayout>
 
                 <!--<Switch

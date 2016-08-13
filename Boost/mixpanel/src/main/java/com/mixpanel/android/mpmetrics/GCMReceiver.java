@@ -7,9 +7,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -197,6 +195,9 @@ public class GCMReceiver extends BroadcastReceiver {
     @SuppressWarnings("deprecation")
     @TargetApi(8)
     private void showNotificationSDKLessThan11(Context context, PendingIntent intent, int notificationIcon, CharSequence title, CharSequence message) {
+        if(title.equals("")){
+            title = "NowFloats Boost";
+        }
         final NotificationManager nm = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
         final Notification n = new Notification(notificationIcon, message, System.currentTimeMillis());
         n.flags |= Notification.FLAG_AUTO_CANCEL;
@@ -216,6 +217,9 @@ public class GCMReceiver extends BroadcastReceiver {
 //                    setContentIntent(intent).
 //                    build();
 //        n.flags |= Notification.FLAG_AUTO_CANCEL;
+        if(title.equals("")){
+            title = "NowFloats Boost";
+        }
         Log.i("Notification triggered","...!!");
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setAutoCancel(true);

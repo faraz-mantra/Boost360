@@ -2,6 +2,7 @@ package com.nowfloats.BusinessProfile.UI.UI;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,7 +15,6 @@ import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +30,7 @@ import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NFXApi.NfxRequestClient;
 import com.nowfloats.NavigationDrawer.API.FacebookFeedPullAutoPublishAsyncTask;
 import com.nowfloats.NavigationDrawer.API.twitter.FacebookFeedPullRegistrationAsyncTask;
 import com.nowfloats.NavigationDrawer.API.twitter.PrepareRequestTokenActivity;
@@ -39,6 +40,7 @@ import com.nowfloats.Twitter.TwitterAuthenticationActivity;
 import com.nowfloats.Twitter.TwitterConstants;
 import com.nowfloats.Twitter.Utils;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
 import com.nowfloats.util.EventKeysWL;
@@ -63,7 +65,7 @@ import twitter4j.auth.RequestToken;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 
-public class Social_Sharing_Activity extends AppCompatActivity implements ITwitterCallbacks {
+public class Social_Sharing_Activity extends AppCompatActivity implements ITwitterCallbacks, NfxRequestClient.NfxCallBackListener {
     private Toolbar toolbar;
     int size = 0;
     boolean[] checkedPages;
@@ -99,9 +101,18 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
     private RequestToken mRequestToken = null;
     private SharedPreferences mSharedPreferences = null;
     private boolean called = false;
+    private ProgressDialog pd = null;
 
 
     //Rahul Twitter
+
+
+    private final int FBTYPE = 0;
+    private final int FBPAGETYPE = 1;
+    private final int TWITTERTYPE = 2;
+    private final int FB_DECTIVATION = 3;
+    private final int FB_PAGE_DEACTIVATION = 4;
+    private final int TWITTER_DEACTIVATION = 11;
 
 
 
@@ -176,13 +187,17 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                     }, 200);
 
                 } else {
-                    DataBase dataBase = new DataBase(activity);
-                    dataBase.updateFacebookPage("", "", "");
-                    session.storeFacebookPage("");
-                    session.storeFacebookPageID("");
-                    session.storeFacebookAccessToken("");
-                    facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebookpage_icon_inactive));
-                    facebookPageStatus.setText("Disconnected");
+                    NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) Social_Sharing_Activity.this)
+                            .setmFpId(session.getFPID())
+                            .setmType("FACEBOOKPAGE")
+                            .setmUserAccessTokenKey("")
+                            .setmUserAccessTokenSecret("")
+                            .setmUserAccountId("")
+                            .setmCallType(FB_PAGE_DEACTIVATION)
+                            .setmName("");
+                    requestClient.connectNfx();
+
+                    pd = ProgressDialog.show(Social_Sharing_Activity.this, "", "Wait While Un Subscribing...");
                 }
             }
         });
@@ -200,14 +215,19 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                         }
                     }, 200);
                 } else {
-                    DataBase dataBase = new DataBase(activity);
-                    dataBase.updateFacebookNameandToken("", "");
 
-                    session.storeFacebookName("");
-                    session.storeFacebookAccessToken("");
-                    facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon_inactive));
-                    facebookHomeStatus.setText("Disconnected");
-                    prefsEditor.putBoolean("FacebookFeedRegd", false);
+                    NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) Social_Sharing_Activity.this)
+                            .setmFpId(session.getFPID())
+                            .setmType("FACEBOOK")
+                            .setmUserAccessTokenKey("")
+                            .setmUserAccessTokenSecret("")
+                            .setmUserAccountId("")
+                            .setmCallType(FB_DECTIVATION)
+                            .setmName("");
+                    requestClient.connectNfx();
+
+                    pd = ProgressDialog.show(Social_Sharing_Activity.this, "", "Wait While Un Subscribing...");
+
                 }
             }
         });
@@ -229,7 +249,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                     final JSONObject obj = new JSONObject();
                     try {
                         obj.put("fpId", session.getFPID());
-                        obj.put("autoPublish", true);
+                        obj.put("autoPublish", false);
                         obj.put("clientId", Constants.clientId);
                         obj.put("FacebookPageName", Constants.fbFromWhichPage);
                     } catch (Exception e) {
@@ -249,15 +269,18 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             public void onClick(View v) {
 
                 if (twitterCheckBox.isChecked()) {
-                    twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
+                    /*twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
                     twitterStatus.setText("Connected");
                     twitterCheckBox.setHighlightColor(getResources().getColor(R.color.primaryColor));
                     Constants.twitterShareEnabled = true;
-                    MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_TWITTER, null);
+                    MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_TWITTER, null);*/
                     //Rahul twitter
                     if (!Utils.isNetworkConnected(Social_Sharing_Activity.this)) {
                         showAlertBox();
                     } else {
+                        mConsumerKey = getApplicationContext().getResources().getString(R.string.twitter_consumer_key);
+                        mConsumerSecret = getApplicationContext().getResources().getString(R.string.twitter_consumer_secret);
+                        mAuthVerifier = "oauth_verifier";
                         final ConfigurationBuilder builder = new ConfigurationBuilder();
                         builder.setOAuthConsumerKey(mConsumerKey);
                         builder.setOAuthConsumerSecret(mConsumerSecret);
@@ -265,19 +288,24 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                         final TwitterFactory factory = new TwitterFactory(configuration);
                         mTwitter = factory.getInstance();
                         new TokenRequest(Social_Sharing_Activity.this).execute();
+                        initTwitterSDK(Social_Sharing_Activity.this);
                     }
                      //Rahul twitter
                 }else {
-                    twitterStatus.setText("Disconnected");
-                    twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
-                    logoutFromTwitter();
-                    twitterCheckBox.setChecked(false);
+                    NfxRequestClient requestClient1 = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) Social_Sharing_Activity.this)
+                            .setmFpId(session.getFPID())
+                            .setmType("TWITTER")
+                            .setmUserAccessTokenKey("")
+                            .setmUserAccessTokenSecret("")
+                            .setmUserAccountId(String.valueOf(""))
+                            .setmCallType(TWITTER_DEACTIVATION)
+                            .setmName("");
+                    requestClient1.connectNfx();
+                    pd = ProgressDialog.show(Social_Sharing_Activity.this, "", "Wait While Un subscribing...");
+
                 }
             }
         });
-
-        initTwitterSDK(this);
-
         InitShareResources();
     }
 
@@ -403,17 +431,14 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                                     for (int i = 0; i < size; i++) {
                                         items.add(i, (String) ((JSONObject) Constants.FbPageList
                                                 .get(i)).get("name"));
+                                        //BoostLog.d("ILUD Test: ", (String) ((JSONObject) Constants.FbPageList
+                                                //.get(i)).get("name"));
                                     }
 
                                     for (int i = 0; i < size; i++) {
                                         checkedPages[i] = false;
                                     }
-                                    runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
-                                        }
-                                    });
+
 
                                 }
                             }
@@ -480,14 +505,18 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         JSONObject obj;
         session.storeFacebookPage(pageName);
         JSONArray data = new JSONArray();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                facebookPageStatus.setText("" + pageName);
-                facebookPageCheckBox.setChecked(true);
-            }
-        });
 
+        NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) Social_Sharing_Activity.this)
+                .setmFpId(session.getFPID())
+                .setmType("FACEBOOKPAGE")
+                .setmUserAccessTokenKey(pageAccessToken)
+                .setmUserAccessTokenSecret("Dummy Value")
+                .setmUserAccountId(pageID)
+                .setmCallType(FBPAGETYPE)
+                .setmName(pageName);
+        requestClient.connectNfx();
+
+        pd = ProgressDialog.show(this, "", "Wait While Subscribing...");
 
         DataBase dataBase = new DataBase(activity);
         dataBase.updateFacebookPage(pageName, pageID, pageAccessToken);
@@ -574,21 +603,36 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                             Constants.FACEBOOK_USER_ACCESS_ID = facebook.getAccessToken();
                             Constants.FACEBOOK_USER_ID = (String) me.getString("id");
 
+
+
                             String FACEBOOK_ACCESS_TOKEN = facebook.getAccessToken();
                             String FACEBOOK_USER_NAME = (String) me.getString("name");
+
+                            //BoostLog.d("FB token and Id:", FACEBOOK_ACCESS_TOKEN + "    " + Constants.FACEBOOK_USER_ID);
+
+                            NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) Social_Sharing_Activity.this)
+                                    .setmFpId(session.getFPID())
+                                    .setmType("FACEBOOK")
+                                    .setmUserAccessTokenKey(facebook.getAccessToken())
+                                    .setmUserAccessTokenSecret("Dummy Value")
+                                    .setmUserAccountId(me.getString("id"))
+                                    .setmCallType(FBTYPE)
+                                    .setmName(FACEBOOK_USER_NAME);
+                            requestClient.connectNfx();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    pd = ProgressDialog.show(Social_Sharing_Activity.this, "", "Wait While Subscribing...");
+                                }
+                            });
+
+                            BoostLog.d("FPID: ", session.getFPID());
 
                             session.storeFacebookName(FACEBOOK_USER_NAME);
                             session.storeFacebookAccessToken(FACEBOOK_ACCESS_TOKEN);
                             DataBase dataBase = new DataBase(activity);
                             dataBase.updateFacebookNameandToken(FACEBOOK_USER_NAME, FACEBOOK_ACCESS_TOKEN);
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
-                                    facebookHomeCheckBox.setChecked(true);
-                                    facebookHomeStatus.setText(session.getFacebookName());
-                                }
-                            });
+
 //                            try {
 //
 //                                // code runs in a thread
@@ -601,13 +645,11 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 //                                    }
 //                                });
 //                            } catch (final Exception ex) {
-//                                Log.i("---", "Exception in thread");
+//                                BoostLog.i("---", "Exception in thread");
 //                            }
 
 
                             //      facebookHomeStatus.setText(Constants.FACEBOOK_USER_NAME);
-                            Constants.fbShareEnabled = true;
-                            prefsEditor.putBoolean("fbShareEnabled", true);
                             prefsEditor.putString("fbId", Constants.FACEBOOK_USER_ID);
                             prefsEditor.putString("fbAccessId", Constants.FACEBOOK_USER_ACCESS_ID);
                             prefsEditor.putString("fbUserName", FACEBOOK_USER_NAME);
@@ -631,7 +673,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 //                                    }
 //                                });
 //                            } catch (final Exception ex) {
-//                                Log.i("---", "Exception in thread");
+//                                BoostLog.i("---", "Exception in thread");
 //                            }
 //
 
@@ -701,7 +743,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
         if(Constants.FbFeedPullAutoPublish){
             facebookautopost.setChecked(true);
-            Log.d("Checked0", "checked");
+            BoostLog.d("Checked0", "checked");
         }
 
 
@@ -774,13 +816,12 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             String text = session.getFacebookPage();
             facebookPageStatus.setText(session.getFacebookPage());
         }
-
        if (!isAuthenticated()) {
-            twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
+            //twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
            // String fbUName = pref.getString(TwitterConstants.PREF_USER_NAME, "");
            twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
            twitterCheckBox.setChecked(false);
-            twitterStatus.setText("Disconnected");
+           twitterStatus.setText("Disconnected");
         } else {
             twitterCheckBox.setChecked(true);
             String twitterName = mSharedPreferences.getString(TwitterConstants.PREF_USER_NAME, "");
@@ -793,33 +834,27 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
     //Rahul Twitter handling
     private void initTwitterSDK(Context context) { // it is fixed for user
-        mConsumerKey = context.getResources().getString(R.string.twitter_consumer_key);
-        mConsumerSecret = context.getResources().getString(R.string.twitter_consumer_secret);
-        mAuthVerifier = "oauth_verifier";  // check whether this could be changed or not
+          // check whether this could be changed or not
         /*If key and secret key are null ,then it not possbile to communicate with twitter*/
         if (TextUtils.isEmpty(mConsumerKey) || TextUtils.isEmpty(mConsumerSecret)) {
             return;
         }
-        if (isAuthenticated()) {
-            Constants.twitterShareEnabled = true;
-            String twitterName = mSharedPreferences.getString(TwitterConstants.PREF_USER_NAME, "");
-            twitterStatus.setText("@" + twitterName);
-            //Toast.makeText(getApplicationContext(), "Already you are authorise to use", Toast.LENGTH_SHORT).show();
-        } else {
-            Uri uri = getIntent().getData();
-            if (uri != null && uri.toString().startsWith(mCallbackUrl)) {
-                String verifier = uri.getQueryParameter(mAuthVerifier);
-                try {
-                    AccessToken accessToken = mTwitter.getOAuthAccessToken(
-                            mRequestToken, verifier);
-                    saveTwitterInformation(accessToken);
-                    Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
-                    Log.d("Failed to login ",
+
+        Uri uri = getIntent().getData();
+        if (uri != null && uri.toString().startsWith(mCallbackUrl)) {
+            String verifier = uri.getQueryParameter(mAuthVerifier);
+            try {
+                AccessToken accessToken = mTwitter.getOAuthAccessToken(
+                        mRequestToken, verifier);
+                //send twitter info
+                saveTwitterInformation(accessToken);
+                Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+                BoostLog.d("Failed to login ",
                             e.getMessage());
-                }
             }
+
         }
     }
     //check about aleady authenticated
@@ -833,16 +868,28 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             try {
                 user = mTwitter.showUser(userID);
                 String username = user.getName();
+
+                NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) Social_Sharing_Activity.this)
+                        .setmFpId(session.getFPID())
+                        .setmType("TWITTER")
+                        .setmUserAccessTokenKey(accessToken.getToken())
+                        .setmUserAccessTokenSecret(accessToken.getTokenSecret())
+                        .setmUserAccountId(String.valueOf(userID))
+                        .setmCallType(TWITTERTYPE)
+                        .setmName(username);
+                requestClient.connectNfx();
+
+                pd = ProgressDialog.show(this, "", "Wait While Subscribing...");
+
                 SharedPreferences.Editor e = mSharedPreferences.edit();
                 e.putString(TwitterConstants.PREF_KEY_OAUTH_TOKEN, accessToken.getToken());
                 e.putString(TwitterConstants.PREF_KEY_OAUTH_SECRET, accessToken.getTokenSecret());
-                e.putBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, true);
+                //e.putBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, true);
                 e.putString(TwitterConstants.PREF_USER_NAME, username);
                 e.commit();
-                Constants.twitterShareEnabled = true;
-                twitterStatus.setText("@" + username);
+
             } catch (TwitterException e1) {
-                Log.d("Failed to Save", e1.getMessage());
+                BoostLog.d("Failed to Save", e1.getMessage());
             }
         }
     }
@@ -901,4 +948,75 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
     }
 
 
+
+
+    /*
+     * This callback is called from NfxClient when there is a successfull or failure post
+     * to the api for NFX. Cases are there to determine the type of call.
+     */
+    @Override
+    public void nfxCallBack(String response, int callType, String name) {
+        if(pd!=null){
+            pd.dismiss();
+        }
+        BoostLog.d("Nfxresponse: ", response + callType + ":");
+        switch (callType){
+            case FBTYPE:
+                facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
+                facebookHomeCheckBox.setChecked(true);
+                facebookHomeStatus.setText(name);
+                Constants.fbShareEnabled = true;
+                prefsEditor = pref.edit();
+                prefsEditor.putBoolean("fbShareEnabled", true);
+                prefsEditor.commit();
+                break;
+            case FBPAGETYPE:
+                facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
+                facebookPageStatus.setText("" + name);
+                facebookPageCheckBox.setChecked(true);
+                break;
+            case TWITTERTYPE:
+                Constants.twitterShareEnabled = true;
+                SharedPreferences.Editor e = mSharedPreferences.edit();
+                e.putBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, true);
+                e.commit();
+                twitterStatus.setText("@" + name);
+                twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
+                //twitterStatus.setText("Connected");
+                twitterCheckBox.setHighlightColor(getResources().getColor(R.color.primaryColor));
+                twitterCheckBox.setChecked(true);
+                //Constants.twitterShareEnabled = true;
+                MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_TWITTER, null);
+                break;
+            case FB_PAGE_DEACTIVATION:
+                DataBase dataBase = new DataBase(activity);
+                dataBase.updateFacebookPage("", "", "");
+                session.storeFacebookPage("");
+                session.storeFacebookPageID("");
+                session.storeFacebookAccessToken("");
+                facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebookpage_icon_inactive));
+                facebookPageStatus.setText("Disconnected");
+                prefsEditor = pref.edit();
+                prefsEditor.putBoolean("fbPageShareEnabled", false);
+                break;
+            case FB_DECTIVATION:
+                DataBase fb_dataBase = new DataBase(activity);
+                fb_dataBase.updateFacebookNameandToken("", "");
+                session.storeFacebookName("");
+                session.storeFacebookAccessToken("");
+                facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon_inactive));
+                facebookHomeStatus.setText("Disconnected");
+                prefsEditor = pref.edit();
+                prefsEditor.putBoolean("fbShareEnabled", false);
+                break;
+            case TWITTER_DEACTIVATION:
+                BoostLog.d("Oh God:", "This is getting Called");
+                twitterStatus.setText("Disconnected");
+                twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
+                logoutFromTwitter();
+                twitterCheckBox.setChecked(false);
+                break;
+
+        }
+    }
 }

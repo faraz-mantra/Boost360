@@ -200,7 +200,9 @@ public class Product_Gallery_Fragment extends Fragment{
     public void getProductList(ArrayList<ProductListModel> data){
         progressLayout.setVisibility(View.GONE);
         if (data!=null){
-        Log.i("","PRoduct List Size--"+data.size());
+            Log.i("","PRoduct List Size--"+data.size());
+            Log.d("Product Id", data.get(0)._id);
+
             productItemModelList = data;
             adapter = new ProductGalleryAdapter(activity, currencyValue);
             gridView.setAdapter(adapter);

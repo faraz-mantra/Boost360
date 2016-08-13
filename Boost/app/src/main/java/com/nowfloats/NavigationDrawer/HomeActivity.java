@@ -25,7 +25,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -74,6 +73,7 @@ import com.nowfloats.Store.Model.StoreModel;
 import com.nowfloats.Store.Service.API_Service;
 import com.nowfloats.Store.StoreFragmentTab;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DefaultArtifactVersion;
@@ -141,6 +141,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     SharedPreferences.Editor prefsEditor;
     private boolean isShownExpireDialog = false;
 
+    private String TAG = HomeActivity.class.getSimpleName();
+
 
 
     @Override
@@ -154,7 +156,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         setContentView(R.layout.activity_home_v3);
         pref = getSharedPreferences(Constants.PREF_NAME,Activity.MODE_PRIVATE);
         AppsFlyerLib.sendTracking(getApplicationContext());
-        Log.d("HomeActivity ONcreate","onCreate");
+        BoostLog.d("HomeActivity ONcreate","onCreate");
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(),HomeActivity.this);
         activity = HomeActivity.this;
@@ -163,6 +165,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 //        GCMIntentService.setHomeActivity(HomeActivity.this);
         Methods.isOnline(HomeActivity.this);
 
+
+        BoostLog.d(TAG, "In on CreateView");
         deepLinkUrl = GCMReceiver.deeplinkUrl;
         session = new UserSessionManager(getApplicationContext(),HomeActivity.this);
         FPID = session.getFPID();
@@ -209,9 +213,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             }
         }).start();
 
-        if (getIntent().hasExtra("message")){
+        /*if (getIntent().hasExtra("message")){
             StorebizFloats = getIntent().getExtras().getParcelableArrayList("message");
-        }
+        }*/
 
         AppsFlyerLib.registerConversionListener(this, new AppsFlyerConversionListener() {
             public String campaign = "";
@@ -228,8 +232,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                             MixPanelController.setProperties("AcquisitionSource", source);
                             MixPanelController.setProperties("CampaignName", campaign);
 
-                            Log.d("AppsFlyerTest","attribute: "+attrName+" = "+stringStringMap.get(attrName));
-                            Log.d("AppsFlyerTest","attribute: "+attrName+" = "+stringStringMap.get(attrName));
+                            BoostLog.d("AppsFlyerTest","attribute: "+attrName+" = "+stringStringMap.get(attrName));
+                            BoostLog.d("AppsFlyerTest","attribute: "+attrName+" = "+stringStringMap.get(attrName));
 
                         }
 
@@ -275,7 +279,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     for (Signature signature : info.signatures) {
                         MessageDigest md = MessageDigest.getInstance("SHA");
                         md.update(signature.toByteArray());
-                        Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+                        BoostLog.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
                     }
                 } catch (PackageManager.NameNotFoundException e) {
 
@@ -361,7 +365,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("cek", "home selected");
+                BoostLog.d("cek", "home selected");
                 if (drawerFragment.mDrawerToggle.isDrawerIndicatorEnabled()){
                     ((DrawerLayout) findViewById(R.id.drawer_layout)).openDrawer(Gravity.LEFT);
                 } else {
@@ -400,23 +404,23 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             chat.chat(fpid,reg,new Callback<ChatRegResponse>() {
                 @Override
                 public void success(ChatRegResponse s, Response response) {
-                    Log.i("GCM chat ", "reg success");
-                    Log.d("Response","Response : "+s.Status);
+                    BoostLog.i("GCM chat ", "reg success");
+                    BoostLog.d("Response","Response : "+s.Status);
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Log.i("GCM chat ","reg FAILed");
+                    BoostLog.i("GCM chat ","reg FAILed");
                 }
             });
         }catch(Exception e){
-            Log.i("GCM chat ","reg exp");
+            BoostLog.i("GCM chat ","reg exp");
             e.printStackTrace();
         }*/
     }
 
     public void DeepLinkPage(String url) {
-        Log.d("Deep Link URL","Deep Link URL : "+url);
+        BoostLog.d("Deep Link URL","Deep Link URL : "+url);
         Constants.GCM_Msg = false;
         if(!Util.isNullOrEmpty(url)){
             if(url.contains(getResources().getString(R.string.deeplink_update)) || url.contains(getResources().getString(R.string.deeplink_featuredimage))){
@@ -543,8 +547,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
     @Override
     protected void onDestroy() {
-       MixPanelController.flushMixPanel(MixPanelController.mainActivity);
        super.onDestroy();
+        MixPanelController.flushMixPanel(MixPanelController.mainActivity);
+        BoostLog.d(TAG, "In onDestroy");
         prefsEditor = pref.edit();
         prefsEditor.putBoolean("EXPIRE_DIALOG",false);
         prefsEditor.commit();
@@ -555,7 +560,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     public void onBackPressed() {
        // super.onBackPressed();
 //        Methods.isOnline(HomeActivity.this);
-        Log.i("back---",""+backChk);
+        BoostLog.i("back---",""+backChk);
         if(backChk){finish();}
         if (!backChk){
             start_backclick();
@@ -571,7 +576,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 try {
                     Thread.sleep(4000);
                     backChk = false;
-                    Log.i("INSIDE---",""+backChk);
+                    BoostLog.i("INSIDE---",""+backChk);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -755,7 +760,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("HomeActivity", "onResume");
+        BoostLog.d("HomeActivity", "onResume");
         Methods.isOnline(HomeActivity.this);
         com.facebook.AppEventsLogger.activateApp(HomeActivity.this, getResources().getString(R.string.facebook_app_id));
         bus.register(this);
@@ -794,7 +799,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("HomeActivity","onStart");
+        BoostLog.d("HomeActivity","onStart");
         if(Constants.GCM_Msg){
             DeepLinkPage(GCMReceiver.deeplinkUrl);
         }
@@ -822,11 +827,11 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         super.onActivityResult(requestCode, resultCode, data);
         if(CardAdapter_V3.pd != null)
         CardAdapter_V3.pd.dismiss();
-        Log.d("","");
+        BoostLog.d("","");
     }
 
     public void getStoredImage(String imagePath) {
-        //  Log.d("Image Path"," Stored Image Path : "+imagePath);
+        //  BoostLog.d("Image Path"," Stored Image Path : "+imagePath);
         File cacheDir = Util.getCacheFolder(this);
         File cacheFile = new File(cacheDir, imagePath);
         InputStream fileInputStream = null;
@@ -982,7 +987,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 //            System.out.println("Have package");
 //            for(ResolveInfo resInfo : resInfos){
 //                String packageName=resInfo.activityInfo.packageName;
-//                Log.i("Package Name", packageName);
+//                BoostLog.i("Package Name", packageName);
 //                if(packageName.contains("com.twitter.android") || packageName.contains("com.facebook.katana") || packageName.contains("com.instagram.android")  ){
 //                    Intent intent=new Intent();
 //                    intent.setComponent(new ComponentName(packageName, resInfo.activityInfo.name));
@@ -1077,6 +1082,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         }
     }
 
+
+
     private void printPlan(ArrayList<ActiveWidget> allModels) {
         for(int i=0;i<allModels.size();i++){
             if(mExpireDailog!=null && mExpireDailog.isShowing()){
@@ -1129,7 +1136,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         switch (expireAccount) {
             case LIGHT_HOUSE_EXPIRE:
                 callUsButtonText = "BUY";
-                cancelButtonText = "CANCEL";
+                cancelButtonText = "LATER";
                 dialogTitle = "Renew Lighthouse plan to get all the features";
                 dialogMessage = "Your Lighthouse plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others";
                 dialogImage = R.drawable.androidexpiryxxxhdpi;
@@ -1138,7 +1145,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
             case WILD_FIRE_EXPIRE:
                 boolean ignoreclicked = pref.getBoolean("IGNORE_CLICKED", false);
-                Log.d("ILUD Boolean Vals: ", String.valueOf(ignoreclicked) + "   " + String.valueOf(dialogShowFlag));
+                BoostLog.d("ILUD Boolean Vals: ", String.valueOf(ignoreclicked) + "   " + String.valueOf(dialogShowFlag));
                 if(!ignoreclicked) {
                     days = pref.getInt("Days_remain", 0);
                     if (days <= 0) {
@@ -1160,7 +1167,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 dialogImage = R.drawable.androidexpiryxxxhdpi;
                 dialogImageBgColor = Color.parseColor("#ff0010");
                 callUsButtonText = "BUY";
-                cancelButtonText = "CANCEL";
+                cancelButtonText = "LATER";
                 dialogTitle = "Buy Lighthouse plan to get all the features";
                 dialogMessage = "Your demo plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.";
                 break;

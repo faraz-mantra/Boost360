@@ -5,11 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +14,9 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.mixpanel.android.java_websocket.framing.FrameBuilder;
 import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.NavigationDrawer.CardData;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.thinksity.R;
 
@@ -87,7 +84,7 @@ public class Business_Queries_Enterprise_Adapter extends RecyclerView.Adapter<Bu
 //        queryTextView.setTypeface(myCustomFontLight);
 //        contactText.setTypeface(myCustomFont);
 
-        Log.d("$$$$$$","Biz Data : "+listPosition+" Data : "+ Constants.StorebizEnterpriseQueries.size());
+        BoostLog.d("$$$$$$","Biz Data : "+listPosition+" Data : "+ Constants.StorebizEnterpriseQueries.size());
         data = Constants.StorebizEnterpriseQueries.get(listPosition);
 
         try {
@@ -130,7 +127,7 @@ public class Business_Queries_Enterprise_Adapter extends RecyclerView.Adapter<Bu
                     }
                 }
             });
-            Log.d("Adapter Data","Adapter Data : "+data.Phone+" , "+data.CreatedDate);
+            BoostLog.d("Adapter Data","Adapter Data : "+data.Phone+" , "+data.CreatedDate);
         } catch (Exception e) {
             e.printStackTrace();
         }

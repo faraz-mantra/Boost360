@@ -6,7 +6,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 import com.nowfloats.Analytics_Screen.Search_Query_Adapter.SearchQueryAdapter;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NotificationCenter.AlertArchive;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.MixPanelController;
@@ -82,7 +82,7 @@ public class SearchQueries extends AppCompatActivity {
 
         if(id==android.R.id.home ){
 
-            Log.d("Back", "Back Pressed");
+            BoostLog.d("Back", "Back Pressed");
             finish();
           overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             //getSupportFragmentManager().popBackStack();

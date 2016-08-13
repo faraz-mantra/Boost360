@@ -46,11 +46,13 @@ import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
 import com.nowfloats.Product_Gallery.Service.ProductImageReplace;
 import com.nowfloats.Product_Gallery.Service.ProductImageUpload;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
@@ -75,9 +77,9 @@ public class Product_Detail_Activity extends AppCompatActivity{
     public Toolbar toolbar;
     public ImageView save;
     public ProductListModel product_data;
-    MaterialEditText productName,productDesc,productCurrency,productPrice,productDiscount,productLink;
+    MaterialEditText productName,productDesc,productCurrency,productPrice,productDiscount,productLink, etShipmentDuration, etPriority;
     ImageView productImage;
-    Switch switchView;
+    Switch switchView, svFreeShipment;
     private String currencyType = "";
     public UserSessionManager session;
     ProductGalleryInterface productInterface;
@@ -92,9 +94,12 @@ public class Product_Detail_Activity extends AppCompatActivity{
     public static boolean replaceImage = false;
     public ProductAPIService apiService;
     public int retryImage =0;
+    private boolean mIsFreeShipment = false;
 
     private final int gallery_req_id = 6;
     private final int media_req_id = 5;
+    private String[] mPriorityList = {"DEFAULT", "HIGH", "MEDIUM", "LOW"};
+    private int mPriorityVal = 1000000;
 
 
 
@@ -122,6 +127,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
         productInterface = Constants.restAdapter.create(ProductGalleryInterface.class);
         tagName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG);
         switchView = (Switch)findViewById(R.id.switchView);
+        svFreeShipment = (Switch) findViewById(R.id.sv_free_shipping);
         switchView.setChecked(true);
 
         PorterDuffColorFilter color = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_IN);
@@ -134,6 +140,8 @@ public class Product_Detail_Activity extends AppCompatActivity{
         productPrice = (MaterialEditText) findViewById(R.id.product_retail_price);
         productDiscount = (MaterialEditText) findViewById(R.id.product_disc_price);
         productLink = (MaterialEditText) findViewById(R.id.product_link);
+        etShipmentDuration = (MaterialEditText) findViewById(R.id.et_shipping_days);
+        etPriority  = (MaterialEditText) findViewById(R.id.product_priority);
         ButtonRectangle deleteProduct = (ButtonRectangle)findViewById(R.id.delete_product);
         deleteProduct.setVisibility(View.GONE);
         //Currency
@@ -143,6 +151,12 @@ public class Product_Detail_Activity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 showCurrencyList(activity,array);
+            }
+        });
+        etPriority.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPriorityList();
             }
         });
 
@@ -159,6 +173,13 @@ public class Product_Detail_Activity extends AppCompatActivity{
                 save.setVisibility(View.VISIBLE);
                 if (isChecked) switchValue = "true";
                 else switchValue = "false";
+            }
+        });
+        svFreeShipment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mIsFreeShipment = isChecked;
+                save.setVisibility(View.VISIBLE);
             }
         });
 
@@ -215,11 +236,44 @@ public class Product_Detail_Activity extends AppCompatActivity{
                     if (avail.equals("true")) {switchView.setChecked(true); switchValue = "true";}
                     else {switchView.setChecked(false);switchValue="false";}
                 }
+                //freeShipment
+                String freeShipment = product_data.IsFreeShipmentAvailable;
+                if (freeShipment!=null && freeShipment.trim().length()>0 && !freeShipment.equals("0")){
+                    if (freeShipment.equals("true")) {svFreeShipment.setChecked(true); mIsFreeShipment = true;}
+                    else {svFreeShipment.setChecked(false);mIsFreeShipment=false;}
+                }
 
                 //link
                 String link = product_data.BuyOnlineLink;
                 if (link!=null && link.trim().length()>0 && !link.equals("0")) productLink.setText(link);
                 textEditListener(productLink);
+                //shipment duration
+                String shipmentDuration = product_data.ShipmentDuration;
+                if (shipmentDuration!=null && shipmentDuration.trim().length()>0 && !shipmentDuration.equals("0")) etShipmentDuration.setText(shipmentDuration);
+                textEditListener(etShipmentDuration);
+                //Currency Code
+                String currencyCode = product_data.CurrencyCode;
+                if (currencyCode!=null && currencyCode.trim().length()>0 && !currencyCode.equals("0")) productCurrency.setText(currencyCode);
+                //textEditListener(productCurrency);
+
+                //priority
+                String priority = product_data.Priority;
+                mPriorityVal = Integer.parseInt(priority);
+                switch (priority){
+                    case "1":
+                        etPriority.setText(mPriorityList[1]);
+                        break;
+                    case "1000000" :
+                        etPriority.setText(mPriorityList[0]);
+                        break;
+                    case "2"  :
+                        etPriority.setText(mPriorityList[2]);
+                        break;
+                    case "3"   :
+                        etPriority.setText(mPriorityList[3]);
+                        break;
+                }
+
 
                 //update onclick listener
                 save.setOnClickListener(new View.OnClickListener() {
@@ -236,11 +290,15 @@ public class Product_Detail_Activity extends AppCompatActivity{
                             boolean flag = ValidateFields(true);
                             ArrayList<UpdateValue> updates = new ArrayList<UpdateValue>();
                             for (Map.Entry<String, String> entry : values.entrySet()) {
+                                //String key = .toUpperCase();
+                                //BoostLog.d(Product_Detail_Activity.class.getName(), key);
                                 updates.add(new UpdateValue(entry.getKey(),entry.getValue()));
                             }
 
                             if(flag){
+                                BoostLog.d("Product_Detail_Activity", updates.toString());
                                 Product_Gallery_Update_Model model = new Product_Gallery_Update_Model(Constants.clientId,product_data._id,updates);
+                                //BoostLog.d()
                                 productInterface.put_UpdateGalleryUpdate(model,new Callback<ArrayList<String>>() {
                                     @Override
                                     public void success(ArrayList<String> strings, Response response) {
@@ -393,10 +451,50 @@ public class Product_Detail_Activity extends AppCompatActivity{
         }
     }
 
+    private void showPriorityList() {
+        String priorityVal = etPriority.getText().toString().trim();
+        int index = 0;
+        if(!Util.isNullOrEmpty(priorityVal)){
+            index = Arrays.asList(mPriorityList).indexOf(priorityVal);
+        }
+
+        new MaterialDialog.Builder(activity)
+                .title("Select Priority")
+                .items(mPriorityList)
+                .widgetColorRes(R.color.primaryColor)
+                .itemsCallbackSingleChoice(index, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int position, CharSequence text) {
+                        try {
+                            etPriority.setText(mPriorityList[position]);
+                            switch (position){
+                                case 0:
+                                    mPriorityVal = 1000000;
+                                    break;
+                                case 1:
+                                    mPriorityVal = 1;
+                                    break;
+                                case 2:
+                                    mPriorityVal = 2;
+                                    break;
+                                case 3:
+                                    mPriorityVal = 3;
+
+                            }
+                            save.setVisibility(View.VISIBLE);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        dialog.dismiss();
+                        return true;
+                    }
+                }).show();
+    }
+
     private boolean ValidateFields(boolean keyCheck) {
         boolean flag = true;
         String desc = "description",disc = "discountAmount",link = "buyOnlineLink",name = "name",price = "price"
-                ,currency = "currencyCode",avail = "isAvailable",ship = "shipmentDuration";
+                ,currency = "currencyCode",avail = "isAvailable",ship = "shipmentDuration", freeShipment = "isFreeShipmentAvailable", priority = "priority" ;
         if (keyCheck){
             desc = desc.toUpperCase();
             disc = "DISCOUNTPRICE";
@@ -407,9 +505,18 @@ public class Product_Detail_Activity extends AppCompatActivity{
             avail = "ISAVAIALABLE";
             ship = ship.toUpperCase();
         }
+        if(keyCheck){
+            freeShipment = "FREESHIPMENT";
+        }
+
+
 
         values.put(avail,switchValue);
-        values.put(ship, "0");
+
+        values.put(freeShipment, String.valueOf(mIsFreeShipment));
+        values.put(priority, String.valueOf(mPriorityVal));
+
+
         try{
             values.put(currency, productCurrency.getText().toString());
         }catch(Exception e){e.printStackTrace();}
@@ -417,6 +524,14 @@ public class Product_Detail_Activity extends AppCompatActivity{
         if(productDesc!=null && productDesc.getText().toString().trim().length()>0){
             values.put(desc, productDesc.getText().toString().trim());
         }else{values.put(desc, "");}
+
+        if(etShipmentDuration!=null && etShipmentDuration.getText().toString().trim().length()>0){
+            values.put(ship, etShipmentDuration.getText().toString());
+        }else {
+            YoYo.with(Techniques.Shake).playOn(etShipmentDuration);
+            Methods.showSnackBarNegative(activity,"Please Enter the Shipment Duration");
+            flag = false;
+        }
 
         if(productDiscount!=null && productDiscount.getText().toString().trim().length()>0){
             values.put(disc, productDiscount.getText().toString().trim());
@@ -452,6 +567,8 @@ public class Product_Detail_Activity extends AppCompatActivity{
                 flag = false;
             }
         }
+
+        System.out.println(values);
 
         return flag;
     }
@@ -546,11 +663,16 @@ public class Product_Detail_Activity extends AppCompatActivity{
     }
 
     public String showCurrencyList(Activity activity,final String[] currencyList){
+        String currencyVal = productCurrency.getText().toString().trim();
+        int index = 0;
+        if(!Util.isNullOrEmpty(currencyVal)){
+            index = Arrays.asList(currencyList).indexOf(currencyVal);
+        }
         new MaterialDialog.Builder(activity)
                 .title("Select Currency")
                 .items(currencyList)
                 .widgetColorRes(R.color.primaryColor)
-                .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
+                .itemsCallbackSingleChoice(index, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int position, CharSequence text) {
                         try {

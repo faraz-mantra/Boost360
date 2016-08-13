@@ -28,7 +28,7 @@ import retrofit.RestAdapter;
 
 
 public class Constants {
-    public static final boolean APK_MODE_RELEASE = false;
+    public static final boolean APK_MODE_RELEASE = true;
     public static final String APP_TAG = "Boost App";
     public static boolean LOGOUPLOADED = false;
     public static boolean IS_SUNDAY_CHECKED = false;
@@ -120,6 +120,7 @@ public class Constants {
     public static String DelBackImg = NOW_FLOATS_API_URL + "/discover/v1/floatingpoint/backgroundImage/delete";
     public static String ReplaceBackImg = NOW_FLOATS_API_URL + "/discover/v1/floatingpoint/replaceBackgroundImage/";
     public static String DeleteCard = NOW_FLOATS_API_URL + "/Discover/v1/floatingPoint/archiveMessage";
+    public static String nfxApi = NOW_FLOATS_API_URL + "/Discover/v2/floatingPoint/updateSocialAccessToken";
 
     public static String picType = "picType";
     public static String picTypeCamera = "picType_Camera";
@@ -161,6 +162,7 @@ public class Constants {
     public static final String PREF_KEY_OAUTH_SECRET = "oauth_token_secret";
     public static final String PREF_KEY_TWITTER_LOGIN = "is_twitter_loggedin";
     public static final String PREF_USER_NAME = "twitter_user_name";
+    public static final String SYNCED = "synced";
 
 
 
@@ -281,6 +283,7 @@ public class Constants {
     public static String[] storeBusinessCategories = {"GENERAL SERVICES",
             "ARCHITECTURE",
             "AUTOMOTIVE",
+            "GROCERY",
             "BLOGS",
             "EDUCATION",
             "ELECTRONICS",
@@ -293,7 +296,7 @@ public class Constants {
             "FASHION - APPAREL",
             "FASHION - FOOTWEAR",
             "FLOWER SHOP",
-            "FURNITURE",
+            "HOME FURNISHINGS",
             "GIFTS & NOVELTIES",
             "HEALTH & FITNESS",
             "HOME APPLIANCES",
@@ -312,7 +315,12 @@ public class Constants {
             "SPORTS",
             "TOURISM",
             "WATCHES & JEWELRY",
-            "OTHER RETAIL"};
+            "OTHER RETAIL",
+            "TUITIONS & COACHING",
+            "MANUFACTURERS",
+            "CONSTRUCTION MATERIAL",
+            "FREELANCER",
+            "CONSULTANTS"};
     public static ArrayList<String> signUpCountryList = new ArrayList<>();
     public static int DefaultBackgroundImage;
     public static boolean imageNotSet = false;

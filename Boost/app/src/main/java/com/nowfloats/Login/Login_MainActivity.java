@@ -133,8 +133,8 @@ public class Login_MainActivity extends AppCompatActivity implements
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userNameText = userName.getText().toString();
-                passwordText = password.getText().toString();
+                userNameText = userName.getText().toString().trim();
+                passwordText = password.getText().toString().trim();
 
                 if (userNameText.length() > 0 && passwordText.length() > 0) {
                     progressDialog = ProgressDialog.show(Login_MainActivity.this, "", "Loading...");

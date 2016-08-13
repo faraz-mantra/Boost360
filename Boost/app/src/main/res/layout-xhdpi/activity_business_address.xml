@@ -59,7 +59,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="bottom"
                         android:hint="Address Line"
-                        android:inputType="text"
+                        android:inputType="textCapSentences"
                         android:textSize="14sp"
                         android:textColor="#575757"/>
 

@@ -31,6 +31,10 @@ public interface Login_Interface {
     @GET("/Discover/v1/floatingPoint/bizFloats")
     public void getMessages(@QueryMap Map<String,String> map, Callback<MessageModel> callback);
 
+    //Get new Available Updates
+    @GET("/Discover/v1/floatingPoint/GetLatestBizFloatsFromMessage")
+    public void getNewAvailableMessage(@QueryMap Map<String, String> map, Callback<MessageModel> callback);
+
     @POST("/Discover/v1/floatingpoint/notification/registerChannel")
     public void post_RegisterRia(@Body HashMap<String,String> map, Callback<String> callback);
 

@@ -10,12 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.nowfloats.Login.Fetch_Home_Data;
-import com.nowfloats.Login.Login_Interface;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
 import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.NotificationCenter.NotificationInterface;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -27,12 +25,7 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.Fetch_Home_Data_Interface{
     UserSessionManager session;
@@ -151,12 +144,23 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
 //        businessEnquiries.getMessages();
 
         //VISITOR and SUBSCRIBER COUNT API
-        GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(SplashScreen_Activity.this,session);
-        visit_subcribersCountAsyncTask.execute();
+        if(Methods.isOnline(this)) {
+            GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(SplashScreen_Activity.this, session);
+            visit_subcribersCountAsyncTask.execute();
+        }
 
-        Fetch_Home_Data fetch_home_data  = new Fetch_Home_Data(this,0);
+
+        Intent i = new Intent(SplashScreen_Activity.this, HomeActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        // Staring Login Activity
+        startActivity(i);
+        if(pd != null)
+            pd.dismiss();
+        finish();
+
+        /*Fetch_Home_Data fetch_home_data  = new Fetch_Home_Data(this,0);
         fetch_home_data.setFetchDataListener(SplashScreen_Activity.this);
-        fetch_home_data.getMessages(session.getFPID(), "0");
+        fetch_home_data.getMessages(session.getFPID(), "0");*/
     }
 
 
@@ -183,12 +187,9 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     }
 
     @Override
-    public void dataFetched() {
+    public void dataFetched(int skip, boolean isNewMessage) {
         Intent i = new Intent(SplashScreen_Activity.this, HomeActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("message",HomeActivity.StorebizFloats);
-        i.putExtras(bundle);
         // Staring Login Activity
         startActivity(i);
         if(pd != null)

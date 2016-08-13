@@ -75,17 +75,18 @@ public final class UploadMessageTask {
                         uploadImage(path, txtId);
                     } else if (txtId != null && txtId.length() > 1) {
                         success = true;
-                        if (Constants.twitterShareEnabled && Home_Main_Fragment.facebookPostCount == 0) {
+                        //Constants.createMsg = false;
+                        /*if (Constants.twitterShareEnabled && Home_Main_Fragment.facebookPostCount == 0) {
                             Constants.twitterShareEnabled = false;
                             String tweetData = "";
                             try {
                                 tweetData = obj.message;
-                                PostImageTweetInBackgroundAsyncTask tweet = new PostImageTweetInBackgroundAsyncTask(appContext,obj.message,txtId,path,session);
-                                tweet.execute();
+                                *//*PostImageTweetInBackgroundAsyncTask tweet = new PostImageTweetInBackgroundAsyncTask(appContext,obj.message,txtId,path,session);
+                                tweet.execute();*//*
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-                        }
+                        }*/
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -102,6 +103,7 @@ public final class UploadMessageTask {
                 @Override
                 public void failure(RetrofitError error) {
                     success = false;
+                    //Constants.createMsg = false;
                 }
             });
         }catch(Exception e){
@@ -148,7 +150,7 @@ public final class UploadMessageTask {
 
             final byte[] bitmapdata = bos.toByteArray();
             final String uri = Constants.PictureFloatImgCreationURI+"?clientId="+ Constants.clientId+"&bizMessageId="+response+"&requestType=sequential&requestId="
-                    + s_uuid + "&sendToSubscribers="+subscribers+"&"+ "totalChunks=1&currentChunkNumber=1" ;
+                    + s_uuid + "&sendToSubscribers="+subscribers+"&"+ "totalChunks=1&currentChunkNumber=1&socialParmeters=" + obj.socialParameters ;
 
             new Thread(new Runnable() {
                 @Override
@@ -217,11 +219,13 @@ public final class UploadMessageTask {
                 String response = responseContent.toString();
                 Log.d("Message Task","Image Response : "+response);
                 if(!Util.isNullOrEmpty(response) && success){
-                    if(Constants.twitterShareEnabled && obj.message!=null && Home_Main_Fragment.facebookPostCount == 0)
+                    /*if(Constants.twitterShareEnabled && obj.message!=null && Home_Main_Fragment.facebookPostCount == 0)
                     {
-                        PostImageTweetInBackgroundAsyncTask tweet = new PostImageTweetInBackgroundAsyncTask(appContext,obj.message,txtId,path,session);
-                        tweet.execute();
-                    }
+                        //PostImageTweetInBackgroundAsyncTask tweet = new PostImageTweetInBackgroundAsyncTask(appContext,obj.message,txtId,path,session);
+                        //tweet.execute();
+
+                    }*/
+                    Create_Message_Activity.imageIconButtonSelected = false;
                     Constants.serviceResponse = response;
                     if (path!=null && !path.equals("")){
                         new Thread(new Runnable() {

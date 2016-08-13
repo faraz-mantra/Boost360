@@ -203,20 +203,7 @@ public class SidePanelFragment extends Fragment {
             }
         });
 
-        if (Constants.IMAGEURIUPLOADED == false) {
-            String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
 
-            if (iconUrl.length() > 0 && !iconUrl.contains("http") && (iconUrl != "https://api.withfloats.com/FP/Actual/default.png")) {
-                String baseNameProfileImage = Constants.BASE_IMAGE_URL + iconUrl;
-                Picasso.with(getActivity()).load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(iconImage);
-            } else {
-                if (iconUrl != null && iconUrl.length() > 0) {
-                    Picasso.with(getActivity()).load(iconUrl).placeholder(R.drawable.business_edit_profile_icon).into(iconImage);
-                } else {
-                    Picasso.with(getActivity()).load(R.drawable.business_edit_profile_icon).into(iconImage);
-                }
-            }
-        }
 
         if (session.getIsSignUpFromFacebook().contains("true")) {
             Picasso.with(getActivity())
@@ -933,9 +920,11 @@ public class SidePanelFragment extends Fragment {
                 }
                 else {
                     Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    i.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
                     startActivityForResult(i, GALLERY_PHOTO);
                 }
                 Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                i.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
                 startActivityForResult(i, GALLERY_PHOTO);
             } catch (ActivityNotFoundException anfe) {
                 // display an error message
@@ -1036,6 +1025,20 @@ public class SidePanelFragment extends Fragment {
         @Override
         public void onResume() {
             super.onResume();
+            if (Constants.IMAGEURIUPLOADED == false) {
+                String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
+
+                if (iconUrl.length() > 0 && !iconUrl.contains("http") && (iconUrl != "https://api.withfloats.com/FP/Actual/default.png")) {
+                    String baseNameProfileImage = Constants.BASE_IMAGE_URL + iconUrl;
+                    Picasso.with(getActivity()).load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(iconImage);
+                } else {
+                    if (iconUrl != null && iconUrl.length() > 0) {
+                        Picasso.with(getActivity()).load(iconUrl).placeholder(R.drawable.business_edit_profile_icon).into(iconImage);
+                    } else {
+                        Picasso.with(getActivity()).load(R.drawable.business_edit_profile_icon).into(iconImage);
+                    }
+                }
+            }
             if (session.getISEnterprise().equals("true")) {
                 profileLayout.setVisibility(View.GONE);
                 imageGalleryLayout.setVisibility(View.GONE);

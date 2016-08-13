@@ -57,6 +57,10 @@ public class Business_Logo_Activity extends AppCompatActivity {
     public static ImageView logoimageView;
     PorterDuffColorFilter whiteLabelFilter;
     UserSessionManager session ;
+
+    private final int gallery_req_id = 0;
+    private final int media_req_id = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -184,6 +188,28 @@ public class Business_Logo_Activity extends AppCompatActivity {
         this.setTitle("Settings");
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
+    {
+        if(requestCode==media_req_id)
+        {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                cameraIntent();
+
+            }
+
+        }
+        else if(requestCode==gallery_req_id)
+        {
+            if (grantResults.length > 0
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                galleryIntent();
+
+            }
+
+        }
+    }
 //    @Override
 //    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
@@ -258,28 +284,6 @@ public class Business_Logo_Activity extends AppCompatActivity {
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         return super.onOptionsItemSelected(item);
     }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
-    {
-        if(requestCode==CAMERA_PHOTO)
-        {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                cameraIntent();
-
-            }
-
-        }
-        else if(requestCode==GALLERY_PHOTO)
-        {
-            if (grantResults.length > 0
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                galleryIntent();
-
-            }
-
-        }
-    }
 
 
 
@@ -291,18 +295,18 @@ public class Business_Logo_Activity extends AppCompatActivity {
                     PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!=
                     PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
-                        CAMERA_PHOTO);
-            }else {
-                values = new ContentValues();
-                values.put(MediaStore.Images.Media.TITLE, "New Picture");
-                values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
-                imageUri = getContentResolver().insert(
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-                Intent captureIntent = new Intent(
-                        MediaStore.ACTION_IMAGE_CAPTURE);
-                captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                startActivityForResult(captureIntent, CAMERA_PHOTO);
+                        media_req_id);
             }
+            values = new ContentValues();
+            values.put(MediaStore.Images.Media.TITLE, "New Picture");
+            values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+            imageUri =getContentResolver().insert(
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            Intent captureIntent = new Intent(
+                    MediaStore.ACTION_IMAGE_CAPTURE);
+            captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            // we will handle the returned data in onActivityResult
+            startActivityForResult(captureIntent, CAMERA_PHOTO);
         } catch (ActivityNotFoundException anfe) {
             // display an error message
             String errorMessage = "Whoops - your device doesn't support capturing images!";
@@ -313,23 +317,23 @@ public class Business_Logo_Activity extends AppCompatActivity {
         }
     }
 
-    public void galleryIntent() {
+    public void galleryIntent(){
         try {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
+                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!=
                     PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
-                        GALLERY_PHOTO);
-            } else {
-                Intent i = new Intent(
-                        Intent.ACTION_PICK,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-                startActivityForResult(i, GALLERY_PHOTO);
+                        gallery_req_id);
             }
+            Intent i = new Intent(
+                    Intent.ACTION_PICK,
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+            startActivityForResult(i, GALLERY_PHOTO);
         } catch (ActivityNotFoundException anfe) {
+            // display an error message
             String errorMessage = "Whoops - your device doesn't support capturing images!";
-            Methods.showSnackBarNegative(Business_Logo_Activity.this, errorMessage);
+            Methods.showSnackBarNegative(Business_Logo_Activity.this,errorMessage);
         }
     }
 

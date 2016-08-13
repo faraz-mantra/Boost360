@@ -208,7 +208,10 @@ public class Methods {
 
     public static String getFormattedDate(String Sdate) {
         String formatted = "",dateTime = "";
-        Sdate = Sdate.replace("/Date(", "").replace(")/", "");
+        if(Sdate.contains("/Date")){
+            Sdate = Sdate.replace("/Date(", "").replace(")/", "");
+        }
+
         Long epochTime = Long.parseLong(Sdate);
         Date date = new Date(epochTime);
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");//dd/MM/yyyy HH:mm:ss
@@ -284,8 +287,8 @@ public class Methods {
         }
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         Bitmap bmp = Util.getBitmap(path,act);
-        if((f.length()/1024)>100){
-            bmp.compress(Bitmap.CompressFormat.JPEG, 30, bos);
+        if((f.length()/1024)>1024){
+            bmp.compress(Bitmap.CompressFormat.JPEG, 80, bos);
         } else{
             bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
         }

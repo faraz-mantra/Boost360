@@ -1,6 +1,6 @@
 package com.nowfloats.Analytics_Screen.Graph;
 
-import android.util.Log;
+import com.nowfloats.util.BoostLog;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,7 +51,7 @@ public class VisitCountParser {
                 countString = getCountString((JSONObject)entityArray.get(i));
 
                 }catch(Exception e){
-                    Log.d("PARSE",e.getMessage());
+                    BoostLog.d("PARSE",e.getMessage());
                 }
 
                 String actualDate = (processDate(dateString));
@@ -85,7 +85,7 @@ public class VisitCountParser {
 
             ds = jObject.getString("CreatedDate");
         }catch(Exception e){
-            Log.d("PARSE","ERROR GETTING DATE STRING");
+            BoostLog.d("PARSE","ERROR GETTING DATE STRING");
         }
         return ds;
     }
@@ -97,7 +97,7 @@ public class VisitCountParser {
 
             cs = jObject.getString("DataCount");
         }catch(Exception e){
-            Log.d("PARSE","ERROR GETTING COUNT STRING");
+            BoostLog.d("PARSE","ERROR GETTING COUNT STRING");
         }
         return cs;
     }

@@ -19,13 +19,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.freshdesk.mobihelp.Mobihelp;
 import com.nowfloats.AccountDetails.AccountInfoActivity;
 import com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQMainAcivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
+import com.nowfloats.sync.DbController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
@@ -220,6 +220,7 @@ public class Settings_Fragment extends Fragment {
                     public void onPositive(MaterialDialog dialog) {
                         session.logoutUser();
                         DataBase db = new DataBase(activity);
+                        DbController.getDbController(activity.getApplicationContext()).deleteDataBase();
                         db.deleteLoginStatus();
                         //Constants.IS_LOGIN = false;
 

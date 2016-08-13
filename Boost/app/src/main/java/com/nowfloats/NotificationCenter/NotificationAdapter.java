@@ -36,6 +36,7 @@ import java.util.TimeZone;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+//import semusi.activitysdk.ContextSdk;
 
 /**
  * Created by guru on 27-04-2015.
@@ -162,6 +163,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                //HashMap<String, String> eventKey = new HashMap<String, String>();
+                //eventKey.put(EventKeysWL.SEARCH_QUERIES, "Clicked on Alert tab");
+                //ContextSdk.tagEvent(NotificationAdapter.class.getCanonicalName(),eventKey);
 
                 if (alertData.get(position).isRead.equalsIgnoreCase("true")) {
                     holder.titleText.setTextColor(appContext.getResources().getColor(R.color.inactive_text));

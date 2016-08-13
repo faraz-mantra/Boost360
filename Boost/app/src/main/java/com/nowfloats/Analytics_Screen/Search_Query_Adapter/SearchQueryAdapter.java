@@ -5,7 +5,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 
 import com.nowfloats.Analytics_Screen.API.Get_Search_Queries_Async_Task;
 import com.nowfloats.Analytics_Screen.DataMap;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.thinksity.R;
 
@@ -43,7 +43,7 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<SearchQueryAdapter.
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            //  Log.d("CardAdapter_v2","MyViewHolder");
+            //  BoostLog.d("CardAdapter_v2","MyViewHolder");
             this.search_query_header_text = (TextView) itemView.findViewById(R.id.search_query_header_text_1);
             this.search_query_date_text = (TextView) itemView.findViewById(R.id.search_query_header_text_2);
             this.search_query_image_icon = (ImageView) itemView.findViewById(R.id.search_query_image);
@@ -99,7 +99,7 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<SearchQueryAdapter.
 //        textViewName.setTextColor(appContext.getResources().getColor(R.color.home_view_card_main_text_color));
 //        textViewEmail.setTextColor(appContext.getResources().getColor(R.color.home_view_card_date_text_color));
 
-         Log.d("Search Query Adapter ", "Constants. : " + list.get(position));
+         BoostLog.d("Search Query Adapter ", "Constants. : " + list.get(position));
 
         JSONObject obj = (JSONObject) list.get(position);
         try

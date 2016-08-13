@@ -20,7 +20,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -41,6 +40,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.RoundCorners_image;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
@@ -99,14 +99,14 @@ public class Image_Gallery_Fragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Log.d("Image_Gallery_Fragment", "onCreateView");
+        BoostLog.d("Image_Gallery_Fragment", "onCreateView");
         return inflater.inflate(R.layout.fragment_image__gallery, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d("Image_Gallery_Fragment","onViewCreated");
+        BoostLog.d("Image_Gallery_Fragment","onViewCreated");
         grid = (GridView) view.findViewById(R.id.grid);
         fabGallery_Button = (FloatingActionButton) view.findViewById(R.id.fab_gallery);
         emptyGalleryLayout = (LinearLayout)view.findViewById(R.id.emptygallerylayout);
@@ -167,7 +167,7 @@ public class Image_Gallery_Fragment extends Fragment implements
     }
 
     private void showFullScaleImage(String imageFile, final int currentPos) {
-        Log.d("full image","image file : "+imageFile);
+        BoostLog.d("full image","image file : "+imageFile);
         int selectedPOS = currentPos ;
 
         // File imgFile = new  File(imageFile);
@@ -196,7 +196,7 @@ public class Image_Gallery_Fragment extends Fragment implements
         final TextView currentTextView = (TextView) imageDialog.findViewById(R.id.currentCountValue);
         final TextView maxCountTextView = (TextView) imageDialog.findViewById(R.id.maxCount);
         // ImageView fullImageView = (ImageView) imageDialog.findViewById(R.id.fullImageView);
-        // Log.d("Base Name","imageLoader base name : "+baseName);
+        // BoostLog.d("Base Name","imageLoader base name : "+baseName);
         // imageLoader.displayImage(baseName, fullImageView);
         //fullImageView.setImageBitmap(myBitmap);
 
@@ -213,7 +213,7 @@ public class Image_Gallery_Fragment extends Fragment implements
         previousImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Log.d("Image_Gallery_Fragment","Current POS : "+selectedPOS);
+                // BoostLog.d("Image_Gallery_Fragment","Current POS : "+selectedPOS);
                 int selectedPosition = getItem(-1);
                 viewPager.setCurrentItem(selectedPosition, true);
                 currentTextView.setText(Integer.toString(selectedPosition));
@@ -224,7 +224,7 @@ public class Image_Gallery_Fragment extends Fragment implements
         nextImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Image_Gallery_Fragment","Current POS : "+ currentPos);
+                BoostLog.d("Image_Gallery_Fragment","Current POS : "+ currentPos);
                 int selectedPosition = getItem(+1);
                 viewPager.setCurrentItem(selectedPosition, true);
                 currentTextView.setText(Integer.toString(selectedPosition));
@@ -408,7 +408,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                 e.printStackTrace();
                 //Util.toast(""+e.toString(), this);
             }catch(OutOfMemoryError E){
-                //Log.d("ANDRO_ASYNC",String.format("catch Out Of Memory error"));
+                //BoostLog.d("ANDRO_ASYNC",String.format("catch Out Of Memory error"));
                 E.printStackTrace();
                 System.gc();
                 //Util.toast("Uh oh. Something went wrong. Please try again", this);
@@ -489,7 +489,7 @@ public class Image_Gallery_Fragment extends Fragment implements
 
     @Override
     public void uploadedPictureListener(String imageURL) {
-        Log.d("Image", "uploadPictureListener imageURL : "+imageURL);
+        BoostLog.d("Image", "uploadPictureListener imageURL : "+imageURL);
         MixPanelController.track("AddImageSuccess",null);
         // Toast.makeText(activity, "imageURL : " + imageURL, Toast.LENGTH_SHORT).show();
         if(progressLayout!=null){
@@ -529,7 +529,7 @@ public class Image_Gallery_Fragment extends Fragment implements
 
     @Override
     public void imagesReceived() {
-        // Log.d("Image_Gallery_Fragment","imagesREceived : "+Constants.storeSecondaryImages.size());
+        // BoostLog.d("Image_Gallery_Fragment","imagesREceived : "+Constants.storeSecondaryImages.size());
         // gridViewAdapter = new OtherImagesAdapter(activity);
         activity.runOnUiThread(new Runnable() {
             @Override
@@ -550,7 +550,7 @@ public class Image_Gallery_Fragment extends Fragment implements
             //  grid.invalidate();
 
         }
-        // Log.d("Login_MainActivity","Constants.storeSecondaryImages : "+ Constants.storeSecondaryImages);
+        // BoostLog.d("Login_MainActivity","Constants.storeSecondaryImages : "+ Constants.storeSecondaryImages);
         //session.storeGalleryImages(Constants.storeSecondaryImages.toString());
     }
 }

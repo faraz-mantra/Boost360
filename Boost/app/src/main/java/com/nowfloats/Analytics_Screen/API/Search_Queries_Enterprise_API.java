@@ -1,7 +1,6 @@
 package com.nowfloats.Analytics_Screen.API;
 
 import android.app.Activity;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -9,6 +8,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.nowfloats.Volley.AppController;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 
 import org.json.JSONArray;
@@ -66,7 +66,7 @@ public class Search_Queries_Enterprise_API {
                     @Override
                     public void onResponse(JSONArray  response)
                     {
-                        Log.d("Search_Queries"," Enterprise APP : "+response);
+                        BoostLog.d("Search_Queries"," Enterprise APP : "+response);
                     }
                 }, new Response.ErrorListener() {
 
@@ -77,7 +77,7 @@ public class Search_Queries_Enterprise_API {
                 // pd.cancel();
                 String mesg = error.getMessage();
 
-                // Log.d(TAG,"Error : "+error.networkResponse);
+                // BoostLog.d(TAG,"Error : "+error.networkResponse);
 
             }
         });

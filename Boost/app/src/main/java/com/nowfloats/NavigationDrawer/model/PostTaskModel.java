@@ -10,13 +10,15 @@ public class PostTaskModel {
     public String merchantId;
     public String parentId;
     public Boolean sendToSubscribers;
+    public String socialParameters;
 
-    public PostTaskModel(String id,String msg,Boolean pic,String merchantId,String parentId,Boolean sendToSubscribers){
+    public PostTaskModel(String id,String msg, String socialParameters,Boolean pic,String merchantId,String parentId,Boolean sendToSubscribers){
         this.clientId = id;
         this.message  = msg;
         this.isPictureMessage = pic;
         this.merchantId = merchantId;
         this.parentId = parentId;
         this.sendToSubscribers = sendToSubscribers;
+        this.socialParameters = socialParameters;
     }
 }

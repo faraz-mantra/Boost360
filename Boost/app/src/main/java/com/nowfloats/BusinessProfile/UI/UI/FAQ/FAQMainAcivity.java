@@ -33,7 +33,7 @@ public class FAQMainAcivity extends ActionBarActivity {
         toolbar = (Toolbar)findViewById(R.id.app_bar_faq_main);
         setSupportActionBar(toolbar);
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
-        headerText.setText("FAQ");
+        headerText.setText("FAQs");
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -41,7 +41,7 @@ public class FAQMainAcivity extends ActionBarActivity {
         lv_faq_main = (ListView)findViewById(R.id.lv_faq_main);
         main_lv_faq_values = getResources().getStringArray(R.array.faqmain);
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, main_lv_faq_values);
+        adapter = new ArrayAdapter<String>(this, R.layout.faq_row_layout, main_lv_faq_values);
 
         lv_faq_main.setAdapter(adapter);
 

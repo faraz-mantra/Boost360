@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import android.widget.LinearLayout;
 import com.nowfloats.Business_Enquiries.Model.BzQueryEvent;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -55,7 +55,7 @@ public class Business_Enquiries_Fragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        Log.d("Business_Enquiri", "onCreateView");
+        BoostLog.d("Business_Enquiri", "onCreateView");
         // Inflate the layout for this fragment
         View mainView =  inflater.inflate(R.layout.fragment_business__enguiries, container, false);
         return mainView ;
@@ -64,7 +64,7 @@ public class Business_Enquiries_Fragment extends Fragment {
     @Override
     public void onViewCreated(View mainView, Bundle savedInstanceState) {
         super.onViewCreated(mainView, savedInstanceState);
-        Log.d("Business_Enquiri", "onViewCreated");
+        BoostLog.d("Business_Enquiri", "onViewCreated");
         progressLayout = (LinearLayout)mainView.findViewById(R.id.progress_layout);
         progressLayout.setVisibility(View.VISIBLE);
         emptyDataLayout = (LinearLayout)mainView.findViewById(R.id.emptydatalayout);
@@ -91,7 +91,7 @@ public class Business_Enquiries_Fragment extends Fragment {
 
     @Subscribe
     public void getValues(final BzQueryEvent event){
-        Log.i("BZ ENQ","event-"+event.StorebizEnterpriseQueries+"\n"+event.StorebizQueries);
+        BoostLog.i("BZ ENQ","event-"+event.StorebizEnterpriseQueries+"\n"+event.StorebizQueries);
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {

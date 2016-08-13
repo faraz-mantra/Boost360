@@ -6,8 +6,10 @@ package com.nowfloats.NavigationDrawer.model;
 public class UploadPostEvent {
     public String path;
     public String msg;
-    public UploadPostEvent(String path, String msg){
+    public String mSocialShare;
+    public UploadPostEvent(String path, String msg, String socialShare){
         this.path = path;
         this.msg = msg;
+        this.mSocialShare = socialShare;
     }
 }

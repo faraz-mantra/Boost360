@@ -16,8 +16,10 @@ public class ProductListModel implements Parcelable {
     public String ExternalSourceId;
     public String IsArchived;
     public String IsAvailable;
+    public String IsFreeShipmentAvailable;
     public String Name;
     public String Price;
+    public String Priority;
     public String ShipmentDuration;
     public ArrayList<String> _keywords;
     public String ApplicationId;
@@ -31,6 +33,7 @@ public class ProductListModel implements Parcelable {
     public String TotalQueries;
     public String CreatedOn;
     public String UpdatedOn;
+
 
     @Override
     public int describeContents() {
@@ -46,8 +49,10 @@ public class ProductListModel implements Parcelable {
         parcel.writeString(ExternalSourceId);
         parcel.writeString(IsArchived);
         parcel.writeString(IsAvailable);
+        parcel.writeString(IsFreeShipmentAvailable);
         parcel.writeString(Name);
         parcel.writeString(Price);
+        parcel.writeString(Priority);
         parcel.writeString(ShipmentDuration);
         parcel.writeStringList(_keywords);
         parcel.writeString(ApplicationId);
@@ -71,8 +76,10 @@ public class ProductListModel implements Parcelable {
         this.ExternalSourceId = in.readString();
         this.IsArchived = in.readString();
         this.IsAvailable = in.readString();
+        this.IsFreeShipmentAvailable = in.readString();
         this.Name = in.readString();
         this.Price = in.readString();
+        this.Priority = in.readString();
         this.ShipmentDuration = in.readString();
         this._keywords = in.readArrayList(ProductListModel.this.getClass().getClassLoader());
         this.ApplicationId = in.readString();

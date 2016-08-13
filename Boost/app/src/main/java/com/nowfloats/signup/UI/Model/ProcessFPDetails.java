@@ -1,15 +1,20 @@
 package com.nowfloats.signup.UI.Model;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.Preference;
 import android.util.Log;
 
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.Twitter.TwitterConstants;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by NowFloatsDev on 25/05/2015.
@@ -208,5 +213,55 @@ public class ProcessFPDetails {
             }
 //            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID,get_fp_details_model.ApplicationId);
         }catch(Exception e){e.printStackTrace();}
+
+        /*
+         *Constants.FACEBOOK_USER_ID = pref.getString("fbId", "");
+        Constants.FACEBOOK_USER_ACCESS_ID = pref.getString("fbAccessId", "");
+        Constants.fbShareEnabled = pref.getBoolean("fbShareEnabled", false);
+//        Constants.FACEBOOK_PAGE_ID 			= pref.getString("fbPageId", "");
+        Constants.FACEBOOK_PAGE_ACCESS_ID = pref.getString("fbPageAccessId", "");
+        Constants.fbPageShareEnabled = pref.getBoolean("fbPageShareEnabled", false);
+        Constants.twitterShareEnabled = pref.getBoolean("twitterShareEnabled", false);
+        Constants.TWITTER_TOK = pref.getString(OAuth.OAUTH_TOKEN, "");
+        Constants.TWITTER_SEC = pref.getString(OAuth.OAUTH_TOKEN_SECRET, "");
+        Constants.FbFeedPullAutoPublish = pref.getBoolean("FBFeedPullAutoPublish", false);
+        Constants.fbPageFullUrl = pref.getString("fbPageFullUrl", "");
+        Constants.fbFromWhichPage = pref.getString("fbFromWhichPage", "");
+         */
+
+        try{
+            List<NfxTokenModel> nfxTokenModelList = get_fp_details_model.NFXAccessTokens;
+
+            SharedPreferences pref = activity.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+            SharedPreferences twitterPref = activity.getSharedPreferences(TwitterConstants.PREF_NAME,Context.MODE_PRIVATE);
+            for(NfxTokenModel model: nfxTokenModelList){
+                switch (model.Type){
+                    case 10:
+                        SharedPreferences.Editor editorFb = pref.edit();
+                        editorFb.putBoolean("fbShareEnabled", true);
+                        session.storeFacebookName(model.UserAccountName);
+                        editorFb.putString("fbAccessId", model.UserAccessTokenKey);
+                        editorFb.commit();
+                        //session.storeFacebookAccessToken();
+                        break;
+                    case 40:
+                        SharedPreferences.Editor editorFbPage = pref.edit();
+                        editorFbPage.putBoolean("fbPageShareEnabled", true);
+                        session.storeFacebookPage(model.UserAccountName);
+                        editorFbPage.putString("fbPageAccessId", model.UserAccessTokenKey);
+                        editorFbPage.commit();
+                        break;
+                    case 20:
+                        SharedPreferences.Editor twitterPrefEditor = twitterPref.edit();
+                        twitterPrefEditor.putBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, true);
+                        twitterPrefEditor.putString(TwitterConstants.PREF_USER_NAME, model.UserAccountName);
+                        twitterPrefEditor.commit();
+                        break;
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 }

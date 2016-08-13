@@ -7,6 +7,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.nowfloats.Login.Model.FloatsMessageModel;
+import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.Methods;
+import com.nowfloats.util.Utils;
 
 import java.util.ArrayList;
 
@@ -34,7 +37,7 @@ public class PageAdapter extends FragmentPagerAdapter {
                 try {
                     if (data != null) {
                         mainText.add(i, data.message);
-                        dateText.add(i, data.createdOn);
+                        dateText.add(i, Methods.getFormattedDate(data.createdOn));
                         images.add(i, data.tileImageUri);
                         messageIds.add(i,HomeActivity.StorebizFloats.get(i)._id);
                     }

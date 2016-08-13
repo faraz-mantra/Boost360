@@ -17,7 +17,6 @@ import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +25,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gc.materialdesign.widgets.SnackBar;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.viewHolder.MyViewHolder;
@@ -92,6 +92,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
         {
             convertView = mInflater.inflate(R.layout.cards_layout,parent,false);
             image_text_viewHolder = new MyViewHolder.Image_Text_ViewHolder(convertView);
+
             convertView.setOnClickListener(Home_Main_Fragment.myOnClickListener);
             return image_text_viewHolder ;
         }
@@ -187,73 +188,77 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                             try {
                                 final Intent shareIntent = new Intent();
                                 if (!imageShare.contains("/Tile/deal.png") && !Util.isNullOrEmpty(imageShare)) {
-                                    URL url = null;
-                                    Uri uri = null;
+                                    if(Methods.isOnline(appContext)) {
+                                        URL url = null;
+                                        Uri uri;
 
 
-                                    try {
+                                        try {
 
-                                        if (imageShare.contains("BizImages")) {
-                                            url = new URL(Constants.NOW_FLOATS_API_URL+"" + imageShare);
-                                        } else {
-                                            url = new URL(imageShare);
+                                            if (imageShare.contains("BizImages")) {
+                                                url = new URL(Constants.NOW_FLOATS_API_URL + "" + imageShare);
+                                            } else {
+                                                url = new URL(imageShare);
+                                            }
+
+                                        } catch (MalformedURLException e) {
+                                            e.printStackTrace();
                                         }
 
-                                    } catch (MalformedURLException e) {
-                                        e.printStackTrace();
-                                    }
+
+                                        HttpURLConnection connection = null;
+                                        try {
+                                            connection = (HttpURLConnection) url.openConnection();
 
 
-                                    HttpURLConnection connection = null;
-                                    try {
-                                        connection = (HttpURLConnection) url.openConnection();
+                                            connection.setDoInput(true);
+
+                                            connection.connect();
+
+                                            InputStream input = connection.getInputStream();
 
 
-                                        connection.setDoInput(true);
+                                            Bitmap immutableBpm = BitmapFactory.decodeStream(input);
 
-                                        connection.connect();
-
-                                        InputStream input = connection.getInputStream();
+                                            Bitmap mutableBitmap = immutableBpm.copy(Bitmap.Config.ARGB_8888, true);
 
 
-                                        Bitmap immutableBpm = BitmapFactory.decodeStream(input);
+                                            View view = new View(appContext);
 
-                                        Bitmap mutableBitmap = immutableBpm.copy(Bitmap.Config.ARGB_8888, true);
+                                            view.draw(new Canvas(mutableBitmap));
 
+                                            String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
 
-                                        View view = new View(appContext);
+                                            uri = Uri.parse(path);
+                                            shareIntent.setType("image/png");
 
-                                        view.draw(new Canvas(mutableBitmap));
+                                            //  Uri uri = Uri.parse("https://api.withfloats.com/" +imageShare);
+                                            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
 
-                                        String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
+                                            //   shareIntentToPackages("image/png",HomeActivity.StorebizFloats.get(position).message,uri);
 
-                                        uri = Uri.parse(path);
-                                        shareIntent.setType("image/png");
+                                            //}
 
-                                        //  Uri uri = Uri.parse("https://api.withfloats.com/" +imageShare);
-                                        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-
-                                        //   shareIntentToPackages("image/png",HomeActivity.StorebizFloats.get(position).message,uri);
-
-                                        //}
-
-                                        //}
-                                    } catch (IOException e) {
-                                        appContext.runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Methods.showSnackBarNegative(appContext, "Error in Sharing");
-                                            }
-                                        });
-                                        e.printStackTrace();
-                                    } catch (Exception e) {
-                                        appContext.runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Methods.showSnackBarNegative(appContext, "Error in Sharing");
-                                            }
-                                        });
-                                        e.printStackTrace();
+                                            //}
+                                        } catch (IOException e) {
+                                            appContext.runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Methods.showSnackBarNegative(appContext, "Error in Sharing");
+                                                }
+                                            });
+                                            e.printStackTrace();
+                                        } catch (Exception e) {
+                                            appContext.runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Methods.showSnackBarNegative(appContext, "Error in Sharing");
+                                                }
+                                            });
+                                            e.printStackTrace();
+                                        }
+                                    }else {
+                                        Methods.showSnackBarNegative(appContext, "Can't Share image content in Offline Mode");
                                     }
 
                                 } else {
@@ -284,7 +289,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
             try {
                 if (data != null) {
                     msg = data.message;
-                    date = data.createdOn;
+                    date = Methods.getFormattedDate(data.createdOn);
                     imageUri = data.tileImageUri;
 
                     String baseName = "";

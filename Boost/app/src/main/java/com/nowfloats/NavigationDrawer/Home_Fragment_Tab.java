@@ -109,7 +109,7 @@ public class Home_Fragment_Tab extends Fragment {
         viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(Home_Main_Fragment.recentPostEvent!=null){
+                if(Constants.createMsg){
                     v.getParent().requestDisallowInterceptTouchEvent(true);
 
                     try{

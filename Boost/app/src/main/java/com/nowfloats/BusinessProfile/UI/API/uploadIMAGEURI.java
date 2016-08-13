@@ -6,13 +6,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
-import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.RoundCorners_image;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -73,9 +73,10 @@ public class uploadIMAGEURI extends AsyncTask<Void,String, String> {
                         try {
                             Bitmap bmp = Util.getBitmap(path, appContext);
                             bmp = RoundCorners_image.getRoundedCornerBitmap(bmp, 15);
-                            Business_Profile_Fragment_V2.businessProfileImageView.setImageBitmap(bmp);
                             Edit_Profile_Activity.editProfileImageView.setImageBitmap(bmp);
                             SidePanelFragment.iconImage.setImageBitmap(bmp);
+                            Business_Profile_Fragment_V2.businessProfileImageView.setImageBitmap(bmp);
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -226,10 +227,14 @@ public class uploadIMAGEURI extends AsyncTask<Void,String, String> {
                 }
 
                 String response = responseContent.toString();
+                BoostLog.d("response: ", response);
                 if(!Util.isNullOrEmpty(response))
                     Constants.serviceResponse = response;
                 else
                     Constants.serviceResponse = "";
+                UserSessionManager manager = new UserSessionManager(appContext, appContext);
+                manager.storeFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI, response.replace("\\", "").replace("\"", ""));
+                //Constants.IMAGEURIUPLOADED = false;
             }
             catch(Exception e){}
             finally

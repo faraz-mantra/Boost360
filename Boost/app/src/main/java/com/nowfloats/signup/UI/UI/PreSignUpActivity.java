@@ -9,6 +9,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
 import android.location.Address;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -268,7 +269,10 @@ public class PreSignUpActivity extends AppCompatActivity implements
                 businessCategory_Selected = true;
                 country_Selected = false;
 
-                if (Constants.storeBusinessCategories == null) {
+                new FetchCategory().execute();
+
+
+                /*if (Constants.storeBusinessCategories == null) {
                     Constants.storeBusinessCategories = API_Layer.getBusinessCategories(activity);
                 } else {
 
@@ -285,7 +289,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
                                 }
                             })
                             .show();
-                }
+                }*/
             }
         });
         updateBasedOnMostRecentLocation(Constants.lastKnownAddress);
@@ -843,5 +847,47 @@ public class PreSignUpActivity extends AppCompatActivity implements
             Toast.makeText(activity, "Invalid Email. Please enter Again", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    private class FetchCategory extends AsyncTask<String, Void, String>{
+
+        ProgressDialog pd = null;
+
+        @Override
+        protected void onPreExecute() {
+
+            pd = ProgressDialog.show(PreSignUpActivity.this, "", "Wait While Loading Categories...");
+            //return
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            API_Layer.getBusinessCategories(PreSignUpActivity.this);
+            return null;
+        }
+
+
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            if(pd!=null && pd.isShowing()){
+                pd.dismiss();
+            }
+            new MaterialDialog.Builder(activity)
+                    .title("Select a Category")
+                    .items(Constants.storeBusinessCategories)
+                    .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                        @Override
+                        public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                            businessCategoryEditText.setText(text);
+
+                            Util.changeDefaultBackgroundImage(text.toString());
+                            return false;
+                        }
+                    })
+                    .show();
+            //return
+        }
     }
 }

@@ -6,13 +6,14 @@ import android.util.Log;
 import android.view.View;
 
 import com.nowfloats.CustomWidget.HttpDeleteWithBody;
-import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.Login_Interface;
+import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.Model.MessageModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.CardAdapter_v2;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Home_Main_Fragment;
+import com.nowfloats.sync.DbController;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 
@@ -86,11 +87,13 @@ public class Home_View_Card_Delete  extends AsyncTask<Void,String, String> {
 //                    Home_Main_Fragment.scaleAdapter.notifyDataSetChanged();
                 }
 
+                DbController.getDbController(activity).deleteUpdate(new String[]{HomeActivity.StorebizFloats.get(position)._id});
                 HomeActivity.StorebizFloats.remove(position);
                 temp	=	"Its Gone!";
                 refresh = new CardAdapter_v2(null,activity);
                 refresh.notifyItemRemoved(position);
                 refresh.notifyDataSetChanged();
+
                 getMessages(session.getFPID());
                 Log.i("Delete POST---",""+temp);
             }catch(Exception e){

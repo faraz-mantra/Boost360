@@ -1,24 +1,31 @@
 package com.nowfloats.NavigationDrawer;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -32,6 +39,7 @@ import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
 import com.gc.materialdesign.views.Card;
+import com.gc.materialdesign.widgets.Dialog;
 import com.melnykov.fab.FloatingActionButton;
 import com.nowfloats.Login.Fetch_Home_Data;
 import com.nowfloats.Login.Model.FloatsMessageModel;
@@ -44,7 +52,11 @@ import com.nowfloats.NavigationDrawer.model.PostTaskModel;
 import com.nowfloats.NavigationDrawer.model.PostTextSuccessEvent;
 import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
 import com.nowfloats.NavigationDrawer.model.Welcome_Card_Model;
+import com.nowfloats.NavigationDrawer.model.WhatsNewDataModel;
+import com.nowfloats.sync.DbController;
+import com.nowfloats.sync.model.Updates;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.ButteryProgressBar;
 import com.nowfloats.util.Constants;
@@ -65,10 +77,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
-import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
-import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -86,6 +97,7 @@ public class Home_Main_Fragment extends Fragment implements
     static View.OnClickListener myOnClickListener;
     Fetch_Home_Data fetch_home_data ;
     FloatingActionButton fabButton ;
+    //private FloatingActionButton fab_event,fab_offer, fab_product_launch, fab_job_alert, fabcustom_review, fab_create_update;
     UserSessionManager session;
     private static final String DATA_ARG_KEY = "HomeFragment.DATA_ARG_KEY";
     public static CardAdapter_V3 cAdapter;
@@ -101,9 +113,12 @@ public class Home_Main_Fragment extends Fragment implements
     public static UploadPostEvent recentPostEvent = null;
     private String ImageResponseID = "";
     public static int facebookPostCount = 0;
-    public static AlphaInAnimationAdapter alphaAdapter ;
-    public static ScaleInAnimationAdapter scaleAdapter ;
     public Activity current_Activity;
+    private SharedPreferences mPref;
+    private boolean mIsNewMsg = false;
+
+    private DbController mDbController;
+
     public Home_Main_Fragment() {}
 
     public static Home_Main_Fragment newInstance() {
@@ -122,21 +137,72 @@ public class Home_Main_Fragment extends Fragment implements
     public void onResume() {
         super.onResume();
         MixPanelController.track(EventKeysWL.HOME_SCREEN, null);
-        Log.d("Home_Main_Fragment","onResume : "+session.getFPName());
+        BoostLog.d("Home_Main_Fragment","onResume : "+session.getFPName());
         getActivity().setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+        //inflateWhatsNew();
+    }
+
+    private void inflateWhatsNew() {
+        SharedPreferences preferences = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = preferences.edit();
+        if(/*preferences.getBoolean("isFirstTime", true) || */!preferences.getString("currentAppVersion", "default").equals(getVersion())) {
+            View v = getActivity().getLayoutInflater().inflate(R.layout.whats_new_layout, null);
+            //final PopupWindow popupWindow = new PopupWindow(v, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            //popupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
+            //popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+            final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setView(v);
+            final AlertDialog dialog = builder.show();
+            RecyclerView rvWhatsNew = (RecyclerView) v.findViewById(R.id.rv_whats_new);
+            Button done = (Button) v.findViewById(R.id.btn_whats_new_done);
+            done.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //popupWindow.dismiss();
+                    dialog.dismiss();
+                    //editor.putBoolean("isFirstTime", false);
+                    editor.putString("currentAppVersion", getVersion());
+                    editor.commit();
+                }
+            });
+            int images[] = {R.drawable.lock, R.drawable.share, R.drawable.camera, R.drawable.scope, R.drawable.chat};
+            String[] headerText = {"Password Management", "Refer a Friend", "New Camera Experience", "Live Visitor Info", "Talk To NowFloats"};
+            String[] bodyText = {"Now Change/retrieve your old password. Phew!!!", "Like Us? Help spread the word about our app among your friends :)",
+                    "Now with preview, crop & rotate features!", "Get to know when & from where someone visited your website in real time",
+                    "Got Questions for us? We are just now a tap away!"};
+            List<WhatsNewDataModel> list = new ArrayList<>();
+            for (int i = 0; i < images.length; i++) {
+                WhatsNewDataModel model = new WhatsNewDataModel(images[i], headerText[i], bodyText[i]);
+                list.add(model);
+            }
+            WhatsNewAdapter adapter = new WhatsNewAdapter(list);
+            rvWhatsNew.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+            rvWhatsNew.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }
+    }
+    private String getVersion(){
+        String val;
+        try {
+            val =  getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
+        }catch (PackageManager.NameNotFoundException e){
+            e.printStackTrace();
+            val = "default";
+        }
+        return val;
     }
 
     @Subscribe
     public void uploadProcess(UploadPostEvent event){
         try {
-            Log.i("upload msg ...", "TRIGeREd");
+            BoostLog.i("upload msg ...", "TRIGeREd");
             recentPostEvent = event;
             progressCrd.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
             retryLayout.setVisibility(View.GONE);
             fetch_home_data.setNewPostListener(true);
             fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
-            uploadPicture(event.path, event.msg, getActivity(), new SampleUploadListener(), new UserSessionManager(getActivity(), getActivity()));
+            uploadPicture(event.path, event.msg, event.mSocialShare, getActivity(), new SampleUploadListener(), new UserSessionManager(getActivity(), getActivity()));
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -145,23 +211,25 @@ public class Home_Main_Fragment extends Fragment implements
     @Subscribe
     public void ImageUploadCheck(PostImageSuccessEvent event){
         ImageResponseID = event.imageResponseId;
-        Log.i("IMAGE---","Image UpLoAd Check Triggered");
-        fetch_home_data.setInterfaceType(1);
+        BoostLog.i("IMAGE---","Image UpLoAd Check Triggered");
+        mIsNewMsg = true;
+        getNewAvailableUpdates();
+        /*fetch_home_data.setInterfaceType(1);
         fetch_home_data.setNewPostListener(true);
         fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
-        fetch_home_data.getMessages(session.getFPID(),"0");
+        fetch_home_data.getNewAvailableMessage(session.getFPID(),"0");*/
     }
 
     @Subscribe
     public void TextUploadCheck(PostTextSuccessEvent event){
         if (event.status){
             event.status = false;
-            Log.i("TEXT---","TeXt UpLoAd Check Triggered");
-            fetch_home_data.setInterfaceType(0);
-            fetch_home_data.setNewPostListener(true);
-            fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
-            fetch_home_data.getMessages(session.getFPID(),"0");
+            mIsNewMsg = true;
+            BoostLog.i("TEXT---","TeXt UpLoAd Check Triggered");
+            getNewAvailableUpdates();
             Create_Message_Activity.path = "";
+            //recentPostEvent = null;
+            Constants.createMsg =false;
         }
     }
 
@@ -181,6 +249,9 @@ public class Home_Main_Fragment extends Fragment implements
         bus = BusProvider.getInstance().getBus();
         bus.register(this);
         current_Activity = getActivity();
+        mPref = current_Activity.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        mDbController = DbController.getDbController(current_Activity);
+        HomeActivity.StorebizFloats.clear();
     }
 
     @Override
@@ -196,13 +267,22 @@ public class Home_Main_Fragment extends Fragment implements
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d("Home_Main_Fragment","onViewCreated");
+        BoostLog.d("Home_Main_Fragment","onViewCreated");
+
+
+
 
         progressCrd = (Card)view.findViewById(R.id.progressCard);
         progressBar = (ButteryProgressBar)view.findViewById(R.id.progressbar);
         retryLayout = (LinearLayout)view.findViewById(R.id.postRetryLayout);
         emptyMsgLayout = (LinearLayout)view.findViewById(R.id.emptymsglayout);
-        emptyMsgLayout.setVisibility(View.GONE);
+        emptyMsgLayout.setVisibility(View.GONE);/*
+        view.findViewById(R.id.fab_event).setOnClickListener(this);
+        view.findViewById(R.id.fab_offer).setOnClickListener(this);
+        view.findViewById(R.id.fab_product_launch).setOnClickListener(this);
+        view.findViewById(R.id.fab_job_alert).setOnClickListener(this);
+        view.findViewById(R.id.fab_custom_review).setOnClickListener(this);
+        view.findViewById(R.id.fab_update).setOnClickListener(this);*/
         ImageView retryPost = (ImageView)view.findViewById(R.id.retryPost);
         ImageView cancelPost = (ImageView)view.findViewById(R.id.cancelPost);
         PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
@@ -210,6 +290,30 @@ public class Home_Main_Fragment extends Fragment implements
         cancelPost.setColorFilter(whiteLabelFilter);
         recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
+
+        cAdapter = new CardAdapter_V3(getActivity(),session);
+//        alphaAdapter = new AlphaInAnimationAdapter(cAdapter);
+//        scaleAdapter = new ScaleInAnimationAdapter(alphaAdapter);
+//        scaleAdapter.setFirstOnly(false);
+//        scaleAdapter.setInterpolator(new OvershootInterpolator());
+        recyclerView.setAdapter(cAdapter);
+        boolean isSynced = mPref.getBoolean(Constants.SYNCED, false);
+        if(isSynced){
+            //get New Available Updates
+            if(Methods.isOnline(getActivity())) {
+                BoostLog.d("OnViewCreated", "This is getting called");
+                getNewAvailableUpdates();
+            }else {
+                loadDataFromDb(0, false);
+            }
+
+            //Load data From Local database
+
+        }else {
+            //start first time sync from server to Local DB
+            startSync();
+        }
+
         retryPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -243,16 +347,16 @@ public class Home_Main_Fragment extends Fragment implements
             }
         });
 
-       if(Constants.isWelcomScreenToBeShown == true) {
+       if(Constants.isWelcomScreenToBeShown) {
             Welcome_Card_Model welcome_card_model = new Welcome_Card_Model();
             welcome_card_model.webSiteName = session.getFPName();
             mNewWelcomeTextImageList.add(welcome_card_model);
        }
 
-        if(HomeActivity.StorebizFloats!=null && HomeActivity.StorebizFloats.size()==0&& !Constants.isWelcomScreenToBeShown){
+        /*if(HomeActivity.StorebizFloats!=null && HomeActivity.StorebizFloats.size()==0&& !Constants.isWelcomScreenToBeShown){
             if (emptyMsgLayout!=null)
                 emptyMsgLayout.setVisibility(View.VISIBLE);
-        }
+        }*/
 
         for(int i = 0 ; i < HomeActivity.StorebizFloats.size();i++)
         {
@@ -282,47 +386,77 @@ public class Home_Main_Fragment extends Fragment implements
 
             @Override
             public void onLoadMore(int current_page) {
+                BoostLog.d("ILUD OnLoadMore:", "This is getting Called");
                 int checkLoad = fetch_home_data.getInterfaceType();
-                if (checkLoad==0){
-                    Log.d("Home_Main_Fragment", "current_Page : " + current_page);
-                    if (Constants.moreStorebizFloatsAvailable == true) {
+                if (checkLoad == 0) {
+                    int skipVal = (current_page-1)*10;
+                    if(!loadDataFromDb(skipVal, false)){
+                        fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
+                        fetch_home_data.getMessages(session.getFPID(), String.valueOf(skipVal));
+                        progressBar.setVisibility(View.VISIBLE);
+                    }
+
+                    /*Log.d("Home_Main_Fragment", "current_Page : " + current_page);
+                    if (true) {
                         if (current_page == 2) {
-                            fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
-                            fetch_home_data.getMessages(session.getFPID(), "10");
+                            if (!loadDataFromDb(10, false)) {
+                                fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
+                                fetch_home_data.getMessages(session.getFPID(), "10");
+                            }
                         } else if (current_page == 3) {
-                            fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
-                            fetch_home_data.getMessages(session.getFPID(), "20");
-                        }else if (current_page == 4) {
-                            fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
-                            fetch_home_data.getMessages(session.getFPID(), "30");
-                        }
-                        else if (current_page == 5) {
-                            fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
-                            fetch_home_data.getMessages(session.getFPID(), "40");
-                        }else if (current_page == 6) {
-                            fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
-                            fetch_home_data.getMessages(session.getFPID(), "50");
-                        }else if (current_page == 7) {
-                            fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
-                            fetch_home_data.getMessages(session.getFPID(), "60");
+                            if (!loadDataFromDb(20, false)) {
+                                fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
+                                fetch_home_data.getMessages(session.getFPID(), "20");
+                            }
+                        } else if (current_page == 4) {
+                            if (!loadDataFromDb(30, false)) {
+                                fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
+                                fetch_home_data.getMessages(session.getFPID(), "30");
+                            }
+                        } else if (current_page == 5) {
+                            if (!loadDataFromDb(40, false)) {
+                                fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
+                                fetch_home_data.getMessages(session.getFPID(), "40");
+                            }
+                        } else if (current_page == 6) {
+                            if (!loadDataFromDb(50, false)) {
+                                fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
+                                fetch_home_data.getMessages(session.getFPID(), "50");
+                            }
+                        } else if (current_page == 7) {
+                            if (!loadDataFromDb(60, false)) {
+                                fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
+                                fetch_home_data.getMessages(session.getFPID(), "60");
+                            }
                         }
                         //}
                     } else {
-//                        Methods.showSnackBar(getActivity(), "No More Messages");
-                    }
+                        Methods.showSnackBar(getActivity(), "No More Messages");
+                    }*/
                 }
             }
         });
 
         fabButton = (FloatingActionButton) view.findViewById(R.id.fab);
+        /*fabButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(fabButton.isOpened()){
+                    fabButton.close(true);
+                    return true;
+                }else {
+                    return false;
+                }
 
+            }
+        });*/
         //session.storeFacebookPage("true");
 
         fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Log.d("ILUD Home_Fragment:", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE));
+                BoostLog.d("ILUD Home_Fragment:", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE));
                 if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
                     mCallback.onRenewPlanSelected();
                 }
@@ -335,21 +469,84 @@ public class Home_Main_Fragment extends Fragment implements
             }
         });
 
-        cAdapter = new CardAdapter_V3(getActivity(),session);
-//        alphaAdapter = new AlphaInAnimationAdapter(cAdapter);
-//        scaleAdapter = new ScaleInAnimationAdapter(alphaAdapter);
-//        scaleAdapter.setFirstOnly(false);
-//        scaleAdapter.setInterpolator(new OvershootInterpolator());
-        recyclerView.setAdapter(cAdapter);
 
-        if (HomeActivity.StorebizFloats==null || HomeActivity.StorebizFloats.size()==0){
+
+        /*if (HomeActivity.StorebizFloats==null || HomeActivity.StorebizFloats.size()==0){
             HomeActivity.StorebizFloats = new ArrayList<FloatsMessageModel>();
             fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
             fetch_home_data.getMessages(session.getFPID(), "10");
-        }
+        }*/
     }
 
-    private void sendIsInterested(FragmentActivity activity, String fpid, String planType,final Bus bus) {
+    private void startSync() {
+        //Fetch_Home_Data fetch_home_data  = new Fetch_Home_Data(current_Activity,0);
+        fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
+        fetch_home_data.getMessages(session.getFPID(), "0");
+    }
+
+    private void getNewAvailableUpdates() {
+        fetch_home_data.setFetchDataListener(Home_Main_Fragment.this);
+        BoostLog.d("Latest Message Id: ", mDbController.getLatestMessageId());
+        fetch_home_data.getNewAvailableMessage(mDbController.getLatestMessageId(), session.getFPID());
+    }
+
+    private boolean loadDataFromDb(int skip, boolean isNewMessage) {
+
+        if(mIsNewMsg){
+            mIsNewMsg = false;
+            HomeActivity.StorebizFloats.clear();
+            //cAdapter = new CardAdapter_V3(getActivity(), session);
+            //recyclerView.re
+
+            cAdapter.notifyDataSetChanged();
+            recyclerView.setAdapter(cAdapter);
+            Constants.createMsg = false;
+        }
+        if(progressBar.getVisibility() == View.VISIBLE) {
+            progressBar.setVisibility(View.GONE);
+        }
+        List<Updates> updates = mDbController.getAllUpdates(skip);
+        if(updates.isEmpty()){
+            return false;
+        }
+        if(emptyMsgLayout.getVisibility()==View.VISIBLE){
+            emptyMsgLayout.setVisibility(View.GONE);
+        }
+
+
+        for (Updates update : updates) {
+            FloatsMessageModel floatModel = new FloatsMessageModel(update.getServerId(), update.getDate(),
+                    update.getImageUrl(), update.getUpdateText(), update.getTileImageUrl(), update.getType());
+            HomeActivity.StorebizFloats.add(floatModel);
+        }
+
+
+        SharedPreferences.Editor editor = mPref.edit();
+        editor.putBoolean(Constants.SYNCED, true);
+        editor.commit();
+
+        cAdapter.notifyDataSetChanged();
+        return true;
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        /*if(fabButton.isOpened()){
+            fabButton.close(true);
+        }*/
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        /*if(fabButton.isOpened()){
+            fabButton.close(true);
+        }*/
+    }
+
+    private void sendIsInterested(FragmentActivity activity, String fpid, String planType, final Bus bus) {
         try {
             HashMap<String, String> params = new HashMap<String, String>();
             params.put("clientId", Constants.clientId);
@@ -359,8 +556,8 @@ public class Home_Main_Fragment extends Fragment implements
     }
 
     @Override
-    public void dataFetched() {
-        Log.d("Home_Main_Fragment","dataFetched ");
+    public void dataFetched(int skip, boolean isNewMessage) {
+        /*BoostLog.d("Home_Main_Fragment","dataFetched ");
         cAdapter.notifyDataSetChanged();
 //        scaleAdapter.notifyDataSetChanged();
         current_Activity.runOnUiThread(new Runnable() {
@@ -372,15 +569,17 @@ public class Home_Main_Fragment extends Fragment implements
                     recentPostEvent = null;
                 }
             }
-        });
+        });*/
+        Create_Message_Activity.path = "";
         Constants.createMsg = false;
+        loadDataFromDb(skip, isNewMessage);
     }
 
     @Override
     public void sendFetched(FloatsMessageModel messageModel) {
-        Log.i("IMAGE---interface"," Triggered");
+        BoostLog.i("IMAGE---interface"," Triggered");
         try {
-            Log.i("IMAGE---","{0}_id=="+messageModel._id+"\n deal Id=="+ImageResponseID+"\nURL ="+messageModel.imageUri);
+            BoostLog.i("IMAGE---","{0}_id=="+messageModel._id+"\n deal Id=="+ImageResponseID+"\nURL ="+messageModel.imageUri);
             if(messageModel._id.equals(ImageResponseID) && !messageModel.imageUri.contains(Constants.NOW_FLOATS_API_URL)){
                 Create_Message_Activity.path = "";
                 if (progressCrd!=null && progressBar!=null){
@@ -388,8 +587,9 @@ public class Home_Main_Fragment extends Fragment implements
                     progressBar.setVisibility(View.GONE);
                     recentPostEvent = null;
                 }
+                Create_Message_Activity.path = "";
                 Constants.createMsg = false;
-                Log.i("IMAGE---", "UPLoaD SucceSS");
+                BoostLog.i("IMAGE---", "UPLoaD SucceSS");
                 cAdapter.notifyDataSetChanged();
 //                scaleAdapter.notifyDataSetChanged();
                 recyclerView.invalidate();
@@ -404,7 +604,7 @@ public class Home_Main_Fragment extends Fragment implements
                 } catch (Exception ex1) {
                     ex1.printStackTrace();
                 }
-                Log.i("IMAGE---","CALing DeLEte Method");
+                BoostLog.i("IMAGE---","CALing DeLEte Method");
                 Home_View_Card_Delete deleteCard =  new Home_View_Card_Delete(getActivity(),Constants.DeleteCard,obj2,0,null,1);
                 deleteCard.execute();
             }
@@ -412,6 +612,41 @@ public class Home_Main_Fragment extends Fragment implements
             e.printStackTrace();
         }
     }
+
+    /*@Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.fab_event:     //for event
+                Toast.makeText(getActivity(), "Just Testing Bro", Toast.LENGTH_SHORT).show();
+                //startActivity(new Intent(getActivity(), Create_Message_Activity.class));
+                break;
+            case R.id.fab_offer:     //for event
+                Toast.makeText(getActivity(), "Just Testing Bro", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fab_product_launch:     //for event
+                Toast.makeText(getActivity(), "Just Testing Bro", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fab_job_alert:     //for event
+                Toast.makeText(getActivity(), "Just Testing Bro", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fab_custom_review:     //for event
+                Toast.makeText(getActivity(), "Just Testing Bro", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.fab_update:     //for event
+                startActivity(new Intent(getActivity(), Create_Message_Activity.class));
+                //Toast.makeText(getActivity(), "Just Testing Bro", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                //In case no option is selected close the overlay and expand menu
+                if(fabButton.isOpened()){
+                    fabButton.close(true);
+                }
+                break;
+
+        }
+
+    }*/
+
 
     public class MyOnClickListener implements View.OnClickListener {
         private final Context context;
@@ -421,7 +656,7 @@ public class Home_Main_Fragment extends Fragment implements
 
         @Override
         public void onClick(View v) {
-            Log.d("Click Listener", " Listener : "+v.getId());
+            BoostLog.d("Click Listener", " Listener : "+v.getId());
             int selectedItemPosition = recyclerView.getChildPosition(v);
             Intent webIntent = new Intent(context, Card_Full_View_MainActivity.class);
             webIntent.putExtra("POSITION",selectedItemPosition);
@@ -453,32 +688,32 @@ public class Home_Main_Fragment extends Fragment implements
     private class SampleUploadListener implements AsyncFacebookRunner.RequestListener {
         @Override
         public void onComplete(String s, Object o) {
-            Log.d("Complete",s);
+            BoostLog.d("Complete",s);
         }
 
         @Override
         public void onIOException(IOException e, Object o) {
-            Log.d("Complete",e.toString());
+            BoostLog.d("Complete",e.toString());
         }
 
         @Override
         public void onFileNotFoundException(FileNotFoundException e, Object o) {
-            Log.d("Complete",e.toString());
+            BoostLog.d("Complete",e.toString());
         }
 
         @Override
         public void onMalformedURLException(MalformedURLException e, Object o) {
-            Log.d("Complete",e.toString());
+            BoostLog.d("Complete",e.toString());
         }
 
         @Override
         public void onFacebookError(FacebookError facebookError, Object o) {
-            Log.d("Complete",facebookError.toString());
+            BoostLog.d("Complete",facebookError.toString());
         }
     }
 
-    public void uploadPicture(String path,String msg,Activity act,SampleUploadListener uploadListener,UserSessionManager session) {
-        Log.d("Image : ", "Upload Pic Path : "+path);
+    public void uploadPicture(String path,String msg, String socialShare, Activity act,SampleUploadListener uploadListener,UserSessionManager session) {
+        BoostLog.d("Image : ", "Upload Pic Path : "+path);
         String merchantId = null,parentId=null;
 
         try {
@@ -497,7 +732,7 @@ public class Home_Main_Fragment extends Fragment implements
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        PostTaskModel task = new PostTaskModel(Constants.clientId,msg,Create_Message_Activity.imageIconButtonSelected,
+        PostTaskModel task = new PostTaskModel(Constants.clientId,msg, socialShare,Create_Message_Activity.imageIconButtonSelected,
                 merchantId,parentId,Create_Message_Activity.tosubscribers);
         if (facebookPostCount==0) {
             if (Constants.fbShareEnabled) {
@@ -510,10 +745,10 @@ public class Home_Main_Fragment extends Fragment implements
                 }
             }
 
-            if(Create_Message_Activity.facbookEnabled)
+            /*if(Create_Message_Activity.facbookEnabled)
                 postOnFacebookWall(msg, act, uploadListener,session);
             if(Create_Message_Activity.isFacebookPageShareLoggedIn)
-                postOnFacebookPage(msg, session, act);
+                postOnFacebookPage(msg, session, act);*/
         }
         UploadMessageTask upa =new UploadMessageTask(act, path, task,session);
         upa.UploadPostService();
@@ -538,7 +773,7 @@ public class Home_Main_Fragment extends Fragment implements
                         public void onCompleted(Response response) {
                             FacebookRequestError error = response.getError();
                             if (error != null) {
-                                Log.e("FACEBOOK WALL ERROR", "" + error.getErrorMessage());
+                                BoostLog.e("FACEBOOK WALL ERROR", "" + error.getErrorMessage());
                             } else {
                                 JSONObject graphResponse = response
                                         .getGraphObject()
@@ -590,7 +825,7 @@ public class Home_Main_Fragment extends Fragment implements
                     public void onCompleted(Response response) {
                         FacebookRequestError error = response.getError();
                         if (error != null) {
-                            Log.e("FACEBOOK PAGE ERROR", "" + error.getErrorMessage());
+                            BoostLog.e("FACEBOOK PAGE ERROR", "" + error.getErrorMessage());
                         } else {
                             JSONObject graphResponse = response
                                     .getGraphObject()
@@ -624,7 +859,7 @@ public class Home_Main_Fragment extends Fragment implements
                     public void onCompleted(Response response) {
                         FacebookRequestError error = response.getError();
                         if (error != null) {
-                            Log.e("FACEBOOK PAGE ERROR", "" + error.getErrorMessage());
+                            BoostLog.e("FACEBOOK PAGE ERROR", "" + error.getErrorMessage());
                         } else {
                             JSONObject graphResponse = response.getGraphObject().getInnerJSONObject();
                             String postId = null;
@@ -670,7 +905,7 @@ public class Home_Main_Fragment extends Fragment implements
 //                    for (int j=0; j < acIdarray.size(); j++){
 //                        if (allModels.get(i)._id.equals(acIdarray.get(j).clientProductId)){
 //                            activeWidgetModels.add(allModels.get(i));
-//                            Log.d("Load Plans",activeWidgetModels.get(i).ExpiryInMths);
+//                            BoostLog.d("Load Plans",activeWidgetModels.get(i).ExpiryInMths);
 //                        }
 //                    }
 //                }
@@ -678,7 +913,7 @@ public class Home_Main_Fragment extends Fragment implements
 //                    for (int j = 0; j < allModels.size(); j++) {
 //                        if (allModels.get(j)._id.equals(acIdarray.get(i).clientProductId)){
 //                            additionalPlan.remove(allModels.get(j));
-//                            Log.d("Load Plans",additionalPlan.get(i).ExpiryInMths);
+//                            BoostLog.d("Load Plans",additionalPlan.get(i).ExpiryInMths);
 //                        }
 //                    }
 //                }

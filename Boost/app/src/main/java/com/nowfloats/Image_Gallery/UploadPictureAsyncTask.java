@@ -6,10 +6,10 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -86,7 +86,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
     }
 
     public void setOnUploadListener(UploadPictureInterface uploadInterface){
-        // Log.d("UploadPictureInterface","uploadInterface setOnUploadListener : "+uploadInterface);
+        // BoostLog.d("UploadPictureInterface","uploadInterface setOnUploadListener : "+uploadInterface);
         this.uploadInterface = uploadInterface;
     }
 
@@ -136,7 +136,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
         {
             pd= ProgressDialog.show(appContext, "", "Uploading image...");
             //	pd.setCancelable(true);
-            Log.d("ILUD Upload Asynctask", "Uploading Immage");
+            BoostLog.d("ILUD Upload Asynctask", "Uploading Immage");
         }
         else
         {
@@ -151,7 +151,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
 
     @Override
     protected void onPostExecute(String result) {
-//        Log.d("UploadPicAsyncTask","onPostExecute : "+Constants.storeSecondaryImages.size());
+//        BoostLog.d("UploadPicAsyncTask","onPostExecute : "+Constants.storeSecondaryImages.size());
 //        Toast.makeText(appContext,"Success  "+result,Toast.LENGTH_SHORT).show();
         if(success) {
             Methods.showSnackBarPositive(appContext, "Image successfully uploaded");
@@ -164,7 +164,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
                 pd.dismiss();
             }
         }
-        //  Log.d("UploadPictureInterface","uploadInterface : "+uploadInterface);
+        //  BoostLog.d("UploadPictureInterface","uploadInterface : "+uploadInterface);
         uploadInterface.uploadedPictureListener(path);
         onPost();
 
@@ -187,7 +187,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
                 //  Util.toast("Gallery image updated.", appContext);
                 // Toast.makeText(appContext,"Gallery Image Update ",Toast.LENGTH_SHORT).show();
 
-                //   Log.d(TAG,"Gallery Updated");
+                //   BoostLog.d(TAG,"Gallery Updated");
                 Constants.isImgUploaded = true;
                 Constants.uploadedImg = path;
                 uploadInterface.uploadedPictureListener(path);
@@ -351,7 +351,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
 
     public void uploadImage(String imagePath){
         // Toast.makeText(appContext,"Image Path : "+imagePath,Toast.LENGTH_SHORT).show();
-        //  Log.d(TAG,"Image Path : "+imagePath);
+        //  BoostLog.d(TAG,"Image Path : "+imagePath);
 //        Handler handler =  new Handler(appContext.getMainLooper());
 //        handler.post( new Runnable(){
 //            public void run(){
@@ -388,7 +388,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
 //            }
 //
 //        } catch (Exception e) {
-//            Log.d(TAG,"E : "+e.getMessage());
+//            BoostLog.d(TAG,"E : "+e.getMessage());
 //
 //        } finally {
 //            try {
@@ -441,7 +441,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
 //            uri = Constants.LoadStoreURI+param+
 //                    "?clientId="+ Constants.clientId+
 //                    "&fpId="+ session.getFPID()+"&reqType=sequential&reqtId=" + s_uuid + "&";
-            uri = "http://api.withfloats.com/Discover/v1/FloatingPoint/createSecondaryImage/?clientId=" +
+            uri = "https://api.withfloats.com/Discover/v1/FloatingPoint/createSecondaryImage/?clientId=" +
                     Constants.clientId +
                     "&fpId=" + session.getFPID() +
                     "&reqType=sequential&reqtId=" +
@@ -561,7 +561,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
 
 
     public void sendDataToServer(String url, byte[] imageData){
-        Log.d("Ilud Upload Image:", url);
+        BoostLog.d("Ilud Upload Image:", url);
         DataOutputStream outputStream = null;
         try {
             URL new_url = new URL(url);
@@ -611,7 +611,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
                 }
                 if (responseContent!=null || responseContent.length()==0){
                     String response = responseContent.toString();
-                    Log.d("Product IMage", "Upload Response : " + response);
+                    BoostLog.d("Gallery IMage", "Upload Response : " + response);
                     if (response==null || response.trim().length()==0) success =false;
                 }else{
                     success =false;

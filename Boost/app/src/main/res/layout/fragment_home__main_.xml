@@ -115,6 +115,7 @@
             android:gravity="center"
             android:text="@string/Message_empty"/>
     </LinearLayout>
+
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -126,5 +127,72 @@
         fab:fab_colorNormal="@color/primaryColor"
         fab:fab_colorPressed="#fddc80"
         fab:fab_colorRipple="@color/primaryColor" />
+    <!--<com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fab"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom|right"
+        android:src="@drawable/ic_add_white_24dp"
+        android:scaleType="fitCenter"
+        android:elevation="2dp"
+        fab:menu_backgroundColor="#ccffffff"
+        fab:menu_labels_colorNormal="#fff"
+        fab:menu_labels_textColor="#000000"
+        fab:menu_labels_showAnimation="@anim/jump_from_down"
+        fab:menu_labels_hideAnimation="@anim/jump_to_down"
+        fab:menu_animationDelayPerItem="0"
+        fab:menu_shadowColor="#444"
+        fab:menu_colorNormal="@color/primaryColor"
+        fab:menu_colorPressed="#fddc80"
+        fab:menu_colorRipple="@color/primaryColor" >
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_email"
+            fab:fab_label="Event"
+            style="@style/MenuButtonsStyle" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_offer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_email"
+            fab:fab_label="Offer"
+            style="@style/MenuButtonsStyle" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_product_launch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_email"
+            fab:fab_label="Product Launch"
+            style="@style/MenuButtonsStyle" />
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_job_alert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_email"
+            fab:fab_label="Job Alert"
+            style="@style/MenuButtonsStyle" />
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_custom_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_email"
+            fab:fab_label="Customer Review"
+            style="@style/MenuButtonsStyle" />
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_email"
+            fab:fab_label="Create Update"
+            style="@style/MenuButtonsStyle" />
+
+
+        </com.github.clans.fab.FloatingActionMenu>-->
+
 
 </FrameLayout>

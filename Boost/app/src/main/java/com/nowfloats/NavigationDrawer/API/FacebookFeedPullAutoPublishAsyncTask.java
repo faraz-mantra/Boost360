@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 
 import org.json.JSONObject;
@@ -53,7 +53,7 @@ public class FacebookFeedPullAutoPublishAsyncTask extends AsyncTask<Void, String
 		if(pd!=null){
 			pd.dismiss();
 		}
-        Log.d("FacebookAutoPublish","FacebookFeedPullAutoPublish : "+result);
+        BoostLog.d("FacebookAutoPublish","FacebookFeedPullAutoPublish : "+result);
 		if(!Util.isNullOrEmpty(result)){
 			//Util.toast("success", appContext);
 			if(subscription == true){

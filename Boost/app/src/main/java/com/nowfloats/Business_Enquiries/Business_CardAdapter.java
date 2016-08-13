@@ -5,18 +5,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,6 +21,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Model;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.GetStoreFrontImageAsyncTask;
 import com.thinksity.R;
@@ -101,7 +99,7 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
 //        contactText.setTypeface(myCustomFont);
 //        entityText.setTypeface(myCustomFontLight);
 
-        Log.d("$$$$$$","Biz Data : "+listPosition+" Data : "+ Constants.StorebizQueries.size());
+        BoostLog.d("$$$$$$","Biz Data : "+listPosition+" Data : "+ Constants.StorebizQueries.size());
         data = Constants.StorebizQueries.get(listPosition);
 
         try {
@@ -177,7 +175,7 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
                     }
                 }
             });
-            Log.d("Adapter Data","Adapter Data : "+data.contact+" , "+data.createdOn);
+            BoostLog.d("Adapter Data","Adapter Data : "+data.contact+" , "+data.createdOn);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -190,13 +188,13 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
             // The bitmap is cached with SoftReference
             bitmap = reference.get();
         }
-        Log.d("Bitmap","Bitmap : "+bitmap+" , "+id);
+        BoostLog.d("Bitmap","Bitmap : "+bitmap+" , "+id);
         return bitmap;
     }
 
     private void saveImagebitmap(Bitmap bmp, String key) {
 
-        Log.d("imagebitmap","key : "+key+" bmp : "+bmp);
+        BoostLog.d("imagebitmap","key : "+key+" bmp : "+bmp);
 
         _cache.put(key, new SoftReference<>(bmp));
 

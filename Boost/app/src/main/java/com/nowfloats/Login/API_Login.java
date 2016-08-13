@@ -6,6 +6,7 @@ import android.util.Log;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.Model.Login_Data_Model;
 import com.nowfloats.Login.Model.MessageModel;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
 import com.nowfloats.util.Methods;
@@ -74,7 +75,8 @@ public class API_Login {
                                 DataBase dataBase = new DataBase(appContext);
                                 dataBase.insertLoginStatus(response_Data, fpId);
                                 //  dataBase.insertFPIDs(response_Data.ValidFPIds);
-                                getMessages(fpId);
+                                //getMessages(fpId);
+                                bus.post(new ArrayList<FloatsMessageModel>());
                             }else{
                                 apiInterface.authenticationFailure("true");
                                 Methods.showSnackBarNegative(appContext,"Please check your credentials");
@@ -88,8 +90,10 @@ public class API_Login {
                             DataBase dataBase = new DataBase(appContext);
                             dataBase.insertLoginStatus(response_Data, fpId);
                             //  dataBase.insertFPIDs(response_Data.ValidFPIds);
-                            getMessages(fpId);
+                            //getMessages(fpId);
+                            bus.post(new ArrayList<FloatsMessageModel>());
                         }
+                        BoostLog.d("FPID: ", fpId);
                     } else {
                         apiInterface.authenticationFailure("true");
                         Methods.showSnackBarNegative(appContext, "Please check your credentials");
@@ -98,6 +102,7 @@ public class API_Login {
                     apiInterface.authenticationFailure("true");
                     e.printStackTrace();
                 }
+
             }
 
             @Override
@@ -163,7 +168,7 @@ public class API_Login {
         Constants.moreStorebizFloatsAvailable 	= response.moreFloatsAvailable;
         for(int i = 0 ; i < bizData.size() ;i++){
             FloatsMessageModel data = bizData.get(i);
-            String formatted = Methods.getFormattedDate(data.createdOn);
+            String formatted = Methods.getFormattedDate(data.createdOn.split("\\(")[1].split("\\)")[0]);
             data.createdOn = formatted;
         }
         bus.post(bizData);

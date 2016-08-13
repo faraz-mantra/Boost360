@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.thinksity"
-    android:versionCode="2016030021"
-    android:versionName="4.4.1">
+    android:versionCode="2016110008"
+    android:versionName="4.4.5">
 
     <permission
         android:name="com.biz2.nowfloats.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="com.biz2.nowfloats.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA"  />
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
@@ -25,8 +26,10 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.android.vending.BILLING" />
-    <uses-feature android:name="android.hardware.camera" android:required="true"/>
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:name="com.nowfloats.Volley.AppController"
@@ -47,7 +50,8 @@
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
-    <!--    <receiver
+        <!--
+            <receiver
             android:name="com.nowfloats.Volley."
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>AndroidGCMBroadcastReceiver
@@ -56,7 +60,8 @@
 
                 <category android:name="com.biz2.nowfloats" />
             </intent-filter>
-        </receiver>-->
+        </receiver>
+        -->
 
         <activity
             android:name="com.nowfloats.signup.UI.UI.PreSignUpActivity"
@@ -250,6 +255,15 @@
         <meta-data
             android:name="com.crashlytics.ApiKey"
             android:value="4669fbc7b101724f568aca25793835505024bceb" />
+        <meta-data
+            android:name="com.semusi.analytics.appid"
+            android:value="574bc887b794654d042aac89" />
+        <meta-data
+            android:name="com.semusi.analytics.appkey"
+            android:value="5285d57267a47c07fb52c88104514ee03b0019cf" />
+        <meta-data
+            android:name="com.semusi.analytics.apikkey"
+            android:value="5d7cbd43b4b1467966daba64e56d7b36" />
 
         <activity
             android:name="com.nowfloats.NavigationDrawer.Mobile_Site_Activity"
@@ -291,8 +305,28 @@
             android:screenOrientation="portrait" />
         <activity android:name="com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQMainAcivity" />
         <activity android:name="com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQ_QandA_Activity" />
-        <activity android:name="com.nowfloats.Twitter.TwitterAuthenticationActivity"  android:launchMode="singleInstance"/>
-        <activity android:name="com.nowfloats.BusinessProfile.UI.UI.TwitterLoginActivity" android:launchMode="singleInstance"></activity>
+        <activity
+            android:name="com.nowfloats.Twitter.TwitterAuthenticationActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name="com.nowfloats.BusinessProfile.UI.UI.TwitterLoginActivity"
+            android:launchMode="singleInstance" />
+
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="com.thinksity" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name="com.nowfloats.Analytics_Screen.SubscribersActivity"></activity>
+        <provider
+            android:authorities="com.thinksity.android.provider"
+            android:name="com.nowfloats.sync.ContentProvider.BoostContentProvider" />
     </application>
 
 </manifest>
