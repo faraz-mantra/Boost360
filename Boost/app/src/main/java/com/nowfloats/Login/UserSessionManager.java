@@ -20,6 +20,7 @@ import com.nowfloats.Volley.AppController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.DataMap;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 
@@ -112,6 +113,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     private String KEY_IS_THINKSITY = "isThinksity";
     private String KEY_IS_FREE_DOMAIN = "isFreeDomain";
     private String KEY_FP_TAG = "fptag";
+    private String KEY_WEB_TEMPLATE_TYPE = "webTemplateType";
 
     //public boolean showUpdates;
 
@@ -145,6 +147,15 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     {
         editor.putString(KEY_FP_NAME , fpName);
         editor.commit();
+    }
+
+    public void storeFpWebTempalteType(String type){
+        editor.putString(KEY_WEB_TEMPLATE_TYPE, type);
+        editor.commit();
+    }
+
+    public String getWebTemplateType(){
+        return pref.getString(KEY_WEB_TEMPLATE_TYPE, null);
     }
 
     public void setVisitorsCount(String cnt)
@@ -234,7 +245,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return pref.getString(KEY_FP_NAME,null);
     }
     public String getFpTag(){
-        return pref.getString(KEY_FP_TAG,null);
+        return pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null);
     }
 
     public boolean getShareWebsite(){
@@ -835,6 +846,14 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 Methods.showSnackBarNegative(activity,"Not able to logout");
             }
         });
+    }
+
+    public boolean isSiteAppearanceShown(){
+        return pref.getBoolean(Key_Preferences.IS_FP_SITE_APPEARNCE_SHOWN, false);
+    }
+    public void setSiteAppearanceShown(boolean val){
+        editor.putBoolean(Key_Preferences.IS_FP_SITE_APPEARNCE_SHOWN, true);
+        editor.commit();
     }
 
 

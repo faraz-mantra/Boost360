@@ -7,12 +7,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.gc.materialdesign.views.Button;
-import com.gc.materialdesign.views.Switch;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NotificationCenter.AlertArchive;
 import com.nowfloats.Store.Service.StoreInterface;
@@ -20,6 +19,9 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
+
+import org.honorato.multistatetogglebutton.MultiStateToggleButton;
+import org.honorato.multistatetogglebutton.ToggleButton;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,13 +67,9 @@ public class DomainLookup extends AppCompatActivity {
 
         Button SearchBtn = (Button)findViewById(R.id.search_domain);
         final EditText domainText = (EditText)findViewById(R.id.domainNameEditText);
-        Switch domainSwitch = (Switch)findViewById(R.id.domainTypeSwitchView);
-        final TextView comDomain = (TextView)findViewById(R.id.comDomainTxt);
-        final TextView netDomain = (TextView)findViewById(R.id.netDomainTxt);
-        comDomain.setTextColor(getResources().getColor(R.color.light_black));
-        netDomain.setTextColor(getResources().getColor(R.color.signup_hint_grey));
+        MultiStateToggleButton domainSwitch = (MultiStateToggleButton) findViewById(R.id.domainTypeSwitchView);
 
-        domainSwitch.setOncheckListener(new Switch.OnCheckListener() {
+        /*domainSwitch.setOncheckListener(new Switch.OnCheckListener() {
             @Override
             public void onCheck(Switch aSwitch, boolean value) {
             if (value) {domainType = ".net";
@@ -82,6 +80,19 @@ public class DomainLookup extends AppCompatActivity {
                 comDomain.setTextColor(getResources().getColor(R.color.light_black));
                 netDomain.setTextColor(getResources().getColor(R.color.signup_hint_grey));
             }
+            }
+        });*/
+        domainSwitch.setOnValueChangedListener(new ToggleButton.OnValueChangedListener() {
+            @Override
+            public void onValueChanged(int value) {
+                switch (value){
+                    case 0:
+                        domainType = ".com";
+                        break;
+                    case 1:
+                        domainType = ".net";
+                        break;
+                }
             }
         });
 

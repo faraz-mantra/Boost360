@@ -74,6 +74,7 @@
     <string name="title_activity_create__message_">Post an Update</string>
     <string name="side_panel_row_one">Dashboard</string>
     <string name="side_panel_row_two">Profile</string>
+    <string name="side_panel_site_appearance">Site Appearance</string>
     <string name="side_panel_row_csp">Custom Pages</string>
     <string name="side_panel_row_three">Enquiries</string>
     <string name="side_panel_row_four">Photo Gallery</string>
@@ -414,11 +415,31 @@
     <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.biz2.nowfloats</string>
     <string name="dot">&#8226;</string>
     <string name="interest">I\'m interested</string>
-    <string name="contact_us_number">+914030911167</string>
+    <string name="contact_us_number">18601231233</string>
     <string name="store_coming_soon">Coming Soon!</string>
     <string name="message_soon">Start updating, now!</string>
     <string name="title_activity_product_gallery">ProductGalleryActivity</string>
     <string name="store">Store</string>
     <string name="empty_alert">We will notify you as soon as\nyou have a new alert</string>
+
+    <string-array name="domain_array">
+        <item>.com</item>
+        <item>.net</item>
+    </string-array>
+
+    <string name="site_appearance_title">Your business site awaits a new look.</string>
+    <string name="site_appearance_text">Now, enhance your customer\'s browsing experience by signing up for a new dynamic interface for your site,
+free exclusively for you. It will help your customers spend more time on your site and let them do more of what your business actually needs.</string>
+    <string name="site_appearance_warn">If you don\'t like the new look, you can roll back to the original look whenever you want.</string>
+
+    <string-array name="kitsune_feedback">
+        <item>I prefer the old theme.</item>
+        <item>My customers prefer the old theme.</item>
+        <item>I can\'t see some of the widgets that were there on the old theme.</item>
+        <item>It\'s not what I paid for.</item>
+    </string-array>
+    <string name="conv_sa_title">Hope you\'re enjoying the new look</string>
+    <string name="conv_sa_body">Your business website is optimised for popular search engines and multiplies that with the geographic location of your business.
+Keep on updating your website with relevant brand or product messaging, and see the magic of your website rising in search rankings and receiving more visitors.</string>
 
 </resources>

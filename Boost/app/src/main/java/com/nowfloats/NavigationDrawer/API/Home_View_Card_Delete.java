@@ -121,36 +121,36 @@ public class Home_View_Card_Delete  extends AsyncTask<Void,String, String> {
     @Override
     protected String doInBackground(Void... params) {
 
-                HttpClient httpclient = new DefaultHttpClient();
-                HttpDeleteWithBody del = new HttpDeleteWithBody(url);
-                StringEntity se;
-                try {
-                    se = new StringEntity(values.toString(), HTTP.UTF_8);
-                    se.setContentType("application/json");
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpDeleteWithBody del = new HttpDeleteWithBody(url);
+        StringEntity se;
+        try {
+            se = new StringEntity(values.toString(), HTTP.UTF_8);
+            se.setContentType("application/json");
 
-                    del.setEntity(se);
+            del.setEntity(se);
 
-                    HttpResponse response = httpclient.execute(del);
+            HttpResponse response = httpclient.execute(del);
 
-                    StatusLine status = response.getStatusLine();
-                    Log.i("Delete POST---","status----"+status);
+            StatusLine status = response.getStatusLine();
+            Log.i("Delete POST---","status----"+status);
 
-                    if (status.getStatusCode() == 200) {
-                        Log.i("Upload Delete msg...","Success");
-                        flag = true;
-                    }
-                } catch (UnsupportedEncodingException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (ClientProtocolException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-        return  null;
+            if (status.getStatusCode() == 200) {
+                Log.i("Upload Delete msg...","Success");
+                flag = true;
             }
+        } catch (UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return  null;
+    }
 
     public void getMessages(String fpId)
     {

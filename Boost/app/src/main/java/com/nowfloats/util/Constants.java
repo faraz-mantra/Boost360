@@ -28,7 +28,7 @@ import retrofit.RestAdapter;
 
 
 public class Constants {
-    public static final boolean APK_MODE_RELEASE = true;
+    public static final boolean APK_MODE_RELEASE = false;
     public static final String APP_TAG = "Boost App";
     public static boolean LOGOUPLOADED = false;
     public static boolean IS_SUNDAY_CHECKED = false;

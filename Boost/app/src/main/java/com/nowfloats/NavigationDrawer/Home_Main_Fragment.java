@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -38,8 +39,6 @@ import com.facebook.Response;
 import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
-import com.gc.materialdesign.views.Card;
-import com.gc.materialdesign.widgets.Dialog;
 import com.melnykov.fab.FloatingActionButton;
 import com.nowfloats.Login.Fetch_Home_Data;
 import com.nowfloats.Login.Model.FloatsMessageModel;
@@ -88,7 +87,7 @@ public class Home_Main_Fragment extends Fragment implements
         Fetch_Home_Data.Fetch_Home_Data_Interface {
     public static LinearLayout retryLayout,emptyMsgLayout;
     public static ButteryProgressBar progressBar;
-    public static Card progressCrd;
+    public static CardView progressCrd;
     private static RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     public static RecyclerView recyclerView;
@@ -268,11 +267,7 @@ public class Home_Main_Fragment extends Fragment implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         BoostLog.d("Home_Main_Fragment","onViewCreated");
-
-
-
-
-        progressCrd = (Card)view.findViewById(R.id.progressCard);
+        progressCrd = (CardView)view.findViewById(R.id.progressCard);
         progressBar = (ButteryProgressBar)view.findViewById(R.id.progressbar);
         retryLayout = (LinearLayout)view.findViewById(R.id.postRetryLayout);
         emptyMsgLayout = (LinearLayout)view.findViewById(R.id.emptymsglayout);
@@ -348,9 +343,11 @@ public class Home_Main_Fragment extends Fragment implements
         });
 
        if(Constants.isWelcomScreenToBeShown) {
+            //emptyMsgLayout.setVisibility(View.GONE);
             Welcome_Card_Model welcome_card_model = new Welcome_Card_Model();
             welcome_card_model.webSiteName = session.getFPName();
             mNewWelcomeTextImageList.add(welcome_card_model);
+
        }
 
         /*if(HomeActivity.StorebizFloats!=null && HomeActivity.StorebizFloats.size()==0&& !Constants.isWelcomScreenToBeShown){
@@ -734,6 +731,7 @@ public class Home_Main_Fragment extends Fragment implements
         }
         PostTaskModel task = new PostTaskModel(Constants.clientId,msg, socialShare,Create_Message_Activity.imageIconButtonSelected,
                 merchantId,parentId,Create_Message_Activity.tosubscribers);
+        //BoostLog.d("Payload:", socialShare);
         if (facebookPostCount==0) {
             if (Constants.fbShareEnabled) {
                 Create_Message_Activity.postUser = new com.nowfloats.NavigationDrawer.API.PostModel(msg);

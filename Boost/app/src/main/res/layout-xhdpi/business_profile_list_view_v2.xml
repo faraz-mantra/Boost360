@@ -175,7 +175,7 @@
                 android:textSize="@dimen/cell_text_size"
                 android:background="?android:selectableItemBackground"
                 android:textColor="@color/cell_text_color"
-                android:text="Logo"
+                android:text="Business Logo"
                 android:gravity="center_vertical"/>
             <View
                 android:layout_width="288dp"

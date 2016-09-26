@@ -126,4 +126,7 @@
     <color name="store_data_title">#747474</color>
     <color name="group_color1">#E6E6E6</color>
     <color name="group_color2">#F5F5F5</color>
+    <color name="multiple_image_select_primary">@color/primaryColor</color>
+    <color name="multiple_image_select_primaryDark">@color/primaryColorDark</color>
+    <color name="multiple_image_select_accent">@color/accentColor</color>
 </resources>

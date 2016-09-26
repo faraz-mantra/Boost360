@@ -70,4 +70,9 @@ public class Key_Preferences {
     public static String GET_FP_DETAILS_PAYMENTSTATE = "GET_FP_DETAILS_PAYMENTSTATE";
     public static String GET_FP_DETAILS_WIDGET_CUSTOMPAGES = "GET_FP_DETAILS_CUSTOMPAGES";
     public static final String GET_FP_DETAILS_ACCOUNTMANAGERID = "AccountManagerId";
+    public static final String GET_FP_DETAILS_EXPIRY_DATE = "fp_expiry_date";
+    public static final String IS_FP_SITE_APPEARNCE_SHOWN = "site_appearance_shown";
+    public static final String LATITUDE = "latitude";
+    public static final String LONGITUDE = "longitude";
+    public static final String MAIN_PRIMARY_CONTACT_NUM = "mainPrimaryContactNum";
 }

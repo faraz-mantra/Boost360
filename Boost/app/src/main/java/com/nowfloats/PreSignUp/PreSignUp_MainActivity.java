@@ -32,7 +32,6 @@ import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
-import com.gc.materialdesign.views.CustomView;
 import com.nowfloats.Login.Login_MainActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.signup.UI.API.API_Layer;
@@ -63,7 +62,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class PreSignUp_MainActivity extends FragmentActivity implements LoadCountryData.LoadCountryData_Interface {
     LinearLayout loginTextView;
-    CustomView signUpButton, facebookSignUpButton;
+    LinearLayout signUpButton, facebookSignUpButton;
     PreSignupFragmentAdapter mAdapter;
     ViewPager mPager;
     CirclePageIndicator mIndicator;
@@ -114,7 +113,7 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
         mainScreen = (FrameLayout) findViewById(R.id.mainLayout);
         belowText = (TextView) findViewById(R.id.pre_signUp_bottom_text);
         session = new UserSessionManager(getApplicationContext(), PreSignUp_MainActivity.this);
-        signUpButton = (CustomView) findViewById(R.id.pre_signup_create);
+        signUpButton = (LinearLayout) findViewById(R.id.pre_signup_create);
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,7 +126,7 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
             }
         });
 
-        facebookSignUpButton = (CustomView) findViewById(R.id.facebook_signup_create);
+        facebookSignUpButton = (LinearLayout) findViewById(R.id.facebook_signup_create);
         facebookSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

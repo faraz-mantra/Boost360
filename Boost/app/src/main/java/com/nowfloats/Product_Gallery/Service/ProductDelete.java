@@ -1,5 +1,6 @@
 package com.nowfloats.Product_Gallery.Service;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -27,12 +28,12 @@ import java.io.UnsupportedEncodingException;
 
 public class ProductDelete extends AsyncTask<String,String,String>{
     String url="",values="";
-    Product_Detail_Activity activity;
+    Activity activity;
     private boolean flag = false;
     private MaterialDialog materialProgress;
     int position;
 
-    public ProductDelete(String url ,String values,Product_Detail_Activity activity,int position){
+    public ProductDelete(String url ,String values,Activity activity,int position){
         this.url=url;
         this.values=values;
         this.activity = activity;

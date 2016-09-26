@@ -27,7 +27,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class SetBusinessCategoryAsyncTask extends AsyncTask<Void, String, String>{
-	
+
 	private Activity appContext = null;
 	ProgressDialog pd = null;
 	Boolean success = false;
@@ -36,12 +36,12 @@ public class SetBusinessCategoryAsyncTask extends AsyncTask<Void, String, String
 	String category = null;
 	int requestCode;
 	Boolean flag4upateprofile=false;
-    String fpID ;
+	String fpID ;
 
 	public SetBusinessCategoryAsyncTask(Activity context, String category) {
 		this.appContext = context;
 		this.category = category;
-		
+
 	}
 
 	public SetBusinessCategoryAsyncTask(Activity context, String category, Boolean flag4category,String fpID) {
@@ -49,14 +49,14 @@ public class SetBusinessCategoryAsyncTask extends AsyncTask<Void, String, String
 		this.appContext = context;
 		this.category = category;
 		this.flag4upateprofile=flag4category;
-        this.fpID = fpID ;
+		this.fpID = fpID ;
 	}
 
 	@Override
 	protected void onPreExecute() {
 		pd = ProgressDialog.show(appContext, null, "Setting business category");
 		pd.setCancelable(true);
-		
+
 //		pd = new ProgressDialog(appContext,R.style.MyTheme);
 //		pd.setCancelable(true);
 //		pd.setMessage("Setting business category");
@@ -66,23 +66,23 @@ public class SetBusinessCategoryAsyncTask extends AsyncTask<Void, String, String
 
 	@Override
 	protected void onPostExecute(String result) {
-        try{
-            if(!(pd==null)) {
-                pd.dismiss();
+		try{
+			if(!(pd==null)) {
+				pd.dismiss();
 
-                Edit_Profile_Activity.category.setText(category);
-                Business_Profile_Fragment_V2.category.setText(category);
-                //NewBusinessDetailsFragment.businessCategory.setText(category);
+				Edit_Profile_Activity.category.setText(category);
+				Business_Profile_Fragment_V2.category.setText(category);
+				//NewBusinessDetailsFragment.businessCategory.setText(category);
 
-                if (flag4upateprofile) {
-                    Edit_Profile_Activity.saveTextView.setVisibility(View.GONE);
-                    Util.changeDefaultBackgroundImage(category.toString());
-                }
+				if (flag4upateprofile) {
+					Edit_Profile_Activity.saveTextView.setVisibility(View.GONE);
+					Util.changeDefaultBackgroundImage(category.toString());
+				}
 
-                // pd.dismiss();
-                //  Util.toast("Data Saved", appContext);
-            }
-        }catch(Exception e){e.printStackTrace();}
+				// pd.dismiss();
+				//  Util.toast("Data Saved", appContext);
+			}
+		}catch(Exception e){e.printStackTrace();}
 	}
 
 	@Override
@@ -92,36 +92,36 @@ public class SetBusinessCategoryAsyncTask extends AsyncTask<Void, String, String
 			String content = Constants.clientId;
 			String EncodedCategory = Uri.encode(category);
 			//response = getDataFromServer(content, Constants.HTTP_POST,Constants.NOW_FLOATS_API_URL+"/Discover/v1/floatingPoint/UpdateFloatingPointCategory/"+Constants.StoreTag+"?category="+EncodedCategory);
-			                                                                                                //  v1/floatingPoint/UpdateFloatingPointCategory/{fpTag}?category={category}	
-			 HttpClient httpclient = new DefaultHttpClient();
-			 HttpPost httppost = new HttpPost(Constants.NOW_FLOATS_API_URL+
-                     "/Discover/v1/floatingPoint/UpdateFloatingPointCategory/"
-                     +fpID.toUpperCase().trim().replace("\"", "")+
-                     "?category="+EncodedCategory.toUpperCase().trim().replace("\"", ""));
-			 
-			    try {
-			    	httppost.setEntity(new StringEntity(Constants.clientId));
-			    	httppost.addHeader("Content-Type" , "application/json");
-			        HttpResponse response = httpclient.execute(httppost);
-			        requestCode = response.getStatusLine().getStatusCode();
-			        responseMessage = EntityUtils.toString(response.getEntity());
-			        if(requestCode==200)
-			        {
-			        }
-			        
-			        
-			        
-			    } catch (ClientProtocolException e) {
-			        // TODO Auto-generated catch block
-			    } catch (IOException e) {
-			        // TODO Auto-generated catch block
-			    }
-			
-			
-			
-			
-			
-			
+			//  v1/floatingPoint/UpdateFloatingPointCategory/{fpTag}?category={category}
+			HttpClient httpclient = new DefaultHttpClient();
+			HttpPost httppost = new HttpPost(Constants.NOW_FLOATS_API_URL+
+					"/Discover/v1/floatingPoint/UpdateFloatingPointCategory/"
+					+fpID.toUpperCase().trim().replace("\"", "")+
+					"?category="+EncodedCategory.toUpperCase().trim().replace("\"", ""));
+
+			try {
+				httppost.setEntity(new StringEntity(Constants.clientId));
+				httppost.addHeader("Content-Type" , "application/json");
+				HttpResponse response = httpclient.execute(httppost);
+				requestCode = response.getStatusLine().getStatusCode();
+				responseMessage = EntityUtils.toString(response.getEntity());
+				if(requestCode==200)
+				{
+				}
+
+
+
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+			}
+
+
+
+
+
+
 //			if (!Util.isNullOrEmpty(response)) {
 //
 //
@@ -135,7 +135,7 @@ public class SetBusinessCategoryAsyncTask extends AsyncTask<Void, String, String
 	}
 
 	public String getDataFromServer(String content, String requestMethod,
-			String serverUrl) {
+									String serverUrl) {
 		String response = "";
 		DataOutputStream outputStream = null;
 		try {
@@ -215,6 +215,6 @@ public class SetBusinessCategoryAsyncTask extends AsyncTask<Void, String, String
 		}
 		return response;
 	}
-	
-	
+
+
 }

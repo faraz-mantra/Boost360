@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -15,27 +17,36 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.nowfloats.BusinessProfile.UI.API.BusinessAddressLatLongUpdateAsyncTask;
 import com.nowfloats.BusinessProfile.UI.API.BusinessAddressUpdateAsyncTask;
 import com.nowfloats.BusinessProfile.UI.API.NewMapViewDialogBusinessAddress;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.squareup.picasso.Picasso;
 import com.thinksity.R;
+
 
 public class Business_Address_Activity extends ActionBarActivity {
 
     private Toolbar toolbar;
-    public static GoogleMap googleMap;
+    //public static GoogleMap googleMap;
     public static TextView saveTextView;
     private TextView titleTextView;
     String responseMessage= "", address_line, address_town, address_pin,latlongAddress;
@@ -46,13 +57,16 @@ public class Business_Address_Activity extends ActionBarActivity {
     public static String text1,text2,text3,text4;
     String[] profilesattr =new String[20];
     UserSessionManager session;
+    public static ImageView ivMap;
+    public static final int PLACE_PICKER_REQUEST = 23;
+    private boolean mUpdatingPositionFromMap = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_address);
         Methods.isOnline(Business_Address_Activity.this);
-        loadData();
+        //loadData();
 
         session = new UserSessionManager(getApplicationContext(),Business_Address_Activity.this);
 
@@ -60,8 +74,14 @@ public class Business_Address_Activity extends ActionBarActivity {
         saveTextView = (TextView) toolbar.findViewById(R.id.saveTextView);
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
         titleTextView.setText("Address");
+        ivMap = (ImageView) findViewById(R.id.iv_map);
 
-
+        ivMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mapViewDialog();
+            }
+        });
 
 
         saveTextView.setOnClickListener(new View.OnClickListener() {
@@ -314,37 +334,35 @@ public class Business_Address_Activity extends ActionBarActivity {
         latlongAddress=text1.replaceAll(" ", "+")+","+text2.replaceAll(" ", "+")+","+","+text3;
         latlongAddress.replaceAll(" ", "+");
 
-       // if(!stateflag){
+        // if(!stateflag){
 
 //		UploadProfileAsyncTask upa = new UploadProfileAsyncTask(this,offerObj,profilesattr);;
 //		upa.execute();
-            String stringafteredit=text1+","+text2+","+","+ session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)+","+text3;
-            BusinessAddressLatLongUpdateAsyncTask save =new BusinessAddressLatLongUpdateAsyncTask(stringafteredit, profilesattr, this,latlongAddress,session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
-            save.execute();
-       // }
+        String stringafteredit=text1+","+text2+","+","+ session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)+","+text3;
+        BusinessAddressLatLongUpdateAsyncTask save =new BusinessAddressLatLongUpdateAsyncTask(stringafteredit, profilesattr, this,latlongAddress,session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
+        save.execute();
+        // }
 
 
     }
 
-    private void loadData() {
 
-
-    }
 
     private void initilizeMap() {
 
-        googleMap = ((MapFragment) getFragmentManager().findFragmentById(
-                R.id.map)).getMap();
-        LatLng latlong = new LatLng(Constants.latitude , Constants.longitude);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlong, 16));
-        googleMap.getUiSettings().setScrollGesturesEnabled(false);
+        String url = "http://maps.google.com/maps/api/staticmap?center=" + Constants.latitude + "," + Constants.longitude + "&zoom=14&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + Constants.latitude + "," + Constants.longitude + "&key=" + "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
+        //holderItem.chatImage.setVisibility(View.VISIBLE);
+        BoostLog.d("Map Url:", url);
+        try {
+            Picasso.with(this)
+                    .load(url)
+                    .placeholder(R.drawable.default_product_image)
+                    .error(R.drawable.default_product_image)
+                    .into(ivMap);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                mapViewDialog();
-            }
-        });
 
         // check if map is created successfully or not
     }
@@ -400,9 +418,49 @@ public class Business_Address_Activity extends ActionBarActivity {
 
     private void mapViewDialog() {
 
-        Intent it = new Intent(this, NewMapViewDialogBusinessAddress.class);
-        startActivity(it);
+        /*Intent it = new Intent(this, NewMapViewDialogBusinessAddress.class);
+        startActivity(it);*/
+        try{
+            PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+            Intent placePickerIntent = builder.build(this);
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
+                placePickerIntent.putExtra("primary_color", ContextCompat.getColor(this, R.color.primaryColor));
+                placePickerIntent.putExtra("primary_color_dark", ContextCompat.getColor(this, R.color.primaryColorDark));
+            }
 
+            startActivityForResult(placePickerIntent, PLACE_PICKER_REQUEST);
+
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==RESULT_OK && requestCode==PLACE_PICKER_REQUEST){
+            Place place = PlacePicker.getPlace(this, data);
+            if(place!=null){
+                LatLng latLng = place.getLatLng();
+                Constants.latitude = latLng.latitude;
+                Constants.longitude = latLng.longitude;
+                String url = "http://maps.google.com/maps/api/staticmap?center=" + Constants.latitude + "," + Constants.longitude + "&zoom=14&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + Constants.latitude + "," + Constants.longitude + "&key=" + "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
+                //holderItem.chatImage.setVisibility(View.VISIBLE);
+                try {
+                    Picasso.with(this)
+                            .load(url)
+                            .placeholder(R.drawable.default_product_image)
+                            .into(ivMap);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                BusinessAddressUpdateAsyncTask Task = new BusinessAddressUpdateAsyncTask( Constants.latitude, Constants.longitude, Business_Address_Activity.this,null,true,session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
+                Task.execute();
+                saveTextView.setVisibility(View.GONE);
+            }
+        }
     }
 
     @Override
@@ -410,13 +468,6 @@ public class Business_Address_Activity extends ActionBarActivity {
         // TODO Auto-generated method stub
         super.onResume();
         this.setTitle("Business Address");
-        if(NewMapViewDialogBusinessAddress.updatingPostionFromMap)
-        {
-
-            BusinessAddressUpdateAsyncTask Task = new BusinessAddressUpdateAsyncTask( Constants.latitude, Constants.longitude, Business_Address_Activity.this,null,true,session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
-            Task.execute();
-            saveTextView.setVisibility(View.GONE);
-        }
 
     }
 

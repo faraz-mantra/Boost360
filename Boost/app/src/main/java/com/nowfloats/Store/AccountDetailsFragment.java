@@ -65,7 +65,7 @@ public class AccountDetailsFragment extends Fragment {
         final LinearLayout progressLayout = (LinearLayout)view.findViewById(R.id.progress_accinfo_layout);
         progressLayout.setVisibility(View.VISIBLE);
 
-        StoreAdapter adapter = new StoreAdapter(activity, StoreFragmentTab.activeWidgetModels,"active");
+        StoreAdapter adapter = new StoreAdapter(activity, StoreFragmentTab.activeWidgetModels,"active", session);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         progressLayout.setVisibility(View.GONE);

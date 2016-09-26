@@ -20,20 +20,6 @@ import java.io.UnsupportedEncodingException;
  * Created by RAJA on 12-07-2016.
  */
 public class NfxRequestClient {
-    /*
-    {
-	"accessToken":{
-		"Type":"TWITTER",
-		"UserAccessTokenKey":"TfQeTwAAAAAAvPNcAAABVdoA6pA",
-		"UserAccessTokenSecret":"iBy7FBJyX3fIbYa5ibmIgl8FhsCjLsTq",
-		"UserAccountId":""
-	},
-	"clientId":"2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21",
-	"floatingPointId":"531178434ec0a44b68145604",
-	"fpIdentifierType":0
-    }
-     */
-
     private String mType;
     private String mUserAccessTokenKey;
     private String mUserAccessTokenSecret;
@@ -58,7 +44,7 @@ public class NfxRequestClient {
 
 
     public interface NfxCallBackListener{
-        public void nfxCallBack(String response, int callType, String name);
+         void nfxCallBack(String response, int callType, String name);
     }
 
 
@@ -133,7 +119,8 @@ public class NfxRequestClient {
     }
 
     public void connectNfx(){
-         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Constants.nfxApi, getNfxParams() , new Response.Listener<JSONObject>() {
+         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                 Constants.nfxApi, getNfxParams() , new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {

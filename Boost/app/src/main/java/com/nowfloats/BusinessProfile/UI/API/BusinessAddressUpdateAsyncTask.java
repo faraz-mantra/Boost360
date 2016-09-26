@@ -15,7 +15,9 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -27,6 +29,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+
 
 
 public class BusinessAddressUpdateAsyncTask extends AsyncTask<Void,String, String>{
@@ -43,8 +46,9 @@ public class BusinessAddressUpdateAsyncTask extends AsyncTask<Void,String, Strin
 	String address;
 	Boolean mapupdateflag=false;
 	SharedPreferences sharedpreferences;
-    String fpTag ;
-	
+	String fpTag ;
+	int responseCode;
+
 	public BusinessAddressUpdateAsyncTask(double latitude, double longitude, Activity context, String address){
 		this.appContext = context;
 		this.latitude = latitude;
@@ -55,16 +59,16 @@ public class BusinessAddressUpdateAsyncTask extends AsyncTask<Void,String, Strin
 
 
 	public BusinessAddressUpdateAsyncTask(double latitude,
-                                          double longitude,
-                                          Activity context,
-                                          String address,Boolean flag,String fpTag) {
+										  double longitude,
+										  Activity context,
+										  String address,Boolean flag,String fpTag) {
 		//values are coming from the bussiness address fragment
 		this.appContext = context;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.address = address;
 		this.mapupdateflag=flag;
-        this.fpTag = fpTag ;
+		this.fpTag = fpTag ;
 
 	}
 
@@ -72,9 +76,9 @@ public class BusinessAddressUpdateAsyncTask extends AsyncTask<Void,String, Strin
 
 	@Override
 	protected String doInBackground(Void... params) {
-		
+
 		//locatingBusinessAddress();
-			
+
 		String location = latitude+","+longitude;
 		JSONObject obj = new JSONObject();
 		JSONObject dataToBeUpdated = new JSONObject();
@@ -88,15 +92,15 @@ public class BusinessAddressUpdateAsyncTask extends AsyncTask<Void,String, Strin
 			myObj2.put("key", "GEOLOCATION");
 			myObj2.put("value", location);
 			data.put(myObj2);
-			
-			
-			if(mapupdateflag==false)  { 
-			JSONObject myObj3 = new JSONObject();
-			myObj3.put("key", "ADDRESS");                                     
-		    myObj3.put("value", address);
-			data.put(myObj3);}
-			
-			
+
+
+			if(mapupdateflag==false)  {
+				JSONObject myObj3 = new JSONObject();
+				myObj3.put("key", "ADDRESS");
+				myObj3.put("value", address);
+				data.put(myObj3);}
+
+
 //			if (mapupdateflag) {
 //
 //				JSONObject myObj4 = new JSONObject();
@@ -121,30 +125,30 @@ public class BusinessAddressUpdateAsyncTask extends AsyncTask<Void,String, Strin
 //								: currentAddress.getCountryName()));
 //				data.put(myObj6);
 //			}
-//			
-			
+//
+
 			obj.put("updates", data);
 
 			dataToBeUpdated.put("GEOLOCATION", location);
 			if(mapupdateflag == false)
-		    dataToBeUpdated.put("ADDRESS", address);
-			
+				dataToBeUpdated.put("ADDRESS", address);
+
 			getDataFromServer(obj.toString(), Constants.HTTP_POST, Constants.FpsUpdate);
-			
-			
+
+
 		} catch (Exception e) {
 
 		}
-			
+
 //			try{
 //				getDataFromServer(obj.toString(), Constants.HTTP_POST, Constants.FpsUpdate);
 //				} catch (Exception e) {
-//					
+//
 //					e.printStackTrace();
 //				}
-			return null ;
-		}
-	
+		return null ;
+	}
+
 
 	@Override
 	protected void onPostExecute(final String result) {
@@ -157,35 +161,36 @@ public class BusinessAddressUpdateAsyncTask extends AsyncTask<Void,String, Strin
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
 		else
 		{
 			pd.dismiss();
 		}
-		
-		if(success == true){    
-			if(mapupdateflag == false)
-			Constants.StoreAddress = address;
-			
-			Constants.latitude = latitude;
-			Constants.longitude = longitude;
 
-			
+		if(responseCode==200 || responseCode==202){
+			if(mapupdateflag == false)
+				Constants.StoreAddress = address;
+
+			//Constants.latitude = latitude;
+			//Constants.longitude = longitude;
+
+
 			LatLng latlong = new LatLng(latitude , longitude);
-         	Business_Address_Activity.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlong, 16));
+
+			//Business_Address_Activity.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlong, 16));
 
 			Toast.makeText(appContext,"Your business address has been updated successfully",Toast.LENGTH_LONG);
-			}
+		}
 		else{
 			NewMapViewDialogBusinessAddress.updatingPostionFromMap = false;
 			//addressErrorDialog();
 		}
-		
-		
-		
-		
-		
+
+
+
+
+
 	}
 
 	@Override
@@ -194,19 +199,19 @@ public class BusinessAddressUpdateAsyncTask extends AsyncTask<Void,String, Strin
 		pd= ProgressDialog.show(appContext, null, "Updating Your Address");
 		pd.show();
 	}
-	
+
 	private void locatingBusinessAddress()
 	{
-		
+
 		try{
 			List<Address> locations = null;
 			Address address = null;
-			
+
 			if (latitude != -1 && longitude != -1){
-				
+
 				Geocoder geocoder = new Geocoder(appContext);
 				Boolean geocoderIsPresent = Geocoder.isPresent();
-				
+
 				if (geocoderIsPresent && geocoder != null) {
 					try {
 						locations = geocoder.getFromLocation(latitude,
@@ -218,15 +223,15 @@ public class BusinessAddressUpdateAsyncTask extends AsyncTask<Void,String, Strin
 				} else {
 					//	Geocoder is not available or supported
 				}
-				
+
 				if(locations!=null){
 					currentAddress = locations.get(0);
-					
+
 					String buzzAddress=(currentAddress.getThoroughfare()==null?"":currentAddress.getThoroughfare())+","+
-					                   (currentAddress.getLocality()==null?"":currentAddress.getLocality())+","+
-					                   (currentAddress.getAdminArea()==null?"":currentAddress.getAdminArea())+","+
-					                   (currentAddress.getCountryName()==null?"":currentAddress.getCountryName())+","+
-					                   (currentAddress.getPostalCode()==null?"":currentAddress.getPostalCode());
+							(currentAddress.getLocality()==null?"":currentAddress.getLocality())+","+
+							(currentAddress.getAdminArea()==null?"":currentAddress.getAdminArea())+","+
+							(currentAddress.getCountryName()==null?"":currentAddress.getCountryName())+","+
+							(currentAddress.getPostalCode()==null?"":currentAddress.getPostalCode());
 					this.buzzAddress=buzzAddress;
 				}
 			} else {
@@ -236,12 +241,12 @@ public class BusinessAddressUpdateAsyncTask extends AsyncTask<Void,String, Strin
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void getDataFromServer(String content,String requestMethod,String serverUrl){
 		String response = "";
 		DataOutputStream outputStream = null;
 		try {
-            
+
 			//Thread.sleep(2000);
 			NewMapViewDialogBusinessAddress.updatingPostionFromMap = false;
 			URL new_url = new URL(serverUrl);
@@ -258,36 +263,37 @@ public class BusinessAddressUpdateAsyncTask extends AsyncTask<Void,String, Strin
 			connection.setRequestMethod(requestMethod);
 			connection.setRequestProperty("Connection", "Keep-Alive");
 
-			connection.setRequestProperty("Content-Type",                          
-						Constants.BG_SERVICE_CONTENT_TYPE_JSON);
+			connection.setRequestProperty("Content-Type",
+					Constants.BG_SERVICE_CONTENT_TYPE_JSON);
 			outputStream = new DataOutputStream(connection.getOutputStream());
-		
+
 			byte[] BytesToBeSent = content.getBytes();
-			if (BytesToBeSent != null) {					
+			if (BytesToBeSent != null) {
 				outputStream.write(BytesToBeSent, 0, BytesToBeSent.length);
 			}
-			int responseCode = connection.getResponseCode();
-			
+			responseCode = connection.getResponseCode();
+
 			responseMessage = connection.getResponseMessage();
-			if (responseCode	== 200  || responseCode	== 202) 
+			BoostLog.d("response Code", responseCode + "");
+			if (responseCode	== 200  || responseCode	== 202)
 			{
 				success = true;
-				
+
 			}
-			
+
 			InputStreamReader inputStreamReader = null;
 			BufferedReader bufferedReader =  null;
 			try
 			{
 				inputStreamReader = new InputStreamReader(connection.getInputStream());
 				bufferedReader = new BufferedReader(inputStreamReader);
-				
+
 				StringBuilder responseContent = new StringBuilder();
-				
+
 				String temp = null;
-				
+
 				boolean isFirst = true;
-				
+
 				while((temp = bufferedReader.readLine())!=null)
 				{
 					if(!isFirst)
@@ -295,23 +301,24 @@ public class BusinessAddressUpdateAsyncTask extends AsyncTask<Void,String, Strin
 					responseContent.append(temp);
 					isFirst = false;
 				}
-				
+
 				response = responseContent.toString();
-				
+				BoostLog.d("response", response);
+
 			}
 			catch(Exception e){}
 			finally
 			{
 				try{
-				inputStreamReader.close();
+					inputStreamReader.close();
 				}catch (Exception e) {}
 				try{
-				bufferedReader.close();
+					bufferedReader.close();
 				}catch (Exception e) {}
 
 			}
-			
-	
+
+
 
 		} catch (Exception ex) {
 			success = false;
@@ -322,10 +329,10 @@ public class BusinessAddressUpdateAsyncTask extends AsyncTask<Void,String, Strin
 			} catch (Exception e) {
 			}
 		}
-		
+
 		//return response;
 	}
-	
-	
+
+
 
 }

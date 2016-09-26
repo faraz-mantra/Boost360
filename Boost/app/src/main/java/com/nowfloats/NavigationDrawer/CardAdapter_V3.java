@@ -7,14 +7,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -25,24 +26,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gc.materialdesign.widgets.SnackBar;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.viewHolder.MyViewHolder;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.thinksity.R;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +53,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
     String imageUri = "";
 
     private LayoutInflater mInflater;
-    public Activity appContext ;
+    public HomeActivity appContext ;
     FloatsMessageModel data;
     String msg = "", date = "";
     private boolean imagePresent;
@@ -64,10 +61,14 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
 
     static ProgressDialog pd ;
 
+    public interface Permission{
+         void getPermission();
+    }
+
     public CardAdapter_V3(Activity appContext, UserSessionManager session)
     {
         Log.d("CardAdapter_V3","Constructor");
-        this.appContext = appContext ;
+        this.appContext = (HomeActivity) appContext ;
         this.session = session;
         mInflater = (LayoutInflater) appContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -173,111 +174,84 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
             shareImageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MixPanelController.track("SharePost",null);
-                   // final Intent shareIntent = null;
+                    MixPanelController.track("SharePost", null);
+                    // final Intent shareIntent = null;
                     appContext.runOnUiThread(new Runnable() {
                         public void run() {
                             pd = ProgressDialog.show(appContext, "", "Sharing . . .");
-                            pd.setCancelable(true);
                         }
                     });
-
-                    Thread mThread = new Thread() {
-                        @Override
-                        public void run() {
-                            try {
-                                final Intent shareIntent = new Intent();
-                                if (!imageShare.contains("/Tile/deal.png") && !Util.isNullOrEmpty(imageShare)) {
-                                    if(Methods.isOnline(appContext)) {
-                                        URL url = null;
-                                        Uri uri;
-
-
-                                        try {
-
-                                            if (imageShare.contains("BizImages")) {
-                                                url = new URL(Constants.NOW_FLOATS_API_URL + "" + imageShare);
-                                            } else {
-                                                url = new URL(imageShare);
-                                            }
-
-                                        } catch (MalformedURLException e) {
-                                            e.printStackTrace();
-                                        }
-
-
-                                        HttpURLConnection connection = null;
-                                        try {
-                                            connection = (HttpURLConnection) url.openConnection();
-
-
-                                            connection.setDoInput(true);
-
-                                            connection.connect();
-
-                                            InputStream input = connection.getInputStream();
-
-
-                                            Bitmap immutableBpm = BitmapFactory.decodeStream(input);
-
-                                            Bitmap mutableBitmap = immutableBpm.copy(Bitmap.Config.ARGB_8888, true);
-
-
+                    final Intent shareIntent = new Intent();
+                    if (!imageShare.contains("/Tile/deal.png") && !Util.isNullOrEmpty(imageShare)) {
+                        if (Methods.isOnline(appContext)) {
+                            String url;
+                            if (imageShare.contains("BizImages")) {
+                                url = Constants.NOW_FLOATS_API_URL + "" + imageShare;
+                            } else {
+                                url = imageShare;
+                            }
+                            Picasso.with(appContext)
+                                    .load(url)
+                                    .into(new Target() {
+                                        @Override
+                                        public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                                            pd.dismiss();
+                                            Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
                                             View view = new View(appContext);
-
                                             view.draw(new Canvas(mutableBitmap));
-
-                                            String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
-
-                                            uri = Uri.parse(path);
-                                            shareIntent.setType("image/png");
-
-                                            //  Uri uri = Uri.parse("https://api.withfloats.com/" +imageShare);
-                                            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-
-                                            //   shareIntentToPackages("image/png",HomeActivity.StorebizFloats.get(position).message,uri);
-
-                                            //}
-
-                                            //}
-                                        } catch (IOException e) {
-                                            appContext.runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    Methods.showSnackBarNegative(appContext, "Error in Sharing");
+                                            try {
+                                                String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
+                                                BoostLog.d("Path is:", path);
+                                                Uri uri = Uri.parse(path);
+                                                shareIntent.setType("image/png");
+                                                shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                                                shareIntent.setAction(Intent.ACTION_SEND);
+                                                shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message);
+                                                if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
+                                                    appContext.startActivityForResult(Intent.createChooser(shareIntent, "Share your message"), 1);
+                                                } else {
+                                                    Methods.showSnackBarNegative(appContext, "No apps available for the action");
                                                 }
-                                            });
-                                            e.printStackTrace();
-                                        } catch (Exception e) {
-                                            appContext.runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    Methods.showSnackBarNegative(appContext, "Error in Sharing");
-                                                }
-                                            });
-                                            e.printStackTrace();
+                                            }catch (Exception e){
+                                                ActivityCompat.requestPermissions(appContext, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA}, 2);
+                                            }
                                         }
-                                    }else {
-                                        Methods.showSnackBarNegative(appContext, "Can't Share image content in Offline Mode");
-                                    }
 
-                                } else {
-                                    shareIntent.setType("text/plain");
-                                    // shareIntentToPackages("text/plain",HomeActivity.StorebizFloats.get(position).message,null);
-                                }
+                                        @Override
+                                        public void onBitmapFailed(Drawable errorDrawable) {
+                                            pd.dismiss();
+                                            Methods.showSnackBarNegative(appContext, "Failed to download Image");
 
-                                shareIntent.setAction(Intent.ACTION_SEND);
-                                shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message);
+                                        }
 
-                                appContext.startActivityForResult(Intent.createChooser(shareIntent, "Share your message"), 1);
-                            }catch (Exception e) {e.printStackTrace();}
+                                        @Override
+                                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                                        }
+                                    });
+
+
+                        } else {
+                            pd.dismiss();
+                            Methods.showSnackBarNegative(appContext, "Can't Share image content in Offline Mode");
                         }
-                    };
-                    mThread.start();
+
+
+                    } else {
+                        pd.dismiss();
+                        shareIntent.setType("text/plain");
+                        shareIntent.setAction(Intent.ACTION_SEND);
+                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message);
+                        if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
+                            appContext.startActivityForResult(Intent.createChooser(shareIntent, "Share your message"), 1);
+                        } else {
+                            Methods.showSnackBarNegative(appContext, "No apps available for the action");
+                        }
+
+                    }
                 }
 
             });
-          //  }
 
             if(Constants.isWelcomScreenToBeShown == true) {
                 Constants.isWelcomScreenToBeShown = false ;
@@ -435,4 +409,5 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
             return HomeActivity.StorebizFloats.size();
         }
     }
+
 }

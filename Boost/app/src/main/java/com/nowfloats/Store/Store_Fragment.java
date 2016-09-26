@@ -126,7 +126,7 @@ public class Store_Fragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
         recyclerView.setItemAnimator(new FadeInUpAnimator());
 
-        storeAdapter = new StoreAdapter(activity, StoreFragmentTab.additionalWidgetModels,"all");
+        storeAdapter = new StoreAdapter(activity, StoreFragmentTab.additionalWidgetModels,"all", session);
 //        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(storeAdapter);
 //        ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(alphaAdapter);
 //        scaleAdapter.setFirstOnly(false);
@@ -174,7 +174,7 @@ public class Store_Fragment extends Fragment {
                 emptystorelayout.setVisibility(View.GONE);
             }
             progress_storelayout.setVisibility(View.GONE);
-            storeAdapter = new StoreAdapter(activity, storeModel,"all");
+            storeAdapter = new StoreAdapter(activity, storeModel,"all", session);
             AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(storeAdapter);
             ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(alphaAdapter);
             scaleAdapter.setFirstOnly(false);

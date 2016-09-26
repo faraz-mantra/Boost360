@@ -510,7 +510,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 .setmFpId(session.getFPID())
                 .setmType("FACEBOOKPAGE")
                 .setmUserAccessTokenKey(pageAccessToken)
-                .setmUserAccessTokenSecret("Dummy Value")
+                .setmUserAccessTokenSecret("null")
                 .setmUserAccountId(pageID)
                 .setmCallType(FBPAGETYPE)
                 .setmName(pageName);
@@ -614,7 +614,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                                     .setmFpId(session.getFPID())
                                     .setmType("FACEBOOK")
                                     .setmUserAccessTokenKey(facebook.getAccessToken())
-                                    .setmUserAccessTokenSecret("Dummy Value")
+                                    .setmUserAccessTokenSecret("null")
                                     .setmUserAccountId(me.getString("id"))
                                     .setmCallType(FBTYPE)
                                     .setmName(FACEBOOK_USER_NAME);

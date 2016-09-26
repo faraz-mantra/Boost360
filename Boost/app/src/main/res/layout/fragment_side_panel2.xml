@@ -27,7 +27,9 @@
         android:layout_width="match_parent"
         android:layout_height="154dp"
         android:background="@drawable/cover_gradient"
-        ></LinearLayout>
+        >
+
+    </LinearLayout>
 
 </FrameLayout>
 

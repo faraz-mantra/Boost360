@@ -24,21 +24,18 @@
             >
 
             <TextView
-                android:id="@+id/contact_info_primary_number_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Primary Number"
                 android:layout_marginLeft="5dp"
                 android:textSize="10sp"
-                android:textColor="#BDBDBD"
-                android:visibility="gone"/>
+                android:textColor="#BDBDBD"/>
 
             <EditText
                 android:id="@+id/primaryNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
-                android:hint="Primary Number"
                 android:inputType="number"
                 android:textSize="14sp"
                 android:textColor="#575757"
@@ -55,21 +52,18 @@
             >
 
             <TextView
-                android:id="@+id/contact_info_alternate_no_1_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Alternate Number 1"
                 android:textSize="10sp"
                 android:layout_marginLeft="5dp"
-                android:textColor="#BDBDBD"
-                android:visibility="gone"/>
+                android:textColor="#BDBDBD"/>
 
             <EditText
                 android:id="@+id/alternateNumber_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
-                android:hint="Alternate Number 1"
                 android:textSize="14sp"
                 android:inputType="number"
                 android:textColor="#575757"/>
@@ -86,16 +80,13 @@
             >
 
             <TextView
-
-                android:id="@+id/contact_info_alternate_number_2_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Alternate Number 2"
                 android:textSize="10sp"
                 android:inputType="number"
                 android:layout_marginLeft="5dp"
-                android:textColor="#BDBDBD"
-                android:visibility="gone"/>
+                android:textColor="#BDBDBD"/>
 
             <EditText
                 android:id="@+id/alternateNumber_2"
@@ -103,7 +94,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
                 android:inputType="number"
-                android:hint="Alternate Number 2"
                 android:textSize="14sp"
                 android:textColor="#575757"/>
 
@@ -117,21 +107,18 @@
             >
 
             <TextView
-                android:id="@+id/contact_info_website_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Website Address"
                 android:textSize="10sp"
                 android:layout_marginLeft="5dp"
-                android:textColor="#BDBDBD"
-                android:visibility="gone"/>
+                android:textColor="#BDBDBD"/>
 
             <EditText
                 android:id="@+id/websiteAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
-                android:hint="Website Address"
                 android:textSize="14sp"
                 android:textColor="#575757"/>
 
@@ -144,21 +131,18 @@
             >
 
             <TextView
-                android:id="@+id/contact_info_email_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Email"
                 android:textSize="10sp"
                 android:layout_marginLeft="5dp"
-                android:textColor="#BDBDBD"
-                android:visibility="gone"/>
+                android:textColor="#BDBDBD"/>
 
             <EditText
                 android:id="@+id/contactInfo_emailId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
-                android:hint="Email"
                 android:textSize="14sp"
                 android:textColor="#575757"/>
 
@@ -172,22 +156,18 @@
             >
 
             <TextView
-
-                android:id="@+id/contact_info_fbpage_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Facebook Page Name"
                 android:textSize="10sp"
                 android:layout_marginLeft="5dp"
-                android:textColor="#BDBDBD"
-                android:visibility="gone"/>
+                android:textColor="#BDBDBD"/>
 
             <EditText
                 android:id="@+id/facebookPage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
-                android:hint="Facebook Page Name"
                 android:textSize="14sp"
                 android:textColor="#575757"/>
 

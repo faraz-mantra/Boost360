@@ -13,9 +13,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Model.StoreModel;
 import com.nowfloats.Store.StoreDataActivity;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
@@ -30,10 +32,12 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
     ArrayList<StoreModel> storeData;
     private LayoutInflater mInflater;
     String modelKey = "";
-    public StoreAdapter(Activity appContext, ArrayList<StoreModel> storeData, String key) {
+    private UserSessionManager mSessionManager;
+    public StoreAdapter(Activity appContext, ArrayList<StoreModel> storeData, String key, UserSessionManager sessionManager) {
         this.appContext = appContext;
         this.storeData = storeData;
         this.modelKey = key;
+        this.mSessionManager = sessionManager;
         mInflater = (LayoutInflater) appContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -87,7 +91,11 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
 //                    holder.validityText.setText("("+storeData.get(position).ExpiryInMths+" months plan,"
 //                            +storeData.get(position).ValiditiyInMths+" months left"+")");
                 }else{
-                    holder.priceText.setVisibility(View.VISIBLE);
+                    if(mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).equals("India")) {
+                        holder.priceText.setVisibility(View.VISIBLE);
+                    }else {
+                        holder.priceText.setVisibility(View.GONE);
+                    }
                     holder.readmore.setVisibility(View.VISIBLE);
                     holder.knowMoreText.setVisibility(View.GONE);
 //                    holder.validityText.setVisibility(View.GONE);

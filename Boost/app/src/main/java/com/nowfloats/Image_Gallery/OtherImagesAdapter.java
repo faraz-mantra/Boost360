@@ -175,7 +175,7 @@ public class OtherImagesAdapter extends BaseAdapter {
                 baseName = serverImage;
             }
 //        imageLoader.displayImage(baseName, imageView, options);
-            Picasso.with(mContext).load(baseName).placeholder(R.drawable.gal).into(imageView);
+            Picasso.with(mContext).load(baseName).placeholder(R.drawable.gal).resize(200, 0).into(imageView);
         }else{
             Picasso.with(mContext).load(R.drawable.gal).into(imageView);
         }

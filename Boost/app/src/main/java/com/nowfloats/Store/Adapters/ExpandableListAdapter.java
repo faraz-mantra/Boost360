@@ -8,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.gc.materialdesign.views.Button;
 import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.StoreDataActivity;
 import com.thinksity.R;

@@ -46,6 +46,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 import com.thinksity.R;
 
 import java.util.HashMap;
@@ -81,7 +82,7 @@ public class SidePanelFragment extends Fragment {
     TextView productGalleryTextView;
     TextView StoreTextView;
     TextView cspTextView;
-    TextView settingsText, chatText, callText, shareText;
+    TextView settingsText, chatText, callText, shareText, tvSiteAppearance;
     public static TextView fpNameTextView;
     UserSessionManager session;
     public static ImageView iconImage;
@@ -104,7 +105,7 @@ public class SidePanelFragment extends Fragment {
 //    protected ImageLoader imageLoader = ImageLoader.getInstance();
 
     LinearLayout homeLayout, profileLayout, analyticsLayout, storeLayout, customerQueriesLayout, imageGalleryLayout, cspLayout,
-            productGalleryLayout, Store_Layout, settingsLayout, chatLayout, callLayout, shareLayout;
+            productGalleryLayout, Store_Layout, settingsLayout, chatLayout, callLayout, shareLayout, llSiteAppearance;
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
     private ProgressBar progressbar;
@@ -120,7 +121,7 @@ public class SidePanelFragment extends Fragment {
 
     private static HashMap<String, Integer> backgroundImages = new HashMap<String, Integer>();
     private ImageView shareImageView, businessProfileImageView, dasbBoardImageView, callImageView, chatImageView, cspImageView,
-            settingsImageView, StoreImageView, productGalleryImageView, imageGalleryImageView, customerQueriesImageView;
+            settingsImageView, StoreImageView, productGalleryImageView, imageGalleryImageView, customerQueriesImageView, ivSiteAppearance;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
 
     public interface OnItemClickListener {
@@ -182,7 +183,12 @@ public class SidePanelFragment extends Fragment {
                 baseNameProfileImage = Constants.BASE_IMAGE_URL + "" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
             }
             if (baseNameProfileImage != null && baseNameProfileImage.length() > 0) {
-                Picasso.with(getActivity()).load(baseNameProfileImage).placeholder(R.drawable.general_services_background_img).into(containerImage);
+                Picasso.with(getActivity())
+                        .load(baseNameProfileImage)
+                        .resize(540, 0)
+                        .placeholder(R.drawable.general_services_background_img)
+                        .into(containerImage);
+                //Picasso.with(getActivity()).load(baseNameProfileImage).placeholder(R.drawable.general_services_background_img).resize(0, 400).into(containerImage);
             } else {
                 Picasso.with(getActivity()).load(R.drawable.general_services_background_img).into(containerImage);
             }
@@ -329,6 +335,7 @@ public class SidePanelFragment extends Fragment {
         chatLayout = (LinearLayout) card.findViewById(R.id.sixthRow_Layout);
         callLayout = (LinearLayout) card.findViewById(R.id.seventhRow_Layout);
         shareLayout = (LinearLayout) card.findViewById(R.id.eigthRow_Layout);
+        llSiteAppearance = (LinearLayout) card.findViewById(R.id.ll_site_appearance);
 
         if (session.getIsThinksity().equals("true")) {
             chatLayout.setVisibility(View.GONE);
@@ -359,6 +366,7 @@ public class SidePanelFragment extends Fragment {
         chatText = (TextView) chatLayout.findViewById(R.id.sixthRow_TextView);
         callText = (TextView) callLayout.findViewById(R.id.seventhRow_TextView);
         shareText = (TextView) shareLayout.findViewById(R.id.eighthRow_TextView);
+        tvSiteAppearance = (TextView) llSiteAppearance.findViewById(R.id.tv_site_appearance);
 
 
         lockWidgetImageView = (ImageView) imageGalleryLayout.findViewById(R.id.lock_widget);
@@ -406,6 +414,7 @@ public class SidePanelFragment extends Fragment {
         chatImageView = (ImageView) chatLayout.findViewById(R.id.sixthRow_ImageView);
         callImageView = (ImageView) callLayout.findViewById(R.id.seventhRow_ImageView);
         shareImageView = (ImageView) shareLayout.findViewById(R.id.eigthRow_ImageView);
+        ivSiteAppearance = (ImageView) llSiteAppearance.findViewById(R.id.iv_site_appearance);
 
         dashBoardTextView.setTypeface(robotoMedium);
         homeLayout.setOnClickListener(new View.OnClickListener() {
@@ -425,6 +434,16 @@ public class SidePanelFragment extends Fragment {
                 ((OnItemClickListener) mainActivity).onClick("Business Profile");
                 onclickColorChange(businessProfileImageView, businessProfileTextView);
                 MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_PROFILE, null);
+            }
+        });
+
+        tvSiteAppearance.setTypeface(robotoMedium);
+        llSiteAppearance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((OnItemClickListener) mainActivity).onClick(getResources().getString(R.string.side_panel_site_appearance));
+                onclickColorChange(ivSiteAppearance, tvSiteAppearance);
+                //MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_PROFILE, null);
             }
         });
 
@@ -534,6 +553,23 @@ public class SidePanelFragment extends Fragment {
                 onclickColorChange(shareImageView, shareText);
             }
         });
+
+        if(checkExpiry()){
+            llSiteAppearance.setVisibility(View.GONE);
+        }
+    }
+
+    private boolean checkExpiry() {
+        boolean flag = false;
+        String strExpiryTime = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EXPIRY_DATE);
+        long expiryTime = -1;
+        if(strExpiryTime!=null){
+            expiryTime = Long.parseLong(strExpiryTime.split("\\(")[1].split("\\)")[0]);
+        }
+        if(expiryTime!=-1 && ((expiryTime - System.currentTimeMillis())/86400000<180) && !session.getWebTemplateType().equals("6")){
+            flag = true;
+        }
+        return flag;
     }
 
     private void showAlertMaterialDialog() {
@@ -917,15 +953,11 @@ public class SidePanelFragment extends Fragment {
                         PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                             gallery_req_id);
-                }
-                else {
+                }else {
                     Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     i.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
                     startActivityForResult(i, GALLERY_PHOTO);
                 }
-                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                i.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-                startActivityForResult(i, GALLERY_PHOTO);
             } catch (ActivityNotFoundException anfe) {
                 // display an error message
                 String errorMessage = "Whoops - your device doesn't support capturing images!";
@@ -1027,13 +1059,22 @@ public class SidePanelFragment extends Fragment {
             super.onResume();
             if (Constants.IMAGEURIUPLOADED == false) {
                 String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
-
+                //int size = (int) Math.ceil(Math.sqrt(100 * 100));
                 if (iconUrl.length() > 0 && !iconUrl.contains("http") && (iconUrl != "https://api.withfloats.com/FP/Actual/default.png")) {
                     String baseNameProfileImage = Constants.BASE_IMAGE_URL + iconUrl;
-                    Picasso.with(getActivity()).load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(iconImage);
+                    Picasso.with(getActivity())
+                            .load(baseNameProfileImage)
+                            .resize(200, 0)
+                            .placeholder(R.drawable.business_edit_profile_icon)
+                            .into(iconImage);
+                    //Picasso.with(getActivity()).load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(iconImage);
                 } else {
                     if (iconUrl != null && iconUrl.length() > 0) {
-                        Picasso.with(getActivity()).load(iconUrl).placeholder(R.drawable.business_edit_profile_icon).into(iconImage);
+                        Picasso.with(getActivity())
+                                .load(iconUrl)
+                                .resize(200, 0)
+                                .placeholder(R.drawable.business_edit_profile_icon)
+                                .into(iconImage);
                     } else {
                         Picasso.with(getActivity()).load(R.drawable.business_edit_profile_icon).into(iconImage);
                     }
@@ -1163,6 +1204,7 @@ public class SidePanelFragment extends Fragment {
             chatText.setTextColor(getResources().getColor(R.color.cell_text_color));
             callText.setTextColor(getResources().getColor(R.color.cell_text_color));
             shareText.setTextColor(getResources().getColor(R.color.cell_text_color));
+            tvSiteAppearance.setTextColor(getResources().getColor(R.color.cell_text_color));
 
             shareImageView.setColorFilter(defaultLabelFilter);
             dasbBoardImageView.setColorFilter(defaultLabelFilter);
@@ -1174,6 +1216,7 @@ public class SidePanelFragment extends Fragment {
             cspImageView.setColorFilter(defaultLabelFilter);
             settingsImageView.setColorFilter(defaultLabelFilter);
             callImageView.setColorFilter(defaultLabelFilter);
+            ivSiteAppearance.setColorFilter(defaultLabelFilter);
 
             if (tv != null){
                 tv.setTextColor(getResources().getColor(R.color.black));

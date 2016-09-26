@@ -3,7 +3,7 @@
     xmlns:card_view="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="match_parent"
     android:background="@color/screen_bg">
 
     <include
@@ -14,247 +14,242 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:fillViewport="true">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="2dp">
-
-        <android.support.v7.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardElevation="3dp"
-            card_view:cardCornerRadius="1dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="2dp">
 
-            >
-
-            <LinearLayout
-                android:background="@color/white"
-                android:layout_width="fill_parent"
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="25dp"
-                android:paddingRight="25dp">
+                app:cardElevation="3dp"
+                card_view:cardCornerRadius="1dp"
+
+                >
+
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
+                    android:background="@color/white"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:gravity="bottom"
-                    >
-
-                    <TextView
-                        android:id="@+id/business_address_textline"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Address Line"
-                        android:textSize="10sp"
-                        android:paddingLeft="5dp"
-                        android:textColor="#BDBDBD"
-                        android:visibility="gone"/>
-
-                    <EditText
-                        android:id="@+id/addressLine"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="bottom"
-                        android:hint="Address Line"
-                        android:inputType="textCapSentences"
-                        android:textSize="14sp"
-                        android:textColor="#575757"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:orientation="horizontal"
-                    android:weightSum="3"
-                    android:gravity="bottom">
-
+                    android:paddingLeft="25dp"
+                    android:paddingRight="25dp">
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="52dp"
                         android:orientation="vertical"
                         android:gravity="bottom"
-                        android:layout_weight="2"
                         >
 
                         <TextView
-                            android:id="@+id/business_address_citytext"
+                            android:id="@+id/business_address_textline"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Town / City"
+                            android:text="Address Line"
                             android:textSize="10sp"
                             android:paddingLeft="5dp"
                             android:textColor="#BDBDBD"
-
                             android:visibility="gone"/>
 
                         <EditText
-                            android:id="@+id/businessAddress_cityEditText"
+                            android:id="@+id/addressLine"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:hint="Town / City"
-                            android:textSize="14sp"
+                            android:layout_height="wrap_content"
                             android:gravity="bottom"
-                            android:inputType="text"
-                            android:textColor="#575757"
-                            />
+                            android:hint="Address Line"
+                            android:inputType="textCapSentences"
+                            android:textSize="14sp"
+                            android:textColor="#575757"/>
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="2dp"
-                        android:background="#ececec"
-                        android:layout_marginBottom="5dp"
-                        android:layout_height="match_parent"
-                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3"
+                        android:gravity="bottom">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="52dp"
+                            android:orientation="vertical"
+                            android:gravity="bottom"
+                            android:layout_weight="2"
+                            >
+
+                            <TextView
+                                android:id="@+id/business_address_citytext"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Town / City"
+                                android:textSize="10sp"
+                                android:paddingLeft="5dp"
+                                android:textColor="#BDBDBD"
+
+                                android:visibility="gone"/>
+
+                            <EditText
+                                android:id="@+id/businessAddress_cityEditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="Town / City"
+                                android:textSize="14sp"
+                                android:gravity="bottom"
+                                android:inputType="text"
+                                android:textColor="#575757"
+                                />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="2dp"
+                            android:background="#ececec"
+                            android:layout_marginBottom="5dp"
+                            android:layout_height="match_parent"
+                            />
+
+
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="52dp"
+                            android:orientation="vertical"
+                            android:gravity="bottom"
+                            android:layout_weight="1"
+                            >
+
+                            <TextView
+                                android:id="@+id/business_address_pincodetext"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Pin/Area Code"
+                                android:textSize="10sp"
+                                android:paddingLeft="5dp"
+                                android:textColor="#BDBDBD"
+                                android:visibility="gone"/>
+
+                            <EditText
+                                android:id="@+id/businessAddress_pinCodeEditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:hint="Pin/Area Code"
+                                android:textSize="14sp"
+
+                                android:gravity="bottom"
+                                android:inputType="number"
+                                android:textColor="#575757"
+                                />
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
 
 
 
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="52dp"
                         android:orientation="vertical"
                         android:gravity="bottom"
                         android:layout_weight="1"
+                        android:visibility="gone"
                         >
 
                         <TextView
-                            android:id="@+id/business_address_pincodetext"
+                            android:id="@+id/business_address_statetext"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Pin/Area Code"
+                            android:text="State / Province"
                             android:textSize="10sp"
                             android:paddingLeft="5dp"
                             android:textColor="#BDBDBD"
                             android:visibility="gone"/>
 
-                        <EditText
-                            android:id="@+id/businessAddress_pinCodeEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:hint="Pin/Area Code"
-                            android:textSize="14sp"
 
+
+                        <EditText
+                            android:id="@+id/businessAddress_stateEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:gravity="bottom"
-                            android:inputType="number"
-                            android:textColor="#575757"
+                            android:hint="State / Province"
+                            android:textSize="14sp"
+                            android:textColor="#575757"/>
+
+
+                    </LinearLayout>
+
+
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:orientation="vertical"
+                        android:gravity="bottom"
+
+
+                        >
+
+                        <TextView
+                            android:id="@+id/business_address_countrytext"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Country"
+                            android:textSize="10sp"
+                            android:paddingLeft="5dp"
+                            android:textColor="#BDBDBD"
+                            />
+
+
+
+
+                        <EditText
+
+                            android:id="@+id/businessAddress_countryEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="bottom"
+                            android:hint="Country"
+                            android:textSize="14sp"
+                            android:textColor="@color/light_gray"
                             />
 
                     </LinearLayout>
 
 
-                </LinearLayout>
-
-
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:orientation="vertical"
-                    android:gravity="bottom"
-                    android:layout_weight="1"
-                    android:visibility="gone"
-                    >
-
-                    <TextView
-                        android:id="@+id/business_address_statetext"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="State / Province"
-                        android:textSize="10sp"
-                        android:paddingLeft="5dp"
-                        android:textColor="#BDBDBD"
-                        android:visibility="gone"/>
-
-
-
-                    <EditText
-                        android:id="@+id/businessAddress_stateEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="bottom"
-                        android:hint="State / Province"
-                        android:textSize="14sp"
-                        android:textColor="#575757"/>
 
 
                 </LinearLayout>
+            </android.support.v7.widget.CardView>
 
 
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:orientation="vertical"
-                    android:gravity="bottom"
-
-
-                    >
-
-                    <TextView
-                        android:id="@+id/business_address_countrytext"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Country"
-                        android:textSize="10sp"
-                        android:paddingLeft="5dp"
-                        android:textColor="#BDBDBD"
-                        />
-
-
-
-
-                    <EditText
-
-                        android:id="@+id/businessAddress_countryEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="bottom"
-                        android:hint="Country"
-                        android:textSize="14sp"
-                        android:textColor="@color/light_gray"
-                        />
-
-                </LinearLayout>
-
-
-
-
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:background="@color/white"
-            android:layout_marginRight="10dp"
-            card_view:cardCornerRadius="3dp"
-            app:cardElevation="3dp"
-            android:layout_marginBottom="10dp">
-
-            <fragment
-                android:id="@+id/map"
-                android:layout_margin="13dp"
-
-                android:name="com.google.android.gms.maps.MapFragment"
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:layout_margin="10dp"
+                card_view:cardCornerRadius="3dp"
+                app:cardElevation="3dp">
+
+                <ImageView
+                    android:id="@+id/iv_map"
+                    android:layout_margin="13dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
 
 
 
-        </android.support.v7.widget.CardView>
+            </android.support.v7.widget.CardView>
 
 
 
-    </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

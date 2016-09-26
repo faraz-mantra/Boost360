@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -111,9 +112,10 @@ public class GCMReceiver extends BroadcastReceiver {
                 if(keys!=null){
                     payload = keys.toString();
                     deeplinkUrl = keys.toString();
+                    Log.d(LOGTAG, deeplinkUrl);
                 }
             }
-            handleNotificationIntent(context, intent, payload, notificationClick);
+            handleNotificationIntent(context, intent, payload, notificationClick, deeplinkUrl);
         }
     }
 
@@ -140,7 +142,7 @@ public class GCMReceiver extends BroadcastReceiver {
         }
     }
 
-    private void handleNotificationIntent(Context context, Intent intent, String payload, String notificationClick) {
+    private void handleNotificationIntent(Context context, Intent intent, String payload, String notificationClick, String deeplinkUrl) {
         String message = intent.getExtras().getString("mp_message");
         if(message == null){
             message = intent.getExtras().getString("message");
@@ -151,7 +153,7 @@ public class GCMReceiver extends BroadcastReceiver {
 
         // Old code --can be removed
         final PackageManager manager = context.getPackageManager();
-        final Intent appIntent = manager.getLaunchIntentForPackage(context.getPackageName());
+        Intent appIntent = manager.getLaunchIntentForPackage(context.getPackageName());
         appIntent.putExtra("payload", payload);
         appIntent.putExtra("notification", notificationClick);
 
@@ -165,6 +167,10 @@ public class GCMReceiver extends BroadcastReceiver {
 //        } catch (final NameNotFoundException e) {
             //In this case, use a blank title and default icon
 //        }
+
+        if(deeplinkUrl!=null) {
+            appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(deeplinkUrl));
+        }
 
         final PendingIntent contentIntent = PendingIntent.getActivity(
                 context.getApplicationContext(),

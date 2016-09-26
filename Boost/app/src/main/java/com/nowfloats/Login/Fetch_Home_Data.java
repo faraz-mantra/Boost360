@@ -157,8 +157,9 @@ public class Fetch_Home_Data {
             }
 
             if(HomeActivity.StorebizFloats!=null && HomeActivity.StorebizFloats.size()==0){
-                if (Home_Main_Fragment.emptyMsgLayout!=null)
-                    Home_Main_Fragment.emptyMsgLayout.setVisibility(View.VISIBLE);
+                if (Home_Main_Fragment.emptyMsgLayout!=null && !Constants.fromLogin) {
+                        Home_Main_Fragment.emptyMsgLayout.setVisibility(View.VISIBLE);
+                }
             }else{
                 if (Home_Main_Fragment.emptyMsgLayout!=null)
                     Home_Main_Fragment.emptyMsgLayout.setVisibility(View.GONE);

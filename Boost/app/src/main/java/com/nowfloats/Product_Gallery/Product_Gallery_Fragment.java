@@ -23,6 +23,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
 import com.nowfloats.Product_Gallery.Service.ProductAPIService;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -90,15 +91,16 @@ public class Product_Gallery_Fragment extends Fragment{
             try{
                 currencyValue = Constants.Currency_Country_Map.get(
                         session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).toLowerCase());
-                getProducts("0");
             }catch (Exception e){e.printStackTrace();}
             }
         }).start();
+        Log.d("Product_Gallery", "onCreate");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d("Product_Gallery", "onCreateView");
+        getProducts("0");
         return inflater.inflate(R.layout.fragment_product__gallery, container, false);
     }
 
@@ -115,8 +117,14 @@ public class Product_Gallery_Fragment extends Fragment{
             @Override
             public void onClick(View v) {
                 MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_ADD, null);
-                Intent intent = new Intent(activity,Product_Detail_Activity.class);
-                intent.putExtra("new","");
+                Intent intent;
+                if(session.getWebTemplateType().equals("6")) {
+                    intent = new Intent(activity, Product_Detail_Activity.class);
+                    intent.putExtra("new", "");
+                }else {
+                    intent = new Intent(activity, Product_Detail_Activity_V45.class);
+                    intent.putExtra("new", "");
+                }
                 startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
@@ -125,10 +133,18 @@ public class Product_Gallery_Fragment extends Fragment{
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(activity,Product_Detail_Activity.class);
+                Intent intent;
+                if(session.getWebTemplateType().equals("6")) {
+                    intent = new Intent(activity, Product_Detail_Activity.class);
 //                Bundle bundle = new Bundle();
 //                bundle.putParcelable("product", productItemModelList.get(position));
-                intent.putExtra("product",position+"");
+                    intent.putExtra("product", position + "");
+                }else{
+                    intent = new Intent(activity, Product_Detail_Activity_V45.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putParcelable("product", productItemModelList.get(position));
+                    intent.putExtra("product", position + "");
+                }
                 Methods.launchFromFragment(activity, view, intent);
             }
         });

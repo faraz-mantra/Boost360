@@ -50,7 +50,6 @@ public class Contact_Info_Activity extends ActionBarActivity {
     private TextView titleTextView;
     public static String primary="",alternate1="",alternate2="";
     private boolean allBoundaryCondtn = true;
-    private  TextView primaryNumberText,alternateNumberText1,alternateNumberText2,emailText,websiteText,fbpageText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,14 +83,6 @@ public class Contact_Info_Activity extends ActionBarActivity {
         websiteAddress = (EditText) findViewById(R.id.websiteAddress);
         facebookPage = (EditText) findViewById(R.id.facebookPage);
 
-
-
-        primaryNumberText = (TextView) findViewById(R.id.contact_info_primary_number_text);
-        alternateNumberText1 = (TextView) findViewById(R.id.contact_info_alternate_no_1_text);
-        alternateNumberText2 = (TextView) findViewById(R.id.contact_info_alternate_number_2_text);
-        emailText = (TextView) findViewById(R.id.contact_info_email_text);
-        websiteText = (TextView) findViewById(R.id.contact_info_website_text);
-        fbpageText = (TextView) findViewById(R.id.contact_info_fbpage_text);
         initializeData();
         facebookPage.setText(session.getFacebookPage());
 
@@ -107,13 +98,13 @@ public class Contact_Info_Activity extends ActionBarActivity {
 
                     int len = msgtxt4_email.length();
                     if (len > 0) {
-                        emailText.setVisibility(View.VISIBLE);
+
                         flag4emailaddress = true;
                         saveTextView.setVisibility(View.VISIBLE);
 
 
                     } else {
-                        emailText.setVisibility(View.GONE);
+
                         saveTextView.setVisibility(View.GONE);
 
                     }
@@ -152,12 +143,12 @@ public class Contact_Info_Activity extends ActionBarActivity {
 
                     int len = msgtxt4website.length();
                     if (len > 0) {
-                        websiteText.setVisibility(View.VISIBLE);
+
                         flag4websiteaddress= true;
                         saveTextView.setVisibility(View.VISIBLE);
 
                     } else {
-                        websiteText.setVisibility(View.GONE);
+
                         saveTextView.setVisibility(View.GONE);
 
                     }
@@ -197,14 +188,14 @@ public class Contact_Info_Activity extends ActionBarActivity {
                             .trim();
                     int len = msgtxt4fbpage.length();
                     if (len > 0) {
-                        fbpageText.setVisibility(View.VISIBLE);
+
                         flag4fbagename = true;
 
                         saveTextView.setVisibility(View.VISIBLE);
 
 
                     } else {
-                        fbpageText.setVisibility(View.GONE);
+
                         saveTextView.setVisibility(View.GONE);
 
                     }
@@ -233,12 +224,12 @@ public class Contact_Info_Activity extends ActionBarActivity {
                             .toString().trim();
                     int len = msgtxt4primaryno.length();
                     if (len >= 0) {
-                        primaryNumberText.setVisibility(View.VISIBLE);
+
                         flag4primaryno = true;
                         saveTextView.setVisibility(View.VISIBLE);
 
                     } else {
-                        primaryNumberText.setVisibility(View.GONE);
+
                         saveTextView.setVisibility(View.GONE);
 
                     }
@@ -279,11 +270,11 @@ public class Contact_Info_Activity extends ActionBarActivity {
                     int len = msgtxt4alternateno1.length();
                     if (len >= 0) {
                         if(len==0){
-                        alternateNumberText1.setVisibility(View.GONE);
+
                         saveTextView.setVisibility(View.GONE);
 
                         }else{
-                            alternateNumberText1.setVisibility(View.VISIBLE);
+
                             saveTextView.setVisibility(View.VISIBLE);
 
                         }
@@ -320,10 +311,10 @@ public class Contact_Info_Activity extends ActionBarActivity {
                     int len = msgtxtalternate2.length();
                     if (len >= 0) {
                         if(len==0){
-                            alternateNumberText2.setVisibility(View.GONE);
+
                             saveTextView.setVisibility(View.GONE);
                         }else {
-                            alternateNumberText2.setVisibility(View.VISIBLE);
+
                             saveTextView.setVisibility(View.VISIBLE);
                         }
                          flag4alternate2 = true;

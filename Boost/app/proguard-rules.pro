@@ -24,6 +24,9 @@
 -dontwarn com.demach.konotor
 -dontwarn com.demach.konotor.KonotorFeedbackActivity
 -dontwarn com.demach.konotor.service.model.GetAllConversationResponse
+-dontwarn com.viewpagerindicator.LinePageIndicator
+-dontwarn jp.wasabeef.recyclerview.animators.BaseItemAnimator
+
 # Demach GSON files
 -keep class com.google.gson.demach.** {
     <fields>;

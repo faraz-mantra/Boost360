@@ -57,7 +57,7 @@ public class ViewPagerAdapter extends PagerAdapter {
             if(!url.contains("http")){
                 url = Constants.BASE_IMAGE_URL  + imagePaths.get(position).imageUri;
             }
-            picasso.load(url).into(imgDisplay);
+            picasso.load(url).resize(900, 900).centerInside().into(imgDisplay);
             ((ViewPager) container).addView(viewLayout);
         } catch (Exception exp) {
             exp.printStackTrace();

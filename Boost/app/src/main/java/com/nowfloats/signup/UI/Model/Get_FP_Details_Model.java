@@ -72,4 +72,5 @@ public class Get_FP_Details_Model {
     public String PinCode;
     public String SMSGatewayUri;
     public String AccountManagerId;
+    public String ExpiryDate;
 }

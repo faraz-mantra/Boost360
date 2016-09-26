@@ -62,10 +62,10 @@ public class SinglePageDeleteAsyncTask extends AsyncTask<String,String,String>{
     @Override
     protected String doInBackground(String... params) {
         try {
-                JSONObject map = new JSONObject();
-                map.put("PageId", pageId);
-                map.put("Tag", "" + tag);
-                map.put("clientId", "" + Constants.clientId);
+            JSONObject map = new JSONObject();
+            map.put("PageId", pageId);
+            map.put("Tag", "" + tag);
+            map.put("clientId", "" + Constants.clientId);
             deleteMethod(map.toString());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -101,23 +101,23 @@ public class SinglePageDeleteAsyncTask extends AsyncTask<String,String,String>{
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                        if (materialProgress!=null)
-                            materialProgress.dismiss();
-                        if (flag){
-                            activity.finish();
-                            CustomPageActivity.dataModel.remove(position);
-                            Methods.showSnackBarPositive(activity, "Pages removed...");
-                            if (CustomPageActivity.custompageAdapter!=null)
-                                CustomPageActivity.custompageAdapter.notifyDataSetChanged();
-                            if (CustomPageActivity.recyclerView!=null)
-                                CustomPageActivity.recyclerView.invalidate();
-                        }else{
-                            Methods.showSnackBarNegative(activity,"Something went wrong ,Try again...");
-                            if (CustomPageActivity.custompageAdapter!=null)
-                                CustomPageActivity.custompageAdapter.notifyDataSetChanged();
-                            if (CustomPageActivity.recyclerView!=null)
-                                CustomPageActivity.recyclerView.invalidate();
-                        }
+                    if (materialProgress!=null)
+                        materialProgress.dismiss();
+                    if (flag){
+                        activity.finish();
+                        CustomPageActivity.dataModel.remove(position);
+                        Methods.showSnackBarPositive(activity, "Pages removed...");
+                        if (CustomPageActivity.custompageAdapter!=null)
+                            CustomPageActivity.custompageAdapter.notifyDataSetChanged();
+                        if (CustomPageActivity.recyclerView!=null)
+                            CustomPageActivity.recyclerView.invalidate();
+                    }else{
+                        Methods.showSnackBarNegative(activity,"Something went wrong ,Try again...");
+                        if (CustomPageActivity.custompageAdapter!=null)
+                            CustomPageActivity.custompageAdapter.notifyDataSetChanged();
+                        if (CustomPageActivity.recyclerView!=null)
+                            CustomPageActivity.recyclerView.invalidate();
+                    }
                 }
             });
         } catch (UnsupportedEncodingException e) {

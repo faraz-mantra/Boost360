@@ -2,10 +2,13 @@ package com.nowfloats.Product_Gallery;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -16,8 +19,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -26,6 +29,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,18 +37,24 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.azoft.carousellayoutmanager.CarouselLayoutManager;
+import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
+import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.gc.materialdesign.views.ButtonRectangle;
+import com.darsh.multipleimageselect.activities.AlbumSelectActivity;
+import com.darsh.multipleimageselect.models.Image;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.Product_Gallery.Adapter.ProductImageAdapter;
+import com.nowfloats.Product_Gallery.Model.ImageListModel;
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
 import com.nowfloats.Product_Gallery.Model.Product_Gallery_Update_Model;
 import com.nowfloats.Product_Gallery.Model.UpdateValue;
+import com.nowfloats.Product_Gallery.Service.MultipleImageUploadService;
 import com.nowfloats.Product_Gallery.Service.ProductAPIService;
 import com.nowfloats.Product_Gallery.Service.ProductDelete;
 import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
 import com.nowfloats.Product_Gallery.Service.ProductImageReplace;
-import com.nowfloats.Product_Gallery.Service.ProductImageUpload;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
@@ -52,9 +62,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
-import com.nowfloats.util.Utils;
 import com.rengwuxian.materialedittext.MaterialEditText;
-import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
 import org.json.JSONException;
@@ -63,9 +71,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import retrofit.Callback;
+import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -74,11 +84,12 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
  * Created by guru on 09-06-2015.
  */
 public class Product_Detail_Activity extends AppCompatActivity{
+    public static final String ACTION = "com.nowFloats.Product_Gallery.ProductDetailsActivity";
     public Toolbar toolbar;
     public ImageView save;
     public ProductListModel product_data;
     MaterialEditText productName,productDesc,productCurrency,productPrice,productDiscount,productLink, etShipmentDuration, etPriority;
-    ImageView productImage;
+    //ImageView productImage;
     Switch switchView, svFreeShipment;
     private String currencyType = "";
     public UserSessionManager session;
@@ -100,7 +111,36 @@ public class Product_Detail_Activity extends AppCompatActivity{
     private final int media_req_id = 5;
     private String[] mPriorityList = {"DEFAULT", "HIGH", "MEDIUM", "LOW"};
     private int mPriorityVal = 1000000;
+    RecyclerView rvProductImg;
+    private ProductImageAdapter adapter;
+    private List<Image> mProductImageList;
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            values = new HashMap<>();
+            values.put("clientId", Constants.clientId);
+            values.put("skipBy","0");
+            values.put("fpTag",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
+            //invoke getProduct api
+            apiService.getProductList(activity, values, Product_Gallery_Fragment.bus);
+            if(pd!=null){
+                pd.dismiss();
+            }
+            finish();
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        }
+    };
+    private IntentFilter mIntentFilter;
+    private ProgressDialog pd;
+    //Bus bus;
+    private boolean mIsNew = true;
+    private boolean mIsNewImageAdded = false;
+    public boolean mIsReplacing = false;
+    private int mSelectedPosition = 0;
+    private boolean mIsImageChosen = false;
+    private boolean mIsImageDeleted = false;
 
+    //private ImageView ivImageTest;
 
 
     @Override
@@ -130,10 +170,47 @@ public class Product_Detail_Activity extends AppCompatActivity{
         svFreeShipment = (Switch) findViewById(R.id.sv_free_shipping);
         switchView.setChecked(true);
 
+        //bus = new Bus();
+
+        mIntentFilter = new IntentFilter();
+        mIntentFilter.addAction(ACTION);
+
+
         PorterDuffColorFilter color = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_IN);
         save.setColorFilter(color);
 
-        productImage = (ImageView)findViewById(R.id.product_image);
+        //recyclerView
+        rvProductImg = (RecyclerView)findViewById(R.id.rv_product_img);
+        CarouselLayoutManager layoutManager = new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false);
+        layoutManager.setPostLayoutListener(new CarouselZoomPostLayoutListener());
+        rvProductImg.setLayoutManager(layoutManager);
+        rvProductImg.addOnScrollListener(new CenterScrollListener());
+        rvProductImg.setHasFixedSize(true);
+        mProductImageList = new ArrayList<>();
+        adapter = new ProductImageAdapter(mProductImageList);
+        rvProductImg.setAdapter(adapter);
+        adapter.setOnItemClickListener(new ProductImageAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                showOptions(view, position);
+            }
+        });
+
+        //ivImageTest = (ImageView) findViewById(R.id.ivTest);
+
+
+        findViewById(R.id.btn_choose).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mIsImageChosen && mProductImageList.size()>=5){
+                    Methods.showSnackBarNegative(Product_Detail_Activity.this, "You can't select more than 5 images");
+                }else {
+                    choosePicture();
+                }
+            }
+        });
+
+        //productImage = (ImageView)findViewById(R.id.product_image);
         productName = (MaterialEditText) findViewById(R.id.product_name);
         productDesc = (MaterialEditText) findViewById(R.id.product_desc);
         productCurrency = (MaterialEditText) findViewById(R.id.product_currency);
@@ -142,7 +219,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
         productLink = (MaterialEditText) findViewById(R.id.product_link);
         etShipmentDuration = (MaterialEditText) findViewById(R.id.et_shipping_days);
         etPriority  = (MaterialEditText) findViewById(R.id.product_priority);
-        ButtonRectangle deleteProduct = (ButtonRectangle)findViewById(R.id.delete_product);
+        Button deleteProduct = (Button)findViewById(R.id.delete_product);
         deleteProduct.setVisibility(View.GONE);
         //Currency
         final String[] array = Constants.currencyArray.toArray(new String[Constants.currencyArray.size()]);
@@ -160,37 +237,23 @@ public class Product_Detail_Activity extends AppCompatActivity{
             }
         });
 
-        productImage.setOnClickListener(new View.OnClickListener() {
+        /*productImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                choosePicture();
             }
-        });
-
-        switchView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                save.setVisibility(View.VISIBLE);
-                if (isChecked) switchValue = "true";
-                else switchValue = "false";
-            }
-        });
-        svFreeShipment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mIsFreeShipment = isChecked;
-                save.setVisibility(View.VISIBLE);
-            }
-        });
+        });*/
 
         if (getIntent().hasExtra("product")){
 //            product_data = getIntent().getExtras().getParcelable("product");
+            mIsNew = false;
             final int position = Integer.parseInt(getIntent().getExtras().getString("product"));
             product_data =  Product_Gallery_Fragment.productItemModelList.get(position);
             if (product_data!=null){
                 replaceImage = true;
                 save.setVisibility(View.GONE);
                 title.setText("Edit Product");
+                BoostLog.d("ProductId:", product_data._id);
                 //load image
 
               /*  try{
@@ -206,14 +269,25 @@ public class Product_Detail_Activity extends AppCompatActivity{
                     });
                 }catch(Exception e){e.printStackTrace();}*/
 
-                String image_url = product_data.TileImageUri;
-                if(image_url!=null && image_url.length()>0 && !image_url.equals("null")) {
-                    if (!image_url.contains("http")) {
-                        image_url = Constants.BASE_IMAGE_URL + product_data.TileImageUri;
+                final List<ImageListModel> imageList = product_data.Images;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //final List<Image> newImageList = new ArrayList<>();
+                        if(imageList!=null) {
+                            for (ImageListModel model : imageList) {
+                                mProductImageList.add(new Image(1, null, model.TileImageUri, true));
+                            }
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
+                        }
                     }
-                    Picasso.with(activity).load(image_url).placeholder(R.drawable.default_product_image).into(productImage);
-                }
-                ViewCompat.setTransitionName(productImage, "imageKey");
+                }).start();
+                //ViewCompat.setTransitionName(productImage, "imageKey");
                 //productName
                 String name = product_data.Name;
                 if (name!=null && name.trim().length()>0 && !name.equals("0"))  productName.setText(name);
@@ -290,15 +364,13 @@ public class Product_Detail_Activity extends AppCompatActivity{
                             boolean flag = ValidateFields(true);
                             ArrayList<UpdateValue> updates = new ArrayList<UpdateValue>();
                             for (Map.Entry<String, String> entry : values.entrySet()) {
-                                //String key = .toUpperCase();
-                                //BoostLog.d(Product_Detail_Activity.class.getName(), key);
                                 updates.add(new UpdateValue(entry.getKey(),entry.getValue()));
                             }
 
                             if(flag){
                                 BoostLog.d("Product_Detail_Activity", updates.toString());
                                 Product_Gallery_Update_Model model = new Product_Gallery_Update_Model(Constants.clientId,product_data._id,updates);
-                                //BoostLog.d()
+
                                 productInterface.put_UpdateGalleryUpdate(model,new Callback<ArrayList<String>>() {
                                     @Override
                                     public void success(ArrayList<String> strings, Response response) {
@@ -316,12 +388,18 @@ public class Product_Detail_Activity extends AppCompatActivity{
                                                     @Override
                                                     public void run() {
                                                         materialProgress.dismiss();
-                                                        invokeGetProductList();
+                                                        if(mIsImageChosen && !mIsReplacing) {
+                                                            uploadProductImage(product_data._id);
+                                                        }else {
+                                                            invokeGetProductList();
+                                                        }
+                                                        //invokeGetProductList();
                                                         Methods.showSnackBarPositive(activity, "Product has successfully updated");
                                                     }
                                                 });
                                             }
                                         }).start();
+
                                     }
 
                                     @Override
@@ -384,6 +462,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
                 });
             }
         }else if(getIntent().hasExtra("new")){
+            mIsNew = true;
             try{
             // make keyboard visible
             findViewById(R.id.productLayout).postDelayed(
@@ -411,7 +490,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
 
                         boolean flag = ValidateFields(false);
 
-                        if (path==null || path.trim().length()==0){
+                        if (mProductImageList.isEmpty()){
                             flag=false; Methods.showSnackBarNegative(activity,"Please upload product image");
                         }
                         if(flag){
@@ -449,6 +528,98 @@ public class Product_Detail_Activity extends AppCompatActivity{
                 }
             });
         }
+        switchView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                save.setVisibility(View.VISIBLE);
+                if (isChecked) switchValue = "true";
+                else switchValue = "false";
+            }
+        });
+        svFreeShipment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mIsFreeShipment = isChecked;
+                save.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void showOptions(View itemView, final int position) {
+        final MaterialDialog dialog = new MaterialDialog.Builder(activity)
+                .customView(R.layout.select_action,true)
+                .show();
+        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+
+        View view = dialog.getCustomView();
+        TextView header = (TextView) view.findViewById(R.id.textview_heading);
+        header.setText("Select your Action");
+        LinearLayout replace = (LinearLayout) view.findViewById(R.id.replace_image);
+        final LinearLayout delete = (LinearLayout) view.findViewById(R.id.delete_image);
+        ImageView   replaceImg = (ImageView) view.findViewById(R.id.pop_up_replace_img);
+        ImageView deleteImg = (ImageView) view.findViewById(R.id.pop_up_delete_img);
+        replaceImg.setColorFilter(whiteLabelFilter_pop_ip);
+        deleteImg.setColorFilter(whiteLabelFilter_pop_ip);
+
+        replace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mIsReplacing = true;
+                mSelectedPosition = position;
+                choosePicture();
+                dialog.dismiss();
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*galleryIntent();
+                dialog.dismiss();*/
+                if(!mIsNew){
+                    deleteProductImage(position, product_data._id);
+                }else {
+                    mProductImageList.remove(position);
+                    adapter.notifyDataSetChanged();
+                }
+                dialog.dismiss();
+
+            }
+        });
+    }
+
+    private void deleteProductImage(final int position, String productId) {
+        final ProgressDialog pd = ProgressDialog.show(this, "", "Wait while Deleting Image...");
+        final String imageFileName = mProductImageList.get(position).path.replace("/tile/", "/actual/");
+        BoostLog.d("ImageFileName:", imageFileName);
+        ProductGalleryInterface productGalleryInterface = new RestAdapter.Builder()
+                .setEndpoint(Constants.NOW_FLOATS_API_URL/*"http://api.withfloats.org"*/)
+                .build()
+                .create(ProductGalleryInterface.class);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("clientId", Constants.clientId);
+        map.put("imageFileName", imageFileName);
+        map.put("productId", productId);
+        productGalleryInterface.deleteProductImage(map, new Callback<String>() {
+            @Override
+            public void success(String s, Response response) {
+                if(s.equals(imageFileName)){
+                    pd.dismiss();
+                    mIsImageDeleted = true;
+                    Methods.showSnackBarPositive(Product_Detail_Activity.this, "Successfully Deleted");
+                    mProductImageList.remove(position);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                BoostLog.d("RetrofitError:", error.getMessage());
+                pd.dismiss();
+                Methods.showSnackBarNegative(Product_Detail_Activity.this, "Couldn't Delete Image");
+            }
+        });
+        //new DeleteProductImage(this).execute(imageFileName, productId);
     }
 
     private void showPriorityList() {
@@ -528,9 +699,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
         if(etShipmentDuration!=null && etShipmentDuration.getText().toString().trim().length()>0){
             values.put(ship, etShipmentDuration.getText().toString());
         }else {
-            YoYo.with(Techniques.Shake).playOn(etShipmentDuration);
-            Methods.showSnackBarNegative(activity,"Please Enter the Shipment Duration");
-            flag = false;
+            values.put(ship, null);
         }
 
         if(productDiscount!=null && productDiscount.getText().toString().trim().length()>0){
@@ -591,6 +760,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
     }
 
     public void invokeGetProductList() {
+        mIsImageDeleted = false;
         values = new HashMap<>();
         values.put("clientId", Constants.clientId);
         values.put("skipBy","0");
@@ -601,30 +771,38 @@ public class Product_Detail_Activity extends AppCompatActivity{
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
+
     private void uploadProductImage(String productId) {
         try{
-            String valuesStr = "clientId="+Constants.clientId
+            /*String valuesStr = "clientId="+Constants.clientId
                     +"&requestType=sequential&requestId="+Constants.deviceId
                     +"&totalChunks=1&currentChunkNumber=1&productId="+productId;
-            String url = Constants.NOW_FLOATS_API_URL + "/Product/v2/AddImage?" +valuesStr;
+            String url = Constants.NOW_FLOATS_API_URL + "/Product/v1/AddImage?" +valuesStr;
             byte[] imageBytes = Methods.compressTobyte(path,activity);
-            new ProductImageUpload(url,imageBytes,Product_Detail_Activity.this).execute();
+            new ProductImageUpload(url,imageBytes,Product_Detail_Activity.this).execute();*/
+            pd = ProgressDialog.show(this, "", "Wait while Uploading Images...");
+            for(Image image: mProductImageList){
+                Intent i =new Intent(this, MultipleImageUploadService.class);
+                i.putExtra(MultipleImageUploadService.REQUEST_PI, productId);
+                i.putExtra(MultipleImageUploadService.REQUEST_FILE_NAME, image.path);
+                startService(i);
+            }
         }catch(Exception e){
             e.printStackTrace();
             Methods.showSnackBarNegative(activity, "Something went wrong, Try again...");
         }
     }
 
-    private void replaceProductImage(String productId) {
+    private void replaceProductImage(String productId, String oldUrl, String path) {
         try{
             MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_UPDATEIMAGE, null);
-            if (product_data.TileImageUri!=null &&  product_data.TileImageUri.trim().length()>0){
-                String[] temp = product_data.TileImageUri.split("\\/");
+            if (oldUrl!=null &&  oldUrl.trim().length()>0){
+                String[] temp = oldUrl.split("\\/");
                 String oldPic = temp[temp.length-1];
                 String valuesStr = "clientId="+Constants.clientId
                         +"&requestType=sequential&requestId="+Constants.deviceId
-                        +"&totalChunks=1&currentChunkNumber=1&productId="+productId+"&imageFileName="+oldPic;
-                String url = Constants.NOW_FLOATS_API_URL + "/Product/v2/ReplaceImage?" +valuesStr;
+                        +"&totalChunks=1&currentChunkNumber=1&productId="+productId+"&imageFileName="+oldUrl.replace("/tile/", "/actual/");
+                String url = Constants.NOW_FLOATS_API_URL/*"http://api.withfloats.org"*/ + "/Product/v2/ReplaceImage?" +valuesStr;
                 byte[] imageBytes = Methods.compressTobyte(path,activity);
                 new ProductImageReplace(url,imageBytes,Product_Detail_Activity.this).execute();
             }else {
@@ -689,23 +867,35 @@ public class Product_Detail_Activity extends AppCompatActivity{
                 }).show();
         return currencyType;
     }
+
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK && (Constants.GALLERY_PHOTO == requestCode)) {
-            if (data != null) {
-                picUri = data.getData();
-                if (picUri == null) {
-                    CameraBitmap = (Bitmap) data.getExtras().get("data");
-                    path = Util.saveBitmap(CameraBitmap, activity,tagName + System.currentTimeMillis());
-                    picUri = Uri.parse(path);
-                    productImage.setImageBitmap(CameraBitmap);
-                    if (replaceImage) replaceProductImage(product_data._id);
-                } else {
-                    path = getRealPathFromURI(picUri);
-                    CameraBitmap = Util.getBitmap(path, activity);
-                    productImage.setImageBitmap(CameraBitmap);
-                    if (replaceImage) replaceProductImage(product_data._id);
+        if(!mIsImageChosen && !mIsReplacing){
+            mIsImageChosen = true;
+            mProductImageList.clear();
+        }
+        if (requestCode == com.darsh.multipleimageselect.helpers.Constants.REQUEST_CODE && resultCode == RESULT_OK && data != null) {
+                ArrayList<Image> images = data.getParcelableArrayListExtra(com.darsh.multipleimageselect.helpers.Constants.INTENT_EXTRA_IMAGES);
+            if(mIsReplacing){
+                String oldUrl = mProductImageList.get(mSelectedPosition).path;
+                mProductImageList.get(mSelectedPosition).path = images.get(0).path;
+                adapter.notifyDataSetChanged();
+                if(!mIsNew && !mIsImageChosen){
+                    replaceProductImage(product_data._id, oldUrl, images.get(0).path);
+                }
+            }else {
+                //mProductImageList.clear();
+                for (Image image : images) {
+                    mProductImageList.add(image);
+                }
+                adapter.notifyDataSetChanged();
+                if (!mIsNew) {
+                    save.setVisibility(View.VISIBLE);
+                    mIsNewImageAdded = true;
                 }
             }
+
         }else if (resultCode == RESULT_OK && (Constants.CAMERA_PHOTO == requestCode)) {
             try {
                 if (picUri==null){
@@ -715,13 +905,15 @@ public class Product_Detail_Activity extends AppCompatActivity{
                             CameraBitmap = (Bitmap) data.getExtras().get("data");
                             path = Util.saveCameraBitmap(CameraBitmap,activity,tagName + System.currentTimeMillis());
                             picUri = Uri.parse(path);
-                            productImage.setImageBitmap(CameraBitmap);
-                            if (replaceImage) replaceProductImage(product_data._id);
+                            setImageFromCamera(path);
+                            //productImage.setImageBitmap(CameraBitmap);
+                            //if (replaceImage) replaceProductImage(product_data._id);
                         }else{
                             path = getRealPathFromURI(picUri);
                             CameraBitmap = Util.getBitmap(path, activity);
-                            productImage.setImageBitmap(CameraBitmap);
-                            if (replaceImage) replaceProductImage(product_data._id);
+                            setImageFromCamera(path);
+                            //productImage.setImageBitmap(CameraBitmap);
+                            //if (replaceImage) replaceProductImage(product_data._id);
                         }
                     }else{
                         Methods.showSnackBar(activity,"Try again....");
@@ -729,8 +921,9 @@ public class Product_Detail_Activity extends AppCompatActivity{
                 }else{
                     path = getRealPathFromURI(picUri);
                     CameraBitmap = Util.getBitmap(path, activity);
-                    productImage.setImageBitmap(CameraBitmap);
-                    if (replaceImage) replaceProductImage(product_data._id);
+                    setImageFromCamera(path);
+                    //productImage.setImageBitmap(CameraBitmap);
+                    //if (replaceImage) replaceProductImage(product_data._id);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -742,6 +935,26 @@ public class Product_Detail_Activity extends AppCompatActivity{
             }
         }
     }
+
+    private void setImageFromCamera(String path) {
+        if(mIsReplacing){
+            String oldUrl = mProductImageList.get(mSelectedPosition).path;
+            mProductImageList.get(mSelectedPosition).path = path;
+            adapter.notifyDataSetChanged();
+            if(!mIsNew && !mIsImageChosen){
+                replaceProductImage(product_data._id, oldUrl, path);
+            }
+        }else {
+            //mProductImageList.clear();
+            mProductImageList.add(new Image(1, "CamImage", path, true));
+            adapter.notifyDataSetChanged();
+            if (!mIsNew) {
+                save.setVisibility(View.VISIBLE);
+                mIsNewImageAdded = true;
+            }
+        }
+    }
+
     public String getRealPathFromURI(Uri contentUri) {
         try{
             String[] proj = { MediaStore.Images.Media.DATA };
@@ -787,6 +1000,14 @@ public class Product_Detail_Activity extends AppCompatActivity{
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //bus.register(this);
+        registerReceiver(receiver, mIntentFilter);
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
     {
@@ -819,15 +1040,32 @@ public class Product_Detail_Activity extends AppCompatActivity{
                         gallery_req_id);
             }
             else {
-                Intent i = new Intent(
-                        Intent.ACTION_PICK,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, Constants.GALLERY_PHOTO);
+                Intent intent = new Intent(this, AlbumSelectActivity.class);
+                if(mIsReplacing) {
+                    intent.putExtra(com.darsh.multipleimageselect.helpers.Constants.INTENT_EXTRA_LIMIT, 1);
+                }else {
+                    if(mIsImageChosen) {
+                        intent.putExtra(com.darsh.multipleimageselect.helpers.Constants.INTENT_EXTRA_LIMIT, 5-mProductImageList.size());
+                    }else {
+                        intent.putExtra(com.darsh.multipleimageselect.helpers.Constants.INTENT_EXTRA_LIMIT, 5);
+                    }
+                }
+                startActivityForResult(intent, com.darsh.multipleimageselect.helpers.Constants.REQUEST_CODE);
             }
         } catch (ActivityNotFoundException anfe) {
             // display an error message
             String errorMessage = "Whoops - your device doesn't support capturing images!";
             Methods.showSnackBarNegative(activity,errorMessage);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //bus.unregister(this);
+        unregisterReceiver(receiver);
+        if(mIsImageDeleted){
+            invokeGetProductList();
         }
     }
 

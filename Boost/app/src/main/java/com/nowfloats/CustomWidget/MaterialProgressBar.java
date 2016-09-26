@@ -2,10 +2,6 @@ package com.nowfloats.CustomWidget;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.widget.ProgressBar;
-
-import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
-import com.gc.materialdesign.views.ProgressBarIndeterminate;
 
 /**
  * Created by NowFloatsDev on 27/05/2015.

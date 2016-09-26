@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:orientation="horizontal">
-            <com.gc.materialdesign.views.CustomView
+            <LinearLayout
                 android:id="@+id/facebook_signup_create"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
@@ -91,9 +91,9 @@
                         tools:ignore="MissingPrefix" />
                 </LinearLayout>
 
-            </com.gc.materialdesign.views.CustomView>
+            </LinearLayout>
 
-            <com.gc.materialdesign.views.CustomView
+            <LinearLayout
             android:id="@+id/pre_signup_create"
             android:layout_width="0dp"
             android:layout_height="48dp"
@@ -129,7 +129,7 @@
                                 tools:ignore="MissingPrefix" />
             </LinearLayout>
 
-        </com.gc.materialdesign.views.CustomView>
+        </LinearLayout>
 
         </LinearLayout>
 

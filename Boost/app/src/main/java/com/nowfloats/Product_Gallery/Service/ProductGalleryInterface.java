@@ -40,4 +40,8 @@ public interface ProductGalleryInterface {
     @Headers({"Content-Type: application/json"})
     @DELETE("/Product/v1/Delete")
     void deleteProduct(@Body HashMap<String,String> map, Callback<String> callback);
+
+    @Headers({"Content-Type: application/json"})
+    @com.nowfloats.Product_Gallery.Model.DELETE("/Product/v2/DeleteImage")
+    void deleteProductImage(@Body HashMap<String, String> map, Callback<String> callback);
 }

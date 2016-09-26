@@ -4,29 +4,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.gc.materialdesign.views.Button;
-import com.gc.materialdesign.views.Switch;
-import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.NotificationCenter.AlertArchive;
-import com.nowfloats.Store.Service.StoreInterface;
-import com.nowfloats.util.Constants;
-import com.nowfloats.util.Key_Preferences;
-import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**

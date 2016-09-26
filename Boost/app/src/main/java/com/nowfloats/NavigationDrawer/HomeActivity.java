@@ -2,6 +2,7 @@ package com.nowfloats.NavigationDrawer;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +20,7 @@ import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -26,10 +28,12 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -63,9 +67,11 @@ import com.nowfloats.Login.Ria_Register;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.App_Update_Async_Task;
 import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
+import com.nowfloats.NavigationDrawer.API.KitsuneApi;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
+import com.nowfloats.SiteAppearance.SiteAppearanceFragment;
 import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.Model.ActiveWidget;
 import com.nowfloats.Store.Model.StoreEvent;
@@ -103,7 +109,7 @@ import java.util.Map;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class HomeActivity extends AppCompatActivity implements  SidePanelFragment.OnItemClickListener
-        ,DeepLinkInterface,CustomPageDeleteInterface,Home_Main_Fragment.OnRenewPlanClickListener {
+        ,DeepLinkInterface,CustomPageDeleteInterface,Home_Main_Fragment.OnRenewPlanClickListener, CardAdapter_V3.Permission {
     private Toolbar toolbar;
     private SharedPreferences pref = null;
     private DrawerLayout mDrawerLayout;
@@ -116,6 +122,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     Settings_Fragment settingsFragment;
     Business_Enquiries_Fragment businessEnquiriesFragment;
     Image_Gallery_Fragment imageGalleryFragment ;
+    SiteAppearanceFragment mSiteAppearanceFragement;
     Product_Gallery_Fragment productGalleryFragment ;
     ChatFragment chatFragment;
     StoreFragmentTab storeFragment;
@@ -264,6 +271,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         settingsFragment = new Settings_Fragment();
         businessEnquiriesFragment = new Business_Enquiries_Fragment();
         imageGalleryFragment = new Image_Gallery_Fragment();
+        mSiteAppearanceFragement = new SiteAppearanceFragment();
         productGalleryFragment = new Product_Gallery_Fragment();
         chatFragment = new ChatFragment();
         storeFragment = new StoreFragmentTab();
@@ -790,10 +798,67 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             }
             else {
                 // LH is active ,check for wildfire
+                if(checkExpiry() && !session.isSiteAppearanceShown()){
+                    showSiteVisibilityDialog();
+                }
                 new API_Service(activity, session.getSourceClientId(), session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY),
                         session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session.getFPID(), bus);
             }
         }
+    }
+
+    private void showSiteVisibilityDialog() {
+        session.setSiteAppearanceShown(true);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View v = inflater.inflate(R.layout.site_appearance_dialog, null);
+        final Dialog dialog = builder.setView(v).create();
+        v.findViewById(R.id.btn_enable_kitsune).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                enableKitsune();
+            }
+        });
+        v.findViewById(R.id.btn_later_kitsune).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        dialog.show();
+    }
+
+    private void enableKitsune() {
+        final ProgressDialog pg = ProgressDialog.show(this,"" , "Wait for the new look...");
+        new KitsuneApi(session.getFpTag()).setResultListener(new KitsuneApi.ResultListener() {
+            @Override
+            public void onResult(String response, boolean isError) {
+                pg.dismiss();
+                if(response.equals("true") && !isError){
+                    Methods.showSnackBarPositive(HomeActivity.this, "Your Website Appearance is changed");
+                    session.storeFpWebTempalteType("6");
+                }
+                else {
+                    Methods.showSnackBarNegative(HomeActivity.this, "Couldn't change Website Appearance");
+                }
+            }
+        }).enableKitsune();
+    }
+
+    private boolean checkExpiry() {
+        boolean flag = false;
+        String strExpiryTime = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EXPIRY_DATE);
+        long expiryTime = -1;
+        if(strExpiryTime!=null){
+            expiryTime = Long.parseLong(strExpiryTime.split("\\(")[1].split("\\)")[0]);
+        }
+        if(expiryTime!=-1 && ((expiryTime - System.currentTimeMillis())/86400000>=180) && !session.getWebTemplateType().equals("6")){
+            flag = true;
+        }
+        return flag;
     }
 
     @Override
@@ -880,6 +945,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 //                            // Add this transaction to the back stack
 //                    .addToBackStack("Profile")
 //                    .commit();
+                }else if(nextScreen.equals(getResources().getString(R.string.side_panel_site_appearance))){
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,mSiteAppearanceFragement).
+                            commit();
                 }else if (nextScreen.equals("Image Gallery"))
                 {
                     // Intent imageGalleryIntent = new Intent(HomeActivity.this, Image_Gallery_MainActivity.class);
@@ -1221,6 +1289,11 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             roboto_lt_24_212121 message = (roboto_lt_24_212121) view.findViewById(R.id.pop_up_create_message_body);
             message.setText(dialogMessage);
         }
+    }
+
+    @Override
+    public void getPermission() {
+        BoostLog.d("Yeah:Permission ", "I am getting called");
     }
 }
 

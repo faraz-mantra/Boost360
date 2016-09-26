@@ -41,7 +41,16 @@ public class ProcessFPDetails {
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TILE_IMAGE_URI, get_fp_details_model.TileImageUri);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI, get_fp_details_model.ImageUri);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON,get_fp_details_model.CreatedOn);
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_EXPIRY_DATE, get_fp_details_model.ExpiryDate);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE, get_fp_details_model.PaymentState);
+            session.storeFPDetails(Key_Preferences.LATITUDE, get_fp_details_model.lat);
+            session.storeFPDetails(Key_Preferences.LONGITUDE, get_fp_details_model.lng);
+            try {
+                Constants.latitude = Double.parseDouble(get_fp_details_model.lat);
+                Constants.longitude = Double.parseDouble(get_fp_details_model.lng);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
             if (get_fp_details_model.AccountManagerId!=null && !get_fp_details_model.AccountManagerId.equals("null"))
                 session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID,get_fp_details_model.AccountManagerId);
             //String category = get_fp_details_model.Category.get(0);
@@ -61,6 +70,7 @@ public class ProcessFPDetails {
             MixPanelController.setProperties("CountryPhoneCode",get_fp_details_model.CountryPhoneCode);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME, get_fp_details_model.Name);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION, get_fp_details_model.Description);
+            session.storeFpWebTempalteType(get_fp_details_model.WebTemplateType);
             if(get_fp_details_model.Description.length() == 0)
             {
                 MixPanelController.setProperties("Business description", "False");
@@ -74,32 +84,33 @@ public class ProcessFPDetails {
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY, get_fp_details_model.Country);
             MixPanelController.setProperties("FPCountry",get_fp_details_model.Country);
             try{
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL, get_fp_details_model.PaymentLevel);
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL, get_fp_details_model.PaymentLevel);
 
-            if(get_fp_details_model.PaymentLevel!=null && get_fp_details_model.PaymentLevel.toString().trim().length()>0 &&
-                    Integer.parseInt(get_fp_details_model.PaymentLevel.toString()) >= 10){
-                MixPanelController.setProperties("NoAds", "True");
-            }
-            else{
-                MixPanelController.setProperties("NoAds", "False");
-            }
+                if(get_fp_details_model.PaymentLevel!=null && get_fp_details_model.PaymentLevel.toString().trim().length()>0 &&
+                        Integer.parseInt(get_fp_details_model.PaymentLevel.toString()) >= 10){
+                    MixPanelController.setProperties("NoAds", "True");
+                }
+                else{
+                    MixPanelController.setProperties("NoAds", "False");
+                }
             }catch(Exception e){e.printStackTrace();}
 
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE, get_fp_details_model.Uri);
+            session.storeFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM, get_fp_details_model.PrimaryNumber);
             try {
                 Util.GettingBackGroundId(session);
-            if(get_fp_details_model.Contacts!=null) {
-                if (get_fp_details_model.Contacts.size() == 1) {
-                    session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER, get_fp_details_model.Contacts.get(0).ContactNumber);
-                } else if (get_fp_details_model.Contacts.size() == 2) {
-                    session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER, get_fp_details_model.Contacts.get(0).ContactNumber);
-                    session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1, get_fp_details_model.Contacts.get(1).ContactNumber);
-                } else if (get_fp_details_model.Contacts.size() == 3) {
-                    session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER, get_fp_details_model.Contacts.get(0).ContactNumber);
-                    session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1, get_fp_details_model.Contacts.get(1).ContactNumber);
-                    session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_2, get_fp_details_model.Contacts.get(2).ContactNumber);
+                if(get_fp_details_model.Contacts!=null) {
+                    if (get_fp_details_model.Contacts.size() == 1) {
+                        session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER, get_fp_details_model.Contacts.get(0).ContactNumber);
+                    } else if (get_fp_details_model.Contacts.size() == 2) {
+                        session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER, get_fp_details_model.Contacts.get(0).ContactNumber);
+                        session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1, get_fp_details_model.Contacts.get(1).ContactNumber);
+                    } else if (get_fp_details_model.Contacts.size() == 3) {
+                        session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER, get_fp_details_model.Contacts.get(0).ContactNumber);
+                        session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1, get_fp_details_model.Contacts.get(1).ContactNumber);
+                        session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_2, get_fp_details_model.Contacts.get(2).ContactNumber);
+                    }
                 }
-            }
             }catch(Exception e){e.printStackTrace();}
 
             ArrayList<String> widgetsList = get_fp_details_model.FPWebWidgets;
@@ -175,7 +186,7 @@ public class ProcessFPDetails {
 
         } catch (Exception e)
         {
-             e.printStackTrace();
+            e.printStackTrace();
         }
 
         try {
@@ -234,6 +245,18 @@ public class ProcessFPDetails {
 
             SharedPreferences pref = activity.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
             SharedPreferences twitterPref = activity.getSharedPreferences(TwitterConstants.PREF_NAME,Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putBoolean("fbShareEnabled", false);
+            session.storeFacebookName(null);
+            editor.putString("fbAccessId", null);
+            editor.putBoolean("fbPageShareEnabled", false);
+            session.storeFacebookPage(null);
+            editor.putString("fbPageAccessId", null);
+            editor.commit();
+            SharedPreferences.Editor tPrefEditor = twitterPref.edit();
+            tPrefEditor.putBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false);
+            tPrefEditor.putString(TwitterConstants.PREF_USER_NAME, null);
+            tPrefEditor.commit();
             for(NfxTokenModel model: nfxTokenModelList){
                 switch (model.Type){
                     case 10:

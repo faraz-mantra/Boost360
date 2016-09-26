@@ -49,38 +49,26 @@
             android:padding="8dp"
             android:gravity="center"
             android:background="@android:color/white">
-
-            <TextView
-                android:id="@+id/comDomainTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                fontPath="Roboto-Medium.ttf"
-                android:text=".com"
-                android:layout_marginRight="6dp"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/large_text_size"
-                tools:ignore="MissingPrefix" />
-            <com.gc.materialdesign.views.Switch
+            <!--<com.gc.materialdesign.views.Switch
                 android:id="@+id/domainTypeSwitchView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/primaryColor"
-                materialdesign:check="false" />
-            <TextView
-                android:id="@+id/netDomainTxt"
+                materialdesign:check="false" />-->
+            <org.honorato.multistatetogglebutton.MultiStateToggleButton
+                xmlns:mstb="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/domainTypeSwitchView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                fontPath="Roboto-Medium.ttf"
-                android:text=".net"
-                android:layout_marginLeft="6dp"
-                android:textColor="@color/light_black"
-                android:textSize="@dimen/large_text_size"
-                tools:ignore="MissingPrefix" />
+                android:layout_marginTop="10dip"
+                mstb:values="@array/domain_array"
+                mstb:mstbPrimaryColor="@color/gray"
+                mstb:mstbSecondaryColor="@color/blue"/>
         </LinearLayout>
 
     </LinearLayout>
 </ScrollView>
-    <com.gc.materialdesign.views.ButtonRectangle
+    <Button
         android:id="@+id/search_domain"
         android:layout_width="200dp"
         android:layout_height="55dp"

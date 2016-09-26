@@ -70,7 +70,7 @@ public class ProductImageReplace extends AsyncTask<String,String,String>{
                 }
             }).start();
         }else{
-            if (activity.retryImage<3){
+            if (false){
                 new ProductImageReplace(url,imageData,activity).execute();
                 activity.retryImage++;
             }else{
@@ -96,6 +96,7 @@ public class ProductImageReplace extends AsyncTask<String,String,String>{
                 }
             });
         }
+        activity.mIsReplacing = false;
     }
 
     @Override
