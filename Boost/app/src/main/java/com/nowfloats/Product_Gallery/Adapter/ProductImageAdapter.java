@@ -45,13 +45,13 @@ public class ProductImageAdapter extends RecyclerView.Adapter<ProductImageAdapte
         //holder.ivProductImg.setImageDrawable(null);
         Log.d("path:", path);
         if(path.contains("https://")){
-            Picasso.with(mContext).load(path).config(Bitmap.Config.RGB_565)
+            Picasso.with(mContext).load(path)
                     .placeholder(R.drawable.post_update_normal_icon)
-                    .resize(150, 150).into(holder.ivProductImg);
+                    .resize(0, 500).into(holder.ivProductImg);
         }else {
-            Picasso.with(mContext).load("file://" + path).config(Bitmap.Config.RGB_565)
+            Picasso.with(mContext).load("file://" + path)
                     .placeholder(R.drawable.post_update_normal_icon)
-                    .resize(150, 150).into(holder.ivProductImg);
+                    .resize(0, 500).into(holder.ivProductImg);
         }
         //Picasso.with(mContext).load(Uri.parse("/storage/emulated/0/Pictures/1472719977655.jpg")).into();
         //holder.tvImageName.setText(mImages.get(position).name);

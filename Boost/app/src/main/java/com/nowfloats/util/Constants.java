@@ -28,7 +28,7 @@ import retrofit.RestAdapter;
 
 
 public class Constants {
-    public static final boolean APK_MODE_RELEASE = false;
+    public static final boolean APK_MODE_RELEASE = true;
     public static final String APP_TAG = "Boost App";
     public static boolean LOGOUPLOADED = false;
     public static boolean IS_SUNDAY_CHECKED = false;
@@ -121,6 +121,9 @@ public class Constants {
     public static String ReplaceBackImg = NOW_FLOATS_API_URL + "/discover/v1/floatingpoint/replaceBackgroundImage/";
     public static String DeleteCard = NOW_FLOATS_API_URL + "/Discover/v1/floatingPoint/archiveMessage";
     public static String nfxApi = NOW_FLOATS_API_URL + "/Discover/v2/floatingPoint/updateSocialAccessToken";
+    public static String beCountUrl = NOW_FLOATS_API_URL + "/Discover/v1/businessenquiries/count";
+
+    public static int enqCount = 0;
 
     public static String picType = "picType";
     public static String picTypeCamera = "picType_Camera";

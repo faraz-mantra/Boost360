@@ -35,6 +35,7 @@ public interface Login_Interface {
     @GET("/Discover/v1/floatingPoint/GetLatestBizFloatsFromMessage")
     public void getNewAvailableMessage(@QueryMap Map<String, String> map, Callback<MessageModel> callback);
 
+    @Headers({"Content-Type: application/json","Accept: application/json"})
     @POST("/Discover/v1/floatingpoint/notification/registerChannel")
     public void post_RegisterRia(@Body HashMap<String,String> map, Callback<String> callback);
 

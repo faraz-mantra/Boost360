@@ -85,7 +85,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
         editor = (HorizontalScrollView)findViewById(R.id.rich_editer);
         titleTxt = (EditText)findViewById(R.id.titleEdit);
         richText = (RichEditor)findViewById(R.id.subtextEdit);
-        richText.setPlaceholder("Describe in detail. Use indents, bullet points and page deviders to format your text. Add images and links wherever necessory.");
+        richText.setPlaceholder("Describe in detail. Use custom layout features like indents, bullet points and heading styles to format your text. Add images and links to enhance your content.");
 
         if(getIntent().hasExtra("name")){
             curName = getIntent().getStringExtra("name");

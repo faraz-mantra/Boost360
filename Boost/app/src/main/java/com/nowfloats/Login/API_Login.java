@@ -45,7 +45,7 @@ public class API_Login {
 
     public void authenticate(String userName, String password, String clientId)
     {
-        Log.d("AUthenticate","Usrname : "+userName+" , Pwd : "+password+" Client Id : "+clientId);
+        BoostLog.d("AUthenticate","Usrname : "+userName+" , Pwd : "+password+" Client Id : "+clientId);
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("loginKey", userName);
         params.put("loginSecret", password);

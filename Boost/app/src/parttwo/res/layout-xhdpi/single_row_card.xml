@@ -5,7 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
 
-    >
+>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -116,7 +116,8 @@
                 android:text="@string/side_panel_row_two" />
 
         </LinearLayout>
-        <LinearLayout
+
+        <!--<LinearLayout
             android:id="@+id/ll_site_appearance"
             android:layout_width="match_parent"
             android:layout_height="@dimen/sidepanel_cell_height"
@@ -142,7 +143,7 @@
                 android:textColor="@color/cell_text_color"
                 android:text="@string/side_panel_site_appearance" />
 
-        </LinearLayout>
+        </LinearLayout>-->
 
 
 
@@ -173,7 +174,7 @@
                 android:textColor="@color/cell_text_color"
                 android:text="@string/side_panel_row_three" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -185,11 +186,25 @@
                     android:scaleType="fitXY"
                     android:layout_height="@dimen/icon_size"
                     android:padding="5dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:src="@drawable/lock_widget"
                     android:layout_marginLeft="@dimen/icon_left_margin"
                     android:layout_marginRight="@dimen/icon_right_margin" />
-            </LinearLayout>
+                <TextView
+                    android:id="@+id/enquiry_count_textview"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:background="@drawable/alert_count_bg"
+                    android:padding="2dp"
+                    android:text=""
+                    android:layout_centerVertical="true"
+                    android:textSize="10sp"
+                    android:visibility="gone"
+                    android:textColor="@color/white"
+                    fontPath="Roboto-Bold.ttf"
+                    tools:ignore="MissingPrefix" />
+
+            </RelativeLayout>
 
         </LinearLayout>
         <LinearLayout
@@ -200,7 +215,7 @@
             android:orientation="horizontal"
             android:gravity="center_vertical"
 
-            >
+        >
 
             <ImageView
                 android:id="@+id/Product_Gal_ImageView"
@@ -248,7 +263,7 @@
             android:background="@color/cell_background_color"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            >
+        >
 
             <ImageView
                 android:id="@+id/fourthRow_ImageView"
@@ -403,7 +418,7 @@
             android:layout_height="@dimen/sidepanel_cell_height"
             android:background="@color/cell_background_color"
             android:orientation="horizontal"
-            android:visibility="gone"
+
             android:gravity="center_vertical">
 
             <ImageView

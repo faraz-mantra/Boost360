@@ -25,6 +25,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
+import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
 import com.nowfloats.sync.DbController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
@@ -42,7 +43,7 @@ import org.json.JSONObject;
  */
 public class Settings_Fragment extends Fragment {
     FrameLayout signOutLayout, changePaswordLayout, feedbackLayout, likeusFacebookLayout, aboutUsLayout,
-            rateUsLayout, faqLayout, accountLayout;
+            rateUsLayout, faqLayout, accountLayout, flSiteAppearance;
     private EditText old_pwd, new_pwd, confirm_pwd;
     Boolean confirmCheckerActive = false;
     private ImageView confirmChecker;
@@ -101,6 +102,7 @@ public class Settings_Fragment extends Fragment {
         signOutLayout = (FrameLayout) view.findViewById(R.id.logout_Layout);
         changePaswordLayout = (FrameLayout) view.findViewById(R.id.change_password_Layout);
         faqLayout = (FrameLayout) view.findViewById(R.id.faq_Layout);
+        flSiteAppearance = (FrameLayout) view.findViewById(R.id.fl_site_appearance);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -126,6 +128,15 @@ public class Settings_Fragment extends Fragment {
                 MixPanelController.track("AccountInfo", null);
                 Intent intent = new Intent(activity, AccountInfoActivity.class);
                 startActivity(intent);
+                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
+        flSiteAppearance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, SiteAppearanceActivity.class);
+                activity.startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
@@ -202,9 +213,26 @@ public class Settings_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), FAQMainAcivity.class);
-                startActivity(i);
+                activity.startActivity(i);
+                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
+        if(checkExpiry()){
+            flSiteAppearance.setVisibility(View.GONE);
+        }
+    }
+
+    private boolean checkExpiry() {
+        boolean flag = false;
+        String strExpiryTime = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EXPIRY_DATE);
+        long expiryTime = -1;
+        if(strExpiryTime!=null){
+            expiryTime = Long.parseLong(strExpiryTime.split("\\(")[1].split("\\)")[0]);
+        }
+        if(expiryTime!=-1 && ((expiryTime - System.currentTimeMillis())/86400000<180) && !session.getWebTemplateType().equals("6")){
+            flag = true;
+        }
+        return flag;
     }
 
     public void logoutAlertDialog_Material() {

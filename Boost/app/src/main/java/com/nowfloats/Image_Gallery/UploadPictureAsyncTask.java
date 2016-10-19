@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -136,7 +137,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
         {
             pd= ProgressDialog.show(appContext, "", "Uploading image...");
             //	pd.setCancelable(true);
-            BoostLog.d("ILUD Upload Asynctask", "Uploading Immage");
+            BoostLog.d("ILUD Upload Asynctask", "Uploading Image");
         }
         else
         {
@@ -153,7 +154,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
     protected void onPostExecute(String result) {
 //        BoostLog.d("UploadPicAsyncTask","onPostExecute : "+Constants.storeSecondaryImages.size());
 //        Toast.makeText(appContext,"Success  "+result,Toast.LENGTH_SHORT).show();
-        if(success) {
+        if(result!=null && result.equals("true")) {
             Methods.showSnackBarPositive(appContext, "Image successfully uploaded");
             if (pd.isShowing()) {
                 pd.dismiss();
@@ -318,7 +319,8 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
     protected String doInBackground(Void... params) {
         String response = "";
         if(!Util.isNullOrEmpty(path)){
-            uploadImage(path);
+            response = uploadImage(path);
+            return response;
         }
         if(delImg && isBackgroundImage)
         {
@@ -349,7 +351,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
     }
 
 
-    public void uploadImage(String imagePath){
+    public String uploadImage(String imagePath){
         // Toast.makeText(appContext,"Image Path : "+imagePath,Toast.LENGTH_SHORT).show();
         //  BoostLog.d(TAG,"Image Path : "+imagePath);
 //        Handler handler =  new Handler(appContext.getMainLooper());
@@ -436,6 +438,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
         }
 
         //Constants con = new Constants(appContext);
+        String response;
         if(isParallel)
         {
 //            uri = Constants.LoadStoreURI+param+
@@ -448,7 +451,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
                     s_uuid + "&";
 
             String temp = uri + "totalChunks=1&currentChunkNumber=1";
-            sendDataToServer(temp, bitmapdata);
+            response = sendDataToServer(imagePath,  uri);
 
                 //sendDataToServer(uri,  bitmapdata);
         }
@@ -462,18 +465,20 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
                         "?clientId="+
                         Constants.clientId+"&fpId="+ session.getFPID()+
                         "&existingBackgroundImageUri="+backgroundimgid+"&identifierType=SINGLE";
-                sendDataToServer(uri,  bitmapdata);
+                response = sendDataToServer(imagePath,  uri);
             }
             else
             {
                 uri = Constants.LoadStoreURI+param+"/?clientId="+
                         Constants.clientId+"&fpId="+ session.getFPID();
-                sendDataToServer(uri,  bitmapdata);
+                response = sendDataToServer(imagePath,  uri);
             }
 
 
 
         }
+
+        return response;
     }
 
     public void removebackgroundImg(){
@@ -560,83 +565,78 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
 
 
 
-    public void sendDataToServer(String url, byte[] imageData){
-        BoostLog.d("Ilud Upload Image:", url);
+    public String sendDataToServer(String filename, String targetUrl){
+        String response = "error";
+        Log.e("Image filename", filename);
+        Log.e("url", targetUrl);
+        HttpURLConnection connection = null;
         DataOutputStream outputStream = null;
+
+        String pathToOurFile = filename;
+        String urlServer = targetUrl;
+
+        int bytesRead, bytesAvailable, bufferSize;
+        byte[] buffer;
+        int maxBufferSize = 1 * 1024;
         try {
-            URL new_url = new URL(url);
-            HttpURLConnection connection = (HttpURLConnection) new_url.openConnection();
+            FileInputStream fileInputStream = new FileInputStream(new File(
+                    pathToOurFile));
+
+            URL url = new URL(urlServer);
+            connection = (HttpURLConnection) url.openConnection();
 
             // Allow Inputs & Outputs
             connection.setDoInput(true);
             connection.setDoOutput(true);
-            connection.setUseCaches(true);
-            // Enable PUT method
-            connection.setRequestMethod(Constants.HTTP_PUT);
+            connection.setUseCaches(false);
+            connection.setChunkedStreamingMode(1024);
+            connection.setRequestMethod("PUT");
+
             connection.setRequestProperty("Connection", "Keep-Alive");
-            connection.setRequestProperty("Content-Type",Constants.BG_SERVICE_CONTENT_TYPE_OCTET_STREAM);
 
-            if (imageData != null) {
-                outputStream = new DataOutputStream(connection.getOutputStream());
-                outputStream.write(imageData, 0, imageData.length);
-            }
-            int responseCode = 0;
+            outputStream = new DataOutputStream(connection.getOutputStream());
+
+            bytesAvailable = fileInputStream.available();
+            bufferSize = Math.min(bytesAvailable, maxBufferSize);
+            buffer = new byte[bufferSize];
+            bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+            Log.e("Image length", bytesAvailable + "");
             try {
-                 responseCode = connection.getResponseCode();
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-            if (responseCode == 200 || responseCode == 202)
-            {
-                success = true;
-            }else {
-                success = false;
-            }
-
-            InputStreamReader inputStreamReader = null;
-            BufferedReader bufferedReader =  null;
-            try
-            {
-                inputStreamReader = new InputStreamReader(connection.getInputStream());
-                bufferedReader = new BufferedReader(inputStreamReader);
-                StringBuilder responseContent = new StringBuilder();
-                String temp = null;
-                boolean isFirst = true;
-                while((temp = bufferedReader.readLine())!=null)
-                {
-                    if(!isFirst)
-                        responseContent.append(Constants.NEW_LINE);
-                    responseContent.append(temp);
-                    isFirst = false;
+                while (bytesRead > 0) {
+                    try {
+                        outputStream.write(buffer, 0, bufferSize);
+                    } catch (OutOfMemoryError e) {
+                        e.printStackTrace();
+                        response = "outofmemoryerror";
+                        return response;
+                    }
+                    bytesAvailable = fileInputStream.available();
+                    bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
                 }
-                if (responseContent!=null || responseContent.length()==0){
-                    String response = responseContent.toString();
-                    BoostLog.d("Gallery IMage", "Upload Response : " + response);
-                    if (response==null || response.trim().length()==0) success =false;
-                }else{
-                    success =false;
-                }
-            }
-            catch(Exception e){e.printStackTrace();success = false;}
-            finally
-            {
-                try{
-                    inputStreamReader.close();
-                }catch (Exception e) {}
-                try{
-                    bufferedReader.close();
-                }catch (Exception e) {}
-
-            }
-        } catch (Exception ex) {
-            success = false;
-        } finally {
-            try {
-                outputStream.flush();
-                outputStream.close();
             } catch (Exception e) {
+                e.printStackTrace();
+                response = "error";
+                return response;
             }
+            int serverResponseCode = connection.getResponseCode();
+            String serverResponseMessage = connection.getResponseMessage();
+            Log.i("Server Response Code ", "" + serverResponseCode);
+            Log.i("Server Response Message", serverResponseMessage);
+
+            if (serverResponseCode == 200) {
+                response = "true";
+            }
+
+            fileInputStream.close();
+            outputStream.flush();
+            outputStream.close();
+            outputStream = null;
+        } catch (Exception ex) {
+            response = "error";
+            Log.e("Send file Exception", ex.getMessage() + "");
+            ex.printStackTrace();
         }
-        //return null;
+        return response;
     }
 }

@@ -15,6 +15,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
 import com.nowfloats.NavigationDrawer.model.AlertCountEvent;
 import com.nowfloats.NotificationCenter.Model.AlertModel;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
@@ -44,6 +45,8 @@ public class NotificationFragment extends Fragment{
     NotificationInterface alertInterface;
     private boolean userScrolled = false;
     private int prevCount = 0;
+    private String mIsRead = "false";
+    private boolean mIsAlertShown = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -134,13 +137,20 @@ public class NotificationFragment extends Fragment{
             Map<String, String> params = new HashMap<String, String>();
             params.put("clientId", Constants.clientId);
             params.put("fpId", session.getFPID());
-            params.put("isRead", "");
+            params.put("isRead", "true");
             params.put("offset", offset);
             params.put("limit", "10");
 
             alertInterface.getAlerts(params,new Callback<ArrayList<AlertModel>>() {
                 @Override
                 public void success(ArrayList<AlertModel> alertModels, Response response) {
+                    progress_layout.setVisibility(View.GONE);
+                    if (alertModels==null || alertModels.size()==0 && !mIsAlertShown){
+                        emptylayout.setVisibility(View.VISIBLE);
+                    }else{
+                        mIsAlertShown = true;
+                        emptylayout.setVisibility(View.GONE);
+                    }
                     Log.i("Alerts Success",""+alertModels.size());
                     adapter.addAlerts(alertModels);
                     adapter.notifyDataSetChanged();
@@ -162,30 +172,27 @@ public class NotificationFragment extends Fragment{
         }
     }
 
+
+
     public void loadAlerts() {
         try {
             Map<String, String> params = new HashMap<String, String>();
             params.put("clientId", Constants.clientId);
             params.put("fpId", session.getFPID());
-            params.put("isRead", "");
+            params.put("isRead", "false");
             params.put("offset", "0");
-            params.put("limit", "10");
+            params.put("limit", Home_Fragment_Tab.alertCountVal);
 
             alertInterface.getAlerts(params,new Callback<ArrayList<AlertModel>>() {
                 @Override
                 public void success(ArrayList<AlertModel> alertModels, Response response) {
                     Log.i("Alerts Success","");
                     if (alertModels!=null){
+                        mIsAlertShown = true;
                         adapter = new NotificationAdapter(activity,alertModels,alertInterface,session,bus);
                         recyclerView.setAdapter(adapter);
-
-                        progress_layout.setVisibility(View.GONE);
-                        if (alertModels==null || alertModels.size()==0){
-                            emptylayout.setVisibility(View.VISIBLE);
-                        }else{
-                            emptylayout.setVisibility(View.GONE);
-                        }
                     }
+                    moreAlerts("0");
                 }
 
                 @Override
@@ -214,6 +221,7 @@ public class NotificationFragment extends Fragment{
             public void success(String s, Response response) {
                 Home_Fragment_Tab.alertCountVal = s;
                 bus.post(new AlertCountEvent(s));
+                BoostLog.d("AlertCount-", s);
                 MixPanelController.track("AlertCount-"+s, null);
             }
 

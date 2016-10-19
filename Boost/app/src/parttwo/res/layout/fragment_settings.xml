@@ -49,6 +49,46 @@
                 android:orientation="horizontal"></LinearLayout>
         </FrameLayout>
         <FrameLayout
+            android:id="@+id/fl_site_appearance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_screen_cell_height"
+                android:background="@color/cell_background_color"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:scaleType="fitCenter"
+                    android:tint="#6f6f6f"
+                    android:layout_height="@dimen/textview_height_business_profile"
+                    android:src="@drawable/site_appearance"
+                    android:layout_marginLeft="@dimen/icon_left_margin"
+                    android:layout_marginRight="@dimen/icon_right_margin"
+                    android:padding="5dp"
+                />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/cell_text_size"
+                    android:textColor="@color/cell_text_color"
+                    android:text="@string/side_panel_site_appearance" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:selectableItemBackground"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+        </FrameLayout>
+        <FrameLayout
             android:id="@+id/change_password_Layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">

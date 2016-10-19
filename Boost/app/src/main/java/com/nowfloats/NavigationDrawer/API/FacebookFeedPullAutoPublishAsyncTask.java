@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
 
 import org.json.JSONObject;
 
@@ -20,7 +23,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class FacebookFeedPullAutoPublishAsyncTask extends AsyncTask<Void, String, String>{
-	
+
 	private SharedPreferences pref = null;
 	SharedPreferences.Editor prefsEditor;
 	private Activity appContext = null;
@@ -31,12 +34,14 @@ public class FacebookFeedPullAutoPublishAsyncTask extends AsyncTask<Void, String
 	JSONObject obj;
 	boolean subscription;
 	TextView fromPage;
+	UserSessionManager sessionManager;
 
-	public FacebookFeedPullAutoPublishAsyncTask(Activity context, JSONObject obj,boolean subscription, TextView FromPage) {
+	public FacebookFeedPullAutoPublishAsyncTask(Activity context, JSONObject obj, boolean subscription, TextView FromPage, UserSessionManager sessionManager) {
 		this.appContext = context;
 		this.obj = obj;
 		this.subscription = subscription;
 		this.fromPage = FromPage;
+		this.sessionManager = sessionManager;
 	}
 
 	@Override
@@ -49,24 +54,25 @@ public class FacebookFeedPullAutoPublishAsyncTask extends AsyncTask<Void, String
 
 	@Override
 	protected void onPostExecute(String result) {
-		
+
 		if(pd!=null){
 			pd.dismiss();
 		}
-        BoostLog.d("FacebookAutoPublish","FacebookFeedPullAutoPublish : "+result);
+		BoostLog.d("FacebookAutoPublish","FacebookFeedPullAutoPublish : "+result);
 		if(!Util.isNullOrEmpty(result)){
 			//Util.toast("success", appContext);
 			if(subscription == true){
 				prefsEditor.putBoolean("FBFeedPullAutoPublish", true);
 				prefsEditor.commit();
 				//fromPage.setText("From "+ Constants.fbFromWhichPage);
-			    			}
+			}
 			else{
-				Toast.makeText(appContext, "Auto Post Updates will be turned OFF", Toast.LENGTH_SHORT).show();
-				prefsEditor.putBoolean("FBFeedPullAutoPublish", false);
-				prefsEditor.commit();
-				fromPage.setText("");
-							}
+				Toast.makeText(appContext, "Auto Pull for Updates will be turned OFF", Toast.LENGTH_SHORT).show();
+				fromPage.setVisibility(View.GONE);
+				sessionManager.storeFPDetails(Key_Preferences.FB_PULL_PAGE_NAME, null);
+				sessionManager.storeFPDetails(Key_Preferences.FB_PULL_ENABLED, "false");
+				sessionManager.storeFPDetails(Key_Preferences.FB_PULL_COUNT, "0");
+			}
 		}
 	}
 
@@ -77,13 +83,13 @@ public class FacebookFeedPullAutoPublishAsyncTask extends AsyncTask<Void, String
 		try {
 			String content = obj.toString();
 			response = getDataFromServer(content,
-                    Constants.HTTP_POST,
-                    Constants.NOW_FLOATS_API_URL+
-                            "/Discover/v1/FloatingPoint/UpdateFacebookPullRegistration/");
+					Constants.HTTP_POST,
+					Constants.NOW_FLOATS_API_URL+
+							"/Discover/v1/FloatingPoint/UpdateFacebookPullRegistration/");
 			if (!Util.isNullOrEmpty(response)) {
 
 
-				
+
 			}// end of if condition
 
 			// end of
@@ -94,7 +100,7 @@ public class FacebookFeedPullAutoPublishAsyncTask extends AsyncTask<Void, String
 	}
 
 	public String getDataFromServer(String content, String requestMethod,
-			String serverUrl) {
+									String serverUrl) {
 		String response = "";
 		DataOutputStream outputStream = null;
 		try {
@@ -174,6 +180,6 @@ public class FacebookFeedPullAutoPublishAsyncTask extends AsyncTask<Void, String
 		}
 		return response;
 	}
-	
-	
+
+
 }

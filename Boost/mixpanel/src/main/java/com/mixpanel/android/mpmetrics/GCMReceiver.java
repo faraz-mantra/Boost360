@@ -108,7 +108,7 @@ public class GCMReceiver extends BroadcastReceiver {
             String notificationClick = "notification clicked";
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
-                Object keys = bundle.get("url");
+                Object keys = bundle.get("C");
                 if(keys!=null){
                     payload = keys.toString();
                     deeplinkUrl = keys.toString();
@@ -231,6 +231,8 @@ public class GCMReceiver extends BroadcastReceiver {
         builder.setAutoCancel(true);
         builder.setContentTitle(title);
         builder.setContentText(message);
+        builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), com.mixpanel.android.R.drawable.app_launcher));
+        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
         builder.setColor(Color.parseColor("#ffb900"));
         try {
             builder.setSmallIcon(R.drawable.app_launcher2);
@@ -285,6 +287,7 @@ public class GCMReceiver extends BroadcastReceiver {
         Notification notification = builder.build();
         NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(0, notification);
+
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         //nm.notify(0, n);
     }

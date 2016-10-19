@@ -41,8 +41,6 @@
         android:theme="@style/AppTheme">
         <activity android:name="com.mixpanel.android.surveys.SurveyActivity" />
 
-        <service android:name="com.nowfloats.Volley.GCMIntentService" />
-
         <receiver
             android:name="com.appsflyer.MultipleInstallBroadcastReceiver"
             android:exported="true">
@@ -125,17 +123,7 @@
             android:name="com.nowfloats.Analytics_Screen.SearchQueries"
             android:label=""
             android:screenOrientation="portrait">
-            <intent-filter android:label="Queries">
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-                <data
-                    android:host="com.biz2.nowfloats"
-                    android:pathPrefix="/queries"
-                    android:scheme="http" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.nowfloats.signup.UI.UI.BusinessProfileActivity"
@@ -144,13 +132,21 @@
         <activity
             android:name="com.nowfloats.NavigationDrawer.HomeActivity"
             android:label="@string/title_activity_home"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter android:label="Queries">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
+                <data android:scheme="com.biz2.nowfloats" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity"
             android:label="@string/title_activity_business__address_"
-            android:windowSoftInputMode="stateVisible|adjustPan"
-            android:screenOrientation="portrait" />
-
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity"
             android:label="@string/title_activity_contact__info_"
@@ -169,13 +165,15 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="nowfloatsboost"
-                    android:host="SocialSharing" />
-            </intent-filter>
 
-            </activity>
+                <data
+                    android:host="SocialSharing"
+                    android:scheme="nowfloatsboost" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -280,8 +278,8 @@
 
         <activity
             android:name="com.nowfloats.NavigationDrawer.Mobile_Site_Activity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_mobile__site_" />
+            android:label="@string/title_activity_mobile__site_"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.Store.StoreDataActivity"
             android:label="@string/title_activity_card__full__view__main"
@@ -301,7 +299,8 @@
             android:name="com.nowfloats.Product_Gallery.Product_Detail_Activity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name="com.nowfloats.Product_Gallery.Product_Detail_Activity_V45"
+        <activity
+            android:name="com.nowfloats.Product_Gallery.Product_Detail_Activity_V45"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -320,19 +319,22 @@
         <activity
             android:name="com.nowfloats.Business_Enquiries.BusinessEnqUpdateDetails"
             android:screenOrientation="portrait" />
-        <activity android:name="com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQMainAcivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQ_QandA_Activity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQMainAcivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQ_QandA_Activity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.Twitter.TwitterAuthenticationActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.TwitterLoginActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
 
+        <!--
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
@@ -343,15 +345,32 @@
                 <category android:name="com.thinksity" />
             </intent-filter>
         </receiver>
+        -->
+        <service
+            android:name="com.nowfloats.RiaFCM.RiaFirebaseMessagingService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name="com.nowfloats.RiaFCM.RiaFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
 
-        <activity android:name="com.nowfloats.Analytics_Screen.SubscribersActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.nowfloats.Analytics_Screen.SubscribersActivity"
+            android:screenOrientation="portrait" />
+
         <provider
-            android:authorities="com.thinksity.android.provider"
-            android:name="com.nowfloats.sync.ContentProvider.BoostContentProvider" />
+            android:name="com.nowfloats.sync.ContentProvider.BoostContentProvider"
+            android:authorities="com.thinksity.android.provider" />
 
         <service android:name="com.nowfloats.Product_Gallery.Service.MultipleImageUploadService" />
-    </application>
 
+        <activity android:name="com.nowfloats.SiteAppearance.SiteAppearanceActivity"></activity>
+    </application>
 
 </manifest>

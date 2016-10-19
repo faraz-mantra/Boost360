@@ -3,11 +3,13 @@ package com.nowfloats.SiteAppearance;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -22,6 +25,7 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.KitsuneApi;
+import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -37,6 +41,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import me.biubiubiu.justifytext.library.JustifyTextView;
+
 public class SiteAppearanceFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -50,11 +56,11 @@ public class SiteAppearanceFragment extends Fragment {
     private Map<String, String> mfeedBack = new HashMap<>();
 
     private CompoundButton.OnCheckedChangeListener checkedChangeListener;
-    private Switch svKitsune;
-    private TextView tvKitsune, tvHelpHeader, tvHelpBody, tvHelpFooter;
-    private Button btnLearnMore;
-    private LinearLayout llKitsune;
-
+    //private Switch svKitsune;
+    private TextView tvHelpHeader, tvHelpFooter, tvKitsuneSwitch;
+    private JustifyTextView tvHelpBody;
+    private CardView cvKitsuneSwitch, cvRevertBack;
+    private ImageView ivKitsuneSwitch;
     //private OnFragmentInteractionListener mListener;
 
     /*public SiteAppearanceFragment() {
@@ -86,34 +92,38 @@ public class SiteAppearanceFragment extends Fragment {
         // Inflate the layout for this fragment
         session = new UserSessionManager(getContext(), getActivity());
         View view = inflater.inflate(R.layout.fragment_site_appearance, container, false);
-        svKitsune = (Switch)view.findViewById(R.id.sv_kitsune);
-        llKitsune = (LinearLayout)view.findViewById(R.id.ll_kitsune);
-        tvKitsune = (TextView)view.findViewById(R.id.tv_kitsune);
+        //svKitsune = (Switch)view.findViewById(R.id.sv_kitsune);
+        cvKitsuneSwitch = (CardView) view.findViewById(R.id.cv_kitsune_switch);
+        cvRevertBack = (CardView) view.findViewById(R.id.cv_revert_back);
+        tvKitsuneSwitch = (TextView)view.findViewById(R.id.tv_kitsune_switch);
         tvHelpHeader = (TextView)view.findViewById(R.id.tv_help_header);
-        tvHelpBody = (TextView)view.findViewById(R.id.tv_help_body);
-        tvHelpFooter = (TextView)view.findViewById(R.id.tv_help_footer);
-        btnLearnMore = (Button)view.findViewById(R.id.btn_learn_kitsune);
-        btnLearnMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Uri uri = Uri.parse("https://nowfloats.com/whychange");
-                Intent i = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
-        });
+        tvHelpBody = (JustifyTextView) view.findViewById(R.id.tv_help_body);
+        tvHelpFooter = (TextView) view.findViewById(R.id.tv_help_footer);
+        //btnLearnMore = (Button)view.findViewById(R.id.btn_learn_kitsune);
+        ivKitsuneSwitch = (ImageView)view.findViewById(R.id.iv_kitsune_switch);
         if(session.getWebTemplateType().equals("6")){
             tvHelpHeader.setText(getResources().getString(R.string.conv_sa_title));
             tvHelpBody.setText(getResources().getString(R.string.conv_sa_body));
             tvHelpFooter.setVisibility(View.GONE);
-            svKitsune.setChecked(true);
+            /*svKitsune.setChecked(true);
             btnLearnMore.setVisibility(View.VISIBLE);
-            tvKitsune.setText("REVERT TO OLD VERSION");
+            tvKitsune.setText("REVERT TO OLD VERSION");*/
+            setOldDesignVisibility();
+            tvKitsuneSwitch.setText("Learn more about new version");
+            tvKitsuneSwitch.setTextColor(Color.parseColor("#808080"));
+            ivKitsuneSwitch.setBackgroundColor(Color.parseColor("#00000000"));
+            ivKitsuneSwitch.setImageDrawable(getResources().getDrawable(R.drawable.ic_learn_more));
+
         }
-        checkedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        cvKitsuneSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
+            public void onClick(View v) {
+                if(session.getWebTemplateType().equals("6")){
+                    String url = "https://nowfloats.com/whychange";
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    startActivity(i);
+                }else {
                     if (checkExpiry()) {
                         final ProgressDialog pg = ProgressDialog.show(getActivity(), "", "Wait for the new look...");
                         new KitsuneApi(session.getFpTag()).setResultListener(new KitsuneApi.ResultListener() {
@@ -125,40 +135,45 @@ public class SiteAppearanceFragment extends Fragment {
                                     tvHelpHeader.setText(getResources().getString(R.string.conv_sa_title));
                                     tvHelpBody.setText(getResources().getString(R.string.conv_sa_body));
                                     tvHelpFooter.setVisibility(View.GONE);
-                                    btnLearnMore.setVisibility(View.VISIBLE);
-                                    tvKitsune.setText("REVERT TO OLD VERSION");
+                                    tvKitsuneSwitch.setText("Learn more about new version");
+                                    tvKitsuneSwitch.setTextColor(Color.parseColor("#808080"));
+                                    ivKitsuneSwitch.setBackgroundColor(Color.parseColor("#00000000"));
+                                    ivKitsuneSwitch.setImageDrawable(getResources().getDrawable(R.drawable.ic_learn_more));
                                     setOldDesignVisibility();
                                     session.storeFpWebTempalteType("6");
                                 } else {
                                     Methods.showSnackBarNegative(getActivity(), "Couldn't change Website Appearance");
-                                    svKitsune.setOnCheckedChangeListener(null);
-                                    svKitsune.setChecked(false);
-                                    svKitsune.setOnCheckedChangeListener(checkedChangeListener);
                                 }
                             }
                         }).enableKitsune();
                     }else {
-                        svKitsune.setOnCheckedChangeListener(null);
-                        svKitsune.setChecked(false);
-                        svKitsune.setOnCheckedChangeListener(checkedChangeListener);
                         Methods.showSnackBarNegative(getActivity(), "Please Renew to use this feature");
                     }
                 }
-                else{
-                    showFeedBackDialog();
-                }
             }
-
-        };
-        svKitsune.setOnCheckedChangeListener(checkedChangeListener);
-        setOldDesignVisibility();
+        });
+        cvRevertBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFeedBackDialog();
+            }
+        });
+        //setOldDesignVisibility();
         return view;
     }
 
     private void setOldDesignVisibility() {
         if(Long.parseLong(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON).split("\\(")[1].split("\\)")[0])/1000 > 1470614400){
-            llKitsune.setVisibility(View.GONE);
+            cvRevertBack.setVisibility(View.GONE);
+        }else {
+            cvRevertBack.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        HomeActivity.headerText.setText(getResources().getString(R.string.side_panel_site_appearance));
     }
 
     private void showFeedBackDialog(){
@@ -227,9 +242,6 @@ public class SiteAppearanceFragment extends Fragment {
                 }
                 if(!checkBoxFlag){
                     Methods.showSnackBarNegative(getActivity(), "Please check any of the CheckBox");
-                    svKitsune.setOnCheckedChangeListener(null);
-                    svKitsune.setChecked(true);
-                    svKitsune.setOnCheckedChangeListener(checkedChangeListener);
                     return;
                 }
                 submitFeedBack(array);
@@ -240,9 +252,6 @@ public class SiteAppearanceFragment extends Fragment {
             public void onClick(View v) {
                 if(dialog.isShowing()) {
                     dialog.dismiss();
-                    svKitsune.setOnCheckedChangeListener(null);
-                    svKitsune.setChecked(true);
-                    svKitsune.setOnCheckedChangeListener(checkedChangeListener);
                 }
             }
         });
@@ -258,9 +267,12 @@ public class SiteAppearanceFragment extends Fragment {
                 if(!isError){
                     if(response.equals("true")){
                         Methods.showSnackBarPositive(getActivity(), "Successfully Reverted");
-                        tvKitsune.setText("ENABLE NEW VERSION");
+                        tvKitsuneSwitch.setText("Upgrade Now");
+                        tvKitsuneSwitch.setTextColor(getResources().getColor(R.color.primaryColor));
+                        ivKitsuneSwitch.setImageDrawable(getResources().getDrawable(R.drawable.ic_enable_kitsune));
+                        ivKitsuneSwitch.setBackgroundColor(getResources().getColor(R.color.primaryColor));
                         session.storeFpWebTempalteType("4");
-                        btnLearnMore.setVisibility(View.GONE);
+                        cvRevertBack.setVisibility(View.GONE);
                         tvHelpHeader.setText(getResources().getString(R.string.site_appearance_title));
                         tvHelpBody.setText(getResources().getString(R.string.site_appearance_text));
                         tvHelpFooter.setVisibility(View.VISIBLE);
@@ -276,15 +288,9 @@ public class SiteAppearanceFragment extends Fragment {
                          */
                     }else {
                         Methods.showSnackBarNegative(getActivity(), "Failed to revert");
-                        svKitsune.setOnCheckedChangeListener(null);
-                        svKitsune.setChecked(true);
-                        svKitsune.setOnCheckedChangeListener(checkedChangeListener);
                     }
                 }else {
                     Methods.showSnackBarNegative(getActivity(), "Failed to revert");
-                    svKitsune.setOnCheckedChangeListener(null);
-                    svKitsune.setChecked(true);
-                    svKitsune.setOnCheckedChangeListener(checkedChangeListener);
                 }
             }
         }).disablekitsune(array.toString());

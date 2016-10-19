@@ -13,6 +13,7 @@ import android.text.util.Linkify;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -92,16 +93,34 @@ public class FAQ_QandA_Activity extends ActionBarActivity {
     }
     private void InflateAnsView(String ans)
     {
-        final TextView message = new TextView(this);
+        final WebView message = new WebView(this);
         //message.setPadding(48,16,48,16);
         final SpannableString s =
                 new SpannableString(Html.fromHtml(ans));
         float dpi = getResources().getDisplayMetrics().density;
-        message.setText(Html.fromHtml(ans));
-        Typeface face = Typeface.createFromAsset(getAssets(), "Roboto-Regular.ttf");
-        message.setTypeface(face);
-        message.setMovementMethod(LinkMovementMethod.getInstance());
+//        message.setText(Html.fromHtml("<p align=\"justify\">" + ans + "</p>"));
+        Typeface face = Typeface.createFromAsset(getAssets(), "Roboto-Thin.ttf");
+//        message.setTypeface(face);
+//        message.setMovementMethod(LinkMovementMethod.getInstance());
         Linkify.addLinks(s, Linkify.WEB_URLS);
+        String text = "<html><head>" +
+                "<style type=\"text/css\">" +
+                "@font-face {" +
+                "    font-family: MyFont;" +
+                "    src: url(\"file:///android_asset/Roboto-Regular.ttf\")" +
+                "}" +
+                "body {" +
+                "    font-family: MyFont;" +
+                "    font-size: medium;" +
+                "    text-align: justify;" +
+                "}" +
+                "</style>" +
+                "</head><body text=\"" +"#808080" + "\">"
+                         + "<p align=\"justify\">"
+                         + ans
+                         + "</p> "
+                         + "</body></html>";
+        message.loadData(text, "text/html", "utf-8");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(message,(int)(25*dpi), (int)(5*dpi), (int)(14*dpi), (int)(5*dpi))
                 .setTitle("Answer")

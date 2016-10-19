@@ -44,7 +44,7 @@ public class NfxRequestClient {
 
 
     public interface NfxCallBackListener{
-         void nfxCallBack(String response, int callType, String name);
+        void nfxCallBack(String response, int callType, String name);
     }
 
 
@@ -119,8 +119,8 @@ public class NfxRequestClient {
     }
 
     public void connectNfx(){
-         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                 Constants.nfxApi, getNfxParams() , new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
+                Constants.nfxApi, getNfxParams() , new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
@@ -130,27 +130,27 @@ public class NfxRequestClient {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                mCallBackListener.nfxCallBack(error.getMessage(), getmCallType(), getmName());
+                mCallBackListener.nfxCallBack("error", getmCallType(), getmName());
             }
         }){
-             @Override
-             protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
-                 try {
-                     String resp =
-                             new String(response.data, HttpHeaderParser.parseCharset(response.headers)
-                             );
-                     String jsonString = "{\"resp\":" + resp + "}";
-                     BoostLog.d("JSON Response:", resp);
-                     return Response.success(new JSONObject(jsonString),
-                             HttpHeaderParser.parseCacheHeaders(response));
-                 } catch (UnsupportedEncodingException e) {
-                     return Response.error(new ParseError(e));
-                 }catch (JSONException e){
-                     return Response.error(new ParseError(e));
-                 }
-                 //return new JSONObject("FACEBOOK");
-             }
-         };
+            @Override
+            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String resp =
+                            new String(response.data, HttpHeaderParser.parseCharset(response.headers)
+                            );
+                    String jsonString = "{\"resp\":" + resp + "}";
+                    BoostLog.d("JSON Response:", resp);
+                    return Response.success(new JSONObject(jsonString),
+                            HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException e) {
+                    return Response.error(new ParseError(e));
+                }catch (JSONException e){
+                    return Response.error(new ParseError(e));
+                }
+                //return new JSONObject("FACEBOOK");
+            }
+        };
         AppController.getInstance().addToRequstQueue(jsonObjectRequest);
 
     }

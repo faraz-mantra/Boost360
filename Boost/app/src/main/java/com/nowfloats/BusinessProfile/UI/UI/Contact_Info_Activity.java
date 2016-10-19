@@ -84,7 +84,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
         facebookPage = (EditText) findViewById(R.id.facebookPage);
 
         initializeData();
-        facebookPage.setText(session.getFacebookPage());
+        facebookPage.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FBPAGENAME));
 
         emailAddress.addTextChangedListener(new TextWatcher() {
 

@@ -212,7 +212,7 @@ public class Login_MainActivity extends AppCompatActivity implements
             MixPanelController.setProperties("LoggedIn", "True");
 
             getFPDetails(Login_MainActivity.this, session.getFPID(), Constants.clientId, bus);
-            HomeActivity.registerChat(session.getFPID(),Constants.gcmRegistrationID);
+            HomeActivity.registerChat(session.getFPID());
         } else {
             if(progressDialog != null) {
                 progressDialog.dismiss();

@@ -15,250 +15,310 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:fillViewport="true">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="2dp">
-
-        <android.support.v7.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            card_view:cardCornerRadius="3dp"
-            app:cardElevation="3dp"
-            android:background="@color/white">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
 
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="20dp">
-
-                    <ImageView
-                        android:id="@+id/social_sharing_facebook_profile_image"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/facebook_icon_inactive"
-                        android:layout_marginLeft="20dp"/>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/facebookProfile"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Facebook Profile"
-                            android:textSize="18sp"
-                            android:layout_marginLeft="10dp"/>
-                        <TextView
-                            android:id="@+id/social_sharing_facebook_profile_flag_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Disconnected"
-                            android:textSize="12sp"
-                            android:layout_marginLeft="10dp"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="right"
-                        android:layout_marginRight="10dp">
-                        <CheckBox
-                            android:id="@+id/social_sharing_facebook_profile_checkbox"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="@color/grey"
-                            android:layout_gravity="right"/>
-                    </LinearLayout>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="20dp">
-
-                    <ImageView
-                        android:id="@+id/social_sharing_facebook_page_image"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/facebookpage_icon_inactive"
-
-                        android:layout_marginLeft="20dp"/>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/facebookPage"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Facebook Page"
-                            android:textSize="18sp"
-                            android:layout_marginLeft="10dp"/>
-                        <TextView
-                            android:id="@+id/social_sharing_facebook_page_flag_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Disconnected"
-                            android:textSize="12sp"
-                            android:layout_marginLeft="10dp"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="right"
-                        android:layout_marginRight="10dp">
-                        <CheckBox
-                            android:id="@+id/social_sharing_facebook_page_checkbox"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:buttonTint="@color/grey"
-                            android:layout_gravity="right"/>
-                    </LinearLayout>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="20dp">
-
-                    <ImageView
-                        android:id="@+id/social_sharing_twitter_image"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/twitter_icon_inactive"
-
-                        android:layout_marginLeft="20dp"/>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/twitterProfile"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Twitter"
-                            android:textSize="18sp"
-                            android:layout_marginLeft="10dp"/>
-                        <TextView
-                            android:id="@+id/social_sharing_twitter_flag_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Disconnected"
-                            android:textSize="12sp"
-                            android:layout_marginLeft="10dp"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="right"
-                        android:layout_marginRight="10dp">
-                        <CheckBox
-                            android:id="@+id/social_sharing_twitter_checkbox"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:buttonTint="@color/grey"
-                            />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-
-        <TextView
-            android:id="@+id/connectTextView"
-            android:gravity="left"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:text="By Connecting your accounts,whatever you post to your Website will also reflect on your social accounts"/>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            card_view:cardCornerRadius="3dp"
-            android:elevation="3dp"
-            android:background="@color/white">
-
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/autoPostTextView"
+                <!--<ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="20dp"
-                    android:text="Auto Post Facebook Updates"
-                    android:textSize="14sp"/>
+                    android:tint="#808080"
+                    android:id="@+id/iv_help_nfx"
+                    android:layout_alignBottom="@+id/topFeatureText"
+                    android:layout_alignRight="@+id/topFeatureText"
+                    android:src="@drawable/ic_help_outline_black_24dp"/>-->
+
+            </RelativeLayout>
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="3dp"
+                app:contentPaddingBottom="10dp"
+                android:background="@color/white">
+
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="right"
-                    android:layout_marginRight="10dp">
-                    <CheckBox
-                        android:id="@+id/social_sharing_facebook_page_auto_post"
-                        android:layout_width="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:buttonTint="@color/grey"
-                        android:layout_gravity="right"/>
+                        android:background="#808080">
+                        <TextView
+                            android:id="@+id/topFeatureText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#ffffff"
+                            android:layout_margin="10dp"
+                            android:textSize="14sp"
+                            android:text="Select any or all social platforms below to automatically share whatever you update on your website with a bigger audience on these social networks."/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="10dp">
+
+                        <ImageView
+                            android:id="@+id/social_sharing_facebook_profile_image"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/facebook_icon_inactive"
+                            android:layout_marginLeft="20dp"/>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/facebookProfile"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Facebook Profile"
+                                android:textSize="18sp"
+                                android:layout_marginLeft="10dp"/>
+                            <TextView
+                                android:id="@+id/social_sharing_facebook_profile_flag_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Disconnected"
+                                android:textSize="12sp"
+                                android:layout_marginLeft="10dp"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="right"
+                            android:layout_marginRight="10dp">
+                            <CheckBox
+                                android:id="@+id/social_sharing_facebook_profile_checkbox"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:buttonTint="@color/grey"
+                                android:layout_gravity="right"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="20dp">
+
+                        <ImageView
+                            android:id="@+id/social_sharing_facebook_page_image"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/facebookpage_icon_inactive"
+
+                            android:layout_marginLeft="20dp"/>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/facebookPage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Facebook Page"
+                                android:textSize="18sp"
+                                android:layout_marginLeft="10dp"/>
+                            <TextView
+                                android:id="@+id/social_sharing_facebook_page_flag_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Disconnected"
+                                android:textSize="12sp"
+                                android:layout_marginLeft="10dp"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="right"
+                            android:layout_marginRight="10dp">
+                            <CheckBox
+                                android:id="@+id/social_sharing_facebook_page_checkbox"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:buttonTint="@color/grey"
+                                android:layout_gravity="right"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="20dp">
+
+                        <ImageView
+                            android:id="@+id/social_sharing_twitter_image"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/twitter_icon_inactive"
+
+                            android:layout_marginLeft="20dp"/>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/twitterProfile"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Twitter"
+                                android:textSize="18sp"
+                                android:layout_marginLeft="10dp"/>
+                            <TextView
+                                android:id="@+id/social_sharing_twitter_flag_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Disconnected"
+                                android:textSize="12sp"
+                                android:layout_marginLeft="10dp"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="right"
+                            android:layout_marginRight="10dp">
+                            <CheckBox
+                                android:id="@+id/social_sharing_twitter_checkbox"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:buttonTint="@color/grey"
+                                />
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
+            </android.support.v7.widget.CardView>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!--<ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:tint="#808080"
+                    android:id="@+id/iv_help_auto_pull"
+                    android:layout_alignBottom="@+id/connectTextView"
+                    android:layout_alignRight="@+id/connectTextView"
+                    android:src="@drawable/ic_help_outline_black_24dp"/>-->
+
+            </RelativeLayout>
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="30dp"
+                app:cardCornerRadius="5dp"
+                android:elevation="3dp"
+                android:background="@color/white">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#808080">
+                        <TextView
+                            android:id="@+id/connectTextView"
+                            android:gravity="left"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:textColor="#ffffff"
+                            android:textSize="14sp"
+                            android:text="Ensure whatever you post to your Facebook Page also gets updated to your website by simply selecting the check box below."/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/autoPostTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="20dp"
+                            android:layout_gravity="center_vertical"
+                            android:text="Auto Post Facebook Updates"
+                            android:textSize="14sp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:gravity="right"
+                            android:layout_marginRight="10dp">
+                            <CheckBox
+                                android:id="@+id/social_sharing_facebook_page_auto_post"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:buttonTint="@color/grey"
+                                android:layout_gravity="right"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tv_fb_page_name"
+                        android:visibility="gone"
+                        android:paddingLeft="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="20dp"
+                        android:text="Subscribed for pulling 10 updates from Test Facebook Page"/>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+                <TextView
+                    android:gravity="left"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#808080"
+                    android:layout_margin="10dp"
+                    android:textSize="14sp"
+                    android:text="Updates will reflect on your website one hour after getting posted on the Facebook Page. Do not select this option if you are using social share from your website."/>
             </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <TextView
-            android:id="@+id/bottomFeatureText"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Enable this feature to automatically post all future Facebook Page updates to your website. You can disable this feature any time. Updates will reflect on your website one hour after getting posted on Facebook Page"/>
-
-    </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

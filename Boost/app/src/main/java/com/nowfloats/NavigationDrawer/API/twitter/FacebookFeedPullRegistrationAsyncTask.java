@@ -4,12 +4,18 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.Key_Preferences;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -19,7 +25,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class FacebookFeedPullRegistrationAsyncTask extends AsyncTask<Void, String, String>{
-	
+
 	private SharedPreferences pref = null;
 	SharedPreferences.Editor prefsEditor;
 	private Activity appContext = null;
@@ -30,13 +36,18 @@ public class FacebookFeedPullRegistrationAsyncTask extends AsyncTask<Void, Strin
 	JSONObject obj;
 	TextView fromPage;
 	CheckBox checkBox;
-	
+	UserSessionManager sessionManager;
+	String count;
+	int responseCode;
 
-	public FacebookFeedPullRegistrationAsyncTask(Activity context, JSONObject obj, TextView FromPage, CheckBox Checkbox) {
+
+	public FacebookFeedPullRegistrationAsyncTask(Activity context, JSONObject obj, TextView FromPage, CheckBox Checkbox, UserSessionManager sessionManager) {
 		this.appContext = context;
 		this.obj = obj;
 		this.fromPage = FromPage;
 		this.checkBox = Checkbox;
+		this.sessionManager = sessionManager;
+		//this.count = count;
 	}
 
 	@Override
@@ -44,24 +55,33 @@ public class FacebookFeedPullRegistrationAsyncTask extends AsyncTask<Void, Strin
 
 		pd = ProgressDialog.show(appContext, null, "Please wait");
 		pd.setCancelable(true);
-        pd.show();
+		pd.show();
 		pref = appContext.getSharedPreferences(Constants.PREF_NAME,Activity.MODE_PRIVATE);
 		prefsEditor = pref.edit();
 	}
 
 	@Override
 	protected void onPostExecute(String result) {
-		
+
 		if(pd!=null){
 			pd.dismiss();
 		}
-		if(success){
+		if(responseCode==200 || responseCode==202){
 			//Util.toast("success", appContext);
-			prefsEditor.putBoolean("FacebookFeedRegd", true);
-			prefsEditor.commit();
-			fromPage.setText("From "+ Constants.fbFromWhichPage);
+			try {
+				sessionManager.storeFPDetails(Key_Preferences.FB_PULL_ENABLED, "true");
+				sessionManager.storeFPDetails(Key_Preferences.FB_PULL_PAGE_NAME, obj.getString("FacebookPageName"));
+				sessionManager.storeFPDetails(Key_Preferences.FB_PULL_COUNT, String.valueOf(obj.getInt("Count")));
+				fromPage.setVisibility(View.VISIBLE);
+				fromPage.setText("Subscribed for pulling " + String.valueOf(obj.getInt("Count")) + " updates from " + obj.getString("FacebookPageName") + " Facebook Page");
+			}catch (JSONException e){
+				e.printStackTrace();
+				Util.toast("Uh oh. Something went wrong. Please try again", appContext);
+				checkBox.setChecked(false);
+			}
 		}
 		else{
+			BoostLog.d("Object:",  obj.toString());
 			Util.toast("Uh oh. Something went wrong. Please try again", appContext);
 			checkBox.setChecked(false);
 		}
@@ -77,7 +97,7 @@ public class FacebookFeedPullRegistrationAsyncTask extends AsyncTask<Void, Strin
 			if (!Util.isNullOrEmpty(response)) {
 
 
-				
+
 			}// end of if condition
 
 			// end of
@@ -88,7 +108,7 @@ public class FacebookFeedPullRegistrationAsyncTask extends AsyncTask<Void, Strin
 	}
 
 	public String getDataFromServer(String content, String requestMethod,
-			String serverUrl) {
+									String serverUrl) {
 		String response = "";
 		DataOutputStream outputStream = null;
 		try {
@@ -113,12 +133,13 @@ public class FacebookFeedPullRegistrationAsyncTask extends AsyncTask<Void, Strin
 			if (BytesToBeSent != null) {
 				outputStream.write(BytesToBeSent, 0, BytesToBeSent.length);
 			}
-			int responseCode = connection.getResponseCode();
+			responseCode = connection.getResponseCode();
 
 			responseMessage = connection.getResponseMessage();
 
 			if (responseCode == 200 || responseCode == 202) {
 				success = true;
+
 
 			}
 
@@ -168,6 +189,6 @@ public class FacebookFeedPullRegistrationAsyncTask extends AsyncTask<Void, Strin
 		}
 		return response;
 	}
-	
-	
+
+
 }

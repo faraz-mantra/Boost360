@@ -68,7 +68,7 @@ public class StoreFragmentTab extends Fragment {
     public void onResume() {
         super.onResume();
         MixPanelController.track(EventKeysWL.STORE_FRAGMENT, null);
-        HomeActivity.headerText.setText("STORE");
+        HomeActivity.headerText.setText("Store");
         bus.register(this);
     }
 

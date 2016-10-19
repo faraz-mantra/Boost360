@@ -126,6 +126,7 @@ public class MultipleImageUploadService extends IntentService{
                 .setSmallIcon(R.drawable.app_launcher2);
 
         mNotificationManager.notify(16, mBuilder.build());
+
         String response = "error";
         Log.e("Image filename", filename);
         Log.e("url", targetUrl);

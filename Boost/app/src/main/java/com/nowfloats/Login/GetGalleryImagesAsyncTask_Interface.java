@@ -84,7 +84,7 @@ public class GetGalleryImagesAsyncTask_Interface extends AsyncTask<Void,String, 
                                 Constants.storeSecondaryImages = new ArrayList<String>();
                                 if (len != 0) {
                                     for(int i =0 ; i < len ; i++){
-                                        Constants.storeSecondaryImages.add(array.getString(i));
+                                        Constants.storeSecondaryImages.add(0, array.getString(i));
                                     }
                                     Constants.storeActualSecondaryImages = Constants.storeSecondaryImages;
                                 }

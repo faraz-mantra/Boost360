@@ -118,7 +118,7 @@ public class Product_Gallery_Fragment extends Fragment{
             public void onClick(View v) {
                 MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_ADD, null);
                 Intent intent;
-                if(session.getWebTemplateType().equals("6")) {
+                if(/*session.getWebTemplateType().equals("6")*/false) {
                     intent = new Intent(activity, Product_Detail_Activity.class);
                     intent.putExtra("new", "");
                 }else {
@@ -134,7 +134,7 @@ public class Product_Gallery_Fragment extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent;
-                if(session.getWebTemplateType().equals("6")) {
+                if(/*session.getWebTemplateType().equals("6")*/false) {
                     intent = new Intent(activity, Product_Detail_Activity.class);
 //                Bundle bundle = new Bundle();
 //                bundle.putParcelable("product", productItemModelList.get(position));
@@ -216,8 +216,8 @@ public class Product_Gallery_Fragment extends Fragment{
     public void getProductList(ArrayList<ProductListModel> data){
         progressLayout.setVisibility(View.GONE);
         if (data!=null){
-            Log.i("","PRoduct List Size--"+data.size());
-            Log.d("Product Id", data.get(0)._id);
+            //Log.i("","PRoduct List Size--"+data.size());
+            //Log.d("Product Id", data.get(0)._id);
 
             productItemModelList = data;
             adapter = new ProductGalleryAdapter(activity, currencyValue);

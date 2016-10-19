@@ -27,6 +27,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -45,6 +46,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.freshdesk.mobihelp.Mobihelp;
 import com.freshdesk.mobihelp.MobihelpConfig;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.mixpanel.android.mpmetrics.GCMReceiver;
 import com.nineoldandroids.animation.Animator;
 import com.nowfloats.Analytics_Screen.SearchQueries;
@@ -62,6 +64,7 @@ import com.nowfloats.CustomPage.CustomPageDeleteInterface;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
 import com.nowfloats.Image_Gallery.Image_Gallery_Fragment;
+import com.nowfloats.Login.Login_Interface;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.Ria_Register;
 import com.nowfloats.Login.UserSessionManager;
@@ -69,8 +72,10 @@ import com.nowfloats.NavigationDrawer.API.App_Update_Async_Task;
 import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
 import com.nowfloats.NavigationDrawer.API.KitsuneApi;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
+import com.nowfloats.NavigationDrawer.Chat.ChatRegResponse;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
+import com.nowfloats.RiaFCM.RiaFirebaseMessagingService;
 import com.nowfloats.SiteAppearance.SiteAppearanceFragment;
 import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.Model.ActiveWidget;
@@ -104,8 +109,13 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class HomeActivity extends AppCompatActivity implements  SidePanelFragment.OnItemClickListener
@@ -174,7 +184,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
 
         BoostLog.d(TAG, "In on CreateView");
-        deepLinkUrl = GCMReceiver.deeplinkUrl;
+        deepLinkUrl = RiaFirebaseMessagingService.deepLinkUrl;
         session = new UserSessionManager(getApplicationContext(),HomeActivity.this);
         FPID = session.getFPID();
         new Thread(new Runnable() {
@@ -368,7 +378,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.mainFrame, homeFragment, "homeFragment");
         ft.commit();
-        DeepLinkPage(deepLinkUrl);
+        //DeepLinkPage(deepLinkUrl);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -394,19 +404,62 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 }
             }
         });
+        //registerChat();
         checkExpire();
+
+        Intent intent = getIntent();
+        if(intent!=null && intent.getData()!=null){
+            String action = intent.getAction();
+            String data = intent.getDataString();
+            BoostLog.d("Data: ", data.toString() + "  "+  action);
+            if(session.checkLogin()){
+                deepLink(data.substring(data.lastIndexOf("/") + 1));
+            }else {
+                finish();
+            }
+        }
     }
 
     public static void setGCMId(String id){
         new Ria_Register(activity,Constants.clientId,"ANDROID",id);
-        registerChat(FPID,id);
+        //registerChat(FPID,id);
         /*SdkConfig config = new SdkConfig();
         config.setGcmSenderId(id);
         config.setAnalyticsTrackingAllowedState(true);
         config.setDebuggingStateAllowed(true);*/
     }
 
-    public static void registerChat(String fpid,String reg) {
+    public static void registerChat(String userId) {
+        BoostLog.d("HomeActivity", "This is getting Called");
+        //String reg = session.getFPDetails(Key_Preferences.FCM_TOKEN);
+        try {
+            final HashMap<String, String> params = new HashMap<String, String>();
+            params.put("Channel", FirebaseInstanceId.getInstance().getToken());
+            params.put("UserId", userId);
+            params.put("DeviceType", "ANDROID");
+            params.put("clientId", Constants.clientId);
+
+
+            Log.i("Ria_Register GCM id--", "API call Started");
+
+            Login_Interface emailValidation = Constants.restAdapter.create(Login_Interface.class);
+            emailValidation.post_RegisterRia(params,new Callback<String>() {
+                @Override
+                public void success(String s, Response response) {
+                    Log.i("GCM local ","reg success" + params.toString());
+                    Log.d("Response","Response : "+s);
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Log.i("GCM local ","reg FAILed" + params.toString());
+                }
+            });
+        } catch (Exception e) {
+            Log.i("Ria_Register ", "API Exception:" + e);
+            e.printStackTrace();
+        }
+        //new Ria_Register(activity,Constants.clientId,"ANDROID",reg);
         /*try{
             Login_Interface chat = Constants.chatRestAdapter.create(Login_Interface.class);
             chat.chat(fpid,reg,new Callback<ChatRegResponse>() {
@@ -778,7 +831,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
         plusAddButton.setVisibility(View.GONE);
         if(Constants.GCM_Msg){
-            DeepLinkPage(GCMReceiver.deeplinkUrl);
+            DeepLinkPage(RiaFirebaseMessagingService.deepLinkUrl);
+            Constants.GCM_Msg = false;
         }
 
     }
@@ -865,9 +919,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     protected void onStart() {
         super.onStart();
         BoostLog.d("HomeActivity","onStart");
-        if(Constants.GCM_Msg){
-            DeepLinkPage(GCMReceiver.deeplinkUrl);
-        }
         isExpiredCheck = true;
     }
 

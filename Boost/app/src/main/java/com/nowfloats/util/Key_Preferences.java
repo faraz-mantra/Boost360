@@ -75,4 +75,10 @@ public class Key_Preferences {
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
     public static final String MAIN_PRIMARY_CONTACT_NUM = "mainPrimaryContactNum";
+
+    public static final String FB_PULL_ENABLED = "fb_pull_enabled";
+    public static final String FB_PULL_PAGE_NAME = "fb_pull_page_name";
+    public static final String FB_PULL_COUNT = "fb_pull_count";
+
+    public static final String FCM_TOKEN = "fcm_token";
 }

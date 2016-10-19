@@ -136,4 +136,8 @@ dependencies {
     compile 'com.github.darsh2:MultipleImageSelect:v0.0.4'
     compile 'com.azoft.carousellayoutmanager:carousel:1.1.5'
     compile 'org.honorato.multistatetogglebutton:multistatetogglebutton:0.2.2'
+    compile 'com.google.firebase:firebase-messaging:9.4.0'
+    compile 'me.biubiubiu.justifytext:library:1.1'
 }
+
+apply plugin: 'com.google.gms.google-services'

@@ -10,9 +10,16 @@
     <include
         android:id="@+id/tool_bar_product_detail"
         layout="@layout/tool_bar_card" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="300dp"
         android:orientation="vertical"
         android:layout_marginBottom="10dp"
         app:cardBackgroundColor="#ECECEC"
@@ -22,7 +29,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_product_img"
             android:layout_width="match_parent"
-            android:layout_height="170dp">
+            android:layout_height="290dp">
 
         </android.support.v7.widget.RecyclerView>
 
@@ -39,9 +46,7 @@
         android:background="@drawable/button_bg"
         android:layout_gravity="center_horizontal"/>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+
 
         <LinearLayout
             android:id="@+id/productLayout"
@@ -287,5 +292,8 @@
                 tools:ignore="MissingPrefix" />
 
         </LinearLayout>
+
+
+    </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -21,6 +21,7 @@
             android:textColor="@color/white"
             android:layout_weight="1"
             android:textSize="18sp"
+            android:textStyle="bold"
             android:singleLine="true"
             android:lines="1"
             android:layout_marginRight="5dp"

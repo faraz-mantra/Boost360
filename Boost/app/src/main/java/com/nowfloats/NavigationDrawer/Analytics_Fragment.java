@@ -35,7 +35,7 @@ public class Analytics_Fragment extends Fragment {
     View rootView = null;
     static public TextView visitCount,subscriberCount,searchQueriesCount;
     private int noOfSearchQueries = 0;
-    public static ProgressBar visits_progressBar,subscriber_progress;
+    public static ProgressBar visits_progressBar,subscriber_progress, search_query_progress;
     UserSessionManager session;
 
     @Override
@@ -58,8 +58,8 @@ public class Analytics_Fragment extends Fragment {
         session = new UserSessionManager(getActivity(),getActivity());
 //        if(Util.isNullOrEmpty(session.getVisitorsCount()) || Util.isNullOrEmpty(session.getSubcribersCount())){
         try {
-            GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(getActivity(), session);
-            visit_subcribersCountAsyncTask.execute();
+            //GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(getActivity(), session);
+            //visit_subcribersCountAsyncTask.execute();
         }catch(Exception e){e.printStackTrace();}
 //        }
     }
@@ -116,10 +116,14 @@ public class Analytics_Fragment extends Fragment {
         visits_progressBar.setVisibility(View.VISIBLE);
         subscriber_progress = (ProgressBar) rootView.findViewById(R.id.subscriber_progressBar);
         subscriber_progress.setVisibility(View.VISIBLE);
+        search_query_progress = (ProgressBar) rootView.findViewById(R.id.search_query_progressBar);
+        search_query_progress.setVisibility(View.VISIBLE);
 
 
         String visittotal  = session.getVisitorsCount();
         String subscribetotal  = session.getSubcribersCount();
+        String searchQueryCount = session.getSearchCount();
+        String enquiryTotal = session.getEnquiryCount();
 //        String Str_noOfSearchQueries = "";
 
         try {
@@ -150,6 +154,14 @@ public class Analytics_Fragment extends Fragment {
         }else{
             subscriber_progress.setVisibility(View.VISIBLE);
             subscriberCount.setVisibility(View.GONE);
+        }
+        if (searchQueryCount!=null && searchQueryCount.trim().length()>0){
+            search_query_progress.setVisibility(View.GONE);
+            searchQueriesCount.setVisibility(View.VISIBLE);
+            searchQueriesCount.setText(searchQueryCount);
+        }else{
+            search_query_progress.setVisibility(View.VISIBLE);
+            searchQueriesCount.setVisibility(View.GONE);
         }
         Log.i("Visits",""+visittotal);
         Log.i("Subscribes",""+subscribetotal);

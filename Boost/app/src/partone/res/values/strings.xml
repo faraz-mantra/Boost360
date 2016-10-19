@@ -77,7 +77,7 @@
     <string name="side_panel_row_three">Business Enquiries</string>
     <string name="side_panel_row_four">Photo Gallery</string>
     <string name="side_panel_row_five">Settings</string>
-    <string name="setting_change_pwd">Change password</string>
+    <string name="setting_change_pwd">Change Password</string>
     <string name="setting_feedback">Feedback</string>
     <string name="setting_rate_us_on_play_store">Rate us on Play Store</string>
     <string name="Setting_like_us_on_facebook">Like us on Facebook</string>
@@ -155,11 +155,6 @@
     <string name="email_text2">Add email</string>
     <string name="postUpdate_text2">Message regularly and relevantly</string>
     <string name="share_text2">Promote your website</string>
-
-
-
-
-
 
     <string-array name="CountryCodes">
         <item>93,AF</item>
@@ -369,7 +364,7 @@
         <item>260,ZM</item>
         <item>263,ZW</item>
     </string-array>
-    <string name="business_enquiries_title">Business Inquiries</string>
+    <string name="business_enquiries_title">Business Enquiries</string>
     <string name="business_profile_title">Business Profile</string>
     <string name="tag_for_partners">.nowfloats.com</string>
     <string name="title_activity_splash_screen_">Boost</string>

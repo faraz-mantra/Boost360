@@ -370,7 +370,7 @@
     </string-array>
 
 
-    <string name="business_enquiries_title">Enquiries</string>
+    <string name="business_enquiries_title">Business Enquiries</string>
     <string name="double_quotes"> &quot; </string>
     <string name="business_profile_title">Profile</string>
     <string name="tag_for_partners">.nowfloats.com</string>
@@ -429,8 +429,8 @@
 
     <string name="site_appearance_title">Your business site awaits a new look.</string>
     <string name="site_appearance_text">Now, enhance your customer\'s browsing experience by signing up for a new dynamic interface for your site,
-free exclusively for you. It will help your customers spend more time on your site and let them do more of what your business actually needs.</string>
-    <string name="site_appearance_warn">If you don\'t like the new look, you can roll back to the original look whenever you want.</string>
+free exclusively for you.\n\nIt will help your customers spend more time on your site and let them do more of what your business actually needs.\n</string>
+    <string name="site_appearance_warn">If you don\'t like the new look, you can roll back to the original look whenever you want.\n</string>
 
     <string-array name="kitsune_feedback">
         <item>I prefer the old theme.</item>
@@ -440,6 +440,6 @@ free exclusively for you. It will help your customers spend more time on your si
     </string-array>
     <string name="conv_sa_title">Hope you\'re enjoying the new look</string>
     <string name="conv_sa_body">Your business website is optimised for popular search engines and multiplies that with the geographic location of your business.
-Keep on updating your website with relevant brand or product messaging, and see the magic of your website rising in search rankings and receiving more visitors.</string>
+        \n\nKeep on updating your website with relevant brand or product messaging, and see the magic of your website rising in search rankings and receiving more visitors.\n</string>
 
 </resources>

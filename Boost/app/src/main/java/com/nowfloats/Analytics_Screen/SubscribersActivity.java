@@ -126,7 +126,9 @@ public class SubscribersActivity extends AppCompatActivity {
                 JSONArray arr = new JSONArray(resp);
                 for(int i=0; i<arr.length(); i++){
                     JSONObject obj = arr.getJSONObject(i);
-                    subscribers.add(obj.getString("UserMobile"));
+                    if(obj.getString("SubscriptionStatus").equals("20")) {
+                        subscribers.add(obj.getString("UserMobile"));
+                    }
                 }
             }catch (JSONException e){
                 e.printStackTrace();

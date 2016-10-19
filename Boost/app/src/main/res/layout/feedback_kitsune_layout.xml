@@ -19,7 +19,7 @@
     <com.nowfloats.CustomWidget.roboto_lt_24_212121
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="10dp"
         android:text="That's OK. It happens. But could you tell us why?"/>
 
     <LinearLayout
@@ -34,12 +34,13 @@
             <CheckBox
                 android:id="@+id/cb_old_theme"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:theme="@style/MyCheckBox"/>
             <com.nowfloats.CustomWidget.roboto_lt_24_212121
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center_vertical"
                 android:text="I prefer the old theme."/>
         </LinearLayout>
         <LinearLayout
@@ -49,12 +50,13 @@
             <CheckBox
                 android:id="@+id/cb_customer_old_theme"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:theme="@style/MyCheckBox"/>
             <com.nowfloats.CustomWidget.roboto_lt_24_212121
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center_vertical"
                 android:text="My customers prefer the old theme."/>
         </LinearLayout>
         <LinearLayout
@@ -64,12 +66,13 @@
             <CheckBox
                 android:id="@+id/cb_widgets_old_theme"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:theme="@style/MyCheckBox"/>
             <com.nowfloats.CustomWidget.roboto_lt_24_212121
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center_vertical"
                 android:text="I can't see some of the widgets that were there on the old theme."/>
         </LinearLayout>
         <LinearLayout
@@ -79,12 +82,13 @@
             <CheckBox
                 android:id="@+id/cb_not_paid_for"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:theme="@style/MyCheckBox"/>
             <com.nowfloats.CustomWidget.roboto_lt_24_212121
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center_vertical"
                 android:text="It's not what I paid for."/>
         </LinearLayout>
         <LinearLayout
@@ -94,12 +98,13 @@
             <CheckBox
                 android:id="@+id/cb_other_reasons"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:theme="@style/MyCheckBox"/>
             <com.nowfloats.CustomWidget.roboto_lt_24_212121
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center_vertical"
                 android:text="Other reasons (please type)..."/>
         </LinearLayout>
 

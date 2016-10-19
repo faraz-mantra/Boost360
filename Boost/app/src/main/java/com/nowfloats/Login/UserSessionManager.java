@@ -80,6 +80,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     private String KEY_Visit_Count = "visitCount";
     private String KEY_Subcribers_Count = "subcribersCount";
     private String KEY_Search_Count = "SearchQueryCount";
+    private String KEY_Enq_Count = "EnquiryCount";
     private String KEY_LS = "local_store";
     private String KEY_website = "website_share";
     private String KEY_FP_EMAIL = "fpemail";
@@ -189,6 +190,15 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public String getSearchCount()
     {
         return pref.getString(KEY_Search_Count,null);
+    }
+
+    public void setEnquiryCount(String count){
+        editor.putString(KEY_Enq_Count , count);
+        editor.commit();
+    }
+
+    public String getEnquiryCount(){
+        return pref.getString(KEY_Enq_Count,null);
     }
 
 
@@ -822,8 +832,8 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 HomeActivity.StorebizFloats= null;
                 HomeActivity.StorebizFloats= new ArrayList<FloatsMessageModel>();
                 ChatFragment.chatModels = new ArrayList<ChatModel>();
-                Analytics_Fragment.subscriberCount.setText("0");
-                Analytics_Fragment.visitCount.setText("0");
+                //Analytics_Fragment.subscriberCount.setText("0");
+                //Analytics_Fragment.visitCount.setText("0");
 
                 MixPanelController.track("LogoutSuccess", null);
 
