@@ -65,7 +65,8 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.app_launcher2)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), com.mixpanel.android.R.drawable.app_launcher))
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),
+                        com.mixpanel.android.R.drawable.app_launcher))
                 .setContentText(message.get("mp_message"))
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)

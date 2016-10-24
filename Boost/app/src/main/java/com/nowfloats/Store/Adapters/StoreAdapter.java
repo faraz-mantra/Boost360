@@ -61,7 +61,9 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
     public StoreAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         displayView = mInflater.inflate(R.layout.store_list_design, parent, false);
         ViewHolder viewHolder = new ViewHolder(displayView);
+        //class str = StoreAdapter.class;
         return viewHolder;
+
     }
 
     @Override

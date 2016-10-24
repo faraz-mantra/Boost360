@@ -31,6 +31,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
@@ -710,6 +711,8 @@ public class Create_Message_Activity extends AppCompatActivity {
             // display an error message
             String errorMessage = getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(activity,errorMessage);
+        } catch (SecurityException e){
+            Toast.makeText(this, "Please eanble camera permission in settings to use your camera", Toast.LENGTH_SHORT);
         }
     }
 

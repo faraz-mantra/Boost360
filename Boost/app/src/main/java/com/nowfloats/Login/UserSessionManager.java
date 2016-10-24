@@ -81,6 +81,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     private String KEY_Subcribers_Count = "subcribersCount";
     private String KEY_Search_Count = "SearchQueryCount";
     private String KEY_Enq_Count = "EnquiryCount";
+    private String KEY_LATEST_ENQ_COUNT = "LatestEnquiryCount";
     private String KEY_LS = "local_store";
     private String KEY_website = "website_share";
     private String KEY_FP_EMAIL = "fpemail";
@@ -199,6 +200,15 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
     public String getEnquiryCount(){
         return pref.getString(KEY_Enq_Count,null);
+    }
+
+    public void setLatestEnqCount(String count){
+        editor.putString(KEY_LATEST_ENQ_COUNT , count);
+        editor.commit();
+    }
+
+    public String getLatestEnqCount(){
+        return pref.getString(KEY_LATEST_ENQ_COUNT,"0");
     }
 
 

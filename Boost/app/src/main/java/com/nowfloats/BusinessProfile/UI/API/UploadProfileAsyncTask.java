@@ -124,6 +124,8 @@ public class UploadProfileAsyncTask extends AsyncTask<Void, String, String> {
                 }
             }
             Methods.showSnackBarPositive(appcontext,"Changes are successfully updated");
+			appcontext.finish();
+			appcontext.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         }
             catch (Exception e) {
                 // TODO Auto-generated catch block

@@ -839,12 +839,16 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
             String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
             if (paymentState.equals("-1")) {
-                if (Integer.parseInt(paymentLevel) > 10) {
-                    //LH expire
-                    renewPlanDialog(LIGHT_HOUSE_EXPIRE);
-                } else if (Integer.parseInt(paymentLevel) == 0 ) {
-                    //Demo expire
-                    renewPlanDialog(DEMO_EXPIRE);
+                try {
+                    if (Integer.parseInt(paymentLevel) > 10) {
+                        //LH expire
+                        renewPlanDialog(LIGHT_HOUSE_EXPIRE);
+                    } else if (Integer.parseInt(paymentLevel) == 0) {
+                        //Demo expire
+                        renewPlanDialog(DEMO_EXPIRE);
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
             }
             else {
@@ -903,11 +907,15 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         boolean flag = false;
         String strExpiryTime = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EXPIRY_DATE);
         long expiryTime = -1;
-        if(strExpiryTime!=null){
-            expiryTime = Long.parseLong(strExpiryTime.split("\\(")[1].split("\\)")[0]);
-        }
-        if(expiryTime!=-1 && ((expiryTime - System.currentTimeMillis())/86400000>=180) && !session.getWebTemplateType().equals("6")){
-            flag = true;
+        try {
+            if (strExpiryTime != null) {
+                expiryTime = Long.parseLong(strExpiryTime.split("\\(")[1].split("\\)")[0]);
+            }
+            if (expiryTime != -1 && ((expiryTime - System.currentTimeMillis()) / 86400000 >= 180) && !session.getWebTemplateType().equals("6")) {
+                flag = true;
+            }
+        }catch (Exception e){
+            flag = false;
         }
         return flag;
     }

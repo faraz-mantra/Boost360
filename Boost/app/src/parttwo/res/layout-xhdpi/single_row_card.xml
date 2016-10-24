@@ -186,8 +186,9 @@
                     android:scaleType="fitXY"
                     android:layout_height="@dimen/icon_size"
                     android:padding="5dp"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:src="@drawable/lock_widget"
+                    android:layout_alignParentRight="true"
                     android:layout_marginLeft="@dimen/icon_left_margin"
                     android:layout_marginRight="@dimen/icon_right_margin" />
                 <TextView
@@ -195,9 +196,12 @@
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:background="@drawable/alert_count_bg"
+                    android:layout_centerVertical="true"
                     android:padding="2dp"
                     android:text=""
-                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:layout_marginRight="32dp"
+                    android:layout_alignParentRight="true"
                     android:textSize="10sp"
                     android:visibility="gone"
                     android:textColor="@color/white"
@@ -409,6 +413,32 @@
                 android:textSize="@dimen/cell_text_size"
                 android:textColor="@color/cell_text_color"
                 android:text="@string/side_panel_row_six" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <!--<ImageView
+                    android:id="@+id/iv_write_to_ria_info"
+                    android:layout_width="25dp"
+                    android:adjustViewBounds="true"
+                    android:layout_height="wrap_content"
+                    android:tint="@color/primaryColor"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="35dp"
+                    android:src="@drawable/ic_info_outline_white_24dp"/>-->
+                <TextView
+                    android:id="@+id/tv_write_to_ria_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/write_to_ria_info_bg"
+                    android:text="i"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="35dp"
+                    android:textSize="16sp"
+                    android:textColor="#ffffff"
+                    android:gravity="center"
+                    android:textStyle="bold"/>
+
+            </RelativeLayout>
 
         </LinearLayout>
 

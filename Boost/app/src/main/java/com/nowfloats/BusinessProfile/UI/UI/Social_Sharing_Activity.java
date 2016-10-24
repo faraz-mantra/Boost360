@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -72,13 +74,14 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
     UserSessionManager session;
 
 
-    TextView connectTextView, autoPostTextView, topFeatureTextView;
+    TextView connectTextView, topFeatureTextView;
     final Facebook facebook = new Facebook(Constants.FACEBOOK_API_KEY);
     private SharedPreferences pref = null;
     SharedPreferences.Editor prefsEditor;
     private ImageView facebookHome;
     private ImageView facebookPage;
     private ImageView twitter;
+    private ImageView ivFbPageAutoPull;
     private TextView facebookHomeStatus, facebookPageStatus, twitterStatus, fbPullStatus;
     private CheckBox facebookHomeCheckBox, facebookPageCheckBox, twitterCheckBox;
     private CheckBox facebookautopost;
@@ -88,6 +91,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
     private boolean numberOfUpdatesSelected = false;
     private Activity activity;
     private MaterialDialog materialProgress;
+    private ImageView ivHelpTool;
 
     //Rahul Twitter
 
@@ -102,6 +106,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
     private SharedPreferences mSharedPreferences = null;
     private boolean called = false;
     private ProgressDialog pd = null;
+    private int mNewPosition =-1;
 
 
     //Rahul Twitter
@@ -155,13 +160,14 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         facebookHome = (ImageView) findViewById(R.id.social_sharing_facebook_profile_image);
         facebookPage = (ImageView) findViewById(R.id.social_sharing_facebook_page_image);
         twitter = (ImageView) findViewById(R.id.social_sharing_twitter_image);
+        ivFbPageAutoPull = (ImageView) findViewById(R.id.auto_pull_facebook_page_image);
 
         facebookHomeStatus = (TextView) findViewById(R.id.social_sharing_facebook_profile_flag_text);
         facebookPageStatus = (TextView) findViewById(R.id.social_sharing_facebook_page_flag_text);
         twitterStatus = (TextView) findViewById(R.id.social_sharing_twitter_flag_text);
         fbPullStatus = (TextView) findViewById(R.id.tv_fb_page_name);
         connectTextView = (TextView) findViewById(R.id.connectTextView);
-        autoPostTextView = (TextView) findViewById(R.id.autoPostTextView);
+        //autoPostTextView = (TextView) findViewById(R.id.autoPostTextView);
         topFeatureTextView = (TextView) findViewById(R.id.topFeatureText);
 
         facebookHomeStatus.setTypeface(myCustomFont);
@@ -175,7 +181,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         facebookautopost = (CheckBox) findViewById(R.id.social_sharing_facebook_page_auto_post);
 
         connectTextView.setTypeface(myCustomFont_Medium);
-        autoPostTextView.setTypeface(myCustomFont);
+        //autoPostTextView.setTypeface(myCustomFont);
         topFeatureTextView.setTypeface(myCustomFont_Medium);
 
 
@@ -278,7 +284,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    FacebookFeedPullAutoPublishAsyncTask fap = new FacebookFeedPullAutoPublishAsyncTask(Social_Sharing_Activity.this, obj, false, fbPullStatus, session);
+                    FacebookFeedPullAutoPublishAsyncTask fap = new FacebookFeedPullAutoPublishAsyncTask(Social_Sharing_Activity.this, obj, false, fbPullStatus, ivFbPageAutoPull, session);
                     fap.execute();
                 }
 
@@ -327,15 +333,14 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 }
             }
         });
-
-        /*findViewById(R.id.iv_help_nfx).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.iv_help_tool).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String message = "You need to have an account on the social platforms you select.";
-                showDialog(message);
+                String message = "Updates will reflect on your website one hour after getting posted on the Facebook Page. Please <u>do not</u> select this option if you are using social share from your website.";
+                showDialog("Tip!", message);
             }
         });
-        findViewById(R.id.iv_help_auto_pull).setOnClickListener(new View.OnClickListener() {
+        /*findViewById(R.id.iv_help_auto_pull).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String message = "Updates will reflect on your website one hour after getting posted on the Facebook Page. Do not select this option if you are using social share from your website.";
@@ -380,7 +385,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            FacebookFeedPullRegistrationAsyncTask fap = new FacebookFeedPullRegistrationAsyncTask(Social_Sharing_Activity.this, obj, fbPullStatus, facebookautopost, session);
+            FacebookFeedPullRegistrationAsyncTask fap = new FacebookFeedPullRegistrationAsyncTask(Social_Sharing_Activity.this, obj, fbPullStatus, ivFbPageAutoPull, facebookautopost, session);
             fap.execute();
         }else {
             facebookautopost.setChecked(false);
@@ -391,9 +396,11 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
     private void selectNumberUpdatesDialog(final String name) {
         final String[] array = getResources().getStringArray(R.array.post_updates);
         new MaterialDialog.Builder(Social_Sharing_Activity.this)
-                .title(getString(R.string.post_on_facebook))
+                .title(getString(R.string.post_on_website))
                 .items(array)
                 .negativeText(getString(R.string.cancel))
+                .cancelable(false)
+                .positiveText(getString(R.string.ok))
                 .negativeColorRes(R.color.light_gray)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
@@ -401,12 +408,30 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                         super.onNegative(dialog);
                         dialog.dismiss();
                     }
+
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        int position = dialog.getSelectedIndex();
+                        if (position == 0) {
+                            numberOfUpdates = 5;
+                            numberOfUpdatesSelected = true;
+                        }else if (position == 1) {
+                            numberOfUpdates = 10;
+                            numberOfUpdatesSelected = true;
+                        }else{
+                            // == 0 ? 5 : dialog.getSelectedIndex() ==1 ? 10 : 5;
+                            Toast.makeText(Social_Sharing_Activity.this, "Please select any Facebook page", Toast.LENGTH_SHORT).show();
+                            numberOfUpdatesSelected = false;
+                        }
+                        autoPostSelectListener(name);
+                        dialog.dismiss();
+                    }
                 })
                 .widgetColorRes(R.color.primaryColor)
-                .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int position, CharSequence text) {
-                        numberOfUpdatesSelected = true;
+
                         //session.storeShowUpdates(false);
                         if (position == 0) {
                             numberOfUpdates = 5;
@@ -415,8 +440,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                         if (position == 1) {
                             numberOfUpdates = 10;
                         }
-                        autoPostSelectListener(name);
-                        dialog.dismiss();
+                        //dialog.dismiss();
                         return true;
                     }
                 }).show();
@@ -443,6 +467,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 long userID = accessToken.getUserId();
                 final User user = mTwitter.showUser(userID);
                 String username = user.getName();
+                twitterStatus.setVisibility(View.VISIBLE);
                 twitterStatus.setText(username);
                 saveTwitterInformation(accessToken);
             } catch (Exception e) {
@@ -498,6 +523,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                         } catch (Exception e1) {
                             e1.printStackTrace();
                         } finally {
+
                             Social_Sharing_Activity.this.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -508,27 +534,69 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                                                 .items(array)
                                                 .widgetColorRes(R.color.primaryColor)
                                                 .cancelable(false)
-                                                .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
+                                                .positiveText("Ok")
+                                                .negativeText("Cancel")
+                                                .negativeColorRes(R.color.light_gray)
+                                                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                                                     @Override
                                                     public boolean onSelection(MaterialDialog dialog, View view, int position, CharSequence text) {
-                                                        String strName = array[position];
-                                                        String FACEBOOK_PAGE_ID = null;
-                                                        String page_access_token = null;
-                                                        try {
-                                                            FACEBOOK_PAGE_ID = (String) ((JSONObject) Constants.FbPageList.get(position)).get("id");
-                                                            page_access_token = ((String) ((JSONObject) Constants.FbPageList.get(position)).get("access_token"));
-                                                        }catch (JSONException e){
 
-                                                        }
-                                                        if(from==FROM_FB_PAGE && !Util.isNullOrEmpty(FACEBOOK_PAGE_ID) && !Util.isNullOrEmpty(page_access_token)) {
-                                                            session.storePageAccessToken(page_access_token);
-                                                            session.storeFacebookPageID(FACEBOOK_PAGE_ID);
-                                                            pageSeleted(position, strName, session.getFacebookPageID(), session.getPageAccessToken());
-                                                        }else if(from==FROM_AUTOPOST){
-                                                            selectNumberUpdatesDialog(strName);
-                                                        }
-                                                        dialog.dismiss();
+                                                        //dialog.dismiss();
+                                                        mNewPosition = position;
                                                         return true;
+                                                    }
+                                                })
+                                                .callback(new MaterialDialog.ButtonCallback() {
+                                                    @Override
+                                                    public void onPositive(MaterialDialog dialog) {
+                                                        mNewPosition = dialog.getSelectedIndex();
+                                                        if(mNewPosition == -1){
+                                                            Toast.makeText(Social_Sharing_Activity.this, "Please select any Facebook page", Toast.LENGTH_SHORT).show();
+                                                            if(from==FROM_FB_PAGE){
+                                                                facebookPageCheckBox.setChecked(false);
+                                                            }else if(from == FROM_AUTOPOST){
+                                                                facebookautopost.setChecked(false);
+                                                            }
+                                                        }else {
+                                                            String strName = array[mNewPosition];
+                                                            String FACEBOOK_PAGE_ID = null;
+                                                            String page_access_token = null;
+                                                            try {
+                                                                FACEBOOK_PAGE_ID = (String) ((JSONObject) Constants.FbPageList.get(mNewPosition)).get("id");
+                                                                page_access_token = ((String) ((JSONObject) Constants.FbPageList.get(mNewPosition)).get("access_token"));
+                                                            } catch (JSONException e) {
+
+                                                            }
+                                                            if (from == FROM_FB_PAGE && !Util.isNullOrEmpty(FACEBOOK_PAGE_ID) && !Util.isNullOrEmpty(page_access_token)) {
+                                                                session.storePageAccessToken(page_access_token);
+                                                                session.storeFacebookPageID(FACEBOOK_PAGE_ID);
+                                                                if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME)) && !strName.equals(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))) {
+                                                                    pageSeleted(mNewPosition, strName, session.getFacebookPageID(), session.getPageAccessToken());
+                                                                } else if (Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))) {
+                                                                    pageSeleted(mNewPosition, strName, session.getFacebookPageID(), session.getPageAccessToken());
+                                                                } else {
+                                                                    facebookPageCheckBox.setChecked(false);
+                                                                    showDialog("Alert", "You cannot select the same Facebook Page to share your updates. This will lead to an indefinite loop of updates on your website and Facebook Page.");
+                                                                }
+                                                                //pageSeleted(position, strName, session.getFacebookPageID(), session.getPageAccessToken());
+                                                            } else if (from == FROM_AUTOPOST) {
+                                                                if (!Util.isNullOrEmpty(session.getFacebookPage()) && !strName.equals(session.getFacebookPage())) {
+                                                                    selectNumberUpdatesDialog(strName);
+                                                                } else if (Util.isNullOrEmpty(session.getFacebookPage())) {
+                                                                    selectNumberUpdatesDialog(strName);
+                                                                } else {
+                                                                    //Toast.makeText(getApplicationContext(), "You can't post and pull from the same Facebook page", Toast.LENGTH_SHORT).show();
+                                                                    facebookautopost.setChecked(false);
+                                                                    showDialog("Alert", "You cannot select the same Facebook Page to auto-update your website. This will lead to an indefinite loop of updates on your website and Facebook Page.");
+                                                                }
+                                                            }
+                                                            dialog.dismiss();
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onNegative(MaterialDialog dialog) {
+                                                        dialog.dismiss();
                                                     }
                                                 }).show();
                                     } else {
@@ -809,8 +877,10 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
         if(session.getFPDetails(Key_Preferences.FB_PULL_ENABLED).equals("true")){
             facebookautopost.setChecked(true);
+            ivFbPageAutoPull.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
             fbPullStatus.setVisibility(View.VISIBLE);
-            fbPullStatus.setText(getString(R.string.subscribe_for_pulling) + session.getFPDetails(Key_Preferences.FB_PULL_COUNT) + getString(R.string.update_from) + session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME) +getString(R.string.facebook_page));
+
+            fbPullStatus.setText(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME));
         }
 
 
@@ -874,6 +944,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         if (!Util.isNullOrEmpty(session.getFacebookName())) {
             facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
             facebookHomeCheckBox.setChecked(true);
+            facebookHomeStatus.setVisibility(View.VISIBLE);
             facebookHomeStatus.setText(session.getFacebookName());
 
         }
@@ -881,6 +952,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
             facebookPageCheckBox.setChecked(true);
             String text = session.getFacebookPage();
+            facebookPageStatus.setVisibility(View.VISIBLE);
             facebookPageStatus.setText(session.getFacebookPage());
         }
         if (!isAuthenticated()) {
@@ -888,10 +960,12 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             // String fbUName = pref.getString(TwitterConstants.PREF_USER_NAME, "");
             twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
             twitterCheckBox.setChecked(false);
-            twitterStatus.setText(getString(R.string.disconnected));
+            twitterStatus.setVisibility(View.GONE);
+            //twitterStatus.setText("Disconnected");
         } else {
             twitterCheckBox.setChecked(true);
             String twitterName = mSharedPreferences.getString(TwitterConstants.PREF_USER_NAME, "");
+            twitterStatus.setVisibility(View.VISIBLE);
             twitterStatus.setText("@" + twitterName);
             twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
         }
@@ -1014,17 +1088,22 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
     }
 
-    private void showDialog(String message){
+    private void showDialog(String headText, String message){
         AlertDialog dialog = null;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(message);
-        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+        builder.setMessage(Html.fromHtml(message));
+        builder.setTitle(headText);
+        builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
-        builder.show();
+        dialog =builder.show();
+        TextView textView = (TextView) dialog.findViewById(android.R.id.message);
+        Typeface face=Typeface.createFromAsset(getAssets(),"Roboto-Light.ttf");
+        textView.setTypeface(face);
+        textView.setTextColor(Color.parseColor("#808080"));
 
     }
 
@@ -1049,6 +1128,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             case FBTYPE:
                 facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
                 facebookHomeCheckBox.setChecked(true);
+                facebookHomeStatus.setVisibility(View.VISIBLE);
                 facebookHomeStatus.setText(name);
                 Constants.fbShareEnabled = true;
                 prefsEditor = pref.edit();
@@ -1057,6 +1137,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 break;
             case FBPAGETYPE:
                 facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
+                facebookPageStatus.setVisibility(View.VISIBLE);
                 facebookPageStatus.setText("" + name);
                 facebookPageCheckBox.setChecked(true);
                 break;
@@ -1065,6 +1146,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 SharedPreferences.Editor e = mSharedPreferences.edit();
                 e.putBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, true);
                 e.commit();
+                twitterStatus.setVisibility(View.VISIBLE);
                 twitterStatus.setText("@" + name);
                 twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
                 //twitterStatus.setText("Connected");
@@ -1080,7 +1162,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 session.storeFacebookPageID("");
                 session.storeFacebookAccessToken("");
                 facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebookpage_icon_inactive));
-                facebookPageStatus.setText("Disconnected");
+                facebookPageStatus.setVisibility(View.GONE);
+                //facebookPageStatus.setText("Disconnected");
                 prefsEditor = pref.edit();
                 prefsEditor.putBoolean("fbPageShareEnabled", false);
                 break;
@@ -1090,13 +1173,15 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 session.storeFacebookName("");
                 session.storeFacebookAccessToken("");
                 facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon_inactive));
-                facebookHomeStatus.setText("Disconnected");
+                facebookHomeStatus.setVisibility(View.GONE);
+                //facebookHomeStatus.setText("Disconnected");
                 prefsEditor = pref.edit();
                 prefsEditor.putBoolean("fbShareEnabled", false);
                 break;
             case TWITTER_DEACTIVATION:
                 BoostLog.d("Oh God:", "This is getting Called");
-                twitterStatus.setText("Disconnected");
+                twitterStatus.setVisibility(View.GONE);
+                //twitterStatus.setText("Disconnected");
                 twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
                 logoutFromTwitter();
                 twitterCheckBox.setChecked(false);

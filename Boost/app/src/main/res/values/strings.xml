@@ -79,7 +79,7 @@
     <string name="side_panel_row_three">Enquiries</string>
     <string name="side_panel_row_four">Photo Gallery</string>
     <string name="side_panel_row_five">Settings</string>
-    <string name="side_panel_row_six">Chat with Ria</string>
+    <string name="side_panel_row_six">Write to Ria</string>
     <string name="side_panel_row_seven">Contact Us</string>
     <string name="side_panel_row_eight">Share</string>
     <string name="setting_change_pwd">Change password</string>
@@ -528,7 +528,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="no_image">No image</string>
     <string name="custom_pages">Custom Pages</string>
     <string name="page_selected">PAGE SELECTED</string>
-    <string name="are_you_sure_want_to_delete">Are you sure to Delete?</string>
+    <string name="are_you_sure_want_to_delete">Are you sure?</string>
     <string name="page_will_deleted">Page will be deleted</string>
     <string name="deleted_in_capital">DELETE</string>
     <string name="cancel_in_capital">CANCEL</string>
@@ -708,6 +708,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="sunday">Sunday</string>
     <string name="your_name">Your Name</string>
     <string name="business_name">Business Name</string>
+    <string name="post_on_website">Post to your website</string>
     <string-array name="calendar">
         <item>Week</item>
         <item>Month</item>

@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nowfloats.Login.UserSessionManager;
@@ -14,6 +15,7 @@ import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Key_Preferences;
+import com.thinksity.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,14 +41,16 @@ public class FacebookFeedPullRegistrationAsyncTask extends AsyncTask<Void, Strin
 	UserSessionManager sessionManager;
 	String count;
 	int responseCode;
+	ImageView ivFbPageAutoPull;
 
 
-	public FacebookFeedPullRegistrationAsyncTask(Activity context, JSONObject obj, TextView FromPage, CheckBox Checkbox, UserSessionManager sessionManager) {
+	public FacebookFeedPullRegistrationAsyncTask(Activity context, JSONObject obj, TextView FromPage, ImageView ivFbPageAutoPull, CheckBox Checkbox, UserSessionManager sessionManager) {
 		this.appContext = context;
 		this.obj = obj;
 		this.fromPage = FromPage;
 		this.checkBox = Checkbox;
 		this.sessionManager = sessionManager;
+		this.ivFbPageAutoPull = ivFbPageAutoPull;
 		//this.count = count;
 	}
 
@@ -73,7 +77,8 @@ public class FacebookFeedPullRegistrationAsyncTask extends AsyncTask<Void, Strin
 				sessionManager.storeFPDetails(Key_Preferences.FB_PULL_PAGE_NAME, obj.getString("FacebookPageName"));
 				sessionManager.storeFPDetails(Key_Preferences.FB_PULL_COUNT, String.valueOf(obj.getInt("Count")));
 				fromPage.setVisibility(View.VISIBLE);
-				fromPage.setText("Subscribed for pulling " + String.valueOf(obj.getInt("Count")) + " updates from " + obj.getString("FacebookPageName") + " Facebook Page");
+				fromPage.setText(obj.getString("FacebookPageName"));
+				ivFbPageAutoPull.setImageDrawable(appContext.getResources().getDrawable(R.drawable.facebook_page));
 			}catch (JSONException e){
 				e.printStackTrace();
 				Util.toast("Uh oh. Something went wrong. Please try again", appContext);
