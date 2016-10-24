@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@android:color/transparent"
+    android:theme="@style/Theme.Transparent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_marginTop="60dp"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"></LinearLayout>
+        <com.nowfloats.CustomWidget.roboto_md_34_primarycolor
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="2"
+            android:gravity="center_horizontal"
+            android:layout_margin="15dp"
+            android:text="Claim a new dynamic look for your site, absolutely free!"/>
+        <com.nowfloats.CustomWidget.roboto_lt_24_212121
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lines="3"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center_horizontal"
+            android:text="If you don't like it, you can always switch back to the previous design by going into the Site Appearance tab"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="45dp">
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:text="Enable"
+                android:id="@+id/btn_enable_kitsune"
+                android:textColor="@color/white"
+                android:background="@color/primaryColor"
+                android:layout_weight="1"/>
+            <LinearLayout
+                android:layout_width="2dp"
+                android:layout_height="45dp"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:text="LATER"
+                android:id="@+id/btn_later_kitsune"
+                android:textColor="@color/white"
+                android:background="@color/primaryColor"
+                android:layout_weight="1"/>
+        </LinearLayout>
+    </LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:src="@drawable/kitsune_manage"/>
+
+</RelativeLayout>

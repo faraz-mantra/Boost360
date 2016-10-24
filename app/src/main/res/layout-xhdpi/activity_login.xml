@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FAFAFA">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/app_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="16dp"
+        >
+        <LinearLayout
+            android:id="@+id/businessNameLayout"
+            style="@style/SignUp_LinearLayout_Style"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/username_icon"
+                android:scaleType="fitXY"
+                />
+
+            <EditText
+                android:id="@+id/editText_businessName"
+                style="@style/SignUp_EditText_Style"
+                android:inputType="textCapWords"
+                android:hint="username"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/businessCategoryLayout"
+            style="@style/SignUp_LinearLayout_Style"
+
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/username_icon"
+                android:scaleType="fitXY"
+                />
+
+            <EditText
+                android:id="@+id/editText_Password"
+                style="@style/SignUp_EditText_Style"
+                android:editable="false"
+                android:drawableRight="@drawable/show_password"
+                android:hint="password"/>
+        </LinearLayout>
+
+
+     <Button
+         android:id="@+id/loginButton"
+         android:layout_width="328dp"
+         android:layout_height="50dp"
+         android:text="LOG IN"
+         android:textColor="#FFFFFF"
+         android:layout_marginTop="40dp"
+         android:background="#FFB900"
+         android:layout_gravity="center_horizontal"
+         android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/forgotPwdTextView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="forgot your password"
+            android:textSize="12sp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:textColor="#969696"/>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

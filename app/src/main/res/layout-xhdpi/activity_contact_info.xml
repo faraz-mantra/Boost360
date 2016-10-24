@@ -1,0 +1,194 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/screen_bg">
+
+    <include
+        android:id="@+id/app_bar"
+        layout="@layout/tool_bar_business_profile" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
+        android:layout_marginLeft="2dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Primary Number"
+                android:layout_marginLeft="5dp"
+                android:textSize="10sp"
+                android:textColor="#BDBDBD"/>
+
+            <EditText
+                android:id="@+id/primaryNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:inputType="number"
+                android:textSize="14sp"
+                android:textColor="#575757"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alternate Number 1"
+                android:textSize="10sp"
+                android:layout_marginLeft="5dp"
+                android:textColor="#BDBDBD"/>
+
+            <EditText
+                android:id="@+id/alternateNumber_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:textSize="14sp"
+                android:inputType="number"
+                android:textColor="#575757"/>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alternate Number 2"
+                android:textSize="10sp"
+                android:inputType="number"
+                android:layout_marginLeft="5dp"
+                android:textColor="#BDBDBD"/>
+
+            <EditText
+                android:id="@+id/alternateNumber_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:inputType="number"
+                android:textSize="14sp"
+                android:textColor="#575757"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Website Address"
+                android:textSize="10sp"
+                android:layout_marginLeft="5dp"
+                android:textColor="#BDBDBD"/>
+
+            <EditText
+                android:id="@+id/websiteAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:textSize="14sp"
+                android:textColor="#575757"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textSize="10sp"
+                android:layout_marginLeft="5dp"
+                android:textColor="#BDBDBD"/>
+
+            <EditText
+                android:id="@+id/contactInfo_emailId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:textSize="14sp"
+                android:textColor="#575757"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:orientation="vertical"
+            android:gravity="bottom"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Facebook Page Name"
+                android:textSize="10sp"
+                android:layout_marginLeft="5dp"
+                android:textColor="#BDBDBD"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="https://facebook.com/"/>
+                <EditText
+                    android:id="@+id/facebookPage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:textSize="14sp"
+                    android:inputType="text"
+                    android:textColor="#575757"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+
+
+</LinearLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="remind_me">
+        <item>Tomorrow</item>
+        <item>In 7 days</item>
+        <item>In 30 days</item>
+        <item>Never</item>
+    </array>
+</resources>

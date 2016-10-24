@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/screen_bg"
+    tools:context="com.nowfloats.CustomPage.CustomPageActivity">
+    <!--<include
+        android:id="@+id/tool_bar_product_detail"
+        layout="@layout/tool_bar_card" />-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/custompage_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:scrollbars="vertical" />
+        <LinearLayout
+            android:id="@+id/emptycustompage"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:visibility="gone"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/custompage_zeroth_icon" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dgts__title_text_size"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/dgts__padding_title"
+                android:layout_marginBottom="@dimen/dgts__padding_title"
+                android:textColor="@color/zeroth_grey_title"
+                android:text="Add a Page"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/zeroth_grey"
+                android:padding="8dp"
+                android:gravity="center"
+                android:text="Use custom pages to describe your business offerings in detail. You can add and format paragraphs of text, links and images!"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/progress_custom_page"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:visibility="gone"
+            android:gravity="center">
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <com.melnykov.fab.FloatingActionButton
+            android:id="@+id/fab_custom_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_add_white_24dp"
+            android:scaleType="fitCenter"
+            fab:fab_colorNormal="@color/primaryColor"
+            fab:fab_colorPressed="#fddc80"
+            fab:fab_colorRipple="@color/primaryColor" />
+    </FrameLayout>
+</LinearLayout>

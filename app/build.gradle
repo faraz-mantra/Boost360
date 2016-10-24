@@ -1,0 +1,143 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+allprojects {
+    apply plugin: 'maven'
+
+    tasks.withType(JavaCompile) {
+        options.incremental = true
+    }
+
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven {
+            url "https://jitpack.io"
+            //url "${project.rootDir}/app/creativesdk-repo"  //ADD THE CORRECT LOCATION OF THE CREATIVESDK LIBRARY FILES
+        }
+        /* maven {
+             url "https://repo.commonsware.com.s3.amazonaws.com"
+         }*/
+    }
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion '23.0.3'
+
+    useLibrary 'org.apache.http.legacy'
+
+    defaultConfig {
+        applicationId 'com.thinksity'
+        minSdkVersion 14
+        targetSdkVersion 23
+        versionName "4.4.6"
+        versionCode 2016100021
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+        partone {
+            applicationId "com.biz2.nowfloats"
+        }
+        parttwo {
+            applicationId "com.thinksity"
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/DEPENDENCIES'
+    }
+
+    dexOptions {
+        jumboMode true
+        preDexLibraries false
+        javaMaxHeapSize "4g"
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project('libs:libraries:volley')
+    compile project(':library')
+    compile project(':mobihelp_sdk_android_v1.5.4')
+    compile project(':mixpanel')
+    compile project(':cropper')
+    compile project(':ZoomImageLibrary')
+    compile files('libs/libraries/signpost-core-1.2.1.2.jar')
+    compile files('libs/libraries/AF-Android-SDK-v2.3.1.17.jar')
+    compile files('libs/libraries/signpost-commonshttp4-1.2.1.2.jar')
+    compile files('libs/libraries/universalimageloader.jar')
+    compile('com.crashlytics.sdk.android:crashlytics:2.2.1@aar') {
+        transitive = true;
+    }
+    compile('com.twitter.sdk.android:twitter:1.3.0@aar') {
+        transitive = true;
+    }
+    /*
+    compile 'com.google.android.gms:play-services-ads:7.8.+'
+    compile 'com.google.android.gms:play-services-gcm:7.8.+'
+    compile 'appice.io.android:sdk:2.+'*/
+//    compile 'com.google.apis:google-api-services-urlshortener:v1-rev43-1.21.0'
+//    compile 'com.google.http-client:google-http-client-android:1.21.0'
+
+    //    compile 'com.commonsware.cwac:richedit:0.5.+'
+
+    //    compile 'com.google.android.gms:play-services:8.3.0'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:cardview-v7:23.4.0'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.google.android.gms:play-services:9.4.0'
+    compile 'uk.co.chrisjenx:calligraphy:2.1.0'
+    compile 'com.melnykov:floatingactionbutton:1.1.0'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.1.0'
+    compile 'com.makeramen:roundedimageview:1.5.0'
+    compile 'com.afollestad:material-dialogs:0.7.4.2'
+    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
+    compile 'com.facebook.android:facebook-android-sdk:3.21.1'
+    compile 'net.i2p.android.ext:floatingactionbutton:1.8.0'
+    compile 'org.twitter4j:twitter4j-core:4.0.4'
+    compile 'com.wdullaer:materialdatetimepicker:1.0.1'
+    compile 'com.android.support:multidex:1.0.0'
+    compile 'com.nispok:snackbar:2.10.0'
+    compile 'jp.wasabeef:recyclerview-animators:1.2.0@aar'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.squareup:otto:1.3.6'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:2.3.0'
+    compile 'com.squareup.okhttp:okhttp:2.3.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.daimajia.easing:library:1.0.1@aar'
+    compile 'com.daimajia.androidanimations:library:1.1.3@aar'
+    compile 'com.rengwuxian.materialedittext:library:2.1.4'
+    compile 'org.jsoup:jsoup:1.7.2'
+    compile 'jp.wasabeef:richeditor-android:1.2.0'
+    compile 'com.github.clans:fab:1.6.4'
+    compile 'com.github.darsh2:MultipleImageSelect:v0.0.4'
+    compile 'com.azoft.carousellayoutmanager:carousel:1.1.5'
+    compile 'org.honorato.multistatetogglebutton:multistatetogglebutton:0.2.2'
+    compile 'com.google.firebase:firebase-messaging:9.4.0'
+    compile 'me.biubiubiu.justifytext:library:1.1'
+}
+
+apply plugin: 'com.google.gms.google-services'

@@ -1,0 +1,93 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".PreSignUpActivity">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addressLayout"
+        android:layout_marginTop="100dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:hint="House number, Building Name"/>
+        <ImageView
+            android:id="@+id/locationImageView"
+            android:layout_width="36dp"
+            android:scaleType="fitXY"
+            android:layout_gravity="right"
+            android:layout_marginLeft="30dp"
+            android:layout_height="36dp"
+            android:background="@drawable/location_crosshair"/>
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/citynzipCode"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/addressLayout"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="City"
+            android:inputType="text"
+            android:layout_weight="1"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="PinCode"
+            android:inputType="number"
+            android:layout_weight="1"/>
+        </LinearLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/country"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/citynzipCode"
+        android:editable="false"
+        android:drawableEnd="@drawable/drop_down_arrow"
+        android:hint="Country"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:id="@+id/state"
+        android:editable="false"
+        android:layout_below="@id/country"
+        android:drawableEnd="@drawable/drop_down_arrow"
+        android:hint="State"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/state">
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="BACK"/>
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="NEXT"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
