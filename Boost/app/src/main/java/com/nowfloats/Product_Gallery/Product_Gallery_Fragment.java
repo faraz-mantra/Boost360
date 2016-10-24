@@ -202,10 +202,10 @@ public class Product_Gallery_Fragment extends Fragment{
         try{
             progressLayout.setVisibility(View.GONE);
             if (event.data!=null){
-                int addPos = productItemModelList.size();
+                //int addPos = productItemModelList.size();
                 for (int i = 0; i < event.data.size(); i++) {
-                    productItemModelList.add(addPos,event.data.get(i));
-                    addPos++;
+                    productItemModelList.add(event.data.get(i));
+                    //addPos++;
                 }
                 adapter.notifyDataSetChanged();
             }

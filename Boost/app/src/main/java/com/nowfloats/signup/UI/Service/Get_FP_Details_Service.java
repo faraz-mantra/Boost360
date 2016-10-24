@@ -61,7 +61,11 @@ public class Get_FP_Details_Service {
                         if (SplashScreen_Activity.pd!=null)
                         {
                             bus.post(new Get_FP_Details_Event(new Get_FP_Details_Model()));
-                            SplashScreen_Activity.pd.dismiss();
+                            try {
+                                SplashScreen_Activity.pd.dismiss();
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
                         }
 
                     }

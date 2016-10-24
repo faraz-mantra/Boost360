@@ -404,79 +404,81 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
         //String filepath = "/sdcard/temp.png";
         File imagefile = new File(imagePath);
         FileInputStream fis = null;
+        String response = null;
         try {
             fis = new FileInputStream(imagefile);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+            Bitmap bm = BitmapFactory.decodeStream(fis);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            if((imagefile.length()/1024)>100){
+                bm.compress(Bitmap.CompressFormat.JPEG, 70, baos);}else{
+                bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            }
+            byte[] bitmapdata = baos.toByteArray();
 
-        Bitmap bm = BitmapFactory.decodeStream(fis);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        if((imagefile.length()/1024)>100){
-            bm.compress(Bitmap.CompressFormat.JPEG, 70, baos);}else{
-            bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        }
-        byte[] bitmapdata = baos.toByteArray();
+            UUID uuid = null;
 
-        UUID uuid = null;
+            uuid = UUID.randomUUID();
+            String s_uuid = uuid.toString();
+            s_uuid = s_uuid.replace("-", "");
+            String uri = null;
+            String param = "createSecondaryImage/";
+            if(isPrimary){
+                param = "createImage";
+            }
+            else if(isLogo)
+            {
+                param = "createLogoImage/";
+            }
+            else if(isBackgroundImage)
+            {
+                param= "createBackgroundImage/";
+            }
 
-        uuid = UUID.randomUUID();
-        String s_uuid = uuid.toString();
-        s_uuid = s_uuid.replace("-", "");
-        String uri = null;
-        String param = "createSecondaryImage/";
-        if(isPrimary){
-            param = "createImage";
-        }
-        else if(isLogo)
-        {
-            param = "createLogoImage/";
-        }
-        else if(isBackgroundImage)
-        {
-            param= "createBackgroundImage/";
-        }
-
-        //Constants con = new Constants(appContext);
-        String response;
-        if(isParallel)
-        {
+            //Constants con = new Constants(appContext);
+            if(isParallel)
+            {
 //            uri = Constants.LoadStoreURI+param+
 //                    "?clientId="+ Constants.clientId+
 //                    "&fpId="+ session.getFPID()+"&reqType=sequential&reqtId=" + s_uuid + "&";
-            uri = "https://api.withfloats.com/Discover/v1/FloatingPoint/createSecondaryImage/?clientId=" +
-                    Constants.clientId +
-                    "&fpId=" + session.getFPID() +
-                    "&reqType=sequential&reqtId=" +
-                    s_uuid + "&";
+                uri = "https://api.withfloats.com/Discover/v1/FloatingPoint/createSecondaryImage/?clientId=" +
+                        Constants.clientId +
+                        "&fpId=" + session.getFPID() +
+                        "&reqType=sequential&reqtId=" +
+                        s_uuid + "&";
 
-            String temp = uri + "totalChunks=1&currentChunkNumber=1";
-            response = sendDataToServer(imagePath,  uri);
+                String temp = uri + "totalChunks=1&currentChunkNumber=1";
+                response = sendDataToServer(imagePath,  uri);
 
                 //sendDataToServer(uri,  bitmapdata);
-        }
-        else
-        {
-            if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)))
-            {
-                //removebackgroundImg();
-                String backgroundimgid = (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)).replace("/Backgrounds/", "");
-                uri = Constants.ReplaceBackImg+
-                        "?clientId="+
-                        Constants.clientId+"&fpId="+ session.getFPID()+
-                        "&existingBackgroundImageUri="+backgroundimgid+"&identifierType=SINGLE";
-                response = sendDataToServer(imagePath,  uri);
             }
             else
             {
-                uri = Constants.LoadStoreURI+param+"/?clientId="+
-                        Constants.clientId+"&fpId="+ session.getFPID();
-                response = sendDataToServer(imagePath,  uri);
+                if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)))
+                {
+                    //removebackgroundImg();
+                    String backgroundimgid = (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE)).replace("/Backgrounds/", "");
+                    uri = Constants.ReplaceBackImg+
+                            "?clientId="+
+                            Constants.clientId+"&fpId="+ session.getFPID()+
+                            "&existingBackgroundImageUri="+backgroundimgid+"&identifierType=SINGLE";
+                    response = sendDataToServer(imagePath,  uri);
+                }
+                else
+                {
+                    uri = Constants.LoadStoreURI+param+"/?clientId="+
+                            Constants.clientId+"&fpId="+ session.getFPID();
+                    response = sendDataToServer(imagePath,  uri);
+                }
+
+
+
             }
-
-
-
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            response = null;
         }
+
+
 
         return response;
     }

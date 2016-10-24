@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.thinksity.R;
 
 import org.json.JSONObject;
 
@@ -35,13 +37,15 @@ public class FacebookFeedPullAutoPublishAsyncTask extends AsyncTask<Void, String
 	boolean subscription;
 	TextView fromPage;
 	UserSessionManager sessionManager;
+	ImageView ivFbPageAutoPull;
 
-	public FacebookFeedPullAutoPublishAsyncTask(Activity context, JSONObject obj, boolean subscription, TextView FromPage, UserSessionManager sessionManager) {
+	public FacebookFeedPullAutoPublishAsyncTask(Activity context, JSONObject obj, boolean subscription, TextView FromPage, ImageView ivFbPageAutoPull, UserSessionManager sessionManager) {
 		this.appContext = context;
 		this.obj = obj;
 		this.subscription = subscription;
 		this.fromPage = FromPage;
 		this.sessionManager = sessionManager;
+		this.ivFbPageAutoPull = ivFbPageAutoPull;
 	}
 
 	@Override
@@ -69,6 +73,7 @@ public class FacebookFeedPullAutoPublishAsyncTask extends AsyncTask<Void, String
 			else{
 				Toast.makeText(appContext, "Auto Pull for Updates will be turned OFF", Toast.LENGTH_SHORT).show();
 				fromPage.setVisibility(View.GONE);
+				ivFbPageAutoPull.setImageDrawable(appContext.getResources().getDrawable(R.drawable.facebookpage_icon_inactive));
 				sessionManager.storeFPDetails(Key_Preferences.FB_PULL_PAGE_NAME, null);
 				sessionManager.storeFPDetails(Key_Preferences.FB_PULL_ENABLED, "false");
 				sessionManager.storeFPDetails(Key_Preferences.FB_PULL_COUNT, "0");

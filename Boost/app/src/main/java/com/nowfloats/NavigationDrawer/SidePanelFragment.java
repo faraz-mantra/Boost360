@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
@@ -461,6 +462,7 @@ public class SidePanelFragment extends Fragment {
             public void onClick(View v) {
                 if(enqCount.getVisibility()==View.VISIBLE){
                     enqCount.setVisibility(View.INVISIBLE);
+                    session.setEnquiryCount(session.getLatestEnqCount());
                 }
                 onclickColorChange(customerQueriesImageView, customerQueries);
                 if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TOB).contains("TOB")) {
@@ -580,8 +582,10 @@ public class SidePanelFragment extends Fragment {
                         enqCount.setVisibility(View.VISIBLE);
                         enqCount.setText(Constants.enqCount + "");
                     }
+                    session.setLatestEnqCount(response+"");
+                }else {
+                    session.setEnquiryCount(response);
                 }
-                session.setEnquiryCount(response);
                 BoostLog.d("Response Business Enquiry: ", response + "");
             }
         }, new Response.ErrorListener() {
@@ -592,7 +596,30 @@ public class SidePanelFragment extends Fragment {
         });
         queue.add(beCountRequest);
 
+        view.findViewById(R.id.tv_write_to_ria_info).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMailDetailDilaog();
+            }
+        });
 
+
+    }
+
+    private void showMailDetailDilaog() {
+        new MaterialDialog.Builder(getActivity())
+                .title("Connect to Customer Support")
+                .content("When you write an email to Ria, a support ticket will be generated and " +
+                        "sent to your registered email id automatically. Our Customer Support " +
+                        "will get in touch with you within 24 hours.")
+                .positiveText("Ok")
+                .positiveColor(Color.parseColor("#808080"))
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        dialog.dismiss();
+                    }
+                }).show();
     }
 
 

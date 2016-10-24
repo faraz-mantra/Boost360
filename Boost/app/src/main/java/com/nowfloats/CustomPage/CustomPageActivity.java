@@ -272,7 +272,7 @@ public class CustomPageActivity extends Fragment  {
 //                    deleteView = null;
 //                }
                 new MaterialDialog.Builder(activity)
-                        .title("Are you sure to Delete?")
+                        .title("Are you sure?")
                         .content("Page will be deleted")
                         .positiveText("DELETE")
                         .negativeText("CANCEL")
