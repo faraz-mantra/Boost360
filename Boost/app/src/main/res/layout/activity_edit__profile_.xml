@@ -81,7 +81,7 @@
                         android:id="@+id/profileName"
                         style="@style/SignUp_EditText_Style"
                         fontPath="Roboto-Light.ttf"
-                        android:hint="Your Name"
+                        android:hint="@string/your_name"
                         android:inputType="textCapWords"
                         android:minLines="1"
                         tools:ignore="MissingPrefix" />
@@ -112,7 +112,7 @@
                         android:id="@+id/businessName"
                         style="@style/SignUp_EditText_Style"
                         fontPath="Roboto-Light.ttf"
-                        android:hint="Business Name"
+                        android:hint="@string/business_name"
                         android:inputType="textCapWords"
                         android:minLines="1"
                         tools:ignore="MissingPrefix" />

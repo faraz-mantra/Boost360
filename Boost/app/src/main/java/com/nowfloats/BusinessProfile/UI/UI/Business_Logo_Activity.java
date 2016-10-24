@@ -71,10 +71,10 @@ public class Business_Logo_Activity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setTitle("Logo");
+        setTitle(getResources().getString(R.string.logo));
 
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
-        titleTextView.setText("Logo");
+        titleTextView.setText(getResources().getString(R.string.logo));
         session = new UserSessionManager(getApplicationContext(),Business_Logo_Activity.this);
         logoimageView = (ImageView) findViewById(R.id.logoimageView);
         uploadButton = (Button) findViewById(R.id.addLogoButton);
@@ -105,7 +105,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
 
                 View view = dialog.getCustomView();
                 TextView title = (TextView) view.findViewById(R.id.textview_heading);
-                title.setText("Upload Logo Image");
+                title.setText(getResources().getString(R.string.upload_logo_image));
                 LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
                 LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
                 ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
@@ -185,7 +185,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        this.setTitle("Settings");
+        this.setTitle(getResources().getString(R.string.setting));
     }
 
     @Override
@@ -309,7 +309,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
             startActivityForResult(captureIntent, CAMERA_PHOTO);
         } catch (ActivityNotFoundException anfe) {
             // display an error message
-            String errorMessage = "Whoops - your device doesn't support capturing images!";
+            String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(Business_Logo_Activity.this,errorMessage);
         }
         catch(Exception e){
@@ -332,7 +332,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
             startActivityForResult(i, GALLERY_PHOTO);
         } catch (ActivityNotFoundException anfe) {
             // display an error message
-            String errorMessage = "Whoops - your device doesn't support capturing images!";
+            String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(Business_Logo_Activity.this,errorMessage);
         }
     }
@@ -362,7 +362,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
                 if (!Util.isNullOrEmpty(path)) {
                     uploadPrimaryPicture(path);
                 }  else
-                    Methods.showSnackBarNegative(Business_Logo_Activity.this,"Please select an image to upload");
+                    Methods.showSnackBarNegative(Business_Logo_Activity.this,getResources().getString(R.string.select_image_upload));
             }
             else if (resultCode == RESULT_OK && (GALLERY_PHOTO == requestCode)) {
                 {
@@ -373,7 +373,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
                         if (!Util.isNullOrEmpty(path)) {
                             uploadPrimaryPicture(path);
                         } else
-                            Methods.showSnackBarNegative(Business_Logo_Activity.this,"Please select an image to upload");
+                            Methods.showSnackBarNegative(Business_Logo_Activity.this,getResources().getString(R.string.select_image_upload));
                     }
                 }
             }

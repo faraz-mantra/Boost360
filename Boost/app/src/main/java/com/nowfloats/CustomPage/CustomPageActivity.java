@@ -4,20 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -86,7 +80,7 @@ public class CustomPageActivity extends Fragment  {
         deleteInterface.DeletePageTrigger(0,false,null);
 //        getSupportActionBar().setDisplayShowTitleEnabled(true);
 //        getSupportActionBar().setBackgroundDrawable(defaultColor);
-        titleTextView.setText("Custom Pages");
+        titleTextView.setText(getString(R.string.custom_pages));
         delete.setVisibility(View.GONE);
         customPageDeleteCheck = false;
     }
@@ -155,7 +149,7 @@ public class CustomPageActivity extends Fragment  {
 
         //Title
         titleTextView = HomeActivity.headerText;
-        titleTextView.setText("Custom Pages");
+        titleTextView.setText(getString(R.string.custom_pages));
         final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources()
                 .getColor(R.color.white), PorterDuff.Mode.SRC_IN);
         HomeActivity.shareButton.setImageResource(R.drawable.delete_dustbin_small);
@@ -205,7 +199,7 @@ public class CustomPageActivity extends Fragment  {
             deleteInterface.DeletePageTrigger(0,false,null);
 //            getSupportActionBar().setDisplayShowTitleEnabled(false);
 //            getSupportActionBar().setBackgroundDrawable(defaultColor);
-            titleTextView.setText("Custom Pages");
+            titleTextView.setText(getString(R.string.custom_pages));
             delete.setVisibility(View.GONE);
             customPageDeleteCheck = false;
 
@@ -232,7 +226,7 @@ public class CustomPageActivity extends Fragment  {
             posList = new ArrayList<String>();
 //            getSupportActionBar().setDisplayShowTitleEnabled(false);
 //            getSupportActionBar().setBackgroundDrawable(defaultColor);
-            titleTextView.setText("Custom Pages");
+            titleTextView.setText(getString(R.string.custom_pages));
             delete.setVisibility(View.GONE);
             customPageDeleteCheck = false;
 
@@ -260,7 +254,7 @@ public class CustomPageActivity extends Fragment  {
         if (posList.size()>0){
             size = posList.size()+"";
         }
-        titleTextView.setText(size+" PAGE SELECTED");
+        titleTextView.setText(size+getString(R.string.page_selected));
         delete.setImageResource(R.drawable.delete_dustbin_small);
         delete.setVisibility(View.VISIBLE);
         customPageDeleteCheck = true;
@@ -272,10 +266,10 @@ public class CustomPageActivity extends Fragment  {
 //                    deleteView = null;
 //                }
                 new MaterialDialog.Builder(activity)
-                        .title("Are you sure to Delete?")
-                        .content("Page will be deleted")
-                        .positiveText("DELETE")
-                        .negativeText("CANCEL")
+                        .title(getString(R.string.are_you_sure_want_to_delete))
+                        .content(getString(R.string.page_will_deleted))
+                        .positiveText(getString(R.string.deleted_in_capital))
+                        .negativeText(getString(R.string.cancel_in_capital))
                         .positiveColorRes(R.color.primaryColor)
                         .negativeColorRes(R.color.grey)
                         .callback(new MaterialDialog.ButtonCallback() {
@@ -292,7 +286,7 @@ public class CustomPageActivity extends Fragment  {
                                     deleteInterface.DeletePageTrigger(0,false,null);
 //                                    getSupportActionBar().setDisplayShowTitleEnabled(false);
 //                                    getSupportActionBar().setBackgroundDrawable(defaultColor);
-                                    titleTextView.setText("Custom Pages");
+                                    titleTextView.setText(getString(R.string.custom_pages));
                                     delete.setVisibility(View.GONE);
                                     customPageDeleteCheck = false;
                                     CustomPageAdapter.deleteCheck = false;
@@ -302,7 +296,7 @@ public class CustomPageActivity extends Fragment  {
                                     deleteInterface.DeletePageTrigger(0,false,null);
 //                                    getSupportActionBar().setDisplayShowTitleEnabled(false);
 //                                    getSupportActionBar().setBackgroundDrawable(defaultColor);
-                                    titleTextView.setText("Custom Pages");
+                                    titleTextView.setText(getString(R.string.custom_pages));
                                     delete.setVisibility(View.GONE);
                                     customPageDeleteCheck = false;
                                     CustomPageAdapter.deleteCheck = false;
@@ -322,7 +316,7 @@ public class CustomPageActivity extends Fragment  {
                                 deleteInterface.DeletePageTrigger(0,false,null);
 //                                getSupportActionBar().setDisplayShowTitleEnabled(false);
 //                                getSupportActionBar().setBackgroundDrawable(defaultColor);
-                                titleTextView.setText("Custom Pages");
+                                titleTextView.setText(getString(R.string.custom_pages));
                                 delete.setVisibility(View.GONE);
                                 customPageDeleteCheck = false;
                                 CustomPageAdapter.deleteCheck = false;
@@ -339,14 +333,14 @@ public class CustomPageActivity extends Fragment  {
             String size = "";
             if (posList.size()>0){
                 size = posList.size()+"";
-                titleTextView.setText(size+" PAGE SELECTED");
+                titleTextView.setText(size+getString(R.string.page_selected));
             }
             if(posList.size()==0){
                 posList = new ArrayList<String>();
                 deleteInterface.DeletePageTrigger(0,false,null);
 //                getSupportActionBar().setDisplayShowTitleEnabled(false);
 //                getSupportActionBar().setBackgroundDrawable(defaultColor);
-                titleTextView.setText("Custom Pages");
+                titleTextView.setText(getString(R.string.custom_pages));
                 delete.setVisibility(View.GONE);
                 customPageDeleteCheck = false;
                 CustomPageAdapter.deleteCheck = false;

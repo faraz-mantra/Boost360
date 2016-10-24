@@ -24,14 +24,9 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.nowfloats.BusinessProfile.UI.API.BusinessAddressLatLongUpdateAsyncTask;
 import com.nowfloats.BusinessProfile.UI.API.BusinessAddressUpdateAsyncTask;
-import com.nowfloats.BusinessProfile.UI.API.NewMapViewDialogBusinessAddress;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
@@ -73,7 +68,7 @@ public class Business_Address_Activity extends ActionBarActivity {
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         saveTextView = (TextView) toolbar.findViewById(R.id.saveTextView);
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
-        titleTextView.setText("Address");
+        titleTextView.setText(getResources().getString(R.string.answer));
         ivMap = (ImageView) findViewById(R.id.iv_map);
 
         ivMap.setOnClickListener(new View.OnClickListener() {
@@ -467,7 +462,7 @@ public class Business_Address_Activity extends ActionBarActivity {
     public void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
-        this.setTitle("Business Address");
+        this.setTitle(getResources().getString(R.string.business__address));
 
     }
 

@@ -137,14 +137,14 @@ public class Login_MainActivity extends AppCompatActivity implements
                 passwordText = password.getText().toString().trim();
 
                 if (userNameText.length() > 0 && passwordText.length() > 0) {
-                    progressDialog = ProgressDialog.show(Login_MainActivity.this, "", "Loading...");
+                    progressDialog = ProgressDialog.show(Login_MainActivity.this, "", getString(R.string.loading));
                     progressDialog.setCancelable(true);
                     API_Login apiLogin = new API_Login(Login_MainActivity.this,session,bus);
                     apiLogin.authenticate(userName.getText().toString(), password.getText().toString(), Specific.clientId2);
                 } else {
                     YoYo.with(Techniques.Shake).playOn(userName);
                     YoYo.with(Techniques.Shake).playOn(password);
-                    Methods.showSnackBarNegative(Login_MainActivity.this,"Enter valid username/password");
+                    Methods.showSnackBarNegative(Login_MainActivity.this,getString(R.string.enter_valid_username_or_password));
                 }
             }
         });
@@ -172,9 +172,9 @@ public class Login_MainActivity extends AppCompatActivity implements
     public void onClick(View v) {
         if(v.getId()==R.id.forgotPwdTextView   ){
             new MaterialDialog.Builder(this)
-                    .title("Forgot Password")
+                    .title(getString(R.string.forgot_password))
                     .inputType(InputType.TYPE_CLASS_TEXT)
-                    .input("Enter Username", null, new MaterialDialog.InputCallback() {
+                    .input(getString(R.string.enter_user_name), null, new MaterialDialog.InputCallback() {
                         @Override
                         public void onInput(MaterialDialog dialog, CharSequence input) {
                             try {
@@ -185,15 +185,15 @@ public class Login_MainActivity extends AppCompatActivity implements
                                     dialog.dismiss();
                                 } else {
                                      YoYo.with(Techniques.Shake).playOn(dialog.getInputEditText());
-                                     Methods.showSnackBarNegative(Login_MainActivity.this, "Enter username !");
+                                     Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.enter_correct_user_name));
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
                     })
-                    .positiveText("OK")
-                    .negativeText("Cancel")
+                    .positiveText(getString(R.string.ok))
+                    .negativeText(getString(R.string.cancel))
                     .positiveColorRes(R.color.primaryColor)
                     .negativeColorRes(R.color.primaryColor)
                     .show();
@@ -292,7 +292,7 @@ public class Login_MainActivity extends AppCompatActivity implements
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Methods.showSnackBarNegative(Login_MainActivity.this,"Your username is incorrect, please try again");
+                            Methods.showSnackBarNegative(Login_MainActivity.this,getString(R.string.enter_correct_user_name));
                         }
                     });
                 }
@@ -314,9 +314,9 @@ public class Login_MainActivity extends AppCompatActivity implements
 //                                Methods.showSnackBarPositive(Login_MainActivity.this,"\n" +
 //                                        "We’ve sent you an email with your login details");
                                 new MaterialDialog.Builder(Login_MainActivity.this)
-                                        .title("Check your email !")
-                                        .content("We have sent you an email with password details")
-                                        .positiveText("OK")
+                                        .title(getString(R.string.check_your_email))
+                                        .content(getString(R.string.we_sent_email_with_password))
+                                        .positiveText(getString(R.string.ok))
                                         .show();
                             }
                         });
@@ -328,7 +328,7 @@ public class Login_MainActivity extends AppCompatActivity implements
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Methods.showSnackBarNegative(Login_MainActivity.this,"Your username is incorrect, please try again");
+                            Methods.showSnackBarNegative(Login_MainActivity.this,getString(R.string.enter_correct_user_name));
                         }
                     });
                 }

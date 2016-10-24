@@ -1,6 +1,5 @@
 package com.nowfloats.NavigationDrawer;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -16,9 +15,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
@@ -26,7 +23,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -323,7 +319,7 @@ public class Home_Main_Fragment extends Fragment implements
                     facebookPostCount = 0 ;
                     retryLayout.setVisibility(View.GONE);
                     progressCrd.setVisibility(View.GONE);
-                    Methods.showSnackBarNegative(getActivity(),"Retry time out, Create new post");
+                    Methods.showSnackBarNegative(getActivity(),getString(R.string.retry_create_new_post));
                     Constants.createMsg = false;
                 }
             }

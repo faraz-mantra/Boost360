@@ -9,6 +9,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.MixPanelController;
+import com.thinksity.R;
 
 import org.json.JSONObject;
 
@@ -55,7 +56,7 @@ public final class DeleteGalleryImages extends AsyncTask<Void,String, String> {
     @Override
 	protected void onPreExecute() 
 	{
-		pd= ProgressDialog.show(ctx, null, "deleting...");
+		pd= ProgressDialog.show(ctx, null, ctx.getString(R.string.deleting));
 	}
 	@Override
 	protected void onPostExecute(final String result) 

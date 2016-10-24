@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public class CustomMarkerClass extends MarkerView {
 
     private TextView tvContent;
-    private String[] values = { "0","1","2","3","4","5","6" };
-    String[] monthNameArray = { "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec" };
+    private String[] values = getResources().getStringArray(R.array.num_values);
+    String[] monthNameArray = getResources().getStringArray(R.array.months);
 
     int[] weekValues = {0,0,0,0};
     int[] monthValues = {0,0,0,0,0,0,0,0,0,0,0,0};
@@ -62,7 +62,7 @@ public class CustomMarkerClass extends MarkerView {
 
         if(mode == 1)
         {
-            tvContent.setText(weekValues[index] + "\n" + "Week " + (index+1));
+            tvContent.setText(weekValues[index] + "\n" + getResources().getString(R.string.week)+" " + (index+1));
         }
         else if(mode == 0)
         {

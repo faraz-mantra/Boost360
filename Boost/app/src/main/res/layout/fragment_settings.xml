@@ -202,7 +202,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/cell_text_size"
                 android:textColor="@color/cell_text_color"
-                android:text="@string/faq" />
+                android:text="@string/faqs" />
 
         </LinearLayout>
             <LinearLayout

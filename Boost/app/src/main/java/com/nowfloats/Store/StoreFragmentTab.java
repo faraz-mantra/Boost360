@@ -5,31 +5,20 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.AccountDetails.Model.AccountDetailModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.NavigationDrawer.Home_Main_Fragment;
 import com.nowfloats.NavigationDrawer.SlidingTabLayout;
-import com.nowfloats.NavigationDrawer.TabPagerAdapter;
-import com.nowfloats.NavigationDrawer.model.AlertCountEvent;
-import com.nowfloats.NotificationCenter.NotificationFragment;
-import com.nowfloats.Store.Adapters.StoreAdapter;
 import com.nowfloats.Store.Adapters.StorePagerAdapter;
 import com.nowfloats.Store.Model.ActiveWidget;
 import com.nowfloats.Store.Model.StoreEvent;
-import com.nowfloats.Store.Model.StoreMainModel;
 import com.nowfloats.Store.Model.StoreModel;
 import com.nowfloats.Store.Service.API_Service;
 import com.nowfloats.util.BusProvider;
-import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -39,14 +28,9 @@ import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
-import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
-import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 import retrofit.http.GET;
 import retrofit.http.QueryMap;
 
@@ -151,7 +135,7 @@ public class StoreFragmentTab extends Fragment {
         if(allModels!=null && activeIdArray!=null){
             LoadActivePlans(activity,allModels,additionalPlans,activeIdArray);
         }else{
-            Methods.showSnackBarNegative(activity,"Something went wrong");
+            Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong));
         }
     }
     private void LoadActivePlans(final Activity activity, ArrayList<StoreModel> allModels, final ArrayList<StoreModel> additionalPlan, ArrayList<ActiveWidget> acIdarray) {
@@ -211,7 +195,7 @@ public class StoreFragmentTab extends Fragment {
                     progressLayout.setVisibility(View.GONE);
                 }
             });
-        }catch (Exception e){e.printStackTrace(); Methods.showSnackBarNegative(activity,"Something went wrong,Please try again");}
+        }catch (Exception e){e.printStackTrace(); Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong_try_again));}
     }
     public interface AccInfoInterface{
         @GET("/Discover/v1/FloatingPoint/GetPaidWidgetDetailsForFP")

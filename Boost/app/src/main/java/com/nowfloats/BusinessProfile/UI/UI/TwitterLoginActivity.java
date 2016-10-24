@@ -7,24 +7,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.StrictMode;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import twitter4j.StatusUpdate;
@@ -106,7 +98,7 @@ public class TwitterLoginActivity extends AppCompatActivity{
         }
         mSharedPreferences = getSharedPreferences(Constants.PREF_NAME, 0);
         if (isAuthenticated()) {
-            Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.success), Toast.LENGTH_SHORT).show();
             //hide login button here and show tweet
             //Rahul enable the twitter check box
         } else {
@@ -118,9 +110,9 @@ public class TwitterLoginActivity extends AppCompatActivity{
                     AccessToken accessToken = mTwitter.getOAuthAccessToken(
                             mRequestToken, verifier);
                     saveTwitterInformation(accessToken);
-                    Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.success), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.failed), Toast.LENGTH_SHORT).show();
                     Log.d("Failed to login ",
                             e.getMessage());
                 }
@@ -198,7 +190,7 @@ public class TwitterLoginActivity extends AppCompatActivity{
             String username = user.getName();
             saveTwitterInformation(accessToken);
         } catch (Exception e) {
-            Toast.makeText(TwitterLoginActivity.this, "Exception ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TwitterLoginActivity.this, getString(R.string.exception), Toast.LENGTH_SHORT).show();
         }finally {
             finish();
         }
@@ -220,7 +212,7 @@ public class TwitterLoginActivity extends AppCompatActivity{
             String username = user.getName();
             saveTwitterInformation(accessToken);
         } catch (Exception e) {
-            Toast.makeText(TwitterLoginActivity.this, "Exception ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TwitterLoginActivity.this, getString(R.string.exception), Toast.LENGTH_SHORT).show();
         }finally {
             finish();
         }
@@ -233,10 +225,10 @@ public class TwitterLoginActivity extends AppCompatActivity{
         if (mdialogBuilder == null) {
             mdialogBuilder = new AlertDialog.Builder(TwitterLoginActivity.this);
 
-            mdialogBuilder.setTitle("Alert");
-            mdialogBuilder.setMessage("No Network");
+            mdialogBuilder.setTitle(getString(R.string.alert));
+            mdialogBuilder.setMessage(getString(R.string.no_network));
 
-            mdialogBuilder.setPositiveButton("Enable",
+            mdialogBuilder.setPositiveButton(getString(R.string.enable),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // launch setting Activity
@@ -267,7 +259,7 @@ public class TwitterLoginActivity extends AppCompatActivity{
         protected void onPreExecute() {
             super.onPreExecute();
             mPostProgress = new ProgressDialog(TwitterLoginActivity.this);
-            mPostProgress.setMessage("Redirecting to twitter, Please wait ...");
+            mPostProgress.setMessage(getString(R.string.redirecting_to_twitter_wait));
             mPostProgress.setCancelable(false);
             mPostProgress.show();
         }
@@ -310,7 +302,7 @@ public class TwitterLoginActivity extends AppCompatActivity{
         protected void onPreExecute() {
             super.onPreExecute();
             mPostProgress = new ProgressDialog(TwitterLoginActivity.this);
-            mPostProgress.setMessage("Loading...");
+            mPostProgress.setMessage(getString(R.string.loading));
             mPostProgress.setCancelable(false);
             mPostProgress.show();
         }

@@ -50,7 +50,7 @@ public class SinglePageDeleteAsyncTask extends AsyncTask<String,String,String>{
     protected void onPreExecute() {
         materialProgress = new MaterialDialog.Builder(activity)
                 .widgetColorRes(R.color.accentColor)
-                .content("Deleting....")
+                .content(activity.getString(R.string.deleting))
                 .progress(true, 0)
                 .show();
         materialProgress.setCancelable(false);
@@ -94,7 +94,7 @@ public class SinglePageDeleteAsyncTask extends AsyncTask<String,String,String>{
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Methods.showSnackBarNegative(activity,"Something went wrong ,Try again...");
+                        Methods.showSnackBarNegative(activity,activity.getString(R.string.something_went_wrong_try_again));
                     }
                 });
             }
@@ -106,13 +106,13 @@ public class SinglePageDeleteAsyncTask extends AsyncTask<String,String,String>{
                     if (flag){
                         activity.finish();
                         CustomPageActivity.dataModel.remove(position);
-                        Methods.showSnackBarPositive(activity, "Pages removed...");
+                        Methods.showSnackBarPositive(activity, activity.getString(R.string.page_removed));
                         if (CustomPageActivity.custompageAdapter!=null)
                             CustomPageActivity.custompageAdapter.notifyDataSetChanged();
                         if (CustomPageActivity.recyclerView!=null)
                             CustomPageActivity.recyclerView.invalidate();
                     }else{
-                        Methods.showSnackBarNegative(activity,"Something went wrong ,Try again...");
+                        Methods.showSnackBarNegative(activity,activity.getString(R.string.something_went_wrong_try_again));
                         if (CustomPageActivity.custompageAdapter!=null)
                             CustomPageActivity.custompageAdapter.notifyDataSetChanged();
                         if (CustomPageActivity.recyclerView!=null)

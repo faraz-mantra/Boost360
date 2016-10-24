@@ -109,7 +109,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
 
     private final int gallery_req_id = 6;
     private final int media_req_id = 5;
-    private String[] mPriorityList = {"DEFAULT", "HIGH", "MEDIUM", "LOW"};
+    private String[] mPriorityList = getResources().getStringArray(R.array.priority_list);
     private int mPriorityVal = 1000000;
     RecyclerView rvProductImg;
     private ProductImageAdapter adapter;
@@ -161,7 +161,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
         save = (ImageView) toolbar.findViewById(R.id.home_view_delete_card);
         TextView title = (TextView) toolbar.findViewById(R.id.titleProduct);
         title.setVisibility(View.VISIBLE);
-        title.setText("Add Product");
+        title.setText(getString(R.string.add_product));
         save.setImageResource(R.drawable.product_tick);
         session = new UserSessionManager(getApplicationContext(),activity);
         productInterface = Constants.restAdapter.create(ProductGalleryInterface.class);
@@ -203,7 +203,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 if(mIsImageChosen && mProductImageList.size()>=5){
-                    Methods.showSnackBarNegative(Product_Detail_Activity.this, "You can't select more than 5 images");
+                    Methods.showSnackBarNegative(Product_Detail_Activity.this, getString(R.string.can_not_select_more_than_5images));
                 }else {
                     choosePicture();
                 }
@@ -252,7 +252,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
             if (product_data!=null){
                 replaceImage = true;
                 save.setVisibility(View.GONE);
-                title.setText("Edit Product");
+                title.setText(getString(R.string.edit_product));
                 BoostLog.d("ProductId:", product_data._id);
                 //load image
 
@@ -357,7 +357,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
                         try{
                             materialProgress = new MaterialDialog.Builder(activity)
                                         .widgetColorRes(R.color.accentColor)
-                                        .content("Updating....")
+                                        .content(getString(R.string.updating))
                                         .progress(true, 0).show();
                             materialProgress.setCancelable(false);
                             values = new HashMap<String, String>();
@@ -394,7 +394,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
                                                             invokeGetProductList();
                                                         }
                                                         //invokeGetProductList();
-                                                        Methods.showSnackBarPositive(activity, "Product has successfully updated");
+                                                        Methods.showSnackBarPositive(activity, getString(R.string.product_successfully_updated));
                                                     }
                                                 });
                                             }
@@ -408,7 +408,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
                                             @Override
                                             public void run() {
                                                 materialProgress.dismiss();
-                                                Methods.showSnackBarNegative(activity, "Something went wrong, Try again...");
+                                                Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
                                             }
                                         });
                                     }
@@ -416,7 +416,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
                             }else{materialProgress.dismiss();}
                         }catch(Exception e){e.printStackTrace();
                             materialProgress.dismiss();
-                            Methods.showSnackBarNegative(activity, "Something went wrong, Try again...");
+                            Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
                         }
                     }
                 });
@@ -429,10 +429,10 @@ public class Product_Detail_Activity extends AppCompatActivity{
                     try{
                         MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_DELETE, null);
                          new MaterialDialog.Builder(activity)
-                        .title("Are you sure?")
-                        .positiveText("Delete")
+                        .title(getString(R.string.are_you_sure_want_to_delete))
+                        .positiveText(getString(R.string.delete))
                         .positiveColorRes(R.color.primaryColor)
-                        .negativeText("Cancel")
+                        .negativeText(getString(R.string.are_you_sure_want_to_delete))
                         .negativeColorRes(R.color.light_gray)
                         .callback(new MaterialDialog.ButtonCallback() {
                             @Override
@@ -480,7 +480,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
                 public void onClick(View v) {
                     materialProgress = new MaterialDialog.Builder(activity)
                             .widgetColorRes(R.color.accentColor)
-                            .content("Loading....")
+                            .content(getString(R.string.loading))
                             .progress(true, 0).show();
                     materialProgress.setCancelable(false);
                     try{
@@ -491,7 +491,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
                         boolean flag = ValidateFields(false);
 
                         if (mProductImageList.isEmpty()){
-                            flag=false; Methods.showSnackBarNegative(activity,"Please upload product image");
+                            flag=false; Methods.showSnackBarNegative(activity,getString(R.string.upload_product_image));
                         }
                         if(flag){
                             productInterface.addProduct(values,new Callback<String>() {
@@ -513,7 +513,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
                                        @Override
                                        public void run() {
                                            materialProgress.dismiss();
-                                           Methods.showSnackBarNegative(activity, "Something went wrong, Try again...");
+                                           Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
                                        }
                                    });
 
@@ -523,7 +523,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
                     }catch(Exception e){
                         e.printStackTrace();
                         materialProgress.dismiss();
-                        Methods.showSnackBarNegative(activity, "Something went wrong, Try again...");
+                        Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
                     }
                 }
             });
@@ -553,7 +553,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
 
         View view = dialog.getCustomView();
         TextView header = (TextView) view.findViewById(R.id.textview_heading);
-        header.setText("Select your Action");
+        header.setText(getString(R.string.select_action));
         LinearLayout replace = (LinearLayout) view.findViewById(R.id.replace_image);
         final LinearLayout delete = (LinearLayout) view.findViewById(R.id.delete_image);
         ImageView   replaceImg = (ImageView) view.findViewById(R.id.pop_up_replace_img);
@@ -589,7 +589,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
     }
 
     private void deleteProductImage(final int position, String productId) {
-        final ProgressDialog pd = ProgressDialog.show(this, "", "Wait while Deleting Image...");
+        final ProgressDialog pd = ProgressDialog.show(this, "", getString(R.string.wait_while_deleting_image));
         final String imageFileName = mProductImageList.get(position).path.replace("/tile/", "/actual/");
         BoostLog.d("ImageFileName:", imageFileName);
         ProductGalleryInterface productGalleryInterface = new RestAdapter.Builder()
@@ -606,7 +606,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
                 if(s.equals(imageFileName)){
                     pd.dismiss();
                     mIsImageDeleted = true;
-                    Methods.showSnackBarPositive(Product_Detail_Activity.this, "Successfully Deleted");
+                    Methods.showSnackBarPositive(Product_Detail_Activity.this,getString(R.string.successfully_deleted));
                     mProductImageList.remove(position);
                     adapter.notifyDataSetChanged();
                 }
@@ -616,7 +616,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
             public void failure(RetrofitError error) {
                 BoostLog.d("RetrofitError:", error.getMessage());
                 pd.dismiss();
-                Methods.showSnackBarNegative(Product_Detail_Activity.this, "Couldn't Delete Image");
+                Methods.showSnackBarNegative(Product_Detail_Activity.this, getString(R.string.can_not_delete_image));
             }
         });
         //new DeleteProductImage(this).execute(imageFileName, productId);
@@ -630,7 +630,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
         }
 
         new MaterialDialog.Builder(activity)
-                .title("Select Priority")
+                .title(getString(R.string.select_priority))
                 .items(mPriorityList)
                 .widgetColorRes(R.color.primaryColor)
                 .itemsCallbackSingleChoice(index, new MaterialDialog.ListCallbackSingleChoice() {
@@ -715,7 +715,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
             values.put(name, productName.getText().toString().trim());
         }else {
             YoYo.with(Techniques.Shake).playOn(productName);
-            Methods.showSnackBarNegative(activity,"Please enter product name");
+            Methods.showSnackBarNegative(activity,getString(R.string.enter_product_name));
             flag = false;
         }
         if (flag){
@@ -723,7 +723,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
                 values.put(price, productPrice.getText().toString().trim());
             }else {
                 YoYo.with(Techniques.Shake).playOn(productPrice);
-                Methods.showSnackBarNegative(activity,"Please enter product price");
+                Methods.showSnackBarNegative(activity,getString(R.string.enter_product_price));
                 flag = false;
             }
         }
@@ -732,7 +732,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
                 (productDiscount!=null && productDiscount.getText().toString().trim().length()>0) && flag){
             if(!(Double.parseDouble(productPrice.getText().toString().trim())>Double.parseDouble(productDiscount.getText().toString().trim()))){
                 YoYo.with(Techniques.Shake).playOn(productDiscount);
-                Methods.showSnackBarNegative(activity,"Discount amount cannot be more than the product price ");
+                Methods.showSnackBarNegative(activity,getString(R.string.discount_amount_can_not_more_than_price));
                 flag = false;
             }
         }
@@ -780,7 +780,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
             String url = Constants.NOW_FLOATS_API_URL + "/Product/v1/AddImage?" +valuesStr;
             byte[] imageBytes = Methods.compressTobyte(path,activity);
             new ProductImageUpload(url,imageBytes,Product_Detail_Activity.this).execute();*/
-            pd = ProgressDialog.show(this, "", "Wait while Uploading Images...");
+            pd = ProgressDialog.show(this, "", getString(R.string.wait_while_deleting_image));
             for(Image image: mProductImageList){
                 Intent i =new Intent(this, MultipleImageUploadService.class);
                 i.putExtra(MultipleImageUploadService.REQUEST_PI, productId);
@@ -789,7 +789,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
             }
         }catch(Exception e){
             e.printStackTrace();
-            Methods.showSnackBarNegative(activity, "Something went wrong, Try again...");
+            Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
         }
     }
 
@@ -810,7 +810,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
             }
         }catch(Exception e){
             e.printStackTrace();
-            Methods.showSnackBarNegative(activity, "Something went wrong, Try again...");
+            Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
         }
     }
 
@@ -847,7 +847,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
             index = Arrays.asList(currencyList).indexOf(currencyVal);
         }
         new MaterialDialog.Builder(activity)
-                .title("Select Currency")
+                .title(getString(R.string.select_currency))
                 .items(currencyList)
                 .widgetColorRes(R.color.primaryColor)
                 .itemsCallbackSingleChoice(index, new MaterialDialog.ListCallbackSingleChoice() {
@@ -915,8 +915,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
                             //productImage.setImageBitmap(CameraBitmap);
                             //if (replaceImage) replaceProductImage(product_data._id);
                         }
-                    }else{
-                        Methods.showSnackBar(activity,"Try again....");
+                    }else{getString(R.string.try_again);
                     }
                 }else{
                     path = getRealPathFromURI(picUri);
@@ -931,7 +930,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
                 E.printStackTrace();
                 CameraBitmap.recycle();
                 System.gc();
-                Methods.showSnackBar(activity,"Try again....");
+                Methods.showSnackBar(activity,getString(R.string.try_again));
             }
         }
     }
@@ -975,7 +974,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
 
         View view = dialog.getCustomView();
         TextView header = (TextView) view.findViewById(R.id.textview_heading);
-        if (replaceImage) header.setText("Replace Photo"); else header.setText("Upload Photo");
+        if (replaceImage) header.setText(getString(R.string.replace_photo)); else header.setText(getString(R.string.upload_photo));
         LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
         LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
         ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
@@ -1054,7 +1053,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
             }
         } catch (ActivityNotFoundException anfe) {
             // display an error message
-            String errorMessage = "Whoops - your device doesn't support capturing images!";
+            String errorMessage = getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(activity,errorMessage);
         }
     }
@@ -1090,7 +1089,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
             }
         } catch (ActivityNotFoundException anfe) {
             // display an error message
-            String errorMessage = "Whoops - your device doesn't support capturing images!";
+            String errorMessage = getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(activity,errorMessage);
         }
     }

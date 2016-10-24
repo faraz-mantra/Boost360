@@ -18,7 +18,6 @@ import com.nowfloats.NotificationCenter.NotificationFragment;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
-import com.nowfloats.util.Methods;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -117,10 +116,10 @@ public class Home_Fragment_Tab extends Fragment {
                             materialDialog.dismiss();
                         }
                         materialDialog = new MaterialDialog.Builder(activity)
-                                .title("Update not fully done!!!")
-                                .content("Do you want to cancel?")
-                                .positiveText("Yes")
-                                .negativeText("No")
+                                .title(getString(R.string.update_not_done))
+                                .content(getString(R.string.do_you_want_to_cancel))
+                                .positiveText(getString(R.string.yes))
+                                .negativeText(getString(R.string.no))
                                 .positiveColorRes(R.color.primaryColor)
                                 .callback(new MaterialDialog.ButtonCallback() {
                                     @Override

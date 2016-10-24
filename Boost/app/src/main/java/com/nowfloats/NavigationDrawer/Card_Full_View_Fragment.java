@@ -53,7 +53,7 @@ public class Card_Full_View_Fragment extends Fragment {
         Typeface robotoMedium = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Medium.ttf");
 
 
-        ((Card_Full_View_MainActivity) getActivity()).setActionBarTitle("Home");
+        ((Card_Full_View_MainActivity) getActivity()).setActionBarTitle(getString(R.string.home));
 
         CardView cardView = (CardView) mainView.findViewById(R.id.card_view);
         cardView.setOnClickListener(new View.OnClickListener() {
@@ -157,7 +157,7 @@ public class Card_Full_View_Fragment extends Fragment {
                 }
                 if (!targetShareIntents.isEmpty()) {
                     System.out.println("Have Intent");
-                    Intent chooserIntent = Intent.createChooser(targetShareIntents.remove(0), "Choose app to share");
+                    Intent chooserIntent = Intent.createChooser(targetShareIntents.remove(0), getString(R.string.choose_app_to_share));
                     chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetShareIntents.toArray(new Parcelable[]{}));
                     startActivity(chooserIntent);
                 } else {

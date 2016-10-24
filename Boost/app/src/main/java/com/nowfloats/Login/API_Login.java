@@ -1,7 +1,6 @@
 package com.nowfloats.Login;
 
 import android.app.Activity;
-import android.util.Log;
 
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.Model.Login_Data_Model;
@@ -11,6 +10,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
 import com.nowfloats.util.Methods;
 import com.squareup.otto.Bus;
+import com.thinksity.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,7 +79,7 @@ public class API_Login {
                                 bus.post(new ArrayList<FloatsMessageModel>());
                             }else{
                                 apiInterface.authenticationFailure("true");
-                                Methods.showSnackBarNegative(appContext,"Please check your credentials");
+                                Methods.showSnackBarNegative(appContext,appContext.getString(R.string.check_your_crediential));
                             }
                         }
                         else{
@@ -96,7 +96,7 @@ public class API_Login {
                         BoostLog.d("FPID: ", fpId);
                     } else {
                         apiInterface.authenticationFailure("true");
-                        Methods.showSnackBarNegative(appContext, "Please check your credentials");
+                        Methods.showSnackBarNegative(appContext, appContext.getString(R.string.check_your_crediential));
                     }
                 } catch (Exception e) {
                     apiInterface.authenticationFailure("true");
@@ -107,9 +107,9 @@ public class API_Login {
 
             @Override
             public void failure(RetrofitError error) {
-                StringBuffer networkError = new StringBuffer("Please check your credentials");
+                StringBuffer networkError = new StringBuffer(appContext.getString(R.string.check_your_crediential));
                 if(error.getKind() == RetrofitError.Kind.HTTP || error.getKind() == RetrofitError.Kind.NETWORK ){
-                    networkError.delete(0, networkError.length()).append("Something Went Wrong!!");
+                    networkError.delete(0, networkError.length()).append(appContext.getString(R.string.something_went_wrong));
                 }
                 apiInterface.authenticationFailure("true");
                 Methods.showSnackBarNegative(appContext, networkError.toString());

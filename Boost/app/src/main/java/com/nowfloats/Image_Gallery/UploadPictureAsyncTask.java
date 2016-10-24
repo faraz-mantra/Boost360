@@ -14,6 +14,7 @@ import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.thinksity.R;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
@@ -22,13 +23,11 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.UUID;
@@ -155,12 +154,12 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void,String, String>
 //        BoostLog.d("UploadPicAsyncTask","onPostExecute : "+Constants.storeSecondaryImages.size());
 //        Toast.makeText(appContext,"Success  "+result,Toast.LENGTH_SHORT).show();
         if(result!=null && result.equals("true")) {
-            Methods.showSnackBarPositive(appContext, "Image successfully uploaded");
+            Methods.showSnackBarPositive(appContext, appContext.getString(R.string.image_successfully_apdated));
             if (pd.isShowing()) {
                 pd.dismiss();
             }
         }else {
-            Methods.showSnackBarNegative(appContext, "Can't Upload Image");
+            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.can_not_upload_image));
             if (pd.isShowing()) {
                 pd.dismiss();
             }

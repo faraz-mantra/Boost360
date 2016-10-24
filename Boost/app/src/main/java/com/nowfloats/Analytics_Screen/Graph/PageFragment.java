@@ -65,9 +65,9 @@ public class PageFragment extends Fragment {
     static CallingTask callingTask;
     LinearLayout progressLayout ;
 
-    String[] dayNameArray = { "Sun","Mon","Tues","Wed","Thur","Fri","Sat" };
-    String[] weekNameArray = { "Week 1", "Week 2", "Week 3", "Week 4" };
-    String[] monthNameArray = { "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec" };
+    String[] dayNameArray = getResources().getStringArray(R.array.weeks);
+    String[] weekNameArray = getResources().getStringArray(R.array.week_with_num);
+    String[] monthNameArray = getResources().getStringArray(R.array.months);
     int[] colorArray = { Color.rgb(123,123,123),Color.rgb(100,100,100),Color.rgb(130,130,130),
             Color.rgb(115,115,115),Color.rgb(135,135,135),Color.rgb(135,135,135),
             Color.rgb(105,105,105),Color.rgb(123,120,110) };
@@ -201,13 +201,13 @@ public class PageFragment extends Fragment {
                         }
                         else if(dateContainStatus == 3) //doesn't contains the start and end date both
                         {
-                            Toast.makeText(context, "No information available!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, getResources().getString(R.string.no_info_avail), Toast.LENGTH_LONG).show();
                         }
 
                         if(dateContainStatus!=3)
                         {
 
-                            Intent i = new Intent("monthDetails");
+                            Intent i = new Intent("MonthDetails");
                             i.putExtra("dateArray",dateArray);
                             i.putExtra("month",index+1);
                             startActivity(i);
@@ -879,11 +879,11 @@ public class PageFragment extends Fragment {
                     if(PageFragment.currentNumbers[currentMode] != null )
                         PageFragment.currentNumbers[currentMode].setText(total+"");
                     if (currentMode == MODE_WEEK) {
-                        dottedLine.setText("............................\nvisits this week");
+                        dottedLine.setText("............................\n"+getResources().getString(R.string.visit_this_week));
                     } else if (currentMode == MODE_MONTH) {
-                        dottedLine.setText("............................\nvisits this month");
+                        dottedLine.setText("............................\n"+getResources().getString(R.string.visit_this_month));
                     } else if (currentMode == MODE_YEAR) {
-                        dottedLine.setText("............................\nvisits this year");
+                        dottedLine.setText("............................\n"+getResources().getString(R.string.visit_this_year));
                     }
 
                     setupGraph(currentMode, dateArray, valueArray,barChart[currentMode]);
@@ -1008,7 +1008,7 @@ public class PageFragment extends Fragment {
         protected void onPostExecute(Integer  result) {
 
             totalCount = result;
-            totalCountTv.setText(result + " total visits");
+            totalCountTv.setText(result + " "+getResources().getString(R.string.total_visits));
 
 
         }

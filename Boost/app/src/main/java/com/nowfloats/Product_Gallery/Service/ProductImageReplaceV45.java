@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.nowfloats.Product_Gallery.Product_Detail_Activity;
 import com.nowfloats.Product_Gallery.Product_Detail_Activity_V45;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
@@ -38,7 +37,7 @@ public class ProductImageReplaceV45 extends AsyncTask<String,String,String>{
     protected void onPreExecute() {
         materialProgress = new MaterialDialog.Builder(activity)
                 .widgetColorRes(R.color.accentColor)
-                .content("Replacing image....")
+                .content(activity.getString(R.string.replacing_image))
                 .progress(true, 0)
                 .show();
         materialProgress.setCancelable(false);
@@ -65,7 +64,7 @@ public class ProductImageReplaceV45 extends AsyncTask<String,String,String>{
                         activity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Methods.showSnackBarPositive(activity, "Product image replaced successfully");
+                                Methods.showSnackBarPositive(activity, activity.getString(R.string.product_image_replaced_successfully));
                             }
                         });
                     }
@@ -81,7 +80,7 @@ public class ProductImageReplaceV45 extends AsyncTask<String,String,String>{
                         public void run() {
                             if (materialProgress!=null)
                                 materialProgress.dismiss();
-                            Methods.showSnackBarNegative(activity,"Something went wrong ,Try again...");
+                            Methods.showSnackBarNegative(activity,activity.getString(R.string.something_went_wrong_try_again));
                         }
                     });
                 }
@@ -93,7 +92,7 @@ public class ProductImageReplaceV45 extends AsyncTask<String,String,String>{
                 public void run() {
                     if (materialProgress!=null)
                         materialProgress.dismiss();
-                    Methods.showSnackBarNegative(activity,"Something went wrong ,Try again...");
+                    Methods.showSnackBarNegative(activity,activity.getString(R.string.something_went_wrong_try_again));
                 }
             });
         }

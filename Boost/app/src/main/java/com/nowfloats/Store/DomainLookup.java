@@ -60,9 +60,9 @@ public class DomainLookup extends AppCompatActivity {
         //Title
         TextView titleTextView = (TextView) toolbar.findViewById(R.id.store_title);
         if (domainPurchase){
-            titleTextView.setText("Book Domain");
+            titleTextView.setText(getString(R.string.book_domain));
         }else{
-            titleTextView.setText("Domain LookUp");
+            titleTextView.setText(getString(R.string.domain_lookup));
         }
 
         Button SearchBtn = (Button)findViewById(R.id.search_domain);
@@ -102,7 +102,7 @@ public class DomainLookup extends AppCompatActivity {
             domainName = domainText.getText().toString().trim();
             int checkFlag = 0;
             if (domainName.length() == 0) {
-                Methods.showSnackBarNegative(DomainLookup.this, "Enter domain name to continue");
+                Methods.showSnackBarNegative(DomainLookup.this, getString(R.string.enter_domain_nmae_to_continue));
                 checkFlag = 1;
             }
             if (checkFlag == 0) {
@@ -115,19 +115,19 @@ public class DomainLookup extends AppCompatActivity {
                     @Override
                     public void success(String s, Response response) {
                         if (s.equals("true")){
-                            Methods.showSnackBarPositive(DomainLookup.this, "Domain is available..");
+                            Methods.showSnackBarPositive(DomainLookup.this, getString(R.string.domain_is_available));
                             if(domainPurchase){
                                 PurchaseDomainDialog();
                             }
                         }
                         else{
-                            Methods.showSnackBarNegative(DomainLookup.this, "Domain is not available..");
+                            Methods.showSnackBarNegative(DomainLookup.this, getString(R.string.domain_not_available));
                         }
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
-                        Methods.showSnackBarNegative(DomainLookup.this, "Something went wrong, try again");
+                        Methods.showSnackBarNegative(DomainLookup.this, getString(R.string.something_went_wrong_try_again));
                     }
                 });
             }
@@ -137,10 +137,10 @@ public class DomainLookup extends AppCompatActivity {
 
     private void PurchaseDomainDialog() {
         new MaterialDialog.Builder(DomainLookup.this)
-                .title("Domain Booking Confirmation")
-				.content("Hello\nDo you want to set this "+domainName+domainType+" as your domain")
-                .positiveText("Yes")
-                .negativeText("No")
+                .title(getString(R.string.domain_booking_confirmation))
+				.content(getString(R.string.hello_do_you_want_this)+domainName+domainType+getString(R.string.as_domain))
+                .positiveText(getString(R.string.yes))
+                .negativeText(getString(R.string.no))
                 .positiveColorRes(R.color.primaryColor)
                 .negativeColorRes(R.color.light_gray)
                 .callback(new MaterialDialog.ButtonCallback() {
@@ -173,9 +173,9 @@ public class DomainLookup extends AppCompatActivity {
                 PrevDialog.dismiss();
                 //Show success dialog
                 new MaterialDialog.Builder(DomainLookup.this)
-                        .title("Success!")
-						.content("Thank you for your domain booking of "+domainName+domainType+" \nIt will be activated within 24 hours. ")
-                        .positiveText("Okay")
+                        .title(getString(R.string.success))
+						.content(getString(R.string.thank_for_booking_domain)+domainName+domainType+getString(R.string.activate_in_24_hours))
+                        .positiveText(getString(R.string.okay))
                         .positiveColorRes(R.color.primaryColor)
                         .negativeColorRes(R.color.light_gray)
                         .callback(new MaterialDialog.ButtonCallback() {
@@ -191,7 +191,7 @@ public class DomainLookup extends AppCompatActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                Methods.showSnackBarNegative(DomainLookup.this,"Something went wrong, Try again");
+                Methods.showSnackBarNegative(DomainLookup.this,getString(R.string.something_went_wrong_try_again));
             }
         });
         }

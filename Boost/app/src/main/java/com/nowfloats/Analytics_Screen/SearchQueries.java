@@ -41,7 +41,7 @@ public class SearchQueries extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         session = new UserSessionManager(getApplicationContext(),SearchQueries.this);
         TextView titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
-        titleTextView.setText("Search Queries");
+        titleTextView.setText(getResources().getString(R.string.search_queries));
 
         emptySearchLayout = (LinearLayout)findViewById(R.id.emptysearchlayout);
         recyclerView = (RecyclerView) findViewById(R.id.search_queries_recycler_view);

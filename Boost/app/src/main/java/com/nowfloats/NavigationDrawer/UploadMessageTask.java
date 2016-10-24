@@ -16,6 +16,7 @@ import com.nowfloats.NavigationDrawer.model.PostTextSuccessEvent;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.thinksity.R;
 
 import org.json.JSONObject;
 
@@ -245,7 +246,7 @@ public final class UploadMessageTask {
                 }
                 if (!success){
                     Log.i("Image UPLOAD FAILED","");
-                    Methods.showSnackBarNegative(appContext, "Image uploading failed. Please try again");
+                    Methods.showSnackBarNegative(appContext, appContext.getString(R.string.image_uploading_failed_try_again));
                     JSONObject obj2 = new JSONObject();
                     try {
                         obj2.put("dealId", txtId);
@@ -326,7 +327,7 @@ public final class UploadMessageTask {
                 public void failure(RetrofitError error) {
                     success = false;
                     Log.i("Image UPLOAD FAILED",""+error.getMessage());
-                    Methods.showSnackBarNegative(appContext, "Image uploading failed. Please try again");
+                    Methods.showSnackBarNegative(appContext, appContext.getString(R.string.image_uploading_failed_try_again));
                     JSONObject obj2 = new JSONObject();
                     try {
                         obj2.put("dealId", txtId);

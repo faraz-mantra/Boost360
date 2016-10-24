@@ -48,7 +48,7 @@
              <TextView
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
-                 android:text="Open"
+                 android:text="@string/open"
                  android:textColor="#B3B3B3"
                  android:layout_marginTop="10dp"
                  android:layout_marginLeft="20dp"
@@ -95,7 +95,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Close"
+                    android:text="@string/close"
                     android:textColor="#B3B3B3"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="70dp"/>
@@ -166,7 +166,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Monday"
+                        android:text="@string/monday"
                         android:textSize="16sp"
                         android:layout_weight="9"
                         android:textColor="#575757"/>
@@ -199,7 +199,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Tuesday"
+                        android:text="@string/tuesday"
                         android:textSize="16sp"
                         android:layout_weight="9"
                         android:textColor="#575757"/>
@@ -229,7 +229,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Wednesday"
+                        android:text="@string/wednesday"
                         android:textSize="16sp"
                         android:layout_weight="9"
                         android:textColor="#575757"/>
@@ -260,7 +260,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Thursday"
+                        android:text="@string/thursday"
                         android:textSize="16sp"
                         android:layout_weight="9"
                         android:textColor="#575757"/>
@@ -290,7 +290,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Friday"
+                        android:text="@string/friday"
                         android:textSize="16sp"
                         android:layout_weight="9"
                         android:textColor="#575757"/>
@@ -320,7 +320,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Saturday"
+                        android:text="@string/saturday"
                         android:textSize="16sp"
                         android:layout_weight="9"
                         android:textColor="#575757"/>
@@ -350,7 +350,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sunday"
+                        android:text="@string/sunday"
                         android:textSize="16sp"
                         android:layout_weight="9"
                         android:textColor="#575757"/>

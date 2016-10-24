@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
 import com.nowfloats.NotificationCenter.NotificationFragment;
+import com.thinksity.R;
 
 public class TabPagerAdapter extends FragmentPagerAdapter  {
     Home_Main_Fragment homeFragment;
@@ -16,7 +17,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter  {
     int currentItem ;
     private FragmentManager mFragmentManager;
 
-    CharSequence Titles[]={"UPDATES","ANALYTICS","ALERTS"};
+    CharSequence Titles[]=appContext.getResources().getStringArray(R.array.dashboard_tabs);
     public TabPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         Log.d("Tap Pager Adapter"," Tab Pager Adapter ");

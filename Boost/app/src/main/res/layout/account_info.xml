@@ -28,7 +28,7 @@
                 android:layout_weight="1"
                 android:textSize="14sp"
                 fontPath="Roboto-Light.ttf"
-                android:text="Username"
+                android:text="@string/username"
                 android:layout_marginLeft="10dp"
                 android:textColor="@color/text_color_brown"
                 tools:ignore="MissingPrefix" />
@@ -54,7 +54,7 @@
             android:paddingLeft="8dp"
             android:paddingTop="8dp"
             fontPath="Roboto-Light.ttf"
-            android:text="PLANS IN USE"
+            android:text="@string/plans_in_use"
             android:textColor="@color/text_color_brown"
             tools:ignore="MissingPrefix" />
 
@@ -86,7 +86,7 @@
                 fontPath="Roboto-Light.ttf"
                 android:padding="1dp"
                 android:layout_marginLeft="6dp"
-                android:text="Buy"
+                android:text="@string/buy"
                 android:textColor="@color/text_color_brown"
                 android:id="@+id/zeroth_txt"
                 tools:ignore="MissingPrefix"/>
@@ -102,7 +102,7 @@
                 android:padding="1dp"
                 android:layout_marginTop="7dp"
                 android:background="@drawable/selector"
-                android:text="Buy"
+                android:text="@string/buy"
                 android:textColor="@color/white"
                 android:id="@+id/zeroth_storebtn"
                 tools:ignore="MissingPrefix" />

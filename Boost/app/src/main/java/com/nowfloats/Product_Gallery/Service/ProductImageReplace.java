@@ -37,7 +37,7 @@ public class ProductImageReplace extends AsyncTask<String,String,String>{
     protected void onPreExecute() {
         materialProgress = new MaterialDialog.Builder(activity)
                 .widgetColorRes(R.color.accentColor)
-                .content("Replacing image....")
+                .content(activity.getString(R.string.replacing_image))
                 .progress(true, 0)
                 .show();
         materialProgress.setCancelable(false);
@@ -64,7 +64,7 @@ public class ProductImageReplace extends AsyncTask<String,String,String>{
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Methods.showSnackBarPositive(activity, "Product image replaced successfully");
+                            Methods.showSnackBarPositive(activity, activity.getString(R.string.product_image_replaced_successfully));
                         }
                     });
                 }
@@ -80,7 +80,7 @@ public class ProductImageReplace extends AsyncTask<String,String,String>{
                     public void run() {
                         if (materialProgress!=null)
                             materialProgress.dismiss();
-                        Methods.showSnackBarNegative(activity,"Something went wrong ,Try again...");
+                        Methods.showSnackBarNegative(activity,activity.getString(R.string.something_went_wrong_try_again));
                     }
                 });
             }
@@ -92,7 +92,7 @@ public class ProductImageReplace extends AsyncTask<String,String,String>{
                 public void run() {
                     if (materialProgress!=null)
                         materialProgress.dismiss();
-                    Methods.showSnackBarNegative(activity,"Something went wrong ,Try again...");
+                    Methods.showSnackBarNegative(activity,activity.getString(R.string.something_went_wrong_try_again));
                 }
             });
         }

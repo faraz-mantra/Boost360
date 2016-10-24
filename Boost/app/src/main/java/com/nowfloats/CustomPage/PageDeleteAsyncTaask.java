@@ -51,7 +51,7 @@ public class PageDeleteAsyncTaask extends AsyncTask<String,String,String>{
     protected void onPreExecute() {
         materialProgress = new MaterialDialog.Builder(activity)
                 .widgetColorRes(R.color.accentColor)
-                .content("Deleting....")
+                .content(activity.getString(R.string.deleting))
                 .progress(true, 0)
                 .show();
         materialProgress.setCancelable(false);
@@ -112,7 +112,7 @@ public class PageDeleteAsyncTaask extends AsyncTask<String,String,String>{
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Methods.showSnackBarNegative(activity,"Something went wrong ,Try again...");
+                        Methods.showSnackBarNegative(activity,activity.getString(R.string.something_went_wrong_try_again));
                     }
                 });
             }
@@ -137,9 +137,9 @@ public class PageDeleteAsyncTaask extends AsyncTask<String,String,String>{
 //                    if (CustomPageActivity.recyclerView!=null){
 //                        CustomPageActivity.recyclerView.invalidate();
 //                    }
-                            Methods.showSnackBarPositive(activity, "Pages removed...");
+                            Methods.showSnackBarPositive(activity, activity.getString(R.string.page_removed));
                         }else{
-                            Methods.showSnackBarNegative(activity,"Something went wrong ,Try again...");
+                            Methods.showSnackBarNegative(activity,activity.getString(R.string.something_went_wrong_try_again));
                             if (CustomPageActivity.custompageAdapter!=null)
                                 CustomPageActivity.custompageAdapter.notifyDataSetChanged();
                             if (CustomPageActivity.recyclerView!=null)

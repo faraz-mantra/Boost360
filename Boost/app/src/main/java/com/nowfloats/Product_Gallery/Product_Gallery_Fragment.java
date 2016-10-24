@@ -23,7 +23,6 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
 import com.nowfloats.Product_Gallery.Service.ProductAPIService;
-import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -53,7 +52,7 @@ public class Product_Gallery_Fragment extends Fragment{
     int visibilityFlag = 1;
     private boolean userScrolled = false;
     private ProductAPIService apiService;
-    private String currencyValue = "INR";
+    private String currencyValue = getString(R.string.inr);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -235,7 +234,7 @@ public class Product_Gallery_Fragment extends Fragment{
             } else {
                 Product_Gallery_Fragment.empty_layout.setVisibility(View.GONE);
             }
-            Methods.showSnackBarNegative(activity, "Something went wrong, Try again...!");
+            Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
         }
     }
 
@@ -254,7 +253,7 @@ public class Product_Gallery_Fragment extends Fragment{
         if (HomeActivity.plusAddButton!=null)
             HomeActivity.plusAddButton.setVisibility(View.GONE);
         if(HomeActivity.headerText!=null)
-            HomeActivity.headerText.setText("Product Gallery");
+            HomeActivity.headerText.setText(getString(R.string.product_gallery));
     }
 
     @Override

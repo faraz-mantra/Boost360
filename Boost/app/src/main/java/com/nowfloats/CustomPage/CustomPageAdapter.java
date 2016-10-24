@@ -248,7 +248,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
     private void editPage(String pageId, final int pOs) {
         final MaterialDialog materialProgress = new MaterialDialog.Builder(appContext)
                 .widgetColorRes(R.color.accentColor)
-                .content("Loading....")
+                .content(appContext.getString(R.string.loading))
                 .progress(true, 0)
                 .show();
         materialProgress.setCancelable(false);
@@ -273,7 +273,12 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
                             Methods.showSnackBarNegative(appContext, "Page Detail not found");
                         }
                     });
-        }catch(Exception e){e.printStackTrace();Methods.showSnackBarNegative(appContext, "Something went wrong,Try again"); materialProgress.dismiss();}
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.something_went_wrong_try_again));
+            materialProgress.dismiss();
+        }
     }
 
 //    private void deletePage(String pageId,final MaterialDialog dialog, final int posi) {

@@ -2,13 +2,12 @@ package com.nowfloats.BusinessProfile.UI.UI.FAQ;
 
 import android.content.DialogInterface;
 import android.graphics.Typeface;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.SpannableString;
-import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.MenuItem;
@@ -41,7 +40,7 @@ public class FAQ_QandA_Activity extends ActionBarActivity {
         toolbar = (Toolbar)findViewById(R.id.app_bar_faq_qnada);
         setSupportActionBar(toolbar);
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
-        headerText.setText("FAQs");
+        headerText.setText(getResources().getString(R.string.faqs));
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -123,8 +122,8 @@ public class FAQ_QandA_Activity extends ActionBarActivity {
         message.loadData(text, "text/html", "utf-8");
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setView(message,(int)(25*dpi), (int)(5*dpi), (int)(14*dpi), (int)(5*dpi))
-                .setTitle("Answer")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setTitle(getResources().getString(R.string.answer))
+                .setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

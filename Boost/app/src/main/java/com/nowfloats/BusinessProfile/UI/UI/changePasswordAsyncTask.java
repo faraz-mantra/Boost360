@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.thinksity.R;
 
 import org.json.JSONObject;
 
@@ -37,10 +38,10 @@ public class changePasswordAsyncTask extends AsyncTask<Void, Void, Void> {
         if (pd!=null)
 		    pd.dismiss();
 		if (success) {
-            Methods.showSnackBarPositive(app,"Your password has been updated.");
+            Methods.showSnackBarPositive(app,context.getResources().getString(R.string.password_updated));
 //			app.finish();
 		} else {
-            Methods.showSnackBarNegative(app,"The password you entered is incorrect.");
+            Methods.showSnackBarNegative(app,context.getResources().getString(R.string.entered_password_incorrect));
 		}
 	}
 
@@ -48,8 +49,7 @@ public class changePasswordAsyncTask extends AsyncTask<Void, Void, Void> {
 	protected void onPreExecute() {
 		// TODO Auto-generated method stub
 		super.onPreExecute();
-		pd = ProgressDialog.show(context, "Please Wait",
-				"Updating your Password...");
+		pd = ProgressDialog.show(context, context.getResources().getString(R.string.please_wait),context.getResources().getString(R.string.updating_password));
 	}
 
 	@Override

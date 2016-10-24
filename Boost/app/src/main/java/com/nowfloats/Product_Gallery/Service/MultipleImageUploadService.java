@@ -4,8 +4,6 @@ import android.app.IntentService;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -14,18 +12,11 @@ import com.nowfloats.Product_Gallery.Product_Detail_Activity;
 import com.nowfloats.util.Constants;
 import com.thinksity.R;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by NowFloats on 06-09-2016.
@@ -77,10 +68,10 @@ public class MultipleImageUploadService extends IntentService{
             if(response.equals("true")){
                 mBuilder =
                         new NotificationCompat.Builder(this)
-                                .setContentTitle("Uploading")
+                                .setContentTitle(getString(R.string.uploading))
                                 .setStyle(new NotificationCompat.BigTextStyle()
-                                        .bigText("Upload Successful"))
-                                .setContentText("Uploading Successful: " + fileName)
+                                        .bigText(getString(R.string.upload_successful)))
+                                .setContentText(getString(R.string.upload_successful)+": " + fileName)
                                 .setLargeIcon(((BitmapDrawable)getResources().getDrawable(R.drawable.app_launcher)).getBitmap())
                                 .setSmallIcon(R.drawable.app_launcher2);
 
@@ -89,10 +80,10 @@ public class MultipleImageUploadService extends IntentService{
             }else {
                 mBuilder =
                         new NotificationCompat.Builder(this)
-                                .setContentTitle("Uploading")
+                                .setContentTitle(getString(R.string.uploading))
                                 .setStyle(new NotificationCompat.BigTextStyle()
-                                        .bigText("Upload Filed"))
-                                .setContentText("Error in Uploading: " + fileName)
+                                        .bigText(getString(R.string.upload_failed)))
+                                .setContentText(getString(R.string.error_in_uploading)+": " + fileName)
                                 .setLargeIcon(((BitmapDrawable)getResources().getDrawable(R.drawable.app_launcher)).getBitmap())
                                 .setSmallIcon(R.drawable.app_launcher2);
 
@@ -102,10 +93,10 @@ public class MultipleImageUploadService extends IntentService{
         if(a==0){
             mBuilder =
                     new NotificationCompat.Builder(this)
-                            .setContentTitle("Uploading")
+                            .setContentTitle(getString(R.string.uploading))
                             .setStyle(new NotificationCompat.BigTextStyle()
-                                    .bigText(mSuccessCount + " Uploaded and " + (mTotalCount-mSuccessCount) + " Failed"))
-                            .setContentText(mSuccessCount + " Uploaded and " + (mTotalCount-mSuccessCount) + " Failed")
+                                    .bigText(mSuccessCount + getString(R.string.uploaded_and) + (mTotalCount-mSuccessCount) +getString(R.string.failed)))
+                            .setContentText(mSuccessCount + getString(R.string.uploaded_and) + (mTotalCount-mSuccessCount) + getString(R.string.failed))
                             .setLargeIcon(((BitmapDrawable)getResources().getDrawable(R.drawable.app_launcher)).getBitmap())
                             .setSmallIcon(R.drawable.app_launcher2);
 
@@ -119,10 +110,10 @@ public class MultipleImageUploadService extends IntentService{
     private String startUpload(String filename, String targetUrl){
         mNotificationManager = (NotificationManager)this.getSystemService(Context.NOTIFICATION_SERVICE);
         mBuilder = new NotificationCompat.Builder(this)
-                .setContentTitle("Uploading")
+                .setContentTitle(getString(R.string.uploading))
                 .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText("Uploading"))
-                .setContentText("Uploading Image: " + filename)
+                        .bigText(getString(R.string.uploading)))
+                .setContentText(getString(R.string.uploading_image)+": " + filename)
                 .setSmallIcon(R.drawable.app_launcher2);
 
         mNotificationManager.notify(16, mBuilder.build());

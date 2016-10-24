@@ -32,8 +32,6 @@ import com.nowfloats.util.ProgressBarAnimation;
 import com.thinksity.R;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 
@@ -299,7 +297,7 @@ public class Site_Meter_Fragment extends Fragment {
                     mProgressAnimation.setProgress(siteMeterTotalWeight);
                 }
                 if(meterReading!=null)
-                    meterReading.setText(siteMeterTotalWeight+"% site completed");
+                    meterReading.setText(siteMeterTotalWeight+getString(R.string.percent_site_completed));
                 }
         });
 //        if (scaleAdapter!=null)

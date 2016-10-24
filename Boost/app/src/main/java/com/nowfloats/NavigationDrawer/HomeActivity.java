@@ -34,7 +34,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -72,7 +71,6 @@ import com.nowfloats.NavigationDrawer.API.App_Update_Async_Task;
 import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
 import com.nowfloats.NavigationDrawer.API.KitsuneApi;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
-import com.nowfloats.NavigationDrawer.Chat.ChatRegResponse;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.nowfloats.RiaFCM.RiaFirebaseMessagingService;
@@ -113,7 +111,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -389,7 +386,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 } else {
                     try{
                         drawerFragment.mDrawerToggle.setDrawerIndicatorEnabled(true);
-                        headerText.setText("Custom Pages");
+                        headerText.setText(getString(R.string.custom_pages));
                         shareButton.setVisibility(View.GONE);
                         CustomPageActivity.customPageDeleteCheck = false;
                         CustomPageAdapter.deleteCheck = false;
@@ -626,7 +623,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         if (!backChk){
             start_backclick();
             backChk = true;
-            Methods.showSnackBar(HomeActivity.this,"Please click again to exit...");
+            Methods.showSnackBar(HomeActivity.this,getString(R.string.click_again_to_exit));
         }
     }
 
@@ -647,10 +644,10 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
     public void appUpdateAlertDilog(final Activity mContext) {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(mContext)
-                .title("App update available")
-                .content("You are using an old version of NowFloats Boost. Update the app to get new features and enhancements")
-                .positiveText("Update")
-                .negativeText("Remind me Later")
+                .title(getString(R.string.app_update_available))
+                .content(getString(R.string.update_nowfloats_app))
+                .positiveText(getString(R.string.update))
+                .negativeText(getString(R.string.remind_me_later))
                 .positiveColorRes(R.color.primaryColor)
                 .negativeColorRes(R.color.primaryColor)
                 .callback(new MaterialDialog.ButtonCallback() {
@@ -737,16 +734,16 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 if(clickCnt == 0){
                     MixPanelController.track(EventKeysWL.WELCOME_SCREEN_2, null);
                     titleTextView.setText(getResources().getString(R.string.onboarding_screen_2_title));
-                    descTextView.setText(Html.fromHtml("<font>Update your website </font>" + "<font color='#FFB900'>twice a week. </font>"+"<font>Just press the plus button at the bottom and simply tell your customers about your products, services or offers </font>"));
-                    showNextButton.setText("Got it,Next");
+                    descTextView.setText(Html.fromHtml(getString(R.string.update_website_twice_week)));
+                    showNextButton.setText(getString(R.string.got_it_next));
                     imageView.setImageResource(R.drawable.onboarding_popup_two_image);
                     imageView.setBackgroundColor(getResources().getColor(R.color.primaryColor));
                     clickCnt++;
                 }else if(clickCnt == 1){
                     MixPanelController.track(EventKeysWL.WELCOME_SCREEN_3, null);
                     titleTextView.setText(getResources().getString(R.string.onboarding_screen_3_title));
-                    descTextView.setText(Html.fromHtml("<font>People around your business are searching for stuff you sell, so keep your updates </font>" + "<font color='#FFB900'>relevant and fresh.</font>" + "<font>This will you lead to attract more customers and generate more revenue.</font>"));
-                    showNextButton.setText("Great, Thanks");
+                    descTextView.setText(Html.fromHtml(getString(R.string.people_are_searching_keep_your_updates)));
+                    showNextButton.setText(getString(R.string.greate_thanks));
                     imageView.setImageResource(R.drawable.onboarding_popup_three);
                     imageView.setBackgroundColor(getResources().getColor(R.color.white));
                     clickCnt++;
@@ -786,9 +783,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         new MaterialDialog.Builder(HomeActivity.this)
 
                 .iconRes(R.drawable.domain_lookup_icon)
-                .title("Get a free .com! ")
-                .content("  Voila! You are now eligible to get a free domain. Request a .com/.net of your choice and we will integrate it to your website within 24 hours.")
-                .positiveText("Request Now")
+                .title(getString(R.string.get_free_com))
+                .content(getString(R.string.you_are_eligible_to_free_domain))
+                .positiveText(getString(R.string.request_now))
 
                 .positiveColorRes(R.color.primaryColor)
                 .negativeColorRes(R.color.primaryColor)
@@ -886,17 +883,17 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     }
 
     private void enableKitsune() {
-        final ProgressDialog pg = ProgressDialog.show(this,"" , "Wait for the new look...");
+        final ProgressDialog pg = ProgressDialog.show(this,"" , getString(R.string.wait_for_new_look));
         new KitsuneApi(session.getFpTag()).setResultListener(new KitsuneApi.ResultListener() {
             @Override
             public void onResult(String response, boolean isError) {
                 pg.dismiss();
                 if(response.equals("true") && !isError){
-                    Methods.showSnackBarPositive(HomeActivity.this, "Your Website Appearance is changed");
+                    Methods.showSnackBarPositive(HomeActivity.this, getString(R.string.your_website_appearance_changed));
                     session.storeFpWebTempalteType("6");
                 }
                 else {
-                    Methods.showSnackBarNegative(HomeActivity.this, "Couldn't change Website Appearance");
+                    Methods.showSnackBarNegative(HomeActivity.this, getString(R.string.can_not_change_appearance));
                 }
             }
         }).enableKitsune();
@@ -977,7 +974,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (nextScreen.equals("Business Profile"))
+                if (nextScreen.equals(getString(R.string.business_profile)))
                 {
                     //Intent businessProfileIntent = new Intent(HomeActivity.this, BusinessProfile_HomeActivity.class);
                     //startActivity(businessProfileIntent)
@@ -999,21 +996,21 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 }else if(nextScreen.equals(getResources().getString(R.string.side_panel_site_appearance))){
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,mSiteAppearanceFragement).
                             commit();
-                }else if (nextScreen.equals("Image Gallery"))
+                }else if (nextScreen.equals(getString(R.string.image_gallery)))
                 {
                     // Intent imageGalleryIntent = new Intent(HomeActivity.this, Image_Gallery_MainActivity.class);
                     // startActivity(imageGalleryIntent);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,imageGalleryFragment).
                             commit();
-                }else if (nextScreen.equals("Product Gallery"))
+                }else if (nextScreen.equals(getString(R.string.product_gallery)))
                 {
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,productGalleryFragment).commit();
-                }else if (nextScreen.equals("Site Meter"))
+                }else if (nextScreen.equals(getString(R.string.site__meter)))
                 {
                     // Intent imageGalleryIntent = new Intent(HomeActivity.this, Image_Gallery_MainActivity.class);
                     // startActivity(imageGalleryIntent);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,siteMeterFragment).addToBackStack(null).commit();
-                }else if(nextScreen.equals("Home")) {
+                }else if(nextScreen.equals(getString(R.string.home))) {
                     headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
                     setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
                     plusAddButton.setVisibility(View.GONE);
@@ -1025,28 +1022,28 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,homeFragment, "homeFragment").commit();
                     //   getSupportFragmentManager().beginTransaction().
                     //           replace(R.id.mainFrame, homeFragment).addToBackStack("Home").commit();
-                }else if(nextScreen.equals("Chat"))
+                }else if(nextScreen.equals(getString(R.string.chat)))
                 {
                     //Konotor.getInstance(getApplicationContext()).launchFeedbackScreen(HomeActivity.this);
                     Mobihelp.showConversations(HomeActivity.this);
                     //Konotor.getInstance(getApplicationContext()).launchFeedbackScreen(HomeActivity.this);
-                }else  if(nextScreen.equals("Call"))
+                }else  if(nextScreen.equals(getString(R.string.call)))
                 {
                     Intent call = new Intent(Intent.ACTION_DIAL);
                     String callString = "tel:"+getString(R.string.contact_us_number);
                     call.setData(Uri.parse(callString));
                     startActivity(call);
-                }else if(nextScreen.equals("Share"))
+                }else if(nextScreen.equals(getString(R.string.share)))
                 {
                     String url = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
                     if (!Util.isNullOrEmpty(url)) {
                         String eol = System.getProperty("line.separator");
-                        url = "Woohoo! We have a new website. Visit it at "
+                        url = getString(R.string.visit_to_new_website)
                                 + eol + url.toLowerCase();
                     }
                     else{
                         String eol = System.getProperty("line.separator");
-                        url = "Woohoo! We have a new website. Visit it at "
+                        url = getString(R.string.visit_to_new_website)
                                 + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
                                 + getResources().getString(R.string.tag_for_partners);
                     }
@@ -1054,7 +1051,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 //                    Constants.PREF_NAME, Activity.MODE_PRIVATE);
 //            prefsEditor = pref.edit();
                     shareWebsite(url);
-                }else if(nextScreen.equals("Business Enquiries"))
+                }else if(nextScreen.equals(getString(R.string.business_enquiries_title)))
                 {
                     // ft.remove(homeFragment);
 
@@ -1087,7 +1084,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         final Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, text);
-        startActivity(Intent.createChooser(intent, "Share with:"));
+        startActivity(Intent.createChooser(intent, getString(R.string.share_with)));
 //        prefsEditor.putBoolean("shareWebsite", true);
 //        prefsEditor.commit();
 //        Constants.websiteShared = true;
@@ -1254,10 +1251,10 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         boolean dialogShowFlag = true;
         switch (expireAccount) {
             case LIGHT_HOUSE_EXPIRE:
-                callUsButtonText = "BUY";
-                cancelButtonText = "LATER";
-                dialogTitle = "Renew Lighthouse plan to get all the features";
-                dialogMessage = "Your Lighthouse plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others";
+                callUsButtonText = getString(R.string.buy_in_capital);
+                cancelButtonText = getString(R.string.later_in_capital);
+                dialogTitle = getString(R.string.renew_light_house_plan);
+                dialogMessage = getString(R.string.light_house_plan_expired_some_features_visible);
                 dialogImage = R.drawable.androidexpiryxxxhdpi;
                 dialogImageBgColor = Color.parseColor("#ff0010");
                 break;
@@ -1268,14 +1265,14 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 if(!ignoreclicked) {
                     days = pref.getInt("Days_remain", 0);
                     if (days <= 0) {
-                        dialogTitle = "Renew Wildfire plan";
-                        dialogMessage = "Your Wildfire plan has expired. Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.";
+                        dialogTitle = getString(R.string.renew_wildfire_plan);
+                        dialogMessage = getString(R.string.continue_auto_promoting_on_google);
                     } else {
-                        dialogTitle = "Wildfire plan will expire in " + days + "days";
-                        dialogMessage = "Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.";
+                        dialogTitle = getString(R.string.wildfire_will_expire) + days + getString(R.string.days);
+                        dialogMessage = getString(R.string.continue_auto_promoting_on_google);
                     }
-                    callUsButtonText = "RENEW";
-                    cancelButtonText = "IGNORE";
+                    callUsButtonText = getString(R.string.renew_in_capital);
+                    cancelButtonText = getString(R.string.ignore_in_capital);
                     dialogImage = R.drawable.wild_fire_expire;
                     dialogImageBgColor = Color.parseColor("#ffffff");
                 }else {
@@ -1285,10 +1282,10 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             case DEMO_EXPIRE:
                 dialogImage = R.drawable.androidexpiryxxxhdpi;
                 dialogImageBgColor = Color.parseColor("#ff0010");
-                callUsButtonText = "BUY";
-                cancelButtonText = "LATER";
-                dialogTitle = "Buy Lighthouse plan to get all the features";
-                dialogMessage = "Your demo plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.";
+                callUsButtonText = getString(R.string.buy_in_capital);
+                cancelButtonText = getString(R.string.later_in_capital);
+                dialogTitle = getString(R.string.buy_light_house_plan);
+                dialogMessage = getString(R.string.demo_plan_expired);
                 break;
             default:
                 callUsButtonText = "";

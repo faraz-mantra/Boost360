@@ -122,7 +122,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
             domainCheck();
         }
         else{
-            Toast.makeText(WebSiteAddressActivity.this, "Please check your internet connection and try again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(WebSiteAddressActivity.this, getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show();
         }
         rTags = new HashSet<String>();
         xTags = new HashSet<String>();
@@ -153,7 +153,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
 
                 }
                 else{
-                    Toast.makeText(WebSiteAddressActivity.this, "Please check your internet connection and try again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WebSiteAddressActivity.this, getString(R.string.check_internet_connection), Toast.LENGTH_SHORT).show();
                 }
 
                 if (firstCheck) {
@@ -207,7 +207,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
 
     private void createStore_retrofit(WebSiteAddressActivity webSiteAddressActivity, HashMap<String, String> jsonData, Bus bus) {
 
-        pd = ProgressDialog.show(WebSiteAddressActivity.this, "", "Creating Website ...");
+        pd = ProgressDialog.show(WebSiteAddressActivity.this, "", getString(R.string.creating_website));
         pd.setCancelable(false);
         new Create_Tag_Service(webSiteAddressActivity,jsonData,bus);
     }
@@ -368,9 +368,9 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
         {
             AlertDialog.Builder builderInner = new AlertDialog.Builder(
                     this);
-            builderInner.setMessage("Please try again ."+error);
-            builderInner.setTitle("Error!");
-            builderInner.setPositiveButton("Ok",
+            builderInner.setMessage(getString(R.string.try_again)+error);
+            builderInner.setTitle(getString(R.string.error));
+            builderInner.setPositiveButton(getString(R.string.ok),
                     new DialogInterface.OnClickListener() {
 
                         @Override
@@ -419,7 +419,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                 if (mesg!=null && mesg.contains("org.json.JSONException: End of input at character 0 of")) {
                     // invalid tag
                     xTags.add(mtag);
-                    label.setText("Chosen website address is not available!");
+                    label.setText(getString(R.string.chosen_website_not_available));
                     domainCheck = false;
                     addressTagValid = false;
 
@@ -429,8 +429,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                         .contains("type java.lang.String cannot be converted to JSONObject")) {
                     mesg = mesg.replace(
                             "org.json.JSONException: Value ", "");
-                    mesg = mesg
-                            .replace(
+                    mesg = mesg.replace(
                                     " of type java.lang.String cannot be converted to JSONObject",
                                     "");
                     mesg = mesg.trim();
@@ -441,7 +440,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                         websiteTag = mesg;
                         addressTagValid = true;
 
-                        label.setText("Chosen website address is available!");
+                        label.setText(getString(R.string.chosen_website_available));
                         domainCheck = false;
                         //domainCheckPD.setVisibility(View.GONE);
                         domainCheckStatus.setVisibility(View.VISIBLE);
@@ -450,7 +449,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                         rTags.add(mesg);
                         aTag = mesg;
                         addressTagValid = false;
-                        label.setText("Chosen website address is not available!");
+                        label.setText(getString(R.string.chosen_website_not_available));
                         domainCheck = false;
                         // domainCheckPD.setVisibility(View.GONE);
                         domainCheckStatus.setVisibility(View.VISIBLE);
@@ -500,7 +499,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                                 String ttag = val.toUpperCase();
                                 if (rTags.contains(ttag)) {
                                     aTag = ttag;
-                                    label.setText("Chosen website address is available!");
+                                    label.setText(getString(R.string.chosen_website_available));
                                     domainCheck = false;
                                     // domainCheckPD.setVisibility(View.GONE);
                                     domainCheckStatus.setVisibility(View.VISIBLE);
@@ -508,7 +507,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                                 } else if (xTags.contains(ttag)) {
                                     // invalid tag
                                     mtag = ttag;
-                                    label.setText("Chosen website address is not available!");
+                                    label.setText(getString(R.string.chosen_website_not_available));
                                     domainCheck = false;
                                     //domainCheckPD.setVisibility(View.GONE);
                                     domainCheckStatus.setVisibility(View.VISIBLE);
@@ -520,7 +519,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                                     verifyTag(ttag);
                                 }
                             } else {
-                                label.setText("Please enter a valid website Name");
+                                label.setText(getString(R.string.enter_valid_website_name));
                                 domainCheck = false;
                                 //domainCheckPD.setVisibility(View.GONE);
                                 domainCheckStatus.setVisibility(View.VISIBLE);

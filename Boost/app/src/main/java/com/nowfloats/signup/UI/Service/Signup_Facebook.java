@@ -3,8 +3,6 @@ package com.nowfloats.signup.UI.Service;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -17,8 +15,8 @@ import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.signup.UI.API.getFacebookData;
 import com.nowfloats.util.Constants;
+import com.thinksity.R;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -30,9 +28,7 @@ import org.apache.http.params.HttpParams;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
 
 /**
  * Created by NowFloatsDev on 08/06/2015.
@@ -94,8 +90,7 @@ public class Signup_Facebook {
 
 
 
-                        System.out
-                                .println("******facebook.getAccessToken()****"
+                        System.out.println("******facebook.getAccessToken()****"
                                         + facebook.getAccessToken());
 
                         access_token = facebook.getAccessToken();
@@ -144,8 +139,7 @@ public class Signup_Facebook {
 
         @Override
         protected void onPreExecute() {
-            pd = ProgressDialog.show(facebookActivity, "Please wait",
-                    "Loading please wait..", true);
+            pd = ProgressDialog.show(facebookActivity, activity.getString(R.string.please_wait),activity.getString(R.string.loading_wait), true);
             pd.setCancelable(true);
 
         }
@@ -165,8 +159,7 @@ public class Signup_Facebook {
 //                textGender.setText(gender);
 //                userImage.setImageBitmap(profilePic);
             } else {
-                Toast.makeText(facebookActivity, "Connection Time out",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(facebookActivity, activity.getString(R.string.connection_time_out),Toast.LENGTH_SHORT).show();
             }
         }
 

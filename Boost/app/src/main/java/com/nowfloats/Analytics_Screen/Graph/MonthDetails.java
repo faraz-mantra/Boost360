@@ -46,9 +46,9 @@ public class MonthDetails extends ActionBarActivity implements View.OnClickListe
     static CallingTask callingTask;
     UserSessionManager session;
 
-    String[] dayNameArray = { "Sun","Mon","Tues","Wed","Thur","Fri","Sat" };
-    String[] weekNameArray = { "Week 1", "Week 2", "Week 3", "Week 4" };
-    String[] monthNameArray = { "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec" };
+    String[] dayNameArray = getResources().getStringArray(R.array.weeks);
+    String[] weekNameArray = getResources().getStringArray(R.array.week_with_num);
+    String[] monthNameArray = getResources().getStringArray(R.array.months);
     int[] colorArray = { Color.rgb(123,123,123),Color.rgb(100,100,100),Color.rgb(130,130,130),
             Color.rgb(115,115,115),Color.rgb(135,135,135),Color.rgb(135,135,135),
             Color.rgb(105,105,105),Color.rgb(123,120,110) };
@@ -116,35 +116,9 @@ public class MonthDetails extends ActionBarActivity implements View.OnClickListe
 
     private String getMonthName(int month)
     {
-        switch(month)
-        {
-            case 1:
-                return "January";
-            case 2:
-                return "February";
-            case 3:
-                return "March";
-            case 4:
-                return "April";
-            case 5:
-                return "May";
-            case 6:
-                return "June";
-            case 7:
-                return "July";
-            case 8:
-                return "August";
-            case 9:
-                return "September";
-            case 10:
-                return "Octover";
-            case 11:
-                return "November";
-            case 12:
-                return "December";
+        String[] months = getResources().getStringArray(R.array.months_with_full_name);
 
-        }
-        return "";
+        return months[month-1];
     }
 
     private void initialiseGraph(BarChart barChart)
@@ -590,11 +564,11 @@ public class MonthDetails extends ActionBarActivity implements View.OnClickListe
                 if(PageFragment.currentNumbers[currentMode] != null)
                 PageFragment.currentNumbers[currentMode].setText(total+"");
                 if (currentMode == MODE_WEEK) {
-                    dottedLine.setText("............................\nvisits this week");
+                    dottedLine.setText("............................\n"+getResources().getString(R.string.visit_this_week));
                 } else if (currentMode == MODE_MONTH) {
-                    dottedLine.setText("............................\nvisits this month");
+                    dottedLine.setText("............................\n"+getResources().getString(R.string.visit_this_month));
                 } else if (currentMode == MODE_YEAR) {
-                    dottedLine.setText("............................\nvisits this year");
+                    dottedLine.setText("............................\n"+getResources().getString(R.string.visit_this_year));
                 }
 
                 setupGraph(currentMode, dateArray, valueArray,barChart);

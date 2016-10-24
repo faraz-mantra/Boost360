@@ -6,22 +6,21 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
-import com.nowfloats.NavigationDrawer.Analytics_Fragment;
-import com.nowfloats.NavigationDrawer.Home_Main_Fragment;
-import com.nowfloats.NotificationCenter.NotificationFragment;
 import com.nowfloats.Store.AccountDetailsFragment;
 import com.nowfloats.Store.Store_Fragment;
+import com.thinksity.R;
 
 public class StorePagerAdapter extends FragmentPagerAdapter  {
     Context appContext;
     int currentItem ;
     private FragmentManager mFragmentManager;
 
-    CharSequence Titles[]={"ADDITIONAL PLANS", "ACTIVE PLANS"};
+    CharSequence Titles[];
     public StorePagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         Log.d("STORE Pager Adapter"," STORE Pager Adapter ");
         appContext = context ;
+        Titles=appContext.getResources().getStringArray(R.array.plans);
         mFragmentManager = fm;
     }
 

@@ -43,9 +43,9 @@ public class Graph_MainActivity extends AppCompatActivity implements View.OnClic
     private static final int MODE_YEAR = 2;
     int currentMode;
 
-    String[] dayNameArray = { "Sun","Mon","Tues","Wed","Thur","Fri","Sat" };
-    String[] weekNameArray = { "Week 1", "Week 2", "Week 3", "Week 4" };
-    String[] monthNameArray = { "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec" };
+    String[] dayNameArray = getResources().getStringArray(R.array.weeks);
+    String[] weekNameArray = getResources().getStringArray(R.array.week_with_num);
+    String[] monthNameArray = getResources().getStringArray(R.array.months);
     int[] colorArray = { Color.rgb(123,123,123),Color.rgb(100,100,100),Color.rgb(130,130,130),
             Color.rgb(115,115,115),Color.rgb(135,135,135),Color.rgb(135,135,135),
             Color.rgb(105,105,105),Color.rgb(123,120,110) };
@@ -73,7 +73,7 @@ public class Graph_MainActivity extends AppCompatActivity implements View.OnClic
         ab.setBackgroundDrawable(new ColorDrawable(Color.rgb(255,195,38)));
         ab.setHomeButtonEnabled(true);
         ab.setDisplayHomeAsUpEnabled(true);
-        ab.setTitle("Visits");
+        ab.setTitle(getResources().getString(R.string.visits));
         session = new UserSessionManager(getApplicationContext(),Graph_MainActivity.this);
 
         setTheme(R.style.Theme_CustomTheme);

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,7 +15,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.thinksity.R;
-import com.twitter.sdk.android.Twitter;
 
 public class TwitterAuthenticationActivity extends AppCompatActivity {
     public final static String EXTRA_URL = "extra_url";
@@ -90,7 +88,7 @@ public class TwitterAuthenticationActivity extends AppCompatActivity {
             super.onPageStarted(view, url, favicon);
             if (mDialog == null)
                 mDialog = new ProgressDialog(TwitterAuthenticationActivity.this);
-            mDialog.setMessage("Loading..");
+            mDialog.setMessage(getString(R.string.loading));
 
             if (!(mActivity.isFinishing())) {
                 mDialog.show();

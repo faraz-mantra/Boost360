@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,12 +80,12 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
                 if (storeData.get(position).Desc!=null)
                     holder.descText.setText(storeData.get(position).Desc);
                 holder.readmore.setPaintFlags(holder.readmore.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-                holder.readmore.setText("Read more");
+                holder.readmore.setText(appContext.getString(R.string.read_more));
                 if(modelKey.equals("active")){
                     holder.priceText.setVisibility(View.GONE);
                     holder.readmore.setVisibility(View.GONE);
                     holder.knowMoreText.setVisibility(View.VISIBLE);
-                    holder.knowMoreText.setText("KNOW MORE");
+                    holder.knowMoreText.setText(appContext.getString(R.string.know_more));
 //                    holder.validityText.setVisibility(View.VISIBLE);
 //                    holder.validityText.setText("("+storeData.get(position).ExpiryInMths+" months plan,"
 //                            +storeData.get(position).ValiditiyInMths+" months left"+")");

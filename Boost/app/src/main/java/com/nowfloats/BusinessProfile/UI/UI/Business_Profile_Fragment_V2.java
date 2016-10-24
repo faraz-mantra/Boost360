@@ -28,6 +28,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
+
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
@@ -95,11 +96,11 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                                     String url = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
                                     if (!Util.isNullOrEmpty(url)) {
                                         String eol = System.getProperty("line.separator");
-                                        url = "Woohoo! We have a new website. Visit it at "
+                                        url = getResources().getString(R.string.visit_to_new_website)
                                                 + eol + url.toLowerCase();
                                     } else {
                                         String eol = System.getProperty("line.separator");
-                                        url = "Woohoo! We have a new website. Visit it at "
+                                        url = getResources().getString(R.string.visit_to_new_website)
                                                 + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
                                                 + activity.getResources().getString(R.string.tag_for_partners);
                                     }
@@ -231,10 +232,10 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                                         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                     } else {
                                         new MaterialDialog.Builder(activity)
-                                                .title("Feature not available")
-                                                .content("Check the store for more information on upgrade plans")
-                                                .positiveText("Go to Store")
-                                                .negativeText("Cancel")
+                                                .title(getResources().getString(R.string.features_not_available))
+                                                .content(getResources().getString(R.string.check_store_for_upgrade_info))
+                                                .positiveText(getResources().getString(R.string.goto_store))
+                                                .negativeText(getResources().getString(R.string.cancel))
                                                 .positiveColorRes(R.color.primaryColor)
                                                 .negativeColorRes(R.color.light_gray)
                                                 .callback(new MaterialDialog.ButtonCallback() {
@@ -251,7 +252,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                                                         Home_Fragment_Tab.viewPager = null;
                                                         dialog.dismiss();
 //                                                    activity.getSupportFragmentManager().popBackStack();
-                                                        ((SidePanelFragment.OnItemClickListener) activity).onClick("Store");
+                                                        ((SidePanelFragment.OnItemClickListener) activity).onClick(getResources().getString(R.string.store));
                                                     }
                                                 }).show();
                                     }

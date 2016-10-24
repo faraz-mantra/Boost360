@@ -208,9 +208,9 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                                                 shareIntent.setAction(Intent.ACTION_SEND);
                                                 shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message);
                                                 if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
-                                                    appContext.startActivityForResult(Intent.createChooser(shareIntent, "Share your message"), 1);
+                                                    appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
                                                 } else {
-                                                    Methods.showSnackBarNegative(appContext, "No apps available for the action");
+                                                    Methods.showSnackBarNegative(appContext,appContext.getString(R.string.no_app_available_for_action));
                                                 }
                                             }catch (Exception e){
                                                 ActivityCompat.requestPermissions(appContext, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA}, 2);
@@ -220,7 +220,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                                         @Override
                                         public void onBitmapFailed(Drawable errorDrawable) {
                                             pd.dismiss();
-                                            Methods.showSnackBarNegative(appContext, "Failed to download Image");
+                                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
 
                                         }
 
@@ -233,7 +233,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
 
                         } else {
                             pd.dismiss();
-                            Methods.showSnackBarNegative(appContext, "Can't Share image content in Offline Mode");
+                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.can_not_share_image_offline_mode));
                         }
 
 
@@ -243,9 +243,9 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                         shareIntent.setAction(Intent.ACTION_SEND);
                         shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message);
                         if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
-                            appContext.startActivityForResult(Intent.createChooser(shareIntent, "Share your message"), 1);
+                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
                         } else {
-                            Methods.showSnackBarNegative(appContext, "No apps available for the action");
+                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
                         }
 
                     }
@@ -338,7 +338,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
             }
             if (!targetShareIntents.isEmpty()) {
                 System.out.println("Have Intent");
-                Intent chooserIntent = Intent.createChooser(targetShareIntents.remove(0), "Choose app to share");
+                Intent chooserIntent = Intent.createChooser(targetShareIntents.remove(0), appContext.getString(R.string.no_app_to_share));
                 chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetShareIntents.toArray(new Parcelable[]{}));
                 appContext.startActivity(chooserIntent);
             }
@@ -381,7 +381,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                         targetedShareIntents.add(targetedShare);
                     }
                 }
-                Intent chooserIntent = Intent.createChooser(targetedShareIntents.remove(0), "Share");
+                Intent chooserIntent = Intent.createChooser(targetedShareIntents.remove(0), appContext.getString(R.string.share));
                 chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toArray(new Parcelable[]{}));
                 appContext.startActivity(chooserIntent);
             }

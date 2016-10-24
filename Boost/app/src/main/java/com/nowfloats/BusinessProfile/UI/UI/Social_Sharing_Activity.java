@@ -202,7 +202,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                             .setmName("");
                     requestClient.connectNfx();
 
-                    pd = ProgressDialog.show(Social_Sharing_Activity.this, "", "Wait While Un Subscribing...");
+                    pd = ProgressDialog.show(Social_Sharing_Activity.this, "", getString(R.string.wait_while_unsubscribing));
                 }
             }
         });
@@ -231,7 +231,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                             .setmName("");
                     requestClient.connectNfx();
 
-                    pd = ProgressDialog.show(Social_Sharing_Activity.this, "", "Wait While Un Subscribing...");
+                    pd = ProgressDialog.show(Social_Sharing_Activity.this, "", getString(R.string.wait_while_unsubscribing));
 
                 }
             }
@@ -322,7 +322,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                             .setmCallType(TWITTER_DEACTIVATION)
                             .setmName("");
                     requestClient1.connectNfx();
-                    pd = ProgressDialog.show(Social_Sharing_Activity.this, "", "Wait While Un subscribing...");
+                    pd = ProgressDialog.show(Social_Sharing_Activity.this, "", getString(R.string.wait_while_unsubscribing));
 
                 }
             }
@@ -389,11 +389,11 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
 
     private void selectNumberUpdatesDialog(final String name) {
-        final String[] array = {"Post 5 Updates", "Post 10 Updates"};
+        final String[] array = getResources().getStringArray(R.array.post_updates);
         new MaterialDialog.Builder(Social_Sharing_Activity.this)
-                .title("Post to Facebook Page")
+                .title(getString(R.string.post_on_facebook))
                 .items(array)
-                .negativeText("Cancel")
+                .negativeText(getString(R.string.cancel))
                 .negativeColorRes(R.color.light_gray)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
@@ -449,7 +449,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 e.printStackTrace();
             }
         }else{
-            Toast.makeText(Social_Sharing_Activity.this, "Some problem with network or twitter ,Please try after some time...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Social_Sharing_Activity.this, getString(R.string.problem_with_twitter_try_later), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -504,7 +504,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                                     if (items != null && items.size() > 0) {
                                         final String[] array = items.toArray(new String[items.size()]);
                                         new MaterialDialog.Builder(Social_Sharing_Activity.this)
-                                                .title("Select a Page")
+                                                .title(getString(R.string.select_page))
                                                 .items(array)
                                                 .widgetColorRes(R.color.primaryColor)
                                                 .cancelable(false)
@@ -532,7 +532,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                                                     }
                                                 }).show();
                                     } else {
-                                        Methods.materialDialog(activity, "Uh oh~", "Looks like there is no Facebook page\nlinked to this account.");
+                                        Methods.materialDialog(activity, "Uh oh~", getString(R.string.look_like_no_facebook_page));
                                     }
                                 }
                             });
@@ -576,7 +576,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 .setmName(pageName);
         requestClient.connectNfx();
 
-        pd = ProgressDialog.show(this, "", "Wait While Subscribing...");
+        pd = ProgressDialog.show(this, "", getString(R.string.wait_while_subscribing));
 
         DataBase dataBase = new DataBase(activity);
         dataBase.updateFacebookPage(pageName, pageID, pageAccessToken);
@@ -810,14 +810,14 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         if(session.getFPDetails(Key_Preferences.FB_PULL_ENABLED).equals("true")){
             facebookautopost.setChecked(true);
             fbPullStatus.setVisibility(View.VISIBLE);
-            fbPullStatus.setText("Subscribed for pulling " + session.getFPDetails(Key_Preferences.FB_PULL_COUNT) + " updates from " + session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME) + " Facebook Page");
+            fbPullStatus.setText(getString(R.string.subscribe_for_pulling) + session.getFPDetails(Key_Preferences.FB_PULL_COUNT) + getString(R.string.update_from) + session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME) +getString(R.string.facebook_page));
         }
 
 
 
         if (!Util.isNullOrEmpty(Constants.FACEBOOK_USER_ACCESS_ID)) {
             facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
-            facebookHomeStatus.setText("connected");
+            facebookHomeStatus.setText(getString(R.string.connected));
             String fbUName = pref.getString("fbUserName", "");
             prefsEditor.putBoolean("fbShareEnabled", true);
             //   facebookHomeCheckBox.setChecked(true);
@@ -865,11 +865,11 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         Methods.isOnline(Social_Sharing_Activity.this);
         facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon_inactive));
         facebookHomeCheckBox.setChecked(false);
-        facebookPageStatus.setText("Disconnected");
+        facebookPageStatus.setText(getString(R.string.disconnected));
 
         facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebookpage_icon_inactive));
         facebookPageCheckBox.setChecked(false);
-        facebookHomeStatus.setText("Disconnected");
+        facebookHomeStatus.setText(getString(R.string.disconnected));
 
         if (!Util.isNullOrEmpty(session.getFacebookName())) {
             facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
@@ -888,7 +888,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             // String fbUName = pref.getString(TwitterConstants.PREF_USER_NAME, "");
             twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
             twitterCheckBox.setChecked(false);
-            twitterStatus.setText("Disconnected");
+            twitterStatus.setText(getString(R.string.disconnected));
         } else {
             twitterCheckBox.setChecked(true);
             String twitterName = mSharedPreferences.getString(TwitterConstants.PREF_USER_NAME, "");
@@ -915,9 +915,9 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                         mRequestToken, verifier);
                 //send twitter info
                 saveTwitterInformation(accessToken);
-                Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.success), Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.failed), Toast.LENGTH_SHORT).show();
                 BoostLog.d("Failed to login ",
                         e.getMessage());
             }
@@ -946,7 +946,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                         .setmName(username);
                 requestClient.connectNfx();
 
-                pd = ProgressDialog.show(this, "", "Wait While Subscribing...");
+                pd = ProgressDialog.show(this, "", getString(R.string.wait_while_subscribing));
 
                 SharedPreferences.Editor e = mSharedPreferences.edit();
                 e.putString(TwitterConstants.PREF_KEY_OAUTH_TOKEN, accessToken.getToken());
@@ -985,10 +985,10 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         AlertDialog.Builder mdialogBuilder = null;
         if (mdialogBuilder == null) {
             mdialogBuilder = new AlertDialog.Builder(Social_Sharing_Activity.this);
-            mdialogBuilder.setTitle("Alert");
-            mdialogBuilder.setMessage("No Network");
+            mdialogBuilder.setTitle(getString(R.string.alert));
+            mdialogBuilder.setMessage(getString(R.string.no_network));
 
-            mdialogBuilder.setPositiveButton("Enable",
+            mdialogBuilder.setPositiveButton(getString(R.string.enable),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             // launch setting Activity
@@ -1018,7 +1018,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         AlertDialog dialog = null;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message);
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

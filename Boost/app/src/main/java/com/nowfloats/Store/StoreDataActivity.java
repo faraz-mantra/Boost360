@@ -48,7 +48,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import it.sephiroth.android.library.easing.Linear;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -141,7 +140,7 @@ public class StoreDataActivity extends AppCompatActivity {
                     ClickedValues = sessionManager.getLocalStorePurchase();
                     if (ClickedValues.contains(product.Name)) {
 //                        if (sessionManager.getLightHousePurchase()){
-                            ProductPrice.setText("Already requested");
+                            ProductPrice.setText(getString(R.string.already_requested));
                             product_pay.setBackgroundColor(getResources().getColor(R.color.greenDark));
 //                        }
                     }
@@ -151,7 +150,7 @@ public class StoreDataActivity extends AppCompatActivity {
 //                    }
                     try {
                         if (product.Name.equalsIgnoreCase("NowFloats Dictate") || product.Name.equalsIgnoreCase("NowFloats WildFire")) {
-                            ProductPrice.setText("Contact Us");
+                            ProductPrice.setText(getString(R.string.contact_us));
                         }
                     }catch(Exception e){e.printStackTrace();}
 
@@ -172,12 +171,12 @@ public class StoreDataActivity extends AppCompatActivity {
                                             new Callback<String>() {
                                                 @Override
                                                 public void success(String s, Response response) {
-                                                    ProductPrice.setText("Already requested");
+                                                    ProductPrice.setText(getString(R.string.already_requested));
                                                     product_pay.setBackgroundColor(getResources().getColor(R.color.greenDark));
                                                     new MaterialDialog.Builder(StoreDataActivity.this)
-                                                            .title("Thank you for your interest!")
-                                                            .content("Our team will get in touch with you within 48 hours to tell you more about our pricing plans.")
-                                                            .negativeText("Ok")
+                                                            .title(getString(R.string.thank_you_for_your_interest))
+                                                            .content(getString(R.string.our_team_contact_in_48hours))
+                                                            .negativeText(getString(R.string.ok))
                                                             .negativeColorRes(R.color.light_gray)
                                                             .callback(new MaterialDialog.ButtonCallback() {
                                                                 @Override
@@ -194,7 +193,7 @@ public class StoreDataActivity extends AppCompatActivity {
                                                     runOnUiThread(new Runnable() {
                                                         @Override
                                                         public void run() {
-                                                            Methods.showSnackBarNegative(StoreDataActivity.this, "Please try again...");
+                                                            Methods.showSnackBarNegative(StoreDataActivity.this, getString(R.string.try_again));
                                                         }
                                                     });
                                                 }
@@ -222,13 +221,13 @@ public class StoreDataActivity extends AppCompatActivity {
                                     storeInterface.requestWidget(fpID, params, new Callback<String>() {
                                         @Override
                                         public void success(String s, Response response) {
-                                            ProductPrice.setText("Already requested");
+                                            ProductPrice.setText(getString(R.string.already_requested));
                                             product_pay.setBackgroundColor(getResources().getColor(R.color.greenDark));
 
                                             new MaterialDialog.Builder(StoreDataActivity.this)
-                                                    .title("Thank you for your interest!")
-                                                    .content("Our team will get in touch with you within 48 hours to tell you more about our pricing plans.")
-                                                    .negativeText("Ok")
+                                                    .title(getString(R.string.thank_you_for_your_interest))
+                                                    .content(getString(R.string.our_team_contact_in_48hours))
+                                                    .negativeText(getString(R.string.ok))
                                                     .negativeColorRes(R.color.light_gray)
                                                     .callback(new MaterialDialog.ButtonCallback() {
                                                         @Override
@@ -241,14 +240,14 @@ public class StoreDataActivity extends AppCompatActivity {
 
                                         @Override
                                         public void failure(RetrofitError error) {
-                                            Methods.showSnackBarNegative(StoreDataActivity.this, "Uh oh! Something went wrong. Please try again.");
+                                            Methods.showSnackBarNegative(StoreDataActivity.this, getString(R.string.something_went_wrong_try_again));
                                         }
                                     });
                                 } else {
                                     new MaterialDialog.Builder(StoreDataActivity.this)
-                                            .title("Processing your request")
-                                            .content("We are processing your request. We will get back to you on this as soon as we can. Thank you for your patience")
-                                            .negativeText("Ok")
+                                            .title(getString(R.string.processing_request))
+                                            .content(getString(R.string.processing_request_we_back_in_48hours))
+                                            .negativeText(getString(R.string.ok))
                                             .negativeColorRes(R.color.light_gray)
                                             .callback(new MaterialDialog.ButtonCallback() {
                                                 @Override
@@ -277,7 +276,7 @@ public class StoreDataActivity extends AppCompatActivity {
 //                    SKU_PACKAGE = "android.test.purchased";
                     try {
                         if (product.Name.equalsIgnoreCase("NowFloats Dictate") || product.Name.equalsIgnoreCase("NowFloats WildFire")) {
-                            ProductPrice.setText("Contact Us");
+                            ProductPrice.setText(getString(R.string.contact_us));
                         }
                     }catch(Exception e){e.printStackTrace();}
                     if(!(ProductPrice.getText().toString().equalsIgnoreCase("Contact Us"))){
@@ -301,12 +300,12 @@ public class StoreDataActivity extends AppCompatActivity {
                                             new Callback<String>() {
                                                 @Override
                                                 public void success(String s, Response response) {
-                                                    ProductPrice.setText("Already requested");
+                                                    ProductPrice.setText(getString(R.string.already_requested));
                                                     product_pay.setBackgroundColor(getResources().getColor(R.color.greenDark));
                                                     new MaterialDialog.Builder(StoreDataActivity.this)
-                                                            .title("Thank you for your interest!")
-                                                            .content("Our team will get in touch with you within 48 hours to tell you more about our pricing plans.")
-                                                            .negativeText("Ok")
+                                                            .title(getString(R.string.thank_you_for_your_interest))
+                                                            .content(getString(R.string.our_team_contact_in_48hours))
+                                                            .negativeText(getString(R.string.ok))
                                                             .negativeColorRes(R.color.light_gray)
                                                             .callback(new MaterialDialog.ButtonCallback() {
                                                                 @Override
@@ -323,7 +322,7 @@ public class StoreDataActivity extends AppCompatActivity {
                                                     runOnUiThread(new Runnable() {
                                                         @Override
                                                         public void run() {
-                                                            Methods.showSnackBarNegative(StoreDataActivity.this, "Please try again...");
+                                                            Methods.showSnackBarNegative(StoreDataActivity.this, getString(R.string.try_again));
                                                         }
                                                     });
                                                 }
@@ -354,9 +353,9 @@ public class StoreDataActivity extends AppCompatActivity {
                                     }
                                 } else {
                                     new MaterialDialog.Builder(StoreDataActivity.this)
-                                            .title("Unable to process your purchase")
-                                            .content("Please reach out to us at ria@nowfloats.com and will be get back to immediately.")
-                                            .negativeText("Close")
+                                            .title(getString(R.string.unable_to_process_purchase))
+                                            .content(getString(R.string.reach_out_ria))
+                                            .negativeText(getString(R.string.close))
                                             .positiveColorRes(R.color.primaryColor)
                                             .negativeColorRes(R.color.light_gray)
                                             .callback(new MaterialDialog.ButtonCallback() {
@@ -453,7 +452,7 @@ public class StoreDataActivity extends AppCompatActivity {
             mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
                 public void onIabSetupFinished(IabResult result) {
                     if (!result.isSuccess()) {
-                        Methods.showSnackBarNegative(StoreDataActivity.this, "Looks like there is an issue with your in-app billing setup. ");
+                        Methods.showSnackBarNegative(StoreDataActivity.this, getString(R.string.looks_an_issue_with_app));
                         materialProgress.dismiss();
                     }else {
                         MixPanelController.track(EventKeysWL.STORE_IN_APP_PURCHASE_INITIATION, null);
@@ -471,7 +470,7 @@ public class StoreDataActivity extends AppCompatActivity {
                                                 if (r.isSuccess()) Log.i("STORE Consume Success", "");
                                             }
                                         });
-                                        Methods.showSnackBarPositive(StoreDataActivity.this,"This pack is already purchased.");
+                                        Methods.showSnackBarPositive(StoreDataActivity.this,getString(R.string.pack_is_already_purchased));
                                         ProductPrice.setText(purchased);
                                         InAppPrize = purchased;
                                         setPrice(InAppPrize);
@@ -499,11 +498,11 @@ public class StoreDataActivity extends AppCompatActivity {
                                                 }
                                             }
                                             materialProgress.dismiss();
-                                            Methods.showSnackBarNegative(StoreDataActivity.this, "Failed to retrieve details. Please go back and try again" );
+                                            Methods.showSnackBarNegative(StoreDataActivity.this, getString(R.string.failed_to_retrive_detail_try) );
                                             return;
                                         }else{
                                             InAppPrize = inv.getSkuDetails(SKU_PACKAGE).getPrice();
-                                            ProductPrice.setText("Pay " +InAppPrize);
+                                            ProductPrice.setText(getString(R.string.pay) +InAppPrize);
                                             setPrice(InAppPrize);
                                             materialProgress.dismiss();
                                         }
@@ -564,7 +563,7 @@ public class StoreDataActivity extends AppCompatActivity {
                             public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
                                 if (result.isFailure()) {
                                     MixPanelController.track(EventKeysWL.STORE_IN_APP_PURCHASE_FAILURE, null);
-                                    Methods.showSnackBarNegative(StoreDataActivity.this, "Purchase failed. Please try again ");
+                                    Methods.showSnackBarNegative(StoreDataActivity.this, getString(R.string.purchase_failed_try));
                                     return;
                                 }else if(result.isSuccess()){
                                     Constants.lastPurchase = purchase;
@@ -619,7 +618,7 @@ public class StoreDataActivity extends AppCompatActivity {
                     EnablePackBoolean = true;
                     if(ProductPrice!=null)
                         ProductPrice.setText(purchased);
-                    Methods.showSnackBarPositive(StoreDataActivity.this, "Success! Your pack is now activated.");
+                    Methods.showSnackBarPositive(StoreDataActivity.this, getString(R.string.success_pack_is_active));
                     if(result.Result.equals("true") && result.StatusCode.equals("200")){
                         try{
                             MixPanelController.track(EventKeysWL.STORE_IN_APP_PURCHASE_PACKAGE_ACTIVATION, null);
@@ -636,7 +635,7 @@ public class StoreDataActivity extends AppCompatActivity {
                 @Override
                 public void failure(RetrofitError error) {
                     EnablePackBoolean = true;
-                    Methods.showSnackBarPositive(StoreDataActivity.this, "Something went wrong. Please try again");
+                    Methods.showSnackBarPositive(StoreDataActivity.this, getString(R.string.something_went_wrong_try_again));
                 }
             });
         }catch(Exception e){e.printStackTrace(); EnablePackBoolean = true;}

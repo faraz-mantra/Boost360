@@ -3,15 +3,12 @@ package com.nowfloats.NavigationDrawer;
 import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
-import android.content.ContentUris;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
@@ -52,7 +49,6 @@ import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
 import com.nowfloats.NotificationCenter.AlertArchive;
 import com.nowfloats.Twitter.TwitterConstants;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
@@ -72,7 +68,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 
 
 public class Create_Message_Activity extends AppCompatActivity {
@@ -171,8 +166,8 @@ public class Create_Message_Activity extends AppCompatActivity {
 
         post = (TextView) toolbar.findViewById(R.id.saveTextView);
         TextView titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
-        titleTextView.setText("Post An Update");
-        post.setText("POST");
+        titleTextView.setText(getString(R.string.post_update));
+        post.setText(getString(R.string.post_in_capital));
 
         post.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,7 +219,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                     overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 } else {
                     YoYo.with(Techniques.Shake).playOn(msg);
-                    Methods.showSnackBarNegative(Create_Message_Activity.this,"Please enter a message");
+                    Methods.showSnackBarNegative(Create_Message_Activity.this,getString(R.string.enter_message));
                 }
             }
         });
@@ -341,10 +336,10 @@ public class Create_Message_Activity extends AppCompatActivity {
                 if (Constants.isFirstTimeSendToSubscriber == false) {
                     Constants.isFirstTimeSendToSubscriber = true;
                     new MaterialDialog.Builder(Create_Message_Activity.this)
-                            .title("Send to Subscribers")
-                            .content("Enable this feature to send website updates to your subscribers via email.")
-                            .positiveText("Enable")
-                            .negativeText("Cancel")
+                            .title(getString(R.string.send_to_subscribers))
+                            .content(getString(R.string.unable_to_send_website_updates_to_subscribers))
+                            .positiveText(getString(R.string.enable))
+                            .negativeText(getString(R.string.cancel))
                             .positiveColorRes(R.color.primaryColor)
                             .negativeColorRes(R.color.light_gray)
                             .callback(new MaterialDialog.ButtonCallback() {
@@ -666,7 +661,7 @@ public class Create_Message_Activity extends AppCompatActivity {
             }
         } catch (ActivityNotFoundException anfe) {
             // display an error message
-            String errorMessage = "Whoops - your device doesn't support capturing images!";
+            String errorMessage = getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(activity,errorMessage);
         }
     }
@@ -713,7 +708,7 @@ public class Create_Message_Activity extends AppCompatActivity {
             }
         } catch (ActivityNotFoundException anfe) {
             // display an error message
-            String errorMessage = "Whoops - your device doesn't support capturing images!";
+            String errorMessage = getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(activity,errorMessage);
         }
     }
@@ -732,7 +727,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                 imageIconButton.setVisibility(View.VISIBLE);
                 imageIconButtonSelected = true ;
                 imageIconButton.setImageBitmap(bmp);
-                msg.setHint("Add some text to give context to the picture.");
+                msg.setHint(getString(R.string.add_context_to_picture));
             }
         }
     }
@@ -768,7 +763,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                 imageIconButton.setVisibility(View.VISIBLE);
                 imageIconButtonSelected = true ;
                 imageIconButton.setImageBitmap(bmp);
-                msg.setHint("Add some text to give context to the picture.");
+                msg.setHint(getString(R.string.add_context_to_picture));
             }
         }
     }
@@ -842,7 +837,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                     }
                 }catch (Exception e){
                     e.printStackTrace();
-                    Methods.showSnackBarNegative(Create_Message_Activity.this, "Please Select Offline Images Only");
+                    Methods.showSnackBarNegative(Create_Message_Activity.this, getString(R.string.select_offline_image));
                 }
 
             }
@@ -864,7 +859,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                             //if (replaceImage) replaceProductImage(product_data._id);
                         }
                     }else{
-                        Methods.showSnackBar(activity,"Try again....");
+                        Methods.showSnackBar(activity,getString(R.string.try_again));
                     }
                 }else{
                     path = getRealPathFromURI(picUri);
@@ -878,7 +873,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                 E.printStackTrace();
                 CameraBitmap.recycle();
                 System.gc();
-                Methods.showSnackBar(activity,"Try again....");
+                Methods.showSnackBar(activity,getString(R.string.try_again));
             }
         }
     }
@@ -1008,7 +1003,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                                     if (items!=null && items.size()>0){
                                         final String[] array = items.toArray(new String[items.size()]);
                                         new MaterialDialog.Builder(Create_Message_Activity.this)
-                                            .title("Select a Page")
+                                            .title(getString(R.string.select_page))
                                             .items(array)
                                             .widgetColorRes(R.color.primaryColor)
                                             .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
@@ -1035,7 +1030,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                                                 }
                                             }).show();
                                     }else {
-                                        Methods.materialDialog(activity,"Uh oh~","Looks like there is no Facebook page\nlinked to this account.");
+                                        Methods.materialDialog(activity,"Uh oh~",getString(R.string.look_like_no_facebook_page));
                                     }
                                 }
                             });

@@ -1,35 +1,28 @@
 package com.nowfloats.SiteAppearance;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
-import com.android.volley.Request;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.KitsuneApi;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
-import com.nowfloats.util.Utils;
 import com.thinksity.R;
 
 import org.json.JSONArray;
@@ -109,7 +102,7 @@ public class SiteAppearanceFragment extends Fragment {
             btnLearnMore.setVisibility(View.VISIBLE);
             tvKitsune.setText("REVERT TO OLD VERSION");*/
             setOldDesignVisibility();
-            tvKitsuneSwitch.setText("Learn more about new version");
+            tvKitsuneSwitch.setText(getString(R.string.learn_more_about_version));
             tvKitsuneSwitch.setTextColor(Color.parseColor("#808080"));
             ivKitsuneSwitch.setBackgroundColor(Color.parseColor("#00000000"));
             ivKitsuneSwitch.setImageDrawable(getResources().getDrawable(R.drawable.ic_learn_more));
@@ -125,29 +118,29 @@ public class SiteAppearanceFragment extends Fragment {
                     startActivity(i);
                 }else {
                     if (checkExpiry()) {
-                        final ProgressDialog pg = ProgressDialog.show(getActivity(), "", "Wait for the new look...");
+                        final ProgressDialog pg = ProgressDialog.show(getActivity(), "", getString(R.string.wait_for_new_look));
                         new KitsuneApi(session.getFpTag()).setResultListener(new KitsuneApi.ResultListener() {
                             @Override
                             public void onResult(String response, boolean isError) {
                                 pg.dismiss();
                                 if (response.equals("true") && !isError) {
-                                    Methods.showSnackBarPositive(getActivity(), "Your Website Appearance is changed");
+                                    Methods.showSnackBarPositive(getActivity(), getString(R.string.your_website_appearance_changed));
                                     tvHelpHeader.setText(getResources().getString(R.string.conv_sa_title));
                                     tvHelpBody.setText(getResources().getString(R.string.conv_sa_body));
                                     tvHelpFooter.setVisibility(View.GONE);
-                                    tvKitsuneSwitch.setText("Learn more about new version");
+                                    tvKitsuneSwitch.setText(getString(R.string.learn_more_about_version));
                                     tvKitsuneSwitch.setTextColor(Color.parseColor("#808080"));
                                     ivKitsuneSwitch.setBackgroundColor(Color.parseColor("#00000000"));
                                     ivKitsuneSwitch.setImageDrawable(getResources().getDrawable(R.drawable.ic_learn_more));
                                     setOldDesignVisibility();
                                     session.storeFpWebTempalteType("6");
                                 } else {
-                                    Methods.showSnackBarNegative(getActivity(), "Couldn't change Website Appearance");
+                                    Methods.showSnackBarNegative(getActivity(), getString(R.string.can_not_change_appearance));
                                 }
                             }
                         }).enableKitsune();
+                        Methods.showSnackBarNegative(getActivity(), getString(R.string.renew_to_use_feature));
                     }else {
-                        Methods.showSnackBarNegative(getActivity(), "Please Renew to use this feature");
                     }
                 }
             }
@@ -206,7 +199,7 @@ public class SiteAppearanceFragment extends Fragment {
                 //Write Code for submitting the feedback and disabling kitsune
                 //Also set the offline webtemplate to 4 in preference
                 if(cbOtherReasons.isChecked() && Util.isNullOrEmpty(et.getText().toString().trim())){
-                    Methods.showSnackBarNegative(getActivity(), "Please fill up the reasons");
+                    Methods.showSnackBarNegative(getActivity(), getString(R.string.fill_reasons));
                     return;
                 }
                 if(dialog.isShowing()) {
@@ -241,7 +234,7 @@ public class SiteAppearanceFragment extends Fragment {
                     }
                 }
                 if(!checkBoxFlag){
-                    Methods.showSnackBarNegative(getActivity(), "Please check any of the CheckBox");
+                    Methods.showSnackBarNegative(getActivity(), getString(R.string.check_any_checkbox));
                     return;
                 }
                 submitFeedBack(array);
@@ -259,15 +252,15 @@ public class SiteAppearanceFragment extends Fragment {
     }
 
     private void submitFeedBack(JSONArray array) {
-        final ProgressDialog pd= ProgressDialog.show(getActivity(), "", "Wait While reverting...");
+        final ProgressDialog pd= ProgressDialog.show(getActivity(), "", getString(R.string.wait_while_reverting));
         new KitsuneApi(session.getFpTag()).setResultListener(new KitsuneApi.ResultListener() {
             @Override
             public void onResult(String response, boolean isError) {
                 pd.dismiss();
                 if(!isError){
                     if(response.equals("true")){
-                        Methods.showSnackBarPositive(getActivity(), "Successfully Reverted");
-                        tvKitsuneSwitch.setText("Upgrade Now");
+                        Methods.showSnackBarPositive(getActivity(), getString(R.string.successfully_revert));
+                        tvKitsuneSwitch.setText(getString(R.string.upgrade_now));
                         tvKitsuneSwitch.setTextColor(getResources().getColor(R.color.primaryColor));
                         ivKitsuneSwitch.setImageDrawable(getResources().getDrawable(R.drawable.ic_enable_kitsune));
                         ivKitsuneSwitch.setBackgroundColor(getResources().getColor(R.color.primaryColor));
@@ -287,10 +280,10 @@ public class SiteAppearanceFragment extends Fragment {
                                     session.storeFpWebTempalteType("6");
                          */
                     }else {
-                        Methods.showSnackBarNegative(getActivity(), "Failed to revert");
+                        Methods.showSnackBarNegative(getActivity(), getString(R.string.failed_to_revert));
                     }
                 }else {
-                    Methods.showSnackBarNegative(getActivity(), "Failed to revert");
+                    Methods.showSnackBarNegative(getActivity(), getString(R.string.failed_to_revert));
                 }
             }
         }).disablekitsune(array.toString());

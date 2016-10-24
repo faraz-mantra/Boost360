@@ -54,7 +54,7 @@ public class VisitsPage extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
-        headerText.setText("Visits");
+        headerText.setText(getResources().getString(R.string.visits));
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

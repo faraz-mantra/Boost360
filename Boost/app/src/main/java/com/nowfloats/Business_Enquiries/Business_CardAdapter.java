@@ -112,12 +112,12 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
 //                img.setBounds( 0, 0, 60, 60 );
 //                contactText.setCompoundDrawables( img, null, null, null );
 //                holder.contactIcon.setImageResource(R.drawable.ic_mail_white_48dp);
-                contactText.setText("EMAIL");
+                contactText.setText(appContext.getResources().getString(R.string.email));
                 fromTextView.setText(data.contact);
 //                holder.setIsRecyclable(false);
             }else {
 //                holder.contactIcon.setImageResource(R.drawable.ic_call_white_48dp);
-                contactText.setText("CALL");
+                contactText.setText(appContext.getResources().getString(R.string.call));
                 fromTextView.setText(data.contact);
             }
             dateTextView.setText(data.createdOn);
@@ -167,7 +167,7 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
                     if(matchFound){
                         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                                 "mailto", headerValue, null));
-                        appContext.startActivity(Intent.createChooser(emailIntent, "Send email..."));
+                        appContext.startActivity(Intent.createChooser(emailIntent, appContext.getResources().getString(R.string.send_email)));
                     }else{
                         Intent call = new Intent(Intent.ACTION_DIAL);
                     call.setData(Uri.parse("tel:"+headerValue));

@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.CustomWidget.HttpDeleteWithBody;
-import com.nowfloats.Product_Gallery.Product_Detail_Activity;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
@@ -44,7 +43,7 @@ public class ProductDelete extends AsyncTask<String,String,String>{
     protected void onPreExecute() {
         materialProgress = new MaterialDialog.Builder(activity)
                 .widgetColorRes(R.color.accentColor)
-                .content("Deleting....")
+                .content(activity.getString(R.string.deleting))
                 .progress(true, 0)
                 .show();
         materialProgress.setCancelable(false);
@@ -57,11 +56,11 @@ public class ProductDelete extends AsyncTask<String,String,String>{
         if (flag){
             if (Product_Gallery_Fragment.productItemModelList!=null && Product_Gallery_Fragment.productItemModelList.size()>0)
                 Product_Gallery_Fragment.productItemModelList.remove(position);
-            Methods.showSnackBarPositive(activity, "Product is removed...");
+            Methods.showSnackBarPositive(activity, activity.getString(R.string.product_removed));
             activity.finish();
             activity.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         }else{
-            Methods.showSnackBarNegative(activity,"Something went wrong ,Try again...");
+            Methods.showSnackBarNegative(activity,activity.getString(R.string.something_went_wrong_try_again));
         }
     }
 

@@ -35,7 +35,7 @@
                     android:layout_weight="1"
                     android:textSize="14sp"
                     fontPath="Roboto-Light.ttf"
-                    android:text="Plan Name"
+                    android:text="@string/plan_name"
                     android:textColor="@color/text_color_brown"
                     tools:ignore="MissingPrefix" />
 
@@ -70,7 +70,7 @@
                     android:layout_weight="1"
                     android:textSize="14sp"
                     fontPath="Roboto-Light.ttf"
-                    android:text="Purchase Date"
+                    android:text="@string/purchase_date"
                     android:textColor="@color/text_color_brown"
                     tools:ignore="MissingPrefix" />
 
@@ -105,7 +105,7 @@
                     android:layout_weight="1"
                     android:textSize="14sp"
                     fontPath="Roboto-Light.ttf"
-                    android:text="Expiry Date"
+                    android:text="@string/expiry_date"
                     android:textColor="@color/text_color_brown"
                     tools:ignore="MissingPrefix" />
 
@@ -140,7 +140,7 @@
                     android:layout_weight="1"
                     android:textSize="14sp"
                     fontPath="Roboto-Light.ttf"
-                    android:text="Status"
+                    android:text="@string/status"
                     android:textColor="@color/text_color_brown"
                     tools:ignore="MissingPrefix" />
 
@@ -157,7 +157,7 @@
                         android:textSize="14sp"
                         fontPath="Roboto-Bold.ttf"
                         android:singleLine="true"
-                        android:text="EXPIRED"
+                        android:text="@string/expired"
                         android:gravity="left"
                         android:textColor="@color/green"
                         android:id="@+id/account_status"
@@ -173,7 +173,7 @@
                         android:gravity="center"
                         android:padding="1dp"
                         android:background="@drawable/selector"
-                        android:text="Renew"
+                        android:text="@string/renew"
                         android:textColor="@color/white"
                         android:id="@+id/storebtn"
                         tools:ignore="MissingPrefix" />

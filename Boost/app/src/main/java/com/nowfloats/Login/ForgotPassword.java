@@ -105,7 +105,7 @@ public class ForgotPassword extends Activity {
                 if (isUpdatedOnServer) {
                     SuccessDialog();
                 } else {
-                   Toast.makeText(ForgotPassword.this,"Please enter a correct username.",Toast.LENGTH_SHORT);
+                   Toast.makeText(ForgotPassword.this,getString(R.string.enter_correct_user_name),Toast.LENGTH_SHORT);
                 }
             }
         };
@@ -135,7 +135,7 @@ public class ForgotPassword extends Activity {
         // TODO Auto-generated method stub
 
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-        builder1.setMessage("Check your email");
+        builder1.setMessage(getString(R.string.check_your_email));
         AlertDialog alert11 = builder1.create();
         alert11.show();
 //        try{

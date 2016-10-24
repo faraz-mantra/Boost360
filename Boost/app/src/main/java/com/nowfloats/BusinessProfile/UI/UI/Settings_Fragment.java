@@ -64,7 +64,7 @@ public class Settings_Fragment extends Fragment {
             ((SidePanelFragment.OnItemClickListener) activity).onClick("Store");
         }
         if (HomeActivity.headerText != null)
-            HomeActivity.headerText.setText("Settings");
+            HomeActivity.headerText.setText(getString(R.string.setting));
     }
 
     @Override
@@ -167,7 +167,7 @@ public class Settings_Fragment extends Fragment {
 
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                         "mailto", headerValue, null));
-                 activity.startActivity(Intent.createChooser(emailIntent, "Send email..."));
+                 activity.startActivity(Intent.createChooser(emailIntent, getString(R.string.send_email)));
             }
         });
 
@@ -239,8 +239,8 @@ public class Settings_Fragment extends Fragment {
 
         new MaterialDialog.Builder(activity)
                 .customView(R.layout.exit_dialog, true)
-                .positiveText("Logout")
-                .negativeText("Cancel")
+                .positiveText(getString(R.string.setting_logout))
+                .negativeText(getString(R.string.cancel))
                 .positiveColorRes(R.color.primaryColor)
                 .negativeColorRes(R.color.light_gray)
                 .callback(new MaterialDialog.ButtonCallback() {
@@ -278,8 +278,8 @@ public class Settings_Fragment extends Fragment {
     public void changePassword() {
         new MaterialDialog.Builder(activity)
                 .customView(R.layout.change_password, true)
-                .positiveText("Ok")
-                .negativeText("Cancel")
+                .positiveText(getString(R.string.ok))
+                .negativeText(getString(R.string.cancel))
                 .positiveColorRes(R.color.primaryColor)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
@@ -312,14 +312,14 @@ public class Settings_Fragment extends Fragment {
                                     dialog.dismiss();
                                     task.execute();
                                 } else {
-                                    Methods.showSnackBarNegative(activity, "Please check your internet connectivity.");
+                                    Methods.showSnackBarNegative(activity, getString(R.string.check_internet_connection));
                                 }
 
                             } else {
-                                Methods.showSnackBarNegative(activity, "Both the passwords don't match.");
+                                Methods.showSnackBarNegative(activity, getString(R.string.both_password_not_matched));
                             }
                         } else {
-                            Methods.showSnackBarNegative(activity, "Min 6 characters are required.");
+                            Methods.showSnackBarNegative(activity, getString(R.string.min_6char_required));
                         }
                     }
                 })

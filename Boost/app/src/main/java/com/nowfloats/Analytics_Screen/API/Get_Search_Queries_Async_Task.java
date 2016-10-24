@@ -19,6 +19,7 @@ import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.thinksity.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,7 +68,7 @@ public final class Get_Search_Queries_Async_Task extends AsyncTask<Void, String,
         skipBy = HomeActivity.StorebizFloats.size();
         if(listView!=null && skipBy < 3)
         {
-            pd= ProgressDialog.show(appContext, null, "Fetching Search details...");
+            pd= ProgressDialog.show(appContext, null, appContext.getResources().getString(R.string.feching_search_detail));
             //pd = new ProgressDialog(appContext, R.style.MyTheme);
             pd.setCancelable(true);
            // pd.setMessage("Fetching Search details...");

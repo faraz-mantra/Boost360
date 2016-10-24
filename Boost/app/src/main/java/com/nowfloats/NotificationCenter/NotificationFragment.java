@@ -160,13 +160,13 @@ public class NotificationFragment extends Fragment{
                 @Override
                 public void failure(RetrofitError error) {
                     Log.i("loadAlerts failure",""+error.getMessage());
-                    Methods.showSnackBarNegative(activity,"something went wrong, Please try again");
+                    Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong_try_again));
                     progress_layout.setVisibility(View.GONE);
                 }
             });
         } catch (Exception e) {
             Log.i("Alert data","API Exception:"+e);
-            Methods.showSnackBarNegative(activity,"something went wrong, Please try again");
+            Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong_try_again));
             e.printStackTrace();
             progress_layout.setVisibility(View.GONE);
         }
@@ -198,13 +198,13 @@ public class NotificationFragment extends Fragment{
                 @Override
                 public void failure(RetrofitError error) {
                     Log.i("loadAlerts failure",""+error.getMessage());
-                    Methods.showSnackBarNegative(activity,"something went wrong, Try again");
+                    Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong_try_again));
                     progress_layout.setVisibility(View.GONE);
                 }
             });
         } catch (Exception e) {
             Log.i("Alert data","API Exception:"+e);
-            Methods.showSnackBarNegative(activity,"something went wrong, Try again");
+            Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong_try_again));
             e.printStackTrace();
             progress_layout.setVisibility(View.GONE);
         }

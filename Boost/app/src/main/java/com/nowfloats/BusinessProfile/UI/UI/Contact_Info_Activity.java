@@ -62,7 +62,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(),Contact_Info_Activity.this);
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
-        titleTextView.setText("Contact Information");
+        titleTextView.setText(getResources().getString(R.string.contact__info));
 
         saveTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -412,7 +412,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
                }
             else
             {
-                Methods.showSnackBarNegative(this,"Enter Valid Website");
+                Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_valid_website));
                 // Util.("Enter Valid Website", this);
                 allBoundaryCondtn=false;
             }
@@ -460,7 +460,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
 
             }
             else{
-                Methods.showSnackBarNegative(this,"Please enter valid email");
+                Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_valid_email));
                 allBoundaryCondtn=false;
             }
         }
@@ -472,7 +472,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
                     primary = msgtxt4primaryno;
                     if(primary.length()==0 )
                     {
-                        Methods.showSnackBarNegative(this,"Primary number cannot be empty");
+                        Methods.showSnackBarNegative(this,getResources().getString(R.string.primary_num_can_not_empty));
 
                         flag4primaryno=false;
                         flag4alternate1=false;
@@ -486,7 +486,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
                     }
                     if(msgtxt4primaryno.length()>0 && msgtxt4primaryno.length()<=6)
                     {
-                        Methods.showSnackBarNegative(this,"Phone number should be between 6 - 12 characters");
+                        Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_password_6to12_char));
                         flag4primaryno=false;
                         flag4alternate1=false;
                         flag4alternate2=false;
@@ -513,7 +513,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
                             : msgtxt4alternateno1;
                     if(msgtxt4alternateno1.length()>0 && msgtxt4alternateno1.length()<6)
                     {
-                        Methods.showSnackBarNegative(this,"Phone number should be between 6 - 12 characters");
+                        Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_password_6to12_char));
 
                         flag4primaryno=false;
                         flag4alternate1=false;
@@ -542,7 +542,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
                             : msgtxtalternate2;
                     if(msgtxtalternate2.length()>0 && msgtxtalternate2.length()<6)
                     {
-                        Methods.showSnackBarNegative(this,"Phone number should be between 6 - 12 characters");
+                        Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_password_6to12_char));
                         flag4primaryno=false;
                         flag4alternate1=false;
                         flag4alternate2=false;
@@ -622,7 +622,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
             else
             {
                 YoYo.with(Techniques.Shake).playOn(websiteAddress);
-                Methods.showSnackBarNegative(this,"Enter Valid Website");
+                Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_valid_website));
                 // Util.("Enter Valid Website", this);
                 allBoundaryCondtn=false;
             }
@@ -685,7 +685,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
             }
             else{
                 YoYo.with(Techniques.Shake).playOn(emailAddress);
-                Methods.showSnackBarNegative(this,"Please enter valid email");
+                Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_valid_email));
                 allBoundaryCondtn=false;
             }
         }
@@ -698,7 +698,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
                     if(primary.length()==0 )
                     {
                         YoYo.with(Techniques.Shake).playOn(primaryNumber);
-                        Methods.showSnackBarNegative(this,"Primary number cannot be empty");
+                        Methods.showSnackBarNegative(this,getResources().getString(R.string.primary_num_can_not_empty));
 
                         flag4primaryno=false;
                         flag4alternate1=false;
@@ -713,7 +713,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
                     if(msgtxt4primaryno.length()>0 && msgtxt4primaryno.length()<=6)
                     {
                         YoYo.with(Techniques.Shake).playOn(primaryNumber);
-                        Methods.showSnackBarNegative(this,"Phone number should be between 6 - 12 characters");
+                        Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_password_6to12_char));
                         flag4primaryno=false;
                         flag4alternate1=false;
                         flag4alternate2=false;
@@ -743,7 +743,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
                     if(msgtxt4alternateno1.length()>0 && msgtxt4alternateno1.length()<6)
                     {
                         YoYo.with(Techniques.Shake).playOn(alternateNumber_1);
-                        Methods.showSnackBarNegative(this,"Phone number should be between 6 - 12 characters");
+                        Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_password_6to12_char));
 
                         flag4primaryno=false;
                         flag4alternate1=false;
@@ -772,7 +772,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
                             : msgtxtalternate2;
                     if(msgtxtalternate2.length()>0 && msgtxtalternate2.length()<6)
                     {YoYo.with(Techniques.Shake).playOn(alternateNumber_2);
-                        Methods.showSnackBarNegative(this,"Phone number should be between 6 - 12 characters");
+                        Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_password_6to12_char));
                         flag4primaryno=false;
                         flag4alternate1=false;
                         flag4alternate2=false;

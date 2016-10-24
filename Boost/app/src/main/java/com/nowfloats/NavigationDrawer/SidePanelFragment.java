@@ -53,7 +53,6 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 import com.thinksity.R;
 
 import java.util.HashMap;
@@ -235,7 +234,7 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MixPanelController.track("SiteScore", null);
-                ((OnItemClickListener) mainActivity).onClick("Site Meter");
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.site__meter));
                 onclickColorChange(null, null);
             }
         });
@@ -283,7 +282,7 @@ public class SidePanelFragment extends Fragment {
                 LinearLayout deleteImage = (LinearLayout) view.findViewById(R.id.deletebackgroundImage);
                 deleteImage.setVisibility(View.GONE);
                 TextView title = (TextView) view.findViewById(R.id.textview_heading);
-                title.setText("Upload Background Image");
+                title.setText(getString(R.string.upload_background_image));
                 LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
                 LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
 
@@ -429,7 +428,7 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //dashBoardTextView.setTextColor(Color.);
-                ((OnItemClickListener) mainActivity).onClick("Home");
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.home));
                 MixPanelController.track(EventKeysWL.SIDE_PANEL_DASHBOARD, null);
                 onclickColorChange(dasbBoardImageView, dashBoardTextView);
             }
@@ -439,7 +438,7 @@ public class SidePanelFragment extends Fragment {
         profileLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((OnItemClickListener) mainActivity).onClick("Business Profile");
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.business_profile));
                 onclickColorChange(businessProfileImageView, businessProfileTextView);
                 MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_PROFILE, null);
             }
@@ -464,7 +463,7 @@ public class SidePanelFragment extends Fragment {
                 }
                 onclickColorChange(customerQueriesImageView, customerQueries);
                 if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TOB).contains("TOB")) {
-                    ((OnItemClickListener) mainActivity).onClick("Business Enquiries");
+                    ((OnItemClickListener) mainActivity).onClick(getString(R.string.business_enquiries_title));
                     MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_ENQUIRIES, null);
                 } else {
                     showAlertMaterialDialog();
@@ -478,7 +477,7 @@ public class SidePanelFragment extends Fragment {
             public void onClick(View v) {
                 onclickColorChange(imageGalleryImageView, imageGalleryTextView);
                 if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_GALLERY).contains("IMAGEGALLERY")) {
-                    ((OnItemClickListener) mainActivity).onClick("Image Gallery");
+                    ((OnItemClickListener) mainActivity).onClick(getString(R.string.image_gallery));
                     MixPanelController.track(EventKeysWL.SIDE_PANEL_IMAGE_GALLERY, null);
                 } else {
                     showAlertMaterialDialog();
@@ -492,7 +491,7 @@ public class SidePanelFragment extends Fragment {
             public void onClick(View v) {
                 onclickColorChange(productGalleryImageView, productGalleryTextView);
                 if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_PRODUCT_GALLERY).contains("PRODUCTCATALOGUE")) {
-                    ((OnItemClickListener) mainActivity).onClick("Product Gallery");
+                    ((OnItemClickListener) mainActivity).onClick(getString(R.string.product_gallery));
                     MixPanelController.track(EventKeysWL.SIDE_PANEL_PRODUCT_GALLERY, null);
                 } else {
                     showAlertMaterialDialog();
@@ -505,7 +504,7 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 onclickColorChange(StoreImageView, StoreTextView);
-                ((OnItemClickListener) mainActivity).onClick("Store");
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.store));
                 MixPanelController.track(EventKeysWL.SIDE_PANEL_PRODUCT_GALLERY, null);
             }
         });
@@ -533,7 +532,7 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 onclickColorChange(settingsImageView, settingsText);
-                ((OnItemClickListener) mainActivity).onClick("Settings");
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.setting));
                 MixPanelController.track(EventKeysWL.SIDE_PANEL_SETTINGS, null);
             }
         });
@@ -542,7 +541,7 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 onclickColorChange(null, chatText);
-                ((OnItemClickListener) mainActivity).onClick("Chat");
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.chat));
                 MixPanelController.track("ChatWithRia", null);
             }
         });
@@ -551,7 +550,7 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MixPanelController.track("ContactUs", null);
-                ((OnItemClickListener) mainActivity).onClick("Call");
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.call));
                 onclickColorChange(callImageView, callText);
             }
         });
@@ -560,7 +559,7 @@ public class SidePanelFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MixPanelController.track("ShareFromSidepanel", null);
-                ((OnItemClickListener) mainActivity).onClick("Share");
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.share));
                 onclickColorChange(shareImageView, shareText);
             }
         });
@@ -611,10 +610,10 @@ public class SidePanelFragment extends Fragment {
 
     private void showAlertMaterialDialog() {
         new MaterialDialog.Builder(getActivity())
-                .title("Feature not available")
-                .content("Check the store for more information on upgrade plans")
-                .positiveText("Go to Store")
-                .negativeText("Cancel")
+                .title(getString(R.string.features_not_available))
+                .content(getString(R.string.check_store_for_upgrade_info))
+                .positiveText(getString(R.string.goto_store))
+                .negativeText(getString(R.string.cancel))
                 .positiveColorRes(R.color.primaryColor)
                 .negativeColorRes(R.color.light_gray)
                 .callback(new MaterialDialog.ButtonCallback() {
@@ -630,7 +629,7 @@ public class SidePanelFragment extends Fragment {
                         super.onPositive(dialog);
 //                        Constants.showStoreScreen = true ;
 //                        getActivity().getSupportFragmentManager().popBackStack();
-                        ((OnItemClickListener) mainActivity).onClick("Store");
+                        ((OnItemClickListener) mainActivity).onClick(getString(R.string.store));
                         dialog.dismiss();
                     }
                 })
@@ -979,7 +978,7 @@ public class SidePanelFragment extends Fragment {
             }
         } catch (ActivityNotFoundException anfe) {
             // display an error message
-            String errorMessage = "Whoops - your device doesn't support capturing images!";
+            String errorMessage = getString(R.string.device_does_not_support_capturing_image);
         }
     }
 
@@ -997,7 +996,7 @@ public class SidePanelFragment extends Fragment {
                 }
             } catch (ActivityNotFoundException anfe) {
                 // display an error message
-                String errorMessage = "Whoops - your device doesn't support capturing images!";
+                String errorMessage = getString(R.string.device_does_not_support_capturing_image);
                 Toast toast = Toast.makeText(getActivity().getApplicationContext(), errorMessage, Toast.LENGTH_SHORT);
                 toast.show();
             }
@@ -1037,12 +1036,12 @@ public class SidePanelFragment extends Fragment {
                         E.printStackTrace();
                         CameraBitmap.recycle();
                         System.gc();
-                        Methods.showSnackBar(getActivity(), "Try again....");
+                        Methods.showSnackBar(getActivity(), getString(R.string.try_again));
                     }
 
                     if (!Util.isNullOrEmpty(path)) {
                         uploadPrimaryPicture(path);
-                    } else Methods.showSnackBar(getActivity(), "Please select an image to upload");
+                    } else Methods.showSnackBar(getActivity(), getString(R.string.select_image_upload));
                 } else if (resultCode == getActivity().RESULT_OK && (GALLERY_PHOTO == requestCode)) {
                     {
                         Uri picUri = data.getData();
@@ -1053,7 +1052,7 @@ public class SidePanelFragment extends Fragment {
                             if (!Util.isNullOrEmpty(path)) {
                                 uploadPrimaryPicture(path);
                             } else
-                                Toast.makeText(getActivity().getApplicationContext(), "Please select an image to upload", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity().getApplicationContext(), getString(R.string.select_image_upload), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

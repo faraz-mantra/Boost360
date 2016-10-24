@@ -58,7 +58,7 @@ public class ScreenshotZoomActivity extends AppCompatActivity {
                     }
                 });
             } else {
-                Methods.showSnackBarNegative(this,"No Screenshots...");
+                Methods.showSnackBarNegative(this,getString(R.string.no_screenshot));
             }
 
             close.setOnTouchListener(new View.OnTouchListener() {
