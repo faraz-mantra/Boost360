@@ -52,7 +52,7 @@ public class Product_Gallery_Fragment extends Fragment{
     int visibilityFlag = 1;
     private boolean userScrolled = false;
     private ProductAPIService apiService;
-    private String currencyValue = getString(R.string.inr);
+    private String currencyValue ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,6 +61,7 @@ public class Product_Gallery_Fragment extends Fragment{
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(activity.getApplicationContext(),activity);
         apiService = new ProductAPIService();
+        currencyValue = getString(R.string.inr);
 
         new Thread(new Runnable() {
             @Override
@@ -102,6 +103,7 @@ public class Product_Gallery_Fragment extends Fragment{
         getProducts("0");
         return inflater.inflate(R.layout.fragment_product__gallery, container, false);
     }
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {

@@ -62,7 +62,7 @@
             android:layout_marginBottom="5dp"
             android:layout_marginRight="11dp"
             android:gravity="left"
-            android:text="Complete the task below to increase your site health. Higher percentage translates more traffic to your site."
+            android:text="@string/site_meter_body_text"
 
             />
 
@@ -74,7 +74,7 @@
             android:layout_marginRight="11dp"
             android:gravity="left"
             android:visibility="gone"
-            android:text="Higher scores translates more traffic to your site."
+            android:text="@string/site_meter_more_traffic_text"
             />
     </LinearLayout>
     <LinearLayout

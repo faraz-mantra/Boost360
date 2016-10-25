@@ -19,7 +19,7 @@
             android:lines="2"
             android:gravity="center_horizontal"
             android:layout_margin="15dp"
-            android:text="Claim a new dynamic look for your site, absolutely free!"/>
+            android:text="@string/site_appearance_dalog_title"/>
         <com.nowfloats.CustomWidget.roboto_lt_24_212121
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:gravity="center_horizontal"
-            android:text="If you don't like it, you can always switch back to the previous design by going into the Site Appearance tab"/>
+            android:text="@string/site_appearance_dialog_body"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
@@ -35,7 +35,7 @@
             <Button
                 android:layout_width="0dp"
                 android:layout_height="45dp"
-                android:text="Enable"
+                android:text="@string/text_btn_enable"
                 android:id="@+id/btn_enable_kitsune"
                 android:textColor="@color/white"
                 android:background="@color/primaryColor"
@@ -46,7 +46,7 @@
             <Button
                 android:layout_width="0dp"
                 android:layout_height="45dp"
-                android:text="LATER"
+                android:text="@string/text_btn_later"
                 android:id="@+id/btn_later_kitsune"
                 android:textColor="@color/white"
                 android:background="@color/primaryColor"

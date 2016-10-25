@@ -80,7 +80,7 @@
                     android:padding="3dp"
                     android:layout_gravity="right"
                     android:textColor="@color/white"
-                    android:text="UPGRADE"
+                    android:text="@string/single_row_card_upgrade_text"
                     android:clickable="false"
                     android:textSize="12sp"
                     fontPath="Roboto-Regular.ttf"
@@ -237,7 +237,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/cell_text_size"
                 android:textColor="@color/cell_text_color"
-                android:text="Product Gallery" />
+                android:text="@string/product_gallery" />
 
             <LinearLayout
                 android:layout_width="fill_parent"

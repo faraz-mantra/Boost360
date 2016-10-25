@@ -69,7 +69,7 @@
                             android:id="@+id/product_currency"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="INR"
+                            android:text="@string/inr"
                             fontPath="Roboto-Medium.ttf"
                             android:textColor="@color/product_price"
                             android:layout_marginRight="2dp"

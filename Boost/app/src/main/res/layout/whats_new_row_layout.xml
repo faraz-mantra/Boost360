@@ -16,7 +16,7 @@
             android:id="@+id/tv_text_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Default"
+            android:text="@string/whats_new_default"
             android:textSize="15sp"
             android:textStyle="bold"
             android:singleLine="true"
@@ -25,7 +25,7 @@
             android:id="@+id/tv_text_body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Default"
+            android:text="@string/whats_new_default"
             android:lines="2"
             android:ellipsize="end"/>
     </LinearLayout>

@@ -88,7 +88,7 @@
     <string name="Setting_like_us_on_facebook">Like us on Facebook</string>
     <string name="setting_about_us">About Us</string>
     <string name="setting_logout">Logout</string>
-    <string name="signup_subd">^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]$</string>
+    <string name="signup_subd">^[a&#8211;zA&#8211;Z0&#8211;9][a&#8211;zA&#8211;Z0&#8211;9&#8211;]{1,61}[a&#8211;zA&#8211;Z0&#8211;9]$</string>
 
 
     <!-- Deep Linking URLs  -->
@@ -424,6 +424,8 @@
     <string name="title_activity_product_gallery">ProductGalleryActivity</string>
     <string name="store">Store</string>
     <string name="empty_alert">We will notify you as soon as\nyou have a new alert</string>
+    <string name="settings_tou_url">https://nowfloats.com/tnc/</string>
+    <string name="settings_privacy_url">https://nowfloats.com/privacy/</string>
 
     <string-array name="domain_array">
         <item>.com</item>
@@ -452,7 +454,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="account_detail">Account Details</string>
     <string name="active">ACTIVE</string>
     <string name="expired">EXPIRED</string>
-    <string name="feching_search_detail">Fetching Search details...</string>
+    <string name="feching_search_detail">Fetching Search details&#8230;</string>
     <string name="week">week</string>
     <string name="visits">Visits</string>
     <string name="no_info_avail">No information available!</string>
@@ -466,7 +468,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="check_internet_connection">Check your Network Connection</string>
     <string name="email">EMAIL</string>
     <string name="call">CALL</string>
-    <string name="send_email">Send email...</string>
+    <string name="send_email">Send email&#8230;</string>
     <string name="faqs">FAQs</string>
     <string name="answer">Answer</string>
     <string name="ok">OK</string>
@@ -487,20 +489,20 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="enter_valid_website">Enter Valid Website</string>
     <string name="enter_valid_email">Please enter valid email</string>
     <string name="primary_num_can_not_empty">Primary number cannot be empty</string>
-    <string name="enter_password_6to12_char">Phone number should be between 6 - 12 characters</string>
+    <string name="enter_password_6to12_char">Phone number should be between 6 &#8211; 12 characters</string>
     <string name="basic_info">Basic Information</string>
     <string name="business_name_more_than_3char">Business Name should be more than 3 letters</string>
-    <string name="try_again">Try again...</string>
-    <string name="wait_while_loading_category">Wait While Loading Categories...</string>
+    <string name="try_again">Try again&#8230;</string>
+    <string name="wait_while_loading_category">Wait While Loading Categories&#8230;</string>
     <string name="select_category">Select a Category</string>
     <string name="both_password_not_matched">Both the passwords don\'t match.</string>
     <string name="min_6char_required">Min 6 characters are required.</string>
-    <string name="wait_while_unsubscribing">Wait While UnSubscribing...</string>
+    <string name="wait_while_unsubscribing">Wait While UnSubscribing&#8230;</string>
     <string name="post_on_facebook">Post to Facebook Page</string>
-    <string name="problem_with_twitter_try_later">Some problem with network or twitter ,Please try after some time...</string>
+    <string name="problem_with_twitter_try_later">Some problem with network or twitter ,Please try after some time&#8230;</string>
     <string name="select_page">Select a Page</string>
     <string name="look_like_no_facebook_page">Looks like there is no Facebook page linked to this account.</string>
-    <string name="wait_while_subscribing">wait while subscribing...</string>
+    <string name="wait_while_subscribing">wait while subscribing&#8230;</string>
     <string name="connected">connected</string>
     <string name="subscribe_for_pulling">Subscribed for pulling</string>
     <string name="update_from">updates from</string>
@@ -513,8 +515,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="enable">Enable</string>
     <string name="loading">Loading..</string>
     <string name="exception">Exception</string>
-    <string name="redirecting_to_twitter_wait">Redirecting to twitter, Please wait ...</string>
-    <string name="updating_password">Your password is updating...</string>
+    <string name="redirecting_to_twitter_wait">Redirecting to twitter, Please wait&#8230;</string>
+    <string name="updating_password">Your password is updating&#8230;</string>
     <string name="custom_page_details">Describe in detail. Use custom layout features like indents, bullet points and heading styles to format your text. Add images and links to enhance your content.</string>
     <string name="new_page">New Page</string>
     <string name="enter_the_title">Enter the title</string>
@@ -531,10 +533,10 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="are_you_sure_want_to_delete">Are you sure?</string>
     <string name="page_will_deleted">Page will be deleted</string>
     <string name="deleted_in_capital">DELETE</string>
-    <string name="cancel_in_capital">CANCEL</string>
-    <string name="deleting">Deleting....</string>
-    <string name="page_removed">Pages removed...</string>
-    <string name="updating_image">Updating image...</string>
+    <string name="cancel_in_capital">@android:string/cancel</string>
+    <string name="deleting">Deleting&#8230;</string>
+    <string name="page_removed">Pages removed&#8230;</string>
+    <string name="updating_image">Updating image&#8230;</string>
     <string name="add_photo">Add Photo</string>
     <string name="select_file">Select File</string>
     <string name="image_successfully_apdated">Image successfully uploaded</string>
@@ -547,7 +549,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="forgot_password">Forgot Password</string>
     <string name="enter_user_name">Enter Username</string>
     <string name="we_sent_email_with_password">We have sent you an email with password details</string>
-    <string name="logging_out">Logging out ...</string>
+    <string name="logging_out">Logging out &#8230;</string>
     <string name="unable_to_logout">Not able to logout</string>
     <string name="percent_site_completed">% site completed</string>
     <string name="choose_app_to_share">Choose app to share</string>
@@ -569,7 +571,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="retry_create_new_post">Retry time out, Create new post</string>
-    <string name="click_again_to_exit">Please click again to exit...</string>
+    <string name="click_again_to_exit">Please click again to exit&#8230;</string>
     <string name="app_update_available">App update available</string>
     <string name="update_nowfloats_app">You are using an old version of NowFloats Boost. Update the app to get new features and enhancements</string>
     <string name="update">Update</string>
@@ -581,7 +583,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="get_free_com">Get a free .com!</string>
     <string name="you_are_eligible_to_free_domain">Voila! You are now eligible to get a free domain. Request a .com/.net of your choice and we will integrate it to your website within 24 hours.</string>
     <string name="request_now">Request Now</string>
-    <string name="wait_for_new_look">Wait for the new look...</string>
+    <string name="wait_for_new_look">Wait for the new look&#8230;</string>
     <string name="your_website_appearance_changed">Your Website Appearance is changed</string>
     <string name="can_not_change_appearance">Couldn\'t change Website Appearance</string>
     <string name="buy_in_capital">BUY</string>
@@ -604,27 +606,27 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="business_profile">Business Profile</string>
     <string name="upload_background_image">Upload Background Image</string>
     <string name="image_uploading_failed_try_again">Image uploading failed. Please try again</string>
-    <string name="getting_details">Getting Details ...</string>
-    <string name="deleting_image">Deleting image....</string>
+    <string name="getting_details">Getting Details &#8230;</string>
+    <string name="deleting_image">Deleting image&#8230;.</string>
     <string name="uploading">Uploading</string>
     <string name="upload_successful">Upload Successful</string>
     <string name="upload_failed">Upload Failed</string>
     <string name="error_in_uploading">Error in Uploading</string>
     <string name="uploaded_and">Uploaded and</string>
     <string name="uploading_image">Uploading Image</string>
-    <string name="product_removed">Product is removed...</string>
-    <string name="replacing_image">Replacing image....</string>
+    <string name="product_removed">Product is removed&#8230;</string>
+    <string name="replacing_image">Replacing image&#8230;.</string>
     <string name="product_image_replaced_successfully">Product image replaced successfully</string>
     <string name="new_product_added">New product added</string>
     <string name="add_product">Add Product</string>
     <string name="can_not_select_more_than_5images">You can\'t select more than 5 images</string>
     <string name="edit_product">Edit Product</string>
-    <string name="updating">Updating...</string>
+    <string name="updating">Updating&#8230;</string>
     <string name="product_successfully_updated">Product has successfully updated</string>
     <string name="delete">Delete</string>
     <string name="upload_product_image">Please upload product image</string>
     <string name="select_action">select your action</string>
-    <string name="wait_while_deleting_image">Wait while Deleting Image...</string>
+    <string name="wait_while_deleting_image">Wait while Deleting Image&#8230;</string>
     <string name="successfully_deleted">Successfully Deleted</string>
     <string name="can_not_delete_image">Couldn\'t Delete Image</string>
     <string name="select_priority">Select Priority</string>
@@ -647,7 +649,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="enter_city">Enter city</string>
     <string name="select_country">Select country</string>
     <string name="checking_contact_number">Checking contact number..</string>
-    <string name="creating_website">Creating Website ...</string>
+    <string name="creating_website">Creating Website &#8230;</string>
     <string name="enter_valid_website_name">Please enter a valid website Name</string>
     <string name="chosen_website_available">Chosen website address is available!</string>
     <string name="chosen_website_not_available">Chosen website address is not available!</string>
@@ -656,7 +658,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="renew_to_use_feature">Please Renew to use this feature</string>
     <string name="fill_reasons">Please fill up the reasons</string>
     <string name="check_any_checkbox">Please check any of the CheckBox</string>
-    <string name="wait_while_reverting">Wait While reverting...</string>
+    <string name="wait_while_reverting">Wait While reverting&#8230;</string>
     <string name="upgrade_now">Upgrade Now</string>
     <string name="successfully_revert">Successfully Reverted</string>
     <string name="failed_to_revert">Failed To Revert</string>
@@ -673,7 +675,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="thank_for_booking_domain">Thank you for your domain booking of</string>
     <string name="activate_in_24_hours">It will be activated within 24 hours.</string>
     <string name="okay">Okay</string>
-    <string name="no_screenshot">No Screenshots...</string>
+    <string name="no_screenshot">No Screenshots&#8230;</string>
     <string name="already_requested">Already requested</string>
     <string name="contact_us">Contact Us</string>
     <string name="thank_you_for_your_interest">Thank you for your interest!</string>
@@ -718,7 +720,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="email_address">Email Address</string>
     <string name="log_in"> Log In</string>
     <string name="complete_task_to_increase_site_score">Complete the task below to increase your site score.</string>
-    <string name="high_score_translate_more_traffic">Heigher scores translates more traffic to your site.</string>
+    <string name="high_score_translate_more_traffic">Higher scores translates more traffic to your site.</string>
     <string name="get_your_identity">Get your own identity</string>
     <string name="buy_a_com_domain">Buy a.com</string>
     <string name="phone_number">Phone number</string>
@@ -758,7 +760,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="my_customer_prefer_old_theme">My customers prefer the old theme.</string>
     <string name="some_widget_i_donot_know_in_old_theme">I can\'t see some of the widgets that were there on the old theme.</string>
     <string name="its_not_what_i_paid_for">It\'s not what I paid for.</string>
-    <string name="other_reasons">Other reasons (please type)...</string>
+    <string name="other_reasons">Other reasons (please type)&#8230;</string>
     <string name="enter_the_reason">Enter other reason</string>
     <string name="submit">SUBMIT</string>
     <string name="no_alerts">No alerts!</string>
@@ -769,7 +771,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="pin_area_code">Pin/Area Code</string>
     <string name="state_province">State / Province</string>
     <string name="country">Country</string>
-    <string name="website_name">website name</string>
     <string name="nowfloats.com">.nowfloats.com</string>
     <string name="type_message">Type a message</string>
     <string name="add_a_page">Add a Page</string>
@@ -805,7 +806,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="by_pressing_above_button_to_agree">By Pressing above button,You agree to our</string>
     <string name="policy_terms">Policy and Terms</string>
     <string name="text">text</string>
-    <string name="number_tocall_says">+919535576625 says ....</string>
+    <string name="number_tocall_says">+919535576625 says &#8230;</string>
     <string name="sent_on">sent on</string>
     <string name="wow_this_is_amazing_offer_is_it_avail_trip">Wow this is an amazing offer. Is this trip available in the month of january?</string>
     <string name="customer_replied_to_your_post">Customer replied to your post:</string>
@@ -837,6 +838,68 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="drag_to_map_your_location">Drag the map to the location of your Store.</string>
     <string name="confirm_in_capital">CONFIRM</string>
     <string name="show_me">Show me!</string>
+=======
+    <string name="whats_new_default">Default</string>
+    <string name="whats_new">whats_new</string>
+    <string name="app_version">Version 4.4.6</string>
+    <string name="whats_new_done">DONE</string>
+    <string name="website_name">Website Name</string>
+    <string name="subdomain_name">.nowfloats.com</string>
+    <string name="sub_domain_available_text">Chosen Sub - Domain is Available</string>
+    <string name="back_text">BACK</string>
+    <string name="next_text">NEXT</string>
+    <string name="alerts_text">AlERTS</string>
+    <string name="light_house_price">25000/year</string>
+    <string name="read_more_text">Read More</string>
+    <string name="know_more_text">KNOW MORE</string>
+    <string name="store_about_this_plan">About this plan</string>
+    <string name="store_screen_shots">Screenshots</string>
+    <string name="store_no_screen_shots">No screenshots available!</string>
+    <string name="features_text">Features</string>
+    <string name="store_no_description">No description available!</string>
+    <string name="store_inclusive_all_taxes">(Inclusive of all taxes)</string>
+    <string name="site_appearance_dalog_title">Claim a new dynamic look for your site, absolutely free!</string>
+    <string name="site_appearance_dialog_body">If you don\'t like it, you can always switch back to the previous design by going into the Site Appearance tab</string>
+    <string name="text_btn_enable">ENABLE</string>
+    <string name="text_btn_later">LATER</string>
+    <string name="select_action_dialog_title">Upload Featured Image</string>
+    <string name="text_replace_image">Replace Image</string>
+    <string name="text_delete_image">Delete Image</string>
+    <string name="product_detail_product_name">Product Name</string>
+    <string name="product_detail_product_descr">Product Description</string>
+    <string name="product_detail_currency">Select Currency</string>
+    <string name="product_detail_product_price">Product Price</string>
+    <string name="product_details_discount">Discount (If Any)</string>
+    <string name="product_detail_online_link">Buy Online Link (If Any)</string>
+    <string name="product_detail_priority">Select Priority</string>
+    <string name="product_details_shipment_dur">Shipment Duration In Days</string>
+    <string name="product_detail_availability">Product Availability</string>
+    <string name="product_detail_free_shipping">Free Shipping</string>
+    <string name="product_detail_delete_btn_text">Delete product</string>
+    <string name="pop_up_create_msg_title">Are you sure?</string>
+    <string name="graph_fragment2_title">Visits</string>
+    <string name="graph_custom_visit_page_title">VISITS</string>
+    <string name="store_fragment_no_package_text">Sorry, Currently you haven\'t opted for any package.\nUpgrade to get more features.</string>
+    <string name="site_appearance_revert_to_old">Revert to the old version</string>
+    <string name="site_appearance_upgrade_text">Upgrade Now</string>
+    <string name="site_meter_body_text">Complete the task below to increase your site health. Higher percentage translates more traffic to your site.</string>
+    <string name="site_meter_more_traffic_text">Higher scores translates more traffic to your site.</string>
+    <string name="tool_bar_save_text">SAVE</string>
+    <string name="single_row_card_upgrade_text">UPGRADE</string>
+    <string name="signup_title">Enter Details</string>
+    <string name="sign_up_business_name">Business Name</string>
+    <string name="sign_up_category">Category</string>
+    <string name="sign_up_city">City</string>
+    <string name="sign_up_country">Country</string>
+    <string name="sign_up_email">Email Address</string>
+    <string name="sign_up_phone_number">Phone Number</string>
+    <string name="Setting_follow_us_on_twitter">Follow us on Twitter</string>
+    <string name="Setting_terms_of_use">Terms of use</string>
+    <string name="Setting_privacy_policy">Privacy policy</string>
+    <string name="onboarding_next_btn_next">Got it,Next</string>
+    <string name="on_boarding_next2_text">Great, Thanks</string>
+    <string name="onboarding_popup_one_btn_text">Show me!</string>
+>>>>>>> 5eff304d7a0e50c3d124704ddd4edcf625681034
     <string-array name="calendar">
         <item>Week</item>
         <item>Month</item>
