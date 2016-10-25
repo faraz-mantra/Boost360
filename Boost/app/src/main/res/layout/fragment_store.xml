@@ -53,6 +53,6 @@
             android:textColor="@color/zeroth_grey"
             android:gravity="center"
             android:padding="12dp"
-            android:text="Sorry, Currently you haven't opted for any package.\nUpgrade to get more features."/>
+            android:text="@string/store_fragment_no_package_text"/>
     </LinearLayout>
 </FrameLayout>

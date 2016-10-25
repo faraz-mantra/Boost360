@@ -31,7 +31,7 @@
         android:id="@+id/saveTextView"
         android:layout_width="50dp"
         android:layout_height="fill_parent"
-        android:text="SAVE"
+        android:text="@string/tool_bar_save_text"
         android:layout_gravity="right"
         android:gravity="center_vertical|center"
         android:textColor="#FFFFFF"

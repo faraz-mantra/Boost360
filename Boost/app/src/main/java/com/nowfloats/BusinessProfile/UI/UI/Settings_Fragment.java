@@ -43,7 +43,7 @@ import org.json.JSONObject;
  */
 public class Settings_Fragment extends Fragment {
     FrameLayout signOutLayout, changePaswordLayout, feedbackLayout, likeusFacebookLayout, aboutUsLayout,
-            rateUsLayout, faqLayout, accountLayout, flSiteAppearance;
+            rateUsLayout, faqLayout, accountLayout, flSiteAppearance, flFollowTwitter, flTermsOfUse, flPrivacyPolicy;
     private EditText old_pwd, new_pwd, confirm_pwd;
     Boolean confirmCheckerActive = false;
     private ImageView confirmChecker;
@@ -54,6 +54,7 @@ public class Settings_Fragment extends Fragment {
     //facebook page constant
     public static String FACEBOOK_URL = "https://www.facebook.com/nowfloats";
     public static String FACEBOOK_PAGE_ID = "nowfloats";
+    public static final String TWITTER_URL = "https://twitter.com/Nowfloats";
     //facebook page constant
 
     @Override
@@ -103,6 +104,9 @@ public class Settings_Fragment extends Fragment {
         changePaswordLayout = (FrameLayout) view.findViewById(R.id.change_password_Layout);
         faqLayout = (FrameLayout) view.findViewById(R.id.faq_Layout);
         flSiteAppearance = (FrameLayout) view.findViewById(R.id.fl_site_appearance);
+        flFollowTwitter = (FrameLayout) view.findViewById(R.id.follow_us_twitter_Layout);
+        flTermsOfUse = (FrameLayout) view.findViewById(R.id.terms_of_use_Layout);
+        flPrivacyPolicy = (FrameLayout) view.findViewById(R.id.privacy_policy_Layout);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -176,6 +180,42 @@ public class Settings_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                likeUsFacebook();
+            }
+        });
+
+        flFollowTwitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent twitterIntent = new Intent(Intent.ACTION_VIEW);
+                //String facebookUrl = getFacebookPageURL(getActivity().getApplicationContext());
+                twitterIntent.setData(Uri.parse(TWITTER_URL));
+                startActivity(twitterIntent);
+            }
+        });
+
+        flTermsOfUse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = getResources().getString(R.string.settings_tou_url);
+                ;//"http://prostinnovation.com/";
+                Intent showWebSiteIntent = new Intent(activity, Mobile_Site_Activity.class);
+                // showWebSiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                showWebSiteIntent.putExtra("WEBSITE_NAME", url);
+                activity.startActivity(showWebSiteIntent);
+                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
+        flPrivacyPolicy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = getResources().getString(R.string.settings_privacy_url);
+                ;//"http://prostinnovation.com/";
+                Intent showWebSiteIntent = new Intent(activity, Mobile_Site_Activity.class);
+                // showWebSiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                showWebSiteIntent.putExtra("WEBSITE_NAME", url);
+                activity.startActivity(showWebSiteIntent);
+                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 

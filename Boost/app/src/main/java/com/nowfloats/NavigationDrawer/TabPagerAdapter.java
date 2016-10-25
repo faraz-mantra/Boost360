@@ -17,7 +17,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter  {
     int currentItem ;
     private FragmentManager mFragmentManager;
 
-    CharSequence Titles[]=appContext.getResources().getStringArray(R.array.dashboard_tabs);
+    private CharSequence mTitles[];
     public TabPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         Log.d("Tap Pager Adapter"," Tab Pager Adapter ");
@@ -26,6 +26,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter  {
         analyticsFragment = new Analytics_Fragment();
         appContext = context ;
         mFragmentManager = fm;
+        mTitles = appContext.getResources().getStringArray(R.array.dashboard_tabs);
     }
 
     private static String makeFragmentName(int viewId, int index) {
@@ -68,7 +69,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter  {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return Titles[position];
+        return mTitles[position];
     }
 
 

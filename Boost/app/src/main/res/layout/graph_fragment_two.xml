@@ -27,7 +27,7 @@
             android:padding="10dp"
             style="@android:style/TextAppearance.Medium"
             android:textColor="#FFFFFF"
-            android:text="Visits"
+            android:text="@string/graph_fragment2_title"
             android:id="@+id/abTitle"/>
 
 

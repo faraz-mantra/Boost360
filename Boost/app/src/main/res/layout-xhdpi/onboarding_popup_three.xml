@@ -77,7 +77,7 @@
                 android:id="@+id/loginButton"
                 android:layout_width="267dp"
                 android:layout_height="45dp"
-                android:text="Great, Thanks"
+                android:text="@string/on_boarding_next2_text"
                 android:textColor="#FFFFFF"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/rounded_corner_button"
