@@ -19,6 +19,8 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.nowfloats.util.Constants.clientId;
+
 /**
  * Created by Dell on 17-01-2015.
  */
@@ -43,12 +45,13 @@ public class API_Login {
         this.bus = bus;
     }
 
-    public void authenticate(String userName, String password, String clientId)
+    public void authenticate(String userName, String password, final String clientId)
     {
-        BoostLog.d("AUthenticate","Usrname : "+userName+" , Pwd : "+password+" Client Id : "+clientId);
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("loginKey", userName);
-        params.put("loginSecret", password);
+    BoostLog.d("AUthenticate","Usrname : "+userName+" , Pwd : "+password+" Client Id : "+clientId);
+    HashMap<String, String> params = new HashMap<String, String>();
+    params.put("loginKey", userName);
+    params.put("loginSecret", password);
+
         params.put("clientId", clientId);
        /* try {
             Constants.restAdapter = Methods.createAdapter(appContext,Constants.NOW_FLOATS_API_URL);
@@ -65,7 +68,7 @@ public class API_Login {
                         session.storeFPID(fpId);
                         if (response_Data.sourceClientId!=null && response_Data.sourceClientId.trim().length()>0)
                             session.storeSourceClientId(response_Data.sourceClientId);
-                        if(Constants.clientId.equals(Constants.clientIdThinksity)){
+                        if(clientId.equals(Constants.clientIdThinksity)){
                             if(response_Data.sourceClientId!=null && response_Data.sourceClientId.trim().length()>0
                                     && response_Data.sourceClientId.equals(Constants.clientIdThinksity))
                             {
@@ -146,7 +149,7 @@ public class API_Login {
     public void getMessages(String fpId)
     {
         HashMap<String,String> map = new HashMap<>();
-        map.put("clientId",Constants.clientId);
+        map.put("clientId", clientId);
         map.put("skipBy","0");
         map.put("fpId",fpId);
         Login_Interface login_interface = Constants.restAdapter.create(Login_Interface.class);
