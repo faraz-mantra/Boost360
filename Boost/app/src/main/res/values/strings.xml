@@ -838,7 +838,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="drag_to_map_your_location">Drag the map to the location of your Store.</string>
     <string name="confirm_in_capital">CONFIRM</string>
     <string name="show_me">Show me!</string>
-=======
     <string name="whats_new_default">Default</string>
     <string name="whats_new">whats_new</string>
     <string name="app_version">Version 4.4.6</string>
@@ -899,7 +898,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="onboarding_next_btn_next">Got it,Next</string>
     <string name="on_boarding_next2_text">Great, Thanks</string>
     <string name="onboarding_popup_one_btn_text">Show me!</string>
->>>>>>> 5eff304d7a0e50c3d124704ddd4edcf625681034
     <string-array name="calendar">
         <item>Week</item>
         <item>Month</item>
