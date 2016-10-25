@@ -168,7 +168,7 @@
                     android:maxLines="4"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:text="Large Text"/>
+                    android:text="@string/large_text"/>
 
 
                 <com.nowfloats.CustomWidget.roboto_md_36__565656
@@ -178,7 +178,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="17dp"
                     android:textSize="16sp"
-                    android:text="Medium Text"
+                    android:text="@string/medium_text"
                     />
 
             </LinearLayout>

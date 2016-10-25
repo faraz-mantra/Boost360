@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <android.support.v7.widget.CardView
         android:id="@+id/initial_card_view"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="340dp"
         android:layout_height="340dp"
         android:visibility="visible"
@@ -49,7 +49,7 @@
                     android:textColor="#797979"
                     android:gravity="center"
                     android:textSize="24sp"
-                    android:text="Congratulations!"/>
+                    android:text="@string/congratulations"/>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                         android:textSize="16sp"
                          android:visibility="gone"
                         android:textColor="@color/black"
-                        android:text="Your website"
+                        android:text="@string/you_website"
                         />
                     <TextView
                         android:id="@+id/card_websiteExtensionTextView"
@@ -73,7 +73,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:textColor="@color/gray"
-                        android:text="Your website is ready"
+                        android:text="@string/your_website_ready"
                         />
                 </LinearLayout>
 
@@ -94,7 +94,7 @@
                     android:textColor="@color/black"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:text="You can view your newly created websites' desktop version on any PC / Mac nearby"
+                    android:text="@string/your_website_created_desktop_version"
                     />
 
             </LinearLayout>
@@ -103,7 +103,7 @@
                 android:id="@+id/showWebsiteButton"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
-                android:text="Show mobile Site"
+                android:text="@string/show_mobile_site"
                 android:textColor="#FFFFFF"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/drop_shadow"

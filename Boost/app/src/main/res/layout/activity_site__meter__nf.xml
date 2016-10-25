@@ -68,8 +68,6 @@
                 android:background="#e0e0e0"
                 android:gravity="center"
                 android:orientation="vertical">
-                >
-
                 <com.nowfloats.CustomWidget.roboto_lt_28_565656
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -77,7 +75,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="11dp"
                     android:gravity="left"
-                    android:text="Complete the task below to increase your site score."
+                    android:text="@string/complete_task_to_increase_site_score"
 
                     />
 
@@ -88,7 +86,7 @@
                     android:layout_marginLeft="11dp"
                     android:layout_marginRight="11dp"
                     android:gravity="left"
-                    android:text="Heigher scores translates more traffic to your site."
+                    android:text="@string/high_score_translate_more_traffic"
 
                     />
             </LinearLayout>
@@ -121,13 +119,13 @@
                         android:id="@+id/site_meter_buy_domain_text1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Get your own identity" />
+                        android:text="@string/get_your_identity" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
                         android:id="@+id/site_meter_buy_domain_text2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Buy a.com" />
+                        android:text="@string/buy_a_com_domain" />
 
                 </LinearLayout>
 
@@ -175,13 +173,13 @@
                         android:id="@+id/site_meter_phone_number_text1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Phone number" />
+                        android:text="@string/phone_number" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
                         android:id="@+id/site_meter_phone_number_text2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Help customers reach you instantly" />
+                        android:text="@string/help_customer_reach_you" />
 
                 </LinearLayout>
 
@@ -229,13 +227,13 @@ android:layout_marginRight="5dp"
                         android:id="@+id/site_meter_business_category_text1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Business Category" />
+                        android:text="@string/business_category" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
                         android:id="@+id/site_meter_business_category_text2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Choose business category" />
+                        android:text="@string/select_business_category" />
 
                 </LinearLayout>
 
@@ -282,13 +280,13 @@ android:layout_marginRight="5dp"
                         android:id="@+id/site_meter_featured_image_text1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Featured Image" />
+                        android:text="@string/featured_image" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
                         android:id="@+id/site_meter_featured_image_text2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Add a relevant image" />
+                        android:text="@string/add_relevant_image" />
 
                 </LinearLayout>
 
@@ -336,13 +334,13 @@ android:layout_marginRight="5dp"
                         android:id="@+id/site_meter_business_name_text1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Business Name" />
+                        android:text="@string/business_name" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
                         android:id="@+id/site_meter_business_name_text2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Add email" />
+                        android:text="@string/add_email" />
 
                 </LinearLayout>
 
@@ -390,13 +388,13 @@ android:layout_marginRight="5dp"
                         android:id="@+id/site_meter_description_text1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Business Description" />
+                        android:text="@string/business_description" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
                         android:id="@+id/site_meter_description_text2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Help your customers find you" />
+                        android:text="@string/help_your_customer_to_find_you" />
 
                 </LinearLayout>
 
@@ -444,13 +442,13 @@ android:layout_marginRight="5dp"
                         android:id="@+id/site_meter_customer_help_text1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Help your customers find you" />
+                        android:text="@string/help_your_customer_to_find_you" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
                         android:layout_width="wrap_content"
                         android:id="@+id/site_meter_customer_help_text2"
                         android:layout_height="wrap_content"
-                        android:text="Help your customers find you" />
+                        android:text="@string/help_your_customer_to_find_you" />
 
                 </LinearLayout>
 
@@ -472,7 +470,6 @@ android:layout_marginRight="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
-
                 android:background="@drawable/change_password_btn_bkg"
                 android:orientation="horizontal">
 
@@ -497,13 +494,13 @@ android:layout_marginRight="5dp"
                         android:id="@+id/site_meter_social_text1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Get Social" />
+                        android:text="@string/get_social" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
                         android:id="@+id/site_meter_social_text2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Connect to facebook/twitter" />
+                        android:text="@string/connect_to_facebook_or_twitter" />
 
                 </LinearLayout>
 
@@ -526,7 +523,6 @@ android:layout_marginRight="5dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="1dp"
                 android:background="@drawable/change_password_btn_bkg"
-
                 android:orientation="horizontal">
 
                 <com.nowfloats.CustomWidget.roboto_md_34_primarycolor
@@ -550,13 +546,13 @@ android:layout_marginRight="5dp"
                         android:id="@+id/site_meter_business_address_text1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Business Address" />
+                        android:text="@string/business__address" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
                         android:id="@+id/site_meter_business_address_text2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Add Address" />
+                        android:text="@string/add_address" />
 
                 </LinearLayout>
 
@@ -602,13 +598,13 @@ android:layout_marginRight="5dp"
                         android:id="@+id/site_meter_email_text1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Email" />
+                        android:text="@string/email" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
                         android:id="@+id/site_meter_email_text2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Add email" />
+                        android:text="@string/add_email" />
 
                 </LinearLayout>
 
@@ -654,13 +650,13 @@ android:layout_marginRight="5dp"
                         android:id="@+id/site_meter_post_update_text1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Post 5 Updates" />
+                        android:text="@string/post_5updates" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
                         android:id="@+id/site_meter_post_update_text2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Message regularly and relevantly" />
+                        android:text="@string/message_regularly_and_relevantly" />
 
                 </LinearLayout>
 
@@ -706,13 +702,13 @@ android:layout_marginRight="5dp"
                         android:id="@+id/site_meter_share_text1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Share" />
+                        android:text="@string/share" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
                         android:id="@+id/site_meter_share_text2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Share website" />
+                        android:text="@string/share_website" />
 
                 </LinearLayout>
 

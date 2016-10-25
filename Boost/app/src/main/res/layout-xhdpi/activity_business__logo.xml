@@ -27,7 +27,6 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-
             android:paddingTop="10dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
@@ -46,7 +45,7 @@
             android:id="@+id/addLogoButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="UPDATE LOGO"
+            android:text="@string/update_logo"
             android:layout_marginBottom="15dp"
             android:layout_marginTop="15dp"
             fontPath="Roboto-Medium.ttf"

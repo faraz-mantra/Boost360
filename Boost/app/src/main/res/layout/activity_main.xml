@@ -12,7 +12,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="@string/login"
         android:id="@+id/login_button"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -22,7 +22,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tweet"
+        android:text="@string/tweet"
         android:id="@+id/twitter_tweet"
         android:layout_alignBottom="@+id/login_button"
         android:layout_alignParentRight="true"
@@ -31,7 +31,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Logout"
+        android:text="@string/logout"
         android:id="@+id/twitter_logout"
         android:layout_marginTop="52dp"
         android:layout_below="@+id/twitter_tweet"

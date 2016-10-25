@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
-        android:text="Upload Featured Image"
+        android:text="@string/upload_featured_image"
         android:layout_marginTop="26dp"
         android:layout_marginLeft="26dp"
         android:textColor="#878787"
@@ -52,9 +52,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="18dp"
-            android:text="Using camera"
+            android:text="@string/using_camera"
             android:textColor="#878787"
-
             android:layout_weight=".6"/>
 
 
@@ -95,7 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="18dp"
-            android:text="From gallery"
+            android:text="@string/from_gallery"
             android:textColor="#878787"
 
             android:layout_weight=".6"/>
@@ -136,7 +135,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="18dp"
-            android:text="Delete"
+            android:text="@string/delete"
             android:textColor="#878787"
             android:layout_weight=".6"/>
 

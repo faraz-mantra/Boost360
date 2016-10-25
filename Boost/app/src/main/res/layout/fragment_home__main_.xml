@@ -6,8 +6,6 @@
     android:background="@color/screen_bg"
     tools:context="recycle.card.com.cardview.mainpackage.tab_Home_Fragment">
 
-
-
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -48,7 +46,7 @@
                         fontPath="Roboto-Medium.ttf"
                         android:gravity="center"
                         android:textSize="18sp"
-                        android:text="Retry"
+                        android:text="@string/retry"
                         android:textColor="@color/retry_txt"
                         tools:ignore="MissingPrefix" />
                 </LinearLayout>
@@ -69,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="18sp"
-                    android:text="Cancel"
+                    android:text="@string/cancel"
                     android:textColor="@color/retry_txt"
                     tools:ignore="MissingPrefix" />
             </LinearLayout>

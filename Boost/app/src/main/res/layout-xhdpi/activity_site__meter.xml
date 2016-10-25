@@ -42,7 +42,7 @@
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="7dp"
-            android:text="35% site completed"
+            android:text="@string/percent_site_completed"
 
             />
 
@@ -75,7 +75,7 @@
                     android:layout_marginLeft="11dp"
                     android:layout_marginRight="11dp"
                     android:gravity="left"
-                    android:text="Complete the task below to increase your site score."
+                    android:text="@string/complete_task_to_increase_site_score"
 
                     />
 
@@ -85,7 +85,7 @@
                     android:layout_marginLeft="11dp"
                     android:layout_marginRight="11dp"
                     android:gravity="left"
-                    android:text="Heigher scores translates more traffic to your site."
+                    android:text="@string/high_score_translate_more_traffic"
 
                     />
             </LinearLayout>
@@ -117,12 +117,12 @@
                     <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Get your own identity" />
+                        android:text="@string/get_your_identity" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Buy a.com" />
+                        android:text="@string/buy_a_com_domain" />
 
                 </LinearLayout>
 
@@ -164,12 +164,12 @@
                     <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Phone number" />
+                        android:text="@string/phone_number" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Help customers reach you instantly" />
+                        android:text="@string/help_customer_reach_you" />
 
                 </LinearLayout>
 
@@ -211,12 +211,12 @@
                     <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Business Category" />
+                        android:text="@string/business_category" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Choose business category" />
+                        android:text="@string/select_business_category" />
 
                 </LinearLayout>
 
@@ -258,12 +258,12 @@
                     <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Featured Image" />
+                        android:text="@string/featured_image" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Add a relevant image" />
+                        android:text="@string/add_relevant_image" />
 
                 </LinearLayout>
 
@@ -305,12 +305,12 @@
                     <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Business Name" />
+                        android:text="@string/business_name" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Add email" />
+                        android:text="@string/add_email" />
 
                 </LinearLayout>
 
@@ -352,12 +352,12 @@
                     <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Business Description" />
+                        android:text="@string/business_description" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Help your customers find you" />
+                        android:text="@string/help_your_customer_to_find_you" />
 
                 </LinearLayout>
 
@@ -399,12 +399,12 @@
                     <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Help your customers find you" />
+                        android:text="@string/help_your_customer_to_find_you" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Help your customers find you" />
+                        android:text="@string/help_your_customer_to_find_you" />
 
                 </LinearLayout>
 
@@ -422,7 +422,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:layout_marginTop="1dp"
-
                 android:background="@color/white"
                 android:orientation="horizontal">
 
@@ -446,12 +445,12 @@
                     <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Business Contacts" />
+                        android:text="@string/business_contact" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Add email" />
+                        android:text="@string/add_email" />
 
                 </LinearLayout>
 
@@ -469,7 +468,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:layout_marginTop="1dp"
-
                 android:background="@color/white"
                 android:orientation="horizontal">
 
@@ -493,12 +491,12 @@
                     <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Business Address" />
+                        android:text="@string/business__address" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Add email" />
+                        android:text="@string/add_email" />
 
                 </LinearLayout>
 
@@ -543,12 +541,12 @@
                     <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Email" />
+                        android:text="@string/email_in_small" />
 
                     <com.nowfloats.CustomWidget.roboto_lt_25_a4a4a4
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Add email" />
+                        android:text="@string/add_email" />
 
                 </LinearLayout>
 
@@ -565,4 +563,4 @@
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout><!-- From: file:/C:/Vinay/prashant772-boostcode-d282cb67240e/app/src/main/res/layout/activity_site__meter.xml --><!-- From: file:/C:/Users/NowFloatsDev/Documents/vinaykg-vinayrepo-0122ccab72e5/vinaykg-vinayrepo-0122ccab72e5/app/src/main/res/layout-xhdpi/activity_site__meter.xml --><!-- From: file:/C:/Users/NowFloatsDev/Documents/vinaykg-vinayrepo-0122ccab72e5/vinaykg-vinayrepo-0122ccab72e5/app/src/main/res/layout-xhdpi/activity_site__meter.xml -->
+</LinearLayout>

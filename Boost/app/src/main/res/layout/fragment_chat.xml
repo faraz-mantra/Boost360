@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="left"
-                android:hint="Type a message"
+                android:hint="@string/type_message"
                 android:maxHeight="100dp"
                 android:padding="8dp"
                 android:singleLine="false"

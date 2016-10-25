@@ -72,7 +72,7 @@
                 android:id="@+id/shownext"
                 android:layout_width="271dp"
                 android:layout_height="45dp"
-                android:text="@string/onboarding_next_btn_next"
+                android:text="@string/got_it_next"
                 android:textColor="#FFFFFF"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/rounded_corner_button"

@@ -5,7 +5,8 @@
     android:orientation="vertical"
     android:background="@color/screen_bg"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
     <include
         android:id="@+id/store_data_action_bar"
@@ -38,7 +39,7 @@
                 android:inputType="text"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:hint="Enter domain name"
+                android:hint="@string/enter_domain_name"
                 tools:ignore="MissingPrefix" />
         </LinearLayout>
 
@@ -74,9 +75,10 @@
         android:layout_height="55dp"
         android:layout_gravity="center"
         fontPath="Roboto-Medium.ttf"
-        android:text="Search"
+        android:text="@string/search"
         android:textSize="7sp"
         android:background="@color/primaryColor"
-        tools:ignore="MissingPrefix" />
+        tools:ignore="MissingPrefix"
+        android:layout_weight="0.01" />
 
 </LinearLayout>

@@ -9,7 +9,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Feedback"
+            android:text="@string/feedback"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:gravity="center_horizontal"
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:text="That's OK. It happens. But could you tell us why?"/>
+        android:text="@string/thats_ok_it_happens_tell_us_why"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="I prefer the old theme."/>
+                android:text="@string/prefered_old_theme"/>
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="10dp"
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="My customers prefer the old theme."/>
+                android:text="@string/my_customer_prefer_old_theme"/>
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="10dp"
@@ -73,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="I can't see some of the widgets that were there on the old theme."/>
+                android:text="@string/some_widget_i_donot_know_in_old_theme"/>
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="10dp"
@@ -89,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="It's not what I paid for."/>
+                android:text="@string/its_not_what_i_paid_for"/>
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="10dp"
@@ -105,7 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Other reasons (please type)..."/>
+                android:text="@string/other_reasons"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -115,7 +115,7 @@
         android:visibility="gone"
         android:layout_marginRight="5dp"
         android:layout_marginTop="10dp"
-        android:hint="Enter other reason"
+        android:hint="@string/enter_the_reason"
         android:background="@drawable/edit_text_style"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:background="@color/primaryColor"
-            android:text="SUBMIT"
+            android:text="@string/submit"
             android:textColor="@color/white"
             android:layout_weight="1"/>
         <LinearLayout
@@ -141,7 +141,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:background="@color/primaryColor"
-            android:text="CANCEL"
+            android:text="@string/cancel_in_capital"
             android:textColor="@color/white"
             android:layout_weight="1"/>
     </LinearLayout>

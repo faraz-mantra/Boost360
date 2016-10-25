@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/cell_text_size"
                     android:textColor="@color/cell_text_color"
-                    android:text="Account Details" />
+                    android:text="@string/account_detail" />
 
             </LinearLayout>
             <LinearLayout
@@ -100,7 +100,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="#ffffff"
-                            android:text="NEW"
+                            android:text="@string/new_in_capital"
                             android:textStyle="bold"
                             android:textSize="15sp" />
                     </android.support.v7.widget.CardView>
@@ -525,7 +525,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_horizontal"
-
             android:layout_marginBottom="2dp"
             android:layout_marginTop="40dp">
 
@@ -534,12 +533,7 @@
                 android:id="@+id/version_text"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-
-                android:text="Version "
-
-
-
-                />
+                android:text="@string/version"/>
 
             <com.nowfloats.CustomWidget.roboto_lt_36_565656
 
@@ -564,18 +558,14 @@
                 android:layout_below="@+id/versionCodeName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" Powered By"
-
-
-
-                />
+                android:text="@string/powered_by"/>
 
             <com.nowfloats.CustomWidget.roboto_md_36__565656
                 android:layout_width="wrap_content"
                 android:layout_below="@+id/versionCodeName"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/poweredBy"
-                android:text=" NowFloats"
+                android:text="@string/nowfloats"
                 />
         </LinearLayout>
 
