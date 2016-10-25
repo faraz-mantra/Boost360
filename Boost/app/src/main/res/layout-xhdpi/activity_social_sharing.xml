@@ -6,7 +6,6 @@
     android:layout_height="fill_parent"
     android:background="@color/screen_bg">
 
-
     <include
         android:id="@+id/app_bar_social"
         layout="@layout/new_app_bar" />
@@ -40,6 +39,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#808080">
+
                         <TextView
                             android:id="@+id/topFeatureText"
                             android:layout_width="wrap_content"
@@ -49,7 +49,7 @@
                             android:paddingTop="8dp"
                             android:paddingBottom="8dp"
                             android:textSize="16sp"
-                            android:text="Auto Share\nTo Social Networks" />
+                            android:text="@string/auto_share_to_social_networks" />
                         <!--android:text="Select any or all social platforms below to automatically share whatever you update on your website with a bigger audience on these social networks."/>-->
                     </LinearLayout>
                     <LinearLayout
@@ -64,12 +64,12 @@
                             android:layout_marginLeft="20dp"
                             android:layout_gravity="center_vertical"
                             android:textSize="14sp"
-                            android:text="Website\nPosts"/>
+                            android:text="@string/website_posts"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="to"
+                            android:text="@string/to"
                             android:layout_marginLeft="30dp"
                             android:textStyle="italic"
                             android:textSize="13sp"
@@ -94,7 +94,7 @@
                                 android:id="@+id/facebookProfile"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Facebook"
+                                android:text="@string/facebook"
                                 android:layout_gravity="center_vertical"
                                 android:textSize="14sp"
                                 android:layout_marginLeft="5dp"/>
@@ -102,7 +102,7 @@
                                 android:id="@+id/social_sharing_facebook_profile_flag_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Disconnected"
+                                android:text="@string/disconnected"
                                 android:textSize="10sp"
                                 android:visibility="gone"
                                 android:layout_marginLeft="5dp"/>
@@ -136,12 +136,12 @@
                             android:layout_marginLeft="20dp"
                             android:layout_gravity="center_vertical"
                             android:textSize="14sp"
-                            android:text="Website\nPosts"/>
+                            android:text="@string/website_posts"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="to"
+                            android:text="@string/to"
                             android:layout_marginLeft="30dp"
                             android:textStyle="italic"
                             android:textSize="13sp"
@@ -175,7 +175,7 @@
                                 android:id="@+id/social_sharing_facebook_page_flag_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Disconnected"
+                                android:text="@string/disconnected"
                                 android:textSize="10sp"
                                 android:visibility="gone"
                                 android:layout_marginLeft="5dp"/>
@@ -208,12 +208,12 @@
                             android:layout_marginLeft="20dp"
                             android:layout_gravity="center_vertical"
                             android:textSize="14sp"
-                            android:text="Website\nPosts"/>
+                            android:text="@string/website_posts"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="to"
+                            android:text="@string/to"
                             android:layout_marginLeft="30dp"
                             android:textStyle="italic"
                             android:textSize="13sp"
@@ -240,14 +240,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:text="Twitter"
+                                android:text="@string/twitter"
                                 android:textSize="14sp"
                                 android:layout_marginLeft="5dp"/>
                             <TextView
                                 android:id="@+id/social_sharing_twitter_flag_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Disconnected"
+                                android:text="@string/disconnected"
                                 android:visibility="gone"
                                 android:textSize="10sp"
                                 android:layout_marginLeft="5dp"/>
@@ -318,7 +318,7 @@
                             android:paddingBottom="8dp"
                             android:textColor="#ffffff"
                             android:textSize="16sp"
-                            android:text="Auto-Update\nFrom Social Networks" />
+                            android:text="@string/auto_update_from_social_network" />
                         <ImageView
                             android:id="@+id/iv_help_tool"
                             android:layout_height="30dp"
@@ -356,7 +356,7 @@
                                 android:id="@+id/auto_pull_facebookPage"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Facebook Page"
+                                android:text="@string/facebook_page"
                                 android:layout_gravity="center_vertical"
                                 android:textSize="14sp"
                                 android:layout_marginLeft="5dp"/>
@@ -364,7 +364,7 @@
                                 android:id="@+id/tv_fb_page_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Disconnected"
+                                android:text="@string/disconnected"
                                 android:textSize="10sp"
                                 android:visibility="gone"
                                 android:layout_marginLeft="5dp"/>
@@ -373,7 +373,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="to"
+                            android:text="@string/to"
                             android:layout_marginLeft="30dp"
                             android:textStyle="italic"
                             android:textSize="13sp"
@@ -386,7 +386,7 @@
                             android:layout_marginLeft="30dp"
                             android:layout_gravity="center_vertical"
                             android:textSize="14sp"
-                            android:text="Website"/>
+                            android:text="@string/website"/>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

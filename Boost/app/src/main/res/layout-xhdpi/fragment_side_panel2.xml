@@ -79,7 +79,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
            android:layout_below="@id/iconImage"
-            android:text="Float Point Name"
+            android:text="@string/float_point_name"
             android:singleLine="true"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
@@ -129,7 +129,7 @@
                 <com.nowfloats.CustomWidget.roboto_md_36_bcbcbc
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Site Complete"
+                    android:text="@string/percent_site_completed"
                     android:layout_marginLeft="3dp">
 
                 </com.nowfloats.CustomWidget.roboto_md_36_bcbcbc>
@@ -138,7 +138,7 @@
                 <com.nowfloats.CustomWidget.roboto_md_36_289dd9
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="What's Missing?"
+                    android:text="@string/what_is_missing"
                     android:layout_gravity="right|bottom"
                     android:layout_marginRight="20dp"
 

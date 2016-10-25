@@ -33,14 +33,12 @@
                 android:id="@+id/editText_businessName"
                 style="@style/SignUp_EditText_Style"
                 android:inputType="textCapWords"
-                android:hint="username"/>
+                android:hint="@string/username"/>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/businessCategoryLayout"
-            style="@style/SignUp_LinearLayout_Style"
-
-            >
+            style="@style/SignUp_LinearLayout_Style">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -54,7 +52,7 @@
                 style="@style/SignUp_EditText_Style"
                 android:editable="false"
                 android:drawableRight="@drawable/show_password"
-                android:hint="password"/>
+                android:hint="@string/password"/>
         </LinearLayout>
 
 
@@ -62,7 +60,7 @@
          android:id="@+id/loginButton"
          android:layout_width="328dp"
          android:layout_height="50dp"
-         android:text="LOG IN"
+         android:text="@string/log_in"
          android:textColor="#FFFFFF"
          android:layout_marginTop="40dp"
          android:background="#FFB900"
@@ -73,7 +71,7 @@
             android:id="@+id/forgotPwdTextView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="forgot your password"
+            android:text="@string/forgot_your_password"
             android:textSize="12sp"
             android:layout_marginTop="20dp"
             android:gravity="center_horizontal"

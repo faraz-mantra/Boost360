@@ -51,8 +51,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_gravity="center_vertical"
                 android:layout_height="wrap_content"
-
-                android:text="Overall Visits" />
+                android:text="@string/overall_visits" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -143,8 +142,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_gravity="center_vertical"
                 android:layout_height="wrap_content"
-
-                android:text="Subscribers" />
+                android:text="@string/subscribers" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -227,7 +225,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_gravity="center_vertical"
                 android:layout_height="wrap_content"
-                android:text="Search Queries" />
+                android:text="@string/search_queries" />
 
             <LinearLayout
                 android:layout_width="match_parent"

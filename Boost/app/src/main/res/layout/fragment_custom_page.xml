@@ -39,7 +39,7 @@
                 android:layout_marginTop="@dimen/dgts__padding_title"
                 android:layout_marginBottom="@dimen/dgts__padding_title"
                 android:textColor="@color/zeroth_grey_title"
-                android:text="Add a Page"/>
+                android:text="@string/add_a_page"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
                 android:textColor="@color/zeroth_grey"
                 android:padding="8dp"
                 android:gravity="center"
-                android:text="Use custom pages to describe your business offerings in detail. You can add and format paragraphs of text, links and images!"/>
+                android:text="@string/use_custom_pages_to_describe_business"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/progress_custom_page"

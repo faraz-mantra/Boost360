@@ -45,7 +45,7 @@
                 android:layout_gravity="center"
                 android:padding="5dp"
                 android:background="@color/primaryColor"
-                android:text="crop"
+                android:text="@string/crop"
                 android:textSize="8sp"
                 android:drawableTop="@drawable/crop_icon"
                 android:textColor="@color/black" />
@@ -57,7 +57,7 @@
                 android:layout_gravity="center"
                 android:padding="5dp"
                 android:background="@color/primaryColor"
-                android:text="rotate"
+                android:text="@string/rotate"
                 android:textSize="8sp"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
@@ -71,7 +71,7 @@
                 android:layout_gravity="center"
                 android:padding="5dp"
                 android:background="@color/greenDark"
-                android:text="done"
+                android:text="@string/done"
                 android:textSize="15sp"
                 android:textColor="@color/white" />
 

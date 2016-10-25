@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/cell_text_size"
                 android:textColor="@color/cell_text_color"
-                android:text="Business Address" />
+                android:text="@string/business__address" />
 
         </LinearLayout>
 
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:textColor="#565656"
-                android:text="Contact Information" />
+                android:text="@string/contact__info" />
 
         </LinearLayout>
 
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/cell_text_size"
                 android:textColor="@color/cell_text_color"
-                android:text="Business Hours" />
+                android:text="@string/title_activity_business__hours_" />
 
         </LinearLayout>
         <LinearLayout
@@ -122,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/cell_text_size"
                 android:textColor="@color/cell_text_color"
-                android:text="Business Logo" />
+                android:text="@string/title_activity_business__logo_" />
 
         </LinearLayout>
 
@@ -151,7 +151,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/cell_text_size"
                 android:textColor="@color/cell_text_color"
-                android:text="Social Sharing" />
+                android:text="@string/title_activity_social__sharing_" />
 
         </LinearLayout>
 

@@ -25,9 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="3dp"
-                card_view:cardCornerRadius="1dp"
-
-                >
+                card_view:cardCornerRadius="1dp">
 
                 <LinearLayout
                     android:background="@color/white"
@@ -40,14 +38,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="52dp"
                         android:orientation="vertical"
-                        android:gravity="bottom"
-                        >
+                        android:gravity="bottom">
 
                         <TextView
                             android:id="@+id/business_address_textline"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Address Line"
+                            android:text="@string/address_line"
                             android:textSize="10sp"
                             android:paddingLeft="5dp"
                             android:textColor="#BDBDBD"
@@ -58,7 +55,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="bottom"
-                            android:hint="Address Line"
+                            android:hint="@string/address_line"
                             android:inputType="textCapSentences"
                             android:textSize="14sp"
                             android:textColor="#575757"/>
@@ -84,7 +81,7 @@
                                 android:id="@+id/business_address_citytext"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Town / City"
+                                android:text="@string/town_city"
                                 android:textSize="10sp"
                                 android:paddingLeft="5dp"
                                 android:textColor="#BDBDBD"
@@ -95,7 +92,7 @@
                                 android:id="@+id/businessAddress_cityEditText"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:hint="Town / City"
+                                android:hint="@string/town_city"
                                 android:textSize="14sp"
                                 android:gravity="bottom"
                                 android:inputType="text"
@@ -126,7 +123,7 @@
                                 android:id="@+id/business_address_pincodetext"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Pin/Area Code"
+                                android:text="@string/pin_area_code"
                                 android:textSize="10sp"
                                 android:paddingLeft="5dp"
                                 android:textColor="#BDBDBD"
@@ -136,9 +133,8 @@
                                 android:id="@+id/businessAddress_pinCodeEditText"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:hint="Pin/Area Code"
+                                android:hint="@string/pin_area_code"
                                 android:textSize="14sp"
-
                                 android:gravity="bottom"
                                 android:inputType="number"
                                 android:textColor="#575757"
@@ -146,11 +142,7 @@
 
                         </LinearLayout>
 
-
                     </LinearLayout>
-
-
-
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -158,14 +150,13 @@
                         android:orientation="vertical"
                         android:gravity="bottom"
                         android:layout_weight="1"
-                        android:visibility="gone"
-                        >
+                        android:visibility="gone">
 
                         <TextView
                             android:id="@+id/business_address_statetext"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="State / Province"
+                            android:text="@string/state_province"
                             android:textSize="10sp"
                             android:paddingLeft="5dp"
                             android:textColor="#BDBDBD"
@@ -178,53 +169,37 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="bottom"
-                            android:hint="State / Province"
+                            android:hint="@string/state_province"
                             android:textSize="14sp"
                             android:textColor="#575757"/>
-
-
                     </LinearLayout>
-
-
-
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="52dp"
                         android:orientation="vertical"
-                        android:gravity="bottom"
-
-
-                        >
+                        android:gravity="bottom">
 
                         <TextView
                             android:id="@+id/business_address_countrytext"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Country"
+                            android:text="@string/country"
                             android:textSize="10sp"
                             android:paddingLeft="5dp"
-                            android:textColor="#BDBDBD"
-                            />
-
-
-
-
+                            android:textColor="#BDBDBD"/>
                         <EditText
 
                             android:id="@+id/businessAddress_countryEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="bottom"
-                            android:hint="Country"
+                            android:hint="@string/country"
                             android:textSize="14sp"
                             android:textColor="@color/light_gray"
                             />
 
                     </LinearLayout>
-
-
-
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -243,8 +218,6 @@
                     android:layout_margin="13dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
-
-
 
             </android.support.v7.widget.CardView>
 

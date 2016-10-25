@@ -11,7 +11,7 @@
         android:id="@+id/category1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="General Services"
+        android:text="@string/general_services"
 
         />
 
@@ -20,7 +20,7 @@
         android:id="@+id/category2"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="General Services"
+        android:text="@string/general_services"
 
         />
 
@@ -29,7 +29,7 @@
         android:id="@+id/category3"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="General Services"
+        android:text="@string/general_services"
 
         />
 
@@ -38,7 +38,7 @@
         android:id="@+id/category4"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="General Services"
+        android:text="@string/general_services"
 
         />
 

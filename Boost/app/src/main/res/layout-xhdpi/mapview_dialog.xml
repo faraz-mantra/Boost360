@@ -12,7 +12,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:gravity="center_horizontal"
-        android:text="Choose your Location"
+        android:text="@string/choose_your_location"
         android:textColor="#878787"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
-            android:text="Drag the map to the location of your Store."
+            android:text="@string/drag_to_map_your_location"
             android:textColor="#878787"
             android:textSize="14sp" />
 
@@ -69,7 +69,7 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:background="#ffb900"
-                android:text="CANCEL"
+                android:text="@string/cancel_in_capital"
                 android:textSize="12sp" />
 
             <View
@@ -83,7 +83,7 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:background="#ffb900"
-                android:text="CONFIRM"
+                android:text="@string/confirm_in_capital"
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>

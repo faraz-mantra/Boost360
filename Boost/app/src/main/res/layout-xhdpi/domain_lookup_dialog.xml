@@ -33,15 +33,10 @@
             android:orientation="vertical"
             android:layout_width="fill_parent">
 
-
-
-
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
-
-
                 android:layout_marginTop="10dp"
                 android:src="@drawable/domain_lookup_icon"/>
 
@@ -53,7 +48,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="15dp"
                 android:textSize="24sp"
-                android:text="Get a free .com!"/>
+                android:text="@string/get_free_com"/>
 
             <TextView
                 android:id="@+id/domain_lookup_desc"
@@ -63,7 +58,7 @@
                 android:gravity="center_horizontal"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
-                android:text="Voila! You are now eligible to get a free domain. Request a .com/.net of your choice and we will integrate it to your website within 24 hours."
+                android:text="@string/you_are_eligible_to_free_domain"
                 />
 
         </LinearLayout>
@@ -72,7 +67,7 @@
             android:id="@+id/loginButton"
             android:layout_width="271dp"
             android:layout_height="45dp"
-            android:text="Okay"
+            android:text="@string/okay"
             android:textColor="#FFFFFF"
             android:layout_marginTop="20dp"
             android:background="@drawable/drop_shadow"

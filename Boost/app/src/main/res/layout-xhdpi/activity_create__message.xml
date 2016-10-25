@@ -31,7 +31,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ADD PHOTO"
+            android:text="@string/add_photo"
             android:textSize="10sp"
             android:textColor="@color/black"/>
     </LinearLayout>
@@ -39,7 +39,7 @@
         <EditText
             android:id="@+id/createMessageEditText"
             android:layout_width="match_parent"
-            android:hint="Description"
+            android:hint="@string/enter_the_description"
             android:gravity="top"
             android:layout_marginRight="20dp"
             android:minLines="5"

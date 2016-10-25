@@ -27,14 +27,14 @@
                 android:layout_marginTop="41dp"
                 android:layout_gravity="center_horizontal"
                 android:textColor="#FFB900"
-                android:text="website_name"/>
+                android:text="@string/website_name"/>
 
 
             <TextView
                 android:id="@+id/domainNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=".nowfloats.com"
+                android:text="@string/nowfloats.com"
                 android:layout_marginBottom="18dp"
                 android:layout_gravity="center|bottom"
                 android:textSize="13sp"

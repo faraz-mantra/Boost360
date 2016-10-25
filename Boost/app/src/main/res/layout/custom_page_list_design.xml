@@ -56,7 +56,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:singleLine="true"
-                            android:text="About Us"
+                            android:text="@string/about_us"
                             android:textColor="#6b6b6b"
                             android:textSize="15sp"
                             tools:ignore="MissingPrefix" />

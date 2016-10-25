@@ -72,7 +72,7 @@
                 android:id="@+id/shownext"
                 android:layout_width="271dp"
                 android:layout_height="45dp"
-                android:text="Got it,Next"
+                android:text="@string/got_it_next"
                 android:textColor="#FFFFFF"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/rounded_corner_button"

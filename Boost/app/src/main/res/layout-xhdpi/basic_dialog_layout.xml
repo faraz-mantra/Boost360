@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:text="Number Already Registered"
+        android:text="@string/number_already_registered"
         android:textColor="#878787"
         android:textSize="15sp"
         android:textStyle="bold" />
@@ -26,7 +26,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
         android:gravity="center_vertical|center_horizontal"
-        android:text="Entered phone number is already registered with us.Please enter a different one."
+        android:text="@string/number_already_registered_enter_different"
         android:textColor="#878787"
         android:textSize="13sp" />
 
@@ -37,10 +37,8 @@
         android:layout_gravity="center_horizontal"
         android:focusableInTouchMode="true"
         android:gravity="left"
-        android:hint="Mobile"
-        android:inputType="phone"
-
-         />
+        android:hint="@string/enter_mobile_number"
+        android:inputType="phone"/>
 
 
 </LinearLayout>
