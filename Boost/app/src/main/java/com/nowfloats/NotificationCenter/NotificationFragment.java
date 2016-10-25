@@ -47,6 +47,8 @@ public class NotificationFragment extends Fragment{
     private int prevCount = 0;
     private String mIsRead = "false";
     private boolean mIsAlertShown = false;
+    private int alertsCount = 0;
+    private boolean mShouldRequestMore = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -121,11 +123,10 @@ public class NotificationFragment extends Fragment{
                 }*/
 
                 int lastInScreen = firstVisibleItem + visibleItemCount;
-                if((userScrolled) && (lastInScreen == totalItemCount)
-                        && (totalItemCount%10==0) && (prevCount!=totalItemCount)){
+                if((userScrolled) && (lastInScreen == totalItemCount) && (prevCount!=totalItemCount) && mShouldRequestMore){
                     userScrolled=false;
                     prevCount = totalItemCount;
-                    moreAlerts("" + totalItemCount);
+                    moreAlerts("" + alertsCount);
                 }
             }
         });
@@ -133,6 +134,7 @@ public class NotificationFragment extends Fragment{
 
     private void moreAlerts(String offset) {
         progress_layout.setVisibility(View.VISIBLE);
+        alertsCount += 10;
         try {
             Map<String, String> params = new HashMap<String, String>();
             params.put("clientId", Constants.clientId);
@@ -144,6 +146,9 @@ public class NotificationFragment extends Fragment{
             alertInterface.getAlerts(params,new Callback<ArrayList<AlertModel>>() {
                 @Override
                 public void success(ArrayList<AlertModel> alertModels, Response response) {
+                    if (alertModels.size()<10){
+                        mShouldRequestMore = false;
+                    }
                     progress_layout.setVisibility(View.GONE);
                     if (alertModels==null || alertModels.size()==0 && !mIsAlertShown){
                         emptylayout.setVisibility(View.VISIBLE);

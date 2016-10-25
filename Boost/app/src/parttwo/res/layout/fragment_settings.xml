@@ -216,7 +216,7 @@
                     android:layout_width="@dimen/icon_size"
                     android:scaleType="fitXY"
                     android:layout_height="@dimen/icon_size"
-                    android:src="@drawable/icon_info"
+                    android:src="@drawable/faq"
                     android:padding="5dp"
                     android:layout_marginLeft="@dimen/icon_left_margin"
                     android:layout_marginRight="@dimen/icon_right_margin"
