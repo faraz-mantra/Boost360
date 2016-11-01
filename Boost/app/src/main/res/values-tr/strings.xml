@@ -79,8 +79,8 @@
     <string name="side_panel_row_eight">hisse</string>
     <string name="setting_change_pwd">Şifre değiştir</string>
     <string name="setting_feedback">geri bildirim</string>
-    <string name="setting_rate_us_on_play_store">Google Play Store'da bize oy ver</string>
-    <string name="Setting_like_us_on_facebook">Bizim gibi Facebook'ta</string>
+    <string name="setting_rate_us_on_play_store">Google Play Store\'da bize oy ver</string>
+    <string name="Setting_like_us_on_facebook">Bizim gibi Facebook\'ta</string>
     <string name="setting_about_us">Hakkımızda</string>
     <string name="setting_logout">Çıkış Yap</string>
     <string name="signup_subd">^[a&#8211;zA&#8211;Z0&#8211;9][a&#8211;zA&#8211;Z0&#8211;9&#8211;]{1,61}[a&#8211;zA&#8211;Z0&#8211;9]$</string>
@@ -551,9 +551,9 @@
 
     <string name="ps_sc2_lbl3">Sürekli oluşturulan ve kolayca \nbu uygulamayı kullanarak yönetilen \nbir iş web sitesi olsun.</string>
     <string name="ps_sc3_lbl3">oluşturmak ve anında web sitenizi \ngüncellemek için Facebook sayfası ile giriş yapın. \nŞiddetle tavsiye!</string>
-    <string name="ps_sc4_lbl3">Yer-SEO Tabanlı ile <sup> <small> TM </ small> </ sup>, ilgili \nanahtar kelimeler için keşfedilen ve arama \nmotorlarında sıralamanızı artırmak olsun</string>
+    <string name="ps_sc4_lbl3">Yer-SEO Tabanlı ile <sup> <small> TM </small> </sup>, ilgili \nanahtar kelimeler için keşfedilen ve arama \nmotorlarında sıralamanızı artırmak olsun</string>
     <string name="ps_sc6_lbl3">Müşterilerin doğrudan iletişim ve \nanında onlara cevap olsun!</string>
-    <string name="ps_sc8_lbl3">in-app Store'dan iş web sitesi için \nek özellikler olsun.</string>
+    <string name="ps_sc8_lbl3">in-app Store\'dan iş web sitesi için \nek özellikler olsun.</string>
     <string name="business_enquiry_empty">Biz en kısa sürede bir \nsorgu olsun size bir bildirim \ngönderecektir.</string>
     <string name="searchquery_empty">Hiçbir şey şu anda burada görmek. \nMesajı iyi ve gelişmek</string>
     <string name="empty_image_gallery">ürün ve \nhizmetlerin resim eklemek \niçin + düğmesine çarptı. </string>
@@ -802,7 +802,7 @@
     <string name="website">Web sitesi</string>
     <string name="email_in_small">E-posta</string>
     <string name="business_contact">İş İletişim</string>
-    <string name="donot_like_it_tap_on_card">do not like it? değiştirmek için kart üzerine dokunun</string>
+    <string name="donot_like_it_tap_on_card">beğenmedim? değiştirmek için kart üzerine dokunun</string>
     <string name="create_website">CORANI MY WEB SİTESİ</string>
     <string name="by_pressing_above_button_to_agree">düğmesinin üzerinde basarak, Sen kabul eden</string>
     <string name="policy_terms">Politikası ve Şartlar</string>
@@ -892,7 +892,7 @@
     <string name="sign_up_country">ülke</string>
     <string name="sign_up_email">E-posta Adres</string>
     <string name="sign_up_phone_number">Telefon numarası</string>
-    <string name="Setting_follow_us_on_twitter">Bizi Twitter'da takip edin</string>
+    <string name="Setting_follow_us_on_twitter">Bizi Twitter\'da takip edin</string>
     <string name="Setting_terms_of_use">Kullanım Şartları</string>
     <string name="Setting_privacy_policy">Gizlilik Politikası</string>
     <string name="onboarding_next_btn_next">Anladım, Sonraki</string>
