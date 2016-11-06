@@ -147,7 +147,7 @@
     <string name="postUpdate_text1">Post 5 Updates</string>
     <string name="share_text1">Share</string>
 
-    <string name="buydomain_text2">Buy a.com</string>
+    <string name="buydomain_text2">Buy a .com</string>
     <string name="phoneNumber_text2">Ensure recruiters reach you instantly</string>
     <string name="featuredImage_text2">Add relevant image</string>
     <string name="businessName_text2">Add name</string>
@@ -551,7 +551,11 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="we_sent_email_with_password">We have sent you an email with password details</string>
     <string name="logging_out">Logging out &#8230;</string>
     <string name="unable_to_logout">Not able to logout</string>
+<<<<<<< HEAD
     <string name="percent_site_completed">site completed</string>
+=======
+    <string name="percent_site_completed"> site completed</string>
+>>>>>>> 34c01e3c5e45c95d32744834cfbfec14f00e2420
     <string name="choose_app_to_share">Choose app to share</string>
     <string name="share_message">Share your message</string>
     <string name="no_app_available_for_action">No apps available for the action</string>
@@ -858,7 +862,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="store_no_description">No description available!</string>
     <string name="store_inclusive_all_taxes">(Inclusive of all taxes)</string>
     <string name="site_appearance_dalog_title">Claim a new dynamic look for your site, absolutely free!</string>
-    <string name="site_appearance_dialog_body">If you don\'t like it, you can always switch back to the previous design by going into the Site Appearance tab</string>
+    <string name="site_appearance_dialog_body">If you don\'t like it, you can always switch back to the previous desig
+        n by going into the Site Appearance tab</string>
     <string name="text_btn_enable">ENABLE</string>
     <string name="text_btn_later">LATER</string>
     <string name="select_action_dialog_title">Upload Featured Image</string>
@@ -898,6 +903,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="onboarding_next_btn_next">Got it,Next</string>
     <string name="on_boarding_next2_text">Great, Thanks</string>
     <string name="onboarding_popup_one_btn_text">Show me!</string>
+<<<<<<< HEAD
     <string name="business_logo_info_text">JPEG, .PNG and .GIF file formats are supported. For best experience, square images are recommended. Keep the size below 400KB and dimensions should not be more than 400px (width) and 400px (height).</string>
     <string name="offer_title">Title:</string>
     <string name="offer_desc">Description:</string>
@@ -917,6 +923,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="suucessfull_offer_post">Your offer is successfully posted</string>
     <string name="error_offer_post">Error while uploading image for your offer</string>
     <string name="offers_image_size_error">Image Size is more than 4MB. Please choose an image of size less than 4MB</string>
+=======
+    <string name="welcome_back">Welcome Back</string>
+>>>>>>> 34c01e3c5e45c95d32744834cfbfec14f00e2420
     <string-array name="calendar">
         <item>Week</item>
         <item>Month</item>

@@ -84,7 +84,7 @@ public class Login_MainActivity extends AppCompatActivity implements
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
-        headerText.setText("Welcome Back");
+        headerText.setText(getString(R.string.welcome_back));
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
