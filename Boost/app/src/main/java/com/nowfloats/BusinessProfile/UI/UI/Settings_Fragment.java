@@ -431,7 +431,7 @@ public class Settings_Fragment extends Fragment {
         });
     }
     private void rateUsPlayStore(Context context){
-        Uri uri = Uri.parse("market://details?id=" + context.getPackageName());
+        Uri uri = Uri.parse("market://details?id=" + Constants.PACKAGE_NAME);
         Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
         // To count with Play market backstack, After pressing back button,
         // to taken back to our application, we need to add following flags to intent.
@@ -458,17 +458,8 @@ public class Settings_Fragment extends Fragment {
 
 
     public String getFacebookPageURL(Context context) {
-        PackageManager packageManager = context.getPackageManager();
-        try {
-            int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
-            if (versionCode >= 3002850) {                              //newer versions of fb app
-                return "fb://facewebmodal/f?href=" + FACEBOOK_URL;
-            } else {                                                  //older versions of fb app
-                return "fb://page/" + FACEBOOK_PAGE_ID;
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            return FACEBOOK_URL;                        //normal web url
-        }
+
+        return Constants.FACEBOOK_URL;
     }
 
 }

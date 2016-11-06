@@ -81,7 +81,7 @@
     <string name="setting_feedback">Feedback</string>
     <string name="setting_rate_us_on_play_store">Rate us on Play Store</string>
     <string name="Setting_like_us_on_facebook">Like us on Facebook</string>
-    <string name="setting_about_us">About Us</string>
+    <string name="setting_about_us">About us</string>
     <string name="setting_logout">Logout</string>
     <string name="signup_subd">^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]$</string>
 

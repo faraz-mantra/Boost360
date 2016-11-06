@@ -65,9 +65,9 @@ public class PageFragment extends Fragment {
     static CallingTask callingTask;
     LinearLayout progressLayout ;
 
-    String[] dayNameArray = getResources().getStringArray(R.array.weeks);
-    String[] weekNameArray = getResources().getStringArray(R.array.week_with_num);
-    String[] monthNameArray = getResources().getStringArray(R.array.months);
+    String[] dayNameArray;
+    String[] weekNameArray;
+    String[] monthNameArray;
     int[] colorArray = { Color.rgb(123,123,123),Color.rgb(100,100,100),Color.rgb(130,130,130),
             Color.rgb(115,115,115),Color.rgb(135,135,135),Color.rgb(135,135,135),
             Color.rgb(105,105,105),Color.rgb(123,120,110) };
@@ -101,6 +101,9 @@ public class PageFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPage = getArguments().getInt(ARG_PAGE);
+        dayNameArray = getResources().getStringArray(R.array.weeks);
+        weekNameArray = getResources().getStringArray(R.array.week_with_num);
+        monthNameArray = getResources().getStringArray(R.array.months);
     }
 
     // Inflate the fragment layout we defined above for this fragment

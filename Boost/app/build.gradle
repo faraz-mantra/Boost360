@@ -44,7 +44,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 23
         versionName "4.4.6"
-        versionCode 2016100021
+        versionCode 2016100025
         multiDexEnabled true
     }
     buildTypes {
@@ -59,7 +59,10 @@ android {
             applicationId "com.biz2.nowfloats"
         }
         parttwo {
-            applicationId "com.thinksity"
+            applicationId "com.sibername"
+        }
+        partthree{
+            applicationId "com.nowfloats.kitsune"
         }
     }
     packagingOptions {
@@ -138,6 +141,7 @@ dependencies {
     compile 'org.honorato.multistatetogglebutton:multistatetogglebutton:0.2.2'
     compile 'com.google.firebase:firebase-messaging:9.4.0'
     compile 'me.biubiubiu.justifytext:library:1.1'
+    compile 'com.github.clans:fab:1.6.4'
 }
 
 apply plugin: 'com.google.gms.google-services'

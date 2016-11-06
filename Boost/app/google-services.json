@@ -98,6 +98,37 @@
           "status": 2
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:87687526880:android:6bdf5c38ebbb47e3",
+        "android_client_info": {
+          "package_name": "com.nowfloats.kitsune"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "87687526880-4if6cli267r20pq80shi31ucgl979l54.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBg1hVuRPhFJkKkIqZdfkGaglzPeky-eBg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     }
   ],
   "configuration_version": "1"

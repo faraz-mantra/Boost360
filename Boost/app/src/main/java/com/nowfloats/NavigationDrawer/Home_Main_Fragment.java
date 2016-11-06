@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
@@ -35,6 +37,7 @@ import com.facebook.Response;
 import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
+import com.github.clans.fab.FloatingActionMenu;
 import com.melnykov.fab.FloatingActionButton;
 import com.nowfloats.Login.Fetch_Home_Data;
 import com.nowfloats.Login.Model.FloatsMessageModel;
@@ -80,7 +83,7 @@ import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
 public class Home_Main_Fragment extends Fragment implements
-        Fetch_Home_Data.Fetch_Home_Data_Interface {
+        Fetch_Home_Data.Fetch_Home_Data_Interface, View.OnClickListener {
     public static LinearLayout retryLayout,emptyMsgLayout;
     public static ButteryProgressBar progressBar;
     public static CardView progressCrd;
@@ -91,7 +94,7 @@ public class Home_Main_Fragment extends Fragment implements
     private static ArrayList<Integer> removedItems;
     static View.OnClickListener myOnClickListener;
     Fetch_Home_Data fetch_home_data ;
-    FloatingActionButton fabButton ;
+    FloatingActionMenu fabButton ;
     //private FloatingActionButton fab_event,fab_offer, fab_product_launch, fab_job_alert, fabcustom_review, fab_create_update;
     UserSessionManager session;
     private static final String DATA_ARG_KEY = "HomeFragment.DATA_ARG_KEY";
@@ -267,13 +270,13 @@ public class Home_Main_Fragment extends Fragment implements
         progressBar = (ButteryProgressBar)view.findViewById(R.id.progressbar);
         retryLayout = (LinearLayout)view.findViewById(R.id.postRetryLayout);
         emptyMsgLayout = (LinearLayout)view.findViewById(R.id.emptymsglayout);
-        emptyMsgLayout.setVisibility(View.GONE);/*
-        view.findViewById(R.id.fab_event).setOnClickListener(this);
+        emptyMsgLayout.setVisibility(View.GONE);
+        /*view.findViewById(R.id.fab_event).setOnClickListener(this);*/
         view.findViewById(R.id.fab_offer).setOnClickListener(this);
-        view.findViewById(R.id.fab_product_launch).setOnClickListener(this);
+        /*view.findViewById(R.id.fab_product_launch).setOnClickListener(this);
         view.findViewById(R.id.fab_job_alert).setOnClickListener(this);
-        view.findViewById(R.id.fab_custom_review).setOnClickListener(this);
-        view.findViewById(R.id.fab_update).setOnClickListener(this);*/
+        view.findViewById(R.id.fab_custom_review).setOnClickListener(this);*/
+        view.findViewById(R.id.fab_update).setOnClickListener(this);
         ImageView retryPost = (ImageView)view.findViewById(R.id.retryPost);
         ImageView cancelPost = (ImageView)view.findViewById(R.id.cancelPost);
         PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
@@ -430,7 +433,7 @@ public class Home_Main_Fragment extends Fragment implements
             }
         });
 
-        fabButton = (FloatingActionButton) view.findViewById(R.id.fab);
+        fabButton = (FloatingActionMenu) view.findViewById(R.id.fab);
         /*fabButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -445,11 +448,11 @@ public class Home_Main_Fragment extends Fragment implements
         });*/
         //session.storeFacebookPage("true");
 
-        fabButton.setOnClickListener(new View.OnClickListener() {
+        /*fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                BoostLog.d("ILUD Home_Fragment:", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE));
+                *//*BoostLog.d("ILUD Home_Fragment:", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE));
                 if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
                     mCallback.onRenewPlanSelected();
                 }
@@ -457,8 +460,32 @@ public class Home_Main_Fragment extends Fragment implements
                     Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
                     startActivity(webIntent);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }
+                }*//*
 
+            }
+        });*/
+        fabButton.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
+            @Override
+            public void onMenuToggle(boolean opened) {
+                if(opened){
+                    fabButton.setMenuButtonColorNormal(Color.parseColor("#545454"));
+                    fabButton.setMenuButtonColorRipple(Color.parseColor("#fddc80"));
+                    fabButton.setMenuButtonColorPressed(Color.parseColor("#545454"));
+                }else {
+                    fabButton.setMenuButtonColorNormal(getResources().getColor(R.color.primaryColor));
+                    fabButton.setMenuButtonColorRipple(Color.parseColor("#fddc80"));
+                    fabButton.setMenuButtonColorPressed(getResources().getColor(R.color.primaryColor));
+                }
+            }
+        });
+        fabButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(fabButton.isOpened()){
+                    fabButton.close(true);
+                    return true;
+                }
+                return false;
             }
         });
 
@@ -603,6 +630,34 @@ public class Home_Main_Fragment extends Fragment implements
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.fab_update:
+                fabButton.close(true);
+                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                    mCallback.onRenewPlanSelected();
+                }
+                else {
+                    Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
+                    startActivity(webIntent);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+                break;
+            case R.id.fab_offer:
+                fabButton.close(true);
+                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                    mCallback.onRenewPlanSelected();
+                }
+                else {
+                    Intent webIntent = new Intent(getActivity(), CreateOffersActivity.class);
+                    startActivity(webIntent);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+                break;
         }
     }
 

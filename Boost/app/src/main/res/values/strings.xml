@@ -80,13 +80,13 @@
     <string name="side_panel_row_four">Photo Gallery</string>
     <string name="side_panel_row_five">Settings</string>
     <string name="side_panel_row_six">Write to Ria</string>
-    <string name="side_panel_row_seven">Contact Us</string>
+    <string name="side_panel_row_seven">Contact us</string>
     <string name="side_panel_row_eight">Share</string>
     <string name="setting_change_pwd">Change password</string>
     <string name="setting_feedback">Feedback</string>
     <string name="setting_rate_us_on_play_store">Rate us on Play Store</string>
     <string name="Setting_like_us_on_facebook">Like us on Facebook</string>
-    <string name="setting_about_us">About Us</string>
+    <string name="setting_about_us">About us</string>
     <string name="setting_logout">Logout</string>
     <string name="signup_subd">^[a&#8211;zA&#8211;Z0&#8211;9][a&#8211;zA&#8211;Z0&#8211;9&#8211;]{1,61}[a&#8211;zA&#8211;Z0&#8211;9]$</string>
 
@@ -485,7 +485,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="cancel">Cancel</string>
     <string name="password_updated">Your password has been updated.</string>
     <string name="entered_password_incorrect">The password you entered is incorrect.</string>
-    <string name="please_wait">Please Wait</string>
+    <string name="please_wait">Please Wait...</string>
     <string name="enter_valid_website">Enter Valid Website</string>
     <string name="enter_valid_email">Please enter valid email</string>
     <string name="primary_num_can_not_empty">Primary number cannot be empty</string>
@@ -551,7 +551,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="we_sent_email_with_password">We have sent you an email with password details</string>
     <string name="logging_out">Logging out &#8230;</string>
     <string name="unable_to_logout">Not able to logout</string>
-    <string name="percent_site_completed">% site completed</string>
+    <string name="percent_site_completed">site completed</string>
     <string name="choose_app_to_share">Choose app to share</string>
     <string name="share_message">Share your message</string>
     <string name="no_app_available_for_action">No apps available for the action</string>
@@ -898,6 +898,25 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="onboarding_next_btn_next">Got it,Next</string>
     <string name="on_boarding_next2_text">Great, Thanks</string>
     <string name="onboarding_popup_one_btn_text">Show me!</string>
+    <string name="business_logo_info_text">JPEG, .PNG and .GIF file formats are supported. For best experience, square images are recommended. Keep the size below 400KB and dimensions should not be more than 400px (width) and 400px (height).</string>
+    <string name="offer_title">Title:</string>
+    <string name="offer_desc">Description:</string>
+    <string name="offer_start_date">Start Date:</string>
+    <string name="offer_end_date">End Date:</string>
+    <string name="offer_discount">Discount Percentage:</string>
+    <string name="createOffersTitle">Post An Offer</string>
+    <string name="offers_title_error">Please enter the title</string>
+    <string name="offers_desc_error">Please enter description for the offer</string>
+    <string name="offers_start_date_error">Please choose start date for the offer</string>
+    <string name="offers_end_date_error">Please choose end date for the offer</string>
+    <string name="offers_discount_error">Please enter discount for the offer</string>
+    <string name="offers_image_error">Choose an image for the offer</string>
+    <string name="offer_uri">Offer Url:</string>
+    <string name="offer_upload_failure">Error while posting your offer</string>
+    <string name="offer_image_upload_dialog_text">Uploading image for the offer...</string>
+    <string name="suucessfull_offer_post">Your offer is successfully posted</string>
+    <string name="error_offer_post">Error while uploading image for your offer</string>
+    <string name="offers_image_size_error">Image Size is more than 4MB. Please choose an image of size less than 4MB</string>
     <string-array name="calendar">
         <item>Week</item>
         <item>Month</item>

@@ -97,7 +97,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
 
     private final int gallery_req_id = 6;
     private final int media_req_id = 5;
-    private String[] mPriorityList = getResources().getStringArray(R.array.priority_list);
+    private String[] mPriorityList;
     private int mPriorityVal = 1000000;
 
 
@@ -128,6 +128,8 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
         switchView = (Switch)findViewById(R.id.switchView);
         svFreeShipment = (Switch) findViewById(R.id.sv_free_shipping);
         switchView.setChecked(true);
+
+        mPriorityList= getResources().getStringArray(R.array.priority_list);
 
         PorterDuffColorFilter color = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_IN);
         save.setColorFilter(color);

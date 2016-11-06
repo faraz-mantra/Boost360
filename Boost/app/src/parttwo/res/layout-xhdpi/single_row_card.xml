@@ -393,7 +393,7 @@
             android:layout_height="@dimen/sidepanel_cell_height"
             android:background="@color/cell_background_color"
             android:orientation="horizontal"
-
+            android:visibility="gone"
             android:gravity="center_vertical">
 
             <ImageView
@@ -416,7 +416,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <!--<ImageView
+                <ImageView
                     android:id="@+id/iv_write_to_ria_info"
                     android:layout_width="25dp"
                     android:adjustViewBounds="true"
@@ -424,7 +424,7 @@
                     android:tint="@color/primaryColor"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="35dp"
-                    android:src="@drawable/ic_info_outline_white_24dp"/>-->
+                    android:src="@drawable/ic_info_outline_white_24dp"/>
                 <TextView
                     android:id="@+id/tv_write_to_ria_info"
                     android:layout_width="wrap_content"
@@ -448,7 +448,7 @@
             android:layout_height="@dimen/sidepanel_cell_height"
             android:background="@color/cell_background_color"
             android:orientation="horizontal"
-
+            android:visibility="gone"
             android:gravity="center_vertical">
 
             <ImageView

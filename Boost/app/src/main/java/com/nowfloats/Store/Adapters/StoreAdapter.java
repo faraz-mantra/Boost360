@@ -74,7 +74,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
                     if (storeData.get(position).PrimaryImageUri.contains("http")){
                         Picasso.with(appContext).load(storeData.get(position).PrimaryImageUri).into(holder.imageView);
                     }else{
-                        String url = Constants.BASE_IMAGE_URL+storeData.get(position).PrimaryImageUri;
+                        String url = Constants.NOW_FLOATS_API_URL+storeData.get(position).PrimaryImageUri;
                         Picasso.with(appContext).load(url).into(holder.imageView);
                     }
                 if (storeData.get(position).Name!=null)

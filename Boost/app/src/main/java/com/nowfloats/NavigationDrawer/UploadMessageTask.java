@@ -71,7 +71,7 @@ public final class UploadMessageTask {
             postInterface.postText(obj, new Callback<String>() {
                 @Override
                 public void success(String txtId, Response retroResponse) {
-                    Log.d("Response", "Text Response : " + txtId);
+                    //Log.d("Response", "Text Response : " + txtId);
                     if (!Util.isNullOrEmpty(txtId) && path.length() > 1) {
                         uploadImage(path, txtId);
                     } else if (txtId != null && txtId.length() > 1) {

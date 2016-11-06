@@ -30,6 +30,7 @@ import com.nowfloats.BusinessProfile.UI.API.Upload_Logo;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NotificationCenter.AlertArchive;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
@@ -80,13 +81,15 @@ public class Business_Logo_Activity extends AppCompatActivity {
         uploadButton = (Button) findViewById(R.id.addLogoButton);
         backgroundImageView = (ImageView) findViewById(R.id.imageView);
         try {
-            if (Constants.LOGOUPLOADED == false) {
+            if (true) {
                 String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
                 if(iconUrl.length()>0 && !iconUrl.contains("http")) {
-                    String baseNameProfileImage = Constants.BASE_IMAGE_URL+"" + iconUrl;
-                    Picasso.with(this).load(baseNameProfileImage).placeholder(R.drawable.logo_default_image).into(logoimageView);
+                    //String baseNameProfileImage = Constants.BASE_IMAGE_URL+"" + iconUrl;
+                    BoostLog.d("Logo Url:", iconUrl);
+                    Picasso.with(this).load(iconUrl).placeholder(R.drawable.logo_default_image).into(logoimageView);
                 }else{
                     if(iconUrl!=null && iconUrl.length()>0) {
+                        BoostLog.d("Logo Url:", iconUrl);
                         Picasso.with(this).load(iconUrl).placeholder(R.drawable.logo_default_image).into(logoimageView);
                     }else{
                         Picasso.with(this).load(R.drawable.logo_default_image).into(logoimageView);
@@ -408,7 +411,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
 
     public void uploadPrimaryPicture(String path) {
         new AlertArchive(Constants.alertInterface,"LOGO",session.getFPID());
-        Upload_Logo upload_logo = new Upload_Logo(Business_Logo_Activity.this,path,session.getFPID());
+        Upload_Logo upload_logo = new Upload_Logo(Business_Logo_Activity.this,path,session.getFPID(), session);
         upload_logo.execute();
 //        Constants.isImgUploaded = false;
 //        UploadPictureAsyncTask upa = new UploadPictureAsyncTask(Business_Logo_Activity.this, path, false,true,session.getFPID());

@@ -68,7 +68,7 @@ public class Business_Address_Activity extends ActionBarActivity {
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         saveTextView = (TextView) toolbar.findViewById(R.id.saveTextView);
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
-        titleTextView.setText(getResources().getString(R.string.answer));
+        titleTextView.setText(getResources().getString(R.string.business__address));
         ivMap = (ImageView) findViewById(R.id.iv_map);
 
         ivMap.setOnClickListener(new View.OnClickListener() {

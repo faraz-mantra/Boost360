@@ -418,6 +418,8 @@ public class Constants {
     public static String fbPageFullUrl;
     public static String fbFromWhichPage;
     public static boolean FbFeedPullAutoPublish;
+    public static String FACEBOOK_URL = Specific.FACEBOOK_URL;
+    public static String PACKAGE_NAME = Specific.PACKAGE_NAME;
 
 
 }

@@ -115,48 +115,87 @@
 
             </LinearLayout>
         </FrameLayout>
-
         <FrameLayout
-            android:id="@+id/change_password_Layout"
+            android:id="@+id/about_us_Layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <LinearLayout
+            <LinearLayout
 
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_screen_cell_height"
+                android:background="@color/cell_background_color"
+                android:orientation="horizontal"
+                android:layout_marginTop="1dp"
+                android:gravity="center_vertical"
+                >
+
+                <ImageView
+                    android:id="@+id/fifthRow_ImageView"
+                    android:layout_width="@dimen/icon_size"
+                    android:scaleType="fitXY"
+                    android:padding="5dp"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@drawable/icon_info"
+                    android:layout_marginLeft="@dimen/icon_left_margin"
+                    android:layout_marginRight="@dimen/icon_right_margin"
+                    />
+
+                <TextView
+                    android:id="@+id/fifthRow_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/cell_text_size"
+                    android:textColor="@color/cell_text_color"
+                    android:text="@string/setting_about_us" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:selectableItemBackground"
+                android:orientation="horizontal"></LinearLayout>
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/faq_Layout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/settings_screen_cell_height"
-            android:background="@color/cell_background_color"
-            android:orientation="horizontal"
-            android:layout_marginTop="1dp"
-            android:gravity="center_vertical">
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_screen_cell_height"
+                android:background="@color/cell_background_color"
+                android:orientation="horizontal"
+                android:layout_marginTop="1dp"
+                android:gravity="center_vertical"
+                >
 
-            <ImageView
-                android:id="@+id/firstrow_ImageView_ProfileV2"
-                android:layout_width="@dimen/icon_size"
-                android:scaleType="fitCenter"
-                android:layout_height="@dimen/textview_height_business_profile"
-                android:src="@drawable/icon_change_password"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
-                android:padding="5dp"
-                />
+                <ImageView
+                    android:id="@+id/faq_ImageView"
+                    android:layout_width="@dimen/icon_size"
+                    android:scaleType="fitXY"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@drawable/faq"
+                    android:padding="5dp"
+                    android:layout_marginLeft="@dimen/icon_left_margin"
+                    android:layout_marginRight="@dimen/icon_right_margin"
+                    />
 
-            <TextView
-                android:id="@+id/firstrow_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/cell_text_size"
-                android:textColor="@color/cell_text_color"
-                android:text="@string/setting_change_pwd" />
+                <TextView
+                    android:id="@+id/faq_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/cell_text_size"
+                    android:textColor="@color/cell_text_color"
+                    android:text="@string/faqs" />
 
-        </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?android:selectableItemBackground"
-        android:orientation="horizontal">
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:selectableItemBackground"
+                android:orientation="horizontal"></LinearLayout>
+        </FrameLayout>
 
-    </LinearLayout>
-</FrameLayout>
+
         <FrameLayout
             android:id="@+id/feedback_Layout"
             android:layout_width="match_parent"
@@ -198,85 +237,8 @@
                 android:background="?android:selectableItemBackground"
                 android:orientation="horizontal"></LinearLayout>
         </FrameLayout>
-        <FrameLayout
-            android:id="@+id/faq_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/settings_screen_cell_height"
-            android:background="@color/cell_background_color"
-            android:orientation="horizontal"
-            android:layout_marginTop="1dp"
-            android:gravity="center_vertical"
-            >
 
-            <ImageView
-                android:id="@+id/faq_ImageView"
-                android:layout_width="@dimen/icon_size"
-                android:scaleType="fitXY"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/faq"
-                android:padding="5dp"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
-                />
 
-            <TextView
-                android:id="@+id/faq_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/cell_text_size"
-                android:textColor="@color/cell_text_color"
-                android:text="@string/faqs" />
-
-        </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:selectableItemBackground"
-                android:orientation="horizontal"></LinearLayout>
-        </FrameLayout>
-        <FrameLayout
-            android:id="@+id/rate_us_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        <LinearLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/settings_screen_cell_height"
-            android:background="@color/cell_background_color"
-            android:orientation="horizontal"
-            android:layout_marginTop="1dp"
-            android:gravity="center_vertical"
-            >
-
-            <ImageView
-                android:id="@+id/rate_us_ImageView"
-                android:layout_width="@dimen/icon_size"
-                android:scaleType="fitXY"
-                android:padding="5dp"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/icon_rateus"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
-                />
-
-            <TextView
-                android:id="@+id/rate_us_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/cell_text_size"
-                android:textColor="@color/cell_text_color"
-                android:text="@string/setting_rate_us_on_play_store" />
-
-        </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:selectableItemBackground"
-                android:orientation="horizontal"></LinearLayout>
-        </FrameLayout>
         <FrameLayout
             android:id="@+id/like_us_Layout"
             android:layout_width="match_parent"
@@ -349,6 +311,46 @@
                     android:textSize="@dimen/cell_text_size"
                     android:textColor="@color/cell_text_color"
                     android:text="@string/Setting_follow_us_on_twitter" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:selectableItemBackground"
+                android:orientation="horizontal"></LinearLayout>
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/rate_us_Layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_screen_cell_height"
+                android:background="@color/cell_background_color"
+                android:orientation="horizontal"
+                android:layout_marginTop="1dp"
+                android:gravity="center_vertical"
+                >
+
+                <ImageView
+                    android:id="@+id/rate_us_ImageView"
+                    android:layout_width="@dimen/icon_size"
+                    android:scaleType="fitXY"
+                    android:padding="5dp"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@drawable/icon_rateus"
+                    android:layout_marginLeft="@dimen/icon_left_margin"
+                    android:layout_marginRight="@dimen/icon_right_margin"
+                    />
+
+                <TextView
+                    android:id="@+id/rate_us_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/cell_text_size"
+                    android:textColor="@color/cell_text_color"
+                    android:text="@string/setting_rate_us_on_play_store" />
 
             </LinearLayout>
             <LinearLayout
@@ -437,47 +439,49 @@
                 android:background="?android:selectableItemBackground"
                 android:orientation="horizontal"></LinearLayout>
         </FrameLayout>
-
         <FrameLayout
-            android:id="@+id/about_us_Layout"
+            android:id="@+id/change_password_Layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <LinearLayout
+            <LinearLayout
 
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/settings_screen_cell_height"
-            android:background="@color/cell_background_color"
-            android:orientation="horizontal"
-            android:layout_marginTop="1dp"
-            android:gravity="center_vertical"
-            >
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_screen_cell_height"
+                android:background="@color/cell_background_color"
+                android:orientation="horizontal"
+                android:layout_marginTop="1dp"
+                android:gravity="center_vertical">
 
-            <ImageView
-                android:id="@+id/fifthRow_ImageView"
-                android:layout_width="@dimen/icon_size"
-                android:scaleType="fitXY"
-                android:padding="5dp"
-                android:layout_height="@dimen/icon_size"
-                android:src="@drawable/icon_info"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin"
-                />
+                <ImageView
+                    android:id="@+id/firstrow_ImageView_ProfileV2"
+                    android:layout_width="@dimen/icon_size"
+                    android:scaleType="fitCenter"
+                    android:layout_height="@dimen/textview_height_business_profile"
+                    android:src="@drawable/icon_change_password"
+                    android:layout_marginLeft="@dimen/icon_left_margin"
+                    android:layout_marginRight="@dimen/icon_right_margin"
+                    android:padding="5dp"
+                    />
 
-            <TextView
-                android:id="@+id/fifthRow_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/cell_text_size"
-                android:textColor="@color/cell_text_color"
-                android:text="@string/setting_about_us" />
+                <TextView
+                    android:id="@+id/firstrow_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/cell_text_size"
+                    android:textColor="@color/cell_text_color"
+                    android:text="@string/setting_change_pwd" />
 
-        </LinearLayout>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="?android:selectableItemBackground"
-                android:orientation="horizontal"></LinearLayout>
+                android:orientation="horizontal">
+
+            </LinearLayout>
         </FrameLayout>
+
+
         <FrameLayout
             android:id="@+id/logout_Layout"
             android:layout_width="match_parent"
@@ -540,6 +544,7 @@
                 android:id="@+id/version_name_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
                 android:text=""
 
                 />
@@ -565,6 +570,7 @@
                 android:layout_below="@+id/versionCodeName"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/poweredBy"
+                android:layout_marginLeft="5dp"
                 android:text="@string/nowfloats"
                 />
         </LinearLayout>

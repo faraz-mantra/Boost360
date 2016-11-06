@@ -22,6 +22,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -246,9 +247,9 @@ public class SidePanelFragment extends Fragment {
         String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
         String normalURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getActivity().getResources().getString(R.string.tag_for_partners);
         if (rootAlisasURI != null && !rootAlisasURI.equals("null") && rootAlisasURI.trim().length() > 0)
-            fpNameTextView.setText(rootAlisasURI);
+            fpNameTextView.setText(Html.fromHtml("<u>" + rootAlisasURI + "</u>"));
         else
-            fpNameTextView.setText(normalURI);
+            fpNameTextView.setText(Html.fromHtml("<u>" + normalURI + "</u>"));
 
         fpNameTextView.setTypeface(robotoMedium);
         fpNameTextView.setOnClickListener(new View.OnClickListener() {

@@ -7,9 +7,12 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.RoundCorners_image;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 
 import java.io.BufferedReader;
@@ -32,15 +35,17 @@ public class Upload_Logo extends AsyncTask<Void,String, String> {
     String path;
     String fpID ;
     ProgressDialog pd = null;
+    UserSessionManager mSession;
     private int imageSize = 4194304;
 
     boolean isUploadingSuccess = false ;
 
-    public Upload_Logo(Activity context ,String path,String fpID) {
+    public Upload_Logo(Activity context , String path, String fpID, UserSessionManager sessionManager) {
         this.appContext	=  	context;
         this.path	= 	path;
         this.fpID = fpID;
         Constants.LOGOUPLOADED = false ;
+        mSession = sessionManager;
     }
 
 
@@ -67,6 +72,10 @@ public class Upload_Logo extends AsyncTask<Void,String, String> {
         });
 
         if (isUploadingSuccess) {
+            if(!Util.isNullOrEmpty(Constants.serviceResponse)){
+                BoostLog.d("Logo Image", Constants.serviceResponse);
+                mSession.storeFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl, Constants.serviceResponse.replace("\\", "").replace("\"", ""));
+            }
             appContext.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

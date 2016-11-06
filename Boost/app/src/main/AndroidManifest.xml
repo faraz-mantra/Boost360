@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2016100021"
+    android:versionCode="2016100025"
     android:versionName="4.4.6">
 
     <permission
@@ -122,9 +123,7 @@
         <activity
             android:name="com.nowfloats.Analytics_Screen.SearchQueries"
             android:label=""
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.nowfloats.signup.UI.UI.BusinessProfileActivity"
             android:label="@string/title_activity_business_profile"
@@ -181,6 +180,9 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyBtiFgbmHVzbjzOj7cV4_IGCzzGvTYCuy4" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg" />
 
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.API.NewMapViewDialogBusinessAddress"
@@ -370,7 +372,8 @@
 
         <service android:name="com.nowfloats.Product_Gallery.Service.MultipleImageUploadService" />
 
-        <activity android:name="com.nowfloats.SiteAppearance.SiteAppearanceActivity"></activity>
+        <activity android:name="com.nowfloats.SiteAppearance.SiteAppearanceActivity" />
+        <activity android:name="com.nowfloats.NavigationDrawer.CreateOffersActivity"></activity>
     </application>
 
 </manifest>

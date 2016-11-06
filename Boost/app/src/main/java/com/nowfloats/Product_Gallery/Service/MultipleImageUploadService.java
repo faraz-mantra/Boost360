@@ -121,6 +121,7 @@ public class MultipleImageUploadService extends IntentService{
         String response = "error";
         Log.e("Image filename", filename);
         Log.e("url", targetUrl);
+
         HttpURLConnection connection = null;
         DataOutputStream outputStream = null;
 
