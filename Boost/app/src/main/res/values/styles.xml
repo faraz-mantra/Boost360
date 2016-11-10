@@ -81,8 +81,6 @@
        <item name="android:background">@color/primaryColor</item>
     </style>
 
-
-    <string name="save">SAVE</string>
     <style name="MenuButtonsStyle">
         <item name="fab_size">mini</item>
         <item name="fab_showAnimation">@anim/jump_from_down</item>

@@ -71,7 +71,7 @@ public class ProcessFPDetails {
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME, get_fp_details_model.Name);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION, get_fp_details_model.Description);
             session.storeFpWebTempalteType(get_fp_details_model.WebTemplateType);
-            if(get_fp_details_model.Description.length() == 0)
+            if(get_fp_details_model.Description!=null && get_fp_details_model.Description.length() == 0)
             {
                 MixPanelController.setProperties("Business description", "False");
             }

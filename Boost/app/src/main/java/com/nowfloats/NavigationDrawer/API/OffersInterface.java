@@ -7,11 +7,14 @@ import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.http.Body;
+import retrofit.http.Field;
+import retrofit.http.FieldMap;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.PUT;
+import retrofit.http.Query;
 import retrofit.http.QueryMap;
 
 /**
@@ -19,9 +22,9 @@ import retrofit.http.QueryMap;
  */
 
 public interface OffersInterface {
+    @Headers({"Content-Type: application/json"})
     @GET("/Discover/v3/floatingPoint/latestOffers")
-    @FormUrlEncoded
-    public void getAllOffers(@QueryMap Map<String,String> map, Callback<OfferModel> callback);
+    public void getAllOffers(@QueryMap Map<String, String> map, Callback<OfferModel> callback);
 
     @Headers({"Content-Type: application/json"})
     @PUT("/Discover/v1/float/createDeal")

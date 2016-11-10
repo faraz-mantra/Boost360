@@ -123,7 +123,7 @@
         <activity
             android:name="com.nowfloats.Analytics_Screen.SearchQueries"
             android:label=""
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.signup.UI.UI.BusinessProfileActivity"
             android:label="@string/title_activity_business_profile"
@@ -373,7 +373,8 @@
         <service android:name="com.nowfloats.Product_Gallery.Service.MultipleImageUploadService" />
 
         <activity android:name="com.nowfloats.SiteAppearance.SiteAppearanceActivity" />
-        <activity android:name="com.nowfloats.NavigationDrawer.CreateOffersActivity"></activity>
+        <activity android:name="com.nowfloats.NavigationDrawer.CreateOffersActivity" />
+        <activity android:name="com.nowfloats.NavigationDrawer.OffersFullScreenActivity"></activity>
     </application>
 
 </manifest>

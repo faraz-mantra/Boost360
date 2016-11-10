@@ -48,6 +48,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter  {
                 break;
             case 1:
                 selectedFragment = analyticsFragment;
+                /*selectedFragment = OffersFragment.newInstance();*/
                 currentItem = 1;
                 break;
             case 2:

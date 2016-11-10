@@ -551,11 +551,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="we_sent_email_with_password">We have sent you an email with password details</string>
     <string name="logging_out">Logging out &#8230;</string>
     <string name="unable_to_logout">Not able to logout</string>
-<<<<<<< HEAD
     <string name="percent_site_completed">site completed</string>
-=======
-    <string name="percent_site_completed"> site completed</string>
->>>>>>> 34c01e3c5e45c95d32744834cfbfec14f00e2420
     <string name="choose_app_to_share">Choose app to share</string>
     <string name="share_message">Share your message</string>
     <string name="no_app_available_for_action">No apps available for the action</string>
@@ -903,7 +899,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="onboarding_next_btn_next">Got it,Next</string>
     <string name="on_boarding_next2_text">Great, Thanks</string>
     <string name="onboarding_popup_one_btn_text">Show me!</string>
-<<<<<<< HEAD
+    <string name="save">SAVE</string>
     <string name="business_logo_info_text">JPEG, .PNG and .GIF file formats are supported. For best experience, square images are recommended. Keep the size below 400KB and dimensions should not be more than 400px (width) and 400px (height).</string>
     <string name="offer_title">Title:</string>
     <string name="offer_desc">Description:</string>
@@ -923,9 +919,19 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="suucessfull_offer_post">Your offer is successfully posted</string>
     <string name="error_offer_post">Error while uploading image for your offer</string>
     <string name="offers_image_size_error">Image Size is more than 4MB. Please choose an image of size less than 4MB</string>
-=======
     <string name="welcome_back">Welcome Back</string>
->>>>>>> 34c01e3c5e45c95d32744834cfbfec14f00e2420
+    <string name="offers_empty">There are no offers on your website\nClick on the + button below\nto create offers</string>
+    <string name="offers_soon">Create Offers, Now!</string>
+    <string name="failed_to_share">Error while sharing offers</string>
+    <string name="offer_getting_error">Error while retrieving offers</string>
+    <string name="store_excluding_all_taxes">( Excluding Taxes )</string>
+    <string name="buy_now">Buy Now</string>
+    <string name="do_you_have_opc">Proceed with an OPC?</string>
+    <string name="opc_edit_text_hint">Enter the OPC</string>
+    <string name="proceed">Proceed</string>
+    <string name="verify_opc">Verifying OPC...</string>
+    <string name="error_verifying_opc">Error while verifying OPC</string>
+    <string name="pay_now">Pay Now</string>
     <string-array name="calendar">
         <item>Week</item>
         <item>Month</item>

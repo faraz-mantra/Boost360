@@ -27,6 +27,9 @@ allprojects {
             url "https://jitpack.io"
             //url "${project.rootDir}/app/creativesdk-repo"  //ADD THE CORRECT LOCATION OF THE CREATIVESDK LIBRARY FILES
         }
+        maven {
+            url "https://s3-ap-southeast-1.amazonaws.com/godel-release/godel/"
+        }
         /* maven {
              url "https://repo.commonsware.com.s3.amazonaws.com"
          }*/
@@ -41,7 +44,7 @@ android {
 
     defaultConfig {
         applicationId 'com.thinksity'
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 23
         versionName "4.4.6"
         versionCode 2016100025
@@ -86,6 +89,7 @@ dependencies {
     compile project(':mixpanel')
     compile project(':cropper')
     compile project(':ZoomImageLibrary')
+    compile project(':instamojoLib')
     compile files('libs/libraries/signpost-core-1.2.1.2.jar')
     compile files('libs/libraries/AF-Android-SDK-v2.3.1.17.jar')
     compile files('libs/libraries/signpost-commonshttp4-1.2.1.2.jar')

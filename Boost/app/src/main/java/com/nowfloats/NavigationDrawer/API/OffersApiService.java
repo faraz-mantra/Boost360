@@ -2,6 +2,7 @@ package com.nowfloats.NavigationDrawer.API;
 
 import com.nowfloats.NavigationDrawer.model.OfferModel;
 import com.nowfloats.NavigationDrawer.model.PostOfferEvent;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.squareup.otto.Bus;
 
@@ -50,6 +51,7 @@ public class OffersApiService {
 
             @Override
             public void failure(RetrofitError error) {
+                BoostLog.d("OffersApiService", error.getMessage());
                 OfferModel offerModel = new OfferModel();
                 offerModel.response = false;
                 mBus.post(offerModel);

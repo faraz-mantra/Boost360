@@ -18,6 +18,7 @@ import com.nowfloats.Store.Model.ActiveWidget;
 import com.nowfloats.Store.Model.StoreEvent;
 import com.nowfloats.Store.Model.StoreModel;
 import com.nowfloats.Store.Service.API_Service;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
@@ -94,7 +95,7 @@ public class StoreFragmentTab extends Fragment {
 
         new API_Service(activity, session.getSourceClientId(),session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY),
                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID),session.getFPID(),bus);
-
+        BoostLog.d("StoreFragmentTab", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY));
         /*new Thread(new Runnable() {
             @Override
             public void run() {

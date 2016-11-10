@@ -92,11 +92,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
 //                    holder.validityText.setText("("+storeData.get(position).ExpiryInMths+" months plan,"
 //                            +storeData.get(position).ValiditiyInMths+" months left"+")");
                 }else{
-                    if(mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).equals("India")) {
-                        holder.priceText.setVisibility(View.VISIBLE);
-                    }else {
-                        holder.priceText.setVisibility(View.GONE);
-                    }
+                    holder.priceText.setVisibility(View.VISIBLE);
                     holder.readmore.setVisibility(View.VISIBLE);
                     holder.knowMoreText.setVisibility(View.GONE);
 //                    holder.validityText.setVisibility(View.GONE);

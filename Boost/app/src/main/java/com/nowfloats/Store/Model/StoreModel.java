@@ -14,7 +14,7 @@ public class StoreModel {
     public ArrayList<Screenshots> Screenshots;
     public ArrayList<ProductId> ExternalApplicationDetails;
     public String Type;
-    public String  ValiditiyInMths;
+    public int ValidityInMths;
     public ArrayList<WidgetPacks> WidgetPacks;
     public String CreatedOn;
     public String ExpiryInMths;

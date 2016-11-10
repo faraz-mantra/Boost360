@@ -83,7 +83,7 @@ import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
 public class Home_Main_Fragment extends Fragment implements
-        Fetch_Home_Data.Fetch_Home_Data_Interface, View.OnClickListener {
+        Fetch_Home_Data.Fetch_Home_Data_Interface {
     public static LinearLayout retryLayout,emptyMsgLayout;
     public static ButteryProgressBar progressBar;
     public static CardView progressCrd;
@@ -272,11 +272,11 @@ public class Home_Main_Fragment extends Fragment implements
         emptyMsgLayout = (LinearLayout)view.findViewById(R.id.emptymsglayout);
         emptyMsgLayout.setVisibility(View.GONE);
         /*view.findViewById(R.id.fab_event).setOnClickListener(this);*/
-        view.findViewById(R.id.fab_offer).setOnClickListener(this);
+        /*view.findViewById(R.id.fab_offer).setOnClickListener(this);*/
         /*view.findViewById(R.id.fab_product_launch).setOnClickListener(this);
         view.findViewById(R.id.fab_job_alert).setOnClickListener(this);
         view.findViewById(R.id.fab_custom_review).setOnClickListener(this);*/
-        view.findViewById(R.id.fab_update).setOnClickListener(this);
+        /*view.findViewById(R.id.fab_update).setOnClickListener(this);*/
         ImageView retryPost = (ImageView)view.findViewById(R.id.retryPost);
         ImageView cancelPost = (ImageView)view.findViewById(R.id.cancelPost);
         PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
@@ -464,7 +464,20 @@ public class Home_Main_Fragment extends Fragment implements
 
             }
         });*/
-        fabButton.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
+        fabButton.setOnMenuButtonClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {
+                    mCallback.onRenewPlanSelected();
+                }
+                else {
+                    Intent webIntent = new Intent(getActivity(), Create_Message_Activity.class);
+                    startActivity(webIntent);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+            }
+        });
+        /*fabButton.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
             @Override
             public void onMenuToggle(boolean opened) {
                 if(opened){
@@ -487,7 +500,7 @@ public class Home_Main_Fragment extends Fragment implements
                 }
                 return false;
             }
-        });
+        });*/
 
 
 
@@ -633,8 +646,8 @@ public class Home_Main_Fragment extends Fragment implements
         }
     }
 
-    @Override
-    public void onClick(View v) {
+
+    /*public void onClick(View v) {
         switch (v.getId()){
             case R.id.fab_update:
                 fabButton.close(true);
@@ -659,40 +672,6 @@ public class Home_Main_Fragment extends Fragment implements
                 }
                 break;
         }
-    }
-
-    /*@Override
-    public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.fab_event:     //for event
-                Toast.makeText(getActivity(), "Just Testing Bro", Toast.LENGTH_SHORT).show();
-                //startActivity(new Intent(getActivity(), Create_Message_Activity.class));
-                break;
-            case R.id.fab_offer:     //for event
-                Toast.makeText(getActivity(), "Just Testing Bro", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.fab_product_launch:     //for event
-                Toast.makeText(getActivity(), "Just Testing Bro", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.fab_job_alert:     //for event
-                Toast.makeText(getActivity(), "Just Testing Bro", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.fab_custom_review:     //for event
-                Toast.makeText(getActivity(), "Just Testing Bro", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.fab_update:     //for event
-                startActivity(new Intent(getActivity(), Create_Message_Activity.class));
-                //Toast.makeText(getActivity(), "Just Testing Bro", Toast.LENGTH_SHORT).show();
-                break;
-            default:
-                //In case no option is selected close the overlay and expand menu
-                if(fabButton.isOpened()){
-                    fabButton.close(true);
-                }
-                break;
-
-        }
-
     }*/
 
 
@@ -913,6 +892,7 @@ public class Home_Main_Fragment extends Fragment implements
                             JSONObject graphResponse = response.getGraphObject().getInnerJSONObject();
                             String postId = null;
                             try {
+                                postId = graphResponse.getString("id");
                                 postId = graphResponse.getString("id");
                             } catch (JSONException e) {
                             }

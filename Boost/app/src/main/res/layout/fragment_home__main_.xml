@@ -154,13 +154,13 @@
             fab:fab_label="Event"
             style="@style/MenuButtonsStyle" />-->
 
-        <com.github.clans.fab.FloatingActionButton
+        <!--<com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_offer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_action_email"
             fab:fab_label="Create Offer"
-            style="@style/MenuButtonsStyle" />
+            style="@style/MenuButtonsStyle" />-->
 
         <!--<com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_product_launch"
@@ -183,13 +183,13 @@
             android:src="@drawable/ic_action_email"
             fab:fab_label="Customer Review"
             style="@style/MenuButtonsStyle" />-->
-        <com.github.clans.fab.FloatingActionButton
+        <!--<com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_action_email"
             fab:fab_label="Create Update"
-            style="@style/MenuButtonsStyle" />
+            style="@style/MenuButtonsStyle" />-->
 
 
         </com.github.clans.fab.FloatingActionMenu>

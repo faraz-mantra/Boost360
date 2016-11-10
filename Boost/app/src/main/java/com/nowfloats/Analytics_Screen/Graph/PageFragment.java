@@ -213,7 +213,7 @@ public class PageFragment extends Fragment {
                             Intent i = new Intent("MonthDetails");
                             i.putExtra("dateArray",dateArray);
                             i.putExtra("month",index+1);
-                            startActivity(i);
+                            //startActivity(i);
 
                         }
                     }
