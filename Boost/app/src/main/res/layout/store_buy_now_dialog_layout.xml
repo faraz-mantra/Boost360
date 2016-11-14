@@ -12,55 +12,31 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="@string/do_you_have_opc"/>
-        <ImageView
-            android:id="@+id/iv_opc_help"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:tint="#808080"
-            android:layout_marginLeft="20dp"
-            android:src="@drawable/ic_help_outline_black_24dp"/>
     </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:layout_marginTop="20dp">
-        <RelativeLayout
-            android:id="@+id/rl_opc_dialog_btn_container"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/opcInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="45dp">
-            <Button
-                android:id="@+id/btn_opc_yes"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/btn_main"
-                android:textColor="@color/white"
-                android:text="@string/yes"/>
-            <Button
-                android:id="@+id/btn_opc_no"
-                android:layout_alignParentRight="true"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/btn_main"
-                android:textColor="@color/white"
-                android:text="@string/no"/>
-        </RelativeLayout>
-        <EditText
-            android:id="@+id/et_opc_code"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:hint="@string/opc_edit_text_hint"/>
-
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/et_opc_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </android.support.design.widget.TextInputLayout>
     </RelativeLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/opc_hint_text"/>
 
     <RelativeLayout
         android:id="@+id/rl_opc_dialog_confirmation_container"
         android:layout_width="match_parent"
         android:layout_marginTop="20dp"
-        android:visibility="gone"
         android:layout_height="45dp">
         <Button
             android:id="@+id/btn_opc_confirm_no"

@@ -98,6 +98,9 @@ public interface EventKeysWL
     String PRODUCT_GALLERY_UPDATEIMAGE = "UpdateProductImage";
     String PRODUCT_GALLERY_UPDATE= "UpdateProduct";
 
+    String BUY_NOW_STORE_CLICKED = "InitiatePayment";
+    String PAYMENT_SUCCESSFULL  = "PaymentSuccess";
+
     // PRODUCT_GALLERY_
 
     ////// Product Gallery

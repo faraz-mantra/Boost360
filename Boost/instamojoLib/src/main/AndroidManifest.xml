@@ -17,8 +17,6 @@
         android:supportsRtl="true">
         <activity
             android:name=".ui.InstaMojoMainActivity" />
-        <activity
-            android:name=".ui.CustomPaymentActivity" />
     </application>
 
 </manifest>

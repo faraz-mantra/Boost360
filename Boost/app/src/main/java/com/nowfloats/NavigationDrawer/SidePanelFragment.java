@@ -41,7 +41,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nowfloats.BusinessProfile.UI.API.UploadPictureAsyncTask;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.Login.UserSessionManager;
@@ -104,7 +103,6 @@ public class SidePanelFragment extends Fragment {
     Bitmap CameraBitmap;
     String path = null;
     String imageUrl = "";
-    DisplayImageOptions options;
     private TextView titleTextView;
     ContentValues values;
     Uri imageUri;

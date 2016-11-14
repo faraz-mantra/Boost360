@@ -70,7 +70,7 @@
     <string name="offer_getting_error">Error while retrieving offers</string>
     <string name="store_excluding_all_taxes">( Excluding Taxes )</string>
     <string name="buy_now">Buy Now</string>
-    <string name="do_you_have_opc">Proceed with an OPC?</string>
+    <string name="do_you_have_opc">Proceed with an Online Payment Code</string>
     <string name="opc_edit_text_hint">Enter the OPC</string>
     <string name="proceed">Proceed</string>
     <string name="verify_opc">Verifying OPC...</string>

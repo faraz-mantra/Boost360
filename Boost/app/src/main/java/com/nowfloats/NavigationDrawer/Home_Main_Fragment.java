@@ -38,7 +38,6 @@ import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
 import com.github.clans.fab.FloatingActionMenu;
-import com.melnykov.fab.FloatingActionButton;
 import com.nowfloats.Login.Fetch_Home_Data;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.UserSessionManager;

@@ -21,8 +21,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.nispok.snackbar.Snackbar;
-import com.nispok.snackbar.SnackbarManager;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.squareup.okhttp.OkHttpClient;
 import com.thinksity.R;
@@ -82,39 +80,51 @@ public class Methods {
     }
 
     public static void showSnackBar(Activity context,String msg){
-        SnackbarManager.show(
+        android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), msg, android.support.design.widget.Snackbar.LENGTH_LONG);
+        snackBar.getView().setBackgroundColor(Color.GRAY);
+        snackBar.show();
+        /*SnackbarManager.show(
                 Snackbar.with(context) // context
                         .text(msg) // text to be displayed
                         .textColor(Color.WHITE) // change the text color
                         .color(Color.GRAY) // change the background color
-                ,context); // activity where it is displayed
+                ,context); // activity where it is displayed*/
     }
 
     public static void showSnackBarPositive(Activity context,String msg){
-        SnackbarManager.show(
+        android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), msg, android.support.design.widget.Snackbar.LENGTH_LONG);
+        snackBar.getView().setBackgroundColor(Color.parseColor("#5DAC01"));
+        snackBar.show();
+        /*SnackbarManager.show(
                 Snackbar.with(context) // context
                         .text(msg) // text to be displayed
                         .textColor(Color.WHITE) // change the text color
                         .color(Color.parseColor("#5DAC01")) // change the background color
-                ,context); // activity where it is displayed
+                ,context); // activity where it is displayed*/
     }
 
     public static void showSnackBarNegative(Activity context,String msg){
-        SnackbarManager.show(
+        android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), msg, android.support.design.widget.Snackbar.LENGTH_LONG);
+        snackBar.getView().setBackgroundColor(Color.parseColor("#E02200"));
+        snackBar.show();
+        /*SnackbarManager.show(
                 Snackbar.with(context) // context
                         .text(msg) // text to be displayed
                         .textColor(Color.WHITE) // change the text color
                         .color(Color.parseColor("#E02200")) // change the background color
-                ,context); // activity where it is displayed
+                ,context); // activity where it is displayed*/
     }
 
     public static void snackbarNoInternet(Activity context){
-        SnackbarManager.show(
+        android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), context.getString(R.string.noInternet), android.support.design.widget.Snackbar.LENGTH_LONG);
+        snackBar.getView().setBackgroundColor(Color.parseColor("#E02200"));
+        snackBar.show();
+        /*SnackbarManager.show(
                 Snackbar.with(context) // context
                         .text(context.getString(R.string.noInternet)) // text to be displayed
                         .textColor(Color.WHITE) // change the text color
                         .color(Color.parseColor("#E02200")) // change the background color
-                ,context); // activity where it is displayed
+                ,context); // activity where it is displayed*/
     }
 
     public static void setListViewHeightBasedOnChildren(ExpandableListView listView) {

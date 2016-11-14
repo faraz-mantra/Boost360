@@ -32,6 +32,7 @@
     <fields>;
     <methods>;
 }
+-keep class com.instamojo.android.**{*;}
 
 -keep class com.demach.konotor.** { *; }
 

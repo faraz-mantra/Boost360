@@ -6,9 +6,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -26,13 +29,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.gson.JsonObject;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Adapters.ExpandableListAdapter;
 import com.nowfloats.Store.Adapters.ItemsRecyclerViewAdapter;
@@ -62,6 +63,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.TwoWayView;
+import com.rengwuxian.materialedittext.MaterialEditText;
 import com.romeo.mylibrary.Models.OrderDataModel;
 import com.romeo.mylibrary.ui.InstaMojoMainActivity;
 import com.squareup.otto.Bus;
@@ -309,7 +311,8 @@ public class StoreDataActivity extends AppCompatActivity {
                     product_pay.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            openOPCDialog();
+                            openPaymentTypeDialog();
+                            MixPanelController.track(EventKeysWL.BUY_NOW_STORE_CLICKED, null);
                         }
                     });
                     /*if (product.ExternalApplicationDetails!=null && product.ExternalApplicationDetails.size()>0){
@@ -495,61 +498,81 @@ public class StoreDataActivity extends AppCompatActivity {
         }catch(Exception e){e.printStackTrace();}
     }
 
+    private void openPaymentTypeDialog() {
+        final String[] array = {"Pay Now", "Proceed with OPC"};
+        MaterialDialog dialog = new MaterialDialog.Builder(StoreDataActivity.this)
+                .title("Please select one to proceed")
+                .items(array)
+                .negativeText(getString(R.string.cancel))
+                .cancelable(false)
+                .positiveText(getString(R.string.ok))
+                .negativeColorRes(R.color.light_gray)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        super.onNegative(dialog);
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        int position = dialog.getSelectedIndex();
+                        if (position == 0) {
+                            mErpExecutiveMailId = null;
+                            mOPC = null;
+                            mErpId = null;
+                            Intent i = new Intent(StoreDataActivity.this, InstaMojoMainActivity.class);
+                            mOrderData = new OrderDataModel(sessionManager.getFpTag(), sessionManager.getFpTag(),
+                                    sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
+                                    "10", product.Name,
+                                    sessionManager.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM),
+                                    "Light House", product.CurrencyCode);
+                            i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
+                            startActivityForResult(i, DIRECT_REQUEST_CODE);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        }else if (position == 1) {
+                            openOPCDialog();
+                        }else{
+                            Toast.makeText(StoreDataActivity.this, "Please select of the options", Toast.LENGTH_SHORT).show();
+                        }
+                        dialog.dismiss();
+                    }
+                })
+                .widgetColorRes(R.color.primaryColor)
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int position, CharSequence text) {
+                        return true;
+                    }
+                }).build();
+        dialog.getWindow().getAttributes().windowAnimations =  R.style.DialogTheme;
+        dialog.show();
+
+    }
+
     private void openOPCDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.store_buy_now_dialog_layout);
         dialog.setCancelable(false);
-        final Button btnOpcYes = (Button) dialog.findViewById(R.id.btn_opc_yes);
-        final Button btnOpcNo = (Button) dialog.findViewById(R.id.btn_opc_no);
         final Button btnOpcConfirmYes = (Button) dialog.findViewById(R.id.btn_opc_confirm__yes);
         final Button btnOpcConfirmNo = (Button) dialog.findViewById(R.id.btn_opc_confirm_no);
         final EditText etOpcCode = (EditText) dialog.findViewById(R.id.et_opc_code);
-        final RelativeLayout rlOPCButtonContainer = (RelativeLayout) dialog.findViewById(R.id.rl_opc_dialog_btn_container);
-        final RelativeLayout rlOPCConfirmButtonContainer = (RelativeLayout) dialog.findViewById(R.id.rl_opc_dialog_confirmation_container);
-        btnOpcYes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                rlOPCButtonContainer.setVisibility(View.GONE);
-                Animation animation = new TranslateAnimation(dialog.getWindow().getDecorView().getWidth(),0,0, 0);
-                animation.setDuration(300);
-                animation.setFillAfter(true);
-                etOpcCode.startAnimation(animation);
-                etOpcCode.setVisibility(View.VISIBLE);
-                rlOPCConfirmButtonContainer.setVisibility(View.VISIBLE);
-            }
-        });
-        btnOpcNo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                mErpExecutiveMailId = null;
-                mOPC = null;
-                mErpId = null;
-                Intent i = new Intent(StoreDataActivity.this, InstaMojoMainActivity.class);
-                mOrderData = new OrderDataModel(sessionManager.getFpTag(), sessionManager.getFpTag(),
-                        sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
-                        "10", product.Name,
-                        sessionManager.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM),
-                        "Light House", product.CurrencyCode);
-                i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
-                startActivityForResult(i, DIRECT_REQUEST_CODE);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                /*sendEmail(true, "Success", "Hello", "123456", "123456", "100");
-                markAsPaid("100");
-                redeemOPC("123456", "uZnNWGvL");*/
-            }
-        });
+        final TextInputLayout opcInputlayout = (TextInputLayout) dialog.findViewById(R.id.opcInputLayout);
+        opcInputlayout.setHintEnabled(true);
+        opcInputlayout.setErrorEnabled(true);
+        opcInputlayout.setHint(getString(R.string.opc_edit_text_hint));
+
         btnOpcConfirmNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                openPaymentTypeDialog();
             }
         });
         btnOpcConfirmYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
-                verifyPaymentToken(etOpcCode.getText().toString().trim());
+                verifyPaymentToken(etOpcCode.getText().toString().trim(), opcInputlayout, dialog);
             }
         });
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -558,10 +581,12 @@ public class StoreDataActivity extends AppCompatActivity {
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(lp);
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogTheme;
         dialog.show();
+
     }
 
-    private void verifyPaymentToken(String OPCCode) {
+    private void verifyPaymentToken(String OPCCode, final TextInputLayout layout, final Dialog mainDialog) {
         HashMap<String, String> data = new HashMap<>();
         data.put("clientId", Constants.clientId);
         data.put("token", OPCCode);
@@ -575,10 +600,12 @@ public class StoreDataActivity extends AppCompatActivity {
                             pd.dismiss();
                         }
                         if(opcDataMain.success){
+                            mainDialog.dismiss();
                             showInvoiceDialog(opcDataMain);
                         }else {
                             if(opcDataMain.reason!=null){
-                                Methods.showSnackBarNegative(StoreDataActivity.this, opcDataMain.reason);
+                                layout.setError(opcDataMain.reason);
+                                //Methods.showSnackBarNegative(StoreDataActivity.this, opcDataMain.reason);
                             }
                         }
                     }
@@ -588,6 +615,7 @@ public class StoreDataActivity extends AppCompatActivity {
                         if(pd!=null && pd.isShowing()){
                             pd.dismiss();
                         }
+                        mainDialog.dismiss();
                         Methods.showSnackBarNegative(StoreDataActivity.this, getString(R.string.error_verifying_opc));
                     }
                 });
@@ -955,6 +983,8 @@ public class StoreDataActivity extends AppCompatActivity {
             if(success) {
                 if(status.equals("Success")) {
 
+                    MixPanelController.track(EventKeysWL.PAYMENT_SUCCESSFULL, null);
+
                     String msg = "Thank you for choosing a NowFloats Plan. You will be getting invoice details on your registered email id.\nThis is the Payment " +
                             "ID for your transaction: <b>" +
                             paymentId + "</b>.  Please share this Payment ID with the sales executive or the customer support team to activate your package. " +
@@ -1123,12 +1153,12 @@ public class StoreDataActivity extends AppCompatActivity {
     private void markAsPaid(String amount) {
         final ProgressDialog pd = ProgressDialog.show(this, "", "Please wait while activating the package...");
         ERPRequestModel erpRequstModel = new ERPRequestModel();
-        erpRequstModel._nfInternalERPId = "android";
+        erpRequstModel._nfInternalERPId = "";
         erpRequstModel.customerEmailId = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL);
         erpRequstModel.purchasedUnits = 1;
         erpRequstModel.sendEmail = true;
         final MarkAsPaidModel markAsPaid = new MarkAsPaidModel();
-        markAsPaid.ClientId  = Constants.clientId;
+        markAsPaid.ClientId  = "A91B82DE3E93446A8141A52F288F69EFA1B09B1D13BB4E55BE743AB547B3489E";
         try {
             markAsPaid.ExpectedAmount = Double.parseDouble(amount);
         }catch (Exception e){
@@ -1154,12 +1184,12 @@ public class StoreDataActivity extends AppCompatActivity {
                 if(pd!=null && pd.isShowing()){
                     pd.dismiss();
                 }
-                if(s.contains("OK")) {
+                if(s!=null && s.contains("OK")) {
                     showDialog("Activated", "Your package is successfully activated");
-                }else if(s.contains("NFINV")){
+                }else if(s!=null && s.contains("NFINV")){
                     showDialog("Activated", "Your package is successfully activated with Invoice Number: " + s);
                 }else{
-                    showDialog("Error", "Error while activating the package");
+                    showDialog("Error", "Error while activating the package. Please Contact Customer Support");
                     BoostLog.d("StoreDataActivity", " Response not ok");
                 }
             }

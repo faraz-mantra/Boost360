@@ -20,6 +20,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -37,9 +38,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.azoft.carousellayoutmanager.CarouselLayoutManager;
-import com.azoft.carousellayoutmanager.CarouselZoomPostLayoutListener;
-import com.azoft.carousellayoutmanager.CenterScrollListener;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.darsh.multipleimageselect.activities.AlbumSelectActivity;
@@ -181,10 +179,8 @@ public class Product_Detail_Activity extends AppCompatActivity{
 
         //recyclerView
         rvProductImg = (RecyclerView)findViewById(R.id.rv_product_img);
-        CarouselLayoutManager layoutManager = new CarouselLayoutManager(CarouselLayoutManager.HORIZONTAL, false);
-        layoutManager.setPostLayoutListener(new CarouselZoomPostLayoutListener());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         rvProductImg.setLayoutManager(layoutManager);
-        rvProductImg.addOnScrollListener(new CenterScrollListener());
         rvProductImg.setHasFixedSize(true);
         mProductImageList = new ArrayList<>();
         adapter = new ProductImageAdapter(mProductImageList);

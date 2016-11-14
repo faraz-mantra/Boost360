@@ -203,7 +203,7 @@ public class InstaMojoMainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);;
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
     private void createOrder(String accessToken, String finalTransactionID) {
@@ -299,8 +299,8 @@ public class InstaMojoMainActivity extends AppCompatActivity {
                             return;
                         }
 
-                        //startPreCreatedUI(order);
-                        startCustomUI(order);
+                        startPreCreatedUI(order);
+                        //startCustomUI(order);
                         //TODO: Create custom Activity for Entering Payment Details
                     }
                 });
@@ -312,16 +312,18 @@ public class InstaMojoMainActivity extends AppCompatActivity {
     }
 
     private void startPreCreatedUI(Order order) {
+        order.setWalletOptions(null);
+        order.setUpiOptions(null);
         Intent intent = new Intent(getBaseContext(), PaymentDetailsActivity.class);
         intent.putExtra(com.instamojo.android.helpers.Constants.ORDER, order);
         startActivityForResult(intent, com.instamojo.android.helpers.Constants.REQUEST_CODE);
     }
     private void startCustomUI(Order order) {
         //Custom UI Implementation
-        Intent intent = new Intent(getBaseContext(), CustomPaymentActivity.class);
+        /*Intent intent = new Intent(getBaseContext(), CustomPaymentActivity.class);
         intent.putExtra(com.instamojo.android.helpers.Constants.ORDER, order);
         startActivityForResult(intent, com.instamojo.android.helpers.Constants.REQUEST_CODE);
-        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
     }
 
     private HttpUrl.Builder getHttpURLBuilder() {

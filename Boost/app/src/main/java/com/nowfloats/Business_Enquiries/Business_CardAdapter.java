@@ -17,7 +17,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nowfloats.Business_Enquiries.Model.Business_Enquiry_Model;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
@@ -40,7 +39,6 @@ public class Business_CardAdapter extends RecyclerView.Adapter<Business_CardAdap
     Business_Enquiry_Model data;
     private Context appContext ;
     final HashMap<String, SoftReference<Bitmap>> _cache = null;
-    DisplayImageOptions options ;
     PorterDuffColorFilter whiteLabelFilter;
     String headerValue;
 
