@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.nowfloats.Analytics_Screen.API.Search_Queries_Enterprise_API;
+import com.nowfloats.Analytics_Screen.Graph.database.SaveDataCounts;
 import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
@@ -844,7 +845,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 ChatFragment.chatModels = new ArrayList<ChatModel>();
                 //Analytics_Fragment.subscriberCount.setText("0");
                 //Analytics_Fragment.visitCount.setText("0");
-
+                _context.deleteDatabase(SaveDataCounts.DATABASE_NAME);
                 MixPanelController.track("LogoutSuccess", null);
 
                 //activity.finish();

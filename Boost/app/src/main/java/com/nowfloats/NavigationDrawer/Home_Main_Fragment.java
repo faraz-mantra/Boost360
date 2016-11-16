@@ -265,6 +265,8 @@ public class Home_Main_Fragment extends Fragment implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         BoostLog.d("Home_Main_Fragment","onViewCreated");
+
+        HomeActivity.StorebizFloats.clear();
         progressCrd = (CardView)view.findViewById(R.id.progressCard);
         progressBar = (ButteryProgressBar)view.findViewById(R.id.progressbar);
         retryLayout = (LinearLayout)view.findViewById(R.id.postRetryLayout);
@@ -534,9 +536,7 @@ public class Home_Main_Fragment extends Fragment implements
             recyclerView.setAdapter(cAdapter);
             Constants.createMsg = false;
         }
-        if(progressBar.getVisibility() == View.VISIBLE) {
-            progressBar.setVisibility(View.GONE);
-        }
+
         List<Updates> updates = mDbController.getAllUpdates(skip);
         if(updates.isEmpty()){
             return false;
@@ -558,6 +558,7 @@ public class Home_Main_Fragment extends Fragment implements
         editor.commit();
 
         cAdapter.notifyDataSetChanged();
+        progressBar.setVisibility(View.GONE);
         return true;
 
     }

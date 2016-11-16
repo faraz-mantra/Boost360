@@ -16,12 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.nowfloats.Analytics_Screen.Graph.VisitsPage;
+import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueries;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Business_Enquiries.Business_Enquiries_Fragment;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.MixPanelController;
@@ -95,7 +94,7 @@ public class Analytics_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 MixPanelController.track("OverallVisitsDetailedView",null);
-                Intent q = new Intent(getActivity(), VisitsPage.class);
+                Intent q = new Intent(getActivity(), AnalyticsActivity.class);
                 startActivity(q);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }

@@ -364,6 +364,15 @@
         <item>260,ZM</item>
         <item>263,ZW</item>
     </string-array>
+
+    <string-array name="weeks">
+        <item>Week 1</item>
+        <item>Week 2</item>
+        <item>Week 3</item>
+        <item>Week 4</item>
+        <item>Week 5</item>
+        <item>Week 6</item>
+    </string-array>
     <string name="business_enquiries_title">Business Enquiries</string>
     <string name="business_profile_title">Business Profile</string>
     <string name="tag_for_partners">.nowfloats.com</string>

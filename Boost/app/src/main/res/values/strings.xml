@@ -958,20 +958,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>5</item>
         <item>6</item>
     </string-array>
-    <string-array name="week_with_num">
+    <string-array name="weeks">
         <item>Week 1</item>
         <item>Week 2</item>
         <item>Week 3</item>
         <item>Week 4</item>
-    </string-array>
-    <string-array name="weeks">
-        <item>Sun</item>
-        <item>Mon</item>
-        <item>Tue</item>
-        <item>Wed</item>
-        <item>Thu</item>
-        <item>Fri</item>
-        <item>Sat</item>
+        <item>Week 5</item>
+        <item>Week 6</item>
     </string-array>
     <string-array name="months_with_full_name">
         <item>January</item>
@@ -1001,4 +994,28 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Nov</item>
         <item>Dec</item>
     </string-array>
+    <string-array name="tabs">
+        <item>Week</item>
+        <item>Month
+        </item>
+        <item>Year</item>
+    </string-array>
+    <string-array name="days">
+        <item>Sun</item>
+        <item>Mon</item>
+        <item>Tues</item>
+        <item>Wed</item>
+        <item>Thu</item>
+        <item>Fri</item>
+        <item>Sat</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="visits_this_week">visits this week</string>
+    <string name="visits_this_month">visits this month</string>
+    <string name="visits_this_year">visits this year</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="Month">Month</string>
+    <string name="day">Day</string>
 </resources>

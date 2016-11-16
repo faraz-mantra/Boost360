@@ -962,13 +962,12 @@
         <item>Hafta 4</item>
     </string-array>
     <string-array name="weeks">
-        <item>Pazar</item>
-        <item>Pazartesi</item>
-        <item>Salı</item>
-        <item>Çarşamba</item>
-        <item>Perşembe</item>
-        <item>Cuma</item>
-        <item>Cumartesi</item>
+        <item>Week 1</item>
+        <item>Week 2</item>
+        <item>Week 3</item>
+        <item>Week 4</item>
+        <item>Week 5</item>
+        <item>Week 6</item>
     </string-array>
     <string-array name="months_with_full_name">
         <item>ocak</item>

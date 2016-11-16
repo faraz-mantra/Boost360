@@ -117,7 +117,7 @@ dependencies {
     compile 'com.google.android.gms:play-services:9.4.0'
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
     compile 'com.melnykov:floatingactionbutton:1.1.0'
-    compile 'com.github.PhilJay:MPAndroidChart:v2.1.0'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
     compile 'com.makeramen:roundedimageview:1.5.0'
     compile 'com.afollestad:material-dialogs:0.7.4.2'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
