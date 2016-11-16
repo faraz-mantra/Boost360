@@ -1214,10 +1214,10 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             if(mExpireDailog!=null && mExpireDailog.isShowing()){
                 return;
             }
-            String temp = allModels.get(i).NameOfWidget;
+            String temp = allModels.get(i).Name;
             if(temp!=null && !temp.isEmpty() && temp.contains("NowFloats WildFire")){
                 String date = allModels.get(i).CreatedOn;
-                int totalMonthsValidity = Integer.parseInt(allModels.get(i).totalMonthsValidity);
+                int totalMonthsValidity = Integer.parseInt(allModels.get(i).TotalMonthsValidity);
                 int remainingDay = verifyTime(date.substring(date.indexOf("(")+1,date.indexOf(")")),totalMonthsValidity);
                 if(remainingDay>0 && remainingDay<7){
                     prefsEditor = pref.edit();

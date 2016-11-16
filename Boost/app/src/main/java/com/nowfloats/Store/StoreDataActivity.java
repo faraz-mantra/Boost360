@@ -172,8 +172,8 @@ public class StoreDataActivity extends AppCompatActivity {
                 product_validity = (TextView) findViewById(R.id.product_validity);
 
 //                if (("91").equals(countryPhoneCode)){
-                if (/*product.ExternalApplicationDetails==null || product.ExternalApplicationDetails.equals("null")
-                        || product.ExternalApplicationDetails.size()==0*/!sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).equalsIgnoreCase("India")){
+                if (true/*product.ExternalApplicationDetails==null || product.ExternalApplicationDetails.equals("null")
+                        || product.ExternalApplicationDetails.size()==0*//*!sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).equalsIgnoreCase("India")*/){
                     materialProgress.dismiss();
                     ProductPrice.setText(getString(R.string.interest));
                     product_validity.setVisibility(View.GONE);
@@ -191,7 +191,7 @@ public class StoreDataActivity extends AppCompatActivity {
 //                            product_pay.setBackgroundColor(getResources().getColor(R.color.greenDark));}
 //                    }
                     try {
-                        if (product.Name.equalsIgnoreCase("NowFloats Dictate") || product.Name.equalsIgnoreCase("NowFloats WildFire")) {
+                        if (product.Name.contains("NowFloats Dictate") || product.Name.contains("NowFloats WildFire")) {
                             ProductPrice.setText(getString(R.string.contact_us));
                         }
                     }catch(Exception e){e.printStackTrace();}

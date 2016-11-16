@@ -149,9 +149,9 @@ public class StoreFragmentTab extends Fragment {
 //                @Override
 //                public void success(ArrayList<AccountDetailModel> accDetail, Response response) {
                     if (acIdarray!=null && acIdarray.size()>0){
-                        for (int i = 0; i < allModels.size(); i++) {
+                        /*for (int i = 0; i < allModels.size(); i++) {
                             for (int j=0; j < acIdarray.size(); j++){
-                                if (allModels.get(i)._id.equals(acIdarray.get(j).clientProductId)){
+                                if (allModels.get(i)._id.equals(acIdarray.get(j).ClientProductId)){
                                     activeWidgetModels.add(allModels.get(i));
 //                                    additionalWidgetModels.remove(additionalDetails.get(i));
                                 }else{
@@ -161,12 +161,24 @@ public class StoreFragmentTab extends Fragment {
                         }
                         for (int i = 0; i < acIdarray.size(); i++) {
                             for (int j = 0; j < allModels.size(); j++) {
-                                if (allModels.get(j)._id.equals(acIdarray.get(i).clientProductId)){
+                                if (allModels.get(j)._id.equals(acIdarray.get(i).ClientProductId)){
                                     additionalPlan.remove(allModels.get(j));
                                 }
                             }
                         }
-                        additionalWidgetModels = additionalPlan;
+                        additionalWidgetModels = additionalPlan;*/
+                        for (int i=0; i<allModels.size(); i++){
+                            boolean flag = false;
+                            for (int j=0; j<acIdarray.size(); j++){
+                                if(allModels.get(i)._id.equals(acIdarray.get(j).ClientProductId)){
+                                    activeWidgetModels.add(allModels.get(i));
+                                    flag = true;
+                                }
+                            }
+                            if(!flag){
+                                additionalWidgetModels.add(allModels.get(i));
+                            }
+                        }
                     }else{
                         additionalWidgetModels = allModels;
 //                        Methods.showSnackBarNegative(activity,"Something went wrong");
