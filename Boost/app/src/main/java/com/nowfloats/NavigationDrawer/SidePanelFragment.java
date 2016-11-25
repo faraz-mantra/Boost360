@@ -74,7 +74,7 @@ public class SidePanelFragment extends Fragment {
     private static int twitterWeight = 10;
     private static int shareWebsiteWeight = 5;
     private static int firstUpdatesWeight = 5;
-
+    private static int logoWeight=5;
     private boolean mUserLearnedDrawer;
     private View containerView;
     public ActionBarDrawerToggle mDrawerToggle;
@@ -118,7 +118,7 @@ public class SidePanelFragment extends Fragment {
     private ProgressBar progressbar;
     private TextView meterValue;
     private boolean fiveUpdatesDone = false;
-    private int onUpdate = 5;
+    private int onUpdate = 4;
     private String originalSite1;
 
     private final int media_req_id=5;
@@ -879,6 +879,7 @@ public class SidePanelFragment extends Fragment {
                     mUserLearnedDrawer = true;
                     saveToPreferences(getActivity(), KEY_USER_LEARNED_DRAWER, mUserLearnedDrawer + "");
                 }
+                siteMeterCalculation();
                 getActivity().invalidateOptionsMenu();
             }
 
@@ -1149,7 +1150,6 @@ public class SidePanelFragment extends Fragment {
                 siteMeter.setVisibility(View.GONE);
             }
 
-            siteMeterCalculation();
             // mDrawerLayout.openDrawer(Gravity.LEFT);
         }
 
@@ -1202,6 +1202,7 @@ public class SidePanelFragment extends Fragment {
         meterValue.setText(siteMeterTotalWeight+"%");
     }*/
         public void siteMeterCalculation() {
+            SharedPreferences pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
             siteMeterTotalWeight = 0;
             if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
                 siteMeterTotalWeight += 10;
@@ -1226,7 +1227,7 @@ public class SidePanelFragment extends Fragment {
                 siteMeterTotalWeight += businessDescriptionWeight;
             }
 
-            if (Constants.twitterShareEnabled == false && Util.isNullOrEmpty(session.getFacebookAccessToken()) && !getResources().getString(R.string.social_percentage).equals("0")) {
+            if (Constants.twitterShareEnabled == false && !pref.getBoolean("fbShareEnabled", false) && !pref.getBoolean("fbPageShareEnabled", false) && !getResources().getString(R.string.social_percentage).equals("0")) {
             } else {
                 siteMeterTotalWeight += twitterWeight;
             }
@@ -1238,16 +1239,22 @@ public class SidePanelFragment extends Fragment {
             if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL)) && !getResources().getString(R.string.email_percentage).equals("0")) {
                 siteMeterTotalWeight += emailWeight;
             }
+            if (HomeActivity.StorebizFloats.size() < 5 ) {
+                siteMeterTotalWeight += (HomeActivity.StorebizFloats.size()*onUpdate);
+                Log.v("ggg",siteMeterTotalWeight+"update");
 
-            if (HomeActivity.StorebizFloats.size() < 5 && fiveUpdatesDone == false) {
-                siteMeterTotalWeight += onUpdate;
-            } else {
-                fiveUpdatesDone = true;
-                siteMeterTotalWeight += 25;
+            }else {
+                siteMeterTotalWeight += 20;
+                Log.v("ggg",siteMeterTotalWeight+"update");
+            }
+            if (!(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl))) && !getResources().getString(R.string.Logo_percentage).equals("0")) {
+                siteMeterTotalWeight += logoWeight;
+                Log.v("ggg",siteMeterTotalWeight+"logo");
             }
 
-            if (session.getWebsiteshare()) {
-                siteMeterTotalWeight += businessNameWeight;
+            if (session.getBusinessHours()) {
+                siteMeterTotalWeight += businessTimingWeight;
+                Log.v("ggg",siteMeterTotalWeight+"hour");
             }
 
             progressbar.setProgress(siteMeterTotalWeight);

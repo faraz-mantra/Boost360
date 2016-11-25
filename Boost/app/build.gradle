@@ -27,9 +27,6 @@ allprojects {
             url "https://jitpack.io"
             //url "${project.rootDir}/app/creativesdk-repo"  //ADD THE CORRECT LOCATION OF THE CREATIVESDK LIBRARY FILES
         }
-        maven {
-            url "https://s3-ap-southeast-1.amazonaws.com/godel-release/godel/"
-        }
         /* maven {
              url "https://repo.commonsware.com.s3.amazonaws.com"
          }*/
@@ -46,8 +43,8 @@ android {
         applicationId 'com.thinksity'
         minSdkVersion 15
         targetSdkVersion 23
-        versionName "4.4.6"
-        versionCode 2016100025
+        versionName "4.4.7"
+        versionCode 2016110024
         multiDexEnabled true
     }
     buildTypes {
@@ -82,14 +79,13 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project('libs:libraries:volley')
     compile project(':library')
     compile project(':mobihelp_sdk_android_v1.5.4')
     compile project(':mixpanel')
     compile project(':cropper')
     compile project(':ZoomImageLibrary')
-    compile project(':instamojoLibMain')
     compile files('libs/libraries/signpost-core-1.2.1.2.jar')
     compile files('libs/libraries/AF-Android-SDK-v2.3.1.17.jar')
     compile files('libs/libraries/signpost-commonshttp4-1.2.1.2.jar')
@@ -100,11 +96,13 @@ dependencies {
         transitive = true;
     }
     /*
-    compile 'com.google.android.gms:play-services-ads:7.8.+'
-    compile 'com.google.android.gms:play-services-gcm:7.8.+'
-    compile 'appice.io.android:sdk:2.+'*/
-//    compile 'com.google.apis:google-api-services-urlshortener:v1-rev43-1.21.0'
-//    compile 'com.google.http-client:google-http-client-android:1.21.0'
+        compile 'com.google.android.gms:play-services-ads:7.8.+'
+        compile 'com.google.android.gms:play-services-gcm:7.8.+'
+        compile 'appice.io.android:sdk:2.+'*/
+
+    //    compile 'com.google.apis:google-api-services-urlshortener:v1-rev43-1.21.0'
+
+    //    compile 'com.google.http-client:google-http-client-android:1.21.0'
 
     //    compile 'com.commonsware.cwac:richedit:0.5.+'
 
@@ -140,7 +138,6 @@ dependencies {
     compile 'com.google.firebase:firebase-messaging:9.4.0'
     compile 'me.biubiubiu.justifytext:library:1.1'
     compile 'com.github.clans:fab:1.6.4'
-    compile 'com.instamojo:android-sdk:+'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
 }
 

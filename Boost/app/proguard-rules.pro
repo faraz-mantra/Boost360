@@ -32,7 +32,6 @@
     <fields>;
     <methods>;
 }
--keep class com.instamojo.android.**{*;}
 
 -keep class com.demach.konotor.** { *; }
 
@@ -49,6 +48,8 @@
       -keep class com.facebook.** {
        *;
     }
+
+-dontwarn com.github.mikephil.**
 
 -keep class org.lucasr.twowayview.** { *; }
 -dontwarn okio.**

@@ -548,7 +548,7 @@ public class Home_Main_Fragment extends Fragment implements
 
         for (Updates update : updates) {
             FloatsMessageModel floatModel = new FloatsMessageModel(update.getServerId(), update.getDate(),
-                    update.getImageUrl(), update.getUpdateText(), update.getTileImageUrl(), update.getType());
+                    update.getImageUrl(), update.getUpdateText(), update.getTileImageUrl(), update.getType(), update.getUrl());
             HomeActivity.StorebizFloats.add(floatModel);
         }
 

@@ -154,12 +154,12 @@
     <string name="businessCategory_percentage">5</string>
     <string name="featuredImage_percentage">10</string>
     <string name="businessName_percentage">5</string>
-    <string name="businessdescription_percentage">5</string>
+    <string name="businessdescription_percentage">10</string>
     <string name="social_percentage">10</string>
     <string name="businessCategory">5</string>
     <string name="address_percentage">10</string>
     <string name="email_percentage">5</string>
-    <string name="postUpdate_percentage">25</string>
+    <string name="postUpdate_percentage">20</string>
     <string name="share_percentage">5</string>
 
     <string name="buydomain_text1">kendi kimliğini alın</string>
@@ -931,6 +931,25 @@
     <string name="on_boarding_next2_text">Çok teşekkürler</string>
     <string name="onboarding_popup_one_btn_text">Göster bana!</string>
     <string name="welcome_back">Tekrar hoşgeldiniz</string>
+
+
+
+    <string name="opc_hint_text">Connect with our sales executives to get an Online Payment Code (OPC).</string>
+
+    <string-array name="tabs">
+        <item>Week</item>
+        <item>Month
+        </item>
+        <item>Year</item>
+    </string-array>
+    <string name="visits_this_week">visits this week</string>
+    <string name="visits_this_month">visits this month</string>
+    <string name="visits_this_year">visits this year</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="Month">Month</string>
+    <string name="day">Day</string>
+
     <string-array name="calendar">
         <item>Hafta</item>
         <item>Ay</item>
@@ -954,12 +973,6 @@
         <item>4</item>
         <item>5</item>
         <item>6</item>
-    </string-array>
-    <string-array name="week_with_num">
-        <item>Hafta 1</item>
-        <item>Hafta 2</item>
-        <item>Hafta 3</item>
-        <item>Hafta 4</item>
     </string-array>
     <string-array name="weeks">
         <item>Week 1</item>
@@ -1127,4 +1140,7 @@
         <item><![CDATA[NowFloats has won many awards over time. You can see them at <a href="http://nowfloats.com/#accolades">http://nowfloats.com/#accolades.</a>]]></item>
         <item><![CDATA[Get more information about NowFloats at <a href="http://nowfloats.com/#aboutus">http://nowfloats.com/#aboutus</a>.<br/> Get our whitepaper at <a href="http://nowfloats.com/boost/whyonline">http://nowfloats.com/boost/whyonline</a>.]]></item>
     </string-array>
+
+    <string name="Logo_percentage">5</string>
+    <string name="business_hours">5</string>
 </resources>

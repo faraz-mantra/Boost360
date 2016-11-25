@@ -117,6 +117,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     private String KEY_IS_FREE_DOMAIN = "isFreeDomain";
     private String KEY_FP_TAG = "fptag";
     private String KEY_WEB_TEMPLATE_TYPE = "webTemplateType";
+    private String KEY_BUSINESS_HOURS = "BusinessHoursMainKey";
 
     //public boolean showUpdates;
 
@@ -236,6 +237,15 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public Boolean getWebsiteshare()
     {
         return pref.getBoolean(KEY_website,false);
+    }
+    public void setBusinessHours(boolean cnt)
+    {
+        editor.putBoolean(KEY_BUSINESS_HOURS , cnt);
+        editor.commit();
+    }
+    public Boolean getBusinessHours()
+    {
+        return pref.getBoolean(KEY_BUSINESS_HOURS,false);
     }
 
     public void setSignUpFromFacebook(String isSignUpFromFacebook)

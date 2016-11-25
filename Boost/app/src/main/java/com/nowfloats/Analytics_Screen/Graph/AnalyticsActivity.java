@@ -23,9 +23,12 @@ import com.nowfloats.Analytics_Screen.Graph.model.DashboardDetails;
 import com.nowfloats.Analytics_Screen.Graph.model.DashboardResponse;
 import com.nowfloats.Analytics_Screen.Graph.model.DatabaseModel;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.thinksity.R;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -39,7 +42,7 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class AnalyticsActivity extends AppCompatActivity {
+public class AnalyticsActivity extends AppCompatActivity implements MonthFragment.OnYearDataClickListener{
 
     public String[] tabs;
     int[] months;
@@ -112,6 +115,10 @@ public class AnalyticsActivity extends AppCompatActivity {
                 if(curMonth>dbmonth)
                 {
                     months = Arrays.copyOf(modelResponse.getYear(), curMonth + 1);
+                    int[] days=Arrays.copyOf(modelResponse.getWeek(),curDay);
+
+                    months[dbmonth-1]-=days[dbdayOfWeek-1];
+
                     yearData = addArray(months);
                 }
                 else
@@ -126,8 +133,13 @@ public class AnalyticsActivity extends AppCompatActivity {
                 if(curWeek>dbweekOfMonth)
                 {
                     months = Arrays.copyOf(modelResponse.getYear(), curMonth + 1);
-                    yearData = addArray(months);
                     weeks= Arrays.copyOf(modelResponse.getMonth(),curWeek);
+                    int[] days=Arrays.copyOf(modelResponse.getWeek(),curDay);
+
+                    months[dbmonth]-=days[dbdayOfWeek-1];
+                    weeks[dbweekOfMonth-1]-=days[dbdayOfWeek-1];
+
+                    yearData = addArray(months);
                     monthData=addArray(weeks);
                 }
                 else
@@ -142,11 +154,17 @@ public class AnalyticsActivity extends AppCompatActivity {
                 if(dbdayOfWeek<curDay)
                 {
                     months = Arrays.copyOf(modelResponse.getYear(), curMonth + 1);
-                    yearData = addArray(months);
                     weeks= Arrays.copyOf(modelResponse.getMonth(),curWeek);
-                    monthData=addArray(weeks);
                     days=Arrays.copyOf(modelResponse.getWeek(),curDay);
+                    int deleteData=days[dbdayOfWeek-1];
+
+                    days[dbdayOfWeek-1]=0;
+                    months[dbmonth]-=deleteData;
+                    weeks[dbweekOfMonth-1]-=deleteData;
+
                     weekData=addArray(days);
+                    monthData=addArray(weeks);
+                    yearData = addArray(months);
                 }
                 else
                 {
@@ -160,11 +178,22 @@ public class AnalyticsActivity extends AppCompatActivity {
                 weeks= modelResponse.getMonth();
                 months= modelResponse.getYear();
                 days=modelResponse.getWeek();
-                yearData=modelResponse.getYearCount();
-                monthData=modelResponse.getMonthCount();
-                weekData=modelResponse.getWeekCount();
-                setPagerAdapter();
-                return;
+//                yearData=modelResponse.getYearCount();
+//                monthData=modelResponse.getMonthCount();
+//                weekData=modelResponse.getWeekCount();
+//
+//                months = Arrays.copyOf(modelResponse.getYear(), curMonth + 1);
+//                weeks= Arrays.copyOf(modelResponse.getMonth(),curWeek);
+//                days=Arrays.copyOf(modelResponse.getWeek(),curDay);
+                int deleteData=days[dbdayOfWeek-1];
+
+                days[dbdayOfWeek-1]=0;
+                months[dbmonth]-=deleteData;
+                weeks[dbweekOfMonth-1]-=deleteData;
+
+                weekData=addArray(days);
+                monthData=addArray(weeks);
+                yearData = addArray(months);
             }
             Log.v("ggg",startDate);
             detail.setData(session.getFpTag(), Constants.clientId, startDate, endDate);
@@ -229,20 +258,115 @@ public class AnalyticsActivity extends AppCompatActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                SaveDataCounts saveDataCounts =new SaveDataCounts(AnalyticsActivity.this);
-                DatabaseModel modelResponse =saveDataCounts.getDataArrays();
-                weeks= modelResponse.getMonth();
-                months= modelResponse.getYear();
-                days=modelResponse.getWeek();
-                yearData=modelResponse.getYearCount();
-                monthData=modelResponse.getMonthCount();
-                weekData=modelResponse.getWeekCount();
-                setPagerAdapter();
+                if(rowExist==true) {
+                    SaveDataCounts saveDataCounts = new SaveDataCounts(AnalyticsActivity.this);
+                    DatabaseModel modelResponse = saveDataCounts.getDataArrays();
+                    weeks = modelResponse.getMonth();
+                    months = modelResponse.getYear();
+                    days = modelResponse.getWeek();
+                    yearData = modelResponse.getYearCount();
+                    monthData = modelResponse.getMonthCount();
+                    weekData = modelResponse.getWeekCount();
+                }
+                    setPagerAdapter();
                 Toast.makeText(AnalyticsActivity.this,error.getMessage(),Toast.LENGTH_SHORT).show();
                // Log.e("error",error+"");
             }
         });
     }
+
+
+
+    @Override
+    public void onYearDataClicked(int dataSetIndex) {
+        final Calendar calendar = Calendar.getInstance();
+        progressBar.setVisibility(View.VISIBLE);
+        try {
+            final int month = dataSetIndex + 1;
+            String dateString = month + "-01-" + calendar.get(Calendar.YEAR);
+            final DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+            Date date = dateFormat.parse(dateString);
+            String firstDate = getFirstDay(date);
+            String lastDate = (month + 1) + "-01-" + calendar.get(Calendar.YEAR);
+            if(month==(calendar.get(Calendar.MONTH)+1)){
+                lastDate = dateFormat.format(new Date());
+            }
+            final String lastDateUsed = getLastDay(date);
+            HashMap<String, String> map=new HashMap<>();
+            map.put("clientId",Constants.clientId);
+            map.put("startDate",firstDate);
+            map.put("endDate",lastDate);
+
+            BoostLog.d("Current Start:", firstDate + " -  " + lastDate);
+
+            RestAdapter adapter = new RestAdapter.Builder().setEndpoint(endpoint).build();
+            AnalyticsFetch.FetchDetails details = adapter.create(AnalyticsFetch.FetchDetails.class);
+            details.getDataCount(session.getFpTag(),map, new Callback<DashboardResponse>() {
+                @Override
+                public void success(final DashboardResponse dashboardResponse, Response response) {
+                    progressBar.setVisibility(View.GONE);
+                    int[] weekDataArr;
+                    try {
+                        Calendar localCalendar = Calendar.getInstance();
+                        localCalendar.setTime(dateFormat.parse(lastDateUsed));
+                        weekDataArr = new int[localCalendar.get(Calendar.WEEK_OF_MONTH)];
+                    }catch (ParseException e){
+                        weekDataArr = new int[6];
+                    }
+                    int sum = 0;
+                    for(DashboardResponse.Entity list :dashboardResponse.getEntity()) {
+                        String s = list.getCreatedDate().substring(list.getCreatedDate().indexOf('(') + 1,
+                                list.getCreatedDate().indexOf(')') - 5);
+                        Calendar c = new SimpleDateFormat(pattern, Locale.ENGLISH).getCalendar();
+                        c.setTimeInMillis(Long.valueOf(s));
+                        int weekOfMonth = c.get(Calendar.WEEK_OF_MONTH);
+                        weekDataArr[weekOfMonth-1]+=list.getDataCount();
+                        sum+=list.getDataCount();
+                    }
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .add(R.id.activity_main_analytics, MonthFragment.newInstance(weekDataArr, sum, 1, "Visists in " + getResources().getStringArray(R.array.months)[month-1] ), "MothFragment")
+                            .addToBackStack("MothFragment")
+                            .commit();
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    // Log.e("error",error+"");
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(AnalyticsActivity.this, "Error while retrieving month data", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+
+        }catch (ParseException exception){
+            exception.printStackTrace();
+        }catch (Exception exception){
+            exception.printStackTrace();
+        }
+    }
+
+    public String getFirstDay(Date d) throws Exception
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(d);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        Date dddd = calendar.getTime();
+        SimpleDateFormat sdf1 = new SimpleDateFormat("MM-dd-yyyy");
+        return sdf1.format(dddd);
+    }
+
+    public String getLastDay(Date d) throws Exception
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(d);
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        Date dddd = calendar.getTime();
+        SimpleDateFormat sdf1 = new SimpleDateFormat("MM-dd-yyyy");
+        return sdf1.format(dddd);
+    }
+
     class Task extends AsyncTask<Void,Void,Void>{
 
         DashboardResponse dashboardResponse;
@@ -260,6 +384,7 @@ public class AnalyticsActivity extends AppCompatActivity {
                 String s = list.getCreatedDate().substring(list.getCreatedDate().indexOf('(')+1,
                         list.getCreatedDate().indexOf(')') - 5);
                 Calendar c= new SimpleDateFormat(pattern, Locale.ENGLISH).getCalendar();
+
                 c.setTimeInMillis(Long.valueOf(s));
                 int year = c.get(Calendar.YEAR);
                 int weekOfMonth=c.get(Calendar.WEEK_OF_MONTH);
@@ -324,11 +449,13 @@ public class AnalyticsActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return  MonthFragment.newInstance(days,weekData,0);
+                    return MonthFragment.newInstance(days,weekData,0, getString(R.string.visits_this_week));
                 case 1:
-                    return MonthFragment.newInstance(weeks,monthData,1);
+                    return MonthFragment.newInstance(weeks,monthData,1, getString(R.string.visit_this_month));
                 default:
-                    return  MonthFragment.newInstance(months,yearData,2);
+                    MonthFragment monthFragment =  MonthFragment.newInstance(months,yearData,2, getString(R.string.visits_this_year));
+                    monthFragment.setYearDataListener(AnalyticsActivity.this);
+                    return monthFragment;
             }
         }
 

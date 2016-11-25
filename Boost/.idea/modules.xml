@@ -7,7 +7,6 @@
       <module fileurl="file://$PROJECT_DIR$/ZoomImageLibrary/ZoomImageLibrary.iml" filepath="$PROJECT_DIR$/ZoomImageLibrary/ZoomImageLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/cropper/cropper.iml" filepath="$PROJECT_DIR$/cropper/cropper.iml" />
-      <module fileurl="file://$PROJECT_DIR$/instamojoLib/instamojoLibMain.iml" filepath="$PROJECT_DIR$/instamojoLib/instamojoLibMain.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/libs/libraries/libraries.iml" filepath="$PROJECT_DIR$/app/libs/libraries/libraries.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/libs/libs.iml" filepath="$PROJECT_DIR$/app/libs/libs.iml" />

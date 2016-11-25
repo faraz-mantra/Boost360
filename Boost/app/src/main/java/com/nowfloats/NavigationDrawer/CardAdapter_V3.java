@@ -163,6 +163,14 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                 }
             });
         } else {
+            String mainFpUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+            if (!Util.isNullOrEmpty(mainFpUrl)) {
+                mainFpUrl = mainFpUrl.toLowerCase();
+            }else{
+                mainFpUrl = "http://"+ session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
+                        + appContext.getResources().getString(R.string.tag_for_partners);
+            }
+            final String finalFpUrl = mainFpUrl;
             final TextView textView1 = holder.textView ;
             TextView dateText = holder.dateText ;
             ImageView imageView = holder.imageView;
@@ -181,7 +189,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                             pd = ProgressDialog.show(appContext, "", "Sharing . . .");
                         }
                     });
-                    final Intent shareIntent = new Intent();
+                    final Intent shareIntent = new Intent(Intent.ACTION_SEND);
                     if (!imageShare.contains("/Tile/deal.png") && !Util.isNullOrEmpty(imageShare)) {
                         if (Methods.isOnline(appContext)) {
                             String url;
@@ -203,10 +211,12 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                                                 String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
                                                 BoostLog.d("Path is:", path);
                                                 Uri uri = Uri.parse(path);
-                                                shareIntent.setType("image/png");
+                                                shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
+                                                        finalFpUrl + "/bizFloat/" + HomeActivity.StorebizFloats.get(position)._id);
                                                 shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-                                                shareIntent.setAction(Intent.ACTION_SEND);
-                                                shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message);
+                                                shareIntent.setType("image/*");
+
+
                                                 if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
                                                     appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
                                                 } else {
@@ -240,8 +250,8 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                     } else {
                         pd.dismiss();
                         shareIntent.setType("text/plain");
-                        shareIntent.setAction(Intent.ACTION_SEND);
-                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message);
+                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
+                                finalFpUrl + "/bizFloat/" + HomeActivity.StorebizFloats.get(position)._id);
                         if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
                             appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
                         } else {

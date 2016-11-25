@@ -20,13 +20,21 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.formatter.YAxisValueFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ViewPortHandler;
+import com.nowfloats.util.BoostLog;
 import com.thinksity.R;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -40,17 +48,20 @@ public class MonthFragment extends Fragment {
     int[] data;
     String[] days, months,weeks,shortArray;
     Context mContext;
-    final static String PARAMETER1="count",PARAMETER2="visit",PARAMETER3="frag";
+    final static String PARAMETER1="count",PARAMETER2="visit",PARAMETER3="frag", PARAMETER4="title";
     String visitsThisWhat,title;
     public TextView visitsTitle,visitsCount;
     public int visitValue,frag;
+    private OnYearDataClickListener onYearDataClickListener;
+    private String titleMain;
 
-    public static MonthFragment newInstance(int[] arrayData,int totalCountData,int frag) {
+    public static MonthFragment newInstance(int[] arrayData,int totalCountData,int frag, String title) {
         MonthFragment monthFragment=new MonthFragment();
         Bundle b=new Bundle();
         b.putIntArray(PARAMETER1,arrayData);
         b.putInt(PARAMETER2,totalCountData);
         b.putInt(PARAMETER3,frag);
+        b.putString(PARAMETER4, title);
         monthFragment.setArguments(b);
         return monthFragment;
     }
@@ -64,21 +75,22 @@ public class MonthFragment extends Fragment {
         data= this.getArguments().getIntArray(PARAMETER1);
         frag= this.getArguments().getInt(PARAMETER3);
         visitValue= this.getArguments().getInt(PARAMETER2);
+        titleMain = this.getArguments().getString(PARAMETER4);
         if(frag==0){
             title=getString(R.string.day);
-            visitsThisWhat=getString(R.string.visits_this_week);
+            visitsThisWhat=titleMain;
             days=getResources().getStringArray(R.array.days);
             shortArray=Arrays.copyOfRange(days, 0, data.length);
         }
         else if(frag==1) {
             title=getString(R.string.week);
-            visitsThisWhat=getString(R.string.visits_this_month);
+            visitsThisWhat=titleMain;
             weeks = getResources().getStringArray(R.array.weeks);
             shortArray=Arrays.copyOfRange(weeks, 0, data.length);
         }
         else {
             title=getString(R.string.Month);
-            visitsThisWhat=getString(R.string.visits_this_year);
+            visitsThisWhat=titleMain;
             months = getResources().getStringArray(R.array.months);
             shortArray=Arrays.copyOfRange(months, 0, data.length);
         }
@@ -139,7 +151,23 @@ public class MonthFragment extends Fragment {
         rightAxis.setTextColor(Color.argb(0,0,0,0));
         graph.setDescription("");
         graph.animateXY(1000, 1000);
+        if(frag==2) {
+            graph.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+                @Override
+                public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+                    BoostLog.d("Clicked index:", " "+ e.getXIndex());
+                    if(onYearDataClickListener != null)
+                        onYearDataClickListener.onYearDataClicked(e.getXIndex());
+                }
+
+                @Override
+                public void onNothingSelected() {
+
+                }
+            });
+        }
         graph.invalidate();
+
 
     }
     private List<IBarDataSet> getDataSet() {
@@ -169,5 +197,13 @@ public class MonthFragment extends Fragment {
         public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
             return mFormat.format(value);
         }
+    }
+
+    public void setYearDataListener(OnYearDataClickListener listener){
+        this.onYearDataClickListener = listener;
+    }
+
+    public interface OnYearDataClickListener{
+        public void onYearDataClicked(int month);
     }
 }

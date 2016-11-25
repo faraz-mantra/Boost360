@@ -63,9 +63,6 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.TwoWayView;
-import com.rengwuxian.materialedittext.MaterialEditText;
-import com.romeo.mylibrary.Models.OrderDataModel;
-import com.romeo.mylibrary.ui.InstaMojoMainActivity;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -121,7 +118,7 @@ public class StoreDataActivity extends AppCompatActivity {
     private String mErpExecutiveMailId;
     private String mErpId;
     private String mOPC;
-    private OrderDataModel mOrderData;
+    //private OrderDataModel mOrderData;
 
     private final int DIRECT_REQUEST_CODE = 1;
     private final int OPC_REQUEST_CODE = 2;
@@ -245,7 +242,8 @@ public class StoreDataActivity extends AppCompatActivity {
 //                                boolean storeClick = false;
                                 Map<String, String> params = new HashMap<String, String>();
                                 params.put("clientId", soureClientId);
-                                params.put("plantype", product.Name);
+                                params.put("planType", product.Name);
+                                params.put("toEmail", "leads@nowfloats.com");
 //                                if (product.Name.equals("NowFloats Lighthouse")) {params.put("plantype", "Lighthouse");
 //                                    storeClick = sessionManager.getLightHousePurchase();
 //                                    sessionManager.setLightHousePurchase(true);
@@ -311,7 +309,7 @@ public class StoreDataActivity extends AppCompatActivity {
                     product_pay.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            openPaymentTypeDialog();
+                            //openPaymentTypeDialog();
                             MixPanelController.track(EventKeysWL.BUY_NOW_STORE_CLICKED, null);
                         }
                     });
@@ -498,7 +496,7 @@ public class StoreDataActivity extends AppCompatActivity {
         }catch(Exception e){e.printStackTrace();}
     }
 
-    private void openPaymentTypeDialog() {
+    /*private void openPaymentTypeDialog() {
         final String[] array = {"Pay Now", "Proceed with OPC"};
         MaterialDialog dialog = new MaterialDialog.Builder(StoreDataActivity.this)
                 .title("Please select one to proceed")
@@ -548,9 +546,9 @@ public class StoreDataActivity extends AppCompatActivity {
         dialog.getWindow().getAttributes().windowAnimations =  R.style.DialogTheme;
         dialog.show();
 
-    }
+    }*/
 
-    private void openOPCDialog() {
+    /*private void openOPCDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.store_buy_now_dialog_layout);
         dialog.setCancelable(false);
@@ -584,9 +582,9 @@ public class StoreDataActivity extends AppCompatActivity {
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogTheme;
         dialog.show();
 
-    }
+    }*/
 
-    private void verifyPaymentToken(String OPCCode, final TextInputLayout layout, final Dialog mainDialog) {
+    /*private void verifyPaymentToken(String OPCCode, final TextInputLayout layout, final Dialog mainDialog) {
         HashMap<String, String> data = new HashMap<>();
         data.put("clientId", Constants.clientId);
         data.put("token", OPCCode);
@@ -619,9 +617,9 @@ public class StoreDataActivity extends AppCompatActivity {
                         Methods.showSnackBarNegative(StoreDataActivity.this, getString(R.string.error_verifying_opc));
                     }
                 });
-    }
+    }*/
 
-    private void showInvoiceDialog(final OPCDataMain opcDataMain) {
+    /*private void showInvoiceDialog(final OPCDataMain opcDataMain) {
         if(opcDataMain==null){
             return;
         }
@@ -690,7 +688,7 @@ public class StoreDataActivity extends AppCompatActivity {
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(lp);
         dialog.show();
-    }
+    }*/
 
     private String getInAppProductPrize(){
         try{
@@ -969,7 +967,7 @@ public class StoreDataActivity extends AppCompatActivity {
                 }
             }
         }*/
-        if(requestCode==DIRECT_REQUEST_CODE || requestCode==OPC_REQUEST_CODE && resultCode==RESULT_OK){
+        /*if(requestCode==DIRECT_REQUEST_CODE || requestCode==OPC_REQUEST_CODE && resultCode==RESULT_OK){
             if(data==null){
                 return;
             }
@@ -1019,7 +1017,7 @@ public class StoreDataActivity extends AppCompatActivity {
                     showDialog(status, msg);
                 }
             }
-        }
+        }*/
     }
 
     private void redeemOPC(String paymentId, String opc) {
@@ -1047,7 +1045,7 @@ public class StoreDataActivity extends AppCompatActivity {
         });
     }
 
-    private void sendEmail(boolean success, String status, String message, String paymentId, String transactionId, String amount) {
+    /*private void sendEmail(boolean success, String status, String message, String paymentId, String transactionId, String amount) {
         DateFormat df = DateFormat.getTimeInstance();
         df.setTimeZone(TimeZone.getTimeZone("gmt"));
         String gmtTime = df.format(new Date());
@@ -1148,7 +1146,7 @@ public class StoreDataActivity extends AppCompatActivity {
             }
         });
 
-    }
+    }*/
 
     private void markAsPaid(String amount) {
         final ProgressDialog pd = ProgressDialog.show(this, "", "Please wait while activating the package...");

@@ -132,12 +132,12 @@
     <string name="businessCategory_percentage">5</string>
     <string name="featuredImage_percentage">10</string>
     <string name="businessName_percentage">5</string>
-    <string name="businessdescription_percentage">5</string>
+    <string name="businessdescription_percentage">10</string>
     <string name="social_percentage">10</string>
     <string name="businessCategory">5</string>
     <string name="address_percentage">10</string>
     <string name="email_percentage">5</string>
-    <string name="postUpdate_percentage">25</string>
+    <string name="postUpdate_percentage">20</string>
     <string name="share_percentage">5</string>
 
     <string name="buydomain_text1">Get your own identity</string>
@@ -534,6 +534,7 @@
 
 
     <!--FAQ hardcoded string end-->
-
+    <string name="Logo_percentage">5</string>
+    <string name="business_hours">5</string>
 
 </resources>

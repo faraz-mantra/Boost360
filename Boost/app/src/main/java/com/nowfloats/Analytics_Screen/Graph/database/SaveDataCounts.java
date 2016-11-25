@@ -150,7 +150,7 @@ public class SaveDataCounts {
         }
 
         public void onCreate(SQLiteDatabase db) {
-            Toast.makeText(mContext, "oncreate", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(mContext, "oncreate", Toast.LENGTH_SHORT).show();
             try {
                 db.execSQL(CREATE_ANALYTICS_TABLE);
             }catch (SQLException e) {
@@ -160,7 +160,7 @@ public class SaveDataCounts {
         }
 
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            Toast.makeText(mContext, "onupgrade", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(mContext, "onupgrade", Toast.LENGTH_SHORT).show();
             try {
                 db.execSQL(DROP_TABLE);
                 onCreate(db);

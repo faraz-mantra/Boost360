@@ -150,7 +150,8 @@ public class Fetch_Home_Data {
                             .setSynced(1)
                             .setTileImageUrl(data.imageUri)
                             .setType(data.type)
-                            .setUpdateText(data.message);
+                            .setUpdateText(data.message)
+                            .setUrl(data.url);
                     mDbController.postUpdate(update);
                     BoostLog.d("Saving To Db:", "Oh Saved to Db" + data.message);
                 }

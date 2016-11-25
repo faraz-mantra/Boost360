@@ -127,12 +127,12 @@
     <string name="businessCategory_percentage">5</string>
     <string name="featuredImage_percentage">10</string>
     <string name="businessName_percentage">5</string>
-    <string name="businessdescription_percentage">5</string>
+    <string name="businessdescription_percentage">10</string>
     <string name="social_percentage">10</string>
     <string name="businessCategory">5</string>
     <string name="address_percentage">10</string>
     <string name="email_percentage">5</string>
-    <string name="postUpdate_percentage">25</string>
+    <string name="postUpdate_percentage">20</string>
     <string name="share_percentage">5</string>
 
     <string name="buydomain_text1">Get your own identity</string>
@@ -781,7 +781,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="nowfloats"> NowFloats</string>
     <string name="version">Version</string>
     <string name="float_point_name">Float Point Name</string>
-    <string name="what_is_missing">what\'s Missing?</string>
+    <string name="what_is_missing">What\'s Missing?</string>
     <string name="primary_number">Primary Number</string>
     <string name="alternate_number1">Alternate Number 1</string>
     <string name="alternate_number2">Alternate Number 2</string>
@@ -882,7 +882,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="store_fragment_no_package_text">Sorry, Currently you haven\'t opted for any package.\nUpgrade to get more features.</string>
     <string name="site_appearance_revert_to_old">Revert to the old version</string>
     <string name="site_appearance_upgrade_text">Upgrade Now</string>
-    <string name="site_meter_body_text">Complete the task below to increase your site health. Higher percentage translates more traffic to your site.</string>
+    <string name="site_meter_body_text">Complete the steps below to increase your Site Score. Higher score translates to more traffic to your site.</string>
     <string name="site_meter_more_traffic_text">Higher scores translates more traffic to your site.</string>
     <string name="tool_bar_save_text">SAVE</string>
     <string name="single_row_card_upgrade_text">UPGRADE</string>
@@ -1018,4 +1018,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="Month">Month</string>
     <string name="day">Day</string>
+    <string name="Logo_percentage">5</string>
+    <string name="business_hours">5</string>
 </resources>

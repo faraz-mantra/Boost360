@@ -195,6 +195,7 @@ public class ProcessFPDetails {
                     if (i==0) {
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME, get_fp_details_model.Timings.get(0).From);
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME, get_fp_details_model.Timings.get(0).To);
+                        session.setBusinessHours(true);
                     }
                     if (i==1) {
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME, get_fp_details_model.Timings.get(1).From);

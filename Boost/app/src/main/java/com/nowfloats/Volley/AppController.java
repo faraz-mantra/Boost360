@@ -14,7 +14,6 @@ import com.appsflyer.AppsFlyerLib;
 import com.crashlytics.android.Crashlytics;
 import com.freshdesk.mobihelp.Mobihelp;
 import com.freshdesk.mobihelp.MobihelpConfig;
-import com.instamojo.android.Instamojo;
 import com.nowfloats.util.Constants;
 
 import java.io.File;
@@ -43,7 +42,6 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
             Fabric.with(this, new Crashlytics());
         }catch(Exception e){e.printStackTrace();}
 
-        Instamojo.initialize(this);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
