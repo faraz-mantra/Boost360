@@ -150,15 +150,17 @@ public class NotificationFragment extends Fragment{
                         mShouldRequestMore = false;
                     }
                     progress_layout.setVisibility(View.GONE);
-                    if (alertModels==null || alertModels.size()==0 && !mIsAlertShown){
+                    if ((alertModels==null || alertModels.size()==0) && !mIsAlertShown){
                         emptylayout.setVisibility(View.VISIBLE);
                     }else{
                         mIsAlertShown = true;
                         emptylayout.setVisibility(View.GONE);
                     }
                     Log.i("Alerts Success",""+alertModels.size());
-                    adapter.addAlerts(alertModels);
-                    adapter.notifyDataSetChanged();
+                    if(adapter!=null) {
+                        adapter.addAlerts(alertModels);
+                        adapter.notifyDataSetChanged();
+                    }
                     progress_layout.setVisibility(View.GONE);
                 }
 
@@ -192,7 +194,7 @@ public class NotificationFragment extends Fragment{
                 @Override
                 public void success(ArrayList<AlertModel> alertModels, Response response) {
                     Log.i("Alerts Success","");
-                    if (alertModels!=null){
+                    if (alertModels!=null && alertModels.size() > 0){
                         mIsAlertShown = true;
                         adapter = new NotificationAdapter(activity,alertModels,alertInterface,session,bus);
                         recyclerView.setAdapter(adapter);

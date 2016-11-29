@@ -844,7 +844,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     if (Integer.parseInt(paymentLevel) > 10) {
                         //LH expire
                         renewPlanDialog(LIGHT_HOUSE_EXPIRE);
-                    } else if (Integer.parseInt(paymentLevel) == 0) {
+                    } else{
                         //Demo expire
                         renewPlanDialog(DEMO_EXPIRE);
                     }
