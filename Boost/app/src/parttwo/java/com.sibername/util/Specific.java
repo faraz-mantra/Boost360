@@ -38,4 +38,5 @@ public class Specific {
     public static String FACEBOOK_URL = "https://www.facebook.com/sibername";
     public static String PACKAGE_NAME = "com.sibername";
 
+    public static final String TWITTER_URL = "https://twitter.com/sibername";
 }

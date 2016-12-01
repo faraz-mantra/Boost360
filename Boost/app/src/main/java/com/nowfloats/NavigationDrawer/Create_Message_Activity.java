@@ -36,13 +36,6 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.facebook.Session;
-import com.facebook.SessionState;
-import com.facebook.UiLifecycleHelper;
-import com.facebook.android.AsyncFacebookRunner;
-import com.facebook.android.DialogError;
-import com.facebook.android.Facebook;
-import com.facebook.android.FacebookError;
 import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.PostModel;
@@ -91,11 +84,9 @@ public class Create_Message_Activity extends AppCompatActivity {
     Bitmap bmp;
     public static boolean tosubscribers = false;
     private ImageView imageIconButton;
-    public static final Facebook facebook = new Facebook(Constants.FACEBOOK_API_KEY);
     private SharedPreferences pref = null;
     SharedPreferences.Editor prefsEditor;
     private ImageView facebookPageShare;
-    private UiLifecycleHelper uiHelper;
     private ImageView twitterloginButton,create_message_subscribe_button;
     public static boolean imageIconButtonSelected = false;
     private TextView post;
@@ -162,8 +153,6 @@ public class Create_Message_Activity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        uiHelper = new UiLifecycleHelper(this, null);
-        uiHelper.onCreate(savedInstanceState);
 
         post = (TextView) toolbar.findViewById(R.id.saveTextView);
         TextView titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
@@ -784,24 +773,10 @@ public class Create_Message_Activity extends AppCompatActivity {
         return null;
     }
 
-    private Session.StatusCallback statusCallback = new Session.StatusCallback() {
-        @Override
-        public void call(Session session, SessionState state,
-                         Exception exception) {
-            if (state.isOpened()) {
 
-                //buttonsEnabled(true);
-                //  Log.d("FacebookSampleActivity", "Facebook session opened");
-            } else if (state.isClosed()) {
-                // buttonsEnabled(false);
-                // Log.d("FacebookSampleActivity", "Facebook session closed");
-            }
-        }
-    };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        facebook.authorizeCallback(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && (Constants.GALLERY_PHOTO == requestCode)) {
             if (data != null) {
                 picUri = data.getData();
@@ -917,208 +892,14 @@ public class Create_Message_Activity extends AppCompatActivity {
         return null;
     }
 
-    public static void userStatusUpdate(PostModel post, Facebook fb,String id,String url,String mesgUrl)
-    {
-        AsyncFacebookRunner mAsyncFbRunner = new AsyncFacebookRunner(fb);
-        Bundle params = new Bundle();
-        Log.e("NFMANAGE", fb.getAccessToken()+"   nowfloat's Access token");
-        params.putString(post.NameKey, post.Message+System.getProperty("line.separator")+"- "+mesgUrl);
-        String graphPath = id+"/photos";
-        params.putString("url", url);
 
 
-        mAsyncFbRunner.request(graphPath, params, "POST",new AsyncFacebookRunner.RequestListener() {
 
-            @Override
-            public void onMalformedURLException(MalformedURLException e, Object state) {
-                // TODO Auto-generated method stub
-                Log.e("NFMANAGE",e.getMessage());
-
-            }
-
-            @Override
-            public void onIOException(IOException e, Object state) {
-                // TODO Auto-generated method stub
-                Log.e("NFMANAGE",e.getMessage());
-            }
-
-            @Override
-            public void onFileNotFoundException(FileNotFoundException e, Object state) {
-                // TODO Auto-generated method stub
-                Log.e("NFMANAGE",e.getMessage());
-            }
-
-            @Override
-            public void onFacebookError(FacebookError e, Object state) {
-                // TODO Auto-generated method stub
-                Log.e("NFMANAGE",e.getMessage());
-            }
-
-            @Override
-            public void onComplete(String response, Object state) {
-                // TODO Auto-generated method stub
-                Log.e("NFMANAGE",response);
-            }
-        },null);
-
-
-    }
-
-    public void fbPageData() {
-        final String[] PERMISSIONS = new String[] { "photo_upload",
-                "user_photos", "publish_stream", "read_stream",
-                "offline_access", "manage_pages", "publish_actions" };
-
-//        facebookPageShare.setImageDrawable(getResources().getDrawable(
-//                R.drawable.facebook_page));
-        // Looper.prepare();
-        facebook.authorize(this, PERMISSIONS, new Facebook.DialogListener() {
-            public void onComplete(Bundle values) {
-
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            JSONObject pageMe = new JSONObject(facebook.request("me/accounts"));
-                            Constants.FbPageList = pageMe.getJSONArray("data");
-                            if (Constants.FbPageList != null) {
-                                size = Constants.FbPageList.length();
-
-                                checkedPages = new boolean[size];
-                                if (size > 0) {
-                                    items = new ArrayList<String>();
-                                    for (int i = 0; i < size; i++) {
-                                       items.add(i,(String) ((JSONObject) Constants.FbPageList.get(i)).get("name"));
-                                    }
-
-                                    for (int i = 0; i < size; i++) {
-                                        checkedPages[i] = false;
-                                    }
-                                }
-                            }
-                        } catch (Exception e1) {
-                            e1.printStackTrace();
-                        }
-                        finally {
-                            Create_Message_Activity.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (items!=null && items.size()>0){
-                                        final String[] array = items.toArray(new String[items.size()]);
-                                        new MaterialDialog.Builder(Create_Message_Activity.this)
-                                            .title(getString(R.string.select_page))
-                                            .items(array)
-                                            .widgetColorRes(R.color.primaryColor)
-                                            .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
-                                                @Override
-                                                public boolean onSelection(MaterialDialog dialog, View view, int position, CharSequence text) {
-                                                    String strName = array[position];
-                                                    try {
-                                                        String FACEBOOK_PAGE_ID = (String) ((JSONObject) Constants.FbPageList.get(position)).get("id");
-                                                        String page_access_token = ((String) ((JSONObject) Constants.FbPageList.get(position)).get("access_token"));
-                                                        session.storePageAccessToken(page_access_token);
-                                                        session.storeFacebookPageID(FACEBOOK_PAGE_ID);
-                                                    } catch (JSONException e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                    pageSeleted(position,strName,session.getFacebookPageID(),session.getPageAccessToken());
-                                                    runOnUiThread(new Runnable() {
-                                                        @Override
-                                                        public void run() {
-                                                            facebookPageShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
-                                                        }
-                                                    });
-                                                    dialog.dismiss();
-                                                    return true;
-                                                }
-                                            }).show();
-                                    }else {
-                                        Methods.materialDialog(activity,"Uh oh~",getString(R.string.look_like_no_facebook_page));
-                                    }
-                                }
-                            });
-                        }
-                    }
-                }).start();
-            }
-
-            @Override
-            public void onCancel() {
-                onFBPageError();
-            }
-
-            @Override
-            public void onFacebookError(FacebookError e) {
-                onFBPageError();
-            }
-
-            @Override
-            public void onError(DialogError e) {
-                onFBPageError();
-            }
-        });
-    }
-
-    public void pageSeleted(int id,String pageName, String pageID ,String pageAccessToken) {
-        String s = "";
-        JSONObject obj;
-        JSONArray data = new JSONArray();
-        session.storeFacebookPage(pageName);
-        dataBase.updateFacebookPage(pageName, pageID, pageAccessToken);
-//        for (int i = 0; i < size; i++) {
-//            if (checkedPages[i]) {
-//                s = s + "," + items.get(i);
-        obj = new JSONObject();
-        try {
-            obj.put("id", pageID);
-            obj.put("access_token",pageAccessToken);
-            data.put(obj);
-
-//                    String pageName = (String) ((JSONObject) Constants.FbPageList
-//                            .get(i)).get("name");
-
-            Constants.fbPageFullUrl = "https://www.facebook.com/pages/"
-                    + pageName + "/" + pageID;
-            Constants.fbFromWhichPage = pageName;
-            prefsEditor.putString("fbPageFullUrl",
-                    Constants.fbPageFullUrl);
-            prefsEditor.putString("fbFromWhichPage",
-                    Constants.fbFromWhichPage);
-            prefsEditor.commit();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-        obj = new JSONObject();
-        try {
-            obj.put("data", data);
-            Constants.FbPageList = data;
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        String fbPageData = obj.toString();
-        if (!Util.isNullOrEmpty(fbPageData)) {
-            if (fbPageData.equals("{\"data\":[]}")) {
-                prefsEditor.putString("fbPageData", "");
-                Constants.fbPageShareEnabled = false;
-                prefsEditor.putBoolean("fbPageShareEnabled",
-                        Constants.fbPageShareEnabled);
-                prefsEditor.commit();
-                Constants.FbPageList = null;
-                //InitShareResources();
-
-            } else {
-                Constants.fbPageShareEnabled = true;
-            }
-        }
-
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        uiHelper.onResume();
+        //uiHelper.onResume();
 
 
         MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY,null);
@@ -1131,97 +912,17 @@ public class Create_Message_Activity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        uiHelper.onPause();
+        //uiHelper.onPause();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         imageIconButtonSelected = false;
-        uiHelper.onDestroy();
+        //uiHelper.onDestroy();
     }
 
-    public void fbData() {
-        final String[] PERMISSIONS = new String[] { "photo_upload",
-                "user_photos", "publish_stream", "read_stream",
-                "offline_access", "publish_actions","manage_pages" };
 
-//        facebookShare.setImageDrawable(getResources().getDrawable(
-//                R.drawable.facebook_icon));
-
-        facebook.authorize(this, PERMISSIONS,new Facebook.DialogListener() {
-
-            public void onComplete(Bundle values) {
-
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        JSONObject me;
-                        try {
-                            isfirstTimeFacebook = true;
-                            me = new JSONObject(facebook.request("me"));
-                            Constants.FACEBOOK_USER_ACCESS_ID = facebook.getAccessToken();
-                            Constants.FACEBOOK_USER_ID = (String) me.getString("id");
-
-                            String FACEBOOK_ACCESS_TOKEN = facebook.getAccessToken();
-                            String FACEBOOK_USER_NAME = (String) me.getString("name");
-
-                            session.storeFacebookName(FACEBOOK_USER_NAME);
-                            session.storeFacebookAccessToken(FACEBOOK_ACCESS_TOKEN);
-                            dataBase.updateFacebookNameandToken(FACEBOOK_USER_NAME,FACEBOOK_ACCESS_TOKEN);
-
-                            facbookEnabled = true ;
-                            Constants.fbShareEnabled = true;
-                            prefsEditor.putBoolean("fbShareEnabled", true);
-                            prefsEditor.putString("fbId", Constants.FACEBOOK_USER_ID);
-                            prefsEditor.putString("fbAccessId",Constants.FACEBOOK_USER_ACCESS_ID);
-                            prefsEditor.putString("fbUserName",FACEBOOK_USER_NAME);
-                            prefsEditor.commit();
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    facebookShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
-                                }
-                            });
-
-
-                        } catch (Exception e1) {
-                            e1.printStackTrace();
-
-                        }
-                    }
-                }).start();
-            }
-
-            @Override
-            public void onCancel() {
-                onFBError();
-            }
-
-            @Override
-            public void onFacebookError(FacebookError e) {
-                onFBError();
-            }
-
-            @Override
-            public void onError(DialogError e) {
-                onFBError();
-            }
-
-        });
-    }
-
-    void onFBError() {
-        Constants.fbShareEnabled = false;
-        prefsEditor.putBoolean("fbShareEnabled", false);
-        prefsEditor.commit();
-    }
-
-    void onFBPageError() {
-        Constants.fbPageShareEnabled = false;
-        prefsEditor.putBoolean("fbPageShareEnabled", false);
-        prefsEditor.commit();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

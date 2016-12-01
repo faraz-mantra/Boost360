@@ -53,6 +53,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
@@ -112,7 +113,7 @@ public class SidePanelFragment extends Fragment {
 //    protected ImageLoader imageLoader = ImageLoader.getInstance();
 
     LinearLayout homeLayout, profileLayout, analyticsLayout, storeLayout, customerQueriesLayout, imageGalleryLayout, cspLayout,
-            productGalleryLayout, Store_Layout, settingsLayout, chatLayout, callLayout, shareLayout /*llSiteAppearance*/;
+            productGalleryLayout, Store_Layout, settingsLayout, chatLayout, callLayout, shareLayout, llGetInTouch /*llSiteAppearance*/;
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
     private ProgressBar progressbar;
@@ -218,7 +219,7 @@ public class SidePanelFragment extends Fragment {
 
 
 
-        if (session.getIsSignUpFromFacebook().contains("true")) {
+        if (session.getIsSignUpFromFacebook().contains("true") && !Util.isNullOrEmpty(session.getFacebookPageURL())) {
             Picasso.with(getActivity())
                     .load(session.getFacebookPageURL())
                     .rotate(90)                             // optional
@@ -342,6 +343,7 @@ public class SidePanelFragment extends Fragment {
         chatLayout = (LinearLayout) card.findViewById(R.id.sixthRow_Layout);
         callLayout = (LinearLayout) card.findViewById(R.id.seventhRow_Layout);
         shareLayout = (LinearLayout) card.findViewById(R.id.eigthRow_Layout);
+        llGetInTouch = (LinearLayout) card.findViewById(R.id.ll_get_in_touch);
         //llSiteAppearance = (LinearLayout) card.findViewById(R.id.ll_site_appearance);
 
         if (session.getIsThinksity().equals("true")) {
@@ -568,6 +570,16 @@ public class SidePanelFragment extends Fragment {
         /*if(checkExpiry()){
             llSiteAppearance.setVisibility(View.GONE);
         }*/
+        llGetInTouch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String headerValue = getResources().getString(R.string.settings_feedback_link);     //"create@prostinnovation.com";
+
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                        "mailto", headerValue, null));
+                getActivity().startActivity(Intent.createChooser(emailIntent, getString(R.string.send_email)));
+            }
+        });
         enqCount = (TextView)view.findViewById(R.id.enquiry_count_textview);
         BoostLog.d("Executing Async: ", Constants.beCountUrl + "?clientId=" + Constants.clientId + "&fpId=" + session.getFPID());
         RequestQueue queue = AppController.getInstance().getRequestQueue();

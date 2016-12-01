@@ -188,7 +188,7 @@ public class Settings_Fragment extends Fragment {
             public void onClick(View v) {
                 Intent twitterIntent = new Intent(Intent.ACTION_VIEW);
                 //String facebookUrl = getFacebookPageURL(getActivity().getApplicationContext());
-                twitterIntent.setData(Uri.parse(TWITTER_URL));
+                twitterIntent.setData(Uri.parse(Constants.TWITTER_URL));
                 startActivity(twitterIntent);
             }
         });

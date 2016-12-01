@@ -2,6 +2,8 @@ package com.nowfloats.Store.Service;
 
 import com.nowfloats.Store.Model.EnablePackageResponse;
 import com.nowfloats.Store.Model.MailModel;
+import com.nowfloats.Store.Model.ReceiveDraftInvoiceModel;
+import com.nowfloats.Store.Model.SendDraftInvoiceModel;
 import com.nowfloats.Store.Model.StoreMainModel;
 import com.nowfloats.Store.Model.StoreModel;
 
@@ -54,4 +56,7 @@ public interface StoreInterface {
     @Headers({"Content-Type: application/json","Accept: application/json"})
     @POST("/Discover/v1/FloatingPoint/SendEmailWithPriority")
     void mail(@Body MailModel data,Callback<String> callback);
+
+    @POST("/payment/v1/floatingpoint/createDraftInvoice")
+    void createDraftInvoice(@QueryMap Map<String, String> params, @Body SendDraftInvoiceModel model, Callback<ReceiveDraftInvoiceModel> callback);
 }

@@ -132,7 +132,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                             //}
 
                             //session.getIsSignUpFromFacebook().contains("true")
-                            if (session.getIsSignUpFromFacebook().contains("true")) {
+                            if (session.getIsSignUpFromFacebook().contains("true") && !Util.isNullOrEmpty(session.getFacebookPageURL())) {
                                 Picasso.with(activity)
                                         .load(session.getFacebookPageURL()).placeholder(R.drawable.business_edit_profile_icon)
                                         // optional

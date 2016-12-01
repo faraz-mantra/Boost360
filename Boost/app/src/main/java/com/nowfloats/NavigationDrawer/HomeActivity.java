@@ -821,7 +821,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         super.onResume();
         BoostLog.d("HomeActivity", "onResume");
         Methods.isOnline(HomeActivity.this);
-        com.facebook.AppEventsLogger.activateApp(HomeActivity.this, getResources().getString(R.string.facebook_app_id));
+        //com.facebook.AppEventsLogger.activateApp(HomeActivity.this, getResources().getString(R.string.facebook_app_id));
         bus.register(this);
         if(session.getISEnterprise().equals("true"))
             headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));

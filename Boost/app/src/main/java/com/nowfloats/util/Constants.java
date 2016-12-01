@@ -124,6 +124,8 @@ public class Constants {
     public static String nfxApi = NOW_FLOATS_API_URL + "/Discover/v2/floatingPoint/updateSocialAccessToken";
     public static String beCountUrl = NOW_FLOATS_API_URL + "/Discover/v1/businessenquiries/count";
 
+    public static String TWITTER_URL = Specific.TWITTER_URL;
+
     public static int enqCount = 0;
 
     public static String picType = "picType";

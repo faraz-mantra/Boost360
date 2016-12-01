@@ -10,10 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.facebook.android.AsyncFacebookRunner;
-import com.facebook.android.DialogError;
-import com.facebook.android.Facebook;
-import com.facebook.android.FacebookError;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
 import com.thinksity.R;
@@ -35,7 +31,7 @@ import java.io.InputStreamReader;
  */
 public class Signup_Facebook {
 
-    Activity activity ;
+    /*Activity activity ;
     String Facebook_APP_ID = Constants.FACEBOOK_API_KEY;
     final Facebook facebook = new Facebook(Constants.FACEBOOK_API_KEY);
     AsyncFacebookRunner mAsyncRunner = new AsyncFacebookRunner(facebook);
@@ -76,9 +72,9 @@ public class Signup_Facebook {
 //            facebook.setAccessExpires(expires);
 //        }
 
-        /**
+        *//**
          * Only call authorize if the access_token has expired.
-         */
+         *//*
         if (!facebook.isSessionValid()) {
 
             facebook.authorize(activity, new String[] {}, new Facebook.DialogListener() {
@@ -165,9 +161,9 @@ public class Signup_Facebook {
 
     }
 
-    /**
+    *//**
      * getting user facebook data from facebook server
-     */
+     *//*
     public void fbUserProfile() {
 
         try {
@@ -207,7 +203,7 @@ public class Signup_Facebook {
         } catch (Exception e) {
            // Connectiontimeout = true;
         }
-    }
+    }*/
 
 
 

@@ -33,4 +33,6 @@ public class Specific {
     public static String FACEBOOK_URL = "https://www.facebook.com/nowfloats";
     public static String PACKAGE_NAME = "com.biz2.nowfloats";
 
+    public static final String TWITTER_URL = "https://twitter.com/Nowfloats";
+
 }

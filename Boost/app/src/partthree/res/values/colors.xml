@@ -127,4 +127,7 @@
 
     <color name="primary">@color/primaryColor</color>
     <color name="primaryDark">@color/primaryColorDark</color>
+
+    <color name="primary_color">@color/primaryColor</color>
+    <color name="primary_color_dark">@color/primaryColorDark</color>
 </resources>

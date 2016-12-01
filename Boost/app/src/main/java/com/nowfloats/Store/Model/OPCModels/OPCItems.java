@@ -8,7 +8,7 @@ public class OPCItems {
     public String packageid;
     public String packagename;
     public int quantity;
-    public long price;
+    public double price;
     public double discount;
-    public long amount;
+    public double amount;
 }

@@ -533,4 +533,8 @@
     </string-array>
     <!--FAQ hardcoded string end-->
 
+
+
+    <string name="fb_login_protocol_scheme">fb1641508162754092</string>
+
 </resources>

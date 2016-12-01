@@ -44,7 +44,13 @@ import com.nowfloats.Store.Model.MailModel;
 import com.nowfloats.Store.Model.MainMailModel;
 import com.nowfloats.Store.Model.MarkAsPaidModel;
 import com.nowfloats.Store.Model.OPCModels.OPCDataMain;
+import com.nowfloats.Store.Model.OPCModels.OPCInvoice;
+import com.nowfloats.Store.Model.OPCModels.OPCItems;
+import com.nowfloats.Store.Model.OPCModels.OPCResponse;
 import com.nowfloats.Store.Model.PhotoItem;
+import com.nowfloats.Store.Model.PurchaseDetail;
+import com.nowfloats.Store.Model.ReceiveDraftInvoiceModel;
+import com.nowfloats.Store.Model.SendDraftInvoiceModel;
 import com.nowfloats.Store.Model.StoreModel;
 import com.nowfloats.Store.Model.WidgetPacks;
 import com.nowfloats.Store.Service.IOPCValidation;
@@ -55,14 +61,18 @@ import com.nowfloats.Store.iapUtils.Inventory;
 import com.nowfloats.Store.iapUtils.Purchase;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
+import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.DataBase;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.TwoWayView;
+import com.romeo.mylibrary.Models.OrderDataModel;
+import com.romeo.mylibrary.ui.InstaMojoMainActivity;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -77,6 +87,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 import java.util.TimeZone;
 import java.util.concurrent.locks.ReadWriteLock;
 
@@ -118,7 +129,7 @@ public class StoreDataActivity extends AppCompatActivity {
     private String mErpExecutiveMailId;
     private String mErpId;
     private String mOPC;
-    //private OrderDataModel mOrderData;
+    private OrderDataModel mOrderData;
 
     private final int DIRECT_REQUEST_CODE = 1;
     private final int OPC_REQUEST_CODE = 2;
@@ -169,8 +180,8 @@ public class StoreDataActivity extends AppCompatActivity {
                 product_validity = (TextView) findViewById(R.id.product_validity);
 
 //                if (("91").equals(countryPhoneCode)){
-                if (true/*product.ExternalApplicationDetails==null || product.ExternalApplicationDetails.equals("null")
-                        || product.ExternalApplicationDetails.size()==0*//*!sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).equalsIgnoreCase("India")*/){
+                if (/*true*//*product.ExternalApplicationDetails==null || product.ExternalApplicationDetails.equals("null")
+                        || product.ExternalApplicationDetails.size()==0*/!sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).equalsIgnoreCase("India")){
                     materialProgress.dismiss();
                     ProductPrice.setText(getString(R.string.interest));
                     product_validity.setVisibility(View.GONE);
@@ -309,7 +320,7 @@ public class StoreDataActivity extends AppCompatActivity {
                     product_pay.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //openPaymentTypeDialog();
+                            openPaymentTypeDialog();
                             MixPanelController.track(EventKeysWL.BUY_NOW_STORE_CLICKED, null);
                         }
                     });
@@ -496,7 +507,7 @@ public class StoreDataActivity extends AppCompatActivity {
         }catch(Exception e){e.printStackTrace();}
     }
 
-    /*private void openPaymentTypeDialog() {
+    private void openPaymentTypeDialog() {
         final String[] array = {"Pay Now", "Proceed with OPC"};
         MaterialDialog dialog = new MaterialDialog.Builder(StoreDataActivity.this)
                 .title("Please select one to proceed")
@@ -516,10 +527,70 @@ public class StoreDataActivity extends AppCompatActivity {
                     public void onPositive(MaterialDialog dialog) {
                         int position = dialog.getSelectedIndex();
                         if (position == 0) {
-                            mErpExecutiveMailId = null;
-                            mOPC = null;
-                            mErpId = null;
-                            Intent i = new Intent(StoreDataActivity.this, InstaMojoMainActivity.class);
+
+                            try {
+                                mErpExecutiveMailId = null;
+                                mOPC = null;
+                                mErpId = null;
+                                SendDraftInvoiceModel sendDraftInvoiceModel = new SendDraftInvoiceModel();
+                                PurchaseDetail purchaseDetail = new PurchaseDetail();
+                                String clientId ="";
+
+                                if (!Util.isNullOrEmpty(sessionManager.getSourceClientId())) {
+                                    clientId = sessionManager.getSourceClientId();
+                                } else {
+                                    clientId = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID);
+                                }
+
+                                purchaseDetail.setClientId(clientId);
+                                purchaseDetail.setDurationInMnths(product.ValidityInMths);
+                                purchaseDetail.setFPId(sessionManager.getFPID());
+                                purchaseDetail.setMRP(Double.parseDouble(product.Price));
+                                purchaseDetail.setMRPCurrencyCode(product.CurrencyCode);
+                                purchaseDetail.setPackageId(product._id);
+
+                                List<PurchaseDetail> purchaseDetailList = new ArrayList<PurchaseDetail>();
+                                purchaseDetailList.add(purchaseDetail);
+
+                                sendDraftInvoiceModel.setPurchaseDetails(purchaseDetailList);
+                                DataBase dataBase = new DataBase(StoreDataActivity.this);
+                                int columnIndex = dataBase.getLoginStatus().getColumnIndex(DataBase.colloginId);
+                                sendDraftInvoiceModel.setFpUserProfileId(dataBase.getLoginStatus().getString(columnIndex));
+                                sendDraftInvoiceModel.setOpc(null);
+
+                                Map<String, String> params = new HashMap<String, String>();
+                                params.put("clientId", Constants.clientId);
+
+                                StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
+                                storeInterface.createDraftInvoice(params, sendDraftInvoiceModel, new Callback<ReceiveDraftInvoiceModel>() {
+                                    @Override
+                                    public void success(ReceiveDraftInvoiceModel receiveDraftInvoiceModel, Response response) {
+                                        OPCDataMain opcDataMain = new OPCDataMain();
+                                        opcDataMain.success = true;
+
+                                        OPCResponse opcResponse = new OPCResponse();
+                                        OPCInvoice invoice = new OPCInvoice();
+                                        ArrayList<OPCItems> opcItemsList = new ArrayList<>();
+                                        OPCItems opcItems = new OPCItems();
+                                        opcItems.packagename = product.Name;
+                                        opcItems.quantity = 1;
+                                        opcItems.price = Double.parseDouble(product.Price);
+                                        opcItems.discount = 0;
+                                        opcItems.amount = opcItems.price;
+                                        opcItemsList.add(opcItems);
+                                        invoice.Items = opcItemsList;
+
+                                    }
+
+                                    @Override
+                                    public void failure(RetrofitError error) {
+
+                                    }
+                                });
+                            }catch (Exception e){
+                                Toast.makeText(StoreDataActivity.this, "Error while generating Invoice", Toast.LENGTH_SHORT).show();
+                            }
+                            /*Intent i = new Intent(StoreDataActivity.this, InstaMojoMainActivity.class);
                             mOrderData = new OrderDataModel(sessionManager.getFpTag(), sessionManager.getFpTag(),
                                     sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
                                     "10", product.Name,
@@ -527,7 +598,7 @@ public class StoreDataActivity extends AppCompatActivity {
                                     "Light House", product.CurrencyCode);
                             i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
                             startActivityForResult(i, DIRECT_REQUEST_CODE);
-                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
                         }else if (position == 1) {
                             openOPCDialog();
                         }else{
@@ -546,9 +617,9 @@ public class StoreDataActivity extends AppCompatActivity {
         dialog.getWindow().getAttributes().windowAnimations =  R.style.DialogTheme;
         dialog.show();
 
-    }*/
+    }
 
-    /*private void openOPCDialog() {
+    private void openOPCDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.store_buy_now_dialog_layout);
         dialog.setCancelable(false);
@@ -582,9 +653,9 @@ public class StoreDataActivity extends AppCompatActivity {
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogTheme;
         dialog.show();
 
-    }*/
+    }
 
-    /*private void verifyPaymentToken(String OPCCode, final TextInputLayout layout, final Dialog mainDialog) {
+    private void verifyPaymentToken(String OPCCode, final TextInputLayout layout, final Dialog mainDialog) {
         HashMap<String, String> data = new HashMap<>();
         data.put("clientId", Constants.clientId);
         data.put("token", OPCCode);
@@ -617,9 +688,9 @@ public class StoreDataActivity extends AppCompatActivity {
                         Methods.showSnackBarNegative(StoreDataActivity.this, getString(R.string.error_verifying_opc));
                     }
                 });
-    }*/
+    }
 
-    /*private void showInvoiceDialog(final OPCDataMain opcDataMain) {
+    private void showInvoiceDialog(final OPCDataMain opcDataMain) {
         if(opcDataMain==null){
             return;
         }
@@ -688,7 +759,7 @@ public class StoreDataActivity extends AppCompatActivity {
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(lp);
         dialog.show();
-    }*/
+    }
 
     private String getInAppProductPrize(){
         try{
@@ -967,7 +1038,7 @@ public class StoreDataActivity extends AppCompatActivity {
                 }
             }
         }*/
-        /*if(requestCode==DIRECT_REQUEST_CODE || requestCode==OPC_REQUEST_CODE && resultCode==RESULT_OK){
+        if(requestCode==DIRECT_REQUEST_CODE || requestCode==OPC_REQUEST_CODE && resultCode==RESULT_OK){
             if(data==null){
                 return;
             }
@@ -977,7 +1048,7 @@ public class StoreDataActivity extends AppCompatActivity {
             final String paymentId = data.getStringExtra(com.romeo.mylibrary.Constants.PAYMENT_ID);
             final String transactionId = data.getStringExtra(com.romeo.mylibrary.Constants.TRANSACTION_ID);
             final String amount = data.getStringExtra(com.romeo.mylibrary.Constants.FINAL_AMOUNT);
-            sendEmail(success, status, message, paymentId, transactionId, amount);
+            //sendEmail(success, status, message, paymentId, transactionId, amount);
             if(success) {
                 if(status.equals("Success")) {
 
@@ -1017,7 +1088,7 @@ public class StoreDataActivity extends AppCompatActivity {
                     showDialog(status, msg);
                 }
             }
-        }*/
+        }
     }
 
     private void redeemOPC(String paymentId, String opc) {
