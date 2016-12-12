@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.Set;
 
 import retrofit.RestAdapter;
-import retrofit.android.AndroidLog;
 
 
 public class Constants {
@@ -89,7 +88,7 @@ public class Constants {
     public static NotificationInterface alertInterface = Constants.restAdapter.create(NotificationInterface.class);
 
     //http://api.withfloats.com/Discover/v3/FloatingPoint/create
-
+    public static String NFX_WITH_NOWFLOATS="http://nfx.withfloats.com";
     public static String createStoreV3 = NOW_FLOATS_API_URL + "/Discover/v3/FloatingPoint/create";
     public static String createStoreV2 = NOW_FLOATS_API_URL + "/Discover/v2/FloatingPoint/create";
     public static String loginUrl = NOW_FLOATS_API_URL + "/discover/v1/login/";
@@ -123,6 +122,8 @@ public class Constants {
     public static String DeleteCard = NOW_FLOATS_API_URL + "/Discover/v1/floatingPoint/archiveMessage";
     public static String nfxApi = NOW_FLOATS_API_URL + "/Discover/v2/floatingPoint/updateSocialAccessToken";
     public static String beCountUrl = NOW_FLOATS_API_URL + "/Discover/v1/businessenquiries/count";
+    public static String nfxFacebookAnalytics = NFX_WITH_NOWFLOATS + "/dataexchange/v1/updateAccessTokens";
+
 
     public static String TWITTER_URL = Specific.TWITTER_URL;
 

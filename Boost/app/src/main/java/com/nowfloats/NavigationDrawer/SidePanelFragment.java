@@ -53,7 +53,6 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
-import com.nowfloats.util.Utils;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
@@ -173,7 +172,13 @@ public class SidePanelFragment extends Fragment {
         meterValue = (TextView) view.findViewById(R.id.fragment_side_panel_progress_meter_value);
         containerImage = (ImageView) view.findViewById(R.id.backgroundImage);
         siteMeterCalculation();
-
+        try {
+            String versionName = mainActivity.getPackageManager().getPackageInfo(mainActivity.getPackageName(), 0).versionName;
+            TextView versionCode= (TextView) view.findViewById(R.id.version_name_text);
+            versionCode.setText(versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
         Typeface robotoMedium = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Medium.ttf");
 
         Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(), "Roboto-Light.ttf");

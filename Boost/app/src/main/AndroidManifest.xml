@@ -81,7 +81,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="@string/fb_login_protocol_scheme" />
+                <data android:scheme="fb1641508162754092" />
             </intent-filter>
         </activity>
         <activity
@@ -91,6 +91,34 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nowfloats.PreSignUp.PreSignUp_MainActivity" />
+        </activity>
+        <activity
+            android:name="com.nowfloats.Analytics_Screen.ShowWebView"
+            android:label="Facebook Analytics"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="SocialSharing"
+                    android:scheme="nowfloatsboost" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nowfloats.Analytics_Screen.ShowWebView" />
+        </activity>
+        <activity
+            android:name="com.nowfloats.Analytics_Screen.FacebookAnalyticsLogin"
+            android:label="Facebook Analytics"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nowfloats.Analytics_Screen.FacebookAnalyticsLogin" />
         </activity>
         <activity
             android:name="com.nowfloats.NavigationDrawer.API.twitter.PrepareRequestTokenActivity"

@@ -171,13 +171,13 @@
             android:id="@+id/version_text"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:text="Version "/>
+            android:text="@string/version"/>
 
         <com.nowfloats.CustomWidget.roboto_lt_36_565656
             android:id="@+id/version_name_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="444"/>
+            android:text=""/>
 
 
     </LinearLayout>

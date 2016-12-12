@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,17 +32,15 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.nowfloats.BusinessProfile.UI.Model.FacebookFeedPullModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NFXApi.NfxRequestClient;
-import com.nowfloats.NavigationDrawer.API.FacebookFeedPullAutoPublishAsyncTask;
 import com.nowfloats.NavigationDrawer.API.twitter.FacebookFeedPullRegistrationAsyncTask;
-import com.nowfloats.NavigationDrawer.API.twitter.PrepareRequestTokenActivity;
 import com.nowfloats.Twitter.ITwitterCallbacks;
 import com.nowfloats.Twitter.TokenRequest;
 import com.nowfloats.Twitter.TwitterAuthenticationActivity;
@@ -61,7 +60,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.security.Permissions;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -145,9 +143,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        //FacebookSdk.sdkInitialize(getApplicationContext());//added
-        callbackManager = CallbackManager.Factory.create();//added
-        //LoginManager.getInstance().registerCallback(callbackManager,callback);//added
+        callbackManager = CallbackManager.Factory.create();
 
         setContentView(R.layout.activity_social_sharing);
 
@@ -204,18 +200,20 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             @Override
             public void onClick(View v) {
                 if (facebookPageCheckBox.isChecked()) {
-                    final Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            fbPageData(FROM_FB_PAGE);
-                        }
-                    }, 200);
-
+                    Toast.makeText(Social_Sharing_Activity.this,"Reconnect with facebook",Toast.LENGTH_SHORT).show();
+                    facebookPageCheckBox.setChecked(false);
+//                    final Handler handler = new Handler();
+//                    handler.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            fbPageData(FROM_FB_PAGE);
+//                        }
+//                    }, 200);
+//
                 } else {
                     NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) Social_Sharing_Activity.this)
                             .setmFpId(session.getFPID())
-                            .setmType("FACEBOOKPAGE")
+                            .setmType("facebookpage")
                             .setmUserAccessTokenKey("")
                             .setmUserAccessTokenSecret("")
                             .setmUserAccountId("")
@@ -244,7 +242,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
                     NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) Social_Sharing_Activity.this)
                             .setmFpId(session.getFPID())
-                            .setmType("FACEBOOK")
+                            .setmType("facebookusertimeline")
                             .setmUserAccessTokenKey("")
                             .setmUserAccessTokenSecret("")
                             .setmUserAccountId("")
@@ -252,6 +250,15 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                             .setmName("");
                     requestClient.connectNfx();
 
+                    NfxRequestClient pageRequestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) Social_Sharing_Activity.this)
+                            .setmFpId(session.getFPID())
+                            .setmType("facebookpage")
+                            .setmUserAccessTokenKey("")
+                            .setmUserAccessTokenSecret("")
+                            .setmUserAccountId("")
+                            .setmCallType(FB_PAGE_DEACTIVATION)
+                            .setmName("");
+                    pageRequestClient.connectNfx();
                     pd = ProgressDialog.show(Social_Sharing_Activity.this, "", getString(R.string.wait_while_unsubscribing));
 
                 }
@@ -289,18 +296,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 if(facebookautopost.isChecked()){
                     fbPageData(FROM_AUTOPOST);
                 }else {
-                    numberOfUpdatesSelected = false;
-                    final JSONObject obj = new JSONObject();
-                    try {
-                        obj.put("fpId", session.getFPID());
-                        obj.put("autoPublish", false);
-                        obj.put("clientId", Constants.clientId);
-                        obj.put("FacebookPageName", session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    FacebookFeedPullAutoPublishAsyncTask fap = new FacebookFeedPullAutoPublishAsyncTask(Social_Sharing_Activity.this, obj, false, fbPullStatus, ivFbPageAutoPull, session);
-                    fap.execute();
+                   updateAutopull(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME),false);
                 }
 
             }
@@ -336,7 +332,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 }else {
                     NfxRequestClient requestClient1 = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) Social_Sharing_Activity.this)
                             .setmFpId(session.getFPID())
-                            .setmType("TWITTER")
+                            .setmType("twitter")
                             .setmUserAccessTokenKey("")
                             .setmUserAccessTokenSecret("")
                             .setmUserAccountId(String.valueOf(""))
@@ -365,6 +361,21 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         InitShareResources();
     }
 
+    private void updateAutopull(String name,boolean autoPublish) {
+        numberOfUpdatesSelected = false;
+        FacebookFeedPullModel.Update obj = new FacebookFeedPullModel().new Update();
+        try {
+            obj.setFpId(session.getFPID());
+            obj.setAutoPublish(autoPublish);
+            obj.setClientId(Constants.clientId);
+            obj.setFacebookPageName(name);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        FacebookFeedPullRegistrationAsyncTask fap = new FacebookFeedPullRegistrationAsyncTask(Social_Sharing_Activity.this, fbPullStatus, ivFbPageAutoPull, facebookautopost, session);
+        fap.autoUpdate(obj);
+    }
+
     private void autoPostSelectListener(String pageName) {
         /*called = true;
         boolean FbRegistered = pref.getBoolean("FacebookFeedRegd", false);
@@ -389,19 +400,19 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             fap.execute();
         }*/
         if(numberOfUpdatesSelected){
-            final JSONObject obj = new JSONObject();
+            FacebookFeedPullModel.Registration obj = new FacebookFeedPullModel().new Registration();
             try {
-                obj.put("Tag", session.getFpTag());
-                obj.put("AutoPublish",true);
-                obj.put("ClientId", Constants.clientId);
-                obj.put("FacebookPageName", pageName);
-                obj.put("IsEnterpriseUpdate",true);
-                obj.put("Count", numberOfUpdates);
+                obj.setTag(session.getFpTag());
+                obj.setAutoPublish(true);
+                obj.setClientId(Constants.clientId);
+                obj.setFacebookPageName(pageName);
+                obj.setIsEnterpriseUpdate(true);
+                obj.setCount(numberOfUpdates);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            FacebookFeedPullRegistrationAsyncTask fap = new FacebookFeedPullRegistrationAsyncTask(Social_Sharing_Activity.this, obj, fbPullStatus, ivFbPageAutoPull, facebookautopost, session);
-            fap.execute();
+            FacebookFeedPullRegistrationAsyncTask fap = new FacebookFeedPullRegistrationAsyncTask(Social_Sharing_Activity.this, fbPullStatus, ivFbPageAutoPull, facebookautopost, session);
+            fap.autoRegister(obj);
         }else {
             facebookautopost.setChecked(false);
         }
@@ -421,6 +432,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                     @Override
                     public void onNegative(MaterialDialog dialog) {
                         super.onNegative(dialog);
+                        facebookautopost.setChecked(false);
                         dialog.dismiss();
                     }
 
@@ -507,12 +519,15 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
 
     public void fbPageData(final int from) {
+        if(from==FROM_AUTOPOST)
+        pd = ProgressDialog.show(this, "", getString(R.string.wait_while_subscribing));
         List<String> readPermissions=Arrays.asList("email"
                 , "public_profile",  "user_friends", "read_insights", "business_management");
         final List<String> publishPermissions = Arrays.asList("publish_actions",
                 "publish_pages", "manage_pages");
         final LoginManager loginManager = LoginManager.getInstance();
         com.facebook.AccessToken currentToken = com.facebook.AccessToken.getCurrentAccessToken();
+        Log.v("ggg",currentToken+"token");
         if (currentToken!=null && !currentToken.isExpired() && currentToken.getPermissions().containsAll(publishPermissions)){
             GraphRequest request = GraphRequest.newGraphPathRequest(
                     currentToken,
@@ -530,8 +545,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                 @Override
                 public void onSuccess(LoginResult loginResult) {
-                    Set permissions = loginResult.getAccessToken().getPermissions();
-                    if(!permissions.containsAll(new HashSet(publishPermissions))){
+                    boolean contain=loginResult.getAccessToken().getPermissions().containsAll(publishPermissions);
+                    if(!contain){
                         loginManager.logInWithPublishPermissions(Social_Sharing_Activity.this, publishPermissions);
                     }else {
                         GraphRequest request = GraphRequest.newGraphPathRequest(
@@ -552,14 +567,20 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
                 @Override
                 public void onCancel() {
+
+                    if(!isFinishing() && pd!=null)
+                    pd.dismiss();
                     onFBPageError(from);
                 }
 
                 @Override
                 public void onError(FacebookException error) {
                     onFBPageError(from);
-                    error.printStackTrace();
+                    Log.v("ggg",error.toString()+"error");
+                    LoginManager.getInstance().logOut();
                     com.facebook.AccessToken.refreshCurrentAccessTokenAsync();
+                   if(pd!=null && !isFinishing())
+                    pd.dismiss();
                 }
             });
             loginManager.logInWithReadPermissions(this, readPermissions);
@@ -703,6 +724,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
     }
 
     private void processGraphResponse(final GraphResponse response, final int from) {
+        if(from==FROM_AUTOPOST && pd!=null)
+            pd.dismiss();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -731,7 +754,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                     }
                 }catch (Exception e1) {
                     e1.printStackTrace();
-                }finally {
+                }finally
+                {
 
                     Social_Sharing_Activity.this.runOnUiThread(new Runnable() {
                         @Override
@@ -779,21 +803,21 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                                                     if (from == FROM_FB_PAGE && !Util.isNullOrEmpty(FACEBOOK_PAGE_ID) && !Util.isNullOrEmpty(page_access_token)) {
                                                         session.storePageAccessToken(page_access_token);
                                                         session.storeFacebookPageID(FACEBOOK_PAGE_ID);
-                                                        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME)) && !strName.equals(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))) {
+                                                        if (Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))
+                                                                || !pref.getBoolean("FBFeedPullAutoPublish",false)
+                                                                || !strName.equals(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))) {
                                                             pageSeleted(mNewPosition, strName, session.getFacebookPageID(), session.getPageAccessToken());
-                                                        } else if (Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))) {
-                                                            pageSeleted(mNewPosition, strName, session.getFacebookPageID(), session.getPageAccessToken());
-                                                        } else {
+                                                        }else {
                                                             facebookPageCheckBox.setChecked(false);
                                                             showDialog("Alert", "You cannot select the same Facebook Page to share your updates. This will lead to an indefinite loop of updates on your website and Facebook Page.");
                                                         }
                                                         //pageSeleted(position, strName, session.getFacebookPageID(), session.getPageAccessToken());
                                                     } else if (from == FROM_AUTOPOST) {
-                                                        if (!Util.isNullOrEmpty(session.getFacebookPage()) && !strName.equals(session.getFacebookPage())) {
+                                                        if (Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))) {
                                                             selectNumberUpdatesDialog(strName);
-                                                        } else if (Util.isNullOrEmpty(session.getFacebookPage())) {
-                                                            selectNumberUpdatesDialog(strName);
-                                                        } else {
+                                                        }else if(!strName.equals(session.getFacebookPage())){
+                                                            updateAutopull(strName,true);
+                                                        }else {
                                                             //Toast.makeText(getApplicationContext(), "You can't post and pull from the same Facebook page", Toast.LENGTH_SHORT).show();
                                                             facebookautopost.setChecked(false);
                                                             showDialog("Alert", "You cannot select the same Facebook Page to auto-update your website. This will lead to an indefinite loop of updates on your website and Facebook Page.");
@@ -805,6 +829,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
                                             @Override
                                             public void onNegative(MaterialDialog dialog) {
+                                                facebookautopost.setChecked(false);
                                                 dialog.dismiss();
                                             }
                                         }).show();
@@ -827,7 +852,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
         NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) Social_Sharing_Activity.this)
                 .setmFpId(session.getFPID())
-                .setmType("FACEBOOKPAGE")
+                .setmType("facebookpage")
                 .setmUserAccessTokenKey(pageAccessToken)
                 .setmUserAccessTokenSecret("null")
                 .setmUserAccountId(pageID)
@@ -911,6 +936,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Set permissions = loginResult.getAccessToken().getPermissions();
+                Log.v("ggg",permissions+"permission");
                 if(!permissions.containsAll(new HashSet(publishPermissions))){
                     loginManager.logInWithPublishPermissions(Social_Sharing_Activity.this, publishPermissions);
                 }else {
@@ -932,6 +958,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                                             saveFbLoginResults(resp.getString("name"),
                                                     FACEBOOK_ACCESS_TOKEN,
                                                     resp.getString("id"));
+                                            fbPageData(FROM_FB_PAGE);
                                         }catch (JSONException e){
                                             e.printStackTrace();
                                         }
@@ -941,6 +968,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                         meRequest.executeAsync();
 
                     }else {
+                        fbPageData(FROM_FB_PAGE);
                         saveFbLoginResults(Profile.getCurrentProfile().getName(),
                                 FACEBOOK_ACCESS_TOKEN,
                                 Profile.getCurrentProfile().getId());
@@ -956,7 +984,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             @Override
             public void onError(FacebookException error) {
                 onFBError();
-                error.printStackTrace();
+                Log.v("ggg",error.toString()+"fberror");
+                LoginManager.getInstance().logOut();
                 com.facebook.AccessToken.refreshCurrentAccessTokenAsync();
             }
         });
@@ -969,7 +998,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         Constants.FACEBOOK_USER_ID = id;
         NfxRequestClient requestClient = new NfxRequestClient(Social_Sharing_Activity.this)
                 .setmFpId(session.getFPID())
-                .setmType("FACEBOOK")
+                .setmType("facebookusertimeline")
                 .setmUserAccessTokenKey(accessToken)
                 .setmUserAccessTokenSecret("null")
                 .setmUserAccountId(id)
@@ -984,8 +1013,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         });
 
         BoostLog.d("FPID: ", session.getFPID());
-
         session.storeFacebookName(userName);
+
         session.storeFacebookAccessToken(accessToken);
         DataBase dataBase = new DataBase(activity);
         dataBase.updateFacebookNameandToken(userName, accessToken);
@@ -1000,9 +1029,11 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         Constants.fbShareEnabled = false;
         prefsEditor.putBoolean("fbShareEnabled", false);
         prefsEditor.commit();
+        Log.v("ggg","fberror");
     }
 
     void onFBPageError(int from) {
+        Log.v("ggg","fberror");
         Constants.fbPageShareEnabled = false;
         prefsEditor.putBoolean("fbPageShareEnabled", false);
         prefsEditor.commit();
@@ -1045,7 +1076,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             facebookHomeStatus.setText(getString(R.string.connected));
             String fbUName = pref.getString("fbUserName", "");
             prefsEditor.putBoolean("fbShareEnabled", true);
-            //   facebookHomeCheckBox.setChecked(true);
+            facebookHomeCheckBox.setChecked(true);
             prefsEditor.commit();
         }
 
@@ -1077,11 +1108,12 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         Methods.isOnline(Social_Sharing_Activity.this);
         facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon_inactive));
         facebookHomeCheckBox.setChecked(false);
-        facebookPageStatus.setText(getString(R.string.disconnected));
 
         facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebookpage_icon_inactive));
         facebookPageCheckBox.setChecked(false);
-        facebookHomeStatus.setText(getString(R.string.disconnected));
+
+        ivFbPageAutoPull.setImageResource(R.drawable.facebookpage_icon_inactive);
+        facebookautopost.setChecked(pref.getBoolean("FBFeedPullAutoPublish",false));
 
         if (!Util.isNullOrEmpty(session.getFacebookName())) {
             facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
@@ -1093,9 +1125,13 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         if (!Util.isNullOrEmpty(session.getFacebookPage())) {
             facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
             facebookPageCheckBox.setChecked(true);
-            String text = session.getFacebookPage();
             facebookPageStatus.setVisibility(View.VISIBLE);
             facebookPageStatus.setText(session.getFacebookPage());
+        }
+        if(pref.getBoolean("FBFeedPullAutoPublish",false)){
+            ivFbPageAutoPull.setImageResource(R.drawable.facebook_page);
+            fbPullStatus.setText(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME));
+            fbPullStatus.setVisibility(View.VISIBLE);
         }
         if (!isAuthenticated()) {
             //twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
@@ -1154,7 +1190,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
                 NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) Social_Sharing_Activity.this)
                         .setmFpId(session.getFPID())
-                        .setmType("TWITTER")
+                        .setmType("twitter")
                         .setmUserAccessTokenKey(accessToken.getToken())
                         .setmUserAccessTokenSecret(accessToken.getTokenSecret())
                         .setmUserAccountId(String.valueOf(userID))
@@ -1169,6 +1205,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 e.putString(TwitterConstants.PREF_KEY_OAUTH_SECRET, accessToken.getTokenSecret());
                 //e.putBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, true);
                 e.putString(TwitterConstants.PREF_USER_NAME, username);
+                Log.v("ggg",username+"twittername");
                 e.commit();
 
             } catch (TwitterException e1) {
@@ -1182,7 +1219,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         e.remove(TwitterConstants.PREF_KEY_OAUTH_SECRET);
         e.remove(TwitterConstants.PREF_KEY_TWITTER_LOGIN);
         e.remove(TwitterConstants.PREF_USER_NAME);
-        e.commit();
+        Log.v("ggg","twitternameremoved");
+        e.apply();
         Constants.twitterShareEnabled = false;
         CookieSyncManager cookieSyncMngr = CookieSyncManager.createInstance(this);
         CookieManager cookieManager = CookieManager.getInstance();
@@ -1265,23 +1303,25 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             Toast.makeText(this, "Something went wrong!!! Please try later.", Toast.LENGTH_SHORT).show();
             return;
         }
-        BoostLog.d("Nfxresponse: ", response + callType + ":");
+        BoostLog.d("ggg: ", response + callType + ":");
         switch (callType){
             case FBTYPE:
+                Constants.fbShareEnabled = true;
                 facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
                 facebookHomeCheckBox.setChecked(true);
                 facebookHomeStatus.setVisibility(View.VISIBLE);
                 facebookHomeStatus.setText(name);
-                Constants.fbShareEnabled = true;
                 prefsEditor = pref.edit();
                 prefsEditor.putBoolean("fbShareEnabled", true);
-                prefsEditor.commit();
+                prefsEditor.apply();
                 break;
             case FBPAGETYPE:
                 facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
                 facebookPageStatus.setVisibility(View.VISIBLE);
                 facebookPageStatus.setText("" + name);
                 facebookPageCheckBox.setChecked(true);
+                prefsEditor.putBoolean("fbPageShareEnabled", true);
+                MixPanelController.track(EventKeysWL.FACEBOOK_ANAYTICS,null);
                 break;
             case TWITTERTYPE:
                 Constants.twitterShareEnabled = true;
@@ -1294,7 +1334,6 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 //twitterStatus.setText("Connected");
                 twitterCheckBox.setHighlightColor(getResources().getColor(R.color.primaryColor));
                 twitterCheckBox.setChecked(true);
-                //Constants.twitterShareEnabled = true;
                 MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_TWITTER, null);
                 break;
             case FB_PAGE_DEACTIVATION:
@@ -1308,11 +1347,13 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 //facebookPageStatus.setText("Disconnected");
                 prefsEditor = pref.edit();
                 prefsEditor.putBoolean("fbPageShareEnabled", false);
+                facebookPageCheckBox.setChecked(false);
                 break;
             case FB_DECTIVATION:
                 DataBase fb_dataBase = new DataBase(activity);
                 fb_dataBase.updateFacebookNameandToken("", "");
                 session.storeFacebookName("");
+                //Log.v("ggg",session.getFacebookName()+"deactivate name");
                 session.storeFacebookAccessToken("");
                 facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon_inactive));
                 facebookHomeStatus.setVisibility(View.GONE);

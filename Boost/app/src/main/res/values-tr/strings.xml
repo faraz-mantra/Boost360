@@ -812,7 +812,10 @@
     <string name="use_custom_pages_to_describe_business">detaylı iş teklifleri tanımlamak için özel sayfalar kullanın. Ekleyebilir ve metin, bağlantılar ve resimler biçimi paragraflar olabilir!</string>
     <string name="retry">Tekrar dene</string>
     <string name="new_in_capital">YENİ</string>
-    <string name="powered_by">Tarafından desteklenmektedir</string>
+    <string name="facebook_analytics">Facebook Analytics</string>
+    <string name="facebook_response_error">Error while receiving data from Facebook</string>
+    <string name="session_expired">Please login again your Session has expired</string>
+    <string name="powered_by">Tarafından desteklenmektedir </string>
     <string name="nowfloats"> NowFloats</string>
     <string name="version">versiyon</string>
     <string name="float_point_name">Nokta Adını Float</string>
@@ -1140,7 +1143,12 @@
         <item><![CDATA[NowFloats has won many awards over time. You can see them at <a href="http://nowfloats.com/#accolades">http://nowfloats.com/#accolades.</a>]]></item>
         <item><![CDATA[Get more information about NowFloats at <a href="http://nowfloats.com/#aboutus">http://nowfloats.com/#aboutus</a>.<br/> Get our whitepaper at <a href="http://nowfloats.com/boost/whyonline">http://nowfloats.com/boost/whyonline</a>.]]></item>
     </string-array>
-
+    <string name="fb_login_protocol_scheme">fb1641508162754092</string>
+    <string name="allow_boost_to_read_your">Please allow Boost to read your Facebook page insights</string>
+    <string name="gathering_fcebook_analytics">Gathering Facebook Page analytics</string>
+    <string name="please_wait_while_collecting_facebook_data">Please wait, as we are collecting statistics from your Facebook Page. It usually takes upto 24 hours to fetch data.</string>
+    <string name="updates_not_found">Updates not found!</string>
+    <string name="looks_like_you_have_not_posted_any_updates">Looks like you haven\'t posted any update on your facebook page through Boost yet Make sure you select the <b>facebook page option</b> while creating an update</string>
     <string name="Logo_percentage">5</string>
     <string name="business_hours">5</string>
 </resources>

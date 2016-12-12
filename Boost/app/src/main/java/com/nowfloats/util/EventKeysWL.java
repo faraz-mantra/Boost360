@@ -17,7 +17,7 @@ public interface EventKeysWL
     String PRE_SIGNUP_SCREEN_SEVEN			=	"PRESIGNUPSCREENSEVEN";
 
     String CREATE_WEBSITE_BUTTON = "SignUpWithEmail";
-
+    String FACEBOOK_ANAYTICS="FacebookAnalytics";
     String LOGIN_BUTTON = "Login";
     String LOGIN_SCREEN_FORGOT_PWD = "ForgotPassword";
     String SIGNUP_NEXT = "SignupNextButton";

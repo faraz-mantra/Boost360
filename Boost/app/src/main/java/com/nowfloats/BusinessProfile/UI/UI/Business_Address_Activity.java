@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,10 +26,10 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.nowfloats.BusinessProfile.UI.API.BusinessAddressLatLongUpdateAsyncTask;
 import com.nowfloats.BusinessProfile.UI.API.BusinessAddressUpdateAsyncTask;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
@@ -38,7 +39,7 @@ import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
 
-public class Business_Address_Activity extends ActionBarActivity {
+public class Business_Address_Activity extends ActionBarActivity implements BusinessAddressLatLongUpdateAsyncTask.MapCallback{
 
     private Toolbar toolbar;
     //public static GoogleMap googleMap;
@@ -74,7 +75,7 @@ public class Business_Address_Activity extends ActionBarActivity {
         ivMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mapViewDialog();
+                mapViewDialog(null);
             }
         });
 
@@ -265,7 +266,6 @@ public class Business_Address_Activity extends ActionBarActivity {
         country.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY));
         areaCode.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PINCODE));
 
-
         saveTextView.setVisibility(View.GONE);
     }
 
@@ -319,14 +319,14 @@ public class Business_Address_Activity extends ActionBarActivity {
             SharedPreferences.Editor prefsEditor;
             prefsEditor = sharedpreferences.edit();
             prefsEditor.putString("State", statetext);
-            prefsEditor.commit();
+            prefsEditor.apply();
             stateflag=false;
 //			if(streetaddressflag && pincodeflag==false && cityflag==false)
 //			Util.toast("Your business address has been updated successfully", this);
         }
 
         SharedPreferences sharedPreferences =getSharedPreferences("Saving State Value", Activity.MODE_PRIVATE);
-        latlongAddress=text1.replaceAll(" ", "+")+","+text2.replaceAll(" ", "+")+","+","+text3;
+        latlongAddress=text1.replaceAll(" ", "+")+","+text2.replaceAll(" ", "+")+","+text3;
         latlongAddress.replaceAll(" ", "+");
 
         // if(!stateflag){
@@ -347,7 +347,7 @@ public class Business_Address_Activity extends ActionBarActivity {
 
         String url = "http://maps.google.com/maps/api/staticmap?center=" + Constants.latitude + "," + Constants.longitude + "&zoom=14&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + Constants.latitude + "," + Constants.longitude + "&key=" + "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
         //holderItem.chatImage.setVisibility(View.VISIBLE);
-        BoostLog.d("Map Url:", url);
+        Log.d("Map Urlggg:", url);
         try {
             Picasso.with(this)
                     .load(url)
@@ -411,12 +411,16 @@ public class Business_Address_Activity extends ActionBarActivity {
     }
 
 
-    private void mapViewDialog() {
+    private void mapViewDialog(LatLngBounds latLngBounds) {
 
         /*Intent it = new Intent(this, NewMapViewDialogBusinessAddress.class);
         startActivity(it);*/
         try{
             PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+            if(latLngBounds!=null){
+                builder.setLatLngBounds(latLngBounds);
+                Log.v("gggpp",latLngBounds.toString());
+            }
             Intent placePickerIntent = builder.build(this);
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
                 placePickerIntent.putExtra("primary_color", ContextCompat.getColor(this, R.color.primaryColor));
@@ -441,6 +445,7 @@ public class Business_Address_Activity extends ActionBarActivity {
                 LatLng latLng = place.getLatLng();
                 Constants.latitude = latLng.latitude;
                 Constants.longitude = latLng.longitude;
+                changeAddress(place);
                 String url = "http://maps.google.com/maps/api/staticmap?center=" + Constants.latitude + "," + Constants.longitude + "&zoom=14&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + Constants.latitude + "," + Constants.longitude + "&key=" + "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
                 //holderItem.chatImage.setVisibility(View.VISIBLE);
                 try {
@@ -451,13 +456,18 @@ public class Business_Address_Activity extends ActionBarActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                BusinessAddressUpdateAsyncTask Task = new BusinessAddressUpdateAsyncTask( Constants.latitude, Constants.longitude, Business_Address_Activity.this,null,true,session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
+                BusinessAddressUpdateAsyncTask Task = new BusinessAddressUpdateAsyncTask( Constants.latitude, Constants.longitude, Business_Address_Activity.this,businessAddress.getText().toString(),true,session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
                 Task.execute();
                 saveTextView.setVisibility(View.GONE);
             }
         }
     }
-
+    private void changeAddress(Place place){
+        Log.v("ggg",place.toString());
+        CharSequence address=place.getAddress();
+        if(address!=null)
+            businessAddress.setText(address);
+    }
     @Override
     public void onResume() {
         // TODO Auto-generated method stub
@@ -467,4 +477,8 @@ public class Business_Address_Activity extends ActionBarActivity {
     }
 
 
+    @Override
+    public void openMap(LatLngBounds latLngBounds) {
+        mapViewDialog(latLngBounds);
+    }
 }

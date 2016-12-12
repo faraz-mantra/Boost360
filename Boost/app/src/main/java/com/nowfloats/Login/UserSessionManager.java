@@ -101,6 +101,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     private String KEY_START_TIME = "starttime";
     private String KEY_END_TIME = "endtime";
     private String KEY_FACEBOOK_NAME = "facebookname";
+    private String KEY_FACEBOOK_IMPRESSIONS = "facebook_impressions";
     private String KEY_FACEBOOK_ACCESS_TOKEN = "facebookaccesstoken";
     private String KEY_FACEBOOK_PAGE = "facebookpage";
     private String KEY_FACEBOOK_PAGE_ID = "facebookpageid";
@@ -398,10 +399,20 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return pref.getString(KEY_FACEBOOK_NAME,null);
     }
 
+    public void storeFacebookImpressions(String facebookImpression)
+    {
+        editor.putString(KEY_FACEBOOK_IMPRESSIONS , facebookImpression);
+        editor.apply();
+    }
+
+    public String getFacebookImpressions()
+    {
+        return pref.getString(KEY_FACEBOOK_IMPRESSIONS,null);
+    }
     public void storeFacebookAccessToken(String token)
     {
         editor.putString(KEY_FACEBOOK_ACCESS_TOKEN , token);
-        editor.commit();
+        editor.apply();
     }
 
     public String getFacebookAccessToken()

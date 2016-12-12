@@ -146,15 +146,15 @@ public class NotificationFragment extends Fragment{
             alertInterface.getAlerts(params,new Callback<ArrayList<AlertModel>>() {
                 @Override
                 public void success(ArrayList<AlertModel> alertModels, Response response) {
-                    if (alertModels.size()<10){
-                        mShouldRequestMore = false;
-                    }
                     progress_layout.setVisibility(View.GONE);
                     if ((alertModels==null || alertModels.size()==0) && !mIsAlertShown){
                         emptylayout.setVisibility(View.VISIBLE);
                     }else{
                         mIsAlertShown = true;
                         emptylayout.setVisibility(View.GONE);
+                    }
+                    if (alertModels!=null &&alertModels.size()<10){
+                        mShouldRequestMore = false;
                     }
                     Log.i("Alerts Success",""+alertModels.size());
                     if(adapter!=null) {

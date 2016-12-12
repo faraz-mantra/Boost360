@@ -3,7 +3,7 @@ package com.nowfloats.BusinessProfile.UI.API;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.view.View;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -11,14 +11,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
-import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.Methods;
-import com.squareup.picasso.Picasso;
-import com.thinksity.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,7 +36,7 @@ public class BusinessAddressLatLongUpdateAsyncTask extends AsyncTask<Void,String
 	String FpAddress=null;
 	String latlongaddress=null;
 	double lat =0.0,lng =0.0;
-	LatLng latlong;
+	LatLngBounds latlongBounds;
 	String fpTag ;
 
 	public BusinessAddressLatLongUpdateAsyncTask(String address, String[] profilesattr,Activity context, String latlongAddress,String fpTag) {
@@ -63,120 +59,124 @@ public class BusinessAddressLatLongUpdateAsyncTask extends AsyncTask<Void,String
 	protected String doInBackground(Void... arg0) {
 		// TODO Auto-generated method stub
 		try {
-			setLatLong(latlongaddress);
+			//setLatLong(latlongaddress);
 			if (lat == 0.0 && lng == 0.0) {
 				setLatLong(latlongaddress.replace(Business_Address_Activity.text1.replaceAll(" ", "+") + ",", ""));
 			}
 		}catch(Exception e){e.printStackTrace();}
-
-		String location = lat+","+lng;
-		JSONObject obj = new JSONObject();
-		JSONObject dataToBeUpdated = new JSONObject();
-		try {
-
-			obj.put("clientId", Constants.clientId);
-			obj.put("fpTag", fpTag);
-			JSONArray data = new JSONArray();
-
-			JSONObject myObj2 = new JSONObject();
-			myObj2.put("key", "GEOLOCATION");
-			myObj2.put("value", location);
-			data.put(myObj2);
-
-			JSONObject myObj3 = new JSONObject();
-			myObj3.put("key", "ADDRESS");
-			myObj3.put("value", FpAddress);
-			data.put(myObj3);
-
-			for(int i=0;i<arr.length;i++)
-			{
-				if (arr[i] == "PINCODE") {
-					JSONObject myObj4 = new JSONObject();
-					myObj4.put("key", "PINCODE");
-					myObj4.put("value",Business_Address_Activity.pincodetext);
-					data.put(myObj4);
-				}
-				if (arr[i] == "CITY") {
-					JSONObject myObj5 = new JSONObject();
-					myObj5.put("key", "CITY");
-
-					myObj5.put("value", Business_Address_Activity.citytext);
-					data.put(myObj5);
-				}
-			}
-
-			obj.put("updates", data);
-			obj.put("updates", data);
-			getDataFromServer(obj.toString(), Constants.HTTP_POST, Constants.FpsUpdate, Constants.BG_SERVICE_CONTENT_TYPE_JSON);
-
-
-		} catch (Exception e) {
-
-		}
+		Log.v("ggg","doinfirst: "+latlongaddress);
+//		String location = lat+","+lng;
+//		JSONObject obj = new JSONObject();
+//		JSONObject dataToBeUpdated = new JSONObject();
+//		try {
+//
+//			obj.put("clientId", Constants.clientId);
+//			obj.put("fpTag", fpTag);
+//			JSONArray data = new JSONArray();
+//
+//			JSONObject myObj2 = new JSONObject();
+//			myObj2.put("key", "GEOLOCATION");
+//			myObj2.put("value", location);
+//			data.put(myObj2);
+//
+//			JSONObject myObj3 = new JSONObject();
+//			myObj3.put("key", "ADDRESS");
+//			myObj3.put("value", FpAddress);
+//			data.put(myObj3);
+//
+//			for(int i=0;i<arr.length;i++)
+//			{
+//				if (arr[i] == "PINCODE") {
+//					JSONObject myObj4 = new JSONObject();
+//					myObj4.put("key", "PINCODE");
+//					myObj4.put("value",Business_Address_Activity.pincodetext);
+//					data.put(myObj4);
+//				}
+//				if (arr[i] == "CITY") {
+//					JSONObject myObj5 = new JSONObject();
+//					myObj5.put("key", "CITY");
+//
+//					myObj5.put("value", Business_Address_Activity.citytext);
+//					data.put(myObj5);
+//				}
+//			}
+//
+//			obj.put("updates", data);
+//			obj.put("updates", data);
+//			getDataFromServer(obj.toString(), Constants.HTTP_POST, Constants.FpsUpdate, Constants.BG_SERVICE_CONTENT_TYPE_JSON);
+//
+//
+//		} catch (Exception e) {
+//
+//		}
 		return null;
 	}
-
+public interface MapCallback{
+        void openMap(LatLngBounds latLngBounds);
+    }
 
 	@Override
 	protected void onPostExecute(String result) {
 		String ch="";
 		if(pd!=null)
 			pd.dismiss();
+        ((Business_Address_Activity)appcontext).openMap(latlongBounds);
 
-		if(Util.isNetworkStatusAvialable(appcontext))
-		{
-			if(lat!=0.0 && lng != 0.0){
-
-
-				try{
-
-					for(int i=0;i<arr.length;i++)
-					{
-						if (arr[i] == "PINCODE") {Business_Address_Activity.areaCode.setText(Business_Address_Activity.pincodetext);
-						}
-						if (arr[i] == "CITY") {Business_Address_Activity.city.setText(Business_Address_Activity.citytext);
-						}
-
-					}
-					for(int i=0;i<arr.length;i++)
-					{
-						if(arr[i]=="ADDRESS" || arr[i]=="PINCODE" || arr[i]=="CITY"){
-							Business_Address_Activity.saveTextView.setVisibility(View.GONE);
-							break;
-						}
-
-					}
-					LatLng latlong = new LatLng(lat , lng);
-					String url = "http://maps.google.com/maps/api/staticmap?center=" + lat + "," + lng + "&zoom=15&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + lat + "," + lng + "&key=" + "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
-					//holderItem.chatImage.setVisibility(View.VISIBLE);
-					try {
-						Picasso.with(appcontext)
-								.load(url)
-								.placeholder(R.drawable.default_product_image)
-								.into(Business_Address_Activity.ivMap);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					//Business_Address_Activity.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlong, 16));
-
-					//BuzzContactInfoFragment.Savetext.setVisibility(View.GONE);
-					Methods.showSnackBarPositive(appcontext,"Business Address Updated!");
-					pd.dismiss();
-
-
-
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		else{
-			//addressErrorDialog();
-		}
+//		if(Util.isNetworkStatusAvialable(appcontext))
+//		{
+//			if(lat!=0.0 && lng != 0.0){
+//
+//
+//				try{
+//
+//					for(int i=0;i<arr.length;i++)
+//					{
+//						if (arr[i] == "PINCODE") {Business_Address_Activity.areaCode.setText(Business_Address_Activity.pincodetext);
+//						}
+//						if (arr[i] == "CITY") {Business_Address_Activity.city.setText(Business_Address_Activity.citytext);
+//						}
+//
+//					}
+//					for(int i=0;i<arr.length;i++)
+//					{
+//						if(arr[i]=="ADDRESS" || arr[i]=="PINCODE" || arr[i]=="CITY"){
+//							Business_Address_Activity.saveTextView.setVisibility(View.GONE);
+//							break;
+//						}
+//
+//					}
+//					LatLng latlong = new LatLng(lat , lng);
+//					String url = "http://maps.google.com/maps/api/staticmap?center=" + lat + "," + lng + "&zoom=15&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + lat + "," + lng + "&key=" + "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
+//					//holderItem.chatImage.setVisibility(View.VISIBLE);
+//					try {
+//						Picasso.with(appcontext)
+//								.load(url)
+//								.placeholder(R.drawable.default_product_image)
+//								.into(Business_Address_Activity.ivMap);
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//					//Business_Address_Activity.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latlong, 16));
+//
+//					//BuzzContactInfoFragment.Savetext.setVisibility(View.GONE);
+//					Methods.showSnackBarPositive(appcontext,"Business Address Updated!");
+//					pd.dismiss();
+//
+//
+//
+//				} catch (Exception e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//		else{
+//			//addressErrorDialog();
+//		}
 	}
 	public static String getDataFromServer(String content,
 										   String requestMethod, String serverUrl, String contentType) {
+        Log.v("ggg","senddatawithlatlog"+content);
 		String response = "", responseMessage = "";
 
 		DataOutputStream outputStream = null;
@@ -267,24 +267,22 @@ public class BusinessAddressLatLongUpdateAsyncTask extends AsyncTask<Void,String
 				new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
+						Log.v("ggg","setlagfirst"+response);
 						try {
 							JSONObject store = new JSONObject(response);
-							lng = ((JSONArray) store.get("results"))
+							JSONObject bounds = ((JSONArray) store.get("results"))
 									.getJSONObject(0).getJSONObject("geometry")
-									.getJSONObject("location").getDouble("lng");
+									.getJSONObject("bounds");
+							if(bounds==null) return;
+							Double northLng=bounds.getJSONObject("northeast").getDouble("lng");
+							Double northLat=bounds.getJSONObject("northeast").getDouble("lat");
+							Double southLng=bounds.getJSONObject("southwest").getDouble("lng");
+							Double southLat=bounds.getJSONObject("southwest").getDouble("lat");
 
-							lat = ((JSONArray) store.get("results"))
-									.getJSONObject(0).getJSONObject("geometry")
-									.getJSONObject("location").getDouble("lat");
-
-
-							Constants.latitude = lat;
-							Constants.longitude = lng;
-
-							if(lng!=0 && lat!=0){
-								latlong = new LatLng(lng , lat);
-							}
-
+							latlongBounds = new LatLngBounds.Builder()
+									.include(new LatLng(northLat,northLng))
+									.include(new LatLng(southLat,southLng))
+									.build();
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
 
