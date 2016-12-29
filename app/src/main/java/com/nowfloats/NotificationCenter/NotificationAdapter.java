@@ -236,7 +236,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
                     @Override
                     public void failure(RetrofitError error) {
-                        Methods.showSnackBarNegative(appContext, "Something went wrong, please try again");
+                        Methods.showSnackBarNegative(appContext, appContext.getString(R.string.something_went_wrong_try_again));
                     }
                 });
             }

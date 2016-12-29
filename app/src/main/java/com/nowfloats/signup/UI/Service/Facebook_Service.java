@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.util.Log;
 
 import com.nowfloats.signup.UI.API.Facebook_Interface;
-import com.nowfloats.util.Constants;
 import com.squareup.otto.Bus;
 
 import org.json.JSONObject;

@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Set;
 
 import retrofit.RestAdapter;
+import retrofit.android.AndroidLog;
 
 
 public class Constants {
@@ -71,6 +72,7 @@ public class Constants {
 
     // public final static String NOW_FLOATS_API_URL		=	"https://api.nowfloatsdev.com";
     public final static String NOW_FLOATS_API_URL = "https://api.withfloats.com";
+    public final static String TEST_API_URL = "http://54.254.184.142";
     public final static String BASE_IMAGE_URL = "https://content.withfloats.com";
     // public final static String NOW_FLOATS_API_URL		=	"https://nftestbed.azurewebsites.net";
     public final static String HTTP_PUT = "PUT";
@@ -84,11 +86,12 @@ public class Constants {
     //    public static RestAdapter validEmailAdapter = null;
     public static final RestAdapter validEmailAdapter = new RestAdapter.Builder().setEndpoint("https://bpi.briteverify.com").build();
     //    public static RestAdapter restAdapter = null;
-    public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL).build();
+    public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).build();
+    public static final RestAdapter testRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.TEST_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
     public static NotificationInterface alertInterface = Constants.restAdapter.create(NotificationInterface.class);
 
     //http://api.withfloats.com/Discover/v3/FloatingPoint/create
-
+    public static String NFX_WITH_NOWFLOATS="http://nfx.withfloats.com";
     public static String createStoreV3 = NOW_FLOATS_API_URL + "/Discover/v3/FloatingPoint/create";
     public static String createStoreV2 = NOW_FLOATS_API_URL + "/Discover/v2/FloatingPoint/create";
     public static String loginUrl = NOW_FLOATS_API_URL + "/discover/v1/login/";
@@ -122,6 +125,10 @@ public class Constants {
     public static String DeleteCard = NOW_FLOATS_API_URL + "/Discover/v1/floatingPoint/archiveMessage";
     public static String nfxApi = NOW_FLOATS_API_URL + "/Discover/v2/floatingPoint/updateSocialAccessToken";
     public static String beCountUrl = NOW_FLOATS_API_URL + "/Discover/v1/businessenquiries/count";
+    public static String nfxFacebookAnalytics = NFX_WITH_NOWFLOATS + "/dataexchange/v1/updateAccessTokens";
+
+
+    public static String TWITTER_URL = Specific.TWITTER_URL;
 
     public static int enqCount = 0;
 
@@ -418,6 +425,8 @@ public class Constants {
     public static String fbPageFullUrl;
     public static String fbFromWhichPage;
     public static boolean FbFeedPullAutoPublish;
+    public static String FACEBOOK_URL = Specific.FACEBOOK_URL;
+    public static String PACKAGE_NAME = Specific.PACKAGE_NAME;
 
 
 }

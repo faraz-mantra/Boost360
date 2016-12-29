@@ -1,21 +1,16 @@
 package com.nowfloats.Product_Gallery.Adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.darsh.multipleimageselect.models.Image;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 

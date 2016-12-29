@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Model.StoreModel;
 import com.nowfloats.Store.StoreDataActivity;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.Key_Preferences;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
@@ -75,7 +73,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
                     if (storeData.get(position).PrimaryImageUri.contains("http")){
                         Picasso.with(appContext).load(storeData.get(position).PrimaryImageUri).into(holder.imageView);
                     }else{
-                        String url = Constants.BASE_IMAGE_URL+storeData.get(position).PrimaryImageUri;
+                        String url = Constants.NOW_FLOATS_API_URL+storeData.get(position).PrimaryImageUri;
                         Picasso.with(appContext).load(url).into(holder.imageView);
                     }
                 if (storeData.get(position).Name!=null)
@@ -83,21 +81,17 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
                 if (storeData.get(position).Desc!=null)
                     holder.descText.setText(storeData.get(position).Desc);
                 holder.readmore.setPaintFlags(holder.readmore.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-                holder.readmore.setText("Read more");
+                holder.readmore.setText(appContext.getString(R.string.read_more));
                 if(modelKey.equals("active")){
                     holder.priceText.setVisibility(View.GONE);
                     holder.readmore.setVisibility(View.GONE);
                     holder.knowMoreText.setVisibility(View.VISIBLE);
-                    holder.knowMoreText.setText("KNOW MORE");
+                    holder.knowMoreText.setText(appContext.getString(R.string.know_more));
 //                    holder.validityText.setVisibility(View.VISIBLE);
 //                    holder.validityText.setText("("+storeData.get(position).ExpiryInMths+" months plan,"
 //                            +storeData.get(position).ValiditiyInMths+" months left"+")");
                 }else{
-                    if(mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).equals("India")) {
-                        holder.priceText.setVisibility(View.VISIBLE);
-                    }else {
-                        holder.priceText.setVisibility(View.GONE);
-                    }
+                    holder.priceText.setVisibility(View.VISIBLE);
                     holder.readmore.setVisibility(View.VISIBLE);
                     holder.knowMoreText.setVisibility(View.GONE);
 //                    holder.validityText.setVisibility(View.GONE);

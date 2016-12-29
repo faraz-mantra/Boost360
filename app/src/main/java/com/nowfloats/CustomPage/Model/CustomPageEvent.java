@@ -1,7 +1,5 @@
 package com.nowfloats.CustomPage.Model;
 
-import com.nowfloats.CustomPage.Model.CustomPageModel;
-
 import java.util.ArrayList;
 
 /**

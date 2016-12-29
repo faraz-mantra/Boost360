@@ -9,11 +9,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -23,15 +21,19 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.facebook.HttpMethod;
-import com.facebook.Request;
-import com.facebook.Response;
-import com.facebook.android.AsyncFacebookRunner;
-import com.facebook.android.DialogError;
-import com.facebook.android.Facebook;
-import com.facebook.android.FacebookError;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphRequestBatch;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.nowfloats.Login.Login_MainActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.signup.UI.API.API_Layer;
@@ -56,6 +58,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -69,19 +75,23 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
     Address lastKnownAddress;
     FrameLayout mainScreen;
     TextView belowText;
-    final Facebook facebook = new Facebook(Constants.FACEBOOK_API_KEY);
-    AsyncFacebookRunner mAsyncRunner = new AsyncFacebookRunner(facebook);
+    /*final Facebook facebook = new Facebook(Constants.FACEBOOK_API_KEY);
+    AsyncFacebookRunner mAsyncRunner = new AsyncFacebookRunner(facebook);*/
     String access_token;
     Bus bus;
     UserSessionManager session;
     private int pagesLengthSize;
     private ArrayList<String> pageItems;
     private JSONArray FbPageList;
-    private String facebook_email;
-    private String facebook_contact_name;
+    private String mFacebookEmail;
+    private String mFacebookContactName;
     private int permision_request_id=0;
     ProgressDialog progressDialog;
     Typeface robotoRegular;
+    GraphResponse mMeResponse;
+    GraphResponse mAccountsResponse;
+
+    private CallbackManager callbackManager;
 
 
     private LocationProvider loc_provider;
@@ -110,6 +120,8 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
         TextView onlyLoginText = (TextView) findViewById(R.id.onlyloginText);
         onlyLoginText.setTypeface(robotoRegular);
 
+        callbackManager = CallbackManager.Factory.create();
+
         mainScreen = (FrameLayout) findViewById(R.id.mainLayout);
         belowText = (TextView) findViewById(R.id.pre_signUp_bottom_text);
         session = new UserSessionManager(getApplicationContext(), PreSignUp_MainActivity.this);
@@ -132,7 +144,7 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
             public void onClick(View v) {
                 getLastKnownLocation();
                 MixPanelController.track("SignUpWithFacebook", null);
-                String aToken = accessTokenFacebook();
+                accessTokenFacebook();
             }
         });
 
@@ -203,18 +215,77 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
         return super.onOptionsItemSelected(item);
     }
 
-    public String accessTokenFacebook() {
+    public void accessTokenFacebook() {
 
         progressDialog = ProgressDialog.show(PreSignUp_MainActivity.this, "", "Fetching Details...");
-        progressDialog.setCancelable(true);
+        progressDialog.setCancelable(false);
 
-        final int[] selectPosition = {0};
+        List<String> readPermissions= Arrays.asList("email"
+                , "public_profile",  "user_friends", "read_insights", "business_management");
+        final List<String> publishPermissions = Arrays.asList("publish_actions",
+                "publish_pages", "manage_pages");
+        final LoginManager loginManager = LoginManager.getInstance();
+        loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Set permissions = loginResult.getAccessToken().getPermissions();
+                //String name = Profile.getCurrentProfile().getName();
+                if(!permissions.containsAll(new HashSet(publishPermissions))){
+                    loginManager.logInWithPublishPermissions(PreSignUp_MainActivity.this, publishPermissions);
+                }else {
+                    Bundle parameters = new Bundle();
+                    parameters.putString("fields", "id,name,email");
+                    GraphRequest meRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(),
+                            new GraphRequest.GraphJSONObjectCallback() {
+                                @Override
+                                public void onCompleted(
+                                        JSONObject object,
+                                        GraphResponse response) {
+                                    mMeResponse = response;
+                                }
+                            });
+                    meRequest.setParameters(parameters);
+                    GraphRequestBatch batch = new GraphRequestBatch(
+                            meRequest,
+                            GraphRequest.newGraphPathRequest(
+                                    loginResult.getAccessToken(),
+                                    "/me/accounts",
+                                    new GraphRequest.Callback() {
+                                        @Override
+                                        public void onCompleted(GraphResponse response) {
+                                            mAccountsResponse = response;
+                                        }
+                            })
+                    );
+                    batch.addCallback(new GraphRequestBatch.Callback() {
+                        @Override
+                        public void onBatchCompleted(GraphRequestBatch batch) {
+                            processFbResponse(mMeResponse, mAccountsResponse);
+                        }
+                    });
+                    batch.executeAsync();
+                }
 
-        final String[] PERMISSIONS = new String[]{"photo_upload",
-                "user_photos", "publish_stream", "read_stream",
-                "offline_access", "manage_pages", "publish_actions", "email", "user_location"};
+            }
 
-        if (access_token != null) {
+            @Override
+            public void onCancel() {
+                progressDialog.dismiss();
+                Log.d("Test", "Test Main Fb Error Cancel");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                progressDialog.dismiss();
+                error.printStackTrace();
+                LoginManager.getInstance().logOut();
+                //Log.d("Test", "Test Main Fb Error");
+                com.facebook.AccessToken.refreshCurrentAccessTokenAsync();
+            }
+        });
+        loginManager.logInWithReadPermissions(this, readPermissions);
+
+        /*if (access_token != null) {
             facebook.setAccessToken(access_token);
         }
         facebook.authorize(this, PERMISSIONS, new Facebook.DialogListener() {
@@ -358,18 +429,162 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
         });
         //     }
 
-        return access_token;
+        return access_token;*/
 //        else {
 //            new getFacebookData().execute();
 //        }
 
     }
 
+    private void processFbResponse(final GraphResponse mMeResponse, final GraphResponse mAccountsResponse) {
+        final int[] selectPosition = {0};
+        if(mMeResponse!=null && mAccountsResponse!=null) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        JSONObject me = mMeResponse.getJSONObject();
+                        mFacebookEmail = me.getString("email");
+                        mFacebookContactName = me.getString("name");
+                        session.storeFacebookName(mFacebookContactName);
+                        JSONObject accounts = mAccountsResponse.getJSONObject();
+                        FbPageList = accounts.getJSONArray("data");
+                        if (FbPageList != null) {
+                            pagesLengthSize = FbPageList.length();
+
+                            if (pagesLengthSize > 0) {
+                                pageItems = new ArrayList<String>();
+                                for (int i = 0; i < pagesLengthSize; i++) {
+                                    pageItems.add(i, (String) ((JSONObject) FbPageList
+                                            .get(i)).get("name"));
+                                }
+
+
+                            }
+                        }
+
+
+                        //System.out.println("******facebook.getAccessToken()****" + facebook.getAccessToken());
+
+                        access_token = AccessToken.getCurrentAccessToken().getToken();
+                        session.storeFacebookAccessToken(access_token);
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    }finally {
+                        PreSignUp_MainActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (pageItems != null && pageItems.size() > 0) {
+                                    final String[] array = pageItems.toArray(new String[pageItems.size()]);
+                                    new MaterialDialog.Builder(PreSignUp_MainActivity.this)
+                                            .title("Choose a Facebook Page")
+                                            .positiveText("Choose")
+                                            .items(array)
+                                            .widgetColorRes(R.color.primaryColor)
+                                            .dismissListener(new DialogInterface.OnDismissListener() {
+                                                @Override
+                                                public void onDismiss(DialogInterface dialog) {
+                                                    progressDialog.dismiss();
+                                                }
+                                            })
+                                            .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
+                                                @Override
+                                                public boolean onSelection(MaterialDialog dialog, View view, int position, CharSequence text) {
+                                                    selectPosition[0] = position;
+                                                    String strName = array[position];
+                                                    session.storeFacebookPage(strName);
+
+                                                    try {
+                                                        String FACEBOOK_PAGE_ID = (String) ((JSONObject) FbPageList.get(position)).get("id");
+                                                        String page_access_token = ((String) ((JSONObject) FbPageList.get(position)).get("access_token"));
+                                                        session.storePageAccessToken(page_access_token);
+                                                        getFacebookImage_FeaturedImage(FACEBOOK_PAGE_ID);
+                                                        session.storeFacebookPageID(FACEBOOK_PAGE_ID);
+
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+
+                                                    new Facebook_Pages_Service(PreSignUp_MainActivity.this, access_token, session.getFacebookPageID(), bus);
+                                                    // getFacebookImage_FeaturedImage(session.getFacebookPageID());
+                                                    //  pageSeleted(position,strName,session.getFacebookPageID(),session.getPageAccessToken());
+                                                    dialog.dismiss();
+                                                    return true;
+                                                }
+                                            })
+                                            .callback(new MaterialDialog.ButtonCallback() {
+                                                @Override
+                                                public void onPositive(MaterialDialog dialog) {
+                                                    super.onPositive(dialog);
+                                                    int position = selectPosition[0];
+                                                    String strName = array[position];
+                                                    session.storeFacebookPage(strName);
+
+                                                    try {
+                                                        String FACEBOOK_PAGE_ID = (String) ((JSONObject) FbPageList.get(position)).get("id");
+                                                        String page_access_token = ((String) ((JSONObject) FbPageList.get(position)).get("access_token"));
+                                                        session.storePageAccessToken(page_access_token);
+                                                        getFacebookImage_FeaturedImage(FACEBOOK_PAGE_ID);
+                                                        session.storeFacebookPageID(FACEBOOK_PAGE_ID);
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+
+                                                    new Facebook_Pages_Service(PreSignUp_MainActivity.this, access_token, session.getFacebookPageID(), bus);
+                                                    // getFacebookImage_FeaturedImage(session.getFacebookPageID());
+                                                    //  pageSeleted(position,strName,session.getFacebookPageID(),session.getPageAccessToken());
+                                                    dialog.dismiss();
+
+                                                }
+                                            })
+                                            .show();
+
+                                } else {
+                                    Methods.materialDialog(PreSignUp_MainActivity.this, "Uh oh~", "Looks like there is no Facebook page\nlinked to this account.");
+                                }
+                            }
+                        });
+
+                    }
+                }
+            }).start();
+        }else {
+            Toast.makeText(this, getString(R.string.facebook_response_error),Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void getFacebookImage_FeaturedImage(String page_id) {
         Bundle params = new Bundle();
         params.putBoolean("redirect", false);
         params.putString("type", "large");
-        new Request(
+        GraphRequest request = GraphRequest.newGraphPathRequest(
+                AccessToken.getCurrentAccessToken(),
+                "/" + page_id + "/picture",
+                new GraphRequest.Callback() {
+                    @Override
+                    public void onCompleted(GraphResponse response) {
+                        // Insert your code here
+                        try {
+                            JSONObject imageData = response.getJSONObject().getJSONObject("data");
+                            String imageURL = imageData.getString("url");
+                            String isDefaultImage = imageData.get("is_silhouette").toString();
+                            // if(isDefaultImage.contains("false"))
+                            //  {
+                            //   Constants.facebookPageURL = imageURL ;
+                            session.storeFacebookPageURL(imageURL);
+
+                            //  }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+        Bundle parameters = new Bundle();
+        parameters.putString("type", "large");
+        parameters.putString("redirect", "false");
+        request.setParameters(parameters);
+        request.executeAsync();
+        /*new Request(
                 facebook.getSession(),
                 "/" + page_id + "/picture",
                 params,
@@ -392,10 +607,10 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-            /* handle the result */
+            *//* handle the result *//*
                     }
                 }
-        ).executeAsync();
+        ).executeAsync();*/
     }
 
     @Override
@@ -444,7 +659,7 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
 //                .resize(150, 100)                        // optional
 //                .rotate(90)                             // optional
 //                .into(SidePanelFragment.iconImage);
-        facebookBundle.putString("facebook_email", facebook_email);
+        facebookBundle.putString("facebook_email", mFacebookEmail);
         signUpIntent.putExtras(facebookBundle);
         startActivity(signUpIntent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -455,7 +670,8 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        facebook.authorizeCallback(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        //facebook.authorizeCallback(requestCode, resultCode, data);
     }
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -473,6 +689,11 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
             // permissions this app might request
         }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LoginManager.getInstance().logOut();
+    }
 
     private void getLastKnownLocation() {
 

@@ -1,19 +1,14 @@
 package com.nowfloats.signup.UI.API;
 
 
-import org.json.JSONObject;
 import com.nowfloats.signup.UI.Model.Email_Validation_Model;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
-import com.nowfloats.util.Constants;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.http.Body;
-import retrofit.http.Field;
-import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;

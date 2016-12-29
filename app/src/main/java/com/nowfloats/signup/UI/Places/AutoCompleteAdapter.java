@@ -7,16 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.nowfloats.signup.UI.Model.PlacesModel;
 import com.nowfloats.signup.UI.UI.PreSignUpActivity;
 import com.thinksity.R;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by guru on 28/07/2015.

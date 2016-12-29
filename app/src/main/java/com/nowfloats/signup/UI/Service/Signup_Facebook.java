@@ -1,45 +1,11 @@
 package com.nowfloats.signup.UI.Service;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.facebook.android.AsyncFacebookRunner;
-import com.facebook.android.DialogError;
-import com.facebook.android.Facebook;
-import com.facebook.android.FacebookError;
-import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.signup.UI.API.getFacebookData;
-import com.nowfloats.util.Constants;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-
 /**
  * Created by NowFloatsDev on 08/06/2015.
  */
 public class Signup_Facebook {
 
-    Activity activity ;
+    /*Activity activity ;
     String Facebook_APP_ID = Constants.FACEBOOK_API_KEY;
     final Facebook facebook = new Facebook(Constants.FACEBOOK_API_KEY);
     AsyncFacebookRunner mAsyncRunner = new AsyncFacebookRunner(facebook);
@@ -80,9 +46,9 @@ public class Signup_Facebook {
 //            facebook.setAccessExpires(expires);
 //        }
 
-        /**
+        *//**
          * Only call authorize if the access_token has expired.
-         */
+         *//*
         if (!facebook.isSessionValid()) {
 
             facebook.authorize(activity, new String[] {}, new Facebook.DialogListener() {
@@ -94,8 +60,7 @@ public class Signup_Facebook {
 
 
 
-                        System.out
-                                .println("******facebook.getAccessToken()****"
+                        System.out.println("******facebook.getAccessToken()****"
                                         + facebook.getAccessToken());
 
                         access_token = facebook.getAccessToken();
@@ -144,8 +109,7 @@ public class Signup_Facebook {
 
         @Override
         protected void onPreExecute() {
-            pd = ProgressDialog.show(facebookActivity, "Please wait",
-                    "Loading please wait..", true);
+            pd = ProgressDialog.show(facebookActivity, activity.getString(R.string.please_wait),activity.getString(R.string.loading_wait), true);
             pd.setCancelable(true);
 
         }
@@ -165,16 +129,15 @@ public class Signup_Facebook {
 //                textGender.setText(gender);
 //                userImage.setImageBitmap(profilePic);
             } else {
-                Toast.makeText(facebookActivity, "Connection Time out",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(facebookActivity, activity.getString(R.string.connection_time_out),Toast.LENGTH_SHORT).show();
             }
         }
 
     }
 
-    /**
+    *//**
      * getting user facebook data from facebook server
-     */
+     *//*
     public void fbUserProfile() {
 
         try {
@@ -214,7 +177,7 @@ public class Signup_Facebook {
         } catch (Exception e) {
            // Connectiontimeout = true;
         }
-    }
+    }*/
 
 
 

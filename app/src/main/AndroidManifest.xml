@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2016100021"
-    android:versionName="4.4.6">
+    android:versionCode="2016120028"
+    android:versionName="4.4.9">
 
     <permission
-        android:name="com.biz2.nowfloats.permission.C2D_MESSAGE"
+        android:name="${applicationId}.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.biz2.nowfloats.permission.C2D_MESSAGE" />
-    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
+    <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />0
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -26,6 +27,8 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -60,7 +63,29 @@
             </intent-filter>
         </receiver>
         -->
+        <!--
+            <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name" />
+        -->
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="fb1641508162754092" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.nowfloats.signup.UI.UI.PreSignUpActivity"
             android:label="@string/app_name"
@@ -68,6 +93,34 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nowfloats.PreSignUp.PreSignUp_MainActivity" />
+        </activity>
+        <activity
+            android:name="com.nowfloats.Analytics_Screen.ShowWebView"
+            android:label="Facebook Analytics"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="SocialSharing"
+                    android:scheme="nowfloatsboost" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nowfloats.Analytics_Screen.ShowWebView" />
+        </activity>
+        <activity
+            android:name="com.nowfloats.Analytics_Screen.FacebookAnalyticsLogin"
+            android:label="Facebook Analytics"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nowfloats.Analytics_Screen.FacebookAnalyticsLogin" />
         </activity>
         <activity
             android:name="com.nowfloats.NavigationDrawer.API.twitter.PrepareRequestTokenActivity"
@@ -92,39 +145,9 @@
                 android:value="com.nowfloats.signup.UI.UI.PreSignUpActivity" />
         </activity>
         <activity
-            android:name="com.nowfloats.Analytics_Screen.Graph.VisitsPage"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.nowfloats.Analytics_Screen.Graph.Graph_MainActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.nowfloats.Analytics_Screen.Graph.MonthDetails"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="monthDetails" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name="com.nowfloats.Analytics_Screen.SearchQueries"
             android:label=""
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.signup.UI.UI.BusinessProfileActivity"
             android:label="@string/title_activity_business_profile"
@@ -150,6 +173,10 @@
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity"
             android:label="@string/title_activity_contact__info_"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity"
+            android:label="@string/visits"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Business_Hours_Activity"
@@ -181,6 +208,9 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyBtiFgbmHVzbjzOj7cV4_IGCzzGvTYCuy4" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg" />
 
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.API.NewMapViewDialogBusinessAddress"
@@ -206,7 +236,8 @@
         <activity
             android:name="com.nowfloats.NavigationDrawer.Card_Full_View_MainActivity"
             android:label="@string/title_activity_card__full__view__main"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nowfloats.NavigationDrawer.HomeActivity" />
@@ -240,10 +271,10 @@
             android:name="com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity"
             android:label="@string/title_activity_edit__profile_"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.facebook.LoginActivity"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!-- <activity -->
+        <!-- android:name="com.facebook.LoginActivity" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" /> -->
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -366,11 +397,14 @@
 
         <provider
             android:name="com.nowfloats.sync.ContentProvider.BoostContentProvider"
-            android:authorities="com.thinksity.android.provider" />
+            android:authorities="${applicationId}.provider" />
 
         <service android:name="com.nowfloats.Product_Gallery.Service.MultipleImageUploadService" />
 
-        <activity android:name="com.nowfloats.SiteAppearance.SiteAppearanceActivity"></activity>
+        <activity android:name="com.nowfloats.SiteAppearance.SiteAppearanceActivity" />
+        <activity android:name="com.nowfloats.NavigationDrawer.CreateOffersActivity" />
+        <activity android:name="com.nowfloats.NavigationDrawer.OffersFullScreenActivity" />
+        <activity android:name="com.nowfloats.PreSignUp.KitsunePreSignUpActivity"></activity>
     </application>
 
 </manifest>

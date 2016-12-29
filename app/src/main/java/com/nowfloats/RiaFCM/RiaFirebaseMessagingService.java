@@ -12,14 +12,11 @@ import android.support.v4.app.NotificationCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.google.gson.JsonObject;
-import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.thinksity.R;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -70,11 +67,12 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentText(message.get("mp_message"))
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(message.get("mp_message")))
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
         if(!Util.isNullOrEmpty(title)){
             notificationBuilder.setContentTitle(title);
         }else {
-            notificationBuilder.setContentTitle("Boost");
+            notificationBuilder.setContentTitle(getResources().getString(R.string.app_name));
         }
         if(pendingIntent!=null){
             notificationBuilder.setContentIntent(pendingIntent);

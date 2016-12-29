@@ -30,5 +30,9 @@ public class Specific {
 
     public static String TWITTER_TOK 				= "4CiUg5gcIbvYre8XjGd8GsElV";
     public static String TWITTER_SEC 				= "4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9";
+    public static String FACEBOOK_URL = "https://www.facebook.com/nowfloats";
+    public static String PACKAGE_NAME = "com.biz2.nowfloats";
+
+    public static final String TWITTER_URL = "https://twitter.com/Nowfloats";
 
 }

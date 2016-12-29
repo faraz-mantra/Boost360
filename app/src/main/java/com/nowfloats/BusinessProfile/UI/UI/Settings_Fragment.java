@@ -43,7 +43,7 @@ import org.json.JSONObject;
  */
 public class Settings_Fragment extends Fragment {
     FrameLayout signOutLayout, changePaswordLayout, feedbackLayout, likeusFacebookLayout, aboutUsLayout,
-            rateUsLayout, faqLayout, accountLayout, flSiteAppearance;
+            rateUsLayout, faqLayout, accountLayout, flSiteAppearance, flFollowTwitter, flTermsOfUse, flPrivacyPolicy;
     private EditText old_pwd, new_pwd, confirm_pwd;
     Boolean confirmCheckerActive = false;
     private ImageView confirmChecker;
@@ -54,6 +54,7 @@ public class Settings_Fragment extends Fragment {
     //facebook page constant
     public static String FACEBOOK_URL = "https://www.facebook.com/nowfloats";
     public static String FACEBOOK_PAGE_ID = "nowfloats";
+    public static final String TWITTER_URL = "https://twitter.com/Nowfloats";
     //facebook page constant
 
     @Override
@@ -64,7 +65,7 @@ public class Settings_Fragment extends Fragment {
             ((SidePanelFragment.OnItemClickListener) activity).onClick("Store");
         }
         if (HomeActivity.headerText != null)
-            HomeActivity.headerText.setText("Settings");
+            HomeActivity.headerText.setText(getString(R.string.setting));
     }
 
     @Override
@@ -103,6 +104,12 @@ public class Settings_Fragment extends Fragment {
         changePaswordLayout = (FrameLayout) view.findViewById(R.id.change_password_Layout);
         faqLayout = (FrameLayout) view.findViewById(R.id.faq_Layout);
         flSiteAppearance = (FrameLayout) view.findViewById(R.id.fl_site_appearance);
+        flFollowTwitter = (FrameLayout) view.findViewById(R.id.follow_us_twitter_Layout);
+        flTermsOfUse = (FrameLayout) view.findViewById(R.id.terms_of_use_Layout);
+        flPrivacyPolicy = (FrameLayout) view.findViewById(R.id.privacy_policy_Layout);
+        if(Long.parseLong(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON).split("\\(")[1].split("\\)")[0])/1000 > 1470614400){
+            flSiteAppearance.setVisibility(View.GONE);
+        }
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -167,7 +174,7 @@ public class Settings_Fragment extends Fragment {
 
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                         "mailto", headerValue, null));
-                 activity.startActivity(Intent.createChooser(emailIntent, "Send email..."));
+                 activity.startActivity(Intent.createChooser(emailIntent, getString(R.string.send_email)));
             }
         });
 
@@ -176,6 +183,42 @@ public class Settings_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                likeUsFacebook();
+            }
+        });
+
+        flFollowTwitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent twitterIntent = new Intent(Intent.ACTION_VIEW);
+                //String facebookUrl = getFacebookPageURL(getActivity().getApplicationContext());
+                twitterIntent.setData(Uri.parse(Constants.TWITTER_URL));
+                startActivity(twitterIntent);
+            }
+        });
+
+        flTermsOfUse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = getResources().getString(R.string.settings_tou_url);
+                ;//"http://prostinnovation.com/";
+                Intent showWebSiteIntent = new Intent(activity, Mobile_Site_Activity.class);
+                // showWebSiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                showWebSiteIntent.putExtra("WEBSITE_NAME", url);
+                activity.startActivity(showWebSiteIntent);
+                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
+        flPrivacyPolicy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = getResources().getString(R.string.settings_privacy_url);
+                ;//"http://prostinnovation.com/";
+                Intent showWebSiteIntent = new Intent(activity, Mobile_Site_Activity.class);
+                // showWebSiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                showWebSiteIntent.putExtra("WEBSITE_NAME", url);
+                activity.startActivity(showWebSiteIntent);
+                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -239,8 +282,8 @@ public class Settings_Fragment extends Fragment {
 
         new MaterialDialog.Builder(activity)
                 .customView(R.layout.exit_dialog, true)
-                .positiveText("Logout")
-                .negativeText("Cancel")
+                .positiveText(getString(R.string.setting_logout))
+                .negativeText(getString(R.string.cancel))
                 .positiveColorRes(R.color.primaryColor)
                 .negativeColorRes(R.color.light_gray)
                 .callback(new MaterialDialog.ButtonCallback() {
@@ -278,8 +321,8 @@ public class Settings_Fragment extends Fragment {
     public void changePassword() {
         new MaterialDialog.Builder(activity)
                 .customView(R.layout.change_password, true)
-                .positiveText("Ok")
-                .negativeText("Cancel")
+                .positiveText(getString(R.string.ok))
+                .negativeText(getString(R.string.cancel))
                 .positiveColorRes(R.color.primaryColor)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
@@ -312,14 +355,14 @@ public class Settings_Fragment extends Fragment {
                                     dialog.dismiss();
                                     task.execute();
                                 } else {
-                                    Methods.showSnackBarNegative(activity, "Please check your internet connectivity.");
+                                    Methods.showSnackBarNegative(activity, getString(R.string.check_internet_connection));
                                 }
 
                             } else {
-                                Methods.showSnackBarNegative(activity, "Both the passwords don't match.");
+                                Methods.showSnackBarNegative(activity, getString(R.string.both_password_not_matched));
                             }
                         } else {
-                            Methods.showSnackBarNegative(activity, "Min 6 characters are required.");
+                            Methods.showSnackBarNegative(activity, getString(R.string.min_6char_required));
                         }
                     }
                 })
@@ -391,7 +434,7 @@ public class Settings_Fragment extends Fragment {
         });
     }
     private void rateUsPlayStore(Context context){
-        Uri uri = Uri.parse("market://details?id=" + context.getPackageName());
+        Uri uri = Uri.parse("market://details?id=" + Constants.PACKAGE_NAME);
         Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
         // To count with Play market backstack, After pressing back button,
         // to taken back to our application, we need to add following flags to intent.
@@ -418,17 +461,8 @@ public class Settings_Fragment extends Fragment {
 
 
     public String getFacebookPageURL(Context context) {
-        PackageManager packageManager = context.getPackageManager();
-        try {
-            int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
-            if (versionCode >= 3002850) {                              //newer versions of fb app
-                return "fb://facewebmodal/f?href=" + FACEBOOK_URL;
-            } else {                                                  //older versions of fb app
-                return "fb://page/" + FACEBOOK_PAGE_ID;
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            return FACEBOOK_URL;                        //normal web url
-        }
+
+        return Constants.FACEBOOK_URL;
     }
 
 }

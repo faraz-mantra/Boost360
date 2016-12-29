@@ -1,54 +1,89 @@
 package com.nowfloats.Store;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Adapters.ExpandableListAdapter;
+import com.nowfloats.Store.Adapters.ItemsRecyclerViewAdapter;
 import com.nowfloats.Store.Adapters.PhotoAdapter;
+import com.nowfloats.Store.Model.ERPRequestModel;
 import com.nowfloats.Store.Model.EnablePackageResponse;
 import com.nowfloats.Store.Model.MailModel;
+import com.nowfloats.Store.Model.MarkAsPaidModel;
+import com.nowfloats.Store.Model.OPCModels.OPCDataMain;
+import com.nowfloats.Store.Model.PaymentTokenResult;
 import com.nowfloats.Store.Model.PhotoItem;
+import com.nowfloats.Store.Model.PurchaseDetail;
+import com.nowfloats.Store.Model.ReceiveDraftInvoiceModel;
+import com.nowfloats.Store.Model.ReceivedDraftInvoice;
+import com.nowfloats.Store.Model.SendDraftInvoiceModel;
 import com.nowfloats.Store.Model.StoreModel;
+import com.nowfloats.Store.Model.SupportedPaymentMethods;
+import com.nowfloats.Store.Model.TaxDetail;
 import com.nowfloats.Store.Model.WidgetPacks;
+import com.nowfloats.Store.Service.IOPCValidation;
 import com.nowfloats.Store.Service.StoreInterface;
 import com.nowfloats.Store.iapUtils.IabHelper;
 import com.nowfloats.Store.iapUtils.IabResult;
 import com.nowfloats.Store.iapUtils.Inventory;
 import com.nowfloats.Store.iapUtils.Purchase;
+import com.nowfloats.Volley.AppController;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
+import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.DataBase;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.TwoWayView;
+import com.romeo.mylibrary.Models.OrderDataModel;
+import com.romeo.mylibrary.ui.InstaMojoMainActivity;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import it.sephiroth.android.library.easing.Linear;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -84,6 +119,12 @@ public class StoreDataActivity extends AppCompatActivity {
     private LinearLayout product_pay;
     private String soureClientId = "";
     private String ClickedValues;
+    private OrderDataModel mOrderData;
+
+    //private ProgressDialog pd;
+
+    private final int DIRECT_REQUEST_CODE = 1;
+    private final int OPC_REQUEST_CODE = 2;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -104,6 +145,7 @@ public class StoreDataActivity extends AppCompatActivity {
                 .widgetColorRes(R.color.accentColor)
                 .content("Please Wait...")
                 .progress(true, 0)
+                .cancelable(false)
                 .show();
         bus = BusProvider.getInstance().getBus();
         sessionManager = new UserSessionManager(this,StoreDataActivity.this);
@@ -120,6 +162,7 @@ public class StoreDataActivity extends AppCompatActivity {
                     product = StoreFragmentTab.additionalWidgetModels.get(StorePosition);
                 }else{
                     product = StoreFragmentTab.activeWidgetModels.get(StorePosition);
+                    //make this Gone
                     product_pay.setVisibility(View.GONE);
                 }
                 //Title
@@ -131,8 +174,8 @@ public class StoreDataActivity extends AppCompatActivity {
                 product_validity = (TextView) findViewById(R.id.product_validity);
 
 //                if (("91").equals(countryPhoneCode)){
-                if (product.ExternalApplicationDetails==null || product.ExternalApplicationDetails.equals("null")
-                        || product.ExternalApplicationDetails.size()==0){
+                if (/*true*//*product.ExternalApplicationDetails==null || product.ExternalApplicationDetails.equals("null")
+                        || product.ExternalApplicationDetails.size()==0*/!sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).equalsIgnoreCase("India")){
                     materialProgress.dismiss();
                     ProductPrice.setText(getString(R.string.interest));
                     product_validity.setVisibility(View.GONE);
@@ -141,7 +184,7 @@ public class StoreDataActivity extends AppCompatActivity {
                     ClickedValues = sessionManager.getLocalStorePurchase();
                     if (ClickedValues.contains(product.Name)) {
 //                        if (sessionManager.getLightHousePurchase()){
-                            ProductPrice.setText("Already requested");
+                            ProductPrice.setText(getString(R.string.already_requested));
                             product_pay.setBackgroundColor(getResources().getColor(R.color.greenDark));
 //                        }
                     }
@@ -150,8 +193,8 @@ public class StoreDataActivity extends AppCompatActivity {
 //                            product_pay.setBackgroundColor(getResources().getColor(R.color.greenDark));}
 //                    }
                     try {
-                        if (product.Name.equalsIgnoreCase("NowFloats Dictate") || product.Name.equalsIgnoreCase("NowFloats WildFire")) {
-                            ProductPrice.setText("Contact Us");
+                        if (product.Name.contains("NowFloats Dictate") || product.Name.contains("NowFloats WildFire")) {
+                            ProductPrice.setText(getString(R.string.contact_us));
                         }
                     }catch(Exception e){e.printStackTrace();}
 
@@ -172,12 +215,12 @@ public class StoreDataActivity extends AppCompatActivity {
                                             new Callback<String>() {
                                                 @Override
                                                 public void success(String s, Response response) {
-                                                    ProductPrice.setText("Already requested");
+                                                    ProductPrice.setText(getString(R.string.already_requested));
                                                     product_pay.setBackgroundColor(getResources().getColor(R.color.greenDark));
                                                     new MaterialDialog.Builder(StoreDataActivity.this)
-                                                            .title("Thank you for your interest!")
-                                                            .content("Our team will get in touch with you within 48 hours to tell you more about our pricing plans.")
-                                                            .negativeText("Ok")
+                                                            .title(getString(R.string.thank_you_for_your_interest))
+                                                            .content(getString(R.string.our_team_contact_in_48hours))
+                                                            .negativeText(getString(R.string.ok))
                                                             .negativeColorRes(R.color.light_gray)
                                                             .callback(new MaterialDialog.ButtonCallback() {
                                                                 @Override
@@ -194,7 +237,7 @@ public class StoreDataActivity extends AppCompatActivity {
                                                     runOnUiThread(new Runnable() {
                                                         @Override
                                                         public void run() {
-                                                            Methods.showSnackBarNegative(StoreDataActivity.this, "Please try again...");
+                                                            Methods.showSnackBarNegative(StoreDataActivity.this, getString(R.string.try_again));
                                                         }
                                                     });
                                                 }
@@ -204,7 +247,8 @@ public class StoreDataActivity extends AppCompatActivity {
 //                                boolean storeClick = false;
                                 Map<String, String> params = new HashMap<String, String>();
                                 params.put("clientId", soureClientId);
-                                params.put("plantype", product.Name);
+                                params.put("planType", product.Name);
+                                params.put("toEmail", "leads@nowfloats.com");
 //                                if (product.Name.equals("NowFloats Lighthouse")) {params.put("plantype", "Lighthouse");
 //                                    storeClick = sessionManager.getLightHousePurchase();
 //                                    sessionManager.setLightHousePurchase(true);
@@ -222,13 +266,13 @@ public class StoreDataActivity extends AppCompatActivity {
                                     storeInterface.requestWidget(fpID, params, new Callback<String>() {
                                         @Override
                                         public void success(String s, Response response) {
-                                            ProductPrice.setText("Already requested");
+                                            ProductPrice.setText(getString(R.string.already_requested));
                                             product_pay.setBackgroundColor(getResources().getColor(R.color.greenDark));
 
                                             new MaterialDialog.Builder(StoreDataActivity.this)
-                                                    .title("Thank you for your interest!")
-                                                    .content("Our team will get in touch with you within 48 hours to tell you more about our pricing plans.")
-                                                    .negativeText("Ok")
+                                                    .title(getString(R.string.thank_you_for_your_interest))
+                                                    .content(getString(R.string.our_team_contact_in_48hours))
+                                                    .negativeText(getString(R.string.ok))
                                                     .negativeColorRes(R.color.light_gray)
                                                     .callback(new MaterialDialog.ButtonCallback() {
                                                         @Override
@@ -241,14 +285,14 @@ public class StoreDataActivity extends AppCompatActivity {
 
                                         @Override
                                         public void failure(RetrofitError error) {
-                                            Methods.showSnackBarNegative(StoreDataActivity.this, "Uh oh! Something went wrong. Please try again.");
+                                            Methods.showSnackBarNegative(StoreDataActivity.this, getString(R.string.something_went_wrong_try_again));
                                         }
                                     });
                                 } else {
                                     new MaterialDialog.Builder(StoreDataActivity.this)
-                                            .title("Processing your request")
-                                            .content("We are processing your request. We will get back to you on this as soon as we can. Thank you for your patience")
-                                            .negativeText("Ok")
+                                            .title(getString(R.string.processing_request))
+                                            .content(getString(R.string.processing_request_we_back_in_48hours))
+                                            .negativeText(getString(R.string.ok))
                                             .negativeColorRes(R.color.light_gray)
                                             .callback(new MaterialDialog.ButtonCallback() {
                                                 @Override
@@ -262,7 +306,19 @@ public class StoreDataActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    if (product.ExternalApplicationDetails!=null && product.ExternalApplicationDetails.size()>0){
+
+                    materialProgress.dismiss();
+                    product_validity.setVisibility(View.GONE);
+                    ProductPrice.setVisibility(View.VISIBLE);
+                    ProductPrice.setText(getString(R.string.buy_now));
+                    product_pay.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            createDraftInvoice();
+                            MixPanelController.track(EventKeysWL.BUY_NOW_STORE_CLICKED, null);
+                        }
+                    });
+                    /*if (product.ExternalApplicationDetails!=null && product.ExternalApplicationDetails.size()>0){
                         for (int i = 0; i < product.ExternalApplicationDetails.size(); i++) {
                             if (product.ExternalApplicationDetails.get(i).Type.equals("1")){
                                 SKU_PACKAGE = product.ExternalApplicationDetails.get(i).ExternalSourceId;
@@ -277,7 +333,7 @@ public class StoreDataActivity extends AppCompatActivity {
 //                    SKU_PACKAGE = "android.test.purchased";
                     try {
                         if (product.Name.equalsIgnoreCase("NowFloats Dictate") || product.Name.equalsIgnoreCase("NowFloats WildFire")) {
-                            ProductPrice.setText("Contact Us");
+                            ProductPrice.setText(getString(R.string.contact_us));
                         }
                     }catch(Exception e){e.printStackTrace();}
                     if(!(ProductPrice.getText().toString().equalsIgnoreCase("Contact Us"))){
@@ -301,12 +357,12 @@ public class StoreDataActivity extends AppCompatActivity {
                                             new Callback<String>() {
                                                 @Override
                                                 public void success(String s, Response response) {
-                                                    ProductPrice.setText("Already requested");
+                                                    ProductPrice.setText(getString(R.string.already_requested));
                                                     product_pay.setBackgroundColor(getResources().getColor(R.color.greenDark));
                                                     new MaterialDialog.Builder(StoreDataActivity.this)
-                                                            .title("Thank you for your interest!")
-                                                            .content("Our team will get in touch with you within 48 hours to tell you more about our pricing plans.")
-                                                            .negativeText("Ok")
+                                                            .title(getString(R.string.thank_you_for_your_interest))
+                                                            .content(getString(R.string.our_team_contact_in_48hours))
+                                                            .negativeText(getString(R.string.ok))
                                                             .negativeColorRes(R.color.light_gray)
                                                             .callback(new MaterialDialog.ButtonCallback() {
                                                                 @Override
@@ -323,7 +379,7 @@ public class StoreDataActivity extends AppCompatActivity {
                                                     runOnUiThread(new Runnable() {
                                                         @Override
                                                         public void run() {
-                                                            Methods.showSnackBarNegative(StoreDataActivity.this, "Please try again...");
+                                                            Methods.showSnackBarNegative(StoreDataActivity.this, getString(R.string.try_again));
                                                         }
                                                     });
                                                 }
@@ -332,12 +388,12 @@ public class StoreDataActivity extends AppCompatActivity {
                             }else {
                                 if (!SKU_PACKAGE.equals("empty")) {
                                     if (Constants.StorePackageIds != null && Constants.StorePackageIds.size() > 0) {
-                                    /*for (int i = 0; i < Constants.StorePackageIds.size(); i++) {
+                                    *//*for (int i = 0; i < Constants.StorePackageIds.size(); i++) {
                                         if (!product._id.equals(Constants.StorePackageIds.get(i))){
                                             purchaseCheck = true;
                                             break;
                                         }
-                                    }*/
+                                    }*//*
                                         if (Constants.StorePackageIds.contains(product._id)) {
                                             purchaseCheck = false;
                                         } else {
@@ -354,9 +410,9 @@ public class StoreDataActivity extends AppCompatActivity {
                                     }
                                 } else {
                                     new MaterialDialog.Builder(StoreDataActivity.this)
-                                            .title("Unable to process your purchase")
-                                            .content("Please reach out to us at ria@nowfloats.com and will be get back to immediately.")
-                                            .negativeText("Close")
+                                            .title(getString(R.string.unable_to_process_purchase))
+                                            .content(getString(R.string.reach_out_ria))
+                                            .negativeText(getString(R.string.close))
                                             .positiveColorRes(R.color.primaryColor)
                                             .negativeColorRes(R.color.light_gray)
                                             .callback(new MaterialDialog.ButtonCallback() {
@@ -370,7 +426,7 @@ public class StoreDataActivity extends AppCompatActivity {
                                 }
                             }
                         }
-                    });
+                    });*/
                 }
 
                 //Product description
@@ -390,7 +446,7 @@ public class StoreDataActivity extends AppCompatActivity {
                     String urlStr = product.Screenshots.get(i).imageUri;
                     if(urlStr!=null && urlStr.length()>0 && !urlStr.equals("null")) {
                         if (!urlStr.contains("http")) {
-                            urlStr = Constants.BASE_IMAGE_URL + product.Screenshots.get(i).imageUri;
+                            urlStr = Constants.NOW_FLOATS_API_URL + product.Screenshots.get(i).imageUri;
                         }
                         Uri uri = Uri.parse(urlStr);
                         mPhotoListItem.add(new PhotoItem(uri));
@@ -444,6 +500,369 @@ public class StoreDataActivity extends AppCompatActivity {
             }
         }catch(Exception e){e.printStackTrace();}
     }
+
+    private void createDraftInvoice() {
+        try {
+            SendDraftInvoiceModel sendDraftInvoiceModel = new SendDraftInvoiceModel();
+            PurchaseDetail purchaseDetail = new PurchaseDetail();
+            String clientId;
+
+            if (!Util.isNullOrEmpty(sessionManager.getSourceClientId())) {
+                clientId = sessionManager.getSourceClientId();
+            } else {
+                clientId = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID);
+            }
+
+            double totalTax = 0;
+
+            /*
+             *Remove this code
+             */
+            /*List<TaxDetail> taxes = new ArrayList<>();
+            TaxDetail taxDetail = new TaxDetail();
+            taxDetail.setAmountType(0);
+            taxDetail.setKey("Service Tax");
+            taxDetail.setValue(15.5);
+            taxes.add(taxDetail);*/
+
+            for(TaxDetail taxData : product.Taxes/*taxes*/){
+                totalTax+=taxData.getValue();
+            }
+
+
+
+            purchaseDetail.setBasePrice(Double.parseDouble(product.Price));
+            purchaseDetail.setClientId(clientId);
+            purchaseDetail.setDurationInMnths(product.ValidityInMths);
+            purchaseDetail.setFPId(sessionManager.getFPID());
+            purchaseDetail.setMRP(Double.parseDouble(product.Price) + (Double.parseDouble(product.Price)*totalTax)/100);
+            purchaseDetail.setMRPCurrencyCode(product.CurrencyCode);
+            purchaseDetail.setPackageId(product._id);
+            purchaseDetail.setPackageName(product.Name);
+            purchaseDetail.setTaxDetails(product.Taxes/*taxes*/);
+
+            List<PurchaseDetail> purchaseDetailList = new ArrayList<PurchaseDetail>();
+            purchaseDetailList.add(purchaseDetail);
+
+            sendDraftInvoiceModel.setPurchaseDetails(purchaseDetailList);
+            DataBase dataBase = new DataBase(StoreDataActivity.this);
+            Cursor cursor = dataBase.getLoginStatus();
+            if (cursor.moveToFirst()){
+                //System.out.println(cursor.getString(cursor.getColumnIndex("title"));
+                sendDraftInvoiceModel.setFpUserProfileId(cursor.getString(cursor.getColumnIndex(DataBase.colloginId)));
+                sendDraftInvoiceModel.setOpc(null);
+            }else {
+                showDialog("Alert!", "This is an added security feature to protect your package details. Kindly Log-out and Login again to pay for this package.");
+                return;
+            }
+
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("clientId", Constants.clientId);
+            if(materialProgress!=null){
+                materialProgress.show();
+            }
+            StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
+            storeInterface.createDraftInvoice(params, sendDraftInvoiceModel, new Callback<ReceivedDraftInvoice>() {
+                @Override
+                public void success(ReceivedDraftInvoice receiveDraftInvoice, Response response) {
+                    if(receiveDraftInvoice!=null && receiveDraftInvoice.getStatusCode()==200){
+                        if(materialProgress!=null){
+                            materialProgress.dismiss();
+                        }
+                        showInvoiceDialog(receiveDraftInvoice.getResult());
+                    }else {
+                        if(materialProgress!=null){
+                            materialProgress.dismiss();
+                        }
+                        Methods.showSnackBarNegative(StoreDataActivity.this, getResources().getString(R.string.error_invoice));
+                    }
+
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    if(materialProgress!=null){
+                        materialProgress.dismiss();
+                    }
+                    Methods.showSnackBarNegative(StoreDataActivity.this, getResources().getString(R.string.error_invoice));
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+            if(materialProgress!=null){
+                materialProgress.dismiss();
+            }
+            Toast.makeText(StoreDataActivity.this, "Error while generating Invoice", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void openPaymentTypeDialog() {
+        final String[] array = {"Pay Now", "Proceed with OPC"};
+        MaterialDialog dialog = new MaterialDialog.Builder(StoreDataActivity.this)
+                .title("Please select one to proceed")
+                .items(array)
+                .negativeText(getString(R.string.cancel))
+                .cancelable(false)
+                .positiveText(getString(R.string.ok))
+                .negativeColorRes(R.color.light_gray)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        super.onNegative(dialog);
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        int position = dialog.getSelectedIndex();
+                        if (position == 0) {
+
+
+                            /*Intent i = new Intent(StoreDataActivity.this, InstaMojoMainActivity.class);
+                            mOrderData = new OrderDataModel(sessionManager.getFpTag(), sessionManager.getFpTag(),
+                                    sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
+                                    "10", product.Name,
+                                    sessionManager.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM),
+                                    "Light House", product.CurrencyCode);
+                            i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
+                            startActivityForResult(i, DIRECT_REQUEST_CODE);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
+                        }else if (position == 1) {
+                            openOPCDialog();
+                        }else{
+                            Toast.makeText(StoreDataActivity.this, "Please select of the options", Toast.LENGTH_SHORT).show();
+                        }
+                        dialog.dismiss();
+                    }
+                })
+                .widgetColorRes(R.color.primaryColor)
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int position, CharSequence text) {
+                        return true;
+                    }
+                }).build();
+        dialog.getWindow().getAttributes().windowAnimations =  R.style.DialogTheme;
+        dialog.show();
+
+    }
+
+    private void openOPCDialog() {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.store_buy_now_dialog_layout);
+        dialog.setCancelable(false);
+        final Button btnOpcConfirmYes = (Button) dialog.findViewById(R.id.btn_opc_confirm__yes);
+        final Button btnOpcConfirmNo = (Button) dialog.findViewById(R.id.btn_opc_confirm_no);
+        final EditText etOpcCode = (EditText) dialog.findViewById(R.id.et_opc_code);
+        final TextInputLayout opcInputlayout = (TextInputLayout) dialog.findViewById(R.id.opcInputLayout);
+        //opcInputlayout.setHintEnabled(true);
+        opcInputlayout.setErrorEnabled(true);
+        opcInputlayout.setHint(getString(R.string.opc_edit_text_hint));
+
+        btnOpcConfirmNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                openPaymentTypeDialog();
+            }
+        });
+        btnOpcConfirmYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                verifyPaymentToken(etOpcCode.getText().toString().trim(), opcInputlayout, dialog);
+            }
+        });
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = dialog.getWindow();
+        lp.copyFrom(window.getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(lp);
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogTheme;
+        dialog.show();
+
+    }
+
+    private void verifyPaymentToken(String OPCCode, final TextInputLayout layout, final Dialog mainDialog) {
+        HashMap<String, String> data = new HashMap<>();
+        data.put("clientId", Constants.clientId);
+        data.put("token", OPCCode);
+        data.put("fpId", sessionManager.getFPID());
+        final ProgressDialog pd = ProgressDialog.show(this, "", getString(R.string.verify_opc));
+        Constants.restAdapter.create(IOPCValidation.class)
+                .verifyPaymentToken(data, new Callback<OPCDataMain>() {
+                    @Override
+                    public void success(OPCDataMain opcDataMain, Response response) {
+                        if(pd!=null && pd.isShowing()){
+                            pd.dismiss();
+                        }
+                        if(opcDataMain.success){
+                            mainDialog.dismiss();
+                            //showInvoiceDialog(opcDataMain);
+                        }else {
+                            if(opcDataMain.reason!=null){
+                                layout.setError(opcDataMain.reason);
+                                //Methods.showSnackBarNegative(StoreDataActivity.this, opcDataMain.reason);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        if(pd!=null && pd.isShowing()){
+                            pd.dismiss();
+                        }
+                        mainDialog.dismiss();
+                        Methods.showSnackBarNegative(StoreDataActivity.this, getString(R.string.error_verifying_opc));
+                    }
+                });
+    }
+
+    private void showInvoiceDialog(final ReceiveDraftInvoiceModel invoiceData) {
+        if(invoiceData==null){
+            return;
+        }
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.invoice_dialog_layout);
+
+        TextView tvUserName = (TextView) dialog.findViewById(R.id.tv_username);
+        TextView tvUserEmail = (TextView) dialog.findViewById(R.id.tv_user_email);
+        TextView tvPhoneNumber = (TextView) dialog.findViewById(R.id.tv_user_phone_no);
+        TextView tvNetTotal = (TextView) dialog.findViewById(R.id.tv_net_total);
+        TextView tvTaxes = (TextView) dialog.findViewById(R.id.tv_taxes);
+        TextView tvAmountToBePaid = (TextView) dialog.findViewById(R.id.tv_amount_to_be_paid);
+
+        tvUserName.setText(sessionManager.getFpTag().toLowerCase());
+        tvUserEmail.setText(sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
+        tvPhoneNumber.setText(sessionManager.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
+        double netAmount = 0;
+        for(PurchaseDetail data : invoiceData.getPurchaseDetails()){
+            netAmount+=data.getBasePrice();
+        }
+        tvNetTotal.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " + netAmount + " /-");
+        double taxVal = 0;
+        StringBuilder taxNames= new StringBuilder();
+        //double taxAmount = 0;
+        for(TaxDetail taxData : invoiceData.getPurchaseDetails().get(0).getTaxDetails()){
+            taxVal+=taxData.getValue();
+            taxNames.append(taxData.getKey() + "-" + taxData.getValue() +"%,\n ");
+        }
+        double taxAmount = 0;
+        if(invoiceData.getPurchaseDetails().get(0).getTaxDetails().get(0).getAmountType()==0) {
+            taxAmount = (netAmount * taxVal) / 100;
+        }else {
+            taxAmount = taxVal;
+        }
+
+        tvTaxes.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " + taxAmount + " /-\n" + "( " + taxNames.substring(0, taxNames.length() - 3) + " )");
+
+        tvAmountToBePaid.setText(product.CurrencyCode + " " + (netAmount+taxAmount) + " /-");
+        String packages="";
+        for(int i=0; i<invoiceData.getPurchaseDetails().size(); i++){
+            packages+=invoiceData.getPurchaseDetails().get(i).getPackageName() + " and ";
+        }
+        final String newPackage = packages;
+        final String finalAmount = String.valueOf(Math.round((netAmount + taxAmount) * 100.0) / 100.0);
+        dialog.findViewById(R.id.btn_pay_now).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Intent i = new Intent(StoreDataActivity.this, InstaMojoMainActivity.class);
+                mOrderData = new OrderDataModel(sessionManager.getFpTag(), sessionManager.getFpTag(),
+                        sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
+                        finalAmount, newPackage.substring(0, newPackage.length()-4),
+                        sessionManager.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM),
+                        "NowFloats Package", product.CurrencyCode);
+                i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
+                /*startActivityForResult(i, OPC_REQUEST_CODE);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
+                initiatePaymentProcess(i, invoiceData.getInvoiceId());
+            }
+        });
+
+
+        RecyclerView rvItems = (RecyclerView) dialog.findViewById(R.id.rv_store_items);
+        rvItems.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        ItemsRecyclerViewAdapter adapter = new ItemsRecyclerViewAdapter(invoiceData.getPurchaseDetails(), product.CurrencyCode);
+        rvItems.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = dialog.getWindow();
+        lp.copyFrom(window.getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(lp);
+        dialog.show();
+    }
+
+    private void initiatePaymentProcess(final Intent i, final String invoiceId) {
+        StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("clientId", Constants.clientId);
+        params.put("invoiceId", invoiceId);
+
+        /*
+         *Remove this code
+         */
+        //List<InitiatePaymentModel> supportedpaymentMethods = new ArrayList<>();
+        SupportedPaymentMethods method = null;
+        for (SupportedPaymentMethods paymentMethod : product.SupportedPaymentMethods){
+            if(paymentMethod.Type==1){
+                method = paymentMethod;
+            }
+        }
+        /*SupportedPaymentMethods method = new SupportedPaymentMethods();
+        method.Key = "53d97d8086e9c14b6695e5973cb0b08d";
+        method.PaymentSource = "INSTAMOJO";
+        method.Secret = "a208e391a8a49488b7d204faa50c983d";
+        method.TargetPaymentUri = null;
+        method.Type = 1;*/
+        //supportedpaymentMethods.add(method);
+
+        /*InitiatePaymentModel initiatePaymentModel = new InitiatePaymentModel();
+        initiatePaymentModel.Key = method.Key;
+        initiatePaymentModel.PaymentSource = method.PaymentSource;
+        initiatePaymentModel.Secret = method.Secret;
+        initiatePaymentModel.TargetPaymentUri = null;
+        initiatePaymentModel.Type = method.Type;
+        initiatePaymentModel.RedirectUri = null;
+        initiatePaymentModel.WebHookUri = "http://54.254.184.142/Payment/v1/floatingpoint/instaMojoWebHook";*/
+        if (materialProgress!=null){
+            materialProgress.show();
+        }
+        storeInterface.initiatePaymentProcess(params, /*product.SupportedPaymentMethods.get(0)*/ method, new Callback<PaymentTokenResult>() {
+            @Override
+            public void success(PaymentTokenResult paymentTokenResult, Response response) {
+                if(paymentTokenResult!=null && paymentTokenResult.getResult()!=null) {
+                    i.putExtra(com.romeo.mylibrary.Constants.PAYMENT_REQUEST_IDENTIFIER, paymentTokenResult.getResult().getPaymentRequestId());
+                    i.putExtra(com.romeo.mylibrary.Constants.ACCESS_TOKEN_IDENTIFIER, paymentTokenResult.getResult().getAccessToken());
+                    i.putExtra(com.romeo.mylibrary.Constants.WEB_HOOK_IDENTIFIER, "https://api.withfloats.com/Payment/v1/floatingpoint/instaMojoWebHook?clientId="+Constants.clientId);//change this later
+                    if (materialProgress!=null){
+                        materialProgress.dismiss();
+                    }
+                    startActivityForResult(i, OPC_REQUEST_CODE);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }else {
+                    if (materialProgress!=null){
+                        materialProgress.dismiss();
+                    }
+                    Methods.showSnackBarNegative(StoreDataActivity.this, "Error while processing payment");
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                if (materialProgress!=null){
+                    materialProgress.dismiss();
+                }
+                Methods.showSnackBarNegative(StoreDataActivity.this, "Error while processing payment");
+            }
+        });
+    }
+
+
     private String getInAppProductPrize(){
         try{
             //play store public license key
@@ -453,7 +872,7 @@ public class StoreDataActivity extends AppCompatActivity {
             mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
                 public void onIabSetupFinished(IabResult result) {
                     if (!result.isSuccess()) {
-                        Methods.showSnackBarNegative(StoreDataActivity.this, "Looks like there is an issue with your in-app billing setup. ");
+                        Methods.showSnackBarNegative(StoreDataActivity.this, getString(R.string.looks_an_issue_with_app));
                         materialProgress.dismiss();
                     }else {
                         MixPanelController.track(EventKeysWL.STORE_IN_APP_PURCHASE_INITIATION, null);
@@ -471,7 +890,7 @@ public class StoreDataActivity extends AppCompatActivity {
                                                 if (r.isSuccess()) Log.i("STORE Consume Success", "");
                                             }
                                         });
-                                        Methods.showSnackBarPositive(StoreDataActivity.this,"This pack is already purchased.");
+                                        Methods.showSnackBarPositive(StoreDataActivity.this,getString(R.string.pack_is_already_purchased));
                                         ProductPrice.setText(purchased);
                                         InAppPrize = purchased;
                                         setPrice(InAppPrize);
@@ -499,11 +918,11 @@ public class StoreDataActivity extends AppCompatActivity {
                                                 }
                                             }
                                             materialProgress.dismiss();
-                                            Methods.showSnackBarNegative(StoreDataActivity.this, "Failed to retrieve details. Please go back and try again" );
+                                            Methods.showSnackBarNegative(StoreDataActivity.this, getString(R.string.failed_to_retrive_detail_try) );
                                             return;
                                         }else{
                                             InAppPrize = inv.getSkuDetails(SKU_PACKAGE).getPrice();
-                                            ProductPrice.setText("Pay " +InAppPrize);
+                                            ProductPrice.setText(getString(R.string.pay) +InAppPrize);
                                             setPrice(InAppPrize);
                                             materialProgress.dismiss();
                                         }
@@ -564,7 +983,7 @@ public class StoreDataActivity extends AppCompatActivity {
                             public void onIabPurchaseFinished(IabResult result, Purchase purchase) {
                                 if (result.isFailure()) {
                                     MixPanelController.track(EventKeysWL.STORE_IN_APP_PURCHASE_FAILURE, null);
-                                    Methods.showSnackBarNegative(StoreDataActivity.this, "Purchase failed. Please try again ");
+                                    Methods.showSnackBarNegative(StoreDataActivity.this, getString(R.string.purchase_failed_try));
                                     return;
                                 }else if(result.isSuccess()){
                                     Constants.lastPurchase = purchase;
@@ -619,7 +1038,7 @@ public class StoreDataActivity extends AppCompatActivity {
                     EnablePackBoolean = true;
                     if(ProductPrice!=null)
                         ProductPrice.setText(purchased);
-                    Methods.showSnackBarPositive(StoreDataActivity.this, "Success! Your pack is now activated.");
+                    Methods.showSnackBarPositive(StoreDataActivity.this, getString(R.string.success_pack_is_active));
                     if(result.Result.equals("true") && result.StatusCode.equals("200")){
                         try{
                             MixPanelController.track(EventKeysWL.STORE_IN_APP_PURCHASE_PACKAGE_ACTIVATION, null);
@@ -636,7 +1055,7 @@ public class StoreDataActivity extends AppCompatActivity {
                 @Override
                 public void failure(RetrofitError error) {
                     EnablePackBoolean = true;
-                    Methods.showSnackBarPositive(StoreDataActivity.this, "Something went wrong. Please try again");
+                    Methods.showSnackBarPositive(StoreDataActivity.this, getString(R.string.something_went_wrong_try_again));
                 }
             });
         }catch(Exception e){e.printStackTrace(); EnablePackBoolean = true;}
@@ -708,8 +1127,8 @@ public class StoreDataActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("Start", "onActivityResult(" + requestCode + "," + resultCode + "," + data);
+    protected void onActivityResult(final int requestCode, int resultCode, Intent data) {
+        /*Log.d("Start", "onActivityResult(" + requestCode + "," + resultCode + "," + data);
         // Pass on the activity result to the helper for handling
         if (!mHelper.handleActivityResult(requestCode, resultCode, data)) {
             super.onActivityResult(requestCode, resultCode, data);
@@ -720,8 +1139,276 @@ public class StoreDataActivity extends AppCompatActivity {
                     InAppPurchaseSuccessResponse();
                 }
             }
+        }*/
+        if(requestCode==DIRECT_REQUEST_CODE || requestCode==OPC_REQUEST_CODE && resultCode==RESULT_OK){
+            if(data==null){
+                return;
+            }
+            final boolean success = data.getBooleanExtra(com.romeo.mylibrary.Constants.RESULT_SUCCESS_KEY, false);
+            final String status = data.getStringExtra(com.romeo.mylibrary.Constants.RESULT_STATUS);
+            final String message = data.getStringExtra(com.romeo.mylibrary.Constants.ERROR_MESSAGE);
+            final String paymentId = data.getStringExtra(com.romeo.mylibrary.Constants.PAYMENT_ID);
+            final String transactionId = data.getStringExtra(com.romeo.mylibrary.Constants.TRANSACTION_ID);
+            final String amount = data.getStringExtra(com.romeo.mylibrary.Constants.FINAL_AMOUNT);
+            //sendEmail(success, status, message, paymentId, transactionId, amount);
+            BoostLog.d("TransaCtionId", transactionId);
+            if(success) {
+                if(status.equals("Success")) {
+
+                    MixPanelController.track(EventKeysWL.PAYMENT_SUCCESSFULL, null);
+
+                    /*String msg = "Thank you! \n" +
+                            "The Payment ID for your transaction is " + paymentId +". Your package will be activated within 24 hours. \n" +
+                            "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
+                    showDialog(status, msg);*/
+                    pollServerforStatus(transactionId, paymentId, status);
+                }
+            }else {
+                if(status.equals("Pending")){
+                    String msg = "Alert! \n" +
+                            "Your payment is pending. Once your payment is successful, your package will be activated within 24 hours. The Payment ID for your transaction is " + paymentId +" . \n" +
+                            "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
+                    showDialog(status, msg);
+                }else if (status.equals("Failure")){
+                    String msg = "Sorry! \n" +
+                            "This transaction failed. To retry, please go to the Store and pay again. \n" +
+                            "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
+                    showDialog(status, msg);
+                }
+            }
         }
     }
+
+    private void pollServerforStatus(final String transactionId, final String paymentid, final String status) {
+        if(!materialProgress.isShowing()) {
+            materialProgress.show();
+        }
+        String url = Constants.NOW_FLOATS_API_URL + "/payment/v1/floatingpoint/getPaymentStatus?clientId=" + Constants.clientId +"&paymentRequestId=" + transactionId;
+        JsonObjectRequest request  =new JsonObjectRequest(Request.Method.POST, url, null, new com.android.volley.Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    if (response.getString("Result").equals("SUCCESS")) {
+                        if(materialProgress!=null){
+                            materialProgress.dismiss();
+                            String msg = "Thank you! \n" +
+                                    "The Payment ID for your transaction is " + paymentid +". Your package will be activated within 24 hours. \n" +
+                                    "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
+                            showDialog(status, msg);
+                        }
+                    }else {
+                        pollServerforStatus(transactionId, paymentid, status);
+                    }
+                }catch (JSONException e){
+                    e.printStackTrace();
+                    materialProgress.dismiss();
+                }
+
+            }
+        }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String msg = "Your PaymentId is: " + paymentid + ". Please Contact Customer Support.";
+                materialProgress.dismiss();
+                showDialog(status, msg);
+            }
+        });
+        AppController.getInstance().addToRequstQueue(request);
+    }
+
+    private void redeemOPC(String paymentId, String opc) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("clientId", Constants.clientId);
+        map.put("token", opc);
+        map.put("paymentId", paymentId);
+        IOPCValidation redeemTokenInterface = Constants.restAdapter.create(IOPCValidation.class);
+        redeemTokenInterface.redeemToken(map, new Callback<String>() {
+            @Override
+            public void success(String s, Response response) {
+                BoostLog.d("StoreDataActivity:", "OPC REEDEEM RESPONSE:" + s);
+
+                if(s.equalsIgnoreCase("True")){
+                    BoostLog.d("StoreDataActivity", "OPC REEDEMED");
+                }else {
+                    BoostLog.d("StoreDataActivity", "OPC REEDEMING ERROR");
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                BoostLog.d("StoreDataActivity", "OPC REEDEMING ERROR");
+            }
+        });
+    }
+
+    /*private void sendEmail(boolean success, String status, String message, String paymentId, String transactionId, String amount) {
+        DateFormat df = DateFormat.getTimeInstance();
+        df.setTimeZone(TimeZone.getTimeZone("gmt"));
+        String gmtTime = df.format(new Date());
+        ArrayList<String> to = new ArrayList<>();
+        to.add("opsdesk@nowfloats.com");
+        to.add("findesk@nowfloats.com");
+        String packageName = "N/A";
+        if(mErpId==null){
+            mErpId = "N/A";
+        }
+        if(mOPC==null){
+            mOPC = "N/A";
+        }
+        if(mErpExecutiveMailId==null){
+            mErpExecutiveMailId = "N/A";
+        }else {
+            to.add(mErpExecutiveMailId);
+        }
+        if(mOrderData!=null){
+            packageName = mOrderData.getExpires();
+        }
+
+        String mailBody = String.format("<html><body><div id=\"mail\" style=\"display: none;\">\n" +
+                "   <table style=\"font-family: monospace\" class=\"table message-table message\">\n" +
+                "       <h3>Information regrading payment</h3>\n" +
+                "       <tbody>\n" +
+                "           <tr>\n" +
+                "               <td>Name</td>\n" +
+                "               <td>%s</td>\n" +
+                "           </tr>\n" +
+                "           <tr>\n" +
+                "               <td>FP Tag</td>\n" +
+                "               <td><a href=\"%s\">%s</a></td>\n" +
+                "           </tr>\n" +
+                "           <tr>\n" +
+                "               <td>Status</td>\n" +
+                "               <td>%s</td>\n" +
+                "           </tr>\n" +
+                "           <tr>\n" +
+                "               <td>Payment Id</td>\n" +
+                "               <td>%s</td>\n" +
+                "           </tr>\n" +
+                "           <tr>\n" +
+                "               <td>Request Id</td>\n" +
+                "               <td>%s</td>\n" +
+                "           </tr>\n" +
+                "           <tr>\n" +
+                "               <td>Payment Date</td>\n" +
+                "               <td>%s</td>\n" +
+                "           </tr>\n" +
+                "           <tr>\n" +
+                "               <td>ERP ID</td>\n" +
+                "               <td>%s</td>\n" +
+                "           </tr>\n" +
+                "           <tr>\n" +
+                "               <td>Token</td>\n" +
+                "               <td>%s</td>\n" +
+                "           </tr>\n" +
+                "           <tr>\n" +
+                "               <td><span title=\"token\">OPC </span>Created By</td>\n" +
+                "               <td>%s</td>\n" +
+                "           </tr>\n" +
+                "           <tr>\n" +
+                "               <td>Amounts</td>\n" +
+                "               <td>%s</td>\n" +
+                "           </tr>\n" +
+                "           <tr>\n" +
+                "               <td>Type of Plan</td>\n" +
+                "               <td>%s</td>\n" +
+                "           </tr>\n" +
+                "       </tbody>\n" +
+                "   </table>\n" +
+                "</div></body></html>", sessionManager.getFpTag(), "http://" + sessionManager.getFpTag().toLowerCase() + ".nowfloats.com", sessionManager.getFpTag(),
+                status, paymentId, transactionId, gmtTime, mErpId, mOPC, mErpExecutiveMailId, product.CurrencyCode+ " " +amount + " /-", packageName);
+        MainMailModel mailData =new MainMailModel();
+        mailData._id = "57a6908294aa3c0ee4464a54";
+        mailData.To = to;
+        mailData.From = "ria@nowfloats.com";
+        mailData.EmailBody = mailBody;
+        mailData.Subject = "Hey! Ria here";
+        mailData.ProcessingState = 0;
+        mailData.Type = 0;
+        IOPCValidation sendMailInterface = Constants.restAdapter.create(IOPCValidation.class);
+        sendMailInterface.sendMail(Constants.clientId, mailData, new Callback<String>() {
+            @Override
+            public void success(String s, Response response) {
+                BoostLog.d("StoreDataActivity", "Send Mail REsponse:" + s);
+                if(s.equals("SUCCESSFULLY ADDED TO QUEUE")){
+                    BoostLog.d("StoreDataActivity", "Mail Sent Succesfully");
+                }else {
+                    BoostLog.d("StoreDataActivity", "Error while sending mail");
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                BoostLog.d("StoreDataActivity", "Error while sending mail");
+            }
+        });
+
+    }*/
+
+    private void markAsPaid(String amount) {
+        final ProgressDialog pd = ProgressDialog.show(this, "", "Please wait while activating the package...");
+        ERPRequestModel erpRequstModel = new ERPRequestModel();
+        erpRequstModel._nfInternalERPId = "";
+        erpRequstModel.customerEmailId = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL);
+        erpRequstModel.purchasedUnits = 1;
+        erpRequstModel.sendEmail = true;
+        final MarkAsPaidModel markAsPaid = new MarkAsPaidModel();
+        markAsPaid.ClientId  = "A91B82DE3E93446A8141A52F288F69EFA1B09B1D13BB4E55BE743AB547B3489E";
+        try {
+            markAsPaid.ExpectedAmount = Double.parseDouble(amount);
+        }catch (Exception e){
+            if(pd!=null && pd.isShowing()){
+                pd.dismiss();
+            }
+            Toast.makeText(this, "Error while marking the FP paid", Toast.LENGTH_LONG).show();
+            return;
+        }
+        markAsPaid.type = 1;
+        markAsPaid.validityInMths = product.ValidityInMths;
+        markAsPaid.FpId = sessionManager.getFPID();
+        markAsPaid.FpTag  =sessionManager.getFpTag();
+        markAsPaid.IsPaid = true;
+        markAsPaid.currencyCode = product.CurrencyCode;
+        markAsPaid.packageId = product._id;
+        markAsPaid.customerSalesOrderRequest = erpRequstModel;
+        IOPCValidation markAsPaidInterface = Constants.restAdapter.create(IOPCValidation.class);
+        markAsPaidInterface.markAsPaid(markAsPaid, new Callback<String>() {
+            @Override
+            public void success(String s, Response response) {
+                BoostLog.d("StoreDataActivity", "Mark As paid response:" + s);
+                if(pd!=null && pd.isShowing()){
+                    pd.dismiss();
+                }
+                if(s!=null && s.contains("OK")) {
+                    showDialog("Activated", "Your package is successfully activated");
+                }else if(s!=null && s.contains("NFINV")){
+                    showDialog("Activated", "Your package is successfully activated with Invoice Number: " + s);
+                }else{
+                    showDialog("Error", "Error while activating the package. Please Contact Customer Support");
+                    BoostLog.d("StoreDataActivity", " Response not ok");
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                if(pd!=null && pd.isShowing()){
+                    pd.dismiss();
+                }
+                showDialog("Error", "Error while activating the package");
+            }
+        });
+    }
+
+    private void showDialog(String title, String msg){
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+        builder.setTitle(title).setMessage(msg).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
 
     @Subscribe
     public void post_getFPDetails(Get_FP_Details_Event response)

@@ -107,7 +107,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         saveTextView = (ImageView) toolbar.findViewById(R.id.saveTextView);
         saveTextView.setColorFilter(whitecolorFilter);
         TextView titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
-        titleTextView.setText("Basic Information");
+        titleTextView.setText(getResources().getString(R.string.basic_info));
 
 
         setSupportActionBar(toolbar);
@@ -421,7 +421,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
             {
 
                 //Util.toast("Business Name has to be more than 3 characters", this);
-                Methods.showSnackBarNegative(Edit_Profile_Activity.this,"Business Name should be more than 3 letters");
+                Methods.showSnackBarNegative(Edit_Profile_Activity.this,getResources().getString(R.string.business_name_more_than_3char));
                 allBoundaryCondtn=false;
             }
             try {
@@ -542,7 +542,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
             }
         //}
 
-        if(session.getIsSignUpFromFacebook().contains("true"))
+        if(session.getIsSignUpFromFacebook().contains("true") && !Util.isNullOrEmpty(session.getFacebookPageURL()))
         {
             Picasso.with(Edit_Profile_Activity.this)
                     .load(session.getFacebookPageURL()).placeholder(R.drawable.featured_photo_default)
@@ -626,7 +626,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
             }
         } catch (ActivityNotFoundException anfe) {
             // display an error message
-            String errorMessage = "Whoops - your device doesn't support capturing images!";
+            String errorMessage = getString(R.string.device_does_not_support_capturing_image);
             // Util.toast(errorMessage, FloatAnImage.this);
 
         }
@@ -650,7 +650,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
             }
         } catch (ActivityNotFoundException anfe) {
             // display an error message
-            String errorMessage = "Whoops - your device doesn't support capturing images!";
+            String errorMessage = getString(R.string.device_does_not_support_capturing_image);
             Toast toast = Toast.makeText(getApplicationContext(),
                     errorMessage, Toast.LENGTH_SHORT);
             toast.show();
@@ -691,12 +691,12 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                     E.printStackTrace();
                     CameraBitmap.recycle();
                     System.gc();
-                    Methods.showSnackBar(Edit_Profile_Activity.this, "Try again....");
+                    Methods.showSnackBar(Edit_Profile_Activity.this,getResources().getString(R.string.try_again));
                 }
 
                 if (!Util.isNullOrEmpty(path)) {
                     uploadPrimaryPicture(path);
-                }  else Methods.showSnackBar(Edit_Profile_Activity.this, "Please select an image to upload");
+                }  else Methods.showSnackBar(Edit_Profile_Activity.this, getResources().getString(R.string.select_image_upload));
             }
             else if (resultCode == RESULT_OK && (GALLERY_PHOTO == requestCode)) {
                 {
@@ -707,7 +707,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                         if (!Util.isNullOrEmpty(path)) {
                             uploadPrimaryPicture(path);
                         } else
-                            Toast.makeText(getApplicationContext(), "Please select an image to upload",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), getResources().getString(R.string.select_image_upload),Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -793,7 +793,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
 
-            pd = ProgressDialog.show(Edit_Profile_Activity.this, "", "Wait While Loading Categories...");
+            pd = ProgressDialog.show(Edit_Profile_Activity.this, "", getResources().getString(R.string.wait_while_loading_category));
             //return
         }
 
@@ -812,7 +812,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                 pd.dismiss();
             }
             new MaterialDialog.Builder(Edit_Profile_Activity.this)
-                    .title("Select a Category")
+                    .title(getString(R.string.select_category))
                     .items(Constants.storeBusinessCategories)
                     .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
                         @Override

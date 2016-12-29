@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
@@ -89,7 +87,7 @@ public class Mobile_Site_Activity extends AppCompatActivity {
                             if (progressDialog == null) {
                                 // in standard case YourActivity.this
                                 progressDialog = new ProgressDialog(Mobile_Site_Activity.this);
-                                progressDialog.setMessage("Loading...");
+                                progressDialog.setMessage(getString(R.string.loading));
                                 progressDialog.show();
                             }
                         }

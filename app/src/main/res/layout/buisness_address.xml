@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:hint="House number, Building Name"/>
+            android:hint="@string/house_number_building_name"/>
         <ImageView
             android:id="@+id/locationImageView"
             android:layout_width="36dp"
@@ -39,13 +39,13 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="City"
+            android:hint="@string/enter_city"
             android:inputType="text"
             android:layout_weight="1"/>
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="PinCode"
+            android:hint="@string/pincode"
             android:inputType="number"
             android:layout_weight="1"/>
         </LinearLayout>
@@ -58,7 +58,8 @@
         android:layout_below="@id/citynzipCode"
         android:editable="false"
         android:drawableEnd="@drawable/drop_down_arrow"
-        android:hint="Country"/>
+        android:hint="@string/select_country"
+        android:drawableRight="@drawable/drop_down_arrow" />
 
     <EditText
         android:layout_width="match_parent"
@@ -68,7 +69,8 @@
         android:editable="false"
         android:layout_below="@id/country"
         android:drawableEnd="@drawable/drop_down_arrow"
-        android:hint="State"/>
+        android:hint="@string/select_state"
+        android:drawableRight="@drawable/drop_down_arrow" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -81,12 +83,12 @@
             android:id="@+id/backButton"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="BACK"/>
+            android:text="@string/back_in_capital"/>
         <Button
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="NEXT"/>
+            android:text="@string/next_in_capital"/>
 
     </LinearLayout>
 

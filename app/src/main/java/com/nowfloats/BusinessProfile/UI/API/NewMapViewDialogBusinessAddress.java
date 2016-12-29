@@ -2,8 +2,6 @@ package com.nowfloats.BusinessProfile.UI.API;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -25,7 +23,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.nowfloats.util.Methods;
-import com.thinksity.Manifest;
 import com.thinksity.R;
 import com.nowfloats.util.Constants;
 

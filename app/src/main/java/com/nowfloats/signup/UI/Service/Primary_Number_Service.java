@@ -4,9 +4,7 @@ import android.app.Activity;
 
 import com.nowfloats.signup.UI.API.Retro_Signup_Interface;
 import com.nowfloats.signup.UI.Model.Primary_Number_Event;
-import com.nowfloats.signup.UI.Model.Primary_Number_Validation_Model;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.Methods;
 import com.squareup.otto.Bus;
 
 import java.util.HashMap;

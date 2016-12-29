@@ -37,7 +37,7 @@ public class TokenRequest extends AsyncTask<Void, Void, String> {
     protected void onPreExecute() {
         super.onPreExecute();
         mPostProgress = new ProgressDialog(mContext);
-        mPostProgress.setMessage("Redirecting to twitter, Please wait ...");
+        mPostProgress.setMessage(mContext.getString(R.string.redirecting_to_twitter_wait));
         mPostProgress.setCancelable(false);
         mPostProgress.show();
     }

@@ -2,8 +2,6 @@ package com.nowfloats.Store.Model;
 
 import android.util.Log;
 
-import java.util.ArrayList;
-
 /**
  * Created by guru on 04-05-2015.
  */

@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     fontPath="Roboto-Medium.ttf"
                     android:textColor="@color/primaryColor"
-                    android:text="Share your website"
+                    android:text="@string/share_website"
                     android:textSize="16sp"
                     android:id="@+id/titleText"
                     tools:ignore="MissingPrefix" />
@@ -62,7 +62,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tell the world about your business share it on facebook and twitterTell the world about your business share it on facebook and twitterTell the world about your business share it on facebook and twitterTell the world about your business share it on facebook and twitterTell the world about your business share it on facebook and twitterTell the world about your business share it on facebook and twitter"
+                    android:text="@string/tell_world_about_your_business_on_facebook_twitter"
                     android:textColor="@color/main_text_color"
                     fontPath="Roboto-Light.ttf"
                     android:textSize="13sp"
@@ -82,7 +82,7 @@
                         android:layout_height="34dp"
                         fontPath="Roboto-Medium.ttf"
                         android:singleLine="true"
-                        android:text="Search"
+                        android:text="@string/search"
                         android:textSize="14sp"
                         android:textColor="@color/white"
                         android:background="@drawable/selector"
@@ -95,7 +95,7 @@
                         android:textColor="@color/main_text_color"
                         fontPath="Roboto-Light.ttf"
                         android:textSize="9sp"
-                        android:text="Know more"
+                        android:text="@string/know_more"
                         android:layout_gravity="right"
                         android:id="@+id/created_date"
                         tools:ignore="MissingPrefix" />

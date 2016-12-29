@@ -1,9 +1,5 @@
 package com.nowfloats.signup.UI.Model;
 
-import com.nowfloats.Store.Model.StoreModel;
-
-import java.util.ArrayList;
-
 /**
  * Created by NowFloatsDev on 13/05/2015.
  */

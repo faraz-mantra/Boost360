@@ -311,7 +311,7 @@ public class Image_Gallery_Fragment extends Fragment implements
             }
         } catch (ActivityNotFoundException anfe) {
             // display an error message
-            String errorMessage = "Whoops - your device doesn't support capturing images!";
+            String errorMessage = getString(R.string.device_does_not_support_capturing_image);
             // Util.toast(errorMessage, FloatAnImage.this);
 
         }
@@ -325,7 +325,7 @@ public class Image_Gallery_Fragment extends Fragment implements
         MixPanelController.track("AddImage",null);
         View view = dialog.getCustomView();
         TextView header = (TextView) view.findViewById(R.id.textview_heading);
-        header.setText("Add Photo");
+        header.setText(getString(R.string.add_photo));
         LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
         LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
         ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
@@ -367,14 +367,13 @@ public class Image_Gallery_Fragment extends Fragment implements
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 //intent.setType("image/*");
                 startActivityForResult(
-                        Intent.createChooser(intent, "Select File"),
+                        Intent.createChooser(intent, getString(R.string.select_file)),
                         PICK_FROM_GALLERY);
             }
         } catch (ActivityNotFoundException anfe) {
             // display an error message
-            String errorMessage = "Whoops - your device doesn't support capturing images!";
-            Toast toast = Toast.makeText(getActivity(),
-                    errorMessage, Toast.LENGTH_SHORT);
+            String errorMessage = getString(R.string.device_does_not_support_capturing_image);
+            Toast toast = Toast.makeText(getActivity(),errorMessage, Toast.LENGTH_SHORT);
             toast.show();
         }
     }

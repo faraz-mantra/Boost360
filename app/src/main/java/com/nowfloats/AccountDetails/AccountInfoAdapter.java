@@ -74,11 +74,11 @@ public class AccountInfoAdapter extends RecyclerView.Adapter<AccountInfoAdapter.
                 }
                 holder.exp_date.setText(detail.totalMonthsValidity);
                 if(Methods.compareDate(date1,new Date())){
-                    holder.status.setText("ACTIVE");
+                    holder.status.setText(activity.getResources().getString(R.string.active));
                     holder.status.setTextColor(activity.getResources().getColor(R.color.green));
                     holder.purchase.setVisibility(View.GONE);
                 }else {
-                    holder.status.setText("EXPIRED");
+                    holder.status.setText(activity.getResources().getString(R.string.expired));
                     holder.status.setTextColor(activity.getResources().getColor(android.R.color.holo_red_light));
                     holder.purchase.setVisibility(View.VISIBLE);
                     holder.purchase.setOnClickListener(new View.OnClickListener() {

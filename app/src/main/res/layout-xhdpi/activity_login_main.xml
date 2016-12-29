@@ -54,7 +54,7 @@
                     android:inputType="text"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:hint="username"
+                    android:hint="@string/username"
 
                     />
 
@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="bottom"
                     android:inputType="textPassword"
-                    android:hint="password"
+                    android:hint="@string/password"
                     android:tag="pwd"/>
             </LinearLayout>
 
@@ -130,7 +130,7 @@
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         android:layout_gravity="center"
-                        android:text="LOG IN"
+                        android:text="@string/log_in"
                         fontPath="Roboto-Medium.ttf"/>
 
                     <LinearLayout
@@ -145,7 +145,7 @@
                 android:id="@+id/forgotPwdTextView"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="forgot your password"
+                android:text="@string/forgot_your_password"
                 android:textSize="13sp"
                 android:layout_marginTop="20dp"
                 android:gravity="center_horizontal"

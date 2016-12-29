@@ -43,53 +43,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/storeRow_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/sidepanel_cell_height"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:background="@color/cell_background_color">
-
-            <ImageView
-                android:id="@+id/storeRow_ImageView"
-                android:layout_width="@dimen/icon_size"
-                android:scaleType="fitXY"
-                android:layout_height="@dimen/icon_size"
-                android:padding="5dp"
-                android:src="@drawable/sidepanel_store"
-                android:layout_marginLeft="@dimen/icon_left_margin"
-                android:layout_marginRight="@dimen/icon_right_margin" />
-
-            <TextView
-                android:id="@+id/storeRow_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/cell_text_size"
-                android:textColor="@color/cell_text_color"
-                android:text="@string/store" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:gravity="right">
-
-                <Button
-                    android:layout_width="80dp"
-                    android:layout_height="27dp"
-                    android:padding="3dp"
-                    android:layout_gravity="right"
-                    android:textColor="@color/white"
-                    android:text="UPGRADE"
-                    android:clickable="false"
-                    android:textSize="12sp"
-                    fontPath="Roboto-Regular.ttf"
-                    android:background="@drawable/corner_white_backgrnd_yellow"
-                    tools:ignore="MissingPrefix" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/secondRow_Layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/sidepanel_cell_height"
@@ -147,7 +100,7 @@
 
 
 
-        <LinearLayout
+        <!--<LinearLayout
             android:id="@+id/thirdRow_Layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/sidepanel_cell_height"
@@ -210,7 +163,7 @@
 
             </RelativeLayout>
 
-        </LinearLayout>
+        </LinearLayout>-->
         <LinearLayout
             android:id="@+id/product_gal_Layout"
             android:layout_width="match_parent"
@@ -237,7 +190,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/cell_text_size"
                 android:textColor="@color/cell_text_color"
-                android:text="Product Gallery" />
+                android:text="@string/product_gallery" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -351,6 +304,53 @@
             </LinearLayout>
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/storeRow_Layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sidepanel_cell_height"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@color/cell_background_color">
+
+            <ImageView
+                android:id="@+id/storeRow_ImageView"
+                android:layout_width="@dimen/icon_size"
+                android:scaleType="fitXY"
+                android:layout_height="@dimen/icon_size"
+                android:padding="5dp"
+                android:src="@drawable/sidepanel_store"
+                android:layout_marginLeft="@dimen/icon_left_margin"
+                android:layout_marginRight="@dimen/icon_right_margin" />
+
+            <TextView
+                android:id="@+id/storeRow_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/cell_text_size"
+                android:textColor="@color/cell_text_color"
+                android:text="@string/store" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:gravity="right">
+
+                <Button
+                    android:layout_width="80dp"
+                    android:layout_height="27dp"
+                    android:padding="3dp"
+                    android:layout_gravity="right"
+                    android:textColor="@color/white"
+                    android:text="@string/single_row_card_upgrade_text"
+                    android:clickable="false"
+                    android:textSize="12sp"
+                    fontPath="Roboto-Regular.ttf"
+                    android:background="@drawable/corner_white_backgrnd_yellow"
+                    tools:ignore="MissingPrefix" />
+            </LinearLayout>
+        </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/fifthRow_Layout"
@@ -439,6 +439,37 @@
                     android:textStyle="bold"/>
 
             </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_get_in_touch"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sidepanel_cell_height"
+            android:background="@color/cell_background_color"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:tint="#808080"
+                android:id="@+id/iv_get_in_touch"
+                android:layout_width="30dp"
+                android:scaleType="fitXY"
+                android:layout_height="30dp"
+                android:padding="5dp"
+                android:src="@drawable/icon_feedback"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="@dimen/icon_right_margin" />
+
+            <TextView
+                android:id="@+id/tv_get_in_touch"
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/cell_text_size"
+                android:textColor="@color/cell_text_color"
+                android:text="@string/feedback" />
 
         </LinearLayout>
 

@@ -1,7 +1,6 @@
 package com.nowfloats.signup.UI.Service;
 
 import android.app.Activity;
-import android.service.media.MediaBrowserService;
 import android.util.Log;
 
 import com.nowfloats.CustomWidget.MaterialProgressBar;
@@ -11,8 +10,8 @@ import com.nowfloats.signup.UI.Model.ValidationEvent;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.squareup.otto.Bus;
+import com.thinksity.R;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,7 +42,7 @@ public class Email_Service {
                 public void failure(RetrofitError error) {
                     MaterialProgressBar.dismissProgressBar();
                   //  bus.post(new ValidationEvent(email_validation));
-                    Methods.showSnackBarNegative(activity, "Email validation failed");
+                    Methods.showSnackBarNegative(activity, activity.getString(R.string.email_validation__failed));
                 }
             });
         } catch (Exception e) {

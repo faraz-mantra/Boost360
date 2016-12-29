@@ -38,6 +38,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+
 /**
  * Created by guru on 09-06-2015.
  */
@@ -78,14 +79,14 @@ public class CreateCustomPageActivity extends AppCompatActivity{
         deletePage.setVisibility(View.GONE);
         TextView title = (TextView) toolbar.findViewById(R.id.titleProduct);
         title.setVisibility(View.VISIBLE);
-        title.setText("New Page");
+        title.setText(getString(R.string.new_page));
         save.setImageResource(R.drawable.checkmark_icon);
         session = new UserSessionManager(getApplicationContext(),activity);
 
         editor = (HorizontalScrollView)findViewById(R.id.rich_editer);
         titleTxt = (EditText)findViewById(R.id.titleEdit);
         richText = (RichEditor)findViewById(R.id.subtextEdit);
-        richText.setPlaceholder("Describe in detail. Use custom layout features like indents, bullet points and heading styles to format your text. Add images and links to enhance your content.");
+        richText.setPlaceholder(getString(R.string.custom_page_details));
 
         if(getIntent().hasExtra("name")){
             curName = getIntent().getStringExtra("name");
@@ -140,16 +141,16 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                 final String name = titleTxt.getText().toString(),html = mHtmlFormat;
                 if (!(titleTxt.getText().toString().trim().length()>0)){
                     flag = false;
-                    Methods.showSnackBarNegative(activity,"Enter the title");
+                    Methods.showSnackBarNegative(activity,getString(R.string.enter_the_title));
                 }else if(!(html.trim().length()>0)){
                     flag = false;
-                    Methods.showSnackBarNegative(activity,"Enter the description");
+                    Methods.showSnackBarNegative(activity,getString(R.string.enter_the_description));
                 }
                 CustomPageInterface anInterface = Constants.restAdapter.create(CustomPageInterface.class);
                 if (flag){
                     final MaterialDialog materialProgress = new MaterialDialog.Builder(activity)
                             .widgetColorRes(R.color.accentColor)
-                            .content("Loading....")
+                            .content(getString(R.string.loading))
                             .progress(true, 0)
                             .show();
                     materialProgress.setCancelable(false);
@@ -166,10 +167,10 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                                         MixPanelController.track("CreateCustomPage", null);
                                         long time = System.currentTimeMillis();
                                         CustomPageActivity.dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
-                                        Methods.showSnackBarPositive(activity, "Page Successfully created");
+                                        Methods.showSnackBarPositive(activity, getString(R.string.page_successfully_created));
                                         finish();
                                     }else{
-                                        Methods.showSnackBarNegative(activity, "Enter different Title and try again");
+                                        Methods.showSnackBarNegative(activity, getString(R.string.enter_different_title_try_again));
                                         //Log.d("Create page Fail", "");
                                     }
                                 }
@@ -177,7 +178,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                                 @Override
                                 public void failure(RetrofitError error) {
                                     materialProgress.dismiss();
-                                    Methods.showSnackBarNegative(activity, "Something went wrong,Try again");
+                                    Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
                                     //Log.d("Create page Fail", "" + error.getMessage());
                                 }
                             });
@@ -195,19 +196,19 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                                     MixPanelController.track("UpdateCustomPage", null);
                                     //Log.d("Update page success", "");
                                     CustomPageActivity.dataModel.get(curPos).DisplayName = name;
-                                    Methods.showSnackBarPositive(activity, "Page updated ");
+                                    Methods.showSnackBarPositive(activity, getString(R.string.page_updated));
                                     finish();
                                 }
 
                                 @Override
                                 public void failure(RetrofitError error) {
                                     materialProgress.dismiss();
-                                    Methods.showSnackBarNegative(activity, "Something went wrong,Try again");
+                                    Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
                                     //Log.d("Update page Fail", "" + error.getMessage());
                                 }
                             });
                         }
-                    }catch(Exception e){e.printStackTrace(); Methods.showSnackBarNegative(activity, "Something went wrong,Try again"); materialProgress.dismiss();}
+                    }catch(Exception e){e.printStackTrace(); Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again)); materialProgress.dismiss();}
                 }
             }
         });
@@ -382,7 +383,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
         findViewById(R.id.action_insert_image).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showUrlDialog("Enter Image Url", 1);
+                showUrlDialog(getString(R.string.enter_image_url), 1);
 
             }
         });
@@ -390,7 +391,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
        findViewById(R.id.action_insert_link).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showUrlDialog("Enter Hyperlink Url", 2);
+                showUrlDialog(getString(R.string.enter_hyperlink_url), 2);
             }
         });
     }
@@ -427,13 +428,13 @@ public class CreateCustomPageActivity extends AppCompatActivity{
             et_tag.setVisibility(View.VISIBLE);
         }
         et_url.setHint(msg);
-        builder.setView(v).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setView(v).setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String url = et_url.getText().toString().trim();
                 if(url_id==1 && !url.isEmpty())
                 {
-                    richText.insertImage(url, "No image");
+                    richText.insertImage(url, getString(R.string.no_image));
                 }
                 else if(url_id==2 && !url.isEmpty())
                 {
@@ -446,7 +447,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
 
             }
               })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

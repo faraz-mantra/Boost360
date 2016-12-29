@@ -79,7 +79,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
            android:layout_below="@id/iconImage"
-            android:text="Float Point Name"
+            android:text="@string/float_point_name"
             android:singleLine="true"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
@@ -129,7 +129,7 @@
                 <com.nowfloats.CustomWidget.roboto_md_36_bcbcbc
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Site Complete"
+                    android:text="@string/percent_site_completed"
                     android:layout_marginLeft="3dp">
 
                 </com.nowfloats.CustomWidget.roboto_md_36_bcbcbc>
@@ -138,7 +138,7 @@
                 <com.nowfloats.CustomWidget.roboto_md_36_289dd9
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="What's Missing?"
+                    android:text="@string/what_is_missing"
                     android:layout_gravity="right|bottom"
                     android:layout_marginRight="20dp"
 
@@ -177,6 +177,7 @@
 
 
 
+
     <LinearLayout
         android:id="@+id/versionCodeName"
         android:layout_width="fill_parent"
@@ -184,14 +185,43 @@
         android:orientation="horizontal"
         android:layout_below="@+id/navigationDrawer_main_leftPane"
         android:gravity="center_horizontal"
-
         android:layout_marginBottom="2dp"
-        android:layout_marginTop="40dp">
+        android:layout_marginTop="20dp">
 
+        <com.nowfloats.CustomWidget.roboto_lt_36_565656
+
+            android:id="@+id/version_text"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="@string/version"/>
+
+        <com.nowfloats.CustomWidget.roboto_lt_36_565656
+            android:id="@+id/version_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""/>
 
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/versionCodeName"
+        android:layout_centerHorizontal="true">
+        <com.nowfloats.CustomWidget.roboto_lt_36_565656
+            android:id="@+id/poweredBy"
+            android:layout_below="@+id/versionCodeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/powered_by"/>
 
+        <com.nowfloats.CustomWidget.roboto_md_36__565656
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/versionCodeName"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/poweredBy"
+            android:text="@string/nowfloats"/>
+    </LinearLayout>
 
 
 

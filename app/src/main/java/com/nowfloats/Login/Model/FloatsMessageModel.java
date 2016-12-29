@@ -13,6 +13,7 @@ public class FloatsMessageModel implements Parcelable{
     public String message;
     public String tileImageUri;
     public String type;
+    public String url;
 
     public FloatsMessageModel(Parcel in) {
         this._id = in.readString();
@@ -21,15 +22,17 @@ public class FloatsMessageModel implements Parcelable{
         this.message = in.readString();
         this.tileImageUri = in.readString();
         this.type = in.readString();
+        this.url =in.readString();
     }
 
-    public FloatsMessageModel(String id,String createdOn,String imageUri,String message,String tileImageUri,String type) {
+    public FloatsMessageModel(String id,String createdOn,String imageUri,String message,String tileImageUri,String type, String url) {
         this._id = id;
         this.createdOn = createdOn;
         this.imageUri = imageUri;
         this.message = message;
         this.tileImageUri = tileImageUri;
         this.type = type;
+        this.url = url;
     }
 
     @Override
@@ -45,6 +48,7 @@ public class FloatsMessageModel implements Parcelable{
         parcel.writeString(message);
         parcel.writeString(tileImageUri);
         parcel.writeString(type);
+        parcel.writeString(url);
     }
 
      public static final Parcelable.Creator<FloatsMessageModel> CREATOR = new Parcelable.Creator<FloatsMessageModel>() {

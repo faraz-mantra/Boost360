@@ -22,24 +22,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
-import android.widget.CheckBox;
-import android.widget.TextView;
-
-import com.nowfloats.util.Constants;
-import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 public class Create_Facebook_AutoPost extends AsyncTask<Void, String, String> {
 
     private SharedPreferences pref = null;

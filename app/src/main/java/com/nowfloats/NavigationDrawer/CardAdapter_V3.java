@@ -163,6 +163,14 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                 }
             });
         } else {
+            String mainFpUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+            if (!Util.isNullOrEmpty(mainFpUrl)) {
+                mainFpUrl = mainFpUrl.toLowerCase();
+            }else{
+                mainFpUrl = "http://"+ session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
+                        + appContext.getResources().getString(R.string.tag_for_partners);
+            }
+            final String finalFpUrl = mainFpUrl;
             final TextView textView1 = holder.textView ;
             TextView dateText = holder.dateText ;
             ImageView imageView = holder.imageView;
@@ -181,7 +189,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                             pd = ProgressDialog.show(appContext, "", "Sharing . . .");
                         }
                     });
-                    final Intent shareIntent = new Intent();
+                    final Intent shareIntent = new Intent(Intent.ACTION_SEND);
                     if (!imageShare.contains("/Tile/deal.png") && !Util.isNullOrEmpty(imageShare)) {
                         if (Methods.isOnline(appContext)) {
                             String url;
@@ -203,14 +211,16 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                                                 String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
                                                 BoostLog.d("Path is:", path);
                                                 Uri uri = Uri.parse(path);
-                                                shareIntent.setType("image/png");
+                                                shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
+                                                        finalFpUrl + "/bizFloat/" + HomeActivity.StorebizFloats.get(position)._id);
                                                 shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-                                                shareIntent.setAction(Intent.ACTION_SEND);
-                                                shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message);
+                                                shareIntent.setType("image/*");
+
+
                                                 if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
-                                                    appContext.startActivityForResult(Intent.createChooser(shareIntent, "Share your message"), 1);
+                                                    appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
                                                 } else {
-                                                    Methods.showSnackBarNegative(appContext, "No apps available for the action");
+                                                    Methods.showSnackBarNegative(appContext,appContext.getString(R.string.no_app_available_for_action));
                                                 }
                                             }catch (Exception e){
                                                 ActivityCompat.requestPermissions(appContext, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA}, 2);
@@ -220,7 +230,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                                         @Override
                                         public void onBitmapFailed(Drawable errorDrawable) {
                                             pd.dismiss();
-                                            Methods.showSnackBarNegative(appContext, "Failed to download Image");
+                                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
 
                                         }
 
@@ -233,19 +243,19 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
 
                         } else {
                             pd.dismiss();
-                            Methods.showSnackBarNegative(appContext, "Can't Share image content in Offline Mode");
+                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.can_not_share_image_offline_mode));
                         }
 
 
                     } else {
                         pd.dismiss();
                         shareIntent.setType("text/plain");
-                        shareIntent.setAction(Intent.ACTION_SEND);
-                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message);
+                        shareIntent.putExtra(Intent.EXTRA_TEXT, HomeActivity.StorebizFloats.get(position).message + " View more at: " +
+                                finalFpUrl + "/bizFloat/" + HomeActivity.StorebizFloats.get(position)._id);
                         if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
-                            appContext.startActivityForResult(Intent.createChooser(shareIntent, "Share your message"), 1);
+                            appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
                         } else {
-                            Methods.showSnackBarNegative(appContext, "No apps available for the action");
+                            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
                         }
 
                     }
@@ -338,7 +348,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
             }
             if (!targetShareIntents.isEmpty()) {
                 System.out.println("Have Intent");
-                Intent chooserIntent = Intent.createChooser(targetShareIntents.remove(0), "Choose app to share");
+                Intent chooserIntent = Intent.createChooser(targetShareIntents.remove(0), appContext.getString(R.string.no_app_to_share));
                 chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetShareIntents.toArray(new Parcelable[]{}));
                 appContext.startActivity(chooserIntent);
             }
@@ -381,7 +391,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                         targetedShareIntents.add(targetedShare);
                     }
                 }
-                Intent chooserIntent = Intent.createChooser(targetedShareIntents.remove(0), "Share");
+                Intent chooserIntent = Intent.createChooser(targetedShareIntents.remove(0), appContext.getString(R.string.share));
                 chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toArray(new Parcelable[]{}));
                 appContext.startActivity(chooserIntent);
             }

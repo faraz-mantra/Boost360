@@ -33,7 +33,7 @@ public class FAQMainAcivity extends ActionBarActivity {
         toolbar = (Toolbar)findViewById(R.id.app_bar_faq_main);
         setSupportActionBar(toolbar);
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
-        headerText.setText("FAQs");
+        headerText.setText(getResources().getString(R.string.faqs));
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

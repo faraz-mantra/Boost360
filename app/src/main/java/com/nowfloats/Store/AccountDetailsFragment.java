@@ -2,7 +2,6 @@ package com.nowfloats.Store;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,24 +9,26 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.nowfloats.AccountDetails.AccountInfoAdapter;
 import com.nowfloats.AccountDetails.Model.AccountDetailModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Adapters.StoreAdapter;
-import com.nowfloats.util.Constants;
-import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.Store.Model.StoreEvent;
+import com.nowfloats.Store.Model.StoreModel;
+import com.nowfloats.util.BusProvider;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 import retrofit.http.GET;
 import retrofit.http.QueryMap;
 
@@ -40,6 +41,10 @@ public class AccountDetailsFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     Activity activity;
     UserSessionManager session;
+    LinearLayout zerothLayout;
+    LinearLayout progressLayout;
+    Bus bus;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,7 @@ public class AccountDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.account_info_fragment, container, false);
+        bus = BusProvider.getInstance().getBus();
         return view;
     }
 
@@ -61,8 +67,8 @@ public class AccountDetailsFragment extends Fragment {
         layoutManager = new LinearLayoutManager(activity);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        LinearLayout zerothLayout = (LinearLayout)view.findViewById(R.id.zeroth_layout);
-        final LinearLayout progressLayout = (LinearLayout)view.findViewById(R.id.progress_accinfo_layout);
+        zerothLayout = (LinearLayout)view.findViewById(R.id.zeroth_layout);
+        progressLayout = (LinearLayout)view.findViewById(R.id.progress_accinfo_layout);
         progressLayout.setVisibility(View.VISIBLE);
 
         StoreAdapter adapter = new StoreAdapter(activity, StoreFragmentTab.activeWidgetModels,"active", session);
@@ -114,6 +120,40 @@ public class AccountDetailsFragment extends Fragment {
                 }
             });
         }catch (Exception e){e.printStackTrace(); progressLayout.setVisibility(View.GONE);}*/
+    }
+
+    @Subscribe
+    public void getStoreList(StoreEvent response){
+        List<StoreModel> storeModel = (ArrayList<StoreModel>)response.model.AllPackages;
+//        storeModel = filterData(storeModel);
+        if(storeModel!=null){
+            if (storeModel.size()==0){
+                zerothLayout.setVisibility(View.VISIBLE);
+            }else {
+                zerothLayout.setVisibility(View.GONE);
+            }
+            progressLayout.setVisibility(View.GONE);
+            adapter = new StoreAdapter(activity, StoreFragmentTab.activeWidgetModels,"active", session);
+            AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(adapter);
+            ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(alphaAdapter);
+            scaleAdapter.setFirstOnly(false);
+            scaleAdapter.setInterpolator(new OvershootInterpolator());
+            recyclerView.setAdapter(scaleAdapter);
+        }else{
+            zerothLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        bus.register(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        bus.unregister(this);
     }
 
     public interface AccInfoInterface{

@@ -4,54 +4,17 @@ package com.nowfloats.signup.UI.API;
  * Created by NowFloatsDev on 10/06/2015.
  */
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
-import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
-import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
-import com.nowfloats.NavigationDrawer.RoundCorners_image;
-import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.Methods;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.UUID;
-
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-
-import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
-import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
-import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
-import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.NavigationDrawer.RoundCorners_image;
-import com.nowfloats.NavigationDrawer.SidePanelFragment;
-import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.nowfloats.util.Constants;
-import com.nowfloats.util.Key_Preferences;
-import com.nowfloats.util.Methods;
-
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -125,6 +88,9 @@ public class uploadFeaturedImage_Facebook extends AsyncTask<Void,String, String>
     public void uploadImage(Bitmap imagePath){
 //        FileInputStream fileInputStream = null;
 //        File img = new File(imagePath);
+        if(imagePath==null){
+            return;
+        }
       ByteArrayOutputStream bos = new ByteArrayOutputStream();
 //        byte[] buf = new byte[1024];
 //        File f = new File(img.getAbsolutePath() + File.separator );

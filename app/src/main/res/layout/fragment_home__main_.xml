@@ -6,8 +6,6 @@
     android:background="@color/screen_bg"
     tools:context="recycle.card.com.cardview.mainpackage.tab_Home_Fragment">
 
-
-
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -48,7 +46,7 @@
                         fontPath="Roboto-Medium.ttf"
                         android:gravity="center"
                         android:textSize="18sp"
-                        android:text="Retry"
+                        android:text="@string/retry"
                         android:textColor="@color/retry_txt"
                         tools:ignore="MissingPrefix" />
                 </LinearLayout>
@@ -69,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="18sp"
-                    android:text="Cancel"
+                    android:text="@string/cancel"
                     android:textColor="@color/retry_txt"
                     tools:ignore="MissingPrefix" />
             </LinearLayout>
@@ -116,7 +114,7 @@
             android:text="@string/Message_empty"/>
     </LinearLayout>
 
-    <com.melnykov.fab.FloatingActionButton
+    <!--<com.melnykov.fab.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -126,8 +124,8 @@
         android:scaleType="fitCenter"
         fab:fab_colorNormal="@color/primaryColor"
         fab:fab_colorPressed="#fddc80"
-        fab:fab_colorRipple="@color/primaryColor" />
-    <!--<com.github.clans.fab.FloatingActionMenu
+        fab:fab_colorRipple="@color/primaryColor" />-->
+    <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/fab"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -135,34 +133,36 @@
         android:src="@drawable/ic_add_white_24dp"
         android:scaleType="fitCenter"
         android:elevation="2dp"
-        fab:menu_backgroundColor="#ccffffff"
-        fab:menu_labels_colorNormal="#fff"
-        fab:menu_labels_textColor="#000000"
-        fab:menu_labels_showAnimation="@anim/jump_from_down"
-        fab:menu_labels_hideAnimation="@anim/jump_to_down"
-        fab:menu_animationDelayPerItem="0"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp"
+        fab:menu_backgroundColor="#cc404040"
+        fab:menu_labels_colorNormal="#404040"
+        fab:menu_labels_textColor="#ffffff"
+        fab:menu_labels_showAnimation="@anim/fab_scale_up"
+        fab:menu_labels_hideAnimation="@anim/fab_scale_down"
+        fab:menu_animationDelayPerItem="40"
         fab:menu_shadowColor="#444"
         fab:menu_colorNormal="@color/primaryColor"
-        fab:menu_colorPressed="#fddc80"
-        fab:menu_colorRipple="@color/primaryColor" >
+        fab:menu_colorRipple="#fddc80"
+        fab:menu_colorPressed="@color/primaryColor">
 
-        <com.github.clans.fab.FloatingActionButton
+        <!--<com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_action_email"
             fab:fab_label="Event"
-            style="@style/MenuButtonsStyle" />
+            style="@style/MenuButtonsStyle" />-->
 
-        <com.github.clans.fab.FloatingActionButton
+        <!--<com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_offer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_action_email"
-            fab:fab_label="Offer"
-            style="@style/MenuButtonsStyle" />
+            fab:fab_label="Create Offer"
+            style="@style/MenuButtonsStyle" />-->
 
-        <com.github.clans.fab.FloatingActionButton
+        <!--<com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_product_launch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -182,17 +182,17 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_action_email"
             fab:fab_label="Customer Review"
-            style="@style/MenuButtonsStyle" />
-        <com.github.clans.fab.FloatingActionButton
+            style="@style/MenuButtonsStyle" />-->
+        <!--<com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_action_email"
             fab:fab_label="Create Update"
-            style="@style/MenuButtonsStyle" />
+            style="@style/MenuButtonsStyle" />-->
 
 
-        </com.github.clans.fab.FloatingActionMenu>-->
+        </com.github.clans.fab.FloatingActionMenu>
 
 
 </FrameLayout>

@@ -17,7 +17,7 @@ public interface EventKeysWL
     String PRE_SIGNUP_SCREEN_SEVEN			=	"PRESIGNUPSCREENSEVEN";
 
     String CREATE_WEBSITE_BUTTON = "SignUpWithEmail";
-
+    String FACEBOOK_ANAYTICS="FacebookAnalytics";
     String LOGIN_BUTTON = "Login";
     String LOGIN_SCREEN_FORGOT_PWD = "ForgotPassword";
     String SIGNUP_NEXT = "SignupNextButton";
@@ -97,6 +97,9 @@ public interface EventKeysWL
     String PRODUCT_GALLERY_DELETE = "DeleteProduct";
     String PRODUCT_GALLERY_UPDATEIMAGE = "UpdateProductImage";
     String PRODUCT_GALLERY_UPDATE= "UpdateProduct";
+
+    String BUY_NOW_STORE_CLICKED = "InitiatePayment";
+    String PAYMENT_SUCCESSFULL  = "PaymentSuccess";
 
     // PRODUCT_GALLERY_
 

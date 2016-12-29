@@ -1,9 +1,6 @@
 package com.nowfloats.signup.UI.Validation;
 
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class Signup_Validation {
 
     //Email Validation

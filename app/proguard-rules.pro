@@ -49,6 +49,8 @@
        *;
     }
 
+-dontwarn com.github.mikephil.**
+
 -keep class org.lucasr.twowayview.** { *; }
 -dontwarn okio.**
 -dontwarn retrofit.**

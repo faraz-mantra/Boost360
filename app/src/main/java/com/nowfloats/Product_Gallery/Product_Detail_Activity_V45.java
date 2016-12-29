@@ -43,7 +43,6 @@ import com.nowfloats.Product_Gallery.Model.UpdateValue;
 import com.nowfloats.Product_Gallery.Service.ProductAPIService;
 import com.nowfloats.Product_Gallery.Service.ProductDelete;
 import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
-import com.nowfloats.Product_Gallery.Service.ProductImageReplace;
 import com.nowfloats.Product_Gallery.Service.ProductImageReplaceV45;
 import com.nowfloats.Product_Gallery.Service.ProductImageUploadV45;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -98,7 +97,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
 
     private final int gallery_req_id = 6;
     private final int media_req_id = 5;
-    private String[] mPriorityList = {"DEFAULT", "HIGH", "MEDIUM", "LOW"};
+    private String[] mPriorityList;
     private int mPriorityVal = 1000000;
 
 
@@ -121,7 +120,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
         save = (ImageView) toolbar.findViewById(R.id.home_view_delete_card);
         TextView title = (TextView) toolbar.findViewById(R.id.titleProduct);
         title.setVisibility(View.VISIBLE);
-        title.setText("Add Product");
+        title.setText(getString(R.string.add_product));
         save.setImageResource(R.drawable.product_tick);
         session = new UserSessionManager(getApplicationContext(),activity);
         productInterface = Constants.restAdapter.create(ProductGalleryInterface.class);
@@ -129,6 +128,8 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
         switchView = (Switch)findViewById(R.id.switchView);
         svFreeShipment = (Switch) findViewById(R.id.sv_free_shipping);
         switchView.setChecked(true);
+
+        mPriorityList= getResources().getStringArray(R.array.priority_list);
 
         PorterDuffColorFilter color = new PorterDuffColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_IN);
         save.setColorFilter(color);
@@ -175,7 +176,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
             if (product_data!=null){
                 replaceImage = true;
                 save.setVisibility(View.GONE);
-                title.setText("Edit Product");
+                title.setText(getString(R.string.edit_product));
                 //load image
 
               /*  try{
@@ -268,7 +269,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
                         try{
                             materialProgress = new MaterialDialog.Builder(activity)
                                         .widgetColorRes(R.color.accentColor)
-                                        .content("Updating....")
+                                        .content(getString(R.string.updating))
                                         .progress(true, 0).show();
                             materialProgress.setCancelable(false);
                             values = new HashMap<String, String>();
@@ -302,7 +303,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
                                                     public void run() {
                                                         materialProgress.dismiss();
                                                         invokeGetProductList();
-                                                        Methods.showSnackBarPositive(activity, "Product has successfully updated");
+                                                        Methods.showSnackBarPositive(activity, getString(R.string.product_successfully_updated));
                                                     }
                                                 });
                                             }
@@ -315,7 +316,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
                                             @Override
                                             public void run() {
                                                 materialProgress.dismiss();
-                                                Methods.showSnackBarNegative(activity, "Something went wrong, Try again...");
+                                                Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
                                             }
                                         });
                                     }
@@ -323,7 +324,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
                             }else{materialProgress.dismiss();}
                         }catch(Exception e){e.printStackTrace();
                             materialProgress.dismiss();
-                            Methods.showSnackBarNegative(activity, "Something went wrong, Try again...");
+                            Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
                         }
                     }
                 });
@@ -336,10 +337,10 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
                     try{
                         MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_DELETE, null);
                          new MaterialDialog.Builder(activity)
-                        .title("Are you sure?")
-                        .positiveText("Delete")
+                        .title(getString(R.string.are_you_sure_want_to_delete))
+                        .positiveText(getString(R.string.delete))
                         .positiveColorRes(R.color.primaryColor)
-                        .negativeText("Cancel")
+                        .negativeText(getString(R.string.cancel))
                         .negativeColorRes(R.color.light_gray)
                         .callback(new MaterialDialog.ButtonCallback() {
                             @Override
@@ -386,7 +387,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
                 public void onClick(View v) {
                     materialProgress = new MaterialDialog.Builder(activity)
                             .widgetColorRes(R.color.accentColor)
-                            .content("Loading....")
+                            .content(getString(R.string.loading))
                             .progress(true, 0).show();
                     materialProgress.setCancelable(false);
                     try{
@@ -397,7 +398,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
                         boolean flag = ValidateFields(false);
 
                         if (path==null || path.trim().length()==0){
-                            flag=false; Methods.showSnackBarNegative(activity,"Please upload product image");
+                            flag=false; Methods.showSnackBarNegative(activity,getString(R.string.upload_product_image));
                         }
                         if(flag){
                             productInterface.addProduct(values,new Callback<String>() {
@@ -419,7 +420,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
                                        @Override
                                        public void run() {
                                            materialProgress.dismiss();
-                                           Methods.showSnackBarNegative(activity, "Something went wrong, Try again...");
+                                           Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
                                        }
                                    });
 
@@ -429,7 +430,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
                     }catch(Exception e){
                         e.printStackTrace();
                         materialProgress.dismiss();
-                        Methods.showSnackBarNegative(activity, "Something went wrong, Try again...");
+                        Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
                     }
                 }
             });
@@ -459,7 +460,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
         }
 
         new MaterialDialog.Builder(activity)
-                .title("Select Priority")
+                .title(getString(R.string.select_priority))
                 .items(mPriorityList)
                 .widgetColorRes(R.color.primaryColor)
                 .itemsCallbackSingleChoice(index, new MaterialDialog.ListCallbackSingleChoice() {
@@ -544,7 +545,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
             values.put(name, productName.getText().toString().trim());
         }else {
             YoYo.with(Techniques.Shake).playOn(productName);
-            Methods.showSnackBarNegative(activity,"Please enter product name");
+            Methods.showSnackBarNegative(activity,getString(R.string.enter_product_name));
             flag = false;
         }
         if (flag){
@@ -552,7 +553,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
                 values.put(price, productPrice.getText().toString().trim());
             }else {
                 YoYo.with(Techniques.Shake).playOn(productPrice);
-                Methods.showSnackBarNegative(activity,"Please enter product price");
+                Methods.showSnackBarNegative(activity,getString(R.string.enter_product_price));
                 flag = false;
             }
         }
@@ -561,7 +562,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
                 (productDiscount!=null && productDiscount.getText().toString().trim().length()>0) && flag){
             if(!(Double.parseDouble(productPrice.getText().toString().trim())>Double.parseDouble(productDiscount.getText().toString().trim()))){
                 YoYo.with(Techniques.Shake).playOn(productDiscount);
-                Methods.showSnackBarNegative(activity,"Discount amount cannot be more than the product price ");
+                Methods.showSnackBarNegative(activity,getString(R.string.discount_amount_can_not_more_than_price));
                 flag = false;
             }
         }
@@ -609,7 +610,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
             new ProductImageUploadV45(url,imageBytes,Product_Detail_Activity_V45.this).execute();
         }catch(Exception e){
             e.printStackTrace();
-            Methods.showSnackBarNegative(activity, "Something went wrong, Try again...");
+            Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
         }
     }
 
@@ -630,7 +631,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
             }
         }catch(Exception e){
             e.printStackTrace();
-            Methods.showSnackBarNegative(activity, "Something went wrong, Try again...");
+            Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
         }
     }
 
@@ -667,7 +668,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
             index = Arrays.asList(currencyList).indexOf(currencyVal);
         }
         new MaterialDialog.Builder(activity)
-                .title("Select Currency")
+                .title(getString(R.string.select_currency))
                 .items(currencyList)
                 .widgetColorRes(R.color.primaryColor)
                 .itemsCallbackSingleChoice(index, new MaterialDialog.ListCallbackSingleChoice() {
@@ -722,7 +723,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
                             if (replaceImage) replaceProductImage(product_data._id);
                         }
                     }else{
-                        Methods.showSnackBar(activity,"Try again....");
+                        Methods.showSnackBar(activity,getString(R.string.try_again));
                     }
                 }else{
                     path = getRealPathFromURI(picUri);
@@ -736,7 +737,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
                 E.printStackTrace();
                 CameraBitmap.recycle();
                 System.gc();
-                Methods.showSnackBar(activity,"Try again....");
+                Methods.showSnackBar(activity,getString(R.string.try_again));
             }
         }
     }
@@ -760,7 +761,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
 
         View view = dialog.getCustomView();
         TextView header = (TextView) view.findViewById(R.id.textview_heading);
-        if (replaceImage) header.setText("Replace Photo"); else header.setText("Upload Photo");
+        if (replaceImage) header.setText(getString(R.string.replace_photo)); else header.setText(getString(R.string.upload_photo));
         LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
         LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
         ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
@@ -824,7 +825,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
             }
         } catch (ActivityNotFoundException anfe) {
             // display an error message
-            String errorMessage = "Whoops - your device doesn't support capturing images!";
+            String errorMessage = getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(activity,errorMessage);
         }
     }
@@ -850,7 +851,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
             }
         } catch (ActivityNotFoundException anfe) {
             // display an error message
-            String errorMessage = "Whoops - your device doesn't support capturing images!";
+            String errorMessage = getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(activity,errorMessage);
         }
     }

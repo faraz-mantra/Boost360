@@ -16,17 +16,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.GetStoreFrontImageAsyncTask;
 import com.nowfloats.util.Key_Preferences;
+import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
 import java.lang.ref.SoftReference;
@@ -43,11 +39,9 @@ public class CardAdapter_v2 extends RecyclerView.Adapter<CardAdapter_v2.MyViewHo
     FloatsMessageModel data;
     String msg = "", date = "";
     String imageUri = "";
-    protected ImageLoader imageLoader = ImageLoader.getInstance();
     private Context appContext ;
     int image_count = 0 ;
     final HashMap<String, SoftReference<Bitmap>> _cache = null;
-    DisplayImageOptions options ;
     CardView initial_card_view;
     ImageView cancelCardView ;
     UserSessionManager session;
@@ -81,24 +75,7 @@ public class CardAdapter_v2 extends RecyclerView.Adapter<CardAdapter_v2.MyViewHo
         this.peopleDataSet = people;
         appContext = context ;
         //Log.d("CardAdapter_v2","Constructor");
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
-                .threadPriority(Thread.NORM_PRIORITY - 2)
-                .denyCacheImageMultipleSizesInMemory()
-                .diskCacheFileNameGenerator(new Md5FileNameGenerator())
-                .tasksProcessingOrder(QueueProcessingType.FIFO)
-                .build();
 
-        //session = new UserSessionManager(context.getApplicationContext(),context);
-
-         imageLoader.init(config);
-
-        options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(null)
-                .showImageForEmptyUri(null)
-                .showImageOnFail(null)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .build();
 
        // imageLoader.init(ImageLoaderConfiguration.createDefault(context));
     }
@@ -215,7 +192,8 @@ public class CardAdapter_v2 extends RecyclerView.Adapter<CardAdapter_v2.MyViewHo
                     Bitmap bmp = BitmapFactory.decodeFile(imageUri);
                        imageView.setImageBitmap(bmp);
                 } else {
-                    imageLoader.displayImage(baseName, imageView, options);
+                    Picasso.with(appContext).load(baseName).into(imageView);
+                    //imageLoader.displayImage(baseName, imageView, options);
                 }
 
                 image_count++;

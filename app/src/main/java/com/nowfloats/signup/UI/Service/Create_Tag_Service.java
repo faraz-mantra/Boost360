@@ -6,6 +6,7 @@ import com.nowfloats.signup.UI.UI.WebSiteAddressActivity;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.squareup.otto.Bus;
+import com.thinksity.R;
 
 import java.util.HashMap;
 
@@ -33,7 +34,7 @@ public class Create_Tag_Service {
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Methods.showSnackBarNegative(activity, "Something went wrong! Please try again.");
+                        Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
                         if (activity.pd != null) {
                             activity.pd.dismiss();
                         }

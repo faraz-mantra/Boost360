@@ -5,31 +5,21 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.AccountDetails.Model.AccountDetailModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.NavigationDrawer.Home_Main_Fragment;
 import com.nowfloats.NavigationDrawer.SlidingTabLayout;
-import com.nowfloats.NavigationDrawer.TabPagerAdapter;
-import com.nowfloats.NavigationDrawer.model.AlertCountEvent;
-import com.nowfloats.NotificationCenter.NotificationFragment;
-import com.nowfloats.Store.Adapters.StoreAdapter;
 import com.nowfloats.Store.Adapters.StorePagerAdapter;
 import com.nowfloats.Store.Model.ActiveWidget;
 import com.nowfloats.Store.Model.StoreEvent;
-import com.nowfloats.Store.Model.StoreMainModel;
 import com.nowfloats.Store.Model.StoreModel;
 import com.nowfloats.Store.Service.API_Service;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
-import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -39,14 +29,9 @@ import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
-import jp.wasabeef.recyclerview.animators.adapters.AlphaInAnimationAdapter;
-import jp.wasabeef.recyclerview.animators.adapters.ScaleInAnimationAdapter;
 import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 import retrofit.http.GET;
 import retrofit.http.QueryMap;
 
@@ -64,11 +49,12 @@ public class StoreFragmentTab extends Fragment {
     public static ArrayList<StoreModel> activeWidgetModels = new ArrayList<>();
     public static ArrayList<StoreModel> additionalWidgetModels = new ArrayList<>();
 
+
     @Override
     public void onResume() {
         super.onResume();
         MixPanelController.track(EventKeysWL.STORE_FRAGMENT, null);
-        HomeActivity.headerText.setText("Store");
+        HomeActivity.headerText.setText("Pricing Plans");
         bus.register(this);
     }
 
@@ -107,10 +93,9 @@ public class StoreFragmentTab extends Fragment {
         tabs = (SlidingTabLayout) view.findViewById(R.id.tabs);
         viewPager = (ViewPager) view.findViewById(R.id.homeTabViewpager);
 
-
         new API_Service(activity, session.getSourceClientId(),session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY),
                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID),session.getFPID(),bus);
-
+        BoostLog.d("StoreFragmentTab", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY));
         /*new Thread(new Runnable() {
             @Override
             public void run() {
@@ -151,10 +136,20 @@ public class StoreFragmentTab extends Fragment {
         if(allModels!=null && activeIdArray!=null){
             LoadActivePlans(activity,allModels,additionalPlans,activeIdArray);
         }else{
-            Methods.showSnackBarNegative(activity,"Something went wrong");
+            Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong));
         }
     }
+
+
+
+
+
+
+
+
     private void LoadActivePlans(final Activity activity, ArrayList<StoreModel> allModels, final ArrayList<StoreModel> additionalPlan, ArrayList<ActiveWidget> acIdarray) {
+        activeWidgetModels.clear();
+        additionalWidgetModels.clear();
         try {
 //            AccInfoInterface infoInterface = Constants.restAdapter.create(AccInfoInterface.class);
 //            HashMap<String,String> valuadditionalWidgetModelses = new HashMap<>();
@@ -164,9 +159,9 @@ public class StoreFragmentTab extends Fragment {
 //                @Override
 //                public void success(ArrayList<AccountDetailModel> accDetail, Response response) {
                     if (acIdarray!=null && acIdarray.size()>0){
-                        for (int i = 0; i < allModels.size(); i++) {
+                        /*for (int i = 0; i < allModels.size(); i++) {
                             for (int j=0; j < acIdarray.size(); j++){
-                                if (allModels.get(i)._id.equals(acIdarray.get(j).clientProductId)){
+                                if (allModels.get(i)._id.equals(acIdarray.get(j).ClientProductId)){
                                     activeWidgetModels.add(allModels.get(i));
 //                                    additionalWidgetModels.remove(additionalDetails.get(i));
                                 }else{
@@ -176,12 +171,24 @@ public class StoreFragmentTab extends Fragment {
                         }
                         for (int i = 0; i < acIdarray.size(); i++) {
                             for (int j = 0; j < allModels.size(); j++) {
-                                if (allModels.get(j)._id.equals(acIdarray.get(i).clientProductId)){
+                                if (allModels.get(j)._id.equals(acIdarray.get(i).ClientProductId)){
                                     additionalPlan.remove(allModels.get(j));
                                 }
                             }
                         }
-                        additionalWidgetModels = additionalPlan;
+                        additionalWidgetModels = additionalPlan;*/
+                        for (int i=0; i<allModels.size(); i++){
+                            boolean flag = false;
+                            for (int j=0; j<acIdarray.size(); j++){
+                                if(allModels.get(i)._id.equals(acIdarray.get(j).ClientProductId)){
+                                    activeWidgetModels.add(allModels.get(i));
+                                    flag = true;
+                                }
+                            }
+                            if(!flag){
+                                additionalWidgetModels.add(allModels.get(i));
+                            }
+                        }
                     }else{
                         additionalWidgetModels = allModels;
 //                        Methods.showSnackBarNegative(activity,"Something went wrong");
@@ -211,7 +218,9 @@ public class StoreFragmentTab extends Fragment {
                     progressLayout.setVisibility(View.GONE);
                 }
             });
-        }catch (Exception e){e.printStackTrace(); Methods.showSnackBarNegative(activity,"Something went wrong,Please try again");}
+            BoostLog.d("Additional WidgetSize:", additionalWidgetModels.size() + "");
+            BoostLog.d("Active WidgetSize:", activeWidgetModels.size() + "");
+        }catch (Exception e){e.printStackTrace(); Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong_try_again));}
     }
     public interface AccInfoInterface{
         @GET("/Discover/v1/FloatingPoint/GetPaidWidgetDetailsForFP")

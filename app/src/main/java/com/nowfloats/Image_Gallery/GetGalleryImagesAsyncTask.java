@@ -8,6 +8,7 @@ import android.util.Log;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
+import com.thinksity.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,7 +29,7 @@ public class GetGalleryImagesAsyncTask extends AsyncTask<Void,String, String>{
 
 	@Override
 	protected void onPreExecute() {
-		pd= ProgressDialog.show(appContext, "", "Updating image...");
+		pd= ProgressDialog.show(appContext, "", appContext.getString(R.string.updating_image));
 		pd.setCancelable(false);
 	}
 

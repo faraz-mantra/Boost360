@@ -39,14 +39,14 @@
                 android:layout_gravity="center_horizontal"
                 android:textColor="#FFB900"
                 fontPath="Roboto-Light.ttf"
-                android:text="website_name"
+                android:text="@string/website_name"
                 android:background="#00000000"/>
 
             <TextView
                 android:id="@+id/domainNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tag_for_partners"
+                android:text="@string/nowfloats.com"
                 android:layout_marginBottom="18dp"
                 android:layout_gravity="center|bottom"
                 android:textSize="13sp"
@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="Dont like it? Tap on card to change"
+                android:text="@string/donot_like_it_tap_on_card"
                 android:textSize="12sp"
                 fontPath="Roboto-Light.ttf"
                 android:gravity="bottom"
@@ -88,7 +88,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             fontPath="Roboto-Medium.ttf"
-            android:text="CREATE MY WEBSITE"
+            android:text="@string/create_website"
             android:textSize="15sp"
             android:textColor="#FFFFFF"
             android:background="@color/primaryColor"/>
@@ -104,19 +104,17 @@
             android:textSize="12sp"
             fontPath="Roboto-Light.ttf"
             android:textColor="#545454"
-            android:text="By Pressing above button,You agree to our"/>
+            android:text="@string/by_pressing_above_button_to_agree"/>
 
             <TextView
                 android:id="@+id/policyTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:textSize="12sp"
                 android:textStyle="bold"
-
                 fontPath="Roboto-Light.ttf"
                 android:textColor="#545454"
-                android:text=" Policy and Terms"/>
+                android:text="@string/policy_terms"/>
 
         </LinearLayout>
 

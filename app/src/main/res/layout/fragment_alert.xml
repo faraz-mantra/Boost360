@@ -43,7 +43,7 @@
             android:layout_marginTop="@dimen/dgts__padding_title"
             android:layout_marginBottom="@dimen/dgts__padding_title"
             android:textColor="@color/zeroth_grey_title"
-            android:text="No alerts!"/>
+            android:text="@string/no_alerts"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

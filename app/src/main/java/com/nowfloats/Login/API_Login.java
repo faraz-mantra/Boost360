@@ -1,7 +1,6 @@
 package com.nowfloats.Login;
 
 import android.app.Activity;
-import android.util.Log;
 
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.Model.Login_Data_Model;
@@ -11,6 +10,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
 import com.nowfloats.util.Methods;
 import com.squareup.otto.Bus;
+import com.thinksity.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +18,8 @@ import java.util.HashMap;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+import static com.nowfloats.util.Constants.clientId;
 
 /**
  * Created by Dell on 17-01-2015.
@@ -43,12 +45,13 @@ public class API_Login {
         this.bus = bus;
     }
 
-    public void authenticate(String userName, String password, String clientId)
+    public void authenticate(String userName, String password, final String clientId)
     {
-        BoostLog.d("AUthenticate","Usrname : "+userName+" , Pwd : "+password+" Client Id : "+clientId);
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("loginKey", userName);
-        params.put("loginSecret", password);
+    BoostLog.d("AUthenticate","Usrname : "+userName+" , Pwd : "+password+" Client Id : "+clientId);
+    HashMap<String, String> params = new HashMap<String, String>();
+    params.put("loginKey", userName);
+    params.put("loginSecret", password);
+
         params.put("clientId", clientId);
        /* try {
             Constants.restAdapter = Methods.createAdapter(appContext,Constants.NOW_FLOATS_API_URL);
@@ -65,7 +68,7 @@ public class API_Login {
                         session.storeFPID(fpId);
                         if (response_Data.sourceClientId!=null && response_Data.sourceClientId.trim().length()>0)
                             session.storeSourceClientId(response_Data.sourceClientId);
-                        if(Constants.clientId.equals(Constants.clientIdThinksity)){
+                        if(clientId.equals(Constants.clientIdThinksity)){
                             if(response_Data.sourceClientId!=null && response_Data.sourceClientId.trim().length()>0
                                     && response_Data.sourceClientId.equals(Constants.clientIdThinksity))
                             {
@@ -79,7 +82,7 @@ public class API_Login {
                                 bus.post(new ArrayList<FloatsMessageModel>());
                             }else{
                                 apiInterface.authenticationFailure("true");
-                                Methods.showSnackBarNegative(appContext,"Please check your credentials");
+                                Methods.showSnackBarNegative(appContext,appContext.getString(R.string.check_your_crediential));
                             }
                         }
                         else{
@@ -96,7 +99,7 @@ public class API_Login {
                         BoostLog.d("FPID: ", fpId);
                     } else {
                         apiInterface.authenticationFailure("true");
-                        Methods.showSnackBarNegative(appContext, "Please check your credentials");
+                        Methods.showSnackBarNegative(appContext, appContext.getString(R.string.check_your_crediential));
                     }
                 } catch (Exception e) {
                     apiInterface.authenticationFailure("true");
@@ -107,9 +110,9 @@ public class API_Login {
 
             @Override
             public void failure(RetrofitError error) {
-                StringBuffer networkError = new StringBuffer("Please check your credentials");
+                StringBuffer networkError = new StringBuffer(appContext.getString(R.string.check_your_crediential));
                 if(error.getKind() == RetrofitError.Kind.HTTP || error.getKind() == RetrofitError.Kind.NETWORK ){
-                    networkError.delete(0, networkError.length()).append("Something Went Wrong!!");
+                    networkError.delete(0, networkError.length()).append(appContext.getString(R.string.something_went_wrong));
                 }
                 apiInterface.authenticationFailure("true");
                 Methods.showSnackBarNegative(appContext, networkError.toString());
@@ -146,7 +149,7 @@ public class API_Login {
     public void getMessages(String fpId)
     {
         HashMap<String,String> map = new HashMap<>();
-        map.put("clientId",Constants.clientId);
+        map.put("clientId", clientId);
         map.put("skipBy","0");
         map.put("fpId",fpId);
         Login_Interface login_interface = Constants.restAdapter.create(Login_Interface.class);

@@ -65,6 +65,14 @@
         <item>10:00</item>
         <item>11:00</item>
     </string-array>
+    <string-array name="weeks">
+        <item>Week 1</item>
+        <item>Week 2</item>
+        <item>Week 3</item>
+        <item>Week 4</item>
+        <item>Week 5</item>
+        <item>Week 6</item>
+    </string-array>
 
     <string name="facebook_app_id">849017471893722</string>
 
@@ -524,5 +532,9 @@
         <item>We have two plans. SiberName Boost LightHouse &amp; SiberName Boost WildFire.\'LightHouse\', draws in the organic traffic. And depending on the regularity of your updates, it can start drawing in web traffic fast. You can get more information and charges here.The second plan is \'WildFire\' \- a combination of garnering inorganic and organic traffic for your website. This plan tends to spread your information faster in your target market. It uses adwords and online advertising to bring in traffic quicker. Depending on your convenience you can choose to pay a fixed amount per month on an annual plan. You can get more information here.All plans are on an annual basis. Wildfire\'s adwords balance can be topped up whenever the it runs low.</item>
     </string-array>
     <!--FAQ hardcoded string end-->
+
+
+
+    <string name="fb_login_protocol_scheme">fb1641508162754092</string>
 
 </resources>

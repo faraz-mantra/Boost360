@@ -2,14 +2,12 @@ package com.nowfloats.BusinessProfile.UI.API;
 
 import android.app.Activity;
 
-import com.nowfloats.signup.UI.API.Retro_Signup_Interface;
 import com.nowfloats.util.Constants;
 import com.squareup.otto.Bus;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;

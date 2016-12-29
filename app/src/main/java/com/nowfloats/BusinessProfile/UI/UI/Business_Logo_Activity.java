@@ -30,6 +30,7 @@ import com.nowfloats.BusinessProfile.UI.API.Upload_Logo;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NotificationCenter.AlertArchive;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
@@ -71,22 +72,24 @@ public class Business_Logo_Activity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setTitle("Logo");
+        setTitle(getResources().getString(R.string.logo));
 
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
-        titleTextView.setText("Logo");
+        titleTextView.setText(getResources().getString(R.string.logo));
         session = new UserSessionManager(getApplicationContext(),Business_Logo_Activity.this);
         logoimageView = (ImageView) findViewById(R.id.logoimageView);
         uploadButton = (Button) findViewById(R.id.addLogoButton);
         backgroundImageView = (ImageView) findViewById(R.id.imageView);
         try {
-            if (Constants.LOGOUPLOADED == false) {
+            if (true) {
                 String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
                 if(iconUrl.length()>0 && !iconUrl.contains("http")) {
-                    String baseNameProfileImage = Constants.BASE_IMAGE_URL+"" + iconUrl;
-                    Picasso.with(this).load(baseNameProfileImage).placeholder(R.drawable.logo_default_image).into(logoimageView);
+                    //String baseNameProfileImage = Constants.BASE_IMAGE_URL+"" + iconUrl;
+                    BoostLog.d("Logo Url:", iconUrl);
+                    Picasso.with(this).load(iconUrl).placeholder(R.drawable.logo_default_image).into(logoimageView);
                 }else{
                     if(iconUrl!=null && iconUrl.length()>0) {
+                        BoostLog.d("Logo Url:", iconUrl);
                         Picasso.with(this).load(iconUrl).placeholder(R.drawable.logo_default_image).into(logoimageView);
                     }else{
                         Picasso.with(this).load(R.drawable.logo_default_image).into(logoimageView);
@@ -105,7 +108,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
 
                 View view = dialog.getCustomView();
                 TextView title = (TextView) view.findViewById(R.id.textview_heading);
-                title.setText("Upload Logo Image");
+                title.setText(getResources().getString(R.string.upload_logo_image));
                 LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
                 LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
                 ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
@@ -185,7 +188,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        this.setTitle("Settings");
+        this.setTitle(getResources().getString(R.string.setting));
     }
 
     @Override
@@ -309,7 +312,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
             startActivityForResult(captureIntent, CAMERA_PHOTO);
         } catch (ActivityNotFoundException anfe) {
             // display an error message
-            String errorMessage = "Whoops - your device doesn't support capturing images!";
+            String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(Business_Logo_Activity.this,errorMessage);
         }
         catch(Exception e){
@@ -332,7 +335,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
             startActivityForResult(i, GALLERY_PHOTO);
         } catch (ActivityNotFoundException anfe) {
             // display an error message
-            String errorMessage = "Whoops - your device doesn't support capturing images!";
+            String errorMessage = getResources().getString(R.string.device_does_not_support_capturing_image);
             Methods.showSnackBarNegative(Business_Logo_Activity.this,errorMessage);
         }
     }
@@ -362,7 +365,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
                 if (!Util.isNullOrEmpty(path)) {
                     uploadPrimaryPicture(path);
                 }  else
-                    Methods.showSnackBarNegative(Business_Logo_Activity.this,"Please select an image to upload");
+                    Methods.showSnackBarNegative(Business_Logo_Activity.this,getResources().getString(R.string.select_image_upload));
             }
             else if (resultCode == RESULT_OK && (GALLERY_PHOTO == requestCode)) {
                 {
@@ -373,7 +376,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
                         if (!Util.isNullOrEmpty(path)) {
                             uploadPrimaryPicture(path);
                         } else
-                            Methods.showSnackBarNegative(Business_Logo_Activity.this,"Please select an image to upload");
+                            Methods.showSnackBarNegative(Business_Logo_Activity.this,getResources().getString(R.string.select_image_upload));
                     }
                 }
             }
@@ -408,7 +411,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
 
     public void uploadPrimaryPicture(String path) {
         new AlertArchive(Constants.alertInterface,"LOGO",session.getFPID());
-        Upload_Logo upload_logo = new Upload_Logo(Business_Logo_Activity.this,path,session.getFPID());
+        Upload_Logo upload_logo = new Upload_Logo(Business_Logo_Activity.this,path,session.getFPID(), session);
         upload_logo.execute();
 //        Constants.isImgUploaded = false;
 //        UploadPictureAsyncTask upa = new UploadPictureAsyncTask(Business_Logo_Activity.this, path, false,true,session.getFPID());

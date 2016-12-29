@@ -8,10 +8,11 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.facebook.login.LoginManager;
 import com.nowfloats.Analytics_Screen.API.Search_Queries_Enterprise_API;
+import com.nowfloats.Analytics_Screen.Graph.database.SaveDataCounts;
 import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.Login.Model.FloatsMessageModel;
-import com.nowfloats.NavigationDrawer.Analytics_Fragment;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.Chat.ChatModel;
 import com.nowfloats.NavigationDrawer.HomeActivity;
@@ -23,6 +24,7 @@ import com.nowfloats.util.DataBase;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.thinksity.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -99,6 +101,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     private String KEY_START_TIME = "starttime";
     private String KEY_END_TIME = "endtime";
     private String KEY_FACEBOOK_NAME = "facebookname";
+    private String KEY_FACEBOOK_IMPRESSIONS = "facebook_impressions";
     private String KEY_FACEBOOK_ACCESS_TOKEN = "facebookaccesstoken";
     private String KEY_FACEBOOK_PAGE = "facebookpage";
     private String KEY_FACEBOOK_PAGE_ID = "facebookpageid";
@@ -116,6 +119,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     private String KEY_IS_FREE_DOMAIN = "isFreeDomain";
     private String KEY_FP_TAG = "fptag";
     private String KEY_WEB_TEMPLATE_TYPE = "webTemplateType";
+    private String KEY_BUSINESS_HOURS = "BusinessHoursMainKey";
 
     //public boolean showUpdates;
 
@@ -208,7 +212,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     }
 
     public String getLatestEnqCount(){
-        return pref.getString(KEY_LATEST_ENQ_COUNT,"0");
+        return pref.getString(KEY_LATEST_ENQ_COUNT, "0");
     }
 
 
@@ -235,6 +239,15 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public Boolean getWebsiteshare()
     {
         return pref.getBoolean(KEY_website,false);
+    }
+    public void setBusinessHours(boolean cnt)
+    {
+        editor.putBoolean(KEY_BUSINESS_HOURS , cnt);
+        editor.commit();
+    }
+    public Boolean getBusinessHours()
+    {
+        return pref.getBoolean(KEY_BUSINESS_HOURS,false);
     }
 
     public void setSignUpFromFacebook(String isSignUpFromFacebook)
@@ -386,10 +399,20 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return pref.getString(KEY_FACEBOOK_NAME,null);
     }
 
+    public void storeFacebookImpressions(String facebookImpression)
+    {
+        editor.putString(KEY_FACEBOOK_IMPRESSIONS , facebookImpression);
+        editor.apply();
+    }
+
+    public String getFacebookImpressions()
+    {
+        return pref.getString(KEY_FACEBOOK_IMPRESSIONS,null);
+    }
     public void storeFacebookAccessToken(String token)
     {
         editor.putString(KEY_FACEBOOK_ACCESS_TOKEN , token);
-        editor.commit();
+        editor.apply();
     }
 
     public String getFacebookAccessToken()
@@ -794,7 +817,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void unsubscribeRIA(String fpID, final Activity activity)
     {
         final ProgressDialog pd ;
-        pd = ProgressDialog.show(activity, "", "Logging out ...");
+        pd = ProgressDialog.show(activity, "", activity.getString(R.string.logging_out));
         pd.setCancelable(false);
 
         HashMap<String, String> params = new HashMap<String, String>();
@@ -842,11 +865,11 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 HomeActivity.StorebizFloats= null;
                 HomeActivity.StorebizFloats= new ArrayList<FloatsMessageModel>();
                 ChatFragment.chatModels = new ArrayList<ChatModel>();
+                LoginManager.getInstance().logOut();
                 //Analytics_Fragment.subscriberCount.setText("0");
                 //Analytics_Fragment.visitCount.setText("0");
-
+                _context.deleteDatabase(SaveDataCounts.DATABASE_NAME);
                 MixPanelController.track("LogoutSuccess", null);
-
                 //activity.finish();
                 /*Intent i = new Intent(activity, Login_MainActivity.class);
                 // Closing all the Activities
@@ -863,7 +886,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
             public void failure(RetrofitError error) {
                 if(pd != null )
                 pd.dismiss();
-                Methods.showSnackBarNegative(activity,"Not able to logout");
+                Methods.showSnackBarNegative(activity,activity.getString(R.string.unable_to_logout));
             }
         });
     }

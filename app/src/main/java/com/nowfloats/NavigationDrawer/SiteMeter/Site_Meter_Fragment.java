@@ -2,7 +2,9 @@ package com.nowfloats.NavigationDrawer.SiteMeter;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,13 +16,17 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
+import com.nowfloats.BusinessProfile.UI.UI.Business_Hours_Activity;
+import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.Create_Message_Activity;
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
@@ -33,7 +39,6 @@ import com.thinksity.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 
@@ -48,14 +53,15 @@ public class Site_Meter_Fragment extends Fragment {
     private static int phoneWeight = 5;
     private static int emailWeight = 5;
     private static int businessAddressWeight = 10;
+    private static int businessHoursWeight = 5;
     private static int businessTimingWeight = 5;
     private static int facebookWeight = 10;
     private static int twitterWeight = 10;
-    private static int shareWebsiteWeight = 5;
+    private static int logoWeight = 5;
     private static int firstUpdatesWeight = 5;
     private static int siteMeterTotalWeight = 0;
     private static boolean fiveUpdatesDone = false;
-    private static int onUpdate = 5;
+    private static int onUpdate = 4;
     UserSessionManager session;
     private RecyclerView recyclerView;
     private SiteMeterAdapter adapter;
@@ -63,7 +69,8 @@ public class Site_Meter_Fragment extends Fragment {
     private static ProgressBar progressBar;
     private TextView meterReading;
     private ArrayList<SiteMeterModel> siteData = new ArrayList<>();
-    public final int domain = 0, phone = 1, category = 2,image =3, businessName=4, description=5, social=6, address=7, email=8, post=9, share=10;
+    public final int domain = 11, phone = 4, category = 2,image =7, businessName=0, description=1,
+            social=10, address=5, email=3, post=9, logo=8,businessHours=6;
     private Activity activity;
 //    private ScaleInAnimationAdapter scaleAdapter;
 
@@ -76,8 +83,8 @@ public class Site_Meter_Fragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                siteData = loadData();
-                adapter = new SiteMeterAdapter(activity,Site_Meter_Fragment.this,siteData);
+                //siteData = loadData();
+                //adapter = new SiteMeterAdapter(activity,Site_Meter_Fragment.this,siteData);
             }
         }).start();
     }
@@ -115,7 +122,8 @@ public class Site_Meter_Fragment extends Fragment {
 //                        scaleAdapter = new ScaleInAnimationAdapter(alphaAdapter);
 //                        scaleAdapter.setFirstOnly(false);
 //                        scaleAdapter.setInterpolator(new OvershootInterpolator());
-                        recyclerView.setAdapter(adapter);
+                        siteData = loadData();
+                        adapter = new SiteMeterAdapter(activity,Site_Meter_Fragment.this,siteData);
                         siteMeterCalculation();
                         progressLayout.setVisibility(View.GONE);
                     }
@@ -146,52 +154,65 @@ public class Site_Meter_Fragment extends Fragment {
     }
 
     private ArrayList<SiteMeterModel> loadData() {
-        ArrayList<SiteMeterModel> siteData =new ArrayList<>();
+
         //Set percentage according to the partners
         //0
+        siteData.clear();
         if (!(getResources().getString(R.string.buydomain_percentage).equals("0")))
-            siteData.add(new SiteMeterModel(domain,"Get your own identity","Buy a .com","+10%",false,1));
+            siteData.add(new SiteMeterModel(domain,"Buy/Link a Domain","Give your business an identity","+10%",false,12));
         //1
         if (!(getResources().getString(R.string.phoneNumber_percentage).equals("0")))
-            siteData.add(new SiteMeterModel(phone,"Phone number","Help customers reach you instantly","+5%",false,2));
+            siteData.add(new SiteMeterModel(phone,"Phone Number","Help customers to reach you instantly","+5%",false,5));
         //2
         if (!(getResources().getString(R.string.businessCategory_percentage).equals("0")))
-            siteData.add(new SiteMeterModel(category,"Business Category","Choose a Business category","+5%",false,3));
+            siteData.add(new SiteMeterModel(category,"Business Category","Choose a business category","+5%",false,3));
         //3
         if (!(getResources().getString(R.string.featuredImage_percentage).equals("0")))
-            siteData.add(new SiteMeterModel(image,"Featured Photo","Add relevant image","+10%",false,4));
+            siteData.add(new SiteMeterModel(image,"Featured Image","Add a relevant image","+10%",false,8));
         //4
         if (!(getResources().getString(R.string.businessName_percentage).equals("0")))
-            siteData.add(new SiteMeterModel(businessName,"Business Name","Add Business name","+5%",false,5));
+            siteData.add(new SiteMeterModel(businessName,"Business Name","Add business name","+5%",false,1));
         //5
         if (!(getResources().getString(R.string.businessdescription_percentage).equals("0")))
-            siteData.add(new SiteMeterModel(description,"Business Description","Describe your business","+10%",false,6));
+            siteData.add(new SiteMeterModel(description,"Business Description","Describe your business","+10%",false,2));
         //6
         if (!(getResources().getString(R.string.social_percentage).equals("0")))
-            siteData.add(new SiteMeterModel(social,"Get Social","Connect to Facebook/Twitter","+10%",false,7));
+            siteData.add(new SiteMeterModel(social,"Social Share","Connect to Facebook and Twitter","+10%",false,11));
         //7
-        siteData.add(new SiteMeterModel(address,"Help your customers find you","Add address","+10%",false,8));
+        siteData.add(new SiteMeterModel(address,"Business Address","Help your customers find you","+10%",false,6));
         //8
         if (!(getResources().getString(R.string.email_percentage).equals("0")))
-            siteData.add(new SiteMeterModel(email,"Add Email","Add email","+5%",false,9));
+            siteData.add(new SiteMeterModel(email,"Email","Add your email","+5%",false,4));
         //9
-        if (!(getResources().getString(R.string.postUpdate_percentage).equals("0")))
-            siteData.add(new SiteMeterModel(post,"Post 5 Updates","Message regularly and relevantly","+25%",false,10));
+        if (!(getResources().getString(R.string.postUpdate_percentage).equals("0"))){
+            int val=HomeActivity.StorebizFloats.size()<5?20-HomeActivity.StorebizFloats.size()*onUpdate:20;
+            siteData.add(new SiteMeterModel(post,"Post 5 Updates","Message regularly and relevantly","+"+val+"%",false,10));
+        }
+
         //10
-        if (!(getResources().getString(R.string.share_percentage).equals("0")))
-            siteData.add(new SiteMeterModel(share,"Share","Promote your website","+5%",false,11));
+        if (!(getResources().getString(R.string.share_percentage).equals("0"))){
+            siteData.add(new SiteMeterModel(logo,"Business Logo","Add a business logo","+5%",false,9));
+        }
+        if (!(getResources().getString(R.string.business_hours).equals("0")))
+            siteData.add(new SiteMeterModel(businessHours,"Business Hours","Display business timings","+5%",false,7));
+
+        Collections.sort(siteData, Collections.<SiteMeterModel>reverseOrder());
+        //Collections.reverse(siteData);
         return siteData;
     }
 
     public void siteMeterCalculation(){
         siteMeterTotalWeight = 0;
-
+        SharedPreferences pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         for (int i = 0; i < siteData.size(); i++) {
             if(siteData.get(i).position==domain){
                 if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))){
                     siteMeterTotalWeight += 10 ;
                     siteData.get(domain).setStatus(true);
                     siteData.get(domain).setSortChar(1);
+                }else {
+                    siteData.get(domain).setStatus(false);
+                    siteData.get(domain).setSortChar(2);
                 }
             }else if(siteData.get(i).position==phone){
                 if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER))  && !getResources().getString(R.string.phoneNumber_percentage).equals("0")){
@@ -239,7 +260,7 @@ public class Site_Meter_Fragment extends Fragment {
                     siteData.get(description).setSortChar(2);
                 }
             }else if(siteData.get(i).position==social) {
-                if (Constants.twitterShareEnabled == false && Util.isNullOrEmpty(session.getFacebookAccessToken()) && !getResources().getString(R.string.social_percentage).equals("0")) {
+                if (Constants.twitterShareEnabled == false && !pref.getBoolean("fbShareEnabled", false) && !pref.getBoolean("fbPageShareEnabled", false) && !getResources().getString(R.string.social_percentage).equals("0")) {
                     siteData.get(social).setStatus(false);
                     siteData.get(social).setSortChar(2);
                 } else {
@@ -267,23 +288,32 @@ public class Site_Meter_Fragment extends Fragment {
                 }
             }else if (siteData.get(i).position==post) {
                 if (HomeActivity.StorebizFloats.size() < 5 && fiveUpdatesDone == false) {
-                    siteMeterTotalWeight += onUpdate;
+                    siteMeterTotalWeight += (HomeActivity.StorebizFloats.size()*onUpdate);
                     siteData.get(post).setStatus(false);
                     siteData.get(post).setSortChar(2);
                 } else {
                     fiveUpdatesDone = true;
-                    siteMeterTotalWeight += 25;
+                    siteMeterTotalWeight += 20;
                     siteData.get(post).setStatus(true);
                     siteData.get(post).setSortChar(1);
                 }
-            }else if(siteData.get(i).position==share) {
-                if (session.getWebsiteshare()) {
-                    siteMeterTotalWeight += businessNameWeight;
-                    siteData.get(share).setStatus(true);
-                    siteData.get(share).setSortChar(1);
+            }else if(siteData.get(i).position==logo) {
+                if (!(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl))) && !getResources().getString(R.string.Logo_percentage).equals("0")) {
+                    siteMeterTotalWeight += logoWeight;
+                    siteData.get(logo).setStatus(true);
+                    siteData.get(logo).setSortChar(1);
                 } else {
-                    siteData.get(share).setStatus(false);
-                    siteData.get(share).setSortChar(2);
+                    siteData.get(logo).setStatus(false);
+                    siteData.get(logo).setSortChar(2);
+                }
+            }else if(siteData.get(i).position==businessHours) {
+                if (session.getBusinessHours()) {
+                    siteMeterTotalWeight += businessHoursWeight;
+                    siteData.get(businessHours).setStatus(true);
+                    siteData.get(businessHours).setSortChar(1);
+                } else {
+                    siteData.get(businessHours).setStatus(false);
+                    siteData.get(businessHours).setSortChar(2);
                 }
             }
         }
@@ -299,12 +329,13 @@ public class Site_Meter_Fragment extends Fragment {
                     mProgressAnimation.setProgress(siteMeterTotalWeight);
                 }
                 if(meterReading!=null)
-                    meterReading.setText(siteMeterTotalWeight+"% site completed");
-                }
+                    meterReading.setText(siteMeterTotalWeight+"% "+getString(R.string.percent_site_completed));
+            }
         });
 //        if (scaleAdapter!=null)
 //            scaleAdapter.notifyDataSetChanged();
-//        Collections.sort(siteData);
+        Collections.sort(siteData);
+        recyclerView.setAdapter(adapter);
         if (adapter!=null)
             adapter.notifyDataSetChanged();
         if(recyclerView!=null)
@@ -316,6 +347,8 @@ public class Site_Meter_Fragment extends Fragment {
         super.onResume();
         HomeActivity.headerText.setText("Site Health");
         try{
+            siteData = loadData();
+            adapter = new SiteMeterAdapter(activity,Site_Meter_Fragment.this,siteData);
             siteMeterCalculation();
         }catch(Exception e){e.printStackTrace();}
         MixPanelController.setProperties("SiteHealth", ""+siteMeterTotalWeight);
@@ -323,37 +356,43 @@ public class Site_Meter_Fragment extends Fragment {
 
     public void SiteMeterOnClick(int value) {
         switch (value){
-            case share:
-                MixPanelController.track(EventKeysWL.SITE_SCORE_SHARE, null);
-                Constants.fromSiteMeter_Share = true ;
-                shareWebsite();
+            case logo:
+                MixPanelController.track(EventKeysWL.LOGO, null);
+                if(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl))){
+                    Intent in = new Intent(activity, Business_Logo_Activity.class);
+                    startActivity(in);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
                 break;
             case address:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_HELP_YOUR_CUSTOMERS,null);
                 if(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS))){
                     Intent in = new Intent(activity, Business_Address_Activity.class);
                     startActivity(in);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
                 break;
             case post:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_POST_5_UPDATES,null);
-                if(HomeActivity.StorebizFloats.size()<5  && fiveUpdatesDone == false){
+                if(HomeActivity.StorebizFloats.size()<5  && !fiveUpdatesDone){
                     Intent in = new Intent(activity,Create_Message_Activity.class);
                     startActivity(in);
                 }
-            break;
+                break;
             case social:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_GET_SOCIAL,null);
-                if(Constants.twitterShareEnabled == false && Util.isNullOrEmpty(Constants.FACEBOOK_USER_ID)){
+                if(!Constants.twitterShareEnabled  && Util.isNullOrEmpty(Constants.FACEBOOK_USER_ID)){
                     Intent in = new Intent(activity, Social_Sharing_Activity.class);
                     startActivity(in);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
-            break;
+                break;
             case email:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_ADD_EMAIL,null);
                 if(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL))) {
-                    Intent in = new Intent(activity, Edit_Profile_Activity.class);
+                    Intent in = new Intent(activity, Contact_Info_Activity.class);
                     startActivity(in);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
                 break;
             case description:
@@ -362,23 +401,42 @@ public class Site_Meter_Fragment extends Fragment {
                 {
                     Intent in = new Intent(activity, Edit_Profile_Activity.class);
                     startActivity(in);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
                 break;
             case domain:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_GET_YOUR_OWN_IDENTITY,null);
-                ((SidePanelFragment.OnItemClickListener) activity).onClick("Store");
+                MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
+                        .title("Get A Domain")
+                        .content("Please drop us a line at ria@nowfloats.com or call us at 1860-123-1233 if you'd like to enable this feature")
+                        .positiveText(getString(R.string.ok))
+                        .positiveColorRes(R.color.primaryColor)
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                super.onPositive(dialog);
+                            }
+
+                        });
+                if(!activity.isFinishing()) {
+                    builder.show();
+                }
                 break;
             case phone:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_PHONE_NUMBER,null);
                 if(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER))){
                     Intent act = new Intent(activity, Contact_Info_Activity.class);
-                    startActivity(act);}
+                    startActivity(act);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
                 break;
             case category:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_Businesss_CATEGORY,null);
                 if(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))){
                     Intent in = new Intent(activity, Edit_Profile_Activity.class);
-                    startActivity(in);}
+                    startActivity(in);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
                 break;
             case image:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_FEATURED_IMAGE,null);
@@ -386,6 +444,7 @@ public class Site_Meter_Fragment extends Fragment {
 
                     Intent in = new Intent(activity, Edit_Profile_Activity.class);
                     startActivity(in);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
                 break;
             case businessName:
@@ -394,6 +453,39 @@ public class Site_Meter_Fragment extends Fragment {
                 {
                     Intent in = new Intent(activity, Edit_Profile_Activity.class);
                     startActivity(in);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+                break;
+            case businessHours:
+                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS).equals("TIMINGS")) {
+                    Intent businessHoursIntent = new Intent(activity, Business_Hours_Activity.class);
+                    startActivity(businessHoursIntent);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                } else {
+                    new MaterialDialog.Builder(activity)
+                            .title(getResources().getString(R.string.features_not_available))
+                            .content(getResources().getString(R.string.check_store_for_upgrade_info))
+                            .positiveText(getResources().getString(R.string.goto_store))
+                            .negativeText(getResources().getString(R.string.cancel))
+                            .positiveColorRes(R.color.primaryColor)
+                            .negativeColorRes(R.color.light_gray)
+                            .callback(new MaterialDialog.ButtonCallback() {
+                                @Override
+                                public void onNegative(MaterialDialog dialog) {
+                                    super.onNegative(dialog);
+                                    dialog.dismiss();
+                                }
+
+                                @Override
+                                public void onPositive(MaterialDialog dialog) {
+                                    super.onPositive(dialog);
+//                                                    Constants.showStoreScreen = true ;
+                                    Home_Fragment_Tab.viewPager = null;
+                                    dialog.dismiss();
+//                                                    activity.getSupportFragmentManager().popBackStack();
+                                    ((SidePanelFragment.OnItemClickListener) activity).onClick(getResources().getString(R.string.store));
+                                }
+                            }).show();
                 }
                 break;
         }

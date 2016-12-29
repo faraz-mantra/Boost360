@@ -16,6 +16,7 @@
         android:layout_height="wrap_content"
         card_view:cardBackgroundColor="@color/white"
         card_view:cardCornerRadius="3dp"
+        android:layout_marginTop="10dp"
         card_view:cardElevation="3dp">
 
         <LinearLayout
@@ -79,7 +80,7 @@
                     android:layout_marginTop="@dimen/margin_top"
                     android:background="@drawable/rounded_corner_white"
                     android:id="@+id/priceText"
-                    android:text="25000/year"
+                    android:text="@string/light_house_price"
                     android:padding="5dp"
                     tools:ignore="MissingPrefix" />
                 <TextView
@@ -101,7 +102,7 @@
                     android:textColor="@color/light_black"
                     fontPath="Roboto-Light.ttf"
                     android:textSize="@dimen/small_text_size"
-                    android:text="Read more"
+                    android:text="@string/read_more_text"
                     android:id="@+id/readMore"
                     tools:ignore="MissingPrefix" />
                 <TextView
@@ -114,7 +115,7 @@
                     android:layout_marginTop="@dimen/margin_top"
                     android:background="@drawable/rounded_corner_white"
                     android:id="@+id/knowMoreText"
-                    android:text="KNOW MORE"
+                    android:text="@string/know_more_text"
                     android:padding="5dp"
                     tools:ignore="MissingPrefix" />
             </LinearLayout>

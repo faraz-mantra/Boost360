@@ -23,6 +23,7 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -86,7 +87,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     }
 
     private void displayHomeScreen() {
-        pd = ProgressDialog.show(SplashScreen_Activity.this, "", "Getting Details ...");
+        pd = ProgressDialog.show(SplashScreen_Activity.this, "", getString(R.string.getting_details));
         pd.setCancelable(false);
         fetchData();
     }
@@ -115,12 +116,22 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
             pd.dismiss();
         HomeActivity.StorebizFloats = new ArrayList<>();
         // user is not logged in redirect him to Login Activity
-        Intent i = new Intent(SplashScreen_Activity.this, PreSignUp_MainActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-        // Staring Login Activity
-        startActivity(i);
+
+        if(BuildConfig.APPLICATION_ID.equals("com.kitsune.biz")){
+            Intent i = new Intent(SplashScreen_Activity.this, KitsunePreSignUpActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            // Staring Login Activity
+            startActivity(i);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        }else {
+            Intent i = new Intent(SplashScreen_Activity.this, PreSignUp_MainActivity.class);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            // Staring Login Activity
+            startActivity(i);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        }
         finish();
-//        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+//
     }
 
     @Override

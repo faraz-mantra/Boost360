@@ -50,7 +50,7 @@ public class SubscribersActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         TextView titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
-        titleTextView.setText("Subscribers");
+        titleTextView.setText(getResources().   getString(R.string.subscribers));
 
         mPbSubscriber = (ProgressBar)findViewById(R.id.pb_subscriber);
         mLvSubscribers = (ListView)findViewById(R.id.lv_subscribers);
@@ -59,7 +59,7 @@ public class SubscribersActivity extends AppCompatActivity {
         if(mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)!=null) {
             new SubscribersAsyncTask().execute(SUBSCRIBER_URL + mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG) + "/subscribers/" + Constants.clientId + "?offset=" + mOffset);
         }else{
-            Methods.showSnackBarNegative(this, "Couldn't find FP Tag");
+            Methods.showSnackBarNegative(this,getResources().getString(R.string.could_not_find_fb_tag));
         }
 
         BoostLog.d("Test for Fp Tag: ",  mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
@@ -116,7 +116,7 @@ public class SubscribersActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
             else{
-                Methods.showSnackBarNegative(SubscribersActivity.this, "Check your Network Connection");
+                Methods.showSnackBarNegative(SubscribersActivity.this, getResources().getString(R.string.check_internet_connection));
             }
         }
 

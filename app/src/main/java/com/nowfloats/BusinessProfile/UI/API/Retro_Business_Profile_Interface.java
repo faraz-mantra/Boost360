@@ -3,14 +3,11 @@ package com.nowfloats.BusinessProfile.UI.API;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.Headers;
-import retrofit.http.Multipart;
 import retrofit.http.POST;
-import retrofit.http.Part;
 
 /**
  * Created by NowFloatsDev on 26/05/2015.

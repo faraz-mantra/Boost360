@@ -4,19 +4,13 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
-import android.widget.SimpleAdapter;
 
-import com.nowfloats.PreSignUp.PreSignUp_MainActivity;
-import com.nowfloats.signup.UI.Model.PlacesMainModel;
-import com.nowfloats.signup.UI.Model.PlacesModel;
 import com.nowfloats.signup.UI.UI.PreSignUpActivity;
 import com.thinksity.R;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by guru on 28/07/2015.

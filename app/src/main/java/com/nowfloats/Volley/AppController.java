@@ -12,6 +12,8 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.appsflyer.AppsFlyerLib;
 import com.crashlytics.android.Crashlytics;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.freshdesk.mobihelp.Mobihelp;
 import com.freshdesk.mobihelp.MobihelpConfig;
 import com.nowfloats.util.Constants;
@@ -42,6 +44,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
             Fabric.with(this, new Crashlytics());
         }catch(Exception e){e.printStackTrace();}
 
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
@@ -53,6 +56,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
                 .setDefaultFontPath("Roboto-Light.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build());*/
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
 
         mInstance = this;
         try{

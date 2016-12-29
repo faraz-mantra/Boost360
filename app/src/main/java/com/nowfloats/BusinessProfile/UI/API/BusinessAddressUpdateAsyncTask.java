@@ -10,14 +10,12 @@ import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -94,7 +92,7 @@ public class BusinessAddressUpdateAsyncTask extends AsyncTask<Void,String, Strin
 			data.put(myObj2);
 
 
-			if(mapupdateflag==false)  {
+			if(!mapupdateflag)  {
 				JSONObject myObj3 = new JSONObject();
 				myObj3.put("key", "ADDRESS");
 				myObj3.put("value", address);
@@ -130,7 +128,7 @@ public class BusinessAddressUpdateAsyncTask extends AsyncTask<Void,String, Strin
 			obj.put("updates", data);
 
 			dataToBeUpdated.put("GEOLOCATION", location);
-			if(mapupdateflag == false)
+			if(!mapupdateflag)
 				dataToBeUpdated.put("ADDRESS", address);
 
 			getDataFromServer(obj.toString(), Constants.HTTP_POST, Constants.FpsUpdate);
@@ -169,7 +167,7 @@ public class BusinessAddressUpdateAsyncTask extends AsyncTask<Void,String, Strin
 		}
 
 		if(responseCode==200 || responseCode==202){
-			if(mapupdateflag == false)
+			if(!mapupdateflag)
 				Constants.StoreAddress = address;
 
 			//Constants.latitude = latitude;

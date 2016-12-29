@@ -2,10 +2,6 @@ package com.nowfloats.signup.UI.Model;
 
 import android.util.Log;
 
-import com.nowfloats.Store.Model.StoreModel;
-
-import java.util.ArrayList;
-
 /**
  * Created by NowFloatsDev on 25/05/2015.
  */

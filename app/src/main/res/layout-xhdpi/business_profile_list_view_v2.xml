@@ -101,7 +101,7 @@
                 android:textSize="@dimen/cell_text_size"
                 android:background="?android:selectableItemBackground"
                 android:textColor="@color/cell_text_color"
-                android:text="Address"
+                android:text="@string/business__address"
                 android:gravity="center_vertical" />
 
             <View
@@ -118,8 +118,9 @@
                 android:background="?android:selectableItemBackground"
                 android:layout_marginTop="1dp"
                 android:textColor="@color/cell_text_color"
-                android:text="Contact Information"
+                android:text="@string/contact__info"
                 android:gravity="center_vertical"/>
+
             <View
                 android:layout_width="288dp"
                 android:layout_height="1dp"
@@ -139,7 +140,7 @@
                 android:textSize="@dimen/cell_text_size"
                 android:visibility="visible"
                 android:textColor="@color/cell_text_color"
-                android:text="Business Hours"
+                android:text="@string/title_activity_business__hours_"
                 android:gravity="center_vertical"/>
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -175,7 +176,7 @@
                 android:textSize="@dimen/cell_text_size"
                 android:background="?android:selectableItemBackground"
                 android:textColor="@color/cell_text_color"
-                android:text="Business Logo"
+                android:text="@string/title_activity_business__logo_"
                 android:gravity="center_vertical"/>
             <View
                 android:layout_width="288dp"
@@ -192,7 +193,7 @@
                 android:textSize="@dimen/cell_text_size"
                 android:background="?android:selectableItemBackground"
                 android:textColor="@color/cell_text_color"
-                android:text="Social Sharing"
+                android:text="@string/title_activity_social__sharing_"
                 android:gravity="center_vertical"/>
 
         </LinearLayout>

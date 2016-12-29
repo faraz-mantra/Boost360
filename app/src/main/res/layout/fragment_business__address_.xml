@@ -35,7 +35,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Address Line"
+                        android:text="@string/address_line"
                         android:textSize="10sp"
                         android:textColor="#BDBDBD"/>
 
@@ -44,7 +44,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="bottom"
-                        android:hint="Malleswaram"
+                        android:hint="@string/malleswaram"
                         android:inputType="text"
                         android:textSize="14sp"
                         android:textColor="#575757"/>
@@ -62,7 +62,7 @@
                         android:id="@+id/businessAddress_cityEditText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="Town / City"
+                        android:hint="@string/town_city"
                         android:textSize="14sp"
                         android:gravity="bottom"
                         android:inputType="text"
@@ -72,9 +72,8 @@
                         android:id="@+id/businessAddress_pinCodeEditText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="Pin/Area Code"
+                        android:hint="@string/pin_area_code"
                         android:textSize="14sp"
-
                         android:gravity="bottom"
                         android:inputType="number"
                         android:textColor="#575757"
@@ -85,7 +84,7 @@
                     android:id="@+id/businessAddress_stateEditText"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
-                    android:hint="State / Province"
+                    android:hint="@string/state_province"
                     android:gravity="bottom"
                     android:textColor="#575757"
                     android:textSize="14sp"/>
@@ -94,7 +93,7 @@
                     android:id="@+id/businessAddress_countryEditText"
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
-                    android:hint="Country"
+                    android:hint="@string/country"
                     android:gravity="bottom"
                     android:textColor="#575757"
                     android:textSize="14sp"/>

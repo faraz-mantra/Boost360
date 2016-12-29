@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
             android:gravity="left"
-            android:text="Choose a Country" />
+            android:text="@string/choose_country" />
     </LinearLayout>
 
     <EditText
@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:hint="Search Here"
+        android:hint="@string/search_here"
         android:textSize="15sp" />
 
     <ListView

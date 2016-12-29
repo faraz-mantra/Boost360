@@ -1,9 +1,11 @@
 package com.nowfloats.signup.UI.API;
 
-import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+
+import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.Methods;
 
 import java.io.InputStream;
 
@@ -11,6 +13,9 @@ import java.io.InputStream;
  * Created by NowFloatsDev on 10/06/2015.
  */
 public class Download_Facebook_Image extends AsyncTask<String, Void, Bitmap> {
+
+    String mFpId;
+
 
     @Override
     protected void onPreExecute() {
@@ -30,7 +35,7 @@ public class Download_Facebook_Image extends AsyncTask<String, Void, Bitmap> {
     protected Bitmap doInBackground(String... URL) {
 
         String imageURL = URL[0];
-        String fpID = URL[1];
+        mFpId = URL[1];
 
         Bitmap bitmap = null;
         try {
@@ -42,8 +47,7 @@ public class Download_Facebook_Image extends AsyncTask<String, Void, Bitmap> {
             e.printStackTrace();
         }
 
-        uploadFeaturedImage_Facebook uploadFacebookImage = new uploadFeaturedImage_Facebook(bitmap,fpID);
-        uploadFacebookImage.execute();
+
 
         return bitmap;
     }
@@ -54,6 +58,10 @@ public class Download_Facebook_Image extends AsyncTask<String, Void, Bitmap> {
         //image.setImageBitmap(result);
         // Close progressdialog
        // mProgressDialog.dismiss();
+        if(!Util.isNullOrEmpty(mFpId)) {
+            uploadFeaturedImage_Facebook uploadFacebookImage = new uploadFeaturedImage_Facebook(result, mFpId);
+            uploadFacebookImage.execute();
+        }
     }
 }
 //}

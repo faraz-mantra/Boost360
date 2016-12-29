@@ -2,16 +2,10 @@ package com.nowfloats.BusinessProfile.UI.API;
 
 import com.nowfloats.util.Constants;
 
-import java.util.HashMap;
-
 import retrofit.Callback;
-import retrofit.http.Body;
-import retrofit.http.Headers;
 import retrofit.http.Multipart;
-import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Part;
-import retrofit.http.Path;
 import retrofit.http.Query;
 import retrofit.mime.TypedFile;
 

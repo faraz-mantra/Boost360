@@ -6,7 +6,6 @@
     android:layout_height="fill_parent"
     android:background="@color/screen_bg">
 
-
     <include
         android:id="@+id/app_bar_social"
         layout="@layout/new_app_bar" />
@@ -40,16 +39,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#808080">
+
                         <TextView
                             android:id="@+id/topFeatureText"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="#ffffff"
-                            android:paddingLeft="20dp"
+                            android:paddingLeft="10dp"
                             android:paddingTop="8dp"
                             android:paddingBottom="8dp"
                             android:textSize="16sp"
-                            android:text="Auto Share\nTo Social Networks" />
+                            android:text="@string/auto_share_to_social_networks" />
                         <!--android:text="Select any or all social platforms below to automatically share whatever you update on your website with a bigger audience on these social networks."/>-->
                     </LinearLayout>
                     <LinearLayout
@@ -61,16 +61,16 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
+                            android:layout_marginLeft="10dp"
                             android:layout_gravity="center_vertical"
-                            android:textSize="14sp"
-                            android:text="Website\nPosts"/>
+                            android:textSize="13sp"
+                            android:text="@string/website_posts"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="to"
-                            android:layout_marginLeft="30dp"
+                            android:text="@string/to"
+                            android:layout_marginLeft="20dp"
                             android:textStyle="italic"
                             android:textSize="13sp"
                             android:gravity="center"
@@ -82,10 +82,10 @@
                             android:layout_height="32dp"
                             android:layout_gravity="center_vertical"
                             android:src="@drawable/facebook_icon_inactive"
-                            android:layout_marginLeft="30dp"/>
+                            android:layout_marginLeft="20dp"/>
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:orientation="vertical">
@@ -94,15 +94,16 @@
                                 android:id="@+id/facebookProfile"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Facebook"
+                                android:text="@string/facebook"
                                 android:layout_gravity="center_vertical"
-                                android:textSize="14sp"
+                                android:textSize="13sp"
                                 android:layout_marginLeft="5dp"/>
                             <TextView
                                 android:id="@+id/social_sharing_facebook_profile_flag_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Disconnected"
+                                android:text="@string/disconnected"
+                                android:ellipsize="end"
                                 android:textSize="10sp"
                                 android:visibility="gone"
                                 android:layout_marginLeft="5dp"/>
@@ -114,7 +115,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:gravity="right"
-                            android:layout_marginRight="10dp">
+                            android:layout_marginRight="5dp">
                             <CheckBox
                                 android:id="@+id/social_sharing_facebook_profile_checkbox"
                                 android:layout_width="wrap_content"
@@ -133,16 +134,16 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
+                            android:layout_marginLeft="10dp"
                             android:layout_gravity="center_vertical"
-                            android:textSize="14sp"
-                            android:text="Website\nPosts"/>
+                            android:textSize="13sp"
+                            android:text="@string/website_posts"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="to"
-                            android:layout_marginLeft="30dp"
+                            android:text="@string/to"
+                            android:layout_marginLeft="20dp"
                             android:textStyle="italic"
                             android:textSize="13sp"
                             android:gravity="center"
@@ -155,10 +156,10 @@
                             android:layout_height="32dp"
                             android:src="@drawable/facebookpage_icon_inactive"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="30dp"/>
+                            android:layout_marginLeft="20dp"/>
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:orientation="vertical">
@@ -169,13 +170,15 @@
                                 android:layout_height="wrap_content"
                                 android:text="Facebook Page"
                                 android:layout_gravity="center_vertical"
-                                android:textSize="14sp"
+                                android:textSize="13sp"
                                 android:layout_marginLeft="5dp"/>
                             <TextView
                                 android:id="@+id/social_sharing_facebook_page_flag_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Disconnected"
+                                android:maxLines="1"
+                                android:text="@string/disconnected"
+                                android:ellipsize="end"
                                 android:textSize="10sp"
                                 android:visibility="gone"
                                 android:layout_marginLeft="5dp"/>
@@ -187,7 +190,8 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:gravity="right"
-                            android:layout_marginRight="10dp">
+                            android:layout_weight="1"
+                            android:layout_marginRight="5dp">
                             <CheckBox
                                 android:id="@+id/social_sharing_facebook_page_checkbox"
                                 android:layout_width="wrap_content"
@@ -205,16 +209,16 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
+                            android:layout_marginLeft="10dp"
                             android:layout_gravity="center_vertical"
-                            android:textSize="14sp"
-                            android:text="Website\nPosts"/>
+                            android:textSize="13sp"
+                            android:text="@string/website_posts"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="to"
-                            android:layout_marginLeft="30dp"
+                            android:text="@string/to"
+                            android:layout_marginLeft="20dp"
                             android:textStyle="italic"
                             android:textSize="13sp"
                             android:gravity="center"
@@ -227,10 +231,10 @@
                             android:layout_height="32dp"
                             android:src="@drawable/twitter_icon_inactive"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="30dp"/>
+                            android:layout_marginLeft="20dp"/>
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:orientation="vertical">
@@ -240,14 +244,15 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                android:text="Twitter"
-                                android:textSize="14sp"
+                                android:text="@string/twitter"
+                                android:textSize="13sp"
                                 android:layout_marginLeft="5dp"/>
                             <TextView
                                 android:id="@+id/social_sharing_twitter_flag_text"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Disconnected"
+                                android:text="@string/disconnected"
+                                android:ellipsize="end"
                                 android:visibility="gone"
                                 android:textSize="10sp"
                                 android:layout_marginLeft="5dp"/>
@@ -259,7 +264,7 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:gravity="right"
-                            android:layout_marginRight="10dp">
+                            android:layout_marginRight="5dp">
                             <CheckBox
                                 android:id="@+id/social_sharing_twitter_checkbox"
                                 android:layout_width="wrap_content"
@@ -313,12 +318,12 @@
                             android:gravity="left"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="20dp"
+                            android:paddingLeft="10dp"
                             android:paddingTop="8dp"
                             android:paddingBottom="8dp"
                             android:textColor="#ffffff"
                             android:textSize="16sp"
-                            android:text="Auto-Update\nFrom Social Networks" />
+                            android:text="@string/auto_update_from_social_network" />
                         <ImageView
                             android:id="@+id/iv_help_tool"
                             android:layout_height="30dp"
@@ -344,10 +349,10 @@
                             android:layout_height="32dp"
                             android:src="@drawable/facebookpage_icon_inactive"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="15dp"/>
+                            android:layout_marginLeft="5dp"/>
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:orientation="vertical">
@@ -356,15 +361,16 @@
                                 android:id="@+id/auto_pull_facebookPage"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Facebook Page"
+                                android:text="@string/facebook_page"
                                 android:layout_gravity="center_vertical"
-                                android:textSize="14sp"
+                                android:textSize="13sp"
                                 android:layout_marginLeft="5dp"/>
                             <TextView
                                 android:id="@+id/tv_fb_page_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Disconnected"
+                                android:text="@string/disconnected"
+                                android:ellipsize="end"
                                 android:textSize="10sp"
                                 android:visibility="gone"
                                 android:layout_marginLeft="5dp"/>
@@ -373,8 +379,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="to"
-                            android:layout_marginLeft="30dp"
+                            android:text="@string/to"
+                            android:layout_marginLeft="20dp"
                             android:textStyle="italic"
                             android:textSize="13sp"
                             android:gravity="center"
@@ -383,16 +389,16 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="30dp"
+                            android:layout_marginLeft="20dp"
                             android:layout_gravity="center_vertical"
-                            android:textSize="14sp"
-                            android:text="Website"/>
+                            android:textSize="13sp"
+                            android:text="@string/website"/>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
                             android:gravity="right"
-                            android:layout_marginRight="10dp">
+                            android:layout_marginRight="5dp">
                             <CheckBox
                                 android:id="@+id/social_sharing_facebook_page_auto_post"
                                 android:layout_width="wrap_content"

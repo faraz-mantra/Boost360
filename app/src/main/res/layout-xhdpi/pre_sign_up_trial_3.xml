@@ -18,7 +18,7 @@
             android:id="@+id/business_address_top_bar_store_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Enter Details"
+            android:text="@string/signup_title"
             android:textSize="20sp"
             android:textColor="@color/white"
             android:layout_margin="15dp"
@@ -80,7 +80,7 @@
                     android:id="@+id/editText_businessName"
                     style="@style/SignUp_EditText_Style"
                     android:inputType="textCapWords"
-                    android:hint="Business Name"
+                    android:hint="@string/sign_up_business_name"
                     tools:ignore="MissingPrefix"
                    />
 
@@ -110,7 +110,7 @@
                     android:drawableRight="@drawable/dropselect"
                     android:focusableInTouchMode="false"
                     tools:ignore="MissingPrefix"
-                    android:hint="Category"/>
+                    android:hint="@string/sign_up_category"/>
             </LinearLayout>
 
             <LinearLayout
@@ -131,7 +131,7 @@
                     android:id="@+id/editText_city"
                     style="@style/SignUp_EditText_Style"
                     android:inputType="textCapWords"
-                    android:hint="City"
+                    android:hint="@string/sign_up_city"
                     tools:ignore="MissingPrefix"
                     android:layout_weight="1"/>
 
@@ -167,7 +167,7 @@
                     android:drawableRight="@drawable/dropselect"
                     android:drawablePadding="5dp"
                     android:focusableInTouchMode="false"
-                    android:hint="Country"/>
+                    android:hint="@string/sign_up_country"/>
             </LinearLayout>
 
             <LinearLayout
@@ -188,7 +188,7 @@
                     tools:ignore="MissingPrefix"
                     style="@style/SignUp_EditText_Style"
                     android:inputType="textEmailAddress"
-                    android:hint="Email Address"/>
+                    android:hint="@string/sign_up_email"/>
             </LinearLayout>
 
             <LinearLayout
@@ -221,7 +221,7 @@
                     style="@style/SignUp_EditText_Style"
                     android:layout_marginLeft="2dp"
                     android:inputType="number"
-                    android:hint="Phone Number"/>
+                    android:hint="@string/sign_up_phone_number"/>
             </LinearLayout>
 
         </LinearLayout>

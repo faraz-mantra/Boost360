@@ -331,7 +331,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
 
         } else {
             MaterialProgressBar.dismissProgressBar();
-            Methods.showSnackBarNegative(activity, "Invalid Email. Please enter again");
+            Methods.showSnackBarNegative(activity, getString(R.string.enter_valid_email));
             //Toast.makeText(activity, "Invalid Email. Please enter Again", Toast.LENGTH_SHORT).show();
         }
     }
@@ -350,17 +350,17 @@ public class PreSignUpActivity extends AppCompatActivity implements
         } else {
             boolean wrapInScrollView = true;
             new MaterialDialog.Builder(this)
-                    .title("Number already registered")
-                    .content("Entered number is already registered with us. Please enter a different one.")
+                    .title(getString(R.string.number_already_registered))
+                    .content(getString(R.string.number_already_registered_enter_different))
                     .inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_CLASS_PHONE)
-                    .input("Enter mobile number", null, new MaterialDialog.InputCallback() {
+                    .input(getString(R.string.enter_mobile_number), null, new MaterialDialog.InputCallback() {
                         @Override
                         public void onInput(MaterialDialog dialog, CharSequence input) {
                             phoneEditText.setText(input.toString());
                         }
                     })
-                    .positiveText("OK")
-                    .negativeText("CANCEL")
+                    .positiveText(getString(R.string.ok))
+                    .negativeText(getString(R.string.cancel_in_capital))
                     .show();
 
             MaterialProgressBar.dismissProgressBar();
@@ -480,32 +480,32 @@ public class PreSignUpActivity extends AppCompatActivity implements
             if (data_businessName.trim().length() == 0) {
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(businessNameEditText);
-                Methods.showSnackBarNegative(activity, "Enter business name");
+                Methods.showSnackBarNegative(activity, getString(R.string.enter_business_name));
             }
             if (data_businessCategory.trim().length() == 0) {
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(businessCategoryEditText);
-                Methods.showSnackBarNegative(activity, "Select business category");
+                Methods.showSnackBarNegative(activity, getString(R.string.select_business_category));
             }
             if (data_city.trim().length() == 0) {
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(cityEditText);
-                Methods.showSnackBarNegative(activity, "Enter city");
+                Methods.showSnackBarNegative(activity, getString(R.string.enter_city));
             }
             if (data_country.trim().length() == 0) {
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(countryEditText);
-                Methods.showSnackBarNegative(activity, "Select country");
+                Methods.showSnackBarNegative(activity, getString(R.string.select_country));
             }
             if (!(Signup_Validation.isValidEmail(emailEditText.getText().toString()))) {
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(emailEditText);
-                Methods.showSnackBarNegative(activity, "Enter the valid email");
+                Methods.showSnackBarNegative(activity, getString(R.string.enter_valid_email));
             }
             if (!Signup_Validation.isValidPhoneNumber(data_phone)) {
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(phoneEditText);
-                Methods.showSnackBarNegative(activity, "Phone number should be between 6 - 12 ");
+                Methods.showSnackBarNegative(activity, getString(R.string.enter_password_6to12_char));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -573,7 +573,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
 
     @Override
     public void CheckUniqueNumber_preExecute(String value) {
-        pd = ProgressDialog.show(activity, null, "Checking contact number..");
+        pd = ProgressDialog.show(activity, null, getString(R.string.checking_contact_number));
         pd.setCancelable(true);
     }
 

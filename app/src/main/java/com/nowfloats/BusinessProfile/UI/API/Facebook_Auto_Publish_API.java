@@ -1,69 +1,30 @@
 package com.nowfloats.BusinessProfile.UI.API;
 
-import android.content.Context;
-import android.util.Log;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import com.nowfloats.NavigationDrawer.API.GetAutoPull;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.MixPanelController;
 
-import org.json.JSONObject;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.http.GET;
+import retrofit.http.Path;
 
 /**
  * Created by NowFloatsDev on 16/04/2015.
  */
-public class Facebook_Auto_Publish_API {
 
-    public static String autoPublish(Context context, String fpID) {
-        RequestQueue queue = Volley.newRequestQueue(context);
+ public class Facebook_Auto_Publish_API {
+    public static autoPullApi getAdapter(){
+        RestAdapter adapter = new RestAdapter.Builder()
+                /*.setLog(new AndroidLog("ggg"))
+                .setLogLevel(RestAdapter.LogLevel.FULL)*/
+                .setEndpoint(Constants.NOW_FLOATS_API_URL)
+                .build();
+        return adapter.create(autoPullApi.class);
+    }
 
-        JSONObject obj = new JSONObject();
-
-        String url = Constants.NOW_FLOATS_API_URL + "/Discover/v1/FloatingPoint/" +
-                "GetFacebookPullRegistrations/" +
-                fpID + "/" +
-                Constants.clientId;
-
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET,
-                url, null, new Response.Listener<JSONObject>() {
-
-            @Override
-            public void onResponse(JSONObject response) {
-                // TODO Auto-generated method stub
-                try {
-                    //Log.d("Email Valid : ", "Email : " + response.getString("status"));
-                    //Log.d("Email Valid : ","Email : "+response.getString("status"));
-
-                    MixPanelController.setProperties("FacebookAutoPublish", response.getString("AutoPublish"));
-                    //Log.d("PullRegistrations","GetFacebookPullRegistrations "+response.getString("AutoPublish"));
-                    //Log.d("Valid Email","Valid Email Response: "+response);
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                // TODO Auto-generated method stub
-
-
-                Log.d("Error", "Error : " + error);
-                // signUp.tagStatus("Success",tag);
-
-            }
-        });
-
-        queue.add(jsObjRequest);
-        return "";
-
-
+    public interface autoPullApi {
+        @GET("/Discover/v1/FloatingPoint/GetFacebookPullRegistrations/{fpId}/{clientId}")
+        void getFacebookAutoPull(@Path("fpId") String fpId, @Path("clientId") String clientId,
+                                 Callback<GetAutoPull> response);
     }
 }

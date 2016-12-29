@@ -7,7 +7,7 @@ import com.nowfloats.signup.UI.Model.Suggest_Tag_Event;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.squareup.otto.Bus;
-
+import com.thinksity.R;
 
 import java.util.HashMap;
 
@@ -34,12 +34,12 @@ public class Suggest_Tag_Service {
             public void success(String s, Response response) {
                 if (s!=null && s.toString().trim().length()>0)
                     bus.post(new Suggest_Tag_Event(s));
-                else  Methods.showSnackBarNegative(activity, "Suggest Tag Failed, Please try again");
+                else  Methods.showSnackBarNegative(activity, activity.getString(R.string.suggest_tag_failed_try_again));
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Methods.showSnackBarNegative(activity, "Suggest Tag Failed, Please try again");
+                Methods.showSnackBarNegative(activity, activity.getString(R.string.suggest_tag_failed_try_again));
             }
         });
 

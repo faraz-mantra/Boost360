@@ -166,7 +166,7 @@ public class Business_Hours_Activity extends ActionBarActivity implements TimePi
                 uploadbusinessTimingsInfo();
             }
                 else
-                Methods.showSnackBarNegative(Business_Hours_Activity.this,"Please select a business day");
+                Methods.showSnackBarNegative(Business_Hours_Activity.this,getResources().getString(R.string.select_business_day));
             }
         });
 

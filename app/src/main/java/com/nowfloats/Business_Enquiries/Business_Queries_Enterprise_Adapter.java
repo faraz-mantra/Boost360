@@ -96,7 +96,7 @@ public class Business_Queries_Enterprise_Adapter extends RecyclerView.Adapter<Bu
 //                Drawable img = appContext.getResources().getDrawable( R.drawable.ic_action_email );
 //                img.setBounds( 0, 0, 60, 60 );
 //                contactText.setCompoundDrawables( img, null, null, null );
-                contactText.setText("EMAIL");
+                contactText.setText(appContext.getResources().getString(R.string.email));
                 fromTextView.setText(data.Phone);
                 holder.setIsRecyclable(false);
             }else {
@@ -118,7 +118,7 @@ public class Business_Queries_Enterprise_Adapter extends RecyclerView.Adapter<Bu
 
                         Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                                 "mailto", headerValue, null));
-                        appContext.startActivity(Intent.createChooser(emailIntent, "Send email..."));
+                        appContext.startActivity(Intent.createChooser(emailIntent, appContext.getResources().getString(R.string.send_email)));
 
                     }else{
                         Intent call = new Intent(Intent.ACTION_DIAL);

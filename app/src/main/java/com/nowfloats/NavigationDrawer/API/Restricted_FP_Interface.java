@@ -1,7 +1,5 @@
 package com.nowfloats.NavigationDrawer.API;
 
-import com.nowfloats.signup.UI.Model.Email_Validation_Model;
-
 import java.util.Map;
 
 import retrofit.Callback;

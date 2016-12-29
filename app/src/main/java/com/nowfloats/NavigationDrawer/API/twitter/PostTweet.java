@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.nowfloats.BusinessProfile.UI.UI.TwitterLoginActivity;
 import com.nowfloats.util.Constants;
 import com.thinksity.R;
 

@@ -120,7 +120,7 @@ public class NfxRequestClient {
 
     public void connectNfx(){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                Constants.nfxApi, getNfxParams() , new Response.Listener<JSONObject>() {
+                Constants.nfxFacebookAnalytics, getNfxParams() , new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {

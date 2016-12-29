@@ -33,7 +33,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         fontPath="Roboto-Medium.ttf"
-                        android:text="About this plan"
+                        android:text="@string/store_about_this_plan"
                         android:layout_marginLeft="6dp"
                         android:textColor="@color/light_black"
                         android:textSize="@dimen/medium_text_size"
@@ -50,7 +50,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         fontPath="Roboto-Light.ttf"
-                        android:text="About this plan"
+                        android:text="@string/store_about_this_plan"
                         android:layout_marginLeft="6dp"
                         android:textColor="@color/light_black"
                         android:textSize="@dimen/small_text_size"
@@ -69,7 +69,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="6dp"
                         fontPath="Roboto-Medium.ttf"
-                        android:text="Screenshots"
+                        android:text="@string/store_screen_shots"
                         android:textColor="@color/light_black"
                         android:textSize="@dimen/medium_text_size"
                         tools:ignore="MissingPrefix" />
@@ -94,7 +94,7 @@
             android:visibility="visible"
             android:textColor="@color/zeroth_grey_title"
             fontPath="Roboto-Light.ttf"
-            android:text="No screenshots available!"
+            android:text="@string/store_no_screen_shots"
             tools:ignore="MissingPrefix" />
         </LinearLayout>
                 <LinearLayout
@@ -120,7 +120,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         fontPath="Roboto-Medium.ttf"
-                        android:text="Features"
+                        android:text="@string/features_text"
                         android:layout_marginLeft="6dp"
                         android:textColor="@color/light_black"
                         android:textSize="@dimen/medium_text_size"
@@ -164,7 +164,7 @@
                             fontPath="Roboto-Light.ttf"
                             tools:ignore="MissingPrefix"
                             android:textColor="@color/zeroth_grey_title"
-                            android:text="No description available!"/>
+                            android:text="@string/store_no_description"/>
                     </LinearLayout>
                 </FrameLayout>
                 <Space
@@ -190,11 +190,12 @@
                 android:textSize="@dimen/large_text_size"
                 tools:ignore="MissingPrefix" />
             <TextView
+                android:visibility="gone"
                 android:id="@+id/product_validity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 fontPath="Roboto-Medium.ttf"
-                android:text="(Inclusive of all taxes)"
+                android:text="@string/store_excluding_all_taxes"
                 android:textColor="@color/white"
                 android:textSize="@dimen/medium_text_size"
                 tools:ignore="MissingPrefix" />

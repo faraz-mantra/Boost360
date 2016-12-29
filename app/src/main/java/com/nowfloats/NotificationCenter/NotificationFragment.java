@@ -47,6 +47,8 @@ public class NotificationFragment extends Fragment{
     private int prevCount = 0;
     private String mIsRead = "false";
     private boolean mIsAlertShown = false;
+    private int alertsCount = 0;
+    private boolean mShouldRequestMore = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -121,11 +123,10 @@ public class NotificationFragment extends Fragment{
                 }*/
 
                 int lastInScreen = firstVisibleItem + visibleItemCount;
-                if((userScrolled) && (lastInScreen == totalItemCount)
-                        && (totalItemCount%10==0) && (prevCount!=totalItemCount)){
+                if((userScrolled) && (lastInScreen == totalItemCount) && (prevCount!=totalItemCount) && mShouldRequestMore){
                     userScrolled=false;
                     prevCount = totalItemCount;
-                    moreAlerts("" + totalItemCount);
+                    moreAlerts("" + alertsCount);
                 }
             }
         });
@@ -133,6 +134,7 @@ public class NotificationFragment extends Fragment{
 
     private void moreAlerts(String offset) {
         progress_layout.setVisibility(View.VISIBLE);
+        alertsCount += 10;
         try {
             Map<String, String> params = new HashMap<String, String>();
             params.put("clientId", Constants.clientId);
@@ -144,29 +146,33 @@ public class NotificationFragment extends Fragment{
             alertInterface.getAlerts(params,new Callback<ArrayList<AlertModel>>() {
                 @Override
                 public void success(ArrayList<AlertModel> alertModels, Response response) {
+                    if (alertModels!=null && alertModels.size()<10){
+                        mShouldRequestMore = false;
+                    }
                     progress_layout.setVisibility(View.GONE);
-                    if (alertModels==null || alertModels.size()==0 && !mIsAlertShown){
+                    if ((alertModels==null || alertModels.size()==0) && !mIsAlertShown){
                         emptylayout.setVisibility(View.VISIBLE);
                     }else{
                         mIsAlertShown = true;
                         emptylayout.setVisibility(View.GONE);
                     }
-                    Log.i("Alerts Success",""+alertModels.size());
-                    adapter.addAlerts(alertModels);
-                    adapter.notifyDataSetChanged();
+                    if(adapter!=null) {
+                        adapter.addAlerts(alertModels);
+                        adapter.notifyDataSetChanged();
+                    }
                     progress_layout.setVisibility(View.GONE);
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
                     Log.i("loadAlerts failure",""+error.getMessage());
-                    Methods.showSnackBarNegative(activity,"something went wrong, Please try again");
+                    Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong_try_again));
                     progress_layout.setVisibility(View.GONE);
                 }
             });
         } catch (Exception e) {
             Log.i("Alert data","API Exception:"+e);
-            Methods.showSnackBarNegative(activity,"something went wrong, Please try again");
+            Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong_try_again));
             e.printStackTrace();
             progress_layout.setVisibility(View.GONE);
         }
@@ -187,7 +193,7 @@ public class NotificationFragment extends Fragment{
                 @Override
                 public void success(ArrayList<AlertModel> alertModels, Response response) {
                     Log.i("Alerts Success","");
-                    if (alertModels!=null){
+                    if (alertModels!=null && alertModels.size() > 0){
                         mIsAlertShown = true;
                         adapter = new NotificationAdapter(activity,alertModels,alertInterface,session,bus);
                         recyclerView.setAdapter(adapter);
@@ -198,13 +204,13 @@ public class NotificationFragment extends Fragment{
                 @Override
                 public void failure(RetrofitError error) {
                     Log.i("loadAlerts failure",""+error.getMessage());
-                    Methods.showSnackBarNegative(activity,"something went wrong, Try again");
+                    Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong_try_again));
                     progress_layout.setVisibility(View.GONE);
                 }
             });
         } catch (Exception e) {
             Log.i("Alert data","API Exception:"+e);
-            Methods.showSnackBarNegative(activity,"something went wrong, Try again");
+            Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong_try_again));
             e.printStackTrace();
             progress_layout.setVisibility(View.GONE);
         }

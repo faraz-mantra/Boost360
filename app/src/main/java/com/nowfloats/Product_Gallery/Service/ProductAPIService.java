@@ -10,6 +10,7 @@ import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.squareup.otto.Bus;
+import com.thinksity.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,7 +66,7 @@ public class ProductAPIService {
                                 Product_Gallery_Fragment.empty_layout.setVisibility(View.VISIBLE);
                             if (Product_Gallery_Fragment.progressLayout!=null)
                                 Product_Gallery_Fragment.progressLayout.setVisibility(View.GONE);
-                            Methods.showSnackBarNegative(activity, "Something went wrong, Try again...!");
+                            Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
                         }
                     });
                 }
@@ -85,7 +86,7 @@ public class ProductAPIService {
                             if (Product_Gallery_Fragment.empty_layout!=null)
                                 Product_Gallery_Fragment.empty_layout.setVisibility(View.GONE);
                         }
-                    Methods.showSnackBarNegative(activity, "Something went wrong, Try again...!");
+                    Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
                 }
             });
         }

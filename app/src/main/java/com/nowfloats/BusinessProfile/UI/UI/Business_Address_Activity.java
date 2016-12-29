@@ -1,6 +1,5 @@
 package com.nowfloats.BusinessProfile.UI.UI;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,10 +7,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,16 +24,9 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.nowfloats.BusinessProfile.UI.API.BusinessAddressLatLongUpdateAsyncTask;
-import com.nowfloats.BusinessProfile.UI.API.BusinessAddressUpdateAsyncTask;
-import com.nowfloats.BusinessProfile.UI.API.NewMapViewDialogBusinessAddress;
+import com.nowfloats.BusinessProfile.UI.API.BusinessAddressUpdateApi;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
@@ -43,7 +36,7 @@ import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
 
-public class Business_Address_Activity extends ActionBarActivity {
+public class Business_Address_Activity extends AppCompatActivity {
 
     private Toolbar toolbar;
     //public static GoogleMap googleMap;
@@ -59,7 +52,7 @@ public class Business_Address_Activity extends ActionBarActivity {
     UserSessionManager session;
     public static ImageView ivMap;
     public static final int PLACE_PICKER_REQUEST = 23;
-    private boolean mUpdatingPositionFromMap = false;
+    private boolean mUpdatingPositionFromMap = false,saveAddressFlag=false;;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +66,7 @@ public class Business_Address_Activity extends ActionBarActivity {
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         saveTextView = (TextView) toolbar.findViewById(R.id.saveTextView);
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
-        titleTextView.setText("Address");
+        titleTextView.setText(getResources().getString(R.string.business__address));
         ivMap = (ImageView) findViewById(R.id.iv_map);
 
         ivMap.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +81,7 @@ public class Business_Address_Activity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 MixPanelController.track(EventKeysWL.SAVE_BUSINESS_ADDRESS,null);
+                saveAddressFlag=true;
                 uploadBussinessAddress();
             }
         });
@@ -102,9 +96,10 @@ public class Business_Address_Activity extends ActionBarActivity {
         }
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         businessAddress = (EditText) findViewById(R.id.addressLine);
         city = (EditText) findViewById(R.id.businessAddress_cityEditText);
         state = (EditText) findViewById(R.id.businessAddress_stateEditText);
@@ -254,14 +249,7 @@ public class Business_Address_Activity extends ActionBarActivity {
             }
         });
 
-
-
-
-
-
     }
-
-
 
     private void initializeData() {
 
@@ -270,80 +258,55 @@ public class Business_Address_Activity extends ActionBarActivity {
         country.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY));
         areaCode.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PINCODE));
 
-
         saveTextView.setVisibility(View.GONE);
     }
 
     private void uploadBussinessAddress() {
-        int i=0;
-        if(streetaddressflag)
-        {
-            InputMethodManager imm = (InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow( state.getWindowToken(), 0);
-            text1=adresslinetext;
+        int i = 0;
+        if (streetaddressflag) {
+            InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(state.getWindowToken(), 0);
+            text1 = adresslinetext;
             profilesattr[i] = "ADDRESS";
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS,text1);
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS, text1);
             i++;
+        } else {
+            text1 = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS);
         }
-        else
-        {
-            text1=session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS);
-        }
-        if(cityflag){
-            InputMethodManager imm = (InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow( city.getWindowToken(), 0);
-            text2=citytext;
+        if (cityflag) {
+            InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(city.getWindowToken(), 0);
+            text2 = citytext;
             profilesattr[i] = "CITY";
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CITY,text2);
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CITY, text2);
             i++;
+        } else {
+            text2 = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY);
         }
-        else
-        {
-            text2=session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY);
-        }
-        if(pincodeflag){
-            InputMethodManager imm = (InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow( areaCode.getWindowToken(), 0);
-            text3=pincodetext;
-            profilesattr[i] = "PINCODE";
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PINCODE,text3);
+        if (pincodeflag) {
+            InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(areaCode.getWindowToken(), 0);
+            text3 = pincodetext;
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PINCODE, text3);
             i++;
-        }
-        else
-        {
-            text3=session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PINCODE);
+        } else {
+            text3 = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PINCODE);
         }
 
-        if(stateflag)
-        {
+        if (stateflag) {
             saveTextView.setVisibility(View.GONE);
-            InputMethodManager imm = (InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow( state.getWindowToken(), 0);
+            InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(state.getWindowToken(), 0);
 
             SharedPreferences sharedpreferences = this.getSharedPreferences("Saving State Value", 0);
             SharedPreferences.Editor prefsEditor;
             prefsEditor = sharedpreferences.edit();
             prefsEditor.putString("State", statetext);
-            prefsEditor.commit();
-            stateflag=false;
-//			if(streetaddressflag && pincodeflag==false && cityflag==false)
-//			Util.toast("Your business address has been updated successfully", this);
+            prefsEditor.apply();
+            stateflag = false;
+
         }
-
-        SharedPreferences sharedPreferences =getSharedPreferences("Saving State Value", Activity.MODE_PRIVATE);
-        latlongAddress=text1.replaceAll(" ", "+")+","+text2.replaceAll(" ", "+")+","+","+text3;
-        latlongAddress.replaceAll(" ", "+");
-
-        // if(!stateflag){
-
-//		UploadProfileAsyncTask upa = new UploadProfileAsyncTask(this,offerObj,profilesattr);;
-//		upa.execute();
-        String stringafteredit=text1+","+text2+","+","+ session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY)+","+text3;
-        BusinessAddressLatLongUpdateAsyncTask save =new BusinessAddressLatLongUpdateAsyncTask(stringafteredit, profilesattr, this,latlongAddress,session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
-        save.execute();
-        // }
-
-
+        mapViewDialog();
     }
 
 
@@ -352,7 +315,7 @@ public class Business_Address_Activity extends ActionBarActivity {
 
         String url = "http://maps.google.com/maps/api/staticmap?center=" + Constants.latitude + "," + Constants.longitude + "&zoom=14&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + Constants.latitude + "," + Constants.longitude + "&key=" + "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
         //holderItem.chatImage.setVisibility(View.VISIBLE);
-        BoostLog.d("Map Url:", url);
+        Log.d("Map Urlggg:", url);
         try {
             Picasso.with(this)
                     .load(url)
@@ -366,17 +329,6 @@ public class Business_Address_Activity extends ActionBarActivity {
 
         // check if map is created successfully or not
     }
-
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        initilizeMap();
-//        this.setTitle("Business Address");
-//
-//    }
-
-
 
 
     @Override
@@ -422,6 +374,7 @@ public class Business_Address_Activity extends ActionBarActivity {
         startActivity(it);*/
         try{
             PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
             Intent placePickerIntent = builder.build(this);
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
                 placePickerIntent.putExtra("primary_color", ContextCompat.getColor(this, R.color.primaryColor));
@@ -456,9 +409,14 @@ public class Business_Address_Activity extends ActionBarActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                BusinessAddressUpdateAsyncTask Task = new BusinessAddressUpdateAsyncTask( Constants.latitude, Constants.longitude, Business_Address_Activity.this,null,true,session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
-                Task.execute();
+
+                BusinessAddressUpdateApi Task = new BusinessAddressUpdateApi( Constants.latitude,
+                        Constants.longitude, Business_Address_Activity.this,city.getText().toString()
+                        ,areaCode.getText().toString(),businessAddress.getText().toString(),
+                        saveAddressFlag,session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
+                Task.update();
                 saveTextView.setVisibility(View.GONE);
+                saveAddressFlag=false;
             }
         }
     }
@@ -467,7 +425,7 @@ public class Business_Address_Activity extends ActionBarActivity {
     public void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
-        this.setTitle("Business Address");
+        this.setTitle(getResources().getString(R.string.business__address));
 
     }
 

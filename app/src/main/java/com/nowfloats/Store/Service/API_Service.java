@@ -5,11 +5,11 @@ import android.util.Log;
 
 import com.nowfloats.Store.Model.StoreEvent;
 import com.nowfloats.Store.Model.StoreMainModel;
-import com.nowfloats.Store.Model.StoreModel;
 import com.nowfloats.Store.StoreFragmentTab;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.squareup.otto.Bus;
+import com.thinksity.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +36,7 @@ public class API_Service {
                 params.put("AccountManagerId",id);
                 params.put("identifier", id);
             }
-            params.put("clientId", id);
+            params.put("clientId", Constants.clientId);
             params.put("fpId", fpID);
             params.put("country",country.toLowerCase());
             Log.i("STORE data", "API call Started");
@@ -50,7 +50,7 @@ public class API_Service {
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Methods.showSnackBarNegative(activity,"Something went wrong");
+                    Methods.showSnackBarNegative(activity,activity.getString(R.string.something_went_wrong));
                     Log.i("store list Error",""+error);
                 }
             });

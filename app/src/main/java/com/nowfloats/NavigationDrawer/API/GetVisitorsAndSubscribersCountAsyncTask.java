@@ -6,17 +6,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.Analytics_Fragment;
-import com.nowfloats.Volley.AppController;
-import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -32,9 +23,7 @@ import org.json.JSONObject;
 
 import java.net.URI;
 import java.text.NumberFormat;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 public class GetVisitorsAndSubscribersCountAsyncTask extends AsyncTask<Void, String, String>{
 	Activity mContext;

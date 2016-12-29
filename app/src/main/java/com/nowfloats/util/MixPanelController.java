@@ -24,7 +24,8 @@ public class MixPanelController {
 			Inbox = "INBOXACTIVITY", loginActivity = "LOGIN",
 			mainActivity = "MainActivity", searchActivity = "SearchActivity",
 			messageFloat = "MessageFloat", feedback = "SendEmailActivity",
-			MessageDetailView = "MessageDetailView";
+			MessageDetailView = "MessageDetailView",
+			FacebookActivity="FacebookAnalytics";
 	private static String KEY = "";
 	public static MixpanelAPI.People people = null;
 

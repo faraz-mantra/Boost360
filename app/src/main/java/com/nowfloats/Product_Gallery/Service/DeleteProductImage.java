@@ -22,7 +22,7 @@ public class DeleteProductImage extends AsyncTask<String, Void, Void> {
     protected void onPreExecute() {
         materialProgress = new MaterialDialog.Builder(mProductDtailsActivity)
                 .widgetColorRes(R.color.accentColor)
-                .content("Deleting image....")
+                .content(mProductDtailsActivity.getString(R.string.deleting_image))
                 .progress(true, 0)
                 .show();
         materialProgress.setCancelable(false);

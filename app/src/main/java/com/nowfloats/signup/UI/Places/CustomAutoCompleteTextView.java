@@ -4,11 +4,9 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.AutoCompleteTextView;
 
-import com.nowfloats.signup.UI.Model.PlacesMainModel;
 import com.nowfloats.signup.UI.Model.PlacesModel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /** Customizing AutoCompleteTextView to return Place Description   
  *  corresponding to the selected item

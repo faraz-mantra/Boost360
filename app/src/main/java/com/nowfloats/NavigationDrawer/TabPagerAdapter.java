@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
 import com.nowfloats.NotificationCenter.NotificationFragment;
+import com.thinksity.R;
 
 public class TabPagerAdapter extends FragmentPagerAdapter  {
     Home_Main_Fragment homeFragment;
@@ -16,7 +17,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter  {
     int currentItem ;
     private FragmentManager mFragmentManager;
 
-    CharSequence Titles[]={"UPDATES","ANALYTICS","ALERTS"};
+    private CharSequence mTitles[];
     public TabPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         Log.d("Tap Pager Adapter"," Tab Pager Adapter ");
@@ -25,6 +26,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter  {
         analyticsFragment = new Analytics_Fragment();
         appContext = context ;
         mFragmentManager = fm;
+        mTitles = appContext.getResources().getStringArray(R.array.dashboard_tabs);
     }
 
     private static String makeFragmentName(int viewId, int index) {
@@ -46,6 +48,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter  {
                 break;
             case 1:
                 selectedFragment = analyticsFragment;
+                /*selectedFragment = OffersFragment.newInstance();*/
                 currentItem = 1;
                 break;
             case 2:
@@ -67,7 +70,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter  {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return Titles[position];
+        return mTitles[position];
     }
 
 

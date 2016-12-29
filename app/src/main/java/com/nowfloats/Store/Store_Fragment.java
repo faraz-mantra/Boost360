@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.LinearLayout;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.AccountDetails.AccountInfoAdapter;
 import com.nowfloats.AccountDetails.Model.AccountDetailModel;
 import com.nowfloats.Login.UserSessionManager;
@@ -18,18 +19,19 @@ import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.Store.Adapters.StoreAdapter;
 import com.nowfloats.Store.Model.StoreEvent;
 import com.nowfloats.Store.Model.StoreModel;
-import com.nowfloats.Store.Service.API_Service;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
+import com.romeo.mylibrary.Models.OrderDataModel;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
@@ -45,12 +47,18 @@ public class Store_Fragment extends Fragment {
     private RecyclerView recyclerView;
     private StoreAdapter storeAdapter;
     Bus bus;
-    public static ArrayList<StoreModel> storeModel = new ArrayList<>();
+    //public static ArrayList<StoreModel> storeModel = new ArrayList<>();
     private LinearLayout emptystorelayout,progress_storelayout;
     private String countryPhoneCode;
     UserSessionManager session;
     Activity activity;
     String args = "";
+
+    private OrderDataModel mOrderData;
+
+    MaterialDialog materialProgress;
+    private final int DIRECT_REQUEST_CODE = 1;
+    private final int OPC_REQUEST_CODE = 2;
 
     @Override
     public void onResume() {
@@ -140,6 +148,7 @@ public class Store_Fragment extends Fragment {
         }
     }
 
+
     private void LoadActivePlans(final Activity activity) {
         try {
             AccInfoInterface infoInterface = Constants.restAdapter.create(AccInfoInterface.class);
@@ -165,7 +174,7 @@ public class Store_Fragment extends Fragment {
 
     @Subscribe
     public void getStoreList(StoreEvent response){
-        storeModel = (ArrayList<StoreModel>)response.model.AllPackages;
+        List<StoreModel> storeModel = (ArrayList<StoreModel>)response.model.AllPackages;
 //        storeModel = filterData(storeModel);
         if(storeModel!=null){
             if (storeModel.size()==0){
@@ -174,7 +183,7 @@ public class Store_Fragment extends Fragment {
                 emptystorelayout.setVisibility(View.GONE);
             }
             progress_storelayout.setVisibility(View.GONE);
-            storeAdapter = new StoreAdapter(activity, storeModel,"all", session);
+            storeAdapter = new StoreAdapter(activity, StoreFragmentTab.additionalWidgetModels,"all", session);
             AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(storeAdapter);
             ScaleInAnimationAdapter scaleAdapter = new ScaleInAnimationAdapter(alphaAdapter);
             scaleAdapter.setFirstOnly(false);

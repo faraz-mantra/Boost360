@@ -56,7 +56,7 @@ public class AccountInfoActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         activity = AccountInfoActivity.this;
         TextView titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
-        titleTextView.setText("Account Details");
+        titleTextView.setText(getResources().getString(R.string.account_detail));
         UserSessionManager session = new UserSessionManager(activity.getApplicationContext(),activity);
         TextView tag = (TextView)findViewById(R.id.tag_name);
         tag.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase());
@@ -72,8 +72,8 @@ public class AccountInfoActivity extends AppCompatActivity {
         zerothLayout.setVisibility(View.GONE);
         TextView zeroth_tv = (TextView)findViewById(R.id.zeroth_txt);
         if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).toLowerCase().equals("india")){
-            zeroth_tv.setText("You are currently on a demo plan. To get more out of your website, upgrade to one of our paid plans.");
-        }else{zeroth_tv.setText("You are currently on a Free plan. To get more out of your website, upgrade to one of our paid plans.");}
+            zeroth_tv.setText(getResources().getString(R.string.demo_plan));
+        }else{zeroth_tv.setText(getResources().getString(R.string.free_plan));}
 
         TextView zeroth_storebtn = (TextView)findViewById(R.id.zeroth_storebtn);
         zeroth_storebtn.setOnClickListener(new View.OnClickListener() {
