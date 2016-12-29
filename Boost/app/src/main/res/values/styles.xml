@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="AppTheme" parent="AppTheme.Base"> 
+
+    </style>
+    
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- customize the color palette -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryColorDark</item>
+        <item name="colorAccent">@color/primaryColor</item>
+        <item name="colorControlActivated">@color/accentColor</item>
+        <item name="colorControlHighlight">@color/accentColor</item>
+        <item name="colorControlNormal">#eeeeee</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+    <style name="AppTheme.Splash" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- customize the color palette -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryColorDark</item>
+        <item name="colorAccent">@color/primaryColor</item>
+        <item name="colorControlActivated">@color/accentColor</item>
+        <item name="colorControlHighlight">@color/accentColor</item>
+        <item name="colorControlNormal">#eeeeee</item>
+    </style>
+    <style name="MyCustomToolBarTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textColorSecondary">#FFFFFF</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_action_back</item>
+    </style>
+
+    <style name="Theme.CustomTheme" parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/Theme.CustomTheme.ActionBar</item>
+        <item name="actionBarStyle">@style/Theme.CustomTheme.ActionBar</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:titleTextStyle">@style/Theme.CustomTheme.TitleTextStyle</item>
+        <item name="titleTextStyle">@style/Theme.CustomTheme.TitleTextStyle</item>
+    </style>
+
+    <style name="Theme.CustomTheme.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">#FFC90E</item>
+    </style>
+
+    <style name="Theme.CustomTheme.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+
+    <style name="MyCustomToolBarEditBoxTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textColorSecondary">#FFFFFF</item>
+        <item name="android:title">@string/save</item>
+
+    </style>
+
+    <style name="SignUp_EditText_Style" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="android:gravity">bottom</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">#383838</item>
+        <item name="android:textColorHint">#B6B6B6</item>
+        <item name="android:layout_marginLeft">24dp</item>
+    </style>
+
+    <style name="InputLayoutTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:textColorHint">#808080</item>
+        <item name="android:textColor">#808080</item>
+    </style>
+
+
+    <style name="SignUp_LinearLayout_Style" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">51dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">bottom</item>
+
+
+    </style>
+
+    <style name="DialogTheme">
+        <item name="android:windowEnterAnimation">@anim/slide_left</item>
+        <item name="android:windowExitAnimation">@anim/slide_right</item>
+    </style>
+
+    <style name="white_label_style" parent="Theme.AppCompat.Light.NoActionBar">
+
+       <item name="android:background">@color/primaryColor</item>
+    </style>
+
+    <style name="MenuButtonsStyle">
+        <item name="fab_size">mini</item>
+        <item name="fab_showAnimation">@anim/jump_from_down</item>
+        <item name="fab_hideAnimation">@anim/jump_to_down</item>
+        <item name="fab_shadowColor">#444</item>
+        <item name="fab_colorNormal">@color/primaryColor</item>
+        <item name="fab_colorPressed">#F2AB00</item>
+        <item name="fab_colorRipple">#D99200</item>
+    </style>
+    <style name="Theme.Transparent" parent="android:Theme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+    <style name="MyCheckBox" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/primaryColor</item>
+        <item name="colorControlActivated">@color/primaryColor</item>
+    </style>
+</resources>

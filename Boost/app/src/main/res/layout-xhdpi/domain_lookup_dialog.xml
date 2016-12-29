@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="320dp"
+    android:layout_height="wrap_content"
+    card_view:cardBackgroundColor="#FFFFFF"
+    card_view:cardCornerRadius="10dp"
+
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <ImageView
+            android:id="@+id/cancelCardImageView"
+            android:tag="image_tag"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_margin="10dp"
+            android:src="@drawable/card_cancel"
+            android:layout_width="wrap_content" />
+
+        <LinearLayout
+
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:layout_width="fill_parent">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/domain_lookup_icon"/>
+
+            <TextView
+                android:id="@+id/domain_lookup_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="15dp"
+                android:textSize="24sp"
+                android:text="@string/get_free_com"/>
+
+            <TextView
+                android:id="@+id/domain_lookup_desc"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:gravity="center_horizontal"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:text="@string/you_are_eligible_to_free_domain"
+                />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/loginButton"
+            android:layout_width="271dp"
+            android:layout_height="45dp"
+            android:text="@string/okay"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/drop_shadow"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="25dp"
+            android:layout_marginLeft="25dp"
+            android:inputType="textCapWords"
+            android:layout_marginBottom="25dp"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
+
+

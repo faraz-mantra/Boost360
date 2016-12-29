@@ -1,0 +1,127 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="#D1D1D1">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="2dp">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            card_view:cardCornerRadius="1dp"
+            >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:orientation="vertical"
+                    android:gravity="bottom"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/address_line"
+                        android:textSize="10sp"
+                        android:textColor="#BDBDBD"/>
+
+                    <EditText
+                        android:id="@+id/addressLine"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="bottom"
+                        android:hint="@string/malleswaram"
+                        android:inputType="text"
+                        android:textSize="14sp"
+                        android:textColor="#575757"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3"
+                    android:gravity="bottom">
+
+                    <EditText
+                        android:id="@+id/businessAddress_cityEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/town_city"
+                        android:textSize="14sp"
+                        android:gravity="bottom"
+                        android:inputType="text"
+                        android:textColor="#575757"
+                        android:layout_weight="1"/>
+                    <EditText
+                        android:id="@+id/businessAddress_pinCodeEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/pin_area_code"
+                        android:textSize="14sp"
+                        android:gravity="bottom"
+                        android:inputType="number"
+                        android:textColor="#575757"
+                        android:layout_weight="2"/>
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/businessAddress_stateEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:hint="@string/state_province"
+                    android:gravity="bottom"
+                    android:textColor="#575757"
+                    android:textSize="14sp"/>
+
+                <EditText
+                    android:id="@+id/businessAddress_countryEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:hint="@string/country"
+                    android:gravity="bottom"
+                    android:textColor="#575757"
+                    android:textSize="14sp"/>
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            card_view:cardCornerRadius="1dp">
+
+            <fragment
+                android:id="@+id/map"
+                android:layout_margin="13dp"
+                class="com.google.android.gms.maps.MapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+
+
+        </android.support.v7.widget.CardView>
+
+
+
+    </LinearLayout>
+</LinearLayout>

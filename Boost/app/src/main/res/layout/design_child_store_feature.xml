@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_child"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="10dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/product_info_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/small_text_size"
+        android:textColor="@color/light_black"
+        fontPath = "Roboto-Light.ttf"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        tools:ignore="MissingPrefix"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/lookupDomain"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginLeft="15dp"
+        android:text="@string/lookup_domain"
+        android:textColor="#fff"
+        fontPath="Roboto-Light.ttf"
+        tools:ignore="MissingPrefix"
+        android:background="@color/primaryColor"
+        android:visibility="visible"
+        android:textSize="10sp"
+        android:elevation="5dp"
+        android:layout_weight="1" />
+</LinearLayout>

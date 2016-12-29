@@ -1,0 +1,79 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/background_grey"
+    android:orientation="vertical"
+    tools:context="com.nowfloats.NavigationDrawer.Analytics_Fragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom"
+        android:layout_weight="1">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/chat_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:scrollbars="vertical" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="2dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/chat_msg"
+                fontPath="Roboto-Light.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="left"
+                android:hint="@string/type_message"
+                android:maxHeight="100dp"
+                android:padding="8dp"
+                android:singleLine="false"
+                android:textColor="@color/text_color_roboto_lt_30_edittext"
+                android:textColorHint="@color/hint_color_roboto_lt_30_edittext"
+                android:textSize="17sp"
+                tools:ignore="MissingPrefix" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/chat_send_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="43dp"
+                android:layout_height="43dp"
+                android:background="@drawable/circle_bakground" />
+
+            <ImageView
+                android:id="@+id/chat_send"
+                android:layout_width="43dp"
+                android:layout_height="43dp"
+                android:layout_marginLeft="2dp"
+                android:layout_gravity="center"
+                android:padding="6dp"
+                android:src="@drawable/chat_send" />
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,120 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screen_bg"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/curved_grey_background"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:padding="5dp">
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="567"
+        android:textStyle="bold"
+        android:textColor="#000000"
+        android:id="@+id/currentNumber"
+        style="@android:style/TextAppearance.Large"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+
+        android:gravity="bottom"
+        android:layout_below="@id/currentNumber"
+        android:text="............................\n visits this month"
+        android:id="@+id/dottedLine"
+        />
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/chart"
+        android:layout_width="fill_parent"
+        android:layout_below="@+id/dottedLine"
+        android:layout_above="@+id/buttonLayout"
+        android:layout_height="wrap_content" />
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:id="@+id/buttonLayout"
+        android:layout_margin="10dp"
+        android:layout_above="@+id/totalNumber">
+
+    <Button
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Week"
+       style="@android:style/TextAppearance.Small"
+       android:textColor="#454545"
+       android:paddingLeft="20dp"
+       android:paddingRight="20dp"
+       android:paddingTop="10dp"
+       android:paddingBottom="10dp"
+       android:background="@drawable/yellow_tab_unselected_week"
+       android:id="@+id/weekButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Month"
+        style="@android:style/TextAppearance.Small"
+        android:textColor="#454545"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@drawable/yellow_tab_selected_month"
+        android:id="@+id/monthButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Year"
+        style="@android:style/TextAppearance.Small"
+        android:textColor="#454545"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@drawable/yellow_tab_unselected_year"
+        android:id="@+id/yearButton" />
+
+    </LinearLayout>
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:text="2345 visits this month"
+        android:textColor="#000000"
+        style="@android:style/TextAppearance.Medium"
+        android:id="@+id/totalNumber" />
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>
