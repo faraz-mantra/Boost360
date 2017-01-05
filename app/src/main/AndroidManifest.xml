@@ -10,7 +10,8 @@
         android:protectionLevel="signature" />
 
     <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
-    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />0
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
+    0
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -96,7 +97,7 @@
         </activity>
         <activity
             android:name="com.nowfloats.Analytics_Screen.ShowWebView"
-            android:label="Facebook Analytics"
+            android:label="Social Analytics"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -115,7 +116,7 @@
         </activity>
         <activity
             android:name="com.nowfloats.Analytics_Screen.FacebookAnalyticsLogin"
-            android:label="Facebook Analytics"
+            android:label="Social Analytics"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <meta-data
@@ -404,7 +405,8 @@
         <activity android:name="com.nowfloats.SiteAppearance.SiteAppearanceActivity" />
         <activity android:name="com.nowfloats.NavigationDrawer.CreateOffersActivity" />
         <activity android:name="com.nowfloats.NavigationDrawer.OffersFullScreenActivity" />
-        <activity android:name="com.nowfloats.PreSignUp.KitsunePreSignUpActivity"></activity>
+        <activity android:name="com.nowfloats.PreSignUp.KitsunePreSignUpActivity" />
+        <activity android:name="com.nowfloats.NavigationDrawer.HelpAndSupportActivity"></activity>
     </application>
 
 </manifest>

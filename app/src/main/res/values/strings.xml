@@ -1043,6 +1043,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="please_wait_while_collecting_facebook_data">Please wait, as we are collecting statistics from your Facebook Page. It usually takes upto 24 hours to fetch data.</string>
     <string name="updates_not_found">Updates not found!</string>
     <string name="looks_like_you_have_not_posted_any_updates">Looks like you haven\'t posted any update on your Facebook Page through Boost yet Make sure you select the <b>Facebook Page option</b> while creating an update</string>
-    <string name="facebook_analytics">Facebook Analytics</string>
+    <string name="facebook_analytics">Social Analytics</string>
     <string name="session_expired">Please login again your Session has expired</string>
+    <string name="help_and_support">Help and Support</string>
 </resources>

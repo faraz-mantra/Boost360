@@ -59,11 +59,6 @@ public class OffersFragment extends Fragment implements View.OnClickListener{
     private int visibilityFlag = 1;
     Bus mBus;
 
-    public static OffersFragment newInstance() {
-        OffersFragment fragment = new OffersFragment();
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         mBus = BusProvider.getInstance().getBus();

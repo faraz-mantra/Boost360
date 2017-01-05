@@ -2,6 +2,7 @@ package com.nowfloats.NavigationDrawer;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -152,56 +153,52 @@ public class Home_Fragment_Tab extends Fragment {
             }
         });
 
-        new Thread(new Runnable() {
+        viewPager.setAdapter(tabPagerAdapter);
+        try{
+            activity.setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+        }catch(Exception e){e.printStackTrace();}
+        tabs.setDistributeEvenly(true);
+        tabs.setCustomTabView(R.layout.tab_text,R.id.tab_textview);
+//                        tabs.setSelectedIndicatorColors(getResources().getColor(R.color.white));
+        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return getResources().getColor(R.color.white);
+            }
+        });
+        // Setting the ViewPager For the SlidingTabsLayout
+        tabs.setViewPager(viewPager);
+
+        if (alertCountVal!=null && alertCountVal.trim().length()>0 && !alertCountVal.equals("0")){
+            alertCountTv.setText(alertCountVal);
+            alertCountTv.setVisibility(View.VISIBLE);
+        }
+        progressLayout.setVisibility(View.GONE);
+        if (viewPager!=null){
+            if(Constants.createMsg){
+                viewPager.setCurrentItem(0);
+                if(Home_Main_Fragment.progressBar!=null)
+                    Home_Main_Fragment.progressBar.setVisibility(View.VISIBLE);
+                Constants.createMsg = false;
+            }else
+            if(Constants.deepLinkAnalytics)
+            {
+                viewPager.setCurrentItem(1);
+                Constants.deepLinkAnalytics = false ;
+            }
+        }
+
+        /*new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Thread.sleep(500);
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        viewPager.setAdapter(tabPagerAdapter);
-                        try{
-                            activity.setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-                        }catch(Exception e){e.printStackTrace();}
-                        tabs.setDistributeEvenly(true);
-                        tabs.setCustomTabView(R.layout.tab_text,R.id.tab_textview);
-//                        tabs.setSelectedIndicatorColors(getResources().getColor(R.color.white));
-                        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+                        getActivity().runOnUiThread(new Runnable() {
                             @Override
-                            public int getIndicatorColor(int position) {
-                                return getResources().getColor(R.color.white);
-                            }
-                        });
-                        // Setting the ViewPager For the SlidingTabsLayout
-                        tabs.setViewPager(viewPager);
+                            public void run() {
 
-                        if (alertCountVal!=null && alertCountVal.trim().length()>0 && !alertCountVal.equals("0")){
-                            alertCountTv.setText(alertCountVal);
-                            alertCountTv.setVisibility(View.VISIBLE);
-                        }
-                        progressLayout.setVisibility(View.GONE);
-                        if (viewPager!=null){
-                            if(Constants.createMsg){
-                                viewPager.setCurrentItem(0);
-                                if(Home_Main_Fragment.progressBar!=null)
-                                    Home_Main_Fragment.progressBar.setVisibility(View.VISIBLE);
-                                Constants.createMsg = false;
-                            }else
-                            if(Constants.deepLinkAnalytics)
-                            {
-                                viewPager.setCurrentItem(1);
-                                Constants.deepLinkAnalytics = false ;
-                            }
-                        }
+
                     }
                 });
-                }catch (InterruptedException e){
-                    e.printStackTrace();
-                }catch (Exception e) {
-                    e.printStackTrace();
-                }
             }
-        }).start();
+        }, 500);*/
     }
 }

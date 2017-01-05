@@ -107,12 +107,6 @@ public class Home_Main_Fragment extends Fragment implements
 
     public Home_Main_Fragment() {}
 
-    public static Home_Main_Fragment newInstance() {
-        Home_Main_Fragment fragment = new Home_Main_Fragment();
-        Bundle args = new Bundle();
-        return fragment;
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -245,30 +239,23 @@ public class Home_Main_Fragment extends Fragment implements
         mainView =  inflater.inflate(R.layout.fragment_home__main_, container, false);
         fetch_home_data = new Fetch_Home_Data(getActivity(),0);
         session = new UserSessionManager(getActivity().getApplicationContext(),getActivity());
-        return mainView;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        BoostLog.d("Home_Main_Fragment","onViewCreated");
 
         HomeActivity.StorebizFloats.clear();
-        progressCrd = (CardView)view.findViewById(R.id.progressCard);
-        progressBar = (ButteryProgressBar)view.findViewById(R.id.progressbar);
-        retryLayout = (LinearLayout)view.findViewById(R.id.postRetryLayout);
-        emptyMsgLayout = (LinearLayout)view.findViewById(R.id.emptymsglayout);
+        progressCrd = (CardView)mainView.findViewById(R.id.progressCard);
+        progressBar = (ButteryProgressBar)mainView.findViewById(R.id.progressbar);
+        retryLayout = (LinearLayout)mainView.findViewById(R.id.postRetryLayout);
+        emptyMsgLayout = (LinearLayout)mainView.findViewById(R.id.emptymsglayout);
         emptyMsgLayout.setVisibility(View.GONE);
-        
-        
-        
-        
-        ImageView retryPost = (ImageView)view.findViewById(R.id.retryPost);
-        ImageView cancelPost = (ImageView)view.findViewById(R.id.cancelPost);
+
+
+
+
+        ImageView retryPost = (ImageView)mainView.findViewById(R.id.retryPost);
+        ImageView cancelPost = (ImageView)mainView.findViewById(R.id.cancelPost);
         PorterDuffColorFilter whiteLabelFilter = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
         retryPost.setColorFilter(whiteLabelFilter);
         cancelPost.setColorFilter(whiteLabelFilter);
-        recyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
+        recyclerView = (RecyclerView) mainView.findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
 
         cAdapter = new CardAdapter_V3(getActivity(),session);
@@ -327,15 +314,15 @@ public class Home_Main_Fragment extends Fragment implements
             }
         });
 
-       if(Constants.isWelcomScreenToBeShown) {
+        if(Constants.isWelcomScreenToBeShown) {
 
             Welcome_Card_Model welcome_card_model = new Welcome_Card_Model();
             welcome_card_model.webSiteName = session.getFPName();
             mNewWelcomeTextImageList.add(welcome_card_model);
 
-       }
+        }
 
-        
+
 
         for(int i = 0 ; i < HomeActivity.StorebizFloats.size();i++)
         {
@@ -375,16 +362,16 @@ public class Home_Main_Fragment extends Fragment implements
                         progressBar.setVisibility(View.VISIBLE);
                     }
 
-                    
+
                 }
             }
         });
 
-        fabButton = (FloatingActionMenu) view.findViewById(R.id.fab);
-        
+        fabButton = (FloatingActionMenu) mainView.findViewById(R.id.fab);
 
 
-        
+
+
         fabButton.setOnMenuButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -398,11 +385,17 @@ public class Home_Main_Fragment extends Fragment implements
                 }
             }
         });
+
+
+        return mainView;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        BoostLog.d("Home_Main_Fragment","onViewCreated");
         
 
-
-
-        
     }
 
     private void startSync() {

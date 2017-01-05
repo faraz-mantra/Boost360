@@ -487,8 +487,9 @@
                 android:layout_width="@dimen/icon_size"
                 android:scaleType="fitXY"
                 android:layout_height="@dimen/icon_size"
-                android:padding="5dp"
-                android:src="@drawable/sidepanel_call"
+                android:padding="10dp"
+                android:tint="#808080"
+                android:src="@drawable/ic_help_and_support"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin" />
 
@@ -498,7 +499,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/cell_text_size"
                 android:textColor="@color/cell_text_color"
-                android:text="@string/side_panel_row_seven" />
+                android:text="@string/help_and_support" />
 
         </LinearLayout>
 

@@ -134,7 +134,6 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
     private CallbackManager callbackManager;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

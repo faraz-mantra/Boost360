@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.util.Log;
 
 import com.facebook.login.LoginManager;
+import com.freshdesk.mobihelp.Mobihelp;
 import com.nowfloats.Analytics_Screen.API.Search_Queries_Enterprise_API;
 import com.nowfloats.Analytics_Screen.Graph.database.SaveDataCounts;
 import com.nowfloats.Business_Enquiries.Model.Entity_model;
@@ -869,6 +870,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 //Analytics_Fragment.subscriberCount.setText("0");
                 //Analytics_Fragment.visitCount.setText("0");
                 _context.deleteDatabase(SaveDataCounts.DATABASE_NAME);
+                Mobihelp.clearUserData(activity.getApplicationContext());
                 MixPanelController.track("LogoutSuccess", null);
                 //activity.finish();
                 /*Intent i = new Intent(activity, Login_MainActivity.class);

@@ -9,7 +9,7 @@ import android.util.Log;
 import com.nowfloats.NotificationCenter.NotificationFragment;
 import com.thinksity.R;
 
-public class TabPagerAdapter extends FragmentPagerAdapter  {
+public class TabPagerAdapter extends FragmentPagerAdapter {
     Home_Main_Fragment homeFragment;
     NotificationFragment alertFragment;
     Analytics_Fragment analyticsFragment ;
@@ -43,7 +43,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter  {
         // if(selectedFragment == null) {
         switch (index) {
             case 0:
-                selectedFragment = homeFragment.newInstance();
+                selectedFragment = homeFragment;
                 currentItem = 0;
                 break;
             case 1:
