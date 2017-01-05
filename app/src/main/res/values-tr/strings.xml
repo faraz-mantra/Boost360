@@ -1167,4 +1167,60 @@
 
     <string name="not_available_in_ur_country">This feature is currently not available in your country. We will notify you when its available.</string>
     <string name="kitsune_demo_expire_dialog_body">Your demo subscription has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
+
+    <string name="getlink">Next</string>
+
+    <string name="business_apps">Business Apps</string>
+
+    <string name="increse_site_score">Increase site score</string>
+
+    <string name="your_site_meter_too_low">Your site meter score is too low</string>
+
+    <string name="you_can_not_have_app_until_score_90">You can\'t have your app up and running until or unless you update your site\'s health score up to 90%</string>
+
+    <string name="details_will_used_to_create_custoer_app">I agree that these details will be used to create my customer app and can\'t be changed once fixed</string>
+
+    <string name="Madman_design_studio">Madman\'s Design Studio</string>
+
+    <string name="congratulation_android_business_app_development">Congrats! Your free Android app is under development. You will be able to download and share this app once it is published to the Play Store.</string>
+
+    <string name="congratulation_ios_business_app_development">Congrats! Your iOS app is under development. You will be able to download and share this app once it is published to the App Store.</string>
+
+    <string name="android_app_preview">PREVIEW YOUR\nANDROID APP</string>
+
+    <string name="ios_app_preview">PREVIEW YOUR\niOS APP</string>
+
+    <string name="get_android_app">GET YOUR ANDROID\nAPP FOR FREE</string>
+
+    <string name="get_ios_app">GET YOUR iOS APP\nFOR INR 6000/-</string>
+
+    <string name="create_push_notification">Create a push notification to your app users</string>
+
+    <string name="android_app"> Android App</string>
+
+    <string name="ios_app"> iOS App</string>
+
+    <string name="increase_our_site_health">increase your site health score</string>
+
+    <string name="more_info">More information</string>
+
+    <string name="edit_details">Edit details</string>
+
+    <string name="on_click_following_field_redirect">On clicking the following fields you will be redirected to the screen where you can make changes</string>
+
+
+    <array name="businessboldtext">
+        <item>A mobile app\nfor your customers</item>
+        <item>Make your brand famous</item>
+        <item>Notify your customers\nwherever they are</item>
+        <item>Offline access to your\nbusiness details</item>
+    </array>
+
+
+    <array name="businesssmalltext">
+        <item>Your way to a permanent place in your\ncustomer\'s phone.</item>
+        <item>Beat your competition and be the first ones\nto get your own Mobile App.</item>
+        <item>Send personalized notifications to your\ncustomers about your products and offerings.</item>
+        <item>Now your customers can reach your store\neven without an internet connection.</item>
+    </array>
 </resources>

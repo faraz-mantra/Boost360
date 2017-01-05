@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#eee"
+    android:clipToPadding="false"
+    android:layout_height="match_parent">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/ps_pager"
+        android:layout_width="fill_parent"
+        android:layout_above="@+id/ps_indicator"
+        android:layout_height="fill_parent">
+    </android.support.v4.view.ViewPager>
+
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/ps_indicator"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@+id/customer_apps_get_store_link_button"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:text="@string/getlink"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryColor"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:padding="5dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:id="@+id/customer_apps_get_store_link_button"
+        android:layout_marginLeft="15dp" />
+
+</RelativeLayout>
