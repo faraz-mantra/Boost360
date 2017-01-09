@@ -408,7 +408,7 @@ public class Site_Meter_Fragment extends Fragment {
                 MixPanelController.track(EventKeysWL.SITE_SCORE_GET_YOUR_OWN_IDENTITY,null);
                 MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
                         .title("Get A Domain")
-                        .content("Please drop us a line at ria@nowfloats.com or call us at 1860-123-1233 if you'd like to enable this feature")
+                        .content(getResources().getString(R.string.drop_us_on_email_or_call))
                         .positiveText(getString(R.string.ok))
                         .positiveColorRes(R.color.primaryColor)
                         .callback(new MaterialDialog.ButtonCallback() {

@@ -102,7 +102,7 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
             previewButton.setText(getResources().getString(R.string.android_app_preview));
             congratesTextView.setText(getResources().getString(R.string.congratulation_android_business_app_development));
         }else{
-            siteHealthButton.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.site_health),null,null,null);
+            siteHealthButton.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.studio),null,null,null);
             androidTextView.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ios_icon_blac), null, null, null );
             androidTextView.setText(getResources().getString(R.string.ios_app));
             previewButton.setText(getResources().getString(R.string.ios_app_preview));

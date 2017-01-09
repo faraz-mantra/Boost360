@@ -452,9 +452,14 @@ public class Settings_Fragment extends Fragment {
     }
     private void likeUsFacebook(){
         MixPanelController.track("LikeUsOnFacebook", null);
-        Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
         String facebookUrl = getFacebookPageURL(getActivity().getApplicationContext());
-        facebookIntent.setData(Uri.parse(facebookUrl));
+        Intent facebookIntent;
+        try {
+            getActivity().getPackageManager().getPackageInfo("com.facebook.katana", 0);
+            facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_PAGE_WITH_ID));
+        } catch (Exception e) {
+            facebookIntent= new Intent(Intent.ACTION_VIEW, Uri.parse(facebookUrl));
+        }
         startActivity(facebookIntent);
     }
 

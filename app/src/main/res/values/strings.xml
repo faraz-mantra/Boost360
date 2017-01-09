@@ -718,7 +718,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="logout">Logout</string>
     <string name="create_website_using">Create website using</string>
     <string name="email_address">Email Address</string>
-    <string name="log_in"> Log In</string>
+    <string name="cap_login">&#160;<u><b>LOGIN</b></u></string>
+    <string name="log_in">Log In</string>
     <string name="complete_task_to_increase_site_score">Complete the task below to increase your site score.</string>
     <string name="high_score_translate_more_traffic">Higher scores translates more traffic to your site.</string>
     <string name="get_your_identity">Get your own identity</string>
@@ -781,7 +782,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="nowfloats"> NowFloats</string>
     <string name="version">Version&#160;</string>
     <string name="float_point_name">Float Point Name</string>
-    <string name="what_is_missing">What\'s Missing?</string>
+    <string name="your_site_health">Your site health</string>
     <string name="primary_number">Primary Number</string>
     <string name="alternate_number1">Alternate Number 1</string>
     <string name="alternate_number2">Alternate Number 2</string>
@@ -1086,6 +1087,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="edit_details">Edit details</string>
 
     <string name="on_click_following_field_redirect">On clicking the following fields you will be redirected to the screen where you can make changes</string>
+    <string name="drop_us_on_email_or_call">Please drop us a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to enable this feature</string>
 
 
     <array name="businessboldtext">

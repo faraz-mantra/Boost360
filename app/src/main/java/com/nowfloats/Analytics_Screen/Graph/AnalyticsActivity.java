@@ -67,12 +67,14 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analytics);
         inIt();
+
         final Calendar c = Calendar.getInstance();
         curYear = c.get(Calendar.YEAR);
         curWeek = c.get(Calendar.WEEK_OF_MONTH);
         curMonth = c.get(Calendar.MONTH);
         curDay=c.get(Calendar.DAY_OF_WEEK);
         curDate=c.get(Calendar.DAY_OF_MONTH);
+
         months=new int[curMonth+1];
         days=new int[curDay];
         weeks=new int[curWeek];
@@ -81,9 +83,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
 
         endDate =new SimpleDateFormat(pattern, Locale.ENGLISH).format(new Date());
         DashboardDetails details=new DashboardDetails();
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
+
         SaveDataCounts saveDataCounts =new SaveDataCounts(AnalyticsActivity.this);
         DatabaseModel modelResponse =saveDataCounts.getDataArrays();
         if(modelResponse==null)
@@ -91,7 +91,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
             rowExist=false;
             startDate="01-01-"+curYear;
             details.setData(session.getFpTag(), Constants.clientId,startDate,endDate );
-            Log.v("ggg",startDate);
+            //Log.v("ggg",startDate);
             getEntityList(details);
         }else
         {
@@ -100,13 +100,16 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
             Calendar dbCalender = new SimpleDateFormat(pattern, Locale.ENGLISH).getCalendar();
             startDate =new SimpleDateFormat(pattern, Locale.ENGLISH).format(new Date(Long.valueOf(date)));
             dbCalender.setTimeInMillis(Long.valueOf(date));
+
             int dbyear = dbCalender.get(Calendar.YEAR);
             int dbweekOfMonth = dbCalender.get(Calendar.WEEK_OF_MONTH);
             int dbdayOfWeek = dbCalender.get(Calendar.DAY_OF_WEEK);
-            int dbday = dbCalender.get(Calendar.DAY_OF_MONTH);
             int dbmonth = dbCalender.get(Calendar.MONTH);
 
-            DashboardDetails detail=new DashboardDetails();
+            int[] dbWeeks = modelResponse.getMonth()!=null ? modelResponse.getMonth():new int[curWeek];
+            int[] dbMonths = modelResponse.getYear()!=null ? modelResponse.getYear():new int[curMonth+1];
+            int[] dbDays = modelResponse.getWeek()!=null ? modelResponse.getWeek():new int[curDay];
+
             if(curYear!=dbyear)
             {
                 startDate = "01-01-" + curYear;
@@ -114,9 +117,9 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
             {
                 if(curMonth>dbmonth)
                 {
-                    months = Arrays.copyOf(modelResponse.getYear(), curMonth + 1);
-                    int[] days=Arrays.copyOf(modelResponse.getWeek(),curDay);
+                    months = Arrays.copyOf(dbMonths, curMonth + 1);
 
+                    int[] days=Arrays.copyOf(dbDays,dbdayOfWeek);
                     months[dbmonth-1]-=days[dbdayOfWeek-1];
 
                     yearData = addArray(months);
@@ -124,7 +127,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
                 else
                 {
                     startDate = curMonth + 1 + "-01-" + curYear;
-                    months = Arrays.copyOf(modelResponse.getYear(), curMonth + 1);
+                    months = Arrays.copyOf(dbMonths, curMonth + 1);
                     months[curMonth] = 0;
                     yearData = addArray(months);
                 }
@@ -132,10 +135,10 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
             {
                 if(curWeek>dbweekOfMonth)
                 {
-                    months = Arrays.copyOf(modelResponse.getYear(), curMonth + 1);
-                    weeks= Arrays.copyOf(modelResponse.getMonth(),curWeek);
-                    int[] days=Arrays.copyOf(modelResponse.getWeek(),curDay);
+                    months = Arrays.copyOf(dbMonths, curMonth + 1);
+                    weeks= Arrays.copyOf(dbWeeks,curWeek);
 
+                    int[] days=Arrays.copyOf(dbDays,dbdayOfWeek);
                     months[dbmonth]-=days[dbdayOfWeek-1];
                     weeks[dbweekOfMonth-1]-=days[dbdayOfWeek-1];
 
@@ -145,7 +148,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
                 else
                 {
                     startDate = curMonth + 1 + "-01-" + curYear;
-                    months = Arrays.copyOf(modelResponse.getYear(), curMonth + 1);
+                    months = Arrays.copyOf(dbMonths, curMonth + 1);
                     months[curMonth] = 0;
                     yearData = addArray(months);
                 }
@@ -153,9 +156,9 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
             {
                 if(dbdayOfWeek<curDay)
                 {
-                    months = Arrays.copyOf(modelResponse.getYear(), curMonth + 1);
-                    weeks= Arrays.copyOf(modelResponse.getMonth(),curWeek);
-                    days=Arrays.copyOf(modelResponse.getWeek(),curDay);
+                    months = Arrays.copyOf(dbMonths, curMonth + 1);
+                    weeks= Arrays.copyOf(dbWeeks,curWeek);
+                    days=Arrays.copyOf(dbDays,curDay);
                     int deleteData=days[dbdayOfWeek-1];
 
                     days[dbdayOfWeek-1]=0;
@@ -169,56 +172,39 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
                 else
                 {
                     startDate = curMonth + 1 + "-01-" + curYear;
-                    months = Arrays.copyOf(modelResponse.getYear(), curMonth + 1);
+                    months = Arrays.copyOf(dbMonths, curMonth + 1);
                     months[curMonth] = 0;
                     yearData = addArray(months);
                 }
             }else
             {
-                weeks= modelResponse.getMonth();
-                months= modelResponse.getYear();
-                days=modelResponse.getWeek();
-//                yearData=modelResponse.getYearCount();
-//                monthData=modelResponse.getMonthCount();
-//                weekData=modelResponse.getWeekCount();
-//
-//                months = Arrays.copyOf(modelResponse.getYear(), curMonth + 1);
-//                weeks= Arrays.copyOf(modelResponse.getMonth(),curWeek);
-//                days=Arrays.copyOf(modelResponse.getWeek(),curDay);
-                int deleteData=days[dbdayOfWeek-1];
+                weeks = dbWeeks;
+                months = dbMonths;
+                days = dbDays;
 
-                days[dbdayOfWeek-1]=0;
-                months[dbmonth]-=deleteData;
-                weeks[dbweekOfMonth-1]-=deleteData;
+                int deleteData=days[curDay-1];
+                days[curDay-1]=0;
+                months[curMonth]-=deleteData;
+                weeks[curWeek-1]-=deleteData;
 
                 weekData=addArray(days);
                 monthData=addArray(weeks);
                 yearData = addArray(months);
             }
-            Log.v("ggg",startDate);
-            detail.setData(session.getFpTag(), Constants.clientId, startDate, endDate);
-            getEntityList(detail);
+            //Log.v("ggg",startDate);
+            details.setData(session.getFpTag(), Constants.clientId, startDate, endDate);
+            getEntityList(details);
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if(id==android.R.id.home){
-            finish();
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void inIt() {
         toolbar= (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(getString(R.string.visits));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        if(getSupportActionBar()!=null) {
+            setTitle(getString(R.string.visits));
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
         pager = (ViewPager) findViewById(R.id.viewpager_main);
         tabs=getResources().getStringArray(R.array.tabs);
         pagerSlidingTabStrip = (PagerSlidingTabStrip) findViewById(R.id.vpagertabstrip_main);
@@ -241,7 +227,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
     }
 
     private void getEntityList(DashboardDetails dashboardDetails) {
-        //Log.v("ggg","getentity");
+
         HashMap<String, String> map=new HashMap<>();
         map.put("clientId",dashboardDetails.getClientId());
         map.put("startDate",dashboardDetails.getStartDate());
@@ -258,7 +244,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
 
             @Override
             public void failure(RetrofitError error) {
-                if(rowExist==true) {
+                if(rowExist) {
                     SaveDataCounts saveDataCounts = new SaveDataCounts(AnalyticsActivity.this);
                     DatabaseModel modelResponse = saveDataCounts.getDataArrays();
                     weeks = modelResponse.getMonth();
@@ -268,9 +254,9 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
                     monthData = modelResponse.getMonthCount();
                     weekData = modelResponse.getWeekCount();
                 }
-                    setPagerAdapter();
-                Toast.makeText(AnalyticsActivity.this,error.getMessage(),Toast.LENGTH_SHORT).show();
-               // Log.e("error",error+"");
+                setPagerAdapter();
+                Toast.makeText(AnalyticsActivity.this,"Error while retrieving data",Toast.LENGTH_SHORT).show();
+                // Log.e("error",error+"");
             }
         });
     }
@@ -407,7 +393,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
                         }
                     }
                 }
-               // Log.v("ggg",c.get(Calendar.DATE)+" month "+month+" day_month "+day+" data "+months[month]);
+                // Log.v("ggg",c.get(Calendar.DATE)+" month "+month+" day_month "+day+" data "+months[month]);
             }
             DatabaseModel model=new DatabaseModel();
             model.setYear(months);
@@ -468,5 +454,16 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         public int getCount() {
             return tabs.length;
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id==android.R.id.home){
+            finish();
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

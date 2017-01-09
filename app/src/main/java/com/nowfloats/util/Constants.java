@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.Set;
 
 import retrofit.RestAdapter;
-import retrofit.android.AndroidLog;
 
 
 public class Constants {
@@ -426,7 +425,8 @@ public class Constants {
     public static String fbFromWhichPage;
     public static boolean FbFeedPullAutoPublish;
     public static String FACEBOOK_URL = Specific.FACEBOOK_URL;
+    public static String FACEBOOK_PAGE_WITH_ID = Specific.FACEBOOK_PAGEID;
     public static String PACKAGE_NAME = Specific.PACKAGE_NAME;
-
+    public static String SUPPORT_EMAIL_ID=Specific.CONTACT_EMAIL_ID;
 
 }

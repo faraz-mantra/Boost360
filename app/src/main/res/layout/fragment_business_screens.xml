@@ -22,9 +22,8 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:id="@+id/imageview_circle"
-                android:src="@drawable/businessapp_fourth"
-                android:scaleType="fitCenter"
-                android:gravity="bottom"
+                android:src="@drawable/businessapp_first"
+                android:scaleType="centerCrop"
                 android:layout_height="match_parent"/>
         </LinearLayout>
 
@@ -41,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:id="@+id/business_screen_bold_text"
-                android:text="Notify your customers\nwhenever they are"
+                android:text="@string/business_apps"
                 android:textSize="20sp"
                 android:layout_marginBottom="5dp"/>
 
@@ -49,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Send personalized notifications to your\ncustomers about your products and offerings."
+                android:text="@string/business_apps"
                 android:id="@+id/business_screen_small_text"
                 android:textSize="12sp"/>
 

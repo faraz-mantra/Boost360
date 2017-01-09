@@ -85,7 +85,7 @@ public class SidePanelFragment extends Fragment {
     TextView dashBoardTextView;
     TextView businessProfileTextView;
     TextView customerQueries;
-    TextView imageGalleryTextView;
+    TextView imageGalleryTextView,businessAppTextview;
     TextView productGalleryTextView;
     TextView StoreTextView;
     TextView cspTextView;
@@ -111,7 +111,7 @@ public class SidePanelFragment extends Fragment {
 
 //    protected ImageLoader imageLoader = ImageLoader.getInstance();
 
-    LinearLayout homeLayout, profileLayout, analyticsLayout, storeLayout, /*customerQueriesLayout,*/ imageGalleryLayout, cspLayout,
+    LinearLayout homeLayout, profileLayout, businessAppsLayout, storeLayout, /*customerQueriesLayout,*/ imageGalleryLayout, cspLayout,
             productGalleryLayout, Store_Layout, settingsLayout, chatLayout, callLayout, shareLayout, llGetInTouch /*llSiteAppearance*/;
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
@@ -128,7 +128,7 @@ public class SidePanelFragment extends Fragment {
 
     private static HashMap<String, Integer> backgroundImages = new HashMap<String, Integer>();
     private ImageView shareImageView, businessProfileImageView, dasbBoardImageView, callImageView, chatImageView, cspImageView,
-            settingsImageView, StoreImageView, productGalleryImageView, imageGalleryImageView/*, customerQueriesImageView*/ /*ivSiteAppearance*/;
+            settingsImageView, StoreImageView, productGalleryImageView,businessappImageView, imageGalleryImageView/*, customerQueriesImageView*/ /*ivSiteAppearance*/;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
 
     public interface OnItemClickListener {
@@ -341,6 +341,7 @@ public class SidePanelFragment extends Fragment {
         profileLayout = (LinearLayout) card.findViewById(R.id.secondRow_Layout);
         cspLayout = (LinearLayout) card.findViewById(R.id.csp_Layout);
         //customerQueriesLayout = (LinearLayout) card.findViewById(R.id.thirdRow_Layout);
+        businessAppsLayout = (LinearLayout) card.findViewById(R.id.customer_app_Layout);
         imageGalleryLayout = (LinearLayout) card.findViewById(R.id.fourthRow_Layout);
         productGalleryLayout = (LinearLayout) card.findViewById(R.id.product_gal_Layout);
         Store_Layout = (LinearLayout) card.findViewById(R.id.storeRow_Layout);
@@ -377,6 +378,7 @@ public class SidePanelFragment extends Fragment {
         settingsText = (TextView) settingsLayout.findViewById(R.id.fifthRow_TextView);
         businessProfileTextView = (TextView) profileLayout.findViewById(R.id.secondRow_TextView);
         cspTextView = (TextView) cspLayout.findViewById(R.id.csp_TextView);
+        businessAppTextview = (TextView) businessAppsLayout.findViewById(R.id.customer_app_TextView);
         chatText = (TextView) chatLayout.findViewById(R.id.sixthRow_TextView);
         callText = (TextView) callLayout.findViewById(R.id.seventhRow_TextView);
         shareText = (TextView) shareLayout.findViewById(R.id.eighthRow_TextView);
@@ -419,6 +421,7 @@ public class SidePanelFragment extends Fragment {
         dasbBoardImageView = (ImageView) homeLayout.findViewById(R.id.firstrow_ImageView);
         businessProfileImageView = (ImageView) profileLayout.findViewById(R.id.secondRow_ImageView);
         //customerQueriesImageView = (ImageView) customerQueriesLayout.findViewById(R.id.thirdRow_ImageView);
+        businessappImageView = (ImageView) businessAppsLayout.findViewById(R.id.customer_app_ImageView);
         imageGalleryImageView = (ImageView) imageGalleryLayout.findViewById(R.id.fourthRow_ImageView);
         productGalleryImageView = (ImageView) productGalleryLayout.findViewById(R.id.Product_Gal_ImageView);
         StoreImageView = (ImageView) Store_Layout.findViewById(R.id.storeRow_ImageView);
@@ -561,7 +564,15 @@ public class SidePanelFragment extends Fragment {
                 onclickColorChange(callImageView, callText, callLayout);
             }
         });
-
+        businessAppTextview.setTypeface(robotoMedium);
+        businessAppsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MixPanelController.track("BusinessApps", null);
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.business_apps));
+                onclickColorChange(businessappImageView, businessAppTextview,businessAppsLayout);
+            }
+        });
         shareLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1283,6 +1294,7 @@ public class SidePanelFragment extends Fragment {
             //customerQueries.setTextColor(getResources().getColor(R.color.cell_text_color));
             imageGalleryTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
             StoreTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+            businessAppTextview.setTextColor(getResources().getColor(R.color.cell_text_color));
             cspTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
             productGalleryTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
             settingsText.setTextColor(getResources().getColor(R.color.cell_text_color));
@@ -1293,6 +1305,7 @@ public class SidePanelFragment extends Fragment {
 
             shareImageView.setColorFilter(defaultLabelFilter);
             dasbBoardImageView.setColorFilter(defaultLabelFilter);
+            businessappImageView.setColorFilter(defaultLabelFilter);
             businessProfileImageView.setColorFilter(defaultLabelFilter);
             //customerQueriesImageView.setColorFilter(defaultLabelFilter);
             imageGalleryImageView.setColorFilter(defaultLabelFilter);
@@ -1310,6 +1323,7 @@ public class SidePanelFragment extends Fragment {
             //storeLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
             //customerQueriesLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
             imageGalleryLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+            businessAppsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
             cspLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
             productGalleryLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
             Store_Layout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));

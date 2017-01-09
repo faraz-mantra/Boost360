@@ -75,6 +75,8 @@ import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
 import com.nowfloats.NavigationDrawer.API.KitsuneApi;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
+import com.nowfloats.NavigationDrawer.businessApps.BusinessAppPreview;
+import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.nowfloats.RiaFCM.RiaFirebaseMessagingService;
 import com.nowfloats.SiteAppearance.SiteAppearanceFragment;
@@ -161,7 +163,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     private boolean isShownExpireDialog = false;
 
     private String TAG = HomeActivity.class.getSimpleName();
-
+    private BusinessAppPreview businessSiteMeter;
+    private BusinessAppsFragment businessAppFragment;
 
 
     @Override
@@ -288,6 +291,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         chatFragment = new ChatFragment();
         storeFragment = new StoreFragmentTab();
         siteMeterFragment = new Site_Meter_Fragment();
+        businessSiteMeter=new BusinessAppPreview();
+        businessAppFragment=new BusinessAppsFragment();
         customPageActivity = new CustomPageActivity();
 
         new Thread(new Runnable() {
@@ -1092,7 +1097,17 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (nextScreen.equals(getString(R.string.business_profile)))
+                if(nextScreen.equals("BusinessAppSiteMeter")){
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.mainFrame,businessSiteMeter,"BusinessSiteMeter")
+                            .commit();
+                }
+                else if(nextScreen.equals(getString(R.string.business_apps))){
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.mainFrame,businessAppFragment,"BusinessApps")
+                            .commit();
+                }
+                else if (nextScreen.equals(getString(R.string.business_profile)))
                 {
                     //Intent businessProfileIntent = new Intent(HomeActivity.this, BusinessProfile_HomeActivity.class);
                     //startActivity(businessProfileIntent)
