@@ -718,7 +718,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="logout">Logout</string>
     <string name="create_website_using">Create website using</string>
     <string name="email_address">Email Address</string>
-    <string name="cap_login">&#160;<u><b>LOGIN</b></u></string>
+    <string name="cap_login" translatable="false">&#160;<u><b>LOGIN</b></u></string>
     <string name="log_in">Log In</string>
     <string name="complete_task_to_increase_site_score">Complete the task below to increase your site score.</string>
     <string name="high_score_translate_more_traffic">Higher scores translates more traffic to your site.</string>
@@ -1046,7 +1046,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="looks_like_you_have_not_posted_any_updates">Looks like you haven\'t posted any update on your Facebook Page through Boost yet Make sure you select the <b>Facebook Page option</b> while creating an update</string>
     <string name="facebook_analytics">Social Analytics</string>
     <string name="session_expired">Please login again your Session has expired</string>
-    <string name="help_and_support">Help and Support</string>
+    <string name="help_and_support" translatable="false">Help and Support</string>
 
     <string name="getlink">Next</string>
 
