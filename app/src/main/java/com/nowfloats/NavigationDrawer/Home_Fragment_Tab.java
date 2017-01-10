@@ -2,9 +2,9 @@ package com.nowfloats.NavigationDrawer;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -180,8 +180,7 @@ public class Home_Fragment_Tab extends Fragment {
                 if(Home_Main_Fragment.progressBar!=null)
                     Home_Main_Fragment.progressBar.setVisibility(View.VISIBLE);
                 Constants.createMsg = false;
-            }else
-            if(Constants.deepLinkAnalytics)
+            }else if(Constants.deepLinkAnalytics)
             {
                 viewPager.setCurrentItem(1);
                 Constants.deepLinkAnalytics = false ;
@@ -200,5 +199,13 @@ public class Home_Fragment_Tab extends Fragment {
                 });
             }
         }, 500);*/
+    }
+    public void setFragmentTab(int i){
+        if(!isAdded()) return;
+        if(Constants.deepLinkAnalytics)
+        {
+            viewPager.setCurrentItem(i);
+            Constants.deepLinkAnalytics = false ;
+        }
     }
 }

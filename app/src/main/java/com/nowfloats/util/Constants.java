@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.Set;
 
 import retrofit.RestAdapter;
-import retrofit.android.AndroidLog;
 
 
 public class Constants {
@@ -428,5 +427,6 @@ public class Constants {
     public static String FACEBOOK_URL = Specific.FACEBOOK_URL;
     public static String PACKAGE_NAME = Specific.PACKAGE_NAME;
 
+    public static final String FACEBOOK_PAGE_WITH_ID = Specific.FACEBOOK_PAGEID;
 
 }

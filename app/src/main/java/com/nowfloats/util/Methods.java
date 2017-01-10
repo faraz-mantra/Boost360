@@ -40,6 +40,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import javax.net.ssl.SSLContext;
@@ -224,66 +225,72 @@ public class Methods {
 
         Long epochTime = Long.parseLong(Sdate);
         Date date = new Date(epochTime);
-        DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");//dd/MM/yyyy HH:mm:ss
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.US);//dd/MM/yyyy HH:mm:ss
         format.setTimeZone(TimeZone.getDefault());
-        if (date != null)
-            dateTime = format.format(date);
+        dateTime = format.format(date);
+
         if (!Util.isNullOrEmpty(dateTime)) {
-            String[] temp = dateTime.split(" ");
-            temp = temp[0].split("-");
-            if (temp.length > 0) {
-                int month = Integer.parseInt(temp[1]);
+            String[] dateTemp;
+            String hrsTemp;
+
+            dateTemp = dateTime.split(" ");
+            hrsTemp=dateTemp[1];
+            dateTemp = dateTemp[0].split("-");
+
+            if (dateTemp.length > 0) {
+                int month = Integer.parseInt(dateTemp[1]);
                 switch (month) {
                     case 01:
-                        temp[0] = Util.AddSuffixForDay(temp[0]);
-                        formatted = temp[0] + " January, " + temp[2];
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " January, " + dateTemp[2];
                         break;
                     case 2:
-                        temp[0] = Util.AddSuffixForDay(temp[0]);
-                        formatted = temp[0] + " February, " + temp[2];
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " February, " + dateTemp[2];
                         break;
                     case 3:
-                        temp[0] = Util.AddSuffixForDay(temp[0]);
-                        formatted = temp[0] + " March, " + temp[2];
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " March, " + dateTemp[2];
                         break;
                     case 4:
-                        temp[0] = Util.AddSuffixForDay(temp[0]);
-                        formatted = temp[0] + " April, " + temp[2];
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " April, " + dateTemp[2];
                         break;
                     case 5:
-                        temp[0] = Util.AddSuffixForDay(temp[0]);
-                        formatted = temp[0] + " May, " + temp[2];
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " May, " + dateTemp[2];
                         break;
                     case 6:
-                        temp[0] = Util.AddSuffixForDay(temp[0]);
-                        formatted = temp[0] + " June, " + temp[2];
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " June, " + dateTemp[2];
                         break;
                     case 7:
-                        temp[0] = Util.AddSuffixForDay(temp[0]);
-                        formatted = temp[0] + " July, " + temp[2];
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " July, " + dateTemp[2];
                         break;
                     case 8:
-                        temp[0] = Util.AddSuffixForDay(temp[0]);
-                        formatted = temp[0] + " August, " + temp[2];
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " August, " + dateTemp[2];
                         break;
                     case 9:
-                        temp[0] = Util.AddSuffixForDay(temp[0]);
-                        formatted = temp[0] + " September, " + temp[2];
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " September, " + dateTemp[2];
                         break;
                     case 10:
-                        temp[0] = Util.AddSuffixForDay(temp[0]);
-                        formatted = temp[0] + " October, " + temp[2];
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " October, " + dateTemp[2];
                         break;
                     case 11:
-                        temp[0] = Util.AddSuffixForDay(temp[0]);
-                        formatted = temp[0] + " November, " + temp[2];
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " November, " + dateTemp[2];
                         break;
                     case 12:
-                        temp[0] = Util.AddSuffixForDay(temp[0]);
-                        formatted = temp[0] + " December, " + temp[2];
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " December, " + dateTemp[2];
                         break;
                 }
             }
+            formatted+=" at "+hrsTemp;
         }
         return formatted;
     }

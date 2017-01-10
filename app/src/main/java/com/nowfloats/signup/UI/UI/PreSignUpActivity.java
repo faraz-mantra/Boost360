@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -425,6 +426,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
         for (String countryCode : locales) {
             Locale obj = new Locale("", countryCode);
             Country_CodeMap.put(obj.getDisplayCountry(), obj.getCountry());
+            Log.v("ggg",obj.getDisplayCountry()+" "+obj.getCountry());
         }
         String[] string_array = getResources().getStringArray(R.array.CountryCodes);
         for (int i = 0; i < string_array.length; i++) {
@@ -663,7 +665,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
         sessionManager.storeFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE, "91");
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.clear();
-        editor.commit();
+        editor.apply();
     }
 
     public void selectC() {
