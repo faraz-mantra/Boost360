@@ -653,7 +653,7 @@ public class SidePanelFragment extends Fragment {
     private void showAlertMaterialDialog() {
         new MaterialDialog.Builder(getActivity())
                 .title(getString(R.string.features_not_available))
-                .content(getString(R.string.check_store_for_upgrade_info))
+                .content(Html.fromHtml(getString(R.string.check_store_for_upgrade_info)))
                 .positiveText(getString(R.string.goto_store))
                 .negativeText(getString(R.string.cancel))
                 .positiveColorRes(R.color.primaryColor)
@@ -671,7 +671,9 @@ public class SidePanelFragment extends Fragment {
                         super.onPositive(dialog);
 //                        Constants.showStoreScreen = true ;
 //                        getActivity().getSupportFragmentManager().popBackStack();
+                        if(!getString(R.string.goto_store).equalsIgnoreCase("ok"))//this condition added for flavor check
                         ((OnItemClickListener) mainActivity).onClick("store");
+
                         dialog.dismiss();
                     }
                 })
@@ -1246,7 +1248,10 @@ public class SidePanelFragment extends Fragment {
             if (Constants.twitterShareEnabled && pref.getBoolean("fbShareEnabled", false) && pref.getBoolean("fbPageShareEnabled", false)) {
                 siteMeterTotalWeight += twitterWeight;
             }
-            if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)) && !getResources().getString(R.string.address_percentage).equals("0")) {
+            if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)) &&
+                    !Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LATITUDE))&&
+                    !Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LONGITUDE))&&
+                    !getResources().getString(R.string.address_percentage).equals("0")) {
                 siteMeterTotalWeight += businessAddressWeight;
             }
 

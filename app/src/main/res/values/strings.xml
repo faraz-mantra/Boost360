@@ -485,7 +485,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="cancel">Cancel</string>
     <string name="password_updated">Your password has been updated.</string>
     <string name="entered_password_incorrect">The password you entered is incorrect.</string>
-    <string name="please_wait">Please Wait...</string>
+    <string name="please_wait">Please Wait&#8230;</string>
     <string name="enter_valid_website">Enter Valid Website</string>
     <string name="enter_valid_email">Please enter valid email</string>
     <string name="primary_num_can_not_empty">Primary number cannot be empty</string>
@@ -543,11 +543,11 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="can_not_upload_image">Can\'t Upload Image</string>
     <string name="check_your_crediential">Please check your credentials</string>
     <string name="something_went_wrong">something went wrong!!</string>
-    <string name="enter_correct_user_name">Please enter a correct username.</string>
+    <string name="enter_correct_user_name">Please enter a correct username/ email/ phone number.</string>
     <string name="check_your_email">Check your email</string>
     <string name="enter_valid_username_or_password">Enter valid username/password</string>
     <string name="forgot_password">Forgot Password</string>
-    <string name="enter_user_name">Enter Username</string>
+    <string name="enter_user_name">Enter Username/ E-mail/ Phone Number</string>
     <string name="we_sent_email_with_password">We have sent you an email with password details</string>
     <string name="logging_out">Logging out &#8230;</string>
     <string name="unable_to_logout">Not able to logout</string>

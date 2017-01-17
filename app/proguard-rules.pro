@@ -55,6 +55,8 @@
 -dontwarn okio.**
 -dontwarn retrofit.**
 -dontwarn com.freshdesk.mobihelp**
+-dontwarn com.freshdesk.hotline**
+-dontwarn uk.co.chrishenx.calligraphy.**
 -keep class retrofit.** { *; }
 -keepattributes Signature
 -keepattributes Exceptions

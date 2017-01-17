@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.freshdesk.hotline.Hotline;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -30,20 +31,24 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        //Displaying data in log
-        //It is optional
-        //super.onMessageReceived(remoteMessage);
-        BoostLog.d(TAG, "From: " + remoteMessage.getFrom());
-        BoostLog.d(TAG, "Notification Message Body: " + remoteMessage.getData().toString());
+        if (Hotline.isHotlineNotification(remoteMessage)) {
+            Hotline.getInstance(this).handleFcmMessage(remoteMessage);
+        } else {
+            BoostLog.d(TAG, "From: " + remoteMessage.getFrom());
+            BoostLog.d(TAG, "Notification Message Body: " + remoteMessage.getData().toString());
 
-        //Calling method to generate notification
-        sendNotification(remoteMessage.getData());
-        Constants.GCM_Msg = true;
+            //Calling method to generate notification
+            sendNotification(remoteMessage.getData());
+            Constants.GCM_Msg = true;
+            //Handle notifications with data payload for your app
+        }
+
     }
 
     //This method is only generating push notification
     //It is same as we did in earlier posts
     private void sendNotification(Map<String, String> message) {
+
         deepLinkUrl = message.get("url");
         Log.v("ggg","notif "+deepLinkUrl);
         String title = message.get("title");

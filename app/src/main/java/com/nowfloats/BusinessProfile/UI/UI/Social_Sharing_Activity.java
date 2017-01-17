@@ -521,7 +521,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         pd = ProgressDialog.show(this, "", getString(R.string.wait_while_subscribing));
         List<String> readPermissions=Arrays.asList("email"
                 , "public_profile",  "user_friends", "read_insights", "business_management");
-        final List<String> publishPermissions = Arrays.asList(/*"publish_actions",*/
+        final List<String> publishPermissions = Arrays.asList("publish_actions",
                 "publish_pages", "manage_pages");
         final LoginManager loginManager = LoginManager.getInstance();
         com.facebook.AccessToken currentToken = com.facebook.AccessToken.getCurrentAccessToken();
@@ -927,7 +927,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
     public void fbData() {
         List<String> readPermissions=Arrays.asList("email"
                 , "public_profile",  "user_friends", "read_insights", "business_management");
-        final List<String> publishPermissions = Arrays.asList(/*"publish_actions",*/
+        final List<String> publishPermissions = Arrays.asList("publish_actions",
                 "publish_pages", "manage_pages");
         final LoginManager loginManager = LoginManager.getInstance();
         loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -941,7 +941,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 }else {
 
                     final String FACEBOOK_ACCESS_TOKEN = loginResult.getAccessToken().getToken();
-                        Log.v("ggg",FACEBOOK_ACCESS_TOKEN+"ppnull");
+                        //Log.v("ggg",FACEBOOK_ACCESS_TOKEN+"ppnull");
                     if(Profile.getCurrentProfile()==null){
                         Bundle parameters = new Bundle();
                         parameters.putString("fields", "id,name,email");
@@ -966,7 +966,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                         meRequest.executeAsync();
 
                     }else {
-                        Log.v("ggg",Profile.getCurrentProfile().toString());
+                        //Log.v("ggg",Profile.getCurrentProfile().toString());
                         fbPageData(FROM_FB_PAGE);
                         saveFbLoginResults(Profile.getCurrentProfile().getName(),
                                 FACEBOOK_ACCESS_TOKEN,
@@ -983,7 +983,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             @Override
             public void onError(FacebookException error) {
                 onFBError();
-                Log.v("ggg",error.toString()+"fberror");
+                //Log.v("ggg",error.toString()+"fberror");
             }
         });
         loginManager.logInWithReadPermissions(this, readPermissions);
@@ -1026,13 +1026,13 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         Constants.fbShareEnabled = false;
         prefsEditor.putBoolean("fbShareEnabled", false);
         prefsEditor.commit();
-        Log.v("ggg","hello fberror");
+        //Log.v("ggg","hello fberror");
         LoginManager.getInstance().logOut();
         com.facebook.AccessToken.refreshCurrentAccessTokenAsync();
     }
 
     void onFBPageError(int from) {
-        Log.v("ggg","fbpage error");
+        //Log.v("ggg","fbpage error");
         Constants.fbPageShareEnabled = false;
         prefsEditor.putBoolean("fbPageShareEnabled", false);
         prefsEditor.commit();

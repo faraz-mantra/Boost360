@@ -74,6 +74,7 @@ import com.nowfloats.NavigationDrawer.API.App_Update_Async_Task;
 import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
 import com.nowfloats.NavigationDrawer.API.KitsuneApi;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
+import com.nowfloats.NavigationDrawer.Chat.HotlineChat;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.nowfloats.RiaFCM.RiaFirebaseMessagingService;
@@ -161,7 +162,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     private boolean isShownExpireDialog = false;
 
     private String TAG = HomeActivity.class.getSimpleName();
-
+    private HotlineChat hotlineFragment;
 
 
     @Override
@@ -287,6 +288,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         productGalleryFragment = new Product_Gallery_Fragment();
         chatFragment = new ChatFragment();
         storeFragment = new StoreFragmentTab();
+        hotlineFragment=new HotlineChat();
         siteMeterFragment = new Site_Meter_Fragment();
         customPageActivity = new CustomPageActivity();
 
@@ -1144,8 +1146,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     //           replace(R.id.mainFrame, homeFragment).addToBackStack("Home").commit();
                 }else if(nextScreen.equals(getString(R.string.chat)))
                 {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,hotlineFragment, "chatfragment").commit();
                     //Konotor.getInstance(getApplicationContext()).launchFeedbackScreen(HomeActivity.this);
-                    Mobihelp.showConversations(HomeActivity.this);
+                    //Mobihelp.showConversations(HomeActivity.this);
                     //Konotor.getInstance(getApplicationContext()).launchFeedbackScreen(HomeActivity.this);
                 }else  if(nextScreen.equals(getString(R.string.call)))
                 {

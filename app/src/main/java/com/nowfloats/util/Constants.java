@@ -127,7 +127,8 @@ public class Constants {
     public static String nfxFacebookAnalytics = NFX_WITH_NOWFLOATS + "/dataexchange/v1/updateAccessTokens";
 
 
-    public static String TWITTER_URL = Specific.TWITTER_URL;
+    public static final String TWITTER_URL = Specific.TWITTER_URL;
+    public static final String TWITTER_ID_URL = Specific.TWITTER_ID_URL;
 
     public static int enqCount = 0;
 
