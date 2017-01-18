@@ -33,7 +33,6 @@ public class ReverseGeoCoderAsyncTask extends AsyncTask<Void, Void, Address> {
     try {
         List<Address> locations = null;
         Address address = null;
-
         if (location != null) {
             double Latitude = location.getLatitude();
             double Longitude = location.getLongitude();

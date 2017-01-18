@@ -21,8 +21,9 @@ public class Specific {
     public static String client_ID_13_enterprizeonboardingservice = "BFB1A9D329204D25AF5423A58E21EB8349FAFE9752DD49F780F7680521DC33E1";
     public static String client_ID_14 = "A91B82DE3E93446A8141A52F288F69EFA1B09B1D13BB4E55BE743AB547B3489E";
 
-    public static String access_level = "20";
 
+    public static String access_level = "20";
+    public static String CONTACT_EMAIL_ID = "ria@nowfloats.com";
     public static final String FACEBOOK_API_KEY 	= "539836972828386";  // Boost
 
 //    public static String TWITTER_TOK 				= "h5lB3rvjU66qOXHgrZK41Q";
@@ -32,7 +33,7 @@ public class Specific {
     public static String TWITTER_SEC 				= "4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9";
     public static String FACEBOOK_URL = "https://www.facebook.com/nowfloats";
     public static String PACKAGE_NAME = "com.biz2.nowfloats";
-
+    public static String FACEBOOK_PAGEID = "fb://page/277931445614143";
     public static final String TWITTER_URL = "https://twitter.com/Nowfloats";
 
 }

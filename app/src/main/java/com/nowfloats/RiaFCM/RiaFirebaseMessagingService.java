@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -44,6 +45,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
     //It is same as we did in earlier posts
     private void sendNotification(Map<String, String> message) {
         deepLinkUrl = message.get("url");
+        Log.v("ggg","notif "+deepLinkUrl);
         String title = message.get("title");
         Intent intent = null;
         if(!Util.isNullOrEmpty(deepLinkUrl)) {

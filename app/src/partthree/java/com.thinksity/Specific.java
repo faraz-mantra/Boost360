@@ -30,9 +30,11 @@ public class Specific {
 
     public static String TWITTER_TOK 				= "GGkgBfPCRL9LPN9uVBM21OZoA";
     public static String TWITTER_SEC 				= "5hSo9EpkWlFH8WMmgRYoF6v9T2QyRPiSC4yY379qrpHTOK1HTD";
-    public static String FACEBOOK_URL = "https://www.facebook.com/getkitsune";
-    public static String PACKAGE_NAME = "com.biz2.nowfloats";
 
+    public static String PACKAGE_NAME = "com.kitsune.biz";
+    public static String FACEBOOK_URL = "https://www.facebook.com/getkitsune";
+    public static String FACEBOOK_PAGEID = "fb://page/713199095512917";
+    public static String CONTACT_EMAIL_ID = "assist@getkitsune.com";
     public static final String TWITTER_URL = "https://twitter.com/getkitsune";
 
 }

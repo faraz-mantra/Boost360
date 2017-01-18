@@ -1243,11 +1243,9 @@ public class SidePanelFragment extends Fragment {
                 siteMeterTotalWeight += businessDescriptionWeight;
             }
 
-            if (Constants.twitterShareEnabled == false && !pref.getBoolean("fbShareEnabled", false) && !pref.getBoolean("fbPageShareEnabled", false) && !getResources().getString(R.string.social_percentage).equals("0")) {
-            } else {
+            if (Constants.twitterShareEnabled && pref.getBoolean("fbShareEnabled", false) && pref.getBoolean("fbPageShareEnabled", false)) {
                 siteMeterTotalWeight += twitterWeight;
             }
-
             if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)) && !getResources().getString(R.string.address_percentage).equals("0")) {
                 siteMeterTotalWeight += businessAddressWeight;
             }
@@ -1257,20 +1255,16 @@ public class SidePanelFragment extends Fragment {
             }
             if (HomeActivity.StorebizFloats.size() < 5 ) {
                 siteMeterTotalWeight += (HomeActivity.StorebizFloats.size()*onUpdate);
-                Log.v("ggg",siteMeterTotalWeight+"update");
 
             }else {
                 siteMeterTotalWeight += 20;
-                Log.v("ggg",siteMeterTotalWeight+"update");
             }
             if (!(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl))) && !getResources().getString(R.string.Logo_percentage).equals("0")) {
                 siteMeterTotalWeight += logoWeight;
-                Log.v("ggg",siteMeterTotalWeight+"logo");
             }
 
             if (session.getBusinessHours()) {
                 siteMeterTotalWeight += businessTimingWeight;
-                Log.v("ggg",siteMeterTotalWeight+"hour");
             }
 
             progressbar.setProgress(siteMeterTotalWeight);

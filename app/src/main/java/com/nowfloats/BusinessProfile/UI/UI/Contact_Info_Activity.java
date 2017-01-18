@@ -8,11 +8,13 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.nowfloats.BusinessProfile.UI.API.Business_Info_Upload_Service;
@@ -212,8 +214,31 @@ public class Contact_Info_Activity extends ActionBarActivity {
             public void afterTextChanged(Editable s) {
             }
         });
+        primaryNumber.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(motionEvent.getAction()== MotionEvent.ACTION_DOWN){
+                    MaterialDialog.Builder builder = new MaterialDialog.Builder(Contact_Info_Activity.this)
+                            .title("To change your primary number")
+                            .customView(R.layout.dialog_link_layout,false)
+                            .positiveText(getString(R.string.ok))
+                            .positiveColorRes(R.color.primaryColor)
+                            .callback(new MaterialDialog.ButtonCallback() {
+                                @Override
+                                public void onPositive(MaterialDialog dialog) {
+                                    super.onPositive(dialog);
+                                }
 
-        primaryNumber.addTextChangedListener(new TextWatcher() {
+                            });
+                    if(!isFinishing()) {
+                        builder.show();
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+       /* primaryNumber.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start,
@@ -252,7 +277,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
                 }
 
             }
-        });
+        });*/
 
 
         alternateNumber_1.addTextChangedListener(new TextWatcher() {

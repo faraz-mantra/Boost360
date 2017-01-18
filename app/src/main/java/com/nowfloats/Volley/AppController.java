@@ -11,7 +11,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.appsflyer.AppsFlyerLib;
-import com.crashlytics.android.Crashlytics;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.freshdesk.mobihelp.Mobihelp;
@@ -20,8 +19,6 @@ import com.nowfloats.util.Constants;
 
 import java.io.File;
 import java.lang.reflect.Method;
-
-import io.fabric.sdk.android.Fabric;
 
 public class AppController extends MultiDexApplication/* implements IAviaryClientCredentials*/ {
 	 
@@ -41,7 +38,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
 
         AppsFlyerLib.setAppsFlyerKey("drr3ek3vNxVmxJZgtBpfnR");
         try {
-            Fabric.with(this, new Crashlytics());
+            //Fabric.with(this, new Crashlytics());
         }catch(Exception e){e.printStackTrace();}
 
 

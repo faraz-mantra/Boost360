@@ -166,7 +166,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+       super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override
@@ -294,12 +294,12 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             @Override
             public void run() {
                 try {
-                    PackageInfo info = getPackageManager().getPackageInfo("com.thinksity",
+                    PackageInfo info = getPackageManager().getPackageInfo(BuildConfig.APPLICATION_ID,
                             PackageManager.GET_SIGNATURES);
                     for (Signature signature : info.signatures) {
                         MessageDigest md = MessageDigest.getInstance("SHA");
                         md.update(signature.toByteArray());
-                        BoostLog.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+                        BoostLog.v("ggg KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
                     }
                 } catch (PackageManager.NameNotFoundException e) {
 
@@ -484,6 +484,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
     public void DeepLinkPage(String url) {
         BoostLog.d("Deep Link URL","Deep Link URL : "+url);
+
         Constants.GCM_Msg = false;
         if(!Util.isNullOrEmpty(url)){
             if(url.contains(getResources().getString(R.string.deeplink_update)) || url.contains(getResources().getString(R.string.deeplink_featuredimage))){
@@ -503,6 +504,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             }
             else if(url.contains(getResources().getString(R.string.deeplink_analytics))){
                 Constants.deepLinkAnalytics = true ;
+                homeFragment.setFragmentTab(1);
             }
             else if(url.contains(getResources().getString(R.string.deeplink_bizenquiry)) || url.contains("enquiries")){
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
