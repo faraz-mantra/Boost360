@@ -135,6 +135,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     public void deleteCACHE () {
         PackageManager pm = getPackageManager();
         // Get all methods on the PackageManager
+
         Method[] methods = pm.getClass().getDeclaredMethods();
         for (Method m : methods) {
             if (m.getName().equals("freeStorage")) {

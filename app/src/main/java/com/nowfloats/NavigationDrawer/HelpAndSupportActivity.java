@@ -1,6 +1,5 @@
 package com.nowfloats.NavigationDrawer;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,24 +7,21 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.telephony.PhoneNumberUtils;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.RiaNetworkInterface;
 import com.nowfloats.NavigationDrawer.model.RiaSupportModel;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.ProgressBarAnimation;
 import com.thinksity.R;
 
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -151,6 +147,13 @@ public class HelpAndSupportActivity extends AppCompatActivity {
                     emailIntent.setType("text/plain");
                     emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{mRiaSupportModel.getEmail()});
                 }
+            }
+        });
+
+        btnSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(HelpAndSupportActivity.this, "This feature will be available soon", Toast.LENGTH_SHORT).show();
             }
         });
 
