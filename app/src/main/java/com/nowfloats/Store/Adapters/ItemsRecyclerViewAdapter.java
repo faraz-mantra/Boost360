@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.nowfloats.Store.Model.PurchaseDetail;
 import com.thinksity.R;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 /**
@@ -19,10 +21,12 @@ public class ItemsRecyclerViewAdapter extends RecyclerView.Adapter<ItemsRecycler
 
     private List<PurchaseDetail> mPurchaseItems;
     private String mCurrency;
+    private boolean mShowDiscount;
 
-    public ItemsRecyclerViewAdapter(List<PurchaseDetail> purchaseItems, String mCurrency){
+    public ItemsRecyclerViewAdapter(List<PurchaseDetail> purchaseItems, String mCurrency, boolean showDiscount){
         this.mPurchaseItems = purchaseItems;
         this.mCurrency = mCurrency;
+        this.mShowDiscount = showDiscount;
     }
 
     @Override
@@ -47,6 +51,17 @@ public class ItemsRecyclerViewAdapter extends RecyclerView.Adapter<ItemsRecycler
         }
 
         holder.tvDiscountedPrice.setText(mCurrency + " " + discountedPrice + " /-");
+        if(mShowDiscount){
+            holder.tvDiscount.setVisibility(View.VISIBLE);
+            holder.tvDiscountedPrice.setVisibility(View.VISIBLE);
+            holder.tvTextDiscountedPrice.setVisibility(View.VISIBLE);
+            holder.tvTextDiscount.setVisibility(View.VISIBLE);
+        }else {
+            holder.tvDiscount.setVisibility(View.GONE);
+            holder.tvDiscountedPrice.setVisibility(View.GONE);
+            holder.tvTextDiscountedPrice.setVisibility(View.GONE);
+            holder.tvTextDiscount.setVisibility(View.GONE);
+        }
 
     }
 
@@ -56,7 +71,7 @@ public class ItemsRecyclerViewAdapter extends RecyclerView.Adapter<ItemsRecycler
     }
 
     public class MyItemsViewHolder extends RecyclerView.ViewHolder{
-        TextView tvPlan, tvQuantity, tvUnitPrice, tvDiscount, tvDiscountedPrice;
+        TextView tvPlan, tvQuantity, tvUnitPrice, tvDiscount, tvDiscountedPrice, tvTextDiscountedPrice, tvTextDiscount;
 
         public MyItemsViewHolder(View itemView) {
             super(itemView);
@@ -65,6 +80,8 @@ public class ItemsRecyclerViewAdapter extends RecyclerView.Adapter<ItemsRecycler
             tvUnitPrice = (TextView) itemView.findViewById(R.id.tv_unit_price);
             tvDiscount = (TextView) itemView.findViewById(R.id.tv_discount_percent);
             tvDiscountedPrice = (TextView) itemView.findViewById(R.id.tv_discount_price);
+            tvTextDiscountedPrice = (TextView) itemView.findViewById(R.id.tvTextDiscountedPrice);
+            tvTextDiscount = (TextView) itemView.findViewById(R.id.tvTextDiscount);
         }
     }
 }

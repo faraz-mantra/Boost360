@@ -162,16 +162,43 @@
                 android:layout_below="@+id/tl_total_price"
                 android:background="#808080"
                 />
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:id="@+id/llOpcInputLayout"
+                android:layout_below="@id/view_horizontal_line"
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/etOpcCode"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/et_opc_bg"
+                    android:layout_marginRight="20dp"
+                    android:layout_height="40dp" />
+                <Button
+                    android:id="@+id/btnOpcApply"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="APPLY"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_main"/>
+
+            </LinearLayout>
             <Button
                 android:id="@+id/btn_pay_now"
-                android:layout_below="@+id/view_horizontal_line"
-                android:layout_width="wrap_content"
+                android:layout_below="@+id/llOpcInputLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_main"
                 android:textColor="@color/white"
                 android:layout_weight="1"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:text="@string/pay_now"/>
         </RelativeLayout>
     </ScrollView>

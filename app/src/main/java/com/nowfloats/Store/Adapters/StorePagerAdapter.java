@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
 import com.nowfloats.Store.AccountDetailsFragment;
-import com.nowfloats.Store.OPCFragment;
 import com.nowfloats.Store.Store_Fragment;
 import com.thinksity.R;
 
@@ -38,10 +37,6 @@ public class StorePagerAdapter extends FragmentPagerAdapter  {
         Fragment selectedFragment = null;
         // if(selectedFragment == null) {
         switch (index) {
-            case 2:
-                selectedFragment = OPCFragment.newInstance();
-                currentItem = 3;
-                break;
             case 1:
                 selectedFragment = new AccountDetailsFragment();
                 currentItem = 0;
@@ -71,6 +66,6 @@ public class StorePagerAdapter extends FragmentPagerAdapter  {
     @Override
     public int getCount() {
         // Log.d("TabPagerAdapter","getCount ");
-        return 3;
+        return 2;
     }
 }
