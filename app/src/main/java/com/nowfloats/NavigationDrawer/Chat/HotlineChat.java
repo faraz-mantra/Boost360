@@ -62,7 +62,7 @@ public class HotlineChat extends Fragment implements View.OnClickListener {
         conversation.setOnClickListener(this);
         faq.setOnClickListener(this);
         search.setOnClickListener(this);
-        HotlineConfig hlConfig=new HotlineConfig("4be3ee16-b8ab-400a-bcdd-2f33103c36f8","f843d239-0077-4acd-ab8c-9988c6c863bc");
+        HotlineConfig hlConfig=new HotlineConfig("f3e79ba0-6b2e-4793-aaeb-e226b43473fb","a2cc59f2-d2d1-4a8f-a27a-5586a1defd6d");
 
         hlConfig.setVoiceMessagingEnabled(true);
         hlConfig.setCameraCaptureEnabled(true);
