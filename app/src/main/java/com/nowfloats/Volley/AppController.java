@@ -13,8 +13,6 @@ import com.android.volley.toolbox.Volley;
 import com.appsflyer.AppsFlyerLib;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-import com.freshdesk.mobihelp.Mobihelp;
-import com.freshdesk.mobihelp.MobihelpConfig;
 import com.nowfloats.util.Constants;
 
 import java.io.File;
@@ -58,10 +56,10 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
 
         mInstance = this;
         try{
-            MobihelpConfig config = new MobihelpConfig("https://nowfloats.freshdesk.com",
+          /*  MobihelpConfig config = new MobihelpConfig("https://nowfloats.freshdesk.com",
                     "nowfloatsboost-1-eb43cfea648e2fd8a088c756519cb4d6",
                     "e13c031f28ba356a76110e8d1e2c4543c84670d5");
-            Mobihelp.init(this, config);
+            Mobihelp.init(this, config);*/
         }catch(Exception e){e.printStackTrace();}
     }
 
@@ -132,6 +130,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     public void deleteCACHE () {
         PackageManager pm = getPackageManager();
         // Get all methods on the PackageManager
+
         Method[] methods = pm.getClass().getDeclaredMethods();
         for (Method m : methods) {
             if (m.getName().equals("freeStorage")) {

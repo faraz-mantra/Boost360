@@ -28,7 +28,7 @@ import retrofit.RestAdapter;
 
 
 public class Constants {
-    public static final boolean APK_MODE_RELEASE = true;
+    public static final boolean APK_MODE_RELEASE = false;
     public static final String APP_TAG = "Boost App";
     public static boolean LOGOUPLOADED = false;
     public static boolean IS_SUNDAY_CHECKED = false;
@@ -71,7 +71,7 @@ public class Constants {
 
     // public final static String NOW_FLOATS_API_URL		=	"https://api.nowfloatsdev.com";
     public final static String NOW_FLOATS_API_URL = "https://api.withfloats.com";
-    public final static String TEST_API_URL = "http://54.254.184.142";
+    public final static String TEST_API_URL = "http://api.nowfloatsdev.com";
     public final static String BASE_IMAGE_URL = "https://content.withfloats.com";
     // public final static String NOW_FLOATS_API_URL		=	"https://nftestbed.azurewebsites.net";
     public final static String HTTP_PUT = "PUT";

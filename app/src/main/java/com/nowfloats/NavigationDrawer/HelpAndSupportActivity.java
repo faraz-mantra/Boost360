@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.RiaNetworkInterface;
@@ -148,6 +149,13 @@ public class HelpAndSupportActivity extends AppCompatActivity {
                         startActivity(emailIntent);
                     }
                 }
+            }
+        });
+
+        btnSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(HelpAndSupportActivity.this, "This feature will be available soon", Toast.LENGTH_SHORT).show();
             }
         });
 

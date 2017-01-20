@@ -610,6 +610,18 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return pref.getString(KEY_IS_FREE_DOMAIN,"");
     }
 
+    public void savePackageStatus(String packegeId, boolean val){
+        try{
+            editor.putBoolean(packegeId,val);
+            editor.commit();
+        }catch(Exception e){e.printStackTrace();}
+
+    }
+
+    public boolean getPackageStatus(String packageId){
+        return pref.getBoolean(packageId, false);
+    }
+
     public void storeFPDetails(String key,String value)
     {   try{
             editor.putString(key,value);

@@ -542,7 +542,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="image_successfully_apdated">Image successfully uploaded</string>
     <string name="can_not_upload_image">Can\'t Upload Image</string>
     <string name="check_your_crediential">Please check your credentials</string>
-    <string name="something_went_wrong">something went wrong!!</string>
+    <string name="something_went_wrong">something went wrong!</string>
     <string name="enter_correct_user_name">Please enter a correct username/ email/ phone number.</string>
     <string name="check_your_email">Check your email</string>
     <string name="enter_valid_username_or_password">Enter valid username/password</string>
@@ -680,7 +680,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="contact_us">Contact Us</string>
     <string name="thank_you_for_your_interest">Thank you for your interest!</string>
     <string name="our_team_contact_in_48hours">Our team will get in touch with you within 48 hours to tell you more about our pricing plans.</string>
-    <string name="processing_request">Processing your request</string>
+    <string name="processing_request">Processing Your Request</string>
     <string name="processing_request_we_back_in_48hours">We are processing your request. We will get back to you on this as soon as we can. Thank you for your patience</string>
     <string name="reach_out_ria">Please reach out to us at ria@nowfloats.com and will be get back to immediately.</string>
     <string name="unable_to_process_purchase">Unable to process your purchase</string>
@@ -718,8 +718,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="logout">Logout</string>
     <string name="create_website_using">Create website using</string>
     <string name="email_address">Email Address</string>
-    <string name="cap_login" translatable="false">&#160;<u><b>LOGIN</b></u></string>
-    <string name="log_in">Log In</string>
+    <string name="log_in"> Log In</string>
     <string name="complete_task_to_increase_site_score">Complete the task below to increase your site score.</string>
     <string name="high_score_translate_more_traffic">Higher scores translates more traffic to your site.</string>
     <string name="get_your_identity">Get your own identity</string>
@@ -926,7 +925,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="failed_to_share">Error while sharing offers</string>
     <string name="offer_getting_error">Error while retrieving offers</string>
     <string name="store_excluding_all_taxes">( Excluding Taxes )</string>
-    <string name="buy_now">Buy Now</string>
+    <string name="buy_now">Proceed to Buy</string>
     <string name="do_you_have_opc">Proceed with an Online Payment Code</string>
     <string name="opc_edit_text_hint">Enter the OPC</string>
     <string name="proceed">Proceed</string>
@@ -943,7 +942,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string-array name="plans">
         <item>ADD-ONS</item>
         <item>CURRENT</item>
-        <item>OPC</item>
     </string-array>
     <string-array name="priority_list">
         <item>DEFAULT</item>
@@ -1046,62 +1044,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="looks_like_you_have_not_posted_any_updates">Looks like you haven\'t posted any update on your Facebook Page through Boost yet Make sure you select the <b>Facebook Page option</b> while creating an update</string>
     <string name="facebook_analytics">Social Analytics</string>
     <string name="session_expired">Please login again your Session has expired</string>
-    <string name="help_and_support" translatable="false">Help and Support</string>
-
-    <string name="getlink">Next</string>
-
-    <string name="business_apps">Business Apps</string>
-
-    <string name="increse_site_score">Increase site score</string>
-
-    <string name="your_site_meter_too_low">Your site meter score is too low</string>
-
-    <string name="you_can_not_have_app_until_score_90">You can\'t have your app up and running until or unless you update your site\'s health score up to 90%</string>
-
-    <string name="details_will_used_to_create_custoer_app">I agree that these details will be used to create my customer app and can\'t be changed once fixed</string>
-
-    <string name="Madman_design_studio">Madman\'s Design Studio</string>
-
-    <string name="congratulation_android_business_app_development">Congrats! Your free Android app is under development. You will be able to download and share this app once it is published to the Play Store.</string>
-
-    <string name="congratulation_ios_business_app_development">Congrats! Your iOS app is under development. You will be able to download and share this app once it is published to the App Store.</string>
-
-    <string name="android_app_preview">PREVIEW YOUR\nANDROID APP</string>
-
-    <string name="ios_app_preview">PREVIEW YOUR\niOS APP</string>
-
-    <string name="get_android_app">GET YOUR ANDROID\nAPP FOR FREE</string>
-
-    <string name="get_ios_app">GET YOUR iOS APP\nFOR INR 6000/-</string>
-
-    <string name="create_push_notification">Create a push notification to your app users</string>
-
-    <string name="android_app"> Android App</string>
-
-    <string name="ios_app"> iOS App</string>
-
-    <string name="increase_our_site_health">increase your site health score</string>
-
-    <string name="more_info">More information</string>
-
-    <string name="edit_details">Edit details</string>
-
-    <string name="on_click_following_field_redirect">On clicking the following fields you will be redirected to the screen where you can make changes</string>
-    <string name="drop_us_on_email_or_call">Please drop us a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to enable this feature</string>
-
-
-    <array name="businessboldtext">
-        <item>A mobile app\nfor your customers</item>
-        <item>Make your brand famous</item>
-        <item>Notify your customers\nwherever they are</item>
-        <item>Offline access to your\nbusiness details</item>
-    </array>
-
-    <array name="businesssmalltext">
-        <item>Your way to a permanent place in your\ncustomer\'s phone.</item>
-        <item>Beat your competition and be the first ones\nto get your own Mobile App.</item>
-        <item>Send personalized notifications to your\ncustomers about your products and offerings.</item>
-        <item>Now your customers can reach your store\neven without an internet connection.</item>
-    </array>
-
+    <string name="help_and_support">Help and Support</string>
+    <string name="product_checkout">Product Checkout</string>
+    <string name="dialog_to_be_activated_null_text">Please note that you will receive an Account Verification Call before your subscription gets activated. Are you sure you want to proceed?</string>
 </resources>
