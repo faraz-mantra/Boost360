@@ -124,9 +124,11 @@ public class StoreDataActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.store_data_action_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
         materialProgress = new MaterialDialog.Builder(this)
                 .widgetColorRes(R.color.accentColor)
                 .content("Please Wait...")
@@ -189,7 +191,7 @@ public class StoreDataActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             if(ProductPrice.getText().toString().equalsIgnoreCase("Contact Us")){
                                 try {
-                                    StoreInterface anInterface = Constants.restAdapter.create(StoreInterface.class);
+                                    StoreInterface anInterface = Constants.testRestAdapter.create(StoreInterface.class);
                                     ArrayList<String> emailList = new ArrayList<String>();
                                     emailList.add("leads@nowfloats.com");
 
@@ -793,7 +795,7 @@ public class StoreDataActivity extends AppCompatActivity {
             params.put("packageValidityInMths", product.ExpiryInMths);
             params.put("amountPaid", product.Price);
 
-            StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
+            StoreInterface storeInterface = Constants.testRestAdapter.create(StoreInterface.class);
             storeInterface.enableWidgetPack(params, new Callback<EnablePackageResponse>() {
                 @Override
                 public void success(EnablePackageResponse result, Response response) {

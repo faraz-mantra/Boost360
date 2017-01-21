@@ -26,7 +26,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.HashMap;
+import java.util.Locale;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -90,7 +92,7 @@ public class InstaMojoMainActivity extends AppCompatActivity {
         tvUserName.setText(" " + mOrderData.getUsername());
         tvBusinessName.setText(" " +mOrderData.getBusinessName());
         tvEmail.setText(" " +mOrderData.getEmail());
-        tvPrice.setText( " " + mOrderData.getCurrency() + " " + mOrderData.getPrice());
+        tvPrice.setText( " " + mOrderData.getCurrency() + " "+NumberFormat.getIntegerInstance(Locale.US).format(Long.valueOf(mOrderData.getPrice())));
         tvExpires.setText(" " +mOrderData.getExpires());
         tvExpires.setEllipsize(TextUtils.TruncateAt.MARQUEE);
         tvExpires.setSingleLine(true);
@@ -319,8 +321,8 @@ public class InstaMojoMainActivity extends AppCompatActivity {
     }
 
     private void startPreCreatedUI(Order order) {
-        order.setWalletOptions(null);
-        order.setUpiOptions(null);
+        /*order.setWalletOptions(null);
+        order.setUpiOptions(null);*/
         Intent intent = new Intent(getBaseContext(), PaymentDetailsActivity.class);
         intent.putExtra(com.instamojo.android.helpers.Constants.ORDER, order);
         startActivityForResult(intent, com.instamojo.android.helpers.Constants.REQUEST_CODE);

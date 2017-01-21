@@ -75,8 +75,10 @@ public class Contact_Info_Activity extends ActionBarActivity {
         });
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         primaryNumber = (EditText) findViewById(R.id.primaryNumber);
         alternateNumber_1 = (EditText) findViewById(R.id.alternateNumber_1);

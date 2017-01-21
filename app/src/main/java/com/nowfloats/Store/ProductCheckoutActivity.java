@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -76,8 +77,10 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.product_checkout_toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
         headerText.setText(getResources().getString(R.string.product_checkout));
@@ -116,6 +119,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                     i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
                     //write logic for with and without opc cases
                     if(!etOpc.isEnabled()) {
+                        Log.v("retrofit"," enable false");
                         if(mOpcDetails==null) {
                             initiatePaymentProcess(i, mInvoiceId);
                         }else {
@@ -218,7 +222,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             DataBase dataBase = new DataBase(this);
 
             Cursor cursor = dataBase.getLoginStatus();
-            if (cursor.moveToFirst()){
+            if (cursor!=null && cursor.moveToFirst()){
                 //System.out.println(cursor.getString(cursor.getColumnIndex("title"));
                 sendDraftInvoiceModel.setFpUserProfileId(cursor.getString(cursor.getColumnIndex(DataBase.colloginId)));
                 sendDraftInvoiceModel.setOpc(OPCCode);
@@ -233,7 +237,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             if(materialProgress!=null){
                 materialProgress.show();
             }
-            StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
+            StoreInterface storeInterface = Constants.testRestAdapter.create(StoreInterface.class);
             storeInterface.createDraftInvoice(params, sendDraftInvoiceModel, new Callback<ReceivedDraftInvoice>() {
                 @Override
                 public void success(ReceivedDraftInvoice receiveDraftInvoice, Response response) {
@@ -307,7 +311,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid Invoice", Toast.LENGTH_SHORT).show();
             return;
         }
-        StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
+        StoreInterface storeInterface = Constants.testRestAdapter.create(StoreInterface.class);
         Map<String, String> params = new HashMap<String, String>();
         params.put("clientId", Constants.clientId);
         params.put("invoiceId", invoiceId);
@@ -399,7 +403,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             if(materialProgress!=null){
                 materialProgress.show();
             }
-            StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
+            StoreInterface storeInterface = Constants.testRestAdapter.create(StoreInterface.class);
             storeInterface.createDraftInvoice(params, sendDraftInvoiceModel, new Callback<ReceivedDraftInvoice>() {
                 @Override
                 public void success(ReceivedDraftInvoice receiveDraftInvoice, Response response) {
@@ -446,6 +450,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
         }
     }
 
+    // showing list of products with discount, if opc added
     private void initializeVal(final ReceiveDraftInvoiceModel invoiceData, boolean showDiscount) {
         if(invoiceData==null){
             return;
@@ -487,7 +492,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             packages+=invoiceData.getPurchaseDetails().get(i).getPackageName() + " and ";
         }
         mNewPackage = packages;
-        mFinalAmount = String.valueOf(NumberFormat.getIntegerInstance(Locale.US).format(Math.round((netAmount + taxAmount) * 100.0) / 100));
+        mFinalAmount = String.valueOf(Math.round((netAmount + taxAmount) * 100) / 100);
 
 
         rvItems.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

@@ -449,6 +449,7 @@
     <string name="empty_alert">Eğer yeni bir uyarı var en kısa sürede biz sizi bilgilendireceğiz</string>
     <string name="settings_tou_url">https://nowfloats.com/tnc/</string>
     <string name="settings_privacy_url">https://nowfloats.com/privacy/</string>
+    <string name="drop_us_on_email_or_call">Please drop us a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to enable this feature</string>
 
     <string-array name="domain_array">
         <item>.com</item>
@@ -819,7 +820,7 @@
     <string name="nowfloats"> NowFloats</string>
     <string name="version">versiyon</string>
     <string name="float_point_name">Nokta Adını Float</string>
-    <string name="what_is_missing">Ne kayıp?</string>
+    <string name="your_site_health">Your site health</string>
     <string name="primary_number">Birincil Numara</string>
     <string name="alternate_number1">Alternatif Sayı 1</string>
     <string name="alternate_number2">Alternatif Sayı 2</string>

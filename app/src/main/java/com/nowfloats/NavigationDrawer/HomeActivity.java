@@ -1197,7 +1197,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 //                    Constants.PREF_NAME, Activity.MODE_PRIVATE);
 //            prefsEditor = pref.edit();
                     shareWebsite(url);
-                }else if(nextScreen.equals(getString(R.string.business_enquiries_title)))
+                }/*else if(nextScreen.equals(getString(R.string.business_enquiries_title)))
                 {
                     // ft.remove(homeFragment);
 
@@ -1206,7 +1206,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     plusAddButton.setVisibility(View.GONE);
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, businessEnquiriesFragment).commit();
-                }else if(nextScreen.equals("Settings"))
+                }*/else if(nextScreen.equals("Settings"))
                 {
                     //ft.replace(R.id.homeTabViewpager, settingsFragment);
                     //ft.commit();

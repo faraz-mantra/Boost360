@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 
 import com.nowfloats.Business_Enquiries.Model.BzQueryEvent;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.squareup.otto.Bus;
@@ -36,7 +35,6 @@ public class Business_Enquiries_Fragment extends Fragment {
     public void onResume() {
         super.onResume();
         bus.register(this);
-        HomeActivity.headerText.setText(getResources().getString(R.string.business_enquiries_title));
     }
 
     @Override
