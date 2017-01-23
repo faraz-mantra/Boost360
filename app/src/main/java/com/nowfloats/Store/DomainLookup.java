@@ -110,7 +110,7 @@ public class DomainLookup extends AppCompatActivity {
                 params.put("clientId", session.getSourceClientId());
                 params.put("domainType", domainType);
 
-                StoreInterface storeInterface = Constants.testRestAdapter.create(StoreInterface.class);
+                StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
                 storeInterface.checkDomain(domainName, params, new Callback<String>() {
                     @Override
                     public void success(String s, Response response) {
@@ -165,7 +165,7 @@ public class DomainLookup extends AppCompatActivity {
         params.put("domainName", domainName);
         params.put("existingFPTag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toUpperCase());
 
-        StoreInterface storeInterface = Constants.testRestAdapter.create(StoreInterface.class);
+        StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
         storeInterface.purchaseDomain(params,new Callback<String>() {
             @Override
             public void success(String s, Response response) {

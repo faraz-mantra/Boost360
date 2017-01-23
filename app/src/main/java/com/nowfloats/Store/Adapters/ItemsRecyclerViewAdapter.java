@@ -47,7 +47,7 @@ public class ItemsRecyclerViewAdapter extends RecyclerView.Adapter<ItemsRecycler
             discountedPrice = NumberFormat.getNumberInstance(Locale.US).format(data.getBasePrice());
         }else {
             holder.tvDiscount.setText(data.getDiscount().value + " %");
-            discountedPrice = String.valueOf(NumberFormat.getNumberInstance(Locale.US).format(Math.round((data.getBasePrice()-(data.getDiscount().value*data.getBasePrice())/100) * 100) /100));
+            discountedPrice = String.valueOf(NumberFormat.getNumberInstance(Locale.US).format(Math.round((data.getBasePrice()-(data.getDiscount().value*data.getBasePrice())/100.0) * 100) /100));
         }
 
         holder.tvDiscountedPrice.setText(mCurrency + " " + discountedPrice + " /-");

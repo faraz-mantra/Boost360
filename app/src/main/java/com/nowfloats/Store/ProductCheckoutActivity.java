@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -119,7 +118,6 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                     i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
                     //write logic for with and without opc cases
                     if(!etOpc.isEnabled()) {
-                        Log.v("retrofit"," enable false");
                         if(mOpcDetails==null) {
                             initiatePaymentProcess(i, mInvoiceId);
                         }else {
@@ -213,7 +211,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 
     private void createOpcDraftInvoice(String OPCCode) {
         if(Util.isNullOrEmpty(OPCCode)){
-            Methods.showSnackBarNegative(this, "OPC can't be empty");
+            Methods.showSnackBarNegative(this, "Online Voucher can't be empty");
             return;
         }
         try {
@@ -237,7 +235,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             if(materialProgress!=null){
                 materialProgress.show();
             }
-            StoreInterface storeInterface = Constants.testRestAdapter.create(StoreInterface.class);
+            StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
             storeInterface.createDraftInvoice(params, sendDraftInvoiceModel, new Callback<ReceivedDraftInvoice>() {
                 @Override
                 public void success(ReceivedDraftInvoice receiveDraftInvoice, Response response) {
@@ -252,9 +250,9 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                                 mInvoiceId = receiveDraftInvoice.getResult().getInvoiceId();
                                 mOpcDetails = receiveDraftInvoice.getResult().getOpcDetails();
                                 initializeVal(receiveDraftInvoice.getResult(), true);
-                                Methods.showSnackBarPositive(ProductCheckoutActivity.this, "OPC Applied Successfully");
+                                Methods.showSnackBarPositive(ProductCheckoutActivity.this, "Online voucher Applied Successfully");
                             }else {
-                                Methods.showSnackBarNegative(ProductCheckoutActivity.this, "The entered OPC is not valid for this product.");
+                                Methods.showSnackBarNegative(ProductCheckoutActivity.this, "The entered Online voucher is not valid for this product.");
                             }
                         }else {
                             Methods.showSnackBarNegative(ProductCheckoutActivity.this, receiveDraftInvoice.getError().getErrorList().get(0).Key);
@@ -311,7 +309,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid Invoice", Toast.LENGTH_SHORT).show();
             return;
         }
-        StoreInterface storeInterface = Constants.testRestAdapter.create(StoreInterface.class);
+        StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
         Map<String, String> params = new HashMap<String, String>();
         params.put("clientId", Constants.clientId);
         params.put("invoiceId", invoiceId);
@@ -403,7 +401,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             if(materialProgress!=null){
                 materialProgress.show();
             }
-            StoreInterface storeInterface = Constants.testRestAdapter.create(StoreInterface.class);
+            StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
             storeInterface.createDraftInvoice(params, sendDraftInvoiceModel, new Callback<ReceivedDraftInvoice>() {
                 @Override
                 public void success(ReceivedDraftInvoice receiveDraftInvoice, Response response) {
@@ -458,14 +456,15 @@ public class ProductCheckoutActivity extends AppCompatActivity {
         tvUserName.setText(mSessionManager.getFpTag().toLowerCase());
         tvUserEmail.setText(mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
         tvPhoneNumber.setText(mSessionManager.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
-        int netAmount = 0;
+        double netAmount = 0;
         for(PurchaseDetail data : invoiceData.getPurchaseDetails()){
             if(data.getDiscount()==null) {
                 netAmount += data.getBasePrice();
             }else {
-                netAmount += (data.getBasePrice()-(data.getBasePrice()*data.getDiscount().value/100));
+                netAmount += (data.getBasePrice()-(data.getBasePrice()*data.getDiscount().value/100.0));
             }
         }
+        netAmount = Math.round((netAmount * 100) / 100.0);
         tvNetTotal.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " +
                 NumberFormat.getIntegerInstance(Locale.US).format(netAmount)+ " /-");
         float taxVal = 0;
@@ -475,18 +474,18 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             taxVal+=taxData.getValue();
             taxNames.append(taxData.getKey() + "-" + taxData.getValue() +"%,\n ");
         }
-        int taxAmount = 0;
+        double taxAmount = 0;
         if(invoiceData.getPurchaseDetails().get(0).getTaxDetails().get(0).getAmountType()==0) {
-            taxAmount = (int)(netAmount * taxVal) / 100;
+            taxAmount = (netAmount * taxVal) / 100.0;
         }else {
             taxAmount =(int) taxVal;
         }
-
+        taxAmount = Math.round((taxAmount * 100) / 100.0);
         tvTaxes.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " +
                 NumberFormat.getIntegerInstance(Locale.US).format(taxAmount) + " /-\n" + "( " + taxNames.substring(0, taxNames.length() - 3) + " )");
 
         tvAmountToBePaid.setText(StoreDataActivity.product.CurrencyCode + " " +
-                NumberFormat.getIntegerInstance(Locale.US).format((netAmount+taxAmount)) + " /-");
+                NumberFormat.getIntegerInstance(Locale.US).format(Math.round((netAmount + taxAmount) * 100) / 100) + " /-");
         String packages="";
         for(int i=0; i<invoiceData.getPurchaseDetails().size(); i++){
             packages+=invoiceData.getPurchaseDetails().get(i).getPackageName() + " and ";

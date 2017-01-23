@@ -396,6 +396,7 @@
     <string name="onboarding_screen_2_title">Content is King</string>
     <string name="onboarding_screen_2_desc">Update your website twice a week. Just press the plus button at the bottom and simply tell your customers about your products, services or offers</string>
     <string name="drop_us_on_email_or_call">Please drop us a line at support@sibername.com, if you\'d like to enable this feature.</string>
+    <string name="primary_contact_number_message">Please drop us a line at support@sibername.com, if you\'d like to change the number.</string>
 
 
     <string name="settings_feedback_link">support@sibername.com</string>

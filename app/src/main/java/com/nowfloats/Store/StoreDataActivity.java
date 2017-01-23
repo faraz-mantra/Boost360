@@ -191,7 +191,7 @@ public class StoreDataActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             if(ProductPrice.getText().toString().equalsIgnoreCase("Contact Us")){
                                 try {
-                                    StoreInterface anInterface = Constants.testRestAdapter.create(StoreInterface.class);
+                                    StoreInterface anInterface = Constants.restAdapter.create(StoreInterface.class);
                                     ArrayList<String> emailList = new ArrayList<String>();
                                     emailList.add("leads@nowfloats.com");
 
@@ -795,7 +795,7 @@ public class StoreDataActivity extends AppCompatActivity {
             params.put("packageValidityInMths", product.ExpiryInMths);
             params.put("amountPaid", product.Price);
 
-            StoreInterface storeInterface = Constants.testRestAdapter.create(StoreInterface.class);
+            StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
             storeInterface.enableWidgetPack(params, new Callback<EnablePackageResponse>() {
                 @Override
                 public void success(EnablePackageResponse result, Response response) {
