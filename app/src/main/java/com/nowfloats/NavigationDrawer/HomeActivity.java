@@ -1117,17 +1117,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(nextScreen.equals("BusinessAppSiteMeter")){
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.mainFrame,businessSiteMeter,"BusinessSiteMeter")
-                            .commit();
-                }
-                else if(nextScreen.equals(getString(R.string.business_apps))){
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.mainFrame,businessAppFragment,"BusinessApps")
-                            .commit();
-                }
-                else if (nextScreen.equals(getString(R.string.business_profile)))
+                if (nextScreen.equals(getString(R.string.business_profile)))
                 {
                     //Intent businessProfileIntent = new Intent(HomeActivity.this, BusinessProfile_HomeActivity.class);
                     //startActivity(businessProfileIntent)

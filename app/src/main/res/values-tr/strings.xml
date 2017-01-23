@@ -1153,7 +1153,6 @@
     <string name="Logo_percentage">5</string>
     <string name="business_hours">5</string>
 
-
     <string name="fb_login_protocol_scheme">fb1641508162754092</string>
     <string name="kitsune_pre_signup_text1">Manage and update your</string>
     <string name="kitsune_pre_signup_text2">Kitsune powered website</string>
@@ -1167,7 +1166,6 @@
     <string name="opc_title">Pay through OPC</string>
     <string name="help_and_support">Help and Support</string>
     <string name="product_checkout">Product Checkout</string>
-
     <string name="not_available_in_ur_country">This feature is currently not available in your country. We will notify you when its available.</string>
     <string name="kitsune_demo_expire_dialog_body">Your demo subscription has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
     <string name="dialog_to_be_activated_null_text">Please note that you will receive an Account Verification Call before your subscription gets activated. Are you sure you want to proceed?</string>
