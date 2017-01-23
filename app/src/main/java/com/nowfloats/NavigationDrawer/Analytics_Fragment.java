@@ -9,7 +9,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +23,7 @@ import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueries;
 import com.nowfloats.Analytics_Screen.ShowWebView;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
-import com.nowfloats.Business_Enquiries.Business_Enquiries_Fragment;
+import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -110,9 +109,9 @@ public class Analytics_Fragment extends Fragment {
         enqLayOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.mainFrame,new Business_Enquiries_Fragment())
-                        .commit();
+               Intent i = new Intent(context, BusinessEnquiryActivity.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 

@@ -110,6 +110,7 @@ public class Settings_Fragment extends Fragment {
         if(Long.parseLong(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON).split("\\(")[1].split("\\)")[0])/1000 > 1470614400){
             flSiteAppearance.setVisibility(View.GONE);
         }
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -174,7 +175,7 @@ public class Settings_Fragment extends Fragment {
 
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                         "mailto", headerValue, null));
-                 activity.startActivity(Intent.createChooser(emailIntent, getString(R.string.send_email)));
+                activity.startActivity(Intent.createChooser(emailIntent, getString(R.string.send_email)));
             }
         });
 
@@ -182,7 +183,7 @@ public class Settings_Fragment extends Fragment {
         likeusFacebookLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               likeUsFacebook();
+                likeUsFacebook();
             }
         });
 
@@ -191,7 +192,14 @@ public class Settings_Fragment extends Fragment {
             public void onClick(View v) {
                 Intent twitterIntent = new Intent(Intent.ACTION_VIEW);
                 //String facebookUrl = getFacebookPageURL(getActivity().getApplicationContext());
-                twitterIntent.setData(Uri.parse(Constants.TWITTER_URL));
+                try {
+                        getActivity().getPackageManager().getPackageInfo("com.twitter.android", 0);
+                        twitterIntent.setData(Uri.parse(Constants.TWITTER_ID_URL));
+                        twitterIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    } catch (PackageManager.NameNotFoundException e1) {
+                        twitterIntent.setData(Uri.parse(Constants.TWITTER_URL));
+                        e1.printStackTrace();
+                }
                 startActivity(twitterIntent);
             }
         });
@@ -438,8 +446,7 @@ public class Settings_Fragment extends Fragment {
         Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
         // To count with Play market backstack, After pressing back button,
         // to taken back to our application, we need to add following flags to intent.
-        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
-                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         try {
             startActivity(goToMarket);
         } catch (ActivityNotFoundException e) {
@@ -457,6 +464,7 @@ public class Settings_Fragment extends Fragment {
         try {
             getActivity().getPackageManager().getPackageInfo("com.facebook.katana", 0);
             facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_PAGE_WITH_ID));
+            facebookIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         } catch (Exception e) {
             facebookIntent= new Intent(Intent.ACTION_VIEW, Uri.parse(facebookUrl));
         }

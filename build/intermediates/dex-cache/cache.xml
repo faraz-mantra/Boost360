@@ -115,7 +115,7 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.3"
-        sha1="f28641c7db2d0ac4b52f9bd0b51d69e5601f6449">
+        sha1="02019b722c1bb9a575ef3ea7a67d76ebb70f0c19">
         <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\instant-run-bootstrap_158b65b43fd00641acb08db195c07ace6ac2be74\classes.dex" />
     </item>
     <item
@@ -412,7 +412,7 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.3"
-        sha1="8dcfd741c532fa9286d645fe24f5cc2f57629512">
+        sha1="3d06901c4834587935ca8534add5d4cc8dc74406">
         <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\instant-run_11d0f6181a4d4cc8cfd6478c511bfe09e6dce205\classes.dex" />
     </item>
     <item
@@ -768,15 +768,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\boost\mobihelp_sdk_android_v1.5.4\unspecified\jars\libs\mobihelp.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="23.0.3"
-        sha1="e3f6df73d2d8df2e6ef93dc518c76a8f093ec34d">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\8\mobihelp_f0c2f72e2d1c1b6ff853621693e228c25e94efde\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.android.support\multidex\1.0.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -810,6 +801,15 @@
         revision="23.0.3"
         sha1="55b967d31b15d92052a5ea2e407378b72d4764a7">
         <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\jp.wasabeef-recyclerview-animators-1.2.0_173ff858ce511103340beff8fb1bd6f810ef3157\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.github.freshdesk\hotline-android\1.2.0\jars\libs\hotline.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="74a6d6d1ff8b4761030a120dc30248223efe7895">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\hotline_f27975ec6c7c7e8a332883e2373e65a1edf58635\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -963,6 +963,15 @@
         revision="23.0.3"
         sha1="19b66e39d657db6b4a14ce175db0fd7172cd1be9">
         <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\in.juspay-godel-0.6.11.0823_c60950c51187bfee43149299a050429214ceeac6\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.github.freshdesk\hotline-android\1.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="5848d558589552391d11d8157ae67b0ad4c4aba5">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.github.freshdesk-hotline-android-1.2.0_2d55c80c013bbc2e6074fe34acad59b77703d127\classes.dex" />
     </item>
     <item
         is-multidex="true"

@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2016120028"
-    android:versionName="4.4.9">
+    android:versionCode="2017010023"
+    android:versionName="4.5.1">
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
@@ -30,6 +30,7 @@
     <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -162,6 +163,13 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity" />
+        </activity>
+        <activity
             android:name="com.nowfloats.NavigationDrawer.HomeActivity"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait">
@@ -183,6 +191,7 @@
             android:name="com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity"
             android:label="@string/title_activity_contact__info_"
             android:launchMode="singleTop"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity"
@@ -418,7 +427,8 @@
         <activity android:name="com.nowfloats.NavigationDrawer.CreateOffersActivity" />
         <activity android:name="com.nowfloats.NavigationDrawer.OffersFullScreenActivity" />
         <activity android:name="com.nowfloats.PreSignUp.KitsunePreSignUpActivity" />
-        <activity android:name="com.nowfloats.NavigationDrawer.HelpAndSupportActivity"></activity>
+        <activity android:name="com.nowfloats.NavigationDrawer.HelpAndSupportActivity" />
+        <activity android:name="com.nowfloats.Store.ProductCheckoutActivity"></activity>
     </application>
 
 </manifest>

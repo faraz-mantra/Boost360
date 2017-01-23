@@ -164,6 +164,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp">
                 <ImageView
@@ -188,7 +189,6 @@
                     android:layout_width="80dp"
                     android:layout_height="35dp"
                     android:text="SCHEDULE"
-
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="50dp"
                     android:background="@drawable/help_n_support_btn_bg"

@@ -260,16 +260,19 @@ public class Site_Meter_Fragment extends Fragment {
                     siteData.get(description).setSortChar(2);
                 }
             }else if(siteData.get(i).position==social) {
-                if (Constants.twitterShareEnabled == false && !pref.getBoolean("fbShareEnabled", false) && !pref.getBoolean("fbPageShareEnabled", false) && !getResources().getString(R.string.social_percentage).equals("0")) {
-                    siteData.get(social).setStatus(false);
-                    siteData.get(social).setSortChar(2);
-                } else {
+                if (Constants.twitterShareEnabled && pref.getBoolean("fbShareEnabled", false) && pref.getBoolean("fbPageShareEnabled", false)) {
                     siteMeterTotalWeight += twitterWeight;
                     siteData.get(social).setStatus(true);
                     siteData.get(social).setSortChar(1);
+                } else {
+                    siteData.get(social).setStatus(false);
+                    siteData.get(social).setSortChar(2);
                 }
             }else if(siteData.get(i).position==address) {
-                if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)) && !getResources().getString(R.string.address_percentage).equals("0")) {
+                if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)) &&
+                        !Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LATITUDE))&&
+                        !Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LONGITUDE))&&
+                        !getResources().getString(R.string.address_percentage).equals("0")) {
                     siteMeterTotalWeight += businessAddressWeight;
                     siteData.get(address).setStatus(true);
                     siteData.get(address).setSortChar(1);
@@ -408,7 +411,7 @@ public class Site_Meter_Fragment extends Fragment {
                 MixPanelController.track(EventKeysWL.SITE_SCORE_GET_YOUR_OWN_IDENTITY,null);
                 MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
                         .title("Get A Domain")
-                        .content(getResources().getString(R.string.drop_us_on_email_or_call))
+                        .customView(R.layout.dialog_link_layout,false)
                         .positiveText(getString(R.string.ok))
                         .positiveColorRes(R.color.primaryColor)
                         .callback(new MaterialDialog.ButtonCallback() {

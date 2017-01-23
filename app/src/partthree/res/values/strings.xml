@@ -396,8 +396,11 @@
     <string name="onboarding_screen_3_desc">People around your business are searching for stuff you sell, so keep your updates relevant and fresh. This will you lead to attract more customers and generate more revenue</string>
     <string name="onboarding_screen_2_title">Content is King</string>
     <string name="onboarding_screen_2_desc">Update your website twice a week. Just press the plus button at the bottom and simply tell your customers about your products, services or offers</string>
-    <string name="drop_us_on_email_or_call">Please drop us a line at assist@getkitsune.com, if you\'d like to enable this feature</string>
-
+    <string name="drop_us_on_email_or_call">Please drop us a line at assist@getkitsune.com if you\'d like to enable this feature</string>
+    <string name="primary_contact_number_message">Please drop us a line at assist@getkitsune.com if you\'d like to change the number</string>
+    <string name="check_store_for_upgrade_info">Please drop us a line at <a href="mailto:assist@getkitsune.com">assist@getkitsune.com</a>, if you\'d like to enable this feature.</string>
+    <string name="goto_store">Ok</string>
+    <string name="cancel">Cancel</string>
     <string name="settings_feedback_link">assist@getkitsune.com</string>
     <string name="settings_facebook_like_link">https://www.facebook.com/getkitsune</string>
     <string name="settings_about_us_link">http://getkitsune.com/</string>
