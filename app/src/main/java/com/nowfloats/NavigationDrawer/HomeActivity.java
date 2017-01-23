@@ -1169,7 +1169,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 }else  if(nextScreen.equals(getString(R.string.call)))
                 {
                     String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-                    if(paymentState==null || paymentState.equals("-1")) {
+                    if(paymentState==null || paymentState.equals("-1") || paymentState.equals("0")) {
                         Intent call = new Intent(Intent.ACTION_DIAL);
                         String callString = "tel:" + getString(R.string.contact_us_number);
                         call.setData(Uri.parse(callString));
