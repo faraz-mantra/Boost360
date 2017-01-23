@@ -21,9 +21,9 @@
 
 -dontwarn org.apache.commons.codec.binary.Base64
 
--dontwarn com.demach.konotor
--dontwarn com.demach.konotor.KonotorFeedbackActivity
--dontwarn com.demach.konotor.service.model.GetAllConversationResponse
+#-dontwarn com.demach.konotor
+#-dontwarn com.demach.konotor.KonotorFeedbackActivity
+#-dontwarn com.demach.konotor.service.model.GetAllConversationResponse
 -dontwarn com.viewpagerindicator.LinePageIndicator
 -dontwarn jp.wasabeef.recyclerview.animators.BaseItemAnimator
 
@@ -33,7 +33,7 @@
     <methods>;
 }
 
--keep class com.demach.konotor.** { *; }
+#-keep class com.demach.konotor.** { *; }
 
 # Demach model
 -keep class com.demach.** {
@@ -54,7 +54,8 @@
 -keep class org.lucasr.twowayview.** { *; }
 -dontwarn okio.**
 -dontwarn retrofit.**
--dontwarn com.freshdesk.mobihelp**
+-dontwarn com.freshdesk.hotline.**
+-dontwarn uk.co.chrishenx.calligraphy.**
 -keep class retrofit.** { *; }
 -keepattributes Signature
 -keepattributes Exceptions
@@ -274,6 +275,5 @@
 
 -keep class com.google.android.gms.R$styleable
 -keepclassmembers class com.google.android.gms.R$styleable {*;}
-
 -dontwarn com.semusi.sdksample**
 -dontwarn semusi.ruleengine.pushmanager**

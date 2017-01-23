@@ -75,8 +75,10 @@ public class Contact_Info_Activity extends ActionBarActivity {
         });
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         primaryNumber = (EditText) findViewById(R.id.primaryNumber);
         alternateNumber_1 = (EditText) findViewById(R.id.alternateNumber_1);
@@ -217,10 +219,13 @@ public class Contact_Info_Activity extends ActionBarActivity {
         primaryNumber.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                View dialogView = getLayoutInflater().inflate(R.layout.dialog_link_layout,null,false);
+                TextView message = (TextView) dialogView.findViewById(R.id.toast_message_to_contact);
+                message.setText(getString(R.string.primary_contact_number_message));
                 if(motionEvent.getAction()== MotionEvent.ACTION_DOWN){
                     MaterialDialog.Builder builder = new MaterialDialog.Builder(Contact_Info_Activity.this)
                             .title("To change your primary number")
-                            .customView(R.layout.dialog_link_layout,false)
+                            .customView(dialogView,false)
                             .positiveText(getString(R.string.ok))
                             .positiveColorRes(R.color.primaryColor)
                             .callback(new MaterialDialog.ButtonCallback() {

@@ -269,7 +269,10 @@ public class Site_Meter_Fragment extends Fragment {
                     siteData.get(social).setSortChar(2);
                 }
             }else if(siteData.get(i).position==address) {
-                if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)) && !getResources().getString(R.string.address_percentage).equals("0")) {
+                if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)) &&
+                        !Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LATITUDE))&&
+                        !Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LONGITUDE))&&
+                        !getResources().getString(R.string.address_percentage).equals("0")) {
                     siteMeterTotalWeight += businessAddressWeight;
                     siteData.get(address).setStatus(true);
                     siteData.get(address).setSortChar(1);

@@ -36,5 +36,7 @@ public class Specific {
     public static String FACEBOOK_PAGEID = "fb://page/713199095512917";
     public static String CONTACT_EMAIL_ID = "assist@getkitsune.com";
     public static final String TWITTER_URL = "https://twitter.com/getkitsune";
+    public static final String TWITTER_ID_URL = "twitter://user?screen_name=getkitsune";
+
 
 }

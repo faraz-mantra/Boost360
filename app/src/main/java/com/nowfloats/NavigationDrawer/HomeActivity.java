@@ -43,8 +43,9 @@ import com.appsflyer.AppsFlyerConversionListener;
 import com.appsflyer.AppsFlyerLib;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.freshdesk.mobihelp.Mobihelp;
-import com.freshdesk.mobihelp.MobihelpConfig;
+import com.freshdesk.hotline.Hotline;
+import com.freshdesk.hotline.HotlineConfig;
+import com.freshdesk.hotline.HotlineUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.mixpanel.android.mpmetrics.GCMReceiver;
 import com.nineoldandroids.animation.Animator;
@@ -163,7 +164,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     private String TAG = HomeActivity.class.getSimpleName();
 
 
-
     @Override
     protected void attachBaseContext(Context newBase) {
        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -183,11 +183,10 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         StrictMode.setThreadPolicy(policy);
 //        GCMIntentService.setHomeActivity(HomeActivity.this);
         Methods.isOnline(HomeActivity.this);
-
-
+        session = new UserSessionManager(getApplicationContext(),HomeActivity.this);
+        setHotlineUser();
         BoostLog.d(TAG, "In on CreateView");
         deepLinkUrl = RiaFirebaseMessagingService.deepLinkUrl;
-        session = new UserSessionManager(getApplicationContext(),HomeActivity.this);
         FPID = session.getFPID();
         new Thread(new Runnable() {
             @Override
@@ -223,11 +222,12 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 //                        .withWelcomeMessage("Welcome to NowFloats Boost! If you have any queries, please leave a message below. Also, you can reach out to us at "+getString(R.string.contact_us_number))		// optional custom welcome message for your app
 //                        .init(Konotor_APP_ID,Konotor_APP_KEY);
 
-                MobihelpConfig config = new MobihelpConfig("https://nowfloats.freshdesk.com",
+               /* MobihelpConfig config = new MobihelpConfig("https://nowfloats.freshdesk.com",
                         "nowfloatsboost-1-eb43cfea648e2fd8a088c756519cb4d6",
                         "e13c031f28ba356a76110e8d1e2c4543c84670d5");
                 config.setPrefetchSolutions(false);
-                Mobihelp.init(HomeActivity.this,config);
+                Mobihelp.init(HomeActivity.this,config);*/
+
 
             }
         }).start();
@@ -420,6 +420,24 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 finish();
             }
         }
+    }
+
+    private void setHotlineUser() {
+        HotlineConfig hlConfig=new HotlineConfig("f3e79ba0-6b2e-4793-aaeb-e226b43473fb","a2cc59f2-d2d1-4a8f-a27a-5586a1defd6d");
+
+        hlConfig.setVoiceMessagingEnabled(true);
+        hlConfig.setCameraCaptureEnabled(true);
+        hlConfig.setPictureMessagingEnabled(true);
+
+        Hotline.getInstance(this).init(hlConfig);
+
+        HotlineUser hlUser=Hotline.getInstance(this).getUser();
+        hlUser.setName(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+        hlUser.setEmail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
+        hlUser.setPhone(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE),
+                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
+        Hotline.getInstance(this).updateUser(hlUser);
+
     }
 
     public static void setGCMId(String id){
@@ -1144,8 +1162,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     //           replace(R.id.mainFrame, homeFragment).addToBackStack("Home").commit();
                 }else if(nextScreen.equals(getString(R.string.chat)))
                 {
+                    //getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,hotlineFragment, "chatfragment").commit();
                     //Konotor.getInstance(getApplicationContext()).launchFeedbackScreen(HomeActivity.this);
-                    Mobihelp.showConversations(HomeActivity.this);
+                    Hotline.showConversations(HomeActivity.this);
                     //Konotor.getInstance(getApplicationContext()).launchFeedbackScreen(HomeActivity.this);
                 }else  if(nextScreen.equals(getString(R.string.call)))
                 {
@@ -1178,7 +1197,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 //                    Constants.PREF_NAME, Activity.MODE_PRIVATE);
 //            prefsEditor = pref.edit();
                     shareWebsite(url);
-                }else if(nextScreen.equals(getString(R.string.business_enquiries_title)))
+                }/*else if(nextScreen.equals(getString(R.string.business_enquiries_title)))
                 {
                     // ft.remove(homeFragment);
 
@@ -1187,7 +1206,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     plusAddButton.setVisibility(View.GONE);
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, businessEnquiriesFragment).commit();
-                }else if(nextScreen.equals("Settings"))
+                }*/else if(nextScreen.equals("Settings"))
                 {
                     //ft.replace(R.id.homeTabViewpager, settingsFragment);
                     //ft.commit();

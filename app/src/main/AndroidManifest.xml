@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2017010018"
-    android:versionName="4.5.0">
+    android:versionCode="2017010023"
+    android:versionName="4.5.1">
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
@@ -153,6 +153,13 @@
             android:name="com.nowfloats.signup.UI.UI.BusinessProfileActivity"
             android:label="@string/title_activity_business_profile"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity" />
+        </activity>
         <activity
             android:name="com.nowfloats.NavigationDrawer.HomeActivity"
             android:label="@string/title_activity_home"

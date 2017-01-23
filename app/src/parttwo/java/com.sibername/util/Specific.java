@@ -40,4 +40,5 @@ public class Specific {
     public static  String CONTACT_EMAIL_ID="";
     public static String FACEBOOK_PAGEID = "fb://page/35829503050";
     public static final String TWITTER_URL = "https://twitter.com/sibername";
+    public static final String TWITTER_ID_URL = "twitter://user?screen_name=sibername";
 }

@@ -9,9 +9,9 @@ import android.widget.TextView;
 import com.nowfloats.Store.Model.PurchaseDetail;
 import com.thinksity.R;
 
-import org.w3c.dom.Text;
-
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by NowFloats on 09-11-2016.
@@ -40,14 +40,14 @@ public class ItemsRecyclerViewAdapter extends RecyclerView.Adapter<ItemsRecycler
         PurchaseDetail data = mPurchaseItems.get(position);
         holder.tvPlan.setText(data.getPackageName());
         holder.tvQuantity.setText(1 + "");
-        holder.tvUnitPrice.setText(mCurrency + " " + data.getBasePrice() + " /-");
+        holder.tvUnitPrice.setText(mCurrency + " " + NumberFormat.getNumberInstance(Locale.US).format(data.getBasePrice()) + " /-");
         String discountedPrice;
         if(data.getDiscount()==null) {
             holder.tvDiscount.setText("N/A");
-            discountedPrice = data.getBasePrice() + "";
+            discountedPrice = NumberFormat.getNumberInstance(Locale.US).format(data.getBasePrice());
         }else {
             holder.tvDiscount.setText(data.getDiscount().value + " %");
-            discountedPrice = String.valueOf(Math.round((data.getBasePrice()-(data.getDiscount().value*data.getBasePrice())/100) * 100.0) /100.0);
+            discountedPrice = String.valueOf(NumberFormat.getNumberInstance(Locale.US).format(Math.round((data.getBasePrice()-(data.getDiscount().value*data.getBasePrice())/100.0) * 100) /100));
         }
 
         holder.tvDiscountedPrice.setText(mCurrency + " " + discountedPrice + " /-");
