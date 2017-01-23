@@ -485,7 +485,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="cancel">Cancel</string>
     <string name="password_updated">Your password has been updated.</string>
     <string name="entered_password_incorrect">The password you entered is incorrect.</string>
-    <string name="please_wait">Please Wait...</string>
+    <string name="please_wait">Please Wait&#8230;</string>
     <string name="enter_valid_website">Enter Valid Website</string>
     <string name="enter_valid_email">Please enter valid email</string>
     <string name="primary_num_can_not_empty">Primary number cannot be empty</string>
@@ -542,12 +542,12 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="image_successfully_apdated">Image successfully uploaded</string>
     <string name="can_not_upload_image">Can\'t Upload Image</string>
     <string name="check_your_crediential">Please check your credentials</string>
-    <string name="something_went_wrong">something went wrong!!</string>
-    <string name="enter_correct_user_name">Please enter a correct username.</string>
+    <string name="something_went_wrong">something went wrong!</string>
+    <string name="enter_correct_user_name">Please enter a correct username/ email/ phone number.</string>
     <string name="check_your_email">Check your email</string>
     <string name="enter_valid_username_or_password">Enter valid username/password</string>
     <string name="forgot_password">Forgot Password</string>
-    <string name="enter_user_name">Enter Username</string>
+    <string name="enter_user_name">Enter Username/ E-mail/ Phone Number</string>
     <string name="we_sent_email_with_password">We have sent you an email with password details</string>
     <string name="logging_out">Logging out &#8230;</string>
     <string name="unable_to_logout">Not able to logout</string>
@@ -680,7 +680,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="contact_us">Contact Us</string>
     <string name="thank_you_for_your_interest">Thank you for your interest!</string>
     <string name="our_team_contact_in_48hours">Our team will get in touch with you within 48 hours to tell you more about our pricing plans.</string>
-    <string name="processing_request">Processing your request</string>
+    <string name="processing_request">Processing Your Request</string>
     <string name="processing_request_we_back_in_48hours">We are processing your request. We will get back to you on this as soon as we can. Thank you for your patience</string>
     <string name="reach_out_ria">Please reach out to us at ria@nowfloats.com and will be get back to immediately.</string>
     <string name="unable_to_process_purchase">Unable to process your purchase</string>
@@ -781,7 +781,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="nowfloats"> NowFloats</string>
     <string name="version">Version&#160;</string>
     <string name="float_point_name">Float Point Name</string>
-    <string name="what_is_missing">What\'s Missing?</string>
+    <string name="your_site_health">Your site health</string>
     <string name="primary_number">Primary Number</string>
     <string name="alternate_number1">Alternate Number 1</string>
     <string name="alternate_number2">Alternate Number 2</string>
@@ -925,7 +925,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="failed_to_share">Error while sharing offers</string>
     <string name="offer_getting_error">Error while retrieving offers</string>
     <string name="store_excluding_all_taxes">( Excluding Taxes )</string>
-    <string name="buy_now">Buy Now</string>
+    <string name="buy_now">Proceed to Buy</string>
     <string name="do_you_have_opc">Proceed with an Online Payment Code</string>
     <string name="opc_edit_text_hint">Enter the OPC</string>
     <string name="proceed">Proceed</string>
@@ -942,7 +942,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string-array name="plans">
         <item>ADD-ONS</item>
         <item>CURRENT</item>
-        <item>OPC</item>
     </string-array>
     <string-array name="priority_list">
         <item>DEFAULT</item>
@@ -1043,6 +1042,10 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="please_wait_while_collecting_facebook_data">Please wait, as we are collecting statistics from your Facebook Page. It usually takes upto 24 hours to fetch data.</string>
     <string name="updates_not_found">Updates not found!</string>
     <string name="looks_like_you_have_not_posted_any_updates">Looks like you haven\'t posted any update on your Facebook Page through Boost yet Make sure you select the <b>Facebook Page option</b> while creating an update</string>
-    <string name="facebook_analytics">Facebook Analytics</string>
+    <string name="facebook_analytics">Social Analytics</string>
     <string name="session_expired">Please login again your Session has expired</string>
+    <string name="help_and_support">Help and Support</string>
+    <string name="product_checkout">Product Checkout</string>
+    <string name="dialog_to_be_activated_null_text">Please note that you will receive an Account Verification Call before your subscription gets activated. Are you sure you want to proceed?</string>
+    <string name="your_site_health">Your site health</string>
 </resources>

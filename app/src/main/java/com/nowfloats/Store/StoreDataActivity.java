@@ -5,13 +5,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -34,22 +31,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Adapters.ExpandableListAdapter;
-import com.nowfloats.Store.Adapters.ItemsRecyclerViewAdapter;
 import com.nowfloats.Store.Adapters.PhotoAdapter;
 import com.nowfloats.Store.Model.ERPRequestModel;
 import com.nowfloats.Store.Model.EnablePackageResponse;
 import com.nowfloats.Store.Model.MailModel;
 import com.nowfloats.Store.Model.MarkAsPaidModel;
 import com.nowfloats.Store.Model.OPCModels.OPCDataMain;
-import com.nowfloats.Store.Model.PaymentTokenResult;
 import com.nowfloats.Store.Model.PhotoItem;
-import com.nowfloats.Store.Model.PurchaseDetail;
-import com.nowfloats.Store.Model.ReceiveDraftInvoiceModel;
-import com.nowfloats.Store.Model.ReceivedDraftInvoice;
-import com.nowfloats.Store.Model.SendDraftInvoiceModel;
 import com.nowfloats.Store.Model.StoreModel;
-import com.nowfloats.Store.Model.SupportedPaymentMethods;
-import com.nowfloats.Store.Model.TaxDetail;
 import com.nowfloats.Store.Model.WidgetPacks;
 import com.nowfloats.Store.Service.IOPCValidation;
 import com.nowfloats.Store.Service.StoreInterface;
@@ -60,18 +49,15 @@ import com.nowfloats.Store.iapUtils.Purchase;
 import com.nowfloats.Volley.AppController;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
-import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.DataBase;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.TwoWayView;
 import com.romeo.mylibrary.Models.OrderDataModel;
-import com.romeo.mylibrary.ui.InstaMojoMainActivity;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -138,9 +124,11 @@ public class StoreDataActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.store_data_action_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
         materialProgress = new MaterialDialog.Builder(this)
                 .widgetColorRes(R.color.accentColor)
                 .content("Please Wait...")
@@ -310,12 +298,24 @@ public class StoreDataActivity extends AppCompatActivity {
                     materialProgress.dismiss();
                     product_validity.setVisibility(View.GONE);
                     ProductPrice.setVisibility(View.VISIBLE);
-                    ProductPrice.setText(getString(R.string.buy_now));
+                    if(!sessionManager.getPackageStatus(product._id)) {
+                        ProductPrice.setText(getString(R.string.buy_now));
+                    }else {
+                        ProductPrice.setText(getString(R.string.processing_request));
+                    }
                     product_pay.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            createDraftInvoice();
-                            MixPanelController.track(EventKeysWL.BUY_NOW_STORE_CLICKED, null);
+                            if(!sessionManager.getPackageStatus(product._id)) {
+                                MixPanelController.track(EventKeysWL.BUY_NOW_STORE_CLICKED, null);
+                                Intent i = new Intent(StoreDataActivity.this, ProductCheckoutActivity.class);
+                                startActivityForResult(i, DIRECT_REQUEST_CODE);
+                                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            }else {
+                                showActivationDialog(null);
+                            }
+
+                            //createDraftInvoice();
                         }
                     });
                     /*if (product.ExternalApplicationDetails!=null && product.ExternalApplicationDetails.size()>0){
@@ -501,100 +501,6 @@ public class StoreDataActivity extends AppCompatActivity {
         }catch(Exception e){e.printStackTrace();}
     }
 
-    private void createDraftInvoice() {
-        try {
-            SendDraftInvoiceModel sendDraftInvoiceModel = new SendDraftInvoiceModel();
-            PurchaseDetail purchaseDetail = new PurchaseDetail();
-            String clientId;
-
-            if (!Util.isNullOrEmpty(sessionManager.getSourceClientId())) {
-                clientId = sessionManager.getSourceClientId();
-            } else {
-                clientId = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID);
-            }
-
-            double totalTax = 0;
-
-            /*
-             *Remove this code
-             */
-            /*List<TaxDetail> taxes = new ArrayList<>();
-            TaxDetail taxDetail = new TaxDetail();
-            taxDetail.setAmountType(0);
-            taxDetail.setKey("Service Tax");
-            taxDetail.setValue(15.5);
-            taxes.add(taxDetail);*/
-
-            for(TaxDetail taxData : product.Taxes/*taxes*/){
-                totalTax+=taxData.getValue();
-            }
-
-
-
-            purchaseDetail.setBasePrice(Double.parseDouble(product.Price));
-            purchaseDetail.setClientId(clientId);
-            purchaseDetail.setDurationInMnths(product.ValidityInMths);
-            purchaseDetail.setFPId(sessionManager.getFPID());
-            purchaseDetail.setMRP(Double.parseDouble(product.Price) + (Double.parseDouble(product.Price)*totalTax)/100);
-            purchaseDetail.setMRPCurrencyCode(product.CurrencyCode);
-            purchaseDetail.setPackageId(product._id);
-            purchaseDetail.setPackageName(product.Name);
-            purchaseDetail.setTaxDetails(product.Taxes/*taxes*/);
-
-            List<PurchaseDetail> purchaseDetailList = new ArrayList<PurchaseDetail>();
-            purchaseDetailList.add(purchaseDetail);
-
-            sendDraftInvoiceModel.setPurchaseDetails(purchaseDetailList);
-            DataBase dataBase = new DataBase(StoreDataActivity.this);
-            Cursor cursor = dataBase.getLoginStatus();
-            if (cursor.moveToFirst()){
-                //System.out.println(cursor.getString(cursor.getColumnIndex("title"));
-                sendDraftInvoiceModel.setFpUserProfileId(cursor.getString(cursor.getColumnIndex(DataBase.colloginId)));
-                sendDraftInvoiceModel.setOpc(null);
-            }else {
-                showDialog("Alert!", "This is an added security feature to protect your package details. Kindly Log-out and Login again to pay for this package.");
-                return;
-            }
-
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("clientId", Constants.clientId);
-            if(materialProgress!=null){
-                materialProgress.show();
-            }
-            StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
-            storeInterface.createDraftInvoice(params, sendDraftInvoiceModel, new Callback<ReceivedDraftInvoice>() {
-                @Override
-                public void success(ReceivedDraftInvoice receiveDraftInvoice, Response response) {
-                    if(receiveDraftInvoice!=null && receiveDraftInvoice.getStatusCode()==200){
-                        if(materialProgress!=null){
-                            materialProgress.dismiss();
-                        }
-                        showInvoiceDialog(receiveDraftInvoice.getResult());
-                    }else {
-                        if(materialProgress!=null){
-                            materialProgress.dismiss();
-                        }
-                        Methods.showSnackBarNegative(StoreDataActivity.this, getResources().getString(R.string.error_invoice));
-                    }
-
-                }
-
-                @Override
-                public void failure(RetrofitError error) {
-                    if(materialProgress!=null){
-                        materialProgress.dismiss();
-                    }
-                    Methods.showSnackBarNegative(StoreDataActivity.this, getResources().getString(R.string.error_invoice));
-                }
-            });
-        }catch (Exception e){
-            e.printStackTrace();
-            if(materialProgress!=null){
-                materialProgress.dismiss();
-            }
-            Toast.makeText(StoreDataActivity.this, "Error while generating Invoice", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     private void openPaymentTypeDialog() {
         final String[] array = {"Pay Now", "Proceed with OPC"};
@@ -718,149 +624,7 @@ public class StoreDataActivity extends AppCompatActivity {
                 });
     }
 
-    private void showInvoiceDialog(final ReceiveDraftInvoiceModel invoiceData) {
-        if(invoiceData==null){
-            return;
-        }
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.invoice_dialog_layout);
 
-        TextView tvUserName = (TextView) dialog.findViewById(R.id.tv_username);
-        TextView tvUserEmail = (TextView) dialog.findViewById(R.id.tv_user_email);
-        TextView tvPhoneNumber = (TextView) dialog.findViewById(R.id.tv_user_phone_no);
-        TextView tvNetTotal = (TextView) dialog.findViewById(R.id.tv_net_total);
-        TextView tvTaxes = (TextView) dialog.findViewById(R.id.tv_taxes);
-        TextView tvAmountToBePaid = (TextView) dialog.findViewById(R.id.tv_amount_to_be_paid);
-
-        tvUserName.setText(sessionManager.getFpTag().toLowerCase());
-        tvUserEmail.setText(sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
-        tvPhoneNumber.setText(sessionManager.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
-        double netAmount = 0;
-        for(PurchaseDetail data : invoiceData.getPurchaseDetails()){
-            netAmount+=data.getBasePrice();
-        }
-        tvNetTotal.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " + netAmount + " /-");
-        double taxVal = 0;
-        StringBuilder taxNames= new StringBuilder();
-        //double taxAmount = 0;
-        for(TaxDetail taxData : invoiceData.getPurchaseDetails().get(0).getTaxDetails()){
-            taxVal+=taxData.getValue();
-            taxNames.append(taxData.getKey() + "-" + taxData.getValue() +"%,\n ");
-        }
-        double taxAmount = 0;
-        if(invoiceData.getPurchaseDetails().get(0).getTaxDetails().get(0).getAmountType()==0) {
-            taxAmount = (netAmount * taxVal) / 100;
-        }else {
-            taxAmount = taxVal;
-        }
-
-        tvTaxes.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " + taxAmount + " /-\n" + "( " + taxNames.substring(0, taxNames.length() - 3) + " )");
-
-        tvAmountToBePaid.setText(product.CurrencyCode + " " + (netAmount+taxAmount) + " /-");
-        String packages="";
-        for(int i=0; i<invoiceData.getPurchaseDetails().size(); i++){
-            packages+=invoiceData.getPurchaseDetails().get(i).getPackageName() + " and ";
-        }
-        final String newPackage = packages;
-        final String finalAmount = String.valueOf(Math.round((netAmount + taxAmount) * 100.0) / 100.0);
-        dialog.findViewById(R.id.btn_pay_now).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                Intent i = new Intent(StoreDataActivity.this, InstaMojoMainActivity.class);
-                mOrderData = new OrderDataModel(sessionManager.getFpTag(), sessionManager.getFpTag(),
-                        sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
-                        finalAmount, newPackage.substring(0, newPackage.length()-4),
-                        sessionManager.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM),
-                        "NowFloats Package", product.CurrencyCode);
-                i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
-                /*startActivityForResult(i, OPC_REQUEST_CODE);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
-                initiatePaymentProcess(i, invoiceData.getInvoiceId());
-            }
-        });
-
-
-        RecyclerView rvItems = (RecyclerView) dialog.findViewById(R.id.rv_store_items);
-        rvItems.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        ItemsRecyclerViewAdapter adapter = new ItemsRecyclerViewAdapter(invoiceData.getPurchaseDetails(), product.CurrencyCode);
-        rvItems.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-
-
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        Window window = dialog.getWindow();
-        lp.copyFrom(window.getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        window.setAttributes(lp);
-        dialog.show();
-    }
-
-    private void initiatePaymentProcess(final Intent i, final String invoiceId) {
-        StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("clientId", Constants.clientId);
-        params.put("invoiceId", invoiceId);
-
-        /*
-         *Remove this code
-         */
-        //List<InitiatePaymentModel> supportedpaymentMethods = new ArrayList<>();
-        SupportedPaymentMethods method = null;
-        for (SupportedPaymentMethods paymentMethod : product.SupportedPaymentMethods){
-            if(paymentMethod.Type==1){
-                method = paymentMethod;
-            }
-        }
-        /*SupportedPaymentMethods method = new SupportedPaymentMethods();
-        method.Key = "53d97d8086e9c14b6695e5973cb0b08d";
-        method.PaymentSource = "INSTAMOJO";
-        method.Secret = "a208e391a8a49488b7d204faa50c983d";
-        method.TargetPaymentUri = null;
-        method.Type = 1;*/
-        //supportedpaymentMethods.add(method);
-
-        /*InitiatePaymentModel initiatePaymentModel = new InitiatePaymentModel();
-        initiatePaymentModel.Key = method.Key;
-        initiatePaymentModel.PaymentSource = method.PaymentSource;
-        initiatePaymentModel.Secret = method.Secret;
-        initiatePaymentModel.TargetPaymentUri = null;
-        initiatePaymentModel.Type = method.Type;
-        initiatePaymentModel.RedirectUri = null;
-        initiatePaymentModel.WebHookUri = "http://54.254.184.142/Payment/v1/floatingpoint/instaMojoWebHook";*/
-        if (materialProgress!=null){
-            materialProgress.show();
-        }
-        storeInterface.initiatePaymentProcess(params, /*product.SupportedPaymentMethods.get(0)*/ method, new Callback<PaymentTokenResult>() {
-            @Override
-            public void success(PaymentTokenResult paymentTokenResult, Response response) {
-                if(paymentTokenResult!=null && paymentTokenResult.getResult()!=null) {
-                    i.putExtra(com.romeo.mylibrary.Constants.PAYMENT_REQUEST_IDENTIFIER, paymentTokenResult.getResult().getPaymentRequestId());
-                    i.putExtra(com.romeo.mylibrary.Constants.ACCESS_TOKEN_IDENTIFIER, paymentTokenResult.getResult().getAccessToken());
-                    i.putExtra(com.romeo.mylibrary.Constants.WEB_HOOK_IDENTIFIER, "https://api.withfloats.com/Payment/v1/floatingpoint/instaMojoWebHook?clientId="+Constants.clientId);//change this later
-                    if (materialProgress!=null){
-                        materialProgress.dismiss();
-                    }
-                    startActivityForResult(i, OPC_REQUEST_CODE);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }else {
-                    if (materialProgress!=null){
-                        materialProgress.dismiss();
-                    }
-                    Methods.showSnackBarNegative(StoreDataActivity.this, "Error while processing payment");
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                if (materialProgress!=null){
-                    materialProgress.dismiss();
-                }
-                Methods.showSnackBarNegative(StoreDataActivity.this, "Error while processing payment");
-            }
-        });
-    }
 
 
     private String getInAppProductPrize(){
@@ -1098,6 +862,8 @@ public class StoreDataActivity extends AppCompatActivity {
         }
     }
 
+    //TODO:Add all discounted price
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -1150,6 +916,8 @@ public class StoreDataActivity extends AppCompatActivity {
             final String paymentId = data.getStringExtra(com.romeo.mylibrary.Constants.PAYMENT_ID);
             final String transactionId = data.getStringExtra(com.romeo.mylibrary.Constants.TRANSACTION_ID);
             final String amount = data.getStringExtra(com.romeo.mylibrary.Constants.FINAL_AMOUNT);
+            final boolean showTobeActivatedOn = data.getBooleanExtra("showToBeActivatedOn", false);
+            final String tobeActivatedOn = data.getStringExtra("toBeActivatedOn");
             //sendEmail(success, status, message, paymentId, transactionId, amount);
             BoostLog.d("TransaCtionId", transactionId);
             if(success) {
@@ -1161,7 +929,7 @@ public class StoreDataActivity extends AppCompatActivity {
                             "The Payment ID for your transaction is " + paymentId +". Your package will be activated within 24 hours. \n" +
                             "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
                     showDialog(status, msg);*/
-                    pollServerforStatus(transactionId, paymentId, status);
+                    pollServerforStatus(transactionId, paymentId, status, showTobeActivatedOn, tobeActivatedOn);
                 }
             }else {
                 if(status.equals("Pending")){
@@ -1179,7 +947,7 @@ public class StoreDataActivity extends AppCompatActivity {
         }
     }
 
-    private void pollServerforStatus(final String transactionId, final String paymentid, final String status) {
+    private void pollServerforStatus(final String transactionId, final String paymentid, final String status, final boolean showTobeActivatedOn, final String tobeActivatedOn) {
         if(!materialProgress.isShowing()) {
             materialProgress.show();
         }
@@ -1189,15 +957,22 @@ public class StoreDataActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     if (response.getString("Result").equals("SUCCESS")) {
-                        if(materialProgress!=null){
+                        if(materialProgress!=null) {
                             materialProgress.dismiss();
-                            String msg = "Thank you! \n" +
-                                    "The Payment ID for your transaction is " + paymentid +". Your package will be activated within 24 hours. \n" +
-                                    "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
-                            showDialog(status, msg);
                         }
+                            if(!showTobeActivatedOn) {
+                                String msg = "Thank you! \n" +
+                                        "The Payment ID for your transaction is " + paymentid + ". Your package will be activated within 24 hours. \n" +
+                                        "You can reach customer support at ria@nowfloats.com or 1860-123-1233 for any queries.";
+                                showDialog(status, msg);
+                            }else {
+                                sessionManager.savePackageStatus(product._id, true);
+                                ProductPrice.setText(getString(R.string.processing_request));
+                                showActivationDialog(tobeActivatedOn);
+                            }
+
                     }else {
-                        pollServerforStatus(transactionId, paymentid, status);
+                        pollServerforStatus(transactionId, paymentid, status, showTobeActivatedOn, tobeActivatedOn);
                     }
                 }catch (JSONException e){
                     e.printStackTrace();
@@ -1214,6 +989,31 @@ public class StoreDataActivity extends AppCompatActivity {
             }
         });
         AppController.getInstance().addToRequstQueue(request);
+    }
+
+    private void showActivationDialog(String tobeActivatedOn) {
+        final Dialog dialog = new Dialog(StoreDataActivity.this);
+        dialog.setContentView(R.layout.account_verification_dialog_layout);
+        TextView tvWriteToUs = (TextView) dialog.findViewById(R.id.tv_write_to_us);
+        TextView tvTobeActivated = (TextView) dialog.findViewById(R.id.tv_to_be_activated_on);
+        Button btnCloseDialog = (Button) dialog.findViewById(R.id.btn_close_dialog);
+        tvWriteToUs.setText("For any queries\nwrite to ria@nowfloats.com\nor call us at\n+91 "+getString(R.string.contact_us_number) );
+        if(tobeActivatedOn!=null){
+            tvTobeActivated.setText("Your website and\nthe Boost app will be\nactivated on " + tobeActivatedOn);
+        }
+        btnCloseDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        Window window = dialog.getWindow();
+        lp.copyFrom(window.getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(lp);
+        dialog.show();
     }
 
     private void redeemOPC(String paymentId, String opc) {

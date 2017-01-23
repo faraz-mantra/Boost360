@@ -4,7 +4,17 @@
     <style name="AppTheme" parent="AppTheme.Base"> 
 
     </style>
-    
+
+    <style name="Theme.Hotline.SelectedTheme" parent="@style/Theme.Hotline.Light.DarkActionBar">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryColorDark</item>
+        <item name="colorAccent">@color/primaryColor</item>
+        <item name="colorControlActivated">@color/accentColor</item>
+        <item name="colorControlHighlight">@color/accentColor</item>
+        <item name="colorControlNormal">#eeeeee</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- customize the color palette -->
         <item name="colorPrimary">@color/primaryColor</item>
@@ -112,4 +122,18 @@
         <item name="colorControlNormal">@color/primaryColor</item>
         <item name="colorControlActivated">@color/primaryColor</item>
     </style>
+
+    <!--<style name="Theme.Mobihelp" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryColorDark</item>
+        <item name="colorAccent">@color/primaryColor</item>
+
+        <item name="mh_ic_menu_search">@drawable/mobihelp_ic_action_search_light</item>
+        <item name="mh_ic_menu_submit">@drawable/mobihelp_ic_action_submit_light</item>
+        <item name="mh_ic_menu_contact_us">@drawable/mobihelp_ic_action_contact_us_light</item>
+        <item name="mh_ic_conversations">@drawable/mobihelp_ic_conversation_light</item>
+        <item name="mh_ic_send">@drawable/mobihelp_ic_action_send_light</item>
+        <item name="mh_ic_attach">@drawable/mobihelp_ic_action_attach_light</item>
+
+    </style>-->
 </resources>

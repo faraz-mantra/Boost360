@@ -123,7 +123,7 @@
                 <com.nowfloats.CustomWidget.roboto_md_36_289dd9
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/what_is_missing"
+                    android:text="@string/your_site_health"
                     android:layout_gravity="right|bottom"
                     android:layout_marginRight="20dp"
                     android:gravity="right"/>

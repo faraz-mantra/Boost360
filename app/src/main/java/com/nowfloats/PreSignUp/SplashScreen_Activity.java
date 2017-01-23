@@ -199,6 +199,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
 
     @Override
     public void dataFetched(int skip, boolean isNewMessage) {
+
         Intent i = new Intent(SplashScreen_Activity.this, HomeActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         // Staring Login Activity

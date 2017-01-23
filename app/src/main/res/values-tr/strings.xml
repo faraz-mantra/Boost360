@@ -69,7 +69,7 @@
     <string name="failed_to_share">Error while sharing offers</string>
     <string name="offer_getting_error">Error while retrieving offers</string>
     <string name="store_excluding_all_taxes">( Excluding Taxes )</string>
-    <string name="buy_now">Buy Now</string>
+    <string name="buy_now">Proceed to Buy</string>
     <string name="do_you_have_opc">Proceed with an Online Payment Code</string>
     <string name="opc_edit_text_hint">Enter the OPC</string>
     <string name="proceed">Proceed</string>
@@ -449,6 +449,8 @@
     <string name="empty_alert">Eğer yeni bir uyarı var en kısa sürede biz sizi bilgilendireceğiz</string>
     <string name="settings_tou_url">https://nowfloats.com/tnc/</string>
     <string name="settings_privacy_url">https://nowfloats.com/privacy/</string>
+    <string name="drop_us_on_email_or_call">Please drop us a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to enable this feature.</string>
+    <string name="primary_contact_number_message">Please drop us a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to change this number.</string>
 
     <string-array name="domain_array">
         <item>.com</item>
@@ -819,7 +821,7 @@
     <string name="nowfloats"> NowFloats</string>
     <string name="version">versiyon</string>
     <string name="float_point_name">Nokta Adını Float</string>
-    <string name="what_is_missing">Ne kayıp?</string>
+    <string name="your_site_health">Your site health</string>
     <string name="primary_number">Birincil Numara</string>
     <string name="alternate_number1">Alternatif Sayı 1</string>
     <string name="alternate_number2">Alternatif Sayı 2</string>
@@ -961,7 +963,6 @@
     <string-array name="plans">
         <item>ADD-ONS</item>
         <item>CURRENT</item>
-        <item>OPC</item>
     </string-array>
     <string-array name="priority_list">
         <item>VARSAYILAN</item>
@@ -1151,7 +1152,7 @@
     <string name="looks_like_you_have_not_posted_any_updates">Looks like you haven\'t posted any update on your facebook page through Boost yet Make sure you select the <b>facebook page option</b> while creating an update</string>
     <string name="Logo_percentage">5</string>
     <string name="business_hours">5</string>
-
+    <string name="drop_us_on_email_or_call">Please drop us a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to enable this feature</string>
 
     <string name="fb_login_protocol_scheme">fb1641508162754092</string>
     <string name="kitsune_pre_signup_text1">Manage and update your</string>
@@ -1164,7 +1165,10 @@
     <string name="opc_card_text">Pay through OPC</string>
     <string name="opc_main_text">If you have been assisted by a NowFloats Sales Executive, you can enter an Online Payment Code (OPC) here. It will auto-populate the details of your pro-forma invoice and enable you to subscribe to a NowFloats package online. Please connect with our customer support team to know more about it.</string>
     <string name="opc_title">Pay through OPC</string>
-
+    <string name="help_and_support">Help and Support</string>
+    <string name="product_checkout">Product Checkout</string>
+    <string name="your_site_health">Your site health</string>
     <string name="not_available_in_ur_country">This feature is currently not available in your country. We will notify you when its available.</string>
     <string name="kitsune_demo_expire_dialog_body">Your demo subscription has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
+    <string name="dialog_to_be_activated_null_text">Please note that you will receive an Account Verification Call before your subscription gets activated. Are you sure you want to proceed?</string>
 </resources>

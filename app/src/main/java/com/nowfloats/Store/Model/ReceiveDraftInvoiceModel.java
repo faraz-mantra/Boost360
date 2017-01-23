@@ -34,6 +34,17 @@ public class ReceiveDraftInvoiceModel {
     @SerializedName("_id")
     @Expose
     private String id;
+    @SerializedName("OPCDetails")
+    @Expose
+    private ArrayList<KeyValuePair> opcDetails;
+
+    public ArrayList<KeyValuePair> getOpcDetails() {
+        return opcDetails;
+    }
+
+    public void setOpcDetails(ArrayList<KeyValuePair> opcDetails) {
+        this.opcDetails = opcDetails;
+    }
 
     /**
      *
@@ -197,6 +208,27 @@ public class ReceiveDraftInvoiceModel {
         this.id = id;
     }
 
+
+    public class KeyValuePair{
+        String Key;
+        String Value;
+
+        public String getKey() {
+            return Key;
+        }
+
+        public void setKey(String key) {
+            Key = key;
+        }
+
+        public String getValue() {
+            return Value;
+        }
+
+        public void setValue(String value) {
+            Value = value;
+        }
+    }
 
 
 }

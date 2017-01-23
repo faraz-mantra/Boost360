@@ -2,15 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2016120028"
-    android:versionName="4.4.9">
+    android:versionCode="2017010023"
+    android:versionName="4.5.1">
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
-    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />0
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -29,6 +29,7 @@
     <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -96,7 +97,7 @@
         </activity>
         <activity
             android:name="com.nowfloats.Analytics_Screen.ShowWebView"
-            android:label="Facebook Analytics"
+            android:label="Social Analytics"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -115,7 +116,7 @@
         </activity>
         <activity
             android:name="com.nowfloats.Analytics_Screen.FacebookAnalyticsLogin"
-            android:label="Facebook Analytics"
+            android:label="Social Analytics"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <meta-data
@@ -153,6 +154,13 @@
             android:label="@string/title_activity_business_profile"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity" />
+        </activity>
+        <activity
             android:name="com.nowfloats.NavigationDrawer.HomeActivity"
             android:label="@string/title_activity_home"
             android:screenOrientation="portrait">
@@ -173,6 +181,7 @@
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity"
             android:label="@string/title_activity_contact__info_"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity"
@@ -404,7 +413,9 @@
         <activity android:name="com.nowfloats.SiteAppearance.SiteAppearanceActivity" />
         <activity android:name="com.nowfloats.NavigationDrawer.CreateOffersActivity" />
         <activity android:name="com.nowfloats.NavigationDrawer.OffersFullScreenActivity" />
-        <activity android:name="com.nowfloats.PreSignUp.KitsunePreSignUpActivity"></activity>
+        <activity android:name="com.nowfloats.PreSignUp.KitsunePreSignUpActivity" />
+        <activity android:name="com.nowfloats.NavigationDrawer.HelpAndSupportActivity" />
+        <activity android:name="com.nowfloats.Store.ProductCheckoutActivity"></activity>
     </application>
 
 </manifest>

@@ -89,9 +89,7 @@
 
             <LinearLayout
                 android:id="@+id/businessCategoryLayout"
-                style="@style/SignUp_LinearLayout_Style"
-
-                >
+                style="@style/SignUp_LinearLayout_Style">
 
                 <ImageView
                     android:id="@+id/businessCategoryImageView"
@@ -112,38 +110,6 @@
                     tools:ignore="MissingPrefix"
                     android:hint="@string/sign_up_category"/>
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/cityLayout"
-                style="@style/SignUp_LinearLayout_Style"
-                >
-                <ImageView
-                    android:id="@+id/cityImageView"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/city_xhdpi"
-                    android:scaleType="fitXY"
-                    android:layout_marginBottom="4dp"
-                    />
-
-                <com.nowfloats.signup.UI.Places.CustomAutoCompleteTextView
-                    fontPath="Roboto-Light.ttf"
-                    android:id="@+id/editText_city"
-                    style="@style/SignUp_EditText_Style"
-                    android:inputType="textCapWords"
-                    android:hint="@string/sign_up_city"
-                    tools:ignore="MissingPrefix"
-                    android:layout_weight="1"/>
-
-                <ProgressBar
-                    style="?android:attr/progressBarStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingRight="3dp"
-                    android:id="@+id/city_progressbar" />
-
-            </LinearLayout>
-
             <LinearLayout
                 android:id="@+id/countryLayout"
                 style="@style/SignUp_LinearLayout_Style"
@@ -169,6 +135,38 @@
                     android:focusableInTouchMode="false"
                     android:hint="@string/sign_up_country"/>
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/cityLayout"
+                style="@style/SignUp_LinearLayout_Style"
+                >
+                <ImageView
+                    android:id="@+id/cityImageView"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/city_xhdpi"
+                    android:scaleType="fitXY"
+                    android:layout_marginBottom="4dp"
+                    />
+
+                <AutoCompleteTextView
+                    android:id="@+id/editText_city"
+                    style="@style/SignUp_EditText_Style"
+                    android:inputType="textCapWords"
+                    android:hint="@string/sign_up_city"
+                    android:completionThreshold="1"
+                    android:layout_weight="1"/>
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingRight="3dp"
+                    android:visibility="gone"
+                    android:id="@+id/city_progressbar" />
+
+            </LinearLayout>
+
+
 
             <LinearLayout
                 android:id="@+id/emailAddressLayout"
