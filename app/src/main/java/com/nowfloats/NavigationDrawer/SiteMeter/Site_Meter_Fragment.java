@@ -369,7 +369,9 @@ public class Site_Meter_Fragment extends Fragment {
                 break;
             case address:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_HELP_YOUR_CUSTOMERS,null);
-                if(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS))){
+                if(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS))||
+                        Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LATITUDE))||
+                        Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LONGITUDE))){
                     Intent in = new Intent(activity, Business_Address_Activity.class);
                     startActivity(in);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
