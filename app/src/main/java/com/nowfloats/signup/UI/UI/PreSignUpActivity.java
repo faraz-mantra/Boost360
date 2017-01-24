@@ -187,9 +187,9 @@ public class PreSignUpActivity extends AppCompatActivity implements
         countryPhoneCode.setTypeface(robotoLight);
 
         Util.addBackgroundImages();
-        LoadCountryData countryData = new LoadCountryData(activity);
+        /*LoadCountryData countryData = new LoadCountryData(activity);
         countryData.LoadCountryData_Listener(this);
-        countryData.execute();
+        countryData.execute();*/
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -506,7 +506,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
             Locale obj = new Locale("", countryCode);
             signUpCountryList.add(obj.getDisplayCountry());
             Country_CodeMap.put(obj.getDisplayCountry(), obj.getCountry());
-
+            Log.v("ggg",obj.getCountry());
         }
         Collections.sort(signUpCountryList);
         if(isFinishing()) return;

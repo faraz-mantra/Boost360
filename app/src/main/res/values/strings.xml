@@ -367,6 +367,8 @@
         <item>967,YE</item>
         <item>260,ZM</item>
         <item>263,ZW</item>
+        <item>1,AG</item>
+        <item>684,AS</item>
     </string-array>
     <string-array name="dashboard_tabs">
         <item>UPDATES</item>

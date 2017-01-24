@@ -31,7 +31,6 @@ import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphRequestBatch;
 import com.facebook.GraphResponse;
-import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.nowfloats.Login.Login_MainActivity;
@@ -169,9 +168,9 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
         // mPager.
         mPager.setCurrentItem(0, true);
 
-        LoadCountryData countryData = new LoadCountryData(PreSignUp_MainActivity.this);
+       /* LoadCountryData countryData = new LoadCountryData(PreSignUp_MainActivity.this);
         countryData.LoadCountryData_Listener(this);
-        countryData.execute();
+        countryData.execute();*/
         mIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -674,8 +673,7 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
         //facebook.authorizeCallback(requestCode, resultCode, data);
     }
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
 
         switch (requestCode) {
             case 0: {

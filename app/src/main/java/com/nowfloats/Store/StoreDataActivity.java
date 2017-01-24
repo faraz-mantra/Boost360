@@ -195,10 +195,16 @@ public class StoreDataActivity extends AppCompatActivity {
                                     ArrayList<String> emailList = new ArrayList<String>();
                                     emailList.add("leads@nowfloats.com");
 
-                                    String tag = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toString().toUpperCase();
+                                    String tag = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toUpperCase();
+                                    String number = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER);
+                                    String businessName = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME);
+                                    String email = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL);
+                                    String address = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS);
+
                                     String subj = "Request to activate "+product.Name +" "+ tag+ " site";
-                                    String mailMsg = "Tag: "+tag+"<br>Package Name: "+product.Name+"<br>Package Id: "+product._id
-                                            +"<br>Account Manager Id: "+ soureClientId;
+                                    String mailMsg = "Tag: "+tag+"<br>Business Name: "+businessName+"<br>Phone Number: "+number+
+                                            "<br>Email: "+email+"<br>Business Address: "+address+"<br>Package Name: "+product.Name+
+                                            "<br>Package Id: "+product._id+"<br>Account Manager Id: "+ soureClientId;
                                     anInterface.mail(new MailModel(soureClientId, mailMsg,subj, emailList),
                                             new Callback<String>() {
                                                 @Override
