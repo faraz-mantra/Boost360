@@ -1136,7 +1136,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 //                            // Add this transaction to the back stack
 //                    .addToBackStack("Profile")
 //                    .commit();
-                }else if(nextScreen.equals(getResources().getString(R.string.side_panel_site_appearance))){
+                }else if(nextScreen.equals("businessApp")){
+
+                }else if(nextScreen.equals(getResources().getString(R.string.business_apps))){
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,mSiteAppearanceFragement).
                             commit();
                 }else if (nextScreen.equals(getString(R.string.image_gallery)))

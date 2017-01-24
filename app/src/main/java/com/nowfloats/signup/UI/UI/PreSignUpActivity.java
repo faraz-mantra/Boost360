@@ -19,7 +19,6 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.style.StyleSpan;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -928,7 +927,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
             String tagName = API_Layer_Signup.getTag(activity, data_businessName, data_country, data_city, data_businessCategory);
             API_Layer_Signup.checkUniqueNumber(activity, data_phone);
         } else {
-            Toast.makeText(activity, "Invalid Email. Please enter Again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, "Invalid Email. Please enter again", Toast.LENGTH_SHORT).show();
         }
 
     }

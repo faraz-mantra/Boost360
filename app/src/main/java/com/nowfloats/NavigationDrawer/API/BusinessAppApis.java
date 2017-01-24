@@ -3,12 +3,8 @@ package com.nowfloats.NavigationDrawer.API;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.android.AndroidLog;
-import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
-import retrofit.http.Multipart;
 import retrofit.http.POST;
-import retrofit.http.Part;
-import retrofit.http.Path;
 import retrofit.http.Query;
 
 /**
@@ -17,7 +13,7 @@ import retrofit.http.Query;
 
 public class BusinessAppApis {
 
-    private final static String BUSINESS_APIS_END_POINT ="http://54.254.145.195";
+    private final static String BUSINESS_APIS_END_POINT ="http://http://api.nowfloatsdev.com/storeongo/";
 
      public static AppApis getRestAdapter(){
         RestAdapter adapter=new RestAdapter.Builder()
