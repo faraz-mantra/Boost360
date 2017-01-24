@@ -259,7 +259,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
                                 }
                             }
                         });
-                            //adapter.notifyDataSetChanged();
+                        //adapter.notifyDataSetChanged();
                     }
                 }).start();
 
@@ -784,15 +784,15 @@ public class PreSignUpActivity extends AppCompatActivity implements
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         countryEditText.setText(text);
-                        Log.v("ggg",text.toString());
+                       // Log.v("ggg",text.toString());
                         try {
                             String country_code = Country_CodeMap.get(text.toString());
-                            Log.v("ggg",country_code);
+                            //Log.v("ggg",country_code);
                             String phone_code = Code_PhoneMap.get(country_code);
                             countryPhoneCode.setText("+" + phone_code);
                             sessionManager.storeFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE, phone_code);
                         } catch (Exception e) {
-                            Log.v("ggg ",e.toString());
+                            e.printStackTrace();
                         }
                         return false;
                     }
