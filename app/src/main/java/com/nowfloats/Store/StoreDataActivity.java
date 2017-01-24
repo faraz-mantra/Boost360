@@ -202,8 +202,8 @@ public class StoreDataActivity extends AppCompatActivity {
                                     String address = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS);
 
                                     String subj = "Request to activate "+product.Name +" "+ tag+ " site";
-                                    String mailMsg = "Tag: "+tag+"<br>Business Name: "+businessName+"<br>Phone Number: "+number+
-                                            "<br>Email: "+email+"<br>Business Address: "+address+"<br>Package Name: "+product.Name+
+                                    String mailMsg = "Tag: "+tag+/*"<br>Business Name: "+businessName+"<br>Phone Number: "+number+
+                                            "<br>Email: "+email+"<br>Business Address: "+address+*/"<br>Package Name: "+product.Name+
                                             "<br>Package Id: "+product._id+"<br>Account Manager Id: "+ soureClientId;
                                     anInterface.mail(new MailModel(soureClientId, mailMsg,subj, emailList),
                                             new Callback<String>() {
