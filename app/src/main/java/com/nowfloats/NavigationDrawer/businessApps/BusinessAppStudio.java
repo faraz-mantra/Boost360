@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.JsonObject;
 import com.nowfloats.CustomWidget.MaterialProgressBar;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.BusinessAppApis;
@@ -106,16 +107,17 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
                     if (type.equals("android")) {
                         MaterialProgressBar.startProgressBar(getActivity(),"requesting for Business App",false);
                         BusinessAppApis.AppApis apis=BusinessAppApis.getRestAdapter();
-                        apis.getGenerate(Constants.clientId, session.getFPID(), new Callback<String>() {
+                        apis.getGenerate(Constants.clientId, session.getFPID(), new Callback<JsonObject>() {
                             @Override
-                            public void success(String s, Response response) {
+                            public void success(JsonObject s, Response response) {
                                 MaterialProgressBar.dismissProgressBar();
                                 if(s==null || response.getStatus()!=200){
                                     return;
                                 }
-                                if(s.equalsIgnoreCase("ok")){
+                                Log.v("ggg",s.toString());
+                               /* if(s.equalsIgnoreCase("ok")){
                                     frag.addAndroidFragment(BusinessAppPreview.SHOW_DEVELOPMENT);
-                                }
+                                }*/
                             }
 
                             @Override

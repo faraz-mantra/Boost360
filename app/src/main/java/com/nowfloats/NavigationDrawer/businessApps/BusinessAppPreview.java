@@ -5,12 +5,22 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.JsonObject;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.API.BusinessAppApis;
+import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by Abhi on 12/12/2016.
@@ -21,6 +31,7 @@ public class BusinessAppPreview extends Fragment {
     Context context;
     public final static int SHOW_STUDIO=0,SHOW_DEVELOPMENT=1,SHOW_COMPLETE=2;
     private UserSessionManager session;
+    String status=null;
 
     @Nullable
     @Override
@@ -28,6 +39,30 @@ public class BusinessAppPreview extends Fragment {
         return inflater.inflate(R.layout.fragment_business_app_preview,container,false);
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        session=new UserSessionManager(context,getActivity());
+        BusinessAppApis.AppApis apis=BusinessAppApis.getRestAdapter();
+        apis.getStatus(Constants.clientId, session.getFPID(), new Callback<JsonObject>() {
+            @Override
+            public void success(JsonObject s, Response response) {
+                //MaterialProgressBar.dismissProgressBar();
+                if(s == null || response.getStatus() != 200){
+                    return;
+                }
+                status = s.get("Status").getAsString();
+                String message = s.get("Message").getAsString();
+                Log.v("ggg",status);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.v("ggg",error+"");
+                Methods.showSnackBarNegative(getActivity(),"Problem to start build");
+            }
+        });
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -83,7 +118,14 @@ public class BusinessAppPreview extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        addAndroidFragment(SHOW_STUDIO);
+        Log.v("ggg","oncreateview"+status);
+        if(status != null && status.equals("1")){
+            addAndroidFragment(SHOW_DEVELOPMENT);
+        }else if(Long.parseLong(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON).split("\\(")[1].split("\\)")[0])/1000 > 1470614400){
+            addAndroidFragment(SHOW_DEVELOPMENT);
+        }else{
+            addAndroidFragment(SHOW_STUDIO);
+        }
         addIosFragment(SHOW_STUDIO);
     }
 }

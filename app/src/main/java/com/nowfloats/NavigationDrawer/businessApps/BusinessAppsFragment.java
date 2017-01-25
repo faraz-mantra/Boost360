@@ -20,6 +20,7 @@ import android.widget.Button;
 
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -108,7 +109,7 @@ public class BusinessAppsFragment extends Fragment {
 
                 if(mPager.getCurrentItem()<3){
                     mPager.setCurrentItem(mPager.getCurrentItem()+1,true);
-                }else
+                }else if(Methods.isOnline(getActivity()))
                 {
                     SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
                     int siteMeter = Integer.parseInt(sharedPreferences.getString("sitescore", "0"));
@@ -149,9 +150,11 @@ public class BusinessAppsFragment extends Fragment {
         switch (item.getItemId())
         {
             case R.id.skip:
-                Intent i=new Intent(context,BusinessAppsActivity.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                if(Methods.isOnline(getActivity())) {
+                    Intent i = new Intent(context, BusinessAppsActivity.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

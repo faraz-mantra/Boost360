@@ -76,7 +76,6 @@ import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
 import com.nowfloats.NavigationDrawer.API.KitsuneApi;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
-import com.nowfloats.NavigationDrawer.businessApps.BusinessAppPreview;
 import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.nowfloats.RiaFCM.RiaFirebaseMessagingService;
@@ -164,7 +163,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     private boolean isShownExpireDialog = false;
 
     private String TAG = HomeActivity.class.getSimpleName();
-    private BusinessAppPreview businessSiteMeter;
+
     private BusinessAppsFragment businessAppFragment;
 
     @Override
@@ -178,7 +177,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         setContentView(R.layout.activity_home_v3);
         pref = getSharedPreferences(Constants.PREF_NAME,Activity.MODE_PRIVATE);
         AppsFlyerLib.sendTracking(getApplicationContext());
-        BoostLog.d("HomeActivity ONcreate","onCreate");
+        Log.d("token ","onCreate"+FirebaseInstanceId.getInstance().getToken());
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(),HomeActivity.this);
         activity = HomeActivity.this;
@@ -291,7 +290,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         chatFragment = new ChatFragment();
         storeFragment = new StoreFragmentTab();
         siteMeterFragment = new Site_Meter_Fragment();
-        businessSiteMeter=new BusinessAppPreview();
         businessAppFragment=new BusinessAppsFragment();
         customPageActivity = new CustomPageActivity();
 
@@ -1136,9 +1134,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 //                            // Add this transaction to the back stack
 //                    .addToBackStack("Profile")
 //                    .commit();
-                }else if(nextScreen.equals("businessApp")){
-
-                }else if(nextScreen.equals(getResources().getString(R.string.business_apps))){
+                }else if(nextScreen.equals(getResources().getString(R.string.business_apps))) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,businessAppFragment).commit();
+                }else if(nextScreen.equals(getResources().getString(R.string.side_panel_site_appearance))){
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,mSiteAppearanceFragement).
                             commit();
                 }else if (nextScreen.equals(getString(R.string.image_gallery)))

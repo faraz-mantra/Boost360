@@ -1,9 +1,10 @@
 package com.nowfloats.NavigationDrawer.API;
 
+import com.google.gson.JsonObject;
+
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.android.AndroidLog;
-import retrofit.http.FormUrlEncoded;
 import retrofit.http.POST;
 import retrofit.http.Query;
 
@@ -13,7 +14,7 @@ import retrofit.http.Query;
 
 public class BusinessAppApis {
 
-    private final static String BUSINESS_APIS_END_POINT ="http://http://api.nowfloatsdev.com/storeongo/";
+    private final static String BUSINESS_APIS_END_POINT ="http://api.nowfloatsdev.com/storeongo";
 
      public static AppApis getRestAdapter(){
         RestAdapter adapter=new RestAdapter.Builder()
@@ -25,18 +26,15 @@ public class BusinessAppApis {
     }
     public interface AppApis{
 
-
         @POST("/Discover/v1/floatingpoint/getAPKstatus")
-        void getStatus(@Query("clientId") String clientId, @Query("fpId") String fpId, Callback<String> response);
+        void getStatus(@Query("clientId") String clientId, @Query("fpId") String fpId, Callback<JsonObject> response);
 
         @POST("/Discover/v1/floatingpoint/downloadAPK")
         void getDownload(@Query("clientId") String clientId,@Query("fpId") String fpId, Callback<String> response);
 
-
         @POST("/Discover/v1/floatingpoint/generateAPK")
-        void getGenerate(@Query("clientId") String clientId, @Query("fpId") String fpId, Callback<String> response);
+        void getGenerate(@Query("clientId") String clientId, @Query("fpId") String fpId, Callback<JsonObject> response);
 
-        @FormUrlEncoded
         @POST("/Discover/v1/floatingpoint/getAPKScreenshots")
         void getScreenshots(@Query("clientId") String clientId,@Query("fpId") String fpId, Callback<String> response);}
 }

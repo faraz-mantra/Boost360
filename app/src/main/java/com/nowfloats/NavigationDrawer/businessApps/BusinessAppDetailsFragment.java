@@ -116,26 +116,28 @@ public class BusinessAppDetailsFragment extends Fragment implements View.OnTouch
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
-        switch (view.getId()){
-            case R.id.app_image:
-                Intent i=new Intent(context,Business_Logo_Activity.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                return true;
-            case R.id.app_number:
-            case R.id.app_email:
-                Intent i1=new Intent(context,Contact_Info_Activity.class);
-                startActivity(i1);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-               return true;
-            case R.id.app_long_disc:
-            case R.id.app_name:
-                Intent i2=new Intent(context, Edit_Profile_Activity.class);
-                startActivity(i2);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                return true;
-            default:
-                break;
+        if(MotionEvent.ACTION_UP == motionEvent.getAction()) {
+            switch (view.getId()) {
+                case R.id.app_image:
+                    Intent i = new Intent(context, Business_Logo_Activity.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    return true;
+                case R.id.app_number:
+                case R.id.app_email:
+                    Intent i1 = new Intent(context, Contact_Info_Activity.class);
+                    startActivity(i1);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    return true;
+                case R.id.app_long_disc:
+                case R.id.app_name:
+                    Intent i2 = new Intent(context, Edit_Profile_Activity.class);
+                    startActivity(i2);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    return true;
+                default:
+                    break;
+            }
         }
         return false;
     }

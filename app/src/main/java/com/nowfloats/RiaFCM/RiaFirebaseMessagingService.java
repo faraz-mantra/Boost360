@@ -39,6 +39,8 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
 
             //Calling method to generate notification
             sendNotification(remoteMessage.getData());
+            /*Log.v("notif",remoteMessage.getData().get("title"));
+            Log.v("notif",remoteMessage.getSentTime()+"  "+String.valueOf(System.currentTimeMillis()));*/
             Constants.GCM_Msg = true;
             //Handle notifications with data payload for your app
         }
