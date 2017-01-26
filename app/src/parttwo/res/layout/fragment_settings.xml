@@ -279,6 +279,7 @@
                 android:background="?android:selectableItemBackground"
                 android:orientation="horizontal"></LinearLayout>
         </FrameLayout>
+
         <FrameLayout
             android:id="@+id/like_us_Layout"
             android:layout_width="match_parent"
@@ -313,6 +314,7 @@
                     android:text="@string/Setting_like_us_on_facebook" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -323,7 +325,7 @@
             android:id="@+id/follow_us_twitter_Layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone">
+            android:visibility="visible">
             <LinearLayout
 
                 android:layout_width="match_parent"

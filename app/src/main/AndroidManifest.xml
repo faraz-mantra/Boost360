@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
     android:versionCode="2017010025"
-    android:versionName="4.5.1">
+    android:versionName="4.4.7">
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"

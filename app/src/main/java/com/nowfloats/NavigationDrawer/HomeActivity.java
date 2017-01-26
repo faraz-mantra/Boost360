@@ -58,6 +58,7 @@ import com.nowfloats.BusinessProfile.UI.UI.Business_Hours_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
 import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
+import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Settings_Fragment;
 import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.Business_Enquiries.Business_Enquiries_Fragment;
@@ -505,12 +506,15 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
         Constants.GCM_Msg = false;
         if(!Util.isNullOrEmpty(url)){
-            if(url.contains(getResources().getString(R.string.deeplink_update)) || url.contains(getResources().getString(R.string.deeplink_featuredimage))){
+            if(url.contains(getResources().getString(R.string.deeplink_update))){
 //                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 //                ft.replace(R.id.mainFrame,homeFragment, "homeFragment").commit();
 
                 Intent queries = new Intent(HomeActivity.this, Create_Message_Activity.class);
                 startActivity(queries);
+            }else if(url.contains(getResources().getString(R.string.deeplink_featuredimage))){
+                Intent featureImage = new Intent(HomeActivity.this, Edit_Profile_Activity.class);
+                startActivity(featureImage);
             }
             else  if(url.contains(getResources().getString(R.string.deeplink_upgrade))){
                 final String appPackageName = HomeActivity.this.getPackageName(); // getPackageName() from Context or Activity object
@@ -543,10 +547,38 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             else if(url.contains(getResources().getString(R.string.deeplink_searchqueries))){
                 Intent queries = new Intent(HomeActivity.this, SearchQueries.class);
                 startActivity(queries);
+            }else if(url.contains("blog")){
+                String url1 = "";
+                if (!Util.isNullOrEmpty(url)) {
+                    url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+                } else {
+                    url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
+                            + getResources().getString(R.string.tag_for_partners);
+                }
+                Uri uri = Uri.parse(url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
             }
             else if(url.contains("subscribers")){
                 Intent subscribers = new Intent(HomeActivity.this, SubscribersActivity.class);
                 startActivity(subscribers);
+            }else if(url.contains("subscribers")){
+                String url2 = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+                if (!Util.isNullOrEmpty(url)) {
+                    String eol = System.getProperty("line.separator");
+                    url2 = getString(R.string.visit_to_new_website)
+                            + eol + url.toLowerCase();
+                }
+                else{
+                    String eol = System.getProperty("line.separator");
+                    url2 = getString(R.string.visit_to_new_website)
+                            + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
+                            + getResources().getString(R.string.tag_for_partners);
+                }
+//            pref = getSharedPreferences(
+//                    Constants.PREF_NAME, Activity.MODE_PRIVATE);
+//            prefsEditor = pref.edit();
+                shareWebsite(url2);
             }
             else if(url.contains("accountstatus")){
                 Intent accountInfo = new Intent(HomeActivity.this, AccountInfoActivity.class);
@@ -565,6 +597,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 Intent queries = new Intent(HomeActivity.this, Social_Sharing_Activity.class);
                 startActivity(queries);
             }
+            else if(url.contains("notification")){
+                homeFragment.setFragmentTab(2);
+            }
             else if(url.contains(getResources().getString(R.string.deeplink_profile))){
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame,
@@ -574,19 +609,19 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 Intent queries = new Intent(HomeActivity.this, Contact_Info_Activity.class);
                 startActivity(queries);
             }
-            else if(url.contains(getResources().getString(R.string.deeplink_bizaddress))){
+            else if(url.contains(getResources().getString(R.string.deeplink_bizaddress))||url.contains("address")){
                 Intent queries = new Intent(HomeActivity.this, Business_Address_Activity.class);
                 startActivity(queries);
             }
-            else if(url.contains(getResources().getString(R.string.deeplink_bizhours))){
+            else if(url.contains(getResources().getString(R.string.deeplink_bizhours))||url.contains("hours")){
                  Intent queries = new Intent(HomeActivity.this, Business_Hours_Activity.class);
                  startActivity(queries);
             }
-            else if(url.contains(getResources().getString(R.string.deeplink_bizlogo))){
+            else if(url.contains(getResources().getString(R.string.deeplink_bizlogo))||url.contains("logo")){
                 Intent queries = new Intent(HomeActivity.this, Business_Logo_Activity.class);
                 startActivity(queries);
             }
-            else if(url.contains(getResources().getString(R.string.deeplink_nfstoreDomainTTBCombo))){
+            else if(url.contains(getResources().getString(R.string.deeplink_nfstoreDomainTTBCombo))|| url.contains("bookdomain")){
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame, businessEnquiriesFragment)
                     .commit();
@@ -596,7 +631,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 ft.replace(R.id.mainFrame, siteMeterFragment)
                         .commit();
             }
-            else if(url.contains(getResources().getString(R.string.deeplink_imageGallery))){
+            else if(url.contains(getResources().getString(R.string.deeplink_imageGallery))|| url.contains("imagegallery")){
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                   ft.replace(R.id.mainFrame,imageGalleryFragment).
                           commit();
