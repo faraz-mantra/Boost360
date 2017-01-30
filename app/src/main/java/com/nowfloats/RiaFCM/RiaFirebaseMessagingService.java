@@ -29,13 +29,12 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
     public static String deepLinkUrl;
 
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         if (Hotline.isHotlineNotification(remoteMessage)) {
             Hotline.getInstance(this).handleFcmMessage(remoteMessage);
         } else {
-            BoostLog.d(TAG, "From: " + remoteMessage.getFrom());
-            BoostLog.d(TAG, "Notification Message Body: " + remoteMessage.getData().toString());
 
             //Calling method to generate notification
             sendNotification(remoteMessage.getData());

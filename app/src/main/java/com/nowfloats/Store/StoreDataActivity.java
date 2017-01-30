@@ -29,6 +29,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Adapters.ExpandableListAdapter;
 import com.nowfloats.Store.Adapters.PhotoAdapter;
@@ -139,6 +140,7 @@ public class StoreDataActivity extends AppCompatActivity {
         sessionManager = new UserSessionManager(this,StoreDataActivity.this);
         soureClientId = sessionManager.getSourceClientId();
 
+        //Log.d("FCM ID", FirebaseInstanceId.getInstance().getToken());
 //        countryPhoneCode = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE);
         fpID = sessionManager.getFPID();
         try{
