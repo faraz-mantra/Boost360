@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
 
 import com.nowfloats.NotificationCenter.NotificationFragment;
 import com.thinksity.R;
@@ -20,7 +19,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     private CharSequence mTitles[];
     public TabPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
-        Log.d("Tap Pager Adapter"," Tab Pager Adapter ");
+        //Log.d("Tap Pager Adapter"," Tab Pager Adapter ");
         homeFragment = new Home_Main_Fragment();
         alertFragment = new NotificationFragment();
         analyticsFragment = new Analytics_Fragment();
@@ -38,7 +37,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
         currentItem = index;
         // String name = makeFragmentName(R.id.pager, index);
         // Fragment selectedFragment = mFragmentManager.findFragmentByTag(name);
-        Log.d("Index","Index : "+index);
+        //Log.d("Index","Index : "+index);
         Fragment selectedFragment = null;
         // if(selectedFragment == null) {
         switch (index) {

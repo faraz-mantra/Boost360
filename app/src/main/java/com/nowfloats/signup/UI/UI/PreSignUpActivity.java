@@ -41,7 +41,6 @@ import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.AutocompletePredictionBuffer;
 import com.google.android.gms.location.places.Places;
-import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.nowfloats.CustomWidget.MaterialProgressBar;
 import com.nowfloats.Login.UserSessionManager;
@@ -57,7 +56,6 @@ import com.nowfloats.signup.UI.Service.Primary_Number_Service;
 import com.nowfloats.signup.UI.Service.Suggest_Tag_Service;
 import com.nowfloats.signup.UI.Validation.Signup_Validation;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.HeaderText;
@@ -80,6 +78,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -90,7 +89,8 @@ public class PreSignUpActivity extends AppCompatActivity implements
         PreSignUpDialog.Dialog_Activity_Interface,
         API_Layer_Signup.SignUp_Interface, View.OnClickListener,
         LoadCountryData.LoadCountryData_Interface,
-        Valid_Email.Valid_Email_Interface, GoogleApiClient.OnConnectionFailedListener {
+        Valid_Email.Valid_Email_Interface
+        , GoogleApiClient.OnConnectionFailedListener {
     static UserSessionManager sessionManager;
     private static final String TAG = "PreSignUp";
     public String[] cat = null;
@@ -137,11 +137,13 @@ public class PreSignUpActivity extends AppCompatActivity implements
     private String Validate_Email_API_KEY = "e5f5fb5a-8e1f-422e-9d25-a67a16018d47";
     public Activity activity;
 
-    private GoogleApiClient mGoogleApiClient;
+
     AutocompleteFilter filter;
-    SupportPlaceAutocompleteFragment frag;
     private List<String> citys =new ArrayList<>();
     ArrayAdapter<String> adapter;
+    ArrayList<String> signUpCountryList=new ArrayList<>();
+    private GoogleApiClient mGoogleApiClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -160,17 +162,15 @@ public class PreSignUpActivity extends AppCompatActivity implements
         cityProgress = (ProgressBar) findViewById(R.id.city_progressbar);
         cityProgress.setVisibility(View.GONE);
 
-        adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_dropdown_item_1line, citys);
-
-        cityEditText.setAdapter(adapter);
-
         mGoogleApiClient = new GoogleApiClient
                 .Builder(this)
                 .addApi(Places.GEO_DATA_API)
                 .addApi(Places.PLACE_DETECTION_API)
                 .enableAutoManage(this, this)
                 .build();
+        adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_dropdown_item_1line,citys);
+        cityEditText.setAdapter(adapter);
 
 
         sessionManager = new UserSessionManager(activity, activity);
@@ -185,10 +185,15 @@ public class PreSignUpActivity extends AppCompatActivity implements
         countryPhoneCode.setTypeface(robotoLight);
 
         Util.addBackgroundImages();
-        LoadCountryData countryData = new LoadCountryData(activity);
+        /*LoadCountryData countryData = new LoadCountryData(activity);
         countryData.LoadCountryData_Listener(this);
-        countryData.execute();
-        loadCountryCodeandCountryNameMap();
+        countryData.execute();*/
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                loadCountryCodeandCountryNameMap();
+            }
+        }).start();
 
         bizzName = (ImageView) findViewById(R.id.businessNameImageView);
         bizzCat = (ImageView) findViewById(R.id.businessCategoryImageView);
@@ -211,35 +216,35 @@ public class PreSignUpActivity extends AppCompatActivity implements
         cityEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-              /*  if (s.toString().trim().length() >= 3) {
+                /*if (s.toString().trim().length() >= 3) {
                     cityProgress.setVisibility(View.VISIBLE);
                     PlacesTask placesTask = new PlacesTask(activity);
                     placesTask.execute(s.toString());
                 }*/
+
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
                 String country_code = Country_CodeMap.get(countryEditText.getText().toString());
                 makeAutoCompleteFilter(country_code);
+
                 final PendingResult<AutocompletePredictionBuffer> result =
                         Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, cityEditText.getText().toString().trim(),
                                 null, filter );
+
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         AutocompletePredictionBuffer a=result.await();
-                        Log.v("ggg","ok");
+                        //Log.v("ggg","ok");
                         citys.clear();
                         for (int i=0;i<a.getCount();i++){
-                            Log.v("ggg",a.get(i).getFullText(new StyleSpan(Typeface.NORMAL)).toString()+" length "+citys.size());
+                            //Log.v("ggg",a.get(i).getFullText(new StyleSpan(Typeface.NORMAL)).toString()+" length "+citys.size());
                             citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString());
                         }
+
                         a.release();
 
                         runOnUiThread(new Runnable() {
@@ -247,13 +252,22 @@ public class PreSignUpActivity extends AppCompatActivity implements
                             public void run() {
                                 adapter = new ArrayAdapter<>(PreSignUpActivity.this,
                                         android.R.layout.simple_dropdown_item_1line, citys);
-                                cityEditText.setAdapter(adapter);
+                                if (!isFinishing()) {
+                                    cityEditText.setAdapter(adapter);
+                                    adapter.notifyDataSetChanged();
+                                }
                             }
                         });
-                        //adapter.notifyDataSetChanged();
-
                     }
                 }).start();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //ArrayList<String> citys=new ArrayList<String>();
+                //cityEditText.setAdapter(null);
+
             }
         });
 
@@ -352,10 +366,16 @@ public class PreSignUpActivity extends AppCompatActivity implements
         updateBasedOnMostRecentLocation(Constants.lastKnownAddress);
     }
     private void makeAutoCompleteFilter(String country_code){
-        filter = new AutocompleteFilter.Builder()
-                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES)
-                .setCountry(country_code.toUpperCase())
-                .build();
+
+        filter =null;
+        AutocompleteFilter.Builder builder = new AutocompleteFilter.Builder()
+                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_CITIES);
+
+        if(country_code!=null){
+            builder.setCountry(country_code.toUpperCase());
+        }
+        filter= builder.build();
+
     }
     private void validateEmail(PreSignUpActivity preSignUpActivity, String email, String apiKey, final Bus bus) {
         // Open Progress Dialog
@@ -397,10 +417,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
             //Toast.makeText(activity, "Invalid Email. Please enter Again", Toast.LENGTH_SHORT).show();
         }
     }
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        BoostLog.v("ggg","connection fail "+connectionResult.getErrorMessage());
-    }
+
     @Subscribe
     public void post_verifyUniqueNumber(Primary_Number_Event response) {
 
@@ -489,9 +506,12 @@ public class PreSignUpActivity extends AppCompatActivity implements
         String[] locales = Locale.getISOCountries();
         for (String countryCode : locales) {
             Locale obj = new Locale("", countryCode);
+            signUpCountryList.add(obj.getDisplayCountry());
             Country_CodeMap.put(obj.getDisplayCountry(), obj.getCountry());
-            //Log.v("ggg",obj.getDisplayCountry()+" "+obj.getCountry());
+            Log.v("ggg",obj.getCountry());
         }
+        Collections.sort(signUpCountryList);
+        if(isFinishing()) return;
         String[] string_array = getResources().getStringArray(R.array.CountryCodes);
         for (int i = 0; i < string_array.length; i++) {
             String phoneCode = string_array[i].split(",")[0];
@@ -731,7 +751,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
     }
 
     public void selectC() {
-        final List<String> stringList = Constants.signUpCountryList;
+        final List<String> stringList = signUpCountryList;
         String[] countryList = new String[stringList.size()];
         countryList = stringList.toArray(countryList);
 
@@ -766,13 +786,15 @@ public class PreSignUpActivity extends AppCompatActivity implements
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         countryEditText.setText(text);
+                        Log.v("ggg",text.toString());
                         try {
                             String country_code = Country_CodeMap.get(text.toString());
+                            Log.v("ggg",country_code);
                             String phone_code = Code_PhoneMap.get(country_code);
                             countryPhoneCode.setText("+" + phone_code);
                             sessionManager.storeFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE, phone_code);
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            Log.v("ggg ",e.toString());
                         }
                         return false;
                     }
@@ -913,6 +935,11 @@ public class PreSignUpActivity extends AppCompatActivity implements
 
     }
 
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
     private class FetchCategory extends AsyncTask<String, Void, String>{
 
         ProgressDialog pd = null;
@@ -954,4 +981,5 @@ public class PreSignUpActivity extends AppCompatActivity implements
             //return
         }
     }
+
 }

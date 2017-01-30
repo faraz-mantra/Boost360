@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -67,13 +66,13 @@ public class Home_Fragment_Tab extends Fragment {
         activity = getActivity();
         session = new UserSessionManager(activity.getApplicationContext(),activity);
         bus = BusProvider.getInstance().getBus();
-        new Thread(new Runnable() {
+        /*new Thread(new Runnable() {
             @Override
             public void run() {
                 if(activity==null){activity = getActivity();}
-                tabPagerAdapter = new TabPagerAdapter(getChildFragmentManager(), activity);
+
             }
-        }).start();
+        }).start();*/
     }
 
     @Subscribe
@@ -93,6 +92,7 @@ public class Home_Fragment_Tab extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View mainView = inflater.inflate(R.layout.fragment_home__fragment__tab, container, false);
+        tabPagerAdapter = new TabPagerAdapter(getChildFragmentManager(), activity);
         return mainView ;
     }
 

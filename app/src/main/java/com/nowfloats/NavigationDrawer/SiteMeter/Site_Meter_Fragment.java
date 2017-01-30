@@ -27,7 +27,6 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.Create_Message_Activity;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
-import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -369,7 +368,9 @@ public class Site_Meter_Fragment extends Fragment {
                 break;
             case address:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_HELP_YOUR_CUSTOMERS,null);
-                if(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS))){
+                if(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS))||
+                        Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LATITUDE))||
+                        Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LONGITUDE))){
                     Intent in = new Intent(activity, Business_Address_Activity.class);
                     startActivity(in);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -486,7 +487,7 @@ public class Site_Meter_Fragment extends Fragment {
                                     Home_Fragment_Tab.viewPager = null;
                                     dialog.dismiss();
 //                                                    activity.getSupportFragmentManager().popBackStack();
-                                    ((SidePanelFragment.OnItemClickListener) activity).onClick(getResources().getString(R.string.store));
+                                    ((HomeActivity)activity).onClick("Store");
                                 }
                             }).show();
                 }

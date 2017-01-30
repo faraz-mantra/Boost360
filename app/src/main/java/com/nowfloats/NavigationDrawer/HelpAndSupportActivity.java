@@ -82,11 +82,12 @@ public class HelpAndSupportActivity extends AppCompatActivity {
         riaNetworkInterface.getMemberForFp(param, new Callback<RiaSupportModel>() {
             @Override
             public void success(final RiaSupportModel riaSupportModel, Response response) {
+                if(pd!=null && pd.isShowing()){
+                    pd.dismiss();
+                }
                 if(riaSupportModel!=null){
                     mRiaSupportModel = riaSupportModel;
-                    if(pd!=null && pd.isShowing()){
-                        pd.dismiss();
-                    }
+
                     if(riaSupportModel.getGender()==1) {
                         tvConsultantName.setText("Ms. " + riaSupportModel.getName());
                         ivHelpAvatar.setImageDrawable(getResources().getDrawable(R.drawable.help_female_avatar));
@@ -109,6 +110,14 @@ public class HelpAndSupportActivity extends AppCompatActivity {
                     });
                     tvEmail.setText(Html.fromHtml("<a href=\"mail:" + riaSupportModel.getEmail()+ "\">" + riaSupportModel.getEmail() + "</a>"));
                     tvTextHelp.setText(Html.fromHtml(riaSupportModel.getName() + " is your dedicated web consultant who will be assisting you with all your queries related to your NowFloats website. You can call her anytime from <b>9 am to 6 pm</b> on all working days."));
+                }
+                else
+                {
+                    finish();
+                    Intent call = new Intent(Intent.ACTION_DIAL);
+                    String callString = "tel:" + getString(R.string.contact_us_number);
+                    call.setData(Uri.parse(callString));
+                    startActivity(call);
                 }
             }
 

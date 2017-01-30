@@ -69,6 +69,7 @@ public class SiteMeterAdapter extends RecyclerView.Adapter<SiteMeterAdapter.View
             @Override
             public void onClick(View v) {
                 int pos = Integer.parseInt(v.getTag().toString());
+                //Log.v("ggg",siteData.get(pos).position+" "+siteData.get(pos).status);
             if (!siteData.get(pos).status)
                 fragment.SiteMeterOnClick(siteData.get(pos).position);
             }

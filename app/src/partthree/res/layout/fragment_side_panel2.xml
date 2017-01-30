@@ -148,13 +148,6 @@
 
     </RelativeLayout>
 
-    <include
-        android:id="@+id/navigationDrawer_main_leftPane"
-        layout="@layout/single_row_card"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/containerDrawerImage" />
-
 
     <LinearLayout
         android:id="@+id/versionCodeName"
@@ -195,6 +188,12 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/poweredBy"
         android:text="@string/nowfloats"/>
+    <include
+        android:id="@+id/navigationDrawer_main_leftPane"
+        layout="@layout/single_row_card"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true" android:layout_alignParentStart="true" />
 
 
 </RelativeLayout><!-- From: file:/C:/Vinay/prashant772-boostcode-d282cb67240e/app/src/main/res/layout-xhdpi/fragment_side_panel2.xml -->

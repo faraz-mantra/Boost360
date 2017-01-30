@@ -349,7 +349,7 @@
                     android:textSize="12sp"
                     fontPath="Roboto-Regular.ttf"
                     android:background="@drawable/corner_white_backgrnd_yellow"
-                    tools:ignore="MissingPrefix" />
+                    tools:ignore="MissingPrefix" android:id="@+id/button2" />
             </LinearLayout>
         </LinearLayout>
 
@@ -449,7 +449,6 @@
             android:layout_height="@dimen/sidepanel_cell_height"
             android:background="@color/cell_background_color"
             android:orientation="horizontal"
-            android:visibility="gone"
             android:gravity="center_vertical">
 
             <ImageView
