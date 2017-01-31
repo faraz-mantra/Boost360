@@ -30,11 +30,14 @@ public class BusinessAppApis {
         void getStatus(@Query("clientId") String clientId, @Query("fpId") String fpId, Callback<JsonObject> response);
 
         @POST("/Discover/v1/floatingpoint/downloadAPK")
-        void getDownload(@Query("clientId") String clientId,@Query("fpId") String fpId, Callback<String> response);
+        void getDownload(@Query("clientId") String clientId,@Query("fpId") String fpId, Callback<JsonObject> response);
 
         @POST("/Discover/v1/floatingpoint/generateAPK")
         void getGenerate(@Query("clientId") String clientId, @Query("fpId") String fpId, Callback<JsonObject> response);
 
+        @POST("/Discover/v1/floatingpoint/getPlayStoreAPKstatus")
+        void getPublishStatus(@Query("clientId") String clientId, @Query("fpId") String fpId, Callback<JsonObject> response);
+
         @POST("/Discover/v1/floatingpoint/getAPKScreenshots")
-        void getScreenshots(@Query("clientId") String clientId,@Query("fpId") String fpId, Callback<String> response);}
+        void getScreenshots(@Query("clientId") String clientId,@Query("fpId") String fpId, Callback<JsonObject> response);}
 }

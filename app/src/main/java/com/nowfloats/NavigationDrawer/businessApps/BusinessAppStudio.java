@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
@@ -74,6 +75,8 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
         ImageView iconImage= (ImageView) view.findViewById(R.id.imgview_icon_type);
         TextView freeText= (TextView) view.findViewById(R.id.tv_free);
         TextView nameTextView= (TextView) view.findViewById(R.id.app_name);
+        LinearLayout comming_soon= (LinearLayout) view.findViewById(R.id.comming_soon);
+        LinearLayout buttonLayout= (LinearLayout) view.findViewById(R.id.button_layout);
 
         previewButton.setOnClickListener(this);
         getAppButton.setOnClickListener(this);
@@ -89,6 +92,8 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
         }
         else {
             freeText.setVisibility(View.GONE);
+            buttonLayout.setVisibility(View.GONE);
+            comming_soon.setVisibility(View.VISIBLE);
             getAppButton.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ios_icon_white), null, null, null );
             getAppButton.setText(getResources().getString(R.string.get_ios_app));
             previewButton.setText(getResources().getString(R.string.ios_app_preview));
@@ -100,6 +105,7 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.preview_button:
+
                 break;
             case R.id.get_app_button:
                 final BusinessAppPreview frag= (BusinessAppPreview) getParentFragment();
@@ -115,9 +121,11 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
                                     return;
                                 }
                                 Log.v("ggg",s.toString());
-                               /* if(s.equalsIgnoreCase("ok")){
-                                    frag.addAndroidFragment(BusinessAppPreview.SHOW_DEVELOPMENT);
-                                }*/
+                                String status = s.get("Status").getAsString();
+                                if(status!= null && status.equals("1")){
+                                    BusinessAppPreview frag= (BusinessAppPreview) getParentFragment();
+                                    frag.addAndroidFragment(BusinessAppPreview.SHOW_COMPLETE);
+                                }
                             }
 
                             @Override

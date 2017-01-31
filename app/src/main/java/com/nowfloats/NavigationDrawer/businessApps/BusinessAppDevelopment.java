@@ -4,13 +4,17 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -22,12 +26,14 @@ import com.thinksity.R;
 /**
  * Created by Admin on 12/27/2016.
  */
-public class BusinessAppDevelopment extends Fragment implements View.OnClickListener {
+public class BusinessAppDevelopment extends Fragment implements View.OnClickListener, ViewTreeObserver.OnGlobalLayoutListener {
     private static final int SHOW_PREVIEW = 0,SITE_HEALTH=2;
 
     private String type;
     private Context context;
     private UserSessionManager session;
+    ImageView back;
+    LinearLayout parent;
 
     public static Fragment getInstance(String type){
         Fragment frag=new BusinessAppDevelopment();
@@ -71,13 +77,14 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
         Button previewButton= (Button) view.findViewById(R.id.preview_button);
         Button siteHealthButton= (Button) view.findViewById(R.id.site_health);
         ImageView logoImage = (ImageView) view.findViewById(R.id.app_logo);
-        ImageView back = (ImageView) view.findViewById(R.id.background_image_view);
-
+        back = (ImageView) view.findViewById(R.id.background_image_view);
+        parent = (LinearLayout) view.findViewById(R.id.anim_parent);
+        parent.getViewTreeObserver().addOnGlobalLayoutListener(this);
         previewButton.setOnClickListener(this);
         siteHealthButton.setOnClickListener(this);
 
         Animation animation = AnimationUtils.loadAnimation(context,R.anim.progressbar_anim);
-        back.startAnimation(animation);
+
 
         String logo = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
 
@@ -114,8 +121,7 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.preview_button:
-                BusinessAppPreview frag= (BusinessAppPreview) getParentFragment();
-                frag.addAndroidFragment(BusinessAppPreview.SHOW_COMPLETE);
+
                 break;
             case R.id.site_health:
                 ((BusinessAppsActivity)context).addFragments(SITE_HEALTH);
@@ -123,5 +129,15 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onGlobalLayout() {
+        float f = parent.getWidth()/(float)back.getWidth();
+        Log.v("ggg","anim "+back.getWidth()+" "+parent.getWidth()+" "+f);
+        TranslateAnimation anim = new TranslateAnimation(-100,f*100,0f,0f);
+        anim.setDuration(2000);
+        anim.setRepeatCount(Animation.INFINITE);
+        back.startAnimation(anim);
     }
 }
