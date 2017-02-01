@@ -10,14 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.nowfloats.CustomWidget.MaterialProgressBar;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.BusinessAppApis;
+import com.nowfloats.NavigationDrawer.model.StoreAndGoModel;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -33,6 +38,7 @@ public class BusinessAppPreview extends Fragment {
     public final static int SHOW_STUDIO=0,SHOW_DEVELOPMENT=1,SHOW_COMPLETE=2;
     private UserSessionManager session;
     String status=null;
+    private ArrayList<String> screenShots;
 
     @Nullable
     @Override
@@ -52,7 +58,7 @@ public class BusinessAppPreview extends Fragment {
         this.context=context;
     }
 
-    public void addAndroidFragment(int id){
+    public void addAndroidFragment(int id,String bundle){
         Fragment frag;
         FragmentTransaction transaction=getChildFragmentManager().beginTransaction();
         switch (id){
@@ -66,7 +72,7 @@ public class BusinessAppPreview extends Fragment {
                 transaction.replace(R.id.card_view_android,frag,"development");
                 break;
             case SHOW_COMPLETE:
-                frag = BusinessAppCompleteFragment.getInstance(ANDROID);
+                frag = BusinessAppCompleteFragment.getInstance(ANDROID,bundle);
                 transaction.replace(R.id.card_view_android,frag,"complete");
                 break;
             default:
@@ -88,7 +94,7 @@ public class BusinessAppPreview extends Fragment {
                 transaction.replace(R.id.card_view_ios,frag,"development");
                 break;
             case SHOW_COMPLETE:
-                frag = BusinessAppCompleteFragment.getInstance(IOS);
+                frag = BusinessAppCompleteFragment.getInstance(IOS,"");
                 transaction.replace(R.id.card_view_ios,frag,"complete");
                 break;
             default:
@@ -111,14 +117,13 @@ public class BusinessAppPreview extends Fragment {
                     return;
                 }
                 status = s.get("Status").getAsString();
-                String message = s.get("Message").getAsString();
                 Log.v("ggg",status);
                 if(status == null){
                     MaterialProgressBar.dismissProgressBar();
                     Methods.showSnackBarNegative(getActivity(),"Problem to start build");
                 }else if(status.equals("0")){
                     MaterialProgressBar.dismissProgressBar();
-                    addAndroidFragment(SHOW_DEVELOPMENT);
+                    addAndroidFragment(SHOW_DEVELOPMENT,"");
                 }else if(status.equals("-1")){
 
                     if(Long.parseLong(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON).split("\\(")[1].split("\\)")[0])/1000 > 1470614400){
@@ -131,7 +136,7 @@ public class BusinessAppPreview extends Fragment {
                                     Methods.showSnackBarNegative(getActivity(),"Problem to start build");
                                     return;
                                 }
-                                addAndroidFragment(SHOW_DEVELOPMENT);
+                                addAndroidFragment(SHOW_DEVELOPMENT,"");
                             }
 
                             @Override
@@ -143,24 +148,29 @@ public class BusinessAppPreview extends Fragment {
                     }
                     else{
                         MaterialProgressBar.dismissProgressBar();
-                        addAndroidFragment(SHOW_STUDIO);
+                        addAndroidFragment(SHOW_STUDIO,"");
                     }
 
                 }else if(status.equals("1")){
-                    apis.getPublishStatus(Constants.clientId, session.getFPID(), new Callback<JsonObject>() {
+                    apis.getPublishStatus(Constants.clientId, session.getFPID(), new Callback<List<StoreAndGoModel.PublishStatusModel>>() {
                         @Override
-                        public void success(JsonObject jsonObject, Response response) {
-                            if(jsonObject == null || response.getStatus() != 200){
-                                MaterialProgressBar.dismissProgressBar();
+                        public void success(List<StoreAndGoModel.PublishStatusModel> modelList, Response response) {
+                            MaterialProgressBar.dismissProgressBar();
+                            if(modelList == null || modelList.size() == 0 ||response.getStatus() != 200){
                                 Methods.showSnackBarNegative(getActivity(),"Problem to start build");
                                 return;
                             }
-                            String status = jsonObject.get("Status").getAsString();
-                            MaterialProgressBar.dismissProgressBar();
-                            if(status!= null && status.equals("1")){
-                                addAndroidFragment(SHOW_COMPLETE);
-                            }else {
-                                addAndroidFragment(SHOW_DEVELOPMENT);
+                            for (StoreAndGoModel.PublishStatusModel model: modelList) {
+                                if (model.getKey().equals("Status")) {
+                                    if (model.getValue().equals("1")) {
+                                        StoreAndGoModel storeAndGoModel = new StoreAndGoModel();
+                                        storeAndGoModel.setPublishStatusModelList(modelList);
+                                        addAndroidFragment(SHOW_COMPLETE, new Gson().toJson(storeAndGoModel));
+                                    } else {
+                                        addAndroidFragment(SHOW_DEVELOPMENT,"");
+                                    }
+                                    break;
+                                }
                             }
                         }
 
@@ -168,7 +178,7 @@ public class BusinessAppPreview extends Fragment {
                         public void failure(RetrofitError error) {
                             MaterialProgressBar.dismissProgressBar();
                             Methods.showSnackBarNegative((BusinessAppsActivity)context,getString(R.string.something_went_wrong));
-                            addAndroidFragment(SHOW_DEVELOPMENT);
+                            addAndroidFragment(SHOW_DEVELOPMENT,"");
                         }
                     });
                 }
@@ -184,4 +194,45 @@ public class BusinessAppPreview extends Fragment {
 
         addIosFragment(SHOW_STUDIO);
     }
+
+    public void showScreenShots(){
+        if(screenShots == null || screenShots.size() == 0){
+            getScreenShots();
+        }else{
+            showImageDialog();
+        }
+
+    }
+
+    private void showImageDialog() {
+        ImageDialogFragment dialog = ImageDialogFragment.getInstance(screenShots);
+        dialog.show(getChildFragmentManager(),"dialog");
+    }
+
+    private void getScreenShots(){
+        MaterialProgressBar.startProgressBar(getActivity(),"Processing...",false);
+        final BusinessAppApis.AppApis apis=BusinessAppApis.getRestAdapter();
+        apis.getScreenshots(Constants.clientId, session.getFPID(), new Callback<List<StoreAndGoModel.ScreenShotsModel>>() {
+            @Override
+            public void success(List<StoreAndGoModel.ScreenShotsModel> modelList, Response response) {
+                MaterialProgressBar.dismissProgressBar();
+                if(modelList == null || modelList.size()== 0 ||response.getStatus() != 200){
+                    return;
+                }
+                for (StoreAndGoModel.ScreenShotsModel model : modelList){
+                    if(model.getKey().equals("screens")){
+                        BusinessAppPreview.this.screenShots = (ArrayList<String>) model.getValue();
+                        showImageDialog();
+                    }
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                MaterialProgressBar.dismissProgressBar();
+                Methods.showSnackBarNegative(getActivity(),"Problem to start build");
+            }
+        });
+    }
+
 }

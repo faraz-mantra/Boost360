@@ -1,6 +1,9 @@
 package com.nowfloats.NavigationDrawer.businessApps;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,9 +15,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
+import com.nowfloats.NavigationDrawer.model.StoreAndGoModel;
 import com.nowfloats.util.Key_Preferences;
 import com.thinksity.R;
+
+import java.util.List;
 
 /**
  * Created by Admin on 12/27/2016.
@@ -24,11 +32,12 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
     private String type;
     private UserSessionManager session;
     private Context context;
-
-    public static Fragment getInstance(String type){
+    List<StoreAndGoModel.PublishStatusModel> modelList;
+    public static Fragment getInstance(String type,String list){
         Fragment frag=new BusinessAppCompleteFragment();
         Bundle b=new Bundle();
         b.putString("type",type);
+        b.putString("modelList",list);
         frag.setArguments(b);
         return  frag;
     }
@@ -38,6 +47,7 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
         super.onCreate(savedInstanceState);
         if(getArguments()!=null){
             type=getArguments().getString("type","android");
+            modelList = new Gson().fromJson(getArguments().getString("modelList"),StoreAndGoModel.class).getPublishStatusModelList();
         }
     }
 
@@ -105,11 +115,30 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
             case R.id.share_app:
                 break;
             case R.id.open_app:
+                //rateUsPlayStore()
+
                 break;
             case R.id.preview_app:
+                BusinessAppPreview frag= (BusinessAppPreview) getParentFragment();
+                frag.showScreenShots();
                 break;
             default:
                 break;
+        }
+    }
+    private void rateUsPlayStore(String url){
+        Uri uri = Uri.parse("market://" +url.substring(url.indexOf("details?id=")));
+        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        // To count with Play market backstack, After pressing back button,
+        // to taken back to our application, we need to add following flags to intent.
+        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        try {
+            startActivity(Intent.createChooser(goToMarket,"options"));
+        } catch (ActivityNotFoundException e) {
+            Intent showWebSiteIntent = new Intent(context, Mobile_Site_Activity.class);
+            showWebSiteIntent.putExtra("WEBSITE_NAME", url);
+            context.startActivity(showWebSiteIntent);
+            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
     }
 }

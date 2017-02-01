@@ -121,7 +121,8 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.preview_button:
-
+                BusinessAppPreview frag= (BusinessAppPreview) getParentFragment();
+                frag.showScreenShots();
                 break;
             case R.id.site_health:
                 ((BusinessAppsActivity)context).addFragments(SITE_HEALTH);

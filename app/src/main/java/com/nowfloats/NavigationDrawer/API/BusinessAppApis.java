@@ -1,6 +1,9 @@
 package com.nowfloats.NavigationDrawer.API;
 
 import com.google.gson.JsonObject;
+import com.nowfloats.NavigationDrawer.model.StoreAndGoModel;
+
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -36,8 +39,8 @@ public class BusinessAppApis {
         void getGenerate(@Query("clientId") String clientId, @Query("fpId") String fpId, Callback<JsonObject> response);
 
         @POST("/Discover/v1/floatingpoint/getPlayStoreAPKstatus")
-        void getPublishStatus(@Query("clientId") String clientId, @Query("fpId") String fpId, Callback<JsonObject> response);
+        void getPublishStatus(@Query("clientId") String clientId, @Query("fpId") String fpId, Callback<List<StoreAndGoModel.PublishStatusModel>> response);
 
         @POST("/Discover/v1/floatingpoint/getAPKScreenshots")
-        void getScreenshots(@Query("clientId") String clientId,@Query("fpId") String fpId, Callback<JsonObject> response);}
+        void getScreenshots(@Query("clientId") String clientId,@Query("fpId") String fpId, Callback<List<StoreAndGoModel.ScreenShotsModel>> response);}
 }

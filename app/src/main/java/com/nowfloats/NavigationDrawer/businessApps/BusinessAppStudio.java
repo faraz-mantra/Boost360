@@ -103,12 +103,13 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
+        final BusinessAppPreview frag= (BusinessAppPreview) getParentFragment();
         switch (view.getId()){
             case R.id.preview_button:
-
+                frag.showScreenShots();
                 break;
             case R.id.get_app_button:
-                final BusinessAppPreview frag= (BusinessAppPreview) getParentFragment();
+
                 if(frag!=null) {
                     if (type.equals("android")) {
                         MaterialProgressBar.startProgressBar(getActivity(),"requesting for Business App",false);
@@ -124,7 +125,7 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
                                 String status = s.get("Status").getAsString();
                                 if(status!= null && status.equals("1")){
                                     BusinessAppPreview frag= (BusinessAppPreview) getParentFragment();
-                                    frag.addAndroidFragment(BusinessAppPreview.SHOW_COMPLETE);
+                                    frag.addAndroidFragment(BusinessAppPreview.SHOW_DEVELOPMENT,"");
                                 }
                             }
 
