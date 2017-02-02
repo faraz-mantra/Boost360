@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,6 +72,7 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
         session = new UserSessionManager(context, getActivity());
 
         TextView appNameTextView= (TextView) view.findViewById(R.id.app_name);
+        appNameTextView.setSelected(true);
         TextView firstCharText= (TextView) view.findViewById(R.id.textcharacter);
         ImageView logoImage = (ImageView) view.findViewById(R.id.app_logo);
         Button shareButton= (Button) view.findViewById(R.id.share_app);
@@ -85,6 +87,7 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
         String logo = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
 
         String name=session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME);
+        appNameTextView.setSelected(true);
         appNameTextView.setText(name);
 
         if(logo==null || logo.isEmpty()){
@@ -113,9 +116,20 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.share_app:
+                for(StoreAndGoModel.PublishStatusModel model : modelList){
+                    if(model.getKey().equals("ShareLink")){
+                        share(model.getValue());
+                        break;
+                    }
+                }
                 break;
             case R.id.open_app:
-                //rateUsPlayStore()
+                for(StoreAndGoModel.PublishStatusModel model : modelList){
+                    if(model.getKey().equals("AppStoreLink")){
+                        rateUsPlayStore(model.getValue());
+                        break;
+                    }
+                }
 
                 break;
             case R.id.preview_app:
@@ -125,6 +139,13 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
             default:
                 break;
         }
+    }
+    private void share(String url){
+        Intent i =new Intent(Intent.ACTION_SEND);
+        i.setType("text/plain");
+        i.putExtra(Intent.EXTRA_TEXT, Html.fromHtml("Download the new app<a href="+url+">"+url+"</a>"));
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(Intent.createChooser(i,"send to:"));
     }
     private void rateUsPlayStore(String url){
         Uri uri = Uri.parse("market://" +url.substring(url.indexOf("details?id=")));

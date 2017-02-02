@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -114,6 +115,7 @@ public class BusinessAppPreview extends Fragment {
 
                 if(s == null || response.getStatus() != 200){
                     MaterialProgressBar.dismissProgressBar();
+                    getActivity().finish();
                     return;
                 }
                 status = s.get("Status").getAsString();
@@ -121,6 +123,7 @@ public class BusinessAppPreview extends Fragment {
                 if(status == null){
                     MaterialProgressBar.dismissProgressBar();
                     Methods.showSnackBarNegative(getActivity(),"Problem to start build");
+                    getActivity().finish();
                 }else if(status.equals("0")){
                     MaterialProgressBar.dismissProgressBar();
                     addAndroidFragment(SHOW_DEVELOPMENT,"");
@@ -134,6 +137,7 @@ public class BusinessAppPreview extends Fragment {
                                 MaterialProgressBar.dismissProgressBar();
                                 if(jsonObject == null || response.getStatus() != 200){
                                     Methods.showSnackBarNegative(getActivity(),"Problem to start build");
+                                    getActivity().finish();
                                     return;
                                 }
                                 addAndroidFragment(SHOW_DEVELOPMENT,"");
@@ -143,6 +147,7 @@ public class BusinessAppPreview extends Fragment {
                             public void failure(RetrofitError error) {
                                 MaterialProgressBar.dismissProgressBar();
                                 Methods.showSnackBarNegative(getActivity(),"Problem to start build");
+                                getActivity().finish();
                             }
                         });
                     }
@@ -158,6 +163,7 @@ public class BusinessAppPreview extends Fragment {
                             MaterialProgressBar.dismissProgressBar();
                             if(modelList == null || modelList.size() == 0 ||response.getStatus() != 200){
                                 Methods.showSnackBarNegative(getActivity(),"Problem to start build");
+                                getActivity().finish();
                                 return;
                             }
                             for (StoreAndGoModel.PublishStatusModel model: modelList) {
@@ -189,6 +195,7 @@ public class BusinessAppPreview extends Fragment {
                 MaterialProgressBar.dismissProgressBar();
                 Log.v("ggg",error+"");
                 Methods.showSnackBarNegative(getActivity(),"Problem to start build");
+                getActivity().finish();
             }
         });
 
@@ -205,7 +212,18 @@ public class BusinessAppPreview extends Fragment {
     }
 
     private void showImageDialog() {
-        ImageDialogFragment dialog = ImageDialogFragment.getInstance(screenShots);
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+
+       ImageDialogFragment dialog = ImageDialogFragment.getInstance(screenShots);
+       /* Window window = dialog.getDialog().getWindow();
+
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        if(window!=null) {
+            lp.copyFrom(window.getAttributes());
+            window.setAttributes(lp);
+            window.getAttributes().windowAnimations = R.style.DialogTheme;
+        }*/
         dialog.show(getChildFragmentManager(),"dialog");
     }
 

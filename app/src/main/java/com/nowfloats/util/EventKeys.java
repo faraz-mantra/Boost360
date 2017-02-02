@@ -110,7 +110,7 @@ public interface EventKeys
 	
 	//Feedback
 	
-	String feedback	=	"Settings";
+	String feedback	=	"ic_settings";
 	String business_profile	=	"Business_profile";
 	
 	
@@ -156,7 +156,7 @@ public interface EventKeys
 	String forgotp = "Forgot password";
 	String signinAsDifferentUser	=	"signin_As_Different_User";
 
-	// Settings Screen
+	// ic_settings Screen
 	
 	String settings_changePassword = 	"Change_Password_Option_in_Settings";
 	String Logout				   =	"User_Logout";
@@ -264,7 +264,7 @@ public interface EventKeys
 	String image_gallery_camera = "Gallery_Images_via_camera";
 	String image_gallery_galley = "Gallery_Images_via_gallery";
 	
-	//Settings screen
+	//ic_settings screen
 	
 	String settings_change_password = "Settings_change_password";
 	String settings_like_Nowfloats = "Settings_FBLike";

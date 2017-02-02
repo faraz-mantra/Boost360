@@ -5,7 +5,7 @@
         android:id="@+id/action_notif"
         android:title="@string/create_push_notification"
         app:showAsAction="always"/>
-    <item android:icon="@drawable/sidepanel_settings"
+    <item android:icon="@drawable/ic_settings"
         android:id="@+id/action_settings"
         android:title="@string/edit_details"
         app:showAsAction="always"/>

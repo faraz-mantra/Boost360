@@ -165,7 +165,7 @@ public class LocationProvider extends Service implements LocationListener {
 
     /**
      * Function to show settings alert dialog
-     * On pressing Settings button will lauch Settings Options
+     * On pressing ic_settings button will lauch ic_settings Options
      * */
     public void showSettingsAlert(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
@@ -176,8 +176,8 @@ public class LocationProvider extends Service implements LocationListener {
         // Setting Dialog Message
         alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
 
-        // On pressing Settings button
-        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+        // On pressing ic_settings button
+        alertDialog.setPositiveButton("ic_settings", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog,int which) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 dialog.dismiss();

@@ -4,14 +4,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -83,8 +79,11 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
         previewButton.setOnClickListener(this);
         siteHealthButton.setOnClickListener(this);
 
-        Animation animation = AnimationUtils.loadAnimation(context,R.anim.progressbar_anim);
-
+        //Animation animation = AnimationUtils.loadAnimation(context,R.anim.progressbar_anim);
+        Glide.with(context)
+                .load(R.drawable.progress_bar)
+                .asGif()
+                .into(back);
 
         String logo = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
 
@@ -134,11 +133,11 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
 
     @Override
     public void onGlobalLayout() {
-        float f = parent.getWidth()/(float)back.getWidth();
+      /*  float f = parent.getWidth()/(float)back.getWidth();
         Log.v("ggg","anim "+back.getWidth()+" "+parent.getWidth()+" "+f);
         TranslateAnimation anim = new TranslateAnimation(-100,f*100,0f,0f);
         anim.setDuration(2000);
         anim.setRepeatCount(Animation.INFINITE);
-        back.startAnimation(anim);
+        back.startAnimation(anim);*/
     }
 }

@@ -3,7 +3,6 @@ package com.nowfloats.NavigationDrawer.businessApps;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +43,6 @@ public class ImageViewFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ImageView image = (ImageView) view.findViewById(R.id.screenshot);
         if(isAdded()) {
-            Log.v("ggg",url+"message ");
             Glide.with(getActivity()).load(url).into(image);
         }
 

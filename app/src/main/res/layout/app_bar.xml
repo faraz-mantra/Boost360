@@ -7,8 +7,5 @@
     android:background="@color/primaryColorDark"
     app:theme="@style/MyCustomToolBarTheme"
     tools:context=".PreSignUpActivity">
-
-
-
     </android.support.v7.widget.Toolbar>
 
