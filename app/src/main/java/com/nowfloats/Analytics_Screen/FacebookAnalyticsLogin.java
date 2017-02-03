@@ -89,7 +89,7 @@ public class FacebookAnalyticsLogin extends AppCompatActivity implements NfxRequ
 
         Intent intent=getIntent();
         if(intent.getIntExtra("GetStatus",3)==2)
-            message.setText("Your session has expired, please connect again");
+            message.setText("Your Facebook session has expired. Please login.");
         Methods.isOnline(FacebookAnalyticsLogin.this);
 
         setSupportActionBar(toolbar);
