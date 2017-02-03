@@ -189,49 +189,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         BoostLog.d(TAG, "In on CreateView");
         deepLinkUrl = RiaFirebaseMessagingService.deepLinkUrl;
         FPID = session.getFPID();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-//                String Konotor_APP_ID = "3d54f920-9547-48ad-9f60-040713f4e5f2";
-//                String Konotor_APP_KEY = "dd48efe5-7c5f-45e8-9b3e-db558dd6bb5e";
-//                Konotor.getInstance(getApplicationContext())
-//                        .withNoGcmRegistration(true)
-//                        .withUserName(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME))
-//                        .withIdentifier(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG))// optional name by which to display the user
-//                                // optional metadata for your user
-//                        .withUserEmail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL)) 		// optional email address of the user
-//                        .init(Konotor_APP_ID,Konotor_APP_KEY);
-//
-////                String regid = gcm.register(K.ANDROID_PROJECT_SENDER_ID);
-//
-//
-//                Konotor.getInstance(getApplicationContext())
-//                        .withUserMeta("Country", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY))
-//                        .withUserMeta("Category", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
-//                        .withUserMeta("Business Name",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME))
-//                        .withUserMeta("Payment Level",""+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL))
-//                        .update();
-//
-//                Konotor.getInstance(getApplicationContext())
-//                        .withSupportName("Ria")
-//                                // optional custom name for the support person
-//                        .withFeedbackScreenTitle("Customer Support") 	// optional title to display when asking for feedback
-//                        .withNoAudioRecording(false) // optional - to disable voice messaging
-//                        .withNoPictureMessaging(true) // optional - to disable sending images from camera/gallery
-//                        .withUsesCustomSupportImage(true) // optional - set to true to use a different image to represenent the app on the chat screen. Replace konotor_support_image.png with your desired image
-//                        .withUsesCustomNotificationImage(true) // optional - set to true to use a different notification icon from your default app icon. Replace konotor_chat.png with your desired icon
-//                        .withWelcomeMessage("Welcome to NowFloats Boost! If you have any queries, please leave a message below. Also, you can reach out to us at "+getString(R.string.contact_us_number))		// optional custom welcome message for your app
-//                        .init(Konotor_APP_ID,Konotor_APP_KEY);
-
-               /* MobihelpConfig config = new MobihelpConfig("https://nowfloats.freshdesk.com",
-                        "nowfloatsboost-1-eb43cfea648e2fd8a088c756519cb4d6",
-                        "e13c031f28ba356a76110e8d1e2c4543c84670d5");
-                config.setPrefetchSolutions(false);
-                Mobihelp.init(HomeActivity.this,config);*/
-
-
-            }
-        }).start();
 
         /*if (getIntent().hasExtra("message")){
             StorebizFloats = getIntent().getExtras().getParcelableArrayList("message");

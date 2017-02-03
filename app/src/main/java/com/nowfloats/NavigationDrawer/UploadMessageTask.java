@@ -39,7 +39,7 @@ import retrofit.http.Headers;
 import retrofit.http.PUT;
 import retrofit.http.QueryMap;
 
-public final class UploadMessageTask {
+public final class UploadMessageTask{
 
     private Activity appContext 	= null;
     String path 					= null;
@@ -151,7 +151,7 @@ public final class UploadMessageTask {
 
             final byte[] bitmapdata = bos.toByteArray();
             final String uri = Constants.PictureFloatImgCreationURI+"?clientId="+ Constants.clientId+"&bizMessageId="+response+"&requestType=sequential&requestId="
-                    + s_uuid + "&sendToSubscribers="+subscribers+"&"+ "totalChunks=1&currentChunkNumber=1&socialParmeters=" + obj.socialParameters ;
+                    + s_uuid + "&sendToSubscribers="+Create_Message_Activity.tosubscribers+"&"+ "totalChunks=1&currentChunkNumber=1&socialParmeters=" + obj.socialParameters ;
 
             new Thread(new Runnable() {
                 @Override
