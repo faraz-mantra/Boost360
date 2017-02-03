@@ -27,7 +27,6 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.Create_Message_Activity;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
-import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -488,7 +487,7 @@ public class Site_Meter_Fragment extends Fragment {
                                     Home_Fragment_Tab.viewPager = null;
                                     dialog.dismiss();
 //                                                    activity.getSupportFragmentManager().popBackStack();
-                                    ((SidePanelFragment.OnItemClickListener) activity).onClick(getResources().getString(R.string.store));
+                                    ((HomeActivity)activity).onClick("Store");
                                 }
                             }).show();
                 }

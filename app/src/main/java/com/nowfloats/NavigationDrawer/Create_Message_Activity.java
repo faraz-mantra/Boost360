@@ -125,6 +125,7 @@ public class Create_Message_Activity extends AppCompatActivity {
             socialSharingIconLayout.setVisibility(View.GONE);
             shareText.setVisibility(View.GONE);
         }
+        tosubscribers = false;
         msg = (EditText) findViewById(R.id.createMessageEditText);
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
@@ -243,7 +244,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                     overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 }
 
-                
+
             }
         });
 
@@ -319,11 +320,11 @@ public class Create_Message_Activity extends AppCompatActivity {
                     startActivity(i);
                     overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 }
-                
+
             }
         });
 
-        
+
 
 
         facebookShare.setOnClickListener(new View.OnClickListener() {
@@ -343,7 +344,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                     startActivity(i);
                     overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 }
-                
+
             }
         });
 
@@ -361,7 +362,7 @@ public class Create_Message_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Methods.hideKeyboard(msg,Create_Message_Activity.this);
                 if (picUri != null) {
-                    
+
 
 
 
@@ -372,7 +373,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                 }
             }
         });
-       
+
     }
     public void choosePicture() {
         final MaterialDialog dialog = new MaterialDialog.Builder(activity)
@@ -459,7 +460,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                         Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, Constants.GALLERY_PHOTO);
-                
+
             }
         } catch (ActivityNotFoundException anfe) {
 
@@ -592,7 +593,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         if (resultCode == RESULT_OK && (Constants.GALLERY_PHOTO == requestCode)) {
             if (data != null) {
                 picUri = data.getData();
-                
+
                 try {
                     if (picUri == null) {
                         CameraBitmap = (Bitmap) data.getExtras().get("data");
@@ -650,7 +651,7 @@ public class Create_Message_Activity extends AppCompatActivity {
     }
 
     public String getPath( Uri uri, String selection,
-                                       String[] selectionArgs) {
+                           String[] selectionArgs) {
 
         Cursor cursor = null;
         final String column = "_data";
@@ -746,7 +747,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
-    
+
     private boolean isExternalStorageAvailable() {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
@@ -779,10 +780,10 @@ public class Create_Message_Activity extends AppCompatActivity {
         }
         return Environment.getExternalStorageDirectory();
     }
-    
-    
-    
-    
+
+
+
+
     public  void logoutFromTwitter() {
         SharedPreferences.Editor e = mSharedPreferences.edit();
         e.remove(TwitterConstants.PREF_KEY_OAUTH_TOKEN);
@@ -795,5 +796,5 @@ public class Create_Message_Activity extends AppCompatActivity {
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.removeAllCookie();
     }
-    
+
 }

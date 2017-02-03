@@ -29,6 +29,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Adapters.ExpandableListAdapter;
 import com.nowfloats.Store.Adapters.PhotoAdapter;
@@ -139,6 +140,7 @@ public class StoreDataActivity extends AppCompatActivity {
         sessionManager = new UserSessionManager(this,StoreDataActivity.this);
         soureClientId = sessionManager.getSourceClientId();
 
+        //Log.d("FCM ID", FirebaseInstanceId.getInstance().getToken());
 //        countryPhoneCode = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE);
         fpID = sessionManager.getFPID();
         try{
@@ -195,10 +197,16 @@ public class StoreDataActivity extends AppCompatActivity {
                                     ArrayList<String> emailList = new ArrayList<String>();
                                     emailList.add("leads@nowfloats.com");
 
-                                    String tag = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toString().toUpperCase();
+                                    String tag = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toUpperCase();
+                                    String number = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER);
+                                    String businessName = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME);
+                                    String email = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL);
+                                    String address = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS);
+
                                     String subj = "Request to activate "+product.Name +" "+ tag+ " site";
-                                    String mailMsg = "Tag: "+tag+"<br>Package Name: "+product.Name+"<br>Package Id: "+product._id
-                                            +"<br>Account Manager Id: "+ soureClientId;
+                                    String mailMsg = "Tag: "+tag+/*"<br>Business Name: "+businessName+"<br>Phone Number: "+number+
+                                            "<br>Email: "+email+"<br>Business Address: "+address+*/"<br>Package Name: "+product.Name+
+                                            "<br>Package Id: "+product._id+"<br>Account Manager Id: "+ soureClientId;
                                     anInterface.mail(new MailModel(soureClientId, mailMsg,subj, emailList),
                                             new Callback<String>() {
                                                 @Override

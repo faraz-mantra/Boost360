@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +62,7 @@ public class MonthFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if(getArguments()== null){
-            Log.v("ggg","argument is null");
+            //Log.v("ggg","argument is null");
             return;
         }
         data= this.getArguments().getIntArray(PARAMETER1);
@@ -88,6 +87,8 @@ public class MonthFragment extends Fragment {
             months = getResources().getStringArray(R.array.months);
             shortArray=Arrays.copyOfRange(months, 0, data.length);
         }
+
+        //message("oncreate"+title);
     }
 
     @Nullable
@@ -99,19 +100,20 @@ public class MonthFragment extends Fragment {
         visitsTitle.setText(visitsThisWhat);
         visitsCount.setText(String.valueOf(visitValue));
         graph = (BarChart) view.findViewById(R.id.graph);
+        //message("oncreateview"+title);
         return view;
     }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext=context;
+        //message("onAttach "+title);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if(data==null) return;
-        Log.v("gggg",shortArray.length+"");
         BarData data = new BarData(shortArray, getDataSet());
         data.setValueFormatter(new MyYAxisValueFormatter());
         data.setValueTextSize(10);

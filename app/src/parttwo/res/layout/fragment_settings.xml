@@ -117,53 +117,12 @@
 
             </LinearLayout>
         </FrameLayout>
-
         <FrameLayout
-            android:id="@+id/change_password_Layout"
+            android:id="@+id/about_us_Layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
 
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/settings_screen_cell_height"
-                android:background="@color/cell_background_color"
-                android:orientation="horizontal"
-                android:layout_marginTop="1dp"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:id="@+id/firstrow_ImageView_ProfileV2"
-                    android:layout_width="@dimen/icon_size"
-                    android:scaleType="fitCenter"
-                    android:layout_height="@dimen/textview_height_business_profile"
-                    android:src="@drawable/icon_change_password"
-                    android:layout_marginLeft="@dimen/icon_left_margin"
-                    android:layout_marginRight="@dimen/icon_right_margin"
-                    android:padding="5dp"
-                />
-
-                <TextView
-                    android:id="@+id/firstrow_TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/cell_text_size"
-                    android:textColor="@color/cell_text_color"
-                    android:text="@string/setting_change_pwd" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:selectableItemBackground"
-                android:orientation="horizontal">
-
-            </LinearLayout>
-        </FrameLayout>
-        <FrameLayout
-            android:id="@+id/feedback_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/settings_screen_cell_height"
                 android:background="@color/cell_background_color"
@@ -173,25 +132,23 @@
             >
 
                 <ImageView
-                    android:id="@+id/feedback_ImageView"
+                    android:id="@+id/fifthRow_ImageView"
                     android:layout_width="@dimen/icon_size"
                     android:scaleType="fitXY"
-                    android:layout_height="@dimen/icon_size"
-                    android:src="@drawable/icon_feedback"
                     android:padding="5dp"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@drawable/icon_info"
                     android:layout_marginLeft="@dimen/icon_left_margin"
                     android:layout_marginRight="@dimen/icon_right_margin"
                 />
 
-
-
                 <TextView
-                    android:id="@+id/secondRow_TextView"
+                    android:id="@+id/fifthRow_TextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/cell_text_size"
                     android:textColor="@color/cell_text_color"
-                    android:text="@string/feedback" />
+                    android:text="@string/setting_about_us" />
 
             </LinearLayout>
             <LinearLayout
@@ -239,6 +196,134 @@
                 android:background="?android:selectableItemBackground"
                 android:orientation="horizontal"></LinearLayout>
         </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/feedback_Layout"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_screen_cell_height"
+                android:background="@color/cell_background_color"
+                android:orientation="horizontal"
+                android:layout_marginTop="1dp"
+                android:gravity="center_vertical"
+            >
+
+                <ImageView
+                    android:id="@+id/feedback_ImageView"
+                    android:layout_width="@dimen/icon_size"
+                    android:scaleType="fitXY"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@drawable/icon_feedback"
+                    android:padding="5dp"
+                    android:layout_marginLeft="@dimen/icon_left_margin"
+                    android:layout_marginRight="@dimen/icon_right_margin"
+                />
+
+
+
+                <TextView
+                    android:id="@+id/secondRow_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/cell_text_size"
+                    android:textColor="@color/cell_text_color"
+                    android:text="@string/feedback" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:selectableItemBackground"
+                android:orientation="horizontal"></LinearLayout>
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:id="@+id/like_us_Layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_screen_cell_height"
+                android:background="@color/cell_background_color"
+                android:orientation="horizontal"
+                android:layout_marginTop="1dp"
+                android:gravity="center_vertical"
+            >
+
+                <ImageView
+                    android:id="@+id/like_us_ImageView"
+                    android:layout_width="@dimen/icon_size"
+                    android:scaleType="fitXY"
+                    android:padding="5dp"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@drawable/icon_fb"
+                    android:layout_marginLeft="@dimen/icon_left_margin"
+                    android:layout_marginRight="@dimen/icon_right_margin"
+                />
+
+                <TextView
+                    android:id="@+id/like_us_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/cell_text_size"
+                    android:textColor="@color/cell_text_color"
+                    android:text="@string/Setting_like_us_on_facebook" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:selectableItemBackground"
+                android:orientation="horizontal"></LinearLayout>
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/follow_us_twitter_Layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible">
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_screen_cell_height"
+                android:background="@color/cell_background_color"
+                android:orientation="horizontal"
+                android:layout_marginTop="1dp"
+                android:gravity="center_vertical"
+            >
+
+                <ImageView
+                    android:id="@+id/like_us_twitter_ImageView"
+                    android:layout_width="@dimen/icon_size"
+                    android:scaleType="fitXY"
+                    android:padding="5dp"
+                    android:layout_height="@dimen/icon_size"
+                    android:src="@drawable/icon_tweet"
+                    android:layout_marginLeft="@dimen/icon_left_margin"
+                    android:layout_marginRight="@dimen/icon_right_margin"
+                />
+
+                <TextView
+                    android:id="@+id/like_us_twitter_TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/cell_text_size"
+                    android:textColor="@color/cell_text_color"
+                    android:text="@string/Setting_follow_us_on_twitter" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:selectableItemBackground"
+                android:orientation="horizontal"></LinearLayout>
+        </FrameLayout>
+
         <FrameLayout
             android:id="@+id/rate_us_Layout"
             android:layout_width="match_parent"
@@ -280,91 +365,10 @@
                 android:orientation="horizontal"></LinearLayout>
         </FrameLayout>
         <FrameLayout
-            android:id="@+id/like_us_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/settings_screen_cell_height"
-                android:background="@color/cell_background_color"
-                android:orientation="horizontal"
-                android:layout_marginTop="1dp"
-                android:gravity="center_vertical"
-            >
-
-                <ImageView
-                    android:id="@+id/like_us_ImageView"
-                    android:layout_width="@dimen/icon_size"
-                    android:scaleType="fitXY"
-                    android:padding="5dp"
-                    android:layout_height="@dimen/icon_size"
-                    android:src="@drawable/icon_fb"
-                    android:layout_marginLeft="@dimen/icon_left_margin"
-                    android:layout_marginRight="@dimen/icon_right_margin"
-                />
-
-                <TextView
-                    android:id="@+id/like_us_TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/cell_text_size"
-                    android:textColor="@color/cell_text_color"
-                    android:text="@string/Setting_like_us_on_facebook" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:selectableItemBackground"
-                android:orientation="horizontal"></LinearLayout>
-        </FrameLayout>
-        <FrameLayout
-            android:id="@+id/follow_us_twitter_Layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone">
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/settings_screen_cell_height"
-                android:background="@color/cell_background_color"
-                android:orientation="horizontal"
-                android:layout_marginTop="1dp"
-                android:gravity="center_vertical"
-            >
-
-                <ImageView
-                    android:id="@+id/like_us_twitter_ImageView"
-                    android:layout_width="@dimen/icon_size"
-                    android:scaleType="fitXY"
-                    android:padding="5dp"
-                    android:layout_height="@dimen/icon_size"
-                    android:src="@drawable/icon_tweet"
-                    android:layout_marginLeft="@dimen/icon_left_margin"
-                    android:layout_marginRight="@dimen/icon_right_margin"
-                />
-
-                <TextView
-                    android:id="@+id/like_us_twitter_TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/cell_text_size"
-                    android:textColor="@color/cell_text_color"
-                    android:text="@string/Setting_follow_us_on_twitter" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?android:selectableItemBackground"
-                android:orientation="horizontal"></LinearLayout>
-        </FrameLayout>
-        <FrameLayout
             android:id="@+id/terms_of_use_Layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone">
+            android:visibility="visible">
             <LinearLayout
 
                 android:layout_width="match_parent"
@@ -405,7 +409,7 @@
             android:id="@+id/privacy_policy_Layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone">
+            android:visibility="visible">
             <LinearLayout
 
                 android:layout_width="match_parent"
@@ -442,9 +446,8 @@
                 android:background="?android:selectableItemBackground"
                 android:orientation="horizontal"></LinearLayout>
         </FrameLayout>
-
         <FrameLayout
-            android:id="@+id/about_us_Layout"
+            android:id="@+id/change_password_Layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
@@ -454,35 +457,37 @@
                 android:background="@color/cell_background_color"
                 android:orientation="horizontal"
                 android:layout_marginTop="1dp"
-                android:gravity="center_vertical"
-            >
+                android:gravity="center_vertical">
 
                 <ImageView
-                    android:id="@+id/fifthRow_ImageView"
+                    android:id="@+id/firstrow_ImageView_ProfileV2"
                     android:layout_width="@dimen/icon_size"
-                    android:scaleType="fitXY"
-                    android:padding="5dp"
-                    android:layout_height="@dimen/icon_size"
-                    android:src="@drawable/icon_info"
+                    android:scaleType="fitCenter"
+                    android:layout_height="@dimen/textview_height_business_profile"
+                    android:src="@drawable/icon_change_password"
                     android:layout_marginLeft="@dimen/icon_left_margin"
                     android:layout_marginRight="@dimen/icon_right_margin"
+                    android:padding="5dp"
                 />
 
                 <TextView
-                    android:id="@+id/fifthRow_TextView"
+                    android:id="@+id/firstrow_TextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/cell_text_size"
                     android:textColor="@color/cell_text_color"
-                    android:text="@string/setting_about_us" />
+                    android:text="@string/setting_change_pwd" />
 
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="?android:selectableItemBackground"
-                android:orientation="horizontal"></LinearLayout>
+                android:orientation="horizontal">
+
+            </LinearLayout>
         </FrameLayout>
+
         <FrameLayout
             android:id="@+id/logout_Layout"
             android:layout_width="match_parent"

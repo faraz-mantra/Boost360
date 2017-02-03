@@ -31,7 +31,6 @@ import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphRequestBatch;
 import com.facebook.GraphResponse;
-import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.nowfloats.Login.Login_MainActivity;
@@ -169,9 +168,9 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
         // mPager.
         mPager.setCurrentItem(0, true);
 
-        LoadCountryData countryData = new LoadCountryData(PreSignUp_MainActivity.this);
+       /* LoadCountryData countryData = new LoadCountryData(PreSignUp_MainActivity.this);
         countryData.LoadCountryData_Listener(this);
-        countryData.execute();
+        countryData.execute();*/
         mIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -674,8 +673,7 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
         //facebook.authorizeCallback(requestCode, resultCode, data);
     }
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode,String permissions[], int[] grantResults) {
 
         switch (requestCode) {
             case 0: {
@@ -695,14 +693,17 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
         LoginManager.getInstance().logOut();
     }
 
+
     private void getLastKnownLocation() {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(PreSignUp_MainActivity.this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
                     permision_request_id);
+            Log.v("ggg","request");
 
         }else {
+            Log.v("ggg","getting things");
             loc_provider = new LocationProvider(PreSignUp_MainActivity.this);
             if (!loc_provider.canGetLocation()) {
                 loc_provider.showSettingsAlert();

@@ -467,3 +467,16 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         return super.onOptionsItemSelected(item);
     }
 }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id==android.R.id.home){
+            finish();
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+}
