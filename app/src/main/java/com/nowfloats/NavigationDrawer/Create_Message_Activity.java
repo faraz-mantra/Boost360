@@ -125,6 +125,7 @@ public class Create_Message_Activity extends AppCompatActivity {
             socialSharingIconLayout.setVisibility(View.GONE);
             shareText.setVisibility(View.GONE);
         }
+        tosubscribers = false;
         msg = (EditText) findViewById(R.id.createMessageEditText);
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);

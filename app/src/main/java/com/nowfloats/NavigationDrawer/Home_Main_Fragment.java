@@ -44,6 +44,7 @@ import com.nowfloats.NavigationDrawer.model.Welcome_Card_Model;
 import com.nowfloats.NavigationDrawer.model.WhatsNewDataModel;
 import com.nowfloats.sync.DbController;
 import com.nowfloats.sync.model.Updates;
+import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.ButteryProgressBar;
@@ -579,8 +580,14 @@ public class Home_Main_Fragment extends Fragment implements
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        PostTaskModel task = new PostTaskModel(Constants.clientId,msg, socialShare,Create_Message_Activity.imageIconButtonSelected,
-                merchantId,parentId,Create_Message_Activity.tosubscribers);
+        PostTaskModel task;
+        if (!Util.isNullOrEmpty(path) && path.length() > 1){
+            task = new PostTaskModel(Constants.clientId, msg, socialShare, Create_Message_Activity.imageIconButtonSelected,
+                    merchantId, parentId, false);
+        }else {
+            task = new PostTaskModel(Constants.clientId, msg, socialShare, Create_Message_Activity.imageIconButtonSelected,
+                    merchantId, parentId, false);
+        }
 
         if (facebookPostCount==0) {
             if (Constants.fbShareEnabled) {
