@@ -586,7 +586,7 @@ public class Home_Main_Fragment extends Fragment implements
                     merchantId, parentId, false);
         }else {
             task = new PostTaskModel(Constants.clientId, msg, socialShare, Create_Message_Activity.imageIconButtonSelected,
-                    merchantId, parentId, false);
+                    merchantId, parentId, Create_Message_Activity.tosubscribers);
         }
 
         if (facebookPostCount==0) {
