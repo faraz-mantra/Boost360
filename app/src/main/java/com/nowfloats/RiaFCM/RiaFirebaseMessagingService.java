@@ -9,13 +9,13 @@ import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.freshdesk.hotline.Hotline;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.thinksity.R;
 
@@ -70,11 +70,11 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.app_launcher2)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(),
-                        com.mixpanel.android.R.drawable.app_launcher))
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.app_launcher))
                 .setContentText(message.get("mp_message"))
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
+                .setColor(ContextCompat.getColor(this, R.color.primaryColor))
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(message.get("mp_message")))
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
         if(!Util.isNullOrEmpty(title)){
