@@ -113,6 +113,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
         activity = Create_Message_Activity.this;
         Methods.isOnline(activity);
+        pref = getSharedPreferences(Constants.PREF_NAME,Activity.MODE_PRIVATE);
         session = new UserSessionManager(getApplicationContext(),Create_Message_Activity.this);
         dataBase = new DataBase(activity);
         LinearLayout socialSharingIconLayout = (LinearLayout) findViewById(R.id.socialSharingIconLayout);
@@ -190,20 +191,20 @@ public class Create_Message_Activity extends AppCompatActivity {
             }
         });
 
-        pref = getSharedPreferences(Constants.PREF_NAME,Activity.MODE_PRIVATE);
+
         prefsEditor = pref.edit();
 
         facebookShare = (ImageView) findViewById(R.id.create_message_activity_facebokhome_button);
         facebookPageShare = (ImageView) findViewById(R.id.create_message_activity_facebokpage_button);
         twitterloginButton = (ImageView) findViewById(R.id.create_message_activity_twitter_button);
 
-        if(!Util.isNullOrEmpty(session.getFacebookName())) {
+        if(!Util.isNullOrEmpty(session.getFacebookName()) && pref.getInt("fbStatus", 3)==1) {
             facbookEnabled = true;
             mFbProfileShare = 1;
             facebookShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
         }
 
-        if(!Util.isNullOrEmpty(session.getFacebookPage())) {
+        if(!Util.isNullOrEmpty(session.getFacebookPage()) && pref.getInt("fbPageStatus", 3) ==1) {
             isFacebookPageShareLoggedIn = true;
             mFbPageShare = 1;
             facebookPageShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
