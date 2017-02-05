@@ -396,8 +396,8 @@
         <item>263,ZW</item>
     </string-array>
     <string-array name="dashboard_tabs">
-        <item>GÜNCELLEME</item>
         <item>ANALİZİ</item>
+        <item>GÜNCELLEME</item>
         <item>UYARILAR</item>
     </string-array>
 

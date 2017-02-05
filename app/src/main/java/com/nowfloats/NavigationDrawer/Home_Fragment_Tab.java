@@ -43,7 +43,7 @@ public class Home_Fragment_Tab extends Fragment {
         bus.register(this);
         if (viewPager!=null){
             if(Constants.createMsg){
-                viewPager.setCurrentItem(0);
+                viewPager.setCurrentItem(1);
                 if(Home_Main_Fragment.progressBar!=null)
                     Home_Main_Fragment.progressBar.setVisibility(View.VISIBLE);
                 Constants.createMsg = false;
@@ -176,13 +176,13 @@ public class Home_Fragment_Tab extends Fragment {
         progressLayout.setVisibility(View.GONE);
         if (viewPager!=null){
             if(Constants.createMsg){
-                viewPager.setCurrentItem(0);
+                viewPager.setCurrentItem(1);
                 if(Home_Main_Fragment.progressBar!=null)
                     Home_Main_Fragment.progressBar.setVisibility(View.VISIBLE);
                 Constants.createMsg = false;
             }else if(Constants.deepLinkAnalytics)
             {
-                viewPager.setCurrentItem(1);
+                viewPager.setCurrentItem(0);
                 Constants.deepLinkAnalytics = false ;
             }
         }

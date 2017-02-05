@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    tools:context="test.com.nowfloats.NavigationDrawer.Analytics_Fragment"
     android:background="@color/screen_bg"
     android:gravity="center_horizontal"
     android:orientation="vertical">
@@ -12,58 +11,128 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView
-            android:id="@+id/card_view"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/cvRiaCard"
+            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="wrap_content"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            card_view:cardBackgroundColor="#FFFFFF"
-            card_view:cardCornerRadius="3dp"
-            android:elevation="3dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15dp">
-
+            card_view:contentPadding="10dp">
             <LinearLayout
-                android:id="@+id/numberOfVisitsLinearLayout"
+                android:id="@+id/llRiaCrdContainer"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="24dp">
-
-
-                    <ImageView
-                        android:id="@+id/pop_up_gallery_img"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/circle_bakground" />
-
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/analytics_visits" />
-                </FrameLayout>
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/sidepanel_chat"/>
+                    <com.nowfloats.CustomWidget.roboto_md_36__565656
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_vertical"
+                        android:text="Your Customers Love you"
+                        android:id="@+id/tvRiaCardHeader"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llRiaCardSections"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_height="wrap_content">
 
-                <com.nowfloats.CustomWidget.roboto_lt_24_212121
-                    android:layout_width="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_height="wrap_content"
-                    android:text="@string/overall_visits" />
-
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="right">
+                    android:layout_height="wrap_content">
+                    <Button
+                        android:id="@+id/btnRiaResponse1"
+                        android:background="@drawable/btn"
+                        android:textColor="#808080"
+                        android:text="Sure!"
+                        android:padding="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp" />
+                    <View
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+                    <Button
+                        android:id="@+id/btnRiaResponse2"
+                        android:background="@drawable/btn"
+                        android:textColor="#808080"
+                        android:text="Not Now"
+                        android:padding="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp" />
+                </LinearLayout>
 
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <android.support.v7.widget.GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
+            <android.support.v7.widget.CardView
+                android:layout_height="120dp"
+                android:layout_width="0dp"
+                app:layout_row="0"
+                app:layout_columnWeight="1"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                app:layout_column="0">
+
+                <LinearLayout
+                    android:id="@+id/numberOfVisitsLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="24dp">
+
+
+                            <ImageView
+                                android:id="@+id/pop_up_gallery_img"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:src="@drawable/circle_bakground" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/analytics_visits" />
+                        </FrameLayout>
+
+                        <com.nowfloats.CustomWidget.roboto_lt_24_212121
+                            android:layout_width="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_height="wrap_content"
+                            android:text="@string/overall_visits" />
+                    </LinearLayout>
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -88,73 +157,54 @@
                             android:textSize="33dp"
                             tools:ignore="MissingPrefix" />
                     </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="34dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:visibility="visible"
-                        android:src="@drawable/next" />
                 </LinearLayout>
-
-            </LinearLayout>
-
-
-        </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
-            android:id="@+id/card_view_business_enq"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            card_view:cardBackgroundColor="#FFFFFF"
-            card_view:cardCornerRadius="3dp"
-            android:elevation="3dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp">
-
-            <LinearLayout
-                android:id="@+id/analytics_screen_business_enq"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="24dp">
-
-
-                    <ImageView
-                        android:id="@+id/business_enq_bg"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/circle_bakground" />
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:tint="#ffffff"
-                        android:layout_gravity="center"
-                        android:src="@drawable/business_enq_main" />
-                </FrameLayout>
-
-                <com.nowfloats.CustomWidget.roboto_lt_24_212121
-                    android:layout_width="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_height="wrap_content"
-                    android:text="@string/business_enquiries_title" />
-
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_height="120dp"
+                android:layout_width="0dp"
+                app:layout_row="0"
+                app:layout_columnWeight="1"
+                android:layout_marginBottom="5dp"
+                app:layout_column="1">
                 <LinearLayout
+                    android:id="@+id/analytics_screen_business_enq"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="right">
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="24dp">
+
+
+                            <ImageView
+                                android:id="@+id/business_enq_bg"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:src="@drawable/circle_bakground" />
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:tint="#ffffff"
+                                android:layout_gravity="center"
+                                android:src="@drawable/business_enq_main" />
+                        </FrameLayout>
+
+                        <com.nowfloats.CustomWidget.roboto_lt_24_212121
+                            android:layout_width="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_height="wrap_content"
+                            android:text="@string/business_enquiries_title" />
+                    </LinearLayout>
                     <FrameLayout android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center">
@@ -174,67 +224,54 @@
                             android:textColor="@color/primaryColor"
                             tools:ignore="MissingPrefix" />
                     </FrameLayout>
-                    <ImageView
-                        android:layout_width="34dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/next" />
                 </LinearLayout>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/card_view_1"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            card_view:cardBackgroundColor="#FFFFFF"
-            card_view:cardCornerRadius="3dp"
-            android:elevation="3dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp">
-
-            <LinearLayout
-                android:id="@+id/subscribers_details"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="24dp">
-
-
-                    <ImageView
-                        android:id="@+id/pop_up_subscribers_img"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/circle_bakground" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/analytics_subscriber" />
-                </FrameLayout>
-
-                <com.nowfloats.CustomWidget.roboto_lt_24_212121
-                    android:layout_width="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_height="wrap_content"
-                    android:text="@string/subscribers" />
-
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_height="120dp"
+                android:layout_width="0dp"
+                app:layout_row="1"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                app:layout_columnWeight="1"
+                app:layout_column="0">
                 <LinearLayout
+                    android:id="@+id/subscribers_details"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="center|right">
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="24dp">
+
+
+                            <ImageView
+                                android:id="@+id/pop_up_subscribers_img"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:src="@drawable/circle_bakground" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/analytics_subscriber" />
+                        </FrameLayout>
+
+                        <com.nowfloats.CustomWidget.roboto_lt_24_212121
+                            android:layout_width="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_height="wrap_content"
+                            android:text="@string/subscribers" />
+                    </LinearLayout>
                     <FrameLayout android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center">
@@ -243,83 +280,64 @@
                             android:layout_height="wrap_content"
                             android:visibility="gone"
                             android:id="@+id/subscriber_progressBar" />
-                    <TextView
-                        fontPath="Roboto-Medium.ttf"
-                        android:id="@+id/analytics_screen_subscriber_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="visible"
-                        android:text="1125"
-                        android:textSize="33dp"
-                        android:textColor="@color/primaryColor"
-                        tools:ignore="MissingPrefix" />
+                        <TextView
+                            fontPath="Roboto-Medium.ttf"
+                            android:id="@+id/analytics_screen_subscriber_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="visible"
+                            android:text="1125"
+                            android:textSize="33dp"
+                            android:textColor="@color/primaryColor"
+                            tools:ignore="MissingPrefix" />
                     </FrameLayout>
-                    <ImageView
-                        android:layout_width="34dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/next" />
                 </LinearLayout>
-
-            </LinearLayout>
-
-
-        </android.support.v7.widget.CardView>
-
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/card_view_2"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            card_view:cardBackgroundColor="#FFFFFF"
-            card_view:cardCornerRadius="3dp"
-            android:elevation="3dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp">
-
-            <LinearLayout
-                android:id="@+id/analytics_screen_search_queries"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="24dp">
-
-
-                    <ImageView
-                        android:id="@+id/pop_up_search_img"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/circle_bakground" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/analytics_search" />
-                </FrameLayout>
-
-                <com.nowfloats.CustomWidget.roboto_lt_24_212121
-                    android:layout_width="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_height="wrap_content"
-                    android:text="@string/search_queries" />
-
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_height="120dp"
+                android:layout_width="0dp"
+                app:layout_row="1"
+                android:layout_marginBottom="5dp"
+                app:layout_columnWeight="1"
+                app:layout_column="1">
                 <LinearLayout
+                    android:id="@+id/analytics_screen_search_queries"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="right">
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="24dp">
+
+
+                            <ImageView
+                                android:id="@+id/pop_up_search_img"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:src="@drawable/circle_bakground" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/analytics_search" />
+                        </FrameLayout>
+
+                        <com.nowfloats.CustomWidget.roboto_lt_24_212121
+                            android:layout_width="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_height="wrap_content"
+                            android:text="@string/search_queries" />
+                    </LinearLayout>
                     <FrameLayout android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center">
@@ -339,58 +357,38 @@
                             android:textColor="@color/primaryColor"
                             tools:ignore="MissingPrefix" />
                     </FrameLayout>
-                    <ImageView
-                        android:layout_width="34dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:src="@drawable/next" />
                 </LinearLayout>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-        <android.support.v7.widget.CardView
-            android:id="@+id/facebook_analytics_card_view"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            card_view:cardBackgroundColor="#FFFFFF"
-            card_view:cardCornerRadius="3dp"
-            android:elevation="3dp"
-
-            android:layout_marginBottom="15dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp">
-
-            <LinearLayout
-                android:id="@+id/facebook_analytics_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-
-                <ImageView
-                    android:id="@+id/iv_fb_page_analytics"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginLeft="24dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/analytics_facebook" />
-
-                <com.nowfloats.CustomWidget.roboto_lt_24_212121
-                    android:layout_width="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_height="wrap_content"
-                    android:text="@string/facebook_analytics" />
-
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_height="120dp"
+                android:layout_width="0dp"
+                app:layout_row="2"
+                app:layout_columnWeight="1"
+                app:layout_column="1">
                 <LinearLayout
+                    android:id="@+id/facebook_analytics_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="right">
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <ImageView
+                            android:id="@+id/iv_fb_page_analytics"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_marginLeft="24dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/analytics_facebook" />
 
+                        <com.nowfloats.CustomWidget.roboto_lt_24_212121
+                            android:layout_width="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_height="wrap_content"
+                            android:text="@string/facebook_analytics" />
+                    </LinearLayout>
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -410,23 +408,80 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textColor="@color/primaryColor"
-                            android:text=""
-                            android:visibility="gone"
+                            android:visibility="invisible"
                             android:textSize="33dp"
                             tools:ignore="MissingPrefix" />
                     </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="34dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:visibility="visible"
-                        android:src="@drawable/next" />
                 </LinearLayout>
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:layout_height="120dp"
+                android:layout_width="0dp"
+                app:layout_row="2"
+                android:layout_marginRight="5dp"
+                app:layout_columnWeight="1"
+                app:layout_column="0">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-            </LinearLayout>
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="24dp">
 
 
-        </android.support.v7.widget.CardView>
+                            <ImageView
+                                android:id="@+id/pop_up_search_rank_img"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:src="@drawable/circle_bakground" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/analytics_search" />
+                        </FrameLayout>
+
+                        <com.nowfloats.CustomWidget.roboto_lt_24_212121
+                            android:layout_width="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_height="wrap_content"
+                            android:text="@string/search_rank" />
+                    </LinearLayout>
+                    <FrameLayout android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+                        <ProgressBar
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:id="@+id/search_rank_progressBar" />
+                        <TextView
+                            fontPath="Roboto-Medium.ttf"
+                            android:id="@+id/analytics_screen_search_rank_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="visible"
+                            android:text="1125"
+                            android:textSize="33dp"
+                            android:textColor="@color/primaryColor"
+                            tools:ignore="MissingPrefix" />
+                    </FrameLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+
+        </android.support.v7.widget.GridLayout>
     </LinearLayout>
 </ScrollView>

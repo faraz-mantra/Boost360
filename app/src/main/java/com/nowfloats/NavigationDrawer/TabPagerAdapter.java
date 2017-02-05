@@ -42,11 +42,11 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
         // if(selectedFragment == null) {
         switch (index) {
             case 0:
-                selectedFragment = homeFragment;
+                selectedFragment = analyticsFragment;
                 currentItem = 0;
                 break;
             case 1:
-                selectedFragment = analyticsFragment;
+                selectedFragment = homeFragment;
                 /*selectedFragment = OffersFragment.newInstance();*/
                 currentItem = 1;
                 break;
