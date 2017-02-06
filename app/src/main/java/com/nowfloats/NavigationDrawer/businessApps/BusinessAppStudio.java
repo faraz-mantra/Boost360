@@ -125,7 +125,7 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
                                 String status = s.get("Status").getAsString();
                                 if(status!= null && status.equals("1")){
                                     BusinessAppPreview frag= (BusinessAppPreview) getParentFragment();
-                                    frag.addAndroidFragment(BusinessAppPreview.SHOW_DEVELOPMENT,"");
+                                    frag.addAndroidFragment(BusinessAppPreview.SHOW_DEVELOPMENT,"",true);
                                 }
                             }
 

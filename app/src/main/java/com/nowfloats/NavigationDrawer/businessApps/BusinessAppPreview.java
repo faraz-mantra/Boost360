@@ -18,7 +18,6 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.BusinessAppApis;
 import com.nowfloats.NavigationDrawer.model.StoreAndGoModel;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
@@ -59,7 +58,7 @@ public class BusinessAppPreview extends Fragment {
         this.context=context;
     }
 
-    public void addAndroidFragment(int id,String bundle){
+    public void addAndroidFragment(int id,String bundle,boolean transition){
         Fragment frag;
         FragmentTransaction transaction=getChildFragmentManager().beginTransaction();
         switch (id){
@@ -69,7 +68,9 @@ public class BusinessAppPreview extends Fragment {
                 break;
             case SHOW_DEVELOPMENT:
                 frag = BusinessAppDevelopment.getInstance(ANDROID);
-                //transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+                if(transition)
+                    transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
+
                 transaction.replace(R.id.card_view_android,frag,"development");
                 break;
             case SHOW_COMPLETE:
@@ -126,10 +127,11 @@ public class BusinessAppPreview extends Fragment {
                     getActivity().finish();
                 }else if(status.equals("0")){
                     MaterialProgressBar.dismissProgressBar();
-                    addAndroidFragment(SHOW_DEVELOPMENT,"");
+                    addAndroidFragment(SHOW_DEVELOPMENT,"",false);
                 }else if(status.equals("-1")){
-
-                    if(Long.parseLong(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON).split("\\(")[1].split("\\)")[0])/1000 > 1470614400){
+                    MaterialProgressBar.dismissProgressBar();
+                    addAndroidFragment(SHOW_STUDIO,"",false);
+                   /* if(Long.parseLong(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON).split("\\(")[1].split("\\)")[0])/1000 > 1470614400){
 
                         apis.getGenerate(Constants.clientId, session.getFPID(), new Callback<JsonObject>() {
                             @Override
@@ -154,7 +156,7 @@ public class BusinessAppPreview extends Fragment {
                     else{
                         MaterialProgressBar.dismissProgressBar();
                         addAndroidFragment(SHOW_STUDIO,"");
-                    }
+                    }*/
 
                 }else if(status.equals("1")){
                     apis.getPublishStatus(Constants.clientId, session.getFPID(), new Callback<List<StoreAndGoModel.PublishStatusModel>>() {
@@ -171,9 +173,9 @@ public class BusinessAppPreview extends Fragment {
                                     if (model.getValue().equals("1")) {
                                         StoreAndGoModel storeAndGoModel = new StoreAndGoModel();
                                         storeAndGoModel.setPublishStatusModelList(modelList);
-                                        addAndroidFragment(SHOW_COMPLETE, new Gson().toJson(storeAndGoModel));
+                                        addAndroidFragment(SHOW_COMPLETE, new Gson().toJson(storeAndGoModel),false);
                                     } else {
-                                        addAndroidFragment(SHOW_DEVELOPMENT,"");
+                                        addAndroidFragment(SHOW_DEVELOPMENT,"",false);
                                     }
                                     break;
                                 }
@@ -184,7 +186,7 @@ public class BusinessAppPreview extends Fragment {
                         public void failure(RetrofitError error) {
                             MaterialProgressBar.dismissProgressBar();
                             Methods.showSnackBarNegative((BusinessAppsActivity)context,getString(R.string.something_went_wrong));
-                            addAndroidFragment(SHOW_DEVELOPMENT,"");
+                            addAndroidFragment(SHOW_DEVELOPMENT,"",false);
                         }
                     });
                 }
