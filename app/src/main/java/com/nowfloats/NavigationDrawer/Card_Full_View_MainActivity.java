@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.NavigationDrawer.API.Home_View_Card_Delete;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
@@ -22,6 +23,10 @@ import com.thinksity.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Card_Full_View_MainActivity extends AppCompatActivity implements Home_View_Card_Delete.CardRefresh {
 
@@ -99,10 +104,11 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
                         .show();
             }
         });
-
-        pageAdapter = new PageAdapter(getSupportFragmentManager(),Card_Full_View_MainActivity.this);
+        List<FloatsMessageModel> floatsMessageModels = new ArrayList<>(HomeActivity.StorebizFloats);
+        pageAdapter = new PageAdapter(getSupportFragmentManager(), floatsMessageModels,Card_Full_View_MainActivity.this);
         //  Log.d("View Pager", "View Pager  :"+viewPager+" , "+pageAdapter);
         viewPager.setAdapter(pageAdapter);
+        pageAdapter.notifyDataSetChanged();
         viewPager.setCurrentItem(position);
     }
 
@@ -111,6 +117,7 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
         MixPanelController.track(EventKeysWL.MESSAGE_FULL_VIEW,null);
         super.onResume();
     }
+
 
     public void setActionBarTitle(String title) {
         getSupportActionBar().setTitle(title);

@@ -12,6 +12,7 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.Utils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Dell on 24-01-2015.
@@ -23,16 +24,18 @@ public class PageAdapter extends FragmentPagerAdapter {
     ArrayList<String> mainText = new ArrayList<>();
     ArrayList<String> dateText = new ArrayList<>();
     ArrayList<String> messageIds = new ArrayList<>();
+    final List<FloatsMessageModel> messages;
 
-    public PageAdapter(FragmentManager fm, Context context) {
+    public PageAdapter(FragmentManager fm, List<FloatsMessageModel> messages,  Context context) {
         super(fm);
         //Log.d("Page Adapter","Page Adapter");
+        this.messages = messages;
         FloatsMessageModel data;
-        if(HomeActivity.StorebizFloats != null)
+        if(messages != null)
         {
-            for(int i = 0 ; i < HomeActivity.StorebizFloats.size(); i++)
+            for(int i = 0 ; i < messages.size(); i++)
             {
-                data = HomeActivity.StorebizFloats.get(i);
+                data = messages.get(i);
 
                 try {
                     if (data != null) {
@@ -49,7 +52,7 @@ public class PageAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return HomeActivity.StorebizFloats.size();
+        return messages.size();
     }
 
     @Override

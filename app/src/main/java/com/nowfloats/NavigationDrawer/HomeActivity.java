@@ -123,7 +123,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class HomeActivity extends AppCompatActivity implements  SidePanelFragment.OnItemClickListener
         ,DeepLinkInterface,CustomPageDeleteInterface,Home_Main_Fragment.OnRenewPlanClickListener,
-        CardAdapter_V3.Permission, OffersFragment.OnRenewPlanClickListener {
+        CardAdapter_V3.Permission, OffersFragment.OnRenewPlanClickListener, Analytics_Fragment.RiaCardDeepLinkListener {
     private Toolbar toolbar;
     private SharedPreferences pref = null;
     private DrawerLayout mDrawerLayout;
@@ -1480,6 +1480,11 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     @Override
     public void getPermission() {
         BoostLog.d("Yeah:Permission ", "I am getting called");
+    }
+
+    @Override
+    public void onDeepLink(String deepLinkUrl) {
+        DeepLinkPage(deepLinkUrl);
     }
 }
 
