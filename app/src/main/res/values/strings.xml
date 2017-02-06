@@ -371,8 +371,8 @@
         <item>684,AS</item>
     </string-array>
     <string-array name="dashboard_tabs">
-        <item>UPDATES</item>
         <item>ANALYTICS</item>
+        <item>UPDATES</item>
         <item>ALERTS</item>
     </string-array>
 
@@ -1049,5 +1049,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="help_and_support">Help and Support</string>
     <string name="product_checkout">Product Checkout</string>
     <string name="dialog_to_be_activated_null_text">Please note that you will receive an Account Verification Call before your subscription gets activated. Are you sure you want to proceed?</string>
+    <string name="search_rank">Search Ranking</string>
 
 </resources>
