@@ -39,7 +39,7 @@ public class API_Service {
             params.put("clientId", Constants.clientId);
             params.put("fpId", fpID);
             params.put("country",country.toLowerCase());
-            Log.i("STORE data", "API call Started");
+            //Log.i("STORE data", "API call Started");
             StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
             storeInterface.getStoreList(params,new Callback<StoreMainModel>() {
                 @Override
