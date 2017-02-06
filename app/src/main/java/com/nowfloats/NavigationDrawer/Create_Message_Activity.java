@@ -113,6 +113,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
         activity = Create_Message_Activity.this;
         Methods.isOnline(activity);
+        pref = getSharedPreferences(Constants.PREF_NAME,Activity.MODE_PRIVATE);
         session = new UserSessionManager(getApplicationContext(),Create_Message_Activity.this);
         dataBase = new DataBase(activity);
         LinearLayout socialSharingIconLayout = (LinearLayout) findViewById(R.id.socialSharingIconLayout);
@@ -191,20 +192,20 @@ public class Create_Message_Activity extends AppCompatActivity {
             }
         });
 
-        pref = getSharedPreferences(Constants.PREF_NAME,Activity.MODE_PRIVATE);
+
         prefsEditor = pref.edit();
 
         facebookShare = (ImageView) findViewById(R.id.create_message_activity_facebokhome_button);
         facebookPageShare = (ImageView) findViewById(R.id.create_message_activity_facebokpage_button);
         twitterloginButton = (ImageView) findViewById(R.id.create_message_activity_twitter_button);
 
-        if(!Util.isNullOrEmpty(session.getFacebookName())) {
+        if(!Util.isNullOrEmpty(session.getFacebookName()) && pref.getInt("fbStatus", 3)==1) {
             facbookEnabled = true;
             mFbProfileShare = 1;
             facebookShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
         }
 
-        if(!Util.isNullOrEmpty(session.getFacebookPage())) {
+        if(!Util.isNullOrEmpty(session.getFacebookPage()) && pref.getInt("fbPageStatus", 3) ==1) {
             isFacebookPageShareLoggedIn = true;
             mFbPageShare = 1;
             facebookPageShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
@@ -243,7 +244,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                     overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 }
 
-                
+
             }
         });
 
@@ -305,7 +306,7 @@ public class Create_Message_Activity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                if(!Util.isNullOrEmpty(session.getFacebookPage())){
+                if(!Util.isNullOrEmpty(session.getFacebookPage()) && pref.getInt("fbPageStatus", 3) ==1) {
                     if(mFbPageShare==1){
                         mFbPageShare = 0;
                         facebookPageShare.setImageDrawable(getResources().getDrawable(R.drawable.facebookpage_icon_inactive));
@@ -319,17 +320,17 @@ public class Create_Message_Activity extends AppCompatActivity {
                     startActivity(i);
                     overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 }
-                
+
             }
         });
 
-        
+
 
 
         facebookShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!Util.isNullOrEmpty(session.getFacebookName())){
+                if(!Util.isNullOrEmpty(session.getFacebookName()) && pref.getInt("fbStatus", 3)==1){
                     if(mFbProfileShare==1){
                         mFbProfileShare = 0;
                         facebookShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon_inactive));
@@ -343,7 +344,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                     startActivity(i);
                     overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 }
-                
+
             }
         });
 
@@ -361,7 +362,7 @@ public class Create_Message_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Methods.hideKeyboard(msg,Create_Message_Activity.this);
                 if (picUri != null) {
-                    
+
 
 
 
@@ -372,7 +373,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                 }
             }
         });
-       
+
     }
     public void choosePicture() {
         final MaterialDialog dialog = new MaterialDialog.Builder(activity)
@@ -459,7 +460,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                         Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, Constants.GALLERY_PHOTO);
-                
+
             }
         } catch (ActivityNotFoundException anfe) {
 
@@ -592,7 +593,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         if (resultCode == RESULT_OK && (Constants.GALLERY_PHOTO == requestCode)) {
             if (data != null) {
                 picUri = data.getData();
-                
+
                 try {
                     if (picUri == null) {
                         CameraBitmap = (Bitmap) data.getExtras().get("data");
@@ -650,7 +651,7 @@ public class Create_Message_Activity extends AppCompatActivity {
     }
 
     public String getPath( Uri uri, String selection,
-                                       String[] selectionArgs) {
+                           String[] selectionArgs) {
 
         Cursor cursor = null;
         final String column = "_data";
@@ -746,7 +747,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
-    
+
     private boolean isExternalStorageAvailable() {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
@@ -779,10 +780,10 @@ public class Create_Message_Activity extends AppCompatActivity {
         }
         return Environment.getExternalStorageDirectory();
     }
-    
-    
-    
-    
+
+
+
+
     public  void logoutFromTwitter() {
         SharedPreferences.Editor e = mSharedPreferences.edit();
         e.remove(TwitterConstants.PREF_KEY_OAUTH_TOKEN);
@@ -795,5 +796,5 @@ public class Create_Message_Activity extends AppCompatActivity {
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.removeAllCookie();
     }
-    
+
 }

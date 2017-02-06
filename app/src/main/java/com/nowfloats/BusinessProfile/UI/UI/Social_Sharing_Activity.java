@@ -1113,7 +1113,9 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
         ivFbPageAutoPull.setImageResource(R.drawable.facebookpage_icon_inactive);
         facebookautopost.setChecked(pref.getBoolean("FBFeedPullAutoPublish",false));
-
+        if(pref.getInt("fbStatus", 3)==2){
+            Methods.showSnackBar(this,"Your Facebook session has expired. Please login.");
+        }
         if (!Util.isNullOrEmpty(session.getFacebookName()) && pref.getInt("fbStatus", 3)==1) {
             facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
             facebookHomeCheckBox.setChecked(true);
