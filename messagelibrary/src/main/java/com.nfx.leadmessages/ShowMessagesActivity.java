@@ -68,30 +68,6 @@ public class ShowMessagesActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void getPermission(){
-        // check read sms permission
-       /* int count=0;boolean enable=false;
-        for(String s:permission){
-            if(ContextCompat.checkSelfPermission(this,s) == PackageManager.PERMISSION_GRANTED){
-
-                count++;
-                Log.v("ggg","get permission "+s);
-            }
-            else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            {
-                // if user deny the permissions
-                if(shouldShowRequestPermissionRationale(s)){
-                    enable=true;
-                    Log.v("ggg","enable "+s);
-                }
-
-            }
-        }
-       if(enable) {
-            Snackbar.make(linearLayout, R.string.required_permission_to_show, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(R.string.enable, this)  // action text on the right side of snackbar
-                    .setActionTextColor(ContextCompat.getColor(this,android.R.color.holo_green_light))
-                    .show();
-       }*/
        if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)== PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)== PackageManager.PERMISSION_GRANTED){
 

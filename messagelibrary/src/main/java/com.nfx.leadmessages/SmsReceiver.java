@@ -96,13 +96,12 @@ public class SmsReceiver extends BroadcastReceiver {
                 MessageListModel.SmsMessage model;
                 for (SmsMessage ms:sms) {
                     for (String s:Constants.selections) {
-                        if (ms.getOriginatingAddress().contains(s)){
+                        if (ms.getOriginatingAddress().toUpperCase().contains(s.toUpperCase())){
                             model =  MessageListModel.SmsMessage.getInstance()
                                     .setBody(ms.getMessageBody())
                                     .setSubject(ms.getOriginatingAddress())
-                                    .setDate(System.currentTimeMillis());
-                            Log.v("ggg","\n"+ms.getOriginatingAddress()+"\n"+ms.getProtocolIdentifier()
-                                    +"\n"+ms.getTimestampMillis());
+                                    .setDate(System.currentTimeMillis())
+                                    .setSeen("0");
 
                             String key = mDatabase.push().getKey();
                             mDatabase.child(key).setValue(model);

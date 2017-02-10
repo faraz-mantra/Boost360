@@ -23,7 +23,6 @@ public class MessageListModel {
          }
         private String body,subject,seen;
         private long date;
-        private long id;
 
         SmsMessage setBody(String body){
             this.body=body;
@@ -41,16 +40,8 @@ public class MessageListModel {
             this.seen=seen;
             return this;
         }
-         SmsMessage setId(long id){
-            this.id=id;
-            return this;
-        }
         public String getBody(){
             return body;
-        }
-
-        public long getId() {
-            return id;
         }
 
         public long getDate() {
@@ -67,7 +58,7 @@ public class MessageListModel {
 
         @Override
         public String toString() {
-            return String.valueOf(id)+", "+date+", "+seen+", "+subject+", "+body;
+            return date+", "+seen+", "+subject+", "+body;
         }
     }
     static class PhoneIds{

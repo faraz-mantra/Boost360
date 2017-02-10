@@ -24,7 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class ReadMessages extends Service {
     private String fpId,mobileId;
     private static final Uri MESSAGE_URI = Uri.parse("content://sms/");
-    private String[] projections=new String[]{"_id","date","address","body","seen"};
+    private String[] projections=new String[]{"date","address","body","seen"};
     private String selection="";
     private String order="date DESC";
     private int selectionLength=Constants.selections.length;
@@ -103,11 +103,10 @@ public class ReadMessages extends Service {
                 do{
 
                     message = MessageListModel.SmsMessage.getInstance()
-                            .setId(cursor.getLong(0))
-                            .setDate(cursor.getLong(1))
-                            .setSubject(cursor.getString(2))
-                            .setBody(cursor.getString(3))
-                            .setSeen(cursor.getString(4));
+                            .setDate(cursor.getLong(0))
+                            .setSubject(cursor.getString(1))
+                            .setBody(cursor.getString(2))
+                            .setSeen(cursor.getString(3));
 
                     String key = MessageIdRef.push().getKey();
                     MessageIdRef.child(key).setValue(message);

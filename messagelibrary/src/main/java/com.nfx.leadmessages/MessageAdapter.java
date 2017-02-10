@@ -1,15 +1,16 @@
 package com.nfx.leadmessages;
 
-import android.icu.text.SimpleDateFormat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
 
 /**
  * Created by Admin on 1/16/2017.
@@ -38,13 +39,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
         calendar.setTimeInMillis(messageList.get(position).getDate());*/
         //Date date=calendar.getTime();
         SimpleDateFormat formatter = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            formatter = new SimpleDateFormat(pattern, Locale.getDefault());
-            formatter.setTimeZone(android.icu.util.TimeZone.getDefault());
-            Date date=new Date(messageList.get(position).getDate());
-            holder.date.setText(formatter.format(date));
-        }
-
+        formatter = new SimpleDateFormat(pattern, Locale.getDefault());
+        //formatter.setTimeZone(android.icu.util.TimeZone.getDefault());
+        Date date=new Date(messageList.get(position).getDate());
+        holder.date.setText(formatter.format(date));
     }
 
     @Override
