@@ -178,7 +178,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         AppsFlyerLib.sendTracking(getApplicationContext());
         BoostLog.d("HomeActivity ONcreate","onCreate");
         bus = BusProvider.getInstance().getBus();
-        session = new UserSessionManager(getApplicationContext(),HomeActivity.this);
         activity = HomeActivity.this;
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -189,7 +188,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         BoostLog.d(TAG, "In on CreateView");
         deepLinkUrl = RiaFirebaseMessagingService.deepLinkUrl;
         FPID = session.getFPID();
-
+        SharedPreferences smsPref = getSharedPreferences(com.nfx.leadmessages.Constants.SHARED_PREF,Context.MODE_PRIVATE);
+        smsPref.edit().putString(com.nfx.leadmessages.Constants.FP_ID,FPID).apply();
         /*if (getIntent().hasExtra("message")){
             StorebizFloats = getIntent().getExtras().getParcelableArrayList("message");
         }*/

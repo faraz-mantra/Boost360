@@ -82,7 +82,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project('libs:libraries:volley')
     compile project(':library')
-
+    compile project(path: ':messagelibrary')
     compile project(':mixpanel')
     compile project(':cropper')
     compile project(':ZoomImageLibrary')
@@ -99,7 +99,7 @@ dependencies {
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.android.support:design:23.4.0'
     compile 'com.android.support:gridlayout-v7:23.4.0'
-    compile 'com.google.android.gms:play-services:9.8.0'
+    compile 'com.google.android.gms:play-services:10.0.1'
     compile 'uk.co.chrisjenx:calligraphy:2.1.0'
     compile 'com.melnykov:floatingactionbutton:1.1.0'
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'

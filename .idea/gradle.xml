@@ -18,6 +18,7 @@
             <option value="$PROJECT_DIR$/cropper" />
             <option value="$PROJECT_DIR$/instamojoLib" />
             <option value="$PROJECT_DIR$/library" />
+            <option value="$PROJECT_DIR$/messagelibrary" />
             <option value="$PROJECT_DIR$/mixpanel" />
             <option value="$PROJECT_DIR$/mobihelp_sdk_android_v1.5.4" />
           </set>
