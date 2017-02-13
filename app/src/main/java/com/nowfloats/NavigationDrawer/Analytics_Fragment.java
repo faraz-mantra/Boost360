@@ -38,11 +38,11 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.nfx.leadmessages.ShowMessagesActivity;
 import com.nowfloats.Analytics_Screen.FacebookAnalyticsLogin;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueries;
 import com.nowfloats.Analytics_Screen.ShowWebView;
+import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.CustomWidget.VerticalTextView;
 import com.nowfloats.Login.UserSessionManager;
@@ -182,7 +182,7 @@ public class Analytics_Fragment extends Fragment {
         subscribeLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), ShowMessagesActivity.class);
+                Intent i = new Intent(getActivity(), SubscribersActivity.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
@@ -400,6 +400,7 @@ public class Analytics_Fragment extends Fragment {
     }
 
     private void attachText(Section widget, LinearLayout llRiaCardSections) {
+        if(getActivity()== null) return;
         TextView tv = new TextView(getActivity());
         tv.setText(widget.getText());
         tv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
@@ -408,6 +409,7 @@ public class Analytics_Fragment extends Fragment {
     }
 
     private void attachGraph(Section widget, LinearLayout llRiaCardSections) {
+        if(getActivity()== null) return;
         LinearLayout graph = new LinearLayout(getActivity());
         graph.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         graph.setGravity(Gravity.CENTER_VERTICAL);
@@ -519,6 +521,7 @@ public class Analytics_Fragment extends Fragment {
     }
 
     private void attachImage(Section widget, LinearLayout llRiaCardSections) {
+        if(getActivity()== null) return;
         ImageView iv = new ImageView(getActivity());
         iv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 150));
         iv.setScaleType(ImageView.ScaleType.CENTER_CROP);

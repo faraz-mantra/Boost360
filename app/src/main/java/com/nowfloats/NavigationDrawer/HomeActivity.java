@@ -1,5 +1,6 @@
 package com.nowfloats.NavigationDrawer;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -14,9 +15,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -48,6 +51,7 @@ import com.freshdesk.hotline.HotlineConfig;
 import com.freshdesk.hotline.HotlineUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.mixpanel.android.mpmetrics.GCMReceiver;
+import com.nfx.leadmessages.ReadMessages;
 import com.nineoldandroids.animation.Animator;
 import com.nowfloats.AccountDetails.AccountInfoActivity;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
@@ -163,7 +167,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     private boolean isShownExpireDialog = false;
 
     private String TAG = HomeActivity.class.getSimpleName();
-
+    private String[] permission = new String[]{Manifest.permission.READ_SMS,
+            Manifest.permission.RECEIVE_SMS,Manifest.permission.READ_PHONE_STATE};
+    private final static int READ_MESSAGES_ID=221;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -190,6 +196,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         FPID = session.getFPID();
         SharedPreferences smsPref = getSharedPreferences(com.nfx.leadmessages.Constants.SHARED_PREF,Context.MODE_PRIVATE);
         smsPref.edit().putString(com.nfx.leadmessages.Constants.FP_ID,FPID).apply();
+        getPermissions();
+
         /*if (getIntent().hasExtra("message")){
             StorebizFloats = getIntent().getExtras().getParcelableArrayList("message");
         }*/
@@ -379,7 +387,40 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             }
         }
     }
+    private void getPermissions() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+            Intent intent = new Intent(this, ReadMessages.class);
+            startService(intent);
+            // start the service to send data to firebase
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // if user deny the permissions
+           /* if(shouldShowRequestPermissionRationale(Manifest.permission.READ_SMS)||
+                    shouldShowRequestPermissionRationale(Manifest.permission.READ_PHONE_STATE)){
 
+                Snackbar.make(parent_layout, com.nfx.leadmessages.R.string.required_permission_to_show, Snackbar.LENGTH_INDEFINITE)
+                        .setAction(com.nfx.leadmessages.R.string.enable, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent();
+                                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                intent.addCategory(Intent.CATEGORY_DEFAULT);
+                                intent.setData(Uri.parse("package:" + getPackageName()));
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                                startActivity(intent);
+                            }
+                        })  // action text on the right side of snackbar
+                        .setActionTextColor(ContextCompat.getColor(this,android.R.color.holo_green_light))
+                        .show();
+            }
+            else{*/
+            requestPermissions(permission, READ_MESSAGES_ID);
+            // }
+
+        }
+    }
     private void setHotlineUser() {
         HotlineConfig hlConfig=new HotlineConfig("f3e79ba0-6b2e-4793-aaeb-e226b43473fb","a2cc59f2-d2d1-4a8f-a27a-5586a1defd6d");
 
