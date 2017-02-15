@@ -1548,12 +1548,18 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
         if(Integer.valueOf(paymentState)>0 &&Integer.valueOf(paymentLevel)>=10){
             View view = getLayoutInflater().inflate(R.layout.pop_up_restrict_post_message,null);
+            ImageView image = (ImageView) view.findViewById(R.id.img_warning);
+            TextView title = (TextView) view.findViewById(R.id.textView1);
+            TextView description = (TextView) view.findViewById(R.id.pop_up_create_message_body);
+            title.setText("Connect with your customers instantly!");
+            description.setText("The all new WildFire Mini Plan lets you reach out to your customers," +
+                    "track all thier phone calls and get good leads. Start your 45 day plan now!");
+            image.setImageResource(R.drawable.wildfire);
             mExpireDailog = new MaterialDialog.Builder(this)
                     .customView(view,true)
                     .backgroundColorRes(R.color.white)
-                    .positiveText("Connect with your customers instantly!")
-                    .negativeText("The all new WildFire Mini Plan lets you reach out to your customers, " +
-                            "track all thier phone calls and get good leads. Start your 45 day plan now!")
+                    .positiveText("BUY")
+                    .negativeText("LATER")
                     .callback(new MaterialDialog.ButtonCallback() {
                         @Override
                         public void onPositive(MaterialDialog mExpireDailog) {

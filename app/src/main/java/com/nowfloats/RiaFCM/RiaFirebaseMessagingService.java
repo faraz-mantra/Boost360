@@ -10,7 +10,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 
 import com.freshdesk.hotline.Hotline;
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -49,7 +48,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
     private void sendNotification(Map<String, String> message) {
 
         deepLinkUrl = message.get("url");
-        Log.v("ggg","notif "+deepLinkUrl);
+        //Log.v("ggg","notif "+deepLinkUrl);
         String title = message.get("title");
         Intent intent = null;
         if(!Util.isNullOrEmpty(deepLinkUrl)) {
