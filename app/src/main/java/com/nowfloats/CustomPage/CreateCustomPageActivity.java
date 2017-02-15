@@ -24,10 +24,12 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.CustomPage.Model.CreatePageModel;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.RiaEventLogger;
 import com.thinksity.R;
 
 import java.util.HashMap;
@@ -57,6 +59,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
     private ImageView deletePage;
 
     private int GALLERY_PHOTO =5;
+    private RiaNodeDataModel mRiaNodedata;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -67,6 +70,8 @@ public class CreateCustomPageActivity extends AppCompatActivity{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_custom_page);
+
+        mRiaNodedata = getIntent().getParcelableExtra(Constants.RIA_NODE_DATA);
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar_product_detail);
         setSupportActionBar(toolbar);
@@ -137,6 +142,13 @@ public class CreateCustomPageActivity extends AppCompatActivity{
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(mRiaNodedata!=null) {
+                    RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
+                            mRiaNodedata.getNodeId(), mRiaNodedata.getButtonId(),
+                            mRiaNodedata.getButtonLabel(),
+                            RiaEventLogger.EventStatus.COMPLETED.getValue());
+                    mRiaNodedata = null;
+                }
                 boolean flag = true;
                 final String name = titleTxt.getText().toString(),html = mHtmlFormat;
                 if (!(titleTxt.getText().toString().trim().length()>0)){
@@ -490,5 +502,17 @@ public class CreateCustomPageActivity extends AppCompatActivity{
 //        }
 //        return null;
 //    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mRiaNodedata!=null){
+            RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
+                    mRiaNodedata.getNodeId(), mRiaNodedata.getButtonId(),
+                    mRiaNodedata.getButtonLabel(),
+                    RiaEventLogger.EventStatus.DROPPED.getValue());
+            mRiaNodedata = null;
+        }
+    }
 
 }

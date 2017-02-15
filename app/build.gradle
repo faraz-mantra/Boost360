@@ -123,10 +123,12 @@ dependencies {
     compile 'com.github.darsh2:MultipleImageSelect:v0.0.4'
     compile 'org.honorato.multistatetogglebutton:multistatetogglebutton:0.2.2'
     compile 'com.google.firebase:firebase-messaging:9.8.0'
+    compile 'com.google.firebase:firebase-database:9.8.0'
     compile 'me.biubiubiu.justifytext:library:1.1'
     compile 'com.github.clans:fab:1.6.4'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.github.freshdesk:hotline-android:1.2.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -5,12 +5,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
+import android.text.Html;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -37,9 +40,11 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.nowfloats.Analytics_Screen.FacebookAnalyticsLogin;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueries;
@@ -52,6 +57,7 @@ import com.nowfloats.NavigationDrawer.API.RiaNetworkInterface;
 import com.nowfloats.NavigationDrawer.model.CoordinateList;
 import com.nowfloats.NavigationDrawer.model.CoordinatesSet;
 import com.nowfloats.NavigationDrawer.model.RiaCardModel;
+import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NavigationDrawer.model.Section;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -59,6 +65,7 @@ import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.RiaEventLogger;
 import com.squareup.otto.Bus;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
@@ -94,6 +101,8 @@ public class Analytics_Fragment extends Fragment {
     RiaCardDeepLinkListener mRiaCardDeepLinkListener;
     private static final String BUTTON_TYPE_DEEP_LINK = "DeepLink";
     private static final String BUTTON_TYPE_NEXT_NODE = "NextNode";
+    private static final String BUTTON_TYPE_EXIT = "None";
+    private static final String BUTTON_TYPE_OPEN_URL="OpenUrl";
     LinearLayout llRiaCardSections;
     private enum SectionType{
         Text, Graph, Image
@@ -317,7 +326,7 @@ public class Analytics_Fragment extends Fragment {
         networkInterface.getRiaCards(session.getFpTag(), new Callback<ArrayList<RiaCardModel>>() {
             @Override
             public void success(ArrayList<RiaCardModel> riaCardModels, Response response) {
-                if(riaCardModels!=null){
+                if(riaCardModels!=null && getActivity()!=null){
                     cvRiaCard.setVisibility(View.VISIBLE);
                     drawRiaCards(riaCardModels);
                 }
@@ -348,9 +357,8 @@ public class Analytics_Fragment extends Fragment {
 
     }
 
-    private void drawSingleRiaCard(RiaCardModel rootCard, final RiaCardResponseListener listener) {
+    private void drawSingleRiaCard(final RiaCardModel rootCard, final RiaCardResponseListener listener) {
         tvRiaCardHeader.setText(rootCard.getHeaderText());
-        //TODO: Handle for buttons null case
         final com.nowfloats.NavigationDrawer.model.Button btnLeft = rootCard.getButtons().get(0);
         final com.nowfloats.NavigationDrawer.model.Button btnRight = rootCard.getButtons().get(1);
         btnRiaCardLeft.setText(btnLeft.getButtonText());
@@ -358,11 +366,23 @@ public class Analytics_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(btnLeft.getButtonType().equals(BUTTON_TYPE_DEEP_LINK) && btnLeft.getDeepLinkUrl()!=null){
-                    //TODO: do the deep link
-                    mRiaCardDeepLinkListener.onDeepLink(btnLeft.getDeepLinkUrl());
+                    mRiaCardDeepLinkListener.onDeepLink(btnLeft.getDeepLinkUrl(), true,
+                            new RiaNodeDataModel(rootCard.getId(), btnLeft.getId(),
+                                    btnLeft.getButtonText()));
                 }else if(btnLeft.getButtonType().equals(BUTTON_TYPE_NEXT_NODE) && btnLeft.getNextNodeId()!=null){
                     listener.onResponse(btnLeft.getId(), btnLeft.getNextNodeId());
+                }else if(btnLeft.getButtonType().equals(BUTTON_TYPE_EXIT)){
+                    cvRiaCard.setVisibility(View.GONE);
+                }else if(btnLeft.getButtonType().equals(BUTTON_TYPE_OPEN_URL)){
+                    Intent intent = new Intent(getActivity(), RiaWebViewActivity.class);
+                    intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnLeft.getUrl());
+                    intent.putExtra(RiaWebViewActivity.RIA_NODE_DATA, new RiaNodeDataModel(rootCard.getId(), btnLeft.getId(),
+                            btnLeft.getButtonText()));
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
+                RiaEventLogger.getInstance().logClickEvent(session.getFpTag(), rootCard.getId(),
+                        btnLeft.getId(), btnLeft.getButtonText());
             }
         });
         btnRiaCrdRight.setText(btnRight.getButtonText());
@@ -370,15 +390,28 @@ public class Analytics_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(btnRight.getButtonType().equals(BUTTON_TYPE_DEEP_LINK) && btnRight.getDeepLinkUrl()!=null){
-                    //TODO: do the deep link
-                    mRiaCardDeepLinkListener.onDeepLink(btnRight.getDeepLinkUrl());
+                    mRiaCardDeepLinkListener.onDeepLink(btnRight.getDeepLinkUrl(), true,
+                            new RiaNodeDataModel(rootCard.getId(), btnLeft.getId(),
+                                    btnLeft.getButtonText()));
                 }else if(btnRight.getButtonType().equals(BUTTON_TYPE_NEXT_NODE) && btnRight.getNextNodeId()!=null){
                     listener.onResponse(btnRight.getId(), btnRight.getNextNodeId());
+                }else if(btnRight.getButtonType().equals(BUTTON_TYPE_EXIT)){
+                    cvRiaCard.setVisibility(View.GONE);
+                }else if(btnLeft.getButtonType().equals(BUTTON_TYPE_OPEN_URL)){
+                    Intent intent = new Intent(getActivity(), RiaWebViewActivity.class);
+                    intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnLeft.getUrl());
+                    intent.putExtra(RiaWebViewActivity.RIA_NODE_DATA, new RiaNodeDataModel(rootCard.getId(), btnLeft.getId(),
+                            btnLeft.getButtonText()));
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
+                RiaEventLogger.getInstance().logClickEvent(session.getFpTag(), rootCard.getId(),
+                        btnLeft.getId(), btnLeft.getButtonText());
             }
         });
 
         drawSectionsForCard(rootCard.getSections(), llRiaCardSections);
+        RiaEventLogger.getInstance().logViewEvent(session.getFpTag(), rootCard.getId());
         cvRiaCard.setAnimation(inFromRightAnimation());
         cvRiaCard.animate();
     }
@@ -406,7 +439,7 @@ public class Analytics_Fragment extends Fragment {
 
     private void attachText(Section widget, LinearLayout llRiaCardSections) {
         TextView tv = new TextView(getActivity());
-        tv.setText(widget.getText());
+        tv.setText(Html.fromHtml(widget.getText()));
         tv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         llRiaCardSections.addView(tv);
@@ -419,6 +452,7 @@ public class Analytics_Fragment extends Fragment {
         VerticalTextView yAxisName = new VerticalTextView(getActivity(), null);
         yAxisName.setText(widget.getY().getLabel());
         yAxisName.setTextSize(dpToPx(4));
+        yAxisName.setRotation(180);
         graph.addView(yAxisName);
         if(!(widget.getY().getAxisType().equals("Integer") || widget.getY().getAxisType().equals("Double"))){
             cvRiaCard.setVisibility(View.GONE);
@@ -427,35 +461,37 @@ public class Analytics_Fragment extends Fragment {
         if(widget.getGraphType().equals(BAR)){
             BarChart barChart = new BarChart(getActivity());
             barChart.getAxisLeft().setDrawGridLines(false);
+            barChart.getAxisRight().setDrawGridLines(false);
             barChart.getXAxis().setDrawGridLines(false);
+            barChart.setDescription(null);
+            barChart.setPadding(dpToPx(-5), dpToPx(-5), dpToPx(-5), dpToPx(-5));
             ArrayList<IBarDataSet> dataSets = new ArrayList<>();
             ArrayList<String> xVals = new ArrayList<>();
             for(CoordinatesSet coordinateSet : widget.getCoordinatesSet()){
                 List<BarEntry> dataEntry = new ArrayList<>();
-                int i = coordinateSet.getCoordinateList().size()-1;
+                int i = 0;
                 for(CoordinateList coordinate: coordinateSet.getCoordinateList()){
                     dataEntry.add(new BarEntry(Float.parseFloat(coordinate.getY()), i));
-                    try {
-                        String splitData[] = (coordinate.getX() + "").split("-");
-                        xVals.add(splitData[0] + "-W " + splitData[1]);
-                    }catch (Exception e){
-
-                    }
-                    i--;
+                    xVals.add(coordinate.getX());
+                    i++;
                 }
-                BarDataSet dataSet = new BarDataSet(dataEntry, coordinateSet.getLegendName());
+                BarDataSet dataSet = new BarDataSet(dataEntry, null);
                 //dataSet.setDrawFilled(true);
-                dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+                dataSet.setColor(Color.parseColor("#ffb900"));
+                dataSet.setValueTextSize(10);
                 dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
                 dataSets.add(dataSet);
             }
+            if(widget.getCoordinatesSet().size()<=1){
+                barChart.getAxisRight().setEnabled(false);
+            }
             barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-            Collections.reverse(xVals);
-            BarData lineDataMain = new BarData(xVals, dataSets);
-            barChart.setData(lineDataMain);
+            BarData barDataMain = new BarData(xVals, dataSets);
+            barDataMain.setValueFormatter(new GraphValueFormatter());
+            barChart.setData(barDataMain);
             barChart.invalidate();
-            barChart.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpToPx(200)));
-            graph.addView(barChart);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpToPx(200));
+            graph.addView(barChart, lp);
             llRiaCardSections.addView(graph);
             TextView xAxisNames = new TextView(getActivity());
             xAxisNames.setText(widget.getX().getLabel());
@@ -467,34 +503,40 @@ public class Analytics_Fragment extends Fragment {
         }else if(widget.getGraphType().equals(LINE)){
             LineChart lineChart = new LineChart(getActivity());
             lineChart.getAxisLeft().setDrawGridLines(false);
+            lineChart.getAxisRight().setDrawGridLines(false);
             lineChart.getXAxis().setDrawGridLines(false);
+            lineChart.setPadding(dpToPx(-5), dpToPx(-5), dpToPx(-5), dpToPx(-5));
+            lineChart.setDescription(null);
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             ArrayList<String> xVals = new ArrayList<>();
             for(CoordinatesSet coordinateSet : widget.getCoordinatesSet()){
                 List<Entry> dataEntry = new ArrayList<>();
-                int i = coordinateSet.getCoordinateList().size()-1;
+                int i = 0;
                 for(CoordinateList coordinate: coordinateSet.getCoordinateList()){
                     dataEntry.add(new Entry(Float.parseFloat(coordinate.getY()), i));
-                    try {
-                        String splitData[] = (coordinate.getX() + "").split("-");
-                        xVals.add("W-" + splitData[1] + " " + splitData[0].substring(2, 4));
-                    }catch (Exception e){
-
-                    }
-                    i--;
+                    xVals.add(coordinate.getX());
+                    i++;
                 }
-                LineDataSet dataSet = new LineDataSet(dataEntry, coordinateSet.getLegendName());
+                LineDataSet dataSet = new LineDataSet(dataEntry, null);
+                //dataSet.setFillColor(Color.parseColor("#33ffb900"));
+                dataSet.setValueTextSize(10);
                 dataSet.setDrawFilled(true);
+                dataSet.setColor(ContextCompat.getColor(getActivity(), R.color.primaryColor));
+                dataSet.setCircleColor(ContextCompat.getColor(getActivity(), R.color.primaryColor));
+                dataSet.setCircleColorHole(ContextCompat.getColor(getActivity(), R.color.primaryColor));
                 dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
                 dataSets.add(dataSet);
             }
+            if(widget.getCoordinatesSet().size()<=1){
+                lineChart.getAxisRight().setEnabled(false);
+            }
             lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-            Collections.reverse(xVals);
             LineData lineDataMain = new LineData(xVals, dataSets);
+            lineDataMain.setValueFormatter(new GraphValueFormatter());
             lineChart.setData(lineDataMain);
             lineChart.invalidate();
-            lineChart.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpToPx(200)));
-            graph.addView(lineChart);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpToPx(200));
+            graph.addView(lineChart, lp);
             llRiaCardSections.addView(graph);
             TextView xAxisNames = new TextView(getActivity());
             xAxisNames.setText(widget.getX().getLabel());
@@ -523,11 +565,22 @@ public class Analytics_Fragment extends Fragment {
         return inFromRight;
     }
 
+    private Animation outToLeftAnimation() {
+        Animation outtoLeft = new TranslateAnimation(
+                Animation.RELATIVE_TO_PARENT, 0.0f,
+                Animation.RELATIVE_TO_PARENT, -1.0f,
+                Animation.RELATIVE_TO_PARENT, 0.0f,
+                Animation.RELATIVE_TO_PARENT, 0.0f);
+        outtoLeft.setDuration(250);
+        outtoLeft.setInterpolator(new AccelerateInterpolator());
+        return outtoLeft;
+    }
+
     private void attachImage(Section widget, LinearLayout llRiaCardSections) {
         ImageView iv = new ImageView(getActivity());
-        iv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 150));
+        iv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpToPx(150)));
         iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        Picasso.with(getActivity()).load(widget.getUrl()).into(iv);
+        Picasso.with(getActivity()).load(widget.getUrl()).placeholder(R.drawable.image_placeholder).into(iv);
         llRiaCardSections.addView(iv);
     }
 
@@ -536,6 +589,13 @@ public class Analytics_Fragment extends Fragment {
     }
 
     public interface RiaCardDeepLinkListener{
-        void onDeepLink(String deepLinkUrl);
+        void onDeepLink(String deepLinkUrl, boolean isFromRia, RiaNodeDataModel riaNodeData);
+    }
+
+    public class GraphValueFormatter implements ValueFormatter {
+        @Override
+        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+            return Math.round(value)+"";
+        }
     }
 }

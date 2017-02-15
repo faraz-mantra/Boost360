@@ -371,8 +371,8 @@
         <item>684,AS</item>
     </string-array>
     <string-array name="dashboard_tabs">
-        <item>ANALYTICS</item>
         <item>UPDATES</item>
+        <item>ANALYTICS</item>
         <item>ALERTS</item>
     </string-array>
 

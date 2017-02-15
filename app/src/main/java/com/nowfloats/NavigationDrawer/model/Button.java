@@ -32,6 +32,9 @@ public class Button {
     @SerializedName("Hidden")
     @Expose
     private Boolean hidden;
+    @SerializedName("Url")
+    @Expose
+    private String url;
 
     public String getId() {
         return id;
@@ -105,4 +108,11 @@ public class Button {
         this.hidden = hidden;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }
