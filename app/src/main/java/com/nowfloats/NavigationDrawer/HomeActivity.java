@@ -66,6 +66,7 @@ import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Settings_Fragment;
 import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.Business_Enquiries.Business_Enquiries_Fragment;
+import com.nowfloats.CustomPage.CreateCustomPageActivity;
 import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.CustomPage.CustomPageAdapter;
 import com.nowfloats.CustomPage.CustomPageDeleteInterface;
@@ -81,6 +82,8 @@ import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
 import com.nowfloats.NavigationDrawer.API.KitsuneApi;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
+import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
+import com.nowfloats.Product_Gallery.Product_Detail_Activity_V45;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.nowfloats.RiaFCM.RiaFirebaseMessagingService;
 import com.nowfloats.SiteAppearance.SiteAppearanceFragment;
@@ -167,6 +170,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     private static final int WILD_FIRE_PURCHASE = 2;
     SharedPreferences.Editor prefsEditor;
     private boolean isShownExpireDialog = false;
+    private RiaNodeDataModel mRiaNodeDataModel;
 
     private String TAG = HomeActivity.class.getSimpleName();
     private String[] permission = new String[]{Manifest.permission.READ_SMS,Manifest.permission.RECEIVE_SMS};
@@ -388,6 +392,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 finish();
             }
         }
+        showWildFire();
+
     }
     private void getPermissions() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
@@ -501,7 +507,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         }*/
     }
 
-    public void DeepLinkPage(String url) {
+    public void DeepLinkPage(String url, boolean isFromRia) {
         BoostLog.d("Deep Link URL","Deep Link URL : "+url);
 
         Constants.GCM_Msg = false;
@@ -510,13 +516,31 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 //                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 //                ft.replace(R.id.mainFrame,homeFragment, "homeFragment").commit();
 
-                Intent queries = new Intent(HomeActivity.this, Create_Message_Activity.class);
-                startActivity(queries);
+                Intent createUpdate = new Intent(HomeActivity.this, Create_Message_Activity.class);
+                if(isFromRia && mRiaNodeDataModel!=null) {
+                    createUpdate.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
+                }
+                startActivity(createUpdate);
             }else if(url.contains(getResources().getString(R.string.deeplink_featuredimage))){
                 Intent featureImage = new Intent(HomeActivity.this, Edit_Profile_Activity.class);
+                if(isFromRia && mRiaNodeDataModel!=null) {
+                    featureImage.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
+                }
                 startActivity(featureImage);
-            }
-            else  if(url.contains(getResources().getString(R.string.deeplink_upgrade))){
+            }else if(url.contains("addProduct")){
+                Intent productActivity = new Intent(HomeActivity.this, Product_Detail_Activity_V45.class);
+                productActivity.putExtra("new", "");
+                if(isFromRia && mRiaNodeDataModel!=null) {
+                    productActivity.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
+                }
+                startActivity(productActivity);
+            }else if(url.contains("addCustomPage")){
+                Intent createCustomPage = new Intent(HomeActivity.this, CreateCustomPageActivity.class);
+                if(isFromRia && mRiaNodeDataModel!=null) {
+                    createCustomPage.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
+                }
+                startActivity(createCustomPage);
+            } else  if(url.contains(getResources().getString(R.string.deeplink_upgrade))){
                 final String appPackageName = HomeActivity.this.getPackageName(); // getPackageName() from Context or Activity object
                 try {
                     HomeActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
@@ -631,7 +655,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 ft.replace(R.id.mainFrame, siteMeterFragment)
                         .commit();
             }
-            else if(url.contains(getResources().getString(R.string.deeplink_imageGallery))|| url.contains("imagegallery")){
+            else if(url.contains(getResources().getString(R.string.deeplink_imageGallery))||
+                    url.contains("imagegallery") || url.contains("imagegallery")){
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                   ft.replace(R.id.mainFrame,imageGalleryFragment).
                           commit();
@@ -905,7 +930,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
         plusAddButton.setVisibility(View.GONE);
         if(Constants.GCM_Msg){
-            DeepLinkPage(RiaFirebaseMessagingService.deepLinkUrl);
+            DeepLinkPage(RiaFirebaseMessagingService.deepLinkUrl, false);
             Constants.GCM_Msg = false;
         }
 
@@ -1332,7 +1357,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
     @Override
     public void deepLink(String url) {
-        DeepLinkPage(url);
+        DeepLinkPage(url, false);
     }
 
     @Override
@@ -1519,27 +1544,31 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         }
     }
     private void showWildFire(){
-        View view = getLayoutInflater().inflate(R.layout.pop_up_restrict_post_message,null);
-        mExpireDailog = new MaterialDialog.Builder(this)
-                .customView(view,true)
-                .backgroundColorRes(R.color.white)
-                .positiveText("Connect with your customers instantly!")
-                .negativeText("The all new WildFire Mini Plan lets you reach out to your customers, " +
-                        "track all thier phone calls and get good leads. Start your 45 day plan now!")
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog mExpireDailog) {
-                        super.onPositive(mExpireDailog);
-                        openStore();
-                        mExpireDailog.dismiss();
-                    }
+        String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
+        String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
+        if(Integer.valueOf(paymentState)>0 &&Integer.valueOf(paymentLevel)>=10){
+            View view = getLayoutInflater().inflate(R.layout.pop_up_restrict_post_message,null);
+            mExpireDailog = new MaterialDialog.Builder(this)
+                    .customView(view,true)
+                    .backgroundColorRes(R.color.white)
+                    .positiveText("Connect with your customers instantly!")
+                    .negativeText("The all new WildFire Mini Plan lets you reach out to your customers, " +
+                            "track all thier phone calls and get good leads. Start your 45 day plan now!")
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog mExpireDailog) {
+                            super.onPositive(mExpireDailog);
+                            openStore();
+                            mExpireDailog.dismiss();
+                        }
 
-                    @Override
-                    public void onNegative(MaterialDialog mExpireDailog) {
-                        super.onNegative(mExpireDailog);
-                        mExpireDailog.dismiss();
-                    }
-                }).show();
+                        @Override
+                        public void onNegative(MaterialDialog mExpireDailog) {
+                            super.onNegative(mExpireDailog);
+                            mExpireDailog.dismiss();
+                        }
+                    }).show();
+        }
     }
     @Override
     public void getPermission() {
@@ -1547,8 +1576,21 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     }
 
     @Override
-    public void onDeepLink(String deepLinkUrl) {
-        DeepLinkPage(deepLinkUrl);
+    public void onDeepLink(String deepLinkUrl, boolean isFromRia, RiaNodeDataModel nodeDataModel) {
+        mRiaNodeDataModel = nodeDataModel;
+        DeepLinkPage(deepLinkUrl, isFromRia);
     }
+
+ /*   public void wildFireStatus(){
+        RestAdapter adapter =new RestAdapter.Builder()
+                .setEndpoint("http://wmt.withfloats.com")
+                .build();
+        WildFire wildfire = adapter.create(WildFire.class);
+        wildfire.getStatus(Constants.clientId,);
+    }
+    public interface WildFire{
+        @GET("/testingapi/api/v1/account/accountstatus")
+        void getStatus(@Query("clientId") String clientId,@Query("accountId") String Callback<String> response);
+    }*/
 }
 

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2017020005"
+    android:versionCode="2017020015"
     android:versionName="4.5.2">
 
     <permission
@@ -154,7 +154,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity" />
@@ -180,8 +180,8 @@
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity"
             android:label="@string/title_activity_contact__info_"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity"
             android:label="@string/visits"
@@ -414,7 +414,8 @@
         <activity android:name="com.nowfloats.NavigationDrawer.OffersFullScreenActivity" />
         <activity android:name="com.nowfloats.PreSignUp.KitsunePreSignUpActivity" />
         <activity android:name="com.nowfloats.NavigationDrawer.HelpAndSupportActivity" />
-        <activity android:name="com.nowfloats.Store.ProductCheckoutActivity"></activity>
+        <activity android:name="com.nowfloats.Store.ProductCheckoutActivity" />
+        <activity android:name="com.nowfloats.NavigationDrawer.RiaWebViewActivity"></activity>
     </application>
 
 </manifest>
