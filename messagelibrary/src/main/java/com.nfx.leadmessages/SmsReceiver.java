@@ -4,14 +4,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.provider.Settings;
 import android.provider.Telephony;
-import android.support.v4.content.ContextCompat;
 import android.telephony.SmsMessage;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
@@ -37,10 +35,7 @@ public class SmsReceiver extends BroadcastReceiver {
         Log.v("ggg","on receive");
         SharedPreferences pref =context.getSharedPreferences(Constants.SHARED_PREF, Context.MODE_PRIVATE);
         fpId =pref.getString(Constants.FP_ID,null);
-        if(ContextCompat.checkSelfPermission(context, android.Manifest.permission.READ_PHONE_STATE)== PackageManager.PERMISSION_GRANTED){
-            TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            mobileId = tm.getDeviceId();
-        }
+        mobileId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
 
         if(mobileId == null || fpId == null){
             return;

@@ -8,9 +8,8 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.telephony.TelephonyManager;
-import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -35,8 +34,7 @@ public class ReadMessages extends Service {
         SharedPreferences pref =getSharedPreferences(Constants.SHARED_PREF, Context.MODE_PRIVATE);
         fpId =pref.getString(Constants.FP_ID,null);
 
-        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        mobileId = tm.getDeviceId();
+        mobileId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         if(mobileId == null || fpId == null){
             return Service.START_NOT_STICKY;
         }
@@ -111,7 +109,7 @@ public class ReadMessages extends Service {
                     String key = MessageIdRef.push().getKey();
                     MessageIdRef.child(key).setValue(message);
 
-                    Log.v("ggg",message.toString());
+                    //Log.v("ggg",message.toString());
 
                 }while(cursor.moveToNext());
                 cursor.close();
@@ -121,6 +119,6 @@ public class ReadMessages extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.v("ggg","destroy");
+        //Log.v("ggg","destroy");
     }
 }

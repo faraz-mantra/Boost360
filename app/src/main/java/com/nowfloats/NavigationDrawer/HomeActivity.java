@@ -167,8 +167,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     private boolean isShownExpireDialog = false;
 
     private String TAG = HomeActivity.class.getSimpleName();
-    private String[] permission = new String[]{Manifest.permission.READ_SMS,
-            Manifest.permission.RECEIVE_SMS,Manifest.permission.READ_PHONE_STATE};
+    private String[] permission = new String[]{Manifest.permission.READ_SMS,Manifest.permission.RECEIVE_SMS};
     private final static int READ_MESSAGES_ID=221;
 
     @Override
@@ -390,7 +389,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     }
     private void getPermissions() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED) {
             Intent intent = new Intent(this, ReadMessages.class);
             startService(intent);
             // start the service to send data to firebase
