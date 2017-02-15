@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 
 import com.nowfloats.Business_Enquiries.Model.BzQueryEvent;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.squareup.otto.Bus;
@@ -36,7 +35,6 @@ public class Business_Enquiries_Fragment extends Fragment {
     public void onResume() {
         super.onResume();
         bus.register(this);
-        HomeActivity.headerText.setText(getResources().getString(R.string.business_enquiries_title));
     }
 
     @Override
@@ -56,7 +54,6 @@ public class Business_Enquiries_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         BoostLog.d("Business_Enquiri", "onCreateView");
-        // Inflate the layout for this fragment
         View mainView =  inflater.inflate(R.layout.fragment_business__enguiries, container, false);
         return mainView ;
     }

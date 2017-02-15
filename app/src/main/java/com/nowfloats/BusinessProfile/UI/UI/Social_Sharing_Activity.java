@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,7 +62,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -525,7 +525,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 "publish_pages", "manage_pages");
         final LoginManager loginManager = LoginManager.getInstance();
         com.facebook.AccessToken currentToken = com.facebook.AccessToken.getCurrentAccessToken();
-        //Log.v("ggg",currentToken+"token");
+        Log.v("ggg",currentToken+"token");
         if (currentToken!=null && !currentToken.isExpired() && currentToken.getPermissions().containsAll(publishPermissions)){
             GraphRequest request = GraphRequest.newGraphPathRequest(
                     currentToken,
@@ -574,7 +574,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 @Override
                 public void onError(FacebookException error) {
                     onFBPageError(from);
-                    //Log.v("ggg",error.toString()+"error");
+                    Log.v("ggg",error.toString()+" error");
                     LoginManager.getInstance().logOut();
                     com.facebook.AccessToken.refreshCurrentAccessTokenAsync();
                    if(pd!=null && !isFinishing())
@@ -933,15 +933,15 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Set permissions = loginResult.getAccessToken().getPermissions();
-                //Log.v("ggg",permissions+"permission");
-                if(!permissions.containsAll(new HashSet(publishPermissions))){
+                Set<String> permissions = loginResult.getAccessToken().getPermissions();
+                boolean contain=permissions.containsAll(publishPermissions);
+                Log.v("ggg",contain+"permission"+loginResult.getAccessToken().getPermissions());
+                if(!contain){
                     loginManager.logInWithPublishPermissions(Social_Sharing_Activity.this, publishPermissions);
                 }else {
 
-
                     final String FACEBOOK_ACCESS_TOKEN = loginResult.getAccessToken().getToken();
-
+                        //Log.v("ggg",FACEBOOK_ACCESS_TOKEN+"ppnull");
                     if(Profile.getCurrentProfile()==null){
                         Bundle parameters = new Bundle();
                         parameters.putString("fields", "id,name,email");
@@ -966,6 +966,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                         meRequest.executeAsync();
 
                     }else {
+                        //Log.v("ggg",Profile.getCurrentProfile().toString());
                         fbPageData(FROM_FB_PAGE);
                         saveFbLoginResults(Profile.getCurrentProfile().getName(),
                                 FACEBOOK_ACCESS_TOKEN,
@@ -983,9 +984,6 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             public void onError(FacebookException error) {
                 onFBError();
                 //Log.v("ggg",error.toString()+"fberror");
-                LoginManager.getInstance().logOut();
-                com.facebook.AccessToken.refreshCurrentAccessTokenAsync();
-                LoginManager.getInstance().logOut();
             }
         });
         loginManager.logInWithReadPermissions(this, readPermissions);
@@ -1028,11 +1026,13 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         Constants.fbShareEnabled = false;
         prefsEditor.putBoolean("fbShareEnabled", false);
         prefsEditor.commit();
-        //Log.v("ggg","fberror");
+        //Log.v("ggg","hello fberror");
+        LoginManager.getInstance().logOut();
+        com.facebook.AccessToken.refreshCurrentAccessTokenAsync();
     }
 
     void onFBPageError(int from) {
-        //Log.v("ggg","fberror");
+        //Log.v("ggg","fbpage error");
         Constants.fbPageShareEnabled = false;
         prefsEditor.putBoolean("fbPageShareEnabled", false);
         prefsEditor.commit();
@@ -1113,7 +1113,9 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
         ivFbPageAutoPull.setImageResource(R.drawable.facebookpage_icon_inactive);
         facebookautopost.setChecked(pref.getBoolean("FBFeedPullAutoPublish",false));
-
+        if(pref.getInt("fbStatus", 3)==2){
+            Methods.showSnackBar(this,"Your Facebook session has expired. Please login.");
+        }
         if (!Util.isNullOrEmpty(session.getFacebookName()) && pref.getInt("fbStatus", 3)==1) {
             facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
             facebookHomeCheckBox.setChecked(true);

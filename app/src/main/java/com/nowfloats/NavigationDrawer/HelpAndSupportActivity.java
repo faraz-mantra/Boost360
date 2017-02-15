@@ -3,9 +3,9 @@ package com.nowfloats.NavigationDrawer;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -21,7 +21,6 @@ import com.nowfloats.NavigationDrawer.API.RiaNetworkInterface;
 import com.nowfloats.NavigationDrawer.model.RiaSupportModel;
 import com.nowfloats.util.Constants;
 import com.thinksity.R;
-
 
 import java.util.HashMap;
 import java.util.Map;
@@ -83,11 +82,12 @@ public class HelpAndSupportActivity extends AppCompatActivity {
         riaNetworkInterface.getMemberForFp(param, new Callback<RiaSupportModel>() {
             @Override
             public void success(final RiaSupportModel riaSupportModel, Response response) {
+                if(pd!=null && pd.isShowing()){
+                    pd.dismiss();
+                }
                 if(riaSupportModel!=null){
                     mRiaSupportModel = riaSupportModel;
-                    if(pd!=null && pd.isShowing()){
-                        pd.dismiss();
-                    }
+
                     if(riaSupportModel.getGender()==1) {
                         tvConsultantName.setText("Ms. " + riaSupportModel.getName());
                         ivHelpAvatar.setImageDrawable(getResources().getDrawable(R.drawable.help_female_avatar));
@@ -110,6 +110,14 @@ public class HelpAndSupportActivity extends AppCompatActivity {
                     });
                     tvEmail.setText(Html.fromHtml("<a href=\"mail:" + riaSupportModel.getEmail()+ "\">" + riaSupportModel.getEmail() + "</a>"));
                     tvTextHelp.setText(Html.fromHtml(riaSupportModel.getName() + " is your dedicated web consultant who will be assisting you with all your queries related to your NowFloats website. You can call her anytime from <b>9 am to 6 pm</b> on all working days."));
+                }
+                else
+                {
+                    finish();
+                    Intent call = new Intent(Intent.ACTION_DIAL);
+                    String callString = "tel:" + getString(R.string.contact_us_number);
+                    call.setData(Uri.parse(callString));
+                    startActivity(call);
                 }
             }
 
@@ -146,6 +154,9 @@ public class HelpAndSupportActivity extends AppCompatActivity {
                     emailIntent.setData(Uri.parse("mailto:"));
                     emailIntent.setType("text/plain");
                     emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{mRiaSupportModel.getEmail()});
+                    if(emailIntent.resolveActivity(getPackageManager())!=null) {
+                        startActivity(emailIntent);
+                    }
                 }
             }
         });
@@ -158,8 +169,8 @@ public class HelpAndSupportActivity extends AppCompatActivity {
         });
 
 
-        tvTextRia.setText(Html.fromHtml("Still having queries? Please write to us at "));
-        tvTextFaq.setText(Html.fromHtml("<a href=\"ria@nowfloats.com\">ria@nowfloats.com</a>. Product related queries, please refer to our <a href=\"https://www.nowfloats.com/faq\">FAQs</a>"));
+        tvTextRia.setText(Html.fromHtml("If your query is unanswered, please contact us at"));
+        tvTextFaq.setText(Html.fromHtml("<a href=\"mailto:ria@nowfloats.com\">ria@nowfloats.com</a>. Product related queries, please refer to our <a href=\"https://www.nowfloats.com/faq\">FAQs</a>"));
         tvTextFaq.setMovementMethod(LinkMovementMethod.getInstance());
 
         pd = ProgressDialog.show(this, "", getString(R.string.please_wait));

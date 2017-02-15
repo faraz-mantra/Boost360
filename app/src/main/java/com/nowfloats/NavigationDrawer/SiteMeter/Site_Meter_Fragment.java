@@ -27,7 +27,6 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.Create_Message_Activity;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
-import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -260,16 +259,19 @@ public class Site_Meter_Fragment extends Fragment {
                     siteData.get(description).setSortChar(2);
                 }
             }else if(siteData.get(i).position==social) {
-                if (Constants.twitterShareEnabled == false && !pref.getBoolean("fbShareEnabled", false) && !pref.getBoolean("fbPageShareEnabled", false) && !getResources().getString(R.string.social_percentage).equals("0")) {
-                    siteData.get(social).setStatus(false);
-                    siteData.get(social).setSortChar(2);
-                } else {
+                if (Constants.twitterShareEnabled && pref.getBoolean("fbShareEnabled", false) && pref.getBoolean("fbPageShareEnabled", false)) {
                     siteMeterTotalWeight += twitterWeight;
                     siteData.get(social).setStatus(true);
                     siteData.get(social).setSortChar(1);
+                } else {
+                    siteData.get(social).setStatus(false);
+                    siteData.get(social).setSortChar(2);
                 }
             }else if(siteData.get(i).position==address) {
-                if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)) && !getResources().getString(R.string.address_percentage).equals("0")) {
+                if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)) &&
+                        !Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LATITUDE))&&
+                        !Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LONGITUDE))&&
+                        !getResources().getString(R.string.address_percentage).equals("0")) {
                     siteMeterTotalWeight += businessAddressWeight;
                     siteData.get(address).setStatus(true);
                     siteData.get(address).setSortChar(1);
@@ -366,7 +368,9 @@ public class Site_Meter_Fragment extends Fragment {
                 break;
             case address:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_HELP_YOUR_CUSTOMERS,null);
-                if(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS))){
+                if(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS))||
+                        Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LATITUDE))||
+                        Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LONGITUDE))){
                     Intent in = new Intent(activity, Business_Address_Activity.class);
                     startActivity(in);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -408,7 +412,7 @@ public class Site_Meter_Fragment extends Fragment {
                 MixPanelController.track(EventKeysWL.SITE_SCORE_GET_YOUR_OWN_IDENTITY,null);
                 MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
                         .title("Get A Domain")
-                        .content("Please drop us a line at ria@nowfloats.com or call us at 1860-123-1233 if you'd like to enable this feature")
+                        .customView(R.layout.dialog_link_layout,false)
                         .positiveText(getString(R.string.ok))
                         .positiveColorRes(R.color.primaryColor)
                         .callback(new MaterialDialog.ButtonCallback() {
@@ -483,7 +487,7 @@ public class Site_Meter_Fragment extends Fragment {
                                     Home_Fragment_Tab.viewPager = null;
                                     dialog.dismiss();
 //                                                    activity.getSupportFragmentManager().popBackStack();
-                                    ((SidePanelFragment.OnItemClickListener) activity).onClick(getResources().getString(R.string.store));
+                                    ((HomeActivity)activity).onClick("Store");
                                 }
                             }).show();
                 }

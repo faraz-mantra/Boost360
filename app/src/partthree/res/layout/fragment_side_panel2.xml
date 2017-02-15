@@ -1,3 +1,10 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    android:background="@color/cell_background_color">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,9 +18,9 @@
         android:layout_height="200dp"
         >
         <FrameLayout
-    android:id="@+id/backgroundImageLay"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+            android:id="@+id/backgroundImageLay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/backgroundImage"
             style="@style/white_label_style"
@@ -123,7 +130,7 @@
                 <com.nowfloats.CustomWidget.roboto_md_36_289dd9
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/what_is_missing"
+                    android:text="@string/your_site_health"
                     android:layout_gravity="right|bottom"
                     android:layout_marginRight="20dp"
                     android:gravity="right"/>
@@ -147,13 +154,6 @@
 
 
     </RelativeLayout>
-
-    <include
-        android:id="@+id/navigationDrawer_main_leftPane"
-        layout="@layout/single_row_card"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/containerDrawerImage" />
 
 
     <LinearLayout
@@ -195,6 +195,13 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/poweredBy"
         android:text="@string/nowfloats"/>
+    <include
+        android:id="@+id/navigationDrawer_main_leftPane"
+        layout="@layout/single_row_card"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/containerDrawerImage"/>
 
 
 </RelativeLayout><!-- From: file:/C:/Vinay/prashant772-boostcode-d282cb67240e/app/src/main/res/layout-xhdpi/fragment_side_panel2.xml -->
+</ScrollView>

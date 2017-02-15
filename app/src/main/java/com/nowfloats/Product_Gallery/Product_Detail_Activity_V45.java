@@ -37,6 +37,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
 import com.nowfloats.Product_Gallery.Model.Product_Gallery_Update_Model;
 import com.nowfloats.Product_Gallery.Model.UpdateValue;
@@ -52,6 +53,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.RiaEventLogger;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
@@ -99,6 +101,8 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
     private final int media_req_id = 5;
     private String[] mPriorityList;
     private int mPriorityVal = 1000000;
+
+    private RiaNodeDataModel mRiaNodedata;
 
 
 
@@ -371,7 +375,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
             }
         }else if(getIntent().hasExtra("new")){
             try{
-            // make keyboard visible
+            mRiaNodedata = getIntent().getParcelableExtra(Constants.RIA_NODE_DATA);
             findViewById(R.id.productLayout).postDelayed(
                     new Runnable() {
                         public void run() {
@@ -385,6 +389,13 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
             save.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(mRiaNodedata!=null) {
+                        RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
+                                mRiaNodedata.getNodeId(), mRiaNodedata.getButtonId(),
+                                mRiaNodedata.getButtonLabel(),
+                                RiaEventLogger.EventStatus.COMPLETED.getValue());
+                        mRiaNodedata = null;
+                    }
                     materialProgress = new MaterialDialog.Builder(activity)
                             .widgetColorRes(R.color.accentColor)
                             .content(getString(R.string.loading))
@@ -856,4 +867,15 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
         }
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mRiaNodedata!=null){
+            RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
+                    mRiaNodedata.getNodeId(), mRiaNodedata.getButtonId(),
+                    mRiaNodedata.getButtonLabel(),
+                    RiaEventLogger.EventStatus.DROPPED.getValue());
+            mRiaNodedata = null;
+        }
+    }
 }

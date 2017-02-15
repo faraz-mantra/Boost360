@@ -5,19 +5,15 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -33,24 +29,17 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Adapters.ExpandableListAdapter;
-import com.nowfloats.Store.Adapters.ItemsRecyclerViewAdapter;
 import com.nowfloats.Store.Adapters.PhotoAdapter;
 import com.nowfloats.Store.Model.ERPRequestModel;
 import com.nowfloats.Store.Model.EnablePackageResponse;
 import com.nowfloats.Store.Model.MailModel;
 import com.nowfloats.Store.Model.MarkAsPaidModel;
 import com.nowfloats.Store.Model.OPCModels.OPCDataMain;
-import com.nowfloats.Store.Model.PaymentTokenResult;
 import com.nowfloats.Store.Model.PhotoItem;
-import com.nowfloats.Store.Model.PurchaseDetail;
-import com.nowfloats.Store.Model.ReceiveDraftInvoiceModel;
-import com.nowfloats.Store.Model.ReceivedDraftInvoice;
-import com.nowfloats.Store.Model.SendDraftInvoiceModel;
 import com.nowfloats.Store.Model.StoreModel;
-import com.nowfloats.Store.Model.SupportedPaymentMethods;
-import com.nowfloats.Store.Model.TaxDetail;
 import com.nowfloats.Store.Model.WidgetPacks;
 import com.nowfloats.Store.Service.IOPCValidation;
 import com.nowfloats.Store.Service.StoreInterface;
@@ -61,18 +50,15 @@ import com.nowfloats.Store.iapUtils.Purchase;
 import com.nowfloats.Volley.AppController;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
-import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.DataBase;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.TwoWayView;
 import com.romeo.mylibrary.Models.OrderDataModel;
-import com.romeo.mylibrary.ui.InstaMojoMainActivity;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -139,9 +125,11 @@ public class StoreDataActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.store_data_action_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
         materialProgress = new MaterialDialog.Builder(this)
                 .widgetColorRes(R.color.accentColor)
                 .content("Please Wait...")
@@ -152,6 +140,7 @@ public class StoreDataActivity extends AppCompatActivity {
         sessionManager = new UserSessionManager(this,StoreDataActivity.this);
         soureClientId = sessionManager.getSourceClientId();
 
+        //Log.d("FCM ID", FirebaseInstanceId.getInstance().getToken());
 //        countryPhoneCode = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE);
         fpID = sessionManager.getFPID();
         try{
@@ -208,10 +197,16 @@ public class StoreDataActivity extends AppCompatActivity {
                                     ArrayList<String> emailList = new ArrayList<String>();
                                     emailList.add("leads@nowfloats.com");
 
-                                    String tag = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toString().toUpperCase();
+                                    String tag = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toUpperCase();
+                                    String number = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER);
+                                    String businessName = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME);
+                                    String email = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL);
+                                    String address = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS);
+
                                     String subj = "Request to activate "+product.Name +" "+ tag+ " site";
-                                    String mailMsg = "Tag: "+tag+"<br>Package Name: "+product.Name+"<br>Package Id: "+product._id
-                                            +"<br>Account Manager Id: "+ soureClientId;
+                                    String mailMsg = "Tag: "+tag+/*"<br>Business Name: "+businessName+"<br>Phone Number: "+number+
+                                            "<br>Email: "+email+"<br>Business Address: "+address+*/"<br>Package Name: "+product.Name+
+                                            "<br>Package Id: "+product._id+"<br>Account Manager Id: "+ soureClientId;
                                     anInterface.mail(new MailModel(soureClientId, mailMsg,subj, emailList),
                                             new Callback<String>() {
                                                 @Override
@@ -1157,59 +1152,6 @@ public class StoreDataActivity extends AppCompatActivity {
 
     }*/
 
-    private void markAsPaid(String amount) {
-        final ProgressDialog pd = ProgressDialog.show(this, "", "Please wait while activating the package...");
-        ERPRequestModel erpRequstModel = new ERPRequestModel();
-        erpRequstModel._nfInternalERPId = "";
-        erpRequstModel.customerEmailId = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL);
-        erpRequstModel.purchasedUnits = 1;
-        erpRequstModel.sendEmail = true;
-        final MarkAsPaidModel markAsPaid = new MarkAsPaidModel();
-        markAsPaid.ClientId  = "A91B82DE3E93446A8141A52F288F69EFA1B09B1D13BB4E55BE743AB547B3489E";
-        try {
-            markAsPaid.ExpectedAmount = Double.parseDouble(amount);
-        }catch (Exception e){
-            if(pd!=null && pd.isShowing()){
-                pd.dismiss();
-            }
-            Toast.makeText(this, "Error while marking the FP paid", Toast.LENGTH_LONG).show();
-            return;
-        }
-        markAsPaid.type = 1;
-        markAsPaid.validityInMths = product.ValidityInMths;
-        markAsPaid.FpId = sessionManager.getFPID();
-        markAsPaid.FpTag  =sessionManager.getFpTag();
-        markAsPaid.IsPaid = true;
-        markAsPaid.currencyCode = product.CurrencyCode;
-        markAsPaid.packageId = product._id;
-        markAsPaid.customerSalesOrderRequest = erpRequstModel;
-        IOPCValidation markAsPaidInterface = Constants.restAdapter.create(IOPCValidation.class);
-        markAsPaidInterface.markAsPaid(markAsPaid, new Callback<String>() {
-            @Override
-            public void success(String s, Response response) {
-                BoostLog.d("StoreDataActivity", "Mark As paid response:" + s);
-                if(pd!=null && pd.isShowing()){
-                    pd.dismiss();
-                }
-                if(s!=null && s.contains("OK")) {
-                    showDialog("Activated", "Your package is successfully activated");
-                }else if(s!=null && s.contains("NFINV")){
-                    showDialog("Activated", "Your package is successfully activated with Invoice Number: " + s);
-                }else{
-                    showDialog("Error", "Error while activating the package. Please Contact Customer Support");
-                    BoostLog.d("StoreDataActivity", " Response not ok");
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                if(pd!=null && pd.isShowing()){
-                    pd.dismiss();
-                }
-                showDialog("Error", "Error while activating the package");
-            }
-        });
-    }
 
     private void showDialog(String title, String msg){
         android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);

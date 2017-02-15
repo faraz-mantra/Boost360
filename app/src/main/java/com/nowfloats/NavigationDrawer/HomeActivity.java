@@ -43,8 +43,9 @@ import com.appsflyer.AppsFlyerConversionListener;
 import com.appsflyer.AppsFlyerLib;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.freshdesk.mobihelp.Mobihelp;
-import com.freshdesk.mobihelp.MobihelpConfig;
+import com.freshdesk.hotline.Hotline;
+import com.freshdesk.hotline.HotlineConfig;
+import com.freshdesk.hotline.HotlineUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.mixpanel.android.mpmetrics.GCMReceiver;
 import com.nineoldandroids.animation.Animator;
@@ -57,9 +58,11 @@ import com.nowfloats.BusinessProfile.UI.UI.Business_Hours_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
 import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
+import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Settings_Fragment;
 import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.Business_Enquiries.Business_Enquiries_Fragment;
+import com.nowfloats.CustomPage.CreateCustomPageActivity;
 import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.CustomPage.CustomPageAdapter;
 import com.nowfloats.CustomPage.CustomPageDeleteInterface;
@@ -75,6 +78,8 @@ import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
 import com.nowfloats.NavigationDrawer.API.KitsuneApi;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
+import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
+import com.nowfloats.Product_Gallery.Product_Detail_Activity_V45;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.nowfloats.RiaFCM.RiaFirebaseMessagingService;
 import com.nowfloats.SiteAppearance.SiteAppearanceFragment;
@@ -121,7 +126,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class HomeActivity extends AppCompatActivity implements  SidePanelFragment.OnItemClickListener
         ,DeepLinkInterface,CustomPageDeleteInterface,Home_Main_Fragment.OnRenewPlanClickListener,
-        CardAdapter_V3.Permission, OffersFragment.OnRenewPlanClickListener {
+        CardAdapter_V3.Permission, OffersFragment.OnRenewPlanClickListener, Analytics_Fragment.RiaCardDeepLinkListener {
     private Toolbar toolbar;
     private SharedPreferences pref = null;
     private DrawerLayout mDrawerLayout;
@@ -159,14 +164,14 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     private final int DEMO_EXPIRE = 3;
     SharedPreferences.Editor prefsEditor;
     private boolean isShownExpireDialog = false;
+    private RiaNodeDataModel mRiaNodeDataModel;
 
     private String TAG = HomeActivity.class.getSimpleName();
 
 
-
     @Override
     protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+       super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     @Override
@@ -183,54 +188,11 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         StrictMode.setThreadPolicy(policy);
 //        GCMIntentService.setHomeActivity(HomeActivity.this);
         Methods.isOnline(HomeActivity.this);
-
-
+        session = new UserSessionManager(getApplicationContext(),HomeActivity.this);
+        setHotlineUser();
         BoostLog.d(TAG, "In on CreateView");
         deepLinkUrl = RiaFirebaseMessagingService.deepLinkUrl;
-        session = new UserSessionManager(getApplicationContext(),HomeActivity.this);
         FPID = session.getFPID();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-//                String Konotor_APP_ID = "3d54f920-9547-48ad-9f60-040713f4e5f2";
-//                String Konotor_APP_KEY = "dd48efe5-7c5f-45e8-9b3e-db558dd6bb5e";
-//                Konotor.getInstance(getApplicationContext())
-//                        .withNoGcmRegistration(true)
-//                        .withUserName(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME))
-//                        .withIdentifier(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG))// optional name by which to display the user
-//                                // optional metadata for your user
-//                        .withUserEmail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL)) 		// optional email address of the user
-//                        .init(Konotor_APP_ID,Konotor_APP_KEY);
-//
-////                String regid = gcm.register(K.ANDROID_PROJECT_SENDER_ID);
-//
-//
-//                Konotor.getInstance(getApplicationContext())
-//                        .withUserMeta("Country", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY))
-//                        .withUserMeta("Category", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))
-//                        .withUserMeta("Business Name",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME))
-//                        .withUserMeta("Payment Level",""+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL))
-//                        .update();
-//
-//                Konotor.getInstance(getApplicationContext())
-//                        .withSupportName("Ria")
-//                                // optional custom name for the support person
-//                        .withFeedbackScreenTitle("Customer Support") 	// optional title to display when asking for feedback
-//                        .withNoAudioRecording(false) // optional - to disable voice messaging
-//                        .withNoPictureMessaging(true) // optional - to disable sending images from camera/gallery
-//                        .withUsesCustomSupportImage(true) // optional - set to true to use a different image to represenent the app on the chat screen. Replace konotor_support_image.png with your desired image
-//                        .withUsesCustomNotificationImage(true) // optional - set to true to use a different notification icon from your default app icon. Replace konotor_chat.png with your desired icon
-//                        .withWelcomeMessage("Welcome to NowFloats Boost! If you have any queries, please leave a message below. Also, you can reach out to us at "+getString(R.string.contact_us_number))		// optional custom welcome message for your app
-//                        .init(Konotor_APP_ID,Konotor_APP_KEY);
-
-                MobihelpConfig config = new MobihelpConfig("https://nowfloats.freshdesk.com",
-                        "nowfloatsboost-1-eb43cfea648e2fd8a088c756519cb4d6",
-                        "e13c031f28ba356a76110e8d1e2c4543c84670d5");
-                config.setPrefetchSolutions(false);
-                Mobihelp.init(HomeActivity.this,config);
-
-            }
-        }).start();
 
         /*if (getIntent().hasExtra("message")){
             StorebizFloats = getIntent().getExtras().getParcelableArrayList("message");
@@ -294,12 +256,12 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             @Override
             public void run() {
                 try {
-                    PackageInfo info = getPackageManager().getPackageInfo("com.thinksity",
+                    PackageInfo info = getPackageManager().getPackageInfo(BuildConfig.APPLICATION_ID,
                             PackageManager.GET_SIGNATURES);
                     for (Signature signature : info.signatures) {
                         MessageDigest md = MessageDigest.getInstance("SHA");
                         md.update(signature.toByteArray());
-                        BoostLog.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+                        BoostLog.v("ggg KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
                     }
                 } catch (PackageManager.NameNotFoundException e) {
 
@@ -422,6 +384,24 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         }
     }
 
+    private void setHotlineUser() {
+        HotlineConfig hlConfig=new HotlineConfig("f3e79ba0-6b2e-4793-aaeb-e226b43473fb","a2cc59f2-d2d1-4a8f-a27a-5586a1defd6d");
+
+        hlConfig.setVoiceMessagingEnabled(true);
+        hlConfig.setCameraCaptureEnabled(true);
+        hlConfig.setPictureMessagingEnabled(true);
+
+        Hotline.getInstance(this).init(hlConfig);
+
+        HotlineUser hlUser=Hotline.getInstance(this).getUser();
+        hlUser.setName(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+        hlUser.setEmail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
+        hlUser.setPhone(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE),
+                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
+        Hotline.getInstance(this).updateUser(hlUser);
+
+    }
+
     public static void setGCMId(String id){
         new Ria_Register(activity,Constants.clientId,"ANDROID",id);
         //registerChat(FPID,id);
@@ -482,18 +462,40 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         }*/
     }
 
-    public void DeepLinkPage(String url) {
+    public void DeepLinkPage(String url, boolean isFromRia) {
         BoostLog.d("Deep Link URL","Deep Link URL : "+url);
+
         Constants.GCM_Msg = false;
         if(!Util.isNullOrEmpty(url)){
-            if(url.contains(getResources().getString(R.string.deeplink_update)) || url.contains(getResources().getString(R.string.deeplink_featuredimage))){
+            if(url.contains(getResources().getString(R.string.deeplink_update))){
 //                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 //                ft.replace(R.id.mainFrame,homeFragment, "homeFragment").commit();
 
-                Intent queries = new Intent(HomeActivity.this, Create_Message_Activity.class);
-                startActivity(queries);
-            }
-            else  if(url.contains(getResources().getString(R.string.deeplink_upgrade))){
+                Intent createUpdate = new Intent(HomeActivity.this, Create_Message_Activity.class);
+                if(isFromRia && mRiaNodeDataModel!=null) {
+                    createUpdate.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
+                }
+                startActivity(createUpdate);
+            }else if(url.contains(getResources().getString(R.string.deeplink_featuredimage))){
+                Intent featureImage = new Intent(HomeActivity.this, Edit_Profile_Activity.class);
+                if(isFromRia && mRiaNodeDataModel!=null) {
+                    featureImage.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
+                }
+                startActivity(featureImage);
+            }else if(url.contains("addProduct")){
+                Intent productActivity = new Intent(HomeActivity.this, Product_Detail_Activity_V45.class);
+                productActivity.putExtra("new", "");
+                if(isFromRia && mRiaNodeDataModel!=null) {
+                    productActivity.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
+                }
+                startActivity(productActivity);
+            }else if(url.contains("addCustomPage")){
+                Intent createCustomPage = new Intent(HomeActivity.this, CreateCustomPageActivity.class);
+                if(isFromRia && mRiaNodeDataModel!=null) {
+                    createCustomPage.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
+                }
+                startActivity(createCustomPage);
+            } else  if(url.contains(getResources().getString(R.string.deeplink_upgrade))){
                 final String appPackageName = HomeActivity.this.getPackageName(); // getPackageName() from Context or Activity object
                 try {
                     HomeActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
@@ -503,6 +505,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             }
             else if(url.contains(getResources().getString(R.string.deeplink_analytics))){
                 Constants.deepLinkAnalytics = true ;
+                homeFragment.setFragmentTab(1);
             }
             else if(url.contains(getResources().getString(R.string.deeplink_bizenquiry)) || url.contains("enquiries")){
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -523,10 +526,38 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             else if(url.contains(getResources().getString(R.string.deeplink_searchqueries))){
                 Intent queries = new Intent(HomeActivity.this, SearchQueries.class);
                 startActivity(queries);
+            }else if(url.contains("blog")){
+                String url1 = "";
+                if (!Util.isNullOrEmpty(url)) {
+                    url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+                } else {
+                    url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
+                            + getResources().getString(R.string.tag_for_partners);
+                }
+                Uri uri = Uri.parse(url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
             }
             else if(url.contains("subscribers")){
                 Intent subscribers = new Intent(HomeActivity.this, SubscribersActivity.class);
                 startActivity(subscribers);
+            }else if(url.contains("subscribers")){
+                String url2 = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+                if (!Util.isNullOrEmpty(url)) {
+                    String eol = System.getProperty("line.separator");
+                    url2 = getString(R.string.visit_to_new_website)
+                            + eol + url.toLowerCase();
+                }
+                else{
+                    String eol = System.getProperty("line.separator");
+                    url2 = getString(R.string.visit_to_new_website)
+                            + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
+                            + getResources().getString(R.string.tag_for_partners);
+                }
+//            pref = getSharedPreferences(
+//                    Constants.PREF_NAME, Activity.MODE_PRIVATE);
+//            prefsEditor = pref.edit();
+                shareWebsite(url2);
             }
             else if(url.contains("accountstatus")){
                 Intent accountInfo = new Intent(HomeActivity.this, AccountInfoActivity.class);
@@ -545,6 +576,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 Intent queries = new Intent(HomeActivity.this, Social_Sharing_Activity.class);
                 startActivity(queries);
             }
+            else if(url.contains("notification")){
+                homeFragment.setFragmentTab(2);
+            }
             else if(url.contains(getResources().getString(R.string.deeplink_profile))){
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame,
@@ -554,19 +588,19 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 Intent queries = new Intent(HomeActivity.this, Contact_Info_Activity.class);
                 startActivity(queries);
             }
-            else if(url.contains(getResources().getString(R.string.deeplink_bizaddress))){
+            else if(url.contains(getResources().getString(R.string.deeplink_bizaddress))||url.contains("address")){
                 Intent queries = new Intent(HomeActivity.this, Business_Address_Activity.class);
                 startActivity(queries);
             }
-            else if(url.contains(getResources().getString(R.string.deeplink_bizhours))){
+            else if(url.contains(getResources().getString(R.string.deeplink_bizhours))||url.contains("hours")){
                  Intent queries = new Intent(HomeActivity.this, Business_Hours_Activity.class);
                  startActivity(queries);
             }
-            else if(url.contains(getResources().getString(R.string.deeplink_bizlogo))){
+            else if(url.contains(getResources().getString(R.string.deeplink_bizlogo))||url.contains("logo")){
                 Intent queries = new Intent(HomeActivity.this, Business_Logo_Activity.class);
                 startActivity(queries);
             }
-            else if(url.contains(getResources().getString(R.string.deeplink_nfstoreDomainTTBCombo))){
+            else if(url.contains(getResources().getString(R.string.deeplink_nfstoreDomainTTBCombo))|| url.contains("bookdomain")){
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame, businessEnquiriesFragment)
                     .commit();
@@ -576,7 +610,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 ft.replace(R.id.mainFrame, siteMeterFragment)
                         .commit();
             }
-            else if(url.contains(getResources().getString(R.string.deeplink_imageGallery))){
+            else if(url.contains(getResources().getString(R.string.deeplink_imageGallery))||
+                    url.contains("imagegallery") || url.contains("imagegallery")){
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                   ft.replace(R.id.mainFrame,imageGalleryFragment).
                           commit();
@@ -850,7 +885,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
         plusAddButton.setVisibility(View.GONE);
         if(Constants.GCM_Msg){
-            DeepLinkPage(RiaFirebaseMessagingService.deepLinkUrl);
+            DeepLinkPage(RiaFirebaseMessagingService.deepLinkUrl, false);
             Constants.GCM_Msg = false;
         }
 
@@ -1142,13 +1177,14 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     //           replace(R.id.mainFrame, homeFragment).addToBackStack("Home").commit();
                 }else if(nextScreen.equals(getString(R.string.chat)))
                 {
+                    //getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,hotlineFragment, "chatfragment").commit();
                     //Konotor.getInstance(getApplicationContext()).launchFeedbackScreen(HomeActivity.this);
-                    Mobihelp.showConversations(HomeActivity.this);
+                    Hotline.showConversations(HomeActivity.this);
                     //Konotor.getInstance(getApplicationContext()).launchFeedbackScreen(HomeActivity.this);
                 }else  if(nextScreen.equals(getString(R.string.call)))
                 {
                     String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-                    if(paymentState==null || paymentState.equals("-1")) {
+                    if(paymentState==null || paymentState.equals("-1") || paymentState.equals("0")) {
                         Intent call = new Intent(Intent.ACTION_DIAL);
                         String callString = "tel:" + getString(R.string.contact_us_number);
                         call.setData(Uri.parse(callString));
@@ -1176,7 +1212,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 //                    Constants.PREF_NAME, Activity.MODE_PRIVATE);
 //            prefsEditor = pref.edit();
                     shareWebsite(url);
-                }else if(nextScreen.equals(getString(R.string.business_enquiries_title)))
+                }/*else if(nextScreen.equals(getString(R.string.business_enquiries_title)))
                 {
                     // ft.remove(homeFragment);
 
@@ -1185,7 +1221,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     plusAddButton.setVisibility(View.GONE);
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, businessEnquiriesFragment).commit();
-                }else if(nextScreen.equals("Settings"))
+                }*/else if(nextScreen.equals("Settings"))
                 {
                     //ft.replace(R.id.homeTabViewpager, settingsFragment);
                     //ft.commit();
@@ -1276,7 +1312,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
     @Override
     public void deepLink(String url) {
-        DeepLinkPage(url);
+        DeepLinkPage(url, false);
     }
 
     @Override
@@ -1467,6 +1503,12 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     @Override
     public void getPermission() {
         BoostLog.d("Yeah:Permission ", "I am getting called");
+    }
+
+    @Override
+    public void onDeepLink(String deepLinkUrl, boolean isFromRia, RiaNodeDataModel nodeDataModel) {
+        mRiaNodeDataModel = nodeDataModel;
+        DeepLinkPage(deepLinkUrl, isFromRia);
     }
 }
 

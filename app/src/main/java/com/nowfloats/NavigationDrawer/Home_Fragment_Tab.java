@@ -2,7 +2,6 @@ package com.nowfloats.NavigationDrawer;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -67,13 +66,13 @@ public class Home_Fragment_Tab extends Fragment {
         activity = getActivity();
         session = new UserSessionManager(activity.getApplicationContext(),activity);
         bus = BusProvider.getInstance().getBus();
-        new Thread(new Runnable() {
+        /*new Thread(new Runnable() {
             @Override
             public void run() {
                 if(activity==null){activity = getActivity();}
-                tabPagerAdapter = new TabPagerAdapter(getChildFragmentManager(), activity);
+
             }
-        }).start();
+        }).start();*/
     }
 
     @Subscribe
@@ -93,6 +92,7 @@ public class Home_Fragment_Tab extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View mainView = inflater.inflate(R.layout.fragment_home__fragment__tab, container, false);
+        tabPagerAdapter = new TabPagerAdapter(getChildFragmentManager(), activity);
         return mainView ;
     }
 
@@ -180,8 +180,7 @@ public class Home_Fragment_Tab extends Fragment {
                 if(Home_Main_Fragment.progressBar!=null)
                     Home_Main_Fragment.progressBar.setVisibility(View.VISIBLE);
                 Constants.createMsg = false;
-            }else
-            if(Constants.deepLinkAnalytics)
+            }else if(Constants.deepLinkAnalytics)
             {
                 viewPager.setCurrentItem(1);
                 Constants.deepLinkAnalytics = false ;
@@ -200,5 +199,13 @@ public class Home_Fragment_Tab extends Fragment {
                 });
             }
         }, 500);*/
+    }
+    public void setFragmentTab(int i){
+        if(!isAdded()) return;
+        if(Constants.deepLinkAnalytics)
+        {
+            viewPager.setCurrentItem(i);
+            Constants.deepLinkAnalytics = false ;
+        }
     }
 }

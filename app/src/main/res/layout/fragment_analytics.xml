@@ -12,6 +12,82 @@
         android:orientation="vertical">
 
         <android.support.v7.widget.CardView
+            android:id="@+id/cvRiaCard"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            card_view:contentPadding="15dp">
+            <LinearLayout
+                android:id="@+id/llRiaCrdContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/sidepanel_chat"/>
+                    <com.nowfloats.CustomWidget.roboto_md_48__565656
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_vertical"
+                        android:text="Your Customers Love you"
+                        android:id="@+id/tvRiaCardHeader"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llRiaCardSections"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_height="wrap_content">
+
+                </LinearLayout>
+                <LinearLayout
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <Button
+                        android:id="@+id/btnRiaResponse1"
+                        android:background="@drawable/ria_positive_btn"
+                        android:textColor="@color/white"
+                        android:text="Sure!"
+                        android:textAllCaps="false"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp" />
+
+                    <Button
+                        android:id="@+id/btnRiaResponse2"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/ria_negative"
+                        android:textColor="@color/white"
+                        android:text="Not Now"
+                        android:textAllCaps="false"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
             android:id="@+id/card_view"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
@@ -22,7 +98,7 @@
             card_view:cardCornerRadius="3dp"
             android:elevation="3dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="10dp">
 
             <LinearLayout
                 android:id="@+id/numberOfVisitsLinearLayout"
@@ -243,16 +319,16 @@
                             android:layout_height="wrap_content"
                             android:visibility="gone"
                             android:id="@+id/subscriber_progressBar" />
-                    <TextView
-                        fontPath="Roboto-Medium.ttf"
-                        android:id="@+id/analytics_screen_subscriber_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="visible"
-                        android:text="1125"
-                        android:textSize="33dp"
-                        android:textColor="@color/primaryColor"
-                        tools:ignore="MissingPrefix" />
+                        <TextView
+                            fontPath="Roboto-Medium.ttf"
+                            android:id="@+id/analytics_screen_subscriber_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="visible"
+                            android:text="1125"
+                            android:textSize="33dp"
+                            android:textColor="@color/primaryColor"
+                            tools:ignore="MissingPrefix" />
                     </FrameLayout>
                     <ImageView
                         android:layout_width="34dp"
