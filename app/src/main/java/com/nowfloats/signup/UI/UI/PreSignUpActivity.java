@@ -227,7 +227,10 @@ public class PreSignUpActivity extends AppCompatActivity implements
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                String country_code = Country_CodeMap.get(countryEditText.getText().toString());
+                String country_code = null;
+                if(Country_CodeMap!=null) {
+                    country_code = Country_CodeMap.get(countryEditText.getText().toString());
+                }
                 makeAutoCompleteFilter(country_code);
 
                 final PendingResult<AutocompletePredictionBuffer> result =
