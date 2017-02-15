@@ -39,6 +39,7 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.PostModel;
+import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
 import com.nowfloats.NotificationCenter.AlertArchive;
 import com.nowfloats.Twitter.TwitterConstants;
@@ -50,6 +51,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.RiaEventLogger;
 import com.thinksity.R;
 
 import java.io.File;
@@ -103,6 +105,7 @@ public class Create_Message_Activity extends AppCompatActivity {
     private SharedPreferences mSharedPreferences = null;
 
     private int mFbPageShare = 0, mFbProfileShare = 0, mTwitterShare = 0;
+    private RiaNodeDataModel mRiaNodedata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +135,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mRiaNodedata = getIntent().getParcelableExtra(Constants.RIA_NODE_DATA);
 
         post = (TextView) toolbar.findViewById(R.id.saveTextView);
         TextView titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
@@ -182,6 +186,12 @@ public class Create_Message_Activity extends AppCompatActivity {
                         new AlertArchive(Constants.alertInterface,"FEATURE IMAGE",session.getFPID());
                     }else{
                         new AlertArchive(Constants.alertInterface,"UPDATE",session.getFPID());
+                    }
+                    if(mRiaNodedata!=null){
+                        RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
+                                mRiaNodedata.getNodeId(), mRiaNodedata.getButtonId(),
+                                mRiaNodedata.getButtonLabel(), RiaEventLogger.EventStatus.COMPLETED.getValue());
+                        mRiaNodedata = null;
                     }
                     finish();
                     overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
@@ -375,6 +385,18 @@ public class Create_Message_Activity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mRiaNodedata!=null){
+            RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
+                    mRiaNodedata.getNodeId(), mRiaNodedata.getButtonId(),
+                    mRiaNodedata.getButtonLabel(), RiaEventLogger.EventStatus.DROPPED.getValue());
+            mRiaNodedata = null;
+        }
+    }
+
     public void choosePicture() {
         final MaterialDialog dialog = new MaterialDialog.Builder(activity)
                 .customView(R.layout.featuredimage_popup,true)

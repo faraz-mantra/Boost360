@@ -77,6 +77,27 @@
                         android:layout_height="wrap_content"
                         android:text=""/>
                 </TableRow>
+                <TableRow
+                    android:visibility="gone"
+                    android:id="@+id/tr_tan_no"
+                    android:layout_marginTop="5dp">
+                    <TextView
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TAN Number"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"/>
+
+                    <TextView
+                        android:id="@+id/tv_user_tan_no"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""/>
+                </TableRow>
             </TableLayout>
             <LinearLayout
                 android:id="@+id/ll_items"
@@ -141,6 +162,24 @@
                         android:text=":"/>
                     <TextView
                         android:id="@+id/tv_taxes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""/>
+                </TableRow>
+                <TableRow
+                    android:visibility="gone"
+                    android:id="@+id/tr_tds_amount">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="TDS Amount"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":"/>
+                    <TextView
+                        android:id="@+id/tv_tds_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""/>

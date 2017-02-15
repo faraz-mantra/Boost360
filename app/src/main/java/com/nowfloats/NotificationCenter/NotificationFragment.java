@@ -193,9 +193,9 @@ public class NotificationFragment extends Fragment{
                 @Override
                 public void success(ArrayList<AlertModel> alertModels, Response response) {
                     Log.i("Alerts Success","");
-                    if (alertModels!=null && alertModels.size() > 0){
+                    if (alertModels!=null && alertModels.size() > 0 && getActivity()!=null){
                         mIsAlertShown = true;
-                        adapter = new NotificationAdapter(activity,alertModels,alertInterface,session,bus);
+                        adapter = new NotificationAdapter(getActivity(),alertModels,alertInterface,session,bus);
                         recyclerView.setAdapter(adapter);
                     }
                     moreAlerts("0");
@@ -204,7 +204,9 @@ public class NotificationFragment extends Fragment{
                 @Override
                 public void failure(RetrofitError error) {
                     Log.i("loadAlerts failure",""+error.getMessage());
-                    Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong_try_again));
+                    if(getActivity()!=null) {
+                        Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong_try_again));
+                    }
                     progress_layout.setVisibility(View.GONE);
                 }
             });

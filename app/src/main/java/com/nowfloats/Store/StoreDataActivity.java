@@ -1152,59 +1152,6 @@ public class StoreDataActivity extends AppCompatActivity {
 
     }*/
 
-    private void markAsPaid(String amount) {
-        final ProgressDialog pd = ProgressDialog.show(this, "", "Please wait while activating the package...");
-        ERPRequestModel erpRequstModel = new ERPRequestModel();
-        erpRequstModel._nfInternalERPId = "";
-        erpRequstModel.customerEmailId = sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL);
-        erpRequstModel.purchasedUnits = 1;
-        erpRequstModel.sendEmail = true;
-        final MarkAsPaidModel markAsPaid = new MarkAsPaidModel();
-        markAsPaid.ClientId  = "A91B82DE3E93446A8141A52F288F69EFA1B09B1D13BB4E55BE743AB547B3489E";
-        try {
-            markAsPaid.ExpectedAmount = Double.parseDouble(amount);
-        }catch (Exception e){
-            if(pd!=null && pd.isShowing()){
-                pd.dismiss();
-            }
-            Toast.makeText(this, "Error while marking the FP paid", Toast.LENGTH_LONG).show();
-            return;
-        }
-        markAsPaid.type = 1;
-        markAsPaid.validityInMths = product.ValidityInMths;
-        markAsPaid.FpId = sessionManager.getFPID();
-        markAsPaid.FpTag  =sessionManager.getFpTag();
-        markAsPaid.IsPaid = true;
-        markAsPaid.currencyCode = product.CurrencyCode;
-        markAsPaid.packageId = product._id;
-        markAsPaid.customerSalesOrderRequest = erpRequstModel;
-        IOPCValidation markAsPaidInterface = Constants.restAdapter.create(IOPCValidation.class);
-        markAsPaidInterface.markAsPaid(markAsPaid, new Callback<String>() {
-            @Override
-            public void success(String s, Response response) {
-                BoostLog.d("StoreDataActivity", "Mark As paid response:" + s);
-                if(pd!=null && pd.isShowing()){
-                    pd.dismiss();
-                }
-                if(s!=null && s.contains("OK")) {
-                    showDialog("Activated", "Your package is successfully activated");
-                }else if(s!=null && s.contains("NFINV")){
-                    showDialog("Activated", "Your package is successfully activated with Invoice Number: " + s);
-                }else{
-                    showDialog("Error", "Error while activating the package. Please Contact Customer Support");
-                    BoostLog.d("StoreDataActivity", " Response not ok");
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                if(pd!=null && pd.isShowing()){
-                    pd.dismiss();
-                }
-                showDialog("Error", "Error while activating the package");
-            }
-        });
-    }
 
     private void showDialog(String title, String msg){
         android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
