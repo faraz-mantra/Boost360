@@ -191,6 +191,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         Methods.isOnline(HomeActivity.this);
         session = new UserSessionManager(getApplicationContext(),HomeActivity.this);
         setHotlineUser();
+        //Log.v("ggg ",FirebaseInstanceId.getInstance().getToken());
         BoostLog.d(TAG, "In on CreateView");
         deepLinkUrl = RiaFirebaseMessagingService.deepLinkUrl;
         FPID = session.getFPID();

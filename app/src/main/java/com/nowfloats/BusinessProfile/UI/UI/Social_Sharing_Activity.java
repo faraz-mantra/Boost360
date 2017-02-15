@@ -291,9 +291,12 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
 
                 }*/
+
                 if(facebookautopost.isChecked()){
+                    // connecting to auto pull
                     fbPageData(FROM_AUTOPOST);
                 }else {
+                    //disconnected to auto pull
                    updateAutopull(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME),false);
                 }
 
@@ -524,8 +527,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         final List<String> publishPermissions = Arrays.asList("publish_actions",
                 "publish_pages", "manage_pages");
         final LoginManager loginManager = LoginManager.getInstance();
-        com.facebook.AccessToken currentToken = com.facebook.AccessToken.getCurrentAccessToken();
-        Log.v("ggg",currentToken+"token");
+    /*    com.facebook.AccessToken currentToken = com.facebook.AccessToken.getCurrentAccessToken();
+
         if (currentToken!=null && !currentToken.isExpired() && currentToken.getPermissions().containsAll(publishPermissions)){
             GraphRequest request = GraphRequest.newGraphPathRequest(
                     currentToken,
@@ -539,7 +542,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                     });
 
             request.executeAsync();
-        }else {
+        }else {*/
             loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                 @Override
                 public void onSuccess(LoginResult loginResult) {
@@ -719,7 +722,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
 
         });*/
-    }
+
 
     private void processGraphResponse(final GraphResponse response, final int from) {
         if(from==FROM_AUTOPOST && pd!=null)
@@ -832,6 +835,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                                             }
                                         }).show();
                             } else {
+                                facebookautopost.setChecked(false);
                                 Methods.materialDialog(activity, "Alert", getString(R.string.look_like_no_facebook_page));
                             }
                         }
@@ -935,7 +939,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             public void onSuccess(LoginResult loginResult) {
                 Set<String> permissions = loginResult.getAccessToken().getPermissions();
                 boolean contain=permissions.containsAll(publishPermissions);
-                Log.v("ggg",contain+"permission"+loginResult.getAccessToken().getPermissions());
+               // Log.v("ggg",contain+"permission"+loginResult.getAccessToken().getPermissions());
                 if(!contain){
                     loginManager.logInWithPublishPermissions(Social_Sharing_Activity.this, publishPermissions);
                 }else {
@@ -1113,23 +1117,23 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
         ivFbPageAutoPull.setImageResource(R.drawable.facebookpage_icon_inactive);
         facebookautopost.setChecked(pref.getBoolean("FBFeedPullAutoPublish",false));
-        if(pref.getInt("fbStatus", 3)==2){
-            Methods.showSnackBar(this,"Your Facebook session has expired. Please login.");
+        if(pref.getInt("fbStatus", 0)==2){
+            Methods.showSnackBarNegative(this,"Your Facebook session has expired. Please login.");
         }
-        if (!Util.isNullOrEmpty(session.getFacebookName()) && pref.getInt("fbStatus", 3)==1) {
+        if (!Util.isNullOrEmpty(session.getFacebookName()) && (pref.getInt("fbStatus", 0)==1 || pref.getInt("fbStatus",0)==3)) {
             facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
             facebookHomeCheckBox.setChecked(true);
             facebookHomeStatus.setVisibility(View.VISIBLE);
             facebookHomeStatus.setText(session.getFacebookName());
 
         }
-        if (!Util.isNullOrEmpty(session.getFacebookPage()) && pref.getInt("fbPageStatus", 3) ==1) {
+        if (!Util.isNullOrEmpty(session.getFacebookPage()) && pref.getInt("fbPageStatus", 0)==1) {
             facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
             facebookPageCheckBox.setChecked(true);
             facebookPageStatus.setVisibility(View.VISIBLE);
             facebookPageStatus.setText(session.getFacebookPage());
         }
-        if(pref.getBoolean("FBFeedPullAutoPublish",false)){
+        if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))&& pref.getBoolean("FBFeedPullAutoPublish",false)){
             ivFbPageAutoPull.setImageResource(R.drawable.facebook_page);
             fbPullStatus.setText(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME));
             fbPullStatus.setVisibility(View.VISIBLE);
@@ -1207,7 +1211,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 //e.putBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, true);
                 e.putString(TwitterConstants.PREF_USER_NAME, username);
                 //Log.v("ggg",username+"twittername");
-                e.commit();
+                e.apply();
 
             } catch (TwitterException e1) {
                 BoostLog.d("Failed to Save", e1.getMessage());

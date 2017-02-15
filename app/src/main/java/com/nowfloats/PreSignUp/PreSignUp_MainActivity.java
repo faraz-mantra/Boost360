@@ -714,7 +714,7 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
             }
             if (location != null) {
                 ReverseGeoCoderAsyncTask task = new ReverseGeoCoderAsyncTask(this, location);
-                Log.d("ILUD location", String.valueOf(location.getLatitude()) + " " + String.valueOf(location.getLongitude()));
+                //Log.d("ILUD location", String.valueOf(location.getLatitude()) + " " + String.valueOf(location.getLongitude()));
                 try {
                     task.execute().get();
                 } catch (InterruptedException e) {

@@ -192,7 +192,7 @@ public class Analytics_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 SharedPreferences pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-                int status =pref.getInt("fbPageStatus",3);
+                int status =pref.getInt("fbPageStatus",0);
 
                 if(pref.getBoolean("fbPageShareEnabled",false) && status==1)
                 {

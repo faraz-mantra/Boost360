@@ -92,12 +92,15 @@ public class Get_FP_Details_Service {
         final UserSessionManager session = new UserSessionManager(activity.getApplicationContext(), activity);
         final SharedPreferences pref = activity.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         session.storeFPDetails(Key_Preferences.FB_PULL_PAGE_NAME, null);
+
         session.storeFPDetails(Key_Preferences.FB_PULL_ENABLED, "false");
         session.storeFPDetails(Key_Preferences.FB_PULL_COUNT, "0");
+        pref.edit().putBoolean("FBFeedPullAutoPublish",false).apply();
         Facebook_Auto_Publish_API.autoPullApi apis=Facebook_Auto_Publish_API.getAdapter();
         apis.getFacebookAutoPull(fpID, Constants.clientId, new Callback<GetAutoPull>() {
             @Override
             public void success(GetAutoPull obj, Response response) {
+                //Log.v("ggg","page "+obj);
                 if(obj==null || obj.toString().length()==0) return;
 
                     boolean autoPublish=obj.getAutoPublish();
@@ -162,8 +165,8 @@ public class Get_FP_Details_Service {
         editor.putBoolean("fbPageShareEnabled", false);
         session.storeFacebookPage(null);
         editor.putString("fbPageAccessId", null);
-        editor.putInt("fbStatus", 3);
-        editor.putInt("fbPageStatus",3);
+        editor.putInt("fbStatus", 0);
+        editor.putInt("fbPageStatus",0);
         editor.apply();
         SharedPreferences.Editor tPrefEditor = twitterPref.edit();
         tPrefEditor.putBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false);
