@@ -128,6 +128,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class HomeActivity extends AppCompatActivity implements  SidePanelFragment.OnItemClickListener
         ,DeepLinkInterface,CustomPageDeleteInterface,Home_Main_Fragment.OnRenewPlanClickListener,
         CardAdapter_V3.Permission, OffersFragment.OnRenewPlanClickListener, Analytics_Fragment.RiaCardDeepLinkListener {
+
     private Toolbar toolbar;
     private SharedPreferences pref = null;
     private DrawerLayout mDrawerLayout;
@@ -163,6 +164,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     private final int LIGHT_HOUSE_EXPIRE = 0;
     private final int WILD_FIRE_EXPIRE = 1;
     private final int DEMO_EXPIRE = 3;
+    private static final int WILD_FIRE_PURCHASE = 2;
     SharedPreferences.Editor prefsEditor;
     private boolean isShownExpireDialog = false;
 
@@ -1437,7 +1439,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 dialogImage = R.drawable.androidexpiryxxxhdpi;
                 dialogImageBgColor = Color.parseColor("#ff0010");
                 break;
-
             case WILD_FIRE_EXPIRE:
                 boolean ignoreclicked = pref.getBoolean("IGNORE_CLICKED", false);
                 BoostLog.d("ILUD Boolean Vals: ", String.valueOf(ignoreclicked) + "   " + String.valueOf(dialogShowFlag));
@@ -1517,7 +1518,29 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             message.setText(dialogMessage);
         }
     }
+    private void showWildFire(){
+        View view = getLayoutInflater().inflate(R.layout.pop_up_restrict_post_message,null);
+        mExpireDailog = new MaterialDialog.Builder(this)
+                .customView(view,true)
+                .backgroundColorRes(R.color.white)
+                .positiveText("Connect with your customers instantly!")
+                .negativeText("The all new WildFire Mini Plan lets you reach out to your customers, " +
+                        "track all thier phone calls and get good leads. Start your 45 day plan now!")
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog mExpireDailog) {
+                        super.onPositive(mExpireDailog);
+                        openStore();
+                        mExpireDailog.dismiss();
+                    }
 
+                    @Override
+                    public void onNegative(MaterialDialog mExpireDailog) {
+                        super.onNegative(mExpireDailog);
+                        mExpireDailog.dismiss();
+                    }
+                }).show();
+    }
     @Override
     public void getPermission() {
         BoostLog.d("Yeah:Permission ", "I am getting called");
