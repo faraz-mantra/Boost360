@@ -36,12 +36,14 @@ import com.nowfloats.BusinessProfile.UI.API.SetBusinessCategoryAsyncTask;
 import com.nowfloats.BusinessProfile.UI.API.UploadProfileAsyncTask;
 import com.nowfloats.BusinessProfile.UI.API.uploadIMAGEURI;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NotificationCenter.AlertArchive;
 import com.nowfloats.signup.UI.API.API_Layer;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.RiaEventLogger;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
@@ -72,6 +74,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
 
     private final int media_req_id = 5;
     private final int gallery_req_id = 6;
+    private RiaNodeDataModel mRiaNodeDataModel;
 
 
     @Override
@@ -90,6 +93,8 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         buzzname = (EditText)findViewById(R.id.businessName);
         category = (EditText)findViewById(R.id.businessCategory);
         buzzdescription = (EditText) findViewById(R.id.businessDesciption);
+
+        mRiaNodeDataModel = getIntent().getParcelableExtra(Constants.RIA_NODE_DATA);
 
 //        yourName_textlineTextView = (TextView) findViewById(R.id.yourName_textline);
 //        businessName_textlineTextView = (TextView) findViewById(R.id.businessName_textline);
@@ -117,7 +122,14 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         saveTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 uploadProfile();
+                if(mRiaNodeDataModel!=null){
+                    RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
+                            mRiaNodeDataModel.getNodeId(), mRiaNodeDataModel.getButtonId(),
+                            mRiaNodeDataModel.getButtonLabel(), RiaEventLogger.EventStatus.COMPLETED.getValue());
+                    mRiaNodeDataModel = null;
+                }
                 //UploadProfileAsyncTask upload = new UploadProfileAsyncTask(Edit_Profile_Activity.this,)
             }
         });
@@ -312,19 +324,15 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         Initdata();
     }
 
-    private void businessCategoryDialog() {
-
-//        if (cat != null) {
-//            selectCats();
-//        } else {
-//            if (Util.isNetworkStatusAvialable(this)) {
-//                loadCats();
-//            } else {
-//                Toast.makeText(this,
-//                        "Please check your internet connection and try again",
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//        }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mRiaNodeDataModel!=null){
+            RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
+                    mRiaNodeDataModel.getNodeId(), mRiaNodeDataModel.getButtonId(),
+                    mRiaNodeDataModel.getButtonLabel(), RiaEventLogger.EventStatus.DROPPED.getValue());
+            mRiaNodeDataModel = null;
+        }
     }
 
     public void selectCats() {
