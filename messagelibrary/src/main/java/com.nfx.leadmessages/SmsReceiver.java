@@ -1,15 +1,19 @@
 package com.nfx.leadmessages;
 
+import android.*;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.provider.Telephony;
+import android.support.v4.app.ActivityCompat;
 import android.telephony.SmsMessage;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
@@ -24,7 +28,7 @@ import static android.content.Context.POWER_SERVICE;
  */
 
 public class SmsReceiver extends BroadcastReceiver {
-    String fpId,mobileId;
+    String fpId,mobileId=null;
 
     PowerManager.WakeLock wakeLock;
     PowerManager powerManager;
@@ -35,7 +39,11 @@ public class SmsReceiver extends BroadcastReceiver {
         Log.v("ggg","on receive");
         SharedPreferences pref =context.getSharedPreferences(Constants.SHARED_PREF, Context.MODE_PRIVATE);
         fpId =pref.getString(Constants.FP_ID,null);
-        mobileId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        if(ActivityCompat.checkSelfPermission(context, android.Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED){
+            TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            mobileId = tm.getDeviceId();
+        }
+        //mobileId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
 
         if(mobileId == null || fpId == null){
             return;
@@ -67,7 +75,7 @@ public class SmsReceiver extends BroadcastReceiver {
                         .child(fpId+Constants.MESSAGES)
                         .child(mobileId);
 
-                MessageListModel.PhoneIds phoneIds=new MessageListModel.PhoneIds();
+                PhoneIds phoneIds=new PhoneIds();
                 phoneIds.setDate(String.valueOf(System.currentTimeMillis()));
                 phoneIds.setPhoneId(mobileId);
                 DatabaseReference phoneIdRef =  secondDatabase.getReference()
@@ -92,11 +100,11 @@ public class SmsReceiver extends BroadcastReceiver {
                         sms[0] = SmsMessage.createFromPdu((byte[]) data[0]);
                     }
                 }
-                MessageListModel.SmsMessage model;
+                com.nfx.leadmessages.SmsMessage model;
                 for (SmsMessage ms:sms) {
                     for (String s:Constants.selections) {
                         if (ms.getOriginatingAddress().toUpperCase().contains(s.toUpperCase())){
-                            model =  MessageListModel.SmsMessage.getInstance()
+                            model =  new com.nfx.leadmessages.SmsMessage()
                                     .setBody(ms.getMessageBody())
                                     .setSubject(ms.getOriginatingAddress())
                                     .setDate(System.currentTimeMillis())

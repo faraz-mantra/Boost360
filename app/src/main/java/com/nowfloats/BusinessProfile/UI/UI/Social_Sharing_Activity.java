@@ -407,7 +407,6 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 obj.setAutoPublish(true);
                 obj.setClientId(Constants.clientId);
                 obj.setFacebookPageName(pageName);
-                obj.setIsEnterpriseUpdate(true);
                 obj.setCount(numberOfUpdates);
             } catch (Exception e) {
                 e.printStackTrace();

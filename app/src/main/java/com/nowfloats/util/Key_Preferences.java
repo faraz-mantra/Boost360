@@ -6,6 +6,7 @@ package com.nowfloats.util;
 public class Key_Preferences {
 
 
+    public static final String EVENT_WILDFIRE_BUY = "eventWildfireBuy";
     public static  String GET_FP_DETAILS_CITY = "GET_FP_DETAILS_CITY";
     public static  String GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG";
     public static  String GET_FP_DETAILS_ADDRESS ="GET_FP_DETAILS_ADDRESS" ;

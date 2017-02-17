@@ -22,6 +22,7 @@ import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -36,7 +37,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -173,7 +176,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     private RiaNodeDataModel mRiaNodeDataModel;
 
     private String TAG = HomeActivity.class.getSimpleName();
-    private String[] permission = new String[]{Manifest.permission.READ_SMS,Manifest.permission.RECEIVE_SMS};
+    private String[] permission = new String[]{Manifest.permission.READ_SMS,Manifest.permission.RECEIVE_SMS
+    ,Manifest.permission.READ_PHONE_STATE};
     private final static int READ_MESSAGES_ID=221;
 
     @Override
@@ -397,6 +401,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     }
     private void getPermissions() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED) {
             Intent intent = new Intent(this, ReadMessages.class);
             startService(intent);
@@ -540,7 +545,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     createCustomPage.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
                 }
                 startActivity(createCustomPage);
-            } else  if(url.contains(getResources().getString(R.string.deeplink_upgrade))){
+            }else if(url.contains(getResources().getString(R.string.deeplink_upgrade))){
                 final String appPackageName = HomeActivity.this.getPackageName(); // getPackageName() from Context or Activity object
                 try {
                     HomeActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
@@ -608,7 +613,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 Intent accountInfo = new Intent(HomeActivity.this, AccountInfoActivity.class);
                 startActivity(accountInfo);
             }
-            else if(url.contains("visits")){
+            else if(url.contains("visits") || url.contains("viewgraph")){
                 Intent accountInfo = new Intent(HomeActivity.this, AnalyticsActivity.class);
                 startActivity(accountInfo);
             }
@@ -1386,6 +1391,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             mExpireDailog.dismiss();
         }
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(StoreFragmentTab.IS_FROM_WILD_FIRE_MINI, true);
+        storeFragment.setArguments(bundle);
         ft.replace(R.id.mainFrame, storeFragment)
                 .commit();
     }
@@ -1544,11 +1552,20 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         }
     }
     private void showWildFire(){
+
+        Calendar calendar = Calendar.getInstance();
+        if(calendar.get(Calendar.DAY_OF_WEEK) != Calendar.FRIDAY){
+            return;
+        }
+
         String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
         String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
-        if(Integer.valueOf(paymentState)>0 &&Integer.valueOf(paymentLevel)>=10){
+        if(Integer.valueOf(paymentState)>0 && Integer.valueOf(paymentLevel)>=10 ){
             View view = getLayoutInflater().inflate(R.layout.pop_up_restrict_post_message,null);
             ImageView image = (ImageView) view.findViewById(R.id.img_warning);
+            ViewGroup.LayoutParams lp = image.getLayoutParams();
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            image.setLayoutParams(lp);
             TextView title = (TextView) view.findViewById(R.id.textView1);
             TextView description = (TextView) view.findViewById(R.id.pop_up_create_message_body);
             title.setText("Connect with your customers instantly!");
@@ -1565,6 +1582,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                         public void onPositive(MaterialDialog mExpireDailog) {
                             super.onPositive(mExpireDailog);
                             openStore();
+                            MixPanelController.track(Key_Preferences.EVENT_WILDFIRE_BUY,null);
                             mExpireDailog.dismiss();
                         }
 

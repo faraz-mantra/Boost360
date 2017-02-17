@@ -1,13 +1,18 @@
 package com.nowfloats.NavigationDrawer;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.edmodo.cropper.cropwindow.handle.Handle;
 import com.nowfloats.Login.UserSessionManager;
@@ -22,6 +27,7 @@ public class RiaWebViewActivity extends AppCompatActivity {
 
     Toolbar tbWebView;
     WebView wbRiaContent;
+    ProgressBar progressBar;
 
     private RiaNodeDataModel mNodeDataModel;
     private UserSessionManager mSession;
@@ -50,18 +56,36 @@ public class RiaWebViewActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         wbRiaContent = (WebView) findViewById(R.id.webview);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-        String url = getIntent().getStringExtra(RIA_WEB_CONTENT_URL);
+        progressBar.setMax(100);
+
+        final String url = getIntent().getStringExtra(RIA_WEB_CONTENT_URL);
         mNodeDataModel = getIntent().getParcelableExtra(RIA_NODE_DATA);
 
         mSession = new UserSessionManager(getApplicationContext(), this);
 
+        findViewById(R.id.tv_open_in_browser).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+                if(!mRiaTimeOut) {
+                    RiaEventLogger.getInstance().logPostEvent(mSession.getFpTag(), mNodeDataModel.getNodeId(),
+                            mNodeDataModel.getButtonId(), mNodeDataModel.getButtonLabel(),
+                            RiaEventLogger.EventStatus.COMPLETED.getValue());
+                    mHandler.removeCallbacks(mRiaPostRunnable);
+                }
+                mRiaTimeOut = true;
+            }
+        });
+
         WebSettings webSettings = wbRiaContent.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        wbRiaContent.setWebViewClient(new WebViewClient());
+        wbRiaContent.setWebChromeClient(new MyWebChromeClient());
+        wbRiaContent.setWebViewClient(new MyWebViewClient());
         wbRiaContent.loadUrl(url);
-        mHandler.postDelayed(mRiaPostRunnable, 15000);
-
 
     }
 
@@ -87,5 +111,28 @@ public class RiaWebViewActivity extends AppCompatActivity {
         }
 
         mHandler.removeCallbacks(mRiaPostRunnable);
+    }
+
+    private class MyWebChromeClient extends WebChromeClient {
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            RiaWebViewActivity.this.setValue(newProgress);
+            super.onProgressChanged(view, newProgress);
+        }
+    }
+
+    private void setValue(int progress){
+        progressBar.setProgress(progress);
+        if(progress==100){
+            progressBar.setVisibility(View.GONE);
+        }
+    }
+
+    private class MyWebViewClient extends WebViewClient{
+        @Override
+        public void onPageFinished(WebView view, String url) {
+
+            mHandler.postDelayed(mRiaPostRunnable, 10000);
+        }
     }
 }

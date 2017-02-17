@@ -33,12 +33,13 @@
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/sidepanel_chat"/>
-                    <com.nowfloats.CustomWidget.roboto_md_48__565656
+                        android:src="@drawable/ria_cirlce_image"/>
+                    <TextView
                         android:layout_marginLeft="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
+                        android:textColor="#808080"
                         android:layout_gravity="center_vertical"
                         android:text="Your Customers Love you"
                         android:id="@+id/tvRiaCardHeader"/>
@@ -47,7 +48,7 @@
                     android:id="@+id/llRiaCardSections"
                     android:layout_width="match_parent"
                     android:orientation="vertical"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_height="wrap_content">
 

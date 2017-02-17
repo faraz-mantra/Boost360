@@ -106,6 +106,7 @@ public class Create_Message_Activity extends AppCompatActivity {
 
     private int mFbPageShare = 0, mFbProfileShare = 0, mTwitterShare = 0;
     private RiaNodeDataModel mRiaNodedata;
+    private boolean mIsImagePicking = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -389,7 +390,7 @@ public class Create_Message_Activity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if(mRiaNodedata!=null){
+        if(mRiaNodedata!=null && !mIsImagePicking){
             RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
                     mRiaNodedata.getNodeId(), mRiaNodedata.getButtonId(),
                     mRiaNodedata.getButtonLabel(), RiaEventLogger.EventStatus.DROPPED.getValue());
@@ -478,6 +479,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                         gallery_req_id);
             }
             else {
+                mIsImagePicking = true;
                 Intent i = new Intent(
                         Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -522,6 +524,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                         media_req_id);
             }
             else {
+                mIsImagePicking = true;
                 ContentValues Cvalues = new ContentValues();
                 Intent captureIntent;
                 Cvalues.put(MediaStore.Images.Media.TITLE, "New Picture");

