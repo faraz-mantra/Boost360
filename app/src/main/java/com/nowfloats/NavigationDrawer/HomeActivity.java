@@ -1414,6 +1414,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
 
     private void printPlan(ArrayList<ActiveWidget> allModels) {
+        //Log.v("ggg","plans");
         for(int i=0;i<allModels.size();i++){
             if(mExpireDailog!=null && mExpireDailog.isShowing()){
                 break;
@@ -1424,6 +1425,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 String date = allModels.get(i).CreatedOn;
                 int totalMonthsValidity = Integer.parseInt(allModels.get(i).TotalMonthsValidity);
                 int remainingDay = verifyTime(date.substring(date.indexOf("(")+1,date.indexOf(")")),totalMonthsValidity);
+                //Log.v("ggg",remainingDay+" days");
                 if(remainingDay>0 && remainingDay<7){
                     prefsEditor = pref.edit();
                     prefsEditor.putInt("Days_remain", remainingDay);
@@ -1440,6 +1442,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 return;
             }
         }
+        //Log.v("ggg","not showing");
         showWildFire();
     }
 
@@ -1562,7 +1565,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         long oldTime = pref.getLong("wildFireMinitime",-1);
         long newTime = calendar.getTimeInMillis();
         long diff = 7*24*60*60*1000;
-        if(oldTime != -1 && ((newTime-oldTime) >= diff)){
+        //Log.v("ggg",String.valueOf(diff)+" "+String.valueOf(newTime-oldTime));
+        if(oldTime != -1 && ((newTime-oldTime) < diff)){
             return;
         }
         prefsEditor.putLong("wildFireMinitime",newTime).apply();
