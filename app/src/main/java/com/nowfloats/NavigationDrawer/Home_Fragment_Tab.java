@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.AlertCountEvent;
+import com.nowfloats.NavigationDrawer.model.RiaCardModel;
 import com.nowfloats.NotificationCenter.NotificationFragment;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
@@ -21,6 +22,8 @@ import com.nowfloats.util.Key_Preferences;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -159,6 +162,7 @@ public class Home_Fragment_Tab extends Fragment {
         }catch(Exception e){e.printStackTrace();}
         tabs.setDistributeEvenly(true);
         tabs.setCustomTabView(R.layout.tab_text,R.id.tab_textview);
+        //((ViewGroup)tabs.getChildAt(0)).getChildAt(1).setVisibility(View.VISIBLE);
 //                        tabs.setSelectedIndicatorColors(getResources().getColor(R.color.white));
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
@@ -206,6 +210,17 @@ public class Home_Fragment_Tab extends Fragment {
         {
             viewPager.setCurrentItem(i);
             Constants.deepLinkAnalytics = false ;
+        }
+    }
+
+    @Subscribe
+    public void getRiaCardModels(ArrayList<RiaCardModel> model){
+        if(tabs.getTabView(1)!=null){
+            if(model.size()>0) {
+                tabs.getTabView(1).findViewById(R.id.iv_ria_icon).setVisibility(View.VISIBLE);
+            }else {
+                tabs.getTabView(1).findViewById(R.id.iv_ria_icon).setVisibility(View.GONE);
+            }
         }
     }
 }

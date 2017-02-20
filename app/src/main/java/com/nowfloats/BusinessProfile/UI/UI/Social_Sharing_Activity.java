@@ -816,9 +816,9 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                                                         //pageSeleted(position, strName, session.getFacebookPageID(), session.getPageAccessToken());
                                                     } else if (from == FROM_AUTOPOST) {
                                                         if (Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))) {
-                                                            selectNumberUpdatesDialog(strName);
+                                                            selectNumberUpdatesDialog(FACEBOOK_PAGE_ID);
                                                         }else if(!strName.equals(session.getFacebookPage())){
-                                                            updateAutopull(strName,true);
+                                                            updateAutopull(FACEBOOK_PAGE_ID,true);
                                                         }else {
                                                             //Toast.makeText(getApplicationContext(), "You can't post and pull from the same Facebook page", Toast.LENGTH_SHORT).show();
                                                             facebookautopost.setChecked(false);
