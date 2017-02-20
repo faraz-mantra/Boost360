@@ -32,15 +32,20 @@ public class RiaWebViewActivity extends AppCompatActivity {
     private RiaNodeDataModel mNodeDataModel;
     private UserSessionManager mSession;
     private boolean mRiaTimeOut = false;
+    private boolean mIsCalled = false;
 
     Handler mHandler = new Handler();
     Runnable mRiaPostRunnable = new Runnable() {
         @Override
         public void run() {
-            RiaEventLogger.getInstance().logPostEvent(mSession.getFpTag(), mNodeDataModel.getNodeId(),
-                    mNodeDataModel.getButtonId(), mNodeDataModel.getButtonLabel(),
-                    RiaEventLogger.EventStatus.COMPLETED.getValue());
-            mRiaTimeOut = true;
+            if(!mRiaTimeOut) {
+                RiaEventLogger.getInstance().logPostEvent(mSession.getFpTag(), mNodeDataModel.getNodeId(),
+                        mNodeDataModel.getButtonId(), mNodeDataModel.getButtonLabel(),
+                        RiaEventLogger.EventStatus.COMPLETED.getValue());
+                mRiaTimeOut = true;
+            }
+
+
         }
     };
 
@@ -75,9 +80,10 @@ public class RiaWebViewActivity extends AppCompatActivity {
                     RiaEventLogger.getInstance().logPostEvent(mSession.getFpTag(), mNodeDataModel.getNodeId(),
                             mNodeDataModel.getButtonId(), mNodeDataModel.getButtonLabel(),
                             RiaEventLogger.EventStatus.COMPLETED.getValue());
-                    mHandler.removeCallbacks(mRiaPostRunnable);
+                    mHandler.removeCallbacksAndMessages(null);
+                    mRiaTimeOut = true;
                 }
-                mRiaTimeOut = true;
+
             }
         });
 
@@ -109,8 +115,9 @@ public class RiaWebViewActivity extends AppCompatActivity {
                     mNodeDataModel.getButtonId(), mNodeDataModel.getButtonLabel(),
                     RiaEventLogger.EventStatus.DROPPED.getValue());
         }
-
-        mHandler.removeCallbacks(mRiaPostRunnable);
+        //Set WebViewClient null to not to cache the view and not to trigger completed event
+        wbRiaContent.setWebViewClient(null);
+        mHandler.removeCallbacksAndMessages(null);
     }
 
     private class MyWebChromeClient extends WebChromeClient {
@@ -131,8 +138,10 @@ public class RiaWebViewActivity extends AppCompatActivity {
     private class MyWebViewClient extends WebViewClient{
         @Override
         public void onPageFinished(WebView view, String url) {
-
-            mHandler.postDelayed(mRiaPostRunnable, 10000);
+            if(!mIsCalled) {
+                mHandler.postDelayed(mRiaPostRunnable, 10000);
+                mIsCalled = true;
+            }
         }
     }
 }

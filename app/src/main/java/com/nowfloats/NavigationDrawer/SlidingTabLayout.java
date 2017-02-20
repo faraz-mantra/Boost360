@@ -18,6 +18,9 @@ import android.widget.TextView;
 
 import com.thinksity.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * To be used with ViewPager to provide a tab indicator component which give constant feedback as to
  * the user's scroll progress.
@@ -62,6 +65,8 @@ public class SlidingTabLayout extends HorizontalScrollView {
     private SparseArray<String> mContentDescriptions = new SparseArray<String>();
     private ViewPager.OnPageChangeListener mViewPagerPageChangeListener;
 
+    private List<View> mTabViews = new ArrayList<>();
+
     private final SlidingTabStrip mTabStrip;
 
     public SlidingTabLayout(Context context) {
@@ -84,6 +89,10 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
         mTabStrip = new SlidingTabStrip(context);
         addView(mTabStrip, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+    }
+
+    public SlidingTabStrip getSlidingTabStrip(){
+        return mTabStrip;
     }
 
     /**
@@ -170,6 +179,14 @@ public class SlidingTabLayout extends HorizontalScrollView {
         return textView;
     }
 
+    public View getTabView(int position){
+        try {
+            return mTabViews.get(position);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
     private void populateTabStrip() {
         final PagerAdapter adapter = mViewPager.getAdapter();
         final View.OnClickListener tabClickListener = new TabClickListener();
@@ -183,6 +200,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
                 tabView = LayoutInflater.from(getContext()).inflate(mTabViewLayoutId, mTabStrip,
                         false);
                 tabTitleView = (TextView) tabView.findViewById(mTabViewTextViewId);
+                mTabViews.add(tabView);
             }
 
             if (tabView == null) {

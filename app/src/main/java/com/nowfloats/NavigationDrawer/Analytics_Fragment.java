@@ -143,6 +143,7 @@ public class Analytics_Fragment extends Fragment {
                     }else if(mNextNodeId== null){
                         if(RiaEventLogger.lastEventStatus) {
                             cvRiaCard.setVisibility(View.GONE);
+                            bus.post(new ArrayList<RiaCardModel>());
                             RiaEventLogger.lastEventStatus = false;
                         }
                     }
@@ -332,8 +333,7 @@ public class Analytics_Fragment extends Fragment {
             businessEnqCount.setVisibility(View.GONE);
         }
 
-        //TODO: UnComment for Ria Cards when required
-        //initRiaCard();
+        initRiaCard();
 
         return rootView;
     }
@@ -351,6 +351,7 @@ public class Analytics_Fragment extends Fragment {
                 if(riaCardModels!=null && getActivity()!=null){
                     cvRiaCard.setVisibility(View.VISIBLE);
                     drawRiaCards(riaCardModels);
+                    bus.post(riaCardModels);
                 }
             }
 
@@ -399,6 +400,7 @@ public class Analytics_Fragment extends Fragment {
                     listener.onResponse(btnLeft.getId(), btnLeft.getNextNodeId());
                 }else if(btnLeft.getButtonType().equals(BUTTON_TYPE_EXIT)){
                     cvRiaCard.setVisibility(View.GONE);
+                    bus.post(new ArrayList<RiaCardModel>());
                 }else if(btnLeft.getButtonType().equals(BUTTON_TYPE_OPEN_URL)){
                     Intent intent = new Intent(getActivity(), RiaWebViewActivity.class);
                     intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnLeft.getUrl());
@@ -427,6 +429,7 @@ public class Analytics_Fragment extends Fragment {
                     listener.onResponse(btnRight.getId(), btnRight.getNextNodeId());
                 }else if(btnRight.getButtonType().equals(BUTTON_TYPE_EXIT)){
                     cvRiaCard.setVisibility(View.GONE);
+                    bus.post(new ArrayList<RiaCardModel>());
                 }else if(btnRight.getButtonType().equals(BUTTON_TYPE_OPEN_URL)){
                     Intent intent = new Intent(getActivity(), RiaWebViewActivity.class);
                     intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnRight.getUrl());
@@ -490,6 +493,7 @@ public class Analytics_Fragment extends Fragment {
         graph.addView(yAxisName);
         if(!(widget.getY().getAxisType().equals("Integer") || widget.getY().getAxisType().equals("Double"))){
             cvRiaCard.setVisibility(View.GONE);
+            bus.post(new ArrayList<RiaCardModel>());
             return;
         }
         if(widget.getGraphType().equals(BAR)){
@@ -621,11 +625,12 @@ public class Analytics_Fragment extends Fragment {
         ImageView iv = new ImageView(getActivity());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpToPx(150));
         lp.setMargins(0, 0, 0, dpToPx(15));
+        iv.setScaleType(ImageView.ScaleType.FIT_XY);
         iv.setLayoutParams(lp);
-        iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
         Glide.with(getActivity())
                 .load(widget.getUrl())
-                .placeholder(R.drawable.image_loader)
+                .centerCrop()
+                .placeholder(R.drawable.default_product_image)
                 .into(iv);
         //Glide.with(getActivity()).load(widget.getUrl()).placeholder(R.drawable.image_placeholder).into(iv);
         llRiaCardSections.addView(iv);
