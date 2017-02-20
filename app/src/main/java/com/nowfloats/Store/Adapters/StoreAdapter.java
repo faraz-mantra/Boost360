@@ -83,6 +83,8 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
                     holder.titleText.setText(storeData.get(position).Name);
                     if(holder.titleText.getText().toString().toLowerCase().contains("mini")){
                         holder.cardView.setVisibility(View.VISIBLE);
+                    }else{
+                        holder.cardView.setVisibility(View.GONE);
                     }
                 }
                 if (storeData.get(position).Desc!=null)

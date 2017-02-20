@@ -76,6 +76,7 @@ import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 
 public class Social_Sharing_Activity extends AppCompatActivity implements ITwitterCallbacks, NfxRequestClient.NfxCallBackListener {
+    private static final int PAGE_NO_FOUND = 404;
     private Toolbar toolbar;
     int size = 0;
     boolean[] checkedPages;
@@ -360,6 +361,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             }
         });*/
         InitShareResources();
+        setStatus();
     }
 
     private void updateAutopull(String name,boolean autoPublish) {
@@ -829,13 +831,20 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
                                             @Override
                                             public void onNegative(MaterialDialog dialog) {
-                                                facebookautopost.setChecked(false);
+                                                onFBPageError(from);
                                                 dialog.dismiss();
                                             }
                                         }).show();
                             } else {
-                                facebookautopost.setChecked(false);
-                                Methods.materialDialog(activity, "Alert", getString(R.string.look_like_no_facebook_page));
+                                onFBPageError(from);
+
+                                NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) Social_Sharing_Activity.this)
+                                        .setmFpId(session.getFPID())
+                                        .setmType("facebookpage")
+                                        .setmCallType(PAGE_NO_FOUND)
+                                        .setmName("");
+                                requestClient.nfxNoPageFound();
+                                pd = ProgressDialog.show(Social_Sharing_Activity.this, "", getString(R.string.please_wait));
                             }
                         }
                     });
@@ -1036,13 +1045,12 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
     void onFBPageError(int from) {
         //Log.v("ggg","fbpage error");
-        Constants.fbPageShareEnabled = false;
-        prefsEditor.putBoolean("fbPageShareEnabled", false);
-        prefsEditor.commit();
         if(from==FROM_AUTOPOST){
             facebookautopost.setChecked(false);
         }else if(from==FROM_FB_PAGE){
             facebookPageCheckBox.setChecked(false);
+            Constants.fbPageShareEnabled = false;
+            prefsEditor.putBoolean("fbPageShareEnabled", false).apply();
         }
 
     }
@@ -1104,9 +1112,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
     }*/
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+   private void setStatus(){
+        Log.v("ggg","resime" +facebookHomeCheckBox.isChecked());
         Methods.isOnline(Social_Sharing_Activity.this);
         facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon_inactive));
         facebookHomeCheckBox.setChecked(false);
@@ -1120,6 +1127,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             Methods.showSnackBarNegative(this,"Your Facebook session has expired. Please login.");
         }
         if (!Util.isNullOrEmpty(session.getFacebookName()) && (pref.getInt("fbStatus", 0)==1 || pref.getInt("fbStatus",0)==3)) {
+            Log.v("ggg"," ok");
             facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
             facebookHomeCheckBox.setChecked(true);
             facebookHomeStatus.setVisibility(View.VISIBLE);
@@ -1317,6 +1325,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 facebookHomeStatus.setText(name);
                 prefsEditor = pref.edit();
                 prefsEditor.putBoolean("fbShareEnabled", true);
+                prefsEditor.putInt("fbStatus",1);
                 prefsEditor.apply();
                 break;
             case FBPAGETYPE:
@@ -1325,6 +1334,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 facebookPageStatus.setText("" + name);
                 facebookPageCheckBox.setChecked(true);
                 prefsEditor.putBoolean("fbPageShareEnabled", true);
+                prefsEditor.putInt("fbPageStatus",1);
                 prefsEditor.apply();
                 MixPanelController.track(EventKeysWL.FACEBOOK_ANAYTICS,null);
                 break;
@@ -1332,7 +1342,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 Constants.twitterShareEnabled = true;
                 SharedPreferences.Editor e = mSharedPreferences.edit();
                 e.putBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, true);
-                e.commit();
+                e.apply();
                 twitterStatus.setVisibility(View.VISIBLE);
                 twitterStatus.setText("@" + name);
                 twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
@@ -1375,7 +1385,9 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 logoutFromTwitter();
                 twitterCheckBox.setChecked(false);
                 break;
-
+            case PAGE_NO_FOUND:
+                Methods.materialDialog(activity, "Alert", getString(R.string.look_like_no_facebook_page));
+                break;
         }
     }
 }

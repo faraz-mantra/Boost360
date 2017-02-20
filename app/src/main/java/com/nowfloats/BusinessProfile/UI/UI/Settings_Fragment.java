@@ -195,11 +195,11 @@ public class Settings_Fragment extends Fragment {
                 try {
                         getActivity().getPackageManager().getPackageInfo("com.twitter.android", 0);
                         twitterIntent.setData(Uri.parse(Constants.TWITTER_ID_URL));
-                        twitterIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     } catch (PackageManager.NameNotFoundException e1) {
                         twitterIntent.setData(Uri.parse(Constants.TWITTER_URL));
                         e1.printStackTrace();
                 }
+                twitterIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(twitterIntent);
             }
         });
@@ -464,10 +464,10 @@ public class Settings_Fragment extends Fragment {
         try {
             getActivity().getPackageManager().getPackageInfo("com.facebook.katana", 0);
             facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_PAGE_WITH_ID));
-            facebookIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         } catch (Exception e) {
             facebookIntent= new Intent(Intent.ACTION_VIEW, Uri.parse(facebookUrl));
         }
+        facebookIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(facebookIntent);
     }
 
