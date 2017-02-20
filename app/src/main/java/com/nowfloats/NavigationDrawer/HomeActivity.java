@@ -1416,7 +1416,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     private void printPlan(ArrayList<ActiveWidget> allModels) {
         for(int i=0;i<allModels.size();i++){
             if(mExpireDailog!=null && mExpireDailog.isShowing()){
-                return;
+                break;
             }
             String temp = allModels.get(i).Name;
             if(temp!=null && !temp.isEmpty() && (temp.contains("NowFloats WildFire")||temp.contains("NF WildFire"))){
@@ -1428,16 +1428,16 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     prefsEditor = pref.edit();
                     prefsEditor.putInt("Days_remain", remainingDay);
                     prefsEditor.apply();
-                    showWildFire();
                 }else if(remainingDay<0){
                     prefsEditor = pref.edit();
                     prefsEditor.putInt("Days_remain", -1);
                     prefsEditor.apply();
-                    showWildFire();
                 }else{
                     return;
                 }
                 renewPlanDialog(WILD_FIRE_EXPIRE);
+                showWildFire();
+                return;
             }
         }
         showWildFire();
