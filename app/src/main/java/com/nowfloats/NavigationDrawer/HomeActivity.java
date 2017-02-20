@@ -1561,7 +1561,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         Calendar calendar = Calendar.getInstance();
         long oldTime = pref.getLong("wildFireMinitime",-1);
         long newTime = calendar.getTimeInMillis();
-        long diff = 7*24*60*60;
+        long diff = 7*24*60*60*1000;
         if(oldTime != -1 && ((newTime-oldTime) >= diff)){
             return;
         }
