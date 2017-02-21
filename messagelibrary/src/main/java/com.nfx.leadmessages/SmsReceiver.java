@@ -1,6 +1,5 @@
 package com.nfx.leadmessages;
 
-import android.*;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.provider.Settings;
 import android.provider.Telephony;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.SmsMessage;
@@ -37,7 +35,11 @@ public class SmsReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, final Intent intent) {
         Log.v("ggg","on receive");
+
         SharedPreferences pref =context.getSharedPreferences(Constants.SHARED_PREF, Context.MODE_PRIVATE);
+        Log.v("ggg","pref"+ pref);
+        if(pref == null) return;
+
         fpId =pref.getString(Constants.FP_ID,null);
         if(ActivityCompat.checkSelfPermission(context, android.Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED){
             TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);

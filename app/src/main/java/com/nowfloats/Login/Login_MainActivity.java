@@ -146,6 +146,7 @@ public class Login_MainActivity extends AppCompatActivity implements
                 passwordText = password.getText().toString().trim();
 
                 if (userNameText.length() > 0 && passwordText.length() > 0) {
+                    userName.clearFocus();
                     progressDialog = ProgressDialog.show(Login_MainActivity.this, "", getString(R.string.loading));
                     progressDialog.setCancelable(true);
                     API_Login apiLogin = new API_Login(Login_MainActivity.this,session,bus);

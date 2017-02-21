@@ -127,7 +127,7 @@ public class Constants {
     public static String DeleteCard = NOW_FLOATS_API_URL + "/Discover/v1/floatingPoint/archiveMessage";
     public static String nfxApi = NOW_FLOATS_API_URL + "/Discover/v2/floatingPoint/updateSocialAccessToken";
     public static String beCountUrl = NOW_FLOATS_API_URL + "/Discover/v1/businessenquiries/count";
-    public static String nfxFacebookAnalytics = NFX_WITH_NOWFLOATS + "/dataexchange/v1/updateAccessTokens";
+    public static String nfxUpdateTokens = NFX_WITH_NOWFLOATS + "/dataexchange/v1/updateAccessTokens";
 
 
     public static final String TWITTER_URL = Specific.TWITTER_URL;

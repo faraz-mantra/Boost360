@@ -22,7 +22,6 @@ import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -204,10 +203,11 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         BoostLog.d(TAG, "In on CreateView");
         deepLinkUrl = RiaFirebaseMessagingService.deepLinkUrl;
         FPID = session.getFPID();
-        SharedPreferences smsPref = getSharedPreferences(com.nfx.leadmessages.Constants.SHARED_PREF,Context.MODE_PRIVATE);
-        smsPref.edit().putString(com.nfx.leadmessages.Constants.FP_ID,FPID).apply();
-        getPermissions();
-
+        if(BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
+            SharedPreferences smsPref = getSharedPreferences(com.nfx.leadmessages.Constants.SHARED_PREF, Context.MODE_PRIVATE);
+            smsPref.edit().putString(com.nfx.leadmessages.Constants.FP_ID, FPID).apply();
+            getPermissions();
+        }
         /*if (getIntent().hasExtra("message")){
             StorebizFloats = getIntent().getExtras().getParcelableArrayList("message");
         }*/
@@ -396,7 +396,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 finish();
             }
         }
-        showWildFire();
 
     }
     private void getPermissions() {
@@ -1415,27 +1414,36 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
 
     private void printPlan(ArrayList<ActiveWidget> allModels) {
+        //Log.v("ggg","plans");
         for(int i=0;i<allModels.size();i++){
             if(mExpireDailog!=null && mExpireDailog.isShowing()){
-                return;
+                break;
             }
             String temp = allModels.get(i).Name;
-            if(temp!=null && !temp.isEmpty() && temp.contains("NowFloats WildFire")){
+            if(temp!=null && !temp.isEmpty() && (temp.contains("NowFloats WildFire")||temp.contains("NF WildFire"))){
+
                 String date = allModels.get(i).CreatedOn;
                 int totalMonthsValidity = Integer.parseInt(allModels.get(i).TotalMonthsValidity);
                 int remainingDay = verifyTime(date.substring(date.indexOf("(")+1,date.indexOf(")")),totalMonthsValidity);
+                //Log.v("ggg",remainingDay+" days");
                 if(remainingDay>0 && remainingDay<7){
                     prefsEditor = pref.edit();
                     prefsEditor.putInt("Days_remain", remainingDay);
-                    prefsEditor.commit();
+                    prefsEditor.apply();
                 }else if(remainingDay<0){
                     prefsEditor = pref.edit();
                     prefsEditor.putInt("Days_remain", -1);
-                    prefsEditor.commit();
+                    prefsEditor.apply();
+                }else{
+                    return;
                 }
                 renewPlanDialog(WILD_FIRE_EXPIRE);
+                showWildFire();
+                return;
             }
         }
+        //Log.v("ggg","not showing");
+        showWildFire();
     }
 
     private int verifyTime(String unixtime, int months)
@@ -1554,10 +1562,14 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     private void showWildFire(){
 
         Calendar calendar = Calendar.getInstance();
-        if(calendar.get(Calendar.DAY_OF_WEEK) != Calendar.FRIDAY){
+        long oldTime = pref.getLong("wildFireMinitime",-1);
+        long newTime = calendar.getTimeInMillis();
+        long diff = 7*24*60*60*1000;
+        //Log.v("ggg",String.valueOf(diff)+" "+String.valueOf(newTime-oldTime));
+        if(oldTime != -1 && ((newTime-oldTime) < diff)){
             return;
         }
-
+        prefsEditor.putLong("wildFireMinitime",newTime).apply();
         String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
         String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
         if(Integer.valueOf(paymentState)>0 && Integer.valueOf(paymentLevel)>=10 ){
@@ -1572,7 +1584,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             description.setText("The all new WildFire Mini Plan lets you reach out to your customers," +
                     "track all thier phone calls and get good leads. Start your 45 day plan now!");
             image.setImageResource(R.drawable.wildfire);
-            mExpireDailog = new MaterialDialog.Builder(this)
+            new MaterialDialog.Builder(this)
                     .customView(view,true)
                     .backgroundColorRes(R.color.white)
                     .positiveText("BUY")
