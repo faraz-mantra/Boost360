@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.CustomPage.Model.CreatePageModel;
 import com.nowfloats.CustomPage.Model.CustomPageModel;
+import com.nowfloats.CustomPage.Model.PageDetail;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.util.Constants;
@@ -82,7 +85,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
         save = (ImageView) toolbar.findViewById(R.id.home_view_delete_card);
         deletePage = (ImageView) toolbar.findViewById(R.id.delete_page);
         deletePage.setVisibility(View.GONE);
-        TextView title = (TextView) toolbar.findViewById(R.id.titleProduct);
+        final TextView title = (TextView) toolbar.findViewById(R.id.titleProduct);
         title.setVisibility(View.VISIBLE);
         title.setText(getString(R.string.new_page));
         save.setImageResource(R.drawable.checkmark_icon);
@@ -93,17 +96,45 @@ public class CreateCustomPageActivity extends AppCompatActivity{
         richText = (RichEditor)findViewById(R.id.subtextEdit);
         richText.setPlaceholder(getString(R.string.custom_page_details));
 
-        if(getIntent().hasExtra("name")){
-            curName = getIntent().getStringExtra("name");
-            curHtml = getIntent().getStringExtra("html");
-            curPageid = getIntent().getStringExtra("pageid");
-            curPos = Integer.parseInt(getIntent().getStringExtra("pos"));
-            titleTxt.setText(curName);
-            title.setText(curName);
-            richText.setHtml(curHtml);
-            mHtmlFormat = curHtml;
-            editCheck = true;
-            deletePage.setVisibility(View.VISIBLE);
+        if(getIntent().hasExtra("pageid")){
+            final MaterialDialog materialProgress = new MaterialDialog.Builder(this)
+                    .widgetColorRes(R.color.accentColor)
+                    .content(getString(R.string.loading))
+                    .progress(true, 0)
+                    .show();
+            materialProgress.setCancelable(false);
+            try {
+                CustomPageInterface pageInterface = Constants.restAdapter.create(CustomPageInterface.class);
+                pageInterface.getPageDetail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG),
+                        getIntent().getStringExtra("pageid"), Constants.clientId, new Callback<PageDetail>() {
+                            @Override
+                            public void success(PageDetail pageDetail, Response response) {
+                                materialProgress.dismiss();
+                                //Intent intent = new Intent(CreateCustomPageActivity, CreateCustomPageActivity.class);
+                                curName =  pageDetail.DisplayName;
+                                curHtml = pageDetail.HtmlCode;
+                                curPageid =  pageDetail._id;
+                                titleTxt.setText(curName);
+                                title.setText(curName);
+                                richText.setHtml(curHtml);
+                                mHtmlFormat = curHtml;
+                                editCheck = true;
+                                deletePage.setVisibility(View.VISIBLE);
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                                materialProgress.dismiss();
+                                Log.d("page detail error-", "" + error.getMessage());
+                                Methods.showSnackBarNegative(CreateCustomPageActivity.this, "Page Detail not found");
+                            }
+                        });
+            }catch(Exception e)
+            {
+                e.printStackTrace();
+                Methods.showSnackBarNegative(this, getString(R.string.something_went_wrong_try_again));
+                materialProgress.dismiss();
+            }
         }
 
         titleTxt.setOnTouchListener(new View.OnTouchListener() {

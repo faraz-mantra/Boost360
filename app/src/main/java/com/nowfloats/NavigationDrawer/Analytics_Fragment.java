@@ -368,6 +368,7 @@ public class Analytics_Fragment extends Fragment {
         mListener = new RiaCardResponseListener() {
             @Override
             public void onResponse(String buttonId, String NextNodeId) {
+
                 for(RiaCardModel riaCard: riaCardModels){
                     if(riaCard.getId().equals(NextNodeId)){
                         drawSingleRiaCard(riaCard, this);

@@ -217,9 +217,9 @@ public class Home_Fragment_Tab extends Fragment {
     public void getRiaCardModels(ArrayList<RiaCardModel> model){
         if(tabs.getTabView(1)!=null){
             if(model.size()>0) {
-                tabs.getTabView(1).findViewById(R.id.iv_ria_icon).setVisibility(View.VISIBLE);
+                tabs.getTabView(1).findViewById(R.id.ll_ria_alert).setVisibility(View.VISIBLE);
             }else {
-                tabs.getTabView(1).findViewById(R.id.iv_ria_icon).setVisibility(View.GONE);
+                tabs.getTabView(1).findViewById(R.id.ll_ria_alert).setVisibility(View.GONE);
             }
         }
     }
