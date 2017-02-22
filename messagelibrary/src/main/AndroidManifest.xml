@@ -12,13 +12,15 @@
         android:supportsRtl="true">
         <service android:name=".ReadMessages"
             android:exported="false"/>
-
-        <receiver android:name=".SmsReceiver">
+        <receiver android:name=".SmsReceiver"
+            android:exported="true">
             <intent-filter
                 android:priority="0">
-                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+
             </intent-filter>
         </receiver>
+
     </application>
 
 </manifest>

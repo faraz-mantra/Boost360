@@ -45,12 +45,12 @@ public class Contact_Info_Activity extends ActionBarActivity {
     UserSessionManager session;
     Bus bus;
 
-    public static EditText primaryNumber, alternateNumber_1,alternateNumber_2,emailAddress,websiteAddress,facebookPage ;
-    Boolean flag4emailaddress = false, flag4websiteaddress = false, flag4fbagename = false,flag4alternate1 = false, flag4primaryno = false,flag4alternate2 = false,flag4digitlimit0=false,flag4digitlimit1=false,flag4digitlimit=false,flag4digitlimit2=false;
-    public static String msgtxt4_email = null, msgtxt4website = null,msgtxt4fbpage = null,msgtxt4primaryno = null, msgtxt4alternateno1 = null,msgtxtalternate2 = null;
+    public static EditText primaryNumber, alternateNumber_1,alternateNumber_2, alternateNumber_3, emailAddress,websiteAddress,facebookPage ;
+    Boolean flag4emailaddress = false, flag4websiteaddress = false, flag4fbagename = false,flag4alternate1 = false, flag4alternate3=false, flag4primaryno = false,flag4alternate2 = false,flag4digitlimit0=false,flag4digitlimit1=false,flag4digitlimit=false,flag4digitlimit2=false;
+    public static String msgtxt4_email = null, msgtxt4website = null,msgtxt4fbpage = null,msgtxt4primaryno = null, msgtxt4alternateno1 = null,msgtxtalternate2 = null, msgtxtalternate3=null;
     String[] profilesattr =new String[20];
     private TextView titleTextView;
-    public static String primary="",alternate1="",alternate2="";
+    public static String primary="",alternate1="",alternate2="", alternate3="";
     private boolean allBoundaryCondtn = true;
 
     @Override
@@ -83,6 +83,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
         primaryNumber = (EditText) findViewById(R.id.primaryNumber);
         alternateNumber_1 = (EditText) findViewById(R.id.alternateNumber_1);
         alternateNumber_2 = (EditText) findViewById(R.id.alternateNumber_2);
+        alternateNumber_3 = (EditText) findViewById(R.id.alternateNumber_3);
         emailAddress = (EditText) findViewById(R.id.contactInfo_emailId);
         websiteAddress = (EditText) findViewById(R.id.websiteAddress);
         facebookPage = (EditText) findViewById(R.id.facebookPage);
@@ -363,6 +364,43 @@ public class Contact_Info_Activity extends ActionBarActivity {
             public void afterTextChanged(Editable s) {
             }
         });
+        alternateNumber_3.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                String msg_txt = "";
+
+                try {
+
+
+                    msgtxtalternate3 = alternateNumber_3.getText()
+                            .toString().trim();
+                    int len = msgtxtalternate3.length();
+                    if (len >= 0) {
+                        if(len==0){
+
+                            saveTextView.setVisibility(View.GONE);
+                        }else {
+
+                            saveTextView.setVisibility(View.VISIBLE);
+                        }
+                        flag4alternate3 = true;
+
+                    }
+                } catch (Exception e) {
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 
 
@@ -495,7 +533,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
             }
         }
 
-        if(flag4primaryno || flag4alternate2 || flag4alternate1){
+        if(flag4primaryno || flag4alternate2 || flag4alternate1 || flag4alternate3){
             try {
 
                 if (flag4primaryno) {
@@ -507,6 +545,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
                         flag4primaryno=false;
                         flag4alternate1=false;
                         flag4alternate2=false;
+                        flag4alternate3 = false;
                         allBoundaryCondtn=false;
 //                        floatSubmit.setVisibility(View.GONE);
 //                        findViewById(
@@ -520,6 +559,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
                         flag4primaryno=false;
                         flag4alternate1=false;
                         flag4alternate2=false;
+                        flag4alternate3 = false;
                         allBoundaryCondtn=false;
 //                        floatSubmit.setVisibility(View.GONE);
 //                        findViewById(
@@ -528,7 +568,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
                         saveTextView.setVisibility(View.GONE);
                     }
                 } else {
-                    String primaryNumber = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER);
+                    String primaryNumber = session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM);
                     if (primaryNumber != null) {
                         int size = primaryNumber.length();
                         if (size != 0) {
@@ -548,6 +588,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
                         flag4primaryno=false;
                         flag4alternate1=false;
                         flag4alternate2=false;
+                        flag4alternate3 = false;
                         allBoundaryCondtn=false;
 //                        floatSubmit.setVisibility(View.GONE);
 //                        findViewById(
@@ -556,7 +597,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
                         saveTextView.setVisibility(View.GONE);
                     }
                 } else {
-                    String alternate1Number = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1);
+                    String alternate1Number = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER);
                     if (alternate1Number != null) {
                         int size = alternate1Number.length();
                         if (size > 1) {
@@ -576,6 +617,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
                         flag4primaryno=false;
                         flag4alternate1=false;
                         flag4alternate2=false;
+                        flag4alternate3 = false;
                         allBoundaryCondtn=false;
 //                        floatSubmit.setVisibility(View.GONE);
 //                        findViewById(
@@ -584,7 +626,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
                         saveTextView.setVisibility(View.GONE);
                     }
                 } else {
-                    String alternate2Number = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_2);
+                    String alternate2Number = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1);
                     if (alternate2Number != null) {
                         int size = alternate2Number.length();
                         if (size > 2) {
@@ -594,8 +636,36 @@ public class Contact_Info_Activity extends ActionBarActivity {
                     }
                 }
 
+                if (flag4alternate3) {
+                    alternate3 = (msgtxtalternate2.length() == 0) ? ""
+                            : msgtxtalternate3;
+                    if(msgtxtalternate3.length()>0 && msgtxtalternate3.length()<6)
+                    {
+                        Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_password_6to12_char));
+                        flag4primaryno=false;
+                        flag4alternate1=false;
+                        flag4alternate2=false;
+                        allBoundaryCondtn=false;
+                        flag4alternate3 = false;
+//                        floatSubmit.setVisibility(View.GONE);
+//                        findViewById(
+//                                R.id.business_contactInfo_save_text)
+//                                .setVisibility(View.GONE);
+                        saveTextView.setVisibility(View.GONE);
+                    }
+                } else {
+                    String alternate3Number = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3);
+                    if (alternate3Number != null) {
+                        int size = alternate3Number.length();
+                        if (size > 2) {
+                            if (!Util.isNullOrEmpty(alternate3Number))
+                                alternate3 = alternate3Number;
+                        }
+                    }
+                }
+
                 obj4.put("key", "CONTACTS");
-                obj4.put("value", primary+"#"+alternate1+"#"+alternate2);
+                obj4.put("value", alternate1+"#"+alternate2+"#"+alternate3);
 
             } catch (Exception ex) {
                 System.out.println();
@@ -720,18 +790,18 @@ public class Contact_Info_Activity extends ActionBarActivity {
             }
         }
 
-        if(flag4primaryno || flag4alternate2 || flag4alternate1){
+        if(flag4primaryno || flag4alternate2 || flag4alternate1 || flag4alternate3){
             try {
 
                 if (flag4primaryno) {
                     primary = msgtxt4primaryno;
                     if(primary.length()==0 )
                     {
-                        YoYo.with(Techniques.Shake).playOn(primaryNumber);
                         Methods.showSnackBarNegative(this,getResources().getString(R.string.primary_num_can_not_empty));
 
                         flag4primaryno=false;
                         flag4alternate1=false;
+                        flag4alternate3 = false;
                         flag4alternate2=false;
                         allBoundaryCondtn=false;
 //                        floatSubmit.setVisibility(View.GONE);
@@ -742,11 +812,11 @@ public class Contact_Info_Activity extends ActionBarActivity {
                     }
                     if(msgtxt4primaryno.length()>0 && msgtxt4primaryno.length()<=6)
                     {
-                        YoYo.with(Techniques.Shake).playOn(primaryNumber);
                         Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_password_6to12_char));
                         flag4primaryno=false;
                         flag4alternate1=false;
                         flag4alternate2=false;
+                        flag4alternate3 = false;
                         allBoundaryCondtn=false;
 //                        floatSubmit.setVisibility(View.GONE);
 //                        findViewById(
@@ -755,16 +825,14 @@ public class Contact_Info_Activity extends ActionBarActivity {
                         saveTextView.setVisibility(View.GONE);
                     }
                 } else {
-                    String primaryNumber = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER);
+                    String primaryNumber = session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM);
                     if (primaryNumber != null) {
                         int size = primaryNumber.length();
                         if (size != 0) {
                             if (!Util.isNullOrEmpty(primaryNumber))
                                 primary = primaryNumber;
-
                         }
                     }
-
                 }
 
                 if (flag4alternate1) {
@@ -772,12 +840,12 @@ public class Contact_Info_Activity extends ActionBarActivity {
                             : msgtxt4alternateno1;
                     if(msgtxt4alternateno1.length()>0 && msgtxt4alternateno1.length()<6)
                     {
-                        YoYo.with(Techniques.Shake).playOn(alternateNumber_1);
                         Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_password_6to12_char));
 
                         flag4primaryno=false;
                         flag4alternate1=false;
                         flag4alternate2=false;
+                        flag4alternate3=false;
                         allBoundaryCondtn=false;
 //                        floatSubmit.setVisibility(View.GONE);
 //                        findViewById(
@@ -786,7 +854,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
                         saveTextView.setVisibility(View.GONE);
                     }
                 } else {
-                    String alternate1Number = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1);
+                    String alternate1Number = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER);
                     if (alternate1Number != null) {
                         int size = alternate1Number.length();
                         if (size > 1) {
@@ -801,11 +869,12 @@ public class Contact_Info_Activity extends ActionBarActivity {
                     alternate2 = (msgtxtalternate2.length() == 0) ? ""
                             : msgtxtalternate2;
                     if(msgtxtalternate2.length()>0 && msgtxtalternate2.length()<6)
-                    {YoYo.with(Techniques.Shake).playOn(alternateNumber_2);
+                    {
                         Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_password_6to12_char));
                         flag4primaryno=false;
                         flag4alternate1=false;
                         flag4alternate2=false;
+                        flag4alternate3=false;
                         allBoundaryCondtn=false;
 //                        floatSubmit.setVisibility(View.GONE);
 //                        findViewById(
@@ -814,7 +883,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
                         saveTextView.setVisibility(View.GONE);
                     }
                 } else {
-                    String alternate2Number = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_2);
+                    String alternate2Number = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1);
                     if (alternate2Number != null) {
                         int size = alternate2Number.length();
                         if (size > 2) {
@@ -824,28 +893,44 @@ public class Contact_Info_Activity extends ActionBarActivity {
                     }
                 }
 
-
-                //                    primaryNumber.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
-//                    alternateNumber_1.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1));
-//                    alternateNumber_2.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_2));
-//                    emailAddress.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
-//                    websiteAddress.setText(session.getFPDetails(""));
-//                    facebookPage.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FACEBOOK_PAGE));
-
-                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER,primary);
-                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1,alternate1);
-                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_2,alternate2);
-
+                if (flag4alternate3) {
+                    alternate3 = (msgtxtalternate3.length() == 0) ? ""
+                            : msgtxtalternate3;
+                    if(msgtxtalternate3.length()>0 && msgtxtalternate3.length()<6)
+                    {
+                        Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_password_6to12_char));
+                        flag4primaryno=false;
+                        flag4alternate1=false;
+                        flag4alternate2=false;
+                        allBoundaryCondtn=false;
+                        flag4alternate3 = false;
+//                        floatSubmit.setVisibility(View.GONE);
+//                        findViewById(
+//                                R.id.business_contactInfo_save_text)
+//                                .setVisibility(View.GONE);
+                        saveTextView.setVisibility(View.GONE);
+                    }
+                } else {
+                    String alternate3Number = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3);
+                    if (alternate3Number != null) {
+                        int size = alternate3Number.length();
+                        if (size > 2) {
+                            if (!Util.isNullOrEmpty(alternate3Number))
+                                alternate3 = alternate3Number;
+                        }
+                    }
+                }
 
                 obj4.put("key", "CONTACTS");
-                obj4.put("value", primary+"#"+alternate1+"#"+alternate2);
+                obj4.put("value", alternate1+"#"+alternate2+"#"+alternate3);
 
             } catch (Exception ex) {
                 System.out.println();
             }
             ja.put(obj4);
-            profilesattr[i] = "CONTACTS";
-            i++;
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER, alternate1);
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1, alternate2);
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3, alternate3);
 
         }
 
@@ -901,6 +986,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
         primaryNumber.setText(session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
         alternateNumber_1.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
         alternateNumber_2.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1));
+        alternateNumber_3.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3));
         emailAddress.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
         websiteAddress.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE));
         facebookPage.setText(session.getFacebookPage());

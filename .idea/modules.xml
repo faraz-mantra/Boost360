@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DragList/DragList.iml" filepath="$PROJECT_DIR$/DragList/DragList.iml" />
       <module fileurl="file://$PROJECT_DIR$/ZoomImageLibrary/ZoomImageLibrary.iml" filepath="$PROJECT_DIR$/ZoomImageLibrary/ZoomImageLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/boost.iml" filepath="$PROJECT_DIR$/boost.iml" />
@@ -13,7 +12,6 @@
       <module fileurl="file://$PROJECT_DIR$/app/libs/libs.iml" filepath="$PROJECT_DIR$/app/libs/libs.iml" />
       <module fileurl="file://$PROJECT_DIR$/messagelibrary/messagelibrary.iml" filepath="$PROJECT_DIR$/messagelibrary/messagelibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/mixpanel/mixpanel.iml" filepath="$PROJECT_DIR$/mixpanel/mixpanel.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mobihelp_sdk_android_v1.5.4/mobihelp_sdk_android_v1.5.4.iml" filepath="$PROJECT_DIR$/mobihelp_sdk_android_v1.5.4/mobihelp_sdk_android_v1.5.4.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/libs/libraries/volley/volley.iml" filepath="$PROJECT_DIR$/app/libs/libraries/volley/volley.iml" />
     </modules>
   </component>
