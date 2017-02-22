@@ -898,9 +898,9 @@ public class Contact_Info_Activity extends ActionBarActivity {
 //        facebookPage = (EditText) findViewById(R.id.facebookPage);
 
 
-        primaryNumber.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
-        alternateNumber_1.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1));
-        alternateNumber_2.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_2));
+        primaryNumber.setText(session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
+        alternateNumber_1.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
+        alternateNumber_2.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1));
         emailAddress.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
         websiteAddress.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE));
         facebookPage.setText(session.getFacebookPage());

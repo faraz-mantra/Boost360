@@ -348,7 +348,7 @@ public class Analytics_Fragment extends Fragment {
         networkInterface.getRiaCards(session.getFpTag(), new Callback<ArrayList<RiaCardModel>>() {
             @Override
             public void success(ArrayList<RiaCardModel> riaCardModels, Response response) {
-                if(riaCardModels!=null && getActivity()!=null){
+                if(riaCardModels!=null && getActivity()!=null && riaCardModels.size()>0){
                     cvRiaCard.setVisibility(View.VISIBLE);
                     drawRiaCards(riaCardModels);
                     bus.post(riaCardModels);
@@ -368,6 +368,7 @@ public class Analytics_Fragment extends Fragment {
         mListener = new RiaCardResponseListener() {
             @Override
             public void onResponse(String buttonId, String NextNodeId) {
+
                 for(RiaCardModel riaCard: riaCardModels){
                     if(riaCard.getId().equals(NextNodeId)){
                         drawSingleRiaCard(riaCard, this);
