@@ -1,9 +1,8 @@
 include ':app', ':cropper', ':ZoomImageLibrary', ':instamojoLib'
-
+include ':messagelibrary'
 
 include ':mixpanel'
 
 include ':app:libs:libraries:volley'
 
 include ':library'
-include ':messagelibrary'
