@@ -82,6 +82,11 @@ public class RiaEventLogger {
 
     public void logPostEvent(String fpTag, String nodeId, String buttonId, String buttonLabel, int status){
         if(!BuildConfig.DEBUG) {
+            if(status == EventStatus.COMPLETED.getValue()){
+                lastEventStatus = true;
+            }else {
+                lastEventStatus = false;
+            }
             DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
             df.setTimeZone(TimeZone.getTimeZone("UTC"));
             HashMap<String, String> eventData = new HashMap<>();
@@ -96,11 +101,6 @@ public class RiaEventLogger {
                     .setNodeId(nodeId)
                     .setEventData(eventData);
             mDatabase.child("RIAUserActivityLog").push().setValue(event);
-            if(status == EventStatus.COMPLETED.getValue()){
-                lastEventStatus = true;
-            }else {
-                lastEventStatus = false;
-            }
         }
     }
 }
