@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2017020018"
+    android:versionCode="2017020021"
     android:versionName="4.5.3">
 
     <permission
@@ -416,6 +416,7 @@
         <activity android:name="com.nowfloats.NavigationDrawer.HelpAndSupportActivity" />
         <activity android:name="com.nowfloats.Store.ProductCheckoutActivity" />
         <activity android:name="com.nowfloats.NavigationDrawer.RiaWebViewActivity"></activity>
+
     </application>
 
 </manifest>

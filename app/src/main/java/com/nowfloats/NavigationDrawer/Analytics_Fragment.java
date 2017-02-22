@@ -46,6 +46,7 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.ViewPortHandler;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.nowfloats.Analytics_Screen.FacebookAnalyticsLogin;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueries;
@@ -117,6 +118,8 @@ public class Analytics_Fragment extends Fragment {
 
     @Override
     public void onResume() {
+
+        Log.d("FCM Token", FirebaseInstanceId.getInstance().getToken());
         getFPDetails(getActivity(), session.getFPID(), Constants.clientId, bus);
 
         MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT,null);
@@ -148,7 +151,7 @@ public class Analytics_Fragment extends Fragment {
                         }
                     }
                 }
-            }, 150);
+            }, 200);
         }
         super.onResume();
     }

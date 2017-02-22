@@ -1569,6 +1569,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         if(oldTime != -1 && ((newTime-oldTime) < diff)){
             return;
         }
+        prefsEditor  = pref.edit();
         prefsEditor.putLong("wildFireMinitime",newTime).apply();
         String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
         String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);

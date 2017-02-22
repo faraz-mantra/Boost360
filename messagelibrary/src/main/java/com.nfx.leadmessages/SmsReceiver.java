@@ -32,6 +32,7 @@ public class SmsReceiver extends BroadcastReceiver {
     PowerManager powerManager;
     SmsMessage[] sms ;
 
+
     @Override
     public void onReceive(final Context context, final Intent intent) {
         Log.v("ggg","on receive");

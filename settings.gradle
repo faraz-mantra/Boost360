@@ -1,4 +1,4 @@
-include ':app', ':cropper', ':ZoomImageLibrary', ':mobihelp_sdk_android_v1.5.4', ':instamojoLib', ':messagelibrary'
+include ':app', ':cropper', ':ZoomImageLibrary', ':instamojoLib'
 
 
 include ':mixpanel'
@@ -6,4 +6,4 @@ include ':mixpanel'
 include ':app:libs:libraries:volley'
 
 include ':library'
-include ':DragList'
+include ':messagelibrary'
