@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.Telephony;
 import android.support.v4.app.ActivityCompat;
-import android.telephony.SmsMessage;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
@@ -30,7 +29,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
     PowerManager.WakeLock wakeLock;
     PowerManager powerManager;
-    SmsMessage[] sms ;
+    android.telephony.SmsMessage[] sms ;
 
 
     @Override
@@ -99,15 +98,15 @@ public class SmsReceiver extends BroadcastReceiver {
                                 wakeLock.release();
                             return;
                         }
-                        sms = new SmsMessage[1];
-                        sms[0] = SmsMessage.createFromPdu((byte[]) data[0]);
+                        sms = new android.telephony.SmsMessage[1];
+                        sms[0] = android.telephony.SmsMessage.createFromPdu((byte[]) data[0]);
                     }
                 }
-                com.nfx.leadmessages.SmsMessage model;
-                for (SmsMessage ms:sms) {
+                SmsMessage model;
+                for (android.telephony.SmsMessage ms:sms) {
                     for (String s:Constants.selections) {
                         if (ms.getOriginatingAddress().toUpperCase().contains(s.toUpperCase())){
-                            model =  new com.nfx.leadmessages.SmsMessage()
+                            model =  new SmsMessage()
                                     .setBody(ms.getMessageBody())
                                     .setSubject(ms.getOriginatingAddress())
                                     .setDate(System.currentTimeMillis())
