@@ -13,7 +13,7 @@
 
         <android.support.v7.widget.CardView
             android:id="@+id/cvRiaCard"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -54,6 +54,27 @@
 
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/ll_single_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="20dp">
+
+                    <Button
+                        android:id="@+id/btnSingleResponse"
+                        android:background="@drawable/ria_positive_btn"
+                        android:textColor="@color/white"
+                        android:text="Sure!"
+                        android:textAllCaps="false"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_twobuttons"
                     android:gravity="center_horizontal"
                     android:layout_marginTop="20dp"
                     android:layout_width="match_parent"

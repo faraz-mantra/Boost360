@@ -34,15 +34,15 @@ allprojects {
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.3'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
 
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId 'com.thinksity'
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 25
         versionName "4.5.3"
         versionCode 2017020022
         multiDexEnabled true
@@ -128,7 +128,6 @@ dependencies {
     compile 'com.github.clans:fab:1.6.4'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.github.freshdesk:hotline-android:1.2.0'
-
 }
 
 apply plugin: 'com.google.gms.google-services'
