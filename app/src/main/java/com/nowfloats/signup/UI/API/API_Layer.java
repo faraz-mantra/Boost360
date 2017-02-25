@@ -30,12 +30,15 @@ public class API_Layer {
 
                     @Override
                     public void onResponse(JSONArray response) {
+                        if(response == null ||response.length()==0){
+                            return;
+                        }
                         cat = new String[response.length()];
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 cat[i] = (String) response.get(i);
                                 // Toast.makeText(PreSignUpActivity.this,"Cat : "+cat[i],Toast.LENGTH_SHORT).show();
-                                //BoostLog.d("Test: ", cat[i]);
+                                //Log.v("Test: ", cat[i]);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

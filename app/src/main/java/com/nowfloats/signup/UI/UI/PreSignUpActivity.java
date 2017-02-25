@@ -964,7 +964,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
 
         @Override
         protected void onPostExecute(String result) {
-
+Log.v("Test",Constants.storeBusinessCategories.length+" length");
             if(pd!=null && pd.isShowing()){
                 pd.dismiss();
             }

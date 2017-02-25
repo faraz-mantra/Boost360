@@ -1113,12 +1113,13 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
 
    private void setStatus(){
-        Log.v("ggg","resime" +facebookHomeCheckBox.isChecked());
+        //Log.v("ggg","resime" +facebookHomeCheckBox.isChecked());
         Methods.isOnline(Social_Sharing_Activity.this);
         facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon_inactive));
         facebookHomeCheckBox.setChecked(false);
 
-        facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebookpage_icon_inactive));
+        facebookPage.setImageDrawable(getResources().getadd .
+                Drawable(R.drawable.facebookpage_icon_inactive));
         facebookPageCheckBox.setChecked(false);
 
         ivFbPageAutoPull.setImageResource(R.drawable.facebookpage_icon_inactive);
@@ -1127,7 +1128,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             Methods.showSnackBarNegative(this,"Your Facebook session has expired. Please login.");
         }
         if (!Util.isNullOrEmpty(session.getFacebookName()) && (pref.getInt("fbStatus", 0)==1 || pref.getInt("fbStatus",0)==3)) {
-            Log.v("ggg"," ok");
+            //Log.v("ggg"," ok");
             facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
             facebookHomeCheckBox.setChecked(true);
             facebookHomeStatus.setVisibility(View.VISIBLE);
