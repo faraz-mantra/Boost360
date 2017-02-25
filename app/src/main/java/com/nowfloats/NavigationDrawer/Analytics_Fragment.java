@@ -97,7 +97,7 @@ public class Analytics_Fragment extends Fragment {
     private Context context;
     private Bus bus;
     CardView cvRiaCard;
-    Button btnRiaCardLeft, btnRiaCrdRight;
+    Button btnRiaCardLeft, btnRiaCrdRight, btnSingleResponse;
     TextView tvRiaCardHeader;
     RiaCardDeepLinkListener mRiaCardDeepLinkListener;
     private static final String BUTTON_TYPE_DEEP_LINK = "DeepLink";
@@ -113,6 +113,7 @@ public class Analytics_Fragment extends Fragment {
     RiaCardResponseListener mListener = null;
     private String mButtonId;
     private String mNextNodeId;
+    LinearLayout llTwoButtons, llSingleButtonLayout;
 
 
 
@@ -186,6 +187,9 @@ public class Analytics_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_analytics, container, false);
         LinearLayout queryLayout = (LinearLayout) rootView.findViewById(R.id.analytics_screen_search_queries);
+        llTwoButtons = (LinearLayout) rootView.findViewById(R.id.ll_twobuttons);
+        llSingleButtonLayout = (LinearLayout) rootView.findViewById(R.id.ll_single_button);
+        btnSingleResponse = (Button) rootView.findViewById(R.id.btnSingleResponse);
         queryLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -385,67 +389,106 @@ public class Analytics_Fragment extends Fragment {
     }
 
     private void drawSingleRiaCard(final RiaCardModel rootCard, final RiaCardResponseListener listener) {
+        llTwoButtons.setVisibility(View.GONE);
+        llSingleButtonLayout.setVisibility(View.GONE);
         tvRiaCardHeader.setText(rootCard.getHeaderText());
-        final com.nowfloats.NavigationDrawer.model.Button btnLeft = rootCard.getButtons().get(0);
-        final com.nowfloats.NavigationDrawer.model.Button btnRight = rootCard.getButtons().get(1);
-        btnRiaCardLeft.setText(btnLeft.getButtonText());
-        btnRiaCardLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(btnLeft.getButtonType().equals(BUTTON_TYPE_DEEP_LINK) && btnLeft.getDeepLinkUrl()!=null){
+        if(rootCard.getButtons()==null || rootCard.getButtons().size()==0){
 
-                    mRiaCardDeepLinkListener.onDeepLink(btnLeft.getDeepLinkUrl(), true,
-                            new RiaNodeDataModel(rootCard.getId(), btnLeft.getId(),
-                                    btnLeft.getButtonText()));
-                    mButtonId = btnLeft.getId();
-                    mNextNodeId = btnLeft.getNextNodeId();
+        }else if(rootCard.getButtons()!=null && rootCard.getButtons().size()==1){
+            llSingleButtonLayout.setVisibility(View.VISIBLE);
+            final com.nowfloats.NavigationDrawer.model.Button btnSingle = rootCard.getButtons().get(0);
+            btnSingleResponse.setText(btnSingle.getButtonText());
+            btnSingleResponse.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (btnSingle.getButtonType().equals(BUTTON_TYPE_DEEP_LINK) && btnSingle.getDeepLinkUrl() != null) {
 
-                }else if(btnLeft.getButtonType().equals(BUTTON_TYPE_NEXT_NODE) && btnLeft.getNextNodeId()!=null){
-                    listener.onResponse(btnLeft.getId(), btnLeft.getNextNodeId());
-                }else if(btnLeft.getButtonType().equals(BUTTON_TYPE_EXIT)){
-                    cvRiaCard.setVisibility(View.GONE);
-                    bus.post(new ArrayList<RiaCardModel>());
-                }else if(btnLeft.getButtonType().equals(BUTTON_TYPE_OPEN_URL)){
-                    Intent intent = new Intent(getActivity(), RiaWebViewActivity.class);
-                    intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnLeft.getUrl());
-                    intent.putExtra(RiaWebViewActivity.RIA_NODE_DATA, new RiaNodeDataModel(rootCard.getId(), btnLeft.getId(),
-                            btnLeft.getButtonText()));
-                    startActivity(intent);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                        mRiaCardDeepLinkListener.onDeepLink(btnSingle.getDeepLinkUrl(), true,
+                                new RiaNodeDataModel(rootCard.getId(), btnSingle.getId(),
+                                        btnSingle.getButtonText()));
+                        mButtonId = btnSingle.getId();
+                        mNextNodeId = btnSingle.getNextNodeId();
+
+                    } else if (btnSingle.getButtonType().equals(BUTTON_TYPE_NEXT_NODE) && btnSingle.getNextNodeId() != null) {
+                        listener.onResponse(btnSingle.getId(), btnSingle.getNextNodeId());
+                    } else if (btnSingle.getButtonType().equals(BUTTON_TYPE_EXIT)) {
+                        cvRiaCard.setVisibility(View.GONE);
+                        bus.post(new ArrayList<RiaCardModel>());
+                    } else if (btnSingle.getButtonType().equals(BUTTON_TYPE_OPEN_URL)) {
+                        Intent intent = new Intent(getActivity(), RiaWebViewActivity.class);
+                        intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnSingle.getUrl());
+                        intent.putExtra(RiaWebViewActivity.RIA_NODE_DATA, new RiaNodeDataModel(rootCard.getId(), btnSingle.getId(),
+                                btnSingle.getButtonText()));
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
+                    RiaEventLogger.getInstance().logClickEvent(session.getFpTag(), rootCard.getId(),
+                            btnSingle.getId(), btnSingle.getButtonText());
                 }
-                RiaEventLogger.getInstance().logClickEvent(session.getFpTag(), rootCard.getId(),
-                        btnLeft.getId(), btnLeft.getButtonText());
-            }
-        });
-        btnRiaCrdRight.setText(btnRight.getButtonText());
-        btnRiaCrdRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(btnRight.getButtonType().equals(BUTTON_TYPE_DEEP_LINK) && btnRight.getDeepLinkUrl()!=null){
+            });
+        }else {
+            llTwoButtons.setVisibility(View.VISIBLE);
+            final com.nowfloats.NavigationDrawer.model.Button btnLeft = rootCard.getButtons().get(0);
+            final com.nowfloats.NavigationDrawer.model.Button btnRight = rootCard.getButtons().get(1);
+            btnRiaCardLeft.setText(btnLeft.getButtonText());
+            btnRiaCardLeft.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (btnLeft.getButtonType().equals(BUTTON_TYPE_DEEP_LINK) && btnLeft.getDeepLinkUrl() != null) {
 
-                    mRiaCardDeepLinkListener.onDeepLink(btnRight.getDeepLinkUrl(), true,
-                            new RiaNodeDataModel(rootCard.getId(), btnRight.getId(),
-                                    btnRight.getButtonText()));
-                    mButtonId = btnLeft.getId();
-                    mNextNodeId = btnLeft.getNextNodeId();
+                        mRiaCardDeepLinkListener.onDeepLink(btnLeft.getDeepLinkUrl(), true,
+                                new RiaNodeDataModel(rootCard.getId(), btnLeft.getId(),
+                                        btnLeft.getButtonText()));
+                        mButtonId = btnLeft.getId();
+                        mNextNodeId = btnLeft.getNextNodeId();
 
-                }else if(btnRight.getButtonType().equals(BUTTON_TYPE_NEXT_NODE) && btnRight.getNextNodeId()!=null){
-                    listener.onResponse(btnRight.getId(), btnRight.getNextNodeId());
-                }else if(btnRight.getButtonType().equals(BUTTON_TYPE_EXIT)){
-                    cvRiaCard.setVisibility(View.GONE);
-                    bus.post(new ArrayList<RiaCardModel>());
-                }else if(btnRight.getButtonType().equals(BUTTON_TYPE_OPEN_URL)){
-                    Intent intent = new Intent(getActivity(), RiaWebViewActivity.class);
-                    intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnRight.getUrl());
-                    intent.putExtra(RiaWebViewActivity.RIA_NODE_DATA, new RiaNodeDataModel(rootCard.getId(), btnRight.getId(),
-                            btnRight.getButtonText()));
-                    startActivity(intent);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    } else if (btnLeft.getButtonType().equals(BUTTON_TYPE_NEXT_NODE) && btnLeft.getNextNodeId() != null) {
+                        listener.onResponse(btnLeft.getId(), btnLeft.getNextNodeId());
+                    } else if (btnLeft.getButtonType().equals(BUTTON_TYPE_EXIT)) {
+                        cvRiaCard.setVisibility(View.GONE);
+                        bus.post(new ArrayList<RiaCardModel>());
+                    } else if (btnLeft.getButtonType().equals(BUTTON_TYPE_OPEN_URL)) {
+                        Intent intent = new Intent(getActivity(), RiaWebViewActivity.class);
+                        intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnLeft.getUrl());
+                        intent.putExtra(RiaWebViewActivity.RIA_NODE_DATA, new RiaNodeDataModel(rootCard.getId(), btnLeft.getId(),
+                                btnLeft.getButtonText()));
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
+                    RiaEventLogger.getInstance().logClickEvent(session.getFpTag(), rootCard.getId(),
+                            btnLeft.getId(), btnLeft.getButtonText());
                 }
-                RiaEventLogger.getInstance().logClickEvent(session.getFpTag(), rootCard.getId(),
-                        btnRight.getId(), btnRight.getButtonText());
-            }
-        });
+            });
+            btnRiaCrdRight.setText(btnRight.getButtonText());
+            btnRiaCrdRight.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (btnRight.getButtonType().equals(BUTTON_TYPE_DEEP_LINK) && btnRight.getDeepLinkUrl() != null) {
+
+                        mRiaCardDeepLinkListener.onDeepLink(btnRight.getDeepLinkUrl(), true,
+                                new RiaNodeDataModel(rootCard.getId(), btnRight.getId(),
+                                        btnRight.getButtonText()));
+                        mButtonId = btnLeft.getId();
+                        mNextNodeId = btnLeft.getNextNodeId();
+
+                    } else if (btnRight.getButtonType().equals(BUTTON_TYPE_NEXT_NODE) && btnRight.getNextNodeId() != null) {
+                        listener.onResponse(btnRight.getId(), btnRight.getNextNodeId());
+                    } else if (btnRight.getButtonType().equals(BUTTON_TYPE_EXIT)) {
+                        cvRiaCard.setVisibility(View.GONE);
+                        bus.post(new ArrayList<RiaCardModel>());
+                    } else if (btnRight.getButtonType().equals(BUTTON_TYPE_OPEN_URL)) {
+                        Intent intent = new Intent(getActivity(), RiaWebViewActivity.class);
+                        intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnRight.getUrl());
+                        intent.putExtra(RiaWebViewActivity.RIA_NODE_DATA, new RiaNodeDataModel(rootCard.getId(), btnRight.getId(),
+                                btnRight.getButtonText()));
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
+                    RiaEventLogger.getInstance().logClickEvent(session.getFpTag(), rootCard.getId(),
+                            btnRight.getId(), btnRight.getButtonText());
+                }
+            });
+        }
 
         drawSectionsForCard(rootCard.getSections(), llRiaCardSections);
         RiaEventLogger.getInstance().logViewEvent(session.getFpTag(), rootCard.getId());
