@@ -1118,8 +1118,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon_inactive));
         facebookHomeCheckBox.setChecked(false);
 
-        facebookPage.setImageDrawable(getResources().getadd .
-                Drawable(R.drawable.facebookpage_icon_inactive));
+        facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebookpage_icon_inactive));
         facebookPageCheckBox.setChecked(false);
 
         ivFbPageAutoPull.setImageResource(R.drawable.facebookpage_icon_inactive);
