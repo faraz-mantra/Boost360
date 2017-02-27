@@ -11,12 +11,14 @@ import android.os.PowerManager;
 import android.provider.Telephony;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static android.content.Context.POWER_SERVICE;
 
@@ -34,10 +36,9 @@ public class SmsReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
-        Log.v("ggg","on receive");
 
         SharedPreferences pref =context.getSharedPreferences(Constants.SHARED_PREF, Context.MODE_PRIVATE);
-        Log.v("ggg","pref"+ pref);
+
         if(pref == null) return;
 
         fpId =pref.getString(Constants.FP_ID,null);
@@ -45,19 +46,17 @@ public class SmsReceiver extends BroadcastReceiver {
             TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
             mobileId = tm.getDeviceId();
         }
-        //mobileId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
 
         if(mobileId == null || fpId == null){
             return;
         }
-        //MOBILE_ID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+
         powerManager = (PowerManager) context.getSystemService(POWER_SERVICE);
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
-                        "MyWakelockTag");
+                wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyWakelockTag");
                 if(!wakeLock.isHeld())
                     wakeLock.acquire();
 
@@ -103,20 +102,19 @@ public class SmsReceiver extends BroadcastReceiver {
                     }
                 }
                 SmsMessage model;
+                List<String> list = Arrays.asList(Constants.selections);
                 for (android.telephony.SmsMessage ms:sms) {
-                    for (String s:Constants.selections) {
-                        if (ms.getOriginatingAddress().toUpperCase().contains(s.toUpperCase())){
-                            model =  new SmsMessage()
-                                    .setBody(ms.getMessageBody())
-                                    .setSubject(ms.getOriginatingAddress())
-                                    .setDate(System.currentTimeMillis())
-                                    .setSeen("0");
+                    if (list.contains(ms.getOriginatingAddress())){
+                        model =  new SmsMessage()
+                                .setBody(ms.getMessageBody())
+                                .setSubject(ms.getOriginatingAddress())
+                                .setDate(System.currentTimeMillis())
+                                .setSeen("0");
 
-                            String key = mDatabase.push().getKey();
-                            mDatabase.child(key).setValue(model);
-                            break;
-                        }
+                        mDatabase.push().setValue(model);
+                        break;
                     }
+
                 }
                 if(wakeLock.isHeld())
                     wakeLock.release();
@@ -125,5 +123,4 @@ public class SmsReceiver extends BroadcastReceiver {
 
     }
 
-    //class OneTimeService extends
 }

