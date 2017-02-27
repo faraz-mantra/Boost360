@@ -120,7 +120,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
                     months = Arrays.copyOf(dbMonths, curMonth + 1);
 
                     int[] days=Arrays.copyOf(dbDays,dbdayOfWeek);
-                    months[dbmonth-1]-=days[dbdayOfWeek-1];
+                    months[dbmonth]-=days[dbdayOfWeek-1];
 
                     yearData = addArray(months);
                 }

@@ -194,7 +194,10 @@ public class Get_FP_Details_Service {
                 editorFbPage.apply();
             }else if(model.getType().equalsIgnoreCase("twitter")) {
                 SharedPreferences.Editor twitterPrefEditor = twitterPref.edit();
-                twitterPrefEditor.putBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, true);
+                if(model.getStatus().equals("1") ||model.getStatus().equals("3")) {
+                    twitterPrefEditor.putBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, true);
+                    Constants.twitterShareEnabled = true;
+                }
                 twitterPrefEditor.putString(TwitterConstants.PREF_USER_NAME, model.getUserAccountName());
                 twitterPrefEditor.apply();
             }

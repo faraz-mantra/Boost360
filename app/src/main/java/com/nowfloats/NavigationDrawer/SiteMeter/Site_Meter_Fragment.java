@@ -27,6 +27,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.Create_Message_Activity;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
+import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -419,6 +420,9 @@ public class Site_Meter_Fragment extends Fragment {
                             @Override
                             public void onPositive(MaterialDialog dialog) {
                                 super.onPositive(dialog);
+                                Intent i= new Intent(getContext(), DomainLookup.class);
+                                startActivity(i);
+
                             }
 
                         });

@@ -81,7 +81,7 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project('libs:libraries:volley')
-    compile project(':messagelibrary')
+    compile project(path:':messagelibrary')
     compile project(':library')
     compile project(':mixpanel')
     compile project(':cropper')
