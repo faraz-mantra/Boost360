@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2017020022"
+    android:versionCode="2017030001"
     android:versionName="4.5.3">
 
     <permission

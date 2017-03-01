@@ -44,7 +44,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 25
         versionName "4.5.3"
-        versionCode 2017020022
+        versionCode 2017030001
         multiDexEnabled true
     }
     buildTypes {
@@ -81,7 +81,6 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project('libs:libraries:volley')
-    compile project(path:':messagelibrary')
     compile project(':library')
     compile project(':mixpanel')
     compile project(':cropper')
@@ -128,6 +127,7 @@ dependencies {
     compile 'com.github.clans:fab:1.6.4'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.github.freshdesk:hotline-android:1.2.0'
+    compile project(':messagelibrary')
 }
 
 apply plugin: 'com.google.gms.google-services'

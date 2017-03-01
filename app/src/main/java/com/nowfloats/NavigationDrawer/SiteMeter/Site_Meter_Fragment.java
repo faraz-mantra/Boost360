@@ -28,6 +28,7 @@ import com.nowfloats.NavigationDrawer.Create_Message_Activity;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
 import com.nowfloats.Store.DomainLookup;
+import com.nowfloats.Twitter.TwitterConstants;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -204,6 +205,12 @@ public class Site_Meter_Fragment extends Fragment {
     public void siteMeterCalculation(){
         siteMeterTotalWeight = 0;
         SharedPreferences pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        Constants.fbShareEnabled = pref.getBoolean("fbShareEnabled", false);
+        Constants.fbPageShareEnabled = pref.getBoolean("fbPageShareEnabled", false);
+
+        SharedPreferences mSharedPreferences = getActivity().getSharedPreferences(TwitterConstants.PREF_NAME,Context.MODE_PRIVATE);
+        Constants.twitterShareEnabled = mSharedPreferences.getBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false);
+
         for (int i = 0; i < siteData.size(); i++) {
             if(siteData.get(i).position==domain){
                 if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))){
@@ -420,8 +427,7 @@ public class Site_Meter_Fragment extends Fragment {
                             @Override
                             public void onPositive(MaterialDialog dialog) {
                                 super.onPositive(dialog);
-                                Intent i= new Intent(getContext(), DomainLookup.class);
-                                startActivity(i);
+                                dialog.dismiss();
 
                             }
 

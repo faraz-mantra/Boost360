@@ -35,6 +35,7 @@ import retrofit.client.Response;
  * Created by NowFloatsDev on 25/05/2015.
  */
 public class Get_FP_Details_Service {
+
     public Get_FP_Details_Service(final Activity activity, String fpID, String clientID,final Bus bus)
     {
         newNfxtokenDetails(activity,fpID,bus);

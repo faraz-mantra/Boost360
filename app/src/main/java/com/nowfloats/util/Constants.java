@@ -73,7 +73,7 @@ public class Constants {
 
     // public final static String NOW_FLOATS_API_URL		=	"https://api.nowfloatsdev.com";
     public final static String NOW_FLOATS_API_URL = "https://api.withfloats.com";
-    public final static String TEST_API_URL = "http://api.nowfloatsdev.com/ram";
+    public final static String TEST_API_URL = "http://api.nowfloatsdev.com";
     public final static String BASE_IMAGE_URL = "https://content.withfloats.com";
     public final static String RIA_API_URL = "http://riamemory.withfloats.com";
     // public final static String NOW_FLOATS_API_URL		=	"https://nftestbed.azurewebsites.net";

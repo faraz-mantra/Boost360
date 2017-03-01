@@ -1064,7 +1064,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 //        Constants.FACEBOOK_PAGE_ID 			= pref.getString("fbPageId", "");
         Constants.FACEBOOK_PAGE_ACCESS_ID = pref.getString("fbPageAccessId", "");
         Constants.fbPageShareEnabled = pref.getBoolean("fbPageShareEnabled", false);
-        Constants.twitterShareEnabled = pref.getBoolean("twitterShareEnabled", false);
+        Constants.twitterShareEnabled = mSharedPreferences.getBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false);
         Constants.TWITTER_TOK = pref.getString(OAuth.OAUTH_TOKEN, "");
         Constants.TWITTER_SEC = pref.getString(OAuth.OAUTH_TOKEN_SECRET, "");
         Constants.FbFeedPullAutoPublish = pref.getBoolean("FBFeedPullAutoPublish", false);
@@ -1383,6 +1383,10 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 //twitterStatus.setText("Disconnected");
                 twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
                 logoutFromTwitter();
+                SharedPreferences.Editor twitterPrefEditor = mSharedPreferences.edit();
+                twitterPrefEditor.putBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false);
+                twitterPrefEditor.apply();
+                Constants.twitterShareEnabled = false;
                 twitterCheckBox.setChecked(false);
                 break;
             case PAGE_NO_FOUND:

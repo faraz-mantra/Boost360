@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -36,19 +37,24 @@ public class ReadMessages extends Service {
         TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         mobileId = tm.getDeviceId();
 
+
         if(mobileId == null || fpId == null){
             return Service.START_NOT_STICKY;
         }
+        StringBuilder builder = new StringBuilder();
+
         for(int i=0;i<selectionLength;i++){
 
             if(i == selectionLength-1){
-                selection+=" address Like \"%"+Constants.selections[i]+"%\"";
+                builder.append(" address Like \"%"+Constants.selections[i]+"%\"");
             }
             else{
-                selection+=" address Like \"%"+Constants.selections[i]+"%\" or";
+                builder.append(" address Like \"%"+Constants.selections[i]+"%\" or");
             }
 
         }
+        selection =builder.toString();
+        Log.d("Slection Param:", selection);
 
         new Thread(new Runnable() {
             @Override
