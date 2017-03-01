@@ -48,8 +48,9 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
     //It is same as we did in earlier posts
     private void sendNotification(Map<String, String> message) {
 
+        Log.d("Message", message.toString());
         deepLinkUrl = message.get("url");
-        Log.v("ggg","notif "+deepLinkUrl);
+        //Log.v("ggg","notif "+deepLinkUrl);
         String title = message.get("title");
         Intent intent = null;
         if(!Util.isNullOrEmpty(deepLinkUrl)) {

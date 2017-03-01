@@ -28,6 +28,7 @@ import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NFXApi.NfxRequestClient;
 import com.nowfloats.Twitter.TwitterConstants;
@@ -58,6 +59,7 @@ import java.util.Set;
 
 public class FacebookAnalyticsLogin extends AppCompatActivity implements NfxRequestClient.NfxCallBackListener {
 
+    private static final int PAGE_NO_FOUND = 404;
     private SharedPreferences pref = null;
     SharedPreferences.Editor prefsEditor;
     private Activity activity;
@@ -88,7 +90,7 @@ public class FacebookAnalyticsLogin extends AppCompatActivity implements NfxRequ
         TextView message= (TextView) findViewById(R.id.facebook_analytics_connect_text1);
 
         Intent intent=getIntent();
-        if(intent.getIntExtra("GetStatus",3)==2)
+        if(intent.getIntExtra("GetStatus",0)==2)
             message.setText("Your Facebook session has expired. Please login.");
         Methods.isOnline(FacebookAnalyticsLogin.this);
 
@@ -390,7 +392,13 @@ public class FacebookAnalyticsLogin extends AppCompatActivity implements NfxRequ
                             } else {
 
                                 onFBPageError();
-                                Methods.materialDialog(activity, "Alert", getString(R.string.look_like_no_facebook_page));
+                                NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) FacebookAnalyticsLogin.this)
+                                        .setmFpId(session.getFPID())
+                                        .setmType("facebookpage")
+                                        .setmCallType(PAGE_NO_FOUND)
+                                        .setmName("");
+                                requestClient.nfxNoPageFound();
+                                pd = ProgressDialog.show(FacebookAnalyticsLogin.this, "", getString(R.string.please_wait));
 
                             }
                         }
@@ -499,15 +507,20 @@ public class FacebookAnalyticsLogin extends AppCompatActivity implements NfxRequ
                 Constants.fbShareEnabled = true;
                 prefsEditor = pref.edit();
                 prefsEditor.putBoolean("fbShareEnabled", true);
+                prefsEditor.putInt("fbStatus",1);
                 prefsEditor.apply();
                 MixPanelController.track(EventKeysWL.FACEBOOK_ANAYTICS,null);
                 break;
             case FBPAGETYPE://not put in pref
                 prefsEditor.putBoolean("fbPageShareEnabled",true);
+                prefsEditor.putInt("fbPageStatus",1);
                 prefsEditor.apply();
                 Intent i = new Intent(this, ShowWebView.class);
                 startActivity(i);
                 finish();
+                break;
+            case PAGE_NO_FOUND:
+                Methods.materialDialog(activity, "Alert", getString(R.string.look_like_no_facebook_page));
                 break;
             default:
                 break;

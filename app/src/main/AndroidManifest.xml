@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2017020015"
-    android:versionName="4.5.2">
+    android:versionCode="2017030001"
+    android:versionName="4.5.3">
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
@@ -29,7 +29,6 @@
     <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -417,6 +416,7 @@
         <activity android:name="com.nowfloats.NavigationDrawer.HelpAndSupportActivity" />
         <activity android:name="com.nowfloats.Store.ProductCheckoutActivity" />
         <activity android:name="com.nowfloats.NavigationDrawer.RiaWebViewActivity"></activity>
+
     </application>
 
 </manifest>

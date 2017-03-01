@@ -10,14 +10,14 @@ import java.util.HashMap;
 
 public class RiaEventModel {
     private String eventCategory;
-    private Date eventDateTime;
+    private long eventDateTime;
     private String fpTag;
     private String eventChannel = "APP_ANDR";
     private String eventName;
     private String nodeId;
     private HashMap<String, String> eventData;
 
-    public RiaEventModel(String eventCategory, Date eventDateTime, String fpTag, String eventChannel,
+    public RiaEventModel(String eventCategory, long eventDateTime, String fpTag, String eventChannel,
                          String eventName, String nodeId, HashMap<String, String> eventData) {
         this.eventCategory = eventCategory;
         this.eventDateTime = eventDateTime;
@@ -41,11 +41,11 @@ public class RiaEventModel {
         return this;
     }
 
-    public Date getEventDateTime() {
+    public long getEventDateTime() {
         return eventDateTime;
     }
 
-    public RiaEventModel setEventDateTime(Date eventDateTime) {
+    public RiaEventModel setEventDateTime(long eventDateTime) {
         this.eventDateTime = eventDateTime;
         return this;
     }
