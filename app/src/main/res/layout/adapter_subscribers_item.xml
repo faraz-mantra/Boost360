@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-   <TextView
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"/>
+    android:layout_height="wrap_content"
+    android:padding="10dp">
     <ImageView
+        android:id="@+id/radioButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        />
+        android:visibility="invisible"
+        android:layout_gravity="center"
+        android:background="@drawable/circle_stroke"/>
+    <TextView
+        android:id="@+id/subscriber_text"
+       android:layout_width="0dp"
+       android:layout_height="match_parent"
+       android:text="@string/email"
+       android:gravity="center_vertical"
+       android:layout_marginStart="10dp"
+       android:layout_weight="1"
+       android:layout_marginLeft="10dp" />
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/arrowImage"
+        android:src="@drawable/forward"/>
 </LinearLayout>
