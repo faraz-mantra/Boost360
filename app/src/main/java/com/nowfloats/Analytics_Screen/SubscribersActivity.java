@@ -32,13 +32,13 @@ public class SubscribersActivity extends AppCompatActivity {
 
 
     private UserSessionManager mSessionManager;
-    private int mOffset = 0;
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
     private Toolbar toolbar;
     ArrayList<SubscriberModel> mSubscriberList = new ArrayList<>();
     SubscribersAdapter mSubscriberAdapter;
     private LinearLayoutManager mLayoutManager;
+    private boolean stop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,38 +70,44 @@ public class SubscribersActivity extends AppCompatActivity {
         }
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                int count = recyclerView.getChildCount();
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                int count = mLayoutManager.getItemCount();
                 int visiblePosition = mLayoutManager.findLastVisibleItemPosition();
-                /*if(visiblePosition>=count-2){
-                    mOffset+=10;
-                    getSubscribersList(String.valueOf(String.valueOf(mOffset)));
-                }*/
+                if(visiblePosition>=count-2 && !stop) {
+                        getSubscribersList();
+                }
             }
         });
 
-        getSubscribersList(String.valueOf(mOffset));
+        getSubscribersList();
         BoostLog.d("Test for Fp Tag: ", mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
-
     }
-    private void getSubscribersList(String mOffset){
+    private void getSubscribersList(){
+        stop =true;
+        final int count = mSubscriberList.size();
+        String offset = String.valueOf(String.valueOf(count+1));
+
         mProgressBar.setVisibility(View.VISIBLE);
         SubscriberApis mSubscriberApis = Constants.restAdapter.create(SubscriberApis.class);
-        mSubscriberApis.getsubscribers(mSessionManager.getFpTag(), Constants.clientId, mOffset, new Callback<List<SubscriberModel>>() {
+        mSubscriberApis.getsubscribers(mSessionManager.getFpTag(), Constants.clientId, offset, new Callback<List<SubscriberModel>>() {
             @Override
             public void success(List<SubscriberModel> subscriberModels, Response response) {
                 mProgressBar.setVisibility(View.GONE);
                 if(subscriberModels == null){
                     return;
                 }
-                int count = mSubscriberList.size();
+                int newItems = subscriberModels.size();
 
-                for (int i=0;i<subscriberModels.size();i++){
-                    Log.v("ggg",subscriberModels.get(i).getUserMobile());
+                for (int i=0;i<newItems;i++){
+
+                    //Log.v("ggg",subscriberModels.get(i).getUserMobile());
                     mSubscriberList.add(subscriberModels.get(i));
                     mSubscriberAdapter.notifyItemChanged(count+i);
                 }
-                //Log.v("ggg",count+"");
+                if(newItems >=10){
+                    stop = false;
+                }
+                Log.v("subscribes",count+1+" "+newItems);
             }
 
             @Override
