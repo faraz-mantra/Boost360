@@ -8,6 +8,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -15,9 +18,7 @@ import com.nowfloats.Analytics_Screen.API.SubscriberApis;
 import com.nowfloats.Analytics_Screen.Search_Query_Adapter.SubscribersAdapter;
 import com.nowfloats.Analytics_Screen.model.SubscriberModel;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
@@ -28,7 +29,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class SubscribersActivity extends AppCompatActivity {
+public class SubscribersActivity extends AppCompatActivity implements View.OnClickListener,SubscribersAdapter.MenuItemDelete {
 
 
     private UserSessionManager mSessionManager;
@@ -39,6 +40,9 @@ public class SubscribersActivity extends AppCompatActivity {
     SubscribersAdapter mSubscriberAdapter;
     private LinearLayoutManager mLayoutManager;
     private boolean stop;
+    TextView titleTextView;
+    EditText searchEditText;
+    ImageView deleteImage,searchImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +50,21 @@ public class SubscribersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_subscribers);
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
+        titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
+        searchEditText = (EditText) findViewById(R.id.search_edittext);
+        deleteImage = (ImageView) findViewById(R.id.delete_image);
+        searchImage = (ImageView) findViewById(R.id.search_image);
+
+        deleteImage.setOnClickListener(this);
+        searchImage.setOnClickListener(this);
+
+        titleTextView.setText(getResources().getString(R.string.subscribers));
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        TextView titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
-        titleTextView.setText(getResources().getString(R.string.subscribers));
+
         mProgressBar = (ProgressBar) findViewById(R.id.pb_subscriber);
         mRecyclerView = (RecyclerView) findViewById(R.id.lv_subscribers);
 
@@ -63,24 +75,19 @@ public class SubscribersActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mSubscriberAdapter);
 
         mSessionManager = new UserSessionManager(getApplicationContext(), SubscribersActivity.this);
-        if (mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG) != null) {
 
-        } else {
-            Methods.showSnackBarNegative(this, getResources().getString(R.string.could_not_find_fb_tag));
-        }
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 int count = mLayoutManager.getItemCount();
                 int visiblePosition = mLayoutManager.findLastVisibleItemPosition();
-                if(visiblePosition>=count-2 && !stop) {
+                if(visiblePosition>=count-2 && !stop) {//call api when second last item visible
                         getSubscribersList();
                 }
             }
         });
 
         getSubscribersList();
-        BoostLog.d("Test for Fp Tag: ", mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
     }
     private void getSubscribersList(){
         stop =true;
@@ -118,21 +125,62 @@ public class SubscribersActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+
+            case R.id.delete_image:
+                //deleteSubscriber();
+                break;
+            case R.id.search_image:
+
+                if(searchEditText.getVisibility() == View.VISIBLE){
+                    //search(editText.getText().toString().trim());
+                    Log.v("ggg",searchEditText.getText().toString().trim());
+                }else{
+                    titleTextView.setVisibility(View.GONE);
+                    searchEditText.setVisibility(View.VISIBLE);
+                    searchEditText.requestFocus();
+                }
+                break;
+        }
+    }
+    //method call when view changed from adapter
+    @Override
+    public void onChangeView(boolean deleteView) {
+        titleTextView.setVisibility(View.VISIBLE);
+        if(deleteView) {
+            searchImage.setVisibility(View.GONE);
+            searchEditText.setVisibility(View.GONE);
+            deleteImage.setVisibility(View.VISIBLE);
+        }else{
+            deleteImage.setVisibility(View.GONE);
+            searchImage.setVisibility(View.VISIBLE);
+        }
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case android.R.id.home:
+                if(searchEditText.getVisibility() == View.VISIBLE){
+                    searchEditText.clearFocus();
+                    searchEditText.setVisibility(View.GONE);
+                    titleTextView.setVisibility(View.VISIBLE);
+                    InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(searchEditText.getWindowToken(), 0);
 
-        int id = item.getItemId();
-
-        if (id == android.R.id.home) {
-
-            BoostLog.d("Back", "Back Pressed");
-            finish();
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-            //getSupportFragmentManager().popBackStack();
-            //  NavUtils.navigateUpFromSameTask(this);
+                }else
+                {
+                   onBackPressed();
+                }
+                return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
