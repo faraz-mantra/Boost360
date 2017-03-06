@@ -34,7 +34,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="2f035bfca562d8a6f74eee0c793d32a9742fdc77">
+        sha1="f9c217b7c02d43450d5b06e2517933f7814d9dcc">
         <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\instant-run_027338dc8cbd7fdc2a846323bb9b72279e4b82ea\classes.dex" />
     </item>
     <item
@@ -156,6 +156,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\exploded-aar\com.android.support\transition\25.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e51c2f662bb72419632af5192553c37e33890a99">
+        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-transition-25.2.0_834b9c006670b9bdf22be539a931953ce13c48eb\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.2.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -216,15 +225,6 @@
         revision="25.0.2"
         sha1="122ec9237acd8a57d974b9d529987f1ee6ca5aea">
         <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-maps-9.8.0_70c9b7d5081d1169293a411cc8519d030acb103a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="ec75036c3c52e451d0cde50a5aedaf5fd32354a0">
-        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-recyclerview-v7-23.4.0_2f7e24eb3265989a8eb624e1b7c94b2cb0e92baa\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -324,6 +324,15 @@
         revision="25.0.2"
         sha1="69bf5d59b95eb91b9d17ddb3f0725a4ff499197e">
         <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.twitter.sdk.android-tweet-composer-0.7.3_e22beeb7bd8e262e8708822ddfcf55952e4da851\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="152de8da301561dcb0946471697a420d8f7a68c5">
+        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-recyclerview-v7-25.2.0_a825735d9959c40f8eed754b4c1122c012a2f054\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -601,7 +610,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="cbe222b4e706a718c2f03422cf211d43c7e5396e">
+        sha1="59c26a6fbcd56c2a6638268e1b42873e14a9aa19">
         <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\instant-run-bootstrap_dbaf4d8d8798a2af32d7d472c9f6ee7807211edd\classes.dex" />
     </item>
     <item
@@ -630,15 +639,6 @@
         revision="25.0.2"
         sha1="bf95955dcf3d5a78c201e49b0c336787ea73f161">
         <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\2\signpost-core-1.2.1.2_f2e2496261a74b815eaf93cc8ecd006950445f78\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="d9ecde39b460470e655de6e47c05573d2d5a8bfb">
-        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-cardview-v7-23.4.0_680ecca537bbb5e8496738d4822946e2b19473fd\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -693,6 +693,15 @@
         revision="25.0.2"
         sha1="04f12ec1e1455909e1f0b8530c719c90b2d01745">
         <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\okhttp-urlconnection-2.3.0_9d89139faa77ca345a40b07abea800f6af71590e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\25.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="30a4938ea5235ccf532b3e9f04200e68547e36ad">
+        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-cardview-v7-25.2.0_13560c7c4b8923a7ce3b4406a87b63af1988e16b\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -810,15 +819,6 @@
         revision="25.0.2"
         sha1="770ebddfd293a627dea95938b3f8a7242a1720b9">
         <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.twitter.sdk.android-tweet-ui-1.0.5_dd19d68e031a86acb549983a6d05d8ba796ce498\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\exploded-aar\com.android.support\design\23.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="5326d9a850d491714fef8cbfaa9ea3416f0bf0d2">
-        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-design-23.4.0_8e39713d56b5ae465c5c7e9206b3e5bcf6090cda\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -948,15 +948,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\exploded-aar\com.android.support\gridlayout-v7\23.4.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="7c4c1fcc34aca536e3389c31527fb3c941b80266">
-        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-gridlayout-v7-23.4.0_91f4e870b62ddbfb00ccd2068772d46827366ec9\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\exploded-aar\org.honorato.multistatetogglebutton\multistatetogglebutton\0.2.2\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -1008,6 +999,15 @@
         revision="25.0.2"
         sha1="8cec50fc9cc847bad0d6ed7d93814f4b34744521">
         <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.daimajia.androidanimations-library-1.1.3_f27a5c3736387a6460fdbd0463aa2e75b2618c6c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\exploded-aar\com.android.support\design\25.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ea6a989b83d19b1b461281e0475a6cd6514897f8">
+        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-design-25.2.0_f7e432acb075daaf4ef47e388aadde3177af1677\classes.dex" />
     </item>
     <item
         is-multidex="true"

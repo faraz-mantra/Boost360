@@ -226,7 +226,7 @@ public class ProcessFPDetails {
                     }
                 }
             }
-//            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID,get_fp_details_model.ApplicationId);
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID,get_fp_details_model.ApplicationId);
         }catch(Exception e){e.printStackTrace();}
 
         /*

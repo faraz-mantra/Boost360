@@ -15,7 +15,9 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -168,7 +170,7 @@ public class LocationProvider extends Service implements LocationListener {
      * On pressing Settings button will lauch Settings Options
      * */
     public void showSettingsAlert(){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
         // Setting Dialog Title
         alertDialog.setTitle("GPS settings");
@@ -193,7 +195,13 @@ public class LocationProvider extends Service implements LocationListener {
         });
 
         // Showing Alert Message
-        alertDialog.show();
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                alertDialog.show();
+            }
+        });
+
     }
 
     @Override

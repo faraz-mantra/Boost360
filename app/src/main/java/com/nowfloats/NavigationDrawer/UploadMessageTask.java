@@ -186,6 +186,7 @@ public final class UploadMessageTask{
             if (imageData != null) {
                 outputStream = new DataOutputStream(connection.getOutputStream());
                 outputStream.write(imageData, 0, imageData.length);
+                //Log.d("Test:::Test", ":::::Again:::1");
             }
 
             int responseCode = connection.getResponseCode();
@@ -218,8 +219,8 @@ public final class UploadMessageTask{
                 }
 
                 String response = responseContent.toString();
-                Log.d("Message Task","Image Response : "+response);
-                if(!Util.isNullOrEmpty(response) && success){
+                //Log.d("Message Task","Image Response : "+response);
+                if(success){
                     /*if(Constants.twitterShareEnabled && obj.message!=null && Home_Main_Fragment.facebookPostCount == 0)
                     {
                         //PostImageTweetInBackgroundAsyncTask tweet = new PostImageTweetInBackgroundAsyncTask(appContext,obj.message,txtId,path,session);
@@ -228,13 +229,15 @@ public final class UploadMessageTask{
                     }*/
                     Create_Message_Activity.imageIconButtonSelected = false;
                     Constants.serviceResponse = response;
+                    //Log.d("Test:::Test", ":::::Again:::  " + path + "    "  + url);
                     if (path!=null && !path.equals("")){
+                        //Log.d("Test:::Test", ":::::");
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
                                 try{
                                     Thread.sleep(8000);
-                                    Log.i("IMAGE---wait"," for 8 SEconDS");
+                                    //Log.i("IMAGE---wait"," for 8 SEconDS");
                                     Home_Main_Fragment.bus.post(new PostImageSuccessEvent(txtId));
                                 }catch(Exception e){e.printStackTrace();}
                             }
@@ -245,7 +248,7 @@ public final class UploadMessageTask{
                     Constants.serviceResponse = "";
                 }
                 if (!success){
-                    Log.i("Image UPLOAD FAILED","");
+                    //Log.i("Image UPLOAD FAILED","");
                     Methods.showSnackBarNegative(appContext, appContext.getString(R.string.image_uploading_failed_try_again));
                     JSONObject obj2 = new JSONObject();
                     try {
