@@ -1389,12 +1389,17 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         if(mExpireDailog!=null && !mExpireDailog.isCancelled()){
             mExpireDailog.dismiss();
         }
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        Bundle bundle = new Bundle();
-        bundle.putBoolean(StoreFragmentTab.IS_FROM_WILD_FIRE_MINI, true);
-        storeFragment.setArguments(bundle);
-        ft.replace(R.id.mainFrame, storeFragment)
-                .commit();
+        try {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            Bundle bundle = new Bundle();
+            bundle.putBoolean(StoreFragmentTab.IS_FROM_WILD_FIRE_MINI, true);
+            storeFragment.setArguments(bundle);
+            ft.replace(R.id.mainFrame, storeFragment)
+                    .commit();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     @Subscribe

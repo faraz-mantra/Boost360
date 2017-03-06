@@ -129,7 +129,12 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getLastKnownLocation();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getLastKnownLocation();
+                    }
+                }).start();
                 MixPanelController.track(EventKeysWL.CREATE_WEBSITE_BUTTON, null);
                 API_Layer.getBusinessCategories(PreSignUp_MainActivity.this);
                 Intent signUpIntent = new Intent(PreSignUp_MainActivity.this, PreSignUpActivity.class);
@@ -159,7 +164,13 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
             }
         });
 
-        getLastKnownLocation();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getLastKnownLocation();
+            }
+        }).start();
+
         mAdapter = new PreSignupFragmentAdapter(getSupportFragmentManager());
 
         mPager = (ViewPager) findViewById(R.id.ps_pager);
