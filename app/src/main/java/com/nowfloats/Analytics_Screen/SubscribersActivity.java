@@ -150,6 +150,8 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     public void onChangeView(boolean deleteView) {
         titleTextView.setVisibility(View.VISIBLE);
         if(deleteView) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(searchEditText.getWindowToken(), 0);
             searchImage.setVisibility(View.GONE);
             searchEditText.setVisibility(View.GONE);
             deleteImage.setVisibility(View.VISIBLE);
