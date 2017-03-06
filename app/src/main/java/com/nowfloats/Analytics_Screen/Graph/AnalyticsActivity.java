@@ -10,7 +10,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -120,7 +119,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
                     months = Arrays.copyOf(dbMonths, curMonth + 1);
 
                     int[] days=Arrays.copyOf(dbDays,dbdayOfWeek);
-                    months[dbmonth-1]-=days[dbdayOfWeek-1];
+                    months[dbmonth]-=days[dbdayOfWeek-1];
 
                     yearData = addArray(months);
                 }
@@ -364,7 +363,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
             if (dashboardResponse == null||dashboardResponse.getEntity()==null){
                 return null;
             }
-            Log.v("ggg","task");
+
             for(DashboardResponse.Entity list :dashboardResponse.getEntity()) {
 
                 String s = list.getCreatedDate().substring(list.getCreatedDate().indexOf('(')+1,
