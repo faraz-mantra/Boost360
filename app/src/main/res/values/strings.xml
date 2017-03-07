@@ -765,8 +765,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="enter_the_reason">Enter other reason</string>
     <string name="submit">SUBMIT</string>
     <string name="no_alerts">No alerts!</string>
-    <string name="overall_visits">Overall Visits</string>
-    <string name="unique_visits">Unique Visits</string>
+    <string name="overall_visits">Total Visits</string>
+    <string name="unique_visits">Unique Visitors</string>
     <string name="address_line">Address Line</string>
     <string name="malleswaram">Malleswaram</string>
     <string name="town_city">Town / City</string>

@@ -3,14 +3,13 @@ package com.nowfloats.NavigationDrawer;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.nowfloats.NotificationCenter.NotificationFragment;
 import com.thinksity.R;
 
-public class TabPagerAdapter extends FragmentPagerAdapter {
+public class TabPagerAdapter extends FragmentStatePagerAdapter {
     Home_Main_Fragment homeFragment;
-    NotificationFragment alertFragment;
     Analytics_Fragment analyticsFragment ;
     Context appContext;
     int currentItem ;
@@ -21,7 +20,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
         super(fm);
         //Log.d("Tap Pager Adapter"," Tab Pager Adapter ");
         homeFragment = new Home_Main_Fragment();
-        alertFragment = new NotificationFragment();
+
         analyticsFragment = new Analytics_Fragment();
         appContext = context ;
         mFragmentManager = fm;
@@ -51,7 +50,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
                 currentItem = 1;
                 break;
             case 2:
-                selectedFragment = alertFragment;
+                selectedFragment = new NotificationFragment();
                 currentItem = 2;
                 break;
         }

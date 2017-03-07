@@ -159,6 +159,9 @@ public class NotificationFragment extends Fragment{
                     if(adapter!=null) {
                         adapter.addAlerts(alertModels);
                         adapter.notifyDataSetChanged();
+                    }else{
+                        adapter = new NotificationAdapter(getActivity(),alertModels,alertInterface,session,bus);
+                        recyclerView.setAdapter(adapter);
                     }
                     progress_layout.setVisibility(View.GONE);
                 }
