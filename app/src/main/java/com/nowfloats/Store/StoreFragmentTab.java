@@ -48,6 +48,8 @@ public class StoreFragmentTab extends Fragment {
     LinearLayout progressLayout;
     public static ArrayList<StoreModel> activeWidgetModels = new ArrayList<>();
     public static ArrayList<StoreModel> additionalWidgetModels = new ArrayList<>();
+    public static String IS_FROM_WILD_FIRE_MINI = "isFromWildFireMiniDialog";
+    private boolean mIsFromWildFireMiniDialog;
 
 
     @Override
@@ -68,15 +70,19 @@ public class StoreFragmentTab extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = getActivity();
-        session = new UserSessionManager(activity.getApplicationContext(),activity);
+        session = new UserSessionManager(activity.getApplicationContext(), activity);
         bus = BusProvider.getInstance().getBus();
+        if (getArguments() != null){
+            mIsFromWildFireMiniDialog = getArguments().getBoolean(IS_FROM_WILD_FIRE_MINI);
+        }
         new Thread(new Runnable() {
             @Override
             public void run() {
                 if(activity==null){activity = getActivity();}
-                tabPagerAdapter = new StorePagerAdapter(getChildFragmentManager(), activity);
+                tabPagerAdapter = new StorePagerAdapter(getChildFragmentManager(), activity, mIsFromWildFireMiniDialog);
             }
         }).start();
+
     }
 
     @Override

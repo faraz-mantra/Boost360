@@ -1,12 +1,17 @@
 package com.nowfloats.Login;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +23,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -39,10 +45,10 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
-import com.thinksity.Specific;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
+import com.thinksity.Specific;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,6 +76,10 @@ public class Login_MainActivity extends AppCompatActivity implements
     private Intent dashboardIntent;
     private RichEditor mEditor;
     private TextView mPreview;
+    private String[] permission = new String[]{Manifest.permission.READ_SMS,
+            Manifest.permission.RECEIVE_SMS,Manifest.permission.READ_PHONE_STATE};
+    private final static int READ_MESSAGES_ID=221;
+    LinearLayout parent_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +90,7 @@ public class Login_MainActivity extends AppCompatActivity implements
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(),Login_MainActivity.this);
         dashboardIntent = new Intent(Login_MainActivity.this, HomeActivity.class);
-
+        parent_layout = (LinearLayout) findViewById(R.id.parent_layout);
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
         headerText.setText(getString(R.string.welcome_back));
@@ -136,6 +146,7 @@ public class Login_MainActivity extends AppCompatActivity implements
                 passwordText = password.getText().toString().trim();
 
                 if (userNameText.length() > 0 && passwordText.length() > 0) {
+                    userName.clearFocus();
                     progressDialog = ProgressDialog.show(Login_MainActivity.this, "", getString(R.string.loading));
                     progressDialog.setCancelable(true);
                     API_Login apiLogin = new API_Login(Login_MainActivity.this,session,bus);
@@ -147,6 +158,7 @@ public class Login_MainActivity extends AppCompatActivity implements
                 }
             }
         });
+        //getPermission();
     }
 
     @Override
@@ -376,5 +388,52 @@ public class Login_MainActivity extends AppCompatActivity implements
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         }
         return super.onOptionsItemSelected(item);
+    }
+    private void getPermission(){
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)== PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)== PackageManager.PERMISSION_GRANTED){
+
+            // start the service to send data to firebase
+        }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        {
+            // if user deny the permissions
+           /* if(shouldShowRequestPermissionRationale(Manifest.permission.READ_SMS)||
+                    shouldShowRequestPermissionRationale(Manifest.permission.READ_PHONE_STATE)){
+
+                Snackbar.make(parent_layout, com.nfx.leadmessages.R.string.required_permission_to_show, Snackbar.LENGTH_INDEFINITE)
+                        .setAction(com.nfx.leadmessages.R.string.enable, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent();
+                                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                intent.addCategory(Intent.CATEGORY_DEFAULT);
+                                intent.setData(Uri.parse("package:" + getPackageName()));
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                                startActivity(intent);
+                            }
+                        })  // action text on the right side of snackbar
+                        .setActionTextColor(ContextCompat.getColor(this,android.R.color.holo_green_light))
+                        .show();
+            }
+            else{*/
+                requestPermissions(permission,READ_MESSAGES_ID);
+           // }
+
+        }
+
+    }
+
+    // this method called when user react on permissions
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+       switch(requestCode){
+           case READ_MESSAGES_ID:
+               //getPermission();
+               break;
+           default:
+               break;
+       }
     }
 }

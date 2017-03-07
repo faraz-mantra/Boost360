@@ -9,7 +9,6 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/DragList" />
             <option value="$PROJECT_DIR$/ZoomImageLibrary" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/app/libs" />
@@ -18,8 +17,8 @@
             <option value="$PROJECT_DIR$/cropper" />
             <option value="$PROJECT_DIR$/instamojoLib" />
             <option value="$PROJECT_DIR$/library" />
+            <option value="$PROJECT_DIR$/messagelibrary" />
             <option value="$PROJECT_DIR$/mixpanel" />
-            <option value="$PROJECT_DIR$/mobihelp_sdk_android_v1.5.4" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -196,7 +196,8 @@ public class Home_Main_Fragment extends Fragment implements
         BoostLog.i("IMAGE---","Image UpLoAd Check Triggered");
         mIsNewMsg = true;
         getNewAvailableUpdates();
-        
+        mPref.edit().putString("msg_post","").apply();
+        mPref.edit().putString("image_post","").apply();
     }
 
     @Subscribe
@@ -209,6 +210,9 @@ public class Home_Main_Fragment extends Fragment implements
             Create_Message_Activity.path = "";
 
             Constants.createMsg =false;
+            mPref.edit().putString("msg_post","").apply();
+            mPref.edit().putString("image_post","").apply();
+            //path = pref.getString("image_post",null);
         }
     }
 

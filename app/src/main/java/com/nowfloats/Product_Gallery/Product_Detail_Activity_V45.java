@@ -103,6 +103,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
     private int mPriorityVal = 1000000;
 
     private RiaNodeDataModel mRiaNodedata;
+    private boolean mIsImagePicking = false;
 
 
 
@@ -389,13 +390,6 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
             save.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mRiaNodedata!=null) {
-                        RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
-                                mRiaNodedata.getNodeId(), mRiaNodedata.getButtonId(),
-                                mRiaNodedata.getButtonLabel(),
-                                RiaEventLogger.EventStatus.COMPLETED.getValue());
-                        mRiaNodedata = null;
-                    }
                     materialProgress = new MaterialDialog.Builder(activity)
                             .widgetColorRes(R.color.accentColor)
                             .content(getString(R.string.loading))
@@ -415,6 +409,13 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
                             productInterface.addProduct(values,new Callback<String>() {
                                @Override
                                public void success(String productId, Response response) {
+                                   if(mRiaNodedata!=null) {
+                                       RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
+                                               mRiaNodedata.getNodeId(), mRiaNodedata.getButtonId(),
+                                               mRiaNodedata.getButtonLabel(),
+                                               RiaEventLogger.EventStatus.COMPLETED.getValue());
+                                       mRiaNodedata = null;
+                                   }
                                    Log.i("PRODUCT ID__",""+productId);
                                    runOnUiThread(new Runnable() {
                                        @Override
@@ -700,6 +701,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
         return currencyType;
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mIsImagePicking = false;
         if (resultCode == RESULT_OK && (Constants.GALLERY_PHOTO == requestCode)) {
             if (data != null) {
                 picUri = data.getData();
@@ -829,6 +831,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
                         gallery_req_id);
             }
             else {
+                mIsImagePicking = true;
                 Intent i = new Intent(
                         Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -851,6 +854,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
                         media_req_id);
             }
             else {
+                mIsImagePicking = true;
                 ContentValues Cvalues = new ContentValues();
                 Intent captureIntent;
                 Cvalues.put(MediaStore.Images.Media.TITLE, "New Picture");
@@ -870,7 +874,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
     @Override
     protected void onStop() {
         super.onStop();
-        if(mRiaNodedata!=null){
+        if(mRiaNodedata!=null && !mIsImagePicking){
             RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
                     mRiaNodedata.getNodeId(), mRiaNodedata.getButtonId(),
                     mRiaNodedata.getButtonLabel(),

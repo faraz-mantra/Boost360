@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    tools:context="test.com.nowfloats.NavigationDrawer.Analytics_Fragment"
+    tools:context="com.nowfloats.NavigationDrawer.Analytics_Fragment"
     android:background="@color/screen_bg"
     android:gravity="center_horizontal"
     android:orientation="vertical">
@@ -33,12 +33,13 @@
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/sidepanel_chat"/>
-                    <com.nowfloats.CustomWidget.roboto_md_48__565656
+                        android:src="@drawable/ria_cirlce_image"/>
+                    <TextView
                         android:layout_marginLeft="10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
+                        android:textColor="#808080"
                         android:layout_gravity="center_vertical"
                         android:text="Your Customers Love you"
                         android:id="@+id/tvRiaCardHeader"/>
@@ -47,12 +48,33 @@
                     android:id="@+id/llRiaCardSections"
                     android:layout_width="match_parent"
                     android:orientation="vertical"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_height="wrap_content">
 
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/ll_single_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="20dp">
+
+                    <Button
+                        android:id="@+id/btnSingleResponse"
+                        android:background="@drawable/ria_positive_btn"
+                        android:textColor="@color/white"
+                        android:text="Sure!"
+                        android:textAllCaps="false"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_twobuttons"
                     android:gravity="center_horizontal"
                     android:layout_marginTop="20dp"
                     android:layout_width="match_parent"

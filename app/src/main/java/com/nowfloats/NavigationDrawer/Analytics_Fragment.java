@@ -9,7 +9,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
@@ -30,6 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -45,6 +46,7 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.ViewPortHandler;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.nowfloats.Analytics_Screen.FacebookAnalyticsLogin;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueries;
@@ -57,6 +59,7 @@ import com.nowfloats.NavigationDrawer.API.RiaNetworkInterface;
 import com.nowfloats.NavigationDrawer.model.CoordinateList;
 import com.nowfloats.NavigationDrawer.model.CoordinatesSet;
 import com.nowfloats.NavigationDrawer.model.RiaCardModel;
+import com.nowfloats.NavigationDrawer.model.RiaEventModel;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NavigationDrawer.model.Section;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
@@ -67,13 +70,12 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.RiaEventLogger;
 import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
-import java.security.spec.ECField;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -81,7 +83,6 @@ import java.util.Locale;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 
 /**
@@ -96,7 +97,7 @@ public class Analytics_Fragment extends Fragment {
     private Context context;
     private Bus bus;
     CardView cvRiaCard;
-    Button btnRiaCardLeft, btnRiaCrdRight;
+    Button btnRiaCardLeft, btnRiaCrdRight, btnSingleResponse;
     TextView tvRiaCardHeader;
     RiaCardDeepLinkListener mRiaCardDeepLinkListener;
     private static final String BUTTON_TYPE_DEEP_LINK = "DeepLink";
@@ -109,9 +110,17 @@ public class Analytics_Fragment extends Fragment {
     }
     private static final String BAR = "Bar";
     private static final String LINE = "Line";
+    RiaCardResponseListener mListener = null;
+    private String mButtonId;
+    private String mNextNodeId;
+    LinearLayout llTwoButtons, llSingleButtonLayout;
+
+
 
     @Override
     public void onResume() {
+
+        Log.d("FCM Token", FirebaseInstanceId.getInstance().getToken());
         getFPDetails(getActivity(), session.getFPID(), Constants.clientId, bus);
 
         MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT,null);
@@ -128,6 +137,23 @@ public class Analytics_Fragment extends Fragment {
         }
         else
             facebokImpressions.setText("0");
+
+        if(mListener!=null){
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if(getActivity()!=null && mButtonId!=null && mNextNodeId!=null){
+                        mListener.onResponse(mButtonId, mNextNodeId);
+                    }else if(mNextNodeId== null){
+                        if(RiaEventLogger.lastEventStatus) {
+                            cvRiaCard.setVisibility(View.GONE);
+                            bus.post(new ArrayList<RiaCardModel>());
+                            RiaEventLogger.lastEventStatus = false;
+                        }
+                    }
+                }
+            }, 200);
+        }
         super.onResume();
     }
 
@@ -161,6 +187,9 @@ public class Analytics_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_analytics, container, false);
         LinearLayout queryLayout = (LinearLayout) rootView.findViewById(R.id.analytics_screen_search_queries);
+        llTwoButtons = (LinearLayout) rootView.findViewById(R.id.ll_twobuttons);
+        llSingleButtonLayout = (LinearLayout) rootView.findViewById(R.id.ll_single_button);
+        btnSingleResponse = (Button) rootView.findViewById(R.id.btnSingleResponse);
         queryLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -206,7 +235,7 @@ public class Analytics_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 SharedPreferences pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-                int status =pref.getInt("fbPageStatus",3);
+                int status =pref.getInt("fbPageStatus",0);
 
                 if(pref.getBoolean("fbPageShareEnabled",false) && status==1)
                 {
@@ -326,9 +355,10 @@ public class Analytics_Fragment extends Fragment {
         networkInterface.getRiaCards(session.getFpTag(), new Callback<ArrayList<RiaCardModel>>() {
             @Override
             public void success(ArrayList<RiaCardModel> riaCardModels, Response response) {
-                if(riaCardModels!=null && getActivity()!=null){
+                if(riaCardModels!=null && getActivity()!=null && riaCardModels.size()>0){
                     cvRiaCard.setVisibility(View.VISIBLE);
                     drawRiaCards(riaCardModels);
+                    bus.post(riaCardModels);
                 }
             }
 
@@ -342,9 +372,10 @@ public class Analytics_Fragment extends Fragment {
 
     private void drawRiaCards(final List<RiaCardModel> riaCardModels) {
         RiaCardModel rootCard = riaCardModels.get(0);
-        RiaCardResponseListener listener = new RiaCardResponseListener() {
+        mListener = new RiaCardResponseListener() {
             @Override
             public void onResponse(String buttonId, String NextNodeId) {
+
                 for(RiaCardModel riaCard: riaCardModels){
                     if(riaCard.getId().equals(NextNodeId)){
                         drawSingleRiaCard(riaCard, this);
@@ -353,62 +384,111 @@ public class Analytics_Fragment extends Fragment {
                 }
             }
         };
-        drawSingleRiaCard(rootCard, listener);
+        drawSingleRiaCard(rootCard, mListener);
 
     }
 
     private void drawSingleRiaCard(final RiaCardModel rootCard, final RiaCardResponseListener listener) {
+        llTwoButtons.setVisibility(View.GONE);
+        llSingleButtonLayout.setVisibility(View.GONE);
         tvRiaCardHeader.setText(rootCard.getHeaderText());
-        final com.nowfloats.NavigationDrawer.model.Button btnLeft = rootCard.getButtons().get(0);
-        final com.nowfloats.NavigationDrawer.model.Button btnRight = rootCard.getButtons().get(1);
-        btnRiaCardLeft.setText(btnLeft.getButtonText());
-        btnRiaCardLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(btnLeft.getButtonType().equals(BUTTON_TYPE_DEEP_LINK) && btnLeft.getDeepLinkUrl()!=null){
-                    mRiaCardDeepLinkListener.onDeepLink(btnLeft.getDeepLinkUrl(), true,
-                            new RiaNodeDataModel(rootCard.getId(), btnLeft.getId(),
-                                    btnLeft.getButtonText()));
-                }else if(btnLeft.getButtonType().equals(BUTTON_TYPE_NEXT_NODE) && btnLeft.getNextNodeId()!=null){
-                    listener.onResponse(btnLeft.getId(), btnLeft.getNextNodeId());
-                }else if(btnLeft.getButtonType().equals(BUTTON_TYPE_EXIT)){
-                    cvRiaCard.setVisibility(View.GONE);
-                }else if(btnLeft.getButtonType().equals(BUTTON_TYPE_OPEN_URL)){
-                    Intent intent = new Intent(getActivity(), RiaWebViewActivity.class);
-                    intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnLeft.getUrl());
-                    intent.putExtra(RiaWebViewActivity.RIA_NODE_DATA, new RiaNodeDataModel(rootCard.getId(), btnLeft.getId(),
-                            btnLeft.getButtonText()));
-                    startActivity(intent);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        if(rootCard.getButtons()==null || rootCard.getButtons().size()==0){
+
+        }else if(rootCard.getButtons()!=null && rootCard.getButtons().size()==1){
+            llSingleButtonLayout.setVisibility(View.VISIBLE);
+            final com.nowfloats.NavigationDrawer.model.Button btnSingle = rootCard.getButtons().get(0);
+            btnSingleResponse.setText(btnSingle.getButtonText());
+            btnSingleResponse.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (btnSingle.getButtonType().equals(BUTTON_TYPE_DEEP_LINK) && btnSingle.getDeepLinkUrl() != null) {
+
+                        mRiaCardDeepLinkListener.onDeepLink(btnSingle.getDeepLinkUrl(), true,
+                                new RiaNodeDataModel(rootCard.getId(), btnSingle.getId(),
+                                        btnSingle.getButtonText()));
+                        mButtonId = btnSingle.getId();
+                        mNextNodeId = btnSingle.getNextNodeId();
+
+                    } else if (btnSingle.getButtonType().equals(BUTTON_TYPE_NEXT_NODE) && btnSingle.getNextNodeId() != null) {
+                        listener.onResponse(btnSingle.getId(), btnSingle.getNextNodeId());
+                    } else if (btnSingle.getButtonType().equals(BUTTON_TYPE_EXIT)) {
+                        cvRiaCard.setVisibility(View.GONE);
+                        bus.post(new ArrayList<RiaCardModel>());
+                    } else if (btnSingle.getButtonType().equals(BUTTON_TYPE_OPEN_URL)) {
+                        Intent intent = new Intent(getActivity(), RiaWebViewActivity.class);
+                        intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnSingle.getUrl());
+                        intent.putExtra(RiaWebViewActivity.RIA_NODE_DATA, new RiaNodeDataModel(rootCard.getId(), btnSingle.getId(),
+                                btnSingle.getButtonText()));
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
+                    RiaEventLogger.getInstance().logClickEvent(session.getFpTag(), rootCard.getId(),
+                            btnSingle.getId(), btnSingle.getButtonText());
                 }
-                RiaEventLogger.getInstance().logClickEvent(session.getFpTag(), rootCard.getId(),
-                        btnLeft.getId(), btnLeft.getButtonText());
-            }
-        });
-        btnRiaCrdRight.setText(btnRight.getButtonText());
-        btnRiaCrdRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(btnRight.getButtonType().equals(BUTTON_TYPE_DEEP_LINK) && btnRight.getDeepLinkUrl()!=null){
-                    mRiaCardDeepLinkListener.onDeepLink(btnRight.getDeepLinkUrl(), true,
-                            new RiaNodeDataModel(rootCard.getId(), btnLeft.getId(),
-                                    btnLeft.getButtonText()));
-                }else if(btnRight.getButtonType().equals(BUTTON_TYPE_NEXT_NODE) && btnRight.getNextNodeId()!=null){
-                    listener.onResponse(btnRight.getId(), btnRight.getNextNodeId());
-                }else if(btnRight.getButtonType().equals(BUTTON_TYPE_EXIT)){
-                    cvRiaCard.setVisibility(View.GONE);
-                }else if(btnLeft.getButtonType().equals(BUTTON_TYPE_OPEN_URL)){
-                    Intent intent = new Intent(getActivity(), RiaWebViewActivity.class);
-                    intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnLeft.getUrl());
-                    intent.putExtra(RiaWebViewActivity.RIA_NODE_DATA, new RiaNodeDataModel(rootCard.getId(), btnLeft.getId(),
-                            btnLeft.getButtonText()));
-                    startActivity(intent);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            });
+        }else {
+            llTwoButtons.setVisibility(View.VISIBLE);
+            final com.nowfloats.NavigationDrawer.model.Button btnLeft = rootCard.getButtons().get(0);
+            final com.nowfloats.NavigationDrawer.model.Button btnRight = rootCard.getButtons().get(1);
+            btnRiaCardLeft.setText(btnLeft.getButtonText());
+            btnRiaCardLeft.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (btnLeft.getButtonType().equals(BUTTON_TYPE_DEEP_LINK) && btnLeft.getDeepLinkUrl() != null) {
+
+                        mRiaCardDeepLinkListener.onDeepLink(btnLeft.getDeepLinkUrl(), true,
+                                new RiaNodeDataModel(rootCard.getId(), btnLeft.getId(),
+                                        btnLeft.getButtonText()));
+                        mButtonId = btnLeft.getId();
+                        mNextNodeId = btnLeft.getNextNodeId();
+
+                    } else if (btnLeft.getButtonType().equals(BUTTON_TYPE_NEXT_NODE) && btnLeft.getNextNodeId() != null) {
+                        listener.onResponse(btnLeft.getId(), btnLeft.getNextNodeId());
+                    } else if (btnLeft.getButtonType().equals(BUTTON_TYPE_EXIT)) {
+                        cvRiaCard.setVisibility(View.GONE);
+                        bus.post(new ArrayList<RiaCardModel>());
+                    } else if (btnLeft.getButtonType().equals(BUTTON_TYPE_OPEN_URL)) {
+                        Intent intent = new Intent(getActivity(), RiaWebViewActivity.class);
+                        intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnLeft.getUrl());
+                        intent.putExtra(RiaWebViewActivity.RIA_NODE_DATA, new RiaNodeDataModel(rootCard.getId(), btnLeft.getId(),
+                                btnLeft.getButtonText()));
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
+                    RiaEventLogger.getInstance().logClickEvent(session.getFpTag(), rootCard.getId(),
+                            btnLeft.getId(), btnLeft.getButtonText());
                 }
-                RiaEventLogger.getInstance().logClickEvent(session.getFpTag(), rootCard.getId(),
-                        btnLeft.getId(), btnLeft.getButtonText());
-            }
-        });
+            });
+            btnRiaCrdRight.setText(btnRight.getButtonText());
+            btnRiaCrdRight.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (btnRight.getButtonType().equals(BUTTON_TYPE_DEEP_LINK) && btnRight.getDeepLinkUrl() != null) {
+
+                        mRiaCardDeepLinkListener.onDeepLink(btnRight.getDeepLinkUrl(), true,
+                                new RiaNodeDataModel(rootCard.getId(), btnRight.getId(),
+                                        btnRight.getButtonText()));
+                        mButtonId = btnLeft.getId();
+                        mNextNodeId = btnLeft.getNextNodeId();
+
+                    } else if (btnRight.getButtonType().equals(BUTTON_TYPE_NEXT_NODE) && btnRight.getNextNodeId() != null) {
+                        listener.onResponse(btnRight.getId(), btnRight.getNextNodeId());
+                    } else if (btnRight.getButtonType().equals(BUTTON_TYPE_EXIT)) {
+                        cvRiaCard.setVisibility(View.GONE);
+                        bus.post(new ArrayList<RiaCardModel>());
+                    } else if (btnRight.getButtonType().equals(BUTTON_TYPE_OPEN_URL)) {
+                        Intent intent = new Intent(getActivity(), RiaWebViewActivity.class);
+                        intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnRight.getUrl());
+                        intent.putExtra(RiaWebViewActivity.RIA_NODE_DATA, new RiaNodeDataModel(rootCard.getId(), btnRight.getId(),
+                                btnRight.getButtonText()));
+                        startActivity(intent);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
+                    RiaEventLogger.getInstance().logClickEvent(session.getFpTag(), rootCard.getId(),
+                            btnRight.getId(), btnRight.getButtonText());
+                }
+            });
+        }
 
         drawSectionsForCard(rootCard.getSections(), llRiaCardSections);
         RiaEventLogger.getInstance().logViewEvent(session.getFpTag(), rootCard.getId());
@@ -438,14 +518,18 @@ public class Analytics_Fragment extends Fragment {
     }
 
     private void attachText(Section widget, LinearLayout llRiaCardSections) {
+        if(getActivity()== null) return;
         TextView tv = new TextView(getActivity());
         tv.setText(Html.fromHtml(widget.getText()));
-        tv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT));
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(0, 0, 0, 0);
+        tv.setLayoutParams(lp);
         llRiaCardSections.addView(tv);
     }
 
     private void attachGraph(Section widget, LinearLayout llRiaCardSections) {
+        if(getActivity()== null) return;
         LinearLayout graph = new LinearLayout(getActivity());
         graph.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         graph.setGravity(Gravity.CENTER_VERTICAL);
@@ -456,6 +540,7 @@ public class Analytics_Fragment extends Fragment {
         graph.addView(yAxisName);
         if(!(widget.getY().getAxisType().equals("Integer") || widget.getY().getAxisType().equals("Double"))){
             cvRiaCard.setVisibility(View.GONE);
+            bus.post(new ArrayList<RiaCardModel>());
             return;
         }
         if(widget.getGraphType().equals(BAR)){
@@ -464,7 +549,10 @@ public class Analytics_Fragment extends Fragment {
             barChart.getAxisRight().setDrawGridLines(false);
             barChart.getXAxis().setDrawGridLines(false);
             barChart.setDescription(null);
+            barChart.getLegend().setEnabled(false);
             barChart.setPadding(dpToPx(-5), dpToPx(-5), dpToPx(-5), dpToPx(-5));
+            barChart.getAxisLeft().setAxisMinValue(0);
+            barChart.getAxisLeft().setSpaceBottom(0);
             ArrayList<IBarDataSet> dataSets = new ArrayList<>();
             ArrayList<String> xVals = new ArrayList<>();
             for(CoordinatesSet coordinateSet : widget.getCoordinatesSet()){
@@ -507,6 +595,9 @@ public class Analytics_Fragment extends Fragment {
             lineChart.getXAxis().setDrawGridLines(false);
             lineChart.setPadding(dpToPx(-5), dpToPx(-5), dpToPx(-5), dpToPx(-5));
             lineChart.setDescription(null);
+            lineChart.getLegend().setEnabled(false);
+            lineChart.getAxisLeft().setAxisMinValue(0);
+            lineChart.getAxisLeft().setSpaceBottom(0);
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             ArrayList<String> xVals = new ArrayList<>();
             for(CoordinatesSet coordinateSet : widget.getCoordinatesSet()){
@@ -560,7 +651,7 @@ public class Analytics_Fragment extends Fragment {
                 Animation.RELATIVE_TO_PARENT, 0.0f,
                 Animation.RELATIVE_TO_PARENT, 0.0f,
                 Animation.RELATIVE_TO_PARENT, 0.0f);
-        inFromRight.setDuration(250);
+        inFromRight.setDuration(100);
         inFromRight.setInterpolator(new AccelerateInterpolator());
         return inFromRight;
     }
@@ -577,10 +668,18 @@ public class Analytics_Fragment extends Fragment {
     }
 
     private void attachImage(Section widget, LinearLayout llRiaCardSections) {
+        if(getActivity()== null) return;
         ImageView iv = new ImageView(getActivity());
-        iv.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpToPx(150)));
-        iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        Picasso.with(getActivity()).load(widget.getUrl()).placeholder(R.drawable.image_placeholder).into(iv);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpToPx(150));
+        lp.setMargins(0, 0, 0, dpToPx(15));
+        iv.setScaleType(ImageView.ScaleType.FIT_XY);
+        iv.setLayoutParams(lp);
+        Glide.with(getActivity())
+                .load(widget.getUrl())
+                .centerCrop()
+                .placeholder(R.drawable.default_product_image)
+                .into(iv);
+        //Glide.with(getActivity()).load(widget.getUrl()).placeholder(R.drawable.image_placeholder).into(iv);
         llRiaCardSections.addView(iv);
     }
 

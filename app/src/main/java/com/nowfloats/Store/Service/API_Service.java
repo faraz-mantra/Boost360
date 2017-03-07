@@ -52,6 +52,7 @@ public class API_Service {
                 public void failure(RetrofitError error) {
                     Methods.showSnackBarNegative(activity,activity.getString(R.string.something_went_wrong));
                     //Log.i("store list Error",""+error);
+
                 }
             });
 

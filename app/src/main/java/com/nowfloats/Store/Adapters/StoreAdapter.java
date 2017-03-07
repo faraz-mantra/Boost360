@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
     public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public ImageView imageView;
+        CardView cardView;
         public TextView titleText,descText,readmore,priceText,knowMoreText;
         public LinearLayout store_product_layout;
         public ViewHolder(View v) {
@@ -51,6 +53,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
             descText = (TextView)itemView.findViewById(R.id.descText);
             readmore = (TextView)itemView.findViewById(R.id.readMore);
             priceText = (TextView)itemView.findViewById(R.id.priceText);
+            cardView = (CardView) itemView.findViewById(R.id.new_card);
             knowMoreText = (TextView)itemView.findViewById(R.id.knowMoreText);
             store_product_layout = (LinearLayout)itemView.findViewById(R.id.store_product_layout);
         }
@@ -76,8 +79,14 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
                         String url = Constants.NOW_FLOATS_API_URL+storeData.get(position).PrimaryImageUri;
                         Picasso.with(appContext).load(url).into(holder.imageView);
                     }
-                if (storeData.get(position).Name!=null)
+                if (storeData.get(position).Name!=null) {
                     holder.titleText.setText(storeData.get(position).Name);
+                    if(holder.titleText.getText().toString().toLowerCase().contains("mini")){
+                        holder.cardView.setVisibility(View.VISIBLE);
+                    }else{
+                        holder.cardView.setVisibility(View.GONE);
+                    }
+                }
                 if (storeData.get(position).Desc!=null)
                     holder.descText.setText(storeData.get(position).Desc);
                 holder.readmore.setPaintFlags(holder.readmore.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);

@@ -1,5 +1,6 @@
 package com.nowfloats.NavigationDrawer;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -14,9 +15,11 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -33,7 +36,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -48,6 +53,7 @@ import com.freshdesk.hotline.HotlineConfig;
 import com.freshdesk.hotline.HotlineUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.mixpanel.android.mpmetrics.GCMReceiver;
+import com.nfx.leadmessages.ReadMessages;
 import com.nineoldandroids.animation.Animator;
 import com.nowfloats.AccountDetails.AccountInfoActivity;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
@@ -127,6 +133,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class HomeActivity extends AppCompatActivity implements  SidePanelFragment.OnItemClickListener
         ,DeepLinkInterface,CustomPageDeleteInterface,Home_Main_Fragment.OnRenewPlanClickListener,
         CardAdapter_V3.Permission, OffersFragment.OnRenewPlanClickListener, Analytics_Fragment.RiaCardDeepLinkListener {
+
     private Toolbar toolbar;
     private SharedPreferences pref = null;
     private DrawerLayout mDrawerLayout;
@@ -162,12 +169,15 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     private final int LIGHT_HOUSE_EXPIRE = 0;
     private final int WILD_FIRE_EXPIRE = 1;
     private final int DEMO_EXPIRE = 3;
+    private static final int WILD_FIRE_PURCHASE = 2;
     SharedPreferences.Editor prefsEditor;
     private boolean isShownExpireDialog = false;
     private RiaNodeDataModel mRiaNodeDataModel;
 
     private String TAG = HomeActivity.class.getSimpleName();
-
+    private String[] permission = new String[]{Manifest.permission.READ_SMS,Manifest.permission.RECEIVE_SMS
+    ,Manifest.permission.READ_PHONE_STATE};
+    private final static int READ_MESSAGES_ID=221;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -182,7 +192,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         AppsFlyerLib.sendTracking(getApplicationContext());
         BoostLog.d("HomeActivity ONcreate","onCreate");
         bus = BusProvider.getInstance().getBus();
-        session = new UserSessionManager(getApplicationContext(),HomeActivity.this);
         activity = HomeActivity.this;
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -190,10 +199,15 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         Methods.isOnline(HomeActivity.this);
         session = new UserSessionManager(getApplicationContext(),HomeActivity.this);
         setHotlineUser();
+        //Log.v("ggg ",FirebaseInstanceId.getInstance().getToken());
         BoostLog.d(TAG, "In on CreateView");
         deepLinkUrl = RiaFirebaseMessagingService.deepLinkUrl;
         FPID = session.getFPID();
-
+        if(BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
+            SharedPreferences smsPref = getSharedPreferences(com.nfx.leadmessages.Constants.SHARED_PREF, Context.MODE_PRIVATE);
+            smsPref.edit().putString(com.nfx.leadmessages.Constants.FP_ID, FPID).apply();
+            getPermissions();
+        }
         /*if (getIntent().hasExtra("message")){
             StorebizFloats = getIntent().getExtras().getParcelableArrayList("message");
         }*/
@@ -382,8 +396,43 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 finish();
             }
         }
-    }
 
+    }
+    private void getPermissions() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED) {
+            Intent intent = new Intent(this, ReadMessages.class);
+            startService(intent);
+            // start the service to send data to firebase
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // if user deny the permissions
+           /* if(shouldShowRequestPermissionRationale(Manifest.permission.READ_SMS)||
+                    shouldShowRequestPermissionRationale(Manifest.permission.READ_PHONE_STATE)){
+
+                Snackbar.make(parent_layout, com.nfx.leadmessages.R.string.required_permission_to_show, Snackbar.LENGTH_INDEFINITE)
+                        .setAction(com.nfx.leadmessages.R.string.enable, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent();
+                                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                intent.addCategory(Intent.CATEGORY_DEFAULT);
+                                intent.setData(Uri.parse("package:" + getPackageName()));
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+                                startActivity(intent);
+                            }
+                        })  // action text on the right side of snackbar
+                        .setActionTextColor(ContextCompat.getColor(this,android.R.color.holo_green_light))
+                        .show();
+            }
+            else{*/
+            requestPermissions(permission, READ_MESSAGES_ID);
+            // }
+
+        }
+    }
     private void setHotlineUser() {
         HotlineConfig hlConfig=new HotlineConfig("f3e79ba0-6b2e-4793-aaeb-e226b43473fb","a2cc59f2-d2d1-4a8f-a27a-5586a1defd6d");
 
@@ -495,7 +544,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     createCustomPage.putExtra(Constants.RIA_NODE_DATA, mRiaNodeDataModel);
                 }
                 startActivity(createCustomPage);
-            } else  if(url.contains(getResources().getString(R.string.deeplink_upgrade))){
+            }else if(url.contains(getResources().getString(R.string.deeplink_upgrade))){
                 final String appPackageName = HomeActivity.this.getPackageName(); // getPackageName() from Context or Activity object
                 try {
                     HomeActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
@@ -563,7 +612,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 Intent accountInfo = new Intent(HomeActivity.this, AccountInfoActivity.class);
                 startActivity(accountInfo);
             }
-            else if(url.contains("visits")){
+            else if(url.contains("visits") || url.contains("viewgraph")){
                 Intent accountInfo = new Intent(HomeActivity.this, AnalyticsActivity.class);
                 startActivity(accountInfo);
             }
@@ -1340,9 +1389,17 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         if(mExpireDailog!=null && !mExpireDailog.isCancelled()){
             mExpireDailog.dismiss();
         }
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.mainFrame, storeFragment)
-                .commit();
+        try {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            Bundle bundle = new Bundle();
+            bundle.putBoolean(StoreFragmentTab.IS_FROM_WILD_FIRE_MINI, true);
+            storeFragment.setArguments(bundle);
+            ft.replace(R.id.mainFrame, storeFragment)
+                    .commit();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     @Subscribe
@@ -1362,27 +1419,36 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
 
     private void printPlan(ArrayList<ActiveWidget> allModels) {
+        //Log.v("ggg","plans");
         for(int i=0;i<allModels.size();i++){
             if(mExpireDailog!=null && mExpireDailog.isShowing()){
-                return;
+                break;
             }
             String temp = allModels.get(i).Name;
-            if(temp!=null && !temp.isEmpty() && temp.contains("NowFloats WildFire")){
+            if(temp!=null && !temp.isEmpty() && (temp.contains("NowFloats WildFire")||temp.contains("NF WildFire"))){
+
                 String date = allModels.get(i).CreatedOn;
                 int totalMonthsValidity = Integer.parseInt(allModels.get(i).TotalMonthsValidity);
                 int remainingDay = verifyTime(date.substring(date.indexOf("(")+1,date.indexOf(")")),totalMonthsValidity);
+                //Log.v("ggg",remainingDay+" days");
                 if(remainingDay>0 && remainingDay<7){
                     prefsEditor = pref.edit();
                     prefsEditor.putInt("Days_remain", remainingDay);
-                    prefsEditor.commit();
+                    prefsEditor.apply();
                 }else if(remainingDay<0){
                     prefsEditor = pref.edit();
                     prefsEditor.putInt("Days_remain", -1);
-                    prefsEditor.commit();
+                    prefsEditor.apply();
+                }else{
+                    return;
                 }
                 renewPlanDialog(WILD_FIRE_EXPIRE);
+                showWildFire();
+                return;
             }
         }
+        //Log.v("ggg","not showing");
+        showWildFire();
     }
 
     private int verifyTime(String unixtime, int months)
@@ -1419,7 +1485,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 dialogImage = R.drawable.androidexpiryxxxhdpi;
                 dialogImageBgColor = Color.parseColor("#ff0010");
                 break;
-
             case WILD_FIRE_EXPIRE:
                 boolean ignoreclicked = pref.getBoolean("IGNORE_CLICKED", false);
                 BoostLog.d("ILUD Boolean Vals: ", String.valueOf(ignoreclicked) + "   " + String.valueOf(dialogShowFlag));
@@ -1499,7 +1564,54 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             message.setText(dialogMessage);
         }
     }
+    private void showWildFire(){
 
+        Calendar calendar = Calendar.getInstance();
+        long oldTime = pref.getLong("wildFireMinitime",-1);
+        long newTime = calendar.getTimeInMillis();
+        long diff = 7*24*60*60*1000;
+        //Log.v("ggg",String.valueOf(diff)+" "+String.valueOf(newTime-oldTime));
+        if(oldTime != -1 && ((newTime-oldTime) < diff)){
+            return;
+        }
+        prefsEditor  = pref.edit();
+        prefsEditor.putLong("wildFireMinitime",newTime).apply();
+        String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
+        String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
+        if(Integer.valueOf(paymentState)>0 && Integer.valueOf(paymentLevel)>=10 ){
+            View view = getLayoutInflater().inflate(R.layout.pop_up_restrict_post_message,null);
+            ImageView image = (ImageView) view.findViewById(R.id.img_warning);
+            ViewGroup.LayoutParams lp = image.getLayoutParams();
+            lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            image.setLayoutParams(lp);
+            TextView title = (TextView) view.findViewById(R.id.textView1);
+            TextView description = (TextView) view.findViewById(R.id.pop_up_create_message_body);
+            title.setText("Connect with your customers instantly!");
+            description.setText("The all new WildFire Mini Plan lets you reach out to your customers," +
+                    "track all thier phone calls and get good leads. Start your 45 day plan now!");
+            image.setImageResource(R.drawable.wildfire);
+            new MaterialDialog.Builder(this)
+                    .customView(view,true)
+                    .backgroundColorRes(R.color.white)
+                    .positiveText("BUY")
+                    .negativeText("LATER")
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog mExpireDailog) {
+                            super.onPositive(mExpireDailog);
+                            openStore();
+                            MixPanelController.track(Key_Preferences.EVENT_WILDFIRE_BUY,null);
+                            mExpireDailog.dismiss();
+                        }
+
+                        @Override
+                        public void onNegative(MaterialDialog mExpireDailog) {
+                            super.onNegative(mExpireDailog);
+                            mExpireDailog.dismiss();
+                        }
+                    }).show();
+        }
+    }
     @Override
     public void getPermission() {
         BoostLog.d("Yeah:Permission ", "I am getting called");
@@ -1510,5 +1622,17 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         mRiaNodeDataModel = nodeDataModel;
         DeepLinkPage(deepLinkUrl, isFromRia);
     }
+
+ /*   public void wildFireStatus(){
+        RestAdapter adapter =new RestAdapter.Builder()
+                .setEndpoint("http://wmt.withfloats.com")
+                .build();
+        WildFire wildfire = adapter.create(WildFire.class);
+        wildfire.getStatus(Constants.clientId,);
+    }
+    public interface WildFire{
+        @GET("/testingapi/api/v1/account/accountstatus")
+        void getStatus(@Query("clientId") String clientId,@Query("accountId") String Callback<String> response);
+    }*/
 }
 

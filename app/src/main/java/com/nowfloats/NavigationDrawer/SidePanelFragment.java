@@ -45,6 +45,7 @@ import com.nowfloats.BusinessProfile.UI.API.UploadPictureAsyncTask;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DeleteBackgroundImageAsyncTask;
+import com.nowfloats.Twitter.TwitterConstants;
 import com.nowfloats.Volley.AppController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
@@ -130,6 +131,7 @@ public class SidePanelFragment extends Fragment {
     private ImageView shareImageView, businessProfileImageView, dasbBoardImageView, callImageView, chatImageView, cspImageView,
             settingsImageView, StoreImageView, productGalleryImageView, imageGalleryImageView/*, customerQueriesImageView*/ /*ivSiteAppearance*/;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
+
 
     public interface OnItemClickListener {
         public void onClick(String nextScreen);
@@ -1221,6 +1223,10 @@ public class SidePanelFragment extends Fragment {
     }*/
         public void siteMeterCalculation() {
             SharedPreferences pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+            SharedPreferences mSharedPreferences = getActivity().getSharedPreferences(TwitterConstants.PREF_NAME,Context.MODE_PRIVATE);
+            Constants.fbShareEnabled = pref.getBoolean("fbShareEnabled", false);
+            Constants.fbPageShareEnabled = pref.getBoolean("fbPageShareEnabled", false);
+            Constants.twitterShareEnabled = mSharedPreferences.getBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false);
             siteMeterTotalWeight = 0;
             if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
                 siteMeterTotalWeight += 10;

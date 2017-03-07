@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -89,10 +90,10 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
     Typeface robotoRegular;
     GraphResponse mMeResponse;
     GraphResponse mAccountsResponse;
-
+    private String[] permission = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private CallbackManager callbackManager;
 
-
+    RelativeLayout parent_layout;
     private LocationProvider loc_provider;
 
     @Override
@@ -106,7 +107,7 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
 
         TextView createWebsiteText = (TextView) findViewById(R.id.createWebSiteText);
         createWebsiteText.setTypeface(robotoRegular);
-
+        parent_layout = (RelativeLayout) findViewById(R.id.parent_layout);
         TextView signUpFacebookText = (TextView) findViewById(R.id.facebook_create_txt);
         signUpFacebookText.setTypeface(robotoRegular);
 
@@ -128,7 +129,12 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getLastKnownLocation();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getLastKnownLocation();
+                    }
+                }).start();
                 MixPanelController.track(EventKeysWL.CREATE_WEBSITE_BUTTON, null);
                 API_Layer.getBusinessCategories(PreSignUp_MainActivity.this);
                 Intent signUpIntent = new Intent(PreSignUp_MainActivity.this, PreSignUpActivity.class);
@@ -158,7 +164,13 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
             }
         });
 
-        getLastKnownLocation();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getLastKnownLocation();
+            }
+        }).start();
+
         mAdapter = new PreSignupFragmentAdapter(getSupportFragmentManager());
 
         mPager = (ViewPager) findViewById(R.id.ps_pager);
@@ -678,8 +690,8 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
         switch (requestCode) {
             case 0: {
 
-                   getLastKnownLocation();
-                }
+               getLastKnownLocation();
+            }
                 return;
             }
 
@@ -693,17 +705,15 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
         LoginManager.getInstance().logOut();
     }
 
-
     private void getLastKnownLocation() {
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(PreSignUp_MainActivity.this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
-                    permision_request_id);
-            Log.v("ggg","request");
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-        }else {
-            Log.v("ggg","getting things");
+            ActivityCompat.requestPermissions(PreSignUp_MainActivity.this, permission, permision_request_id);
+
+        }else
+        {
             loc_provider = new LocationProvider(PreSignUp_MainActivity.this);
             if (!loc_provider.canGetLocation()) {
                 loc_provider.showSettingsAlert();
@@ -715,7 +725,7 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
             }
             if (location != null) {
                 ReverseGeoCoderAsyncTask task = new ReverseGeoCoderAsyncTask(this, location);
-                Log.d("ILUD location", String.valueOf(location.getLatitude()) + " " + String.valueOf(location.getLongitude()));
+                //Log.d("ILUD location", String.valueOf(location.getLatitude()) + " " + String.valueOf(location.getLongitude()));
                 try {
                     task.execute().get();
                 } catch (InterruptedException e) {
@@ -730,7 +740,9 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
                 if (lastKnownAddress != null)
                     GetCountryZipCode(lastKnownAddress.getCountryCode());
             }
+
         }
+
     }
 
     public void GetCountryZipCode(String countryid) {

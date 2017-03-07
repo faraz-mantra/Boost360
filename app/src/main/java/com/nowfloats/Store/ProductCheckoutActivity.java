@@ -392,7 +392,11 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 
             if (!Util.isNullOrEmpty(mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID))) {
                 clientId = mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID);
-            } else {
+            } else if(!Util.isNullOrEmpty(mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID))) {
+                clientId = mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID);
+            }else if(!Util.isNullOrEmpty(mSessionManager.getSourceClientId())){
+                clientId = mSessionManager.getSourceClientId();
+            }else {
                 Methods.showSnackBarNegative(this, "Can't Proceed for Payment");
                 return;
             }
@@ -419,7 +423,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             sendDraftInvoiceModel.setPurchaseDetails(purchaseDetailList);
             DataBase dataBase = new DataBase(ProductCheckoutActivity.this);
             Cursor cursor = dataBase.getLoginStatus();
-            if (cursor.moveToFirst()){
+            if (cursor.moveToFirst() && !cursor.getString(cursor.getColumnIndex(DataBase.colloginId)).equals("0")){
                 sendDraftInvoiceModel.setFpUserProfileId(cursor.getString(cursor.getColumnIndex(DataBase.colloginId)));
                 sendDraftInvoiceModel.setOpc(null);
             }else {
