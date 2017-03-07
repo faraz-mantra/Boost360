@@ -720,7 +720,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="logout">Logout</string>
     <string name="create_website_using">Create website using</string>
     <string name="email_address">Email Address</string>
-    <string name="log_in"> Log In</string>
     <string name="complete_task_to_increase_site_score">Complete the task below to increase your site score.</string>
     <string name="high_score_translate_more_traffic">Higher scores translates more traffic to your site.</string>
     <string name="get_your_identity">Get your own identity</string>
@@ -1052,5 +1051,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="dialog_to_be_activated_null_text">Please note that you will receive an Account Verification Call before your subscription gets activated. Are you sure you want to proceed?</string>
     <string name="search_rank">Search Ranking</string>
     <string name="alternate_number3">Alternate Number 3</string>
+    <string name="cap_login" translatable="false">&#160;<u><b>LOGIN</b></u></string>
+    <string name="log_in">Log In</string>
 
 </resources>
