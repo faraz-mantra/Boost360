@@ -32,7 +32,7 @@ public class GetVisitorsAndSubscribersCountAsyncTask extends AsyncTask<Void, Str
 	//public IOnObserverListener onObserverListener;
 //	int count;
 	UserSessionManager sessionManager;
-    private String numberOfViews,numberOfSubscribers;
+    private String numberOfViews,numberOfSubscribers,numberOfVisitors;
 
     public GetVisitorsAndSubscribersCountAsyncTask(Activity context, UserSessionManager session) {
        super();
@@ -55,6 +55,8 @@ public class GetVisitorsAndSubscribersCountAsyncTask extends AsyncTask<Void, Str
                 try {
                     if (!numberOfViews.contains(","))
                         numberOfViews = NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(numberOfViews));
+                    if (!numberOfVisitors.contains(","))
+                        numberOfVisitors = NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(numberOfVisitors));
                     if (!numberOfSubscribers.contains(",")){
                         numberOfSubscribers = NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(numberOfSubscribers));
                     }
@@ -62,7 +64,8 @@ public class GetVisitorsAndSubscribersCountAsyncTask extends AsyncTask<Void, Str
                     e.printStackTrace();
                 }
 
-                sessionManager.setVisitorsCount(numberOfViews);
+                sessionManager.setVisitsCount(numberOfViews);
+                sessionManager.setVisitorsCount(numberOfVisitors);
                 sessionManager.setSubcribersCount(numberOfSubscribers);
 
                 mContext.runOnUiThread(new Runnable() {
@@ -80,7 +83,13 @@ public class GetVisitorsAndSubscribersCountAsyncTask extends AsyncTask<Void, Str
                             Analytics_Fragment.visitCount.setVisibility(View.VISIBLE);
                             Analytics_Fragment.visits_progressBar.setVisibility(View.GONE);
                             Analytics_Fragment.visitCount.setText(numberOfViews);
-                            Log.i("Visitors",""+numberOfSubscribers);
+                            Log.i("Visitors",""+numberOfViews);
+                        }
+                        if(Analytics_Fragment.visitorsCount != null && Analytics_Fragment.visitors_progressBar!=null)
+                        {
+                            Analytics_Fragment.visitorsCount.setVisibility(View.VISIBLE);
+                            Analytics_Fragment.visitors_progressBar.setVisibility(View.GONE);
+                            Analytics_Fragment.visitorsCount.setText(numberOfVisitors);
                         }
                     }
                 });
@@ -126,6 +135,7 @@ public class GetVisitorsAndSubscribersCountAsyncTask extends AsyncTask<Void, Str
                 for(int i = 0 ; i < entityArray.length() ;i++) {
                     JSONObject data = (JSONObject) entityArray.get(i);
                     numberOfViews = data.getString("NoOfViews");
+                    numberOfVisitors = data.getString("NoOfUniqueViews");
                     String numberOfMessages = data.getString("NoOfMessages");
                     numberOfSubscribers = data.getString("NoOfSubscribers");
 

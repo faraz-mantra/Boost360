@@ -22,31 +22,30 @@ import org.json.JSONObject;
 
 public class SaveDataCounts {
 
-    public static final String DATE_ID = "id";
-    public static final String DATE = "date";
-    public static final String DATA_COUNT = "dataCount";
-    public static final String YEAR = "year";
-    public static final String MONTH = "month";
-    public static final String WEEK = "week";
-    private Context mContext;
+    private static final String DATE_ID = "id";
+    private static final String DATE = "date";
+    private static final String DATA_COUNT = "dataCount";
+    private static final String YEAR = "year";
+    private static final String MONTH = "month";
+    private static final String WEEK = "week";
 
     private Holder mHolder;
     private SQLiteDatabase mDb;
     public static final String DATABASE_NAME = "Analytics.db";
     private static final int DATABASE_VERSION = 1;
 
-    private static final String ANALYTICS_TABLE = "AnalyticsTable";
-    private static final String DROP_TABLE = "DROP TABLE IF EXISTS " + ANALYTICS_TABLE;
+    private static String ANALYTICS_TABLE = "";
+    private static String DROP_TABLE = "DROP TABLE IF EXISTS " + ANALYTICS_TABLE;
     private static final String WEEK_COUNT ="weekCount" ;
     private static final String MONTH_COUNT ="monthCount" ;
     private static final String YEAR_COUNT ="yearCount" ;
-    private static final String CREATE_ANALYTICS_TABLE = "CREATE TABLE " + ANALYTICS_TABLE +
+    private static String CREATE_ANALYTICS_TABLE = "CREATE TABLE " + ANALYTICS_TABLE +
             " ( " + DATE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + DATE + " INTEGER, "+ YEAR_COUNT + " INTEGER, "
             + MONTH_COUNT + " INTEGER, "+ WEEK_COUNT + " INTEGER, "+ DATA_COUNT + " VARCHAR(255))";
 
-    public SaveDataCounts(Context context) {
-        mContext = context;
-        mHolder = new Holder(mContext);
+    public SaveDataCounts(Context context,String tableName) {
+        ANALYTICS_TABLE = tableName;
+        mHolder = new Holder(context);
     }
     public void addDataCount(DatabaseModel data) {
         mDb = mHolder.getWritableDatabase();
@@ -64,10 +63,9 @@ public class SaveDataCounts {
     }
     public boolean rowExist(){
         Cursor mCursor = mDb.rawQuery("SELECT * FROM " + ANALYTICS_TABLE, null);
-        if (mCursor.moveToFirst())
-           return true;
-        else
-            return false;
+        boolean isExist = mCursor.moveToFirst();
+        mCursor.close();
+        return isExist;
     }
     private ContentValues makeContentValues(DatabaseModel data){
         ContentValues values = new ContentValues();
@@ -90,22 +88,21 @@ public class SaveDataCounts {
     }
     public long deleteAll(){
         mDb = mHolder.getWritableDatabase();
-        long i = mDb.delete(ANALYTICS_TABLE,null, null);
-        Log.v("ggg",i+"delete row");
-        return i;
-    }
+        return mDb.delete(ANALYTICS_TABLE,null, null);
+        //Log.v("ggg",i+"delete row");
+             }
     public DatabaseModel getDataArrays() {
         DatabaseModel modeldata=null;
         try {
             mDb = mHolder.getWritableDatabase();
             String selectQuery = "SELECT * FROM "+ ANALYTICS_TABLE;
             Cursor cursor = mDb.rawQuery(selectQuery, null);
-            Log.v("ggg","getdata");
+            //Log.v("ggg","getdata");
             if(cursor==null) return null;
             if (cursor.moveToFirst()) {
                 modeldata= new DatabaseModel();
                 do {
-                    Log.v("ggg","doloop");
+                    //Log.v("ggg","doloop");
                     String arrayJSON=cursor.getString(5);
                     if(arrayJSON==null||arrayJSON.equals("null")) return null;
                     JSONObject json = new JSONObject(cursor.getString(5));
@@ -116,7 +113,7 @@ public class SaveDataCounts {
                     modeldata.setYearCount(cursor.getInt(2));
                     modeldata.setMonthCount(cursor.getInt(3));
                     modeldata.setWeekCount(cursor.getInt(4));
-                    Log.v("ggg","one times run getArray database");
+                    //Log.v("ggg","one times run getArray database");
                 } while (cursor.moveToNext());
             }
             cursor.close();
@@ -142,7 +139,7 @@ public class SaveDataCounts {
             intAarry[i]=json.optInt(i);
         return intAarry;
     }
-    class Holder extends SQLiteOpenHelper {
+    private class Holder extends SQLiteOpenHelper {
 
          Holder(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);

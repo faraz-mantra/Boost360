@@ -1,5 +1,6 @@
 package com.nowfloats.Analytics_Screen.Graph;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -59,13 +60,14 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
     ContentLoadingProgressBar progressBar;
     PagerSlidingTabStrip pagerSlidingTabStrip;
     Toolbar toolbar;
+    private static String tableName;
     private UserSessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analytics);
-        inIt();
+        init();
 
         final Calendar c = Calendar.getInstance();
         curYear = c.get(Calendar.YEAR);
@@ -78,14 +80,16 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         days=new int[curDay];
         weeks=new int[curWeek];
 
+        Intent intent = getIntent();
+        tableName = intent.getStringExtra("table_name");
         session = new UserSessionManager(getApplicationContext(), this);
 
         endDate =new SimpleDateFormat(pattern, Locale.ENGLISH).format(new Date());
         DashboardDetails details=new DashboardDetails();
 
-        SaveDataCounts saveDataCounts =new SaveDataCounts(AnalyticsActivity.this);
+        SaveDataCounts saveDataCounts =new SaveDataCounts(AnalyticsActivity.this,tableName);
         DatabaseModel modelResponse =saveDataCounts.getDataArrays();
-        if(modelResponse==null)
+        if(modelResponse == null)
         {
             rowExist=false;
             startDate="01-01-"+curYear;
@@ -196,7 +200,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         }
     }
 
-    private void inIt() {
+    private void init() {
         toolbar= (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!=null) {
@@ -231,7 +235,8 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         map.put("clientId",dashboardDetails.getClientId());
         map.put("startDate",dashboardDetails.getStartDate());
         map.put("endDate",dashboardDetails.getEndDate());
-
+        map.put("detailstype",tableName.equals(Constants.VISITS_TABLE)? "0" : "1");
+        map.put("scope",session.getISEnterprise().equals("true") ? "1" : "0");
         RestAdapter adapter = new RestAdapter.Builder().setEndpoint(endpoint).build();
         AnalyticsFetch.FetchDetails details = adapter.create(AnalyticsFetch.FetchDetails.class);
         details.getDataCount(dashboardDetails.getfpTag(),map, new Callback<DashboardResponse>() {
@@ -244,7 +249,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
             @Override
             public void failure(RetrofitError error) {
                 if(rowExist) {
-                    SaveDataCounts saveDataCounts = new SaveDataCounts(AnalyticsActivity.this);
+                    SaveDataCounts saveDataCounts = new SaveDataCounts(AnalyticsActivity.this,tableName);
                     DatabaseModel modelResponse = saveDataCounts.getDataArrays();
                     weeks = modelResponse.getMonth();
                     months = modelResponse.getYear();
@@ -281,7 +286,8 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
             map.put("clientId",Constants.clientId);
             map.put("startDate",firstDate);
             map.put("endDate",lastDate);
-
+            map.put("detailstype",tableName.equals(Constants.VISITS_TABLE)? "0" : "1");
+            map.put("scope",session.getISEnterprise().equals("true") ? "1" : "0");
             BoostLog.d("Current Start:", firstDate + " -  " + lastDate);
 
             RestAdapter adapter = new RestAdapter.Builder().setEndpoint(endpoint).build();
@@ -310,7 +316,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
                     }
                     getSupportFragmentManager()
                             .beginTransaction()
-                            .add(R.id.activity_main_analytics, MonthFragment.newInstance(weekDataArr, sum, 1, "Visists in " + getResources().getStringArray(R.array.months)[month-1] ), "MothFragment")
+                            .add(R.id.activity_main_analytics, MonthFragment.newInstance(weekDataArr, sum, 1, "Visits in " + getResources().getStringArray(R.array.months)[month-1] ), "MothFragment")
                             .addToBackStack("MothFragment")
                             .commit();
                 }
@@ -325,8 +331,6 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
 
 
 
-        }catch (ParseException exception){
-            exception.printStackTrace();
         }catch (Exception exception){
             exception.printStackTrace();
         }
@@ -402,7 +406,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
             model.setYearCount(yearData);
             model.setWeekCount(weekData);
             model.setDate(String.valueOf(Calendar.getInstance().getTimeInMillis()));
-            SaveDataCounts saveDataCounts = new SaveDataCounts(AnalyticsActivity.this);
+            SaveDataCounts saveDataCounts = new SaveDataCounts(AnalyticsActivity.this,tableName);
             if(rowExist)
                 saveDataCounts.updateDataCount(model);
             else
@@ -426,7 +430,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
 
     class AnalyticsAdapter extends FragmentStatePagerAdapter {
 
-        public AnalyticsAdapter(FragmentManager fm) {
+        AnalyticsAdapter(FragmentManager fm) {
             super(fm);
         }
 

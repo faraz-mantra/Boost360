@@ -614,6 +614,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             }
             else if(url.contains("visits") || url.contains("viewgraph")){
                 Intent accountInfo = new Intent(HomeActivity.this, AnalyticsActivity.class);
+                accountInfo.putExtra("table_name",Constants.VISITS_TABLE);
                 startActivity(accountInfo);
             }
             else if(url.contains(getResources().getString(R.string.deeplink_setings))){

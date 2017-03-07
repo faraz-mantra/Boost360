@@ -44,7 +44,6 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.nowfloats.Analytics_Screen.FacebookAnalyticsLogin;
@@ -59,7 +58,6 @@ import com.nowfloats.NavigationDrawer.API.RiaNetworkInterface;
 import com.nowfloats.NavigationDrawer.model.CoordinateList;
 import com.nowfloats.NavigationDrawer.model.CoordinatesSet;
 import com.nowfloats.NavigationDrawer.model.RiaCardModel;
-import com.nowfloats.NavigationDrawer.model.RiaEventModel;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NavigationDrawer.model.Section;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
@@ -70,13 +68,10 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.RiaEventLogger;
 import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
-import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -90,9 +85,9 @@ import retrofit.client.Response;
  */
 public class Analytics_Fragment extends Fragment {
     View rootView = null;
-    static public TextView visitCount,subscriberCount,searchQueriesCount, businessEnqCount,facebokImpressions;
+    public static TextView visitCount,visitorsCount, subscriberCount,searchQueriesCount, businessEnqCount,facebokImpressions;
     private int noOfSearchQueries = 0;
-    public static ProgressBar visits_progressBar,subscriber_progress, search_query_progress, businessEnqProgress;
+    public static ProgressBar visits_progressBar,visitors_progressBar,subscriber_progress, search_query_progress, businessEnqProgress;
     UserSessionManager session;
     private Context context;
     private Bus bus;
@@ -105,6 +100,7 @@ public class Analytics_Fragment extends Fragment {
     private static final String BUTTON_TYPE_EXIT = "None";
     private static final String BUTTON_TYPE_OPEN_URL="OpenUrl";
     LinearLayout llRiaCardSections;
+
     private enum SectionType{
         Text, Graph, Image
     }
@@ -126,7 +122,11 @@ public class Analytics_Fragment extends Fragment {
         MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT,null);
         if(!Util.isNullOrEmpty(session.getVisitorsCount()))
         {
-            visitCount.setText(session.getVisitorsCount());
+            visitorsCount.setText(session.getVisitorsCount());
+        }
+        if(!Util.isNullOrEmpty(session.getVisitsCount()))
+        {
+            visitCount.setText(session.getVisitsCount());
         }
         if(!Util.isNullOrEmpty(session.getSubcribersCount()))
         {
@@ -216,11 +216,22 @@ public class Analytics_Fragment extends Fragment {
             public void onClick(View v) {
                 MixPanelController.track("OverallVisitsDetailedView",null);
                 Intent q = new Intent(getActivity(), AnalyticsActivity.class);
+                q.putExtra("table_name",Constants.VISITS_TABLE);
                 startActivity(q);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
-
+        LinearLayout visitorsLinearLayout = (LinearLayout) rootView.findViewById(R.id.numberOfVisitorsLinearLayout);
+        visitorsLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MixPanelController.track("UniqueVisitsDetailedView",null);
+                Intent q = new Intent(getActivity(), AnalyticsActivity.class);
+                q.putExtra("table_name",Constants.VISITORS_TABLE);
+                startActivity(q);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
         LinearLayout subscribeLinearLayout = (LinearLayout) rootView.findViewById(R.id.subscribers_details);
         subscribeLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -273,6 +284,7 @@ public class Analytics_Fragment extends Fragment {
         ivFbAnalytics.setColorFilter(porterDuffColorFilter);
 
         visitCount = (TextView) rootView.findViewById(R.id.analytics_screen_visitor_count);
+        visitorsCount = (TextView) rootView.findViewById(R.id.visitors_count);
         subscriberCount = (TextView) rootView.findViewById(R.id.analytics_screen_subscriber_count);
         searchQueriesCount = (TextView) rootView.findViewById(R.id.analytics_screen_search_queries_count);
         businessEnqCount = (TextView) rootView.findViewById(R.id.analytics_screen_business_enq_count);
@@ -280,6 +292,8 @@ public class Analytics_Fragment extends Fragment {
         searchQueriesCount.setVisibility(View.INVISIBLE);
         visits_progressBar = (ProgressBar) rootView.findViewById(R.id.visits_progressBar);
         visits_progressBar.setVisibility(View.VISIBLE);
+        visitors_progressBar = (ProgressBar) rootView.findViewById(R.id.visitors_progressBar);
+        visitors_progressBar.setVisibility(View.VISIBLE);
         subscriber_progress = (ProgressBar) rootView.findViewById(R.id.subscriber_progressBar);
         subscriber_progress.setVisibility(View.VISIBLE);
         search_query_progress = (ProgressBar) rootView.findViewById(R.id.search_query_progressBar);
@@ -288,7 +302,8 @@ public class Analytics_Fragment extends Fragment {
         businessEnqProgress.setVisibility(View.VISIBLE);
 
 
-        String visittotal  = session.getVisitorsCount();
+        String visittotal  = session.getVisitsCount();
+        String visitortotal  = session.getVisitorsCount();
         String subscribetotal  = session.getSubcribersCount();
         String searchQueryCount = session.getSearchCount();
         String enquiryCount = session.getLatestEnqCount();
@@ -313,6 +328,14 @@ public class Analytics_Fragment extends Fragment {
         }else{
             visits_progressBar.setVisibility(View.VISIBLE);
             visitCount.setVisibility(View.GONE);
+        }
+        if (visitortotal!=null && visitortotal.trim().length()>0){
+            visitors_progressBar.setVisibility(View.GONE);
+            visitorsCount.setVisibility(View.VISIBLE);
+            visitorsCount.setText(visitortotal);
+        }else{
+            visitors_progressBar.setVisibility(View.VISIBLE);
+            visitorsCount.setVisibility(View.GONE);
         }
 
         if (subscribetotal!=null && subscribetotal.trim().length()>0){
