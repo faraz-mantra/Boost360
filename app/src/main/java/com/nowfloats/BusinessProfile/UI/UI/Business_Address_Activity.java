@@ -7,7 +7,6 @@ import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -423,18 +422,16 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
 
         if(id==android.R.id.home ){
 
-
-            // Log.d("Back","Back Pressed");
-
-            Business_Profile_Fragment_V2 f1 = (Business_Profile_Fragment_V2) getSupportFragmentManager().findFragmentByTag("A");
+            /*Business_Profile_Fragment_V2 f1 = (Business_Profile_Fragment_V2) getSupportFragmentManager().findFragmentByTag("A");
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             if(f1 != null) {
                 transaction.attach(f1);
                 transaction.addToBackStack("Profile");
                 transaction.commit();
-            }
+            }*/
             finish();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            return true;
             //getSupportFragmentManager().popBackStack();
 
             //  NavUtils.navigateUpFromSameTask(this);

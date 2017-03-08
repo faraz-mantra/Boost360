@@ -125,8 +125,8 @@ public class AccountInfoActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if(id==android.R.id.home ){
-            finish();
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            onBackPressed();
+           return true;
         }
         return super.onOptionsItemSelected(item);
     }

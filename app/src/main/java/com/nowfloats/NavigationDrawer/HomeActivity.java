@@ -199,6 +199,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         Methods.isOnline(HomeActivity.this);
         session = new UserSessionManager(getApplicationContext(),HomeActivity.this);
         setHotlineUser();
+
         //Log.v("ggg ",FirebaseInstanceId.getInstance().getToken());
         BoostLog.d(TAG, "In on CreateView");
         deepLinkUrl = RiaFirebaseMessagingService.deepLinkUrl;
@@ -469,7 +470,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             params.put("UserId", userId);
             params.put("DeviceType", "ANDROID");
             params.put("clientId", Constants.clientId);
-
 
             Log.i("Ria_Register GCM id--", "API call Started");
 

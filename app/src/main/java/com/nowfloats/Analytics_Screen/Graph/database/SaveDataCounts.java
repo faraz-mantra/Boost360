@@ -8,8 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.nowfloats.Analytics_Screen.Graph.model.DatabaseModel;
+import com.nowfloats.util.Constants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,40 +30,53 @@ public class SaveDataCounts {
     private static final String YEAR = "year";
     private static final String MONTH = "month";
     private static final String WEEK = "week";
+    private final Context mContext;
 
     private Holder mHolder;
     private SQLiteDatabase mDb;
     public static final String DATABASE_NAME = "Analytics.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
-    private static String ANALYTICS_TABLE = "";
-    private static String DROP_TABLE = "DROP TABLE IF EXISTS " + ANALYTICS_TABLE;
+    private static final String VISITS_TABLE = "AnalyticsTable";
+    private static final String VISITORS_TABLE = "VisitorsAnalyticsTable";
+    private String ANALYTICS_TABLE ;
+    private static final String DROP_VISITORS_TABLE = "DROP TABLE IF EXISTS " + VISITORS_TABLE;
+    private static final String DROP_VISITS_TABLE = "DROP TABLE IF EXISTS " + VISITS_TABLE;
     private static final String WEEK_COUNT ="weekCount" ;
     private static final String MONTH_COUNT ="monthCount" ;
     private static final String YEAR_COUNT ="yearCount" ;
-    private static String CREATE_ANALYTICS_TABLE = "CREATE TABLE " + ANALYTICS_TABLE +
+    private static final String CREATE_VISITORS_TABLE = "CREATE TABLE " + VISITORS_TABLE +
+            " ( " + DATE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + DATE + " INTEGER, "+ YEAR_COUNT + " INTEGER, "
+            + MONTH_COUNT + " INTEGER, "+ WEEK_COUNT + " INTEGER, "+ DATA_COUNT + " VARCHAR(255))";
+    private static final String CREATE_VISITS_TABLE = "CREATE TABLE " + VISITS_TABLE +
             " ( " + DATE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + DATE + " INTEGER, "+ YEAR_COUNT + " INTEGER, "
             + MONTH_COUNT + " INTEGER, "+ WEEK_COUNT + " INTEGER, "+ DATA_COUNT + " VARCHAR(255))";
 
-    public SaveDataCounts(Context context,String tableName) {
-        ANALYTICS_TABLE = tableName;
+    public SaveDataCounts(Context context,int visitors) {
+        if(visitors == Constants.VISITS_TABLE) {
+            ANALYTICS_TABLE = VISITS_TABLE;
+        }else{
+            ANALYTICS_TABLE = VISITORS_TABLE;
+        }
+        mContext=context;
         mHolder = new Holder(context);
     }
     public void addDataCount(DatabaseModel data) {
         mDb = mHolder.getWritableDatabase();
         ContentValues values=makeContentValues(data);
         long i=mDb.insert(ANALYTICS_TABLE, null, values);
-        Log.v("ggg",i+"insert row");
+        Log.v("ggg",i+" insert row "+ANALYTICS_TABLE);
         mDb.close();
     }
     public void updateDataCount(DatabaseModel data){
         mDb = mHolder.getWritableDatabase();
         ContentValues values=makeContentValues(data);
         long i=mDb.update(ANALYTICS_TABLE,values,null,null);
-        Log.v("ggg",i+"update row");
+        Log.v("ggg",i+" update row"+ANALYTICS_TABLE);
         mDb.close();
     }
     public boolean rowExist(){
+        mDb = mHolder.getReadableDatabase();
         Cursor mCursor = mDb.rawQuery("SELECT * FROM " + ANALYTICS_TABLE, null);
         boolean isExist = mCursor.moveToFirst();
         mCursor.close();
@@ -77,7 +92,7 @@ public class SaveDataCounts {
                 json.put(WEEK, new JSONArray(data.getWeek()));
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.v("ggg",e.getMessage()+" colums");
         }
         values.put(DATA_COUNT,json.toString());
         values.put(DATE,data.getDate());
@@ -97,12 +112,12 @@ public class SaveDataCounts {
             mDb = mHolder.getWritableDatabase();
             String selectQuery = "SELECT * FROM "+ ANALYTICS_TABLE;
             Cursor cursor = mDb.rawQuery(selectQuery, null);
-            //Log.v("ggg","getdata");
+
             if(cursor==null) return null;
             if (cursor.moveToFirst()) {
                 modeldata= new DatabaseModel();
                 do {
-                    //Log.v("ggg","doloop");
+
                     String arrayJSON=cursor.getString(5);
                     if(arrayJSON==null||arrayJSON.equals("null")) return null;
                     JSONObject json = new JSONObject(cursor.getString(5));
@@ -139,30 +154,33 @@ public class SaveDataCounts {
             intAarry[i]=json.optInt(i);
         return intAarry;
     }
-    private class Holder extends SQLiteOpenHelper {
+    class Holder extends SQLiteOpenHelper {
 
          Holder(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);
         }
 
         public void onCreate(SQLiteDatabase db) {
-            //Toast.makeText(mContext, "oncreate", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "oncreate", Toast.LENGTH_SHORT).show();
             try {
-                db.execSQL(CREATE_ANALYTICS_TABLE);
+                Log.v("ggg",CREATE_VISITORS_TABLE + " "+CREATE_VISITS_TABLE);
+                db.execSQL(CREATE_VISITORS_TABLE);
+                db.execSQL(CREATE_VISITS_TABLE);
             }catch (SQLException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                Log.v("ggg",e.getMessage()+"");
             }
         }
 
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             //Toast.makeText(mContext, "onupgrade", Toast.LENGTH_SHORT).show();
             try {
-                db.execSQL(DROP_TABLE);
+                db.execSQL(DROP_VISITORS_TABLE);
+                db.execSQL(DROP_VISITS_TABLE);
                 onCreate(db);
             }catch (SQLException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                Log.v("ggg",e.getMessage()+"");
             }
         }
     }

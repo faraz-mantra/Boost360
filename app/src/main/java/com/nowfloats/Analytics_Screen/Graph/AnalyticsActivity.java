@@ -60,7 +60,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
     ContentLoadingProgressBar progressBar;
     PagerSlidingTabStrip pagerSlidingTabStrip;
     Toolbar toolbar;
-    private static String tableName;
+    private int tableName;
     private UserSessionManager session;
 
     @Override
@@ -81,7 +81,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         weeks=new int[curWeek];
 
         Intent intent = getIntent();
-        tableName = intent.getStringExtra("table_name");
+        tableName = intent.getIntExtra("table_name",-1);
         session = new UserSessionManager(getApplicationContext(), this);
 
         endDate =new SimpleDateFormat(pattern, Locale.ENGLISH).format(new Date());
@@ -235,7 +235,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         map.put("clientId",dashboardDetails.getClientId());
         map.put("startDate",dashboardDetails.getStartDate());
         map.put("endDate",dashboardDetails.getEndDate());
-        map.put("detailstype",tableName.equals(Constants.VISITS_TABLE)? "0" : "1");
+        map.put("detailstype",String.valueOf(tableName));
         map.put("scope",session.getISEnterprise().equals("true") ? "1" : "0");
         RestAdapter adapter = new RestAdapter.Builder().setEndpoint(endpoint).build();
         AnalyticsFetch.FetchDetails details = adapter.create(AnalyticsFetch.FetchDetails.class);
@@ -286,7 +286,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
             map.put("clientId",Constants.clientId);
             map.put("startDate",firstDate);
             map.put("endDate",lastDate);
-            map.put("detailstype",tableName.equals(Constants.VISITS_TABLE)? "0" : "1");
+            map.put("detailstype",String.valueOf(tableName));
             map.put("scope",session.getISEnterprise().equals("true") ? "1" : "0");
             BoostLog.d("Current Start:", firstDate + " -  " + lastDate);
 

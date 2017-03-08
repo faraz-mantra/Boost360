@@ -925,22 +925,27 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        finish();
-        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        if(id == android.R.id.home){
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            onBackPressed();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
     public void fbData() {
-        List<String> readPermissions=Arrays.asList("email"
-                , "public_profile",  "user_friends", "read_insights", "business_management");
-        final List<String> publishPermissions = Arrays.asList("publish_actions",
-                "publish_pages", "manage_pages");
+        List<String> readPermissions=Arrays.asList("email", "public_profile", "user_friends", "read_insights", "business_management");
+        final List<String> publishPermissions = Arrays.asList("publish_actions", "publish_pages", "manage_pages");
         final LoginManager loginManager = LoginManager.getInstance();
         loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override

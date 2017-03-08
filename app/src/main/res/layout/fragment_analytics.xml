@@ -145,7 +145,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@drawable/analytics_visits" />
+                        android:src="@drawable/unique_visitors" />
                 </FrameLayout>
 
                 <com.nowfloats.CustomWidget.roboto_lt_24_212121
@@ -183,7 +183,7 @@
                             android:textColor="@color/primaryColor"
                             android:text="25"
                             android:visibility="visible"
-                            android:textSize="33dp"
+                            android:textSize="33sp"
                             tools:ignore="MissingPrefix" />
                     </LinearLayout>
 
@@ -235,7 +235,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@drawable/analytics_visits" />
+                        android:src="@drawable/total_visits" />
                 </FrameLayout>
 
                 <com.nowfloats.CustomWidget.roboto_lt_24_212121
@@ -273,7 +273,7 @@
                             android:textColor="@color/primaryColor"
                             android:text="25"
                             android:visibility="visible"
-                            android:textSize="33dp"
+                            android:textSize="33sp"
                             tools:ignore="MissingPrefix" />
                     </LinearLayout>
 
@@ -357,8 +357,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:visibility="visible"
-                            android:text="1125"
-                            android:textSize="33dp"
+                            android:text="25"
+                            android:textSize="33sp"
                             android:textColor="@color/primaryColor"
                             tools:ignore="MissingPrefix" />
                     </FrameLayout>
@@ -437,8 +437,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:visibility="visible"
-                            android:text="1125"
-                            android:textSize="33dp"
+                            android:text="25"
+                            android:textSize="33sp"
                             android:textColor="@color/primaryColor"
                             tools:ignore="MissingPrefix" />
                     </FrameLayout>
@@ -522,8 +522,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:visibility="visible"
-                            android:text="1125"
-                            android:textSize="33dp"
+                            android:text="25"
+                            android:textSize="33sp"
                             android:textColor="@color/primaryColor"
                             tools:ignore="MissingPrefix" />
                     </FrameLayout>
@@ -577,7 +577,7 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:layout_gravity="center_vertical"
-                    android:gravity="right">
+                    android:gravity="end">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -594,13 +594,13 @@
                         <TextView
                             fontPath="Roboto-Medium.ttf"
                             android:id="@+id/analytics_screen_updates_count"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textColor="@color/primaryColor"
                             android:text=""
                             android:visibility="gone"
-                            android:textSize="33dp"
+                            android:textSize="33sp"
                             tools:ignore="MissingPrefix" />
                     </LinearLayout>
 

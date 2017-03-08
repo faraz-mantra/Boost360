@@ -32,8 +32,8 @@ public class Constants {
     public static final boolean APK_MODE_RELEASE = true;
     public static final String APP_TAG = "Boost App";
     public static final String RIA_NODE_DATA = "riaNodeDatas" ;
-    public static final String VISITS_TABLE = "AnalyticsTable";
-    public static final String VISITORS_TABLE = "VisitorsAnalyticsTable";
+    public static final int VISITS_TABLE = 0;
+    public static final int VISITORS_TABLE = 1;
     public static boolean LOGOUPLOADED = false;
     public static boolean IS_SUNDAY_CHECKED = false;
     public static boolean IS_MONDAY_CHECKED = false;

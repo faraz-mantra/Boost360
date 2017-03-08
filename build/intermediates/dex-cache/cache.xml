@@ -30,12 +30,48 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\libs\libraries\signpost-commonshttp4-1.2.1.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="731e05de30cfeb1f41d417f886277f9597fe0f36">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\2\signpost-commonshttp4-1.2.1.2_8546b2ced7d3bdc4363471919a17cfd5fab66e49\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.firebase\firebase-database-connection\9.8.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="5f47ede9561595584dca71104baa0fecb36dda87">
         <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.firebase-firebase-database-connection-9.8.0_d30134285d8330e5896a68af7ad5f145a2539a6e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="810f41e5b7fd99f196ebeabe865ba2c54e7e76dc">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-support-vector-drawable-25.2.0_950df6bfe1e601735e12959f052384bcd8427e82\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\24.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b327fbe2fad414bc38cf0ce8f7efe1a38f572837">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-mediarouter-v7-24.0.0_4e55d2724b9260b6cc8edec4338ea0f3078c5267\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.firebase\firebase-database\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="03df48d3713661d66ad024b1e406259a4c26fcac">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.firebase-firebase-database-9.8.0_f05c15f2b46466b430a9427dd6cccf13954c6df2\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -54,6 +90,24 @@
         revision="25.0.2"
         sha1="30a4938ea5235ccf532b3e9f04200e68547e36ad">
         <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-cardview-v7-25.2.0_b180c30c51376820b0a19091ec4ca18e9ed55cc1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.firebase\firebase-auth\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="15e59454416c6341bd3ed2533b585cd340682dd1">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.firebase-firebase-auth-9.8.0_b2ea358aaf853c8fcbdcf8776011006f408649ff\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\jp.wasabeef\richeditor-android\1.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="92aa852032e97ccf6eb2a80151205ab578a7916f">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\jp.wasabeef-richeditor-android-1.2.0_0485ca70de5d8e07710ded2fd8f9c9994b77905f\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -81,6 +135,24 @@
         revision="25.0.2"
         sha1="99d79164a8f983161bdb59b1403b9e4a1127aae1">
         <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.facebook.android-facebook-android-sdk-4.16.1_5f12e3a28e4b35aa10fa4d466c9e80959e3cad1a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="9f6d236bac26d02b410e4ee186ba517ace5ee661">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-basement-9.8.0_eae49332c16d16a47e0d6e40d623b74e39b7a5dc\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.daimajia.androidanimations\library\1.1.3\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="8cec50fc9cc847bad0d6ed7d93814f4b34744521">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.daimajia.androidanimations-library-1.1.3_f3423a9cbb9900863be2e4f3e25528efb8a41a35\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -120,12 +192,30 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-identity\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="cef85cfc7df40e29fbea58844dd4c1e7d0b15542">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-identity-9.8.0_c0acc1d55b632f046f7fe7c94ea66c23edff596a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.firebase\firebase-storage-common\9.8.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="ec9104b53aee77dfcfd2fe1c4add23ff7c4df55f">
         <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.firebase-firebase-storage-common-9.8.0_79cb88c82edf2c8e3aafb4eab36f2641dcbbe0b5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="f2d240dd085626f03f759c41d628a0c8b63e491f">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-ads-9.8.0_e3fac6a9df6c273359a6004cef96a00d815bdf73\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -147,6 +237,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\com.squareup\otto\1.3.6\ee373b6d0d6ea36a0a9b0cbabaf16be7e7fc3e30\otto-1.3.6.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ee373b6d0d6ea36a0a9b0cbabaf16be7e7fc3e30">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\otto-1.3.6_eccf6c8f5814383e5d1c35a7a69e1657ba53a6ac\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\org.twitter4j\twitter4j-core\4.0.4\1f3c896c7b2f20c51103078ccf0bc2ea97ac012a\twitter4j-core-4.0.4.jar"
         jumboMode="true"
         optimize="true"
@@ -165,12 +264,39 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.firebase\firebase-analytics-impl\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="190a642ba16d1421296a4d794606279b80039c59">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.firebase-firebase-analytics-impl-9.8.0_931192d005fb6396bf0b9af1e0ee9813f306a1e2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3daa7a9c9009fd386872a84c177a76979bdcafd6">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-plus-9.8.0_edd14c1996bd5d5ebbddbee1703c358142a65d83\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-instantapps\9.8.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="00d358528c5a8731a6e19bca910cbb3fd755ee31">
         <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-instantapps-9.8.0_58b85c08ad7c9b5c7875079fc8d3527252830b87\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="9dae58326f6f6a515022468cce56dd04ec3b9fdb">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-gcm-9.8.0_635420e37116feadb638287e6da02b2a054af4bd\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -192,6 +318,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.android.support\palette-v7\24.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="734e80dffea7bd76c18ae256822a124c30d85850">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-palette-v7-24.0.0_45da3787e649f380aae45c08f093f03697d32e9f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.twitter.sdk.android\tweet-ui\1.0.5\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -207,6 +342,24 @@
         revision="25.0.2"
         sha1="bf95955dcf3d5a78c201e49b0c336787ea73f161">
         <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\2\signpost-core-1.2.1.2_7c21b29a2e1e2ed886cd26093c964d4c9e7b926d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="152de8da301561dcb0946471697a420d8f7a68c5">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-recyclerview-v7-25.2.0_55a77c6bc6744d4dcc16252c4a648bfc71d34d38\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e3234cd25e23069abd48ecd2117bc0e8011bf45a">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-appindexing-9.8.0_3ff2cd1ed23b7609d2a8e2a15870e47749a1acb8\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -243,6 +396,15 @@
         revision="25.0.2"
         sha1="288913b440a3c61c30aa171095453a605432277a">
         <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.rengwuxian.materialedittext-library-2.1.4_f22e25560bf20570ca04559f67b919f6ee22fd27\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="702d339bc0a81d21354cd7e2cf2b67225fa4a16c">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-appcompat-v7-25.2.0_93e1df6223e665fd22f501728d7aaf44afa58cad\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -291,6 +453,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\org.honorato.multistatetogglebutton\multistatetogglebutton\0.2.2\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="7460c7e8002ab6678c217d3b5ef2e1d8c62b20fc">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\org.honorato.multistatetogglebutton-multistatetogglebutton-0.2.2_56506858deff7bfb98293c683768b68549252721\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-cast-framework\9.8.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -306,438 +477,6 @@
         revision="25.0.2"
         sha1="e820b7be8c035dd522da4bc822e8a76c8e27921a">
         <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-support-core-utils-25.2.0_1c64f5b5d95db575dbbdfd9637bd6bf243958d8d\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\in.juspay\godel-osd\0.6.14\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="1e38957b073579147835c752cb860aa0db26db8b">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\in.juspay-godel-osd-0.6.14_ef8ccdfec1a5d67b540036dd1820e39e1f2177aa\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-tasks\9.8.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="bf2e1838e4428616c1aa26edf43de72b5b99bf84">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-tasks-9.8.0_9125e1e8ede758ec4277303b2fa6e15f2b11eac2\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\it.sephiroth.android.library.easing\android-easing\1.0.3\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="90c8cd98f8c1cd37285d7bf9ea5a9ec6df3a99b6">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\it.sephiroth.android.library.easing-android-easing-1.0.3_a998992cd99a2b80f84c892789f1625d925eab50\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\com.nineoldandroids\library\2.4.0\e9b63380f3a242dbdbf103a2355ad7e43bad17cb\library-2.4.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\library-2.4.0_8145473287de8c2ff70de33d83ab99a0a921997e\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.firebase\firebase-messaging\9.8.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="5ffe8867f51cfc726e9fb21db1e5b6962ebf25a0">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.firebase-firebase-messaging-9.8.0_cf6341679dc0f9924e4d14a444811bf401fff477\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3.1\ecb6e1f8e4b0e84c4b886c2f14a1500caf309757\gson-2.3.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\gson-2.3.1_8fa5293d22411cd4b044a3fa3a7ed2692159af67\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit\retrofit\1.9.0\a681c044244d9fc375198588297a39ba78028423\retrofit-1.9.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="a681c044244d9fc375198588297a39ba78028423">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\retrofit-1.9.0_c7362d1ea96da0ef4660b21e3cebe652d3affa48\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\3.6.0\69edde9fc4b01c9fd51d25b83428837478c27254\okhttp-3.6.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="69edde9fc4b01c9fd51d25b83428837478c27254">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\okhttp-3.6.0_0049067652861da6db1135e885200ed8eb1fc3ed\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\org.jsoup\jsoup\1.7.2\d7e275ba05aa380ca254f72d0c0ffebaedc3adcf\jsoup-1.7.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="d7e275ba05aa380ca254f72d0c0ffebaedc3adcf">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\jsoup-1.7.2_4e2cf26d5442a3d3392c75122ff7a4f000d7c6c6\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\9.8.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="122ec9237acd8a57d974b9d529987f1ee6ca5aea">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-maps-9.8.0_71a33646f8b6e3792a7cb1418f4d1d904fd9fdfb\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Admin\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.2.0\support-annotations-25.2.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="4a5a82a027706397fff621b22fd6fa796e91d7c5">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\support-annotations-25.2.0_42835a9238a22798450315ddcfa7042fe39d8af8\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-awareness\9.8.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="a2537b11ae24b42172d34e2a613fc0b903c56158">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-awareness-9.8.0_0f79d4291b67d92534ef15c4a796db446530e0de\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.github.freshdesk\hotline-android\1.2.0\jars\libs\hotline.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="74a6d6d1ff8b4761030a120dc30248223efe7895">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\hotline_f27975ec6c7c7e8a332883e2373e65a1edf58635\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.firebase\firebase-storage\9.8.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="7fd91ec2730fdaa82906aad32a3f3d3e574bae56">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.firebase-firebase-storage-9.8.0_603008315419256537cbf311728c0f85123f3173\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\com.github.PhilJay\MPAndroidChart\v2.2.4\7abd1ecef320da6a7679b137083151401fe8bf43\MPAndroidChart-v2.2.4.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="7abd1ecef320da6a7679b137083151401fe8bf43">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\MPAndroidChart-v2.2.4_702004927dfe95766d957325859f74637b0c8d39\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.firebase\firebase-config\9.8.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="289cad663c288ce965463cb9ece8b35cc7de0fac">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.firebase-firebase-config-9.8.0_a4f87a376c5e3e81be516e29d24619d2734b6bfd\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.wdullaer\materialdatetimepicker\1.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="58d38532f875dd455db6801bf500d774e22bc338">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.wdullaer-materialdatetimepicker-1.0.1_70ac3b3d5fe49a357d9624f0daac952e2c75e930\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.github.darsh2\MultipleImageSelect\v0.0.4\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="44f8fe0dad3f7e2e3f4a78ec1297a8012caa51cc">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.github.darsh2-MultipleImageSelect-v0.0.4_7d96e254465e9fb5d66011c264b5b24dd95ef51f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.melnykov\floatingactionbutton\1.1.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="ee9ae2b87d57a33a7381c75d54db12bdf2995656">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.melnykov-floatingactionbutton-1.1.0_4e7f3b810ba5de9342b05c871d57c81db826e522\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\incremental-runtime-classes\partone\debug\instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="5eb872f08f90081e2c4c6dc57ddb4d28827a185a">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\instant-run_11d0f6181a4d4cc8cfd6478c511bfe09e6dce205\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.android.support\transition\25.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="e51c2f662bb72419632af5192553c37e33890a99">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-transition-25.2.0_4b448f25b09d71c19cd6917cd06184568d106c2a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-games\9.8.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="fbb3885c40e431cd2b0dc69c0cab2bf6d5da7b43">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-games-9.8.0_d5711de373d24e26f343d6522035ac53587423bf\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-tagmanager-api\9.8.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="266570862e5792ef3c51143a8b8593cf54fac68d">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-tagmanager-api-9.8.0_4b291534ea040250c25fe5e5cfd6ab07d2ccafea\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.firebase\firebase-auth-common\9.8.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="4438b1a7848a7c571122ba618aa1304514aabee6">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.firebase-firebase-auth-common-9.8.0_efa54c790fe8ec8c474e2ec1d104486ac60f2824\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-tasks\1.4.0\d85884acf6810a3bbbecb587f239005cbc846dc4\bolts-tasks-1.4.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\bolts-tasks-1.4.0_a729045a5e53740a2e648c205a9a256c35191b03\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\in.juspay\godel\0.6.18.1423\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="52f6bcc4bb9657967ad3451a87b88bc907af87ca">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\in.juspay-godel-0.6.18.1423_2931938e3c09dce533632348497200fa4e748d6a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.afollestad\material-dialogs\0.7.4.2\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="047453ba8c649f4214f4ed1d13c90fe6adca7a23">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.afollestad-material-dialogs-0.7.4.2_886bcf61b19273d085ddd5e3d1ce3b2626ddf0e4\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-fitness\9.8.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="a7a04d6b7c01e569a285fa627cf64f5b05295906">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-fitness-9.8.0_89bc35e8d465e9f456bb6257b6a15104d9969a71\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\uk.co.chrisjenx\calligraphy\2.1.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="e653e15e62e8a59ddd76cc7f827bf8bce38ae7bb">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\uk.co.chrisjenx-calligraphy-2.1.0_c34b0cddde9ab40a92e2a26f8019954d81f39b5b\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\libs\libraries\signpost-commonshttp4-1.2.1.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="731e05de30cfeb1f41d417f886277f9597fe0f36">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\2\signpost-commonshttp4-1.2.1.2_8546b2ced7d3bdc4363471919a17cfd5fab66e49\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="810f41e5b7fd99f196ebeabe865ba2c54e7e76dc">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-support-vector-drawable-25.2.0_950df6bfe1e601735e12959f052384bcd8427e82\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\24.0.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="b327fbe2fad414bc38cf0ce8f7efe1a38f572837">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-mediarouter-v7-24.0.0_4e55d2724b9260b6cc8edec4338ea0f3078c5267\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.firebase\firebase-database\9.8.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="03df48d3713661d66ad024b1e406259a4c26fcac">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.firebase-firebase-database-9.8.0_f05c15f2b46466b430a9427dd6cccf13954c6df2\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.firebase\firebase-auth\9.8.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="15e59454416c6341bd3ed2533b585cd340682dd1">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.firebase-firebase-auth-9.8.0_b2ea358aaf853c8fcbdcf8776011006f408649ff\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\jp.wasabeef\richeditor-android\1.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="92aa852032e97ccf6eb2a80151205ab578a7916f">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\jp.wasabeef-richeditor-android-1.2.0_0485ca70de5d8e07710ded2fd8f9c9994b77905f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\9.8.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="9f6d236bac26d02b410e4ee186ba517ace5ee661">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-basement-9.8.0_eae49332c16d16a47e0d6e40d623b74e39b7a5dc\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.daimajia.androidanimations\library\1.1.3\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="8cec50fc9cc847bad0d6ed7d93814f4b34744521">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.daimajia.androidanimations-library-1.1.3_f3423a9cbb9900863be2e4f3e25528efb8a41a35\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-identity\9.8.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="cef85cfc7df40e29fbea58844dd4c1e7d0b15542">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-identity-9.8.0_c0acc1d55b632f046f7fe7c94ea66c23edff596a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\9.8.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="f2d240dd085626f03f759c41d628a0c8b63e491f">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-ads-9.8.0_e3fac6a9df6c273359a6004cef96a00d815bdf73\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\com.squareup\otto\1.3.6\ee373b6d0d6ea36a0a9b0cbabaf16be7e7fc3e30\otto-1.3.6.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="ee373b6d0d6ea36a0a9b0cbabaf16be7e7fc3e30">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\otto-1.3.6_eccf6c8f5814383e5d1c35a7a69e1657ba53a6ac\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.firebase\firebase-analytics-impl\9.8.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="190a642ba16d1421296a4d794606279b80039c59">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.firebase-firebase-analytics-impl-9.8.0_931192d005fb6396bf0b9af1e0ee9813f306a1e2\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\9.8.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="3daa7a9c9009fd386872a84c177a76979bdcafd6">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-plus-9.8.0_edd14c1996bd5d5ebbddbee1703c358142a65d83\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\9.8.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="9dae58326f6f6a515022468cce56dd04ec3b9fdb">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-gcm-9.8.0_635420e37116feadb638287e6da02b2a054af4bd\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.android.support\palette-v7\24.0.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="734e80dffea7bd76c18ae256822a124c30d85850">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-palette-v7-24.0.0_45da3787e649f380aae45c08f093f03697d32e9f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="152de8da301561dcb0946471697a420d8f7a68c5">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-recyclerview-v7-25.2.0_55a77c6bc6744d4dcc16252c4a648bfc71d34d38\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\9.8.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="e3234cd25e23069abd48ecd2117bc0e8011bf45a">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-appindexing-9.8.0_3ff2cd1ed23b7609d2a8e2a15870e47749a1acb8\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.2.0\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="702d339bc0a81d21354cd7e2cf2b67225fa4a16c">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-appcompat-v7-25.2.0_93e1df6223e665fd22f501728d7aaf44afa58cad\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\org.honorato.multistatetogglebutton\multistatetogglebutton\0.2.2\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="7460c7e8002ab6678c217d3b5ef2e1d8c62b20fc">
-        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\org.honorato.multistatetogglebutton-multistatetogglebutton-0.2.2_56506858deff7bfb98293c683768b68549252721\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -759,6 +498,24 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\in.juspay\godel-osd\0.6.14\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="1e38957b073579147835c752cb860aa0db26db8b">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\in.juspay-godel-osd-0.6.14_ef8ccdfec1a5d67b540036dd1820e39e1f2177aa\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-tasks\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bf2e1838e4428616c1aa26edf43de72b5b99bf84">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-tasks-9.8.0_9125e1e8ede758ec4277303b2fa6e15f2b11eac2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.android.support\design\25.2.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -774,6 +531,24 @@
         revision="25.0.2"
         sha1="67eb33110dbacb46a48175b08ae0c96761d2c17d">
         <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-support-compat-25.2.0_0e6d22b26a57e3df41f7279abefca1053eaf8a6a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\it.sephiroth.android.library.easing\android-easing\1.0.3\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="90c8cd98f8c1cd37285d7bf9ea5a9ec6df3a99b6">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\it.sephiroth.android.library.easing-android-easing-1.0.3_a998992cd99a2b80f84c892789f1625d925eab50\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\com.nineoldandroids\library\2.4.0\e9b63380f3a242dbdbf103a2355ad7e43bad17cb\library-2.4.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\library-2.4.0_8145473287de8c2ff70de33d83ab99a0a921997e\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -822,6 +597,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.firebase\firebase-messaging\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="5ffe8867f51cfc726e9fb21db1e5b6962ebf25a0">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.firebase-firebase-messaging-9.8.0_cf6341679dc0f9924e4d14a444811bf401fff477\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp\okhttp-urlconnection\2.3.0\4f12ec1e1455909e1f0b8530c719c90b2d01745\okhttp-urlconnection-2.3.0.jar"
         jumboMode="true"
         optimize="true"
@@ -837,6 +621,42 @@
         revision="25.0.2"
         sha1="2d1eaa9e0b98f8fc4c2b989d9b30d4f1480648ac">
         <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-customtabs-23.4.0_4ad4448d0f39ff9e1243de81d32382d39f49541a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3.1\ecb6e1f8e4b0e84c4b886c2f14a1500caf309757\gson-2.3.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\gson-2.3.1_8fa5293d22411cd4b044a3fa3a7ed2692159af67\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\com.squareup.retrofit\retrofit\1.9.0\a681c044244d9fc375198588297a39ba78028423\retrofit-1.9.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="a681c044244d9fc375198588297a39ba78028423">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\retrofit-1.9.0_c7362d1ea96da0ef4660b21e3cebe652d3affa48\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\com.squareup.okhttp3\okhttp\3.6.0\69edde9fc4b01c9fd51d25b83428837478c27254\okhttp-3.6.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="69edde9fc4b01c9fd51d25b83428837478c27254">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\okhttp-3.6.0_0049067652861da6db1135e885200ed8eb1fc3ed\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\org.jsoup\jsoup\1.7.2\d7e275ba05aa380ca254f72d0c0ffebaedc3adcf\jsoup-1.7.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7e275ba05aa380ca254f72d0c0ffebaedc3adcf">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\jsoup-1.7.2_4e2cf26d5442a3d3392c75122ff7a4f000d7c6c6\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -867,12 +687,84 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="122ec9237acd8a57d974b9d529987f1ee6ca5aea">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-maps-9.8.0_71a33646f8b6e3792a7cb1418f4d1d904fd9fdfb\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.2.0\support-annotations-25.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4a5a82a027706397fff621b22fd6fa796e91d7c5">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\support-annotations-25.2.0_42835a9238a22798450315ddcfa7042fe39d8af8\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-awareness\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="a2537b11ae24b42172d34e2a613fc0b903c56158">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-awareness-9.8.0_0f79d4291b67d92534ef15c4a796db446530e0de\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.github.freshdesk\hotline-android\1.2.0\jars\libs\hotline.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="74a6d6d1ff8b4761030a120dc30248223efe7895">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\hotline_f27975ec6c7c7e8a332883e2373e65a1edf58635\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.firebase\firebase-storage\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="7fd91ec2730fdaa82906aad32a3f3d3e574bae56">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.firebase-firebase-storage-9.8.0_603008315419256537cbf311728c0f85123f3173\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.2.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="ee394a892dd21c03a528139c1e8d4e0e1264ac84">
         <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-support-media-compat-25.2.0_733bc04edde6dfcb0621baeab645c56d1ae5a04c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\com.github.PhilJay\MPAndroidChart\v2.2.4\7abd1ecef320da6a7679b137083151401fe8bf43\MPAndroidChart-v2.2.4.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="7abd1ecef320da6a7679b137083151401fe8bf43">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\MPAndroidChart-v2.2.4_702004927dfe95766d957325859f74637b0c8d39\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.firebase\firebase-config\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="289cad663c288ce965463cb9ece8b35cc7de0fac">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.firebase-firebase-config-9.8.0_a4f87a376c5e3e81be516e29d24619d2734b6bfd\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.wdullaer\materialdatetimepicker\1.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="58d38532f875dd455db6801bf500d774e22bc338">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.wdullaer-materialdatetimepicker-1.0.1_70ac3b3d5fe49a357d9624f0daac952e2c75e930\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -894,6 +786,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.github.darsh2\MultipleImageSelect\v0.0.4\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="44f8fe0dad3f7e2e3f4a78ec1297a8012caa51cc">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.github.darsh2-MultipleImageSelect-v0.0.4_7d96e254465e9fb5d66011c264b5b24dd95ef51f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\io.fabric.sdk.android\fabric\1.1.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -912,12 +813,30 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.melnykov\floatingactionbutton\1.1.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ee9ae2b87d57a33a7381c75d54db12bdf2995656">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.melnykov-floatingactionbutton-1.1.0_4e7f3b810ba5de9342b05c871d57c81db826e522\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-wearable\9.8.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="0b8e087da59c0b062c33f49a335e59f907086da2">
         <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-wearable-9.8.0_3c5b0f875068eb6738f650663f729fd4316b4e4d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\incremental-runtime-classes\partone\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="12a9ec7c8f953b06dc3fd79d8146e94796be07bf">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\instant-run_11d0f6181a4d4cc8cfd6478c511bfe09e6dce205\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -966,6 +885,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.android.support\transition\25.2.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e51c2f662bb72419632af5192553c37e33890a99">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.android.support-transition-25.2.0_4b448f25b09d71c19cd6917cd06184568d106c2a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\me.biubiubiu.justifytext\library\1.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -984,12 +912,66 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-games\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="fbb3885c40e431cd2b0dc69c0cab2bf6d5da7b43">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-games-9.8.0_d5711de373d24e26f343d6522035ac53587423bf\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-tagmanager-api\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="266570862e5792ef3c51143a8b8593cf54fac68d">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-tagmanager-api-9.8.0_4b291534ea040250c25fe5e5cfd6ab07d2ccafea\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.firebase\firebase-auth-common\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4438b1a7848a7c571122ba618aa1304514aabee6">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.firebase-firebase-auth-common-9.8.0_efa54c790fe8ec8c474e2ec1d104486ac60f2824\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-tasks\1.4.0\d85884acf6810a3bbbecb587f239005cbc846dc4\bolts-tasks-1.4.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\bolts-tasks-1.4.0_a729045a5e53740a2e648c205a9a256c35191b03\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.twitter.sdk.android\twitter\1.3.0\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="681f373dd53fc3bf22303592e7af3c4c83151723">
         <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.twitter.sdk.android-twitter-1.3.0_58c9f342d52968a6ed2900c93f7147eea06c8c82\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\in.juspay\godel\0.6.18.1423\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="52f6bcc4bb9657967ad3451a87b88bc907af87ca">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\in.juspay-godel-0.6.18.1423_2931938e3c09dce533632348497200fa4e748d6a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.afollestad\material-dialogs\0.7.4.2\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="047453ba8c649f4214f4ed1d13c90fe6adca7a23">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.afollestad-material-dialogs-0.7.4.2_886bcf61b19273d085ddd5e3d1ce3b2626ddf0e4\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -1042,8 +1024,26 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="372b4bf5b5230d393591c5211a0ba2e30f6ca9f3">
+        sha1="a29c7dda2d4de2838981b483d6a241050d5b898d">
         <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\instant-run-bootstrap_158b65b43fd00641acb08db195c07ace6ac2be74\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-fitness\9.8.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="a7a04d6b7c01e569a285fa627cf64f5b05295906">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\com.google.android.gms-play-services-fitness-9.8.0_89bc35e8d465e9f456bb6257b6a15104d9969a71\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\BoostNew\boost\app\build\intermediates\exploded-aar\uk.co.chrisjenx\calligraphy\2.1.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e653e15e62e8a59ddd76cc7f827bf8bce38ae7bb">
+        <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\uk.co.chrisjenx-calligraphy-2.1.0_c34b0cddde9ab40a92e2a26f8019954d81f39b5b\classes.dex" />
     </item>
 
 </items>
