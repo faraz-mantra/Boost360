@@ -153,7 +153,7 @@
                     android:layout_marginLeft="16dp"
                     android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content"
-                    android:text="@string/unique_visits" />
+                    android:text="@string/unique_visitors" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

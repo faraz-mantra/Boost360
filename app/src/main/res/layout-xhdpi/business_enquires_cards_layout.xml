@@ -192,7 +192,7 @@
                     <View
                         android:layout_width="2dp"
                         android:layout_height="match_parent"
-                        android:background="@color/primaryColor"></View>
+                        android:background="@color/primaryColor"/>
 
                     <TextView
                         android:id="@+id/entityTexView"

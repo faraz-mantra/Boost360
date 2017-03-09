@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.nowfloats.Analytics_Screen.Graph.model.DatabaseModel;
 import com.nowfloats.util.Constants;
@@ -65,14 +64,14 @@ public class SaveDataCounts {
         mDb = mHolder.getWritableDatabase();
         ContentValues values=makeContentValues(data);
         long i=mDb.insert(ANALYTICS_TABLE, null, values);
-        Log.v("ggg",i+" insert row "+ANALYTICS_TABLE);
+        //Log.v("ggg",i+" insert row "+ANALYTICS_TABLE);
         mDb.close();
     }
     public void updateDataCount(DatabaseModel data){
         mDb = mHolder.getWritableDatabase();
         ContentValues values=makeContentValues(data);
         long i=mDb.update(ANALYTICS_TABLE,values,null,null);
-        Log.v("ggg",i+" update row"+ANALYTICS_TABLE);
+        //Log.v("ggg",i+" update row"+ANALYTICS_TABLE);
         mDb.close();
     }
     public boolean rowExist(){
@@ -161,9 +160,8 @@ public class SaveDataCounts {
         }
 
         public void onCreate(SQLiteDatabase db) {
-            Toast.makeText(mContext, "oncreate", Toast.LENGTH_SHORT).show();
+
             try {
-                Log.v("ggg",CREATE_VISITORS_TABLE + " "+CREATE_VISITS_TABLE);
                 db.execSQL(CREATE_VISITORS_TABLE);
                 db.execSQL(CREATE_VISITS_TABLE);
             }catch (SQLException e) {

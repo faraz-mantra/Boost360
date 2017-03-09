@@ -3,12 +3,12 @@ package com.nowfloats.NavigationDrawer;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 
 import com.nowfloats.NotificationCenter.NotificationFragment;
 import com.thinksity.R;
 
-public class TabPagerAdapter extends FragmentStatePagerAdapter {
+public class TabPagerAdapter extends FragmentPagerAdapter {
     Home_Main_Fragment homeFragment;
     Analytics_Fragment analyticsFragment ;
     Context appContext;
@@ -19,11 +19,8 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
     public TabPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         //Log.d("Tap Pager Adapter"," Tab Pager Adapter ");
-        homeFragment = new Home_Main_Fragment();
 
-        analyticsFragment = new Analytics_Fragment();
         appContext = context ;
-        mFragmentManager = fm;
         mTitles = appContext.getResources().getStringArray(R.array.dashboard_tabs);
     }
 
@@ -41,11 +38,11 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
         // if(selectedFragment == null) {
         switch (index) {
             case 0:
-                selectedFragment = homeFragment;
+                selectedFragment  = new Home_Main_Fragment();
                 currentItem = 0;
                 break;
             case 1:
-                selectedFragment = analyticsFragment;
+                selectedFragment =  new Analytics_Fragment();
                 /*selectedFragment = OffersFragment.newInstance();*/
                 currentItem = 1;
                 break;

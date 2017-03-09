@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.nowfloats.Analytics_Screen.DataMap;
-import com.nowfloats.Analytics_Screen.SearchQueries;
 import com.nowfloats.Analytics_Screen.Search_Query_Adapter.SearchQueryAdapter;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
@@ -95,7 +94,7 @@ public final class Get_Search_Queries_Async_Task extends AsyncTask<Void, String,
 
                 if(Adap!=null)
                 {
-                    Adap.setList(Constants.StoreUserSearch);
+                  /*  Adap.setList(Constants.StoreUserSearch);
                     Adap.notifyDataSetChanged();
 
                     if(Constants.StoreUserSearch!=null){
@@ -109,7 +108,7 @@ public final class Get_Search_Queries_Async_Task extends AsyncTask<Void, String,
                     else{
                         SearchQueries.emptySearchLayout.setVisibility(View.GONE);
                        // listView.setVisibility(View.GONE);
-                    }
+                    }*/
                 }
 
 

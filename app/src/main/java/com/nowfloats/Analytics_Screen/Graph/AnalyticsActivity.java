@@ -82,6 +82,11 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
 
         Intent intent = getIntent();
         tableName = intent.getIntExtra("table_name",-1);
+        if(tableName == Constants.VISITORS_TABLE){
+            setTitle(getString(R.string.unique_visitors));
+        }else{
+            setTitle(getString(R.string.overall_visits));
+        }
         session = new UserSessionManager(getApplicationContext(), this);
 
         endDate =new SimpleDateFormat(pattern, Locale.ENGLISH).format(new Date());
@@ -204,7 +209,6 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         toolbar= (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!=null) {
-            setTitle(getString(R.string.visits));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }

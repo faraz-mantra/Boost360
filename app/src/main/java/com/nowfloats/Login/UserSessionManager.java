@@ -883,7 +883,6 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 Constants.BusinessTimingsWidget = false ;
                 Constants.BusinessEnquiryWidget = false ;
                 HomeActivity.StorebizFloats.clear();
-                HomeActivity.StorebizFloats= null;
                 HomeActivity.StorebizFloats= new ArrayList<FloatsMessageModel>();
                 ChatFragment.chatModels = new ArrayList<ChatModel>();
                 LoginManager.getInstance().logOut();
