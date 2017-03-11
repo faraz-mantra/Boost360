@@ -38,6 +38,8 @@ import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.nowfloats.BusinessProfile.UI.Model.FacebookFeedPullModel;
+import com.nowfloats.CustomWidget.roboto_lt_24_212121;
+import com.nowfloats.CustomWidget.roboto_md_60_212121;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NFXApi.NfxRequestClient;
 import com.nowfloats.NavigationDrawer.API.twitter.FacebookFeedPullRegistrationAsyncTask;
@@ -54,6 +56,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import org.json.JSONArray;
@@ -81,7 +84,9 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
     int size = 0;
     boolean[] checkedPages;
     UserSessionManager session;
-
+    private final int LIGHT_HOUSE_EXPIRE = 0;
+    private final int WILD_FIRE_EXPIRE = 1;
+    private final int DEMO_EXPIRE = 3;
 
     TextView connectTextView, topFeatureTextView;
     //final Facebook facebook = new Facebook(Constants.FACEBOOK_API_KEY);
@@ -132,7 +137,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
     private final int FROM_FB_PAGE = 0;
 
 
-
+    MaterialDialog mExpireDailog;
     private CallbackManager callbackManager;
 
     @Override
@@ -292,13 +297,38 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
 
                 }*/
+                String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
+                String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
+                if (paymentState.equals("-1")) {
+                    try {
+                        if (Integer.parseInt(paymentLevel) > 10) {
+                            //LH expire
+                            if(BuildConfig.APPLICATION_ID.equals("com.kitsune.biz")){
+                                renewKitsune(LIGHT_HOUSE_EXPIRE);
+                            }else {
+                                renewPlanDialog(LIGHT_HOUSE_EXPIRE);
+                            }
+                        } else{
+                            //Demo expire
 
-                if(facebookautopost.isChecked()){
-                    // connecting to auto pull
-                    fbPageData(FROM_AUTOPOST);
+                            if(BuildConfig.APPLICATION_ID.equals("com.kitsune.biz")){
+                                renewKitsune(DEMO_EXPIRE);
+                            }else {
+                                renewPlanDialog(DEMO_EXPIRE);
+                            }
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    facebookautopost.setChecked(false);
                 }else {
-                    //disconnected to auto pull
-                   updateAutopull(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME),false);
+                    if (facebookautopost.isChecked()) {
+                        // connecting to auto pull
+                        fbPageData(FROM_AUTOPOST);
+                    } else {
+                        //disconnected to auto pull
+                        updateAutopull(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME), false);
+                    }
                 }
 
             }
@@ -363,7 +393,130 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         InitShareResources();
         setStatus();
     }
+    private void renewKitsune(int expiryType) {
+        String dialogTitle = null;
+        String dialogMessage = null;
+        String callUsButtonText = "";
+        String cancelButtonText = null;
+        int dialogImage = 0;
+        int dialogImageBgColor = 0;
+        int days;
+        prefsEditor.putBoolean("EXPIRE_DIALOG",true);
+        prefsEditor.commit();
+        boolean dialogShowFlag = true;
+        switch (expiryType) {
+            case LIGHT_HOUSE_EXPIRE:
+                dialogTitle = getString(R.string.kitsune_renew_dialog_title);
+                dialogMessage = getString(R.string.kitsune_renew_dialog_body);
+                dialogImage = R.drawable.androidexpiryxxxhdpi;
+                dialogImageBgColor = Color.parseColor("#ff0010");
+                break;
+            case DEMO_EXPIRE:
+                dialogImage = R.drawable.androidexpiryxxxhdpi;
+                dialogImageBgColor = Color.parseColor("#ff0010");
+                dialogTitle = getString(R.string.kitsune_demo_expire_dialog_title);
+                dialogMessage = getString(R.string.kitsune_demo_expire_dialog_body);
+                break;
+            default:
+                callUsButtonText = "";
+                cancelButtonText = "";
+                dialogTitle = "";
+                dialogMessage = "";
+                dialogImage = -1;
+                break;
+        }
+        mExpireDailog = new MaterialDialog.Builder(this)
+                .customView(R.layout.pop_up_restrict_post_message, false)
+                .backgroundColorRes(R.color.white)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onNegative(MaterialDialog mExpireDailog) {
+                        super.onNegative(mExpireDailog);
+                        mExpireDailog.dismiss();
+                        prefsEditor.putBoolean("EXPIRE_DIALOG", true);
+                        prefsEditor.putBoolean("IGNORE_CLICKED", true);
+                        prefsEditor.commit();
+                    }
+                }).show();
 
+            mExpireDailog.setCancelable(true);
+            View view = mExpireDailog.getCustomView();
+            if(view == null) return;
+            roboto_md_60_212121 title = (roboto_md_60_212121) view.findViewById(R.id.textView1);
+            title.setText(dialogTitle);
+
+            ImageView expireImage = (ImageView) view.findViewById(R.id.img_warning);
+            expireImage.setBackgroundColor(dialogImageBgColor);
+            expireImage.setImageDrawable(getResources().getDrawable(dialogImage));
+
+            roboto_lt_24_212121 message = (roboto_lt_24_212121) view.findViewById(R.id.pop_up_create_message_body);
+            message.setText(dialogMessage);
+    }
+    private void renewPlanDialog(final int expireAccount) {
+        String dialogTitle = null;
+        String dialogMessage = null;
+        String callUsButtonText = "";
+        String cancelButtonText = null;
+        int dialogImage = 0;
+        int dialogImageBgColor = 0;
+
+        prefsEditor.putBoolean("EXPIRE_DIALOG",true);
+        prefsEditor.commit();
+        boolean dialogShowFlag = true;
+        switch (expireAccount) {
+            case LIGHT_HOUSE_EXPIRE:
+                callUsButtonText = "Ok";
+                cancelButtonText = getString(R.string.later_in_capital);
+                dialogTitle = getString(R.string.renew_light_house_plan);
+                dialogMessage = getString(R.string.light_house_plan_expired_some_features_visible);
+                dialogImage = R.drawable.androidexpiryxxxhdpi;
+                dialogImageBgColor = Color.parseColor("#ff0010");
+                break;
+            case DEMO_EXPIRE:
+                dialogImage = R.drawable.androidexpiryxxxhdpi;
+                dialogImageBgColor = Color.parseColor("#ff0010");
+                callUsButtonText = "Ok";
+                cancelButtonText = getString(R.string.later_in_capital);
+                dialogTitle = getString(R.string.buy_light_house_plan);
+                dialogMessage = getString(R.string.demo_plan_expired);
+                break;
+            default:
+                callUsButtonText = "";
+                cancelButtonText = "";
+                dialogTitle = "";
+                dialogMessage = "";
+                dialogImage = -1;
+                break;
+        }
+        mExpireDailog = new MaterialDialog.Builder(this)
+                .customView(R.layout.pop_up_restrict_post_message, false)
+                .backgroundColorRes(R.color.white)
+                .negativeText(cancelButtonText)
+                .callback(new MaterialDialog.ButtonCallback() {
+
+                    @Override
+                    public void onNegative(MaterialDialog mExpireDailog) {
+                        super.onNegative(mExpireDailog);
+                        mExpireDailog.dismiss();
+                        prefsEditor.putBoolean("EXPIRE_DIALOG", true);
+                        prefsEditor.putBoolean("IGNORE_CLICKED", true);
+                        prefsEditor.commit();
+                    }
+                }).show();
+
+            mExpireDailog.setCancelable(true);
+            View view = mExpireDailog.getCustomView();
+            if(view == null ) return;
+            roboto_md_60_212121 title = (roboto_md_60_212121) view.findViewById(R.id.textView1);
+            title.setText(dialogTitle);
+
+            ImageView expireImage = (ImageView) view.findViewById(R.id.img_warning);
+            expireImage.setBackgroundColor(dialogImageBgColor);
+            expireImage.setImageDrawable(getResources().getDrawable(dialogImage));
+
+            roboto_lt_24_212121 message = (roboto_lt_24_212121) view.findViewById(R.id.pop_up_create_message_body);
+            message.setText(dialogMessage);
+    }
     private void updateAutopull(String name,boolean autoPublish) {
         numberOfUpdatesSelected = false;
         FacebookFeedPullModel.Update obj = new FacebookFeedPullModel().new Update();

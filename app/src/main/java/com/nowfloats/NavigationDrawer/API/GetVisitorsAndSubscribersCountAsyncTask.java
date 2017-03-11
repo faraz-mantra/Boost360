@@ -32,7 +32,7 @@ public class GetVisitorsAndSubscribersCountAsyncTask extends AsyncTask<Void, Str
 	//public IOnObserverListener onObserverListener;
 //	int count;
 	UserSessionManager sessionManager;
-    private String numberOfViews,numberOfSubscribers,numberOfVisitors;
+    private String numberOfViews,numberOfSubscribers,numberOfVisitors,numberOfEnquries;
 
     public GetVisitorsAndSubscribersCountAsyncTask(Activity context, UserSessionManager session) {
        super();
@@ -60,6 +60,9 @@ public class GetVisitorsAndSubscribersCountAsyncTask extends AsyncTask<Void, Str
                     if (!numberOfSubscribers.contains(",")){
                         numberOfSubscribers = NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(numberOfSubscribers));
                     }
+                    if (!numberOfEnquries.contains(",")){
+                        numberOfEnquries = NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(numberOfEnquries));
+                    }
                 }catch(Exception e){
                     e.printStackTrace();
                 }
@@ -67,6 +70,7 @@ public class GetVisitorsAndSubscribersCountAsyncTask extends AsyncTask<Void, Str
                 sessionManager.setVisitsCount(numberOfViews);
                 sessionManager.setVisitorsCount(numberOfVisitors);
                 sessionManager.setSubcribersCount(numberOfSubscribers);
+                sessionManager.setEnquiryCount(numberOfEnquries);
 
                 mContext.runOnUiThread(new Runnable() {
                     @Override
@@ -91,6 +95,12 @@ public class GetVisitorsAndSubscribersCountAsyncTask extends AsyncTask<Void, Str
                             Analytics_Fragment.visitors_progressBar.setVisibility(View.GONE);
                             Analytics_Fragment.visitorsCount.setText(numberOfVisitors);
                         }
+                        if(Analytics_Fragment.businessEnqCount != null && Analytics_Fragment.businessEnqProgress!=null)
+                        {
+                            Analytics_Fragment.businessEnqCount.setVisibility(View.VISIBLE);
+                            Analytics_Fragment.businessEnqProgress.setVisibility(View.GONE);
+                            Analytics_Fragment.businessEnqCount.setText(numberOfEnquries);
+                        }
                     }
                 });
             } else{ Methods.showSnackBarNegative(mContext, "Something went wrong! in Visitor and Subscriber count...");}
@@ -111,7 +121,7 @@ public class GetVisitorsAndSubscribersCountAsyncTask extends AsyncTask<Void, Str
                 website = new URI(queryURL);
             } else {
                website = new URI(Constants.NOW_FLOATS_API_URL+"/Dashboard/v1/"+sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)+"/summary?clientId="
-                        + Constants.clientId+"&fpId="+sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)+"&scope=0");
+                        + Constants.clientId+"&fpId="+sessionManager.getFPID()+"&scope=0");
             }
 //            normal
 //            https://api.withfloats.com/Dashboard/v1/TECHNEWS/summary?clientId=DB96EA35A6E44C0F8FB4A6BAA94DB017C0DFBE6F9944B14AA6C3C48641B3D70&fpId=TECHNEWS&scope=0
@@ -136,9 +146,8 @@ public class GetVisitorsAndSubscribersCountAsyncTask extends AsyncTask<Void, Str
                     JSONObject data = (JSONObject) entityArray.get(i);
                     numberOfViews = data.getString("NoOfViews");
                     numberOfVisitors = data.getString("NoOfUniqueViews");
-                    String numberOfMessages = data.getString("NoOfMessages");
+                    numberOfEnquries = data.getString("NoOfMessages");
                     numberOfSubscribers = data.getString("NoOfSubscribers");
-
                 }
                     if(code == 200)
                     {

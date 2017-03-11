@@ -484,7 +484,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="4c68d0e374885e1b4baf83e1b9901c6107616161">
+        sha1="ff0af6b651dfedcd296c702e6a73b25bbc36859f">
         <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\instant-run_11d0f6181a4d4cc8cfd6478c511bfe09e6dce205\classes.dex" />
     </item>
     <item
@@ -1042,7 +1042,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="b9d9f299ed79f845d5752662ed52a5d83923cf48">
+        sha1="ec0dc1aba07e08f23ac1238fcc8fa5983f81697d">
         <dex dex="C:\NFSource\BoostNew\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\instant-run-bootstrap_158b65b43fd00641acb08db195c07ace6ac2be74\classes.dex" />
     </item>
 

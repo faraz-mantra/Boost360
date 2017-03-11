@@ -132,11 +132,15 @@ public class Analytics_Fragment extends Fragment {
         {
             subscriberCount.setText(session.getSubcribersCount());
         }
+        if(!Util.isNullOrEmpty(session.getEnquiryCount())){
+            businessEnqCount.setText(session.getEnquiryCount());
+        }
         if(!Util.isNullOrEmpty(session.getFacebookImpressions())){
             facebokImpressions.setText(session.getFacebookImpressions());
         }
-        else
+        else {
             facebokImpressions.setText("0");
+        }
 
         if(mListener!=null){
             new Handler().postDelayed(new Runnable() {
@@ -306,7 +310,7 @@ public class Analytics_Fragment extends Fragment {
         String visitortotal  = session.getVisitorsCount();
         String subscribetotal  = session.getSubcribersCount();
         String searchQueryCount = session.getSearchCount();
-        String enquiryCount = session.getLatestEnqCount();
+        String enquiryCount = session.getEnquiryCount();
 //        String Str_noOfSearchQueries = "";
 
         try {

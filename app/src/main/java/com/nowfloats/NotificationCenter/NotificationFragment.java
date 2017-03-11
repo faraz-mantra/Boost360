@@ -82,13 +82,14 @@ public class NotificationFragment extends Fragment{
         emptylayout = (LinearLayout) view.findViewById(R.id.emptyalertlayout);
         emptylayout.setVisibility(View.GONE);
         progress_layout = (LinearLayout) view.findViewById(R.id.progress_layout);
-        progress_layout.setVisibility(View.VISIBLE);
         final LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLinearLayoutManager);
         adapter = new NotificationAdapter(getActivity(),alertModelsList,alertInterface,session,bus);
         recyclerView.setAdapter(adapter);
         //get alert Values
-        loadAlerts();
+        if(!mIsAlertShown){
+            loadAlerts();
+        }
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
@@ -162,7 +163,7 @@ public class NotificationFragment extends Fragment{
     public void loadAlerts() {
         stop =true;
         progress_layout.setVisibility(View.VISIBLE);
-
+        mIsAlertShown =true;
         try {
             Map<String, String> params = new HashMap<String, String>();
             params.put("clientId", Constants.clientId);

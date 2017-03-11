@@ -1,8 +1,7 @@
 package com.nowfloats.Analytics_Screen.API;
 
+import com.google.gson.JsonObject;
 import com.nowfloats.Analytics_Screen.model.SearchQueryModel;
-
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -18,5 +17,5 @@ import retrofit.http.Query;
 public interface SearchQueryApi {
 
     @POST("/Search/v1/queries/report")
-    void getQueries(@Query("offset") String offset, @Body JSONObject obj, Callback<List<SearchQueryModel>> response);
+    void getQueries(@Query("offset") String offset, @Body JsonObject obj, Callback<List<SearchQueryModel>> response);
 }

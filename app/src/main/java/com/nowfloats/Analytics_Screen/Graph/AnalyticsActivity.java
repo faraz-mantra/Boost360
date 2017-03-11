@@ -42,6 +42,12 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.nowfloats.Analytics_Screen.Graph.fragments.MonthFragment.MONTH_PARAMETER;
+import static com.nowfloats.Analytics_Screen.Graph.fragments.MonthFragment.PARAMETER1;
+import static com.nowfloats.Analytics_Screen.Graph.fragments.MonthFragment.PARAMETER2;
+import static com.nowfloats.Analytics_Screen.Graph.fragments.MonthFragment.PARAMETER3;
+import static com.nowfloats.Analytics_Screen.Graph.fragments.MonthFragment.PARAMETER4;
+
 public class AnalyticsActivity extends AppCompatActivity implements MonthFragment.OnYearDataClickListener{
 
     public String[] tabs;
@@ -318,9 +324,15 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
                         weekDataArr[weekOfMonth-1]+=list.getDataCount();
                         sum+=list.getDataCount();
                     }
+                    Bundle b=new Bundle();
+                    b.putIntArray(PARAMETER1,weekDataArr);
+                    b.putInt(PARAMETER2,sum);
+                    b.putInt(PARAMETER3,1);
+                    b.putString(PARAMETER4, "Visits in " + getResources().getStringArray(R.array.months)[month-1]);
+                    b.putInt(MONTH_PARAMETER, month);
                     getSupportFragmentManager()
                             .beginTransaction()
-                            .add(R.id.activity_main_analytics, MonthFragment.newInstance(weekDataArr, sum, 1, "Visits in " + getResources().getStringArray(R.array.months)[month-1] ), "MothFragment")
+                            .add(R.id.activity_main_analytics, MonthFragment.newInstance(b),"MothFragment")
                             .addToBackStack("MothFragment")
                             .commit();
                 }
@@ -440,16 +452,34 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
 
         @Override
         public Fragment getItem(int position) {
+            Bundle b=new Bundle();
+            MonthFragment monthFragment;
             switch (position) {
                 case 0:
-                    return MonthFragment.newInstance(days,weekData,0, getString(R.string.visits_this_week));
+                    b.putIntArray(PARAMETER1,days);
+                    b.putInt(PARAMETER2,weekData);
+                    b.putInt(PARAMETER3,0);
+                    b.putString(PARAMETER4, getString(R.string.visits_this_week));
+                    monthFragment = MonthFragment.newInstance(b);
+                    break;
                 case 1:
-                    return MonthFragment.newInstance(weeks,monthData,1, getString(R.string.visit_this_month));
+                    b.putIntArray(PARAMETER1,weeks);
+                    b.putInt(PARAMETER2,monthData);
+                    b.putInt(PARAMETER3,1);
+                    b.putString(PARAMETER4, getString(R.string.visit_this_month));
+                    b.putInt(MONTH_PARAMETER, Calendar.getInstance().get(Calendar.MONTH)+1);
+                    monthFragment = MonthFragment.newInstance(b);
+                    break;
                 default:
-                    MonthFragment monthFragment =  MonthFragment.newInstance(months,yearData,2, getString(R.string.visits_this_year));
+                    b.putIntArray(PARAMETER1,months);
+                    b.putInt(PARAMETER2,yearData);
+                    b.putInt(PARAMETER3,2);
+                    b.putString(PARAMETER4,getString(R.string.visits_this_year));
+                    monthFragment = MonthFragment.newInstance(b);
                     monthFragment.setYearDataListener(AnalyticsActivity.this);
-                    return monthFragment;
+                    break;
             }
+            return monthFragment;
         }
 
         @Override

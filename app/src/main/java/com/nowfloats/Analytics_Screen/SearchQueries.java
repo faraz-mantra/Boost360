@@ -6,7 +6,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,21 +13,18 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.gson.JsonObject;
 import com.nowfloats.Analytics_Screen.API.SearchQueryApi;
 import com.nowfloats.Analytics_Screen.Search_Query_Adapter.SearchQueryAdapter;
 import com.nowfloats.Analytics_Screen.model.SearchQueryModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NotificationCenter.AlertArchive;
-import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +44,7 @@ public class SearchQueries extends AppCompatActivity {
     public LinearLayout emptySearchLayout;
     UserSessionManager session;
     ArrayList<SearchQueryModel> mSearchArrayList = new ArrayList<>();
-    JSONObject obj;
+    JsonObject obj;
     private boolean stop = false;
     ProgressBar progressBar;
 
@@ -86,7 +82,6 @@ public class SearchQueries extends AppCompatActivity {
                 int totalItemCount = layoutManager.getItemCount();
                 int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
                 if(lastVisibleItem>=totalItemCount-1 && !stop){
-                    Log.v("ggg","hello");
                    getSearch();
                 }
             }
@@ -94,14 +89,10 @@ public class SearchQueries extends AppCompatActivity {
     }
 
     private void createObj() {
-        obj = new JSONObject();
-        try {
-            obj.put("clientId", Constants.clientId);
-            obj.put("fpIdentifierType", session.getISEnterprise().equals("true")?"MULTI":"SINGLE");
-            obj.put("fpTag",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        obj = new JsonObject();
+        obj.addProperty("clientId", Constants.clientId);
+        obj.addProperty("fpIdentifierType", session.getISEnterprise().equals("true")?"MULTI":"SINGLE");
+        obj.addProperty("fpTag",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
     }
 
     private void getSearch(){
@@ -122,11 +113,10 @@ public class SearchQueries extends AppCompatActivity {
 
                 for (int i =0; i<searchQueryModels.size() ;i++){
                     mSearchArrayList.add(searchQueryModels.get(i));
-                    Log.v("ggg",i+" adapter");
                     adapter.notifyItemChanged(count+i);
                 }
                 adapter.notifyDataSetChanged();
-                stop = searchQueryModels.size()<11 && count>0;
+                stop = count>0 ? searchQueryModels.size()<11 : searchQueryModels.size()<10;
             }
 
             @Override
@@ -161,10 +151,8 @@ public class SearchQueries extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id==android.R.id.home ){
-
-            BoostLog.d("Back", "Back Pressed");
             finish();
-          overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             return true;
             //getSupportFragmentManager().popBackStack();
             //  NavUtils.navigateUpFromSameTask(this);

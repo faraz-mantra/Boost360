@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nowfloats.Analytics_Screen.DataMap;
 import com.nowfloats.Analytics_Screen.model.SearchQueryModel;
 import com.thinksity.R;
 
@@ -25,9 +24,6 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<SearchQueryAdapter.
 
     private ArrayList<SearchQueryModel> queryList;
     Activity activity;
-    DataMap list;
-    int size;
-    String msg = "mesg",date = "date", time = "time", timef = "timef";
     PorterDuffColorFilter porterDuffColorFilter;
 
 
@@ -62,16 +58,16 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<SearchQueryAdapter.
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
         porterDuffColorFilter = new PorterDuffColorFilter(activity.getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
-        msg =  queryList.get(position).getKeyword();
-        date = queryList.get(position).getCreatedOn();
-
-        String sDate = time.replace("/Date(", "").replace(")/", "");
-        String[] splitDate = sDate.split("\\+");
-        Long epochTime = Long.parseLong(splitDate[0]);
-        Date date = new Date(epochTime);
-
+        try {
+            String sDate = queryList.get(position).getCreatedOn().replace("/Date(", "").replace(")/", "");
+            String[] splitDate = sDate.split("\\+");
+            Long epochTime = Long.parseLong(splitDate[0]);
+            Date date = new Date(epochTime);
+            holder.search_query_date_text.setText(date.toString());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         holder.search_query_header_text.setText(queryList.get(position).getKeyword());
-        holder.search_query_date_text.setText(date.toString());
         holder.search_query_date_text.setTypeface(null, Typeface.ITALIC);
         holder.search_query_image_icon.setColorFilter(porterDuffColorFilter);
     }

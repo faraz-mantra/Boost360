@@ -1444,12 +1444,12 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     return;
                 }
                 renewPlanDialog(WILD_FIRE_EXPIRE);
-                showWildFire();
+                //showWildFire();
                 return;
             }
         }
         //Log.v("ggg","not showing");
-        showWildFire();
+        //showWildFire();
     }
 
     private int verifyTime(String unixtime, int months)
