@@ -199,6 +199,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         Methods.isOnline(HomeActivity.this);
         session = new UserSessionManager(getApplicationContext(),HomeActivity.this);
         setHotlineUser();
+
         //Log.v("ggg ",FirebaseInstanceId.getInstance().getToken());
         BoostLog.d(TAG, "In on CreateView");
         deepLinkUrl = RiaFirebaseMessagingService.deepLinkUrl;
@@ -470,7 +471,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             params.put("DeviceType", "ANDROID");
             params.put("clientId", Constants.clientId);
 
-
             Log.i("Ria_Register GCM id--", "API call Started");
 
             Login_Interface emailValidation = Constants.restAdapter.create(Login_Interface.class);
@@ -614,6 +614,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             }
             else if(url.contains("visits") || url.contains("viewgraph")){
                 Intent accountInfo = new Intent(HomeActivity.this, AnalyticsActivity.class);
+                accountInfo.putExtra("table_name",Constants.VISITS_TABLE);
                 startActivity(accountInfo);
             }
             else if(url.contains(getResources().getString(R.string.deeplink_setings))){
@@ -1443,12 +1444,12 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     return;
                 }
                 renewPlanDialog(WILD_FIRE_EXPIRE);
-                showWildFire();
+                //showWildFire();
                 return;
             }
         }
         //Log.v("ggg","not showing");
-        showWildFire();
+        //showWildFire();
     }
 
     private int verifyTime(String unixtime, int months)

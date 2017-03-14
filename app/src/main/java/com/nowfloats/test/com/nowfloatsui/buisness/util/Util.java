@@ -986,8 +986,10 @@ public class Util {
             if (rotation != 0f) {
                 matrix.preRotate(rotation);
             }
-            b = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(),
-                    matrix, true);
+            if(b!=null) {
+                b = Bitmap.createBitmap(b, 0, 0, b.getWidth(), b.getHeight(),
+                        matrix, true);
+            }
             System.gc();
             in.close();
             return b;

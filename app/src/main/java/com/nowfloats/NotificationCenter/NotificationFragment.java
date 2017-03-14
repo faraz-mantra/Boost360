@@ -15,7 +15,6 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
 import com.nowfloats.NavigationDrawer.model.AlertCountEvent;
 import com.nowfloats.NotificationCenter.Model.AlertModel;
-import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
@@ -27,7 +26,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -43,12 +41,10 @@ public class NotificationFragment extends Fragment{
     Bus bus;
     private LinearLayout emptylayout,progress_layout;
     NotificationInterface alertInterface;
-    private boolean userScrolled = false;
-    private int prevCount = 0;
-    private String mIsRead = "false";
     private boolean mIsAlertShown = false;
-    private int alertsCount = 0;
-    private boolean mShouldRequestMore = true;
+    private int readAlertsCount;
+    private boolean stop;
+    private ArrayList<AlertModel> alertModelsList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,55 +82,34 @@ public class NotificationFragment extends Fragment{
         emptylayout = (LinearLayout) view.findViewById(R.id.emptyalertlayout);
         emptylayout.setVisibility(View.GONE);
         progress_layout = (LinearLayout) view.findViewById(R.id.progress_layout);
-        progress_layout.setVisibility(View.VISIBLE);
         final LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLinearLayoutManager);
-        recyclerView.setItemAnimator(new FadeInUpAnimator());
+        adapter = new NotificationAdapter(getActivity(),alertModelsList,alertInterface,session,bus);
+        recyclerView.setAdapter(adapter);
         //get alert Values
-        loadAlerts();
-        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int scrollState) {
-                super.onScrollStateChanged(recyclerView, scrollState);
-                if(scrollState == RecyclerView.SCROLL_STATE_DRAGGING){
-                    userScrolled = true;
-                }
-            }
+        if(!mIsAlertShown){
+            loadAlerts();
+        }
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                int visibleItemCount = recyclerView.getChildCount();
                 int totalItemCount = mLinearLayoutManager.getItemCount();
-                int firstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition();
-
-                /*if (loading) {
-                    if (totalItemCount > previousTotal) {
-                        loading = false;
-                        previousTotal = totalItemCount;
-                    }
-                }
-                if (!loading && (totalItemCount - visibleItemCount)
-                        <= (firstVisibleItem + visibleThreshold)) {
-                    // End has been reached
-
-                    // Do something
-                    current_page++;
-                }*/
-
-                int lastInScreen = firstVisibleItem + visibleItemCount;
-                if((userScrolled) && (lastInScreen == totalItemCount) && (prevCount!=totalItemCount) && mShouldRequestMore){
-                    userScrolled=false;
-                    prevCount = totalItemCount;
-                    moreAlerts("" + alertsCount);
+                int lastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
+                if(lastVisibleItem>=totalItemCount-2 && !stop){
+                    moreAlerts();
                 }
             }
         });
     }
 
-    private void moreAlerts(String offset) {
+    private void moreAlerts() {
+        stop = true;
+
+        String offset = String.valueOf(readAlertsCount);
+        readAlertsCount+=10;
+
         progress_layout.setVisibility(View.VISIBLE);
-        alertsCount += 10;
         try {
             Map<String, String> params = new HashMap<String, String>();
             params.put("clientId", Constants.clientId);
@@ -146,32 +121,37 @@ public class NotificationFragment extends Fragment{
             alertInterface.getAlerts(params,new Callback<ArrayList<AlertModel>>() {
                 @Override
                 public void success(ArrayList<AlertModel> alertModels, Response response) {
-                    if (alertModels!=null && alertModels.size()<10){
-                        mShouldRequestMore = false;
-                    }
+
                     progress_layout.setVisibility(View.GONE);
-                    if ((alertModels==null || alertModels.size()==0) && !mIsAlertShown){
-                        emptylayout.setVisibility(View.VISIBLE);
+                    if ((alertModels==null || alertModels.size() == 0 )){
+                        if(alertModelsList.size() == 0){
+                            emptylayout.setVisibility(View.VISIBLE);
+                        }
                     }else{
-                        mIsAlertShown = true;
-                        emptylayout.setVisibility(View.GONE);
-                    }
-                    if(adapter!=null) {
-                        adapter.addAlerts(alertModels);
+                        int count = alertModelsList.size();
+                        for ( int i = 0; i<alertModels.size() ;i++){
+
+                            alertModelsList.add(alertModels.get(i));
+                            adapter.notifyItemChanged(count+i);
+                        }
                         adapter.notifyDataSetChanged();
+                        if(alertModels.size()>=10){
+                            stop = false;
+                        }
                     }
-                    progress_layout.setVisibility(View.GONE);
+
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Log.i("loadAlerts failure",""+error.getMessage());
+                    stop =false;
+                    Log.i("ggg",""+error.getMessage());
                     Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong_try_again));
                     progress_layout.setVisibility(View.GONE);
                 }
             });
         } catch (Exception e) {
-            Log.i("Alert data","API Exception:"+e);
+            Log.i("ggg","API Exception:"+e);
             Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong_try_again));
             e.printStackTrace();
             progress_layout.setVisibility(View.GONE);
@@ -181,6 +161,9 @@ public class NotificationFragment extends Fragment{
 
 
     public void loadAlerts() {
+        stop =true;
+        progress_layout.setVisibility(View.VISIBLE);
+        mIsAlertShown =true;
         try {
             Map<String, String> params = new HashMap<String, String>();
             params.put("clientId", Constants.clientId);
@@ -192,18 +175,21 @@ public class NotificationFragment extends Fragment{
             alertInterface.getAlerts(params,new Callback<ArrayList<AlertModel>>() {
                 @Override
                 public void success(ArrayList<AlertModel> alertModels, Response response) {
-                    Log.i("Alerts Success","");
-                    if (alertModels!=null && alertModels.size() > 0 && getActivity()!=null){
-                        mIsAlertShown = true;
-                        adapter = new NotificationAdapter(getActivity(),alertModels,alertInterface,session,bus);
-                        recyclerView.setAdapter(adapter);
+
+                    if(alertModels != null ){
+                        for(int i = 0; i<alertModels.size();i++){
+                            alertModelsList.add(alertModels.get(i));
+                            adapter.notifyItemChanged(i);
+                        }
                     }
-                    moreAlerts("0");
+                    stop = false;
+                    moreAlerts();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    Log.i("loadAlerts failure",""+error.getMessage());
+                    stop = false;
+
                     if(getActivity()!=null) {
                         Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong_try_again));
                     }
@@ -211,7 +197,7 @@ public class NotificationFragment extends Fragment{
                 }
             });
         } catch (Exception e) {
-            Log.i("Alert data","API Exception:"+e);
+
             Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong_try_again));
             e.printStackTrace();
             progress_layout.setVisibility(View.GONE);
@@ -219,6 +205,7 @@ public class NotificationFragment extends Fragment{
     }
 
     public static void getAlertCount(UserSessionManager session,NotificationInterface notificationInterface,final Bus bus){
+
         try{
         HashMap<String,String> map = new HashMap<>();
         map.put("fpId",session.getFPID());
@@ -229,7 +216,6 @@ public class NotificationFragment extends Fragment{
             public void success(String s, Response response) {
                 Home_Fragment_Tab.alertCountVal = s;
                 bus.post(new AlertCountEvent(s));
-                BoostLog.d("AlertCount-", s);
                 MixPanelController.track("AlertCount-"+s, null);
             }
 

@@ -184,7 +184,6 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity"
-            android:label="@string/visits"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Business_Hours_Activity"
