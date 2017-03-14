@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -39,13 +40,14 @@ public class SubscribersActivity extends AppCompatActivity {
     private ProgressBar mPbSubscriber;
     private ListView mLvSubscribers;
     private Toolbar toolbar;
-
+    LinearLayout emptyLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_subscribers);
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
+        emptyLayout = (LinearLayout) findViewById(R.id.emplty_layout);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -79,6 +81,7 @@ public class SubscribersActivity extends AppCompatActivity {
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             //getSupportFragmentManager().popBackStack();
             //  NavUtils.navigateUpFromSameTask(this);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -116,7 +119,7 @@ public class SubscribersActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
             }
             else{
-                Methods.showSnackBarNegative(SubscribersActivity.this, getResources().getString(R.string.check_internet_connection));
+                emptyLayout.setVisibility(View.VISIBLE);
             }
         }
 

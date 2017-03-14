@@ -10,7 +10,6 @@ import com.thinksity.R;
 
 public class TabPagerAdapter extends FragmentPagerAdapter {
     Home_Main_Fragment homeFragment;
-    NotificationFragment alertFragment;
     Analytics_Fragment analyticsFragment ;
     Context appContext;
     int currentItem ;
@@ -20,11 +19,8 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
     public TabPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
         //Log.d("Tap Pager Adapter"," Tab Pager Adapter ");
-        homeFragment = new Home_Main_Fragment();
-        alertFragment = new NotificationFragment();
-        analyticsFragment = new Analytics_Fragment();
+
         appContext = context ;
-        mFragmentManager = fm;
         mTitles = appContext.getResources().getStringArray(R.array.dashboard_tabs);
     }
 
@@ -42,16 +38,16 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
         // if(selectedFragment == null) {
         switch (index) {
             case 0:
-                selectedFragment = homeFragment;
+                selectedFragment  = new Home_Main_Fragment();
                 currentItem = 0;
                 break;
             case 1:
-                selectedFragment = analyticsFragment;
+                selectedFragment =  new Analytics_Fragment();
                 /*selectedFragment = OffersFragment.newInstance();*/
                 currentItem = 1;
                 break;
             case 2:
-                selectedFragment = alertFragment;
+                selectedFragment = new NotificationFragment();
                 currentItem = 2;
                 break;
         }

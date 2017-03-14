@@ -3,8 +3,7 @@
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screen_bg"
-    tools:context="recycle.card.com.cardview.mainpackage.tab_Home_Fragment">
+    android:background="@color/screen_bg">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -114,7 +113,7 @@
             android:text="@string/Message_empty"/>
     </LinearLayout>
 
-    <!--<com.melnykov.fab.FloatingActionButton
+    <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -124,8 +123,8 @@
         android:scaleType="fitCenter"
         fab:fab_colorNormal="@color/primaryColor"
         fab:fab_colorPressed="#fddc80"
-        fab:fab_colorRipple="@color/primaryColor" />-->
-    <com.github.clans.fab.FloatingActionMenu
+        fab:fab_colorRipple="@color/primaryColor" />
+   <!-- <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/fab"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -146,23 +145,23 @@
         fab:menu_colorRipple="#fddc80"
         fab:menu_colorPressed="@color/primaryColor">
 
-        <!--<com.github.clans.fab.FloatingActionButton
+        &lt;!&ndash;<com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_action_email"
             fab:fab_label="Event"
-            style="@style/MenuButtonsStyle" />-->
+            style="@style/MenuButtonsStyle" />&ndash;&gt;
 
-        <!--<com.github.clans.fab.FloatingActionButton
+        &lt;!&ndash;<com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_offer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_action_email"
             fab:fab_label="Create Offer"
-            style="@style/MenuButtonsStyle" />-->
+            style="@style/MenuButtonsStyle" />&ndash;&gt;
 
-        <!--<com.github.clans.fab.FloatingActionButton
+        &lt;!&ndash;<com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_product_launch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -182,17 +181,17 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_action_email"
             fab:fab_label="Customer Review"
-            style="@style/MenuButtonsStyle" />-->
-        <!--<com.github.clans.fab.FloatingActionButton
+            style="@style/MenuButtonsStyle" />&ndash;&gt;
+        &lt;!&ndash;<com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_action_email"
             fab:fab_label="Create Update"
-            style="@style/MenuButtonsStyle" />-->
+            style="@style/MenuButtonsStyle" />&ndash;&gt;
 
 
-        </com.github.clans.fab.FloatingActionMenu>
+        </com.github.clans.fab.FloatingActionMenu>-->
 
 
 </FrameLayout>

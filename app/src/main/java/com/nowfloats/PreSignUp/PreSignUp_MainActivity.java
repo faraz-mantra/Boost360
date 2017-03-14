@@ -20,7 +20,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -93,7 +92,6 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
     private String[] permission = new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private CallbackManager callbackManager;
 
-    RelativeLayout parent_layout;
     private LocationProvider loc_provider;
 
     @Override
@@ -107,7 +105,6 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
 
         TextView createWebsiteText = (TextView) findViewById(R.id.createWebSiteText);
         createWebsiteText.setTypeface(robotoRegular);
-        parent_layout = (RelativeLayout) findViewById(R.id.parent_layout);
         TextView signUpFacebookText = (TextView) findViewById(R.id.facebook_create_txt);
         signUpFacebookText.setTypeface(robotoRegular);
 

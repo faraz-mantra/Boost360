@@ -27,7 +27,6 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.Create_Message_Activity;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
-import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Twitter.TwitterConstants;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
@@ -73,6 +72,7 @@ public class Site_Meter_Fragment extends Fragment {
     public final int domain = 11, phone = 4, category = 2,image =7, businessName=0, description=1,
             social=10, address=5, email=3, post=9, logo=8,businessHours=6;
     private Activity activity;
+    private SharedPreferences mSharedPreferences, pref;
 //    private ScaleInAnimationAdapter scaleAdapter;
 
     @Override
@@ -99,6 +99,12 @@ public class Site_Meter_Fragment extends Fragment {
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        Constants.fbShareEnabled = pref.getBoolean("fbShareEnabled", false);
+        Constants.fbPageShareEnabled = pref.getBoolean("fbPageShareEnabled", false);
+
+        mSharedPreferences = getActivity().getSharedPreferences(TwitterConstants.PREF_NAME,Context.MODE_PRIVATE);
+        Constants.twitterShareEnabled = mSharedPreferences.getBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false);
         final LinearLayout progressLayout = (LinearLayout) view.findViewById(R.id.progress_layout);
         progressLayout.setVisibility(View.VISIBLE);
         new Thread(new Runnable() {
@@ -204,12 +210,6 @@ public class Site_Meter_Fragment extends Fragment {
 
     public void siteMeterCalculation(){
         siteMeterTotalWeight = 0;
-        SharedPreferences pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-        Constants.fbShareEnabled = pref.getBoolean("fbShareEnabled", false);
-        Constants.fbPageShareEnabled = pref.getBoolean("fbPageShareEnabled", false);
-
-        SharedPreferences mSharedPreferences = getActivity().getSharedPreferences(TwitterConstants.PREF_NAME,Context.MODE_PRIVATE);
-        Constants.twitterShareEnabled = mSharedPreferences.getBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false);
 
         for (int i = 0; i < siteData.size(); i++) {
             if(siteData.get(i).position==domain){
@@ -393,7 +393,7 @@ public class Site_Meter_Fragment extends Fragment {
                 break;
             case social:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_GET_SOCIAL,null);
-                if(!Constants.twitterShareEnabled  && Util.isNullOrEmpty(Constants.FACEBOOK_USER_ID)){
+                if(!(Constants.twitterShareEnabled && pref.getBoolean("fbShareEnabled", false) && pref.getBoolean("fbPageShareEnabled", false))){
                     Intent in = new Intent(activity, Social_Sharing_Activity.class);
                     startActivity(in);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
