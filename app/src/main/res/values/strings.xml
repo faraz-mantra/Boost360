@@ -1012,11 +1012,11 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     </string-array>
 
     <string-array name="spinner_list_item_array">
-        <item>Rank Increased</item>
-        <item>Rank Maintained</item>
-        <item>Rank Decreased</item>
-        <item>New</item>
-        <item>Lost</item>
+        <item>IMPROVED</item>
+        <item>MAINTAINED</item>
+        <item>DECLINED</item>
+        <item>NEW</item>
+        <item>LOST</item>
     </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->

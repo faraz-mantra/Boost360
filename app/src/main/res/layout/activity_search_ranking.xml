@@ -28,30 +28,51 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:padding="10dp"
-                android:background="@color/primaryColor"
+                android:background="#A1A1A1"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:id="@+id/tv_search_query_title"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:text="SEARCH QUERY"
+                    android:text="Search Queries"
+                    android:textStyle="bold"
                     android:textSize="16sp"
                     android:textColor="@color/white"
-                    android:gravity="center"
+                    android:gravity="left"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="6dp"
                     android:layout_height="wrap_content" />
-                <TextView
-                    android:layout_width="100dp"
-                    android:gravity="center"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="OLD PAGE"/>
-                <TextView
-                    android:layout_width="100dp"
-                    android:gravity="center"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
-                    android:layout_height="wrap_content"
-                    android:text="NEW PAGE"/>
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="Positioning (Page no.)"/>
+                    <LinearLayout
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="70dp"
+                            android:gravity="center"
+                            android:textSize="16sp"
+                            android:textColor="@color/white"
+                            android:layout_height="wrap_content"
+                            android:text="old"/>
+                        <TextView
+                            android:layout_width="70dp"
+                            android:gravity="center"
+                            android:textSize="16sp"
+                            android:textColor="@color/white"
+                            android:layout_height="wrap_content"
+                            android:text="new"/>
+                    </LinearLayout>
+
+                </LinearLayout>
             </LinearLayout>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_search_query"

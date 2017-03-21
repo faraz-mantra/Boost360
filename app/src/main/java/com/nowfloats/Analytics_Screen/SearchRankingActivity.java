@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.nowfloats.Analytics_Screen.API.SearchQueryApi;
 import com.nowfloats.Analytics_Screen.Search_Query_Adapter.SearchRankingRvAdapter;
@@ -36,16 +38,17 @@ import retrofit.client.Response;
 
 public class SearchRankingActivity extends AppCompatActivity {
 
-    private final int FILTER_INCREASED = 0;
-    private final int FILTER_SAME = 1;
-    private final int FILTER_DECREASED = 2;
-    private final int FILTER_NEW = 3;
-    private final int FILTER_LOST = 4;
+    public static final int FILTER_INCREASED = 0;
+    public static final int FILTER_SAME = 1;
+    public static final int FILTER_DECREASED = 2;
+    public static final int FILTER_NEW = 3;
+    public static final int FILTER_LOST = 4;
 
     Toolbar toolbar;
     RecyclerView rvSearchQuery;
     ProgressDialog pd;
     LinearLayout llRankContainer, llEmptyLayout;
+    TextView tvSearchQueryTitle;
 
     List<SearchRankModel> mSearchRankList;
     List<SearchRankModel> mFilteredList = new ArrayList<>();
@@ -68,6 +71,8 @@ public class SearchRankingActivity extends AppCompatActivity {
         llEmptyLayout = (LinearLayout) findViewById(R.id.ll_empty_msg);
         rvSearchQuery = (RecyclerView) findViewById(R.id.rv_search_query);
         rvSearchQuery.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rvSearchQuery.addItemDecoration(new DividerItemDecoration(rvSearchQuery.getContext(), DividerItemDecoration.VERTICAL));
+        tvSearchQueryTitle = (TextView) findViewById(R.id.tv_search_query_title);
 
         pd = new ProgressDialog(this);
         pd.setMessage(getString(R.string.please_wait));
@@ -164,7 +169,8 @@ public class SearchRankingActivity extends AppCompatActivity {
                         if(pd.isShowing()){
                             pd.dismiss();
                             if(mFilteredList.size()>0) {
-                                mRvAdapter = new SearchRankingRvAdapter(mFilteredList);
+                                tvSearchQueryTitle.setText("Search Queries (" + mFilteredList.size() + ")");
+                                mRvAdapter = new SearchRankingRvAdapter(mFilteredList, filter, SearchRankingActivity.this);
                                 rvSearchQuery.setAdapter(mRvAdapter);
                                 mRvAdapter.notifyDataSetChanged();
                             }else {
