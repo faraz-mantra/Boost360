@@ -30,20 +30,20 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
-    <com.nowfloats.NavigationDrawer.SlidingTabLayout
-        android:id="@+id/tabs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/primaryColor"/>
+        <com.nowfloats.NavigationDrawer.SlidingTabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primaryColor"/>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/homeTabViewpager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="1dp"
-        android:layout_weight="1"
-        android:layout_gravity="top"
-        android:background="@android:color/transparent" />
+        <android.support.v4.view.ViewPager
+            android:id="@+id/homeTabViewpager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="1dp"
+            android:layout_weight="1"
+            android:layout_gravity="top"
+            android:background="@android:color/transparent" />
 
     </LinearLayout>
 

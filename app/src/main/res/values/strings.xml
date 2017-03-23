@@ -375,7 +375,11 @@
         <item>ANALYTICS</item>
         <item>ALERTS</item>
     </string-array>
-
+<string-array name="themeIds">
+    <item>575bfec79bfed51e10df0e5d</item>
+    <item>571f7f789bfed52c543d888d</item>
+    <item>57c3c1a65d64370d7cf4eb17</item>
+</string-array>
     <string name="business_enquiries_title">Business Enquiries</string>
     <string name="double_quotes"> &quot; </string>
     <string name="business_profile_title">Profile</string>
@@ -720,7 +724,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="logout">Logout</string>
     <string name="create_website_using">Create website using</string>
     <string name="email_address">Email Address</string>
-    <string name="log_in"> Log In</string>
     <string name="complete_task_to_increase_site_score">Complete the task below to increase your site score.</string>
     <string name="high_score_translate_more_traffic">Higher scores translates more traffic to your site.</string>
     <string name="get_your_identity">Get your own identity</string>
@@ -766,7 +769,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="enter_the_reason">Enter other reason</string>
     <string name="submit">SUBMIT</string>
     <string name="no_alerts">No alerts!</string>
-    <string name="overall_visits">Overall Visits</string>
+    <string name="overall_visits">Total Visits</string>
+    <string name="unique_visitors">Unique Visitors</string>
     <string name="address_line">Address Line</string>
     <string name="malleswaram">Malleswaram</string>
     <string name="town_city">Town / City</string>
@@ -860,8 +864,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="store_no_description">No description available!</string>
     <string name="store_inclusive_all_taxes">(Inclusive of all taxes)</string>
     <string name="site_appearance_dalog_title">Claim a new dynamic look for your site, absolutely free!</string>
-    <string name="site_appearance_dialog_body">If you don\'t like it, you can always switch back to the previous desig
-        n by going into the Site Appearance tab</string>
+    <string name="site_appearance_dialog_body">If you don\'t like it, you can always switch back to the previous design by going into the Site Appearance tab</string>
     <string name="text_btn_enable">ENABLE</string>
     <string name="text_btn_later">LATER</string>
     <string name="select_action_dialog_title">Upload Featured Image</string>
@@ -1051,5 +1054,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="dialog_to_be_activated_null_text">Please note that you will receive an Account Verification Call before your subscription gets activated. Are you sure you want to proceed?</string>
     <string name="search_rank">Search Ranking</string>
     <string name="alternate_number3">Alternate Number 3</string>
+    <string name="cap_login" translatable="false">&#160;<u><b>LOGIN</b></u></string>
+    <string name="log_in">Log In</string>
+    <string name="subscriber_second_text">Subscription is a great way to engage with your\nexisting customers and tell them about latest offers\nor new product launches</string>
+
 
 </resources>

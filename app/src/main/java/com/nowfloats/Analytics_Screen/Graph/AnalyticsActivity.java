@@ -1,5 +1,6 @@
 package com.nowfloats.Analytics_Screen.Graph;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,7 +11,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -42,6 +42,12 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.nowfloats.Analytics_Screen.Graph.fragments.MonthFragment.MONTH_PARAMETER;
+import static com.nowfloats.Analytics_Screen.Graph.fragments.MonthFragment.PARAMETER1;
+import static com.nowfloats.Analytics_Screen.Graph.fragments.MonthFragment.PARAMETER2;
+import static com.nowfloats.Analytics_Screen.Graph.fragments.MonthFragment.PARAMETER3;
+import static com.nowfloats.Analytics_Screen.Graph.fragments.MonthFragment.PARAMETER4;
+
 public class AnalyticsActivity extends AppCompatActivity implements MonthFragment.OnYearDataClickListener{
 
     public String[] tabs;
@@ -60,13 +66,14 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
     ContentLoadingProgressBar progressBar;
     PagerSlidingTabStrip pagerSlidingTabStrip;
     Toolbar toolbar;
+    private int tableName;
     private UserSessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_analytics);
-        inIt();
+        init();
 
         final Calendar c = Calendar.getInstance();
         curYear = c.get(Calendar.YEAR);
@@ -79,14 +86,21 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         days=new int[curDay];
         weeks=new int[curWeek];
 
+        Intent intent = getIntent();
+        tableName = intent.getIntExtra("table_name",-1);
+        if(tableName == Constants.VISITORS_TABLE){
+            setTitle(getString(R.string.unique_visitors));
+        }else{
+            setTitle(getString(R.string.overall_visits));
+        }
         session = new UserSessionManager(getApplicationContext(), this);
 
         endDate =new SimpleDateFormat(pattern, Locale.ENGLISH).format(new Date());
         DashboardDetails details=new DashboardDetails();
 
-        SaveDataCounts saveDataCounts =new SaveDataCounts(AnalyticsActivity.this);
+        SaveDataCounts saveDataCounts =new SaveDataCounts(AnalyticsActivity.this,tableName);
         DatabaseModel modelResponse =saveDataCounts.getDataArrays();
-        if(modelResponse==null)
+        if(modelResponse == null)
         {
             rowExist=false;
             startDate="01-01-"+curYear;
@@ -197,11 +211,10 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         }
     }
 
-    private void inIt() {
+    private void init() {
         toolbar= (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!=null) {
-            setTitle(getString(R.string.visits));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
@@ -232,7 +245,8 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         map.put("clientId",dashboardDetails.getClientId());
         map.put("startDate",dashboardDetails.getStartDate());
         map.put("endDate",dashboardDetails.getEndDate());
-
+        map.put("detailstype",String.valueOf(tableName));
+        map.put("scope",session.getISEnterprise().equals("true") ? "1" : "0");
         RestAdapter adapter = new RestAdapter.Builder().setEndpoint(endpoint).build();
         AnalyticsFetch.FetchDetails details = adapter.create(AnalyticsFetch.FetchDetails.class);
         details.getDataCount(dashboardDetails.getfpTag(),map, new Callback<DashboardResponse>() {
@@ -245,7 +259,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
             @Override
             public void failure(RetrofitError error) {
                 if(rowExist) {
-                    SaveDataCounts saveDataCounts = new SaveDataCounts(AnalyticsActivity.this);
+                    SaveDataCounts saveDataCounts = new SaveDataCounts(AnalyticsActivity.this,tableName);
                     DatabaseModel modelResponse = saveDataCounts.getDataArrays();
                     weeks = modelResponse.getMonth();
                     months = modelResponse.getYear();
@@ -282,7 +296,8 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
             map.put("clientId",Constants.clientId);
             map.put("startDate",firstDate);
             map.put("endDate",lastDate);
-
+            map.put("detailstype",String.valueOf(tableName));
+            map.put("scope",session.getISEnterprise().equals("true") ? "1" : "0");
             BoostLog.d("Current Start:", firstDate + " -  " + lastDate);
 
             RestAdapter adapter = new RestAdapter.Builder().setEndpoint(endpoint).build();
@@ -309,9 +324,15 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
                         weekDataArr[weekOfMonth-1]+=list.getDataCount();
                         sum+=list.getDataCount();
                     }
+                    Bundle b=new Bundle();
+                    b.putIntArray(PARAMETER1,weekDataArr);
+                    b.putInt(PARAMETER2,sum);
+                    b.putInt(PARAMETER3,1);
+                    b.putString(PARAMETER4, "Visits in " + getResources().getStringArray(R.array.months)[month-1]);
+                    b.putInt(MONTH_PARAMETER, month);
                     getSupportFragmentManager()
                             .beginTransaction()
-                            .add(R.id.activity_main_analytics, MonthFragment.newInstance(weekDataArr, sum, 1, "Visists in " + getResources().getStringArray(R.array.months)[month-1] ), "MothFragment")
+                            .add(R.id.activity_main_analytics, MonthFragment.newInstance(b),"MothFragment")
                             .addToBackStack("MothFragment")
                             .commit();
                 }
@@ -326,8 +347,6 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
 
 
 
-        }catch (ParseException exception){
-            exception.printStackTrace();
         }catch (Exception exception){
             exception.printStackTrace();
         }
@@ -364,7 +383,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
             if (dashboardResponse == null||dashboardResponse.getEntity()==null){
                 return null;
             }
-            Log.v("ggg","task");
+
             for(DashboardResponse.Entity list :dashboardResponse.getEntity()) {
 
                 String s = list.getCreatedDate().substring(list.getCreatedDate().indexOf('(')+1,
@@ -403,7 +422,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
             model.setYearCount(yearData);
             model.setWeekCount(weekData);
             model.setDate(String.valueOf(Calendar.getInstance().getTimeInMillis()));
-            SaveDataCounts saveDataCounts = new SaveDataCounts(AnalyticsActivity.this);
+            SaveDataCounts saveDataCounts = new SaveDataCounts(AnalyticsActivity.this,tableName);
             if(rowExist)
                 saveDataCounts.updateDataCount(model);
             else
@@ -427,22 +446,40 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
 
     class AnalyticsAdapter extends FragmentStatePagerAdapter {
 
-        public AnalyticsAdapter(FragmentManager fm) {
+        AnalyticsAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
         public Fragment getItem(int position) {
+            Bundle b=new Bundle();
+            MonthFragment monthFragment;
             switch (position) {
                 case 0:
-                    return MonthFragment.newInstance(days,weekData,0, getString(R.string.visits_this_week));
+                    b.putIntArray(PARAMETER1,days);
+                    b.putInt(PARAMETER2,weekData);
+                    b.putInt(PARAMETER3,0);
+                    b.putString(PARAMETER4, getString(R.string.visits_this_week));
+                    monthFragment = MonthFragment.newInstance(b);
+                    break;
                 case 1:
-                    return MonthFragment.newInstance(weeks,monthData,1, getString(R.string.visit_this_month));
+                    b.putIntArray(PARAMETER1,weeks);
+                    b.putInt(PARAMETER2,monthData);
+                    b.putInt(PARAMETER3,1);
+                    b.putString(PARAMETER4, getString(R.string.visit_this_month));
+                    b.putInt(MONTH_PARAMETER, Calendar.getInstance().get(Calendar.MONTH)+1);
+                    monthFragment = MonthFragment.newInstance(b);
+                    break;
                 default:
-                    MonthFragment monthFragment =  MonthFragment.newInstance(months,yearData,2, getString(R.string.visits_this_year));
+                    b.putIntArray(PARAMETER1,months);
+                    b.putInt(PARAMETER2,yearData);
+                    b.putInt(PARAMETER3,2);
+                    b.putString(PARAMETER4,getString(R.string.visits_this_year));
+                    monthFragment = MonthFragment.newInstance(b);
                     monthFragment.setYearDataListener(AnalyticsActivity.this);
-                    return monthFragment;
+                    break;
             }
+            return monthFragment;
         }
 
         @Override

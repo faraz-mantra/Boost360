@@ -106,6 +106,9 @@ public class uploadIMAGEURI extends AsyncTask<Void,String, String> {
 
 
     public void uploadImage(String imagePath){
+        if(imagePath==null){
+            return;
+        }
         FileInputStream fileInputStream = null;
         File img = new File(imagePath);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -165,7 +168,7 @@ public class uploadIMAGEURI extends AsyncTask<Void,String, String> {
 
 
 
-        }
+    }
 
 
     public void sendDataToServer(String url, byte[] BytesToBeSent){

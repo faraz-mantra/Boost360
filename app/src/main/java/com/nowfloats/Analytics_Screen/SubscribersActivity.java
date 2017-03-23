@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -44,6 +45,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     EditText searchEditText;
     ImageView deleteImage,searchImage;
 
+    LinearLayout emptyLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +61,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
         searchImage.setOnClickListener(this);
 
         titleTextView.setText(getResources().getString(R.string.subscribers));
+        emptyLayout = (LinearLayout) findViewById(R.id.emplty_layout);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(false);
@@ -106,13 +109,15 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                 int newItems = subscriberModels.size();
 
                 for (int i=0;i<newItems;i++){
-
                     //Log.v("ggg",subscriberModels.get(i).getUserMobile());
                     mSubscriberList.add(subscriberModels.get(i));
                     mSubscriberAdapter.notifyItemChanged(count+i);
                 }
                 if(newItems >=10){
                     stop = false;
+                }
+                if(mSubscriberList.size() == 0){
+                    emptyLayout.setVisibility(View.VISIBLE);
                 }
                 Log.v("subscribes",count+1+" "+newItems);
             }

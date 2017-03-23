@@ -36,7 +36,7 @@ import java.util.Map;
 
 import me.biubiubiu.justifytext.library.JustifyTextView;
 
-public class SiteAppearanceFragment extends Fragment {
+public class SiteAppearanceFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -54,6 +54,8 @@ public class SiteAppearanceFragment extends Fragment {
     private JustifyTextView tvHelpBody;
     private CardView cvKitsuneSwitch, cvRevertBack;
     private ImageView ivKitsuneSwitch;
+    private CardView themePickerCard;
+    ArrayList<Integer> list = new ArrayList<>();
     //private OnFragmentInteractionListener mListener;
 
     /*public SiteAppearanceFragment() {
@@ -72,6 +74,9 @@ public class SiteAppearanceFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        list.add(R.drawable.bnb);
+        list.add(R.drawable.fml);
+        list.add(R.drawable.tff);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -87,6 +92,7 @@ public class SiteAppearanceFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_site_appearance, container, false);
         //svKitsune = (Switch)view.findViewById(R.id.sv_kitsune);
         cvKitsuneSwitch = (CardView) view.findViewById(R.id.cv_kitsune_switch);
+        themePickerCard = (CardView) view.findViewById(R.id.theme_picker);
         cvRevertBack = (CardView) view.findViewById(R.id.cv_revert_back);
         tvKitsuneSwitch = (TextView)view.findViewById(R.id.tv_kitsune_switch);
         tvHelpHeader = (TextView)view.findViewById(R.id.tv_help_header);
@@ -108,6 +114,7 @@ public class SiteAppearanceFragment extends Fragment {
             ivKitsuneSwitch.setImageDrawable(getResources().getDrawable(R.drawable.ic_learn_more));
 
         }
+        themePickerCard.setOnClickListener(this);
         cvKitsuneSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -322,18 +329,20 @@ public class SiteAppearanceFragment extends Fragment {
         //mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    /*public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }*/
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.theme_picker:
+                showThemeDialog();
+                break;
+        }
+    }
+
+    private void showThemeDialog() {
+
+        ImageDialogFragment imageFragment = ImageDialogFragment.getInstance();
+        imageFragment.show(getChildFragmentManager(),"frag");
+    }
+
+
 }

@@ -19,7 +19,6 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.style.StyleSpan;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -511,7 +510,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
             Locale obj = new Locale("", countryCode);
             signUpCountryList.add(obj.getDisplayCountry());
             Country_CodeMap.put(obj.getDisplayCountry(), obj.getCountry());
-            Log.v("ggg",obj.getCountry());
+            //Log.v("ggg",obj.getCountry());
         }
         Collections.sort(signUpCountryList);
         if(isFinishing()) return;
@@ -610,10 +609,9 @@ public class PreSignUpActivity extends AppCompatActivity implements
         if (id == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this);
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            return true;
         }
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.forward_button_signup_screen) {
+        else if (id == R.id.forward_button_signup_screen) {
 
             getEditTextData();
 
@@ -789,15 +787,15 @@ public class PreSignUpActivity extends AppCompatActivity implements
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         countryEditText.setText(text);
-                        Log.v("ggg",text.toString());
+                        //Log.v("ggg",text.toString());
                         try {
                             String country_code = Country_CodeMap.get(text.toString());
-                            Log.v("ggg",country_code);
+                            //Log.v("ggg",country_code);
                             String phone_code = Code_PhoneMap.get(country_code);
                             countryPhoneCode.setText("+" + phone_code);
                             sessionManager.storeFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE, phone_code);
                         } catch (Exception e) {
-                            Log.v("ggg ",e.toString());
+                            //Log.v("ggg ",e.toString());
                         }
                         return false;
                     }
@@ -964,7 +962,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
 
         @Override
         protected void onPostExecute(String result) {
-Log.v("Test",Constants.storeBusinessCategories.length+" length");
+        //Log.v("Test",Constants.storeBusinessCategories.length+" length");
             if(pd!=null && pd.isShowing()){
                 pd.dismiss();
             }

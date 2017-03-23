@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2017030001"
-    android:versionName="4.5.3">
+    android:versionCode="2017030006"
+    android:versionName="4.5.4">
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
@@ -184,7 +184,6 @@
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity"
-            android:label="@string/visits"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Business_Hours_Activity"
@@ -271,7 +270,6 @@
             <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
@@ -29,7 +27,7 @@ import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
-import com.github.clans.fab.FloatingActionMenu;
+import com.melnykov.fab.FloatingActionButton;
 import com.nowfloats.Login.Fetch_Home_Data;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.UserSessionManager;
@@ -57,13 +55,8 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -83,7 +76,7 @@ public class Home_Main_Fragment extends Fragment implements
     private static ArrayList<Integer> removedItems;
     static View.OnClickListener myOnClickListener;
     Fetch_Home_Data fetch_home_data ;
-    FloatingActionMenu fabButton ;
+    FloatingActionButton fabButton ;
 
     UserSessionManager session;
     private static final String DATA_ARG_KEY = "HomeFragment.DATA_ARG_KEY";
@@ -196,7 +189,8 @@ public class Home_Main_Fragment extends Fragment implements
         BoostLog.i("IMAGE---","Image UpLoAd Check Triggered");
         mIsNewMsg = true;
         getNewAvailableUpdates();
-        
+        mPref.edit().putString("msg_post","").apply();
+        mPref.edit().putString("image_post","").apply();
     }
 
     @Subscribe
@@ -209,6 +203,9 @@ public class Home_Main_Fragment extends Fragment implements
             Create_Message_Activity.path = "";
 
             Constants.createMsg =false;
+            mPref.edit().putString("msg_post","").apply();
+            mPref.edit().putString("image_post","").apply();
+            //path = pref.getString("image_post",null);
         }
     }
 
@@ -368,12 +365,12 @@ public class Home_Main_Fragment extends Fragment implements
             }
         });
 
-        fabButton = (FloatingActionMenu) mainView.findViewById(R.id.fab);
+        fabButton = (FloatingActionButton) mainView.findViewById(R.id.fab);
 
 
 
 
-        fabButton.setOnMenuButtonClickListener(new View.OnClickListener() {
+        fabButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("-1")) {

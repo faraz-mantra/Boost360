@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -14,7 +16,7 @@ import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
-public class EditImageActivity extends Activity {
+public class EditImageActivity extends AppCompatActivity {
     // Static final constants
     private static final int DEFAULT_ASPECT_RATIO_VALUES = 10;
     private static final int ROTATE_NINETY_DEGREES = 90;
@@ -58,7 +60,7 @@ public class EditImageActivity extends Activity {
             }catch(OutOfMemoryError error){error.printStackTrace(); System.gc();
             }catch(Exception e){e.printStackTrace();}
         }
-        
+
         //Sets the rotate button
         final Button rotateButton = (Button) findViewById(R.id.Button_rotate);
         rotateButton.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +102,7 @@ public class EditImageActivity extends Activity {
                     if(croppedImage!=null) {
                         Intent in = new Intent();
                         String path = Util.saveCameraBitmap(croppedImage, EditImageActivity.this, "Edit" + System.currentTimeMillis());
+                        //Log.v("ggg","edit path "+path);
                         in.putExtra("edit_image", path);
                         setResult(RESULT_OK, in);
                         finish();

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.Analytics_Screen.model.SubscriberModel;
 import com.nowfloats.CustomWidget.CircularCheckBox;
 import com.thinksity.R;
@@ -70,6 +71,7 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
     }
     private void initialView() {
         deleteView = false;
+        pos = -1;
         notifyDataSetChanged();
         ((MenuItemDelete)mContext).onChangeView(deleteView);
     }
@@ -91,6 +93,7 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
             radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    Log.v("ggg",selectedMap.size()+" radio checked "+radioButton.isChecked());
                     if(isChecked) {
                         selectedMap.put(getAdapterPosition(),radioButton.isChecked());
                     }else{
@@ -104,6 +107,7 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
             mLinearLayout.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
+                    Log.v("ggg",selectedMap.size()+" long click ");
                     if(!deleteView){
                         selectedMap.put(getAdapterPosition(),true);
                         deleteView(getAdapterPosition());
@@ -115,19 +119,9 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
 
         @Override
         public void onClick(View v) {
-            if(radioButton.getVisibility() == View.VISIBLE) {
+            if(deleteView) {
                 radioButton.setChecked(!radioButton.isChecked());
-                if(radioButton.isChecked()) {
-                    selectedMap.put(getAdapterPosition(),radioButton.isChecked());
-                }
-                else
-                {
-                    selectedMap.remove(getAdapterPosition());
-                    if(selectedMap.isEmpty()){
-                        initialView();
-                    }
-                }
-                Log.v("ggg",radioButton.isChecked()+" "+selectedMap.isEmpty()+" "+selectedMap.size());
+                //Log.v("ggg",radioButton.isChecked()+" "+selectedMap.isEmpty()+" "+selectedMap.size());
 
             }else{
                 //start detail activity
@@ -140,4 +134,9 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
         void onChangeView(boolean view);
     }
 
+    private void showDialog(){
+        MaterialDialog dialog = new MaterialDialog.Builder(mContext)
+                //.customView(R.layout.)
+                .build();
+    }
 }

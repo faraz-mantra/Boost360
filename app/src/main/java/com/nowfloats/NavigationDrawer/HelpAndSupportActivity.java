@@ -109,7 +109,8 @@ public class HelpAndSupportActivity extends AppCompatActivity {
                         }
                     });
                     tvEmail.setText(Html.fromHtml("<a href=\"mail:" + riaSupportModel.getEmail()+ "\">" + riaSupportModel.getEmail() + "</a>"));
-                    tvTextHelp.setText(Html.fromHtml(riaSupportModel.getName() + " is your dedicated web consultant who will be assisting you with all your queries related to your NowFloats website. You can call her anytime from <b>9 am to 6 pm</b> on all working days."));
+                    String genderVal = (riaSupportModel.getGender()==1)? "her" :"him";
+                    tvTextHelp.setText(Html.fromHtml(riaSupportModel.getName() + " is your dedicated web consultant who will be assisting you with all your queries related to your NowFloats website. You can call "+ genderVal + " anytime from <b>9.30 am to 6.30 pm</b> on all working days."));
                 }
                 else
                 {
