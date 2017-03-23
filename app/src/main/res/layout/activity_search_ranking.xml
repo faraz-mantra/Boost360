@@ -85,13 +85,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/ll_empty_msg"
+            android:orientation="vertical"
             android:gravity="center"
             android:visibility="invisible">
 
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:tint="@color/light_gray"
+                android:src="@drawable/analytics_search_ranking"/>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:textColor="@color/light_gray"
+                android:text="Keep Moving"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="No Search Ranking Found Yet"/>
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:textColor="@color/light_gray"
+                android:text="Update fresh and industry-relevant content"/>
 
         </LinearLayout>
     </RelativeLayout>

@@ -569,10 +569,11 @@
                         android:src="@drawable/circle_bakground" />
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:tint="@color/white"
                         android:layout_gravity="center"
-                        android:src="@drawable/analytics_search" />
+                        android:src="@drawable/analytics_search_ranking" />
                 </FrameLayout>
 
                 <com.nowfloats.CustomWidget.roboto_lt_24_212121
