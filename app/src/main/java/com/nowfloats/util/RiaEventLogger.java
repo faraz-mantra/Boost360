@@ -47,40 +47,42 @@ public class RiaEventLogger {
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
-    public void logViewEvent(String fpTag, String nodeId){
+    public void logViewEvent(String FPTag, String NodeId){
         if(!BuildConfig.DEBUG) {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             df.setTimeZone(TimeZone.getTimeZone("UTC"));
-            RiaEventModel event = new RiaEventModel().setEventCategory("RIA_CARD")
+            RiaEventModel Event = new RiaEventModel()
+                    .setEventCategory("RIA_CARD")
                     .setEventChannel("APP_ANDR")
                     .setEventName("VIEW")
                     .setEventDateTime(System.currentTimeMillis()/1000)
-                    .setFpTag(fpTag)
-                    .setNodeId(nodeId);
+                    .setFpTag(FPTag)
+                    .setNodeId(NodeId);
 
-            mDatabase.child("RIAUserActivityLog").push().setValue(event);
+            mDatabase.child("RIAUserActivityLog").push().setValue(Event);
         }
     }
 
-    public void logClickEvent(String fpTag, String nodeId, String buttonId, String buttonLabel){
+    public void logClickEvent(String FPTag, String NodeId, String buttonId, String buttonLabel){
         if(!BuildConfig.DEBUG) {
             DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
             df.setTimeZone(TimeZone.getTimeZone("UTC"));
-            HashMap<String, String> eventData = new HashMap<>();
-            eventData.put("ButtonId", buttonId);
-            eventData.put("ButtonLabel", buttonLabel);
-            RiaEventModel event = new RiaEventModel().setEventCategory("RIA_CARD")
+            HashMap<String, String> EventData = new HashMap<>();
+            EventData.put("ButtonId", buttonId);
+            EventData.put("ButtonLabel", buttonLabel);
+            RiaEventModel Event = new RiaEventModel()
+                    .setEventCategory("RIA_CARD")
                     .setEventChannel("APP_ANDR")
                     .setEventName("CLICK")
                     .setEventDateTime(System.currentTimeMillis()/1000)
-                    .setFpTag(fpTag)
-                    .setNodeId(nodeId)
-                    .setEventData(eventData);
-            mDatabase.child("RIAUserActivityLog").push().setValue(event);
+                    .setFpTag(FPTag)
+                    .setNodeId(NodeId)
+                    .setEventData(EventData);
+            mDatabase.child("RIAUserActivityLog").push().setValue(Event);
         }
     }
 
-    public void logPostEvent(String fpTag, String nodeId, String buttonId, String buttonLabel, int status){
+    public void logPostEvent(String FPTag, String NodeId, String buttonId, String buttonLabel, int status){
         if(!BuildConfig.DEBUG) {
             if(status == EventStatus.COMPLETED.getValue()){
                 lastEventStatus = true;
@@ -89,18 +91,19 @@ public class RiaEventLogger {
             }
             DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
             df.setTimeZone(TimeZone.getTimeZone("UTC"));
-            HashMap<String, String> eventData = new HashMap<>();
-            eventData.put("ButtonId", buttonId);
-            eventData.put("ButtonLabel", buttonLabel);
-            eventData.put("EventStatus", EventStatus.values()[status].name());
-            RiaEventModel event = new RiaEventModel().setEventCategory("RIA_CARD")
+            HashMap<String, String> EventData = new HashMap<>();
+            EventData.put("ButtonId", buttonId);
+            EventData.put("ButtonLabel", buttonLabel);
+            EventData.put("EventStatus", EventStatus.values()[status].name());
+            RiaEventModel Event = new RiaEventModel()
+                    .setEventCategory("RIA_CARD")
                     .setEventChannel("APP_ANDR")
                     .setEventName("POST_CLICK")
                     .setEventDateTime(System.currentTimeMillis()/1000)
-                    .setFpTag(fpTag)
-                    .setNodeId(nodeId)
-                    .setEventData(eventData);
-            mDatabase.child("RIAUserActivityLog").push().setValue(event);
+                    .setFpTag(FPTag)
+                    .setNodeId(NodeId)
+                    .setEventData(EventData);
+            mDatabase.child("RIAUserActivityLog").push().setValue(Event);
         }
     }
 }

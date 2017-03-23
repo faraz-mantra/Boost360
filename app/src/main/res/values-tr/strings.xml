@@ -1173,5 +1173,17 @@
     <string name="dialog_to_be_activated_null_text">Please note that you will receive an Account Verification Call before your subscription gets activated. Are you sure you want to proceed?</string>
     <string name="alternate_number3">Alternate Number 3</string>
     <string name="subscriber_second_text">Subscription is a great way to engage with your existing customers and tell them about latest offers or new product launches</string>
+    <string name="search_ranking">Search Ranking</string>
+    <string name="spinner_title">Filter</string>
+
+
+    <string-array name="spinner_list_item_array">
+        <item>Rank Increased</item>
+        <item>Rank Maintained</item>
+        <item>Rank Decreased</item>
+        <item>New</item>
+        <item>Lost</item>
+    </string-array>
+
 
 </resources>

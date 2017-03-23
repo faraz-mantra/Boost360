@@ -1011,6 +1011,14 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Sat</item>
     </string-array>
 
+    <string-array name="spinner_list_item_array">
+        <item>IMPROVED</item>
+        <item>MAINTAINED</item>
+        <item>DECLINED</item>
+        <item>NEW</item>
+        <item>LOST</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="visits_this_week">visits this week</string>
     <string name="visits_this_month">visits this month</string>
@@ -1053,6 +1061,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="cap_login" translatable="false">&#160;<u><b>LOGIN</b></u></string>
     <string name="log_in">Log In</string>
     <string name="subscriber_second_text">Subscription is a great way to engage with your\nexisting customers and tell them about latest offers\nor new product launches</string>
+    <string name="search_ranking">Search Ranking</string>
+    <string name="spinner_title">Filter</string>
 
 
 </resources>
