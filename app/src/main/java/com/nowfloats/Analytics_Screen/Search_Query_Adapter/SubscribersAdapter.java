@@ -1,8 +1,8 @@
 package com.nowfloats.Analytics_Screen.Search_Query_Adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.gson.Gson;
 import com.nowfloats.Analytics_Screen.model.SubscriberModel;
 import com.nowfloats.CustomWidget.CircularCheckBox;
 import com.thinksity.R;
@@ -56,6 +56,11 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
 
         holder.radioButton.setChecked(pos == position);
         holder.mTextView.setText(mSubscriberList.get(position).getUserMobile());
+        if(mSubscriberList.get(position).getSubscriptionStatus().equals("10")){
+            holder.mTextView.setTextColor(ContextCompat.getColor(mContext,R.color.primary));
+        }else{
+            holder.mTextView.setTextColor(ContextCompat.getColor(mContext,R.color.black_translucent));
+        }
     }
 
     @Override
@@ -67,13 +72,13 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
         deleteView = true;
         this.pos=pos;
         notifyDataSetChanged();
-        ((MenuItemDelete)mContext).onChangeView(deleteView);
+        ((SubscriberInterfaceMethods)mContext).onChangeView(deleteView);
     }
     private void initialView() {
         deleteView = false;
         pos = -1;
         notifyDataSetChanged();
-        ((MenuItemDelete)mContext).onChangeView(deleteView);
+        ((SubscriberInterfaceMethods)mContext).onChangeView(deleteView);
     }
     class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -93,23 +98,24 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
             radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Log.v("ggg",selectedMap.size()+" radio checked "+radioButton.isChecked());
+                    //Log.v("ggg",selectedMap.size()+" radio checked "+radioButton.isChecked());
                     if(isChecked) {
                         selectedMap.put(getAdapterPosition(),radioButton.isChecked());
                     }else{
                         selectedMap.remove(getAdapterPosition());
                         if(selectedMap.isEmpty()){
                             initialView();
+                            return;
                         }
                     }
+                    ((SubscriberInterfaceMethods)mContext).onViewSelected(selectedMap.size());
                 }
             });
             mLinearLayout.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    Log.v("ggg",selectedMap.size()+" long click ");
+                    //Log.v("ggg",selectedMap.size()+" long click ");
                     if(!deleteView){
-                        selectedMap.put(getAdapterPosition(),true);
                         deleteView(getAdapterPosition());
                     }
                     return true;
@@ -121,22 +127,16 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
         public void onClick(View v) {
             if(deleteView) {
                 radioButton.setChecked(!radioButton.isChecked());
-                //Log.v("ggg",radioButton.isChecked()+" "+selectedMap.isEmpty()+" "+selectedMap.size());
-
             }else{
-                //start detail activity
+                ((SubscriberInterfaceMethods)mContext).onitemSeleted(new Gson().toJson(mSubscriberList.get(getAdapterPosition())));
             }
-
         }
     }
 
-    public interface MenuItemDelete{
+    public interface SubscriberInterfaceMethods{
         void onChangeView(boolean view);
+        void onViewSelected(int i);
+        void onitemSeleted(String data);
     }
 
-    private void showDialog(){
-        MaterialDialog dialog = new MaterialDialog.Builder(mContext)
-                //.customView(R.layout.)
-                .build();
-    }
 }

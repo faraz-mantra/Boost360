@@ -1,5 +1,6 @@
 package com.nowfloats.SiteAppearance;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,14 +19,22 @@ import it.sephiroth.android.library.imagezoom.ImageViewTouch;
  */
 public class ImageViewFragment extends Fragment{
     int pos;
-    String[] themeName = new String[]{"Bold and Beauty"," Milk Light","The Fire Fox"};
+    String[] themeName;
     int[] images= new int[]{R.drawable.bnb,R.drawable.fml,R.drawable.tff};
+    private Context mContext;
+
     public static Fragment getInstance(int pos){
         Fragment frag = new ImageViewFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("pos",pos);
         frag.setArguments(bundle);
         return frag;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
     }
 
     @Override
@@ -44,6 +53,9 @@ public class ImageViewFragment extends Fragment{
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        if(!isAdded()) return;
+
+        themeName = mContext.getResources().getStringArray(R.array.themeNames);
         ImageViewTouch image = (ImageViewTouch) view.findViewById(R.id.screenshot);
         TextView theme = (TextView) view.findViewById(R.id.themename);
         if(isAdded()){

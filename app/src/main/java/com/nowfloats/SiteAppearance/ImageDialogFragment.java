@@ -7,12 +7,12 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
@@ -24,9 +24,8 @@ import java.util.Map;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.http.FieldMap;
-import retrofit.http.FormUrlEncoded;
 import retrofit.http.POST;
+import retrofit.http.QueryMap;
 
 /**
  * Created by Admin on 23-03-2017.
@@ -36,7 +35,8 @@ public class ImageDialogFragment extends DialogFragment {
 
     private Context mContext;
     UserSessionManager manager;
-    String[] themeIds;
+    String[] themeIds,themeNames;
+    ProgressBar progressBar;
     public static ImageDialogFragment getInstance(){
         return new ImageDialogFragment();
     }
@@ -62,9 +62,12 @@ public class ImageDialogFragment extends DialogFragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        if(!isAdded()) return;
         manager = new UserSessionManager(mContext,getActivity());
         themeIds = mContext.getResources().getStringArray(R.array.themeIds);
-        final ViewPager pager = (ViewPager) view.findViewById(R.id.viewpager);
+        themeNames = mContext.getResources().getStringArray(R.array.themeNames);
+        final ImageViewTouchViewPager pager = (ImageViewTouchViewPager) view.findViewById(R.id.viewpager);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         Button selectButton = (Button) view.findViewById(R.id.selectButton);
         selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,40 +76,51 @@ public class ImageDialogFragment extends DialogFragment {
             }
         });
         ScreenShotsAdapter adapter = new ScreenShotsAdapter(getChildFragmentManager());
-        pager.setClipToPadding(false);
-        // set padding manually, the more you set the padding the more you see of prev & next page
-        pager.setPadding(10, 0, 10, 0);
         // sets a margin b/w individual pages to ensure that there is a gap b/w them
-        pager.setPageMargin(30);
+        pager.setPageMargin(20);
 
         pager.setAdapter(adapter);
     }
 
-    private void setTheme(int currentItem) {
+    private void setTheme(final int currentItem) {
+        progressBar.setVisibility(View.VISIBLE);
         HashMap<String,String> map = new HashMap<>();
         map.put("clientId",Constants.clientId);
         map.put("fpTag",manager.getFpTag());
         map.put("templateId",themeIds[currentItem]);
         ThemeApi api = Constants.restAdapter.create(ThemeApi.class);
+        final SiteAppearanceFragment frag = (SiteAppearanceFragment) getParentFragment();
         api.changeTheme(map, new Callback<Boolean>() {
             @Override
             public void success(Boolean aBoolean, Response response) {
+                if(!isAdded()) return;
+                progressBar.setVisibility(View.GONE);
+                if(frag!=null){
+                    frag.hideDialog();
+                }
                 if(aBoolean){
-                    Log.v("ggg","successful");
+                    Toast.makeText(mContext, "Successfully Changed theme to "+themeNames[currentItem], Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(mContext, "Failed to change theme into "+themeNames[currentItem], Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void failure(RetrofitError error) {
-
+                if(!isAdded()) return;
+                if(frag!=null){
+                    frag.hideDialog();
+                }
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(mContext, "Failed to change theme into "+themeNames[currentItem], Toast.LENGTH_LONG).show();
             }
         });
     }
 
     interface ThemeApi{
-        @FormUrlEncoded
+
         @POST("/Kitsune/v1/fixtheme")
-        void changeTheme(@FieldMap Map<String, String> map, Callback<Boolean> response);
+        void changeTheme(@QueryMap Map<String, String> map, Callback<Boolean> response);
     }
     class ScreenShotsAdapter extends FragmentStatePagerAdapter{
 

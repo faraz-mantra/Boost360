@@ -284,7 +284,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         try {
             final int month = dataSetIndex + 1;
             String dateString = month + "-01-" + calendar.get(Calendar.YEAR);
-            final DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+            final DateFormat dateFormat = new SimpleDateFormat(pattern,Locale.ENGLISH);
             Date date = dateFormat.parse(dateString);
             String firstDate = getFirstDay(date);
             String lastDate = (month + 1) + "-01-" + calendar.get(Calendar.YEAR);
@@ -358,7 +358,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         calendar.setTime(d);
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         Date dddd = calendar.getTime();
-        SimpleDateFormat sdf1 = new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat sdf1 = new SimpleDateFormat(pattern,Locale.ENGLISH);
         return sdf1.format(dddd);
     }
 
@@ -368,7 +368,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         calendar.setTime(d);
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         Date dddd = calendar.getTime();
-        SimpleDateFormat sdf1 = new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat sdf1 = new SimpleDateFormat(pattern,Locale.ENGLISH);
         return sdf1.format(dddd);
     }
 

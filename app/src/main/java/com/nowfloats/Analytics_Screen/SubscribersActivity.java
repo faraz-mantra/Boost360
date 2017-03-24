@@ -1,5 +1,6 @@
 package com.nowfloats.Analytics_Screen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,7 +31,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class SubscribersActivity extends AppCompatActivity implements View.OnClickListener,SubscribersAdapter.MenuItemDelete {
+public class SubscribersActivity extends AppCompatActivity implements View.OnClickListener,SubscribersAdapter.SubscriberInterfaceMethods {
 
 
     private UserSessionManager mSessionManager;
@@ -154,6 +155,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onChangeView(boolean deleteView) {
         titleTextView.setVisibility(View.VISIBLE);
+        titleTextView.setText("Subscribers");
         if(deleteView) {
             InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(searchEditText.getWindowToken(), 0);
@@ -165,6 +167,20 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
             searchImage.setVisibility(View.VISIBLE);
         }
     }
+
+    @Override
+    public void onViewSelected(int i) {
+        titleTextView.setText(i+" subscriber(s)"+" selected");
+    }
+
+    @Override
+    public void onitemSeleted(String data) {
+        Intent i = new Intent(this, SubscriberDetailsActivity.class);
+        i.putExtra("data",data);
+        startActivity(i);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

@@ -183,7 +183,7 @@ public class Settings_Fragment extends Fragment {
         likeusFacebookLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                likeUsFacebook();
+                Methods.likeUsFacebook(activity,"");
             }
         });
 
@@ -454,26 +454,6 @@ public class Settings_Fragment extends Fragment {
             activity.startActivity(showWebSiteIntent);
             activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
-    }
-    private void likeUsFacebook(){
-        MixPanelController.track("LikeUsOnFacebook", null);
-        String facebookUrl = getFacebookPageURL(getActivity().getApplicationContext());
-        Intent facebookIntent;
-        try {
-            getActivity().getPackageManager().getPackageInfo("com.facebook.katana", 0);
-            facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_PAGE_WITH_ID));
-        } catch (Exception e) {
-            facebookIntent= new Intent(Intent.ACTION_VIEW, Uri.parse(facebookUrl));
-        }
-        facebookIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
-        startActivity(facebookIntent);
-    }
-
-
-
-    public String getFacebookPageURL(Context context) {
-
-        return Constants.FACEBOOK_URL;
     }
 
 }

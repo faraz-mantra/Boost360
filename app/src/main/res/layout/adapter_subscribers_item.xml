@@ -23,7 +23,7 @@
             android:layout_marginRight="10dp" />
         <TextView
             android:id="@+id/subscriber_text"
-           android:layout_width="0dp"
+            android:layout_width="0dp"
            android:layout_height="match_parent"
            android:text="@string/email"
            android:gravity="center_vertical"
@@ -31,7 +31,9 @@
         <ImageView
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:visibility="gone"
+            android:visibility="visible"
+            android:alpha=".5"
+            android:layout_weight=".09"
             android:id="@+id/arrowImage"
             android:src="@drawable/forward"/>
     </LinearLayout>

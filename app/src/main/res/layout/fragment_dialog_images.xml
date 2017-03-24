@@ -1,25 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/black"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
     android:layout_width="match_parent">
-
-    <android.support.v4.view.ViewPager
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:id="@+id/viewpager">
-    </android.support.v4.view.ViewPager>
-
-    <Button
+    <LinearLayout
         android:layout_height="wrap_content"
-        android:text="Make this as default theme"
-        android:id="@+id/selectButton"
-        android:background="@color/primary_color"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        android:layout_margin="15dp"
-        android:layout_width="match_parent"/>
+        android:orientation="vertical"
+        android:background="@color/black"
+        android:layout_width="match_parent">
 
-</LinearLayout>
+        <com.nowfloats.SiteAppearance.ImageViewTouchViewPager
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/viewpager">
+        </com.nowfloats.SiteAppearance.ImageViewTouchViewPager>
+
+        <Button
+            android:layout_height="wrap_content"
+            android:text="Make this as default theme"
+            android:id="@+id/selectButton"
+            android:background="@color/primary_color"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:layout_margin="15dp"
+            android:layout_width="match_parent"/>
+    </LinearLayout>
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:visibility="gone"
+        android:layout_centerInParent="true"/>
+    </RelativeLayout>

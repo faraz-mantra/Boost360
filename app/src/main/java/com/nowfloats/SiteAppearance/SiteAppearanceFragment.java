@@ -56,6 +56,7 @@ public class SiteAppearanceFragment extends Fragment implements View.OnClickList
     private ImageView ivKitsuneSwitch;
     private CardView themePickerCard;
     ArrayList<Integer> list = new ArrayList<>();
+    ImageDialogFragment imageFragment;
     //private OnFragmentInteractionListener mListener;
 
     /*public SiteAppearanceFragment() {
@@ -339,10 +340,12 @@ public class SiteAppearanceFragment extends Fragment implements View.OnClickList
     }
 
     private void showThemeDialog() {
-
-        ImageDialogFragment imageFragment = ImageDialogFragment.getInstance();
+        imageFragment = ImageDialogFragment.getInstance();
         imageFragment.show(getChildFragmentManager(),"frag");
     }
-
+    public void hideDialog(){
+        if(isAdded())
+            imageFragment.dismiss();
+    }
 
 }

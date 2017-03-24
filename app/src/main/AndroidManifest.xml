@@ -149,6 +149,10 @@
             android:label=""
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.nowfloats.Analytics_Screen.SubscriberDetailsActivity"
+            android:label=""
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.nowfloats.signup.UI.UI.BusinessProfileActivity"
             android:label="@string/title_activity_business_profile"
             android:screenOrientation="portrait" />

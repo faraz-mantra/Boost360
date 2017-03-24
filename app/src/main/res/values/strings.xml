@@ -377,8 +377,13 @@
     </string-array>
 <string-array name="themeIds">
     <item>575bfec79bfed51e10df0e5d</item>
-    <item>571f7f789bfed52c543d888d</item>
     <item>57c3c1a65d64370d7cf4eb17</item>
+    <item>571f7f789bfed52c543d888d</item>
+</string-array>
+    <string-array name="themeNames">
+    <item>Bold and The Beauty</item>
+    <item>Fresh Milk Light</item>
+    <item>The First Fox</item>
 </string-array>
     <string name="business_enquiries_title">Business Enquiries</string>
     <string name="double_quotes"> &quot; </string>
@@ -1057,6 +1062,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="cap_login" translatable="false">&#160;<u><b>LOGIN</b></u></string>
     <string name="log_in">Log In</string>
     <string name="subscriber_second_text">Subscription is a great way to engage with your\nexisting customers and tell them about latest offers\nor new product launches</string>
+    <string name="site_appearance_change_to_new_look">In case you didn\'t like the existing look of your website, you  can always choose to change it from here.</string>
 
 
 </resources>
