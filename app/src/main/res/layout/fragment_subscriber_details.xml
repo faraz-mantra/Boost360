@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/subscriber_email"
-            android:textSize="25sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:text="@string/email"/>
@@ -41,7 +41,7 @@
         android:padding="30dp"
         android:visibility="gone"
         android:drawablePadding="20dp"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:text="Call Subscriber"
         android:drawableStart="@drawable/ic_phone_in_talk_black_24dp"
         android:drawableLeft="@drawable/ic_phone_in_talk_black_24dp"/>
@@ -56,7 +56,7 @@
         android:id="@+id/message_subscriber"
         android:padding="30dp"
         android:drawablePadding="20dp"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:text="Send Message"
         android:drawableLeft="@drawable/ic_markunread_black_24dp"/>
     <View android:layout_height="2dp"
@@ -70,7 +70,7 @@
         android:gravity="center_vertical"
         android:padding="30dp"
         android:drawablePadding="20dp"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:text="Unsubscriber"
         android:drawableLeft="@drawable/ic_delete_black_24dp"/>
     </LinearLayout>

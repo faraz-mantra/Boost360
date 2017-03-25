@@ -59,19 +59,22 @@ public class SubscriberDetailsActivity extends AppCompatActivity implements View
 
     }
     private void sendSms(){
-        Intent sendIntent = new Intent(Intent.ACTION_VIEW,Uri.fromParts("sms",mSubscriberData.getUserMobile(), null));
+        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
         sendIntent.putExtra("sms_body", "write here");
         sendIntent.setType("vnd.android-dir/mms-sms");
+        sendIntent.putExtra("address",mSubscriberData.getUserMobile());
         startActivity(Intent.createChooser(sendIntent,"Sms by:"));
     }
     private void makeCall(){
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:"+mSubscriberData.getUserMobile()));
+        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+        callIntent.setData(Uri.parse("tel:"+"+"+mSubscriberData.getUserCountryCode()+mSubscriberData.getUserMobile()));
         startActivity(Intent.createChooser(callIntent,"Call by:"));
     }
     private void sendMail(){
         Intent email = new Intent(Intent.ACTION_SEND);
-        email.putExtra(Intent.EXTRA_EMAIL,mSubscriberData.getUserMobile());
+        email.setData(Uri.parse("mailto:"));
+        email.setType("text/plain");
+        email.putExtra(Intent.EXTRA_EMAIL, new String[]{mSubscriberData.getUserMobile()});
         startActivity(Intent.createChooser(email,"Email by:"));
     }
     @Override

@@ -55,4 +55,8 @@ public class SubscriberModel {
         this.userMobile = userMobile;
     }
 
+    @Override
+    public String toString() {
+        return getUserMobile();
+    }
 }

@@ -10,7 +10,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -43,10 +44,13 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     private LinearLayoutManager mLayoutManager;
     private boolean stop;
     TextView titleTextView;
-    EditText searchEditText;
+    AutoCompleteTextView searchEditText;
+    ArrayAdapter<SubscriberModel> autoCompleteAdapter;
     ImageView deleteImage,searchImage;
 
     LinearLayout emptyLayout;
+    private boolean deleteView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,9 +58,12 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
 
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
-        searchEditText = (EditText) findViewById(R.id.search_edittext);
+        searchEditText = (AutoCompleteTextView) findViewById(R.id.search_edittext);
         deleteImage = (ImageView) findViewById(R.id.delete_image);
         searchImage = (ImageView) findViewById(R.id.search_image);
+
+        autoCompleteAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,mSubscriberList);
+        searchEditText.setAdapter(autoCompleteAdapter);
 
         deleteImage.setOnClickListener(this);
         searchImage.setOnClickListener(this);
@@ -114,19 +121,21 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                     mSubscriberList.add(subscriberModels.get(i));
                     mSubscriberAdapter.notifyItemChanged(count+i);
                 }
+                autoCompleteAdapter.notifyDataSetChanged();
+                //autoCompleteAdapter = new ArrayAdapter<SubscriberModel>(SubscribersActivity.this,android.R.layout.simple_list_item_activated_1,mSubscriberList);
+               // searchEditText.setAdapter(autoCompleteAdapter);
+                Log.v("ggg","size "+autoCompleteAdapter.getCount());
                 if(newItems >=10){
                     stop = false;
                 }
                 if(mSubscriberList.size() == 0){
                     emptyLayout.setVisibility(View.VISIBLE);
                 }
-                Log.v("subscribes",count+1+" "+newItems);
             }
 
             @Override
             public void failure(RetrofitError error) {
                 mProgressBar.setVisibility(View.GONE);
-
                 Methods.showSnackBarNegative(SubscribersActivity.this,getString(R.string.something_went_wrong));
             }
         });
@@ -139,15 +148,10 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                 //deleteSubscriber();
                 break;
             case R.id.search_image:
-
-                if(searchEditText.getVisibility() == View.VISIBLE){
-                    //search(editText.getText().toString().trim());
-                    Log.v("ggg",searchEditText.getText().toString().trim());
-                }else{
-                    titleTextView.setVisibility(View.GONE);
-                    searchEditText.setVisibility(View.VISIBLE);
-                    searchEditText.requestFocus();
-                }
+                titleTextView.setVisibility(View.GONE);
+                searchImage.setVisibility(View.GONE);
+                searchEditText.setVisibility(View.VISIBLE);
+                searchEditText.requestFocus();
                 break;
         }
     }
@@ -155,6 +159,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onChangeView(boolean deleteView) {
         titleTextView.setVisibility(View.VISIBLE);
+        this.deleteView = deleteView;
         titleTextView.setText("Subscribers");
         if(deleteView) {
             InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
@@ -195,9 +200,12 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                     searchEditText.clearFocus();
                     searchEditText.setVisibility(View.GONE);
                     titleTextView.setVisibility(View.VISIBLE);
+                    searchImage.setVisibility(View.VISIBLE);
                     InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(searchEditText.getWindowToken(), 0);
 
+                }else if(deleteView){
+                    mSubscriberAdapter.initialView();
                 }else
                 {
                    onBackPressed();

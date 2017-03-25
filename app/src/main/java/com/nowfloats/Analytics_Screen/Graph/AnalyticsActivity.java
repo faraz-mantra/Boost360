@@ -278,7 +278,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
 
 
     @Override
-    public void onYearDataClicked(int dataSetIndex) {
+    public void onYearDataClicked(final int dataSetIndex) {
         final Calendar calendar = Calendar.getInstance();
         progressBar.setVisibility(View.VISIBLE);
         try {
@@ -309,8 +309,14 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
                     int[] weekDataArr;
                     try {
                         Calendar localCalendar = Calendar.getInstance();
-                        localCalendar.setTime(dateFormat.parse(lastDateUsed));
-                        weekDataArr = new int[localCalendar.get(Calendar.WEEK_OF_MONTH)];
+                        if(localCalendar.get(Calendar.MONTH) == dataSetIndex){
+
+                            weekDataArr = new int[localCalendar.get(Calendar.WEEK_OF_MONTH)];
+                        }
+                        else {
+                            localCalendar.setTime(dateFormat.parse(lastDateUsed));
+                            weekDataArr = new int[localCalendar.get(Calendar.WEEK_OF_MONTH)];
+                        }
                     }catch (ParseException e){
                         weekDataArr = new int[6];
                     }

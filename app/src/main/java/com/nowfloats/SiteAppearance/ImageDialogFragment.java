@@ -3,7 +3,6 @@ package com.nowfloats.SiteAppearance;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -31,7 +30,7 @@ import retrofit.http.QueryMap;
  * Created by Admin on 23-03-2017.
  */
 
-public class ImageDialogFragment extends DialogFragment {
+public class ImageDialogFragment extends Fragment {
 
     private Context mContext;
     UserSessionManager manager;
@@ -44,8 +43,7 @@ public class ImageDialogFragment extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setStyle(STYLE_NO_TITLE, android.R.style.Theme_Holo_Dialog);
+        //setStyle(STYLE_NO_TITLE, android.R.style.Theme_Holo_Dialog);
     }
 
     @Override

@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -56,7 +55,7 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
 
         holder.radioButton.setChecked(pos == position);
         holder.mTextView.setText(mSubscriberList.get(position).getUserMobile());
-        if(mSubscriberList.get(position).getSubscriptionStatus().equals("10")){
+        if(mSubscriberList.get(position).getSubscriptionStatus().equals("20")){
             holder.mTextView.setTextColor(ContextCompat.getColor(mContext,R.color.primary));
         }else{
             holder.mTextView.setTextColor(ContextCompat.getColor(mContext,R.color.black_translucent));
@@ -71,13 +70,16 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
     private void deleteView(int pos){
         deleteView = true;
         this.pos=pos;
+        selectedMap.put(pos,true);
         notifyDataSetChanged();
         ((SubscriberInterfaceMethods)mContext).onChangeView(deleteView);
+        ((SubscriberInterfaceMethods)mContext).onViewSelected(selectedMap.size());
     }
-    private void initialView() {
+    public void initialView() {
         deleteView = false;
         pos = -1;
         notifyDataSetChanged();
+        selectedMap.clear();
         ((SubscriberInterfaceMethods)mContext).onChangeView(deleteView);
     }
     class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -95,22 +97,7 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
             mTextView = (TextView) itemView.findViewById(R.id.subscriber_text);
             view = itemView.findViewById(R.id.divider);
             mLinearLayout.setOnClickListener(this);
-            radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    //Log.v("ggg",selectedMap.size()+" radio checked "+radioButton.isChecked());
-                    if(isChecked) {
-                        selectedMap.put(getAdapterPosition(),radioButton.isChecked());
-                    }else{
-                        selectedMap.remove(getAdapterPosition());
-                        if(selectedMap.isEmpty()){
-                            initialView();
-                            return;
-                        }
-                    }
-                    ((SubscriberInterfaceMethods)mContext).onViewSelected(selectedMap.size());
-                }
-            });
+            radioButton.setOnClickListener(this);
             mLinearLayout.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
@@ -125,10 +112,25 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
 
         @Override
         public void onClick(View v) {
-            if(deleteView) {
-                radioButton.setChecked(!radioButton.isChecked());
-            }else{
-                ((SubscriberInterfaceMethods)mContext).onitemSeleted(new Gson().toJson(mSubscriberList.get(getAdapterPosition())));
+            switch(v.getId()){
+                case R.id.item_layout:
+                    radioButton.setChecked(!radioButton.isChecked());
+                case R.id.radioButton:
+                    if(deleteView) {
+                        if(radioButton.isChecked()){
+                            selectedMap.put(getAdapterPosition(),true);
+                        }else{
+                            selectedMap.remove(getAdapterPosition());
+                            if(selectedMap.isEmpty()){
+                                initialView();
+                                return;
+                            }
+                        }
+                        ((SubscriberInterfaceMethods)mContext).onViewSelected(selectedMap.size());
+                    }else{
+                        ((SubscriberInterfaceMethods)mContext).onitemSeleted(new Gson().toJson(mSubscriberList.get(getAdapterPosition())));
+                    }
+                    break;
             }
         }
     }

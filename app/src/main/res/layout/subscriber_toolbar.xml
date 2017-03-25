@@ -10,8 +10,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_marginEnd="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginRight="5dp">
 
         <TextView
             android:id="@+id/titleTextView"
@@ -32,16 +34,18 @@
             tools:ignore="MissingPrefix"
             android:layout_marginRight="5dp" />
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/search_edittext"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="1"
             android:maxLines="1"
-            android:hint="@string/search_here"
+            android:layout_marginEnd="15dp"
+            android:hint="@string/find_your_subscribers"
             android:textColor="@color/light_black"
             android:visibility="gone"
-            android:background="@drawable/white_round_corner"/>
+            android:background="@drawable/white_round_corner"
+            android:layout_marginRight="15dp" />
         <ImageView
             android:id="@+id/search_image"
             android:layout_width="40dp"

@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nowfloats.Login.UserSessionManager;
@@ -57,6 +58,7 @@ public class SiteAppearanceFragment extends Fragment implements View.OnClickList
     private CardView themePickerCard;
     ArrayList<Integer> list = new ArrayList<>();
     ImageDialogFragment imageFragment;
+    private LinearLayout linearLayout;
     //private OnFragmentInteractionListener mListener;
 
     /*public SiteAppearanceFragment() {
@@ -99,6 +101,7 @@ public class SiteAppearanceFragment extends Fragment implements View.OnClickList
         tvHelpHeader = (TextView)view.findViewById(R.id.tv_help_header);
         tvHelpBody = (JustifyTextView) view.findViewById(R.id.tv_help_body);
         tvHelpFooter = (TextView) view.findViewById(R.id.tv_help_footer);
+        linearLayout = (LinearLayout) view.findViewById(R.id.child_layout);
         //btnLearnMore = (Button)view.findViewById(R.id.btn_learn_kitsune);
         ivKitsuneSwitch = (ImageView)view.findViewById(R.id.iv_kitsune_switch);
         if(session.getWebTemplateType().equals("6")){
@@ -340,12 +343,13 @@ public class SiteAppearanceFragment extends Fragment implements View.OnClickList
     }
 
     private void showThemeDialog() {
-        imageFragment = ImageDialogFragment.getInstance();
-        imageFragment.show(getChildFragmentManager(),"frag");
+
+        linearLayout.setAlpha((float) .2);
+       getChildFragmentManager().beginTransaction().add(R.id.parent_layout,ImageDialogFragment.getInstance()).addToBackStack(null).commit();
     }
     public void hideDialog(){
-        if(isAdded())
-            imageFragment.dismiss();
+        linearLayout.setAlpha(1);
+        getChildFragmentManager().popBackStack();
     }
 
 }
