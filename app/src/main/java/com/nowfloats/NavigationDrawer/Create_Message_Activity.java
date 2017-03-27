@@ -27,6 +27,8 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.EditText;
@@ -84,7 +86,7 @@ public class Create_Message_Activity extends AppCompatActivity {
     private SharedPreferences pref = null;
     SharedPreferences.Editor prefsEditor;
     private ImageView facebookPageShare;
-    private ImageView twitterloginButton,create_message_subscribe_button;
+    private ImageView twitterloginButton,create_message_subscribe_button,quikrButton;
     public static boolean imageIconButtonSelected = false;
     private TextView post;
     private boolean isfirstTimeFacebook = false;
@@ -109,7 +111,7 @@ public class Create_Message_Activity extends AppCompatActivity {
     private int mFbPageShare = 0, mFbProfileShare = 0, mTwitterShare = 0;
     private RiaNodeDataModel mRiaNodedata;
     private boolean mIsImagePicking = false;
-    private CardView image_card;
+    private CardView image_card,title_card,message_card;
     private ImageView deleteButton,editButton;
 
     @Override
@@ -126,6 +128,8 @@ public class Create_Message_Activity extends AppCompatActivity {
         session = new UserSessionManager(getApplicationContext(),Create_Message_Activity.this);
         dataBase = new DataBase(activity);
         LinearLayout socialSharingIconLayout = (LinearLayout) findViewById(R.id.socialSharingIconLayout);
+        title_card = (CardView) findViewById(R.id.title_card);
+        message_card = (CardView) findViewById(R.id.message_card_view);
 
         TextView shareText = (TextView) findViewById(R.id.shareTextView);
         tagName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG);
@@ -215,14 +219,27 @@ public class Create_Message_Activity extends AppCompatActivity {
         facebookShare = (ImageView) findViewById(R.id.create_message_activity_facebokhome_button);
         facebookPageShare = (ImageView) findViewById(R.id.create_message_activity_facebokpage_button);
         twitterloginButton = (ImageView) findViewById(R.id.create_message_activity_twitter_button);
+        quikrButton = (ImageView) findViewById(R.id.create_message_activity_quikr_button);
+        quikrButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Animation anim = AnimationUtils.loadAnimation(Create_Message_Activity.this,R.anim.slide_up_slow);
+                Animation anim2 = AnimationUtils.loadAnimation(Create_Message_Activity.this,R.anim.slide_down_slow);
+                title_card.setAnimation(anim);
+                message_card.setAnimation(anim2);
+                title_card.setVisibility(View.VISIBLE);
+                anim2.start();
+                anim.setStartOffset(600);
 
-        if(!Util.isNullOrEmpty(session.getFacebookName()) && pref.getInt("fbStatus", 3)==1) {
+            }
+        });
+        if(!Util.isNullOrEmpty(session.getFacebookName()) && (pref.getInt("fbStatus", 0)==1 || pref.getInt("fbStatus",0)==3)) {
             facbookEnabled = true;
             mFbProfileShare = 1;
             facebookShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
         }
 
-        if(!Util.isNullOrEmpty(session.getFacebookPage()) && pref.getInt("fbPageStatus", 3) ==1) {
+        if(!Util.isNullOrEmpty(session.getFacebookPage()) && pref.getInt("fbPageStatus", 0) ==1) {
             isFacebookPageShareLoggedIn = true;
             mFbPageShare = 1;
             facebookPageShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
@@ -271,7 +288,7 @@ public class Create_Message_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (Constants.isFirstTimeSendToSubscriber == false) {
+                if (!Constants.isFirstTimeSendToSubscriber) {
                     Constants.isFirstTimeSendToSubscriber = true;
                     new MaterialDialog.Builder(Create_Message_Activity.this)
                             .title(getString(R.string.send_to_subscribers))
@@ -291,7 +308,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                                 @Override
                                 public void onPositive(MaterialDialog dialog) {
                                     super.onPositive(dialog);
-                                    if (tosubscribers == true) {
+                                    if (tosubscribers) {
                                         MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_SEND_TO_SUBSCRIBERS, null);
                                         create_message_subscribe_button.setImageDrawable(getResources().getDrawable(R.drawable.subscribe_icon));
                                         tosubscribers = false;
@@ -306,7 +323,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                             .show();
 
                 }else {
-                    if (tosubscribers == true) {
+                    if (tosubscribers) {
                         MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_SEND_TO_SUBSCRIBERS, null);
                         create_message_subscribe_button.setImageDrawable(getResources().getDrawable(R.drawable.subscribe_icon));
                         tosubscribers = false;
@@ -323,7 +340,7 @@ public class Create_Message_Activity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                if(!Util.isNullOrEmpty(session.getFacebookPage()) && pref.getInt("fbPageStatus", 3) ==1) {
+                if(!Util.isNullOrEmpty(session.getFacebookPage()) && pref.getInt("fbPageStatus",0) ==1) {
                     if(mFbPageShare==1){
                         mFbPageShare = 0;
                         facebookPageShare.setImageDrawable(getResources().getDrawable(R.drawable.facebookpage_icon_inactive));
@@ -347,7 +364,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         facebookShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!Util.isNullOrEmpty(session.getFacebookName()) && pref.getInt("fbStatus", 3)==1){
+                if(!Util.isNullOrEmpty(session.getFacebookName()) && (pref.getInt("fbStatus", 0)==1 || pref.getInt("fbStatus",0)==3)){
                     if(mFbProfileShare==1){
                         mFbProfileShare = 0;
                         facebookShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon_inactive));

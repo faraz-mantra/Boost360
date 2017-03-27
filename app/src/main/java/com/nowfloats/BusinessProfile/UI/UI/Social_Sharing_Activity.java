@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -1231,7 +1232,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
         if(session.getFPDetails(Key_Preferences.FB_PULL_ENABLED).equals("true")){
             facebookautopost.setChecked(true);
-            ivFbPageAutoPull.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
+            ivFbPageAutoPull.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebook_page));
             fbPullStatus.setVisibility(View.VISIBLE);
 
             fbPullStatus.setText(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME));
@@ -1240,7 +1241,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
 
         if (!Util.isNullOrEmpty(Constants.FACEBOOK_USER_ACCESS_ID)) {
-            facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
+            facebookHome.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebook_icon));
             facebookHomeStatus.setText(getString(R.string.connected));
             String fbUName = pref.getString("fbUserName", "");
             prefsEditor.putBoolean("fbShareEnabled", true);
@@ -1273,10 +1274,10 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
    private void setStatus(){
         //Log.v("ggg","resime" +facebookHomeCheckBox.isChecked());
         Methods.isOnline(Social_Sharing_Activity.this);
-        facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon_inactive));
+        facebookHome.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebook_icon_inactive));
         facebookHomeCheckBox.setChecked(false);
 
-        facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebookpage_icon_inactive));
+        facebookPage.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebookpage_icon_inactive));
         facebookPageCheckBox.setChecked(false);
 
         ivFbPageAutoPull.setImageResource(R.drawable.facebookpage_icon_inactive);
@@ -1286,14 +1287,14 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         }
         if (!Util.isNullOrEmpty(session.getFacebookName()) && (pref.getInt("fbStatus", 0)==1 || pref.getInt("fbStatus",0)==3)) {
             //Log.v("ggg"," ok");
-            facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
+            facebookHome.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebook_icon));
             facebookHomeCheckBox.setChecked(true);
             facebookHomeStatus.setVisibility(View.VISIBLE);
             facebookHomeStatus.setText(session.getFacebookName());
 
         }
         if (!Util.isNullOrEmpty(session.getFacebookPage()) && pref.getInt("fbPageStatus", 0)==1) {
-            facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
+            facebookPage.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebook_page));
             facebookPageCheckBox.setChecked(true);
             facebookPageStatus.setVisibility(View.VISIBLE);
             facebookPageStatus.setText(session.getFacebookPage());
@@ -1306,7 +1307,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         if (!isAuthenticated()) {
             //twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
             // String fbUName = pref.getString(TwitterConstants.PREF_USER_NAME, "");
-            twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
+            twitter.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.twitter_icon_inactive));
             twitterCheckBox.setChecked(false);
             twitterStatus.setVisibility(View.GONE);
             //twitterStatus.setText("Disconnected");
@@ -1315,7 +1316,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             String twitterName = mSharedPreferences.getString(TwitterConstants.PREF_USER_NAME, "");
             twitterStatus.setVisibility(View.VISIBLE);
             twitterStatus.setText("@" + twitterName);
-            twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
+            twitter.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.twitter_icon_active));
         }
     }
 

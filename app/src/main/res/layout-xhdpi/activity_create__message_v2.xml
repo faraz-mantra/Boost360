@@ -18,15 +18,33 @@
         android:scrollbarStyle="insideOverlay"
         android:scrollbarThumbVertical="@drawable/scrollbar"
         android:layout_height="match_parent">
-
         <LinearLayout
             android:id="@+id/relativeLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
             <android.support.v7.widget.CardView
-                android:id="@+id/card_view"
+                android:id="@+id/title_card"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                card_view:cardBackgroundColor="#FFFFFF"
+                android:visibility="gone"
+                card_view:cardCornerRadius="0dp">
+                <com.nowfloats.CustomWidget.roboto_lt_33__b6b6b6_383838_edittext
+                    android:id="@+id/createTitleEditText"
+                    android:layout_width="match_parent"
+                    android:hint="@string/title_for_quikrr"
+                    android:gravity="center"
+                    android:layout_margin="10dp"
+                    android:minLines="1"
+                    android:padding="10dp"
+                    android:background="@color/white"
+                    android:layout_height="wrap_content" />
+            </android.support.v7.widget.CardView>
+            <android.support.v7.widget.CardView
+                android:id="@+id/message_card_view"
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -117,7 +135,8 @@
                 android:gravity="center_vertical"
                 android:paddingBottom="3dp"
                 android:orientation="horizontal"
-                android:background="@color/white">
+                android:background="@color/white"
+                android:weightSum="1">
 
                 <LinearLayout
                     android:id="@+id/addImageButton"
@@ -164,20 +183,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/share"
-                    android:layout_marginLeft="38dp"
+                    android:layout_marginLeft="30dp"
                     android:layout_gravity="center"
                     android:textSize="18sp"
                     android:textColor="#A1A1A1"/>
 
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
 
+                    android:gravity="right|bottom">
                 <LinearLayout
                     android:id="@+id/socialSharingIconLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="right|bottom"
-                    android:gravity="right|bottom"
                     android:weightSum="4"
+                    android:layout_gravity="right|bottom"
                     android:paddingTop="1dp"
                     android:orientation="horizontal" >
 
@@ -240,7 +262,22 @@
                             android:layout_height="@dimen/content_creation_icon_sizes"
                             android:src="@drawable/twitter_icon_inactive" />
                     </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/float_a_picture_share_quikr_parent"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:id="@+id/create_message_activity_quikr_button"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/quikr" />
+                    </LinearLayout>
                 </LinearLayout>
+                </HorizontalScrollView>
             </LinearLayout>
         </LinearLayout>
     </TableLayout>

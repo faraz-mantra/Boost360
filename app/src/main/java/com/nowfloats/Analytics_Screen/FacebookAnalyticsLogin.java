@@ -28,7 +28,6 @@ import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NFXApi.NfxRequestClient;
 import com.nowfloats.Twitter.TwitterConstants;
@@ -461,8 +460,7 @@ public class FacebookAnalyticsLogin extends AppCompatActivity implements NfxRequ
             if (fbPageData.equals("{\"data\":[]}")) {
                 prefsEditor.putString("fbPageData", "");
                 Constants.fbPageShareEnabled = false;
-                prefsEditor.putBoolean("fbPageShareEnabled",
-                        Constants.fbPageShareEnabled);
+                prefsEditor.putBoolean("fbPageShareEnabled", Constants.fbPageShareEnabled);
                 prefsEditor.apply();
                 Constants.FbPageList = null;
                 //InitShareResources();
