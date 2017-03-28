@@ -24,16 +24,17 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -223,13 +224,15 @@ public class Create_Message_Activity extends AppCompatActivity {
         quikrButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Animation anim = AnimationUtils.loadAnimation(Create_Message_Activity.this,R.anim.slide_up_slow);
+
+                showQuikrGuidlines();
+                /*Animation anim = AnimationUtils.loadAnimation(Create_Message_Activity.this,R.anim.slide_up_slow);
                 Animation anim2 = AnimationUtils.loadAnimation(Create_Message_Activity.this,R.anim.slide_down_slow);
                 title_card.setAnimation(anim);
                 message_card.setAnimation(anim2);
                 title_card.setVisibility(View.VISIBLE);
                 anim2.start();
-                anim.setStartOffset(600);
+                anim.setStartOffset(600);*/
 
             }
         });
@@ -434,6 +437,18 @@ public class Create_Message_Activity extends AppCompatActivity {
                 prefsEditor.putString("msg_post",s.toString()).apply();
             }
         });
+    }
+
+    private void showQuikrGuidlines() {
+        View v = LayoutInflater.from(this).inflate(R.layout.quikr_guidlines,null);
+        ListView list = (ListView) v.findViewById(R.id.list);
+        String[] array = getResources().getStringArray(R.array.quikr_tip_points);
+        list.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_activated_1,array));
+        new MaterialDialog.Builder(this)
+                .customView(v,true)
+                .title(R.string.guidlines)
+                .build()
+                .show();
     }
 
     private void editImage() {

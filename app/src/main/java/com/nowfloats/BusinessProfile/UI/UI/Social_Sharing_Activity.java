@@ -170,8 +170,10 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
         headerText.setText("Social Sharing");
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         facebookHome = (ImageView) findViewById(R.id.social_sharing_facebook_profile_image);
         facebookPage = (ImageView) findViewById(R.id.social_sharing_facebook_page_image);
