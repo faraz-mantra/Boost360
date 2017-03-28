@@ -34,16 +34,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:minHeight="120dp"
-                    android:minWidth="120dp"
-                    android:maxWidth="300dp"
+                    android:layout_width="120dp"
                     android:layout_margin="5dp"
-                    android:maxHeight="300dp"
                     android:src="@drawable/studio_architecture"
                     android:id="@+id/business_app_preview_android_image"
-                   android:layout_gravity="center"
-                    android:layout_height="wrap_content" />
+                    android:layout_gravity="center"
+                    android:layout_height="120dp" />
 
                 <ImageView
                     android:layout_width="30dp"
@@ -51,7 +47,7 @@
                     android:layout_gravity="bottom|end"
                     android:id="@+id/imgview_icon_type"
                     android:src="@drawable/android_green_padding" />
-                    </FrameLayout>
+            </FrameLayout>
             <TextView
                 android:id="@+id/app_name"
                 android:layout_width="wrap_content"

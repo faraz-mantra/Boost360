@@ -142,7 +142,7 @@ public class BusinessAppPreview extends Fragment {
                                     getActivity().finish();
                                     return;
                                 }
-                                addAndroidFragment(SHOW_DEVELOPMENT,"");
+                                addAndroidFragment(SHOW_DEVELOPMENT,"",false);
                             }
 
                             @Override
@@ -155,7 +155,7 @@ public class BusinessAppPreview extends Fragment {
                     }
                     else{
                         MaterialProgressBar.dismissProgressBar();
-                        addAndroidFragment(SHOW_STUDIO,"");
+                        addAndroidFragment(SHOW_STUDIO,"",false);
                     }*/
 
                 }else if(status.equals("1")){

@@ -14,6 +14,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
+import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
@@ -38,21 +40,21 @@ public class BusinessAppsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-       /* if(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl))){
+        if(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl))){
             ShowDialogLogo();
-        }*/
+        }
         addFragments(SHOW_PREVIEW);
+
     }
     private void ShowDialogLogo(){
         MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
-                .title("Add Logo")
-                .content(getString(R.string.create_push_notification))
+                .title("Business Logo Missing!")
+                .content(getString(R.string.add_logo_message))
                 .cancelable(false)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
-
                         finish();
                         dialog.dismiss();
                         Intent i = new Intent(BusinessAppsActivity.this, Business_Logo_Activity.class);
@@ -65,10 +67,11 @@ public class BusinessAppsActivity extends AppCompatActivity {
                     public void onNegative(MaterialDialog dialog) {
                         super.onNegative(dialog);
                         finish();
+                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                         dialog.dismiss();
                     }
                 })
-                .positiveText("Add Logo")
+                .positiveText("Add Now")
                 .negativeText("Back");
         if(!isFinishing()){
             builder.show();

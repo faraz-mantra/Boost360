@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,12 +14,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Store.Adapters.ItemsRecyclerViewAdapter;
+import com.nowfloats.Store.Model.OPCModels.UpdateDraftInvoiceModel;
 import com.nowfloats.Store.Model.PaymentTokenResult;
 import com.nowfloats.Store.Model.PurchaseDetail;
 import com.nowfloats.Store.Model.ReceiveDraftInvoiceModel;
@@ -57,10 +60,13 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     MaterialDialog materialProgress;
-    TextView headerText, tvUserName, tvUserEmail, tvPhoneNumber, tvNetTotal, tvTaxes, tvAmountToBePaid;
+    TextView headerText, tvUserName, tvUserEmail, tvPhoneNumber, tvNetTotal, tvTaxes,
+            tvAmountToBePaid, tvTanNo, tvTdsAmount;
     RecyclerView rvItems;
     Button btnPayNow, btnOpcApply;
     EditText etOpc;
+
+    TableRow trTanNo, trTdsAmount;
 
     ArrayList<ReceiveDraftInvoiceModel.KeyValuePair> mOpcDetails;
 
@@ -100,8 +106,12 @@ public class ProductCheckoutActivity extends AppCompatActivity {
         tvNetTotal = (TextView) findViewById(R.id.tv_net_total);
         tvTaxes = (TextView) findViewById(R.id.tv_taxes);
         tvAmountToBePaid = (TextView) findViewById(R.id.tv_amount_to_be_paid);
+        tvTanNo = (TextView) findViewById(R.id.tv_user_tan_no);
+        tvTdsAmount = (TextView) findViewById(R.id.tv_tds_amount);
 
         rvItems = (RecyclerView) findViewById(R.id.rv_store_items);
+        trTanNo = (TableRow) findViewById(R.id.tr_tan_no);
+        trTdsAmount = (TableRow) findViewById(R.id.tr_tds_amount);
 
         btnPayNow = (Button) findViewById(R.id.btn_pay_now);
         btnOpcApply = (Button) findViewById(R.id.btnOpcApply);
@@ -124,7 +134,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                             showConfirmationDialog(i, mInvoiceId);
                         }
                     }else {
-                        createDraftInvoice();
+                        initiatePaymentProcess(i, mInvoiceId);
                     }
                 }else {
                     Methods.showSnackBarNegative(ProductCheckoutActivity.this, "Error in processing Amount");
@@ -136,7 +146,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                createOpcDraftInvoice(etOpc.getText().toString().trim());
+                updateDraftInvoice(etOpc.getText().toString().trim());
             }
         });
 
@@ -167,6 +177,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
         receiveDraftInvoiceModel.setPurchaseDetails(purchaseDetailList);
 
         initializeVal(receiveDraftInvoiceModel, false);
+        createDraftInvoice();
     }
 
     private void showConfirmationDialog(final Intent i, final String mInvoiceId) {
@@ -209,13 +220,13 @@ public class ProductCheckoutActivity extends AppCompatActivity {
         }
     }
 
-    private void createOpcDraftInvoice(String OPCCode) {
+    private void updateDraftInvoice(String OPCCode) {
         if(Util.isNullOrEmpty(OPCCode)){
             Methods.showSnackBarNegative(this, "Online Voucher can't be empty");
             return;
         }
         try {
-            SendDraftInvoiceModel sendDraftInvoiceModel = new SendDraftInvoiceModel();
+            /*SendDraftInvoiceModel sendDraftInvoiceModel = new SendDraftInvoiceModel();
             //PurchaseDetail purchaseDetail = new PurchaseDetail();
             DataBase dataBase = new DataBase(this);
 
@@ -228,15 +239,35 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.login_status_error, Toast.LENGTH_SHORT).show();
                 return;
             }
-            sendDraftInvoiceModel.setPurchaseDetails(null);
+            sendDraftInvoiceModel.setPurchaseDetails(null);*/
+            DataBase dataBase = new DataBase(ProductCheckoutActivity.this);
+            Cursor cursor = dataBase.getLoginStatus();
+            String fpUserProfileId;
+            if (cursor.moveToFirst()){
+                fpUserProfileId = cursor.getString(cursor.getColumnIndex(DataBase.colloginId));
+            }else {
+                showDialog("Alert!", "This is an added security feature to protect your package details. Kindly Log-out and Login again to pay for this package.");
+                return;
+            }
+            UpdateDraftInvoiceModel updateDraftInvoiceModel;
+            if(mInvoiceId!=null && fpUserProfileId!=null) {
+                updateDraftInvoiceModel = new UpdateDraftInvoiceModel(fpUserProfileId, OPCCode, mInvoiceId);
+            }else {
+                Methods.showSnackBarNegative(this, "Unable to create Draft Invoice");
+                return;
+            }
 
             Map<String, String> params = new HashMap<String, String>();
             params.put("clientId", Constants.clientId);
             if(materialProgress!=null){
                 materialProgress.show();
             }
+            if(updateDraftInvoiceModel==null){
+                Methods.showSnackBarNegative(this, "Unable to apply Coupon");
+                return;
+            }
             StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
-            storeInterface.createDraftInvoice(params, sendDraftInvoiceModel, new Callback<ReceivedDraftInvoice>() {
+            storeInterface.updateDraftInvoice(params, updateDraftInvoiceModel, new Callback<ReceivedDraftInvoice>() {
                 @Override
                 public void success(ReceivedDraftInvoice receiveDraftInvoice, Response response) {
                     if(receiveDraftInvoice!=null){
@@ -361,7 +392,11 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 
             if (!Util.isNullOrEmpty(mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID))) {
                 clientId = mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID);
-            } else {
+            } else if(!Util.isNullOrEmpty(mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID))) {
+                clientId = mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID);
+            }else if(!Util.isNullOrEmpty(mSessionManager.getSourceClientId())){
+                clientId = mSessionManager.getSourceClientId();
+            }else {
                 Methods.showSnackBarNegative(this, "Can't Proceed for Payment");
                 return;
             }
@@ -388,7 +423,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             sendDraftInvoiceModel.setPurchaseDetails(purchaseDetailList);
             DataBase dataBase = new DataBase(ProductCheckoutActivity.this);
             Cursor cursor = dataBase.getLoginStatus();
-            if (cursor.moveToFirst()){
+            if (cursor.moveToFirst() && !cursor.getString(cursor.getColumnIndex(DataBase.colloginId)).equals("0")){
                 sendDraftInvoiceModel.setFpUserProfileId(cursor.getString(cursor.getColumnIndex(DataBase.colloginId)));
                 sendDraftInvoiceModel.setOpc(null);
             }else {
@@ -411,7 +446,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                         }
                         initializeVal(receiveDraftInvoice.getResult(), false);
                         mInvoiceId = receiveDraftInvoice.getResult().getInvoiceId();
-                        if(!Util.isNullOrEmpty(mNewPackage) && !Util.isNullOrEmpty(mFinalAmount)) {
+                        /*if(!Util.isNullOrEmpty(mNewPackage) && !Util.isNullOrEmpty(mFinalAmount)) {
                             Intent i = new Intent(ProductCheckoutActivity.this, InstaMojoMainActivity.class);
                             mOrderData = new OrderDataModel(mSessionManager.getFpTag(), mSessionManager.getFpTag(),
                                     mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
@@ -420,7 +455,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                                     "NowFloats Package", StoreDataActivity.product.CurrencyCode);
                             i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
                             initiatePaymentProcess(i, mInvoiceId);
-                        }
+                        }*/
 
                     }else {
                         if(materialProgress!=null){
@@ -456,6 +491,10 @@ public class ProductCheckoutActivity extends AppCompatActivity {
         tvUserName.setText(mSessionManager.getFpTag().toLowerCase());
         tvUserEmail.setText(mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
         tvPhoneNumber.setText(mSessionManager.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
+        if(showDiscount) {
+            trTanNo.setVisibility(View.VISIBLE);
+            tvTanNo.setText(invoiceData.getTanNumber() + "");
+        }
         double netAmount = 0;
         for(PurchaseDetail data : invoiceData.getPurchaseDetails()){
             if(data.getDiscount()==null) {
@@ -483,15 +522,19 @@ public class ProductCheckoutActivity extends AppCompatActivity {
         taxAmount = Math.round((taxAmount * 100) / 100.0);
         tvTaxes.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " +
                 NumberFormat.getIntegerInstance(Locale.US).format(taxAmount) + " /-\n" + "( " + taxNames.substring(0, taxNames.length() - 3) + " )");
+        if(showDiscount) {
+            trTdsAmount.setVisibility(View.VISIBLE);
+            tvTdsAmount.setText(invoiceData.getPurchaseDetails().get(0).getMRPCurrencyCode() + " " + invoiceData.getTdsAmount());
+        }
 
         tvAmountToBePaid.setText(StoreDataActivity.product.CurrencyCode + " " +
-                NumberFormat.getIntegerInstance(Locale.US).format(Math.round((netAmount + taxAmount) * 100) / 100) + " /-");
+                NumberFormat.getIntegerInstance(Locale.US).format(Math.round((netAmount + taxAmount - invoiceData.getTdsAmount()) * 100) / 100) + " /-");
         String packages="";
         for(int i=0; i<invoiceData.getPurchaseDetails().size(); i++){
             packages+=invoiceData.getPurchaseDetails().get(i).getPackageName() + " and ";
         }
         mNewPackage = packages;
-        mFinalAmount = String.valueOf(Math.round((netAmount + taxAmount) * 100) / 100);
+        mFinalAmount = String.valueOf(Math.round((netAmount + taxAmount - invoiceData.getTdsAmount()) * 100) / 100);
 
 
         rvItems.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));

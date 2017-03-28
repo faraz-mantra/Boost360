@@ -28,6 +28,7 @@ import com.thinksity.R;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -41,20 +42,16 @@ public class MonthFragment extends Fragment {
     int[] data;
     String[] days, months,weeks,shortArray;
     Context mContext;
-    final static String PARAMETER1="count",PARAMETER2="visit",PARAMETER3="frag", PARAMETER4="title";
+    public final static String PARAMETER1="count",PARAMETER2="visit",PARAMETER3="frag", PARAMETER4="title",MONTH_PARAMETER="month";
     String visitsThisWhat,title;
     public TextView visitsTitle,visitsCount;
     public int visitValue,frag;
     private OnYearDataClickListener onYearDataClickListener;
     private String titleMain;
+    private boolean flag;
 
-    public static MonthFragment newInstance(int[] arrayData,int totalCountData,int frag, String title) {
+    public static MonthFragment newInstance(Bundle b) {
         MonthFragment monthFragment=new MonthFragment();
-        Bundle b=new Bundle();
-        b.putIntArray(PARAMETER1,arrayData);
-        b.putInt(PARAMETER2,totalCountData);
-        b.putInt(PARAMETER3,frag);
-        b.putString(PARAMETER4, title);
         monthFragment.setArguments(b);
         return monthFragment;
     }
@@ -80,6 +77,7 @@ public class MonthFragment extends Fragment {
             visitsThisWhat=titleMain;
             weeks = getResources().getStringArray(R.array.weeks);
             shortArray=Arrays.copyOfRange(weeks, 0, data.length);
+            getWeeksAcordingToMonth(getArguments().getInt(MONTH_PARAMETER));
         }
         else {
             title=getString(R.string.Month);
@@ -201,4 +199,39 @@ public class MonthFragment extends Fragment {
     public interface OnYearDataClickListener{
         public void onYearDataClicked(int month);
     }
+   public void getWeeksAcordingToMonth(int month){
+       int end =-1;
+       Calendar calendar = Calendar.getInstance();
+       calendar.set(Calendar.MONTH,month-1);
+       calendar.set(Calendar.DATE,1);
+       int currMonth = calendar.get(Calendar.MONTH);
+       int start = calendar.get(Calendar.DAY_OF_MONTH);
+       flag =false;
+       while(currMonth == calendar.get(Calendar.MONTH)){
+
+           if(calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY){
+               //Log.v("ggg",start+"-"+calendar.get(Calendar.DAY_OF_MONTH));
+               flag= true;
+           }
+           end = calendar.get(Calendar.DAY_OF_MONTH);
+           int day =calendar.get(Calendar.WEEK_OF_MONTH);
+           calendar.add(Calendar.DAY_OF_MONTH,1);
+           if(day<=data.length && currMonth == calendar.get(Calendar.MONTH)){
+               if(flag) {
+                   //Log.v("ggg", start + "data" + end);
+                   shortArray[day - 1] = getResources().getStringArray(R.array.months)[month - 1] + "(" + start + "-" + end + ")";
+                   flag = false;
+                   start = end + 1;
+                   end = -1;
+               }
+           }else{
+               break;
+           }
+       }
+       if(calendar.get(Calendar.DAY_OF_MONTH)==Calendar.SUNDAY && end != -1){
+           shortArray[data.length-1]=getResources().getStringArray(R.array.months)[month-1]+"("+start+"-"+end+")";
+           //Log.v("ggg",start+" end "+end);
+       }
+
+   }
 }

@@ -54,7 +54,6 @@ public class Business_Enquiries_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         BoostLog.d("Business_Enquiri", "onCreateView");
-        // Inflate the layout for this fragment
         View mainView =  inflater.inflate(R.layout.fragment_business__enguiries, container, false);
         return mainView ;
     }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,19 +86,19 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
         nameTextView.setText(name);
 
         if(type.equals("android")){
-            getAppButton.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.android_icon_white), null, null, null );
+            getAppButton.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context,R.drawable.android_icon_white), null, null, null );
             getAppButton.setText(getResources().getString(R.string.get_android_app));
             previewButton.setText(getResources().getString(R.string.android_app_preview));
-            iconImage.setImageDrawable(getResources().getDrawable(R.drawable.android_green_padding));
+            iconImage.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.android_green_padding));
         }
         else {
             freeText.setVisibility(View.GONE);
             buttonLayout.setVisibility(View.GONE);
             comming_soon.setVisibility(View.VISIBLE);
-            getAppButton.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ios_icon_white), null, null, null );
+            getAppButton.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context,R.drawable.ios_icon_white), null, null, null );
             getAppButton.setText(getResources().getString(R.string.get_ios_app));
             previewButton.setText(getResources().getString(R.string.ios_app_preview));
-            iconImage.setImageDrawable(getResources().getDrawable(R.drawable.ios_icon_black));
+            iconImage.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.ios_icon_black));
         }
     }
 

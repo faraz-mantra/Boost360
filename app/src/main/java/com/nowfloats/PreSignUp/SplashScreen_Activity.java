@@ -87,8 +87,8 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     }
 
     private void displayHomeScreen() {
-        pd = ProgressDialog.show(SplashScreen_Activity.this, "", getString(R.string.getting_details));
-        pd.setCancelable(false);
+       /* pd = ProgressDialog.show(SplashScreen_Activity.this, "", getString(R.string.getting_details));
+        pd.setCancelable(false);*/
         fetchData();
     }
 

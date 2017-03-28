@@ -2,12 +2,11 @@ package com.nowfloats.NavigationDrawer.API;
 
 import com.google.gson.JsonObject;
 import com.nowfloats.NavigationDrawer.model.StoreAndGoModel;
+import com.nowfloats.util.Constants;
 
 import java.util.List;
 
 import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.android.AndroidLog;
 import retrofit.http.POST;
 import retrofit.http.Query;
 
@@ -20,12 +19,7 @@ public class BusinessAppApis {
     private final static String BUSINESS_APIS_END_POINT ="http://api.nowfloatsdev.com/storeongo";
 
      public static AppApis getRestAdapter(){
-        RestAdapter adapter=new RestAdapter.Builder()
-                .setEndpoint(BUSINESS_APIS_END_POINT)
-                .setLog(new AndroidLog("ggg"))
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .build();
-        return adapter.create(AppApis.class);
+        return Constants.restAdapter.create(AppApis.class);
     }
     public interface AppApis{
 

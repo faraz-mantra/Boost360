@@ -102,13 +102,16 @@ public class ProcessFPDetails {
                 if(get_fp_details_model.Contacts!=null) {
                     if (get_fp_details_model.Contacts.size() == 1) {
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER, get_fp_details_model.Contacts.get(0).ContactNumber);
+                        session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1, "");
+                        session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3, "");
                     } else if (get_fp_details_model.Contacts.size() == 2) {
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER, get_fp_details_model.Contacts.get(0).ContactNumber);
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1, get_fp_details_model.Contacts.get(1).ContactNumber);
-                    } else if (get_fp_details_model.Contacts.size() == 3) {
+                        session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3, "");
+                    } else if (get_fp_details_model.Contacts.size() >= 3) {
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER, get_fp_details_model.Contacts.get(0).ContactNumber);
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1, get_fp_details_model.Contacts.get(1).ContactNumber);
-                        session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_2, get_fp_details_model.Contacts.get(2).ContactNumber);
+                        session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3, get_fp_details_model.Contacts.get(2).ContactNumber);
                     }
                 }
             }catch(Exception e){e.printStackTrace();}
@@ -223,7 +226,7 @@ public class ProcessFPDetails {
                     }
                 }
             }
-//            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID,get_fp_details_model.ApplicationId);
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID,get_fp_details_model.ApplicationId);
         }catch(Exception e){e.printStackTrace();}
 
         /*

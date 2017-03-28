@@ -73,16 +73,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         linkInterface = (DeepLinkInterface)appContext;
     }
 
-    public void addAlerts(ArrayList<AlertModel> data){
-        try {
-            for (int i = 0; i < data.size(); i++) {
-                if (!alertData.contains(data.get(i)))
-                    alertData.add(data.get(i));
-            }
-            notifyDataSetChanged();
-
-        }catch(Exception e) {e.printStackTrace();}
-    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case

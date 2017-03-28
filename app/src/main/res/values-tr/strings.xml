@@ -802,6 +802,7 @@
     <string name="submit">GÖNDER</string>
     <string name="no_alerts">Hiçbir uyarı!</string>
     <string name="overall_visits">Genel Ziyaretler</string>
+    <string name="unique_visitors">Genel Ziyaretler</string>
     <string name="address_line">Adres satırı</string>
     <string name="malleswaram">Malleswaram</string>
     <string name="town_city">İlçe / Şehir</string>
@@ -1168,6 +1169,7 @@
     <string name="product_checkout">Product Checkout</string>
     <string name="not_available_in_ur_country">This feature is currently not available in your country. We will notify you when its available.</string>
     <string name="kitsune_demo_expire_dialog_body">Your demo subscription has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
+    <string name="search_rank">Search Ranking</string>
     <string name="dialog_to_be_activated_null_text">Please note that you will receive an Account Verification Call before your subscription gets activated. Are you sure you want to proceed?</string>
 
     <string name="getlink">Next</string>
@@ -1224,4 +1226,8 @@
         <item>Send personalized notifications to your\ncustomers about your products and offerings.</item>
         <item>Now your customers can reach your store\neven without an internet connection.</item>
     </array>
+    <string name="alternate_number3">Alternate Number 3</string>
+    <string name="subscriber_second_text">Subscription is a great way to engage with your existing customers and tell them about latest offers or new product launches</string>
+    <string name="add_logo_message">Please add a logo for your business before proceeding.</string>
+
 </resources>

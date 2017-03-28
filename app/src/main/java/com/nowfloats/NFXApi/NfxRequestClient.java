@@ -1,5 +1,8 @@
 package com.nowfloats.NFXApi;
 
+import android.util.Log;
+
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -15,6 +18,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by RAJA on 12-07-2016.
@@ -120,7 +125,7 @@ public class NfxRequestClient {
 
     public void connectNfx(){
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
-                Constants.nfxFacebookAnalytics, getNfxParams() , new Response.Listener<JSONObject>() {
+                Constants.nfxUpdateTokens, getNfxParams() , new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
@@ -133,6 +138,16 @@ public class NfxRequestClient {
                 mCallBackListener.nfxCallBack("error", getmCallType(), getmName());
             }
         }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String,String> map =new HashMap<>();
+                map.put("key","78234i249123102398");
+                map.put("pwd","JYUYTJH*(*&BKJ787686876bbbhl");
+                map.put("Content-Type","application/json");
+                Log.v("ggg","map");
+                return map;
+            }
+
             @Override
             protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
                 try {
@@ -155,7 +170,33 @@ public class NfxRequestClient {
 
     }
 
-
+    public void nfxNoPageFound(){
+        String url = Constants.nfxUpdateTokens+"?not_found=true";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(JsonObjectRequest.Method.POST,
+                url, getNoPageNfxParams(),
+                new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    mCallBackListener.nfxCallBack(response.toString(),mCallType,getmName());
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    mCallBackListener.nfxCallBack("error",mCallType,getmName());
+                }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String,String> map =new HashMap<>();
+                map.put("key","78234i249123102398");
+                map.put("pwd","JYUYTJH*(*&BKJ787686876bbbhl");
+                map.put("Content-Type","application/json");
+                Log.v("ggg","map");
+                return map;
+            }
+        };
+        AppController.getInstance().addToRequstQueue(jsonObjectRequest);
+    }
 
     private JSONObject getNfxParams(){
 
@@ -166,6 +207,23 @@ public class NfxRequestClient {
             internalParams.put(USERACCESSTOKENSECRET, getmUserAccessTokenSecret());
             internalParams.put(USERACCOUNTID, getmUserAccountId());
             internalParams.put(USERACCOUNTNAME, getmName());
+            JSONObject param = new JSONObject();
+            param.put(ACCESSTOKEN , internalParams);
+            param.put(CLIENTID, Constants.clientId);
+            param.put(FLOATINGPOINTID, getmFpId());
+            param.put(FPIDENTIFIERTYPE, 0);
+            BoostLog.d("JSON String", param.toString());
+            return param;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    private JSONObject getNoPageNfxParams(){
+        try {
+            JSONObject internalParams = new JSONObject();
+            internalParams.put(TYPE, getmType());
+
             JSONObject param = new JSONObject();
             param.put(ACCESSTOKEN , internalParams);
             param.put(CLIENTID, Constants.clientId);

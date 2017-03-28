@@ -2,9 +2,11 @@ package com.nowfloats.Store;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +54,7 @@ public class Store_Fragment extends Fragment {
     private String countryPhoneCode;
     UserSessionManager session;
     Activity activity;
-    String args = "";
+    boolean args;
 
     private OrderDataModel mOrderData;
 
@@ -72,10 +74,10 @@ public class Store_Fragment extends Fragment {
         bus.unregister(this);
     }
 
-    public static Fragment newInstance(String args){
+    public static Fragment newInstance(boolean args){
         Store_Fragment fragment = new Store_Fragment();
         Bundle bundle = new Bundle();
-        bundle.putString("key",args);
+        bundle.putBoolean("key",args);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -86,7 +88,7 @@ public class Store_Fragment extends Fragment {
         activity = getActivity();
         session = new UserSessionManager(activity.getApplicationContext(),activity);
         Bundle bundle = getArguments();
-        args = bundle.getString("key");
+        args = bundle.getBoolean("key");
     }
 
     @Override
@@ -131,7 +133,7 @@ public class Store_Fragment extends Fragment {
         emptystorelayout.setVisibility(View.GONE);
         progress_storelayout = (LinearLayout) view.findViewById(R.id.progress_storelayout);
         progress_storelayout.setVisibility(View.VISIBLE);
-        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setItemAnimator(new FadeInUpAnimator());
 
         storeAdapter = new StoreAdapter(activity, StoreFragmentTab.additionalWidgetModels,"all", session);
@@ -145,6 +147,16 @@ public class Store_Fragment extends Fragment {
             emptystorelayout.setVisibility(View.VISIBLE);
         }else {
             emptystorelayout.setVisibility(View.GONE);
+            //Log.d("Args Val", args+"1");
+            if(args){
+                args = false;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        recyclerView.smoothScrollToPosition(storeAdapter.getItemCount()-1);
+                    }
+                }, 100);
+            }
         }
     }
 
@@ -189,6 +201,17 @@ public class Store_Fragment extends Fragment {
             scaleAdapter.setFirstOnly(false);
             scaleAdapter.setInterpolator(new OvershootInterpolator());
             recyclerView.setAdapter(scaleAdapter);
+            //Log.d("Args Val", args+"2");
+            if(args){
+                args = false;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        recyclerView.smoothScrollToPosition(storeAdapter.getItemCount()-1);
+                    }
+                }, 100);
+
+            }
         }else{
             emptystorelayout.setVisibility(View.VISIBLE);
         }

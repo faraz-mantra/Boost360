@@ -53,7 +53,7 @@
                 android:id="@+id/customer_app_ImageView"
                 android:layout_width="38dp"
                 android:scaleType="centerInside"
-                android:padding="5dp"
+                android:padding="10dp"
                 android:layout_height="38dp"
                 android:src="@drawable/business_apps"
                 android:layout_marginStart="@dimen/icon_left_margin"
@@ -72,21 +72,33 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
                 android:gravity="right">
 
                 <Button
                     android:layout_width="50dp"
                     android:layout_height="27dp"
                     android:padding="3dp"
+                    android:id="@+id/new_business_button"
+                    android:layout_marginRight="15dp"
                     android:layout_gravity="right"
                     android:textColor="@color/white"
                     android:text="@string/new_in_capital"
+                    android:visibility="gone"
                     android:clickable="false"
                     android:textSize="12sp"
                     fontPath="Roboto-Regular.ttf"
                     android:background="@drawable/corner_white_backgrnd_yellow"
                     tools:ignore="MissingPrefix" />
+                <ImageView
+                    android:id="@+id/business_lock_widget"
+                    android:layout_width="@dimen/icon_size"
+                    android:scaleType="fitXY"
+                    android:layout_height="@dimen/icon_size"
+                    android:padding="5dp"
+                    android:visibility="gone"
+                    android:src="@drawable/lock_widget"
+                    android:layout_marginLeft="@dimen/icon_left_margin"
+                    android:layout_marginRight="@dimen/icon_right_margin" />
             </LinearLayout>
         </LinearLayout>
         <LinearLayout

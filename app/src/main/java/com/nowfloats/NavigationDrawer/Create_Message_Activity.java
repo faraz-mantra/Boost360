@@ -20,8 +20,10 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +41,7 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.PostModel;
+import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
 import com.nowfloats.NotificationCenter.AlertArchive;
 import com.nowfloats.Twitter.TwitterConstants;
@@ -50,6 +53,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.RiaEventLogger;
 import com.thinksity.R;
 
 import java.io.File;
@@ -63,7 +67,7 @@ public class Create_Message_Activity extends AppCompatActivity {
     ContentValues values;
     Bitmap CameraBitmap;
     Uri imageUri;
-    public static String path = "";
+    public static String path = null;
     public static String[] keywords = null;
     ImageView facebookShare ;
     ArrayList<String> items;
@@ -103,6 +107,10 @@ public class Create_Message_Activity extends AppCompatActivity {
     private SharedPreferences mSharedPreferences = null;
 
     private int mFbPageShare = 0, mFbProfileShare = 0, mTwitterShare = 0;
+    private RiaNodeDataModel mRiaNodedata;
+    private boolean mIsImagePicking = false;
+    private CardView image_card;
+    private ImageView deleteButton,editButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +122,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         activity = Create_Message_Activity.this;
         Methods.isOnline(activity);
         pref = getSharedPreferences(Constants.PREF_NAME,Activity.MODE_PRIVATE);
+        prefsEditor = pref.edit();
         session = new UserSessionManager(getApplicationContext(),Create_Message_Activity.this);
         dataBase = new DataBase(activity);
         LinearLayout socialSharingIconLayout = (LinearLayout) findViewById(R.id.socialSharingIconLayout);
@@ -129,9 +138,12 @@ public class Create_Message_Activity extends AppCompatActivity {
         msg = (EditText) findViewById(R.id.createMessageEditText);
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar()!= null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
+        mRiaNodedata = getIntent().getParcelableExtra(Constants.RIA_NODE_DATA);
 
         post = (TextView) toolbar.findViewById(R.id.saveTextView);
         TextView titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
@@ -179,9 +191,16 @@ public class Create_Message_Activity extends AppCompatActivity {
                     }
                     Home_Main_Fragment.bus.post(new UploadPostEvent(path, msg.getText().toString(), socialShare));
                     if (path!=null && path.trim().length()>0){
+                        //Log.v("ggg",path+" path for upadte");
                         new AlertArchive(Constants.alertInterface,"FEATURE IMAGE",session.getFPID());
                     }else{
                         new AlertArchive(Constants.alertInterface,"UPDATE",session.getFPID());
+                    }
+                    if(mRiaNodedata!=null){
+                        RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
+                                mRiaNodedata.getNodeId(), mRiaNodedata.getButtonId(),
+                                mRiaNodedata.getButtonLabel(), RiaEventLogger.EventStatus.COMPLETED.getValue());
+                        mRiaNodedata = null;
                     }
                     finish();
                     overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
@@ -192,8 +211,6 @@ public class Create_Message_Activity extends AppCompatActivity {
             }
         });
 
-
-        prefsEditor = pref.edit();
 
         facebookShare = (ImageView) findViewById(R.id.create_message_activity_facebokhome_button);
         facebookPageShare = (ImageView) findViewById(R.id.create_message_activity_facebokpage_button);
@@ -350,31 +367,79 @@ public class Create_Message_Activity extends AppCompatActivity {
 
         cameraButton = (ImageView) findViewById(R.id.create_mee_activity_facebokhome_button);
         imageIconButton = (ImageView) findViewById(R.id.imageIcon);
+        deleteButton = (ImageView) findViewById(R.id.delete_image);
+        editButton = (ImageView) findViewById(R.id.edit_image);
+        image_card = (CardView)findViewById(R.id.image_card);
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageIconButtonSelected =false;
+                path = null;
+                prefsEditor.putString("image_post",path).apply();
+                //Log.v("ggg"," delete"+ path);
+                image_card.setVisibility(View.GONE);
+            }
+        });
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 choosePicture();
             }
         });
-
         imageIconButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Methods.hideKeyboard(msg,Create_Message_Activity.this);
-                if (picUri != null) {
-
-
-
-
-
-                    Intent in =new Intent(Create_Message_Activity.this,EditImageActivity.class);
-                    in.putExtra("image",path);
-                    startActivityForResult(in, ACTION_REQUEST_IMAGE_EDIT);
-                }
+                editImage();
             }
         });
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editImage();
+            }
+        });
+        restoreData();
+        msg.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //Log.v("ggg","ontextchanged");
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //Log.v("ggg",s.toString()+" after");
+                prefsEditor.putString("msg_post",s.toString()).apply();
+            }
+        });
     }
+
+    private void editImage() {
+        Methods.hideKeyboard(msg,Create_Message_Activity.this);
+        if (path != null && path.length() >0) {
+
+            Intent in =new Intent(Create_Message_Activity.this,EditImageActivity.class);
+            in.putExtra("image",path);
+            startActivityForResult(in, ACTION_REQUEST_IMAGE_EDIT);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mRiaNodedata!=null && !mIsImagePicking){
+            RiaEventLogger.getInstance().logPostEvent(session.getFpTag(),
+                    mRiaNodedata.getNodeId(), mRiaNodedata.getButtonId(),
+                    mRiaNodedata.getButtonLabel(), RiaEventLogger.EventStatus.DROPPED.getValue());
+            mRiaNodedata = null;
+        }
+    }
+
     public void choosePicture() {
         final MaterialDialog dialog = new MaterialDialog.Builder(activity)
                 .customView(R.layout.featuredimage_popup,true)
@@ -406,6 +471,16 @@ public class Create_Message_Activity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void restoreData() {
+        msg.setText(pref.getString("msg_post",""));
+        path = pref.getString("image_post",null);
+        //Log.v("ggg","restore "+ msg.getText().toString()+" "+path);
+        if (path != null && path.length() >0) {
+            CameraBitmap = Util.getBitmap(path, activity);
+            setPicture(CameraBitmap);
+        }
     }
 
     public void choosePictureOptionDilog() {
@@ -456,6 +531,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                         gallery_req_id);
             }
             else {
+                mIsImagePicking = true;
                 Intent i = new Intent(
                         Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -500,6 +576,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                         media_req_id);
             }
             else {
+                mIsImagePicking = true;
                 ContentValues Cvalues = new ContentValues();
                 Intent captureIntent;
                 Cvalues.put(MediaStore.Images.Media.TITLE, "New Picture");
@@ -529,7 +606,8 @@ public class Create_Message_Activity extends AppCompatActivity {
     public void setPicture(Bitmap bmp) {
         if (!Util.isNullOrEmpty(path)) {
             if (bmp != null) {
-                imageIconButton.setVisibility(View.VISIBLE);
+                prefsEditor.putString("image_post",path).apply();
+                image_card.setVisibility(View.VISIBLE);
                 imageIconButtonSelected = true ;
                 imageIconButton.setImageBitmap(bmp);
                 msg.setHint(getString(R.string.add_context_to_picture));
@@ -565,7 +643,7 @@ public class Create_Message_Activity extends AppCompatActivity {
             bmp = Util.getBitmap(path, this);
             CameraBitmap = bmp;
             if (bmp != null) {
-                imageIconButton.setVisibility(View.VISIBLE);
+                image_card.setVisibility(View.VISIBLE);
                 imageIconButtonSelected = true ;
                 imageIconButton.setImageBitmap(bmp);
                 msg.setHint(getString(R.string.add_context_to_picture));
@@ -647,6 +725,11 @@ public class Create_Message_Activity extends AppCompatActivity {
                 System.gc();
                 Methods.showSnackBar(activity,getString(R.string.try_again));
             }
+        }else if(ACTION_REQUEST_IMAGE_EDIT==requestCode && resultCode == RESULT_OK){
+            //Log.v("ggg", data.getStringExtra("edit_image")+" ");
+            path = data.getStringExtra("edit_image");
+            CameraBitmap = Util.getBitmap(path, activity);
+            setPicture(CameraBitmap);
         }
     }
 
@@ -734,8 +817,8 @@ public class Create_Message_Activity extends AppCompatActivity {
 
         if(id==android.R.id.home){
 
-            finish();
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -743,7 +826,6 @@ public class Create_Message_Activity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
@@ -769,7 +851,7 @@ public class Create_Message_Activity extends AppCompatActivity {
             return Environment.getExternalStorageDirectory();
         }
 
-        Log.d("photo Effect", "Pictures folder: " + baseDir.getAbsolutePath());
+        //Log.d("photo Effect", "Pictures folder: " + baseDir.getAbsolutePath());
         File aviaryFolder = new File(baseDir, "image_edit");
 
         if (aviaryFolder.exists()) {

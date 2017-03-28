@@ -246,39 +246,12 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
 //    }
 
     private void editPage(String pageId, final int pOs) {
-        final MaterialDialog materialProgress = new MaterialDialog.Builder(appContext)
-                .widgetColorRes(R.color.accentColor)
-                .content(appContext.getString(R.string.loading))
-                .progress(true, 0)
-                .show();
-        materialProgress.setCancelable(false);
-        try {
-            pageInterface.getPageDetail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG),
-                    pageId, Constants.clientId, new Callback<PageDetail>() {
-                        @Override
-                        public void success(PageDetail pageDetail, Response response) {
-                            materialProgress.dismiss();
-                            Intent intent = new Intent(appContext, CreateCustomPageActivity.class);
-                            intent.putExtra("name", "" + pageDetail.DisplayName);
-                            intent.putExtra("html", "" + pageDetail.HtmlCode);
-                            intent.putExtra("pageid", "" + pageDetail._id);
-                            intent.putExtra("pos",pOs+"");
-                            appContext.startActivity(intent);
-                        }
 
-                        @Override
-                        public void failure(RetrofitError error) {
-                            materialProgress.dismiss();
-                            Log.d("page detail error-", "" + error.getMessage());
-                            Methods.showSnackBarNegative(appContext, "Page Detail not found");
-                        }
-                    });
-        }catch(Exception e)
-        {
-            e.printStackTrace();
-            Methods.showSnackBarNegative(appContext, appContext.getString(R.string.something_went_wrong_try_again));
-            materialProgress.dismiss();
-        }
+        Intent intent = new Intent(appContext, CreateCustomPageActivity.class);
+        intent.putExtra("pageid", "" + pageId);
+        appContext.startActivity(intent);
+
+
     }
 
 //    private void deletePage(String pageId,final MaterialDialog dialog, final int posi) {

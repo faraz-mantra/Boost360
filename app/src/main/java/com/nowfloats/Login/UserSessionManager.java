@@ -81,6 +81,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     private String KEY_FP_NAME = "fpname";
     private String KEY_sourceClientId = "source_clientid";
     private String KEY_Visit_Count = "visitCount";
+    private String KEY_Visitors_Count = "visitorsCount";
     private String KEY_Subcribers_Count = "subcribersCount";
     private String KEY_Search_Count = "SearchQueryCount";
     private String KEY_Enq_Count = "EnquiryCount";
@@ -165,14 +166,21 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return pref.getString(KEY_WEB_TEMPLATE_TYPE, null);
     }
 
-    public void setVisitorsCount(String cnt)
+    public void setVisitsCount(String cnt)
     {
         editor.putString(KEY_Visit_Count , cnt);
         editor.commit();
+    }public void setVisitorsCount(String cnt)
+    {
+        editor.putString(KEY_Visitors_Count , cnt);
+        editor.commit();
     }
-    public String getVisitorsCount()
+    public String getVisitsCount()
     {
         return pref.getString(KEY_Visit_Count,null);
+    }public String getVisitorsCount()
+    {
+        return pref.getString(KEY_Visitors_Count,null);
     }
 
     public void setSubcribersCount(String cnt)
@@ -875,7 +883,6 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 Constants.BusinessTimingsWidget = false ;
                 Constants.BusinessEnquiryWidget = false ;
                 HomeActivity.StorebizFloats.clear();
-                HomeActivity.StorebizFloats= null;
                 HomeActivity.StorebizFloats= new ArrayList<FloatsMessageModel>();
                 ChatFragment.chatModels = new ArrayList<ChatModel>();
                 LoginManager.getInstance().logOut();

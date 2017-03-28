@@ -14,14 +14,16 @@ public class StorePagerAdapter extends FragmentPagerAdapter  {
     Context appContext;
     int currentItem ;
     private FragmentManager mFragmentManager;
+    private boolean mIsFromWildFireMiniDilog;
 
     CharSequence Titles[];
-    public StorePagerAdapter(FragmentManager fm, Context context) {
+    public StorePagerAdapter(FragmentManager fm, Context context, boolean isFromWildFireMiniDilog) {
         super(fm);
         Log.d("STORE Pager Adapter"," STORE Pager Adapter ");
         appContext = context ;
         Titles=appContext.getResources().getStringArray(R.array.plans);
         mFragmentManager = fm;
+        this.mIsFromWildFireMiniDilog = isFromWildFireMiniDilog;
     }
 
     private static String makeFragmentName(int viewId, int index) {
@@ -42,7 +44,7 @@ public class StorePagerAdapter extends FragmentPagerAdapter  {
                 currentItem = 0;
                 break;
             case 0:
-                selectedFragment = Store_Fragment.newInstance("inactive");
+                selectedFragment = Store_Fragment.newInstance(mIsFromWildFireMiniDilog);
                 currentItem = 1;
                 break;
         }

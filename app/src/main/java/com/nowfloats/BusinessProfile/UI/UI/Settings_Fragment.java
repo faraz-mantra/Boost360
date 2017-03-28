@@ -195,11 +195,11 @@ public class Settings_Fragment extends Fragment {
                 try {
                         getActivity().getPackageManager().getPackageInfo("com.twitter.android", 0);
                         twitterIntent.setData(Uri.parse(Constants.TWITTER_ID_URL));
-                        twitterIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     } catch (PackageManager.NameNotFoundException e1) {
                         twitterIntent.setData(Uri.parse(Constants.TWITTER_URL));
                         e1.printStackTrace();
                 }
+                twitterIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(twitterIntent);
             }
         });
@@ -327,7 +327,7 @@ public class Settings_Fragment extends Fragment {
     }
 
     public void changePassword() {
-        new MaterialDialog.Builder(activity)
+        MaterialDialog dialog =new MaterialDialog.Builder(activity)
                 .customView(R.layout.change_password, true)
                 .positiveText(getString(R.string.ok))
                 .negativeText(getString(R.string.cancel))
@@ -341,10 +341,9 @@ public class Settings_Fragment extends Fragment {
 
                     @Override
                     public void onPositive(MaterialDialog dialog) {
-                        confirmDetails(dialog);
-                        oldPass = old_pwd.getText().toString();
-                        newPass = new_pwd.getText().toString();
-                        confirmPass = confirm_pwd.getText().toString();
+                        oldPass = old_pwd.getText().toString().trim();
+                        newPass = new_pwd.getText().toString().trim();
+                        confirmPass = confirm_pwd.getText().toString().trim();
                         Boolean confirm = newPass.equals(confirmPass);
 
                         if (newPass.length() > 5) {
@@ -373,8 +372,8 @@ public class Settings_Fragment extends Fragment {
                             Methods.showSnackBarNegative(activity, getString(R.string.min_6char_required));
                         }
                     }
-                })
-                .show();
+                }).show();
+        confirmDetails(dialog);
     }
 
     private void confirmDetails(MaterialDialog view) {
@@ -393,17 +392,15 @@ public class Settings_Fragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                String newPwd = new_pwd.getText().toString();
-                String confirmPwd = confirm_pwd.getText().toString();
+                String newPwd = new_pwd.getText().toString().trim();
+                String confirmPwd = confirm_pwd.getText().toString().trim();
                 confirmCheckerActive = true;
                 if (confirmPwd.equals(newPwd)) {
                     confirmChecker.setVisibility(View.VISIBLE);
-                    confirmChecker
-                            .setBackgroundResource(R.drawable.domain_available);
+                    confirmChecker.setImageResource(R.drawable.domain_available);
                 } else {
                     confirmChecker.setVisibility(View.VISIBLE);
-                    confirmChecker
-                            .setBackgroundResource(R.drawable.domain_not_available);
+                    confirmChecker.setImageResource(R.drawable.domain_not_available);
                 }
             }
 
@@ -424,13 +421,14 @@ public class Settings_Fragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 if (confirmCheckerActive) {
-                    String newPwd = new_pwd.getText().toString();
-                    String confirmPwd = confirm_pwd.getText().toString();
+                    String newPwd = new_pwd.getText().toString().trim();
+                    String confirmPwd = confirm_pwd.getText().toString().trim();
                     if (confirmPwd.equals(newPwd)) {
-                        confirmChecker.setBackgroundResource(R.drawable.domain_available);
+                        confirmChecker.setImageResource(R.drawable.domain_available);
                     } else {
-                        confirmChecker.setBackgroundResource(R.drawable.domain_not_available);
+                        confirmChecker.setImageResource(R.drawable.domain_not_available);
                     }
                 }
             }
@@ -464,10 +462,10 @@ public class Settings_Fragment extends Fragment {
         try {
             getActivity().getPackageManager().getPackageInfo("com.facebook.katana", 0);
             facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_PAGE_WITH_ID));
-            facebookIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         } catch (Exception e) {
             facebookIntent= new Intent(Intent.ACTION_VIEW, Uri.parse(facebookUrl));
         }
+        facebookIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(facebookIntent);
     }
 

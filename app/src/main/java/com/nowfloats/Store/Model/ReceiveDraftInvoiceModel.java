@@ -37,6 +37,15 @@ public class ReceiveDraftInvoiceModel {
     @SerializedName("OPCDetails")
     @Expose
     private ArrayList<KeyValuePair> opcDetails;
+    @SerializedName("TanNumber")
+    @Expose
+    private String tanNumber;
+    @SerializedName("TdsAmount")
+    @Expose
+    private double tdsAmount;
+    @SerializedName("TotalPayableAmount")
+    @Expose
+    private String totalPayableAmount;
 
     public ArrayList<KeyValuePair> getOpcDetails() {
         return opcDetails;
@@ -230,5 +239,27 @@ public class ReceiveDraftInvoiceModel {
         }
     }
 
+    public String getTanNumber() {
+        return tanNumber;
+    }
 
+    public void setTanNumber(String tanNumber) {
+        this.tanNumber = tanNumber;
+    }
+
+    public double getTdsAmount() {
+        return tdsAmount;
+    }
+
+    public void setTdsAmount(double tdsAmount) {
+        this.tdsAmount = tdsAmount;
+    }
+
+    public String getTotalPayableAmount() {
+        return totalPayableAmount;
+    }
+
+    public void setTotalPayableAmount(String totalPayableAmount) {
+        this.totalPayableAmount = totalPayableAmount;
+    }
 }

@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2017010025"
-    android:versionName="4.5.1">
+    android:versionCode="2017030006"
+    android:versionName="4.5.4">
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
@@ -29,7 +29,6 @@
     <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -96,13 +95,6 @@
                 android:value="com.nowfloats.PreSignUp.PreSignUp_MainActivity" />
         </activity>
         <activity
-            android:name="com.nowfloats.NavigationDrawer.businessApps.BusinessAppsActivity"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nowfloats.NavigationDrawer.businessApps.BusinessAppsActivity" />
-        </activity>
-        <activity
             android:name="com.nowfloats.Analytics_Screen.ShowWebView"
             android:label="Social Analytics"
             android:screenOrientation="portrait">
@@ -159,11 +151,10 @@
         <activity
             android:name="com.nowfloats.signup.UI.UI.BusinessProfileActivity"
             android:label="@string/title_activity_business_profile"
-            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity" />
@@ -189,22 +180,18 @@
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity"
             android:label="@string/title_activity_contact__info_"
-            android:launchMode="singleTop"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity"
-            android:label="@string/visits"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Business_Hours_Activity"
             android:label="@string/title_activity_business__hours_"
-            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity"
             android:label="@string/title_activity_business__logo_"
-            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity"
@@ -249,6 +236,9 @@
             android:label="@string/title_activity_pre_sign_up__main"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.nowfloats.NavigationDrawer.businessApps.BusinessAppsActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.nowfloats.Image_Gallery.FullScreen_Gallery_Image"
             android:label="Gallery Image"
             android:screenOrientation="portrait"
@@ -290,7 +280,6 @@
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity"
             android:label="@string/title_activity_edit__profile_"
-            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <!-- <activity -->
         <!-- android:name="com.facebook.LoginActivity" -->
@@ -427,7 +416,9 @@
         <activity android:name="com.nowfloats.NavigationDrawer.OffersFullScreenActivity" />
         <activity android:name="com.nowfloats.PreSignUp.KitsunePreSignUpActivity" />
         <activity android:name="com.nowfloats.NavigationDrawer.HelpAndSupportActivity" />
-        <activity android:name="com.nowfloats.Store.ProductCheckoutActivity"></activity>
+        <activity android:name="com.nowfloats.Store.ProductCheckoutActivity" />
+        <activity android:name="com.nowfloats.NavigationDrawer.RiaWebViewActivity"></activity>
+
     </application>
 
 </manifest>

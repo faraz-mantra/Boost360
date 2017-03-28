@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,17 +100,17 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
         }
         Glide.with(context)
                 .load(logo)
-                .placeholder(getResources().getDrawable(R.drawable.studio_architecture))
+                .placeholder(ContextCompat.getDrawable(context,R.drawable.studio_architecture))
                 .into(logoImage);
 
         if(type.equalsIgnoreCase("android")){
-            androidTextView.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.android_green), null, null, null );
+            androidTextView.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context,R.drawable.android_green), null, null, null );
             androidTextView.setText(getResources().getString(R.string.android_app));
             previewButton.setText(getResources().getString(R.string.android_app_preview));
             congratesTextView.setText(getResources().getString(R.string.congratulation_android_business_app_development));
         }else{
-            siteHealthButton.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.studio),null,null,null);
-            androidTextView.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ios_icon_blac), null, null, null );
+            siteHealthButton.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context,R.drawable.studio),null,null,null);
+            androidTextView.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context,R.drawable.ios_icon_blac), null, null, null );
             androidTextView.setText(getResources().getString(R.string.ios_app));
             previewButton.setText(getResources().getString(R.string.ios_app_preview));
             congratesTextView.setText(getResources().getString(R.string.congratulation_ios_business_app_development));

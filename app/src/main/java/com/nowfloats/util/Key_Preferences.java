@@ -6,6 +6,8 @@ package com.nowfloats.util;
 public class Key_Preferences {
 
 
+    public static final String EVENT_WILDFIRE_BUY = "eventWildfireBuy";
+    public static final String GET_FP_DETAILS_WIDGET_BUSINESS_APP = "GET_FP_DETAILS_BUSINESS_APP";
     public static  String GET_FP_DETAILS_CITY = "GET_FP_DETAILS_CITY";
     public static  String GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG";
     public static  String GET_FP_DETAILS_ADDRESS ="GET_FP_DETAILS_ADDRESS" ;
@@ -22,6 +24,7 @@ public class Key_Preferences {
     public static String GET_FP_DETAILS_PRIMARY_NUMBER = "GET_FP_DETAILS_PRIMARY_NUMBER";
     public static String GET_FP_DETAILS_ALTERNATE_NUMBER_1 = "GET_FP_DETAILS_ALTERNATE_NUMBER_1";
     public static String GET_FP_DETAILS_ALTERNATE_NUMBER_2 = "GET_FP_DETAILS_ALTERNATE_NUMBER_2";
+    public static String GET_FP_DETAILS_ALTERNATE_NUMBER_3 = "GET_FP_DETAILS_ALTERNATE_NUMBER_3";
     public static String GET_FP_DETAILS_CREATED_ON = "GET_FP_DETAILS_CREATED_ON";
 
     public static String GET_FP_DETAILS_WIDGET_IMAGE_GALLERY = "GET_FP_DETAILS_WIDGET_IMAGE_GALLERY";

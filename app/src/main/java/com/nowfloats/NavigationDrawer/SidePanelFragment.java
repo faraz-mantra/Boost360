@@ -28,6 +28,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -45,6 +46,7 @@ import com.nowfloats.BusinessProfile.UI.API.UploadPictureAsyncTask;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DeleteBackgroundImageAsyncTask;
+import com.nowfloats.Twitter.TwitterConstants;
 import com.nowfloats.Volley.AppController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
@@ -125,11 +127,13 @@ public class SidePanelFragment extends Fragment {
     private final int gallery_req_id=6;
 
     private ImageView lockWidgetImageView, lockWidget_ProductGallery, /*lockWidgetImageView_BusinessEnq,*/ lockWidgetImageView_CSP;
-
+    private Button newButton;
     private static HashMap<String, Integer> backgroundImages = new HashMap<String, Integer>();
     private ImageView shareImageView, businessProfileImageView, dasbBoardImageView, callImageView, chatImageView, cspImageView,
             settingsImageView, StoreImageView, productGalleryImageView,businessappImageView, imageGalleryImageView/*, customerQueriesImageView*/ /*ivSiteAppearance*/;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
+    private ImageView businessLockImage;
+
 
     public interface OnItemClickListener {
         public void onClick(String nextScreen);
@@ -167,6 +171,8 @@ public class SidePanelFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //Log.d("ILUD", "Hello");
+        final String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
+        final String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
 
         progressbar = (ProgressBar) view.findViewById(R.id.ProgressBar);
         meterValue = (TextView) view.findViewById(R.id.fragment_side_panel_progress_meter_value);
@@ -362,6 +368,7 @@ public class SidePanelFragment extends Fragment {
             profileLayout.setVisibility(View.GONE);
             cspLayout.setVisibility(View.GONE);
             imageGalleryLayout.setVisibility(View.GONE);
+            businessAppsLayout.setVisibility(View.GONE);
             chatLayout.setVisibility(View.GONE);
             siteMeter.setVisibility(View.GONE);
             callLayout.setVisibility(View.GONE);
@@ -386,11 +393,12 @@ public class SidePanelFragment extends Fragment {
 
 
         lockWidgetImageView = (ImageView) imageGalleryLayout.findViewById(R.id.lock_widget);
+        businessLockImage = (ImageView) businessAppsLayout.findViewById(R.id.business_lock_widget);
         lockWidget_ProductGallery = (ImageView) productGalleryLayout.findViewById(R.id.lock_product_gal);
         //lockWidgetImageView_BusinessEnq = (ImageView) customerQueriesLayout.findViewById(R.id.lock_widget_business_enquiries);
         lockWidgetImageView_CSP = (ImageView) cspLayout.findViewById(R.id.lock_widget_csp);
         //Constants.ImageGalleryWidget = false ;
-
+        newButton = (Button) businessAppsLayout.findViewById(R.id.new_business_button);
         // Constants.BusinessEnquiryWidget = true;
 
         if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_GALLERY).contains("IMAGEGALLERY")) {
@@ -398,7 +406,11 @@ public class SidePanelFragment extends Fragment {
         } else {
             lockWidgetImageView.setVisibility(View.GONE);
         }
-
+        if (Integer.parseInt(paymentState)>0 && Integer.parseInt(paymentLevel) > 10) {
+            newButton.setVisibility(View.VISIBLE);
+        } else {
+            businessLockImage.setVisibility(View.VISIBLE);
+        }
         if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_PRODUCT_GALLERY).contains("PRODUCTCATALOGUE")) {
             lockWidget_ProductGallery.setVisibility(View.VISIBLE);
         } else {
@@ -568,9 +580,16 @@ public class SidePanelFragment extends Fragment {
         businessAppsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MixPanelController.track("BusinessApps", null);
-                ((OnItemClickListener) mainActivity).onClick(getString(R.string.business_apps));
-                onclickColorChange(businessappImageView, businessAppTextview,businessAppsLayout);
+
+                if (Integer.parseInt(paymentState)>0 && Integer.parseInt(paymentLevel) > 10) {
+                    MixPanelController.track("BusinessApps", null);
+                    onclickColorChange(businessappImageView, businessAppTextview,businessAppsLayout);
+                    ((OnItemClickListener) mainActivity).onClick(getString(R.string.business_apps));
+                }
+                else {
+                    showAlertMaterialDialog();
+                }
+
             }
         });
         shareLayout.setOnClickListener(new View.OnClickListener() {
@@ -1232,6 +1251,10 @@ public class SidePanelFragment extends Fragment {
     }*/
         public void siteMeterCalculation() {
             SharedPreferences pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+            SharedPreferences mSharedPreferences = getActivity().getSharedPreferences(TwitterConstants.PREF_NAME,Context.MODE_PRIVATE);
+            Constants.fbShareEnabled = pref.getBoolean("fbShareEnabled", false);
+            Constants.fbPageShareEnabled = pref.getBoolean("fbPageShareEnabled", false);
+            Constants.twitterShareEnabled = mSharedPreferences.getBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false);
             siteMeterTotalWeight = 0;
             if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
                 siteMeterTotalWeight += 10;

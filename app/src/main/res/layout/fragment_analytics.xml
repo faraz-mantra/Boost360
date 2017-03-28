@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    tools:context="test.com.nowfloats.NavigationDrawer.Analytics_Fragment"
+    tools:context="com.nowfloats.NavigationDrawer.Analytics_Fragment"
     android:background="@color/screen_bg"
     android:gravity="center_horizontal"
     android:orientation="vertical">
@@ -11,6 +11,194 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <android.support.v7.widget.CardView
+            android:id="@+id/cvRiaCard"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            card_view:contentPadding="15dp">
+            <LinearLayout
+                android:id="@+id/llRiaCrdContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ria_cirlce_image"/>
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textColor="#808080"
+                        android:layout_gravity="center_vertical"
+                        android:text="Your Customers Love you"
+                        android:id="@+id/tvRiaCardHeader"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/llRiaCardSections"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_height="wrap_content">
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_single_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="20dp">
+
+                    <Button
+                        android:id="@+id/btnSingleResponse"
+                        android:background="@drawable/ria_positive_btn"
+                        android:textColor="@color/white"
+                        android:text="Sure!"
+                        android:textAllCaps="false"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_twobuttons"
+                    android:gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <Button
+                        android:id="@+id/btnRiaResponse1"
+                        android:background="@drawable/ria_positive_btn"
+                        android:textColor="@color/white"
+                        android:text="Sure!"
+                        android:textAllCaps="false"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp" />
+
+                    <Button
+                        android:id="@+id/btnRiaResponse2"
+                        android:layout_marginLeft="30dp"
+                        android:background="@drawable/ria_negative"
+                        android:textColor="@color/white"
+                        android:text="Not Now"
+                        android:textAllCaps="false"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/visitors_card"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            card_view:cardBackgroundColor="#FFFFFF"
+            card_view:cardCornerRadius="3dp"
+            android:elevation="3dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:id="@+id/numberOfVisitorsLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="24dp">
+
+
+                    <ImageView
+                        android:id="@+id/visitors_image"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/circle_bakground" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/unique_visitors" />
+                </FrameLayout>
+
+                <com.nowfloats.CustomWidget.roboto_lt_24_212121
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:text="@string/unique_visitors" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="right">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
+
+                        <ProgressBar
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:id="@+id/visitors_progressBar" />
+
+                        <TextView
+                            fontPath="Roboto-Medium.ttf"
+                            android:id="@+id/visitors_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="@color/primaryColor"
+                            android:text="25"
+                            android:visibility="visible"
+                            android:textSize="33sp"
+                            tools:ignore="MissingPrefix" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="34dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="visible"
+                        android:src="@drawable/next" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </android.support.v7.widget.CardView>
         <android.support.v7.widget.CardView
             android:id="@+id/card_view"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -22,7 +210,7 @@
             card_view:cardCornerRadius="3dp"
             android:elevation="3dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="10dp">
 
             <LinearLayout
                 android:id="@+id/numberOfVisitsLinearLayout"
@@ -47,7 +235,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:src="@drawable/analytics_visits" />
+                        android:src="@drawable/total_visits" />
                 </FrameLayout>
 
                 <com.nowfloats.CustomWidget.roboto_lt_24_212121
@@ -85,7 +273,7 @@
                             android:textColor="@color/primaryColor"
                             android:text="25"
                             android:visibility="visible"
-                            android:textSize="33dp"
+                            android:textSize="33sp"
                             tools:ignore="MissingPrefix" />
                     </LinearLayout>
 
@@ -169,8 +357,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:visibility="visible"
-                            android:text="1125"
-                            android:textSize="33dp"
+                            android:text="25"
+                            android:textSize="33sp"
                             android:textColor="@color/primaryColor"
                             tools:ignore="MissingPrefix" />
                     </FrameLayout>
@@ -243,16 +431,16 @@
                             android:layout_height="wrap_content"
                             android:visibility="gone"
                             android:id="@+id/subscriber_progressBar" />
-                    <TextView
-                        fontPath="Roboto-Medium.ttf"
-                        android:id="@+id/analytics_screen_subscriber_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="visible"
-                        android:text="1125"
-                        android:textSize="33dp"
-                        android:textColor="@color/primaryColor"
-                        tools:ignore="MissingPrefix" />
+                        <TextView
+                            fontPath="Roboto-Medium.ttf"
+                            android:id="@+id/analytics_screen_subscriber_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="visible"
+                            android:text="25"
+                            android:textSize="33sp"
+                            android:textColor="@color/primaryColor"
+                            tools:ignore="MissingPrefix" />
                     </FrameLayout>
                     <ImageView
                         android:layout_width="34dp"
@@ -334,8 +522,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:visibility="visible"
-                            android:text="1125"
-                            android:textSize="33dp"
+                            android:text="25"
+                            android:textSize="33sp"
                             android:textColor="@color/primaryColor"
                             tools:ignore="MissingPrefix" />
                     </FrameLayout>
@@ -389,7 +577,7 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:layout_gravity="center_vertical"
-                    android:gravity="right">
+                    android:gravity="end">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -406,13 +594,13 @@
                         <TextView
                             fontPath="Roboto-Medium.ttf"
                             android:id="@+id/analytics_screen_updates_count"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textColor="@color/primaryColor"
                             android:text=""
                             android:visibility="gone"
-                            android:textSize="33dp"
+                            android:textSize="33sp"
                             tools:ignore="MissingPrefix" />
                     </LinearLayout>
 
