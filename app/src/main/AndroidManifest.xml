@@ -114,13 +114,13 @@
                 android:value="com.nowfloats.Analytics_Screen.ShowWebView" />
         </activity>
         <activity
-            android:name="com.nowfloats.Analytics_Screen.FacebookAnalyticsLogin"
+            android:name="com.nowfloats.Analytics_Screen.SocialAnalytics"
             android:label="Social Analytics"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nowfloats.Analytics_Screen.FacebookAnalyticsLogin" />
+                android:value="com.nowfloats.Analytics_Screen.SocialAnalytics" />
         </activity>
         <activity
             android:name="com.nowfloats.NavigationDrawer.API.twitter.PrepareRequestTokenActivity"

@@ -46,7 +46,7 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.nowfloats.Analytics_Screen.FacebookAnalyticsLogin;
+import com.nowfloats.Analytics_Screen.SocialAnalytics;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueries;
 import com.nowfloats.Analytics_Screen.ShowWebView;
@@ -260,7 +260,7 @@ public class Analytics_Fragment extends Fragment {
                 else
                 {
                     //Log.v("ggg",pref.getBoolean("fbPageShareEnabled",false)+"frag_ana"+status);
-                    Intent i = new Intent(getActivity(), FacebookAnalyticsLogin.class);
+                    Intent i = new Intent(getActivity(), SocialAnalytics.class);
                     i.putExtra("GetStatus",status);
                     startActivity(i);
                 }
