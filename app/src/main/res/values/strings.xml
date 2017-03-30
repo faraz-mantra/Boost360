@@ -385,6 +385,10 @@
     <item>Fresh Milk Light</item>
     <item>The First Fox</item>
 </string-array>
+    <string-array name="social_array">
+        <item>Facebook</item>
+        <item>Quikr</item>
+    </string-array>
     <string name="business_enquiries_title">Business Enquiries</string>
     <string name="double_quotes"> &quot; </string>
     <string name="business_profile_title">Profile</string>

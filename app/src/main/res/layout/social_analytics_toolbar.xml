@@ -6,18 +6,30 @@
     android:layout_height="50dp">
     <LinearLayout
         android:layout_width="match_parent"
-        android:gravity="end|center_vertical"
-        android:layout_height="wrap_content">
-
+        android:layout_marginEnd="10dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp">
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:layout_weight="1"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_gravity="start"
+        android:text="Social Analytics"/>
         <ImageView
             android:id="@+id/spinner_img"
             android:layout_width="25dp"
             android:layout_height="25dp"
+            android:visibility="gone"
             android:src="@drawable/quikr"/>
-        <android.support.v7.widget.AppCompatSpinner
+        <com.nowfloats.CustomWidget.HiddenTextSpinner
             android:id="@+id/toolbar_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
+            android:layout_width="75dp"
+            android:layout_height="25dp"/>
     </LinearLayout>
 
 </android.support.v7.widget.Toolbar>

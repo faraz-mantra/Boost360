@@ -36,19 +36,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.nowfloats.BusinessProfile.UI.API.UploadPictureAsyncTask;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DeleteBackgroundImageAsyncTask;
 import com.nowfloats.Twitter.TwitterConstants;
-import com.nowfloats.Volley.AppController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
@@ -587,14 +580,14 @@ public class SidePanelFragment extends Fragment {
             }
         });
         //enqCount = (TextView)view.findViewById(R.id.enquiry_count_textview);
-        BoostLog.d("Executing Async: ", Constants.beCountUrl + "?clientId=" + Constants.clientId + "&fpId=" + session.getFPID());
-        RequestQueue queue = AppController.getInstance().getRequestQueue();
+        Log.d("Executing Async: ", Constants.beCountUrl + "?clientId=" + Constants.clientId + "&fpId=" + session.getFPID());
+       /* RequestQueue queue = AppController.getInstance().getRequestQueue();
         StringRequest beCountRequest = new StringRequest(Request.Method.GET, Constants.beCountUrl + "?clientId=" + Constants.clientId + "&fpId=" + session.getFPID(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if(!Util.isNullOrEmpty(session.getEnquiryCount())){
                     Constants.enqCount = Integer.parseInt(response)-Integer.parseInt(session.getEnquiryCount());
-                    if(/*Constants.enqCount > 0 && lockWidgetImageView_BusinessEnq.getVisibility()!=View.VISIBLE*/false){
+                    if(*//*Constants.enqCount > 0 && lockWidgetImageView_BusinessEnq.getVisibility()!=View.VISIBLE*//*false){
                         //enqCount.setVisibility(View.VISIBLE);
                         //enqCount.setText(Constants.enqCount + "");
                     }
@@ -610,7 +603,7 @@ public class SidePanelFragment extends Fragment {
                 BoostLog.d("Error Business Enquiry: ", error.getMessage());
             }
         });
-        queue.add(beCountRequest);
+        queue.add(beCountRequest);*/
 
         view.findViewById(R.id.tv_write_to_ria_info).setOnClickListener(new View.OnClickListener() {
             @Override

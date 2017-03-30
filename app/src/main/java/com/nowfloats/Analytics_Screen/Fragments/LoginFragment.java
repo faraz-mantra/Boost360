@@ -533,6 +533,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
                 prefsEditor.putInt("fbPageStatus",1);
                 prefsEditor.apply();
                //call other fragment
+                ((OpenOtherFacebookScreen)mContext).showFragment();
                 break;
             case PAGE_NO_FOUND:
                 Methods.materialDialog(activity, "Alert", getString(R.string.look_like_no_facebook_page));
@@ -540,5 +541,9 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
             default:
                 break;
         }
+    }
+
+    public interface OpenOtherFacebookScreen{
+        void showFragment();
     }
 }

@@ -46,10 +46,9 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.nowfloats.Analytics_Screen.SocialAnalytics;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueries;
-import com.nowfloats.Analytics_Screen.ShowWebView;
+import com.nowfloats.Analytics_Screen.SocialAnalytics;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.CustomWidget.VerticalTextView;
@@ -252,18 +251,18 @@ public class Analytics_Fragment extends Fragment {
                 SharedPreferences pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
                 int status =pref.getInt("fbPageStatus",0);
 
-                if(pref.getBoolean("fbPageShareEnabled",false) && status==1)
+                /*if(pref.getBoolean("fbPageShareEnabled",false) && status==1)
                 {
                     Intent i = new Intent(getActivity(), ShowWebView.class);
                     startActivity(i);
                 }
                 else
-                {
+                {*/
                     //Log.v("ggg",pref.getBoolean("fbPageShareEnabled",false)+"frag_ana"+status);
                     Intent i = new Intent(getActivity(), SocialAnalytics.class);
                     i.putExtra("GetStatus",status);
                     startActivity(i);
-                }
+
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
