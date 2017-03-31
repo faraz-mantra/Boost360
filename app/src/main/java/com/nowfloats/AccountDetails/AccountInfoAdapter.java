@@ -59,8 +59,8 @@ public class AccountInfoAdapter extends RecyclerView.Adapter<AccountInfoAdapter.
             AccountDetailModel detail = detailModels.get(position);
             try {
                 holder.purchase.setVisibility(View.GONE);
-                detail.CreatedOn = detail.CreatedOn.replace("/Date(", "").replace(")/", "");
-                Long epochTime = Long.parseLong(detail.CreatedOn);
+                detail.ToBeActivatedOn = detail.ToBeActivatedOn.replace("/Date(", "").replace(")/", "");
+                Long epochTime = Long.parseLong(detail.ToBeActivatedOn);
                 Date date = new Date(epochTime),date1 = null;
                 holder.name.setText(detail.NameOfWidget);
                 String value = dateFormat.format(date);
