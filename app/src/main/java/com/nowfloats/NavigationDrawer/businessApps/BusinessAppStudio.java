@@ -74,6 +74,7 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
         Button previewButton= (Button) view.findViewById(R.id.preview_button);
         Button getAppButton= (Button) view.findViewById(R.id.get_app_button);
         ImageView iconImage= (ImageView) view.findViewById(R.id.imgview_icon_type);
+        ImageView logoImage= (ImageView) view.findViewById(R.id.business_app_preview_android_image);
         TextView freeText= (TextView) view.findViewById(R.id.tv_free);
         TextView nameTextView= (TextView) view.findViewById(R.id.app_name);
         LinearLayout comming_soon= (LinearLayout) view.findViewById(R.id.comming_soon);
@@ -81,7 +82,6 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
 
         previewButton.setOnClickListener(this);
         getAppButton.setOnClickListener(this);
-
         String name=session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME);
         nameTextView.setText(name);
 

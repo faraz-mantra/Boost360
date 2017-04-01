@@ -14,8 +14,6 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
-import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
@@ -40,9 +38,9 @@ public class BusinessAppsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-        if(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl))){
+        /*if(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl))){
             ShowDialogLogo();
-        }
+        }*/
         addFragments(SHOW_PREVIEW);
 
     }

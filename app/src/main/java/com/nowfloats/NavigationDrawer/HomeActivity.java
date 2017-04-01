@@ -516,9 +516,11 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
         Constants.GCM_Msg = false;
         if(!Util.isNullOrEmpty(url)){
-            if(url.contains(getResources().getString(R.string.deeplink_update))){
-//                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//                ft.replace(R.id.mainFrame,homeFragment, "homeFragment").commit();
+            if(url.contains("facebookpage")){
+                Methods.likeUsFacebook(this,"/reviews/");
+            }else if(url.contains(getResources().getString(R.string.deeplink_update))){
+//               FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//               ft.replace(R.id.mainFrame,homeFragment, "homeFragment").commit();
 
                 Intent createUpdate = new Intent(HomeActivity.this, Create_Message_Activity.class);
                 if(isFromRia && mRiaNodeDataModel!=null) {

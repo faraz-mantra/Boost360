@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -79,7 +80,18 @@ public class Methods {
         }
         return status;
     }
-
+    public static void likeUsFacebook(Context context,String review){
+        MixPanelController.track("LikeUsOnFacebook", null);
+        Intent facebookIntent;
+        try {
+            context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
+            facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_PAGE_WITH_ID));
+        } catch (Exception e) {
+            facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_URL+review));
+        }
+        facebookIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
+        context.startActivity(facebookIntent);
+    }
     public static void showSnackBar(Activity context,String msg){
         android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), msg, android.support.design.widget.Snackbar.LENGTH_LONG);
         snackBar.getView().setBackgroundColor(Color.GRAY);
