@@ -46,14 +46,15 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:orientation="vertical"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="10dp"
             android:gravity="center_vertical"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp">
+            android:layout_marginLeft="10dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:gravity="center"
+                android:drawablePadding="5dp"
                 android:drawableStart="@drawable/android_green"
                 android:id="@+id/android_app"
                 android:text="@string/android_app"

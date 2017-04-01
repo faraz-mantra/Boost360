@@ -19,7 +19,6 @@
             android:layout_width="match_parent"
             android:orientation="horizontal"
             android:layout_gravity="center"
-            android:padding="5dp"
             android:layout_height="wrap_content">
             <FrameLayout
                 android:layout_width="wrap_content"
@@ -59,13 +58,14 @@
                 android:orientation="vertical"
                 android:gravity="bottom"
                 android:id="@+id/anim_parent"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="10dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="5dp">
+                android:layout_marginLeft="10dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:gravity="center"
+                    android:drawablePadding="5dp"
                     android:drawableStart="@drawable/android_green"
                     android:id="@+id/android_app"
                     android:text="@string/android_app"
