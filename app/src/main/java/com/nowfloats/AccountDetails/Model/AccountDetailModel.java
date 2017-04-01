@@ -14,4 +14,5 @@ public class AccountDetailModel {
     public String widgetKey;
     public String CreatedOn;
     public String _id;
+    public String ToBeActivatedOn;
 }

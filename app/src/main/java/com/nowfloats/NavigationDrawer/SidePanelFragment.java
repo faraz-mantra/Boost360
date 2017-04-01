@@ -616,13 +616,13 @@ public class SidePanelFragment extends Fragment {
         });
         //enqCount = (TextView)view.findViewById(R.id.enquiry_count_textview);
         BoostLog.d("Executing Async: ", Constants.beCountUrl + "?clientId=" + Constants.clientId + "&fpId=" + session.getFPID());
-        RequestQueue queue = AppController.getInstance().getRequestQueue();
+        /*RequestQueue queue = AppController.getInstance().getRequestQueue();
         StringRequest beCountRequest = new StringRequest(Request.Method.GET, Constants.beCountUrl + "?clientId=" + Constants.clientId + "&fpId=" + session.getFPID(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if(!Util.isNullOrEmpty(session.getEnquiryCount())){
                     Constants.enqCount = Integer.parseInt(response)-Integer.parseInt(session.getEnquiryCount());
-                    if(/*Constants.enqCount > 0 && lockWidgetImageView_BusinessEnq.getVisibility()!=View.VISIBLE*/false){
+                    if(*//*Constants.enqCount > 0 && lockWidgetImageView_BusinessEnq.getVisibility()!=View.VISIBLE*//*false){
                         //enqCount.setVisibility(View.VISIBLE);
                         //enqCount.setText(Constants.enqCount + "");
                     }
@@ -638,7 +638,7 @@ public class SidePanelFragment extends Fragment {
                 BoostLog.d("Error Business Enquiry: ", error.getMessage());
             }
         });
-        queue.add(beCountRequest);
+        queue.add(beCountRequest);*/
 
         view.findViewById(R.id.tv_write_to_ria_info).setOnClickListener(new View.OnClickListener() {
             @Override

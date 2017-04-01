@@ -49,6 +49,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.nowfloats.Analytics_Screen.FacebookAnalyticsLogin;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueries;
+import com.nowfloats.Analytics_Screen.SearchRankingActivity;
 import com.nowfloats.Analytics_Screen.ShowWebView;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
@@ -116,7 +117,7 @@ public class Analytics_Fragment extends Fragment {
     @Override
     public void onResume() {
 
-        Log.d("FCM Token", FirebaseInstanceId.getInstance().getToken());
+        //Log.d("FCM Token", FirebaseInstanceId.getInstance().getToken());
         getFPDetails(getActivity(), session.getFPID(), Constants.clientId, bus);
 
         MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT,null);
@@ -267,6 +268,18 @@ public class Analytics_Fragment extends Fragment {
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
+
+        LinearLayout llSearchRanking = (LinearLayout) rootView.findViewById(R.id.analytics_screen_search_ranking);
+        llSearchRanking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), SearchRankingActivity.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
+
         cvRiaCard = (CardView) rootView.findViewById(R.id.cvRiaCard);
         btnRiaCardLeft = (Button) rootView.findViewById(R.id.btnRiaResponse1);
         btnRiaCrdRight = (Button) rootView.findViewById(R.id.btnRiaResponse2);

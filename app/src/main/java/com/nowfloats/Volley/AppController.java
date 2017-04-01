@@ -1,8 +1,10 @@
 package com.nowfloats.Volley;
 
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.StrictMode;
 import android.provider.Settings;
+import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
@@ -167,4 +169,9 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         return "e916fce1-97ca-4dd7-9f95-7a58f6ce42cf";
     }*/
 
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 }

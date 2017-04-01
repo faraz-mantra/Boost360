@@ -132,7 +132,6 @@ public class InAppFragment extends Fragment {
                     try {
                         uri = Uri.parse(uriString);
                     } catch (IllegalArgumentException e) {
-                        Log.i(LOGTAG, "Can't parse notification URI, will not take any action", e);
                         return true;
                     }
 
@@ -141,7 +140,6 @@ public class InAppFragment extends Fragment {
                         mParent.startActivity(viewIntent);
                         mMixpanel.getPeople().trackNotification("$campaign_open", inApp);
                     } catch (ActivityNotFoundException e) {
-                        Log.i(LOGTAG, "User doesn't have an activity for notification URI " + uri);
                     }
                 }
 
@@ -234,7 +232,7 @@ public class InAppFragment extends Fragment {
             // setCustomAnimations works on a per transaction level, so the animations set
             // when this fragment was created do not apply
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.setCustomAnimations(0, R.anim.com_mixpanel_android_slide_down).remove(this).commit();
+            transaction.setCustomAnimations(0, R.animator.com_mixpanel_android_slide_down).remove(this).commit();
             UpdateDisplayState.releaseDisplayState(mDisplayStateId);
             mCleanedUp = true;
         }
