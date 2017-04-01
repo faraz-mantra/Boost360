@@ -123,7 +123,7 @@ public class NotificationFragment extends Fragment{
                 public void success(ArrayList<AlertModel> alertModels, Response response) {
 
                     progress_layout.setVisibility(View.GONE);
-                    if ((alertModels==null || alertModels.size() == 0 )){
+                    if (alertModels==null){
                         if(alertModelsList.size() == 0){
                             emptylayout.setVisibility(View.VISIBLE);
                         }

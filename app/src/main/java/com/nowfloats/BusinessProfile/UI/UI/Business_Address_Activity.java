@@ -66,7 +66,7 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
     UserSessionManager session;
     public static ImageView ivMap;
     public static final int PLACE_PICKER_REQUEST = 23;
-    private boolean mUpdatingPositionFromMap = false,saveAddressFlag=false;;
+    private boolean mUpdatingPositionFromMap = false,saveAddressFlag=false;
     ArrayAdapter<String> adapter;
     private List<String> citys =new ArrayList<>();
     private GoogleApiClient mGoogleApiClient;

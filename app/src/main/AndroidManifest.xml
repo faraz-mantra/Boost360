@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2017030021"
-    android:versionName="4.5.6">
+    android:versionCode="2017030031"
+    android:versionName="4.5.7">
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
@@ -270,8 +270,14 @@
             <!-- android:theme="@android:style/Theme.Translucent.NoTitleBar" -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:host="com.biz2.nowfloats" android:scheme="https"/>
             </intent-filter>
         </activity>
         <activity
