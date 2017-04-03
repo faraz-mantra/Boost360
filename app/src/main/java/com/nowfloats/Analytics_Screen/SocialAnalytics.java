@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
@@ -16,7 +17,6 @@ import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -56,6 +56,7 @@ public class SocialAnalytics extends AppCompatActivity implements View.OnClickLi
     private String mAnalyticsUrl="http://nfx.withfloats.com/dataexchange/v1/fetch/analytics?" +
             "identifier="+mType+"&nowfloats_id=";
     String[] socialArray;
+    int[] images = new int[]{R.drawable.facebook_round,R.drawable.quikr};
     UserSessionManager session;
     AppCompatSpinner spinner;
     ImageView toolbarImage;
@@ -70,6 +71,7 @@ public class SocialAnalytics extends AppCompatActivity implements View.OnClickLi
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         title = (TextView) findViewById(R.id.title);
+
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!=null) {
             title.setText("Social Analytics");
@@ -82,7 +84,8 @@ public class SocialAnalytics extends AppCompatActivity implements View.OnClickLi
         layout = (LinearLayout) findViewById(R.id.linearlayout);
         spinner = (AppCompatSpinner) findViewById(R.id.toolbar_spinner);
         spinner.setOnItemSelectedListener(this);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,socialArray);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,socialArray);
+        SpinnerAdapter adapter = new SpinnerAdapter(this,images);
         spinner.setAdapter(adapter);
 
         Intent intent = getIntent();
@@ -169,6 +172,7 @@ public class SocialAnalytics extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Log.v("ggg",position+" selected "+id);
+        ((LinearLayout)view).setBackgroundColor(ContextCompat.getColor(this,R.color.primaryColor));
     }
 
     @Override
