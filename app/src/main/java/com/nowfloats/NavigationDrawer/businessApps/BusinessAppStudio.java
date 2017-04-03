@@ -14,13 +14,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.JsonObject;
 import com.nowfloats.CustomWidget.MaterialProgressBar;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.BusinessAppApis;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
-import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 import retrofit.Callback;
@@ -119,10 +119,11 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
                             @Override
                             public void success(JsonObject s, Response response) {
                                 MaterialProgressBar.dismissProgressBar();
-                                if(s==null || response.getStatus()!=200){
+                                if(s==null || (s.getAsString().length() == 0) || response.getStatus()!=200){
+                                    showMessage("There was an error processing your request. Please write to ria@nowfloats.com or call 1860-123-1233");
                                     return;
                                 }
-                                Log.v("ggg",s.toString());
+                                //Log.v("ggg",s.toString());
                                 String status = s.get("Status").getAsString();
                                 if(status!= null && status.equals("1")){
                                     BusinessAppPreview frag= (BusinessAppPreview) getParentFragment();
@@ -134,7 +135,7 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
                             public void failure(RetrofitError error) {
                                 Log.v("ggg",error+"");
                                 MaterialProgressBar.dismissProgressBar();
-                                Methods.showSnackBarNegative(getActivity(),"Problem to start build");
+                                showMessage("There was an error processing your request. Please try again in few minutes");
                             }
                         });
                     }
@@ -143,5 +144,14 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
             default:
                 break;
         }
+    }
+    private void showMessage(String message){
+        if(!isAdded()) return;
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_link_layout,null);
+        TextView text = (TextView) view.findViewById(R.id.toast_message_to_contact);
+        text.setText(message);
+        new MaterialDialog.Builder(context)
+                .customView(view,false)
+                .build().show();
     }
 }

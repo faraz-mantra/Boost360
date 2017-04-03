@@ -123,7 +123,7 @@ public class BusinessAppPreview extends Fragment {
                 Log.v("ggg",status);
                 if(status == null){
                     MaterialProgressBar.dismissProgressBar();
-                    Methods.showSnackBarNegative(getActivity(),"Problem to start build");
+                    Methods.showSnackBarNegative(getActivity(),getResources().getString(R.string.something_went_wrong_try_again));
                     getActivity().finish();
                 }else if(status.equals("0")){
                     MaterialProgressBar.dismissProgressBar();
@@ -164,7 +164,6 @@ public class BusinessAppPreview extends Fragment {
                         public void success(List<StoreAndGoModel.PublishStatusModel> modelList, Response response) {
                             MaterialProgressBar.dismissProgressBar();
                             if(modelList == null || modelList.size() == 0 ||response.getStatus() != 200){
-                                Methods.showSnackBarNegative(getActivity(),"Problem to start build");
                                 getActivity().finish();
                                 return;
                             }
@@ -185,7 +184,7 @@ public class BusinessAppPreview extends Fragment {
                         @Override
                         public void failure(RetrofitError error) {
                             MaterialProgressBar.dismissProgressBar();
-                            Methods.showSnackBarNegative((BusinessAppsActivity)context,getString(R.string.something_went_wrong));
+                            Methods.showSnackBarNegative((BusinessAppsActivity)context,getResources().getString(R.string.something_went_wrong_try_again));
                             addAndroidFragment(SHOW_DEVELOPMENT,"",false);
                         }
                     });
@@ -196,7 +195,7 @@ public class BusinessAppPreview extends Fragment {
             public void failure(RetrofitError error) {
                 MaterialProgressBar.dismissProgressBar();
                 Log.v("ggg",error+"");
-                Methods.showSnackBarNegative(getActivity(),"Problem to start build");
+                Methods.showSnackBarNegative(getActivity(),getResources().getString(R.string.something_went_wrong_try_again));
                 getActivity().finish();
             }
         });
@@ -237,6 +236,7 @@ public class BusinessAppPreview extends Fragment {
             public void success(List<StoreAndGoModel.ScreenShotsModel> modelList, Response response) {
                 MaterialProgressBar.dismissProgressBar();
                 if(modelList == null || modelList.size()== 0 ||response.getStatus() != 200){
+                    Methods.showSnackBarNegative(getActivity(),getResources().getString(R.string.something_went_wrong_try_again));
                     return;
                 }
                 for (StoreAndGoModel.ScreenShotsModel model : modelList){
@@ -250,7 +250,7 @@ public class BusinessAppPreview extends Fragment {
             @Override
             public void failure(RetrofitError error) {
                 MaterialProgressBar.dismissProgressBar();
-                Methods.showSnackBarNegative(getActivity(),"Problem to start build");
+                Methods.showSnackBarNegative(getActivity(),getResources().getString(R.string.something_went_wrong_try_again));
             }
         });
     }
