@@ -20,6 +20,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.RiaNetworkInterface;
 import com.nowfloats.NavigationDrawer.model.RiaSupportModel;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class HelpAndSupportActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     TextView headerText, tvConsultantName, tvConsultantNumber, tvEmail, tvTextHelp, tvTextRia,
-            tvTextFaq;
+            tvTextFaq1, tvTextFaq2;
     Button btnSendEmail, btnCall, btnSchedule;
     ImageView ivHelpAvatar;
     ProgressDialog pd;
@@ -62,7 +63,8 @@ public class HelpAndSupportActivity extends AppCompatActivity {
         tvEmail = (TextView) findViewById(R.id.tv_consultant_email);
         tvTextHelp = (TextView) findViewById(R.id.tv_text_help);
         tvTextRia = (TextView)  findViewById(R.id.tv_ria_text);
-        tvTextFaq = (TextView) findViewById(R.id.tv_text_faq);
+        tvTextFaq1 = (TextView) findViewById(R.id.tv_text_faq1);
+        tvTextFaq2 = (TextView) findViewById(R.id.tv_text_faq2);
 
         ivHelpAvatar = (ImageView) findViewById(R.id.iv_help_avatar);
 
@@ -170,9 +172,11 @@ public class HelpAndSupportActivity extends AppCompatActivity {
         });
 
 
-        tvTextRia.setText(Html.fromHtml("If your query is unanswered, please contact us at"));
-        tvTextFaq.setText(Html.fromHtml("<a href=\"mailto:ria@nowfloats.com\">ria@nowfloats.com</a>. Product related queries, please refer to our <a href=\"https://www.nowfloats.com/faq\">FAQs</a>"));
-        tvTextFaq.setMovementMethod(LinkMovementMethod.getInstance());
+        tvTextRia.setText(Methods.fromHtml("If your query is unanswered, please contact us at"));
+        tvTextFaq1.setText(Methods.fromHtml("<a href=\"mailto:ria@nowfloats.com\">ria@nowfloats.com</a> or call at "+getString(R.string.contact_us_number)+"."));
+        tvTextFaq1.setMovementMethod(LinkMovementMethod.getInstance());
+        tvTextFaq2.setText(Methods.fromHtml("Product related queries, please refer to our <a href=\"https://www.nowfloats.com/faq\">FAQs</a>"));
+        tvTextFaq2.setMovementMethod(LinkMovementMethod.getInstance());
 
         pd = ProgressDialog.show(this, "", getString(R.string.please_wait));
     }
