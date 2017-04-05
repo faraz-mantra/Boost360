@@ -8,9 +8,12 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,7 +82,28 @@ public class Methods {
         }
         return status;
     }
-
+    @SuppressWarnings("deprecation")
+    public static Spanned fromHtml(String html){
+        Spanned result;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
+        { result = Html.fromHtml(html,Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            result = Html.fromHtml(html);
+        }
+        return result;
+    }
+    public static void likeUsFacebook(Context context,String review){
+        MixPanelController.track("LikeUsOnFacebook", null);
+        Intent facebookIntent;
+        try {
+                context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
+                facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_PAGE_WITH_ID));
+            } catch (Exception e) {
+                facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_URL+review));
+            }
+        facebookIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
+        context.startActivity(facebookIntent);
+    }
     public static void showSnackBar(Activity context,String msg){
         android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), msg, android.support.design.widget.Snackbar.LENGTH_LONG);
         snackBar.getView().setBackgroundColor(Color.GRAY);
