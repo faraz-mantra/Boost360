@@ -68,6 +68,9 @@ android {
         partthree {
             applicationId "com.kitsune.biz"
         }
+        partfour{
+            applicationId "com.boostwebz"
+        }
     }
     packagingOptions {
         exclude 'META-INF/NOTICE.txt'

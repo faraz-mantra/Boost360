@@ -15,7 +15,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +44,6 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ViewPortHandler;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.nowfloats.Analytics_Screen.FacebookAnalyticsLogin;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueries;
@@ -288,12 +286,15 @@ public class Analytics_Fragment extends Fragment {
 
         PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
         ImageView galleryBack = (ImageView) rootView.findViewById(R.id.pop_up_gallery_img);
+        ImageView visitorBack = (ImageView) rootView.findViewById(R.id.visitors_image);
         ImageView subsBack = (ImageView) rootView.findViewById(R.id.pop_up_subscribers_img);
         ImageView searchBack = (ImageView) rootView.findViewById(R.id.pop_up_search_img);
+        ImageView searchRankBack = (ImageView) rootView.findViewById(R.id.pop_up_search_ranking_img);
         ImageView businessEnqBg = (ImageView) rootView.findViewById(R.id.business_enq_bg);
         ImageView ivFbAnalytics = (ImageView) rootView.findViewById(R.id.iv_fb_page_analytics);
 
-
+        visitorBack.setColorFilter(porterDuffColorFilter);
+        searchRankBack.setColorFilter(porterDuffColorFilter);
         galleryBack.setColorFilter(porterDuffColorFilter);
         subsBack.setColorFilter(porterDuffColorFilter);
         searchBack.setColorFilter(porterDuffColorFilter);
