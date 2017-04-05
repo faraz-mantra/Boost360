@@ -145,13 +145,7 @@
                     android:orientation="horizontal"
                     android:gravity="center">
 
-                    <com.nowfloats.CustomWidget.roboto_md_24_a1a1a1
-                        android:layout_marginLeft="16dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/add_photo"
-                        android:textSize="18sp"
-                        android:textColor="#A1A1A1"/>
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -182,27 +176,20 @@
                     android:id="@+id/shareTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/share"
-                    android:layout_marginLeft="30dp"
                     android:layout_gravity="center"
-                    android:textSize="18sp"
-                    android:textColor="#A1A1A1"/>
+                    android:layout_marginLeft="16dp"
+                    android:text="@string/share"
+                    android:textColor="#A1A1A1"
+                    android:textSize="18sp" />
 
-                <HorizontalScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-
-                    android:gravity="right|bottom">
                 <LinearLayout
                     android:id="@+id/socialSharingIconLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:weightSum="4"
-                    android:layout_gravity="right|bottom"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="end|bottom"
                     android:paddingTop="1dp"
                     android:orientation="horizontal" >
-
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -264,20 +251,21 @@
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/float_a_picture_share_quikr_parent"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:orientation="horizontal" >
 
                         <ImageView
                             android:id="@+id/create_message_activity_quikr_button"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:src="@drawable/quikr" />
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/facebook_icon_inactive" />
                     </LinearLayout>
                 </LinearLayout>
-                </HorizontalScrollView>
+
             </LinearLayout>
         </LinearLayout>
     </TableLayout>

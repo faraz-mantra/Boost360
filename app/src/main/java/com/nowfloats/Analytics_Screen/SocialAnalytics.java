@@ -172,7 +172,7 @@ public class SocialAnalytics extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Log.v("ggg",position+" selected "+id);
-        ((LinearLayout)view).setBackgroundColor(ContextCompat.getColor(this,R.color.primaryColor));
+        view.setBackgroundColor(ContextCompat.getColor(this,R.color.primaryColor));
     }
 
     @Override

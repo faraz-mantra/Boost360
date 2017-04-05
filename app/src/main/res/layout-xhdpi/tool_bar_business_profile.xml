@@ -23,8 +23,6 @@
         android:gravity="right"
         >
 
-
-
     <com.nowfloats.CustomWidget.roboto_md_size_a1a1a1
         android:id="@+id/saveTextView"
         android:layout_width="50dp"
