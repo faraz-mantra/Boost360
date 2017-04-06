@@ -3,15 +3,6 @@
 
     <item
         is-multidex="true"
-        jar="C:\NFSource\nowfloats\boost\app\build\intermediates\incremental-runtime-classes\partone\debug\instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
-        <dex dex="C:\NFSource\nowfloats\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10000\instant-run_d02719f1bf5ccf4ec246ec3284d2e08ec8050f80\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="C:\NFSource\nowfloats\boost\app\libs\libraries\AF-Android-SDK-v2.3.1.17.jar"
         jumboMode="true"
         optimize="true"
@@ -25,8 +16,17 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="e07cc0959290794c1c28afd3a55e00fee4e645f2">
+        sha1="b2a23828271e17d8579f92c1336c03700668d78a">
         <dex dex="C:\NFSource\nowfloats\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10000\instant-run-bootstrap_67c73ff8d4614773cb1f9844732e6760c2784ad7\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\NFSource\nowfloats\boost\app\build\intermediates\incremental-runtime-classes\partone\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
+        <dex dex="C:\NFSource\nowfloats\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10000\instant-run_d02719f1bf5ccf4ec246ec3284d2e08ec8050f80\classes.dex" />
     </item>
     <item
         is-multidex="true"

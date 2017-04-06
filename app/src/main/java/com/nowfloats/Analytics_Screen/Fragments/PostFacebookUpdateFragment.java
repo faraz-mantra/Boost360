@@ -60,13 +60,15 @@ public class PostFacebookUpdateFragment extends Fragment {
         postUpdate= (Button) view.findViewById(R.id.create_update_button);
         TextView message = (TextView) view.findViewById(R.id.message);
 
-        String socialType = null;
+        String socialTypeText1 = null,socialTypeText2 = null;
         if(SocialAnalytics.FACEBOOK.equals(mType)){
-            socialType = "Facebook Page";
+            socialTypeText2 = "Facebook Page";
+            socialTypeText1 = "Facebook Page";
         }else if(SocialAnalytics.QUIKR.equals(mType)){
-            socialType = "Quikr";
+            socialTypeText2 = "Quikr";
+            socialTypeText1 = "Quikr account";
         }
-        String text = "Looks like you haven\'t posted any update on your "+socialType+" through Boost yet Make sure you select the <b>"+socialType+" option</b> while creating an update";
+        String text = "Looks like you haven\'t posted any update on your "+socialTypeText1+" through Boost yet Make sure you select the <b>"+socialTypeText2+" option</b> while creating an update";
         message.setText(Methods.fromHtml(text));
         postUpdate.setOnClickListener(new View.OnClickListener() {
             @Override

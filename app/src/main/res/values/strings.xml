@@ -387,7 +387,6 @@
 </string-array>
     <string-array name="quikr_widget">
         <item>automotive</item>
-        <item>general</item>
         <item>tourism</item>
         <item>hotels &amp; motels</item>
         <item>real estate &amp; construction</item>

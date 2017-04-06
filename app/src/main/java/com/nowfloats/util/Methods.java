@@ -199,7 +199,7 @@ public class Methods {
         try{
             new MaterialDialog.Builder(activity)
                     .title(title)
-                    .content(msg)
+                    .content(Methods.fromHtml(msg))
                     .positiveText("Ok")
                     .positiveColorRes(R.color.primaryColor)
                     .callback(new MaterialDialog.ButtonCallback() {

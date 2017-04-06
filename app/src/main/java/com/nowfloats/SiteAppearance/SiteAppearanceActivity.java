@@ -42,14 +42,5 @@ public class SiteAppearanceActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-        if(siteAppearanceFragment!=null && siteAppearanceFragment.getChildFragmentManager().getBackStackEntryCount()>0){
-            siteAppearanceFragment.hideDialog();
-        }
-        else{
-            super.onBackPressed();
-        }
-
-    }
+   
 }

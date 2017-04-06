@@ -233,7 +233,7 @@ public class Create_Message_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int status = pref.getInt("quikrStatus", -1);
-                if (status == 1) {
+                if (status == 0) {
                     Methods.showSnackBar(activity,"Sorry, You have reached your daily limit of one post");
                 }else if(status == -1){
                     Methods.showSnackBarNegative(activity,"Something went wrong, please restart the application");
@@ -514,7 +514,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                     }
                 })*/
                 .build();
-
+        dialog.show();
         later.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
