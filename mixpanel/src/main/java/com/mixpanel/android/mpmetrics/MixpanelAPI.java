@@ -1604,7 +1604,7 @@ public class MixpanelAPI {
                                     Log.v(LOGTAG, "Attempting to show mini notification.");
                                 }
                                 final FragmentTransaction transaction = parent.getFragmentManager().beginTransaction();
-                                transaction.setCustomAnimations(0, R.anim.com_mixpanel_android_slide_down);
+                                transaction.setCustomAnimations(0, R.animator.com_mixpanel_android_slide_down);
                                 transaction.add(android.R.id.content, inapp);
                                 transaction.commit();
                             }
@@ -1756,7 +1756,6 @@ public class MixpanelAPI {
                             try {
                                 properties.put(key, args.get(key));
                             } catch (final JSONException e) {
-                                Log.e(APP_LINKS_LOGTAG, "failed to add key \"" + key + "\" to properties for tracking bolts event", e);
                             }
                         }
                     }
@@ -1764,13 +1763,13 @@ public class MixpanelAPI {
                 }
             }, new IntentFilter("com.parse.bolts.measurement_event"));
         } catch (final InvocationTargetException e) {
-            Log.d(APP_LINKS_LOGTAG, "Failed to invoke LocalBroadcastManager.registerReceiver() -- App Links tracking will not be enabled due to this exception", e);
+            //Log.d(APP_LINKS_LOGTAG, "Failed to invoke LocalBroadcastManager.registerReceiver() -- App Links tracking will not be enabled due to this exception", e);
         } catch (final ClassNotFoundException e) {
-            Log.d(APP_LINKS_LOGTAG, "To enable App Links tracking android.support.v4 must be installed: " + e.getMessage());
+            //Log.d(APP_LINKS_LOGTAG, "To enable App Links tracking android.support.v4 must be installed: " + e.getMessage());
         } catch (final NoSuchMethodException e) {
-            Log.d(APP_LINKS_LOGTAG, "To enable App Links tracking android.support.v4 must be installed: " + e.getMessage());
+            //Log.d(APP_LINKS_LOGTAG, "To enable App Links tracking android.support.v4 must be installed: " + e.getMessage());
         } catch (final IllegalAccessException e) {
-            Log.d(APP_LINKS_LOGTAG, "App Links tracking will not be enabled due to this exception: " + e.getMessage());
+            //Log.d(APP_LINKS_LOGTAG, "App Links tracking will not be enabled due to this exception: " + e.getMessage());
         }
     }
 
@@ -1785,16 +1784,11 @@ public class MixpanelAPI {
                 final Method getTargetUrlFromInboundIntent = clazz.getMethod("getTargetUrlFromInboundIntent", Context.class, Intent.class);
                 getTargetUrlFromInboundIntent.invoke(null, context, intent);
             } catch (final InvocationTargetException e) {
-                Log.d(APP_LINKS_LOGTAG, "Failed to invoke bolts.AppLinks.getTargetUrlFromInboundIntent() -- Unable to detect inbound App Links", e);
             } catch (final ClassNotFoundException e) {
-                Log.d(APP_LINKS_LOGTAG, "Please install the Bolts library >= 1.1.2 to track App Links: " + e.getMessage());
             } catch (final NoSuchMethodException e) {
-                Log.d(APP_LINKS_LOGTAG, "Please install the Bolts library >= 1.1.2 to track App Links: " + e.getMessage());
             } catch (final IllegalAccessException e) {
-                Log.d(APP_LINKS_LOGTAG, "Unable to detect inbound App Links: " + e.getMessage());
             }
         } else {
-            Log.d(APP_LINKS_LOGTAG, "Context is not an instance of Activity. To detect inbound App Links, pass an instance of an Activity to getInstance.");
         }
     }
 

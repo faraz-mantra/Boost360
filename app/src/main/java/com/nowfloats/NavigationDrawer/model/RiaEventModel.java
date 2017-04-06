@@ -7,89 +7,63 @@ import java.util.HashMap;
  */
 
 public class RiaEventModel {
-    private String EventCategory;
-    private long EventDateTime;
-    private String FpTag;
-    private String EventChannel = "APP_ANDR";
-    private String EventName;
-    private String NodeId;
-    private HashMap<String, String> EventData;
+    public String EventCategory;
+    public long EventDateTime;
+    public String FPTag;
+    public String EventChannel = "APP_ANDR";
+    public String EventName;
+    public String NodeId;
+    public HashMap<String, String> EventData;
 
-    public RiaEventModel(String eventCategory, long eventDateTime, String fpTag, String eventChannel,
-                         String eventName, String nodeId, HashMap<String, String> eventData) {
-        this.EventCategory = eventCategory;
-        this.EventDateTime = eventDateTime;
-        this.FpTag = fpTag;
-        this.EventChannel = eventChannel;
-        this.EventName = eventName;
-        this.NodeId = nodeId;
-        this.EventData = eventData;
+    public RiaEventModel(String EventCategory, long EventDateTime, String FPTag, String EventChannel,
+                         String EventName, String NodeId, HashMap<String, String> EventData) {
+        this.EventCategory = EventCategory;
+        this.EventDateTime = EventDateTime;
+        this.FPTag = FPTag;
+        this.EventChannel = EventChannel;
+        this.EventName = EventName;
+        this.NodeId = NodeId;
+        this.EventData = EventData;
     }
 
     public RiaEventModel(){
 
     }
 
-    public String getEventCategory() {
-        return EventCategory;
-    }
-
-    public RiaEventModel setEventCategory(String eventCategory) {
-        this.EventCategory = eventCategory;
+    public RiaEventModel setEventCategory(String EventCategory) {
+        this.EventCategory = EventCategory;
         return this;
     }
 
-    public long getEventDateTime() {
-        return EventDateTime;
-    }
 
-    public RiaEventModel setEventDateTime(long eventDateTime) {
-        this.EventDateTime = eventDateTime;
+    public RiaEventModel setEventDateTime(long EventDateTime) {
+        this.EventDateTime = EventDateTime;
         return this;
     }
 
-    public String getFpTag() {
-        return FpTag;
-    }
 
-    public RiaEventModel setFpTag(String fpTag) {
-        this.FpTag = fpTag;
+    public RiaEventModel setFpTag(String FPTag) {
+        this.FPTag = FPTag;
         return this;
     }
 
-    public String getEventChannel() {
-        return EventChannel;
-    }
-
-    public RiaEventModel setEventChannel(String eventChannel) {
-        this.EventChannel = eventChannel;
+    public RiaEventModel setEventChannel(String EventChannel) {
+        this.EventChannel = EventChannel;
         return this;
     }
 
-    public String getEventName() {
-        return EventName;
-    }
-
-    public RiaEventModel setEventName(String eventName) {
-        this.EventName = eventName;
+    public RiaEventModel setEventName(String EventName) {
+        this.EventName = EventName;
         return this;
     }
 
-    public String getNodeId() {
-        return NodeId;
-    }
-
-    public RiaEventModel setNodeId(String nodeId) {
-        this.NodeId = nodeId;
+    public RiaEventModel setNodeId(String NodeId) {
+        this.NodeId = NodeId;
         return this;
     }
 
-    public HashMap<String, String> getEventData() {
-        return EventData;
-    }
-
-    public RiaEventModel setEventData(HashMap<String, String> eventData) {
-        this.EventData = eventData;
+    public RiaEventModel setEventData(HashMap<String, String> EventData) {
+        this.EventData = EventData;
         return this;
     }
 }

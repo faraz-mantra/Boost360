@@ -33,6 +33,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -234,14 +235,16 @@ public class Create_Message_Activity extends AppCompatActivity {
                 int status = pref.getInt("quikrStatus", -1);
                 if (status == 1) {
                     Methods.showSnackBar(activity,"Sorry, You have reached your daily limit of one post");
-                }else if(status == 2){
+                }else if(status == -1){
                     Methods.showSnackBarNegative(activity,"Something went wrong, please restart the application");
                 } else{
                     if (mQuikrShare == 1) {
                         mQuikrShare = 0;
                         quikrButton.setImageResource(R.drawable.quikr_icon_deactivate);
                     } else {
-                        showQuikrGuidelines();
+                        if(pref.getBoolean("show_quikr_guidelines",true)) {
+                            showQuikrGuidelines();
+                        }
                         mQuikrShare = 1;
                         quikrButton.setImageResource(R.drawable.quikr_icon_activate);
                     }
@@ -472,13 +475,16 @@ public class Create_Message_Activity extends AppCompatActivity {
         View v = LayoutInflater.from(this).inflate(R.layout.quikr_guidlines,null);
         final AppCompatCheckBox checkBox = (AppCompatCheckBox) v.findViewById(R.id.checkbox);
         RecyclerView list = (RecyclerView) v.findViewById(R.id.list);
+        Button later = (Button) v.findViewById(R.id.button1);
+        Button agree = (Button) v.findViewById(R.id.button2);
+
         list.setHasFixedSize(true);
         list.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-        String[] array = getResources().getStringArray(R.array.quikr_tip_points);
+        String[] array = getResources().getStringArray(R.array.quikr_tip_on_dialog);
         list.setAdapter(new QuikrAdapter(this,array));
-        new MaterialDialog.Builder(this)
+        final MaterialDialog dialog = new MaterialDialog.Builder(this)
                 .customView(v,true)
-                .cancelable(true)
+                .cancelable(false)
                 .title(R.string.guidlines)
                 /*.positiveText("I read")
                 .positiveColor(R.color.primaryColor)
@@ -507,8 +513,28 @@ public class Create_Message_Activity extends AppCompatActivity {
                         }
                     }
                 })*/
-                .build()
-                .show();
+                .build();
+
+        later.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        agree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkBox.isChecked()) {
+                    dialog.dismiss();
+                    prefsEditor.putBoolean("show_quikr_guidelines",false).apply();
+                    Methods.materialDialog(activity,"Quikr Guidelines",getString(R.string.message_quikr));
+                }
+                else{
+                    Toast.makeText(activity, "Please read the guidelines", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void editImage() {

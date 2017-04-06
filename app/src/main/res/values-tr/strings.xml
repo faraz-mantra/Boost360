@@ -1188,5 +1188,17 @@
     <string name="title_for_quikrr">Write message title(Quikrr only)</string>
     <string name="guidlines">Guidelines for posting to Quikr</string>
     <string name="quikr_message">Good news! You can now publish your updates as product ads to Quikr. Please follow the guidelines mentioned below to ensure that your ad is successfully posted.</string>
+    <string name="search_ranking">Search Ranking</string>
+    <string name="spinner_title">Filter</string>
+
+
+    <string-array name="spinner_list_item_array">
+        <item>Rank Increased</item>
+        <item>Rank Maintained</item>
+        <item>Rank Decreased</item>
+        <item>New</item>
+        <item>Lost</item>
+    </string-array>
+
 
 </resources>

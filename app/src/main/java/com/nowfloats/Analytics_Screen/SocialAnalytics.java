@@ -29,8 +29,10 @@ import com.nowfloats.Analytics_Screen.Fragments.PostFacebookUpdateFragment;
 import com.nowfloats.Analytics_Screen.model.GetFacebookAnalyticsData;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.BoostLog;
+import com.nowfloats.util.Key_Preferences;
 import com.thinksity.R;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,9 +46,9 @@ import retrofit.client.Response;
  * Created by Abhi on 12/1/2016.
  */
 
-public class SocialAnalytics extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener,LoginFragment.OpenOtherFacebookScreen {
+public class SocialAnalytics extends AppCompatActivity implements AdapterView.OnItemSelectedListener,LoginFragment.OpenOtherFacebookScreen {
 
-    private int status = 0;
+    private int facebookStatus = 0;
     private final static int FETCH_DATA = 20,POST_UPDATE = 10,LOGIN_FACEBOOK = -100;
     WebView web;
     ProgressDialog progress;
@@ -88,25 +90,25 @@ public class SocialAnalytics extends AppCompatActivity implements View.OnClickLi
         spinner.setAdapter(adapter);
 
         Intent intent = getIntent();
-        status = intent.getIntExtra("GetStatus",0);
+        facebookStatus = intent.getIntExtra("GetStatus",0);
 
         progress=new ProgressDialog(this);
         progress.setMessage(getResources().getString(R.string.please_wait));
         progress.setCanceledOnTouchOutside(false);
 
-        if(status == 1){
+        if(facebookStatus == 1){
             checkForMessage(FACEBOOK);
         }else{
             addFragment(LOGIN_FACEBOOK,FACEBOOK);
         }
-        spinner.setVisibility(View.VISIBLE);
-        /*String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
+
+        String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
         List<String> list = Arrays.asList(quikrArray);
         if(list.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())){
             spinner.setVisibility(View.VISIBLE);
         }else{
             toolbarImage.setVisibility(View.VISIBLE);
-        }*/
+        }
     }
 
     private void showDialog(){
@@ -114,38 +116,42 @@ public class SocialAnalytics extends AppCompatActivity implements View.OnClickLi
             progress.show();
     }
     private void hideDialog(){
-        if(progress.isShowing())
+        if(!isFinishing()&& progress.isShowing())
             progress.hide();
     }
 
     private void checkForMessage(final String mType){
         //Log.v("ggg","checkformessage");
-        showDialog();
-        NfxFacebbokAnalytics.nfxFacebookApis facebookApis=NfxFacebbokAnalytics.getAdapter();
-        facebookApis.nfxFetchFacebookData(session.getFPID(), mType, new Callback<GetFacebookAnalyticsData>() {
-            @Override
-            public void success(GetFacebookAnalyticsData facebookAnalyticsData, Response response) {
-                hideDialog();
-                if(facebookAnalyticsData==null){
-                    return;
+        try {
+            showDialog();
+            NfxFacebbokAnalytics.nfxFacebookApis facebookApis = NfxFacebbokAnalytics.getAdapter();
+            facebookApis.nfxFetchFacebookData(session.getFPID(), mType, new Callback<GetFacebookAnalyticsData>() {
+                @Override
+                public void success(GetFacebookAnalyticsData facebookAnalyticsData, Response response) {
+                    hideDialog();
+                    if (facebookAnalyticsData == null) {
+                        return;
+                    }
+                    String status = facebookAnalyticsData.getStatus();
+                    String message = facebookAnalyticsData.getMessage();
+                    if (message != null && message.equalsIgnoreCase("success")) {
+                        startWebView(mType);
+                        setImpressionValue(facebookAnalyticsData.getData());
+                    } else if (status != null && message != null) {
+                        addFragment(Integer.parseInt(status), mType);
+                    }
                 }
-                String status=facebookAnalyticsData.getStatus();
-                String message=facebookAnalyticsData.getMessage();
-                if(message!=null && message.equalsIgnoreCase("success")){
-                    startWebView(mType);
-                    setImpressionValue(facebookAnalyticsData.getData());
-                }else if(status!=null && message!=null){
-                    addFragment(Integer.parseInt(status),mType);
-                }
-            }
 
-            @Override
-            public void failure(RetrofitError error) {
-                hideDialog();
-                Toast.makeText(SocialAnalytics.this,error.getMessage(), Toast.LENGTH_SHORT).show();
-                //Log.v("ggg", error + "");
-            }
-        });
+                @Override
+                public void failure(RetrofitError error) {
+                    hideDialog();
+                    Toast.makeText(SocialAnalytics.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                    //Log.v("ggg", error + "");
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void setImpressionValue(List<GetFacebookAnalyticsData.Datum> list) {
@@ -171,15 +177,19 @@ public class SocialAnalytics extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
-    public void onClick(View v) {
-
-    }
-
-    @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Log.v("ggg",position+" selected "+id);
         view.setBackgroundColor(ContextCompat.getColor(this,R.color.primaryColor));
-        checkForMessage(position == 0 ? FACEBOOK : QUIKR);
+        if(position == 0){
+            if(facebookStatus == 1) {
+                checkForMessage(FACEBOOK);
+            }else{
+                addFragment(LOGIN_FACEBOOK,FACEBOOK);
+            }
+
+        } else if(position == 1){
+         checkForMessage(QUIKR);
+        }
     }
 
     @Override
@@ -231,7 +241,7 @@ public class SocialAnalytics extends AppCompatActivity implements View.OnClickLi
             case LOGIN_FACEBOOK:
                 frag = manager.findFragmentByTag("LoginFragment");
                 if(frag == null)
-                    frag = LoginFragment.getInstance(status);
+                    frag = LoginFragment.getInstance(facebookStatus);
 
                 transaction.replace(R.id.linearlayout,frag,"LoginFragment").commit();
                 break;

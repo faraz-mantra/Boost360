@@ -15,7 +15,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,9 +44,9 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ViewPortHandler;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueries;
+import com.nowfloats.Analytics_Screen.SearchRankingActivity;
 import com.nowfloats.Analytics_Screen.SocialAnalytics;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
@@ -115,7 +114,7 @@ public class Analytics_Fragment extends Fragment {
     @Override
     public void onResume() {
 
-        Log.d("FCM Token", FirebaseInstanceId.getInstance().getToken());
+        //Log.d("FCM Token", FirebaseInstanceId.getInstance().getToken());
         getFPDetails(getActivity(), session.getFPID(), Constants.clientId, bus);
 
         MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT,null);
@@ -249,7 +248,7 @@ public class Analytics_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 SharedPreferences pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-                int status =pref.getInt("fbPageStatus",0);
+                int status = pref.getInt("fbPageStatus", 0);
 
                 /*if(pref.getBoolean("fbPageShareEnabled",false) && status==1)
                 {
@@ -258,14 +257,26 @@ public class Analytics_Fragment extends Fragment {
                 }
                 else
                 {*/
-                    //Log.v("ggg",pref.getBoolean("fbPageShareEnabled",false)+"frag_ana"+status);
-                    Intent i = new Intent(getActivity(), SocialAnalytics.class);
-                    i.putExtra("GetStatus",status);
-                    startActivity(i);
+                //Log.v("ggg",pref.getBoolean("fbPageShareEnabled",false)+"frag_ana"+status);
+                Intent i = new Intent(getActivity(), SocialAnalytics.class);
+                i.putExtra("GetStatus", status);
+                startActivity(i);
 
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
+
+        LinearLayout llSearchRanking = (LinearLayout) rootView.findViewById(R.id.analytics_screen_search_ranking);
+        llSearchRanking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), SearchRankingActivity.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
+
         cvRiaCard = (CardView) rootView.findViewById(R.id.cvRiaCard);
         btnRiaCardLeft = (Button) rootView.findViewById(R.id.btnRiaResponse1);
         btnRiaCrdRight = (Button) rootView.findViewById(R.id.btnRiaResponse2);

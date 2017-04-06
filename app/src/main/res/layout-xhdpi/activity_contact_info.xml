@@ -35,9 +35,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
-                android:cursorVisible="false"
                 android:textSize="14sp"
-                android:textColor="#BDBDBD">
+                android:textColor="#575757">
                 </EditText>
 
         </LinearLayout>

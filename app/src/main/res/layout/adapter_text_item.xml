@@ -17,8 +17,7 @@
         android:layout_weight="1"
         android:autoLink="all"
         android:text="hello"
-        android:textColor="@color/black"
-        android:layout_marginTop="3dp">
+        android:textColor="@color/black">
 
     </TextView>
 

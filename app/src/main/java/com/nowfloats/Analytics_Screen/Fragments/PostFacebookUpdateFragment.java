@@ -5,14 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.nowfloats.Analytics_Screen.SocialAnalytics;
 import com.nowfloats.NavigationDrawer.Create_Message_Activity;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 
@@ -57,18 +58,22 @@ public class PostFacebookUpdateFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         postUpdate= (Button) view.findViewById(R.id.create_update_button);
-        Log.v("ggg",mType +" post");
+        TextView message = (TextView) view.findViewById(R.id.message);
+
+        String socialType = null;
         if(SocialAnalytics.FACEBOOK.equals(mType)){
-
+            socialType = "Facebook Page";
         }else if(SocialAnalytics.QUIKR.equals(mType)){
-
+            socialType = "Quikr";
         }
-
+        String text = "Looks like you haven\'t posted any update on your "+socialType+" through Boost yet Make sure you select the <b>"+socialType+" option</b> while creating an update";
+        message.setText(Methods.fromHtml(text));
         postUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, Create_Message_Activity.class);
                 startActivity(i);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
     }

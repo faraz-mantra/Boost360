@@ -190,6 +190,7 @@ public class Home_Main_Fragment extends Fragment implements
         mIsNewMsg = true;
         getNewAvailableUpdates();
         mPref.edit().putString("msg_post","").apply();
+        mPref.edit().putInt("quikrStatus",1).apply();
         mPref.edit().putString("image_post","").apply();
     }
 
@@ -204,6 +205,7 @@ public class Home_Main_Fragment extends Fragment implements
 
             Constants.createMsg =false;
             mPref.edit().putString("msg_post","").apply();
+            mPref.edit().putInt("quikrStatus",1).apply();
             mPref.edit().putString("image_post","").apply();
             //path = pref.getString("image_post",null);
         }

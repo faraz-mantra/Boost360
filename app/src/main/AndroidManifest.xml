@@ -2,14 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2017030006"
-    android:versionName="4.5.4">
+    android:versionCode="2017030031"
+    android:versionName="4.5.7">
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
@@ -275,6 +274,13 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:host="com.biz2.nowfloats" android:scheme="https"/>
             </intent-filter>
         </activity>
         <activity
@@ -417,8 +423,8 @@
         <activity android:name="com.nowfloats.PreSignUp.KitsunePreSignUpActivity" />
         <activity android:name="com.nowfloats.NavigationDrawer.HelpAndSupportActivity" />
         <activity android:name="com.nowfloats.Store.ProductCheckoutActivity" />
-        <activity android:name="com.nowfloats.NavigationDrawer.RiaWebViewActivity"></activity>
-
+        <activity android:name="com.nowfloats.NavigationDrawer.RiaWebViewActivity" />
+        <activity android:name="com.nowfloats.Analytics_Screen.SearchRankingActivity"></activity>
     </application>
 
 </manifest>

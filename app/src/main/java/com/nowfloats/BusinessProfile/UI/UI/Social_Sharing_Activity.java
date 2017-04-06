@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -191,10 +192,18 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         //autoPostTextView = (TextView) findViewById(R.id.autoPostTextView);
         topFeatureTextView = (TextView) findViewById(R.id.topFeatureText);
 
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.list);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-        mRecyclerView.setAdapter(new QuikrAdapter(this,getResources().getStringArray(R.array.quikr_tip_points)));
+        //Quikr added
+        CardView card = (CardView) findViewById(R.id.quikr_card);
+        String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
+        List<String> list = Arrays.asList(quikrArray);
+        if(list.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())){
+            card.setVisibility(View.VISIBLE);
+
+            RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.list);
+            mRecyclerView.setHasFixedSize(true);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+            mRecyclerView.setAdapter(new QuikrAdapter(this,getResources().getStringArray(R.array.quikr_tip_points)));
+        }
 
         facebookHomeStatus.setTypeface(myCustomFont);
         facebookPageStatus.setTypeface(myCustomFont);

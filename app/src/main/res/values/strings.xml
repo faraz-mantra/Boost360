@@ -387,6 +387,7 @@
 </string-array>
     <string-array name="quikr_widget">
         <item>automotive</item>
+        <item>general</item>
         <item>tourism</item>
         <item>hotels &amp; motels</item>
         <item>real estate &amp; construction</item>
@@ -1053,6 +1054,26 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Quikr\’s Privacy Policy (http://bangalore.quikr.com/html/privacy.php)</item>
         <item>Quikr\’s Listing Policy (http://hyderabad.quikr.com/html/policies.php)</item>
     </string-array>
+    <string-array name="quikr_tip_on_dialog">
+        <item>Please be as detailed as possible in the description of the update. For example, if
+            you are posting an update about a car, mention the make, model, year and kms driven.
+            If you are posting an update about an apartment, mention whether it\'s for rent or sale,
+            area and number of rooms (1 BHK, 2BHK etc)</item>
+        <item>We recommend that you post the update with a clear image of the product</item>
+        <item>Each ad you post is live on Quikr for 30 days</item>
+        <item>Your primary email Id is shared with Quikr and you would receive any leads for the ads on this email id </item>
+        <item>The details of all ads posted can be viewed in <b>Analytics -> Off-page analytics -> Quikr</b></item>
+        <item>To ensure optimal experience for all users, you can post only 1 update to Quikr per day</item>
+    </string-array>
+<string name = "message_quikr">These guidelines will help you post the right content to Quikr so that the ad doesn\'t get rejected. You can refer to them at any time in <b>Business Profile -> Social Sharing</b>.</string>
+    <string-array name="spinner_list_item_array">
+        <item>IMPROVED</item>
+        <item>MAINTAINED</item>
+        <item>DECLINED</item>
+        <item>NEW</item>
+        <item>LOST</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="visits_this_week">visits this week</string>
     <string name="visits_this_month">visits this month</string>
@@ -1100,6 +1121,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="title_for_quikrr">Write message title(Quikrr only)</string>
     <string name="guidlines">Guidelines for\nposting to Quikr</string>
     <string name="quikr_message">Good news! You can now publish your updates as product ads to Quikr. Please follow the guidelines mentioned below to ensure that your ad is successfully posted.</string>
+    <string name="search_ranking">Search Ranking</string>
+    <string name="spinner_title">Filter</string>
 
 
 </resources>

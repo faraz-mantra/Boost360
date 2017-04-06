@@ -203,7 +203,7 @@ public class Get_FP_Details_Service {
                 twitterPrefEditor.putString(TwitterConstants.PREF_USER_NAME, model.getUserAccountName());
                 twitterPrefEditor.apply();
             }else if(model.getType().equalsIgnoreCase("quikr")){
-                //pref.edit().putInt("quikrStatus", Integer.parseInt(model.getStatus())).apply();
+                pref.edit().putInt("quikrStatus", Integer.parseInt(model.getStatus())).apply();
             }
         }
     }

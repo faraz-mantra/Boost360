@@ -582,6 +582,8 @@ public class SidePanelFragment extends Fragment {
         //enqCount = (TextView)view.findViewById(R.id.enquiry_count_textview);
         Log.d("Executing Async: ", Constants.beCountUrl + "?clientId=" + Constants.clientId + "&fpId=" + session.getFPID());
        /* RequestQueue queue = AppController.getInstance().getRequestQueue();
+        BoostLog.d("Executing Async: ", Constants.beCountUrl + "?clientId=" + Constants.clientId + "&fpId=" + session.getFPID());
+        /*RequestQueue queue = AppController.getInstance().getRequestQueue();
         StringRequest beCountRequest = new StringRequest(Request.Method.GET, Constants.beCountUrl + "?clientId=" + Constants.clientId + "&fpId=" + session.getFPID(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

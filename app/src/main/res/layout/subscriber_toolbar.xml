@@ -53,7 +53,7 @@
             android:background="@drawable/button_click_effect"
             android:src="@drawable/analytics_search"
             android:layout_gravity="end"
-            android:visibility="visible"/>
+            android:visibility="gone"/>
 
         <ImageView
             android:id="@+id/delete_image"

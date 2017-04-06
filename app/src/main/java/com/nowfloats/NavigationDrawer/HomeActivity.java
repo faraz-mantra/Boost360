@@ -516,6 +516,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
         Constants.GCM_Msg = false;
         if(!Util.isNullOrEmpty(url)){
+
             if(url.contains("facebookpage")){
                 Methods.likeUsFacebook(this,"/reviews/");
             }else if(url.contains(getResources().getString(R.string.deeplink_update))){
@@ -676,8 +677,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame,chatFragment,"chatFragment").commit();
             }else if(url.contains(getResources().getString(R.string.deeplink_gplaces))){//TODO
-
-            }
+             }
         }deepLinkUrl = null; GCMReceiver.deeplinkUrl = null;
     }
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,7 +40,7 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Contact_Info_Activity extends ActionBarActivity {
+public class Contact_Info_Activity extends ActionBarActivity implements View.OnTouchListener {
     private Toolbar toolbar;
     public static TextView saveTextView;
     UserSessionManager session;
@@ -52,6 +53,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
     private TextView titleTextView;
     public static String primary="",alternate1="",alternate2="", alternate3="";
     private boolean allBoundaryCondtn = true;
+    private boolean VMN_Dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
         }
 
         primaryNumber = (EditText) findViewById(R.id.primaryNumber);
+        primaryNumber.setInputType(InputType.TYPE_NULL);
         alternateNumber_1 = (EditText) findViewById(R.id.alternateNumber_1);
         alternateNumber_2 = (EditText) findViewById(R.id.alternateNumber_2);
         alternateNumber_3 = (EditText) findViewById(R.id.alternateNumber_3);
@@ -217,33 +220,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
             public void afterTextChanged(Editable s) {
             }
         });
-        primaryNumber.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                View dialogView = getLayoutInflater().inflate(R.layout.dialog_link_layout,null,false);
-                TextView message = (TextView) dialogView.findViewById(R.id.toast_message_to_contact);
-                message.setText(getString(R.string.primary_contact_number_message));
-                if(motionEvent.getAction()== MotionEvent.ACTION_DOWN){
-                    MaterialDialog.Builder builder = new MaterialDialog.Builder(Contact_Info_Activity.this)
-                            .title("Change primary number")
-                            .customView(dialogView,false)
-                            .positiveText(getString(R.string.ok))
-                            .positiveColorRes(R.color.primaryColor)
-                            .callback(new MaterialDialog.ButtonCallback() {
-                                @Override
-                                public void onPositive(MaterialDialog dialog) {
-                                    super.onPositive(dialog);
-                                }
-
-                            });
-                    if(!isFinishing()) {
-                        builder.show();
-                    }
-                    return true;
-                }
-                return false;
-            }
-        });
+        primaryNumber.setOnTouchListener(this);
        /* primaryNumber.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -962,11 +939,42 @@ public class Contact_Info_Activity extends ActionBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-       // initializeData();
+        if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
+                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)) ||
+                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME))){
+            alternateNumber_2.setInputType(InputType.TYPE_NULL);
+            alternateNumber_3.setInputType(InputType.TYPE_NULL);
+            alternateNumber_1.setInputType(InputType.TYPE_NULL);
+            alternateNumber_1.setOnTouchListener(this);
+            alternateNumber_2.setOnTouchListener(this);
+            alternateNumber_3.setOnTouchListener(this);
+            VMN_Dialog = true;
+    }
         bus.register(this);
         this.setTitle("Contact Information");
     }
+    private MaterialDialog dialog() {
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_link_layout,null,false);
+        TextView message = (TextView) dialogView.findViewById(R.id.toast_message_to_contact);
+        if(VMN_Dialog) {
+            message.setText("Call tracker is enabled. You will receive the call on your primary number."+getString(R.string.primary_contact_number_message));
+        }else{
+            message.setText(getString(R.string.primary_contact_number_message));
+        }
+            return new MaterialDialog.Builder(Contact_Info_Activity.this)
+                    .title("Change number")
+                    .customView(dialogView,false)
+                    .positiveText(getString(R.string.ok))
+                    .positiveColorRes(R.color.primaryColor)
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+                        }
 
+                    })
+                    .build();
+    }
     @Override
     protected void onPause() {
         super.onPause();
@@ -1097,5 +1105,17 @@ public class Contact_Info_Activity extends ActionBarActivity {
         //Pattern pattern = Pattern.compile(EMAIL_PATTERN);
         Matcher matcher = pattern.matcher(website);
         return matcher.matches();
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        if(event.getAction()== MotionEvent.ACTION_DOWN){
+            MaterialDialog dialog = dialog();
+            if(!isFinishing()){
+                dialog.show();
+                return true;
+            }
+        }
+        return false;
     }
 }
