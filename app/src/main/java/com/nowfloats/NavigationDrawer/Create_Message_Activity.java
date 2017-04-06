@@ -20,6 +20,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -112,7 +113,7 @@ public class Create_Message_Activity extends AppCompatActivity {
     private final int media_req_id = 1;
     private SharedPreferences mSharedPreferences = null;
 
-    private int mFbPageShare = 0, mFbProfileShare = 0, mTwitterShare = 0;
+    private int mFbPageShare = 0, mFbProfileShare = 0, mQuikrShare =0 , mTwitterShare = 0;
     private RiaNodeDataModel mRiaNodedata;
     private boolean mIsImagePicking = false;
     private CardView image_card,title_card,message_card;
@@ -197,6 +198,9 @@ public class Create_Message_Activity extends AppCompatActivity {
                     if (mTwitterShare == 1) {
                         socialShare+="TWITTER.";
                     }
+                    if(mQuikrShare == 1){
+                        socialShare+="QUIKR.";
+                    }
                     Home_Main_Fragment.bus.post(new UploadPostEvent(path, msg.getText().toString(), socialShare));
                     if (path!=null && path.trim().length()>0){
                         //Log.v("ggg",path+" path for upadte");
@@ -227,8 +231,20 @@ public class Create_Message_Activity extends AppCompatActivity {
         quikrButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                showQuikrGuidlines();
+                int status = pref.getInt("quikrStatus", -1);
+                if (status == 1) {
+                    Methods.showSnackBar(activity,"Sorry, You have reached your daily limit of one post");
+                }else if(status == 2){
+                    Methods.showSnackBarNegative(activity,"Something went wrong, please restart the application");
+                } else{
+                    if (mQuikrShare == 1) {
+                        mQuikrShare = 0;
+                        quikrButton.setImageResource(R.drawable.quikr_icon_deactivate);
+                    } else {
+                        showQuikrGuidelines();
+                        mQuikrShare = 1;
+                        quikrButton.setImageResource(R.drawable.quikr_icon_activate);
+                    }
                 /*Animation anim = AnimationUtils.loadAnimation(Create_Message_Activity.this,R.anim.slide_up_slow);
                 Animation anim2 = AnimationUtils.loadAnimation(Create_Message_Activity.this,R.anim.slide_down_slow);
                 title_card.setAnimation(anim);
@@ -237,6 +253,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                 anim2.start();
                 anim.setStartOffset(600);*/
 
+                }
             }
         });
         if(!Util.isNullOrEmpty(session.getFacebookName()) && (pref.getInt("fbStatus", 0)==1 || pref.getInt("fbStatus",0)==3)) {
@@ -388,6 +405,8 @@ public class Create_Message_Activity extends AppCompatActivity {
             }
         });
 
+
+
         cameraButton = (ImageView) findViewById(R.id.create_mee_activity_facebokhome_button);
         imageIconButton = (ImageView) findViewById(R.id.imageIcon);
         deleteButton = (ImageView) findViewById(R.id.delete_image);
@@ -443,13 +462,15 @@ public class Create_Message_Activity extends AppCompatActivity {
 
         String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
         List<String> list = Arrays.asList(quikrArray);
-        if(list.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY))){
-            quikrButton.setVisibility(View.VISIBLE);
+        LinearLayout layout = (LinearLayout) findViewById(R.id.float_a_picture_share_quikr_parent);
+        if(list.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())){
+            layout.setVisibility(View.VISIBLE);
         }
     }
 
-    private void showQuikrGuidlines() {
+    private void showQuikrGuidelines() {
         View v = LayoutInflater.from(this).inflate(R.layout.quikr_guidlines,null);
+        final AppCompatCheckBox checkBox = (AppCompatCheckBox) v.findViewById(R.id.checkbox);
         RecyclerView list = (RecyclerView) v.findViewById(R.id.list);
         list.setHasFixedSize(true);
         list.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
@@ -457,7 +478,35 @@ public class Create_Message_Activity extends AppCompatActivity {
         list.setAdapter(new QuikrAdapter(this,array));
         new MaterialDialog.Builder(this)
                 .customView(v,true)
+                .cancelable(true)
                 .title(R.string.guidlines)
+                /*.positiveText("I read")
+                .positiveColor(R.color.primaryColor)
+                .negativeText("Later")
+                .negativeColor(R.color.primaryColor)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        super.onPositive(dialog);
+                        if(checkBox.isChecked()) {
+                            dialog.dismiss();
+                        }
+                        else{
+                            Toast.makeText(activity, "Please read it", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        super.onNegative(dialog);
+                        if(checkBox.isChecked()) {
+                            dialog.dismiss();
+                        }
+                        else{
+                            Toast.makeText(activity, "Please read it", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })*/
                 .build()
                 .show();
     }

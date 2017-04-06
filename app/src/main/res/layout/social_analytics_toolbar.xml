@@ -21,13 +21,14 @@
         android:layout_gravity="start"
         android:text="Social Analytics"/>
         <ImageView
-            android:id="@+id/spinner_img"
+            android:id="@+id/social_img"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:visibility="gone"
-            android:src="@drawable/quikr"/>
+            android:src="@drawable/facebook_round"/>
         <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/toolbar_spinner"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
     </LinearLayout>

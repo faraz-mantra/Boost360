@@ -6,6 +6,7 @@ import com.nowfloats.util.Constants;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
+import retrofit.android.AndroidLog;
 import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.Query;
@@ -16,9 +17,9 @@ import retrofit.http.Query;
 
 public class NfxFacebbokAnalytics {
     public static nfxFacebookApis getAdapter(){
-        RestAdapter adapter = new RestAdapter.Builder()/*
+        RestAdapter adapter = new RestAdapter.Builder()
                 .setLog(new AndroidLog("ggg"))
-                .setLogLevel(RestAdapter.LogLevel.FULL)*/
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setEndpoint(Constants.NFX_WITH_NOWFLOATS)
                 .build();
         return adapter.create(nfxFacebookApis.class);

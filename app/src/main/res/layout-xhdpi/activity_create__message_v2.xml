@@ -262,7 +262,7 @@
                             android:id="@+id/create_message_activity_quikr_button"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:src="@drawable/facebook_icon_inactive" />
+                            android:src="@drawable/quikr_icon_deactivate" />
                     </LinearLayout>
                 </LinearLayout>
 

@@ -31,29 +31,19 @@ public class QuikrAdapter extends RecyclerView.Adapter<QuikrAdapter.MyHolder> {
         if(viewType == BUTTON_TYPE){
             view = LayoutInflater.from(mContext).inflate(R.layout.adapter_button_item, parent, false);
         }else if(viewType == TEXT_TYPE) {
-            view = LayoutInflater.from(mContext).inflate(android.R.layout.simple_list_item_activated_1, parent, false);
+            view = LayoutInflater.from(mContext).inflate(R.layout.adapter_text_item, parent, false);
         }
         return new MyHolder(view,viewType);
     }
 
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
-        if(position == guidelines.length-1){
-
-        }
-        else {
-            holder.text.setText(guidelines[position]);
-        }
+        holder.text.setText(guidelines[position]);
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(position == guidelines.length-1){
-            return BUTTON_TYPE;
-        }else{
-            return TEXT_TYPE;
-        }
-
+        return TEXT_TYPE;
     }
 
     @Override

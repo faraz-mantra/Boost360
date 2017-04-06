@@ -15,6 +15,8 @@ import android.os.Handler;
 import android.os.StrictMode;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
@@ -44,6 +46,7 @@ import com.nowfloats.CustomWidget.roboto_md_60_212121;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NFXApi.NfxRequestClient;
 import com.nowfloats.NavigationDrawer.API.twitter.FacebookFeedPullRegistrationAsyncTask;
+import com.nowfloats.NavigationDrawer.Adapter.QuikrAdapter;
 import com.nowfloats.Twitter.ITwitterCallbacks;
 import com.nowfloats.Twitter.TokenRequest;
 import com.nowfloats.Twitter.TwitterAuthenticationActivity;
@@ -187,6 +190,11 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         connectTextView = (TextView) findViewById(R.id.connectTextView);
         //autoPostTextView = (TextView) findViewById(R.id.autoPostTextView);
         topFeatureTextView = (TextView) findViewById(R.id.topFeatureText);
+
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.list);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        mRecyclerView.setAdapter(new QuikrAdapter(this,getResources().getStringArray(R.array.quikr_tip_points)));
 
         facebookHomeStatus.setTypeface(myCustomFont);
         facebookPageStatus.setTypeface(myCustomFont);
@@ -1083,6 +1091,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
     }
 
     @Override
@@ -1092,7 +1101,6 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if(id == android.R.id.home){
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             onBackPressed();
             return true;
         }

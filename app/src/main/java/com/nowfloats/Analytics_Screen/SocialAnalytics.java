@@ -52,9 +52,8 @@ public class SocialAnalytics extends AppCompatActivity implements View.OnClickLi
     ProgressDialog progress;
     LinearLayout layout;
     Toolbar toolbar;
-    final String mType="facebook";
-    private String mAnalyticsUrl="http://nfx.withfloats.com/dataexchange/v1/fetch/analytics?" +
-            "identifier="+mType+"&nowfloats_id=";
+    public static final String FACEBOOK="facebook", QUIKR = "quikr";
+
     String[] socialArray;
     int[] images = new int[]{R.drawable.facebook_round,R.drawable.quikr};
     UserSessionManager session;
@@ -79,7 +78,7 @@ public class SocialAnalytics extends AppCompatActivity implements View.OnClickLi
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        toolbarImage = (ImageView) findViewById(R.id.spinner_img);
+        toolbarImage = (ImageView) findViewById(R.id.social_img);
         web = (WebView) findViewById(R.id.webview);
         layout = (LinearLayout) findViewById(R.id.linearlayout);
         spinner = (AppCompatSpinner) findViewById(R.id.toolbar_spinner);
@@ -96,11 +95,18 @@ public class SocialAnalytics extends AppCompatActivity implements View.OnClickLi
         progress.setCanceledOnTouchOutside(false);
 
         if(status == 1){
-            checkForMessage();
+            checkForMessage(FACEBOOK);
         }else{
-            addFragment(LOGIN_FACEBOOK);
+            addFragment(LOGIN_FACEBOOK,FACEBOOK);
         }
-
+        spinner.setVisibility(View.VISIBLE);
+        /*String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
+        List<String> list = Arrays.asList(quikrArray);
+        if(list.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())){
+            spinner.setVisibility(View.VISIBLE);
+        }else{
+            toolbarImage.setVisibility(View.VISIBLE);
+        }*/
     }
 
     private void showDialog(){
@@ -112,7 +118,7 @@ public class SocialAnalytics extends AppCompatActivity implements View.OnClickLi
             progress.hide();
     }
 
-    private void checkForMessage(){
+    private void checkForMessage(final String mType){
         //Log.v("ggg","checkformessage");
         showDialog();
         NfxFacebbokAnalytics.nfxFacebookApis facebookApis=NfxFacebbokAnalytics.getAdapter();
@@ -126,10 +132,10 @@ public class SocialAnalytics extends AppCompatActivity implements View.OnClickLi
                 String status=facebookAnalyticsData.getStatus();
                 String message=facebookAnalyticsData.getMessage();
                 if(message!=null && message.equalsIgnoreCase("success")){
-                    startWebView();
+                    startWebView(mType);
                     setImpressionValue(facebookAnalyticsData.getData());
                 }else if(status!=null && message!=null){
-                    addFragment(Integer.parseInt(status));
+                    addFragment(Integer.parseInt(status),mType);
                 }
             }
 
@@ -151,7 +157,7 @@ public class SocialAnalytics extends AppCompatActivity implements View.OnClickLi
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    private void startWebView() {
+    private void startWebView(String mType) {
         //Log.v("ggg","webview");
         layout.setVisibility(View.GONE);
         web.setVisibility(View.VISIBLE);
@@ -161,7 +167,7 @@ public class SocialAnalytics extends AppCompatActivity implements View.OnClickLi
         Map<String,String> mp=new HashMap<>();
         mp.put("key","78234i249123102398");
         mp.put("pwd","JYUYTJH*(*&BKJ787686876bbbhl)");
-        web.loadUrl(makeUrl(session.getFPID()),mp);
+        web.loadUrl(makeUrl(mType,session.getFPID()),mp);
     }
 
     @Override
@@ -173,6 +179,7 @@ public class SocialAnalytics extends AppCompatActivity implements View.OnClickLi
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Log.v("ggg",position+" selected "+id);
         view.setBackgroundColor(ContextCompat.getColor(this,R.color.primaryColor));
+        checkForMessage(position == 0 ? FACEBOOK : QUIKR);
     }
 
     @Override
@@ -182,7 +189,7 @@ public class SocialAnalytics extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void showFragment() {
-        checkForMessage();
+        checkForMessage(FACEBOOK);
     }
 
     private class MyWebViewClient extends WebChromeClient {
@@ -195,7 +202,9 @@ public class SocialAnalytics extends AppCompatActivity implements View.OnClickLi
             super.onProgressChanged(view, newProgress);
         }
     }
-    private void addFragment(int i){
+    private void addFragment(int i,String mType){
+        Bundle b = new Bundle();
+        b.putString("mType",mType);
         if(layout.getVisibility() != View.VISIBLE) {
             layout.setVisibility(View.VISIBLE);
             web.setVisibility(View.GONE);
@@ -208,14 +217,14 @@ public class SocialAnalytics extends AppCompatActivity implements View.OnClickLi
                 //getting info about message
                 frag = manager.findFragmentByTag("FetchFacebookData");
                 if(frag == null)
-                    frag = new FetchFacebookDataFragment();
+                    frag = FetchFacebookDataFragment.getInstance(b);
 
                 transaction.replace(R.id.linearlayout,frag,"FetchFacebookData").commit();
                 break;
             case POST_UPDATE:
                 frag = manager.findFragmentByTag("PostFacebookUpdate");
                 if(frag == null)
-                    frag = new PostFacebookUpdateFragment();
+                    frag = PostFacebookUpdateFragment.getInstance(b);
 
                 transaction.replace(R.id.linearlayout,frag,"PostFacebookUpdate").commit();
                 break;
@@ -231,7 +240,9 @@ public class SocialAnalytics extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private String makeUrl(String fpId){
+    private String makeUrl(String mType, String fpId){
+        String mAnalyticsUrl="http://nfx.withfloats.com/dataexchange/v1/fetch/analytics?" +
+                "identifier="+mType+"&nowfloats_id=";
         return mAnalyticsUrl + fpId;
     }
     @Override

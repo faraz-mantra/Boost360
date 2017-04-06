@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.nowfloats.Analytics_Screen.SocialAnalytics;
 import com.nowfloats.NavigationDrawer.Create_Message_Activity;
 import com.thinksity.R;
 
@@ -19,8 +21,25 @@ import com.thinksity.R;
  */
 
 public class PostFacebookUpdateFragment extends Fragment {
-    Button postToFacebook;
+    Button postUpdate;
     Context context;
+    String mType;
+
+    public static Fragment getInstance(Bundle b){
+        Fragment frag = new PostFacebookUpdateFragment();
+        frag.setArguments(b);
+        return frag;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(getArguments() != null){
+            Bundle b = getArguments();
+            mType = b.getString("mType");
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,8 +56,15 @@ public class PostFacebookUpdateFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        postToFacebook= (Button) view.findViewById(R.id.create_facebook_update_button);
-        postToFacebook.setOnClickListener(new View.OnClickListener() {
+        postUpdate= (Button) view.findViewById(R.id.create_update_button);
+        Log.v("ggg",mType +" post");
+        if(SocialAnalytics.FACEBOOK.equals(mType)){
+
+        }else if(SocialAnalytics.QUIKR.equals(mType)){
+
+        }
+
+        postUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, Create_Message_Activity.class);

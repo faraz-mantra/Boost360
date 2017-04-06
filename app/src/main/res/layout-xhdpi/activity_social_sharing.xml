@@ -465,10 +465,17 @@
                         <!--android:text="Ensure whatever you post to your Facebook Page also gets updated to your website by simply selecting the check box below."/>-->
 
                     </LinearLayout>
-                    <include
-                        layout="@layout/quikr_guidlines"
+                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="@string/quikr_message"/>
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/list"
+                        android:layout_margin="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </android.support.v7.widget.RecyclerView>
                 </LinearLayout>
 
                 </android.support.v7.widget.CardView>

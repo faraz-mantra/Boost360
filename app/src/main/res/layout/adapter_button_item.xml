@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <Button
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id ="@+id/button1"
@@ -7,6 +6,7 @@
     android:layout_height="wrap_content"
     android:textColor="@color/white"
     android:layout_marginTop="10dp"
-    android:textSize="18sp"
+    android:textSize="15sp"
+    android:textAllCaps="false"
     android:background="@color/primary_color"
-    android:text="I UNDERSTAND"/>
+    android:text="I read"/>

@@ -168,6 +168,7 @@ public class Get_FP_Details_Service {
         editor.putString("fbPageAccessId", null);
         editor.putInt("fbStatus", 0);
         editor.putInt("fbPageStatus",0);
+        editor.putInt("quikrStatus",-1);
         editor.apply();
         SharedPreferences.Editor tPrefEditor = twitterPref.edit();
         tPrefEditor.putBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false);
@@ -201,6 +202,8 @@ public class Get_FP_Details_Service {
                 }
                 twitterPrefEditor.putString(TwitterConstants.PREF_USER_NAME, model.getUserAccountName());
                 twitterPrefEditor.apply();
+            }else if(model.getType().equalsIgnoreCase("quikr")){
+                //pref.edit().putInt("quikrStatus", Integer.parseInt(model.getStatus())).apply();
             }
         }
     }

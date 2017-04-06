@@ -345,7 +345,7 @@ public class SiteAppearanceFragment extends Fragment implements View.OnClickList
     private void showThemeDialog() {
 
         linearLayout.setAlpha((float) .2);
-       getChildFragmentManager().beginTransaction().add(R.id.parent_layout,ImageDialogFragment.getInstance()).addToBackStack(null).commit();
+        getChildFragmentManager().beginTransaction().add(R.id.parent_layout,ImageDialogFragment.getInstance()).addToBackStack(null).commit();
     }
     public void hideDialog(){
         linearLayout.setAlpha(1);

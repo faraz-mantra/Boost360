@@ -149,7 +149,7 @@ public class ShowWebView extends AppCompatActivity {
                 frag = new FetchFacebookDataFragment();
                 break;
             case POST_UPDATE:
-                frag = new PostFacebookUpdateFragment();
+                frag = PostFacebookUpdateFragment.getInstance(null);
                 break;
             default:
                 break;

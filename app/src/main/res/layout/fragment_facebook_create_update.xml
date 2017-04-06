@@ -39,7 +39,7 @@
         android:textColor="#fff"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:id="@+id/create_facebook_update_button"
+        android:id="@+id/create_update_button"
         android:layout_marginTop="5dp"
         android:background="@color/primaryColor"/>
 </LinearLayout>
