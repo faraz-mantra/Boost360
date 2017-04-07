@@ -1045,28 +1045,21 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         </ul>
     </string>
     <string-array name="quikr_tip_points">
-        <item>Please be as detailed as possible in the description of the update. For example, if
-            you are posting an update about a car, mention the make, model, year and kms driven.
-            If you are posting an update about an apartment, mention whether it\'s for rent or sale,
-            area and number of rooms (1 BHK, 2BHK etc)</item>
+        <item>Be as detailed as possible in the description of the update</item>
         <item>We recommend that you post the update with a clear image of the product</item>
         <item>Each ad you post is live on Quikr for 30 days</item>
-        <item>Your primary email Id is shared with Quikr and you would receive any leads for the ads on this email id </item>
-        <item>The details of all ads posted can be viewed in <b>Analytics -> Off-page analytics -> Quikr</b></item>
+        <item>Your primary email Id is shared with Quikr and you would receive any leads for the ads on this email id</item>
+        <item>The details of all ads posted can be viewed in <b>Analytics -> Social analytics -> Quikr</b></item>
         <item>To ensure optimal experience for all users, you can post only 1 update to Quikr per day</item>
-        <item>Quikr\’s Terms of Use (http://www.quikr.com/html/termsandconditions.php)</item>
-        <item>Quikr\’s Privacy Policy (http://bangalore.quikr.com/html/privacy.php)</item>
-        <item>Quikr\’s Listing Policy (http://hyderabad.quikr.com/html/policies.php)</item>
+        <item><a href="http://www.quikr.com/html/termsandconditions.php">Terms of Use</a></item>
+        <item><a href="http://bangalore.quikr.com/html/privacy.php">Privacy Policy</a></item>
+        <item><a href="http://hyderabad.quikr.com/html/policies.php">Listing Policy</a></item>
     </string-array>
+    <string name="quikr_tip_points_heading">Good news! You can now publish your updates as product ads to Quikr. Click here to view the guidelines</string>
     <string-array name="quikr_tip_on_dialog">
-        <item>Please be as detailed as possible in the description of the update. For example, if
-            you are posting an update about a car, mention the make, model, year and kms driven.
-            If you are posting an update about an apartment, mention whether it\'s for rent or sale,
-            area and number of rooms (1 BHK, 2BHK etc)</item>
+        <item>Be as detailed as possible in the description of the update. For example, Automotive -if you are posting an update about a car, mention the make, model, year and kms driven.
+        Real Estate &amp; Construction -if you are posting an update about an apartment, mention whether it\'s for rent or sale, area and number of rooms (1 BHK, 2BHK etc)</item>
         <item>We recommend that you post the update with a clear image of the product</item>
-        <item>Each ad you post is live on Quikr for 30 days</item>
-        <item>Your primary email Id is shared with Quikr and you would receive any leads for the ads on this email id </item>
-        <item>The details of all ads posted can be viewed in <b>Analytics -> Off-page analytics -> Quikr</b></item>
         <item>To ensure optimal experience for all users, you can post only 1 update to Quikr per day</item>
     </string-array>
 <string name = "message_quikr">These guidelines will help you post the right content to Quikr so that the ad doesn\'t get rejected. You can refer to them at any time in <b>Business Profile -> Social Sharing</b>.</string>
@@ -1123,7 +1116,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="site_appearance_change_to_new_look">In case you didn\'t like the existing look of your website, you  can always choose to change it from here.</string>
     <string name="find_your_subscribers">Find your subscribers</string>
     <string name="title_for_quikrr">Write message title(Quikrr only)</string>
-    <string name="guidlines">Guidelines for\nposting to Quikr</string>
+    <string name="guidlines">Guidelines for posting\nto Quikr</string>
     <string name="quikr_message">Good news! You can now publish your updates as product ads to Quikr. Please follow the guidelines mentioned below to ensure that your ad is successfully posted.</string>
     <string name="search_ranking">Search Ranking</string>
     <string name="spinner_title">Filter</string>

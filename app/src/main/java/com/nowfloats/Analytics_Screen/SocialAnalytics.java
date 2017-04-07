@@ -7,18 +7,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +43,7 @@ import retrofit.client.Response;
  * Created by Abhi on 12/1/2016.
  */
 
-public class SocialAnalytics extends AppCompatActivity implements AdapterView.OnItemSelectedListener,LoginFragment.OpenOtherFacebookScreen {
+public class SocialAnalytics extends AppCompatActivity implements LoginFragment.OpenOtherFacebookScreen, View.OnClickListener {
 
     private int facebookStatus = 0;
     private final static int FETCH_DATA = 20,POST_UPDATE = 10,LOGIN_FACEBOOK = -100;
@@ -58,9 +56,10 @@ public class SocialAnalytics extends AppCompatActivity implements AdapterView.On
     String[] socialArray;
     int[] images = new int[]{R.drawable.facebook_round,R.drawable.quikr};
     UserSessionManager session;
-    AppCompatSpinner spinner;
+    ImageView spinner;
     ImageView toolbarImage;
     TextView title;
+    PopupWindow popup = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,11 +81,11 @@ public class SocialAnalytics extends AppCompatActivity implements AdapterView.On
         toolbarImage = (ImageView) findViewById(R.id.social_img);
         web = (WebView) findViewById(R.id.webview);
         layout = (LinearLayout) findViewById(R.id.linearlayout);
-        spinner = (AppCompatSpinner) findViewById(R.id.toolbar_spinner);
-        spinner.setOnItemSelectedListener(this);
+        spinner = (ImageView) findViewById(R.id.toolbar_spinner);
+       // spinner.setOnItemSelectedListener(this);
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,socialArray);
-        SpinnerAdapter adapter = new SpinnerAdapter(this,images);
-        spinner.setAdapter(adapter);
+        //SpinnerAdapter adapter = new SpinnerAdapter(this,images);
+        //spinner.setAdapter(adapter);
 
         Intent intent = getIntent();
         facebookStatus = intent.getIntExtra("GetStatus",0);
@@ -104,16 +103,40 @@ public class SocialAnalytics extends AppCompatActivity implements AdapterView.On
         String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
         //Log.v("ggg",quikrArray[3]+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase());
         LinearLayout layout = (LinearLayout) findViewById(R.id.float_a_picture_share_quikr_parent);
-        for(String category: quikrArray){
-            if(category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())){
-                spinner.setVisibility(View.VISIBLE);
-                return;
+        if("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
+            for (String category : quikrArray) {
+                if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
+                    spinner.setVisibility(View.VISIBLE);
+                    break;
+                }
             }
         }
-        toolbarImage.setVisibility(View.VISIBLE);
+        spinner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initiatePopupWindow(spinner);
+            }
+        });
 
     }
+    private void initiatePopupWindow(View image) {
 
+        try {
+            popup = new PopupWindow(this);
+            View layout = LayoutInflater.from(this).inflate(R.layout.pop_up_window, null);
+            popup.setContentView(layout);
+            popup.setOutsideTouchable(true);
+            popup.setFocusable(true);
+            popup.showAsDropDown(image,5,5);
+
+            layout.findViewById(R.id.facebook).setOnClickListener(this);
+            layout.findViewById(R.id.quikr).setOnClickListener(this);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
     private void showDialog(){
         if(!isFinishing())
             progress.show();
@@ -179,30 +202,35 @@ public class SocialAnalytics extends AppCompatActivity implements AdapterView.On
         web.loadUrl(makeUrl(mType,session.getFPID()),mp);
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Log.v("ggg",position+" selected "+id);
-        view.setBackgroundColor(ContextCompat.getColor(this,R.color.primaryColor));
-        if(position == 0){
-            if(facebookStatus == 1) {
-                checkForMessage(FACEBOOK);
-            }else{
-                addFragment(LOGIN_FACEBOOK,FACEBOOK);
-            }
-
-        } else if(position == 1){
-         checkForMessage(QUIKR);
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
 
     @Override
     public void showFragment() {
         checkForMessage(FACEBOOK);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int pos = 0;
+        if(popup !=null){
+            popup.dismiss();
+        }
+        switch(v.getId()) {
+            case R.id.facebook:
+                pos = 0;
+                if (facebookStatus == 1) {
+                    checkForMessage(FACEBOOK);
+                } else {
+                    addFragment(LOGIN_FACEBOOK, FACEBOOK);
+                }
+                break;
+            case R.id.quikr:
+                pos = 1;
+                checkForMessage(QUIKR);
+                break;
+            default:
+                break;
+        }
+        toolbarImage.setImageResource(images[pos]);
     }
 
     private class MyWebViewClient extends WebChromeClient {
@@ -252,6 +280,8 @@ public class SocialAnalytics extends AppCompatActivity implements AdapterView.On
                 break;
         }
     }
+
+
 
     private String makeUrl(String mType, String fpId){
         String mAnalyticsUrl="http://nfx.withfloats.com/dataexchange/v1/fetch/analytics?" +

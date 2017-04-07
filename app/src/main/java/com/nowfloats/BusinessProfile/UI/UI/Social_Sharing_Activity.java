@@ -13,11 +13,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
@@ -29,7 +28,7 @@ import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +47,6 @@ import com.nowfloats.CustomWidget.roboto_md_60_212121;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NFXApi.NfxRequestClient;
 import com.nowfloats.NavigationDrawer.API.twitter.FacebookFeedPullRegistrationAsyncTask;
-import com.nowfloats.NavigationDrawer.Adapter.QuikrAdapter;
 import com.nowfloats.Twitter.ITwitterCallbacks;
 import com.nowfloats.Twitter.TokenRequest;
 import com.nowfloats.Twitter.TwitterAuthenticationActivity;
@@ -84,7 +82,7 @@ import twitter4j.auth.RequestToken;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 
-public class Social_Sharing_Activity extends AppCompatActivity implements ITwitterCallbacks, NfxRequestClient.NfxCallBackListener {
+public class Social_Sharing_Activity extends AppCompatActivity implements ITwitterCallbacks, NfxRequestClient.NfxCallBackListener, ShowArrayFragment.ChangeTitle {
     private static final int PAGE_NO_FOUND = 404;
     private Toolbar toolbar;
     int size = 0;
@@ -145,6 +143,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
     MaterialDialog mExpireDailog;
     private CallbackManager callbackManager;
+    private TextView arrowTextView;
+    private ShowArrayFragment showArrayFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,21 +192,17 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         connectTextView = (TextView) findViewById(R.id.connectTextView);
         //autoPostTextView = (TextView) findViewById(R.id.autoPostTextView);
         topFeatureTextView = (TextView) findViewById(R.id.topFeatureText);
-
+        arrowTextView = (TextView)findViewById(R.id.guidelines_arrow_text);
         //Quikr added
         CardView card = (CardView) findViewById(R.id.quikr_card);
-        String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
+        final String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
         //Log.v("ggg",quikrArray[3]+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase());
-        LinearLayout layout = (LinearLayout) findViewById(R.id.float_a_picture_share_quikr_parent);
-        for(String category: quikrArray){
-            if(category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())){
-                card.setVisibility(View.VISIBLE);
-
-                RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.list);
-                mRecyclerView.setHasFixedSize(true);
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-                mRecyclerView.setAdapter(new QuikrAdapter(this,getResources().getStringArray(R.array.quikr_tip_points)));
-                break;
+        if("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
+            for (String category : quikrArray) {
+                if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
+                    card.setVisibility(View.VISIBLE);
+                    break;
+                }
             }
         }
 
@@ -223,7 +219,23 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         connectTextView.setTypeface(myCustomFont_Medium);
         //autoPostTextView.setTypeface(myCustomFont);
         topFeatureTextView.setTypeface(myCustomFont_Medium);
-
+        arrowTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getSupportFragmentManager();
+                showArrayFrag = (ShowArrayFragment) manager.findFragmentByTag("showArray");
+                if(showArrayFrag == null){
+                    Bundle b = new Bundle();
+                    b.putStringArray("array",getResources().getStringArray(R.array.quikr_tip_points));
+                    showArrayFrag = (ShowArrayFragment) ShowArrayFragment.getInstance(b);
+                }
+                manager.beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                        .add(R.id.parent_layout, showArrayFrag,"showArray")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
         facebookPageCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -418,6 +430,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         InitShareResources();
         setStatus();
     }
+
     private void renewKitsune(int expiryType) {
         String dialogTitle = null;
         String dialogMessage = null;
@@ -1105,6 +1118,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
         overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
     }
 
@@ -1576,5 +1590,18 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 Methods.materialDialog(activity, "Alert", getString(R.string.look_like_no_facebook_page));
                 break;
         }
+    }
+
+    @Override
+    public void setTitle(String title) {
+        headerText.setText(title);
+        ScrollView scroll = (ScrollView) findViewById(R.id.scrollView);
+        if(title.contains("Social")){
+            scroll.setVisibility(View.VISIBLE);
+        }else{
+            scroll.setVisibility(View.GONE);
+        }
+
+
     }
 }

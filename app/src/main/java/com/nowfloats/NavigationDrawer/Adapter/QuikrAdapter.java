@@ -2,6 +2,7 @@ package com.nowfloats.NavigationDrawer.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ public class QuikrAdapter extends RecyclerView.Adapter<QuikrAdapter.MyHolder> {
 
     @Override
     public void onBindViewHolder(MyHolder holder, int position) {
+        holder.text.setMovementMethod(LinkMovementMethod.getInstance());
         holder.text.setText(guidelines[position]);
     }
 
@@ -65,4 +67,6 @@ public class QuikrAdapter extends RecyclerView.Adapter<QuikrAdapter.MyHolder> {
 
         }
     }
+
+
 }

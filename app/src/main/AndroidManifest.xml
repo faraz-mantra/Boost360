@@ -255,8 +255,7 @@
         <activity
             android:name="com.nowfloats.NavigationDrawer.Create_Message_Activity"
             android:label="@string/title_activity_create__message_"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden">
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nowfloats.NavigationDrawer.HomeActivity" />

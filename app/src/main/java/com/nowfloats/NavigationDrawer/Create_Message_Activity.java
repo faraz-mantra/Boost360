@@ -144,6 +144,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         }
         tosubscribers = false;
         msg = (EditText) findViewById(R.id.createMessageEditText);
+        msg.requestFocus();
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!= null) {
@@ -371,6 +372,8 @@ public class Create_Message_Activity extends AppCompatActivity {
                     }else {
                         mFbPageShare = 1;
                         facebookPageShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this,R.drawable.facebook_page));
+                       /* PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(Create_Message_Activity.this,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+                        facebookPageShare.setColorFilter(porterDuffColorFilter);*/
                     }
 
                 }else {
@@ -464,13 +467,14 @@ public class Create_Message_Activity extends AppCompatActivity {
         String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
         //Log.v("ggg",quikrArray[3]+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase());
         LinearLayout layout = (LinearLayout) findViewById(R.id.float_a_picture_share_quikr_parent);
-        for(String category: quikrArray){
-            if(category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())){
-                layout.setVisibility(View.VISIBLE);
-                break;
+        if("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
+            for (String category : quikrArray) {
+                if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
+                    layout.setVisibility(View.VISIBLE);
+                    break;
+                }
             }
         }
-
     }
 
     private void showQuikrGuidelines() {
