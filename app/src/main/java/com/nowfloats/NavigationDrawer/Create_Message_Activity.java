@@ -64,9 +64,7 @@ import com.thinksity.R;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 
 public class Create_Message_Activity extends AppCompatActivity {
@@ -464,11 +462,15 @@ public class Create_Message_Activity extends AppCompatActivity {
         });
 
         String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
-        List<String> list = Arrays.asList(quikrArray);
+        //Log.v("ggg",quikrArray[3]+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase());
         LinearLayout layout = (LinearLayout) findViewById(R.id.float_a_picture_share_quikr_parent);
-        if(list.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())){
-            layout.setVisibility(View.VISIBLE);
+        for(String category: quikrArray){
+            if(category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())){
+                layout.setVisibility(View.VISIBLE);
+                break;
+            }
         }
+
     }
 
     private void showQuikrGuidelines() {

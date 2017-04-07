@@ -32,7 +32,6 @@ import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Key_Preferences;
 import com.thinksity.R;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -103,12 +102,16 @@ public class SocialAnalytics extends AppCompatActivity implements AdapterView.On
         }
 
         String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
-        List<String> list = Arrays.asList(quikrArray);
-        if(list.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())){
-            spinner.setVisibility(View.VISIBLE);
-        }else{
-            toolbarImage.setVisibility(View.VISIBLE);
+        //Log.v("ggg",quikrArray[3]+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase());
+        LinearLayout layout = (LinearLayout) findViewById(R.id.float_a_picture_share_quikr_parent);
+        for(String category: quikrArray){
+            if(category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())){
+                spinner.setVisibility(View.VISIBLE);
+                return;
+            }
         }
+        toolbarImage.setVisibility(View.VISIBLE);
+
     }
 
     private void showDialog(){

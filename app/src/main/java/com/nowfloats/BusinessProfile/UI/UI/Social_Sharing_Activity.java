@@ -29,6 +29,7 @@ import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -195,14 +196,18 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         //Quikr added
         CardView card = (CardView) findViewById(R.id.quikr_card);
         String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
-        List<String> list = Arrays.asList(quikrArray);
-        if(list.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())){
-            card.setVisibility(View.VISIBLE);
+        //Log.v("ggg",quikrArray[3]+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase());
+        LinearLayout layout = (LinearLayout) findViewById(R.id.float_a_picture_share_quikr_parent);
+        for(String category: quikrArray){
+            if(category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())){
+                card.setVisibility(View.VISIBLE);
 
-            RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.list);
-            mRecyclerView.setHasFixedSize(true);
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-            mRecyclerView.setAdapter(new QuikrAdapter(this,getResources().getStringArray(R.array.quikr_tip_points)));
+                RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.list);
+                mRecyclerView.setHasFixedSize(true);
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+                mRecyclerView.setAdapter(new QuikrAdapter(this,getResources().getStringArray(R.array.quikr_tip_points)));
+                break;
+            }
         }
 
         facebookHomeStatus.setTypeface(myCustomFont);
