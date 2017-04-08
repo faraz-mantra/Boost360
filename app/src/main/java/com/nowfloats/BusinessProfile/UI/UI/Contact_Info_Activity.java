@@ -90,7 +90,6 @@ public class Contact_Info_Activity extends ActionBarActivity implements View.OnT
         emailAddress = (EditText) findViewById(R.id.contactInfo_emailId);
         websiteAddress = (EditText) findViewById(R.id.websiteAddress);
         facebookPage = (EditText) findViewById(R.id.facebookPage);
-
         initializeData();
         facebookPage.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FBPAGENAME));
 

@@ -136,13 +136,13 @@
                 android:layout_marginLeft="5dp"
                 android:textColor="#BDBDBD"/>
 
-            <EditText
-                android:id="@+id/websiteAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:textSize="14sp"
-                android:textColor="#575757"/>
+                <EditText
+                    android:id="@+id/websiteAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:textSize="14sp"
+                    android:textColor="#575757"/>
 
         </LinearLayout>
         <LinearLayout
