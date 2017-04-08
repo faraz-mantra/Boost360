@@ -11,7 +11,9 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -45,13 +47,16 @@ public class Contact_Info_Activity extends ActionBarActivity {
     UserSessionManager session;
     Bus bus;
 
-    public static EditText primaryNumber, alternateNumber_1,alternateNumber_2, alternateNumber_3, emailAddress,websiteAddress,facebookPage ;
+    private String[] mProtoCols = {"http://", "https://"};
+
+    EditText primaryNumber, alternateNumber_1,alternateNumber_2, alternateNumber_3, emailAddress,websiteAddress,facebookPage ;
     Boolean flag4emailaddress = false, flag4websiteaddress = false, flag4fbagename = false,flag4alternate1 = false, flag4alternate3=false, flag4primaryno = false,flag4alternate2 = false,flag4digitlimit0=false,flag4digitlimit1=false,flag4digitlimit=false,flag4digitlimit2=false;
     public static String msgtxt4_email = null, msgtxt4website = null,msgtxt4fbpage = null,msgtxt4primaryno = null, msgtxt4alternateno1 = null,msgtxtalternate2 = null, msgtxtalternate3=null;
     String[] profilesattr =new String[20];
     private TextView titleTextView;
     public static String primary="",alternate1="",alternate2="", alternate3="";
     private boolean allBoundaryCondtn = true;
+    Spinner protocolSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +92,8 @@ public class Contact_Info_Activity extends ActionBarActivity {
         emailAddress = (EditText) findViewById(R.id.contactInfo_emailId);
         websiteAddress = (EditText) findViewById(R.id.websiteAddress);
         facebookPage = (EditText) findViewById(R.id.facebookPage);
+
+        protocolSpinner = (Spinner) findViewById(R.id.sp_web_address);
 
         initializeData();
         facebookPage.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FBPAGENAME));
@@ -401,6 +408,8 @@ public class Contact_Info_Activity extends ActionBarActivity {
             public void afterTextChanged(Editable s) {
             }
         });
+
+        protocolSpinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mProtoCols));
     }
 
 
@@ -710,7 +719,7 @@ public class Contact_Info_Activity extends ActionBarActivity {
             if(isValidWebsite(msgtxt4website)){
                 try {
                     obj1.put("key", "URL");
-                    obj1.put("value", msgtxt4website);
+                    obj1.put("value", protocolSpinner.getSelectedItem() + msgtxt4website);
                       session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE,msgtxt4website);
 
                 } catch (Exception ex) {
