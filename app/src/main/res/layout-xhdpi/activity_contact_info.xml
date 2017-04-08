@@ -136,13 +136,38 @@
                 android:layout_marginLeft="5dp"
                 android:textColor="#BDBDBD"/>
 
-            <EditText
-                android:id="@+id/websiteAddress"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:textSize="14sp"
-                android:textColor="#575757"/>
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_protocol_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic__drop_down"/>
+                <android.support.v7.widget.AppCompatSpinner
+                    android:background="@drawable/bg_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sp_web_address">
+
+                </android.support.v7.widget.AppCompatSpinner>
+                <!--<Spinner
+                    android:background="@drawable/bg_spinner"
+                    android:gravity="right"
+                    android:id="@+id/sp_web_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </Spinner>-->
+                <EditText
+                    android:id="@+id/websiteAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:textSize="14sp"
+                    android:textColor="#575757"/>
+            </LinearLayout>
 
         </LinearLayout>
         <LinearLayout

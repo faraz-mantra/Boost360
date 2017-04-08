@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Boost.iml" filepath="$PROJECT_DIR$/Boost.iml" />
       <module fileurl="file://$PROJECT_DIR$/ZoomImageLibrary/ZoomImageLibrary.iml" filepath="$PROJECT_DIR$/ZoomImageLibrary/ZoomImageLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/boost.iml" filepath="$PROJECT_DIR$/boost.iml" />
       <module fileurl="file://$PROJECT_DIR$/cropper/cropper.iml" filepath="$PROJECT_DIR$/cropper/cropper.iml" />
       <module fileurl="file://$PROJECT_DIR$/instamojoLib/instamojoLib.iml" filepath="$PROJECT_DIR$/instamojoLib/instamojoLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/libs/libraries/libraries.iml" filepath="$PROJECT_DIR$/app/libs/libraries/libraries.iml" />
