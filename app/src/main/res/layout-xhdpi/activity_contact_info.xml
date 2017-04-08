@@ -35,9 +35,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
-                android:cursorVisible="false"
                 android:textSize="14sp"
-                android:textColor="#BDBDBD">
+                android:textColor="#575757">
                 </EditText>
 
         </LinearLayout>
@@ -140,12 +139,27 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <Spinner
+                <ImageView
+                    android:id="@+id/iv_protocol_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic__drop_down"/>
+                <android.support.v7.widget.AppCompatSpinner
+                    android:background="@drawable/bg_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sp_web_address">
+
+                </android.support.v7.widget.AppCompatSpinner>
+                <!--<Spinner
+                    android:background="@drawable/bg_spinner"
+                    android:gravity="right"
                     android:id="@+id/sp_web_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                </Spinner>
+                </Spinner>-->
                 <EditText
                     android:id="@+id/websiteAddress"
                     android:layout_width="match_parent"
