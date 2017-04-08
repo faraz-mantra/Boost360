@@ -26,15 +26,6 @@
         android:layout_margin="5dp"
         android:visibility="visible"
         android:orientation="horizontal">
-        <Button
-            android:id ="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:padding="10dp"
-            android:textAllCaps="false"
-            android:background="@color/primary_color"
-            android:text="Cancel"/>
 
         <Button
             android:id ="@+id/button2"

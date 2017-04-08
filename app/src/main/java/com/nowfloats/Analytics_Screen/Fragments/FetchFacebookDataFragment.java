@@ -48,11 +48,11 @@ public class FetchFacebookDataFragment extends Fragment {
         ImageView image = (ImageView) view.findViewById(R.id.boost_app_icon);
         String socialType = null;
         if(SocialAnalytics.FACEBOOK.equals(mType)){
-            image.setVisibility(View.VISIBLE);
+            image.setImageResource(R.drawable.boost_with_facebook);
             socialType = "Facebook Page";
         }else if(SocialAnalytics.QUIKR.equals(mType)){
             socialType = "Quikr";
-            image.setVisibility(View.GONE);
+            image.setImageResource(R.drawable.boost_with_quikr);
         }
         String text1_message = "Gathering "+socialType+" analytics";
         String text2_message = "Please wait, as we are collecting statistics from your "+socialType+". It usually takes upto 24 hours to fetch data.";

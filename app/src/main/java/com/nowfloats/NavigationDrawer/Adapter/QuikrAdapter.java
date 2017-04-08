@@ -1,14 +1,22 @@
 package com.nowfloats.NavigationDrawer.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
 import com.thinksity.R;
 
 
@@ -38,11 +46,44 @@ public class QuikrAdapter extends RecyclerView.Adapter<QuikrAdapter.MyHolder> {
     }
 
     @Override
-    public void onBindViewHolder(MyHolder holder, int position) {
-        holder.text.setMovementMethod(LinkMovementMethod.getInstance());
-        holder.text.setText(guidelines[position]);
-    }
+    public void onBindViewHolder(final MyHolder holder, int position) {
+        if(position>=3){
+            SpannableString ss = new SpannableString(guidelines[position]);
+            ClickableSpan clickableSpan = new ClickableSpan() {
+                @Override
+                public void onClick(View textView) {
+                    int pos = holder.getAdapterPosition();
+                    if(pos ==3){
+                        openWebView("http://www.quikr.com/html/termsandconditions.php");
+                    }else if(pos == 4){
+                        openWebView("http://bangalore.quikr.com/html/privacy.php");
+                    }else if(pos == 5){
+                        openWebView("http://hyderabad.quikr.com/html/policies.php");
+                    }
+                }
+                @Override
+                public void updateDrawState(TextPaint ds) {
+                    super.updateDrawState(ds);
+                    ds.setUnderlineText(true);
+                }
+            };
+            ss.setSpan(clickableSpan, 0,guidelines[position].length() , Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            holder.text.setText(ss);
+            holder.text.setMovementMethod(LinkMovementMethod.getInstance());
+            holder.text.setHighlightColor(Color.TRANSPARENT);
 
+        }else{
+            holder.text.setText(guidelines[position]);
+        }
+    }
+    private void openWebView(String url){
+
+        Intent showWebSiteIntent = new Intent(mContext, Mobile_Site_Activity.class);
+        // showWebSiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        showWebSiteIntent.putExtra("WEBSITE_NAME", url);
+        mContext.startActivity(showWebSiteIntent);
+        ((Activity)mContext).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
     @Override
     public int getItemViewType(int position) {
         return TEXT_TYPE;

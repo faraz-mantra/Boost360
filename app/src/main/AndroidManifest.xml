@@ -94,25 +94,6 @@
                 android:value="com.nowfloats.PreSignUp.PreSignUp_MainActivity" />
         </activity>
         <activity
-            android:name="com.nowfloats.Analytics_Screen.ShowWebView"
-            android:label="Social Analytics"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="SocialSharing"
-                    android:scheme="nowfloatsboost" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.nowfloats.Analytics_Screen.ShowWebView" />
-        </activity>
-        <activity
             android:name="com.nowfloats.Analytics_Screen.SocialAnalytics"
             android:label="Social Analytics"
             android:launchMode="singleTop"
@@ -237,6 +218,9 @@
         <activity
             android:name="com.nowfloats.PreSignUp.PreSignUp_MainActivity"
             android:label="@string/title_activity_pre_sign_up__main"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.BusinessProfile.UI.UI.QuikrGuidelinesActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.Image_Gallery.FullScreen_Gallery_Image"
