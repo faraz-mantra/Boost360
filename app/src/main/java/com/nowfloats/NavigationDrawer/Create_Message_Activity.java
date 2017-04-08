@@ -239,13 +239,17 @@ public class Create_Message_Activity extends AppCompatActivity {
                 } else{
                     if (mQuikrShare == 1) {
                         mQuikrShare = 0;
-                        quikrButton.setImageResource(R.drawable.quikr_icon_deactivate);
+                        quikrButton.setImageResource(R.drawable.quikr_icon_activate);
+                        quikrButton.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
+                        Toast.makeText(Create_Message_Activity.this, "Quikr Disabled", Toast.LENGTH_SHORT).show();
                     } else {
                         if(pref.getBoolean("show_quikr_guidelines",true)) {
                             showQuikrGuidelines();
                         }
                         mQuikrShare = 1;
                         quikrButton.setImageResource(R.drawable.quikr_icon_activate);
+                        quikrButton.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
+                        Toast.makeText(Create_Message_Activity.this, "Quikr Enabled", Toast.LENGTH_SHORT).show();
                     }
                 /*Animation anim = AnimationUtils.loadAnimation(Create_Message_Activity.this,R.anim.slide_up_slow);
                 Animation anim2 = AnimationUtils.loadAnimation(Create_Message_Activity.this,R.anim.slide_down_slow);
@@ -278,8 +282,8 @@ public class Create_Message_Activity extends AppCompatActivity {
         }else{
             Constants.twitterShareEnabled = false;
             mTwitterShare = 0;
-            twitterloginButton.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
             twitterloginButton.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.twitter_icon_inactive));
+            twitterloginButton.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
         }
 
 
@@ -515,13 +519,10 @@ public class Create_Message_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(checkBox.isChecked()) {
-                    dialog.dismiss();
                     prefsEditor.putBoolean("show_quikr_guidelines",false).apply();
                     Methods.materialDialog(activity,"Quikr Guidelines",getString(R.string.message_quikr));
                 }
-                else{
-                    Toast.makeText(activity, "Please read the guidelines", Toast.LENGTH_SHORT).show();
-                }
+                dialog.dismiss();
             }
         });
     }

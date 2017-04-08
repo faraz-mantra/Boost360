@@ -102,7 +102,6 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
 
         String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
         //Log.v("ggg",quikrArray[3]+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase());
-        LinearLayout layout = (LinearLayout) findViewById(R.id.float_a_picture_share_quikr_parent);
         if("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
             for (String category : quikrArray) {
                 if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
@@ -127,8 +126,7 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
             popup.setContentView(layout);
             popup.setOutsideTouchable(true);
             popup.setFocusable(true);
-            popup.showAsDropDown(image,5,5);
-
+            popup.showAsDropDown(image,-10,0);
             layout.findViewById(R.id.facebook).setOnClickListener(this);
             layout.findViewById(R.id.quikr).setOnClickListener(this);
 

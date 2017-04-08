@@ -12,13 +12,14 @@
         android:drawableLeft="@drawable/circle_bullets" />
     <TextView
         android:id="@+id/text1"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_height="wrap_content"
         android:textSize="15sp"
         android:autoLink="all"
-        android:text="hello">
+        android:text="hello"
+        android:layout_marginLeft="5dp">
 
     </TextView>
 

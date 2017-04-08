@@ -31,11 +31,11 @@
             android:src="@drawable/facebook_round"/>
         <ImageView
             android:id="@+id/toolbar_spinner"
-            android:visibility="visible"
+            android:visibility="gone"
             android:src="@drawable/drop_down"
             android:background="@drawable/ripple_spinner"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:padding="10dp" />
 
     </LinearLayout>
