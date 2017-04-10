@@ -271,6 +271,7 @@ public class Settings_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), FAQMainAcivity.class);
+                i.putExtra("array",getResources().getStringArray(R.array.faqmain));
                 activity.startActivity(i);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
@@ -462,6 +463,5 @@ public class Settings_Fragment extends Fragment {
             activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
     }
-
 
 }

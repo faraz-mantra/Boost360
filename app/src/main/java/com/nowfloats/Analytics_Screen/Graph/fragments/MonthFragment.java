@@ -201,6 +201,7 @@ public class MonthFragment extends Fragment {
         public void onYearDataClicked(int month);
     }
    public void getWeeksAcordingToMonth(int month){
+       Calendar currentCalendar = Calendar.getInstance();
        int end =-1;
        Calendar calendar = Calendar.getInstance();
        calendar.set(Calendar.MONTH,month-1);
@@ -208,29 +209,34 @@ public class MonthFragment extends Fragment {
        int currMonth = calendar.get(Calendar.MONTH);
        int start = calendar.get(Calendar.DAY_OF_MONTH);
        flag =false;
+       int lastDay = calendar.get(Calendar.DAY_OF_MONTH);
        while(currMonth == calendar.get(Calendar.MONTH)){
 
-           if(calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY){
-               //Log.v("ggg",start+"-"+calendar.get(Calendar.DAY_OF_MONTH));
-               flag= true;
-           }
-           end = calendar.get(Calendar.DAY_OF_MONTH);
            int day =calendar.get(Calendar.WEEK_OF_MONTH);
-           calendar.add(Calendar.DAY_OF_MONTH,1);
-           if(day<=data.length && currMonth == calendar.get(Calendar.MONTH)){
-               if(flag) {
-                   //Log.v("ggg", start + "data" + end);
+           lastDay = calendar.get(Calendar.DAY_OF_MONTH);
+           if(day>data.length) break;
+           if(start == -1){
+
+               start = calendar.get(Calendar.DAY_OF_MONTH);
+               end = -1;
+
+           }else if(end == -1){
+
+               if(currentCalendar.get(Calendar.MONTH) == calendar.get(Calendar.MONTH) &&
+                       currentCalendar.get(Calendar.DAY_OF_MONTH) == calendar.get(Calendar.DAY_OF_MONTH)){
+                   lastDay = calendar.get(Calendar.DAY_OF_MONTH);
+                   break;
+
+               }else if(calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+                   end = calendar.get(Calendar.DAY_OF_MONTH);
                    shortArray[day - 1] = getResources().getStringArray(R.array.months)[month - 1] + "(" + start + "-" + end + ")";
-                   flag = false;
-                   start = end + 1;
-                   end = -1;
+                   start = -1;
                }
-           }else{
-               break;
            }
+           calendar.add(Calendar.DATE,1);
        }
-       if(calendar.get(Calendar.DAY_OF_MONTH)==Calendar.SUNDAY && end != -1){
-           shortArray[data.length-1]=getResources().getStringArray(R.array.months)[month-1]+"("+start+"-"+end+")";
+       if(end == -1){
+           shortArray[data.length-1]=getResources().getStringArray(R.array.months)[month-1]+"("+start+"-"+lastDay+")";
            //Log.v("ggg",start+" end "+end);
        }
 

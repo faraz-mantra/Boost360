@@ -20,15 +20,20 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,6 +46,7 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.PostModel;
+import com.nowfloats.NavigationDrawer.Adapter.QuikrAdapter;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
 import com.nowfloats.NotificationCenter.AlertArchive;
@@ -84,7 +90,7 @@ public class Create_Message_Activity extends AppCompatActivity {
     private SharedPreferences pref = null;
     SharedPreferences.Editor prefsEditor;
     private ImageView facebookPageShare;
-    private ImageView twitterloginButton,create_message_subscribe_button;
+    private ImageView twitterloginButton,create_message_subscribe_button,quikrButton;
     public static boolean imageIconButtonSelected = false;
     private TextView post;
     private boolean isfirstTimeFacebook = false;
@@ -106,10 +112,10 @@ public class Create_Message_Activity extends AppCompatActivity {
     private final int media_req_id = 1;
     private SharedPreferences mSharedPreferences = null;
 
-    private int mFbPageShare = 0, mFbProfileShare = 0, mTwitterShare = 0;
+    private int mFbPageShare = 0, mFbProfileShare = 0, mQuikrShare =0 , mTwitterShare = 0;
     private RiaNodeDataModel mRiaNodedata;
     private boolean mIsImagePicking = false;
-    private CardView image_card;
+    private CardView image_card,title_card,message_card;
     private ImageView deleteButton,editButton;
 
     @Override
@@ -126,6 +132,8 @@ public class Create_Message_Activity extends AppCompatActivity {
         session = new UserSessionManager(getApplicationContext(),Create_Message_Activity.this);
         dataBase = new DataBase(activity);
         LinearLayout socialSharingIconLayout = (LinearLayout) findViewById(R.id.socialSharingIconLayout);
+        title_card = (CardView) findViewById(R.id.title_card);
+        message_card = (CardView) findViewById(R.id.message_card_view);
 
         TextView shareText = (TextView) findViewById(R.id.shareTextView);
         tagName = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG);
@@ -136,6 +144,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         }
         tosubscribers = false;
         msg = (EditText) findViewById(R.id.createMessageEditText);
+        msg.requestFocus();
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
         if(getSupportActionBar()!= null) {
@@ -189,6 +198,9 @@ public class Create_Message_Activity extends AppCompatActivity {
                     if (mTwitterShare == 1) {
                         socialShare+="TWITTER.";
                     }
+                    if(mQuikrShare == 1){
+                        socialShare+="QUIKR.";
+                    }
                     Home_Main_Fragment.bus.post(new UploadPostEvent(path, msg.getText().toString(), socialShare));
                     if (path!=null && path.trim().length()>0){
                         //Log.v("ggg",path+" path for upadte");
@@ -215,18 +227,62 @@ public class Create_Message_Activity extends AppCompatActivity {
         facebookShare = (ImageView) findViewById(R.id.create_message_activity_facebokhome_button);
         facebookPageShare = (ImageView) findViewById(R.id.create_message_activity_facebokpage_button);
         twitterloginButton = (ImageView) findViewById(R.id.create_message_activity_twitter_button);
+        quikrButton = (ImageView) findViewById(R.id.create_message_activity_quikr_button);
+        quikrButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int status = pref.getInt("quikrStatus", -1);
+                if (status == 0) {
+                    Methods.showSnackBar(activity,"Sorry, You have reached your daily limit of one post");
+                }else if(status == -1){
+                    Methods.showSnackBarNegative(activity,"Something went wrong, please restart the application");
+                } else{
+                    if (mQuikrShare == 1) {
+                        mQuikrShare = 0;
+                        quikrButton.setImageResource(R.drawable.quikr_icon_activate);
+                        quikrButton.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
+                        Toast.makeText(Create_Message_Activity.this, "Quikr Disabled", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if(pref.getBoolean("show_quikr_guidelines",true)) {
+                            showQuikrGuidelines();
+                        }
+                        mQuikrShare = 1;
+                        quikrButton.setImageResource(R.drawable.quikr_icon_activate);
+                        quikrButton.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
+                        Toast.makeText(Create_Message_Activity.this, "Quikr Enabled", Toast.LENGTH_SHORT).show();
+                    }
+                /*Animation anim = AnimationUtils.loadAnimation(Create_Message_Activity.this,R.anim.slide_up_slow);
+                Animation anim2 = AnimationUtils.loadAnimation(Create_Message_Activity.this,R.anim.slide_down_slow);
+                title_card.setAnimation(anim);
+                message_card.setAnimation(anim2);
+                title_card.setVisibility(View.VISIBLE);
+                anim2.start();
+                anim.setStartOffset(600);*/
 
+                }
+            }
+        });
+        if(!Util.isNullOrEmpty(session.getFacebookName()) && (pref.getInt("fbStatus", 0)==1 || pref.getInt("fbStatus",0)==3)) {
+            facbookEnabled = true;
+            mFbProfileShare = 1;
+            facebookShare.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebook_icon));
+        }
 
+        if(!Util.isNullOrEmpty(session.getFacebookPage()) && pref.getInt("fbPageStatus", 0) ==1) {
+            isFacebookPageShareLoggedIn = true;
+            mFbPageShare = 1;
+            facebookPageShare.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebook_page));
+        }
         mSharedPreferences = getSharedPreferences(TwitterConstants.PREF_NAME, MODE_PRIVATE);
         if(mSharedPreferences.getBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false)) {
-            twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
+            twitterloginButton.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.twitter_icon_active));
             twitterloginButton.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
             Constants.twitterShareEnabled = true;
             mTwitterShare = 1;
         }else{
             Constants.twitterShareEnabled = false;
             mTwitterShare = 0;
-            twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
+            twitterloginButton.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.twitter_icon_inactive));
             twitterloginButton.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
         }
 
@@ -240,13 +296,13 @@ public class Create_Message_Activity extends AppCompatActivity {
                     if(Constants.twitterShareEnabled){
                         Constants.twitterShareEnabled = false;
                         mTwitterShare = 0;
-                        twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
+                        twitterloginButton.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this,R.drawable.twitter_icon_inactive));
                         twitterloginButton.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
                         Toast.makeText(Create_Message_Activity.this, "Twitter Disabled", Toast.LENGTH_SHORT).show();
                     }else {
                         Constants.twitterShareEnabled = true;
                         mTwitterShare = 1;
-                        twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
+                        twitterloginButton.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this,R.drawable.twitter_icon_active));
                         twitterloginButton.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
                         Toast.makeText(Create_Message_Activity.this, "Twitter Enabled", Toast.LENGTH_SHORT).show();
                     }
@@ -268,7 +324,7 @@ public class Create_Message_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (Constants.isFirstTimeSendToSubscriber == false) {
+                if (!Constants.isFirstTimeSendToSubscriber) {
                     Constants.isFirstTimeSendToSubscriber = true;
                     new MaterialDialog.Builder(Create_Message_Activity.this)
                             .title(getString(R.string.send_to_subscribers))
@@ -288,13 +344,13 @@ public class Create_Message_Activity extends AppCompatActivity {
                                 @Override
                                 public void onPositive(MaterialDialog dialog) {
                                     super.onPositive(dialog);
-                                    if (tosubscribers == true) {
+                                    if (tosubscribers) {
                                         MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_SEND_TO_SUBSCRIBERS, null);
-                                        create_message_subscribe_button.setImageDrawable(getResources().getDrawable(R.drawable.subscribe_icon));
+                                        create_message_subscribe_button.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this,R.drawable.subscribe_icon));
                                         create_message_subscribe_button.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
                                         tosubscribers = false;
                                     } else {
-                                        create_message_subscribe_button.setImageDrawable(getResources().getDrawable(R.drawable.subscribe_icon_selected));
+                                        create_message_subscribe_button.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this,R.drawable.subscribe_icon_selected));
                                         create_message_subscribe_button.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
                                         tosubscribers = true;
                                     }
@@ -305,13 +361,13 @@ public class Create_Message_Activity extends AppCompatActivity {
                             .show();
 
                 }else {
-                    if (tosubscribers == true) {
+                    if (tosubscribers) {
                         MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_SEND_TO_SUBSCRIBERS, null);
-                        create_message_subscribe_button.setImageDrawable(getResources().getDrawable(R.drawable.subscribe_icon));
+                        create_message_subscribe_button.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this,R.drawable.subscribe_icon));
                         create_message_subscribe_button.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
                         tosubscribers = false;
                     } else {
-                        create_message_subscribe_button.setImageDrawable(getResources().getDrawable(R.drawable.subscribe_icon_selected));
+                        create_message_subscribe_button.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this,R.drawable.subscribe_icon_selected));
                         create_message_subscribe_button.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
                         tosubscribers = true;
                     }
@@ -324,17 +380,19 @@ public class Create_Message_Activity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                if(!Util.isNullOrEmpty(session.getFacebookPage()) && pref.getInt("fbPageStatus", 3) ==1) {
+                if(!Util.isNullOrEmpty(session.getFacebookPage()) && pref.getInt("fbPageStatus",0) ==1) {
                     if(mFbPageShare==1){
                         mFbPageShare = 0;
-                        facebookPageShare.setImageDrawable(getResources().getDrawable(R.drawable.facebookpage_icon_inactive));
+                        facebookPageShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this,R.drawable.facebookpage_icon_inactive));
                         facebookPageShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
                         Toast.makeText(Create_Message_Activity.this, "Facebook Page Disabled", Toast.LENGTH_SHORT).show();
                     }else {
                         mFbPageShare = 1;
-                        facebookPageShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
-                        facebookPageShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
                         Toast.makeText(Create_Message_Activity.this, "Facebook Page Enabled", Toast.LENGTH_SHORT).show();
+                        facebookPageShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this,R.drawable.facebook_page));
+                        facebookPageShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
+                        /* PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(Create_Message_Activity.this,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+                        facebookPageShare.setColorFilter(porterDuffColorFilter);*/
                     }
 
                 }else {
@@ -352,15 +410,15 @@ public class Create_Message_Activity extends AppCompatActivity {
         facebookShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!Util.isNullOrEmpty(session.getFacebookName()) && pref.getInt("fbStatus", 3)==1){
+                if(!Util.isNullOrEmpty(session.getFacebookName()) && (pref.getInt("fbStatus", 0)==1 || pref.getInt("fbStatus",0)==3)){
                     if(mFbProfileShare==1){
                         mFbProfileShare = 0;
-                        facebookShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon_inactive));
+                        facebookShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this,R.drawable.facebook_icon_inactive));
                         facebookShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
                         Toast.makeText(Create_Message_Activity.this, "Facebook Disabled", Toast.LENGTH_SHORT).show();
                     }else {
                         mFbProfileShare = 1;
-                        facebookShare.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
+                        facebookShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this,R.drawable.facebook_icon));
                         facebookShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
                         Toast.makeText(Create_Message_Activity.this, "Facebook Enabled", Toast.LENGTH_SHORT).show();
 
@@ -427,6 +485,46 @@ public class Create_Message_Activity extends AppCompatActivity {
                 prefsEditor.putString("msg_post",s.toString()).apply();
             }
         });
+
+        String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
+        //Log.v("ggg",quikrArray[3]+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase());
+        LinearLayout layout = (LinearLayout) findViewById(R.id.float_a_picture_share_quikr_parent);
+        if("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
+            for (String category : quikrArray) {
+                if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
+                    layout.setVisibility(View.VISIBLE);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void showQuikrGuidelines() {
+        View v = LayoutInflater.from(this).inflate(R.layout.quikr_guidlines,null);
+        final AppCompatCheckBox checkBox = (AppCompatCheckBox) v.findViewById(R.id.checkbox);
+        RecyclerView list = (RecyclerView) v.findViewById(R.id.list);
+        Button agree = (Button) v.findViewById(R.id.button2);
+
+        list.setHasFixedSize(true);
+        list.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        String[] array = getResources().getStringArray(R.array.quikr_tip_on_dialog);
+        list.setAdapter(new QuikrAdapter(this,array));
+        final MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .customView(v,true)
+                .title(R.string.guidlines)
+                .build();
+        dialog.show();
+
+        agree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkBox.isChecked()) {
+                    prefsEditor.putBoolean("show_quikr_guidelines",false).apply();
+                    Methods.materialDialog(activity,"Quikr Guidelines",getString(R.string.message_quikr));
+                }
+                dialog.dismiss();
+            }
+        });
     }
 
     private void editImage() {
@@ -454,7 +552,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         final MaterialDialog dialog = new MaterialDialog.Builder(activity)
                 .customView(R.layout.featuredimage_popup,true)
                 .show();
-        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(ContextCompat.getColor(this,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
 
         View view = dialog.getCustomView();
         TextView header = (TextView) view.findViewById(R.id.textview_heading);
@@ -500,7 +598,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         final MaterialDialog dialog = new MaterialDialog.Builder(Create_Message_Activity.this)
                 .customView(R.layout.featuredimage_popup,true)
                 .show();
-        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(ContextCompat.getColor(this,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
 
         View view = dialog.getCustomView();
         TextView header = (TextView) view.findViewById(R.id.textview_heading);
@@ -812,11 +910,13 @@ public class Create_Message_Activity extends AppCompatActivity {
 
         MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY,null);
         if(Constants.twitterShareEnabled) {
-            twitterloginButton.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
+            twitterloginButton.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.twitter_icon_active));
             twitterloginButton.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
         }else{
             twitterloginButton.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
         }
+
+        quikrButton.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
     }
 
     @Override

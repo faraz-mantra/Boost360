@@ -36,19 +36,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.nowfloats.BusinessProfile.UI.API.UploadPictureAsyncTask;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DeleteBackgroundImageAsyncTask;
 import com.nowfloats.Twitter.TwitterConstants;
-import com.nowfloats.Volley.AppController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
@@ -587,6 +580,8 @@ public class SidePanelFragment extends Fragment {
             }
         });
         //enqCount = (TextView)view.findViewById(R.id.enquiry_count_textview);
+        Log.d("Executing Async: ", Constants.beCountUrl + "?clientId=" + Constants.clientId + "&fpId=" + session.getFPID());
+       /* RequestQueue queue = AppController.getInstance().getRequestQueue();
         BoostLog.d("Executing Async: ", Constants.beCountUrl + "?clientId=" + Constants.clientId + "&fpId=" + session.getFPID());
         /*RequestQueue queue = AppController.getInstance().getRequestQueue();
         StringRequest beCountRequest = new StringRequest(Request.Method.GET, Constants.beCountUrl + "?clientId=" + Constants.clientId + "&fpId=" + session.getFPID(), new Response.Listener<String>() {

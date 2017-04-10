@@ -1016,7 +1016,17 @@
         <item>kasım</item>
         <item>aralık</item>
     </string-array>
-
+    <string-array name="quikr_tip_points">
+        <item>Please be as detailed as possible in the description of the update. For example, if
+            you are posting an update about a car, mention the make, model, year and kms driven.
+            If you are posting an update about an apartment, mention whether it\'s for rent or sale,
+            area and number of rooms (1 BHK, 2BHK etc)</item>
+        <item>We recommend that you post the update with a clear image of the product</item>
+        <item>Each ad you post is live on Quikr for 30 days</item>
+        <item>Your primary email Id is shared with Quikr and you would receive any leads for the ads on this email id </item>
+        <item>The details of all ads posted can be viewed in <b>Analytics -> Off-page analytics -> Quikr</b></item>
+        <item>To ensure optimal experience for all users, you can post only 1 update to Quikr per day</item>
+    </string-array>
     <string name="title_activity_business__address_">Business Address</string>
     <string name="title_activity_contact__info_">Contact Information</string>
 
@@ -1173,6 +1183,11 @@
     <string name="dialog_to_be_activated_null_text">Please note that you will receive an Account Verification Call before your subscription gets activated. Are you sure you want to proceed?</string>
     <string name="alternate_number3">Alternate Number 3</string>
     <string name="subscriber_second_text">Subscription is a great way to engage with your existing customers and tell them about latest offers or new product launches</string>
+    <string name="site_appearance_change_to_new_look">In case you didn\'t like the existing look of your website, you  can always choose to change it from here.</string>
+    <string name="find_your_subscribers">Find your subscribers</string>
+    <string name="title_for_quikrr">Write message title(Quikrr only)</string>
+    <string name="guidlines">Guidelines for posting to Quikr</string>
+    <string name="quikr_message">Good news! You can now publish your updates as product ads to Quikr. Please follow the guidelines mentioned below to ensure that your ad is successfully posted.</string>
     <string name="search_ranking">Search Ranking</string>
     <string name="spinner_title">Filter</string>
 
