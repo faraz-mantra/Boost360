@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    app:theme="@style/CustomToolbarTheme"
+    android:background="?attr/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginEnd="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginRight="15dp">
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:layout_marginEnd="5dp"
+            android:ellipsize="marquee"
+            fontPath="Roboto-Medium.ttf"
+            android:fadingEdge="horizontal"
+            android:visibility="visible"
+            android:marqueeRepeatLimit="1"
+            android:scrollHorizontally="true"
+            tools:ignore="MissingPrefix"
+            android:layout_marginRight="5dp" />
+
+        <AutoCompleteTextView
+            android:id="@+id/search_edittext"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:maxLines="1"
+            android:hint="@string/find_your_subscribers"
+            android:textColor="@color/light_black"
+            android:visibility="gone"
+            android:background="@drawable/white_round_corner"
+            android:layout_marginRight="15dp" />
+        <ImageView
+            android:id="@+id/search_image"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:background="@drawable/button_click_effect"
+            android:src="@drawable/analytics_search"
+            android:layout_gravity="end"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/delete_image"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:padding="9dp"
+            android:src="@drawable/delete_dustbin_small"
+            android:visibility="gone"
+            android:background="@drawable/button_click_effect"/>
+
+    </LinearLayout>
+</android.support.v7.widget.Toolbar>

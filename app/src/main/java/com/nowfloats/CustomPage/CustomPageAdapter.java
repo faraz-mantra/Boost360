@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -95,7 +96,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
                 holder.stencil.setColorFilter(primary);
                 if (storeData.get(position).getSel()==0){
                     holder.imageView.setVisibility(View.INVISIBLE);
-                    holder.fullLayout.setBackgroundColor( android.R.attr.selectableItemBackground);
+                    holder.fullLayout.setBackgroundColor( ContextCompat.getColor(appContext,android.R.attr.selectableItemBackground));
 //                    holder.imageView.setColorFilter(greyBg);
                 }else{
                     holder.imageView.setVisibility(View.VISIBLE);

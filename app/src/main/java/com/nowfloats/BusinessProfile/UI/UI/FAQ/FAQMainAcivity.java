@@ -37,9 +37,9 @@ public class FAQMainAcivity extends ActionBarActivity {
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        Intent intent = getIntent();
+        main_lv_faq_values = intent.getStringArrayExtra("array");
         lv_faq_main = (ListView)findViewById(R.id.lv_faq_main);
-        main_lv_faq_values = getResources().getStringArray(R.array.faqmain);
 
         adapter = new ArrayAdapter<String>(this, R.layout.faq_row_layout, main_lv_faq_values);
 

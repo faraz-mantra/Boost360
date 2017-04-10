@@ -102,7 +102,7 @@ public class SubscribersActivity extends AppCompatActivity {
             String resp = getResponse(params[0]);
             subscribers = new ArrayList<>();
             if(resp!=null){
-                    parseJson(resp);
+                parseJson(resp);
             }else {
                 return null;
             }

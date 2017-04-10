@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.nowfloats.Login.UserSessionManager;
@@ -54,6 +55,7 @@ public class SiteAppearanceFragment extends Fragment {
     private JustifyTextView tvHelpBody;
     private CardView cvKitsuneSwitch, cvRevertBack;
     private ImageView ivKitsuneSwitch;
+    private LinearLayout linearLayout;
     //private OnFragmentInteractionListener mListener;
 
     /*public SiteAppearanceFragment() {
@@ -72,6 +74,7 @@ public class SiteAppearanceFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -92,6 +95,7 @@ public class SiteAppearanceFragment extends Fragment {
         tvHelpHeader = (TextView)view.findViewById(R.id.tv_help_header);
         tvHelpBody = (JustifyTextView) view.findViewById(R.id.tv_help_body);
         tvHelpFooter = (TextView) view.findViewById(R.id.tv_help_footer);
+        linearLayout = (LinearLayout) view.findViewById(R.id.child_layout);
         //btnLearnMore = (Button)view.findViewById(R.id.btn_learn_kitsune);
         ivKitsuneSwitch = (ImageView)view.findViewById(R.id.iv_kitsune_switch);
         if(session.getWebTemplateType().equals("6")){
@@ -322,18 +326,4 @@ public class SiteAppearanceFragment extends Fragment {
         //mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    /*public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }*/
 }

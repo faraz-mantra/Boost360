@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/facebook"
+        android:icon="@drawable/facebook_round"
+        android:title="Facebook Page"
+        app:showAsAction="withText"/>
+
+    <item
+        android:id="@+id/quikr"
+        android:icon="@drawable/facebook_round"
+        android:title="Quikr"
+        app:showAsAction="withText"/>
+</menu>

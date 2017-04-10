@@ -199,7 +199,7 @@ public class Methods {
         try{
             new MaterialDialog.Builder(activity)
                     .title(title)
-                    .content(msg)
+                    .content(Methods.fromHtml(msg))
                     .positiveText("Ok")
                     .positiveColorRes(R.color.primaryColor)
                     .callback(new MaterialDialog.ButtonCallback() {
@@ -208,7 +208,9 @@ public class Methods {
                             super.onPositive(dialog);
                             dialog.dismiss();
                         }
-                    }).show();
+                    })
+                    .build()
+                    .show();
         }catch(Exception e){e.printStackTrace();}
     }
 
@@ -249,16 +251,17 @@ public class Methods {
 
         Long epochTime = Long.parseLong(Sdate);
         Date date = new Date(epochTime);
-        DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.US);//dd/MM/yyyy HH:mm:ss
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy KK:mm a", Locale.US);//dd/MM/yyyy HH:mm:ss
         format.setTimeZone(TimeZone.getDefault());
         dateTime = format.format(date);
 
         if (!Util.isNullOrEmpty(dateTime)) {
             String[] dateTemp;
             String hrsTemp;
-
+            String amMarker;
             dateTemp = dateTime.split(" ");
             hrsTemp=dateTemp[1];
+            amMarker = dateTemp[2];
             dateTemp = dateTemp[0].split("-");
 
             if (dateTemp.length > 0) {
@@ -314,7 +317,7 @@ public class Methods {
                         break;
                 }
             }
-            formatted+=" at "+hrsTemp;
+            formatted+=" at "+hrsTemp+" "+amMarker;
         }
         return formatted;
     }

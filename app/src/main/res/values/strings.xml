@@ -71,7 +71,7 @@
     <string name="title_activity_image__gallery__main">Image Gallery</string>
     <string name="title_activity_home__main">Home_MainActivity</string>
     <string name="home">Home</string>
-    <string name="title_activity_create__message_">Post an Update</string>
+    <string name="title_activity_create__message_">Post an update</string>
     <string name="side_panel_row_one">Dashboard</string>
     <string name="side_panel_row_two">Profile</string>
     <string name="side_panel_site_appearance">Site Appearance</string>
@@ -375,7 +375,36 @@
         <item>ANALYTICS</item>
         <item>ALERTS</item>
     </string-array>
-
+<string-array name="themeIds">
+    <item>575bfec79bfed51e10df0e5d</item>
+    <item>57c3c1a65d64370d7cf4eb17</item>
+    <item>571f7f789bfed52c543d888d</item>
+</string-array>
+    <string-array name="themeNames">
+    <item>Bold and The Beautiful</item>
+    <item>Fresh Milk Light</item>
+    <item>The First Fox</item>
+</string-array>
+    <string-array name="quikr_widget">
+        <item>automotive</item>
+        <item>tourism</item>
+        <item>hotel&amp;motels</item>
+        <item>interior design</item>
+        <item>interiordesign</item>
+        <item>realestate&amp;construction</item>
+        <item>traininginstitutes</item>
+        <item>cars</item>
+        <item>usedcars</item>
+        <item>hotel &amp; motels</item>
+        <item>realestate &amp; construction</item>
+        <item>training institutes</item>
+        <item>cars</item>
+        <item>used cars</item>
+    </string-array>
+    <string-array name="social_array">
+        <item>Facebook</item>
+        <item>Quikr</item>
+    </string-array>
     <string name="business_enquiries_title">Business Enquiries</string>
     <string name="double_quotes"> &quot; </string>
     <string name="business_profile_title">Profile</string>
@@ -561,7 +590,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="can_not_share_image_offline_mode">Can\'t Share image content in Offline Mode</string>
     <string name="no_app_to_share">No apps to share</string>
     <string name="share">Share</string>
-    <string name="post_update">Post An Update</string>
+    <string name="post_update">Post an update</string>
     <string name="post_in_capital">POST</string>
     <string name="enter_message">Please enter a message</string>
     <string name="send_to_subscribers">Send to Subscribers</string>
@@ -620,7 +649,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="replacing_image">Replacing image&#8230;.</string>
     <string name="product_image_replaced_successfully">Product image replaced successfully</string>
     <string name="new_product_added">New product added</string>
-    <string name="add_product">Add Product</string>
+    <string name="add_product">Add product</string>
     <string name="can_not_select_more_than_5images">You can\'t select more than 5 images</string>
     <string name="edit_product">Edit Product</string>
     <string name="updating">Updating&#8230;</string>
@@ -1010,7 +1039,30 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Fri</item>
         <item>Sat</item>
     </string-array>
-
+   <!-- <string name="quikr_list">
+        <ul>
+            <li>Coffee</li>
+            <li>Tea</li>
+            <li>Milk</li>
+        </ul>
+    </string>-->
+    <string-array name="quikr_tip_points">
+        <item> Be as detailed as possible in the description of the update. For example, if you are posting an update about a car, mention the brand, model and year. If you are posting an update about an apartment, mention whether it\'s for rent or sale, the area and the number of rooms (1 BHK, 2BHK etc)</item>
+        <item>We recommend that you post the update along with a clear image</item>
+        <item>To ensure an optimal experience for all users, you can post only 1 update to Quikr per day</item>
+        <item>Your primary Email Id is shared with Quikr and you would receive communication from Quikr directly regarding the posted ads</item>
+        <item>The details of all the posted ads can be viewed in Analytics -> Social analytics -> Quikr</item>
+        <item><a href="http://www.quikr.com/html/termsandconditions.php">Terms of Use</a></item>
+        <item><a href="http://bangalore.quikr.com/html/privacy.php">Privacy Policy</a></item>
+        <item><a href="http://hyderabad.quikr.com/html/policies.php">Listing Policy</a></item>
+    </string-array>
+    <string name="quikr_tip_points_heading">Good news! You can now publish your updates as product ads to Quikr.</string>
+    <string-array name="quikr_tip_on_dialog">
+        <item> Be as detailed as possible in the description of the update. For example, if you are posting an update about a car, mention the brand, model and year. If you are posting an update about an apartment, mention whether it\'s for rent or sale, the area and the number of rooms (1 BHK, 2BHK etc)</item>
+        <item>We recommend that you post the update along with a clear image</item>
+        <item>To ensure an optimal experience for all users, you can post only 1 update to Quikr per day</item>
+    </string-array>
+<string name = "message_quikr">These guidelines will help you post the right content to Quikr so that the ad doesn\'t get rejected. You can refer to them at any time in <b>Business Profile -> Social Sharing</b>.</string>
     <string-array name="spinner_list_item_array">
         <item>IMPROVED</item>
         <item>MAINTAINED</item>
@@ -1061,6 +1113,11 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="cap_login" translatable="false">&#160;<u><b>LOGIN</b></u></string>
     <string name="log_in">Log In</string>
     <string name="subscriber_second_text">Subscription is a great way to engage with your\nexisting customers and tell them about latest offers\nor new product launches</string>
+    <string name="site_appearance_change_to_new_look">In case you didn\'t like the existing look of your website, you  can always choose to change it from here.</string>
+    <string name="find_your_subscribers">Find your subscribers</string>
+    <string name="title_for_quikrr">Write message title(Quikrr only)</string>
+    <string name="guidlines">Guidelines for posting\nto Quikr</string>
+    <string name="quikr_message">Good news! You can now publish your updates as product ads to Quikr. Please follow the guidelines mentioned below to ensure that your ad is successfully posted.</string>
     <string name="search_ranking">Search Ranking</string>
     <string name="spinner_title">Filter</string>
 

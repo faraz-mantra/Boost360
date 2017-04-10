@@ -15,6 +15,12 @@
         <item name="android:windowDisablePreview">true</item>
     </style>
 
+
+        <style name="MyActionButtonOverflow" parent="android:style/Widget.Holo.ActionButton.Overflow">
+            <item name="android:src">@drawable/down_arrow</item>
+        </style>
+
+
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- customize the color palette -->
         <item name="colorPrimary">@color/primaryColor</item>
