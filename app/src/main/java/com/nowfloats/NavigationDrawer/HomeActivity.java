@@ -1409,7 +1409,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     @Subscribe
     public void getStoreList(StoreEvent response){
         ArrayList<StoreModel> allModels = response.model.AllPackages;
-        ArrayList<ActiveWidget> activeIdArray = response.model.ActivePackages;
+        ArrayList<StoreModel> activeIdArray = response.model.ActivePackages;
         if (!isShownExpireDialog) {
             if (allModels != null && activeIdArray != null) {
                 printPlan(activeIdArray);
@@ -1422,7 +1422,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
 
 
-    private void printPlan(ArrayList<ActiveWidget> allModels) {
+    private void printPlan(ArrayList<StoreModel> allModels) {
         //Log.v("ggg","plans");
         for(int i=0;i<allModels.size();i++){
             if(mExpireDailog!=null && mExpireDailog.isShowing()){
@@ -1432,7 +1432,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             if(temp!=null && !temp.isEmpty() && (temp.contains("NowFloats WildFire")||temp.contains("NF WildFire"))){
 
                 String date = allModels.get(i).CreatedOn;
-                int totalMonthsValidity = Integer.parseInt(allModels.get(i).TotalMonthsValidity);
+                float totalMonthsValidity = allModels.get(i).TotalMonthsValidity;
                 int remainingDay = verifyTime(date.substring(date.indexOf("(")+1,date.indexOf(")")),totalMonthsValidity);
                 //Log.v("ggg",remainingDay+" days");
                 if(remainingDay>0 && remainingDay<7){
@@ -1455,13 +1455,14 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         //showWildFire();
     }
 
-    private int verifyTime(String unixtime, int months)
+    private int verifyTime(String unixtime, float months)
     {
         Long createdunixtime = Long.parseLong(unixtime);
         Calendar cal = Calendar.getInstance();
         Date currdate = cal.getTime();
         cal.setTimeInMillis(createdunixtime);
-        cal.add(Calendar.MONTH, months);
+        cal.add(Calendar.MONTH, (int)months);
+        cal.add(Calendar.DATE, (int)((months-(int)months)*30));
         Date dateaftersixmonths = cal.getTime();
         long diff = dateaftersixmonths.getTime() - currdate.getTime();
         int diffInDays = (int) ((diff) / (1000 * 60 * 60 * 24));

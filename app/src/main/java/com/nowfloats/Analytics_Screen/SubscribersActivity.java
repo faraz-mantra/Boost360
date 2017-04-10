@@ -59,7 +59,9 @@ public class SubscribersActivity extends AppCompatActivity {
 
         mSessionManager = new UserSessionManager(getApplicationContext(), SubscribersActivity.this);
         if(mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG)!=null) {
-            new SubscribersAsyncTask().execute(SUBSCRIBER_URL + mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG) + "/subscribers/" + Constants.clientId + "?offset=" + mOffset);
+            new SubscribersAsyncTask().execute(SUBSCRIBER_URL +
+                    mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG) +
+                    "/subscribers/" + Constants.clientId + "?offset=" + mOffset);
         }else{
             Methods.showSnackBarNegative(this,getResources().getString(R.string.could_not_find_fb_tag));
         }

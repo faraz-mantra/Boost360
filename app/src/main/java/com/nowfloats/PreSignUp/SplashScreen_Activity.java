@@ -19,6 +19,7 @@ import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
@@ -32,7 +33,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     UserSessionManager session;
     Bus bus;
     public static ProgressDialog pd ;
-    private String loginCheck = null;
+    private String loginCheck = null, deepLink;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +48,11 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         } catch (IOException e) {
             e.printStackTrace();
         }*/
+
+        if(getIntent()!=null && getIntent().getStringExtra("from")!=null){
+            MixPanelController.track(EventKeysWL.NOTIFICATION_CLICKED, null);
+
+        }
 
 
         Constants.deviceId = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
