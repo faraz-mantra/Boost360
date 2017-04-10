@@ -915,6 +915,8 @@ public class Create_Message_Activity extends AppCompatActivity {
         }else{
             twitterloginButton.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
         }
+
+        quikrButton.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
     }
 
     @Override

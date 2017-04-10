@@ -1047,18 +1047,20 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         </ul>
     </string>-->
     <string-array name="quikr_tip_points">
-        <item> Please be as detailed as possible in the description of the update. For example, if you are posting an update about a car, mention the make, model, year and kms driven. If you are posting an update about an apartment, mention whether it\'s for rent or sale, area and number of rooms (1 BHK, 2BHK etc)</item>
-        <item>We recommend that you post the update with a clear image of the product</item>
-        <item>To ensure optimal experience for all users, you can post only 1 update to Quikr per day</item>
+        <item> Be as detailed as possible in the description of the update. For example, if you are posting an update about a car, mention the brand, model and year. If you are posting an update about an apartment, mention whether it\'s for rent or sale, the area and the number of rooms (1 BHK, 2BHK etc)</item>
+        <item>We recommend that you post the update along with a clear image</item>
+        <item>To ensure an optimal experience for all users, you can post only 1 update to Quikr per day</item>
+        <item>Your primary Email Id is shared with Quikr and you would receive communication from Quikr directly regarding the posted ads</item>
+        <item>The details of all the posted ads can be viewed in Analytics -> Social analytics -> Quikr</item>
         <item><a href="http://www.quikr.com/html/termsandconditions.php">Terms of Use</a></item>
         <item><a href="http://bangalore.quikr.com/html/privacy.php">Privacy Policy</a></item>
         <item><a href="http://hyderabad.quikr.com/html/policies.php">Listing Policy</a></item>
     </string-array>
     <string name="quikr_tip_points_heading">Good news! You can now publish your updates as product ads to Quikr.</string>
     <string-array name="quikr_tip_on_dialog">
-        <item> Please be as detailed as possible in the description of the update. For example, if you are posting an update about a car, mention the make, model, year and kms driven. If you are posting an update about an apartment, mention whether it\'s for rent or sale, area and number of rooms (1 BHK, 2BHK etc)</item>
-        <item>We recommend that you post the update with a clear image of the product</item>
-        <item>To ensure optimal experience for all users, you can post only 1 update to Quikr per day</item>
+        <item> Be as detailed as possible in the description of the update. For example, if you are posting an update about a car, mention the brand, model and year. If you are posting an update about an apartment, mention whether it\'s for rent or sale, the area and the number of rooms (1 BHK, 2BHK etc)</item>
+        <item>We recommend that you post the update along with a clear image</item>
+        <item>To ensure an optimal experience for all users, you can post only 1 update to Quikr per day</item>
     </string-array>
 <string name = "message_quikr">These guidelines will help you post the right content to Quikr so that the ad doesn\'t get rejected. You can refer to them at any time in <b>Business Profile -> Social Sharing</b>.</string>
     <string-array name="spinner_list_item_array">
