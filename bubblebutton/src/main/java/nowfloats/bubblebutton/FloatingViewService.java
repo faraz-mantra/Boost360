@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -51,6 +52,19 @@ public class FloatingViewService extends Service implements View.OnTouchListener
             stopSelf();
             return;
         }
+        LinearLayout linearLayout = new LinearLayout(this){
+
+            @Override
+            public boolean dispatchKeyEvent(KeyEvent event) {
+
+                if(event.getKeyCode() == KeyEvent.KEYCODE_BACK)
+                {
+
+                }
+                return  true;
+            }
+        };
+
         container = LayoutInflater.from(this).inflate(R.layout.floating_container,null);
         container_cancel = LayoutInflater.from(this).inflate(R.layout.cancel_button,null);
 
@@ -66,6 +80,7 @@ public class FloatingViewService extends Service implements View.OnTouchListener
         //Add the view to the window
         mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         mWindowManager.addView(container, params);
+
     }
 
     private WindowManager.LayoutParams getCancelParam(){
@@ -87,8 +102,8 @@ public class FloatingViewService extends Service implements View.OnTouchListener
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                WindowManager.LayoutParams.TYPE_PRIORITY_PHONE,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS| WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.RGBA_8888);
 
         DisplayMetrics matrics = getResources().getDisplayMetrics();
@@ -105,6 +120,7 @@ public class FloatingViewService extends Service implements View.OnTouchListener
         }else {
             return Service.START_REDELIVER_INTENT;
         }
+
     }
 
     @Nullable
@@ -179,6 +195,7 @@ public class FloatingViewService extends Service implements View.OnTouchListener
             return false;
     }
 
+
     private void resetParams(){
         params.gravity = Gravity.TOP | Gravity.START;        //Initially view will be added to top-left corner
         params.x = 0;
@@ -204,4 +221,5 @@ public class FloatingViewService extends Service implements View.OnTouchListener
             Toast.makeText(this, "view clicked", Toast.LENGTH_SHORT).show();
         }
     }
+
 }

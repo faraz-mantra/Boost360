@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -200,12 +199,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         Methods.isOnline(HomeActivity.this);
         session = new UserSessionManager(getApplicationContext(),HomeActivity.this);
         setHotlineUser();
-        Intent intent1 = new Intent(Intent.ACTION_MAIN);
-        intent1.addCategory(Intent.CATEGORY_HOME);
-        ResolveInfo resolveInfo = getPackageManager().resolveActivity(intent1, PackageManager.MATCH_DEFAULT_ONLY);
-        String currentHomePackage = resolveInfo.activityInfo.packageName;
 
-        Log.v("ggg ",currentHomePackage);
         BoostLog.d(TAG, "In on CreateView");
         deepLinkUrl = RiaFirebaseMessagingService.deepLinkUrl;
         FPID = session.getFPID();
