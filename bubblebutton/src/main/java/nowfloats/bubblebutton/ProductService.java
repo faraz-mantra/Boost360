@@ -1,11 +1,9 @@
-package com.nowfloats.Product_Gallery;
+package nowfloats.bubblebutton;
 
 import android.accessibilityservice.AccessibilityService;
 import android.content.Intent;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
-
-import com.nowfloats.Product_Gallery.Service.FloatingViewService;
 
 /**
  * Created by Admin on 11-04-2017.
@@ -16,7 +14,7 @@ public class ProductService extends AccessibilityService {
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
 
-        Log.v("ggg","whindow changed");
+        Log.v("ggg","window changed");
 
             //If the draw over permission is not available open the settings screen
             //to grant the permission.

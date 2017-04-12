@@ -6,9 +6,12 @@
     android:layout_height="match_parent">
 
     <AutoCompleteTextView
+        android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:hint="@string/product_checkout"
+        android:hint="@string/search"
+        android:textColor="@color/gray"
+        android:textColorHint="@color/gray"
         android:background="@drawable/search_upper_round_edittext"/>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
