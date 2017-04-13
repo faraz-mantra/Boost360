@@ -3,11 +3,20 @@
 
     <item
         is-multidex="true"
+        jar="C:\NFSource\nowfloats\boost\app\libs\libraries\AF-Android-SDK-v2.3.1.17.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="fc4960d15a15fa450ceab2f52996cf345e771b0f">
+        <dex dex="C:\NFSource\nowfloats\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\2\AF-Android-SDK-v2.3.1.17_b422a0c954989987d4120c2a030503fb5713de29\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\NFSource\nowfloats\boost\app\build\intermediates\incremental-classes\partone\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="15e55b21b068bab06ed9e137b18c448e564a36d6">
+        sha1="235bb68e7fd0b86fc661a3c8571040621c6b68fe">
         <dex dex="C:\NFSource\nowfloats\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10000\instant-run-bootstrap_67c73ff8d4614773cb1f9844732e6760c2784ad7\classes.dex" />
     </item>
     <item
@@ -36,15 +45,6 @@
         revision="25.0.2"
         sha1="731e05de30cfeb1f41d417f886277f9597fe0f36">
         <dex dex="C:\NFSource\nowfloats\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\2\signpost-commonshttp4-1.2.1.2_fe093e7155457137e6fea94078ddfa307a41d1d5\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\NFSource\nowfloats\boost\app\libs\libraries\AF-Android-SDK-v2.3.1.17.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="fc4960d15a15fa450ceab2f52996cf345e771b0f">
-        <dex dex="C:\NFSource\nowfloats\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\2\AF-Android-SDK-v2.3.1.17_b422a0c954989987d4120c2a030503fb5713de29\classes.dex" />
     </item>
 
 </items>

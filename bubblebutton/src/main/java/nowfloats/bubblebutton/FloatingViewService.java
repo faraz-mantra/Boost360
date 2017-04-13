@@ -1,6 +1,7 @@
 package nowfloats.bubblebutton;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.net.Uri;
@@ -8,10 +9,8 @@ import android.os.Build;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,22 +19,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import nowfloats.bubblebutton.activityDialogs.ProductSuggestions;
+
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 /**
  * Created by Admin on 11-04-2017.
  */
 
 public class FloatingViewService extends Service implements View.OnTouchListener, View.OnClickListener {
     LinearLayout detailButton,imageButton;
-    private WindowManager mWindowManager;
-    WindowManager.LayoutParams params;
+    WindowManager.LayoutParams bubbleParams,cancelParams;
     private int initialX;
     private int initialY;
     private float initialTouchX;
     private float initialTouchY;
-    View container =null,container_cancel=null;
+    View container =null,container_cancel=null,dialog=null;
     ImageView cancelButton;
     boolean isCancel = true;
     private long pressStartTime;
+    private int lastAction;
+    private WindowManager mWindowManager;
 
     @Override
     public void onCreate() {
@@ -47,26 +51,21 @@ public class FloatingViewService extends Service implements View.OnTouchListener
             //to grant the permission.
             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                     Uri.parse("package:" + getPackageName()));
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             stopSelf();
             return;
         }
-        LinearLayout linearLayout = new LinearLayout(this){
-
-            @Override
-            public boolean dispatchKeyEvent(KeyEvent event) {
-
-                if(event.getKeyCode() == KeyEvent.KEYCODE_BACK)
-                {
-
-                }
-                return  true;
-            }
-        };
 
         container = LayoutInflater.from(this).inflate(R.layout.floating_container,null);
         container_cancel = LayoutInflater.from(this).inflate(R.layout.cancel_button,null);
+
+        cancelParams =getDefaultCancelParam();
+        bubbleParams = bubbleDefaultParams();
+        mWindowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        /*bubbleManager = new BubbleManager.Builder(this).build()
+                .addCancelView(container_cancel,cancelParams);
+        bubbleManager.show(container,bubbleParams);*/
 
         imageButton = (LinearLayout) container.findViewById(R.id.floating_image);
         detailButton = (LinearLayout) container.findViewById(R.id.floating_view);
@@ -75,44 +74,10 @@ public class FloatingViewService extends Service implements View.OnTouchListener
         imageButton.setOnTouchListener(this);
         detailButton.setOnClickListener(this);
         cancelButton.setOnClickListener(this);
-        params = getContainerParam();
-
-        //Add the view to the window
-        mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-        mWindowManager.addView(container, params);
-
+        mWindowManager.addView(container,bubbleParams);
     }
 
-    private WindowManager.LayoutParams getCancelParam(){
-        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_PHONE,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.RGBA_8888);
 
-        params.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
-
-        params.x = 0;
-        params.y = -500;
-        return params;
-    }
-
-    private WindowManager.LayoutParams getContainerParam(){
-        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_PRIORITY_PHONE,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS| WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                PixelFormat.RGBA_8888);
-
-        DisplayMetrics matrics = getResources().getDisplayMetrics();
-        //Specify the view position
-        params.gravity = Gravity.TOP | Gravity.START;        //Initially view will be added to top-left corner
-        params.x = 0;
-        params.y = 100;
-        return params;
-    }
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if(intent == null){
@@ -120,7 +85,6 @@ public class FloatingViewService extends Service implements View.OnTouchListener
         }else {
             return Service.START_REDELIVER_INTENT;
         }
-
     }
 
     @Nullable
@@ -136,17 +100,21 @@ public class FloatingViewService extends Service implements View.OnTouchListener
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     //remember the initial position.
-                    initialX = params.x;
-                    initialY = params.y;
+                    initialX = bubbleParams.x;
+                    initialY = bubbleParams.y;
                     pressStartTime = System.currentTimeMillis();
 
                     //get the touch location
                     initialTouchX = event.getRawX();
                     initialTouchY = event.getRawY();
+                    Log.v("kkk", initialX +" down "+initialY+" "+initialTouchX+" "+initialTouchY);
+
                     if(!isCancel){
-                        mWindowManager.removeViewImmediate(container_cancel);
+                        //bubbleManager.removeView(container_cancel);
+                        mWindowManager.removeView(container_cancel);
                         isCancel = true;
                     }
+                    lastAction = event.getAction();
                     return true;
                 case MotionEvent.ACTION_UP:
                     int Xdiff = (int) (event.getRawX() - initialTouchX);
@@ -156,51 +124,89 @@ public class FloatingViewService extends Service implements View.OnTouchListener
                     //The check for Xdiff <10 && YDiff< 10 because sometime elements moves a little while clicking.
                     //So that is click event.
                     long timeDiff = System.currentTimeMillis() - pressStartTime;
-                    if (Xdiff < 5 && Ydiff < 5 && timeDiff< 1000) {
+                    if (lastAction == MotionEvent.ACTION_DOWN) {
 
                         if (!isViewCollapsed()) {
                             //When user clicks on the image view of the collapsed layout,
                             //visibility of the collapsed layout will be changed to "View.GONE"
                             //and expanded view will become visible.
-                            params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                            params.width = WindowManager.LayoutParams.MATCH_PARENT;
-                            detailButton.setVisibility(View.VISIBLE);
+                            bubbleParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                            bubbleParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
+                            //detailButton.setVisibility(View.VISIBLE);
+                            Intent i = new Intent(this, ProductSuggestions.class);
+                            i.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(i);
+
                             resetParams();
                         }else{
-                            params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                            params.width = WindowManager.LayoutParams.WRAP_CONTENT;
-                            detailButton.setVisibility(View.GONE);
+                            bubbleParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                            bubbleParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
+                            //detailButton.setVisibility(View.GONE);
                             resetParams();
                         }
+
                         //cancelButton.setVisibility(View.GONE);
                     }
                     if(!isCancel){
-                        mWindowManager.removeViewImmediate(container_cancel);
+                        //bubbleManager.removeView(container_cancel);
+                        mWindowManager.removeView(container_cancel);
                         isCancel = true;
                     }
                     return true;
                 case MotionEvent.ACTION_MOVE:
                     //Calculate the X and Y coordinates of the view.
-                    params.x = initialX + (int) (event.getRawX() - initialTouchX);
-                    params.y = initialY + (int) (event.getRawY() - initialTouchY);
-
+                    bubbleParams.x = initialX + (int) (- event.getRawX() + initialTouchX);
+                    bubbleParams.y = initialY + (int) (event.getRawY() - initialTouchY);
+                    Log.v("kkk", initialX +" move "+initialY+" "+initialTouchX+" "+initialTouchY+" "+event.getRawX()+" "+event.getRawY());
                     if(isCancel) {
-                        mWindowManager.addView(container_cancel, getCancelParam());
+                        //bubbleManager.addCancelView(container_cancel,cancelParams);
+                        mWindowManager.addView(container_cancel,cancelParams);
                         isCancel =false;
                     }
+                    lastAction = event.getAction();
                     //Update the layout with new X & Y coordinate
-                    mWindowManager.updateViewLayout(container, params);
+                   // bubbleManager.updateBubbleView(container,bubbleParams);
+                    mWindowManager.updateViewLayout(container,bubbleParams);
                     return true;
             }
             return false;
     }
+    private WindowManager.LayoutParams getDefaultCancelParam(){
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.TYPE_PHONE,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.RGBA_8888);
 
+        params.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
 
-    private void resetParams(){
-        params.gravity = Gravity.TOP | Gravity.START;        //Initially view will be added to top-left corner
         params.x = 0;
-        params.y = 100;
-        mWindowManager.updateViewLayout(container, params);
+        params.y = 0;
+        return params;
+    }
+
+    private WindowManager.LayoutParams bubbleDefaultParams(){
+
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.TYPE_PHONE,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.RGBA_8888);
+
+        //Specify the view position
+        params.gravity = Gravity.TOP | Gravity.END;        //Initially view will be added to top-left corner
+        params.x = 0;
+        params.y = 0;
+        return params;
+    }
+    private void resetParams(){
+        bubbleParams.gravity = Gravity.TOP | Gravity.END;        //Initially view will be added to top-left corner
+        bubbleParams.x = 0;
+        bubbleParams.y = 0;
+        //bubbleManager.updateBubbleView(container,bubbleParams);
+        mWindowManager.updateViewLayout(container,bubbleParams);
     }
 
     private boolean isViewCollapsed() {

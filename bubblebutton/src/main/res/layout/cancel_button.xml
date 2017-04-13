@@ -7,7 +7,7 @@
         android:id="@+id/floating_cancel"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="#ddd"
+        android:background="@android:color/transparent"
         android:visibility="visible"
         android:src="@drawable/cancel_post"/>
 </LinearLayout>
