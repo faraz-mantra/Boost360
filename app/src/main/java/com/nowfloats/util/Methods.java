@@ -95,12 +95,16 @@ public class Methods {
     public static void likeUsFacebook(Context context,String review){
         MixPanelController.track("LikeUsOnFacebook", null);
         Intent facebookIntent;
-        try {
+        if(review.trim().length() == 0) {
+            try {
                 context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
                 facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_PAGE_WITH_ID));
             } catch (Exception e) {
-                facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_URL+review));
+                facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_URL + review));
             }
+        }else{
+            facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_URL + review));
+        }
         facebookIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
         context.startActivity(facebookIntent);
     }
