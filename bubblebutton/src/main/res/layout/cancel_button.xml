@@ -5,9 +5,9 @@
     android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/floating_cancel"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:background="@android:color/transparent"
         android:visibility="visible"
-        android:src="@drawable/cancel_post"/>
+        android:src="@drawable/cancel_opacity"/>
 </LinearLayout>

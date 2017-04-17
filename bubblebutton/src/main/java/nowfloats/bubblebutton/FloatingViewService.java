@@ -4,11 +4,10 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
-import android.net.Uri;
-import android.os.Build;
 import android.os.IBinder;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,11 +16,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import nowfloats.bubblebutton.activityDialogs.ProductSuggestions;
-
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import nowfloats.bubblebutton.adapter.ProductSuggestionAdapter;
 
 /**
  * Created by Admin on 11-04-2017.
@@ -39,25 +35,18 @@ public class FloatingViewService extends Service implements View.OnTouchListener
     boolean isCancel = true;
     private long pressStartTime;
     private int lastAction;
+    boolean isDialog =false;
     private WindowManager mWindowManager;
+    private RecyclerView recyclerView;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
 
-
-            //If the draw over permission is not available open the settings screen
-            //to grant the permission.
-            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:" + getPackageName()));
-            intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            stopSelf();
-            return;
-        }
+        Log.v("kkk","overlay permission required");
 
         container = LayoutInflater.from(this).inflate(R.layout.floating_container,null);
+        detailButton = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.dialog_products,null);
         container_cancel = LayoutInflater.from(this).inflate(R.layout.cancel_button,null);
 
         cancelParams =getDefaultCancelParam();
@@ -68,13 +57,17 @@ public class FloatingViewService extends Service implements View.OnTouchListener
         bubbleManager.show(container,bubbleParams);*/
 
         imageButton = (LinearLayout) container.findViewById(R.id.floating_image);
-        detailButton = (LinearLayout) container.findViewById(R.id.floating_view);
+        recyclerView = (RecyclerView) detailButton.findViewById(R.id.list);
         cancelButton = (ImageView) container_cancel.findViewById(R.id.floating_cancel);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.setAdapter(new ProductSuggestionAdapter(this));
 
         imageButton.setOnTouchListener(this);
         detailButton.setOnClickListener(this);
-        cancelButton.setOnClickListener(this);
         mWindowManager.addView(container,bubbleParams);
+
     }
 
 
@@ -126,23 +119,19 @@ public class FloatingViewService extends Service implements View.OnTouchListener
                     long timeDiff = System.currentTimeMillis() - pressStartTime;
                     if (lastAction == MotionEvent.ACTION_DOWN) {
 
-                        if (!isViewCollapsed()) {
+                        if (!isDialog) {
                             //When user clicks on the image view of the collapsed layout,
                             //visibility of the collapsed layout will be changed to "View.GONE"
                             //and expanded view will become visible.
-                            bubbleParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                            bubbleParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
-                            //detailButton.setVisibility(View.VISIBLE);
-                            Intent i = new Intent(this, ProductSuggestions.class);
-                            i.setFlags(FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(i);
-
+                            /*bubbleParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                            bubbleParams.width = WindowManager.LayoutParams.WRAP_CONTENT;*/
                             resetParams();
+                            mWindowManager.addView(detailButton,detailsParams());
                         }else{
-                            bubbleParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-                            bubbleParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
-                            //detailButton.setVisibility(View.GONE);
+//                            bubbleParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+//                            bubbleParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
                             resetParams();
+                            mWindowManager.removeView(detailButton);
                         }
 
                         //cancelButton.setVisibility(View.GONE);
@@ -157,7 +146,7 @@ public class FloatingViewService extends Service implements View.OnTouchListener
                     //Calculate the X and Y coordinates of the view.
                     bubbleParams.x = initialX + (int) (- event.getRawX() + initialTouchX);
                     bubbleParams.y = initialY + (int) (event.getRawY() - initialTouchY);
-                    Log.v("kkk", initialX +" move "+initialY+" "+initialTouchX+" "+initialTouchY+" "+event.getRawX()+" "+event.getRawY());
+                    Log.v("ppp1", event.getRawX()+" "+event.getRawY());
                     if(isCancel) {
                         //bubbleManager.addCancelView(container_cancel,cancelParams);
                         mWindowManager.addView(container_cancel,cancelParams);
@@ -167,13 +156,35 @@ public class FloatingViewService extends Service implements View.OnTouchListener
                     //Update the layout with new X & Y coordinate
                    // bubbleManager.updateBubbleView(container,bubbleParams);
                     mWindowManager.updateViewLayout(container,bubbleParams);
+
+                    if(checkForOverlap()){
+
+                        stopSelf();
+                    }
                     return true;
             }
             return false;
     }
+
+    private boolean checkForOverlap() {
+
+        int[] outPos1=new int[2];
+        int[] outPos2=new int[2];
+        imageButton.getLocationOnScreen(outPos1);
+        cancelButton.getLocationOnScreen(outPos2);
+        Log.v("pppp",outPos1[0]+" "+outPos1[1]+" "+outPos2[0]+" "+outPos2[1]);
+        if(outPos1[0]> outPos2[0] && outPos1[0]-outPos2[0]<=15 && outPos1[1]>outPos2[1]&& outPos1[1]-outPos2[1]<=15
+                && (outPos1[0]+imageButton.getWidth())<=(outPos2[0]+cancelButton.getWidth())
+                && (outPos1[1]+imageButton.getHeight())<=(outPos2[1]+cancelButton.getHeight())){
+            Log.v("pppp","stop service");
+            return true;
+        }
+        return false;
+    }
+
     private WindowManager.LayoutParams getDefaultCancelParam(){
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.TYPE_PHONE,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
@@ -182,7 +193,7 @@ public class FloatingViewService extends Service implements View.OnTouchListener
         params.gravity = Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL;
 
         params.x = 0;
-        params.y = 0;
+        params.y = -500;
         return params;
     }
 
@@ -201,6 +212,21 @@ public class FloatingViewService extends Service implements View.OnTouchListener
         params.y = 0;
         return params;
     }
+    private WindowManager.LayoutParams detailsParams(){
+
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.TYPE_PHONE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                PixelFormat.RGBA_8888);
+
+        //Specify the view position
+        params.gravity = Gravity.TOP | Gravity.END;        //Initially view will be added to top-left corner
+        params.x = 0;
+        params.y = 200;
+        return params;
+    }
     private void resetParams(){
         bubbleParams.gravity = Gravity.TOP | Gravity.END;        //Initially view will be added to top-left corner
         bubbleParams.x = 0;
@@ -217,15 +243,13 @@ public class FloatingViewService extends Service implements View.OnTouchListener
         super.onDestroy();
         Log.v("ggg","destroy");
         if (container != null) mWindowManager.removeView(container);
+
+        if (container_cancel != null) mWindowManager.removeView(container_cancel);
     }
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.floating_cancel){
-            stopSelf();
-        }else if(v.getId() == R.id.floating_view){
-            Toast.makeText(this, "view clicked", Toast.LENGTH_SHORT).show();
-        }
+
     }
 
 }

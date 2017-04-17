@@ -5,9 +5,14 @@ import android.accessibilityservice.AccessibilityServiceInfo;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
+
+import nowfloats.bubblebutton.bubble.BubblesService;
 
 /**
  * Created by Admin on 11-04-2017.
@@ -17,7 +22,9 @@ public class ProductService extends AccessibilityService {
 
 
     public static final String PK_NAME_WHATSAAPP = "com.whatsapp";
-    boolean isWhatsApp, isHomeScreen;
+    public static final String PK_GOOGLE ="com.google";
+    public static final String  PK_ANDROID="com.android";
+    public static final String  PK_BOOST="com.biz2.nowfloats";
 
     @Override
     protected void onServiceConnected() {
@@ -37,60 +44,23 @@ public class ProductService extends AccessibilityService {
         intent1.addCategory(Intent.CATEGORY_HOME);
         ResolveInfo resolveInfo = getPackageManager().resolveActivity(intent1, PackageManager.MATCH_DEFAULT_ONLY);
         String currentHomePackage = resolveInfo.activityInfo.packageName;
-
+        Log.v("ggg",event.toString());
         if(!TextUtils.isEmpty(event.getPackageName())){
-            if(event.getPackageName().toString().contains(PK_NAME_WHATSAAPP)){
+            if(event.getPackageName().toString().equalsIgnoreCase(PK_NAME_WHATSAAPP)){
 
-                if(!isWhatsApp) {
-                Intent intent = new Intent(this, FloatingViewService.class);
-                startService(intent);
-                    Log.v("ggg ", "window start whats app");
-                    isWhatsApp = true;
-                }
-                if(isHomeScreen) {
-                    isHomeScreen =false;
-                    Log.v("ggg ", "window close home screen");
-                }
-            }else if(event.getPackageName().toString().contains(currentHomePackage)){
-
-                if(isWhatsApp) {
-                    stopService(new Intent(this, FloatingViewService.class));
-                    isWhatsApp =false;
-                    Log.v("ggg ", "window close whatsapp");
-                }
-                if(!isHomeScreen) {
-                    Log.v("ggg ", currentHomePackage);
-                    Log.v("ggg ", "window home screen");
-                    isHomeScreen =true;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+                    Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    return;
+                }else{
+                    startService(new Intent(ProductService.this,BubblesService.class));
                 }
             }else{
-                if(isHomeScreen) {
-                    isHomeScreen =false;
-                    Log.v("ggg ", "window close home screen");
-                }
-
-                if(isWhatsApp) {
-                    isWhatsApp =false;
-                    Log.v("ggg ", "window close whatsapp");
-                }
+                //stopService(new Intent(ProductService.this,BubblesService.class));
             }
         }
 
-        /*
-
-
-       /* if(event.getPackageName().toString().contains(currentHomePackage)){
-            if(!isHomeScreen) {
-                Log.v("ggg ", currentHomePackage);
-                Log.v("ggg ", "window home screen");
-                isHomeScreen =true;
-            }
-        }else{
-            if(isHomeScreen) {
-                isHomeScreen =false;
-                Log.v("ggg ", "window close home screen");
-            }
-        }*/
     }
 
     @Override

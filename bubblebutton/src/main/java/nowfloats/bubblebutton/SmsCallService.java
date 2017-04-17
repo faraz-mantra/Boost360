@@ -49,7 +49,6 @@ public class SmsCallService extends Service implements View.OnTouchListener, Vie
             }
             container = LayoutInflater.from(this).inflate(R.layout.floating_container,null);
             imageButton = (LinearLayout) container.findViewById(R.id.floating_image);
-            detailButton = (LinearLayout) container.findViewById(R.id.floating_view);
             cancelButton = (ImageView) container.findViewById(R.id.floating_cancel);
             imageButton.setOnTouchListener(this);
             params = new WindowManager.LayoutParams(
