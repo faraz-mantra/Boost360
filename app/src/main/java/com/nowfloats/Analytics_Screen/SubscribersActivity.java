@@ -204,20 +204,23 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
             }
         });
     }
-    private void addSubscriber(String email, final MaterialDialog dialog){
+    private void addSubscriber(final String email, final MaterialDialog dialog){
         AddSubscriberModel model = new AddSubscriberModel();
         model.setClientId(Constants.clientId);
         model.setCountryCode(mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY));
         model.setFpTag(mSessionManager.getFpTag());
         model.setUserContact(email);
         mProgressBar.setVisibility(View.VISIBLE);
-        SubscriberApis mSubscriberApis = Constants.restAdapter.create(SubscriberApis.class);
+        final SubscriberApis mSubscriberApis = Constants.restAdapter.create(SubscriberApis.class);
         mSubscriberApis.addSubscriber(model, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
                 mProgressBar.setVisibility(View.GONE);
                 if(response.getStatus() == 200) {
-                    Toast.makeText(SubscribersActivity.this, "Successfully Added", Toast.LENGTH_SHORT).show();
+                    mSubscriberList.clear();
+                    mSubscriberAdapter.notifyDataSetChanged();
+                    getSubscribersList();
+                    Toast.makeText(SubscribersActivity.this, email+" Successfully Added", Toast.LENGTH_SHORT).show();
                     if (!isFinishing()){
                         dialog.dismiss();
                     }
@@ -245,7 +248,6 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                 titleTextView.setVisibility(View.GONE);
                 searchImage.setVisibility(View.GONE);
                 deleteImage.setVisibility(View.GONE);
-                toolbar.setBackgroundResource(R.color.black_translucent);
                 searchEditText.setVisibility(View.VISIBLE);
                 searchEditText.requestFocus();
                 break;
@@ -256,7 +258,6 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_add_subscriber,null);
         final EditText email = (EditText) view.findViewById(R.id.edittext);
         new MaterialDialog.Builder(this)
-                .title("Add Subscriber")
                 .customView(view,false)
                 .positiveText("Add")
                 .negativeText("Cancel")
@@ -307,7 +308,6 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                     deleteImage.setVisibility(View.VISIBLE);
                     titleTextView.setVisibility(View.VISIBLE);
                     searchImage.setVisibility(View.VISIBLE);
-                    toolbar.setBackgroundResource(R.color.primary);
                     InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(searchEditText.getWindowToken(), 0);
                 }else

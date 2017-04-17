@@ -4,21 +4,17 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/primary_color"
-        android:id="@+id/parent_layout"
-        android:orientation="vertical">
         <include
-            layout="@layout/subscriber_detail_toolbar"
+            layout="@layout/toolbar"
             android:id="@+id/toolbar"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"/>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/primary_color"
+            android:id="@+id/parent_layout"
             android:orientation="vertical"
             android:gravity="center">
             <TextView
@@ -37,7 +33,6 @@
                 android:layout_marginTop="5dp"
                 android:text="@string/date"/>
         </LinearLayout>
-    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
@@ -76,6 +71,7 @@
         android:drawableStart="@drawable/ic_delete_black_24dp"
         android:gravity="center_vertical"
         android:padding="30dp"
+        android:visibility="gone"
         android:drawablePadding="20dp"
         android:textSize="18sp"
         android:background="@color/white"
