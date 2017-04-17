@@ -12,11 +12,10 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.nowfloats.Analytics_Screen.model.SubscriberModel;
-import com.nowfloats.CustomWidget.CircularCheckBox;
+import com.nowfloats.util.Constants;
 import com.thinksity.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by Admin on 02-03-2017.
@@ -24,11 +23,9 @@ import java.util.HashMap;
 
 public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.MyHolder> {
 
-    private boolean deleteView ;
     int pos = -1;
     ArrayList<SubscriberModel> mSubscriberList;
     Context mContext;
-    HashMap<Integer,Boolean> selectedMap = new HashMap<>();
     public SubscribersAdapter(Context context,ArrayList<SubscriberModel> subscriberModelList){
         mContext= context;
         mSubscriberList = subscriberModelList;
@@ -44,21 +41,21 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
         if (holder == null){
             return;
         }
-        if(deleteView){
-            holder.radioButton.setVisibility(View.VISIBLE);
-            holder.arrowImage.setVisibility(View.GONE);
-        }
-        else{
-            holder.radioButton.setVisibility(View.INVISIBLE);
-            holder.arrowImage.setVisibility(View.VISIBLE);
-        }
+        holder.mLinearLayout.setBackgroundColor(pos == position ?ContextCompat.getColor(mContext,R.color.gray_transparent) :ContextCompat.getColor(mContext,R.color.white));
+        holder.emailTextView.setText(mSubscriberList.get(position).getUserMobile());
+        try {
+            int status = Integer.parseInt(mSubscriberList.get(position).getSubscriptionStatus());
+            if (Constants.SubscriberStatus.SUBSCRIBED.value == status) {
+                holder.statusTextView.setText("Subscribed");
+                //holder.emailTextView.setTextColor(ContextCompat.getColor(mContext, R.color.primary));
+            } else if(Constants.SubscriberStatus.REQUESTED.value == status) {
+                holder.statusTextView.setText("Subscription initiated");
+            }else if(Constants.SubscriberStatus.UNSUBSCRIBED.value == status){
+                holder.statusTextView.setText("UnSubscribed");
 
-        holder.radioButton.setChecked(pos == position);
-        holder.mTextView.setText(mSubscriberList.get(position).getUserMobile());
-        if(mSubscriberList.get(position).getSubscriptionStatus().equals("20")){
-            holder.mTextView.setTextColor(ContextCompat.getColor(mContext,R.color.primary));
-        }else{
-            holder.mTextView.setTextColor(ContextCompat.getColor(mContext,R.color.black_translucent));
+            }
+        }catch(Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -67,77 +64,33 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
         return mSubscriberList.size();
     }
 
-    private void deleteView(int pos){
-        deleteView = true;
-        this.pos=pos;
-        selectedMap.put(pos,true);
-        notifyDataSetChanged();
-        ((SubscriberInterfaceMethods)mContext).onChangeView(deleteView);
-        ((SubscriberInterfaceMethods)mContext).onViewSelected(selectedMap.size());
-    }
-    public void initialView() {
-        deleteView = false;
-        pos = -1;
-        notifyDataSetChanged();
-        selectedMap.clear();
-        ((SubscriberInterfaceMethods)mContext).onChangeView(deleteView);
-    }
     class MyHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView  arrowImage;
-        TextView mTextView;
-        CircularCheckBox radioButton;
+        TextView emailTextView,statusTextView;
         View view;
         LinearLayout mLinearLayout;
         MyHolder(View itemView) {
             super(itemView);
             mLinearLayout = (LinearLayout) itemView.findViewById(R.id.item_layout);
             arrowImage = (ImageView) itemView.findViewById(R.id.arrowImage);
-            radioButton = (CircularCheckBox) itemView.findViewById(R.id.radioButton);
-            mTextView = (TextView) itemView.findViewById(R.id.subscriber_text);
+            emailTextView = (TextView) itemView.findViewById(R.id.subscriber_text);
+            statusTextView = (TextView) itemView.findViewById(R.id.subscriber_status);
             view = itemView.findViewById(R.id.divider);
             mLinearLayout.setOnClickListener(this);
-            radioButton.setOnClickListener(this);
-            mLinearLayout.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    //Log.v("ggg",selectedMap.size()+" long click ");
-                    if(!deleteView){
-                        deleteView(getAdapterPosition());
-                    }
-                    return true;
-                }
-            });
         }
 
         @Override
         public void onClick(View v) {
-            switch(v.getId()){
+            switch (v.getId()) {
                 case R.id.item_layout:
-                    radioButton.setChecked(!radioButton.isChecked());
-                case R.id.radioButton:
-                    if(deleteView) {
-                        if(radioButton.isChecked()){
-                            selectedMap.put(getAdapterPosition(),true);
-                        }else{
-                            selectedMap.remove(getAdapterPosition());
-                            if(selectedMap.isEmpty()){
-                                initialView();
-                                return;
-                            }
-                        }
-                        ((SubscriberInterfaceMethods)mContext).onViewSelected(selectedMap.size());
-                    }else{
-                        ((SubscriberInterfaceMethods)mContext).onitemSeleted(new Gson().toJson(mSubscriberList.get(getAdapterPosition())));
-                    }
+                    ((SubscriberInterfaceMethods)mContext).onitemSeleted(new Gson().toJson(mSubscriberList.get(getAdapterPosition())));
                     break;
             }
         }
     }
 
     public interface SubscriberInterfaceMethods{
-        void onChangeView(boolean view);
-        void onViewSelected(int i);
         void onitemSeleted(String data);
     }
 

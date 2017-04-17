@@ -337,6 +337,15 @@ public class Constants {
             "CONSTRUCTION MATERIAL",
             "FREELANCER",
             "CONSULTANTS"};
+
+    public enum SubscriberStatus {
+        UNSUBSCRIBED(30), SUBSCRIBED(20),REQUESTED(10);
+        public int value;
+        SubscriberStatus(int i){
+            value = i;
+        }
+    }
+
     public static ArrayList<String> signUpCountryList = new ArrayList<>();
     public static int DefaultBackgroundImage;
     public static boolean imageNotSet = false;
