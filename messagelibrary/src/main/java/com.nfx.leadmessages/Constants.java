@@ -5,7 +5,7 @@ package com.nfx.leadmessages;
  */
 
 public class Constants {
-    public static final String CALL_LOG = "calllog";
+    public static final String CALL_LOG = "_calllog";
     public static String MESSAGES="_messages",PHONE_IDS="phoneIds",DETAILS="_details";
     public final static String[] selections=new String[]{"INDMRT","JUSTDL","QUIKRR","OLXIND","mShopo"
             ,"MEESMT","MEESHM","KRAFTL","SULEKH"};

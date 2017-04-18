@@ -11,7 +11,6 @@ import android.os.IBinder;
 import android.provider.CallLog;
 import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -40,6 +39,7 @@ public class ReadMessages extends Service {
     private String order="date DESC";
     private String CALL_order=CallLog.Calls.DATE+" DESC";
     private int selectionLength=Constants.selections.length;
+    final private int DAYS_BEFORE =7;
 
 
     @Override
@@ -49,11 +49,9 @@ public class ReadMessages extends Service {
         TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         mobileId = tm.getDeviceId();
 
-
         if(mobileId == null || fpId == null){
             return Service.START_NOT_STICKY;
         }
-        Log.v("ggg",mobileId+" "+fpId);
         StringBuilder builder = new StringBuilder();
 
         for(int i=0;i<selectionLength;i++){
@@ -64,10 +62,8 @@ public class ReadMessages extends Service {
             else{
                 builder.append(" address Like \"%"+Constants.selections[i]+"%\" or");
             }
-
         }
         selection =builder.toString();
-        Log.d("Slection Param:", selection);
 
         new Thread(new Runnable() {
             @Override
@@ -107,21 +103,24 @@ public class ReadMessages extends Service {
     private void readCallLog(DatabaseReference mDatabase){
         ContentResolver resolver = getContentResolver();
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE,-7);
+        String currentTime = String.valueOf(calendar.getTimeInMillis());
+
+        calendar.add(Calendar.DATE,-DAYS_BEFORE);
         String selection = CallLog.Calls.DATE+">="+calendar.getTimeInMillis();
         Cursor cursor = resolver.query(CALL_LOG_URI,CALL_LOG_PROJECTIONS,selection,null,CALL_order);
         if(cursor!=null && cursor.moveToFirst()){
 
             PhoneIds phoneIds=new PhoneIds();
-            phoneIds.setDate(String.valueOf(System.currentTimeMillis()));
+            phoneIds.setDate(currentTime);
             phoneIds.setPhoneId(mobileId);
             DatabaseReference phoneIdRef = mDatabase.child(fpId+Constants.DETAILS).child(Constants.PHONE_IDS);
             phoneIdRef.child(mobileId).setValue(phoneIds);
 
             CallLogModel model;
-            DatabaseReference MessageIdRef = mDatabase.child(fpId+Constants.CALL_LOG).child(mobileId);
 
+            DatabaseReference MessageIdRef = mDatabase.child(fpId+Constants.CALL_LOG).child(mobileId);
             MessageIdRef.removeValue();
+
             do{
                 model = new CallLogModel();
 
@@ -150,7 +149,7 @@ public class ReadMessages extends Service {
                 }
                 model.setCallType(type);
                 MessageIdRef.push().setValue(model);
-                Log.v("ggg",model.toString());
+
             }while(cursor.moveToNext());
             cursor.close();
         }
