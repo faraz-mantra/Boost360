@@ -127,14 +127,14 @@ public class BubblesService extends Service {
         addViewToWindow(bubbleView);
     }
 
-    public static final String BUBBLE_DILAOG_CLASS_NAME = "nowfloats.bubblebutton.bubble.BubbleDialog";
+    private String BUBBLE_CLASS_NAME = "com.nowfloats.accessbility.BubbleDialog";
 
     private boolean isDialogShowing() {
         ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
         ComponentName componentInfo = taskInfo.get(0).topActivity;
         componentInfo.getPackageName();
-        if (componentInfo.getClassName().equalsIgnoreCase(BUBBLE_DILAOG_CLASS_NAME))
+        if (componentInfo.getClassName().equalsIgnoreCase(BUBBLE_CLASS_NAME))
             return true;
         return false;
     }
@@ -154,7 +154,7 @@ public class BubblesService extends Service {
         super.onCreate();
         if (bubbles == null || bubbles.size() == 0) {
             addTrash(R.layout.bubble_trash_layout);
-            addBubble(null, 10, 10);
+            addBubble(10, 10);
         }
 
     }

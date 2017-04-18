@@ -75,6 +75,9 @@ public class BubbleDialog extends AppCompatActivity {
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         productGalleryFragment = new Product_Gallery_Fragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Product_Gallery_Fragment.KEY_FROM, Product_Gallery_Fragment.FROM.BUBBLE);
+        productGalleryFragment.setArguments(bundle);
         ft.replace(R.id.mainFrame, productGalleryFragment).
                 commit();
 
