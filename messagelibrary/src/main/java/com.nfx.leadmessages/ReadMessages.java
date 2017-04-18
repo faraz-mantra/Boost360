@@ -39,7 +39,7 @@ public class ReadMessages extends Service {
     private String order="date DESC";
     private String CALL_order=CallLog.Calls.DATE+" DESC";
     private int selectionLength=Constants.selections.length;
-    final private int DAYS_BEFORE =7;
+    final private int DAYS_BEFORE =30;
 
 
     @Override

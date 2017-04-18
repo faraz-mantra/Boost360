@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#ECEFF1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:elevation="4dp"
+        app:theme="@style/MyCustomToolBarTheme"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:background="?attr/colorPrimary">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ria_cirlce_image"
+                android:layout_gravity="center_vertical"/>
+            <TextView
+                android:layout_marginLeft="16dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="left|center_vertical"
+                android:textSize="22sp"
+                android:layout_gravity="right"
+                android:textColor="@color/white"
+                android:text="Ria"/>
+            <ImageView
+                android:id="@+id/iv_attach"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:visibility="invisible"
+                android:layout_marginRight="16dp"
+                android:layout_gravity="center_vertical"
+                android:rotation="-45"
+                android:src="@drawable/ic_attach_file_black_24dp"
+                android:tint="@color/white"/>
+        </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_chat_data"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingBottom="5dp"
+        android:layout_weight="1">
+
+    </android.support.v7.widget.RecyclerView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:minHeight="50dp"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.RecyclerView
+            android:visibility="invisible"
+            android:id="@+id/rv_reply_button_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:id="@+id/cv_chat_input"
+            android:visibility="gone"
+            android:background="#fff"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#CED7DB" />
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tv_prefix"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"/>
+                <AutoCompleteTextView
+                    android:id="@+id/et_chat_input"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="40dp"
+                    android:maxLines="5"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:background="@drawable/et_bg"
+                    android:paddingLeft="5dp"
+                    android:hint="Say Something..."
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/tv_postfix"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"/>
+                <ImageView
+                    android:id="@+id/iv_send_msg"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:tint="?attr/colorPrimary"
+                    android:src="@drawable/ic_send_black_24dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

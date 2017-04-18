@@ -47,8 +47,8 @@ android {
         applicationId 'com.thinksity'
         minSdkVersion 15
         targetSdkVersion 25
-        versionName "4.5.9"
-        versionCode 2017040012
+        versionName "4.6.0"
+        versionCode 2017040018
         multiDexEnabled true
     }
     buildTypes {
@@ -90,6 +90,7 @@ dependencies {
     compile project(':cropper')
     compile project(':ZoomImageLibrary')
     compile project(':instamojoLib')
+    compile project(':messagelibrary')
     compile files('libs/libraries/signpost-core-1.2.1.2.jar')
     compile files('libs/libraries/AF-Android-SDK-v2.3.1.17.jar')
     compile files('libs/libraries/signpost-commonshttp4-1.2.1.2.jar')
@@ -131,7 +132,6 @@ dependencies {
     compile 'com.github.clans:fab:1.6.4'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.github.freshdesk:hotline-android:1.2.0'
-    compile project(':messagelibrary')
 }
 
 apply plugin: 'com.google.gms.google-services'

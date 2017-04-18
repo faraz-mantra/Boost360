@@ -71,7 +71,7 @@
     <string name="title_activity_image__gallery__main">Image Gallery</string>
     <string name="title_activity_home__main">Home_MainActivity</string>
     <string name="home">Home</string>
-    <string name="title_activity_create__message_">Post an update</string>
+    <string name="title_activity_create__message_">Post an Update</string>
     <string name="side_panel_row_one">Dashboard</string>
     <string name="side_panel_row_two">Profile</string>
     <string name="side_panel_site_appearance">Site Appearance</string>
@@ -81,7 +81,7 @@
     <string name="side_panel_row_five">Settings</string>
     <string name="side_panel_row_six">Write to Ria</string>
     <string name="side_panel_row_seven">Contact us</string>
-    <string name="side_panel_row_eight">Share your website</string>
+    <string name="side_panel_row_eight">Share</string>
     <string name="setting_change_pwd">Change password</string>
     <string name="setting_feedback">Feedback</string>
     <string name="setting_rate_us_on_play_store">Rate us on Play Store</string>
@@ -148,6 +148,8 @@
     <string name="share_text1">Share</string>
 
     <string name="buydomain_text2">Buy a .com</string>
+    <string name="buy_a_domain">Buy a Domain</string>
+    <string name="domain_detail_required">Domain Detail Required</string>
     <string name="phoneNumber_text2">Ensure recruiters reach you instantly</string>
     <string name="featuredImage_text2">Add relevant image</string>
     <string name="businessName_text2">Add name</string>
@@ -560,6 +562,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="custom_pages">Custom Pages</string>
     <string name="page_selected">PAGE SELECTED</string>
     <string name="are_you_sure_want_to_delete">Are you sure?</string>
+    <string name="are_you_sure_do_you_want_to_book_domain">Are you sure do you want to book this domain?</string>
     <string name="page_will_deleted">Page will be deleted</string>
     <string name="deleted_in_capital">DELETE</string>
     <string name="cancel_in_capital">@android:string/cancel</string>
@@ -575,6 +578,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="enter_correct_user_name">Please enter a correct username/ email/ phone number.</string>
     <string name="check_your_email">Check your email</string>
     <string name="enter_valid_username_or_password">Enter valid username/password</string>
+    <string name="enter_domain_name">Enter domain name</string>
+    <string name="enter_zip_code">Enter zip code</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="enter_user_name">Enter Username/ E-mail/ Phone Number</string>
     <string name="we_sent_email_with_password">We have sent you an email with password details</string>
@@ -588,7 +593,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="can_not_share_image_offline_mode">Can\'t Share image content in Offline Mode</string>
     <string name="no_app_to_share">No apps to share</string>
     <string name="share">Share</string>
-    <string name="post_update">Post an update</string>
+    <string name="post_update">Post An Update</string>
     <string name="post_in_capital">POST</string>
     <string name="enter_message">Please enter a message</string>
     <string name="send_to_subscribers">Send to Subscribers</string>
@@ -613,6 +618,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="you_are_eligible_to_free_domain">Voila! You are now eligible to get a free domain. Request a .com/.net of your choice and we will integrate it to your website within 24 hours.</string>
     <string name="request_now">Request Now</string>
     <string name="wait_for_new_look">Wait for the new look&#8230;</string>
+    <string name="please_select_subject">Please select subject</string>
+    <string name="please_enter_message">Please enter message</string>
     <string name="your_website_appearance_changed">Your Website Appearance is changed</string>
     <string name="can_not_change_appearance">Couldn\'t change Website Appearance</string>
     <string name="buy_in_capital">BUY</string>
@@ -647,7 +654,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="replacing_image">Replacing image&#8230;.</string>
     <string name="product_image_replaced_successfully">Product image replaced successfully</string>
     <string name="new_product_added">New product added</string>
-    <string name="add_product">Add product</string>
+    <string name="add_product">Add Product</string>
     <string name="can_not_select_more_than_5images">You can\'t select more than 5 images</string>
     <string name="edit_product">Edit Product</string>
     <string name="updating">Updating&#8230;</string>
@@ -694,12 +701,19 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="read_more">Read More</string>
     <string name="know_more">KNOW MORE</string>
     <string name="book_domain">Book Domain</string>
+    <string name="unique_visitors">Unique Visitors</string>
     <string name="domain_lookup">Domain LookUp</string>
     <string name="enter_domain_nmae_to_continue">Enter domain name to continue</string>
     <string name="domain_is_available">Domain is available..</string>
     <string name="domain_not_available">Domain is not available..</string>
     <string name="domain_booking_confirmation">Domain Booking Confirmation</string>
+    <string name="domain_booking_successful">Domain Booking Successful</string>
+    <string name="domain_booking_process">Domain Booking In Process</string>
+    <string name="domain_booking_process_message">Your Domain will be activated within 24 hours.</string>
+    <string name="domain_booking_successful_message">Your Domain: \n %s \n has been registered to the DNS server and successfully mapped.</string>
+    <string name="drop_us_contact"><![CDATA[You can drop us a line at <b><font color=#ffb900>ria@nowfloats.com</font></b> or call us at <b><font color=#ffb900>1860-123-1233 </font></b> if you\'d like to enable this feature.]]></string>
     <string name="hello_do_you_want_this">Hello Do you want to set this</string>
+    <string name="please_fill_details_to_proceed">Please fill details to proceed</string>
     <string name="as_domain">as your domain</string>
     <string name="thank_for_booking_domain">Thank you for your domain booking of</string>
     <string name="activate_in_24_hours">It will be activated within 24 hours.</string>
@@ -747,6 +761,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="logout">Logout</string>
     <string name="create_website_using">Create website using</string>
     <string name="email_address">Email Address</string>
+    <string name="log_in"> Log In</string>
     <string name="complete_task_to_increase_site_score">Complete the task below to increase your site score.</string>
     <string name="high_score_translate_more_traffic">Higher scores translates more traffic to your site.</string>
     <string name="get_your_identity">Get your own identity</string>
@@ -778,7 +793,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="describe_in_detail">Describe in detail</string>
     <string name="about_us">About Us</string>
     <string name="enter_hyperlink_tag">Enter Hyperlink Tag</string>
-    <string name="enter_domain_name">Enter domain name</string>
     <string name="crop">crop</string>
     <string name="rotate">rotate</string>
     <string name="done">done</string>
@@ -792,8 +806,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="enter_the_reason">Enter other reason</string>
     <string name="submit">SUBMIT</string>
     <string name="no_alerts">No alerts!</string>
-    <string name="overall_visits">Total Visits</string>
-    <string name="unique_visitors">Unique Visitors</string>
+    <string name="overall_visits">Overall Visits</string>
     <string name="address_line">Address Line</string>
     <string name="malleswaram">Malleswaram</string>
     <string name="town_city">Town / City</string>
@@ -875,6 +888,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="subdomain_name">.nowfloats.com</string>
     <string name="sub_domain_available_text">Chosen Sub - Domain is Available</string>
     <string name="back_text">BACK</string>
+    <string name="back">Back</string>
     <string name="next_text">NEXT</string>
     <string name="alerts_text">AlERTS</string>
     <string name="light_house_price">25000/year</string>
@@ -904,6 +918,10 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="product_detail_availability">Product Availability</string>
     <string name="product_detail_free_shipping">Free Shipping</string>
     <string name="product_detail_delete_btn_text">Delete product</string>
+    <string name="book_a_new_domain">Book a new domain</string>
+    <string name="have_an_existing_domain">Have an existing domain? </string>
+    <string name="link_a_domain_nf">Link a domain (included in your NowFloats Package)</string>
+    <string name="already_have_a_domain">Already have a domain</string>
     <string name="pop_up_create_msg_title">Are you sure?</string>
     <string name="graph_fragment2_title">Visits</string>
     <string name="graph_custom_visit_page_title">VISITS</string>
@@ -952,6 +970,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="offers_soon">Create Offers, Now!</string>
     <string name="failed_to_share">Error while sharing offers</string>
     <string name="offer_getting_error">Error while retrieving offers</string>
+    <string name="domain_details_getting_error">Error while retrieving domain details</string>
     <string name="store_excluding_all_taxes">( Excluding Taxes )</string>
     <string name="buy_now">Proceed to Buy</string>
     <string name="do_you_have_opc">Proceed with an Online Payment Code</string>
@@ -962,6 +981,34 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="pay_now">Pay Now</string>
     <string name="opc_hint_text">Connect with our sales executives to get an Online Payment Code (OPC).</string>
 
+
+    <string name="domain">Domain:</string>
+    <string name="domain_type">Domain Type:</string>
+    <string name="company_name">Company Name:</string>
+    <string name="tag">Tag:</string>
+    <string name="domain_address_line">Address Line:</string>
+    <string name="city">City:</string>
+    <string name="zip">Zip:</string>
+    <string name="country_code">Country Code:</string>
+    <string name="isd_code">ISD Code:</string>
+    <string name="domain_country">Country:</string>
+    <string name="domain_email">Email:</string>
+    <string name="domain_primary_number">Primary Number:</string>
+    <string name="price_of_domain">Price of %s:</string>
+    <string name="activate_your_domain">Activate your domain</string>
+    <string name="submit_request">Submit Request</string>
+    <string name="book_your_domain">Book your Domain</string>
+    <string name="content_link_domain">
+        If you have an existing domain, we strongly recommend that you use it for your NowFloats Website.
+        Online discovery will be faster as search engines already recognize your domain.
+        Choose from the options below and send us a request for mapping your existing domain:
+    </string>
+    <string name="point_your_existing_domain_to_nowfloats_website">
+        Point your existing domain to NowFloats website.
+    </string>
+    <string name="put_your_nowfloats_website_as_a_sub_domain">
+        Put your NowFloats website as a sub domain.
+    </string>
     <string-array name="calendar">
         <item>Week</item>
         <item>Month</item>
@@ -1109,7 +1156,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="search_rank">Search Ranking</string>
     <string name="alternate_number3">Alternate Number 3</string>
     <string name="cap_login" translatable="false">&#160;<u><b>LOGIN</b></u></string>
-    <string name="log_in">Log In</string>
     <string name="subscriber_second_text">Subscription is a great way to engage with your\nexisting customers and tell them about latest offers\nor new product launches</string>
     <string name="site_appearance_change_to_new_look">In case you didn\'t like the existing look of your website, you  can always choose to change it from here.</string>
     <string name="find_your_subscribers">Find your subscribers</string>
