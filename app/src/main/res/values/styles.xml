@@ -136,6 +136,15 @@
         <item name="android:background">@drawable/bg_spinner</item>
     </style>
 
+        <style name="Theme.custom" parent="Theme.AppCompat.Light.Dialog">
+            <item name="windowNoTitle">true</item>
+            <item name="colorPrimary">@color/primary_color</item>
+            <item name="colorPrimaryDark">@color/primary_color_dark</item>
+            <item name="android:background">@null</item>
+            <item name="windowActionModeOverlay">true</item>
+            <item name="colorAccent">@color/primary_color</item>
+            <item name="colorButtonNormal">@color/primary_color</item>
+        </style>
     <!--<style name="Theme.Mobihelp" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryColorDark</item>

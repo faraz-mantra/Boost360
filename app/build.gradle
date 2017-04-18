@@ -131,8 +131,6 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.github.freshdesk:hotline-android:1.2.0'
     compile project(':messagelibrary')
-    compile project(path: ':bubblebutton')
-    compile project(':bubblebutton')
 }
 
 apply plugin: 'com.google.gms.google-services'

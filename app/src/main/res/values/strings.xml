@@ -455,7 +455,7 @@
     <string name="empty_alert">We will notify you as soon as\nyou have a new alert</string>
     <string name="settings_tou_url">https://nowfloats.com/tnc/</string>
     <string name="settings_privacy_url">https://nowfloats.com/privacy/</string>
-
+    <string name="accessibility_description">Permission required to upload Boost product and grow your business......</string>
     <string-array name="domain_array">
         <item>.com</item>
         <item>.net</item>

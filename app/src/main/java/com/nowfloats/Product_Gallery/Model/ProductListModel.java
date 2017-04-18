@@ -32,6 +32,7 @@ public class ProductListModel implements Parcelable {
     public String GPId;
     public String TotalQueries;
     public String CreatedOn;
+    public String ProductIndex;
     public String UpdatedOn;
 
 
