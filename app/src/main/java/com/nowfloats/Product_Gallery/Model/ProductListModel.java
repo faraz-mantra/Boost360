@@ -34,6 +34,7 @@ public class ProductListModel implements Parcelable {
     public String CreatedOn;
     public String ProductIndex;
     public String UpdatedOn;
+    public boolean isProductSelected;
 
 
     @Override

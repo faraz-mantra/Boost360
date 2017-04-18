@@ -223,7 +223,7 @@ public class BubbleLayout extends BubbleBaseLayout {
 
 
     private class MoveAnimator implements Runnable {
-        private Handler handler = new Handler(Looper.getMainLooper());
+        private Handler handler = new Handler(Looper.myLooper());
         private float destinationX;
         private float destinationY;
         private long startingTime;

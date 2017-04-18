@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 
@@ -38,8 +40,6 @@ import java.util.Currency;
 import java.util.HashMap;
 import java.util.Locale;
 
-import static com.nowfloats.Product_Gallery.Product_Gallery_Fragment.FROM.DEFAULT;
-
 /**
  * Created by guru on 08-06-2015.
  */
@@ -55,7 +55,8 @@ public class Product_Gallery_Fragment extends Fragment {
     private boolean userScrolled = false;
     private ProductAPIService apiService;
     private String currencyValue;
-    private FROM from;
+    private FROM from = FROM.DEFAULT;
+    ;
     public static final String KEY_FROM = "KEY_FROM";
 
     public enum FROM {
@@ -69,9 +70,7 @@ public class Product_Gallery_Fragment extends Fragment {
         activity = getActivity();
         if (getArguments() != null)
             from = (FROM) getArguments().get(KEY_FROM);
-        else {
-            from = DEFAULT;
-        }
+
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(activity.getApplicationContext(), activity);
         apiService = new ProductAPIService();
@@ -133,6 +132,7 @@ public class Product_Gallery_Fragment extends Fragment {
         addProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_ADD, null);
                 Intent intent;
                 if (/*session.getWebTemplateType().equals("6")*/false) {
@@ -150,19 +150,35 @@ public class Product_Gallery_Fragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent;
-                if (/*session.getWebTemplateType().equals("6")*/false) {
-                    intent = new Intent(activity, Product_Detail_Activity.class);
+
+                if (from == FROM.DEFAULT) {
+                    Intent intent;
+                    if (/*session.getWebTemplateType().equals("6")*/false) {
+                        intent = new Intent(activity, Product_Detail_Activity.class);
 //                Bundle bundle = new Bundle();
 //                bundle.putParcelable("product", productItemModelList.get(position));
-                    intent.putExtra("product", position + "");
+                        intent.putExtra("product", position + "");
+                    } else {
+                        intent = new Intent(activity, Product_Detail_Activity_V45.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putParcelable("product", productItemModelList.get(position));
+                        intent.putExtra("product", position + "");
+                    }
+                    Methods.launchFromFragment(activity, view, intent);
                 } else {
-                    intent = new Intent(activity, Product_Detail_Activity_V45.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putParcelable("product", productItemModelList.get(position));
-                    intent.putExtra("product", position + "");
+                    ProductListModel productItemModel = (ProductListModel) view.getTag(R.string.key_details);
+                    productItemModel.isProductSelected = !productItemModel.isProductSelected;
+                    FrameLayout flMain = (FrameLayout) view.findViewById(R.id.flMain);
+                    FrameLayout flOverlay = (FrameLayout) view.findViewById(R.id.flOverlay);
+                    View vwOverlay = view.findViewById(R.id.vwOverlay);
+                    if (productItemModel.isProductSelected) {
+                        flOverlay.setVisibility(View.VISIBLE);
+                        setOverlay(vwOverlay, 200, flMain.getWidth(), flMain.getHeight());
+                    } else {
+                        flOverlay.setVisibility(View.GONE);
+                    }
                 }
-                Methods.launchFromFragment(activity, view, intent);
+
             }
         });
 
@@ -209,6 +225,17 @@ public class Product_Gallery_Fragment extends Fragment {
         }
     }
 
+
+    public void setOverlay(View v, int opac, int width, int height) {
+        int opacity = opac; // from 0 to 255
+        v.setBackgroundColor(opacity * 0x1000000); // black with a variable alpha
+        FrameLayout.LayoutParams params =
+                new FrameLayout.LayoutParams(width, height);
+        params.gravity = Gravity.NO_GRAVITY;
+        v.setLayoutParams(params);
+        v.invalidate();
+    }
+
     private void getProducts(String skip) {
         HashMap<String, String> values = new HashMap<>();
         values.put("clientId", Constants.clientId);
@@ -244,7 +271,7 @@ public class Product_Gallery_Fragment extends Fragment {
             //Log.d("Product Id", data.get(0)._id);
 
             productItemModelList = data;
-            adapter = new ProductGalleryAdapter(activity, currencyValue);
+            adapter = new ProductGalleryAdapter(activity, currencyValue,from);
             gridView.setAdapter(adapter);
             gridView.invalidateViews();
 
