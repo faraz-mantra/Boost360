@@ -90,7 +90,7 @@ public class Constants {
     //    public static RestAdapter validEmailAdapter = null;
     public static final RestAdapter validEmailAdapter = new RestAdapter.Builder().setEndpoint("https://bpi.briteverify.com").build();
     //    public static RestAdapter restAdapter = null;
-    public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
+    public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL)./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).*/build();
 
     public static final RestAdapter testRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.TEST_API_URL).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).build();
     public static NotificationInterface alertInterface = Constants.restAdapter.create(NotificationInterface.class);
@@ -337,6 +337,15 @@ public class Constants {
             "CONSTRUCTION MATERIAL",
             "FREELANCER",
             "CONSULTANTS"};
+
+    public enum SubscriberStatus {
+        UNSUBSCRIBED(30), SUBSCRIBED(20),REQUESTED(10);
+        public int value;
+        SubscriberStatus(int i){
+            value = i;
+        }
+    }
+
     public static ArrayList<String> signUpCountryList = new ArrayList<>();
     public static int DefaultBackgroundImage;
     public static boolean imageNotSet = false;

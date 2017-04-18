@@ -233,7 +233,7 @@ public class Create_Message_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 int status = pref.getInt("quikrStatus", -1);
                 if (status == 0) {
-                    Methods.showSnackBar(activity,"Sorry, You have reached your daily limit of one post");
+                    Methods.showSnackBar(activity,"You cannot post more than one ad on Quikr in a day");
                 }else if(status == -1){
                     Methods.showSnackBarNegative(activity,"Something went wrong, please restart the application");
                 } else{
