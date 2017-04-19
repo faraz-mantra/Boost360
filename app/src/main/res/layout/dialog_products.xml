@@ -4,14 +4,31 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edtSearch"
+    <FrameLayout
+        android:id="@+id/toolbar_container"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/search_upper_round_edittext"
-        android:drawableLeft="@drawable/ic_search"
-        android:drawableStart="@drawable/ic_search"
-        android:hint="search" />
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/primary_color" />
+
+        <com.miguelcatalan.materialsearchview.MaterialSearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
+    <!-- <EditText
+         android:id="@+id/edtSearch"
+         android:layout_width="match_parent"
+         android:layout_height="50dp"
+         android:background="@drawable/search_upper_round_edittext"
+         android:drawableLeft="@drawable/ic_search"
+         android:drawableStart="@drawable/ic_search"
+         android:hint="search" />-->
 
     <FrameLayout
         android:id="@+id/mainFrame"

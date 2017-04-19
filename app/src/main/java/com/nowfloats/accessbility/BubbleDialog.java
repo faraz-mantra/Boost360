@@ -7,17 +7,18 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.thinksity.R;
 
@@ -31,7 +32,7 @@ public class BubbleDialog extends AppCompatActivity {
     private Product_Gallery_Fragment productGalleryFragment;
     private FrameLayout mainFrame;
     private Button btnShare;
-    private EditText edtSearch;
+    private MaterialSearchView searchView;
 
     private class KillListener extends BroadcastReceiver {
 
@@ -59,11 +60,16 @@ public class BubbleDialog extends AppCompatActivity {
         int screenHeight = (int) (metrics.heightPixels * 0.80);
         mainFrame = (FrameLayout) findViewById(R.id.mainFrame);
         btnShare = (Button) findViewById(R.id.btnShare);
-        edtSearch = (EditText) findViewById(R.id.edtSearch);
+        searchView = (MaterialSearchView) findViewById(R.id.searchView);
         killListener = new KillListener();
         getWindow().setGravity(Gravity.BOTTOM);
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, screenHeight);
-
+        searchView.setVoiceSearch(false);
+        searchView.setEllipsize(true);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle("Share");
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
     }
 
     private void bindControls() {
@@ -86,24 +92,21 @@ public class BubbleDialog extends AppCompatActivity {
             }
         });
 
-        edtSearch.addTextChangedListener(new TextWatcher() {
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+            public boolean onQueryTextSubmit(String s) {
+                return false;
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
+            public boolean onQueryTextChange(String s) {
                 if (productGalleryFragment != null) {
                     productGalleryFragment.filterProducts(s.toString());
                 }
+                return false;
             }
         });
+
     }
 
     private void loadData() {
@@ -161,6 +164,15 @@ public class BubbleDialog extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_bubble, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+
+        return true;
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
     }
@@ -169,6 +181,15 @@ public class BubbleDialog extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         unregisterReceiver(killListener);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (searchView.isSearchOpen()) {
+            searchView.closeSearch();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
