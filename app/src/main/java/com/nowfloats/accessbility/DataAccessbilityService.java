@@ -5,6 +5,7 @@ import android.accessibilityservice.AccessibilityServiceInfo;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
@@ -13,6 +14,8 @@ import android.text.TextUtils;
 import android.view.accessibility.AccessibilityEvent;
 
 import com.nowfloats.bubble.BubblesService;
+import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
 
 
 /**
@@ -23,8 +26,9 @@ import com.nowfloats.bubble.BubblesService;
 public class DataAccessbilityService extends AccessibilityService {
 
 
-        public static final String PK_NAME_WHATSAPP = "com.whatsapp";
-//    public static final String PK_NAME_WHATSAPP = "com.twitter.android";
+    public static final String PK_NAME_WHATSAPP = "com.whatsapp";
+    //    public static final String PK_NAME_WHATSAPP = "com.twitter.android";
+    private SharedPreferences pref;
 
     @Override
     protected void onServiceConnected() {
@@ -35,6 +39,7 @@ public class DataAccessbilityService extends AccessibilityService {
         info.flags = 91;
         info.feedbackType = 16;
         setServiceInfo(info);
+        pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
     }
 
     @Override
@@ -49,7 +54,8 @@ public class DataAccessbilityService extends AccessibilityService {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     return;
-                } else if (!isMyServiceRunning(BubblesService.class)) {
+                } else if (!isMyServiceRunning(BubblesService.class) &&
+                        !TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null))) {
                     Intent intent = new Intent(DataAccessbilityService.this, BubblesService.class);
                     startService(intent);
                 }
