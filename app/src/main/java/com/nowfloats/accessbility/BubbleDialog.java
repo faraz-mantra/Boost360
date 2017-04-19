@@ -68,7 +68,7 @@ public class BubbleDialog extends AppCompatActivity {
         searchView.setEllipsize(true);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("Share");
+        getSupportActionBar().setTitle(getString(R.string.select_a_product_to_share));
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
     }
 

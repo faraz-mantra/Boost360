@@ -18,7 +18,8 @@ public class TempDisplayDialog extends AppCompatActivity {
         Intent it = new Intent(TempDisplayDialog.this, BubbleDialog.class).
                 setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(it);
-        overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
+//        overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
+        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
         finish();
     }
 }

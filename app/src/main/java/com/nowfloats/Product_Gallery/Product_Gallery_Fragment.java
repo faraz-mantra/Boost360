@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -65,6 +66,7 @@ public class Product_Gallery_Fragment extends Fragment {
     private FROM from = FROM.DEFAULT;
     ;
     public static final String KEY_FROM = "KEY_FROM";
+    private boolean isAnyProductSelected = false;
 
     public enum FROM {
         BUBBLE,
@@ -173,16 +175,23 @@ public class Product_Gallery_Fragment extends Fragment {
                     }
                     Methods.launchFromFragment(activity, view, intent);
                 } else {
+
                     final ProductListModel productItemModel = (ProductListModel) view.getTag(R.string.key_details);
-                    productItemModel.isProductSelected = !productItemModel.isProductSelected;
-                    FrameLayout flMain = (FrameLayout) view.findViewById(R.id.flMain);
-                    FrameLayout flOverlay = (FrameLayout) view.findViewById(R.id.flOverlay);
-                    View vwOverlay = view.findViewById(R.id.vwOverlay);
-                    if (productItemModel.isProductSelected) {
-                        flOverlay.setVisibility(View.VISIBLE);
-                        setOverlay(vwOverlay, 200, flMain.getWidth(), flMain.getHeight());
+                    if (isAnyProductSelected && !productItemModel.isProductSelected) {
+                        Toast.makeText(activity, "You can select only one product", Toast.LENGTH_LONG).show();
                     } else {
-                        flOverlay.setVisibility(View.GONE);
+                        productItemModel.isProductSelected = !productItemModel.isProductSelected;
+                        FrameLayout flMain = (FrameLayout) view.findViewById(R.id.flMain);
+                        FrameLayout flOverlay = (FrameLayout) view.findViewById(R.id.flOverlay);
+                        View vwOverlay = view.findViewById(R.id.vwOverlay);
+                        if (productItemModel.isProductSelected) {
+                            flOverlay.setVisibility(View.VISIBLE);
+                            setOverlay(vwOverlay, 200, flMain.getWidth(), flMain.getHeight());
+                            isAnyProductSelected = true;
+                        } else {
+                            isAnyProductSelected = false;
+                            flOverlay.setVisibility(View.GONE);
+                        }
                     }
 
 //                    if (productItemModel.picimageURI == null) {

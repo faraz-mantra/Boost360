@@ -21,14 +21,6 @@
             android:layout_height="wrap_content" />
     </FrameLayout>
 
-    <!-- <EditText
-         android:id="@+id/edtSearch"
-         android:layout_width="match_parent"
-         android:layout_height="50dp"
-         android:background="@drawable/search_upper_round_edittext"
-         android:drawableLeft="@drawable/ic_search"
-         android:drawableStart="@drawable/ic_search"
-         android:hint="search" />-->
 
     <FrameLayout
         android:id="@+id/mainFrame"
@@ -45,6 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dip"
-        android:background="@drawable/yellow_btn_bg"
-        android:text="@string/share" />
+        android:background="@color/primaryColor"
+        android:text="@string/share_to_your_customers"
+        android:textColor="@android:color/white" />
 </LinearLayout>

@@ -23,7 +23,8 @@ import com.nowfloats.bubble.BubblesService;
 public class DataAccessbilityService extends AccessibilityService {
 
 
-    public static final String PK_NAME_WHATSAPP = "com.whatsapp";
+    //    public static final String PK_NAME_WHATSAPP = "com.whatsapp";
+    public static final String PK_NAME_WHATSAPP = "com.twitter.android";
 
     @Override
     protected void onServiceConnected() {
@@ -48,7 +49,7 @@ public class DataAccessbilityService extends AccessibilityService {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     return;
-                } else if(!isMyServiceRunning(BubblesService.class)){
+                } else if (!isMyServiceRunning(BubblesService.class)) {
                     Intent intent = new Intent(DataAccessbilityService.this, BubblesService.class);
                     startService(intent);
                 }
