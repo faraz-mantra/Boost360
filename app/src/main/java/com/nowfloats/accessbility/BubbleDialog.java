@@ -15,7 +15,9 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
+import com.nowfloats.util.Key_Preferences;
 import com.thinksity.R;
+
 
 
 /**
@@ -24,6 +26,7 @@ import com.thinksity.R;
 
 public class BubbleDialog extends AppCompatActivity {
     public static final String ACTION_KILL_DIALOG = "nowfloats.bubblebutton.bubble.ACTION_KILL_DIALOG";
+
     private Product_Gallery_Fragment productGalleryFragment;
     private FrameLayout mainFrame;
     private Button btnShare;
@@ -54,6 +57,10 @@ public class BubbleDialog extends AppCompatActivity {
         int screenHeight = (int) (metrics.heightPixels * 0.80);
         mainFrame = (FrameLayout) findViewById(R.id.mainFrame);
         btnShare = (Button) findViewById(R.id.btnShare);
+        String className = getIntent().getStringExtra(Key_Preferences.WHATSAPP_CLASS);
+        if(DataAccessbilityService.CLASS_NAME_WHATSAPP_CONVERSATION.equalsIgnoreCase(className)){
+            btnShare.setText("Copy");
+        }
         killListener = new KillListener();
         getWindow().setGravity(Gravity.BOTTOM);
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, screenHeight);

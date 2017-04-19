@@ -7,6 +7,7 @@ public class Key_Preferences {
 
 
     public static final String EVENT_WILDFIRE_BUY = "eventWildfireBuy";
+    public static final String INTENT_BUBBLE_CLASS = "com.intent.bubbleService";
     public static  String GET_FP_DETAILS_CITY = "GET_FP_DETAILS_CITY";
     public static  String GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG";
     public static  String GET_FP_DETAILS_ADDRESS ="GET_FP_DETAILS_ADDRESS" ;
@@ -86,4 +87,6 @@ public class Key_Preferences {
     public static final String FB_PULL_COUNT = "fb_pull_count";
 
     public static final String FCM_TOKEN = "fcm_token";
+
+    public static final String WHATSAPP_CLASS = "className";
 }
