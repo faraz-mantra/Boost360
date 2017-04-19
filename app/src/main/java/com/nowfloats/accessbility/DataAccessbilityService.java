@@ -23,8 +23,8 @@ import com.nowfloats.bubble.BubblesService;
 public class DataAccessbilityService extends AccessibilityService {
 
 
-    //    public static final String PK_NAME_WHATSAPP = "com.whatsapp";
-    public static final String PK_NAME_WHATSAPP = "com.twitter.android";
+        public static final String PK_NAME_WHATSAPP = "com.whatsapp";
+//    public static final String PK_NAME_WHATSAPP = "com.twitter.android";
 
     @Override
     protected void onServiceConnected() {
