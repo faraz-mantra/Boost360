@@ -143,9 +143,7 @@ public class BubblesService extends Service {
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
         ComponentName componentInfo = taskInfo.get(0).topActivity;
         componentInfo.getPackageName();
-        if (componentInfo.getClassName().equalsIgnoreCase(BUBBLE_CLASS_NAME))
-            return true;
-        return false;
+        return componentInfo.getClassName().equalsIgnoreCase(BUBBLE_CLASS_NAME);
     }
 
     @Override

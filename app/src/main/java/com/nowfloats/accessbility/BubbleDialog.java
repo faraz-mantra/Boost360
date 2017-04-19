@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.nowfloats.util.Key_Preferences;
@@ -63,7 +64,7 @@ public class BubbleDialog extends AppCompatActivity implements ProductItemClickC
         btnShare = (Button) findViewById(R.id.btnShare);
         className = getIntent().getStringExtra(Key_Preferences.WHATSAPP_CLASS);
         if(DataAccessbilityService.CLASS_NAME_WHATSAPP_CONVERSATION.equalsIgnoreCase(className)){
-            btnShare.setText("Copy");
+            btnShare.setText("Copy Products");
         }
         killListener = new KillListener();
         getWindow().setGravity(Gravity.BOTTOM);
@@ -76,6 +77,10 @@ public class BubbleDialog extends AppCompatActivity implements ProductItemClickC
             @Override
             public void onClick(View v) {
                 String urls = arrayToStringUrl();
+                if(urls.length() == 0){
+                    Toast.makeText(BubbleDialog.this, "Please select at least one product", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Log.v("ggg",urls);
                 if(DataAccessbilityService.CLASS_NAME_WHATSAPP_HOMEACTIVITY.equalsIgnoreCase(className)){
                     Intent intent  = new Intent(Intent.ACTION_SEND);
@@ -87,6 +92,7 @@ public class BubbleDialog extends AppCompatActivity implements ProductItemClickC
                     copyToClipboard(urls);
                 }
 
+                finish();
             }
         });
     }
@@ -152,6 +158,7 @@ public class BubbleDialog extends AppCompatActivity implements ProductItemClickC
         StringBuilder builder = new StringBuilder();
         for(int i = 0; i<size ;i++){
             builder.append(sharedProductUrls.valueAt(i));
+            builder.append("\n");
         }
         sharedProductUrls.clear();
         return builder.toString();
