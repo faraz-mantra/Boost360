@@ -42,6 +42,7 @@ import com.thinksity.R;
 import java.io.ByteArrayOutputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Currency;
 import java.util.HashMap;
 import java.util.Locale;
@@ -53,7 +54,7 @@ public class Product_Gallery_Fragment extends Fragment {
     public static Bus bus;
     public static LinearLayout empty_layout, progressLayout;
     GridView gridView;
-    public static ProductGalleryAdapter adapter;
+    public ProductGalleryAdapter adapter;
     public static ArrayList<ProductListModel> productItemModelList;
     private Activity activity;
     UserSessionManager session;
@@ -289,13 +290,65 @@ public class Product_Gallery_Fragment extends Fragment {
                     productItemModelList.add(event.data.get(i));
                     //addPos++;
                 }
-                adapter.notifyDataSetChanged();
+                adapter.refreshDetails(productItemModelList);
             }
         } catch (Exception e) {
             e.printStackTrace();
             System.gc();
         }
     }
+
+    private static final String PRODUCT_SEARCH = "PRODUCT_SEARCH";
+
+    public void filterProducts(final String searchText) {
+
+        if (productItemModelList != null && productItemModelList.size() > 0) {
+
+            synchronized (PRODUCT_SEARCH) {
+
+                try {
+                    ArrayList<ProductListModel> arrModelTemp = null;
+                    if (TextUtils.isEmpty(searchText)) {
+                        arrModelTemp = productItemModelList;
+                    } else {
+                        Predicate<ProductListModel> searchItem = new Predicate<ProductListModel>() {
+                            public boolean apply(ProductListModel productListModel) {
+                                return (!TextUtils.isEmpty(productListModel.Description)
+                                        && productListModel.Description.toLowerCase().contains(searchText.toLowerCase()))
+                                        || (!TextUtils.isEmpty(productListModel.Name)
+                                        && productListModel.Name.toLowerCase().contains(searchText.toLowerCase()));
+                            }
+                        };
+                        arrModelTemp = (ArrayList<ProductListModel>)
+                                filter(productItemModelList, searchItem);
+                    }
+                    adapter.refreshDetails(arrModelTemp);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+    public interface Predicate<T> {
+        boolean apply(T type);
+    }
+
+    public static <T> Collection<T> filter(Collection<T> col, Predicate<T> predicate) {
+
+        Collection<T> result = new ArrayList<T>();
+        if (col != null) {
+            for (T element : col) {
+                if (predicate.apply(element)) {
+                    result.add(element);
+                }
+            }
+        }
+        return result;
+    }
+
 
     @Subscribe
     public void getProductList(ArrayList<ProductListModel> data) {
@@ -308,6 +361,7 @@ public class Product_Gallery_Fragment extends Fragment {
             adapter = new ProductGalleryAdapter(activity, currencyValue, from);
             gridView.setAdapter(adapter);
             gridView.invalidateViews();
+            adapter.refreshDetails(productItemModelList);
 
             if (productItemModelList.size() == 0) {
                 empty_layout.setVisibility(View.VISIBLE);
@@ -315,7 +369,7 @@ public class Product_Gallery_Fragment extends Fragment {
                 empty_layout.setVisibility(View.GONE);
             }
         } else {
-            if (Product_Gallery_Fragment.productItemModelList.size() == 0) {
+            if (productItemModelList == null || productItemModelList.size() == 0) {
                 Product_Gallery_Fragment.empty_layout.setVisibility(View.VISIBLE);
             } else {
                 Product_Gallery_Fragment.empty_layout.setVisibility(View.GONE);

@@ -7,12 +7,15 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
@@ -28,6 +31,7 @@ public class BubbleDialog extends AppCompatActivity {
     private Product_Gallery_Fragment productGalleryFragment;
     private FrameLayout mainFrame;
     private Button btnShare;
+    private EditText edtSearch;
 
     private class KillListener extends BroadcastReceiver {
 
@@ -55,6 +59,7 @@ public class BubbleDialog extends AppCompatActivity {
         int screenHeight = (int) (metrics.heightPixels * 0.80);
         mainFrame = (FrameLayout) findViewById(R.id.mainFrame);
         btnShare = (Button) findViewById(R.id.btnShare);
+        edtSearch = (EditText) findViewById(R.id.edtSearch);
         killListener = new KillListener();
         getWindow().setGravity(Gravity.BOTTOM);
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, screenHeight);
@@ -72,12 +77,31 @@ public class BubbleDialog extends AppCompatActivity {
 //
 //                }
                 String selectedProducts = productGalleryFragment.getSelectedProducts();
-                if(!TextUtils.isEmpty(selectedProducts)){
+                if (!TextUtils.isEmpty(selectedProducts)) {
                     navigateToWhatsApp(selectedProducts);
-                }else{
+                } else {
 
                 }
 
+            }
+        });
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (productGalleryFragment != null) {
+                    productGalleryFragment.filterProducts(s.toString());
+                }
             }
         });
     }
