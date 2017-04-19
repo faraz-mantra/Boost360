@@ -1,9 +1,18 @@
 package com.nowfloats.NavigationDrawer;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,14 +25,19 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.AlertCountEvent;
 import com.nowfloats.NavigationDrawer.model.RiaCardModel;
 import com.nowfloats.NotificationCenter.NotificationFragment;
+import com.nowfloats.bubble.BubblesService;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+
+import static com.nowfloats.accessbility.BubbleDialog.ACTION_KILL_DIALOG;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -39,11 +53,15 @@ public class Home_Fragment_Tab extends Fragment {
     public Activity activity;
     LinearLayout progressLayout;
     private MaterialDialog materialDialog;
+    LinearLayout bubbleOverlay;
+    SharedPreferences pref;
+    private IntentFilter clickIntentFilters = new IntentFilter(ACTION_KILL_DIALOG);
 
     @Override
     public void onResume() {
         super.onResume();
         bus.register(this);
+        checkForBubble();
         if (viewPager!=null){
             if(Constants.createMsg){
                 viewPager.setCurrentItem(0);
@@ -78,6 +96,7 @@ public class Home_Fragment_Tab extends Fragment {
         }).start();*/
     }
 
+
     @Subscribe
     public void getalertCountEvent(AlertCountEvent ev){
         if (alertCountVal!=null && alertCountVal.trim().length()>0 && !alertCountVal.equals("0") && alertCountTv!=null){
@@ -102,12 +121,15 @@ public class Home_Fragment_Tab extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if(!isAdded()) return;
+        pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         NotificationFragment.getAlertCount(session, Constants.alertInterface, bus);
         progressLayout = (LinearLayout)view.findViewById(R.id.progress_layout);
         progressLayout.setVisibility(View.VISIBLE);
         tabs = (SlidingTabLayout) view.findViewById(R.id.tabs);
         viewPager = (ViewPager) view.findViewById(R.id.homeTabViewpager);
         alertCountTv = (TextView)view.findViewById(R.id.alert_count_textview);
+        bubbleOverlay = (LinearLayout) view.findViewById(R.id.floating_bubble_overlay);
         alertCountTv.setVisibility(View.GONE);
         viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -223,4 +245,76 @@ public class Home_Fragment_Tab extends Fragment {
             }
         }
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        if(getActivity()==null) return;
+
+        getActivity().stopService(new Intent(getActivity(),BubblesService.class));
+        getActivity().unregisterReceiver(clickReceiver);
+    }
+    private  void showBubble(){
+        Calendar calendar = Calendar.getInstance();
+        long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME,-1);
+        long newTime = calendar.getTimeInMillis();
+        long diff = 3*24*60*60*1000;
+        Log.v("ggg",oldTime+"");
+        //Log.v("ggg",String.valueOf(diff)+" "+String.valueOf(newTime-oldTime));
+        if(oldTime != -1 && ((newTime-oldTime) < diff)){
+            return;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(getActivity())) {
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getActivity().getPackageName()));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }else {
+            if(!pref.getBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK,false)) {
+                addOverlay();
+                pref.edit().putBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK,true).apply();
+            }
+
+            int px = Methods.dpToPx(80,getActivity());
+            Intent intent = new Intent(getActivity(), BubblesService.class);
+            intent.putExtra("bubble_pos",px);
+            intent.putExtra(Key_Preferences.DIALOG_FROM, BubblesService.FROM.HOME_ACTIVITY);
+            activity.startService(intent);
+        }
+    }
+    private void checkForBubble(){
+        if(getActivity() ==null) return;
+        if(!Methods.isAccessibilitySettingsOn(getActivity())) {
+            showBubble();
+        }else if(pref!=null){
+            pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME,Calendar.getInstance().getTimeInMillis()).apply();
+        }
+    }
+    private void addOverlay(){
+        final View view = LayoutInflater.from(getActivity()).inflate(R.layout.bubble_pointing_sign, bubbleOverlay);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bubbleOverlay.removeAllViews();
+            }
+        });
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getActivity().registerReceiver(clickReceiver,clickIntentFilters);
+    }
+
+    BroadcastReceiver clickReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.v("ggg","clicked");
+            bubbleOverlay.removeAllViews();
+        }
+
+    };
+
 }

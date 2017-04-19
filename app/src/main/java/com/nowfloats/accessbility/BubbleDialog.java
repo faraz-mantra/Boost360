@@ -8,17 +8,12 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.Gravity;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
-import com.nowfloats.util.Key_Preferences;
 import com.thinksity.R;
 
 
@@ -26,15 +21,12 @@ import com.thinksity.R;
  * Created by NowFloats on 4/12/2017.
  */
 
-public class BubbleDialog extends AppCompatActivity implements ProductItemClickCallback {
+public class BubbleDialog extends AppCompatActivity {
     public static final String ACTION_KILL_DIALOG = "nowfloats.bubblebutton.bubble.ACTION_KILL_DIALOG";
 
     private Product_Gallery_Fragment productGalleryFragment;
     private FrameLayout mainFrame;
     private Button btnShare;
-    String className;
-    SparseArray<String> sharedProductUrls = new SparseArray<>();
-
 
     private class KillListener extends BroadcastReceiver {
 
@@ -62,10 +54,6 @@ public class BubbleDialog extends AppCompatActivity implements ProductItemClickC
         int screenHeight = (int) (metrics.heightPixels * 0.80);
         mainFrame = (FrameLayout) findViewById(R.id.mainFrame);
         btnShare = (Button) findViewById(R.id.btnShare);
-        className = getIntent().getStringExtra(Key_Preferences.WHATSAPP_CLASS);
-        if(DataAccessbilityService.CLASS_NAME_WHATSAPP_CONVERSATION.equalsIgnoreCase(className)){
-            btnShare.setText("Copy Products");
-        }
         killListener = new KillListener();
         getWindow().setGravity(Gravity.BOTTOM);
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, screenHeight);
@@ -73,28 +61,7 @@ public class BubbleDialog extends AppCompatActivity implements ProductItemClickC
     }
 
     private void bindControls() {
-        btnShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String urls = arrayToStringUrl();
-                if(urls.length() == 0){
-                    Toast.makeText(BubbleDialog.this, "Please select at least one product", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                Log.v("ggg",urls);
-                if(DataAccessbilityService.CLASS_NAME_WHATSAPP_HOMEACTIVITY.equalsIgnoreCase(className)){
-                    Intent intent  = new Intent(Intent.ACTION_SEND);
-                    intent.setType("text/plain");
-                    intent.setPackage(DataAccessbilityService.PK_NAME_WHATSAAPP);
-                    intent.putExtra(Intent.EXTRA_TEXT,urls);
-                    startActivity(Intent.createChooser(intent,"Share with:"));
-                }else{
-                    copyToClipboard(urls);
-                }
 
-                finish();
-            }
-        });
     }
 
     private Product_Gallery_Fragment product_gallery_fragment;
@@ -153,25 +120,4 @@ public class BubbleDialog extends AppCompatActivity implements ProductItemClickC
         super.onDestroy();
     }
 
-    String arrayToStringUrl(){
-        int size = sharedProductUrls.size();
-        StringBuilder builder = new StringBuilder();
-        for(int i = 0; i<size ;i++){
-            builder.append(sharedProductUrls.valueAt(i));
-            builder.append("\n");
-        }
-        sharedProductUrls.clear();
-        return builder.toString();
-    }
-    @Override
-    public void addItemUrl(int index,String url) {
-        sharedProductUrls.put(index,url);
-        Log.v("ggg","add "+index+" "+url);
-    }
-
-    @Override
-    public void deleteItemUrl(int index) {
-        sharedProductUrls.delete(index);
-        Log.v("ggg","delete "+index);
-    }
 }

@@ -68,6 +68,7 @@ public class MixPanelController {
 	public static void identify(String id, JSONObject param,String fpid) {
 		Log.v("mixpanel", id);
 		try {
+			if(mixPanel == null ) return;
 			mixPanel.identify(id);
 			people = mixPanel.getPeople();
 			people.identify(id);
@@ -107,7 +108,8 @@ public class MixPanelController {
 
 	public static void setProperties(String plan, String status) {
 		try {
-			mixPanel.getPeople().set(plan, status);
+			if(mixPanel!=null)
+				mixPanel.getPeople().set(plan, status);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

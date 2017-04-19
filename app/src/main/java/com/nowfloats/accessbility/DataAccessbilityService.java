@@ -9,13 +9,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
 import com.nowfloats.bubble.BubblesService;
-import com.nowfloats.util.Key_Preferences;
 
 
 /**
@@ -38,12 +35,20 @@ public class DataAccessbilityService extends AccessibilityService {
     @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
+        showWhatsAppDialog();
         AccessibilityServiceInfo info = new AccessibilityServiceInfo();
         info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK;
         info.notificationTimeout = 100;
         info.flags = 91;
         info.feedbackType = 16;
         setServiceInfo(info);
+    }
+
+    private void showWhatsAppDialog() {
+        Intent intent = new Intent(this,WhatsAppDialog.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
+        //stopService(new Intent(DataAccessbilityService.this, BubblesService.class));
     }
 
     @Override
@@ -60,12 +65,6 @@ public class DataAccessbilityService extends AccessibilityService {
                 } else if(!isMyServiceRunning(BubblesService.class)){
                     Intent intent = new Intent(DataAccessbilityService.this, BubblesService.class);
                     startService(intent);
-                }else if (event.getClassName().toString().equalsIgnoreCase(CLASS_NAME_WHATSAPP_HOMEACTIVITY)||
-                        event.getClassName().toString().equalsIgnoreCase(CLASS_NAME_WHATSAPP_CONVERSATION)){
-                    Log.v("ggg",event.getClassName().toString());
-                    Intent intent  = new Intent(Key_Preferences.INTENT_BUBBLE_CLASS);
-                    intent.putExtra(Key_Preferences.WHATSAPP_CLASS,event.getClassName().toString());
-                    LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
                 }
             } else {
                 stopService(new Intent(DataAccessbilityService.this, BubblesService.class));
