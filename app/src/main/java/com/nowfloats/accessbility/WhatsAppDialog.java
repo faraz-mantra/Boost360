@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nowfloats.bubble.BubblesService;
 import com.thinksity.R;
@@ -32,8 +33,13 @@ public class WhatsAppDialog extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 stopService(new Intent(WhatsAppDialog.this, BubblesService.class));
-                Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.whatsapp");
-                startActivity(launchIntent);
+                try {
+                    Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.whatsapp");
+                    startActivity(launchIntent);
+                }catch(Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(WhatsAppDialog.this, "Problem to open whatsApp", Toast.LENGTH_SHORT).show();
+                }
                 finish();
             }
         });

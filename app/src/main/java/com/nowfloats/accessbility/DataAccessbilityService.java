@@ -33,14 +33,18 @@ public class DataAccessbilityService extends AccessibilityService {
     @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
-        showWhatsAppDialog();
+        pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        if(pref.getBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG,true)) {
+            showWhatsAppDialog();
+            pref.edit().putBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG,false).apply();
+        }
         AccessibilityServiceInfo info = new AccessibilityServiceInfo();
         info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK;
         info.notificationTimeout = 100;
         info.flags = 91;
         info.feedbackType = 16;
         setServiceInfo(info);
-        pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+
     }
 
     private void showWhatsAppDialog() {
@@ -88,5 +92,11 @@ public class DataAccessbilityService extends AccessibilityService {
     @Override
     public void onInterrupt() {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        pref.edit().putBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG,true).apply();
     }
 }

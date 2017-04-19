@@ -30,7 +30,6 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
 import com.nowfloats.Product_Gallery.Service.ProductAPIService;
-import com.nowfloats.accessbility.ProductItemClickCallback;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -42,7 +41,6 @@ import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
 import java.io.ByteArrayOutputStream;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Currency;
@@ -412,7 +410,8 @@ public class Product_Gallery_Fragment extends Fragment {
                     } else {
                         selectedProducts = selectedProducts + "https://" + session.getFpTag() + ".nowfloats.com/";
                     }
-                    selectedProducts = selectedProducts + URLEncoder.encode(productListModel.Name, "UTF-8") + "/p" + productListModel.ProductIndex;
+//                    selectedProducts = selectedProducts + URLEncoder.encode(productListModel.Name, "UTF-8").replace("+","") + "/p" + productListModel.ProductIndex;
+                    selectedProducts = selectedProducts + productListModel.Name.replaceAll("[^a-zA-Z0-9]+","-") + "/p" + productListModel.ProductIndex;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

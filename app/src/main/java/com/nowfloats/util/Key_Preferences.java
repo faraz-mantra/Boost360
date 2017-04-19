@@ -11,6 +11,7 @@ public class Key_Preferences {
     public static final String GET_EVENT_PACKAGE_NAME = "com.nowfloats.NavigationDrawer";
     public static final String SHOW_BUBBLE_TIME = "bubble_time";
     public static final String SHOW_BUBBLE_COACH_MARK = "bubble_coach_mark";
+    public static final String SHOW_WHATS_APP_DIALOG ="whatsapp_dialog" ;
     public static  String GET_FP_DETAILS_CITY = "GET_FP_DETAILS_CITY";
     public static  String GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG";
     public static  String GET_FP_DETAILS_ADDRESS ="GET_FP_DETAILS_ADDRESS" ;
