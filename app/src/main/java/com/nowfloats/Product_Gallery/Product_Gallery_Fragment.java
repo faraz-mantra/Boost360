@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.HashMap;
@@ -271,7 +273,7 @@ public class Product_Gallery_Fragment extends Fragment {
             //Log.d("Product Id", data.get(0)._id);
 
             productItemModelList = data;
-            adapter = new ProductGalleryAdapter(activity, currencyValue,from);
+            adapter = new ProductGalleryAdapter(activity, currencyValue, from);
             gridView.setAdapter(adapter);
             gridView.invalidateViews();
 
@@ -288,6 +290,28 @@ public class Product_Gallery_Fragment extends Fragment {
             }
             Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
         }
+    }
+
+    public String getSelectedProducts() {
+
+        String selectedProducts = "";
+        for (ProductListModel productListModel : productItemModelList) {
+            if (productListModel.isProductSelected) {
+
+                try {
+
+                    if (!TextUtils.isEmpty(session.getRootAliasURI())) {
+                        selectedProducts = selectedProducts + session.getRootAliasURI();
+                    } else {
+                        selectedProducts = selectedProducts + "https://" + session.getFpTag() + ".nowfloats.com/";
+                    }
+                    selectedProducts = selectedProducts + URLEncoder.encode(productListModel.Name, "UTF-8") + "/p" + productListModel.ProductIndex + "\n";
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return selectedProducts;
     }
 
     @Override

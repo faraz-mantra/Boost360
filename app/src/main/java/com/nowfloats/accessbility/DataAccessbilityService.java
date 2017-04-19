@@ -23,12 +23,7 @@ import com.nowfloats.bubble.BubblesService;
 public class DataAccessbilityService extends AccessibilityService {
 
 
-    public static final String PK_NAME_WHATSAAPP = "com.twitter.android";
-    public static final String PK_NAME_NOWFLOATS = "com.biz2.nowfloats";
-    public static final String PK_GOOGLE = "com.google";
-    public static final String PK_ANDROID = "com.android";
-    public static final String PK_BOOST = "com.biz2.nowfloats";
-
+    public static final String PK_NAME_WHATSAPP = "com.whatsapp";
 
     @Override
     protected void onServiceConnected() {
@@ -45,7 +40,7 @@ public class DataAccessbilityService extends AccessibilityService {
     public void onAccessibilityEvent(AccessibilityEvent event) {
 
         if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
-            if (event.getPackageName().toString().equalsIgnoreCase(PK_NAME_WHATSAAPP)
+            if (event.getPackageName().toString().equalsIgnoreCase(PK_NAME_WHATSAPP)
                     || (!TextUtils.isEmpty(event.getClassName()) &&
                     event.getClassName().toString().equalsIgnoreCase(BUBBLE_CLASS_NAME))) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {

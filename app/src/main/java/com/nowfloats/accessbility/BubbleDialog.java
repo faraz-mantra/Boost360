@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
+import com.nowfloats.bubble.BubblesService;
 import com.thinksity.R;
 
 
@@ -64,12 +66,15 @@ public class BubbleDialog extends AppCompatActivity {
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                copyToClipboard("");
+                String productList = productGalleryFragment.getSelectedProducts();
+                if (TextUtils.isEmpty(productList)) {
+
+                } else {
+                    navigateToWhatsApp(productList);
+                }
             }
         });
     }
-
-    private Product_Gallery_Fragment product_gallery_fragment;
 
     private void loadData() {
 
@@ -81,6 +86,15 @@ public class BubbleDialog extends AppCompatActivity {
         ft.replace(R.id.mainFrame, productGalleryFragment).
                 commit();
 
+    }
+
+    private void navigateToWhatsApp(String message) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+        sendIntent.setType("text/plain");
+        sendIntent.setPackage(DataAccessbilityService.PK_NAME_WHATSAPP);
+        startActivity(sendIntent);
     }
 
     private void copyToClipboard(String message) {

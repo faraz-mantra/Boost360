@@ -68,6 +68,7 @@ public class ProductListModel implements Parcelable {
         parcel.writeString(TotalQueries);
         parcel.writeString(CreatedOn);
         parcel.writeString(UpdatedOn);
+        parcel.writeString(ProductIndex);
     }
 
     public ProductListModel(Parcel in) {
@@ -96,6 +97,7 @@ public class ProductListModel implements Parcelable {
         this.TotalQueries = in.readString();
         this.CreatedOn = in.readString();
         this.UpdatedOn = in.readString();
+        this.ProductIndex = in.readString();
     }
 
     public static final Parcelable.Creator<ProductListModel> CREATOR = new Parcelable.Creator<ProductListModel>() {

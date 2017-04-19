@@ -289,6 +289,9 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public String getFpTag(){
         return pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null);
     }
+    public String getRootAliasURI(){
+        return pref.getString(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI, null);
+    }
 
     public boolean getShareWebsite(){
         return pref.getBoolean("shareWebsite", false);
