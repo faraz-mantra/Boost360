@@ -92,7 +92,7 @@ public class ProductGalleryAdapter extends BaseAdapter {
             final ProductListModel productItemModel = (ProductListModel) getItem(position);
             vi.setTag(R.string.key_details, productItemModel);
             viewHolder.Product_Name.setText(productItemModel.Name);
-            ImageView imageView = viewHolder.ProductImageView;
+            final ImageView imageView = viewHolder.ProductImageView;
             Picasso picasso = Picasso.with(activity);
             String image_url = productItemModel.TileImageUri;
             if (image_url != null && image_url.length() > 0 && !image_url.equals("null")) {
@@ -103,7 +103,6 @@ public class ProductGalleryAdapter extends BaseAdapter {
             } else {
                 picasso.load(R.drawable.default_product_image).into(imageView);
             }
-
             String originalPrice = productItemModel.Price;
             String disc = productItemModel.DiscountAmount;
             if (disc != null && disc.trim().length() > 0
@@ -140,6 +139,7 @@ public class ProductGalleryAdapter extends BaseAdapter {
         }
         return vi;
     }
+
 
     public void setOverlay(View v, int opac, int width, int height) {
         int opacity = opac; // from 0 to 255

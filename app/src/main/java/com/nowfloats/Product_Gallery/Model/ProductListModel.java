@@ -1,5 +1,6 @@
 package com.nowfloats.Product_Gallery.Model;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -33,6 +34,7 @@ public class ProductListModel implements Parcelable {
     public String TotalQueries;
     public String CreatedOn;
     public String ProductIndex;
+    public Uri picimageURI =null;
     public String UpdatedOn;
     public boolean isProductSelected;
 

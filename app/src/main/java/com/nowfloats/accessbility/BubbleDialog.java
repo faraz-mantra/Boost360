@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
-import com.nowfloats.bubble.BubblesService;
 import com.thinksity.R;
 
 
@@ -66,12 +65,19 @@ public class BubbleDialog extends AppCompatActivity {
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String productList = productGalleryFragment.getSelectedProducts();
-                if (TextUtils.isEmpty(productList)) {
+//                ArrayList<Uri> arrUri = productGalleryFragment.getSelectedProducts();
+//                if (arrUri != null && arrUri.size() > 0) {
+//                    navigateToWhatsApp(arrUri);
+//                } else {
+//
+//                }
+                String selectedProducts = productGalleryFragment.getSelectedProducts();
+                if(!TextUtils.isEmpty(selectedProducts)){
+                    navigateToWhatsApp(selectedProducts);
+                }else{
 
-                } else {
-                    navigateToWhatsApp(productList);
                 }
+
             }
         });
     }
@@ -88,12 +94,24 @@ public class BubbleDialog extends AppCompatActivity {
 
     }
 
+//    private void navigateToWhatsApp(ArrayList<Uri> localArrayList) {
+//        Intent sendIntent = new Intent();
+//        sendIntent.setAction(Intent.ACTION_SEND);
+//        sendIntent.setType("image/jpeg");
+//        sendIntent.setPackage(DataAccessbilityService.PK_NAME_WHATSAPP);
+//        sendIntent.putExtra(Intent.EXTRA_TEXT,"");
+//        sendIntent.putParcelableArrayListExtra("android.intent.extra.STREAM", localArrayList);
+//        sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//        startActivity(sendIntent);
+//    }
+
     private void navigateToWhatsApp(String message) {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, message);
         sendIntent.setType("text/plain");
         sendIntent.setPackage(DataAccessbilityService.PK_NAME_WHATSAPP);
+        sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(sendIntent);
     }
 

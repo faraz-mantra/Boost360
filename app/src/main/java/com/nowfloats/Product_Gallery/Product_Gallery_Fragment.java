@@ -3,7 +3,10 @@ package com.nowfloats.Product_Gallery;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -36,6 +39,7 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
+import java.io.ByteArrayOutputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Currency;
@@ -168,7 +172,7 @@ public class Product_Gallery_Fragment extends Fragment {
                     }
                     Methods.launchFromFragment(activity, view, intent);
                 } else {
-                    ProductListModel productItemModel = (ProductListModel) view.getTag(R.string.key_details);
+                    final ProductListModel productItemModel = (ProductListModel) view.getTag(R.string.key_details);
                     productItemModel.isProductSelected = !productItemModel.isProductSelected;
                     FrameLayout flMain = (FrameLayout) view.findViewById(R.id.flMain);
                     FrameLayout flOverlay = (FrameLayout) view.findViewById(R.id.flOverlay);
@@ -179,6 +183,27 @@ public class Product_Gallery_Fragment extends Fragment {
                     } else {
                         flOverlay.setVisibility(View.GONE);
                     }
+
+//                    if (productItemModel.picimageURI == null) {
+//                        Picasso.with(activity).load(productItemModel.TileImageUri).placeholder(R.drawable.default_product_image).into(new Target() {
+//                            @Override
+//                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+//                                Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+//                                if (productItemModel.picimageURI == null)
+//                                    productItemModel.picimageURI = getImageUri(mutableBitmap, productItemModel);
+//                            }
+//
+//                            @Override
+//                            public void onBitmapFailed(Drawable errorDrawable) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onPrepareLoad(Drawable placeHolderDrawable) {
+//
+//                            }
+//                        });
+//                    }
                 }
 
             }
@@ -225,6 +250,13 @@ public class Product_Gallery_Fragment extends Fragment {
         if (from == FROM.BUBBLE) {
             addProduct.setVisibility(View.GONE);
         }
+    }
+
+    public Uri getImageUri(Bitmap inImage, ProductListModel productItemModel) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(activity.getContentResolver(), inImage, productItemModel.Name, productItemModel.Description);
+        return Uri.parse(path);
     }
 
 
@@ -292,6 +324,17 @@ public class Product_Gallery_Fragment extends Fragment {
         }
     }
 
+//    public ArrayList<Uri> getSelectedProducts() {
+//
+//        ArrayList<Uri> arrayList = new ArrayList<Uri>();
+//        for (ProductListModel productListModel : productItemModelList) {
+//            if (productListModel.isProductSelected && productListModel.picimageURI != null) {
+//                arrayList.add(productListModel.picimageURI);
+//            }
+//        }
+//        return arrayList;
+//    }
+
     public String getSelectedProducts() {
 
         String selectedProducts = "";
@@ -305,14 +348,16 @@ public class Product_Gallery_Fragment extends Fragment {
                     } else {
                         selectedProducts = selectedProducts + "https://" + session.getFpTag() + ".nowfloats.com/";
                     }
-                    selectedProducts = selectedProducts + URLEncoder.encode(productListModel.Name, "UTF-8") + "/p" + productListModel.ProductIndex + "\n";
+                    selectedProducts = selectedProducts + URLEncoder.encode(productListModel.Name, "UTF-8") + "/p" + productListModel.ProductIndex;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                break;
             }
         }
         return selectedProducts;
     }
+
 
     @Override
     public void onResume() {
