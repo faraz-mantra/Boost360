@@ -33,7 +33,8 @@ public class TempDisplayDialog extends AppCompatActivity {
                 break;
         }
         startActivity(it);
-        overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
+//        overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
+        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
         finish();
     }
 }

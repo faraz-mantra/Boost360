@@ -5,6 +5,7 @@ import android.accessibilityservice.AccessibilityServiceInfo;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
@@ -13,6 +14,8 @@ import android.text.TextUtils;
 import android.view.accessibility.AccessibilityEvent;
 
 import com.nowfloats.bubble.BubblesService;
+import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
 
 
 /**
@@ -23,14 +26,9 @@ import com.nowfloats.bubble.BubblesService;
 public class DataAccessbilityService extends AccessibilityService {
 
 
-    public static final String PK_NAME_WHATSAAPP = "com.whatsapp";
-    public static final String PK_NAME_NOWFLOATS = "com.biz2.nowfloats";
-    public static final String PK_GOOGLE = "com.google";
-    public static final String PK_ANDROID = "com.android";
-    public static final String PK_BOOST = "com.biz2.nowfloats";
-    public static final String CLASS_NAME_WHATSAPP_CONVERSATION = "com.whatsapp.Conversation";
-    public static final String CLASS_NAME_WHATSAPP_HOMEACTIVITY = "com.whatsapp.HomeActivity";
-
+    public static final String PK_NAME_WHATSAPP = "com.whatsapp";
+    //    public static final String PK_NAME_WHATSAPP = "com.twitter.android";
+    private SharedPreferences pref;
 
     @Override
     protected void onServiceConnected() {
@@ -42,6 +40,7 @@ public class DataAccessbilityService extends AccessibilityService {
         info.flags = 91;
         info.feedbackType = 16;
         setServiceInfo(info);
+        pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
     }
 
     private void showWhatsAppDialog() {
@@ -55,14 +54,16 @@ public class DataAccessbilityService extends AccessibilityService {
     public void onAccessibilityEvent(AccessibilityEvent event) {
 
         if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
-            if (event.getPackageName().toString().equalsIgnoreCase(PK_NAME_WHATSAAPP)
+            if (event.getPackageName().toString().equalsIgnoreCase(PK_NAME_WHATSAPP)
                     || (!TextUtils.isEmpty(event.getClassName()) &&
                     event.getClassName().toString().equalsIgnoreCase(BUBBLE_CLASS_NAME))) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
                     Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
-                } else if(!isMyServiceRunning(BubblesService.class)){
+                    return;
+                } else if (!isMyServiceRunning(BubblesService.class) &&
+                        !TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null))) {
                     Intent intent = new Intent(DataAccessbilityService.this, BubblesService.class);
                     startService(intent);
                 }
@@ -88,5 +89,4 @@ public class DataAccessbilityService extends AccessibilityService {
     public void onInterrupt() {
 
     }
-
 }

@@ -3,8 +3,12 @@ package com.nowfloats.Product_Gallery;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -36,7 +41,10 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
+import java.io.ByteArrayOutputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Currency;
 import java.util.HashMap;
 import java.util.Locale;
@@ -48,7 +56,7 @@ public class Product_Gallery_Fragment extends Fragment {
     public static Bus bus;
     public static LinearLayout empty_layout, progressLayout;
     GridView gridView;
-    public static ProductGalleryAdapter adapter;
+    public ProductGalleryAdapter adapter;
     public static ArrayList<ProductListModel> productItemModelList;
     private Activity activity;
     UserSessionManager session;
@@ -59,6 +67,7 @@ public class Product_Gallery_Fragment extends Fragment {
     private FROM from = FROM.DEFAULT;
     ;
     public static final String KEY_FROM = "KEY_FROM";
+    private boolean isAnyProductSelected = false;
 
     public enum FROM {
         BUBBLE,
@@ -167,19 +176,45 @@ public class Product_Gallery_Fragment extends Fragment {
                     }
                     Methods.launchFromFragment(activity, view, intent);
                 } else {
-                    ProductListModel productItemModel = (ProductListModel) view.getTag(R.string.key_details);
-                    productItemModel.isProductSelected = !productItemModel.isProductSelected;
-                    FrameLayout flMain = (FrameLayout) view.findViewById(R.id.flMain);
-                    FrameLayout flOverlay = (FrameLayout) view.findViewById(R.id.flOverlay);
-                    View vwOverlay = view.findViewById(R.id.vwOverlay);
-                    if (productItemModel.isProductSelected) {
-                        ((ProductItemClickCallback)getContext()).addItemUrl(position, productUrl(position));
-                        flOverlay.setVisibility(View.VISIBLE);
-                        setOverlay(vwOverlay, 200, flMain.getWidth(), flMain.getHeight());
+
+                    final ProductListModel productItemModel = (ProductListModel) view.getTag(R.string.key_details);
+                    if (isAnyProductSelected && !productItemModel.isProductSelected) {
+                        Toast.makeText(activity, "You can select only one product", Toast.LENGTH_LONG).show();
                     } else {
-                        flOverlay.setVisibility(View.GONE);
-                        ((ProductItemClickCallback)getContext()).deleteItemUrl(position);
+                        productItemModel.isProductSelected = !productItemModel.isProductSelected;
+                        FrameLayout flMain = (FrameLayout) view.findViewById(R.id.flMain);
+                        FrameLayout flOverlay = (FrameLayout) view.findViewById(R.id.flOverlay);
+                        View vwOverlay = view.findViewById(R.id.vwOverlay);
+                        if (productItemModel.isProductSelected) {
+                            flOverlay.setVisibility(View.VISIBLE);
+                            setOverlay(vwOverlay, 200, flMain.getWidth(), flMain.getHeight());
+                            isAnyProductSelected = true;
+                        } else {
+                            isAnyProductSelected = false;
+                            flOverlay.setVisibility(View.GONE);
+                        }
                     }
+
+//                    if (productItemModel.picimageURI == null) {
+//                        Picasso.with(activity).load(productItemModel.TileImageUri).placeholder(R.drawable.default_product_image).into(new Target() {
+//                            @Override
+//                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+//                                Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+//                                if (productItemModel.picimageURI == null)
+//                                    productItemModel.picimageURI = getImageUri(mutableBitmap, productItemModel);
+//                            }
+//
+//                            @Override
+//                            public void onBitmapFailed(Drawable errorDrawable) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onPrepareLoad(Drawable placeHolderDrawable) {
+//
+//                            }
+//                        });
+//                    }
                 }
 
             }
@@ -228,9 +263,11 @@ public class Product_Gallery_Fragment extends Fragment {
         }
     }
 
-    private String productUrl(int position) {
-        ProductListModel model = productItemModelList.get(position);
-        return "https://"+model.FPTag+".nowfloats.com/"+model.Name+"/p"+model.ProductIndex;
+    public Uri getImageUri(Bitmap inImage, ProductListModel productItemModel) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(activity.getContentResolver(), inImage, productItemModel.Name, productItemModel.Description);
+        return Uri.parse(path);
     }
 
 
@@ -263,13 +300,65 @@ public class Product_Gallery_Fragment extends Fragment {
                     productItemModelList.add(event.data.get(i));
                     //addPos++;
                 }
-                adapter.notifyDataSetChanged();
+                adapter.refreshDetails(productItemModelList);
             }
         } catch (Exception e) {
             e.printStackTrace();
             System.gc();
         }
     }
+
+    private static final String PRODUCT_SEARCH = "PRODUCT_SEARCH";
+
+    public void filterProducts(final String searchText) {
+
+        if (productItemModelList != null && productItemModelList.size() > 0) {
+
+            synchronized (PRODUCT_SEARCH) {
+
+                try {
+                    ArrayList<ProductListModel> arrModelTemp = null;
+                    if (TextUtils.isEmpty(searchText)) {
+                        arrModelTemp = productItemModelList;
+                    } else {
+                        Predicate<ProductListModel> searchItem = new Predicate<ProductListModel>() {
+                            public boolean apply(ProductListModel productListModel) {
+                                return (!TextUtils.isEmpty(productListModel.Description)
+                                        && productListModel.Description.toLowerCase().contains(searchText.toLowerCase()))
+                                        || (!TextUtils.isEmpty(productListModel.Name)
+                                        && productListModel.Name.toLowerCase().contains(searchText.toLowerCase()));
+                            }
+                        };
+                        arrModelTemp = (ArrayList<ProductListModel>)
+                                filter(productItemModelList, searchItem);
+                    }
+                    adapter.refreshDetails(arrModelTemp);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+    public interface Predicate<T> {
+        boolean apply(T type);
+    }
+
+    public static <T> Collection<T> filter(Collection<T> col, Predicate<T> predicate) {
+
+        Collection<T> result = new ArrayList<T>();
+        if (col != null) {
+            for (T element : col) {
+                if (predicate.apply(element)) {
+                    result.add(element);
+                }
+            }
+        }
+        return result;
+    }
+
 
     @Subscribe
     public void getProductList(ArrayList<ProductListModel> data) {
@@ -279,9 +368,10 @@ public class Product_Gallery_Fragment extends Fragment {
             //Log.d("Product Id", data.get(0)._id);
 
             productItemModelList = data;
-            adapter = new ProductGalleryAdapter(activity, currencyValue,from);
+            adapter = new ProductGalleryAdapter(activity, currencyValue, from);
             gridView.setAdapter(adapter);
             gridView.invalidateViews();
+            adapter.refreshDetails(productItemModelList);
 
             if (productItemModelList.size() == 0) {
                 empty_layout.setVisibility(View.VISIBLE);
@@ -289,7 +379,7 @@ public class Product_Gallery_Fragment extends Fragment {
                 empty_layout.setVisibility(View.GONE);
             }
         } else {
-            if (Product_Gallery_Fragment.productItemModelList.size() == 0) {
+            if (productItemModelList == null || productItemModelList.size() == 0) {
                 Product_Gallery_Fragment.empty_layout.setVisibility(View.VISIBLE);
             } else {
                 Product_Gallery_Fragment.empty_layout.setVisibility(View.GONE);
@@ -297,6 +387,41 @@ public class Product_Gallery_Fragment extends Fragment {
             Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
         }
     }
+
+//    public ArrayList<Uri> getSelectedProducts() {
+//
+//        ArrayList<Uri> arrayList = new ArrayList<Uri>();
+//        for (ProductListModel productListModel : productItemModelList) {
+//            if (productListModel.isProductSelected && productListModel.picimageURI != null) {
+//                arrayList.add(productListModel.picimageURI);
+//            }
+//        }
+//        return arrayList;
+//    }
+
+    public String getSelectedProducts() {
+
+        String selectedProducts = "";
+        for (ProductListModel productListModel : productItemModelList) {
+            if (productListModel.isProductSelected) {
+
+                try {
+
+                    if (!TextUtils.isEmpty(session.getRootAliasURI())) {
+                        selectedProducts = selectedProducts + session.getRootAliasURI();
+                    } else {
+                        selectedProducts = selectedProducts + "https://" + session.getFpTag() + ".nowfloats.com/";
+                    }
+                    selectedProducts = selectedProducts + URLEncoder.encode(productListModel.Name, "UTF-8") + "/p" + productListModel.ProductIndex;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+        }
+        return selectedProducts;
+    }
+
 
     @Override
     public void onResume() {

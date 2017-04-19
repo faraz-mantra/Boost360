@@ -46,5 +46,14 @@
         sha1="731e05de30cfeb1f41d417f886277f9597fe0f36">
         <dex dex="C:\NFSource\nowfloats\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\2\signpost-commonshttp4-1.2.1.2_fe093e7155457137e6fea94078ddfa307a41d1d5\classes.dex" />
     </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Admin\.android\build-cache\cfa34020a030676660777a55858c33e5a7a472b8\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="918e3e9514d90e54421b674cf0c95044f4e155ad">
+        <dex dex="C:\NFSource\nowfloats\boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\classes_718229be4e206dd9c22e2b4d8f72963eec00a16f\classes.dex" />
+    </item>
 
 </items>

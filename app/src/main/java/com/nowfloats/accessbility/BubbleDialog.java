@@ -7,12 +7,18 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.thinksity.R;
 
@@ -27,6 +33,7 @@ public class BubbleDialog extends AppCompatActivity {
     private Product_Gallery_Fragment productGalleryFragment;
     private FrameLayout mainFrame;
     private Button btnShare;
+    private MaterialSearchView searchView;
 
     private class KillListener extends BroadcastReceiver {
 
@@ -54,17 +61,54 @@ public class BubbleDialog extends AppCompatActivity {
         int screenHeight = (int) (metrics.heightPixels * 0.80);
         mainFrame = (FrameLayout) findViewById(R.id.mainFrame);
         btnShare = (Button) findViewById(R.id.btnShare);
+        searchView = (MaterialSearchView) findViewById(R.id.searchView);
         killListener = new KillListener();
         getWindow().setGravity(Gravity.BOTTOM);
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, screenHeight);
-
+        searchView.setVoiceSearch(false);
+        searchView.setEllipsize(true);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(getString(R.string.select_a_product_to_share));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
     }
 
     private void bindControls() {
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                ArrayList<Uri> arrUri = productGalleryFragment.getSelectedProducts();
+//                if (arrUri != null && arrUri.size() > 0) {
+//                    navigateToWhatsApp(arrUri);
+//                } else {
+//
+//                }
+                String selectedProducts = productGalleryFragment.getSelectedProducts();
+                if (!TextUtils.isEmpty(selectedProducts)) {
+                    navigateToWhatsApp(selectedProducts);
+                } else {
+
+                }
+
+            }
+        });
+
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                if (productGalleryFragment != null) {
+                    productGalleryFragment.filterProducts(s.toString());
+                }
+                return false;
+            }
+        });
 
     }
-
-    private Product_Gallery_Fragment product_gallery_fragment;
 
     private void loadData() {
 
@@ -78,15 +122,36 @@ public class BubbleDialog extends AppCompatActivity {
 
     }
 
+//    private void navigateToWhatsApp(ArrayList<Uri> localArrayList) {
+//        Intent sendIntent = new Intent();
+//        sendIntent.setAction(Intent.ACTION_SEND);
+//        sendIntent.setType("image/jpeg");
+//        sendIntent.setPackage(DataAccessbilityService.PK_NAME_WHATSAPP);
+//        sendIntent.putExtra(Intent.EXTRA_TEXT,"");
+//        sendIntent.putParcelableArrayListExtra("android.intent.extra.STREAM", localArrayList);
+//        sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//        startActivity(sendIntent);
+//    }
+
+    private void navigateToWhatsApp(String message) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+        sendIntent.setType("text/plain");
+        sendIntent.setPackage(DataAccessbilityService.PK_NAME_WHATSAPP);
+        sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivity(sendIntent);
+    }
+
     private void copyToClipboard(String message) {
 
         int sdk = android.os.Build.VERSION.SDK_INT;
         if (sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
             android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-            clipboard.setText(message);
+            clipboard.setText("text to clip");
         } else {
             android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-            android.content.ClipData clip = android.content.ClipData.newPlainText("text label", message);
+            android.content.ClipData clip = android.content.ClipData.newPlainText("text label", "text to clip");
             clipboard.setPrimaryClip(clip);
         }
     }
@@ -97,6 +162,15 @@ public class BubbleDialog extends AppCompatActivity {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(ACTION_KILL_DIALOG);
         registerReceiver(killListener, intentFilter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_bubble, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        searchView.setMenuItem(item);
+
+        return true;
     }
 
     @Override
@@ -111,6 +185,15 @@ public class BubbleDialog extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        if (searchView.isSearchOpen()) {
+            searchView.closeSearch();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
     }
@@ -119,5 +202,6 @@ public class BubbleDialog extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
 
 }

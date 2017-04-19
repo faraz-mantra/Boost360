@@ -375,16 +375,16 @@
         <item>ANALYTICS</item>
         <item>ALERTS</item>
     </string-array>
-<string-array name="themeIds">
-    <item>575bfec79bfed51e10df0e5d</item>
-    <item>57c3c1a65d64370d7cf4eb17</item>
-    <item>571f7f789bfed52c543d888d</item>
-</string-array>
+    <string-array name="themeIds">
+        <item>575bfec79bfed51e10df0e5d</item>
+        <item>57c3c1a65d64370d7cf4eb17</item>
+        <item>571f7f789bfed52c543d888d</item>
+    </string-array>
     <string-array name="themeNames">
-    <item>Bold and The Beautiful</item>
-    <item>Fresh Milk Light</item>
-    <item>The First Fox</item>
-</string-array>
+        <item>Bold and The Beautiful</item>
+        <item>Fresh Milk Light</item>
+        <item>The First Fox</item>
+    </string-array>
     <string-array name="quikr_widget">
         <item>automotive</item>
         <item>tourism</item>
@@ -588,6 +588,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="can_not_share_image_offline_mode">Can\'t Share image content in Offline Mode</string>
     <string name="no_app_to_share">No apps to share</string>
     <string name="share">Share</string>
+    <string name="share_to_your_customers">Share to your customers</string>
     <string name="post_update">Post an update</string>
     <string name="post_in_capital">POST</string>
     <string name="enter_message">Please enter a message</string>
@@ -767,6 +768,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="share_website">Share website</string>
     <string name="tell_world_about_your_business_on_facebook_twitter">Tell the world about your business share it on facebook and twitterTell the world about your business share it on facebook and twitterTell the world about your business share it on facebook and twitterTell the world about your business share it on facebook and twitterTell the world about your business share it on facebook and twitterTell the world about your business share it on facebook and twitter</string>
     <string name="search">Search</string>
+    <string name="select_a_product_to_share">Select a product to share</string>
     <string name="house_number_building_name">House number, Building Name</string>
     <string name="pincode">PinCode</string>
     <string name="select_state">Select State</string>
@@ -1039,13 +1041,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Fri</item>
         <item>Sat</item>
     </string-array>
-   <!-- <string name="quikr_list">
-        <ul>
-            <li>Coffee</li>
-            <li>Tea</li>
-            <li>Milk</li>
-        </ul>
-    </string>-->
+    <!-- <string name="quikr_list">
+         <ul>
+             <li>Coffee</li>
+             <li>Tea</li>
+             <li>Milk</li>
+         </ul>
+     </string>-->
     <string-array name="quikr_tip_points">
         <item> Be as detailed as possible in the description of the update. For example, if you are posting an update about a car, mention the brand, model and year. If you are posting an update about an apartment, mention whether it\'s for rent or sale, the area and the number of rooms (1 BHK, 2BHK etc)</item>
         <item>We recommend that you post the update along with a clear image</item>
@@ -1062,7 +1064,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>We recommend that you post the update along with a clear image</item>
         <item>To ensure an optimal experience for all users, you can post only 1 update to Quikr per day</item>
     </string-array>
-<string name = "message_quikr">These guidelines will help you post the right content to Quikr so that the ad doesn\'t get rejected. You can refer to them at any time in <b>Business Profile -> Social Sharing</b>.</string>
+    <string name="message_quikr">These guidelines will help you post the right content to Quikr so that the ad doesn\'t get rejected. You can refer to them at any time in <b>Business Profile -> Social Sharing</b>.</string>
     <string-array name="spinner_list_item_array">
         <item>IMPROVED</item>
         <item>MAINTAINED</item>

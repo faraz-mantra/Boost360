@@ -197,7 +197,7 @@ public class CardAdapter_v2 extends RecyclerView.Adapter<CardAdapter_v2.MyViewHo
                 }
 
                 image_count++;
-                Log.d("Messages : ", "msg  "+msg+" , Date : "+date+" , imageURI : "+imageUri);
+                Log.d("Messages : ", "msg  "+msg+" , Date : "+date+" , picimageURI : "+imageUri);
                 Log.d("Messages","**********************************************");
             }
         } catch (Exception e) {

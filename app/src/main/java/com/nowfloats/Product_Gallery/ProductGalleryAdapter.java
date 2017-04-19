@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 /**
  * Created by guru
@@ -40,6 +41,7 @@ public class ProductGalleryAdapter extends BaseAdapter {
     public String currencyType = "";
     private Resources mResources;
     private Product_Gallery_Fragment.FROM from;
+    private ArrayList<ProductListModel> productItemModelList;
 
     public ProductGalleryAdapter(Activity activity, String currency, Product_Gallery_Fragment.FROM from) {
         this.activity = activity;
@@ -50,12 +52,14 @@ public class ProductGalleryAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return Product_Gallery_Fragment.productItemModelList.size();
+        if (productItemModelList != null && productItemModelList.size() > 0)
+            return productItemModelList.size();
+        return 0;
     }
 
     @Override
     public Object getItem(int position) {
-        return Product_Gallery_Fragment.productItemModelList.get(position);
+        return productItemModelList.get(position);
     }
 
     @Override
@@ -92,7 +96,7 @@ public class ProductGalleryAdapter extends BaseAdapter {
             final ProductListModel productItemModel = (ProductListModel) getItem(position);
             vi.setTag(R.string.key_details, productItemModel);
             viewHolder.Product_Name.setText(productItemModel.Name);
-            ImageView imageView = viewHolder.ProductImageView;
+            final ImageView imageView = viewHolder.ProductImageView;
             Picasso picasso = Picasso.with(activity);
             String image_url = productItemModel.TileImageUri;
             if (image_url != null && image_url.length() > 0 && !image_url.equals("null")) {
@@ -103,7 +107,6 @@ public class ProductGalleryAdapter extends BaseAdapter {
             } else {
                 picasso.load(R.drawable.default_product_image).into(imageView);
             }
-
             String originalPrice = productItemModel.Price;
             String disc = productItemModel.DiscountAmount;
             if (disc != null && disc.trim().length() > 0
@@ -139,6 +142,11 @@ public class ProductGalleryAdapter extends BaseAdapter {
             exp.printStackTrace();
         }
         return vi;
+    }
+
+    public void refreshDetails(ArrayList<ProductListModel> productItemModelList) {
+        this.productItemModelList = productItemModelList;
+        notifyDataSetChanged();
     }
 
     public void setOverlay(View v, int opac, int width, int height) {
