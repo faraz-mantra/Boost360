@@ -608,6 +608,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="update_website_twice_week"><![CDATA[<font>Update your website </font>\" + \"<font color=\'#FFB900\'>twice a week. </font>\"+\"<font>Just press the plus button at the bottom and simply tell your customers about your products, services or offers </font>]]></string>
     <string name="people_are_searching_keep_your_updates"><![CDATA[<font>People around your business are searching for stuff you sell, so keep your updates </font>\" + \"<font color=\'#FFB900\'>relevant and fresh.</font>\" + \"<font>This will you lead to attract more customers and generate more revenue.</font>]]></string>
     <string name="got_it_next">Got it,Next</string>
+    <string name="key_selected">key_selected</string>
+    <string name="key_details">key_details</string>
     <string name="greate_thanks">Great, Thanks</string>
     <string name="get_free_com">Get a free .com!</string>
     <string name="you_are_eligible_to_free_domain">Voila! You are now eligible to get a free domain. Request a .com/.net of your choice and we will integrate it to your website within 24 hours.</string>

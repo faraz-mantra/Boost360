@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -19,17 +21,19 @@ import com.nowfloats.util.Key_Preferences;
 import com.thinksity.R;
 
 
-
 /**
  * Created by NowFloats on 4/12/2017.
  */
 
-public class BubbleDialog extends AppCompatActivity {
+public class BubbleDialog extends AppCompatActivity implements ProductItemClickCallback {
     public static final String ACTION_KILL_DIALOG = "nowfloats.bubblebutton.bubble.ACTION_KILL_DIALOG";
 
     private Product_Gallery_Fragment productGalleryFragment;
     private FrameLayout mainFrame;
     private Button btnShare;
+    String className;
+    SparseArray<String> sharedProductUrls = new SparseArray<>();
+
 
     private class KillListener extends BroadcastReceiver {
 
@@ -57,7 +61,7 @@ public class BubbleDialog extends AppCompatActivity {
         int screenHeight = (int) (metrics.heightPixels * 0.80);
         mainFrame = (FrameLayout) findViewById(R.id.mainFrame);
         btnShare = (Button) findViewById(R.id.btnShare);
-        String className = getIntent().getStringExtra(Key_Preferences.WHATSAPP_CLASS);
+        className = getIntent().getStringExtra(Key_Preferences.WHATSAPP_CLASS);
         if(DataAccessbilityService.CLASS_NAME_WHATSAPP_CONVERSATION.equalsIgnoreCase(className)){
             btnShare.setText("Copy");
         }
@@ -71,7 +75,18 @@ public class BubbleDialog extends AppCompatActivity {
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                copyToClipboard("");
+                String urls = arrayToStringUrl();
+                Log.v("ggg",urls);
+                if(DataAccessbilityService.CLASS_NAME_WHATSAPP_HOMEACTIVITY.equalsIgnoreCase(className)){
+                    Intent intent  = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    intent.setPackage(DataAccessbilityService.PK_NAME_WHATSAAPP);
+                    intent.putExtra(Intent.EXTRA_TEXT,urls);
+                    startActivity(Intent.createChooser(intent,"Share with:"));
+                }else{
+                    copyToClipboard(urls);
+                }
+
             }
         });
     }
@@ -95,10 +110,10 @@ public class BubbleDialog extends AppCompatActivity {
         int sdk = android.os.Build.VERSION.SDK_INT;
         if (sdk < android.os.Build.VERSION_CODES.HONEYCOMB) {
             android.text.ClipboardManager clipboard = (android.text.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-            clipboard.setText("text to clip");
+            clipboard.setText(message);
         } else {
             android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-            android.content.ClipData clip = android.content.ClipData.newPlainText("text label", "text to clip");
+            android.content.ClipData clip = android.content.ClipData.newPlainText("text label", message);
             clipboard.setPrimaryClip(clip);
         }
     }
@@ -132,5 +147,24 @@ public class BubbleDialog extends AppCompatActivity {
         super.onDestroy();
     }
 
+    String arrayToStringUrl(){
+        int size = sharedProductUrls.size();
+        StringBuilder builder = new StringBuilder();
+        for(int i = 0; i<size ;i++){
+            builder.append(sharedProductUrls.valueAt(i));
+        }
+        sharedProductUrls.clear();
+        return builder.toString();
+    }
+    @Override
+    public void addItemUrl(int index,String url) {
+        sharedProductUrls.put(index,url);
+        Log.v("ggg","add "+index+" "+url);
+    }
 
+    @Override
+    public void deleteItemUrl(int index) {
+        sharedProductUrls.delete(index);
+        Log.v("ggg","delete "+index);
+    }
 }

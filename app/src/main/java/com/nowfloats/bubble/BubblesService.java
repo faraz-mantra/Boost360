@@ -36,6 +36,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -111,7 +112,7 @@ public class BubblesService extends Service {
 
             @Override
             public void onBubbleClick(BubbleLayout bubble) {
-
+                Log.v("ggg","bubble clicked");
                 if (isDialogShowing()) {
                     killDialog();
                 } else {

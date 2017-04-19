@@ -11,6 +11,7 @@ import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
 import com.nowfloats.bubble.BubblesService;
@@ -61,6 +62,7 @@ public class DataAccessbilityService extends AccessibilityService {
                     startService(intent);
                 }else if (event.getClassName().toString().equalsIgnoreCase(CLASS_NAME_WHATSAPP_HOMEACTIVITY)||
                         event.getClassName().toString().equalsIgnoreCase(CLASS_NAME_WHATSAPP_CONVERSATION)){
+                    Log.v("ggg",event.getClassName().toString());
                     Intent intent  = new Intent(Key_Preferences.INTENT_BUBBLE_CLASS);
                     intent.putExtra(Key_Preferences.WHATSAPP_CLASS,event.getClassName().toString());
                     LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
