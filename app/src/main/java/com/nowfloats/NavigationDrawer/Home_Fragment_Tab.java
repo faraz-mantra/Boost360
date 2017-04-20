@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
@@ -43,6 +42,7 @@ import static com.nowfloats.accessbility.BubbleDialog.ACTION_KILL_DIALOG;
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
 public class Home_Fragment_Tab extends Fragment {
+    private static final int PERM_REQUEST_CODE_DRAW_OVERLAYS = 122;
     public static ViewPager viewPager = null;
     TabPagerAdapter tabPagerAdapter;
     SlidingTabLayout tabs;
@@ -61,7 +61,7 @@ public class Home_Fragment_Tab extends Fragment {
     public void onResume() {
         super.onResume();
         bus.register(this);
-        checkForBubble();
+
         if (viewPager!=null){
             if(Constants.createMsg){
                 viewPager.setCurrentItem(0);
@@ -256,6 +256,20 @@ public class Home_Fragment_Tab extends Fragment {
         getActivity().unregisterReceiver(clickReceiver);
     }
     private  void showBubble(){
+
+        if(!pref.getBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK,false)) {
+            addOverlay();
+            pref.edit().putBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK,true).apply();
+        }
+
+        int px = Methods.dpToPx(80,getActivity());
+        Intent intent = new Intent(getActivity(), BubblesService.class);
+        intent.putExtra(Key_Preferences.BUBBLE_POS,px);
+        intent.putExtra(Key_Preferences.DIALOG_FROM, BubblesService.FROM.HOME_ACTIVITY);
+        activity.startService(intent);
+
+    }
+    private void checkOverlay() {
         Calendar calendar = Calendar.getInstance();
         long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME,-1);
         long newTime = calendar.getTimeInMillis();
@@ -266,24 +280,49 @@ public class Home_Fragment_Tab extends Fragment {
             return;
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(getActivity())) {
-            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getActivity().getPackageName()));
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }else {
-            if(!pref.getBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK,false)) {
-                addOverlay();
-                pref.edit().putBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK,true).apply();
-            }
-
-            int px = Methods.dpToPx(80,getActivity());
-            Intent intent = new Intent(getActivity(), BubblesService.class);
-            intent.putExtra(Key_Preferences.BUBBLE_POS,px);
-            intent.putExtra(Key_Preferences.DIALOG_FROM, BubblesService.FROM.HOME_ACTIVITY);
-            activity.startService(intent);
+        if (android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity())) {
+            dialogForOverlayPath();
+        } else {
+            checkForAccessibility();
         }
     }
-    private void checkForBubble(){
+    private void dialogForOverlayPath(){
+        String positiveText = null,message=null;
+        positiveText = getString(R.string.open_setting);
+        message = getString(R.string.boost_overlay_marshmellow_message);
+        new MaterialDialog.Builder(getActivity())
+                .title(getString(R.string.boost_bubble))
+                .content(message)
+                .positiveColorRes(R.color.primary)
+                .positiveText(positiveText)
+                .callback(new MaterialDialog.ButtonCallback() {
+
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        super.onPositive(dialog);
+
+                        requestOverlayPermission();
+                        dialog.dismiss();
+                    }
+                }).show();
+    }
+
+    private void requestOverlayPermission(){
+        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getActivity().getPackageName()));
+        startActivityForResult(intent, PERM_REQUEST_CODE_DRAW_OVERLAYS);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PERM_REQUEST_CODE_DRAW_OVERLAYS) {
+            if (android.os.Build.VERSION.SDK_INT >= 23) {
+                if (getActivity()!= null && Settings.canDrawOverlays(getActivity())) {
+                    checkForAccessibility();
+                }
+            }
+        }
+    }
+    private void checkForAccessibility(){
         if(getActivity() ==null) return;
         if(!Methods.isAccessibilitySettingsOn(getActivity())) {
             showBubble();
@@ -305,6 +344,7 @@ public class Home_Fragment_Tab extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        checkOverlay();
         getActivity().registerReceiver(clickReceiver,clickIntentFilters);
     }
 

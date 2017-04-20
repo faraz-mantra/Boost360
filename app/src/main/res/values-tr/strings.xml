@@ -1197,6 +1197,7 @@
     <string name="bubble_in_app_second_message">You just have to grant us \"Accessibility\" permission and start sharing!</string>
     <string name="bubble_overlay_text">Now share your product on WhatsApp!</string>
     <string name="boost_overlay_permission">Boost Bubble</string>
+    <string name="open_setting">Open Settings</string>
 
 
     <string-array name="spinner_list_item_array">
