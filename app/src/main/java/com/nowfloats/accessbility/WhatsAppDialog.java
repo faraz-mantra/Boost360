@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nowfloats.bubble.BubblesService;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 /**
@@ -33,6 +34,7 @@ public class WhatsAppDialog extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 stopService(new Intent(WhatsAppDialog.this, BubblesService.class));
+                MixPanelController.track(MixPanelController.WHATS_APP_DIALOG_CLICKED,null);
                 try {
                     Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.whatsapp");
                     startActivity(launchIntent);

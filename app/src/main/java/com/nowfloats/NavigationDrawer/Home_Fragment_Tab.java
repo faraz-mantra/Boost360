@@ -43,6 +43,7 @@ import static com.nowfloats.accessbility.BubbleDialog.ACTION_KILL_DIALOG;
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
 public class Home_Fragment_Tab extends Fragment {
+    private static final int PERM_REQUEST_CODE_DRAW_OVERLAYS = 122;
     public static ViewPager viewPager = null;
     TabPagerAdapter tabPagerAdapter;
     SlidingTabLayout tabs;
@@ -254,6 +255,14 @@ public class Home_Fragment_Tab extends Fragment {
 
         getActivity().stopService(new Intent(getActivity(),BubblesService.class));
         getActivity().unregisterReceiver(clickReceiver);
+    }
+    public void permissionToDrawOverlays() {
+        if (android.os.Build.VERSION.SDK_INT >= 23) {   //Android M Or Over
+            if (!Settings.canDrawOverlays(getActivity())) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getActivity().getPackageName()));
+                startActivityForResult(intent, PERM_REQUEST_CODE_DRAW_OVERLAYS);
+            }
+        }
     }
     private  void showBubble(){
         Calendar calendar = Calendar.getInstance();

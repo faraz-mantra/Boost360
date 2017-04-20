@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -20,6 +21,7 @@ import android.widget.FrameLayout;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 
@@ -50,6 +52,7 @@ public class BubbleDialog extends AppCompatActivity {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_products);
+        MixPanelController.track(MixPanelController.BUBBLE_DIALOG,null);
         initialize();
         bindControls();
         loadData();
@@ -69,8 +72,8 @@ public class BubbleDialog extends AppCompatActivity {
         searchView.setEllipsize(true);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(getString(R.string.select_a_product_to_share));
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        setTitle(getString(R.string.select_a_product_to_share));
+        toolbar.setTitleTextColor(ContextCompat.getColor(this,R.color.white));
     }
 
     private void bindControls() {
@@ -102,7 +105,7 @@ public class BubbleDialog extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String s) {
                 if (productGalleryFragment != null) {
-                    productGalleryFragment.filterProducts(s.toString());
+                    productGalleryFragment.filterProducts(s);
                 }
                 return false;
             }
@@ -134,6 +137,7 @@ public class BubbleDialog extends AppCompatActivity {
 //    }
 
     private void navigateToWhatsApp(String message) {
+        MixPanelController.track(MixPanelController.BUBBLE_DIALOG_SHARE,null);
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, message);

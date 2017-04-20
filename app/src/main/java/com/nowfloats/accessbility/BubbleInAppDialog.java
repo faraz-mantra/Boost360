@@ -8,12 +8,12 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 /**
@@ -29,6 +29,7 @@ public class BubbleInAppDialog extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_in_app_bubble);
+        MixPanelController.track(MixPanelController.BUBBLE_IN_APP_DIALOG,null);
         initialize();
     }
 
@@ -41,8 +42,6 @@ public class BubbleInAppDialog extends AppCompatActivity {
     }
     private void initialize() {
 
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        int screenHeight = (int) (metrics.heightPixels * 0.60);
         killListener = new KillListener();
         getWindow().setGravity(Gravity.CENTER_VERTICAL);
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
@@ -52,6 +51,7 @@ public class BubbleInAppDialog extends AppCompatActivity {
         permissionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MixPanelController.track(MixPanelController.BUBBLE_IN_APP_DIALOG_CLICKED,null);
                 Intent i = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(i);

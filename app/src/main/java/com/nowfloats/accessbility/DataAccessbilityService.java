@@ -16,6 +16,7 @@ import android.view.accessibility.AccessibilityEvent;
 import com.nowfloats.bubble.BubblesService;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.MixPanelController;
 
 
 /**
@@ -48,6 +49,7 @@ public class DataAccessbilityService extends AccessibilityService {
     }
 
     private void showWhatsAppDialog() {
+        MixPanelController.track(MixPanelController.WHATS_APP_DIALOG,null);
         Intent intent = new Intent(this,WhatsAppDialog.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
@@ -65,7 +67,6 @@ public class DataAccessbilityService extends AccessibilityService {
                     Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
-                    return;
                 } else if (!isMyServiceRunning(BubblesService.class) &&
                         !TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null))) {
                     Intent intent = new Intent(DataAccessbilityService.this, BubblesService.class);

@@ -10,14 +10,6 @@
         <service android:name="nowfloats.bubblebutton.FloatingViewService"
             android:exported="true"/>
 
-        <service android:name=".ProductService"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
-            <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-            </intent-filter>
-            <meta-data android:name="android.accessibilityservice"
-                android:resource="@xml/accessibility_service"/>
-        </service>
         <service android:name=".bubble.BubblesService"/>
         <activity android:name=".activityDialogs.ProductSuggestions"
             android:launchMode="singleInstance"
@@ -27,7 +19,7 @@
             android:name=".bubble.BubbleDialog"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
-            android:theme="@style/Theme.custom"></activity>
+            android:theme="@style/Theme.custom"/>
     </application>
 
 </manifest>

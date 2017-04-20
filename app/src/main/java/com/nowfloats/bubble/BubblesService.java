@@ -45,6 +45,7 @@ import com.nowfloats.accessbility.BubbleDialog;
 import com.nowfloats.accessbility.TempDisplayDialog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -102,7 +103,6 @@ public class BubblesService extends Service {
     }
 
     public void addBubble(final int x, final int y) {
-
 
         final BubbleLayout bubbleView = new BubbleLayout(this);
         bubbleView.addView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.bubble_layout, null));
@@ -262,6 +262,7 @@ public class BubblesService extends Service {
     }
 
     public void removeBubble(BubbleLayout bubble) {
+        MixPanelController.track(MixPanelController.BUBBLE_CLOSED,null);
         pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, Calendar.getInstance().getTimeInMillis()).apply();
         stopSelf();
     }
