@@ -1127,6 +1127,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="accessibility_message">GO ahead &amp; share on WhatsApp</string>
     <string name="bubble_in_app_second_message">You just have to grant us \"Accessibility\" permission and start sharing!</string>
     <string name="bubble_overlay_text">Now share your product on WhatsApp!</string>
+    <string name="boost_overlay_marshmellow_message"></string>
+    <string name="boost_overlay_before_marshmellow_message"></string>
 
 
 </resources>

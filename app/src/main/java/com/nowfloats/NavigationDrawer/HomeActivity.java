@@ -1145,7 +1145,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         super.onActivityResult(requestCode, resultCode, data);
         if(CardAdapter_V3.pd != null)
         CardAdapter_V3.pd.dismiss();
-        CardAdapter_V3.pd.dismiss();
         BoostLog.d("","");
     }
 

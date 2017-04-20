@@ -43,7 +43,6 @@ import static com.nowfloats.accessbility.BubbleDialog.ACTION_KILL_DIALOG;
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
 public class Home_Fragment_Tab extends Fragment {
-    private static final int PERM_REQUEST_CODE_DRAW_OVERLAYS = 122;
     public static ViewPager viewPager = null;
     TabPagerAdapter tabPagerAdapter;
     SlidingTabLayout tabs;
@@ -256,14 +255,6 @@ public class Home_Fragment_Tab extends Fragment {
         getActivity().stopService(new Intent(getActivity(),BubblesService.class));
         getActivity().unregisterReceiver(clickReceiver);
     }
-    public void permissionToDrawOverlays() {
-        if (android.os.Build.VERSION.SDK_INT >= 23) {   //Android M Or Over
-            if (!Settings.canDrawOverlays(getActivity())) {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getActivity().getPackageName()));
-                startActivityForResult(intent, PERM_REQUEST_CODE_DRAW_OVERLAYS);
-            }
-        }
-    }
     private  void showBubble(){
         Calendar calendar = Calendar.getInstance();
         long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME,-1);
@@ -287,7 +278,7 @@ public class Home_Fragment_Tab extends Fragment {
 
             int px = Methods.dpToPx(80,getActivity());
             Intent intent = new Intent(getActivity(), BubblesService.class);
-            intent.putExtra("bubble_pos",px);
+            intent.putExtra(Key_Preferences.BUBBLE_POS,px);
             intent.putExtra(Key_Preferences.DIALOG_FROM, BubblesService.FROM.HOME_ACTIVITY);
             activity.startService(intent);
         }
