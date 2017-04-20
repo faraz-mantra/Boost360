@@ -1122,12 +1122,11 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="quikr_message">Good news! You can now publish your updates as product ads to Quikr. Please follow the guidelines mentioned below to ensure that your ad is successfully posted.</string>
     <string name="search_ranking">Search Ranking</string>
     <string name="spinner_title">Filter</string>
-    <string name="bubble_in_app_message">Hey,\nWe have made it easier for you to now share your products on whatsApp through this bubble.</string>
+    <string name="bubble_in_app_message">Hey,\nWe have made it easier for you to now share your products on WhatsApp through this bubble.</string>
     <string name="boost_bubble">Boost Bubble</string>
     <string name="accessibility_message">GO ahead &amp; share on WhatsApp</string>
-    <string name="bubble_in_app_second_message">You just have to grant us \"Accessibility\" permission and start sharing!</string>
+    <string name="bubble_in_app_second_message">You just have to grant us \"Accessibility\" permission and you are good to go.</string>
     <string name="bubble_overlay_text">Now share your product on WhatsApp!</string>
-    <string name="boost_overlay_marshmellow_message"></string>
     <string name="open_setting">Open Settings</string>
 
 

@@ -1,14 +1,18 @@
 package com.nowfloats.NavigationDrawer;
 
 import android.app.Activity;
+import android.app.AppOpsManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -16,10 +20,13 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.AlertCountEvent;
 import com.nowfloats.NavigationDrawer.model.RiaCardModel;
@@ -33,6 +40,7 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -56,6 +64,7 @@ public class Home_Fragment_Tab extends Fragment {
     LinearLayout bubbleOverlay;
     SharedPreferences pref;
     private IntentFilter clickIntentFilters = new IntentFilter(ACTION_KILL_DIALOG);
+    private MaterialDialog overLayDialog;
 
     @Override
     public void onResume() {
@@ -271,6 +280,51 @@ public class Home_Fragment_Tab extends Fragment {
     }
     private void checkOverlay() {
         Calendar calendar = Calendar.getInstance();
+        long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, -1);
+        long newTime = calendar.getTimeInMillis();
+        long diff = 3 * 24 * 60 * 60 * 1000;
+        Log.v("ggg", oldTime + "");
+//Log.v("ggg",String.valueOf(diff)+" "+String.valueOf(newTime-oldTime));
+        if (oldTime != -1 && ((newTime - oldTime) < diff)) {
+            return;
+        }
+
+        boolean checkAccessibility = true;
+
+        if (android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity())) {
+            checkAccessibility = false;
+            dialogForOverlayPath();
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            checkAccessibility = canDrawOverlaysUsingReflection(getActivity());
+            if (!checkAccessibility) {
+                dialogForOverlayPath();
+            }
+        }
+
+        if (checkAccessibility)
+            checkForAccessibility();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private boolean canDrawOverlaysUsingReflection(Context context) {
+
+        try {
+
+            AppOpsManager manager = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
+            Class clazz = AppOpsManager.class;
+            Method dispatchMethod = clazz.getMethod("checkOp", new Class[]{int.class, int.class, String.class});
+//AppOpsManager.OP_SYSTEM_ALERT_WINDOW = 24
+            int mode = (Integer) dispatchMethod.invoke(manager, new Object[]{24, Binder.getCallingUid(), context.getApplicationContext().getPackageName()});
+
+            return AppOpsManager.MODE_ALLOWED == mode;
+
+        } catch (Exception e) {
+            return false;
+        }
+
+    }
+    /*private void checkOverlay() {
+        Calendar calendar = Calendar.getInstance();
         long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME,-1);
         long newTime = calendar.getTimeInMillis();
         long diff = 3*24*60*60*1000;
@@ -285,16 +339,23 @@ public class Home_Fragment_Tab extends Fragment {
         } else {
             checkForAccessibility();
         }
-    }
+    }*/
     private void dialogForOverlayPath(){
-        String positiveText = null,message=null;
-        positiveText = getString(R.string.open_setting);
-        message = getString(R.string.boost_overlay_marshmellow_message);
-        new MaterialDialog.Builder(getActivity())
+
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_bubble_overlay_permission,null);
+        ImageView image = (ImageView) view.findViewById(R.id.gif_image);
+        try {
+            GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(image);
+            Glide.with(getActivity()).load(R.drawable.overlay_gif).into(target);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        if(overLayDialog == null){
+        overLayDialog = new MaterialDialog.Builder(getActivity())
                 .title(getString(R.string.boost_bubble))
-                .content(message)
+                .customView(view,false)
                 .positiveColorRes(R.color.primary)
-                .positiveText(positiveText)
+                .positiveText(getString(R.string.open_setting))
                 .callback(new MaterialDialog.ButtonCallback() {
 
                     @Override
@@ -305,6 +366,7 @@ public class Home_Fragment_Tab extends Fragment {
                         dialog.dismiss();
                     }
                 }).show();
+        }
     }
 
     private void requestOverlayPermission(){

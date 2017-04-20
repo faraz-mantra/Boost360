@@ -6,7 +6,6 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
@@ -53,7 +52,13 @@ public class DataAccessbilityService extends AccessibilityService {
         Intent intent = new Intent(this,WhatsAppDialog.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
-        //stopService(new Intent(DataAccessbilityService.this, BubblesService.class));
+    }
+
+    private void showOverlayDialog() {
+        MixPanelController.track(MixPanelController.WHATS_APP_DIALOG,null);
+        Intent intent = new Intent(this,OverlayDialog.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(intent);
     }
 
     @Override
@@ -64,9 +69,10 @@ public class DataAccessbilityService extends AccessibilityService {
                     || (!TextUtils.isEmpty(event.getClassName()) &&
                     event.getClassName().toString().equalsIgnoreCase(BUBBLE_CLASS_NAME))) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
-                    Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
+//                    Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    startActivity(intent);
+                    showOverlayDialog();
                 } else if (!isMyServiceRunning(BubblesService.class) &&
                         !TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null))) {
                     Intent intent = new Intent(DataAccessbilityService.this, BubblesService.class);

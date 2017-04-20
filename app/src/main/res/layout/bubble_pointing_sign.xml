@@ -22,7 +22,7 @@
             android:layout_marginEnd="10dp"
             android:padding="15dp"
             android:textColor="#000"
-            android:textSize="18dp"
+            android:textSize="14dp"
             android:text="@string/bubble_overlay_text"
             android:background="@drawable/white_round_corner"
             android:layout_marginRight="10dp" />

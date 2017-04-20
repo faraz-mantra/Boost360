@@ -104,41 +104,46 @@ public class BubblesService extends Service {
 
     public void addBubble(final int x, final int y) {
 
-        final BubbleLayout bubbleView = new BubbleLayout(this);
-        bubbleView.addView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.bubble_layout, null));
+        try{
+            final BubbleLayout bubbleView = new BubbleLayout(this);
+            bubbleView.addView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.bubble_layout, null));
 
-        bubbleView.setOnBubbleRemoveListener(new BubbleLayout.OnBubbleRemoveListener() {
-            @Override
-            public void onBubbleRemoved(BubbleLayout bubble) {
-            }
-        });
-        bubbleView.setOnBubbleClickListener(new BubbleLayout.OnBubbleClickListener() {
-
-            @Override
-            public void onBubbleClick(BubbleLayout bubble) {
-                Log.v("ggg","bubble clicked");
-                killDialog();
-                if (isDialogShowing()) {
-//                    killDialog();
-                } else {
-//                    killDialog();
-                    bubble.goToRightWall();
-                    Intent intent = new Intent(BubblesService.this, TempDisplayDialog.class).
-                            setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
-                    intent.putExtra(Key_Preferences.DIALOG_FROM,from);
-                    startActivity(intent);
+            bubbleView.setOnBubbleRemoveListener(new BubbleLayout.OnBubbleRemoveListener() {
+                @Override
+                public void onBubbleRemoved(BubbleLayout bubble) {
                 }
-            }
-        });
+            });
+            bubbleView.setOnBubbleClickListener(new BubbleLayout.OnBubbleClickListener() {
 
-        bubbleView.setShouldStickToWall(true);
+                @Override
+                public void onBubbleClick(BubbleLayout bubble) {
+                    Log.v("ggg","bubble clicked");
+                    killDialog();
+                    if (isDialogShowing()) {
+//                    killDialog();
+                    } else {
+//                    killDialog();
+                        bubble.goToRightWall();
+                        Intent intent = new Intent(BubblesService.this, TempDisplayDialog.class).
+                                setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        intent.putExtra(Key_Preferences.DIALOG_FROM,from);
+                        startActivity(intent);
+                    }
+                }
+            });
 
-        WindowManager.LayoutParams layoutParams = buildLayoutParamsForBubble(x, y);
-        bubbleView.setWindowManager(getWindowManager());
-        bubbleView.setViewParams(layoutParams);
-        bubbleView.setLayoutCoordinator(layoutCoordinator);
-        bubbles.add(bubbleView);
-        addViewToWindow(bubbleView);
+            bubbleView.setShouldStickToWall(true);
+
+            WindowManager.LayoutParams layoutParams = buildLayoutParamsForBubble(x, y);
+            bubbleView.setWindowManager(getWindowManager());
+            bubbleView.setViewParams(layoutParams);
+            bubbleView.setLayoutCoordinator(layoutCoordinator);
+            bubbles.add(bubbleView);
+            addViewToWindow(bubbleView);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     private String BUBBLE_CLASS_NAME = "com.nowfloats.accessbility.BubbleDialog";
