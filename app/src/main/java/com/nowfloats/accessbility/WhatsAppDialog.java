@@ -36,7 +36,7 @@ public class WhatsAppDialog extends AppCompatActivity {
                 stopService(new Intent(WhatsAppDialog.this, BubblesService.class));
                 MixPanelController.track(MixPanelController.WHATS_APP_DIALOG_CLICKED,null);
                 try {
-                    Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.whatsapp");
+                    Intent launchIntent = getPackageManager().getLaunchIntentForPackage(DataAccessbilityServiceV1.PK_NAME_WHATSAPP);
                     startActivity(launchIntent);
                 }catch(Exception e){
                     e.printStackTrace();

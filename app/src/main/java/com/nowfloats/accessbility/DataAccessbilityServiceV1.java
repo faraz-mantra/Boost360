@@ -23,7 +23,7 @@ import com.nowfloats.util.MixPanelController;
  */
 
 @RequiresApi(api = Build.VERSION_CODES.DONUT)
-public class DataAccessbilityService extends AccessibilityService {
+public class DataAccessbilityServiceV1 extends AccessibilityService {
 
 
     public static final String PK_NAME_WHATSAPP = "com.whatsapp";
@@ -40,6 +40,7 @@ public class DataAccessbilityService extends AccessibilityService {
         && pref.getBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG,true)) {
             showWhatsAppDialog();
             pref.edit().putBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG,false).apply();
+            pref.edit().putBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED,true).apply();
         }
         AccessibilityServiceInfo info = new AccessibilityServiceInfo();
         info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK;
@@ -77,8 +78,9 @@ public class DataAccessbilityService extends AccessibilityService {
 //                    startActivity(intent);
                     showOverlayDialog();
                 } else if (!isMyServiceRunning(BubblesService.class) &&
-                        !TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null))) {
-                    Intent intent = new Intent(DataAccessbilityService.this, BubblesService.class);
+                        !TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null))
+                        && pref.getBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED,false)) {
+                    Intent intent = new Intent(DataAccessbilityServiceV1.this, BubblesService.class);
                     startService(intent);
                 }
             } else {
@@ -87,7 +89,7 @@ public class DataAccessbilityService extends AccessibilityService {
                 !event.getClassName().toString().contains(PK_NAME_NOWFLOATS)){
 
                 }else{
-                    stopService(new Intent(DataAccessbilityService.this, BubblesService.class));
+                    stopService(new Intent(DataAccessbilityServiceV1.this, BubblesService.class));
                 }
 
             }
@@ -115,5 +117,6 @@ public class DataAccessbilityService extends AccessibilityService {
     public void onDestroy() {
         super.onDestroy();
         pref.edit().putBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG,true).apply();
+        pref.edit().putBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED,false).apply();
     }
 }

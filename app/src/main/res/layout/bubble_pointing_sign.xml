@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:id="@+id/parent_layout"
     android:layout_width="match_parent"
     android:background="@color/light_black"
     android:alpha=".9"
@@ -22,7 +23,7 @@
             android:layout_marginEnd="10dp"
             android:padding="15dp"
             android:textColor="#000"
-            android:textSize="14dp"
+            android:textSize="14sp"
             android:text="@string/bubble_overlay_text"
             android:background="@drawable/white_round_corner"
             android:layout_marginRight="10dp" />

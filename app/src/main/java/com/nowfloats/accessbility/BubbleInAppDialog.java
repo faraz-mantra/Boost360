@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.TextView;
+import android.widget.Button;
 
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
@@ -23,7 +23,7 @@ import com.thinksity.R;
 public class BubbleInAppDialog extends AppCompatActivity {
     public static final String ACTION_KILL_DIALOG = "nowfloats.bubblebutton.bubble.ACTION_KILL_DIALOG";
     private KillListener killListener;
-    TextView permissionBtn;
+    Button permissionBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class BubbleInAppDialog extends AppCompatActivity {
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
 
 
-        permissionBtn = (TextView) findViewById(R.id.permission_btn);
+        permissionBtn = (Button) findViewById(R.id.permission_btn);
         permissionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

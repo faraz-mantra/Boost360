@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
@@ -31,6 +32,8 @@ public class OverlayDialog extends AppCompatActivity {
 
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_bubble_overlay_permission,null);
         ImageView image = (ImageView) view.findViewById(R.id.gif_image);
+        TextView screenOverlay = (TextView) view.findViewById(R.id.overlay_title);
+        screenOverlay.setVisibility(View.GONE);
         try {
             GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(image);
             Glide.with(this).load(R.drawable.overlay_gif).into(target);

@@ -118,11 +118,10 @@ public class BubblesService extends Service {
                 @Override
                 public void onBubbleClick(BubbleLayout bubble) {
                     Log.v("ggg","bubble clicked");
-                    killDialog();
                     if (isDialogShowing()) {
-//                    killDialog();
+                        killDialog();
                     } else {
-//                    killDialog();
+                        killDialog();
                         bubble.goToRightWall();
                         Intent intent = new Intent(BubblesService.this, TempDisplayDialog.class).
                                 setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);

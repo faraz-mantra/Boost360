@@ -51,7 +51,7 @@ public class BubbleLayout extends BubbleBaseLayout {
     private OnBubbleRemoveListener onBubbleRemoveListener;
     private OnBubbleClickListener onBubbleClickListener;
     private static final int TOUCH_TIME_THRESHOLD = 150;
-    private long lastTouchDown;
+    private long lastTouchDown,lastRemoved;
     private MoveAnimator animator;
     private int width,height,maxWidth;
     private WindowManager windowManager;
@@ -147,7 +147,8 @@ public class BubbleLayout extends BubbleBaseLayout {
                     break;
             }
 
-            if(isToRemoveDialog){
+            if(isToRemoveDialog && (System.currentTimeMillis() - lastTouchDown > TOUCH_TIME_THRESHOLD)){
+                lastRemoved = System.currentTimeMillis();
                 getContext().sendBroadcast(new Intent(BubbleDialog.ACTION_KILL_DIALOG));
             }
         }

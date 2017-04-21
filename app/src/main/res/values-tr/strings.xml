@@ -1193,11 +1193,14 @@
     <string name="accessibility_description">Permission required to upload Boost product and grow your business</string>
     <string name="bubble_in_app_message">This will help you to sell products through WhatsApp</string>
     <string name="boost_bubble">Boost Bubble</string>
-    <string name="accessibility_message"><![CDATA[GO ahead &amp; share on WhatsApp]]></string>
+    <string name="accessibility_message">go ahead &amp; start sharing on WhatsApp</string>
     <string name="bubble_in_app_second_message">You just have to grant us \"Accessibility\" permission and start sharing!</string>
     <string name="bubble_overlay_text">Now share your product on WhatsApp!</string>
     <string name="boost_overlay_permission">Boost Bubble</string>
     <string name="open_setting">Open Settings</string>
+    <string name="take_me_there">Take me there</string>
+    <string name="screen_overlay_permission">Screen overlay permission</string>
+    <string name="required_overlay_permission">Checkout new feature \"Boost Bubble\", easy to share products</string>
 
 
     <string-array name="spinner_list_item_array">

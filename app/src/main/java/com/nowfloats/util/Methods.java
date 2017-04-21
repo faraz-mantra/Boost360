@@ -27,7 +27,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.nowfloats.accessbility.DataAccessbilityService;
+import com.nowfloats.accessbility.DataAccessbilityServiceV1;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.squareup.okhttp.OkHttpClient;
 import com.thinksity.R;
@@ -60,7 +60,7 @@ import retrofit.client.OkClient;
  * Created by Guru on 21-04-2015.
  */
 public class Methods {
-    public static SimpleDateFormat dateFormatDefault = new SimpleDateFormat("dd/MM/yyyy");
+    public static SimpleDateFormat dateFormatDefault = new SimpleDateFormat("dd/MM/yyyy",Locale.US);
     public static boolean isOnline(Activity context) {
         boolean status = false;
         try {
@@ -110,7 +110,7 @@ public class Methods {
     }
     public static boolean isAccessibilitySettingsOn(Context mContext) {
         int accessibilityEnabled = 0;
-        final String service = mContext.getPackageName() + "/" + DataAccessbilityService.class.getCanonicalName();
+        final String service = mContext.getPackageName() + "/" + DataAccessbilityServiceV1.class.getCanonicalName();
         try {
             accessibilityEnabled = Settings.Secure.getInt(mContext.getApplicationContext().getContentResolver(),
                     android.provider.Settings.Secure.ACCESSIBILITY_ENABLED);

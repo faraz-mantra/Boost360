@@ -1099,7 +1099,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="opc_main_text">If you have been assisted by a NowFloats Sales Executive, you can enter an Online Payment Code (OPC) here. It will auto-populate the details of your pro-forma invoice and enable you to subscribe to a NowFloats package online. Please connect with our customer support team to know more about it.</string>
     <string name="opc_title">Pay through OPC</string>
     <string name="not_available_in_ur_country">This feature is currently not available in your country. We will notify you when its available.</string>
-
+    <string name="boost_overlay_permission">Boost Bubble</string>
     <string name="allow_boost_to_read_your">Please allow Boost to read your Facebook Page insights.</string>
     <string name="gathering_fcebook_analytics">Gathering Facebook Page analytics</string>
     <string name="please_wait_while_collecting_facebook_data">Please wait, as we are collecting statistics from your Facebook Page. It usually takes upto 24 hours to fetch data.</string>
@@ -1122,12 +1122,15 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="quikr_message">Good news! You can now publish your updates as product ads to Quikr. Please follow the guidelines mentioned below to ensure that your ad is successfully posted.</string>
     <string name="search_ranking">Search Ranking</string>
     <string name="spinner_title">Filter</string>
-    <string name="bubble_in_app_message">Hey,\nWe have made it easier for you to now share your products on WhatsApp through this bubble.</string>
+    <string name="bubble_in_app_message">We have made it easier for you to now share your products on WhatsApp through this bubble.</string>
     <string name="boost_bubble">Boost Bubble</string>
-    <string name="accessibility_message">GO ahead &amp; share on WhatsApp</string>
+    <string name="accessibility_message">go ahead &amp; start sharing on WhatsApp</string>
     <string name="bubble_in_app_second_message">You just have to grant us \"Accessibility\" permission and you are good to go.</string>
-    <string name="bubble_overlay_text">Now share your product on WhatsApp!</string>
+    <string name="bubble_overlay_text">Tap on Bubble to share your product on WhatsApp!</string>
     <string name="open_setting">Open Settings</string>
-
-
+    <string name="take_me_there">Take me there</string>
+    <string name="accessibility_permission">Accessibility permission</string>
+    <string name="screen_overlay_permission">Screen overlay permission</string>
+    <string name="required_overlay_permission">Give us this permission to see our new feature \"Boost Bubble\"</string>
+    <string name="bubble_for_whatsapp">Bubble for WhatsApp</string>
 </resources>

@@ -278,7 +278,7 @@ public class Home_Fragment_Tab extends Fragment {
         activity.startService(intent);
 
     }
-    private void checkOverlay() {
+    public void checkOverlay() {
         Calendar calendar = Calendar.getInstance();
         long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, -1);
         long newTime = calendar.getTimeInMillis();
@@ -352,7 +352,6 @@ public class Home_Fragment_Tab extends Fragment {
         }
         if(overLayDialog == null){
         overLayDialog = new MaterialDialog.Builder(getActivity())
-                .title(getString(R.string.boost_bubble))
                 .customView(view,false)
                 .positiveColorRes(R.color.primary)
                 .positiveText(getString(R.string.open_setting))
@@ -369,9 +368,20 @@ public class Home_Fragment_Tab extends Fragment {
         }
     }
 
-    private void requestOverlayPermission(){
-        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getActivity().getPackageName()));
-        startActivityForResult(intent, PERM_REQUEST_CODE_DRAW_OVERLAYS);
+    private void requestOverlayPermission() {
+
+        if (android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null) {
+
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getActivity().getPackageName()));
+            startActivityForResult(intent, PERM_REQUEST_CODE_DRAW_OVERLAYS);
+        } else if (getActivity() != null) {
+//            Intent intent = new Intent();
+//            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+//            Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+//            intent.setData(uri);
+//            startActivity(intent);
+            startActivity(new Intent(Settings.ACTION_SETTINGS));
+        }
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -393,12 +403,15 @@ public class Home_Fragment_Tab extends Fragment {
         }
     }
     private void addOverlay(){
-        final View view = LayoutInflater.from(getActivity()).inflate(R.layout.bubble_pointing_sign, bubbleOverlay);
+        bubbleOverlay.setVisibility(View.VISIBLE);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.bubble_pointing_sign, bubbleOverlay);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 bubbleOverlay.removeAllViews();
-            }
+                bubbleOverlay.setVisibility(View.GONE);
+                //layout.setOnClickListener(null);
+        }
         });
 
     }
@@ -415,6 +428,8 @@ public class Home_Fragment_Tab extends Fragment {
         public void onReceive(Context context, Intent intent) {
             Log.v("ggg","clicked");
             bubbleOverlay.removeAllViews();
+            bubbleOverlay.setVisibility(View.GONE);
+            //bubbleOverlay.setOnClickListener(null);
         }
 
     };
