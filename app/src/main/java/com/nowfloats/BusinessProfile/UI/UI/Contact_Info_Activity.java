@@ -1045,12 +1045,14 @@ public class Contact_Info_Activity extends ActionBarActivity implements View.OnT
         alternateNumber_3.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3));
         emailAddress.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
         String websiteAddr= session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE);
-        if(websiteAddr.split("://")[0].equals("http") ){
-            protocolSpinner.setSelection(0);
-            websiteAddress.setText(websiteAddr.split("://")[1]);
-        }else{
-            protocolSpinner.setSelection(1);
-            websiteAddress.setText(websiteAddr.split("://")[1]);
+        if(websiteAddr!=null && !websiteAddr.equals("")) {
+            if (websiteAddr.split("://")[0].equals("http") && websiteAddr.split("://").length==2) {
+                protocolSpinner.setSelection(0);
+                websiteAddress.setText(websiteAddr.split("://")[1]);
+            } else if (websiteAddr.split("://")[0].equals("https") && websiteAddr.split("://").length==2) {
+                protocolSpinner.setSelection(1);
+                websiteAddress.setText(websiteAddr.split("://")[1]);
+            }
         }
         facebookPage.setText(session.getFacebookPage());
 

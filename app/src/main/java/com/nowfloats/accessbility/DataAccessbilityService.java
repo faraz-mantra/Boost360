@@ -27,6 +27,8 @@ public class DataAccessbilityService extends AccessibilityService {
 
 
     public static final String PK_NAME_WHATSAPP = "com.whatsapp";
+    public static final String PK_NAME_NOWFLOATS = "com.biz2.nowfloats";
+
     //    public static final String PK_NAME_WHATSAPP = "com.twitter.android";
     private SharedPreferences pref;
 
@@ -34,7 +36,8 @@ public class DataAccessbilityService extends AccessibilityService {
     protected void onServiceConnected() {
         super.onServiceConnected();
         pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-        if(pref.getBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG,true)) {
+        if(!TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG,""))
+        && pref.getBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG,true)) {
             showWhatsAppDialog();
             pref.edit().putBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG,false).apply();
         }
@@ -66,8 +69,8 @@ public class DataAccessbilityService extends AccessibilityService {
 
         if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
             if (event.getPackageName().toString().equalsIgnoreCase(PK_NAME_WHATSAPP)
-                    || (!TextUtils.isEmpty(event.getClassName()) &&
-                    event.getClassName().toString().equalsIgnoreCase(BUBBLE_CLASS_NAME))) {
+                    || (!TextUtils.isEmpty(event.getClassName()) && (
+                    event.getClassName().toString().equalsIgnoreCase(BUBBLE_CLASS_NAME)))) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
 //                    Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
 //                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -79,7 +82,14 @@ public class DataAccessbilityService extends AccessibilityService {
                     startService(intent);
                 }
             } else {
-                stopService(new Intent(DataAccessbilityService.this, BubblesService.class));
+
+                if(!TextUtils.isEmpty(event.getClassName()) && event.getPackageName().toString().equalsIgnoreCase(PK_NAME_NOWFLOATS) &&
+                !event.getClassName().toString().contains(PK_NAME_NOWFLOATS)){
+
+                }else{
+                    stopService(new Intent(DataAccessbilityService.this, BubblesService.class));
+                }
+
             }
         }
     }
