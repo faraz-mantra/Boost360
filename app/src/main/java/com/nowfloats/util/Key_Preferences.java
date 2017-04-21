@@ -7,6 +7,11 @@ public class Key_Preferences {
 
 
     public static final String EVENT_WILDFIRE_BUY = "eventWildfireBuy";
+    public static final String INTENT_BUBBLE_CLASS = "com.intent.bubbleService";
+    public static final String GET_EVENT_PACKAGE_NAME = "com.nowfloats.NavigationDrawer";
+    public static final String SHOW_BUBBLE_TIME = "bubble_time";
+    public static final String SHOW_BUBBLE_COACH_MARK = "bubble_coach_mark";
+    public static final String SHOW_WHATS_APP_DIALOG ="whatsapp_dialog" ;
     public static  String GET_FP_DETAILS_CITY = "GET_FP_DETAILS_CITY";
     public static  String GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG";
     public static  String GET_FP_DETAILS_ADDRESS ="GET_FP_DETAILS_ADDRESS" ;
@@ -86,4 +91,7 @@ public class Key_Preferences {
     public static final String FB_PULL_COUNT = "fb_pull_count";
 
     public static final String FCM_TOKEN = "fcm_token";
+
+    public static final String DIALOG_FROM = "dialogFrom";
+    public static final String BUBBLE_POS = "bubble_pos";
 }

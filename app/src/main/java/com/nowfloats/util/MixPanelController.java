@@ -14,6 +14,13 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class MixPanelController {
+	public static final String WHATS_APP_DIALOG ="WhatsAppDialog" ;
+	public static final String WHATS_APP_DIALOG_CLICKED ="WhatsAppDialogClicked" ;
+	public static final String BUBBLE_IN_APP_DIALOG = "BubbleInAppDialog";
+	public static final String BUBBLE_IN_APP_DIALOG_CLICKED = "BubbleInAppDialogClicked";
+	public static final String BUBBLE_DIALOG = "BubbleDialogOnWhatsApp";
+	public static final String BUBBLE_DIALOG_SHARE = "BubbleWhatsAppProductShareClicked";
+	public static final String BUBBLE_CLOSED = "BubbleClosedByUser";
 	private static MixpanelAPI mixPanel;
 	public static String Bhours = "bhours", Signup = "SignUpActivity",
 			landingPage = "LandingPage",
@@ -68,6 +75,7 @@ public class MixPanelController {
 	public static void identify(String id, JSONObject param,String fpid) {
 		Log.v("mixpanel", id);
 		try {
+			if(mixPanel == null ) return;
 			mixPanel.identify(id);
 			people = mixPanel.getPeople();
 			people.identify(id);
@@ -107,7 +115,8 @@ public class MixPanelController {
 
 	public static void setProperties(String plan, String status) {
 		try {
-			mixPanel.getPeople().set(plan, status);
+			if(mixPanel!=null)
+				mixPanel.getPeople().set(plan, status);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
