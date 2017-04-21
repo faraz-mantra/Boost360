@@ -1063,6 +1063,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="subscriber_second_text">Subscription is a great way to engage with your\nexisting customers and tell them about latest offers\nor new product launches</string>
     <string name="search_ranking">Search Ranking</string>
     <string name="spinner_title">Filter</string>
+    <string name="website_domain_name">.nowfloats.com</string>
 
 
 </resources>

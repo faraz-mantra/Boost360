@@ -2,7 +2,7 @@
 <resources>
     <string name="twitter_consumer_key">4CiUg5gcIbvYre8XjGd8GsElV</string>
     <string name="twitter_consumer_secret">4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9</string>
-
+    <string name="website_domain_name">.digitalseoz.com</string>
     <string name="package_name_aviary">com.thinksity.AviaryCdsProvider</string>
     <string name="app_name">Digitalseoz</string>
     <string name="hello_world">Hello world!</string>
@@ -395,12 +395,12 @@
     <string name="onboarding_screen_3_desc">People around your business are searching for stuff you sell, so keep your updates relevant and fresh. This will you lead to attract more customers and generate more revenue.</string>
     <string name="onboarding_screen_2_title">Content is King</string>
     <string name="onboarding_screen_2_desc">Update your website twice a week. Just press the plus button at the bottom and simply tell your customers about your products, services or offers.</string>
-    <string name="drop_us_on_email_or_call">Please drop us a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to enable this feature.</string>
-    <string name="primary_contact_number_message">Please drop us a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to change this number.</string>
+    <string name="drop_us_on_email_or_call">Please drop us a line at support@digitalseoz.com or call us at 9320690003 if you\'d like to enable this feature.</string>
+    <string name="primary_contact_number_message">Please drop us a line at support@digitalseoz.com or call us at 9320690003 if you\'d like to change this number.</string>
 
     <string name="your_site_health">Your site health</string>
-
-    <string name="settings_feedback_link">ria@nowfloats.com</string>
+    <string name="contact_us_number">9320690003</string>
+    <string name="settings_feedback_link">support@digitalseoz.com</string>
     <string name="settings_facebook_like_link">https://www.facebook.com/nowfloats</string>
     <string name="settings_about_us_link">http://nowfloats.com/</string>
 
@@ -512,7 +512,7 @@
         <item>What if I already have a website? Can Digitalseoz still help me get more customers?</item>
     </string-array>
     <string-array name="answer_7">
-        <item><![CDATA[Yes indeed. In fact, you can build the Digitalseoz website (almost instantly) and then contact our customer care at <a href="ria@nowfloats.com">ria@nowfloats.com</a> and they can ensure that your purchased domain name/URL begins to point to the website.<br/> If you\'ve been waiting for the right opportunity, this is the time to build it.]]></item>
+        <item><![CDATA[Yes indeed. In fact, you can build the Digitalseoz website (almost instantly) and then contact our customer care at <a href="support@digitalseoz.com">support@digitalseoz.com</a> and they can ensure that your purchased domain name/URL begins to point to the website.<br/> If you\'ve been waiting for the right opportunity, this is the time to build it.]]></item>
         <item><![CDATA[Absolutely! If you already have a website for your business, but it isn\'t updated often enough, chances are it won\'t be doing much for your business. The Digitalseoz website can plug-in to your existing website as a sub-domain page where you can update your deals, offers, launches or messages. To find out more, download our detailed integration tutorial <a href="http://nowfloats.com/Content/IntegrationTutorial.pdf">PDF here.</a><br/> With regular updates, your page rank begins to rise and the SEO gets added on to your main site too.]]></item>
     </string-array>
     <string-array name="questions_8">

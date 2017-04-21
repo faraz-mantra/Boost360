@@ -6,7 +6,7 @@ package com.thinksity;
 
 public class Specific {
 
-    public static String clientId2 	= "2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21";
+    public static String clientId2 	= "C98B02D6EAEC4DC18C62FCF91E6C720F00A0B7BA2F7444EBB16CE3912982222F-DEVZMEDIA";
     public static String client_ID_1 = "39EB5FD120DC4394A10301B108030CB70FA553E91F984C829AB6ADE23B6767B7";
     public static String client_ID_2_webcreatorservice = "DA92AD580F614449B2B7B8B62DFC7AE72D201733A6D74E73B8050C541579A26C";
     public static String client_ID_3_imagechunkprocessor = "BFFEB94156C24961BBF4D4B4CC3663BB883E2EFA875148CE9C08BAB702663FAE";
@@ -24,7 +24,7 @@ public class Specific {
 
 
     public static String access_level = "20";
-    public static final String CONTACT_EMAIL_ID = "ria@nowfloats.com";
+    public static final String CONTACT_EMAIL_ID = "support@digitalseoz.com";
     public static final String FACEBOOK_API_KEY 	= "539836972828386";  // Boost
 
 //    public static String TWITTER_TOK 				= "h5lB3rvjU66qOXHgrZK41Q";
@@ -33,7 +33,7 @@ public class Specific {
     public static final String TWITTER_TOK 				= "4CiUg5gcIbvYre8XjGd8GsElV";
     public static final String TWITTER_SEC 				= "4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9";
     public static final String FACEBOOK_URL = "https://www.facebook.com/nowfloats";
-    public static final String PACKAGE_NAME = "com.biz2.nowfloats";
+    public static final String PACKAGE_NAME = "com.digitalseoz";
     public static final String FACEBOOK_PAGEID = "fb://page/277931445614143";
     public static final String TWITTER_URL = "https://twitter.com/Nowfloats";
     public static final String TWITTER_ID_URL = "twitter://user?screen_name=nowfloats";

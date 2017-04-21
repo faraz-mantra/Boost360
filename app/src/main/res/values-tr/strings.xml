@@ -1175,6 +1175,7 @@
     <string name="subscriber_second_text">Subscription is a great way to engage with your existing customers and tell them about latest offers or new product launches</string>
     <string name="search_ranking">Search Ranking</string>
     <string name="spinner_title">Filter</string>
+    <string name="website_domain_name">.nowfloats.com</string>
 
 
     <string-array name="spinner_list_item_array">
