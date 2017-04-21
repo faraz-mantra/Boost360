@@ -13,7 +13,6 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
-import android.text.Html;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -63,6 +62,7 @@ import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
+import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.RiaEventLogger;
 import com.squareup.otto.Bus;
@@ -557,7 +557,7 @@ public class Analytics_Fragment extends Fragment {
     private void attachText(Section widget, LinearLayout llRiaCardSections) {
         if(getActivity()== null) return;
         TextView tv = new TextView(getActivity());
-        tv.setText(Html.fromHtml(widget.getText()));
+        tv.setText(Methods.fromHtml(widget.getText()));
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         lp.setMargins(0, 0, 0, 0);

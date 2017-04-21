@@ -352,7 +352,6 @@ public class Home_Fragment_Tab extends Fragment {
         }
         if(overLayDialog == null){
         overLayDialog = new MaterialDialog.Builder(getActivity())
-                .title(getString(R.string.boost_bubble))
                 .customView(view,false)
                 .positiveColorRes(R.color.primary)
                 .positiveText(getString(R.string.open_setting))
@@ -393,12 +392,15 @@ public class Home_Fragment_Tab extends Fragment {
         }
     }
     private void addOverlay(){
-        final View view = LayoutInflater.from(getActivity()).inflate(R.layout.bubble_pointing_sign, bubbleOverlay);
+        bubbleOverlay.setVisibility(View.VISIBLE);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.bubble_pointing_sign, bubbleOverlay);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 bubbleOverlay.removeAllViews();
-            }
+                bubbleOverlay.setVisibility(View.GONE);
+                //layout.setOnClickListener(null);
+        }
         });
 
     }
@@ -415,6 +417,8 @@ public class Home_Fragment_Tab extends Fragment {
         public void onReceive(Context context, Intent intent) {
             Log.v("ggg","clicked");
             bubbleOverlay.removeAllViews();
+            bubbleOverlay.setVisibility(View.GONE);
+            //bubbleOverlay.setOnClickListener(null);
         }
 
     };

@@ -60,7 +60,7 @@ import retrofit.client.OkClient;
  * Created by Guru on 21-04-2015.
  */
 public class Methods {
-    public static SimpleDateFormat dateFormatDefault = new SimpleDateFormat("dd/MM/yyyy");
+    public static SimpleDateFormat dateFormatDefault = new SimpleDateFormat("dd/MM/yyyy",Locale.US);
     public static boolean isOnline(Activity context) {
         boolean status = false;
         try {
