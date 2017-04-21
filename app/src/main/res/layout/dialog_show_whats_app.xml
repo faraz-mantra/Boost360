@@ -31,5 +31,6 @@
         android:background="@color/white"
         android:textColor="@color/primary"
         android:text="Open WhatsApp"
+        android:layout_marginBottom="8dp"
         android:layout_marginRight="24dp" />
 </LinearLayout>
