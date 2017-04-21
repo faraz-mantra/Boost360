@@ -37,6 +37,7 @@ public class DataAccessbilityService extends AccessibilityService {
         if(pref.getBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG,true)) {
             showWhatsAppDialog();
             pref.edit().putBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG,false).apply();
+            pref.edit().putBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED,true).apply();
         }
         AccessibilityServiceInfo info = new AccessibilityServiceInfo();
         info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK;
@@ -74,7 +75,8 @@ public class DataAccessbilityService extends AccessibilityService {
 //                    startActivity(intent);
                     showOverlayDialog();
                 } else if (!isMyServiceRunning(BubblesService.class) &&
-                        !TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null))) {
+                        !TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null))
+                        && pref.getBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED,false)) {
                     Intent intent = new Intent(DataAccessbilityService.this, BubblesService.class);
                     startService(intent);
                 }

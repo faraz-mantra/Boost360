@@ -1224,7 +1224,17 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 Constants.showStoreScreen=false;
                 Home_Fragment_Tab.viewPager.setCurrentItem(2,true);
             }*/
+                    boolean callMethod = false;
+                    Home_Fragment_Tab myFragment = (Home_Fragment_Tab) getSupportFragmentManager().findFragmentByTag("homeFragment");
+                    if (myFragment != null && myFragment.isVisible()
+                            && session.isBoostBubbleEnabled()) {
+                        callMethod = true;
+                    }
+
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,homeFragment, "homeFragment").commit();
+                    if(callMethod){
+                        homeFragment.checkOverlay();
+                    }
                     //   getSupportFragmentManager().beginTransaction().
                     //           replace(R.id.mainFrame, homeFragment).addToBackStack("Home").commit();
                 }else if(nextScreen.equals(getString(R.string.chat)))

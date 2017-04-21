@@ -17,6 +17,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -28,10 +29,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,7 +87,7 @@ public class SidePanelFragment extends Fragment {
     TextView StoreTextView;
     TextView cspTextView;
     //TextView enqCount;
-    TextView settingsText, chatText, callText, shareText /*tvSiteAppearance*/;
+    TextView settingsText, chatText, callText, shareText,tvBoostBubble /*tvSiteAppearance*/;
     public static TextView fpNameTextView;
     UserSessionManager session;
     public static ImageView iconImage;
@@ -102,11 +105,12 @@ public class SidePanelFragment extends Fragment {
     Uri imageUri;
     private static final int GALLERY_PHOTO = 2;
     private static final int CAMERA_PHOTO = 1;
-
+    private Switch bubbleSwitch;
 //    protected ImageLoader imageLoader = ImageLoader.getInstance();
 
-    LinearLayout homeLayout, profileLayout, analyticsLayout, storeLayout, /*customerQueriesLayout,*/ imageGalleryLayout, cspLayout,
-            productGalleryLayout, Store_Layout, settingsLayout, chatLayout, callLayout, shareLayout, llGetInTouch /*llSiteAppearance*/;
+    LinearLayout homeLayout, profileLayout, analyticsLayout, storeLayout, /*customerQueriesLayout,*/
+            imageGalleryLayout, cspLayout,
+            productGalleryLayout, Store_Layout, settingsLayout, chatLayout, callLayout, shareLayout, llGetInTouch, bubbleLayout /*llSiteAppearance*/;
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
     private ProgressBar progressbar;
@@ -375,8 +379,27 @@ public class SidePanelFragment extends Fragment {
         chatText = (TextView) chatLayout.findViewById(R.id.sixthRow_TextView);
         callText = (TextView) callLayout.findViewById(R.id.seventhRow_TextView);
         shareText = (TextView) shareLayout.findViewById(R.id.eighthRow_TextView);
+        tvBoostBubble = (TextView) bubbleLayout.findViewById(R.id.ninethRow_TextView);
+        bubbleSwitch = (Switch) bubbleLayout.findViewById(R.id.ninethRow_Switch);
         //tvSiteAppearance = (TextView) llSiteAppearance.findViewById(R.id.tv_site_appearance);
+        bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
 
+        bubbleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(!isChecked)
+                   session.setBubbleStatus(isChecked);
+                if (isChecked) {
+
+                    if ((android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity()))
+                            || (!Methods.isAccessibilitySettingsOn(getActivity()))) {
+                        session.setBubbleTime(-1);
+                        ((OnItemClickListener) mainActivity).onClick(getString(R.string.home));
+                    }
+
+                }
+            }
+        });
 
         lockWidgetImageView = (ImageView) imageGalleryLayout.findViewById(R.id.lock_widget);
         lockWidget_ProductGallery = (ImageView) productGalleryLayout.findViewById(R.id.lock_product_gal);
@@ -1277,19 +1300,20 @@ public class SidePanelFragment extends Fragment {
             meterValue.setText(siteMeterTotalWeight + "%");
         }
 
-        private void onclickColorChange(ImageView img, TextView tv, LinearLayout llPaletes) {
-            dashBoardTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-            businessProfileTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-            //customerQueries.setTextColor(getResources().getColor(R.color.cell_text_color));
-            imageGalleryTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-            StoreTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-            cspTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-            productGalleryTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-            settingsText.setTextColor(getResources().getColor(R.color.cell_text_color));
-            chatText.setTextColor(getResources().getColor(R.color.cell_text_color));
-            callText.setTextColor(getResources().getColor(R.color.cell_text_color));
-            shareText.setTextColor(getResources().getColor(R.color.cell_text_color));
-            //tvSiteAppearance.setTextColor(getResources().getColor(R.color.cell_text_color));
+    private void onclickColorChange(ImageView img, TextView tv, LinearLayout llPaletes) {
+        dashBoardTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+        businessProfileTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+        //customerQueries.setTextColor(getResources().getColor(R.color.cell_text_color));
+        imageGalleryTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+        StoreTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+        cspTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+        productGalleryTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+        settingsText.setTextColor(getResources().getColor(R.color.cell_text_color));
+        chatText.setTextColor(getResources().getColor(R.color.cell_text_color));
+        callText.setTextColor(getResources().getColor(R.color.cell_text_color));
+        shareText.setTextColor(getResources().getColor(R.color.cell_text_color));
+        tvBoostBubble.setTextColor(getResources().getColor(R.color.cell_text_color));
+        //tvSiteAppearance.setTextColor(getResources().getColor(R.color.cell_text_color));
 
             shareImageView.setColorFilter(defaultLabelFilter);
             dasbBoardImageView.setColorFilter(defaultLabelFilter);

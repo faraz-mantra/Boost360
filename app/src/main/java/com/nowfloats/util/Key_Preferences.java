@@ -14,6 +14,7 @@ public class Key_Preferences {
     public static final String SHOW_WHATS_APP_DIALOG ="whatsapp_dialog" ;
     public static  String GET_FP_DETAILS_CITY = "GET_FP_DETAILS_CITY";
     public static  String GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG";
+    public static  String IS_BOOST_BUBBLE_ENABLED = "IS_BOOST_BUBBLE_ENABLED";
     public static  String GET_FP_DETAILS_ADDRESS ="GET_FP_DETAILS_ADDRESS" ;
     public static String GET_FP_DETAILS_CATEGORY = "GET_FP_DETAILS_CATEGORY";
     public static String GET_FP_DETAILS_CONTACTNAME = "GET_FP_DETAILS_CONTACTNAME";

@@ -645,8 +645,19 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return pref.getString(key,"");
     }
 
-    public void storeGalleryImages(String imagePath)
-    {
+    public boolean isBoostBubbleEnabled() {
+        return pref.getBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED, false);
+    }
+
+    public void setBubbleStatus(boolean flag) {
+        pref.edit().putBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED, flag);
+    }
+
+    public void setBubbleTime(long time) {
+        pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, time);
+    }
+
+    public void storeGalleryImages(String imagePath) {
         editor.putString(KEY_GALLLERY_IMAGES,imagePath);
         editor.commit();
     }
