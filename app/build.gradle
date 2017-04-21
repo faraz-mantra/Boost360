@@ -48,7 +48,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 25
         versionName "4.6.0"
-        versionCode 2017040018
+        versionCode 2017040021
         multiDexEnabled true
     }
     buildTypes {
