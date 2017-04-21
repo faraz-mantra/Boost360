@@ -52,6 +52,11 @@ class PhoneIds implements Parcelable{
     }
 
     @Override
+    public String toString() {
+        return date+" "+phoneId;
+    }
+
+    @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(phoneId);
         dest.writeString(date);

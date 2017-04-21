@@ -383,7 +383,7 @@ public class Analytics_Fragment extends Fragment {
     }
 
     private void initRiaCard() {
-        RestAdapter riaCardAdapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_API_URL)
+        RestAdapter riaCardAdapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_MEMORY_API_URL)
                 /*.setLogLevel(RestAdapter.LogLevel.FULL)
                 .setLog(new AndroidLog("Retrofit Response"))*/
                 .build();

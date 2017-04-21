@@ -124,5 +124,9 @@
     <dimen name="large_text_size">18sp</dimen>
     <dimen name="xlarge_text_size">23sp</dimen>
     <dimen name="xxlarge_text_size">28sp</dimen>
+    <dimen name="margin_5">5dp</dimen>
+    <dimen name="margin_20">20dp</dimen>
+    <dimen name="margin_100">100dp</dimen>
+    <dimen name="margin_3">3dp</dimen>
 
 </resources>

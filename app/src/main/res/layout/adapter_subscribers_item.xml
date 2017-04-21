@@ -9,25 +9,41 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:gravity="center"
+        android:background="#fff"
         android:padding="10dp">
         <com.nowfloats.CustomWidget.CircularCheckBox
             android:id="@+id/radioButton"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:visibility="visible"
+            android:visibility="gone"
             android:checked="false"
             android:layout_marginEnd="10dp"
             android:layout_gravity="center"
             android:layout_marginRight="10dp" />
-        <TextView
-            android:id="@+id/subscriber_text"
+        <LinearLayout
             android:layout_width="0dp"
-           android:layout_height="match_parent"
-           android:text="@string/email"
-           android:gravity="center_vertical"
-           android:layout_weight="1" />
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/subscriber_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                android:textSize="15sp"
+                android:gravity="center_vertical" />
+            <TextView
+                android:id="@+id/subscriber_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                android:textSize="12sp"
+                android:gravity="center_vertical"/>
+        </LinearLayout>
+
         <ImageView
             android:layout_width="18dp"
             android:layout_height="18dp"
@@ -37,7 +53,7 @@
             android:id="@+id/arrowImage"
             android:src="@drawable/forward"/>
     </LinearLayout>
-    <View android:layout_height="2dp"
+    <View android:layout_height="1dp"
         android:layout_width="match_parent"
         android:id="@+id/divider"
         android:background="@color/md_divider_black"/>
