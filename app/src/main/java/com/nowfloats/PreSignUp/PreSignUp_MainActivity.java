@@ -137,6 +137,7 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
                 Intent signUpIntent = new Intent(PreSignUp_MainActivity.this, PreSignUpActivity.class);
                 startActivity(signUpIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                //ChatManager.getInstance(PreSignUp_MainActivity.this).startChat();
             }
         });
 

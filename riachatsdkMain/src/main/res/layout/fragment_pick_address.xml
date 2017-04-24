@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <FrameLayout
+        android:id="@+id/mapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@+id/container_toolbar"
+        android:layout_weight="1">
+
+        <fragment
+            android:id="@+id/map"
+            class="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent" />
+
+        <ImageView
+            android:id="@+id/imageMarker"
+            android:layout_marginBottom="15dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:src="@drawable/add_marker" />
+
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/street_address"/>
+        <EditText
+            android:layout_marginTop="1dp"
+            android:paddingLeft="10dp"
+            android:id="@+id/et_street_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="35dp"
+            android:maxLines="1"
+            android:inputType="text"
+            android:background="@drawable/et_bg"/>
+        <TextView
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:maxLines="1"
+            android:layout_height="wrap_content"
+            android:text="@string/city"/>
+        <EditText
+            android:paddingLeft="10dp"
+            android:layout_marginTop="1dp"
+            android:id="@+id/et_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="35dp"
+            android:maxLines="1"
+            android:background="@drawable/et_bg"/>
+        <TextView
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/country"/>
+        <EditText
+            android:paddingLeft="10dp"
+            android:layout_marginTop="1dp"
+            android:id="@+id/et_country"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="35dp"
+            android:maxLines="1"
+            android:background="@drawable/et_bg"/>
+        <TextView
+            android:layout_marginTop="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pincode"/>
+        <EditText
+            android:paddingLeft="10dp"
+            android:layout_marginTop="1dp"
+            android:id="@+id/et_pincode"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="35dp"
+            android:maxLines="1"
+            android:background="@drawable/et_bg"/>
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SAVE"
+            android:layout_gravity="right"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2017030031"
-    android:versionName="4.5.7">
+    android:versionCode="2017030021"
+    android:versionName="4.6.0">
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
@@ -28,6 +30,11 @@
     <uses-permission android:name="com.android.vending.BILLING" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -50,6 +57,7 @@
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
+
         <!--
             <receiver
             android:name="com.nowfloats.Volley."
@@ -69,6 +77,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name" />
         -->
+
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -143,6 +152,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity" />
         </activity>
+
+        <service android:name="com.nowfloats.bubble.BubblesService" />
+
         <activity
             android:name="com.nowfloats.NavigationDrawer.HomeActivity"
             android:label="@string/title_activity_home"
@@ -196,9 +208,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBtiFgbmHVzbjzOj7cV4_IGCzzGvTYCuy4" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg" />
@@ -261,9 +270,13 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:host="com.biz2.nowfloats" android:scheme="https"/>
+
+                <data
+                    android:host="com.biz2.nowfloats"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
@@ -408,6 +421,59 @@
         <activity android:name="com.nowfloats.Store.ProductCheckoutActivity" />
         <activity android:name="com.nowfloats.NavigationDrawer.RiaWebViewActivity" />
         <activity android:name="com.nowfloats.Analytics_Screen.SearchRankingActivity"></activity>
+
+        <service
+            android:name="com.nowfloats.accessbility.DataAccessbilityServiceV1"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service" />
+        </service>
+
+        <activity
+            android:name="com.nowfloats.accessbility.BubbleDialog"
+            android:autoRemoveFromRecents="true"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.custom"
+            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
+        <activity
+            android:name="com.nowfloats.accessbility.BubbleInAppDialog"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.bubbleInApp"
+            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
+        <activity
+            android:name="com.nowfloats.accessbility.WhatsAppDialog"
+            android:autoRemoveFromRecents="true"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
+            android:noHistory="true"
+            android:theme="@style/Theme.custom"
+            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
+        <activity
+            android:name="com.nowfloats.accessbility.OverlayDialog"
+            android:autoRemoveFromRecents="true"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
+            android:noHistory="true"
+            android:theme="@style/Theme.custom"
+            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
+        <activity
+            android:name="com.nowfloats.accessbility.TempDisplayDialog"
+            android:autoRemoveFromRecents="true"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance"
+            android:noHistory="true"
+            android:theme="@style/Theme.custom"
+            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden"/>
     </application>
 
 </manifest>
