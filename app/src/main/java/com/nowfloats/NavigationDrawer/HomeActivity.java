@@ -1298,6 +1298,15 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, customPageActivity).commit();
 //            Intent in = new Intent(HomeActivity.this, CustomPageActivity.class);
 //            startActivity(in);
+                }else if(nextScreen.equals(getString(R.string.contact__info))){
+                    Intent contactIntent =  new Intent(HomeActivity.this, Contact_Info_Activity.class);
+                    startActivity(contactIntent);
+                }else if(nextScreen.equals(getString(R.string.basic_info))){
+                    Intent basicInfoIntent =  new Intent(HomeActivity.this, Edit_Profile_Activity.class);
+                    startActivity(basicInfoIntent);
+                }else if(nextScreen.equals(getString(R.string.business__address))){
+                    Intent businessAddressIntent =  new Intent(HomeActivity.this, Business_Address_Activity.class);
+                    startActivity(businessAddressIntent);
                 }
             }
         }, 200);

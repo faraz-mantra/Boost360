@@ -664,27 +664,28 @@ public class Site_Meter_Fragment extends Fragment {
                     || get_fp_details_model.getRootAliasUri().contains(ROOT_ALIAS_URI))
                     && get_fp_details_model.getFPWebWidgets() != null
                     && get_fp_details_model.getFPWebWidgets().contains(FP_WEB_WIDGET_DOMAIN)) {
-                if (!TextUtils.isEmpty(get_fp_details_model.getContactName())
-                        && get_fp_details_model.getCategory() != null
-                        && !TextUtils.isEmpty(get_fp_details_model.getEmail())
-                        && get_fp_details_model.getContacts() != null
-                        && !TextUtils.isEmpty(get_fp_details_model.getAddress())
-                        && !TextUtils.isEmpty(get_fp_details_model.getLat())
-                        && !TextUtils.isEmpty(get_fp_details_model.getLng())
-                        && !get_fp_details_model.getLat().equalsIgnoreCase("0")
-                        && !get_fp_details_model.getLng().equalsIgnoreCase("0")) {
-                    chooseDomain();
 
-                } else {
-
-                    /*
-                     * Domain details missing
-                     * navigate to business profile activity
-                     */
+                if(TextUtils.isEmpty(get_fp_details_model.getEmail())
+                        || get_fp_details_model.getContacts() == null){
                     showCustomDomain(getString(R.string.domain_detail_required),
                             Html.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
-                            getString(R.string.ok), null, DialogFrom.DOMAIN_DETAILS_REQUIRED);
+                            getString(R.string.ok), null, DialogFrom.CONTACTS_AND_EMAIL_REQUIRED);
 
+                }else if(get_fp_details_model.getCategory() == null){
+                    showCustomDomain(getString(R.string.domain_detail_required),
+                            Html.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
+                            getString(R.string.ok), null, DialogFrom.CATEGORY_REQUIRED);
+                }else if(TextUtils.isEmpty(get_fp_details_model.getAddress())
+                        || TextUtils.isEmpty(get_fp_details_model.getLat())
+                        || TextUtils.isEmpty(get_fp_details_model.getLng())
+                        || get_fp_details_model.getLat().equalsIgnoreCase("0")
+                        || get_fp_details_model.getLng().equalsIgnoreCase("0")){
+                    showCustomDomain(getString(R.string.domain_detail_required),
+                            Html.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
+                            getString(R.string.ok), null, DialogFrom.ADDRESS_REQUIRED);
+                }
+                else{
+                    chooseDomain();
                 }
             } else {
                 showCustomDomain(getString(R.string.buy_a_domain),
@@ -920,7 +921,9 @@ public class Site_Meter_Fragment extends Fragment {
 
     private enum DialogFrom {
         DOMAIN_AVAILABLE,
-        DOMAIN_DETAILS_REQUIRED,
+        CONTACTS_AND_EMAIL_REQUIRED,
+        CATEGORY_REQUIRED,
+        ADDRESS_REQUIRED,
         DEFAULT
     }
 
@@ -943,15 +946,26 @@ public class Site_Meter_Fragment extends Fragment {
                             case DOMAIN_AVAILABLE:
                                 prepareAndPublishDomain();
                                 break;
-                            case DOMAIN_DETAILS_REQUIRED:
+                            case CONTACTS_AND_EMAIL_REQUIRED:
                                 ((SidePanelFragment.OnItemClickListener) activity).
-                                        onClick(getResources().getString(R.string.business_profile));
+                                        onClick(getResources().getString(R.string.contact__info));
                                 break;
+                            case CATEGORY_REQUIRED:
+                                ((SidePanelFragment.OnItemClickListener) activity).
+                                        onClick(getResources().getString(R.string.basic_info));
+                                break;
+                            case ADDRESS_REQUIRED:
+                                ((SidePanelFragment.OnItemClickListener) activity).
+                                        onClick(getResources().getString(R.string.business__address));
                             case DEFAULT:
 
                                 break;
                         }
                     }
+                    /*
+                    ((SidePanelFragment.OnItemClickListener) activity).
+                onClick(getResources().getString(R.string.business_profile));
+                     */
 
                     @Override
                     public void onNegative(MaterialDialog dialog) {
@@ -985,7 +999,8 @@ public class Site_Meter_Fragment extends Fragment {
         hashMap.put("addressLine1", get_fp_details_model.getAddress());
         hashMap.put("city", get_fp_details_model.getCity());
         hashMap.put("companyName", get_fp_details_model.getTag());
-        hashMap.put("contactName", get_fp_details_model.getContactName());
+        hashMap.put("contactName", TextUtils.isEmpty(get_fp_details_model.getContactName())?
+                session.getFpTag():get_fp_details_model.getContactName());
         hashMap.put("country", get_fp_details_model.getCountry());
         hashMap.put("countryCode", get_fp_details_model.getLanguageCode());
         hashMap.put("email", get_fp_details_model.getEmail());
