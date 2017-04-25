@@ -175,7 +175,7 @@ public class HelpAndSupportActivity extends AppCompatActivity {
         tvTextRia.setText(Methods.fromHtml("If your query is unanswered, please contact us at"));
         tvTextFaq1.setText(Methods.fromHtml("<a href=\"mailto:"+getString(R.string.settings_feedback_link)+"\">"+getString(R.string.settings_feedback_link)+"</a> or call at "+getString(R.string.contact_us_number)+"."));
         tvTextFaq1.setMovementMethod(LinkMovementMethod.getInstance());
-        tvTextFaq2.setText(Methods.fromHtml("Product related queries, please refer to our <a href=\"https://www.nowfloats.com/faq\">FAQs</a>"));
+        tvTextFaq2.setText(Methods.fromHtml("Product related queries, please refer to our <a href=\""+getString(R.string.faqs_url)+"\">FAQs</a>"));
         tvTextFaq2.setMovementMethod(LinkMovementMethod.getInstance());
 
         pd = ProgressDialog.show(this, "", getString(R.string.please_wait));

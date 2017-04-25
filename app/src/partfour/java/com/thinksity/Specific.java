@@ -30,13 +30,13 @@ public class Specific {
 //    public static String TWITTER_TOK 				= "h5lB3rvjU66qOXHgrZK41Q";
 //    public static String TWITTER_SEC 				= "L0Bo08aevt2U1fLjuuYAMtANSAzWWi8voGuvbrdtcY4";
 
-    public static final String TWITTER_TOK 				= "4CiUg5gcIbvYre8XjGd8GsElV";
-    public static final String TWITTER_SEC 				= "4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9";
-    public static final String FACEBOOK_URL = "https://www.facebook.com/nowfloats";
-    public static final String PACKAGE_NAME = "com.digitalseoz";
-    public static final String FACEBOOK_PAGEID = "fb://page/277931445614143";
-    public static final String TWITTER_URL = "https://twitter.com/Nowfloats";
-    public static final String TWITTER_ID_URL = "twitter://user?screen_name=nowfloats";
+    public static final String TWITTER_TOK 		= "4CiUg5gcIbvYre8XjGd8GsElV";
+    public static final String TWITTER_SEC 		= "4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9";
+    public static final String FACEBOOK_URL = "https://www.facebook.com/129528697583648";
+    public static final String PACKAGE_NAME = "com.boostwebz";
+    public static final String FACEBOOK_PAGEID = "fb://page/129528697583648";
+    public static final String TWITTER_URL = "https://twitter.com/digitalseoz";
+    public static final String TWITTER_ID_URL = "twitter://user?screen_name=digitalseoz";
 
 }
 
