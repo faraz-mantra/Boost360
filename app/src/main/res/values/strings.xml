@@ -377,16 +377,16 @@
         <item>ANALYTICS</item>
         <item>ALERTS</item>
     </string-array>
-<string-array name="themeIds">
-    <item>575bfec79bfed51e10df0e5d</item>
-    <item>57c3c1a65d64370d7cf4eb17</item>
-    <item>571f7f789bfed52c543d888d</item>
-</string-array>
+    <string-array name="themeIds">
+        <item>575bfec79bfed51e10df0e5d</item>
+        <item>57c3c1a65d64370d7cf4eb17</item>
+        <item>571f7f789bfed52c543d888d</item>
+    </string-array>
     <string-array name="themeNames">
-    <item>Bold and The Beautiful</item>
-    <item>Fresh Milk Light</item>
-    <item>The First Fox</item>
-</string-array>
+        <item>Bold and The Beautiful</item>
+        <item>Fresh Milk Light</item>
+        <item>The First Fox</item>
+    </string-array>
     <string-array name="quikr_widget">
         <item>automotive</item>
         <item>tourism</item>
@@ -710,6 +710,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="domain_is_available">Domain is available..</string>
     <string name="domain_not_available">Domain is not available..</string>
     <string name="domain_booking_confirmation">Domain Booking Confirmation</string>
+    <string name="domain_configuration">Domain Configuration</string>
     <string name="domain_booking_successful">Domain Booking Successful</string>
     <string name="domain_booking_process">Domain Booking In Process</string>
     <string name="domain_booking_process_message">Your Domain will be activated within 24 hours.</string>
@@ -1002,6 +1003,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="activate_your_domain">Activate your domain</string>
     <string name="submit_request">Submit Request</string>
     <string name="book_your_domain">Book your Domain</string>
+    <string name="already_included_in_your_package">*Already included in your package</string>
+    <string name="link_comments">I would like to map my existing domain to my Nowfloats site %s.nowfloats.com\nplease reach out to me to discuss this in detail.</string>
     <string name="content_link_domain">
         If you have an existing domain, we strongly recommend that you use it for your NowFloats Website.
         Online discovery will be faster as search engines already recognize your domain.
@@ -1088,13 +1091,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Fri</item>
         <item>Sat</item>
     </string-array>
-   <!-- <string name="quikr_list">
-        <ul>
-            <li>Coffee</li>
-            <li>Tea</li>
-            <li>Milk</li>
-        </ul>
-    </string>-->
+    <!-- <string name="quikr_list">
+         <ul>
+             <li>Coffee</li>
+             <li>Tea</li>
+             <li>Milk</li>
+         </ul>
+     </string>-->
     <string-array name="quikr_tip_points">
         <item> Be as detailed as possible in the description of the update. For example, if you are posting an update about a car, mention the brand, model and year. If you are posting an update about an apartment, mention whether it\'s for rent or sale, the area and the number of rooms (1 BHK, 2BHK etc)</item>
         <item>We recommend that you post the update along with a clear image</item>
@@ -1111,7 +1114,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>We recommend that you post the update along with a clear image</item>
         <item>To ensure an optimal experience for all users, you can post only 1 update to Quikr per day</item>
     </string-array>
-<string name = "message_quikr">These guidelines will help you post the right content to Quikr so that the ad doesn\'t get rejected. You can refer to them at any time in <b>Business Profile -> Social Sharing</b>.</string>
+    <string name="message_quikr">These guidelines will help you post the right content to Quikr so that the ad doesn\'t get rejected. You can refer to them at any time in <b>Business Profile -> Social Sharing</b>.</string>
     <string-array name="spinner_list_item_array">
         <item>IMPROVED</item>
         <item>MAINTAINED</item>
