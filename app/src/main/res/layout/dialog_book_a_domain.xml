@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
+
 
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -22,7 +20,12 @@
             android:textColor="@color/white"
             android:textSize="@dimen/xlarge_text_size"
             tools:ignore="MissingPrefix" />
-
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,12 +63,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginTop="@dimen/margin_20"
                 android:orientation="horizontal">
 
                 <TextView
                     fontPath="Roboto-Medium.ttf"
+                    android:layout_gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
@@ -76,7 +80,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
                     android:layout_weight=".4"
                     android:background="@drawable/spinner_background"
@@ -373,44 +377,41 @@
                     android:text="@string/price_of_domain"
                     android:textSize="@dimen/large_text_size"
                     tools:ignore="MissingPrefix" />
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tvPrice"
+                    android:layout_weight="0.4"
+                    fontPath="Roboto-Regular.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
-                    android:orientation="vertical">
+                    android:textSize="@dimen/large_text_size"
+                    tools:ignore="MissingPrefix" />
 
-                    <TextView
-                        android:id="@+id/tvPrice"
-                        fontPath="Roboto-Regular.ttf"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="@dimen/large_text_size"
-                        tools:ignore="MissingPrefix" />
 
-                    <TextView
-                        android:id="@+id/tvPriceRemarks"
-                        fontPath="Roboto-Regular.ttf"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/already_included_in_your_package"
-                        android:textSize="@dimen/large_text_size"
-                        tools:ignore="MissingPrefix" />
-                </LinearLayout>
+
             </LinearLayout>
+            <TextView
+                android:textColor="@color/green"
+                android:layout_marginTop="@dimen/margin_20"
+                android:layout_marginBottom="@dimen/margin_20"
+                android:id="@+id/tvPriceRemarks"
+                fontPath="Roboto-Regular.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/already_included_in_your_package"
+                android:textSize="@dimen/small_text_size"
+                tools:ignore="MissingPrefix" />
         </LinearLayout>
-
+</ScrollView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnBack"
                 fontPath="Roboto-Regular.ttf"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@color/primary_color"
@@ -441,4 +442,3 @@
                 tools:ignore="MissingPrefix" />
         </LinearLayout>
     </LinearLayout>
-</ScrollView>

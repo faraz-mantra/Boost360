@@ -3,11 +3,20 @@
 
     <item
         is-multidex="true"
+        jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\libs\libraries\AF-Android-SDK-v2.3.1.17.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="fc4960d15a15fa450ceab2f52996cf345e771b0f">
+        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\2\AF-Android-SDK-v2.3.1.17_3d5de43f6546be6ccc6a79ee206a286d37e4b3df\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\incremental-runtime-classes\partone\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
+        sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
         <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10000\instant-run_027338dc8cbd7fdc2a846323bb9b72279e4b82ea\classes.dex" />
     </item>
     <item
@@ -34,17 +43,8 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="5d0c44ba4271e4e00a7671ecfbb15292a00c9d2a">
+        sha1="d6cd8e10250d15189b4e243217a95bba1c2dd357">
         <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10000\instant-run-bootstrap_dbaf4d8d8798a2af32d7d472c9f6ee7807211edd\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\libs\libraries\AF-Android-SDK-v2.3.1.17.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="fc4960d15a15fa450ceab2f52996cf345e771b0f">
-        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\2\AF-Android-SDK-v2.3.1.17_3d5de43f6546be6ccc6a79ee206a286d37e4b3df\classes.dex" />
     </item>
 
 </items>

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Boost.iml" filepath="$PROJECT_DIR$/Boost.iml" />
       <module fileurl="file://$PROJECT_DIR$/ManageBoost.iml" filepath="$PROJECT_DIR$/ManageBoost.iml" />
       <module fileurl="file://$PROJECT_DIR$/ZoomImageLibrary/ZoomImageLibrary.iml" filepath="$PROJECT_DIR$/ZoomImageLibrary/ZoomImageLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
