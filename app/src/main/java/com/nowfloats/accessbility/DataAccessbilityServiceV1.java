@@ -10,6 +10,7 @@ import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
 import com.nowfloats.bubble.BubblesService;
@@ -59,7 +60,6 @@ public class DataAccessbilityServiceV1 extends AccessibilityService {
     }
 
     private void showOverlayDialog() {
-        MixPanelController.track(MixPanelController.WHATS_APP_DIALOG,null);
         Intent intent = new Intent(this,OverlayDialog.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
@@ -69,6 +69,7 @@ public class DataAccessbilityServiceV1 extends AccessibilityService {
     public void onAccessibilityEvent(AccessibilityEvent event) {
 
         if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
+            Log.v("ggg",event.toString());
             if (event.getPackageName().toString().equalsIgnoreCase(PK_NAME_WHATSAPP)
                     || (!TextUtils.isEmpty(event.getClassName()) && (
                     event.getClassName().toString().equalsIgnoreCase(BUBBLE_CLASS_NAME)))) {
@@ -89,6 +90,7 @@ public class DataAccessbilityServiceV1 extends AccessibilityService {
                 !event.getClassName().toString().contains(PK_NAME_NOWFLOATS)){
 
                 }else{
+                    Log.v("ggg1","closed");
                     stopService(new Intent(DataAccessbilityServiceV1.this, BubblesService.class));
                 }
 

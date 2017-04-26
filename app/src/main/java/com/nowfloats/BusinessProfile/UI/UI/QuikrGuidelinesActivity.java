@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.nowfloats.NavigationDrawer.Adapter.QuikrAdapter;
+import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 /**
@@ -25,6 +27,7 @@ public class QuikrGuidelinesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quikr_guidelines);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        MixPanelController.track(Key_Preferences.QUIKR_GUIDELINES_ACTIVITY,null);
         if(getSupportActionBar()!= null ){
             setTitle("Quikr Guidelines");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

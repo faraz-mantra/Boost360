@@ -14,32 +14,34 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class MixPanelController {
-    public static final String WHATS_APP_DIALOG = "WhatsAppDialog";
-    public static final String WHATS_APP_DIALOG_CLICKED = "WhatsAppDialogClicked";
-    public static final String BUBBLE_IN_APP_DIALOG = "BubbleInAppDialog";
-    public static final String BUBBLE_IN_APP_DIALOG_CLICKED = "BubbleInAppDialogClicked";
-    public static final String BUBBLE_DIALOG = "BubbleDialogOnWhatsApp";
-    public static final String BUBBLE_DIALOG_SHARE = "BubbleWhatsAppProductShareClicked";
-    public static final String BUBBLE_CLOSED = "BubbleClosedByUser";
-    private static MixpanelAPI mixPanel;
-    public static String Bhours = "bhours", Signup = "SignUpActivity",
-            landingPage = "LandingPage",
-            BusinessDetailActivity = "BIZdetailActivity",
-            contactInfoActivity = "ContactInfoActivity",
-            otherImgsActivity = "OtherImgActivity",
-            primaryImgActivity = "PrimaryImageActivity",
-            Inbox = "INBOXACTIVITY", loginActivity = "LOGIN",
-            mainActivity = "MainActivity", searchActivity = "SearchActivity",
-            messageFloat = "MessageFloat", feedback = "SendEmailActivity",
-            MessageDetailView = "MessageDetailView",
-            FacebookActivity = "FacebookAnalytics";
-    private static String KEY = "";
-    public static MixpanelAPI.People people = null;
 
-    public static void setMixPanel(Activity app, String key) {
-        KEY = key;
-        if (mixPanel != null)
-            mixPanel.flush();
+	public static final String WHATS_APP_DIALOG ="WhatsAppDialog" ;
+	public static final String WHATS_APP_DIALOG_CLICKED ="WhatsAppDialogClicked" ;
+	public static final String BUBBLE_IN_APP_DIALOG = "BubbleInAppDialog";
+	public static final String BUBBLE_IN_APP_DIALOG_CLICKED = "BubbleInAppDialogClicked";
+	public static final String BUBBLE_DIALOG = "BubbleDialogOnWhatsApp";
+	public static final String BUBBLE_DIALOG_SHARE = "BubbleWhatsAppProductShareClicked";
+	public static final String BUBBLE_CLOSED = "BubbleClosedByUser";
+	public static final String WHATSAPP_TO_BOOST = "whatsapp_to_boost";
+	private static MixpanelAPI mixPanel;
+	public static String Bhours = "bhours", Signup = "SignUpActivity",
+			landingPage = "LandingPage",
+			BusinessDetailActivity = "BIZdetailActivity",
+			contactInfoActivity = "ContactInfoActivity",
+			otherImgsActivity = "OtherImgActivity",
+			primaryImgActivity = "PrimaryImageActivity",
+			Inbox = "INBOXACTIVITY", loginActivity = "LOGIN",
+			mainActivity = "MainActivity", searchActivity = "SearchActivity",
+			messageFloat = "MessageFloat", feedback = "SendEmailActivity",
+			MessageDetailView = "MessageDetailView",
+			FacebookActivity="FacebookAnalytics";
+	private static String KEY = "";
+	public static MixpanelAPI.People people = null;
+
+	public static void setMixPanel(Activity app, String key) {
+		KEY = key;
+		if (mixPanel != null)
+			mixPanel.flush();
         /** Boost App **/
         mixPanel = MixpanelAPI.getInstance(app, "7d962760bccee86ab026331478d49bab");
 

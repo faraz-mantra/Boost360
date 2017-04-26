@@ -1201,6 +1201,7 @@
     <string name="take_me_there">Take me there</string>
     <string name="screen_overlay_permission">Screen overlay permission</string>
     <string name="required_overlay_permission">Checkout new feature \"Boost Bubble\", easy to share products</string>
+    <string name="whatsapp_bubble_close">You can disable this feature from your Boost app</string>
 
 
     <string-array name="spinner_list_item_array">
