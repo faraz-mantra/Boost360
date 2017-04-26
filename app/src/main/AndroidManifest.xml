@@ -449,6 +449,12 @@
             android:theme="@style/Theme.bubbleInApp"
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
         <activity
+            android:name="com.nowfloats.accessbility.WhatsAppBubbleCloseDialog"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.bubbleInApp"
+            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
+        <activity
             android:name="com.nowfloats.accessbility.WhatsAppDialog"
             android:autoRemoveFromRecents="true"
             android:label="@string/app_name"

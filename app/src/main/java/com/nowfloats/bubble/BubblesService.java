@@ -43,6 +43,7 @@ import android.view.WindowManager;
 
 import com.nowfloats.accessbility.BubbleDialog;
 import com.nowfloats.accessbility.TempDisplayDialog;
+import com.nowfloats.accessbility.WhatsAppBubbleCloseDialog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
@@ -62,7 +63,8 @@ public class BubblesService extends Service {
     private SharedPreferences pref;
     public enum FROM{
         HOME_ACTIVITY,
-        WHATSAPP
+        WHATSAPP,
+        WHATSAPP_DIALOG
     }
 
     @Override
@@ -166,7 +168,7 @@ public class BubblesService extends Service {
             Bundle bundle = intent.getExtras();
             int y_Pos = 0;
             if(bundle!=null){
-                y_Pos = bundle.getInt(Key_Preferences.BUBBLE_POS,110);
+                y_Pos = bundle.getInt(Key_Preferences.BUBBLE_POS,130);
 
                 if(bundle.containsKey(Key_Preferences.DIALOG_FROM)){
                     from = (FROM) bundle.get(Key_Preferences.DIALOG_FROM);
@@ -180,7 +182,7 @@ public class BubblesService extends Service {
 
             if (bubbles == null || bubbles.size() == 0) {
                 addTrash(R.layout.bubble_trash_layout);
-                addBubble(10, y_Pos);
+                addBubble(20, y_Pos);
             }
 
             return Service.START_REDELIVER_INTENT;
@@ -268,6 +270,13 @@ public class BubblesService extends Service {
     public void removeBubble(BubbleLayout bubble) {
         MixPanelController.track(MixPanelController.BUBBLE_CLOSED,null);
         pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, Calendar.getInstance().getTimeInMillis()).apply();
+        if(from == FROM.WHATSAPP /*!pref.getBoolean(Key_Preferences.SHOW_WHATSAPP_CLOSE_DIALOG,false)*/){
+            pref.edit().putBoolean(Key_Preferences.SHOW_WHATSAPP_CLOSE_DIALOG,true).apply();
+            Intent intent = new Intent(BubblesService.this, WhatsAppBubbleCloseDialog.class).
+                    setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+            startActivity(intent);
+        }
         stopSelf();
     }
 }

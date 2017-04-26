@@ -16,6 +16,7 @@ public class Key_Preferences {
     public static final String POST_TO_QUIKR_SECOND_TIME = "quikr_post_second_time";
     public static final String QUIKR_DIALOG_DISABLED = "quikr_dialog_disabled";
     public static final String SHOW_QUIKR_ANALYTICS = "show_quikr_analytics";
+    public static final String SHOW_WHATSAPP_CLOSE_DIALOG = "whatsApp_close";
     public static  String GET_FP_DETAILS_CITY = "GET_FP_DETAILS_CITY";
     public static  String GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG";
     public static  String IS_BOOST_BUBBLE_ENABLED = "IS_BOOST_BUBBLE_ENABLED";

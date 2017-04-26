@@ -400,6 +400,7 @@ public class Product_Gallery_Fragment extends Fragment {
     public String getSelectedProducts() {
 
         String selectedProducts = "";
+        if(productItemModelList == null) return null;
         for (ProductListModel productListModel : productItemModelList) {
             if (productListModel.isProductSelected) {
 
