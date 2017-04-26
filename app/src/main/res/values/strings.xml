@@ -985,6 +985,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="error_verifying_opc">Error while verifying OPC</string>
     <string name="pay_now">Pay Now</string>
     <string name="opc_hint_text">Connect with our sales executives to get an Online Payment Code (OPC).</string>
+    <string name="domain_book_nowfloats_package">Domain booking is part of your NowFloats package.</string>
 
 
     <string name="domain">Domain:</string>

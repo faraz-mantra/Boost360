@@ -724,7 +724,18 @@ public class Site_Meter_Fragment extends Fragment {
                             linkDomain();
                         }
                     });
+
+            View maView = materialDialog.getCustomView();
+            TextView tvDomainConfig = (TextView) maView.findViewById(R.id.tvDomainConfig);
+            tvDomainConfig.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Methods.showSnackBarPositive(getActivity(), getString(R.string.domain_book_nowfloats_package));
+                }
+            });
         }
+
+
     }
 
     private ArrayList<String> arrDomainExtensions;
@@ -861,10 +872,10 @@ public class Site_Meter_Fragment extends Fragment {
 
 //            if (domainBookDialog != null)
 //                domainBookDialog.dismiss();
-            showCustomDialog(getString(R.string.domain_not_available),
-                    null,
-                    getString(R.string.ok), null, DialogFrom.DEFAULT);
-//            Methods.showSnackBarNegative(getActivity(), getString(R.string.domain_not_available));
+//            showCustomDialog(getString(R.string.domain_not_available),
+//                    null,
+//                    getString(R.string.ok), null, DialogFrom.DEFAULT);
+            Methods.showSnackBarNegative(getActivity(), getString(R.string.domain_not_available));
         }
     }
 
