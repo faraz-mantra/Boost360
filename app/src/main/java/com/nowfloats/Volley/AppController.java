@@ -150,7 +150,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
 
     public void addToRequstQueue(Request request){
         if (mRequestQueue == null) {
-            mRequestQueue = getRequestQueue();
+            getRequestQueue();
         }
         mRequestQueue.add(request);
     }

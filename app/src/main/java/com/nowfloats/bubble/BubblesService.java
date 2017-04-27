@@ -270,7 +270,7 @@ public class BubblesService extends Service {
     public void removeBubble(BubbleLayout bubble) {
         MixPanelController.track(MixPanelController.BUBBLE_CLOSED,null);
         pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, Calendar.getInstance().getTimeInMillis()).apply();
-        if(from == FROM.WHATSAPP /*!pref.getBoolean(Key_Preferences.SHOW_WHATSAPP_CLOSE_DIALOG,false)*/){
+        if(from == FROM.WHATSAPP && !pref.getBoolean(Key_Preferences.SHOW_WHATSAPP_CLOSE_DIALOG,false)){
             pref.edit().putBoolean(Key_Preferences.SHOW_WHATSAPP_CLOSE_DIALOG,true).apply();
             Intent intent = new Intent(BubblesService.this, WhatsAppBubbleCloseDialog.class).
                     setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
