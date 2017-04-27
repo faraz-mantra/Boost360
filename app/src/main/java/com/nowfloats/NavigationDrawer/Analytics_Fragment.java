@@ -48,6 +48,7 @@ import com.nowfloats.Analytics_Screen.SearchQueries;
 import com.nowfloats.Analytics_Screen.SearchRankingActivity;
 import com.nowfloats.Analytics_Screen.SocialAnalytics;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
+import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.CustomWidget.VerticalTextView;
 import com.nowfloats.Login.UserSessionManager;
@@ -265,7 +266,15 @@ public class Analytics_Fragment extends Fragment {
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
-
+        LinearLayout vmnCallLayout = (LinearLayout) rootView.findViewById(R.id.analytics_screen_vmn_call);
+        vmnCallLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
         LinearLayout llSearchRanking = (LinearLayout) rootView.findViewById(R.id.analytics_screen_search_ranking);
         llSearchRanking.setOnClickListener(new View.OnClickListener() {
             @Override

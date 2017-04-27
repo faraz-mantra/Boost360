@@ -1179,4 +1179,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="screen_overlay_permission">Screen overlay permission</string>
     <string name="required_overlay_permission">Give us this permission to see our new feature \"Boost Bubble\"</string>
     <string name="bubble_for_whatsapp">Bubble for WhatsApp</string>
+    <string name="missed_calls">MiSSED CALLS</string>
+    <string name="received_call">RECEIVED CALLS</string>
+    <string name="call_tracker">Call Tracker</string>
 </resources>

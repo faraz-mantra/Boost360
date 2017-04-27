@@ -16,7 +16,7 @@
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/pb_subscriber"
+        android:id="@+id/pb_vmncall"
         android:visibility="gone"/>
 
     <LinearLayout
