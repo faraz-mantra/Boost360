@@ -844,7 +844,7 @@ public class Site_Meter_Fragment extends Fragment {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     tvPriceDef.setText(String.format(getString(R.string.price_of_domain), arrDomainExtensions.get(position)));
                     if (hmPrices.containsKey(arrDomainExtensions.get(position))) {
-                        tvPrice.setText(hmPrices.get(arrDomainExtensions.get(position)));
+                        tvPrice.setText(hmPrices.get(arrDomainExtensions.get(position))+"*");
                     } else {
                         tvPrice.setText("");
                     }

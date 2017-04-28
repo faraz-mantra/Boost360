@@ -457,7 +457,7 @@
     <string name="empty_alert">We will notify you as soon as\nyou have a new alert</string>
     <string name="settings_tou_url">https://nowfloats.com/tnc/</string>
     <string name="settings_privacy_url">https://nowfloats.com/privacy/</string>
-    <string name="accessibility_description">Permission required to upload Boost product and grow your business......</string>
+    <string name="accessibility_description">Sharing your products on WhatsApp is just a step away! Switch ON to grant Boost App the permission.</string>
     <string-array name="domain_array">
         <item>.com</item>
         <item>.net</item>
@@ -1174,7 +1174,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="spinner_title">Filter</string>
     <string name="bubble_in_app_message">We have made it easier for you to now share your products on WhatsApp through this bubble.</string>
     <string name="boost_bubble">Boost Bubble</string>
-    <string name="accessibility_message">go ahead &amp; start sharing on WhatsApp</string>
+    <string name="disable_boost_bubble">Disable Boost Bubble</string>
+    <string name="accessibility_message">Go ahead &amp; start sharing on WhatsApp</string>
     <string name="bubble_in_app_second_message">You just have to grant us \"Accessibility\" permission and you are good to go.</string>
     <string name="bubble_overlay_text">Tap on Bubble to share your product on WhatsApp!</string>
     <string name="open_setting">Open Settings</string>

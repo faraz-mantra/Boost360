@@ -27,7 +27,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.nowfloats.accessbility.DataAccessbilityServiceV2;
+import com.nowfloats.accessbility.DataAccessbilityServiceV3;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.squareup.okhttp.OkHttpClient;
 import com.thinksity.R;
@@ -114,7 +114,7 @@ public class Methods {
     }
     public static boolean isAccessibilitySettingsOn(Context mContext) {
         int accessibilityEnabled = 0;
-        final String service = mContext.getPackageName() + "/" + DataAccessbilityServiceV2.class.getCanonicalName();
+        final String service = mContext.getPackageName() + "/" + DataAccessbilityServiceV3.class.getCanonicalName();
         try {
             accessibilityEnabled = Settings.Secure.getInt(mContext.getApplicationContext().getContentResolver(),
                     android.provider.Settings.Secure.ACCESSIBILITY_ENABLED);

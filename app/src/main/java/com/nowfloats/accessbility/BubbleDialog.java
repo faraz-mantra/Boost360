@@ -31,6 +31,7 @@ import com.thinksity.R;
 
 public class BubbleDialog extends AppCompatActivity {
     public static final String ACTION_KILL_DIALOG = "nowfloats.bubblebutton.bubble.ACTION_KILL_DIALOG";
+    public static final String ACTION_RESET_BUBBLE = "nowfloats.bubblebutton.bubble.ACTION_RESET_BUBBLE";
 
     private Product_Gallery_Fragment productGalleryFragment;
     private FrameLayout mainFrame;
@@ -129,7 +130,7 @@ public class BubbleDialog extends AppCompatActivity {
 //        Intent sendIntent = new Intent();
 //        sendIntent.setAction(Intent.ACTION_SEND);
 //        sendIntent.setType("image/jpeg");
-//        sendIntent.setPackage(DataAccessbilityServiceV2.PK_NAME_WHATSAPP);
+//        sendIntent.setPackage(DataAccessbilityServiceV3.PK_NAME_WHATSAPP);
 //        sendIntent.putExtra(Intent.EXTRA_TEXT,"");
 //        sendIntent.putParcelableArrayListExtra("android.intent.extra.STREAM", localArrayList);
 //        sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -142,7 +143,7 @@ public class BubbleDialog extends AppCompatActivity {
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, message);
         sendIntent.setType("text/plain");
-        sendIntent.setPackage(DataAccessbilityServiceV2.PK_NAME_WHATSAPP);
+        sendIntent.setPackage(DataAccessbilityServiceV3.PK_NAME_WHATSAPP);
         sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(sendIntent);
     }
@@ -205,6 +206,7 @@ public class BubbleDialog extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        sendBroadcast(new Intent(ACTION_RESET_BUBBLE));
         super.onDestroy();
     }
 

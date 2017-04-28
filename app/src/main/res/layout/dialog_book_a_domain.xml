@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <TextView
+        fontPath="Roboto-Medium.ttf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@color/primary_color"
+        android:gravity="center"
+        android:padding="@dimen/margin_15"
+        android:text="@string/book_your_domain"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/large_text_size"
+        tools:ignore="MissingPrefix" />
 
-        <TextView
-            fontPath="Roboto-Medium.ttf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/primary_color"
-            android:gravity="center"
-            android:padding="@dimen/margin_15"
-            android:text="@string/book_your_domain"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/xlarge_text_size"
-            tools:ignore="MissingPrefix" />
-        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:fillViewport="true">
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,7 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:text="@string/domain"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
 
                 <EditText
@@ -69,12 +68,12 @@
 
                 <TextView
                     fontPath="Roboto-Medium.ttf"
-                    android:layout_gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="0.6"
                     android:text="@string/domain_type"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
 
 
@@ -121,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:text="@string/company_name"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
 
                 <TextView
@@ -130,7 +129,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
             </LinearLayout>
 
@@ -147,7 +146,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:text="@string/tag"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
 
                 <TextView
@@ -156,7 +155,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
             </LinearLayout>
 
@@ -172,7 +171,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:text="@string/domain_address_line"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
 
                 <TextView
@@ -181,7 +180,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
             </LinearLayout>
 
@@ -197,7 +196,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:text="@string/city"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
 
                 <TextView
@@ -206,7 +205,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
             </LinearLayout>
 
@@ -222,7 +221,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:text="@string/zip"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
 
                 <EditText
@@ -233,7 +232,7 @@
                     android:layout_weight="0.4"
                     android:background="@drawable/et_bg"
                     android:padding="@dimen/margin_5"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
             </LinearLayout>
 
@@ -249,7 +248,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:text="@string/country_code"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
 
                 <TextView
@@ -258,7 +257,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
             </LinearLayout>
 
@@ -274,7 +273,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:text="@string/isd_code"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
 
                 <TextView
@@ -283,7 +282,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
             </LinearLayout>
 
@@ -299,7 +298,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:text="@string/domain_country"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
 
                 <TextView
@@ -308,7 +307,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
             </LinearLayout>
 
@@ -324,7 +323,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:text="@string/domain_email"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
 
                 <TextView
@@ -333,7 +332,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
             </LinearLayout>
 
@@ -349,7 +348,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:text="@string/domain_primary_number"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
 
                 <TextView
@@ -358,7 +357,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
             </LinearLayout>
 
@@ -375,70 +374,72 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:text="@string/price_of_domain"
-                    android:textSize="@dimen/large_text_size"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
+
                 <TextView
                     android:id="@+id/tvPrice"
-                    android:layout_weight="0.4"
                     fontPath="Roboto-Regular.ttf"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/large_text_size"
+                    android:layout_weight="0.4"
+                    android:textSize="@dimen/medium_text_size"
                     tools:ignore="MissingPrefix" />
 
 
-
             </LinearLayout>
+
             <TextView
-                android:textColor="@color/green"
-                android:layout_marginTop="@dimen/margin_20"
-                android:layout_marginBottom="@dimen/margin_20"
                 android:id="@+id/tvPriceRemarks"
                 fontPath="Roboto-Regular.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_20"
+                android:layout_marginTop="@dimen/margin_20"
                 android:text="@string/already_included_in_your_package"
+                android:textColor="@color/green"
                 android:textSize="@dimen/small_text_size"
                 tools:ignore="MissingPrefix" />
         </LinearLayout>
-</ScrollView>
-        <LinearLayout
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnBack"
+            fontPath="Roboto-Regular.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@color/primary_color"
+            android:elevation="5dp"
+            android:padding="@dimen/margin_10"
+            android:text="@string/back"
+            android:textAllCaps="false"
+            android:textColor="@drawable/yellow_btn_hover_text_color"
+            android:textSize="@dimen/medium_text_size"
+            android:visibility="visible"
+            tools:ignore="MissingPrefix" />
+
+        <Button
+            android:id="@+id/btnActivateDomain"
+            fontPath="Roboto-Regular.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/btnBack"
-                fontPath="Roboto-Regular.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@color/primary_color"
-                android:elevation="5dp"
-                android:padding="@dimen/margin_10"
-                android:text="@string/back"
-                android:textAllCaps="false"
-                android:textColor="@drawable/yellow_btn_hover_text_color"
-                android:textSize="@dimen/large_text_size"
-                android:visibility="visible"
-                tools:ignore="MissingPrefix" />
-
-            <Button
-                android:id="@+id/btnActivateDomain"
-                fontPath="Roboto-Regular.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:background="@color/primary_color_dark"
-                android:elevation="5dp"
-                android:padding="@dimen/margin_10"
-                android:text="@string/activate_your_domain"
-                android:textAllCaps="false"
-                android:textColor="@drawable/yellow_btn_hover_text_color"
-                android:textSize="@dimen/large_text_size"
-                android:visibility="visible"
-                tools:ignore="MissingPrefix" />
-        </LinearLayout>
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@color/primary_color_dark"
+            android:elevation="5dp"
+            android:padding="@dimen/margin_10"
+            android:text="@string/activate_your_domain"
+            android:textAllCaps="false"
+            android:textColor="@drawable/yellow_btn_hover_text_color"
+            android:textSize="@dimen/medium_text_size"
+            android:visibility="visible"
+            tools:ignore="MissingPrefix" />
     </LinearLayout>
+</LinearLayout>

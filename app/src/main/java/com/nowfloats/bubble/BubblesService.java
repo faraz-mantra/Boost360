@@ -26,9 +26,11 @@ package com.nowfloats.bubble;
 
 import android.app.ActivityManager;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
@@ -36,6 +38,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +56,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import static com.nowfloats.accessbility.BubbleDialog.ACTION_KILL_DIALOG;
+import static com.nowfloats.accessbility.BubbleDialog.ACTION_RESET_BUBBLE;
+
 
 public class BubblesService extends Service {
     private List<BubbleLayout> bubbles = new ArrayList<BubbleLayout>();
@@ -61,11 +67,25 @@ public class BubblesService extends Service {
     private BubblesLayoutCoordinator layoutCoordinator;
     private FROM from;
     private SharedPreferences pref;
+    private IntentFilter resertIntentFilters = new IntentFilter(ACTION_RESET_BUBBLE);
+    private float initAplha = 0.5f;
+
     public enum FROM{
         HOME_ACTIVITY,
         WHATSAPP,
         WHATSAPP_DIALOG
     }
+
+    BroadcastReceiver resetReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if(bubbleView!=null){
+                bubbleView.applyAlpha();
+            }
+        }
+
+    };
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -77,6 +97,7 @@ public class BubblesService extends Service {
         for (BubbleLayout bubble : bubbles) {
             recycleBubble(bubble);
         }
+        unregisterReceiver(resetReceiver);
         super.onDestroy();
     }
 
@@ -104,12 +125,13 @@ public class BubblesService extends Service {
         return windowManager;
     }
 
+    private BubbleLayout bubbleView;
     public void addBubble(final int x, final int y) {
 
         try{
-            final BubbleLayout bubbleView = new BubbleLayout(this);
+            bubbleView  = new BubbleLayout(this);
             bubbleView.addView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.bubble_layout, null));
-
+            bubbleView.initalizeBubbleView(initAplha);
             bubbleView.setOnBubbleRemoveListener(new BubbleLayout.OnBubbleRemoveListener() {
                 @Override
                 public void onBubbleRemoved(BubbleLayout bubble) {
@@ -124,6 +146,7 @@ public class BubblesService extends Service {
                         killDialog();
                     } else {
                         killDialog();
+                        bubbleView.restAlpha();
                         bubble.goToRightWall();
                         Intent intent = new Intent(BubblesService.this, TempDisplayDialog.class).
                                 setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -166,23 +189,37 @@ public class BubblesService extends Service {
         } else {
 
             Bundle bundle = intent.getExtras();
-            int y_Pos = 0;
-            if(bundle!=null){
-                y_Pos = bundle.getInt(Key_Preferences.BUBBLE_POS,130);
+            int y_Pos = 0, x_pos = 20;
+            if (bundle != null) {
+                y_Pos = bundle.getInt(Key_Preferences.BUBBLE_POS_Y, 130);
 
                 if(bundle.containsKey(Key_Preferences.DIALOG_FROM)){
                     from = (FROM) bundle.get(Key_Preferences.DIALOG_FROM);
                 }else{
                     from = FROM.WHATSAPP;
                 }
-            }else{
+
+
+                if (bundle.containsKey(Key_Preferences.BUBBLE_POS_X)) {
+                    x_pos = bundle.getInt(Key_Preferences.BUBBLE_POS_X);
+                }
+            } else {
                 from = FROM.WHATSAPP;
             }
 
+            if (from == FROM.WHATSAPP) {
+
+                WindowManager window = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+                Display display = window.getDefaultDisplay();
+                x_pos = display.getWidth();
+                y_Pos = (display.getHeight() * 20) / 100;
+            }else{
+                initAplha = 1.0f;
+            }
 
             if (bubbles == null || bubbles.size() == 0) {
                 addTrash(R.layout.bubble_trash_layout);
-                addBubble(20, y_Pos);
+                addBubble(x_pos, y_Pos);
             }
 
             return Service.START_REDELIVER_INTENT;
@@ -192,6 +229,7 @@ public class BubblesService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        registerReceiver(resetReceiver,resertIntentFilters);
 
     }
 
