@@ -7,17 +7,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/toolbar"
         layout="@layout/toolbar"/>
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="wrap_content"
-        android:id="@+id/list"/>
 
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/pb_vmncall"
-        android:visibility="gone"/>
+    <ExpandableListView
+        android:id="@+id/exp_list"
+        android:layout_marginTop="10dp"
+        android:groupIndicator="@android:color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <LinearLayout
         android:layout_width="match_parent"

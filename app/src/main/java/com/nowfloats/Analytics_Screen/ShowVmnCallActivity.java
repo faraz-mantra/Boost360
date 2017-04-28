@@ -4,9 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.ExpandableListView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -16,7 +15,9 @@ import com.thinksity.R;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 
 /**
  * Created by Admin on 27-04-2017.
@@ -25,10 +26,8 @@ import java.util.List;
 public class ShowVmnCallActivity extends AppCompatActivity {
 
 
-    RecyclerView rvList;
-    ArrayList<VmnCallModel> list;
+    ExpandableListView expList;
     Toolbar toolbar;
-    String title;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,27 +35,53 @@ public class ShowVmnCallActivity extends AppCompatActivity {
         setContentView(R.layout.activity_vmn_calls);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        Intent intent = getIntent();
+        expList = (ExpandableListView) findViewById(R.id.exp_list);
 
+        Intent intent = getIntent();
         if(intent != null){
-            Type type = new TypeToken<List<VmnCallModel>>(){}.getType();
-            list = new Gson().fromJson(intent.getStringExtra("Calls"),type);
-            title = intent.getStringExtra("CallType");
+            Type type = new TypeToken<ArrayList<VmnCallModel>>(){}.getType();
+            ArrayList<VmnCallModel> list =  new Gson().fromJson(intent.getStringExtra("calls"),type);
+            numberWiseSeparation(list);
         }else{
             return;
         }
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            setTitle(title);
+            setTitle("Call Logs");
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        VmnCallAdapter adapter = new VmnCallAdapter(this,list);
-        rvList = (RecyclerView) findViewById(R.id.list);
-        rvList.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-        rvList.setHasFixedSize(true);
-        rvList.setAdapter(adapter);
+
+    }
+
+    private void numberWiseSeparation(ArrayList<VmnCallModel> list){
+        HashMap<Object, ArrayList<VmnCallModel>> hashMap = new HashMap<>();
+        for(VmnCallModel model: list) {
+            if (!hashMap.containsKey(model.getCallerNumber())) {
+                ArrayList<VmnCallModel> subList = new ArrayList<>();
+                subList.add(model);
+
+                hashMap.put(model.getCallerNumber(), subList);
+            } else {
+                hashMap.get(model.getCallerNumber()).add(model);
+            }
+        }
+        ArrayList<ArrayList<VmnCallModel>> bsort = new ArrayList<>(hashMap.values());
+        Collections.sort(bsort, new Comparator<ArrayList<VmnCallModel>>() {
+            @Override
+            public int compare(ArrayList<VmnCallModel> o1, ArrayList<VmnCallModel> o2) {
+                String first = removeDate(o1.get(0).getCallDateTime());
+                String second = removeDate(o2.get(0).getCallDateTime());
+                return second.compareToIgnoreCase(first);
+            }
+        });
+        expList.setAdapter(new VmnCallAdapter(this,bsort));
+
+    }
+
+    private String removeDate(String withDate){
+        return  withDate.replace("/Date(", "").replace(")/", "");
     }
 
 }
