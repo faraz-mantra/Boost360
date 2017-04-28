@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2017030021"
-    android:versionName="4.6.0">
+    android:versionCode="2017030028"
+    android:versionName="4.6.1">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
@@ -423,9 +423,9 @@
         <activity android:name="com.nowfloats.Analytics_Screen.SearchRankingActivity"></activity>
 
         <service
-            android:name="com.nowfloats.accessbility.DataAccessbilityServiceV1"
+            android:name="com.nowfloats.accessbility.DataAccessbilityServiceV3"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
-            <intent-filter>
+            <intent-filter android:priority="2147483647">
                 <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>
             <meta-data
@@ -445,6 +445,15 @@
         <activity
             android:name="com.nowfloats.accessbility.BubbleInAppDialog"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.bubbleInApp"
+            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
+        <activity
+            android:name="com.nowfloats.accessbility.WhatsAppBubbleCloseDialog"
+            android:autoRemoveFromRecents="true"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance"
+            android:noHistory="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.bubbleInApp"
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />

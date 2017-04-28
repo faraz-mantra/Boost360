@@ -273,7 +273,7 @@ public class Home_Fragment_Tab extends Fragment {
 
         int px = Methods.dpToPx(80,getActivity());
         Intent intent = new Intent(getActivity(), BubblesService.class);
-        intent.putExtra(Key_Preferences.BUBBLE_POS,px);
+        intent.putExtra(Key_Preferences.BUBBLE_POS_Y,px);
         intent.putExtra(Key_Preferences.DIALOG_FROM, BubblesService.FROM.HOME_ACTIVITY);
         activity.startService(intent);
 

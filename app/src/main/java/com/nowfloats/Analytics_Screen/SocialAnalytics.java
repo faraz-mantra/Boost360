@@ -28,6 +28,7 @@ import com.nowfloats.Analytics_Screen.model.GetFacebookAnalyticsData;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 import java.util.HashMap;
@@ -46,7 +47,7 @@ import retrofit.client.Response;
 public class SocialAnalytics extends AppCompatActivity implements LoginFragment.OpenOtherFacebookScreen, View.OnClickListener {
 
     private int facebookStatus = 0;
-    private final static int FETCH_DATA = 20,POST_UPDATE = 10,LOGIN_FACEBOOK = -100;
+    private final static int FETCH_DATA = 20,POST_UPDATE = 10,LOGIN_FACEBOOK = 30;
     WebView web;
     ProgressDialog progress;
     LinearLayout layout;
@@ -223,6 +224,7 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
                 break;
             case R.id.quikr:
                 pos = 1;
+                MixPanelController.track(Key_Preferences.SHOW_QUIKR_ANALYTICS,null);
                 checkForMessage(QUIKR);
                 break;
             default:

@@ -3,94 +3,127 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="20dp">
+    android:orientation="vertical">
 
     <TextView
-        fontPath="Roboto-Regular.ttf"
+        fontPath="Roboto-Medium.ttf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="5dp"
-        android:elevation="5dp"
-        android:padding="@dimen/margin_10"
-        android:text="@string/content_link_domain"
-        android:textColor="@color/black"
-        android:visibility="visible"
+        android:background="@color/primary_color"
+        android:gravity="center"
+        android:padding="@dimen/margin_15"
+        android:text="@string/have_an_existing_domain"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/large_text_size"
         tools:ignore="MissingPrefix" />
 
-    <RadioGroup
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_10"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
-        <RadioButton
-            android:id="@+id/rbPointExisting"
-            fontPath="Roboto-Regular.ttf"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/point_your_existing_domain_to_nowfloats_website"
-            android:textColor="@color/black"
-            tools:ignore="MissingPrefix" />
+            android:orientation="vertical"
+            android:padding="@dimen/margin_10">
 
-        <RadioButton
-            android:id="@+id/rbPointNFWeb"
-            fontPath="Roboto-Regular.ttf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10"
-            android:text="@string/put_your_nowfloats_website_as_a_sub_domain"
-            android:textColor="@color/black"
-            tools:ignore="MissingPrefix" />
-    </RadioGroup>
+            <TextView
+                fontPath="Roboto-Regular.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:elevation="5dp"
+                android:padding="@dimen/margin_10"
+                android:text="@string/content_link_domain"
+                android:textColor="@color/dark_grey"
+                android:textSize="@dimen/medium_text_size"
+                android:visibility="visible"
+                tools:ignore="MissingPrefix" />
 
-    <EditText
-        android:id="@+id/edtComments"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/margin_100"
-        android:layout_marginTop="@dimen/margin_10"
-        android:background="@drawable/et_bg" />
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_10"
+                android:orientation="vertical">
 
+                <RadioButton
+                    android:id="@+id/rbPointExisting"
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/point_your_existing_domain_to_nowfloats_website"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="@dimen/medium_text_size"
+                    tools:ignore="MissingPrefix" />
+
+                <RadioButton
+                    android:id="@+id/rbPointNFWeb"
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:text="@string/put_your_nowfloats_website_as_a_sub_domain"
+                    android:textColor="@color/dark_grey"
+                    android:textSize="@dimen/medium_text_size"
+                    tools:ignore="MissingPrefix" />
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/edtComments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:background="@drawable/et_bg"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:padding="@dimen/margin_5"
+                android:textSize="@dimen/medium_text_size" />
+
+
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_20"
-        android:layout_marginTop="@dimen/margin_20"
-        android:gravity="right"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnBack"
             fontPath="Roboto-Medium.ttf"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:background="@drawable/grey_btn_bg"
+            android:layout_weight="1"
+            android:background="@color/primary_color"
             android:elevation="5dp"
             android:padding="@dimen/margin_10"
             android:text="@string/back"
             android:textAllCaps="false"
-            android:textColor="@color/black"
+            android:textColor="@drawable/yellow_btn_hover_text_color"
             android:visibility="visible"
             tools:ignore="MissingPrefix" />
 
         <Button
             android:id="@+id/btnSubmitRequest"
             fontPath="Roboto-Medium.ttf"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:background="@drawable/yellow_btn_focus_bg"
+            android:layout_weight="1"
+            android:background="@color/primary_color_dark"
             android:elevation="5dp"
             android:enabled="true"
             android:padding="@dimen/margin_10"
             android:text="@string/submit_request"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@drawable/yellow_btn_hover_text_color"
             android:visibility="visible"
             tools:ignore="MissingPrefix" />
     </LinearLayout>

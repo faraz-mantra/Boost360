@@ -221,30 +221,6 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
             }
         }
 
-//    private void showPopup(final int pOs) {
-//        final MaterialDialog dialog = new MaterialDialog.Builder(appContext)
-//                .customView(R.layout.page_edit_popup,true)
-//                .show();
-//        View view = dialog.getCustomView();
-//        TextView title = (TextView) view.findViewById(R.id.title);
-//        TextView edit = (TextView) view.findViewById(R.id.edit);
-//        TextView delete = (TextView) view.findViewById(R.id.delete);
-//        title.setText(storeData.get(pOs).DisplayName);
-//        edit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog.dismiss();
-//                editPage(storeData.get(pOs).PageId,pOs);
-//            }
-//        });
-//
-//        delete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                deletePage(storeData.get(pOs).PageId,dialog,pOs);
-//            }
-//        });
-//    }
 
     private void editPage(String pageId, final int pOs) {
 
@@ -255,33 +231,6 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
 
     }
 
-//    private void deletePage(String pageId,final MaterialDialog dialog, final int posi) {
-//        try {
-//            JSONObject map = new JSONObject();
-//            map.put("PageId", pageId);
-//            map.put("Tag", "" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
-//            map.put("clientId", "" + Constants.clientId);
-//            String url = Constants.NOW_FLOATS_API_URL + "/Discover/v1/floatingpoint/custompage/delete";
-//            new PageDelete(url, map.toString(), appContext, posi).execute();
-//            dialog.dismiss();
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        /*pageInterface.deletePage(map, new Callback<String>() {
-//            @Override
-//            public void success(String s, Response response) {
-//                CustomPageFragment.dataModel.remove(posi);
-//                dialog.dismiss();
-//                Methods.showSnackBarPositive(appContext, "Page deleted successfully");
-//            }
-//
-//            @Override
-//            public void failure(RetrofitError error) {
-//                Log.e("delete error",""+error.getMessage());
-//                Methods.showSnackBarNegative(appContext, "Something went wrong, Try again later");
-//            }
-//        });*/
-//    }
 
     @Override
     public int getItemCount() {

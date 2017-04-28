@@ -38,6 +38,7 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.nowfloats.accessbility.BubbleDialog;
 import com.thinksity.R;
@@ -55,6 +56,7 @@ public class BubbleLayout extends BubbleBaseLayout {
     private MoveAnimator animator;
     private int width,height,maxWidth;
     private WindowManager windowManager;
+    private float initAlpha = 0;
     private boolean shouldStickToWall = true;
 
     public void setOnBubbleRemoveListener(OnBubbleRemoveListener listener) {
@@ -96,8 +98,15 @@ public class BubbleLayout extends BubbleBaseLayout {
         }
     }
 
+    private ImageView ivBubble;
+
     private void initializeView() {
         setClickable(true);
+    }
+
+    public void initalizeBubbleView(float initAlpha) {
+        ivBubble = (ImageView) findViewById(R.id.ivBubble);
+        this.initAlpha = initAlpha;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
@@ -162,6 +171,7 @@ public class BubbleLayout extends BubbleBaseLayout {
                     .loadAnimator(getContext(), R.animator.bubble_shown_animator);
             animator.setTarget(this);
             animator.start();
+            applyAlpha();
         }
     }
 
@@ -171,6 +181,7 @@ public class BubbleLayout extends BubbleBaseLayout {
                     .loadAnimator(getContext(), R.animator.bubble_down_click_animator);
             animator.setTarget(this);
             animator.start();
+           restAlpha();
         }
     }
 
@@ -180,6 +191,7 @@ public class BubbleLayout extends BubbleBaseLayout {
                     .loadAnimator(getContext(), R.animator.bubble_up_click_animator);
             animator.setTarget(this);
             animator.start();
+          applyAlpha();
         }
     }
 
@@ -222,6 +234,16 @@ public class BubbleLayout extends BubbleBaseLayout {
         windowManager.updateViewLayout(this, getViewParams());
     }
 
+    public void restAlpha(){
+        ivBubble.setAlpha(1.0f);
+        ivBubble.invalidate();
+    }
+
+    public void applyAlpha(){
+        ivBubble.setAlpha(initAlpha);
+        ivBubble.invalidate();
+
+    }
 
     private class MoveAnimator implements Runnable {
         private Handler handler = new Handler(Looper.myLooper());
