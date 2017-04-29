@@ -573,7 +573,7 @@
                         android:layout_height="18dp"
                         android:tint="@color/white"
                         android:layout_gravity="center"
-                        android:src="@drawable/analytics_search_ranking" />
+                        android:src="@drawable/ic_call_white" />
                 </FrameLayout>
 
                 <com.nowfloats.CustomWidget.roboto_lt_24_212121
@@ -603,7 +603,7 @@
                             fontPath="Roboto-Medium.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="25"
+                            android:text="0"
                             android:textColor="@color/primaryColor"
                             android:textSize="33sp"
                             android:visibility="visible"

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -117,6 +118,20 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
             }
         });
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
 
     @Override
     public void onClick(View v) {
@@ -126,6 +141,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
             case R.id.card_view_view_calllog:
                 i.putExtra("calls",new Gson().toJson(totalCalls));
                 startActivity(i);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
         }
     }
