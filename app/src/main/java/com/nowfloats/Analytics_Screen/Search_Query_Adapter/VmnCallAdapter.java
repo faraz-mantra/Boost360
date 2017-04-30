@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.nowfloats.Analytics_Screen.VmnMediaPlayer;
 import com.nowfloats.Analytics_Screen.model.VmnCallModel;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
@@ -35,10 +37,12 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
     private final Handler handler;
     private ArrayList<ArrayList<VmnCallModel>> listData;
     private Context mContext;
+    VmnMediaPlayer vmnMediaPlayer;
     public VmnCallAdapter(Context context,ArrayList<ArrayList<VmnCallModel>> hashMap){
         mContext = context;
         listData = hashMap;
         handler = new Handler();
+        vmnMediaPlayer = VmnMediaPlayer.getInstance(mContext);
     }
 
     @Override
@@ -115,14 +119,17 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
             childHolder.mediaImage.setVisibility(View.GONE);
             childHolder.downloadImage.setVisibility(View.GONE);
             childHolder.progressBar.setVisibility(View.GONE);
+            childHolder.mediaLayout.setVisibility(View.GONE);
         }else{
+            childHolder.mediaLayout.setVisibility(View.VISIBLE);
             childHolder.callImage.setImageResource(R.drawable.ic_call_received);
             childHolder.mediaImage.setVisibility(View.VISIBLE);
             childHolder.downloadImage.setVisibility(View.VISIBLE);
-            childHolder.progressBar.setVisibility(View.VISIBLE);
+            childHolder.recEndPoint.setText("/ "+vmnMediaPlayer.getTimeFromMilliSeconds(Long.valueOf(childModel.getCallDuration())));
             childHolder.downloadImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    childHolder.progressBar.setVisibility(View.VISIBLE);
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
@@ -131,15 +138,34 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
                     }).start();
                 }
             });
-            childHolder.mediaImage.setOnClickListener(new View.OnClickListener() {
+            childHolder.playButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startAudio(childModel.getCallRecordingUri());
+
+                    if(isSameUrl(childModel.getCallRecordingUri())){
+                        if(isPlaying())
+                        {
+                            vmnMediaPlayer.pause();
+                            childHolder.playButton.setImageResource(R.drawable.ic_play_light);
+                        }else
+                        {
+                            vmnMediaPlayer.start();
+                            childHolder.playButton.setImageResource(R.drawable.ic_pause_light);
+                        }
+                    }else{
+                        //stop prev start new
+                        startAudio(childModel.getCallRecordingUri());
+                        childHolder.playButton.setImageResource(R.drawable.ic_pause_light);
+                    }
                 }
             });
         }
 
         return convertView;
+    }
+
+    private boolean isSameUrl(String callRecordingUri) {
+        return callRecordingUri.equals(vmnMediaPlayer.getUrl());
     }
 
     @Override
@@ -158,22 +184,31 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
         }
     }
 
-    private class MyChildHolder {
+    public class MyChildHolder {
 
-        TextView date;
-        ImageView mediaImage, callImage,downloadImage;
-        ProgressBar progressBar;
-        MyChildHolder(View itemView) {
+        public TextView date,recEndPoint,recCurrPoint;
+        public ImageView mediaImage, callImage,downloadImage,playButton;
+        public ProgressBar progressBar;
+        LinearLayout mediaLayout;
+        public MyChildHolder(View itemView) {
             date = (TextView) itemView.findViewById(R.id.tv_date);
             mediaImage = (ImageView) itemView.findViewById(R.id.media_img);
             callImage = (ImageView) itemView.findViewById(R.id.call_img);
             downloadImage = (ImageView) itemView.findViewById(R.id.download_img);
             progressBar = (ProgressBar) itemView.findViewById(R.id.progress);
+            playButton = (ImageView) itemView.findViewById(R.id.imgview_play);
+            recEndPoint = (TextView) itemView.findViewById(R.id.tv_end_time);
+            recCurrPoint = (TextView) itemView.findViewById(R.id.tv_current_time);
+            mediaLayout = (LinearLayout) itemView.findViewById(R.id.media_layout);
         }
     }
 
     private void startAudio(String url){
+        vmnMediaPlayer.setUpPlayer(url);
+    }
 
+    private boolean isPlaying(){
+       return vmnMediaPlayer.isPlaying();
     }
 
     private void downloadFile(String fileurl, String filename, final ProgressBar progress){
@@ -201,7 +236,7 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
                 publishHandler(progress,total,lenghtOfFile);
                 output.write(data, 0, count);
             }
-            progress.setVisibility(View.GONE);
+
             output.flush();
             output.close();
             input.close();
@@ -215,8 +250,12 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
             @Override
             public void run() {
                 progress.setProgress((int)(total*100/lengthOfFile));
+                if(progress.getProgress() == 100){
+                    progress.setProgress(0);
+                    progress.setVisibility(View.GONE);
+                }
             }
-        },200);
+        },400);
     }
     private File initProfilePicFolder(String file) {
         File ProfilePicFolder = new File(Environment.getExternalStorageDirectory() + File.separator + "nowfloats/");
@@ -238,3 +277,4 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
         return ProfilePicFile;
     }
 }
+

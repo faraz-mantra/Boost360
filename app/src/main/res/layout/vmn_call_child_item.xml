@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:layout_width="match_parent">
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:gravity="center_vertical"
-        android:background="@color/white"
         android:layout_height="wrap_content">
         <ImageView
             android:layout_marginStart="16dp"
@@ -42,14 +42,18 @@
             android:background="@color/primary"
             android:src="@drawable/ic_file_download" />
     </LinearLayout>
-
+    <include
+        android:id="@+id/media_layout"
+        layout="@layout/dialog_media_player"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <ProgressBar
         android:id="@+id/progress"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:progress="0"
         android:max="100"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_height="2dp" />
 
 </LinearLayout>
