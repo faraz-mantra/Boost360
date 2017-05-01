@@ -7,7 +7,7 @@
     <ImageView
         android:layout_width="50dp"
         android:layout_height="40dp"
-        android:paddingLeft="10dp"
+        android:padding="5dp"
         android:src="@drawable/ic_play_light"
         android:id="@+id/imgview_play" />
     <TextView

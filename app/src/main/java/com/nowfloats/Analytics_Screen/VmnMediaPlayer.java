@@ -84,14 +84,17 @@ public class VmnMediaPlayer {
 
     public void pause(){
         playOrPause = true;
+        Log.v("ggg","pause");
         mediaPlayer.pause();
     }
     public void start(){
+        Log.v("ggg","start");
         playOrPause = true;
         mediaPlayer.start();
     }
 
     public void stop(){
+        Log.v("ggg","stop");
         playOrPause = false;
         mediaPlayer.stop();
         mediaPlayer.reset();
