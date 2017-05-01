@@ -5,24 +5,20 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.PowerManager;
 import android.util.Log;
-import android.widget.ImageView;
 
 import com.nowfloats.Analytics_Screen.Search_Query_Adapter.VmnCallAdapter;
-import com.thinksity.R;
 
 import java.io.IOException;
-import java.util.Locale;
 
 /**
  * Created by Admin on 29-04-2017.
  */
 
-public class VmnMediaPlayer implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener {
+public class VmnMediaPlayer {
     private static MediaPlayer mediaPlayer;
     private Context mContext;
     private String playingUrl;
-    private VmnCallAdapter.MyChildHolder childHolder;
-    private ImageView prevplayToPause;
+    private boolean  playOrPause;
     private static VmnMediaPlayer vmnMediaPlayer;
 
     private VmnMediaPlayer(Context context) {
@@ -35,56 +31,48 @@ public class VmnMediaPlayer implements MediaPlayer.OnCompletionListener, MediaPl
         }
         return vmnMediaPlayer;
     }
-    public void setUpPlayer(String url){
+    public void setUpPlayer(VmnCallAdapter.ConnectToVmnPlayer implementer){
         if(mediaPlayer == null){
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.setWakeMode(mContext, PowerManager.PARTIAL_WAKE_LOCK);
-            mediaPlayer.setOnCompletionListener(this);
-            mediaPlayer.setOnPreparedListener(this);
-            mediaPlayer.setScreenOnWhilePlaying(true);
+            mediaPlayer.setOnCompletionListener(implementer);
+            mediaPlayer.setOnPreparedListener(implementer);
+            mediaPlayer.setOnErrorListener(implementer);
         }
-        playingUrl = url;
-        setDataUrl(url);
     }
-    public void setHolder(VmnCallAdapter.MyChildHolder holder){
-        setPrevPlayToPause();
-        childHolder = holder;
-        prevplayToPause = childHolder.playButton;
-    }
-    Runnable updateProgressBar = new Runnable() {
-        @Override
-        public void run() {
-            int duration=mediaPlayer.getCurrentPosition();
-            int seekBarPos = duration*100 / mediaPlayer.getDuration();
 
-            String time=getTimeFromMilliSeconds((long) duration);
-            childHolder.progressBar.setProgress(seekBarPos);
-            childHolder.recCurrPoint.setText(time);
-        }
-    };
-    public void seekTo(int i){
-        mediaPlayer.seekTo(i);
+    public void reset(){
+        mediaPlayer.reset();
     }
-    public int getProgress(){
+
+    public void seekTo(int i){
+        mediaPlayer.seekTo(seekToDuration(i));
+    }
+
+    private int seekToDuration(int i){
+        int totalDuration = mediaPlayer.getDuration();
+        return (i*totalDuration)/100;
+    }
+
+    public int getCurrentPosition(){
         return mediaPlayer.getCurrentPosition();
     }
-    public void setPrevPlayToPause(){
-        if(prevplayToPause == null){
-            Log.v("ggg","first recording play");
-            return;
-        }
-        prevplayToPause.setImageResource(R.drawable.ic_play_light);
+
+    public int getDuration(){
+        return  mediaPlayer.getDuration();
     }
+
     public String getUrl(){
         return playingUrl;
     }
-    private void setDataUrl(String url){
+
+    public void setDataUrl(String url){
         Log.v("ggg",url);
-        if(mediaPlayer.isPlaying()){
+        playingUrl = url;
+        if(playOrPause){
             Log.v("ggg","isplay");
-            mediaPlayer.stop();
-            mediaPlayer.reset();
+            stop();
         }
         try {
             mediaPlayer.setDataSource(url);
@@ -95,31 +83,33 @@ public class VmnMediaPlayer implements MediaPlayer.OnCompletionListener, MediaPl
     }
 
     public void pause(){
+        playOrPause = true;
         mediaPlayer.pause();
     }
     public void start(){
+        playOrPause = true;
         mediaPlayer.start();
-        seekTo(childHolder.progressBar.getProgress());
     }
+
+    public void stop(){
+        playOrPause = false;
+        mediaPlayer.stop();
+        mediaPlayer.reset();
+    }
+
     public boolean isPlaying(){
 
         return mediaPlayer != null && mediaPlayer.isPlaying();
 
     }
-    @Override
-    public void onCompletion(MediaPlayer mp) {
 
-    }
-
-    @Override
-    public void onPrepared(MediaPlayer mp) {
-        Log.v("ggg","play");
-        start();
-    }
-
-    public String getTimeFromMilliSeconds(Long pos) {
-        int seconds = (int) (pos / 1000) % 60 ;
-        int minutes = (int) ((pos / (1000*60)) % 60);
-        return String.format(Locale.ENGLISH,"%02d:%02d", minutes,seconds);
+    public void release(){
+        if(mediaPlayer != null){
+            Log.v("ggg","released");
+            mediaPlayer.release();
+            mediaPlayer = null;
+            playingUrl = null;
+            playOrPause = false;
+        }
     }
 }

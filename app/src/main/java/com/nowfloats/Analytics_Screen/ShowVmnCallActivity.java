@@ -29,6 +29,7 @@ public class ShowVmnCallActivity extends AppCompatActivity {
 
     ExpandableListView expList;
     Toolbar toolbar;
+    VmnCallAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,13 +78,15 @@ public class ShowVmnCallActivity extends AppCompatActivity {
                 return second.compareToIgnoreCase(first);
             }
         });
-        expList.setAdapter(new VmnCallAdapter(this,bsort));
+        adapter = new VmnCallAdapter(this,bsort);
+        expList.setAdapter(adapter);
 
     }
 
     private String removeDate(String withDate){
         return  withDate.replace("/Date(", "").replace(")/", "");
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -97,6 +100,9 @@ public class ShowVmnCallActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        if(adapter != null){
+            adapter.releaseResources();
+        }
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 }
