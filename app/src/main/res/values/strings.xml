@@ -1183,4 +1183,5 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="received_call">RECEIVED CALLS</string>
     <string name="call_tracker">Call Tracker</string>
     <string name="data_is_empty">Calls are empty</string>
+    <string name="successfully_downloaded">Successfully Downloaded</string>
 </resources>

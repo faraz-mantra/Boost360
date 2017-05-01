@@ -72,6 +72,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
     private void getVmnCalls(){
         mProgressBar.setVisibility(View.VISIBLE);
         String endDate =new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(new Date());
+        Log.v("ggg",endDate);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("clientId", Constants.clientId);
         hashMap.put("fpid",sessionManager.getFPID());

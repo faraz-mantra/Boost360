@@ -66,25 +66,21 @@ public class ShowVmnCallActivity extends AppCompatActivity {
 
                 hashMap.put(model.getCallerNumber(), subList);
             } else {
-                hashMap.get(model.getCallerNumber()).add(model);
+                hashMap.get(model.getCallerNumber()).add(0,model);
             }
         }
         ArrayList<ArrayList<VmnCallModel>> bsort = new ArrayList<>(hashMap.values());
         Collections.sort(bsort, new Comparator<ArrayList<VmnCallModel>>() {
             @Override
             public int compare(ArrayList<VmnCallModel> o1, ArrayList<VmnCallModel> o2) {
-                String first = removeDate(o1.get(0).getCallDateTime());
-                String second = removeDate(o2.get(0).getCallDateTime());
+                String first = o1.get(0).getCallDateTime();
+                String second = o2.get(0).getCallDateTime();
                 return second.compareToIgnoreCase(first);
             }
         });
         adapter = new VmnCallAdapter(this,bsort);
         expList.setAdapter(adapter);
 
-    }
-
-    private String removeDate(String withDate){
-        return  withDate.replace("/Date(", "").replace(")/", "");
     }
 
 

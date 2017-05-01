@@ -751,11 +751,13 @@ public class Analytics_Fragment extends Fragment {
 
     private void setVmnTotalCallCount(){
         vmnProgressBar.setVisibility(View.VISIBLE);
+        vmnTotalCallCount.setVisibility(View.GONE);
         CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
         trackerApis.getTotalCalls(Constants.clientId, session.getFPID(), new Callback<String>() {
             @Override
             public void success(String s, Response response) {
                 vmnProgressBar.setVisibility(View.GONE);
+                vmnTotalCallCount.setVisibility(View.VISIBLE);
                 if(s == null || s.equals("null") || response.getStatus() != 200){
                     return;
                 }

@@ -69,12 +69,13 @@ public class VmnMediaPlayer {
 
     public void setDataUrl(String url){
         Log.v("ggg",url);
-        playingUrl = url;
         if(playOrPause){
             Log.v("ggg","isplay");
             stop();
         }
         try {
+
+            playingUrl = url;
             mediaPlayer.setDataSource(url);
             mediaPlayer.prepareAsync(); // might take long! (for buffering, etc)
         } catch (IOException e) {
@@ -98,6 +99,7 @@ public class VmnMediaPlayer {
         playOrPause = false;
         mediaPlayer.stop();
         mediaPlayer.reset();
+        playingUrl = null;
     }
 
     public boolean isPlaying(){
