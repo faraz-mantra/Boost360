@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="#eee"
     android:layout_width="match_parent">
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:gravity="center_vertical"
+        android:padding="5dp"
         android:layout_height="wrap_content">
         <ImageView
             android:layout_marginStart="16dp"
@@ -23,28 +24,21 @@
             android:layout_gravity="center"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:textSize="12sp"
             android:layout_height="wrap_content" />
-        <ImageView
-            android:id="@+id/download_img"
+        <TextView
+            android:id="@+id/tv_play"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginEnd="16dp"
+            android:text="Play"
             android:padding="10dp"
-            android:layout_margin="1dp"
-            android:background="@color/primary"
-            android:src="@drawable/ic_file_download" />
+            android:textAllCaps="true"
+            android:layout_marginRight="16dp" />
     </LinearLayout>
-    <include
-        android:id="@+id/media_layout"
-        layout="@layout/dialog_media_player"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <ProgressBar
-        android:id="@+id/progress"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:progress="0"
-        android:max="100"
-        android:visibility="gone"
-        android:layout_height="2dp" />
+        android:layout_height="1dp"
+        android:background="@color/gray_transparent"/>
 
 </LinearLayout>

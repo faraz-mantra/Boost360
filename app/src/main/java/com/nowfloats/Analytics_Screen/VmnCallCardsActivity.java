@@ -72,7 +72,6 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
     private void getVmnCalls(){
         mProgressBar.setVisibility(View.VISIBLE);
         String endDate =new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(new Date());
-        Log.v("ggg",endDate);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("clientId", Constants.clientId);
         hashMap.put("fpid",sessionManager.getFPID());
@@ -113,7 +112,6 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 
             @Override
             public void failure(RetrofitError error) {
-                Log.v("ggg",error.getMessage());
                 mProgressBar.setVisibility(View.GONE);
                 Methods.showSnackBarNegative(VmnCallCardsActivity.this,getString(R.string.something_went_wrong_try_again));
             }

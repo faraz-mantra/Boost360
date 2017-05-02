@@ -1,21 +1,25 @@
 package com.nowfloats.Analytics_Screen.Search_Query_Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.Analytics_Screen.VmnMediaPlayer;
 import com.nowfloats.Analytics_Screen.model.VmnCallModel;
 import com.nowfloats.util.Methods;
@@ -86,7 +90,7 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+    public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         MyParentHolder parentHolder;
         if(convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.adapter_vmn_call_item, parent, false);
@@ -98,11 +102,15 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
         }
         parentHolder.callerNumber.setText((String)getGroup(groupPosition));
 
-        if (isExpanded) {
-            parentHolder.arrowImage.setImageResource(R.drawable.ic_arrow_drop_up);
-        }else {
-            parentHolder.arrowImage.setImageResource(R.drawable.ic_arrow_drop_down);
-        }
+        parentHolder.callButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                callIntent.setData(Uri.parse("tel:"+getGroup(groupPosition)));
+                mContext.startActivity(Intent.createChooser(callIntent,"Call by:"));
+            }
+        });
+
         return convertView;
     }
 
@@ -112,59 +120,66 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
         final VmnCallModel childModel = (VmnCallModel) getChild(groupPosition, childPosition);
         if(convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.vmn_call_child_item, parent, false);
+            childHolder = new MyChildHolder(convertView);
+            convertView.setTag(childHolder);
 
-            //convertView.setTag(childHolder);
+        }else{
+           childHolder = (MyChildHolder) convertView.getTag();
+        }
 
-        }/*else{
-            childHolder = (MyChildHolder) convertView.getTag();
-        }*/
-        childHolder = new MyChildHolder(convertView);
         childHolder.date.setText(Methods.getFormattedDate(childModel.getCallDateTime()));
         if(childModel.getCallStatus().equalsIgnoreCase("MISSED")){
             childHolder.callImage.setImageResource(R.drawable.ic_call_missed);
-            childHolder.downloadImage.setVisibility(View.GONE);
-            childHolder.progressBar.setVisibility(View.GONE);
-            childHolder.mediaLayout.setVisibility(View.GONE);
-        }else{
-            childHolder.mediaLayout.setVisibility(View.VISIBLE);
+            childHolder.play.setText("MISSED");
+        }else
+        {
             childHolder.callImage.setImageResource(R.drawable.ic_call_received);
-            childHolder.downloadImage.setVisibility(View.VISIBLE);
-            childHolder.recEndPoint.setText("/ "+childModel.getCallDuration());
-            childHolder.seekBar.setMax(100);
-            if(connectToVmn.isSameUrl(childModel.getCallRecordingUri())){
-                childHolder.seekBar.setProgress(connectToVmn.getSeekCurrentPos());
-                childHolder.recCurrPoint.setText(connectToVmn.getrecCurrPoint());
-                childHolder.playButton.setImageResource(connectToVmn.isPlaying() ? R.drawable.ic_pause_light : R.drawable.ic_play_light);
-            }else{
-                childHolder.seekBar.setProgress(0);
-                childHolder.recCurrPoint.setText("0:00");
-                childHolder.playButton.setImageResource(R.drawable.ic_play_light);
-            }
-            childHolder.downloadImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    childHolder.progressBar.setVisibility(View.VISIBLE);
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            downloadFile(childModel.getCallRecordingUri(),childModel.getId(),childHolder.progressBar);
-                        }
-                    }).start();
-                }
-            });
-            childHolder.playButton.setOnClickListener(new View.OnClickListener() {
+            childHolder.play.setText("PLAY");
+
+            childHolder.play.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    connectToVmn.setDataUri(childModel.getCallRecordingUri(),childHolder);
+                    connectToVmn.setData(childModel);
                 }
             });
 
+        }
+
+        return convertView;
+    }
+
+    public class ConnectToVmnPlayer implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, View.OnClickListener {
+        VmnMediaPlayer vmnMediaPlayer;
+        MediaHolder childHolder;
+        MaterialDialog mediaDialog;
+        VmnCallModel mediaData;
+
+        private ConnectToVmnPlayer(){
+            vmnMediaPlayer = VmnMediaPlayer.getInstance(mContext);
+            vmnMediaPlayer.setUpPlayer(this);
+            setPlayerDialog();
+        }
+
+        private void releaseResources(){
+            vmnMediaPlayer.release();
+            vmnMediaPlayer = null;
+        }
+
+        private void setData(VmnCallModel model){
+            mediaData = model;
+            showDialog();
+        }
+
+
+        private MaterialDialog setPlayerDialog() {
+            View parent = LayoutInflater.from(mContext).inflate(R.layout.dialog_media_player,null,false);
+            childHolder = new MediaHolder(parent);
             childHolder.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                     if(fromUser)
-                        connectToVmn.makeMediaPlayerSync(progress,childModel.getCallRecordingUri());
+                        vmnMediaPlayer.seekTo(progress);
                 }
 
                 @Override
@@ -178,66 +193,42 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
                 }
             });
 
+            childHolder.playButton.setOnClickListener(this);
+            childHolder.downloadImage.setOnClickListener(this);
+
+            mediaDialog = new MaterialDialog.Builder(mContext)
+                    .customView(parent,false)
+                    .build();
+            return mediaDialog;
         }
 
-        return convertView;
-    }
-
-    public class ConnectToVmnPlayer implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener {
-        VmnMediaPlayer vmnMediaPlayer;
-        MyChildHolder childHolder;
-        ImageView prevPlayToPause;
-
-        private ConnectToVmnPlayer(){
-            vmnMediaPlayer = VmnMediaPlayer.getInstance(mContext);
-            vmnMediaPlayer.setUpPlayer(this);
-        }
-
-        private void releaseResources(){
-            vmnMediaPlayer.release();
-        }
-
-        private void setDataUri(String url,MyChildHolder holder){
-            if(isSameUrl(url))
-            {
-                if(isPlaying())
-                {
-                    pause();
-                    childHolder.playButton.setImageResource(R.drawable.ic_play_light);
-                }else
-                {
-                    start();
-                    childHolder.playButton.setImageResource(R.drawable.ic_pause_light);
-                }
-            }else
-            {
-                setHolder(holder);
-                vmnMediaPlayer.setDataUrl(url);
-                childHolder.playButton.setImageResource(R.drawable.ic_pause_light);
+        private void showDialog(){
+            resetMediaPlayer();
+            if(mediaDialog == null) {
+                mediaDialog = setPlayerDialog();
             }
+            mediaDialog.show();
+            vmnMediaPlayer.setDataUrl(mediaData.getCallRecordingUri());
+        }
+        private void resetMediaPlayer(){
+            childHolder.playButton.setImageResource(R.drawable.ic_play_arrow);
+            childHolder.date.setText(Methods.getFormattedDate(mediaData.getCallDateTime()));
+            childHolder.seekBar.setProgress(0);
+            childHolder.recCurrPoint.setText("0:00");
+            childHolder.recEndPoint.setText(getTimeFromMilliSeconds(mediaData.getCallDuration()));
         }
 
-        public void setHolder(MyChildHolder holder){
-            setPrevPlayToPause();
-            childHolder = holder;
-            prevPlayToPause = childHolder.playButton;
-        }
-
-        private int getSeekCurrentPos(){
-            return seekBarPos(vmnMediaPlayer.getCurrentPosition());
-        }
         Runnable updateSeekBar = new Runnable() {
             @Override
             public void run() {
+                if(vmnMediaPlayer == null){
+                    return;
+                }
                 int duration=vmnMediaPlayer.getCurrentPosition();
                 int seekBarPos = seekBarPos(duration);
                 String time=getTimeFromMilliSeconds(duration);
                 Log.v("ggg",duration+" "+time);
                 if(duration == vmnMediaPlayer.getDuration()){
-                    childHolder.seekBar.setProgress(0);
-                    childHolder.recCurrPoint.setText("0:00");
-                    childHolder.playButton.setImageResource(R.drawable.ic_play_light);
-                    vmnMediaPlayer.stop();
                     return;
                 }else if(!isPlaying()){
                     childHolder.seekBar.setProgress(seekBarPos);
@@ -254,16 +245,6 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
         int seekBarPos(int duration){
             return duration*100 / vmnMediaPlayer.getDuration();
         }
-        void setPrevPlayToPause(){
-            if(prevPlayToPause == null){
-                Log.v("ggg","first recording play");
-                return;
-            }
-            prevPlayToPause.setImageResource(R.drawable.ic_play_light);
-        }
-        private boolean isSameUrl(String callRecordingUri) {
-            return callRecordingUri.equals(vmnMediaPlayer.getUrl());
-        }
 
         private boolean isPlaying(){
             return vmnMediaPlayer.isPlaying();
@@ -277,11 +258,11 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
 
         @Override
         public void onCompletion(MediaPlayer mp) {
-            //childHolder.recCurrPoint.setText("0:00");
-            //childHolder.playButton.setImageResource(R.drawable.ic_play_light);
-            //childHolder.seekBar.setProgress(0);
+            childHolder.seekBar.setProgress(0);
+            childHolder.recCurrPoint.setText("0:00");
+            childHolder.playButton.setImageResource(R.drawable.ic_play_light);
+            vmnMediaPlayer.stop();
             Log.v("ggg","complete");
-            //vmnMediaPlayer.stop();
         }
 
         @Override
@@ -303,14 +284,31 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
             return false;
         }
 
-        String getrecCurrPoint() {
-            int duration = vmnMediaPlayer.getCurrentPosition();
-            return getTimeFromMilliSeconds(duration);
-        }
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.imgview_play:
+                    if(isPlaying())
+                    {
+                        pause();
+                        childHolder.playButton.setImageResource(R.drawable.ic_play_arrow);
+                    }else
+                    {
+                        start();
+                        childHolder.playButton.setImageResource(R.drawable.ic_pause_yellow);
+                    }
+                    break;
+                case R.id.download:
+                    PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(mContext,R.color.gray_transparent), PorterDuff.Mode.SRC_IN);
+                    childHolder.downloadImage.setColorFilter(porterDuffColorFilter);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            downloadFile(mediaData.getCallRecordingUri(),mediaData.getId(),childHolder.downloadImage);
+                        }
+                    }).start();
+                    break;
 
-        private void makeMediaPlayerSync(int progress,String url) {
-            if(isSameUrl(url)){
-                vmnMediaPlayer.seekTo(progress);
             }
         }
     }
@@ -327,35 +325,41 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
     private class MyParentHolder {
 
         TextView callerNumber;
-        ImageView arrowImage;
+        ImageView callButton;
         MyParentHolder(View itemView) {
             callerNumber = (TextView) itemView.findViewById(R.id.caller_number);
-            arrowImage = (ImageView) itemView.findViewById(R.id.arrowImage);
+            callButton = (ImageView) itemView.findViewById(R.id.call);
         }
     }
 
-    public class MyChildHolder {
+    private class MyChildHolder {
 
-        public TextView date,recEndPoint,recCurrPoint;
-        public ImageView callImage,downloadImage,playButton;
-        public ProgressBar progressBar;
-        LinearLayout mediaLayout;
-        SeekBar seekBar;
+        public TextView play,date;
+        ImageView callImage;
 
-        public MyChildHolder(View itemView) {
+        MyChildHolder(View itemView) {
             date = (TextView) itemView.findViewById(R.id.tv_date);
+            play = (TextView) itemView.findViewById(R.id.tv_play);
             callImage = (ImageView) itemView.findViewById(R.id.call_img);
-            downloadImage = (ImageView) itemView.findViewById(R.id.download_img);
-            progressBar = (ProgressBar) itemView.findViewById(R.id.progress);
+        }
+    }
+    private class MediaHolder{
+
+        TextView date, recEndPoint, recCurrPoint;
+        SeekBar seekBar;
+        ImageView downloadImage, playButton;
+
+        MediaHolder(View itemView){
+
+            downloadImage = (ImageView) itemView.findViewById(R.id.download);
+            date= (TextView) itemView.findViewById(R.id.date);
             playButton = (ImageView) itemView.findViewById(R.id.imgview_play);
             recEndPoint = (TextView) itemView.findViewById(R.id.tv_end_time);
             recCurrPoint = (TextView) itemView.findViewById(R.id.tv_current_time);
             seekBar = (SeekBar) itemView.findViewById(R.id.seekBar);
-            mediaLayout = (LinearLayout) itemView.findViewById(R.id.media_layout);
         }
     }
-
-    private void downloadFile(String fileurl, String filename, final ProgressBar progress){
+    private void downloadFile(String fileurl, String filename, final ImageView downloadImage){
         File file = initProfilePicFolder(filename);
         int count = 0;
         try {
@@ -377,7 +381,7 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
                 total += count;
                 // publishing the progress....
                 Log.v("ggg",(int)(total*100/lenghtOfFile)+" ");
-                publishHandler(progress,total,lenghtOfFile);
+                publishHandler(downloadImage,total,lenghtOfFile);
                 output.write(data, 0, count);
             }
             output.flush();
@@ -388,14 +392,13 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
         }
     }
 
-    private void publishHandler(final ProgressBar progress, final long total, final int lengthOfFile){
+    private void publishHandler(final ImageView downloadImage, final long total, final int lengthOfFile){
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                progress.setProgress((int)(total*100/lengthOfFile));
-                if(progress.getProgress() == 100){
-                    progress.setProgress(0);
-                    progress.setVisibility(View.GONE);
+                if(total == 100){
+                    PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(mContext,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+                    downloadImage.setColorFilter(porterDuffColorFilter);
                     Toast.makeText(mContext, mContext.getString(R.string.successfully_downloaded), Toast.LENGTH_SHORT).show();
                 }
             }

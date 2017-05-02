@@ -35,13 +35,12 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         if (Hotline.isHotlineNotification(remoteMessage)) {
             Hotline.getInstance(this).handleFcmMessage(remoteMessage);
         } else {
-
             //Calling method to generate notification
             sendNotification(remoteMessage.getData());
             Constants.GCM_Msg = true;
             //Handle notifications with data payload for your app
         }
-
+        Log.v("Message","received bubble");
     }
 
     //This method is only generating push notification

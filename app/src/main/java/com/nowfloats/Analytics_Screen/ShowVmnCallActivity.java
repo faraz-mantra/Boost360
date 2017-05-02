@@ -59,7 +59,22 @@ public class ShowVmnCallActivity extends AppCompatActivity {
 
     private void numberWiseSeparation(ArrayList<VmnCallModel> list){
         HashMap<Object, ArrayList<VmnCallModel>> hashMap = new HashMap<>();
+        /*MediaPlayer player = new MediaPlayer();
+        player.setAudioStreamType(AudioManager.STREAM_MUSIC);*/
         for(VmnCallModel model: list) {
+            /*if(model.getCallRecordingUri()!=null && !model.getCallRecordingUri().equalsIgnoreCase("null")) {
+                try {
+                    player.setDataSource(model.getCallRecordingUri());
+                    player.prepare();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                model.setCallDuration(player.getDuration());
+                Log.v("ggg", "duration " + player.getDuration());
+                player.stop();
+                player.reset();
+
+            }*/
             if (!hashMap.containsKey(model.getCallerNumber())) {
                 ArrayList<VmnCallModel> subList = new ArrayList<>();
                 subList.add(model);
@@ -69,6 +84,8 @@ public class ShowVmnCallActivity extends AppCompatActivity {
                 hashMap.get(model.getCallerNumber()).add(0,model);
             }
         }
+        /*player.release();
+        player =null;*/
         ArrayList<ArrayList<VmnCallModel>> bsort = new ArrayList<>(hashMap.values());
         Collections.sort(bsort, new Comparator<ArrayList<VmnCallModel>>() {
             @Override
