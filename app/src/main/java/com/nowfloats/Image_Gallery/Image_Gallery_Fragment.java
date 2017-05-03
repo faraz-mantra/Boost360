@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
+import android.content.ClipData;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,13 +14,16 @@ import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -47,6 +51,8 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
@@ -54,8 +60,8 @@ import com.thinksity.R;
 public class Image_Gallery_Fragment extends Fragment implements
         UploadPictureAsyncTask.UploadPictureInterface,
         DeleteGalleryImages.DeleteGalleryInterface,
-        GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface{
-    public static GridView grid ;
+        GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface {
+    public static GridView grid;
     OtherImagesAdapter gridViewAdapter;
     Bitmap CameraBitmap;
     Uri imageUri;
@@ -63,14 +69,14 @@ public class Image_Gallery_Fragment extends Fragment implements
     public static String path = "";
     private static final int PICK_FROM_CAMERA = 1;
     private static final int PICK_FROM_GALLERY = 2;
-    Dialog imageDialog = null ;
+    Dialog imageDialog = null;
     ImageAdapter adapter;
     ViewPager viewPager;
-    FloatingActionButton fabGallery_Button ;
+    FloatingActionButton fabGallery_Button;
     UserSessionManager session;
     Activity activity;
-    private LinearLayout progressLayout,emptyGalleryLayout;
-    private final int media_req_id=5;
+    private LinearLayout progressLayout, emptyGalleryLayout;
+    private final int media_req_id = 5;
     private final int gallery_req_id = 6;
 
     @Override
@@ -78,9 +84,9 @@ public class Image_Gallery_Fragment extends Fragment implements
         super.onResume();
         HomeActivity.plusAddButton.setVisibility(View.GONE);
         HomeActivity.headerText.setText("Photo Gallery");
-        if (grid!=null)
+        if (grid != null)
             grid.invalidate();
-        if (gridViewAdapter!=null)
+        if (gridViewAdapter != null)
             gridViewAdapter.notifyDataSetChanged();
         //getActivity().getActionBar().
     }
@@ -89,8 +95,8 @@ public class Image_Gallery_Fragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = getActivity();
-        session = new UserSessionManager(activity.getApplicationContext(),activity);
-        GetGalleryImagesAsyncTask_Interface gallery = new GetGalleryImagesAsyncTask_Interface(activity,session);
+        session = new UserSessionManager(activity.getApplicationContext(), activity);
+        GetGalleryImagesAsyncTask_Interface gallery = new GetGalleryImagesAsyncTask_Interface(activity, session);
         gallery.setGalleryInterfaceListener(this);
         gallery.execute();
     }
@@ -106,11 +112,11 @@ public class Image_Gallery_Fragment extends Fragment implements
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        BoostLog.d("Image_Gallery_Fragment","onViewCreated");
+        BoostLog.d("Image_Gallery_Fragment", "onViewCreated");
         grid = (GridView) view.findViewById(R.id.grid);
         fabGallery_Button = (FloatingActionButton) view.findViewById(R.id.fab_gallery);
-        emptyGalleryLayout = (LinearLayout)view.findViewById(R.id.emptygallerylayout);
-        progressLayout = (LinearLayout)view.findViewById(R.id.progress_gallerylayout);
+        emptyGalleryLayout = (LinearLayout) view.findViewById(R.id.emptygallerylayout);
+        progressLayout = (LinearLayout) view.findViewById(R.id.progress_gallerylayout);
         progressLayout.setVisibility(View.VISIBLE);
         new Thread(new Runnable() {
             @Override
@@ -124,9 +130,9 @@ public class Image_Gallery_Fragment extends Fragment implements
                     @Override
                     public void run() {
                         gridViewAdapter = new OtherImagesAdapter(activity);
-                        if(gridViewAdapter.getCount()==0){
+                        if (gridViewAdapter.getCount() == 0) {
                             emptyGalleryLayout.setVisibility(View.VISIBLE);
-                        }else {
+                        } else {
                             emptyGalleryLayout.setVisibility(View.GONE);
                         }
                         grid.setAdapter(gridViewAdapter);
@@ -151,7 +157,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                                         selectImage();
                                         break;
                                     }
-                                    case MotionEvent.ACTION_UP:{
+                                    case MotionEvent.ACTION_UP: {
                                         break;
                                     }
                                 }
@@ -167,13 +173,12 @@ public class Image_Gallery_Fragment extends Fragment implements
     }
 
     private void showFullScaleImage(String imageFile, final int currentPos) {
-        BoostLog.d("full image","image file : "+imageFile);
-        int selectedPOS = currentPos ;
+        BoostLog.d("full image", "image file : " + imageFile);
+        int selectedPOS = currentPos;
 
         // File imgFile = new  File(imageFile);
         Bitmap myBitmap = null;
-        String baseName = Constants.NOW_FLOATS_API_URL+""+imageFile;
-
+        String baseName = Constants.NOW_FLOATS_API_URL + "" + imageFile;
 
 
         //  https://api.withfloats.com//FP/Tile/53ffff644ec0a40740921460.jpg
@@ -181,7 +186,7 @@ public class Image_Gallery_Fragment extends Fragment implements
         imageDialog = new Dialog(activity);
         imageDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         imageDialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        imageDialog.getWindow().setLayout(500,500);
+        imageDialog.getWindow().setLayout(500, 500);
         WindowManager.LayoutParams lp = imageDialog.getWindow().getAttributes();
         lp.dimAmount = 15.7f;
         imageDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
@@ -205,7 +210,7 @@ public class Image_Gallery_Fragment extends Fragment implements
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(selectedPOS);
         final int maxNumberofImages = adapter.getCount();
-        currentTextView.setText(Integer.toString(selectedPOS+1));
+        currentTextView.setText(Integer.toString(selectedPOS + 1));
         maxCountTextView.setText(Integer.toString(maxNumberofImages));
         //currentTextView.setId(R.id.custom_view_pager);
         // viewPager.setId(R.id.custom_view_pager);
@@ -224,7 +229,7 @@ public class Image_Gallery_Fragment extends Fragment implements
         nextImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BoostLog.d("Image_Gallery_Fragment","Current POS : "+ currentPos);
+                BoostLog.d("Image_Gallery_Fragment", "Current POS : " + currentPos);
                 int selectedPosition = getItem(+1);
                 viewPager.setCurrentItem(selectedPosition, true);
                 currentTextView.setText(Integer.toString(selectedPosition));
@@ -246,7 +251,7 @@ public class Image_Gallery_Fragment extends Fragment implements
         deleteImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MixPanelController.track(EventKeysWL.IMAGE_GALLERY_DELETE_IMAGE,null);
+                MixPanelController.track(EventKeysWL.IMAGE_GALLERY_DELETE_IMAGE, null);
                 deleteImage(currentPos);
             }
         });
@@ -258,28 +263,25 @@ public class Image_Gallery_Fragment extends Fragment implements
         return viewPager.getCurrentItem() + i;
     }
 
-    public void deleteImage(int deletePosition){
-        DeleteGalleryImages task = new DeleteGalleryImages(activity,adapter,deletePosition);
+    public void deleteImage(int deletePosition) {
+        DeleteGalleryImages task = new DeleteGalleryImages(activity, adapter, deletePosition);
         task.setOnDeleteListener(this);
         task.execute();
 
 //        UploadPictureAsyncTask upload = new UploadPictureAsyncTask(activity,imageUrl);
 //        upload.execute();
     }
+
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
-    {
-        if(requestCode==media_req_id)
-        {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        if (requestCode == media_req_id) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 cameraIntent();
 
             }
 
-        }
-        else if(requestCode==gallery_req_id)
-        {
+        } else if (requestCode == gallery_req_id) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 galleryIntent();
@@ -288,16 +290,16 @@ public class Image_Gallery_Fragment extends Fragment implements
 
         }
     }
+
     public void cameraIntent() {
         try {
             // use standard intent to capture an image
-            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)!=
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) !=
                     PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                         media_req_id);
-            }
-            else {
+            } else {
                 ContentValues values = new ContentValues();
                 values.put(MediaStore.Images.Media.TITLE, "New Picture");
                 values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
@@ -322,13 +324,13 @@ public class Image_Gallery_Fragment extends Fragment implements
                 .customView(R.layout.featuredimage_popup, true)
                 .show();
         final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
-        MixPanelController.track("AddImage",null);
+        MixPanelController.track("AddImage", null);
         View view = dialog.getCustomView();
         TextView header = (TextView) view.findViewById(R.id.textview_heading);
         header.setText(getString(R.string.add_photo));
         LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
         LinearLayout takeGallery = (LinearLayout) view.findViewById(R.id.galleryimage);
-        ImageView   cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
+        ImageView cameraImg = (ImageView) view.findViewById(R.id.pop_up_camera_imag);
         final ImageView galleryImg = (ImageView) view.findViewById(R.id.pop_up_gallery_img);
         cameraImg.setColorFilter(whiteLabelFilter_pop_ip);
         galleryImg.setColorFilter(whiteLabelFilter_pop_ip);
@@ -336,7 +338,7 @@ public class Image_Gallery_Fragment extends Fragment implements
         takeCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MixPanelController.track(EventKeysWL.IMAGE_GALLERY_IMAGE_CAMERA,null);
+                MixPanelController.track(EventKeysWL.IMAGE_GALLERY_IMAGE_CAMERA, null);
                 cameraIntent();
                 dialog.hide();
             }
@@ -345,27 +347,27 @@ public class Image_Gallery_Fragment extends Fragment implements
         takeGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MixPanelController.track(EventKeysWL.IMAGE_GALLERY_IMAGE_GALLERY,null);
+                MixPanelController.track(EventKeysWL.IMAGE_GALLERY_IMAGE_GALLERY, null);
                 galleryIntent();
                 dialog.hide();
             }
         });
     }
 
-    private void galleryIntent()
-    {
+    private void galleryIntent() {
         try {
-            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)!=
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) !=
                     PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                         gallery_req_id);
-            }
-            else {
+            } else {
                 Intent intent = new Intent(
                         Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                //intent.setType("image/*");
+                intent.setType("image/*");
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(
                         Intent.createChooser(intent, getString(R.string.select_file)),
                         PICK_FROM_GALLERY);
@@ -373,7 +375,7 @@ public class Image_Gallery_Fragment extends Fragment implements
         } catch (ActivityNotFoundException anfe) {
             // display an error message
             String errorMessage = getString(R.string.device_does_not_support_capturing_image);
-            Toast toast = Toast.makeText(getActivity(),errorMessage, Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT);
             toast.show();
         }
     }
@@ -397,7 +399,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                 imageUrl = getRealPathFromURI(imageUri);
                 path = imageUrl;
 
-                UploadPictureAsyncTask upload = new UploadPictureAsyncTask(activity,imageUrl);
+                UploadPictureAsyncTask upload = new UploadPictureAsyncTask(activity, imageUrl);
                 upload.setOnUploadListener(Image_Gallery_Fragment.this);
                 upload.execute();
 
@@ -406,7 +408,7 @@ public class Image_Gallery_Fragment extends Fragment implements
             } catch (Exception e) {
                 e.printStackTrace();
                 //Util.toast(""+e.toString(), this);
-            }catch(OutOfMemoryError E){
+            } catch (OutOfMemoryError E) {
                 //BoostLog.d("ANDRO_ASYNC",String.format("catch Out Of Memory error"));
                 E.printStackTrace();
                 System.gc();
@@ -424,8 +426,9 @@ public class Image_Gallery_Fragment extends Fragment implements
                         String eol = System.getProperty("line.separator");
                         // updateHint.setText("CHANGE" + eol + "PHOTO");
                     }
-                } catch(Exception e){e.printStackTrace();
-                } catch(OutOfMemoryError E){
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } catch (OutOfMemoryError E) {
                     E.printStackTrace();
                     System.gc();
                 }
@@ -437,14 +440,20 @@ public class Image_Gallery_Fragment extends Fragment implements
                 Uri extras2 = data.getData();
                 // if (extras2 != null) {
 
-                String filepath = getGalleryImagePath(data);
-
-                UploadPictureAsyncTask upload = new UploadPictureAsyncTask(activity, filepath);
+                String filepath = "";
+                UploadPictureAsyncTask upload = null;
+                if (data.getData() != null) {
+                    filepath = getGalleryImagePath(data);
+                    upload = new UploadPictureAsyncTask(activity, filepath);
+                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN && data.getClipData() != null) {
+                    upload = new UploadPictureAsyncTask(activity, getGalleryImagesMultiple(data));
+                }
                 upload.setOnUploadListener(Image_Gallery_Fragment.this);
                 upload.execute();
                 // Check if the specified image exists.
-            }catch(Exception e){e.printStackTrace();
-            } catch(OutOfMemoryError E){
+            } catch (Exception e) {
+                e.printStackTrace();
+            } catch (OutOfMemoryError E) {
                 E.printStackTrace();
                 System.gc();
             }
@@ -455,14 +464,14 @@ public class Image_Gallery_Fragment extends Fragment implements
     }
 
     public String getRealPathFromURI(Uri contentUri) {
-        try{
-            String[] proj = { MediaStore.Images.Media.DATA };
+        try {
+            String[] proj = {MediaStore.Images.Media.DATA};
             Cursor cursor = activity.managedQuery(contentUri, proj, null, null, null);
             int column_index = cursor
                     .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
             return cursor.getString(column_index);
-        }catch (Exception e) {
+        } catch (Exception e) {
         }
         return null;
     }
@@ -472,7 +481,7 @@ public class Image_Gallery_Fragment extends Fragment implements
         String filePath = "";
         if (data.getType() == null) {
             // For getting images from default gallery app.
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
             Cursor cursor = activity.getContentResolver().query(imgUri, filePathColumn, null, null, null);
             cursor.moveToFirst();
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
@@ -485,25 +494,51 @@ public class Image_Gallery_Fragment extends Fragment implements
         return filePath;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    private ArrayList<String> getGalleryImagesMultiple(Intent data) {
+        ArrayList<String> arrPaths = null;
+        if (data.getClipData() != null) {
+            arrPaths = new ArrayList<>();
+            ClipData mClipData = data.getClipData();
+            ArrayList<Uri> mArrayUri = new ArrayList<Uri>();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            for (int i = 0; i < mClipData.getItemCount(); i++) {
+
+                ClipData.Item item = mClipData.getItemAt(i);
+                Uri uri = item.getUri();
+                mArrayUri.add(uri);
+                // Get the cursor
+                Cursor cursor = activity.getContentResolver().query(uri, filePathColumn, null, null, null);
+                // Move to first row
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                String imageEncoded = cursor.getString(columnIndex);
+                arrPaths.add(imageEncoded);
+                cursor.close();
+
+            }
+        }
+        return arrPaths;
+    }
 
     @Override
     public void uploadedPictureListener(String imageURL) {
-        BoostLog.d("Image", "uploadPictureListener imageURL : "+imageURL);
-        MixPanelController.track("AddImageSuccess",null);
+        BoostLog.d("Image", "uploadPictureListener imageURL : " + imageURL);
+        MixPanelController.track("AddImageSuccess", null);
         // Toast.makeText(activity, "imageURL : " + imageURL, Toast.LENGTH_SHORT).show();
-        if(progressLayout!=null){
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                progressLayout.setVisibility(View.VISIBLE);
-            }
-        });
+        if (progressLayout != null) {
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    progressLayout.setVisibility(View.VISIBLE);
+                }
+            });
         }
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable(){
+        handler.postDelayed(new Runnable() {
             @Override
-            public void run(){
-                GetGalleryImagesAsyncTask_Interface gallery = new GetGalleryImagesAsyncTask_Interface(activity,session);
+            public void run() {
+                GetGalleryImagesAsyncTask_Interface gallery = new GetGalleryImagesAsyncTask_Interface(activity, session);
                 gallery.setGalleryInterfaceListener(Image_Gallery_Fragment.this);
                 gallery.execute();
             }
@@ -533,16 +568,15 @@ public class Image_Gallery_Fragment extends Fragment implements
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(progressLayout!=null)
-                {
+                if (progressLayout != null) {
                     progressLayout.setVisibility(View.GONE);
                 }
             }
         });
-        if(grid != null) {
-            if(gridViewAdapter != null)
+        if (grid != null) {
+            if (gridViewAdapter != null)
                 gridViewAdapter.notifyDataSetChanged();
-            if(emptyGalleryLayout!=null)
+            if (emptyGalleryLayout != null)
                 emptyGalleryLayout.setVisibility(View.GONE);
             grid.invalidateViews();
             // grid.setAdapter(gridViewAdapter);

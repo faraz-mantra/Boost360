@@ -813,6 +813,7 @@ public class Site_Meter_Fragment extends Fragment {
                     .setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            Methods.hideKeyboard(getActivity());
                             String domainName = edtDomainName.getText().toString();
                             if (TextUtils.isEmpty(domainName)) {
                                 Methods.showSnackBarNegative(getActivity(),
@@ -844,7 +845,7 @@ public class Site_Meter_Fragment extends Fragment {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     tvPriceDef.setText(String.format(getString(R.string.price_of_domain), arrDomainExtensions.get(position)));
                     if (hmPrices.containsKey(arrDomainExtensions.get(position))) {
-                        tvPrice.setText(hmPrices.get(arrDomainExtensions.get(position))+"*");
+                        tvPrice.setText(hmPrices.get(arrDomainExtensions.get(position)) + "*");
                     } else {
                         tvPrice.setText("");
                     }
@@ -1010,32 +1011,44 @@ public class Site_Meter_Fragment extends Fragment {
         hashMap.put("domainName", get_fp_details_model.getDomainName());
         hashMap.put("domainType", get_fp_details_model.getDomainType());
         hashMap.put("existingFPTag", session.getFpTag());
-        hashMap.put("addressLine1", get_fp_details_model.getAddress());
-        hashMap.put("city", get_fp_details_model.getCity());
-        hashMap.put("companyName", get_fp_details_model.getTag());
-        hashMap.put("contactName", TextUtils.isEmpty(get_fp_details_model.getContactName()) ?
-                session.getFpTag() : get_fp_details_model.getContactName());
-        hashMap.put("country", get_fp_details_model.getCountry());
-        hashMap.put("countryCode", get_fp_details_model.getLanguageCode());
-        hashMap.put("email", get_fp_details_model.getEmail());
-        hashMap.put("lat", get_fp_details_model.getLat());
-        hashMap.put("lng", get_fp_details_model.getLng());
-        hashMap.put("phoneISDCode", get_fp_details_model.getCountryPhoneCode());
-        if (get_fp_details_model.getCategory() != null && get_fp_details_model.getCategory().size() > 0)
-            hashMap.put("primaryCategory", get_fp_details_model.getCategory().get(0));
-        else
-            hashMap.put("primaryCategory", "");
-        hashMap.put("primaryNumber", get_fp_details_model.getPrimaryNumber());
-        hashMap.put("regService", "");
-        hashMap.put("state", get_fp_details_model.getPaymentState());
-        hashMap.put("zip", get_fp_details_model.getPinCode());
+//        hashMap.put("addressLine1", get_fp_details_model.getAddress());
+//        hashMap.put("city", get_fp_details_model.getCity());
+//        hashMap.put("companyName", get_fp_details_model.getTag());
+//        hashMap.put("contactName", TextUtils.isEmpty(get_fp_details_model.getContactName()) ?
+//                session.getFpTag() : get_fp_details_model.getContactName());
+//        hashMap.put("country", get_fp_details_model.getCountry());
+//        hashMap.put("countryCode", get_fp_details_model.getLanguageCode());
+//        hashMap.put("email", get_fp_details_model.getEmail());
+//        hashMap.put("lat", get_fp_details_model.getLat());
+//        hashMap.put("lng", get_fp_details_model.getLng());
+//        hashMap.put("phoneISDCode", get_fp_details_model.getCountryPhoneCode());
+//        if (get_fp_details_model.getCategory() != null && get_fp_details_model.getCategory().size() > 0)
+//            hashMap.put("primaryCategory", get_fp_details_model.getCategory().get(0));
+//        else
+//            hashMap.put("primaryCategory", "");
+//        hashMap.put("primaryNumber", get_fp_details_model.getPrimaryNumber());
+//        hashMap.put("regService", "");
+//        hashMap.put("state", get_fp_details_model.getPaymentState());
+//        hashMap.put("zip", get_fp_details_model.getPinCode());
         domainApiService.buyDomain(hashMap);
     }
 
     @Subscribe
-    public void domainBookStatus(String content) {
-        showCustomDialog(getString(R.string.book_a_new_domain),
-                content,
-                getString(R.string.ok), null, DialogFrom.DEFAULT);
+    public void domainBookStatus(String response) {
+        if (domainBookDialog != null && domainBookDialog.isShowing())
+            domainBookDialog.dismiss();
+
+        if (!TextUtils.isEmpty(response) &&
+                response.equalsIgnoreCase(getString(R.string.domain_booking_process_message))) {
+
+            showCustomDialog(getString(R.string.domain_booking_process),
+                    getString(R.string.domain_booking_process_message),
+                    getString(R.string.ok), null, DialogFrom.DEFAULT);
+
+        } else {
+            showCustomDialog(getString(R.string.book_a_new_domain),
+                    response,
+                    getString(R.string.ok), null, DialogFrom.DEFAULT);
+        }
     }
 }

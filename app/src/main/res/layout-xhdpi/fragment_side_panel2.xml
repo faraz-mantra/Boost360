@@ -206,6 +206,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
         android:layout_below="@id/versionCodeName"
         android:layout_centerHorizontal="true">
         <com.nowfloats.CustomWidget.roboto_lt_36_565656

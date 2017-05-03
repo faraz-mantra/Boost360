@@ -239,8 +239,25 @@ public class Methods {
         }
     }
 
-    public static void materialDialog(Activity activity,String title,String msg){
-        try{
+    public static void hideKeyboard(Context context) {
+        try {
+
+            if (context != null) {
+
+                View view = ((Activity) context).getCurrentFocus();
+                if (view != null) {
+                    InputMethodManager imm = (InputMethodManager) context.getSystemService(Service.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void materialDialog(Activity activity, String title, String msg) {
+        try {
             new MaterialDialog.Builder(activity)
                     .title(title)
                     .content(Methods.fromHtml(msg))
