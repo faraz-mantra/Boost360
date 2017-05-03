@@ -377,16 +377,16 @@
         <item>ANALYTICS</item>
         <item>ALERTS</item>
     </string-array>
-<string-array name="themeIds">
-    <item>575bfec79bfed51e10df0e5d</item>
-    <item>57c3c1a65d64370d7cf4eb17</item>
-    <item>571f7f789bfed52c543d888d</item>
-</string-array>
+    <string-array name="themeIds">
+        <item>575bfec79bfed51e10df0e5d</item>
+        <item>57c3c1a65d64370d7cf4eb17</item>
+        <item>571f7f789bfed52c543d888d</item>
+    </string-array>
     <string-array name="themeNames">
-    <item>Bold and The Beautiful</item>
-    <item>Fresh Milk Light</item>
-    <item>The First Fox</item>
-</string-array>
+        <item>Bold and The Beautiful</item>
+        <item>Fresh Milk Light</item>
+        <item>The First Fox</item>
+    </string-array>
     <string-array name="quikr_widget">
         <item>automotive</item>
         <item>tourism</item>
@@ -457,7 +457,7 @@
     <string name="empty_alert">We will notify you as soon as\nyou have a new alert</string>
     <string name="settings_tou_url">https://nowfloats.com/tnc/</string>
     <string name="settings_privacy_url">https://nowfloats.com/privacy/</string>
-    <string name="accessibility_description">Permission required to upload Boost product and grow your business......</string>
+    <string name="accessibility_description">Sharing your products on WhatsApp is just a step away! Switch ON to grant Boost App the permission.</string>
     <string-array name="domain_array">
         <item>.com</item>
         <item>.net</item>
@@ -553,8 +553,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="enter_the_title">Enter the title</string>
     <string name="enter_the_description">Enter the description</string>
     <string name="page_successfully_created">Page Successfully created</string>
-    <string name="enter_different_title_try_again">Enter different Title and try again</string>
-    <string name="something_went_wrong_try_again">Something went wrong,Try again</string>
+    <string name="enter_different_title_try_again">Enter different Title and try again.</string>
+    <string name="something_went_wrong_try_again">Something went wrong, please try again.</string>
     <string name="page_updated">Page updated</string>
     <string name="enter_image_url">Enter Image Url</string>
     <string name="enter_hyperlink_url">Enter Hyperlink Url</string>
@@ -594,7 +594,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="no_app_to_share">No apps to share</string>
     <string name="share">Share</string>
     <string name="post_update">Post An Update</string>
-    <string name="share_to_your_customers">Share to your customers</string>
+    <string name="send_to_your_customers">Send to your customers</string>
     <string name="post_in_capital">POST</string>
     <string name="enter_message">Please enter a message</string>
     <string name="send_to_subscribers">Send to Subscribers</string>
@@ -710,6 +710,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="domain_is_available">Domain is available..</string>
     <string name="domain_not_available">Domain is not available..</string>
     <string name="domain_booking_confirmation">Domain Booking Confirmation</string>
+    <string name="domain_configuration">Domain Configuration</string>
     <string name="domain_booking_successful">Domain Booking Successful</string>
     <string name="domain_booking_process">Domain Booking In Process</string>
     <string name="domain_booking_process_message">Your Domain will be activated within 24 hours.</string>
@@ -965,7 +966,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="offers_image_error">Choose an image for the offer</string>
     <string name="offer_uri">Offer Url:</string>
     <string name="offer_upload_failure">Error while posting your offer</string>
-    <string name="offer_image_upload_dialog_text">Uploading image for the offer...</string>
+    <string name="offer_image_upload_dialog_text">Uploading image for the offer&#8230;</string>
     <string name="suucessfull_offer_post">Your offer is successfully posted</string>
     <string name="error_offer_post">Error while uploading image for your offer</string>
     <string name="offers_image_size_error">Image Size is more than 4MB. Please choose an image of size less than 4MB</string>
@@ -980,10 +981,11 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="do_you_have_opc">Proceed with an Online Payment Code</string>
     <string name="opc_edit_text_hint">Enter the OPC</string>
     <string name="proceed">Proceed</string>
-    <string name="verify_opc">Verifying OPC...</string>
+    <string name="verify_opc">Verifying OPC&#8230;</string>
     <string name="error_verifying_opc">Error while verifying OPC</string>
     <string name="pay_now">Pay Now</string>
     <string name="opc_hint_text">Connect with our sales executives to get an Online Payment Code (OPC).</string>
+    <string name="domain_book_nowfloats_package">Domain booking is part of your NowFloats package.</string>
 
 
     <string name="domain">Domain:</string>
@@ -1002,6 +1004,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="activate_your_domain">Activate your domain</string>
     <string name="submit_request">Submit Request</string>
     <string name="book_your_domain">Book your Domain</string>
+    <string name="already_included_in_your_package">*Already included in your package</string>
+    <string name="link_comments">I would like to map my existing domain to my Nowfloats site %s.nowfloats.com\nplease reach out to me to discuss this in detail.</string>
     <string name="content_link_domain">
         If you have an existing domain, we strongly recommend that you use it for your NowFloats Website.
         Online discovery will be faster as search engines already recognize your domain.
@@ -1088,13 +1092,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>Fri</item>
         <item>Sat</item>
     </string-array>
-   <!-- <string name="quikr_list">
-        <ul>
-            <li>Coffee</li>
-            <li>Tea</li>
-            <li>Milk</li>
-        </ul>
-    </string>-->
+    <!-- <string name="quikr_list">
+         <ul>
+             <li>Coffee</li>
+             <li>Tea</li>
+             <li>Milk</li>
+         </ul>
+     </string>-->
     <string-array name="quikr_tip_points">
         <item> Be as detailed as possible in the description of the update. For example, if you are posting an update about a car, mention the brand, model and year. If you are posting an update about an apartment, mention whether it\'s for rent or sale, the area and the number of rooms (1 BHK, 2BHK etc)</item>
         <item>We recommend that you post the update along with a clear image</item>
@@ -1111,7 +1115,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>We recommend that you post the update along with a clear image</item>
         <item>To ensure an optimal experience for all users, you can post only 1 update to Quikr per day</item>
     </string-array>
-<string name = "message_quikr">These guidelines will help you post the right content to Quikr so that the ad doesn\'t get rejected. You can refer to them at any time in <b>Business Profile -> Social Sharing</b>.</string>
+    <string name="message_quikr">These guidelines will help you post the right content to Quikr so that the ad doesn\'t get rejected. You can refer to them at any time in <b>Business Profile -> Social Sharing</b>.</string>
     <string-array name="spinner_list_item_array">
         <item>IMPROVED</item>
         <item>MAINTAINED</item>
@@ -1170,7 +1174,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="spinner_title">Filter</string>
     <string name="bubble_in_app_message">We have made it easier for you to now share your products on WhatsApp through this bubble.</string>
     <string name="boost_bubble">Boost Bubble</string>
-    <string name="accessibility_message">go ahead &amp; start sharing on WhatsApp</string>
+    <string name="disable_boost_bubble">Disable Boost Bubble</string>
+    <string name="accessibility_message">Go ahead &amp; start sharing on WhatsApp</string>
     <string name="bubble_in_app_second_message">You just have to grant us \"Accessibility\" permission and you are good to go.</string>
     <string name="bubble_overlay_text">Tap on Bubble to share your product on WhatsApp!</string>
     <string name="open_setting">Open Settings</string>
@@ -1179,9 +1184,12 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="screen_overlay_permission">Screen overlay permission</string>
     <string name="required_overlay_permission">Give us this permission to see our new feature \"Boost Bubble\"</string>
     <string name="bubble_for_whatsapp">Bubble for WhatsApp</string>
+    <string name="whatsapp_bubble_close">You can disable this feature from your Boost app</string>
     <string name="missed_calls">MiSSED CALLS</string>
     <string name="received_call">RECEIVED CALLS</string>
     <string name="call_tracker">Call Tracker</string>
     <string name="data_is_empty">Calls are empty</string>
     <string name="successfully_downloaded">Successfully Downloaded</string>
+    <string name="downloading">File downloading&#8230;</string>
+    <string name="play_with_underline" translatable="false"><u>PLAY</u></string>
 </resources>

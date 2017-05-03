@@ -1,13 +1,19 @@
 package com.nowfloats.Analytics_Screen;
 
+import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Analytics_Screen.Search_Query_Adapter.VmnCallAdapter;
@@ -24,12 +30,13 @@ import java.util.HashMap;
  * Created by Admin on 27-04-2017.
  */
 
-public class ShowVmnCallActivity extends AppCompatActivity {
+public class ShowVmnCallActivity extends AppCompatActivity implements VmnCallAdapter.RequestPermission {
 
 
     ExpandableListView expList;
     Toolbar toolbar;
     VmnCallAdapter adapter;
+    int REQUEST_PERMISSION = 202;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -112,10 +119,50 @@ public class ShowVmnCallActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        Log.v("ggg","onback");
         if(adapter != null){
             adapter.releaseResources();
         }
+        super.onBackPressed();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
+
+    public void gotoSetting(){
+        Intent intent = new Intent();
+        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getPackageName(), null);
+        intent.setData(uri);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+    @Override
+    public void reuestStoragePermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_PERMISSION);
+        }else{
+            new MaterialDialog.Builder(this)
+                    .title("Recording Download")
+                    .content("we need write to external storage permission to download this file.")
+                    .negativeColorRes(R.color.gray_transparent)
+                    .negativeText(getString(R.string.cancel))
+                    .positiveColorRes(R.color.primary_color)
+                    .positiveText(getString(R.string.open_setting))
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+                            dialog.dismiss();
+                            gotoSetting();
+                            dialog.dismiss();
+                        }
+
+                        @Override
+                        public void onNegative(MaterialDialog dialog) {
+                            super.onNegative(dialog);
+                            dialog.dismiss();
+                        }
+                    })
+                    .show();
+        }
     }
 }

@@ -9,6 +9,7 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,9 @@ import android.widget.TextView;
 
 import com.nowfloats.CustomPage.Model.CustomPageModel;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
 import com.squareup.otto.Bus;
 import com.thinksity.R;
 
@@ -26,6 +30,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by guru on 27-04-2015.
@@ -38,11 +46,11 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
     private SimpleDateFormat format;
     public UserSessionManager session;
     public CustomPageInterface pageInterface;
-//    public CustomPageDeleteInterface pageDeleteInterface;
+    //    public CustomPageDeleteInterface pageDeleteInterface;
     private View prev_view = null;
     public static boolean deleteCheck = false;
     public Bus bus;
-    Drawable drawableFromTheme;
+//    Drawable drawableFromTheme;
     PorterDuffColorFilter primary;
     public CustomPageAdapter(Activity appContext, ArrayList<CustomPageModel> storeData,
                              UserSessionManager session, CustomPageInterface pageInterface, Bus bus) {
@@ -58,11 +66,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
         primary = new PorterDuffColorFilter(appContext.getResources()
                 .getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
 
-        int[] attrs = new int[] { android.R.attr.selectableItemBackground /* index 0 */};
-        TypedArray ta = appContext.obtainStyledAttributes(attrs);
-        drawableFromTheme = ta.getDrawable(0 /* index */);
 
-        ta.recycle();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -88,7 +92,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder,int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         try{
             if (storeData.get(position)!=null){
                 holder.fullLayout.setTag(position+"");
@@ -96,6 +100,12 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
                 holder.stencil.setColorFilter(primary);
                 if (storeData.get(position).getSel()==0){
                     holder.imageView.setVisibility(View.INVISIBLE);
+
+                    int[] attrs = new int[] { android.R.attr.selectableItemBackground /* index 0 */};
+                    TypedArray ta = appContext.obtainStyledAttributes(attrs);
+                    Drawable drawableFromTheme = ta.getDrawable(0 /* index */);
+
+                    ta.recycle();
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                         holder.fullLayout.setBackground(drawableFromTheme);
@@ -134,6 +144,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
                     @Override
                     public void onClick(View v) {
                         int POs = Integer.parseInt(v.getTag().toString());
+                        //Log.v("ggg",POs+"");
                         if (deleteCheck){
                             if (CustomPageActivity.posList.contains(POs+"")){
                                 if(CustomPageActivity.posList.size()==1){
@@ -144,7 +155,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
                                 bus.post(new DeletePageTriggerEvent(POs,false,v));
 //                                pageDeleteInterface.DeletePageTrigger(POs,false,v);
 //                                holder.imageView.setVisibility(View.INVISIBLE);
-                                storeData.get(holder.getAdapterPosition()).setSel(0);
+                                storeData.get(POs).setSel(0);
                             }else{
 //                                v.setBackgroundColor(appContext.getResources().getColor(R.color.gray_transparent));
                                 deleteCheck =true;
@@ -153,7 +164,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
 //                                pageDeleteInterface.DeletePageTrigger(POs,true,v);
                                 bus.post(new DeletePageTriggerEvent(POs,true,v));
 //                                holder.imageView.setVisibility(View.VISIBLE);
-                                storeData.get(holder.getAdapterPosition()).setSel(1);
+                                storeData.get(POs).setSel(1);
                             }
                             if (CustomPageActivity.custompageAdapter!=null)
                                 CustomPageActivity.custompageAdapter.notifyDataSetChanged();
@@ -174,6 +185,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
 //                        prev_view = v;
 //                        int c = v.get;
                         int POs = Integer.parseInt(v.getTag().toString());
+                        //Log.v("ggg",POs+"");
                         if (CustomPageActivity.posList.contains(POs+"")){
                             if(CustomPageActivity.posList.size()==1){
                                 deleteCheck = false;
@@ -183,7 +195,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
 //                            pageDeleteInterface.DeletePageTrigger(POs,false,v);
                             bus.post(new DeletePageTriggerEvent(POs,false,v));
 //                            holder.imageView.setVisibility(View.INVISIBLE);
-                            storeData.get(holder.getAdapterPosition()).setSel(0);
+                            storeData.get(POs).setSel(0);
                         }else{
 //                            v.setBackgroundColor(appContext.getResources().getColor(R.color.gray_transparent));
                             deleteCheck =true;
@@ -192,7 +204,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
 //                            pageDeleteInterface.DeletePageTrigger(POs,true,v);
                             bus.post(new DeletePageTriggerEvent(POs,true,v));
 //                            holder.imageView.setVisibility(View.VISIBLE);
-                            storeData.get(holder.getAdapterPosition()).setSel(1);
+                            storeData.get(POs).setSel(1);
                         }
                         if (CustomPageActivity.custompageAdapter!=null)
                             CustomPageActivity.custompageAdapter.notifyDataSetChanged();
@@ -217,15 +229,15 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
             }
         }catch(Exception e){e.printStackTrace();}
     }
-        public void updateSelection(int position){
-            if (position==0){
-                for (int i = 0; i < storeData.size(); i++) {
-                    storeData.get(i).setSel(0);
-                }
-            }else{
-                storeData.get(position).setSel(0);
+    public void updateSelection(int position){
+        if (position==0){
+            for (int i = 0; i < storeData.size(); i++) {
+                storeData.get(i).setSel(0);
             }
+        }else{
+            storeData.get(position).setSel(0);
         }
+    }
 
 //    private void showPopup(final int pOs) {
 //        final MaterialDialog dialog = new MaterialDialog.Builder(appContext)

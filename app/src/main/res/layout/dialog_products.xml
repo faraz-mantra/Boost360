@@ -38,6 +38,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dip"
         android:background="@color/primaryColor"
-        android:text="@string/share_to_your_customers"
+        android:text="@string/send_to_your_customers"
         android:textColor="@android:color/white" />
 </LinearLayout>

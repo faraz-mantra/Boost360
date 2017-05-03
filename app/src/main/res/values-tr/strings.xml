@@ -1206,6 +1206,9 @@
     <string name="call_tracker">Call Tracker</string>
     <string name="data_is_empty">Calls are empty</string>
     <string name="successfully_downloaded">Successfully Downloaded</string>
+    <string name="whatsapp_bubble_close">You can disable this feature from your Boost app</string>
+    <string name="downloading">File downloading&#8230;</string>
+    <string name="play_with_underline"><u>PLAY</u></string>
 
 
     <string-array name="spinner_list_item_array">

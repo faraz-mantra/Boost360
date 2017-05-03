@@ -153,12 +153,10 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textColor="@color/primary"
-                android:text="View Call Logs"/>
+                android:text="View call logs"/>
             <ImageView
-                android:layout_width="34dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
                 android:src="@drawable/next"/>
         </LinearLayout>
 

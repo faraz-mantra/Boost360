@@ -113,7 +113,7 @@
             android:id="@+id/visitors_card"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="70dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             card_view:cardBackgroundColor="#FFFFFF"
@@ -132,7 +132,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="24dp">
+                    android:layout_marginLeft="20dp">
 
 
                     <ImageView
@@ -181,9 +181,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textColor="@color/primaryColor"
-                            android:text="25"
+                            android:text="28"
                             android:visibility="visible"
-                            android:textSize="33sp"
+                            android:textSize="25sp"
                             tools:ignore="MissingPrefix" />
                     </LinearLayout>
 
@@ -203,7 +203,7 @@
             android:id="@+id/card_view"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="70dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             card_view:cardBackgroundColor="#FFFFFF"
@@ -222,7 +222,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="24dp">
+                    android:layout_marginLeft="20dp">
 
 
                     <ImageView
@@ -273,7 +273,7 @@
                             android:textColor="@color/primaryColor"
                             android:text="25"
                             android:visibility="visible"
-                            android:textSize="33sp"
+                            android:textSize="28sp"
                             tools:ignore="MissingPrefix" />
                     </LinearLayout>
 
@@ -293,7 +293,7 @@
             android:id="@+id/card_view_business_enq"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="70dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             card_view:cardBackgroundColor="#FFFFFF"
@@ -312,7 +312,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="24dp">
+                    android:layout_marginLeft="20dp">
 
 
                     <ImageView
@@ -358,7 +358,7 @@
                             android:layout_height="wrap_content"
                             android:visibility="visible"
                             android:text="25"
-                            android:textSize="33sp"
+                            android:textSize="28sp"
                             android:textColor="@color/primaryColor"
                             tools:ignore="MissingPrefix" />
                     </FrameLayout>
@@ -375,7 +375,7 @@
             android:id="@+id/card_view_1"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="70dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             card_view:cardBackgroundColor="#FFFFFF"
@@ -394,7 +394,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="24dp">
+                    android:layout_marginLeft="20dp">
 
 
                     <ImageView
@@ -438,7 +438,7 @@
                             android:layout_height="wrap_content"
                             android:visibility="visible"
                             android:text="25"
-                            android:textSize="33sp"
+                            android:textSize="28sp"
                             android:textColor="@color/primaryColor"
                             tools:ignore="MissingPrefix" />
                     </FrameLayout>
@@ -459,7 +459,7 @@
             android:id="@+id/card_view_2"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="70dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             card_view:cardBackgroundColor="#FFFFFF"
@@ -478,7 +478,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="24dp">
+                    android:layout_marginLeft="20dp">
 
 
                     <ImageView
@@ -524,7 +524,7 @@
                             android:layout_height="wrap_content"
                             android:text="25"
                             android:textColor="@color/primaryColor"
-                            android:textSize="33sp"
+                            android:textSize="28sp"
                             android:visibility="visible"
                             tools:ignore="MissingPrefix" />
                     </FrameLayout>
@@ -540,7 +540,7 @@
             android:id="@+id/card_view_vmn_call"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="70dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             card_view:cardBackgroundColor="#FFFFFF"
@@ -559,7 +559,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="24dp">
+                    android:layout_marginLeft="20dp">
 
 
                     <ImageView
@@ -605,7 +605,7 @@
                             android:layout_height="wrap_content"
                             android:text="0"
                             android:textColor="@color/primaryColor"
-                            android:textSize="33sp"
+                            android:textSize="28sp"
                             android:visibility="visible"
                             tools:ignore="MissingPrefix" />
                     </FrameLayout>
@@ -622,7 +622,7 @@
             android:id="@+id/card_view_serach_ranking"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="70dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             card_view:cardBackgroundColor="#FFFFFF"
@@ -641,7 +641,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="24dp">
+                    android:layout_marginLeft="20dp">
 
 
                     <ImageView
@@ -684,7 +684,7 @@
             android:id="@+id/facebook_analytics_card_view"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="70dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             card_view:cardBackgroundColor="#FFFFFF"
@@ -706,7 +706,7 @@
                     android:id="@+id/iv_fb_page_analytics"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:layout_marginLeft="24dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_gravity="center"
                     android:src="@drawable/analytics_facebook" />
 
@@ -745,7 +745,7 @@
                             android:textColor="@color/primaryColor"
                             android:text=""
                             android:visibility="gone"
-                            android:textSize="33sp"
+                            android:textSize="28sp"
                             tools:ignore="MissingPrefix" />
                     </LinearLayout>
 

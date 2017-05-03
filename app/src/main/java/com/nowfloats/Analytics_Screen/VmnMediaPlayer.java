@@ -17,7 +17,6 @@ import java.io.IOException;
 public class VmnMediaPlayer {
     private MediaPlayer mediaPlayer;
     private Context mContext;
-    private String playingUrl;
     private boolean  playOrPause;
     private static VmnMediaPlayer vmnMediaPlayer;
 
@@ -63,10 +62,6 @@ public class VmnMediaPlayer {
         return  mediaPlayer!=null? mediaPlayer.getDuration():-1;
     }
 
-    public String getUrl(){
-        return playingUrl;
-    }
-
     public void setDataUrl(String url){
         Log.v("ggg",url);
         if(playOrPause){
@@ -75,7 +70,6 @@ public class VmnMediaPlayer {
         }
         try {
 
-            playingUrl = url;
             mediaPlayer.setDataSource(url);
             mediaPlayer.prepareAsync(); // might take long! (for buffering, etc)
         } catch (IOException e) {
@@ -99,7 +93,6 @@ public class VmnMediaPlayer {
         playOrPause = false;
         mediaPlayer.stop();
         mediaPlayer.reset();
-        playingUrl = null;
     }
 
     public boolean isPlaying(){
@@ -116,7 +109,6 @@ public class VmnMediaPlayer {
             }
             mediaPlayer.release();
             mediaPlayer = null;
-            playingUrl = null;
             playOrPause = false;
         }
     }

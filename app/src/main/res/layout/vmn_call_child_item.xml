@@ -13,6 +13,7 @@
         <ImageView
             android:layout_marginStart="16dp"
             android:id="@+id/call_img"
+            android:padding="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_call_missed"
@@ -31,14 +32,15 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginEnd="16dp"
-            android:text="Play"
+            android:text="@string/play_with_underline"
             android:padding="10dp"
+            android:textColor="@color/gray"
             android:textAllCaps="true"
             android:layout_marginRight="16dp" />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/gray_transparent"/>
+        android:background="#ddd"/>
 
 </LinearLayout>

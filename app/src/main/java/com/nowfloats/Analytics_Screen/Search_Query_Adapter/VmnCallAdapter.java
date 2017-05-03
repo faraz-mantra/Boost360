@@ -1,7 +1,10 @@
 package com.nowfloats.Analytics_Screen.Search_Query_Adapter;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.media.MediaPlayer;
@@ -32,7 +35,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -46,6 +51,7 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
     private ArrayList<ArrayList<VmnCallModel>> listData;
     private Context mContext;
     private ConnectToVmnPlayer connectToVmn;
+    private String currentPlay="-1 -1";
     public VmnCallAdapter(Context context,ArrayList<ArrayList<VmnCallModel>> hashMap){
         mContext = context;
         listData = hashMap;
@@ -105,17 +111,21 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
         parentHolder.callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                callIntent.setData(Uri.parse("tel:"+getGroup(groupPosition)));
-                mContext.startActivity(Intent.createChooser(callIntent,"Call by:"));
+                startCall((String)getGroup(groupPosition));
             }
         });
 
         return convertView;
     }
 
+    private void startCall(String number) {
+        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+        callIntent.setData(Uri.parse("tel:"+number));
+        mContext.startActivity(Intent.createChooser(callIntent,"Call by:"));
+    }
+
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         final MyChildHolder childHolder;
         final VmnCallModel childModel = (VmnCallModel) getChild(groupPosition, childPosition);
         if(convertView == null) {
@@ -127,19 +137,28 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
            childHolder = (MyChildHolder) convertView.getTag();
         }
 
-        childHolder.date.setText(Methods.getFormattedDate(childModel.getCallDateTime()));
+        childHolder.date.setText(connectToVmn.getDate(Methods.getFormattedDate(childModel.getCallDateTime())));
         if(childModel.getCallStatus().equalsIgnoreCase("MISSED")){
             childHolder.callImage.setImageResource(R.drawable.ic_call_missed);
-            childHolder.play.setText("MISSED");
+            childHolder.play.setText("Missed Call");
+            childHolder.play.setTextColor(ContextCompat.getColor(mContext,R.color.gray_transparent));
+            childHolder.play.setPaintFlags(childHolder.play.getPaintFlags() & (~ Paint.UNDERLINE_TEXT_FLAG));
         }else
         {
+            String[] positions = currentPlay.split(" ");
+            if(Integer.parseInt(positions[0]) == groupPosition && Integer.parseInt(positions[1]) == childPosition){
+                childHolder.play.setTextColor(ContextCompat.getColor(mContext,R.color.gray_transparent));
+            }else{
+                childHolder.play.setTextColor(ContextCompat.getColor(mContext,R.color.gray));
+            }
             childHolder.callImage.setImageResource(R.drawable.ic_call_received);
-            childHolder.play.setText("PLAY");
-
+            childHolder.play.setText(mContext.getString(R.string.play_with_underline));
+            childHolder.play.setPaintFlags(childHolder.play.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             childHolder.play.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    currentPlay = groupPosition+" "+childPosition;
+                    childHolder.play.setTextColor(ContextCompat.getColor(mContext,R.color.gray_transparent));
                     connectToVmn.setData(childModel);
                 }
             });
@@ -172,6 +191,9 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
         }
 
 
+        private String getDate(String date){
+            return date.replaceAll(",.*?at","");
+        }
         private MaterialDialog setPlayerDialog() {
             View parent = LayoutInflater.from(mContext).inflate(R.layout.dialog_media_player,null,false);
             childHolder = new MediaHolder(parent);
@@ -198,7 +220,26 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
 
             mediaDialog = new MaterialDialog.Builder(mContext)
                     .customView(parent,false)
-                    .canceledOnTouchOutside(false)
+                    .cancelable(false)
+                    .negativeColorRes(R.color.primary_color)
+                    .negativeText(mContext.getString(R.string.call))
+                    .positiveColorRes(R.color.gray_transparent)
+                    .positiveText(mContext.getString(R.string.cancel))
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+                            dialog.dismiss();
+                            vmnMediaPlayer.stop();
+                        }
+
+                        @Override
+                        public void onNegative(MaterialDialog dialog) {
+                            super.onNegative(dialog);
+                            pause();
+                            startCall(mediaData.getCallerNumber());
+                        }
+                    })
                     .build();
             return mediaDialog;
         }
@@ -213,7 +254,7 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
         }
         private void resetMediaPlayer(){
             childHolder.playButton.setImageResource(R.drawable.ic_pause_yellow);
-            childHolder.date.setText(Methods.getFormattedDate(mediaData.getCallDateTime()));
+            childHolder.date.setText(getDate(Methods.getFormattedDate(mediaData.getCallDateTime())));
             childHolder.seekBar.setProgress(0);
             childHolder.recCurrPoint.setText("0:00");
             childHolder.recEndPoint.setText(getTimeFromMilliSeconds(mediaData.getCallDuration()));
@@ -228,7 +269,6 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
                 int duration=vmnMediaPlayer.getCurrentPosition();
                 int seekBarPos = seekBarPos(duration);
                 String time=getTimeFromMilliSeconds(duration);
-                Log.v("ggg",duration+" "+time);
                 if(duration == vmnMediaPlayer.getDuration()){
                     return;
                 }else if(!isPlaying()){
@@ -261,8 +301,7 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
         public void onCompletion(MediaPlayer mp) {
             childHolder.seekBar.setProgress(0);
             childHolder.recCurrPoint.setText("0:00");
-            childHolder.playButton.setImageResource(R.drawable.ic_play_light);
-            vmnMediaPlayer.stop();
+            childHolder.playButton.setImageResource(R.drawable.ic_play_arrow);
             Log.v("ggg","complete");
         }
 
@@ -302,12 +341,17 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
                 case R.id.download:
                     PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(mContext,R.color.gray_transparent), PorterDuff.Mode.SRC_IN);
                     childHolder.downloadImage.setColorFilter(porterDuffColorFilter);
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            downloadFile(mediaData.getCallRecordingUri(),mediaData.getId(),childHolder.downloadImage);
-                        }
-                    }).start();
+                    Toast.makeText(mContext, mContext.getString(R.string.downloading), Toast.LENGTH_SHORT).show();
+                    if(ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                downloadFile(mediaData.getCallRecordingUri(),mediaData.getCallerNumber(),childHolder.downloadImage);
+                            }
+                        }).start();
+                    }else{
+                        ((RequestPermission)mContext).reuestStoragePermission();
+                    }
                     break;
 
             }
@@ -390,6 +434,14 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
             input.close();
         } catch (Exception e) {
             Log.v("ggg",count+" "+e.getMessage());
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(mContext,R.color.primary), PorterDuff.Mode.SRC_IN);
+                    downloadImage.setColorFilter(porterDuffColorFilter);
+                    Toast.makeText(mContext, mContext.getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+                }
+            },400);
         }
     }
 
@@ -397,32 +449,48 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(total == 100){
+                if((int)(total*100/lengthOfFile) == 100){
                     PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(mContext,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
                     downloadImage.setColorFilter(porterDuffColorFilter);
                     Toast.makeText(mContext, mContext.getString(R.string.successfully_downloaded), Toast.LENGTH_SHORT).show();
                 }
             }
-        },400);
+        },500);
     }
     private File initProfilePicFolder(String file) {
-        File ProfilePicFolder = new File(Environment.getExternalStorageDirectory() + File.separator + "nowfloats/");
+        String dateFile = file+"_"+new SimpleDateFormat("dd/MM/yyyy_KK:mm_a", Locale.ENGLISH).format(new Date());
+        File ProfilePicFolder = new File(Environment.getExternalStorageDirectory() + File.separator + "Boost/");
         if (!ProfilePicFolder.exists()) {
-            ProfilePicFolder.mkdirs();
+            Log.v("ggg",ProfilePicFolder.mkdirs()+" ");
         }
-        File ProfilePicFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "nowfloats/"+file+".mp3");
-        if (!ProfilePicFile.exists()) {
-            try {
-                if (ProfilePicFile.createNewFile()) {
-                    Log.d("ggg","Successfully created the parent dir:" + ProfilePicFile.getName());
-                } else {
-                    Log.d("ggg","Failed to create the parent dir:" + ProfilePicFile.getName());
+        File ProfilePicFile;
+        for (int i=1;;i++)
+        {
+            ProfilePicFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "Boost/"+dateFile+".mp3");
+            if (ProfilePicFile.exists()) {
+                dateFile = dateFile.replaceAll("(.*?)","");
+                dateFile+="("+i+")";
+                Log.v("ggg",dateFile);
+            }else
+            {
+                try {
+                    if (ProfilePicFile.createNewFile()) {
+                        Log.d("ggg","Successfully created the parent dir:" + ProfilePicFile.getName());
+                    } else {
+                        Log.d("ggg","Failed to create the parent dir:" + ProfilePicFile.getName());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.v("ggg","error");
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+                break;
             }
         }
         return ProfilePicFile;
+    }
+
+    public interface RequestPermission{
+        void reuestStoragePermission();
     }
 }
 

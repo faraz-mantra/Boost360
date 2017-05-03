@@ -8,6 +8,7 @@ import com.nowfloats.bubble.BubblesService;
 import com.nowfloats.util.Key_Preferences;
 import com.thinksity.R;
 
+
 /**
  * Created by NowFloats on 4/17/2017.
  */
@@ -31,10 +32,12 @@ public class TempDisplayDialog extends AppCompatActivity {
                 it = new Intent(TempDisplayDialog.this, BubbleInAppDialog.class);
 
                 break;
+            case WHATSAPP_DIALOG:
+                break;
         }
         startActivity(it);
 //        overridePendingTransition(R.anim.zoom_enter, R.anim.zoom_exit);
-        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+        overridePendingTransition(R.anim.bubble_scale_up, R.anim.bubble_scale_down);
         finish();
     }
 }

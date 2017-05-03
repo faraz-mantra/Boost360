@@ -27,7 +27,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.nowfloats.accessbility.DataAccessbilityServiceV1;
+import com.nowfloats.accessbility.DataAccessbilityServiceV3;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.squareup.okhttp.OkHttpClient;
 import com.thinksity.R;
@@ -114,7 +114,7 @@ public class Methods {
     }
     public static boolean isAccessibilitySettingsOn(Context mContext) {
         int accessibilityEnabled = 0;
-        final String service = mContext.getPackageName() + "/" + DataAccessbilityServiceV1.class.getCanonicalName();
+        final String service = mContext.getPackageName() + "/" + DataAccessbilityServiceV3.class.getCanonicalName();
         try {
             accessibilityEnabled = Settings.Secure.getInt(mContext.getApplicationContext().getContentResolver(),
                     android.provider.Settings.Secure.ACCESSIBILITY_ENABLED);
@@ -295,7 +295,7 @@ public class Methods {
 
         Long epochTime = Long.parseLong(Sdate);
         Date date = new Date(epochTime);
-        DateFormat format = new SimpleDateFormat("dd-MM-yyyy KK:mm a", Locale.US);//dd/MM/yyyy HH:mm:ss
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy KK:mm a", Locale.ENGLISH);//dd/MM/yyyy HH:mm:ss
         format.setTimeZone(TimeZone.getDefault());
         dateTime = format.format(date);
 
@@ -313,19 +313,19 @@ public class Methods {
                 switch (month) {
                     case 01:
                         dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
-                        formatted = dateTemp[0] + " January, " + dateTemp[2];
+                        formatted = dateTemp[0] + " Jan, " + dateTemp[2];
                         break;
                     case 2:
                         dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
-                        formatted = dateTemp[0] + " February, " + dateTemp[2];
+                        formatted = dateTemp[0] + " Feb, " + dateTemp[2];
                         break;
                     case 3:
                         dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
-                        formatted = dateTemp[0] + " March, " + dateTemp[2];
+                        formatted = dateTemp[0] + " Mar, " + dateTemp[2];
                         break;
                     case 4:
                         dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
-                        formatted = dateTemp[0] + " April, " + dateTemp[2];
+                        formatted = dateTemp[0] + " Apr, " + dateTemp[2];
                         break;
                     case 5:
                         dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
@@ -341,23 +341,23 @@ public class Methods {
                         break;
                     case 8:
                         dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
-                        formatted = dateTemp[0] + " August, " + dateTemp[2];
+                        formatted = dateTemp[0] + " Aug, " + dateTemp[2];
                         break;
                     case 9:
                         dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
-                        formatted = dateTemp[0] + " September, " + dateTemp[2];
+                        formatted = dateTemp[0] + " Sept, " + dateTemp[2];
                         break;
                     case 10:
                         dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
-                        formatted = dateTemp[0] + " October, " + dateTemp[2];
+                        formatted = dateTemp[0] + " Oct, " + dateTemp[2];
                         break;
                     case 11:
                         dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
-                        formatted = dateTemp[0] + " November, " + dateTemp[2];
+                        formatted = dateTemp[0] + " Nov, " + dateTemp[2];
                         break;
                     case 12:
                         dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
-                        formatted = dateTemp[0] + " December, " + dateTemp[2];
+                        formatted = dateTemp[0] + " Dec, " + dateTemp[2];
                         break;
                 }
             }
@@ -386,7 +386,7 @@ public class Methods {
     public static String getCurrentTime() {
         String result = "";
         try{
-            DateFormat dateFormat = new SimpleDateFormat("hh:mm aa");//dd/MM/yyyy HH:mm:ss
+            DateFormat dateFormat = new SimpleDateFormat("hh:mm aa",Locale.ENGLISH);//dd/MM/yyyy HH:mm:ss
             dateFormat.setTimeZone(TimeZone.getDefault());
             result = dateFormat.format(Calendar.getInstance().getTime());
         }catch(Exception e){
