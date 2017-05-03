@@ -47,17 +47,17 @@ public class QuikrAdapter extends RecyclerView.Adapter<QuikrAdapter.MyHolder> {
 
     @Override
     public void onBindViewHolder(final MyHolder holder, int position) {
-        if(position>=3){
+        if(position>=5){
             SpannableString ss = new SpannableString(guidelines[position]);
             ClickableSpan clickableSpan = new ClickableSpan() {
                 @Override
                 public void onClick(View textView) {
                     int pos = holder.getAdapterPosition();
-                    if(pos ==3){
+                    if(pos ==5){
                         openWebView("http://www.quikr.com/html/termsandconditions.php");
-                    }else if(pos == 4){
+                    }else if(pos == 6){
                         openWebView("http://bangalore.quikr.com/html/privacy.php");
-                    }else if(pos == 5){
+                    }else if(pos == 7){
                         openWebView("http://hyderabad.quikr.com/html/policies.php");
                     }
                 }
