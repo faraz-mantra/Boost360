@@ -127,7 +127,8 @@ public class NotificationFragment extends Fragment{
                         if(alertModelsList.size() == 0){
                             emptylayout.setVisibility(View.VISIBLE);
                         }
-                    }else{
+                    }else
+                    {
                         int count = alertModelsList.size();
                         for ( int i = 0; i<alertModels.size() ;i++){
 

@@ -157,9 +157,11 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
             childHolder.play.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    currentPlay = groupPosition+" "+childPosition;
-                    childHolder.play.setTextColor(ContextCompat.getColor(mContext,R.color.gray_transparent));
-                    connectToVmn.setData(childModel);
+                    if (((TextView)v).getText().toString().equalsIgnoreCase("play")){
+                        currentPlay = groupPosition + " " + childPosition;
+                        childHolder.play.setTextColor(ContextCompat.getColor(mContext, R.color.gray_transparent));
+                        connectToVmn.setData(childModel);
+                    }
                 }
             });
 
@@ -186,8 +188,10 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
         }
 
         private void setData(VmnCallModel model){
-            mediaData = model;
-            showDialog();
+            if(model != null) {
+                mediaData = model;
+                showDialog();
+            }
         }
 
 
@@ -253,11 +257,12 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
             vmnMediaPlayer.setDataUrl(mediaData.getCallRecordingUri());
         }
         private void resetMediaPlayer(){
-            childHolder.playButton.setImageResource(R.drawable.ic_pause_yellow);
+            childHolder.playButton.setImageResource(R.drawable.ic_pause_gray);
             childHolder.date.setText(getDate(Methods.getFormattedDate(mediaData.getCallDateTime())));
             childHolder.seekBar.setProgress(0);
+            childHolder.number.setText(mediaData.getCallerNumber());
             childHolder.recCurrPoint.setText("0:00");
-            childHolder.recEndPoint.setText(getTimeFromMilliSeconds(mediaData.getCallDuration()));
+            childHolder.recEndPoint.setText("0:00");
         }
 
         Runnable updateSeekBar = new Runnable() {
@@ -307,6 +312,7 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
 
         @Override
         public void onPrepared(MediaPlayer mp) {
+            childHolder.recEndPoint.setText(getTimeFromMilliSeconds(mp.getDuration()));
             start();
         }
 
@@ -335,14 +341,14 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
                     }else
                     {
                         start();
-                        childHolder.playButton.setImageResource(R.drawable.ic_pause_yellow);
+                        childHolder.playButton.setImageResource(R.drawable.ic_pause_gray);
                     }
                     break;
                 case R.id.download:
-                    PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(mContext,R.color.gray_transparent), PorterDuff.Mode.SRC_IN);
-                    childHolder.downloadImage.setColorFilter(porterDuffColorFilter);
-                    Toast.makeText(mContext, mContext.getString(R.string.downloading), Toast.LENGTH_SHORT).show();
                     if(ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                        PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(mContext,R.color.gray_transparent), PorterDuff.Mode.SRC_IN);
+                        childHolder.downloadImage.setColorFilter(porterDuffColorFilter);
+                        Toast.makeText(mContext, mContext.getString(R.string.downloading), Toast.LENGTH_SHORT).show();
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -390,7 +396,7 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
     }
     private class MediaHolder{
 
-        TextView date, recEndPoint, recCurrPoint;
+        TextView date,number, recEndPoint, recCurrPoint;
         SeekBar seekBar;
         ImageView downloadImage, playButton;
 
@@ -398,6 +404,7 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
 
             downloadImage = (ImageView) itemView.findViewById(R.id.download);
             date= (TextView) itemView.findViewById(R.id.date);
+            number= (TextView) itemView.findViewById(R.id.number);
             playButton = (ImageView) itemView.findViewById(R.id.imgview_play);
             recEndPoint = (TextView) itemView.findViewById(R.id.tv_end_time);
             recCurrPoint = (TextView) itemView.findViewById(R.id.tv_current_time);
@@ -458,7 +465,7 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
         },500);
     }
     private File initProfilePicFolder(String file) {
-        String dateFile = file+"_"+new SimpleDateFormat("dd/MM/yyyy_KK:mm_a", Locale.ENGLISH).format(new Date());
+        String dateFile = file+"_"+new SimpleDateFormat("dd-MM-yyyy_KK_mm_a", Locale.ENGLISH).format(new Date());
         File ProfilePicFolder = new File(Environment.getExternalStorageDirectory() + File.separator + "Boost/");
         if (!ProfilePicFolder.exists()) {
             Log.v("ggg",ProfilePicFolder.mkdirs()+" ");
@@ -468,9 +475,12 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
         {
             ProfilePicFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "Boost/"+dateFile+".mp3");
             if (ProfilePicFile.exists()) {
-                dateFile = dateFile.replaceAll("(.*?)","");
+                if(i>1) {
+                    dateFile = dateFile.replaceAll("\\("+(i-1)+"\\)", "");
+                }
+
                 dateFile+="("+i+")";
-                Log.v("ggg",dateFile);
+
             }else
             {
                 try {

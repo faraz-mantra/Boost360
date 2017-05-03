@@ -9,6 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_marginBottom="15dp"
+        android:padding="5dp"
+        android:gravity="center_vertical"
         android:layout_height="wrap_content">
 
         <LinearLayout
@@ -27,22 +29,21 @@
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Call on 29Apr 1:43 PM"
+                android:text="Call on 29 Apr 1:43 PM"
                 android:textSize="12sp" />
         </LinearLayout>
         <ImageView
             android:id="@+id/imgview_play"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
             android:padding="5dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_pause_yellow"/>
+            android:src="@drawable/ic_pause_gray"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/download"
-            android:padding="10dp"
-            android:layout_gravity="center_vertical"
+            android:padding="5dp"
             android:src="@drawable/ic_download"/>
     </LinearLayout>
     <SeekBar
