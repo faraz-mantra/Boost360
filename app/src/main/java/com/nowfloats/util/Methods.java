@@ -118,7 +118,7 @@ public class Methods {
         try {
             accessibilityEnabled = Settings.Secure.getInt(mContext.getApplicationContext().getContentResolver(),
                     android.provider.Settings.Secure.ACCESSIBILITY_ENABLED);
-            Log.v("ggg", "accessibilityEnabled = " + accessibilityEnabled);
+            //Log.v("ggg", "accessibilityEnabled = " + accessibilityEnabled);
         } catch (Settings.SettingNotFoundException e) {
             Log.e("ggg", "Error finding setting, default accessibility to not found: "
                     + e.getMessage());
@@ -126,7 +126,7 @@ public class Methods {
         TextUtils.SimpleStringSplitter mStringColonSplitter = new TextUtils.SimpleStringSplitter(':');
 
         if (accessibilityEnabled == 1) {
-            Log.v("ggg", "***ACCESSIBILITY IS ENABLED*** -----------------");
+            //Log.v("ggg", "***ACCESSIBILITY IS ENABLED*** -----------------");
             String settingValue = Settings.Secure.getString(
                     mContext.getApplicationContext().getContentResolver(),
                     Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
@@ -135,15 +135,15 @@ public class Methods {
                 while (mStringColonSplitter.hasNext()) {
                     String accessibilityService = mStringColonSplitter.next();
 
-                    Log.v("ggg", "-------------- > accessibilityService :: " + accessibilityService + " " + service);
+                    //Log.v("ggg", "-------------- > accessibilityService :: " + accessibilityService + " " + service);
                     if (accessibilityService.equalsIgnoreCase(service)) {
-                        Log.v("ggg", "We've found the correct setting - accessibility is switched on!");
+                        //Log.v("ggg", "We've found the correct setting - accessibility is switched on!");
                         return true;
                     }
                 }
             }
         } else {
-            Log.v("ggg", "***ACCESSIBILITY IS DISABLED***");
+            //Log.v("ggg", "***ACCESSIBILITY IS DISABLED***");
         }
 
         return false;

@@ -198,6 +198,7 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
 
             mediaDialog = new MaterialDialog.Builder(mContext)
                     .customView(parent,false)
+                    .canceledOnTouchOutside(false)
                     .build();
             return mediaDialog;
         }
@@ -211,7 +212,7 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
             vmnMediaPlayer.setDataUrl(mediaData.getCallRecordingUri());
         }
         private void resetMediaPlayer(){
-            childHolder.playButton.setImageResource(R.drawable.ic_play_arrow);
+            childHolder.playButton.setImageResource(R.drawable.ic_pause_yellow);
             childHolder.date.setText(Methods.getFormattedDate(mediaData.getCallDateTime()));
             childHolder.seekBar.setProgress(0);
             childHolder.recCurrPoint.setText("0:00");
