@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.nowfloats.Login.UserSessionManager;
@@ -162,7 +163,7 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
     protected void onPostExecute(String result) {
 //        BoostLog.d("UploadPicAsyncTask","onPostExecute : "+Constants.storeSecondaryImages.size());
 //        Toast.makeText(appContext,"Success  "+result,Toast.LENGTH_SHORT).show();
-        if (result != null && result.equals("true")) {
+        if (!TextUtils.isEmpty(result) && result.equals("true")) {
             Methods.showSnackBarPositive(appContext, appContext.getString(R.string.image_successfully_apdated));
             if (pd.isShowing()) {
                 pd.dismiss();

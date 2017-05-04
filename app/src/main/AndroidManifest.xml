@@ -428,7 +428,7 @@
         <activity android:name="com.nowfloats.Analytics_Screen.SearchRankingActivity"/>
 
         <service
-            android:name="com.nowfloats.accessbility.DataAccessbilityServiceV3"
+            android:name="com.nowfloats.accessbility.DataAccessbilityServiceV4"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter android:priority="2147483647">
                 <action android:name="android.accessibilityservice.AccessibilityService" />

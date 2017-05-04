@@ -619,6 +619,8 @@ public class Site_Meter_Fragment extends Fragment {
     public void getDomainDetails(DomainDetails domainDetails) {
 //        domainDetails = null;
         hideLoader();
+
+
         if (domainDetails != null && domainDetails.response) {
 
             if (domainDetails.getProcessingStatus().equalsIgnoreCase(DOMAIN_SUCCESS_STATUS) &&
@@ -913,6 +915,8 @@ public class Site_Meter_Fragment extends Fragment {
                         Methods.showSnackBarNegative(getActivity(),
                                 getString(R.string.please_enter_message));
                     } else {
+
+                        MixPanelController.track(MixPanelController.LINK_DOMAIN,null);
                         materialDialog.dismiss();
                         HashMap<String, String> hashMap = new HashMap<String, String>();
                         hashMap.put("Subject", subject);
@@ -989,7 +993,7 @@ public class Site_Meter_Fragment extends Fragment {
                         switch (dialogFrom) {
 
                             case DOMAIN_AVAILABLE:
-
+                                MixPanelController.track(MixPanelController.DOMAIN_SEARCH,null);
                                 break;
                             case DEFAULT:
 
@@ -1006,6 +1010,7 @@ public class Site_Meter_Fragment extends Fragment {
     }
 
     private void prepareAndPublishDomain() {
+        MixPanelController.track(MixPanelController.BOOK_DOMAIN,null);
         HashMap<String, String> hashMap = new HashMap<String, String>();
         hashMap.put("clientId", Constants.clientId);
         hashMap.put("domainName", get_fp_details_model.getDomainName());
