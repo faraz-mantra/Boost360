@@ -63,9 +63,8 @@ public class VmnMediaPlayer {
     }
 
     public void setDataUrl(String url){
-        Log.v("ggg",url);
+
         if(playOrPause){
-            Log.v("ggg","isplay");
             stop();
         }
         try {
@@ -79,17 +78,17 @@ public class VmnMediaPlayer {
 
     public void pause(){
         playOrPause = true;
-        Log.v("ggg","pause");
+
         mediaPlayer.pause();
     }
     public void start(){
-        Log.v("ggg","start");
+
         playOrPause = true;
         mediaPlayer.start();
     }
 
     public void stop(){
-        Log.v("ggg","stop");
+
         playOrPause = false;
         mediaPlayer.stop();
         mediaPlayer.reset();
@@ -103,7 +102,6 @@ public class VmnMediaPlayer {
 
     public void release(){
         if(mediaPlayer != null){
-            Log.v("ggg","released");
             if(mediaPlayer.isPlaying()){
                 mediaPlayer.stop();
             }

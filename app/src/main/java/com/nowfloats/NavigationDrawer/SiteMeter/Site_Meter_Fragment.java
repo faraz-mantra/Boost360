@@ -1051,6 +1051,10 @@ public class Site_Meter_Fragment extends Fragment {
                     getString(R.string.ok), null, DialogFrom.DEFAULT);
 
         } else {
+
+            if(TextUtils.isEmpty(response)){
+                response = getString(R.string.domain_booking_failed);
+            }
             showCustomDialog(getString(R.string.book_a_new_domain),
                     response,
                     getString(R.string.ok), null, DialogFrom.DEFAULT);

@@ -95,7 +95,7 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
         progress.setMessage(getResources().getString(R.string.please_wait));
         progress.setCanceledOnTouchOutside(false);
 
-        if(facebookStatus == 1){
+        if(facebookStatus == 1 ){
             checkForMessage(FACEBOOK);
         }else{
             addFragment(LOGIN_FACEBOOK,FACEBOOK);
@@ -218,7 +218,7 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
                 pos = 0;
                 if (facebookStatus == 1) {
                     checkForMessage(FACEBOOK);
-                } else {
+                }else {
                     addFragment(LOGIN_FACEBOOK, FACEBOOK);
                 }
                 break;
@@ -255,18 +255,13 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
         Fragment frag=null;
         switch(i){
             case FETCH_DATA:
-                //getting info about message
-                frag = manager.findFragmentByTag("FetchFacebookData");
-                if(frag == null)
-                    frag = FetchFacebookDataFragment.getInstance(b);
 
+                frag = FetchFacebookDataFragment.getInstance(b);
                 transaction.replace(R.id.linearlayout,frag,"FetchFacebookData").commit();
                 break;
             case POST_UPDATE:
-                frag = manager.findFragmentByTag("PostFacebookUpdate");
-                if(frag == null)
-                    frag = PostFacebookUpdateFragment.getInstance(b);
 
+                frag = PostFacebookUpdateFragment.getInstance(b);
                 transaction.replace(R.id.linearlayout,frag,"PostFacebookUpdate").commit();
                 break;
             case LOGIN_FACEBOOK:

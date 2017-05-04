@@ -714,6 +714,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="domain_booking_successful">Domain Booking Successful</string>
     <string name="domain_booking_process">Domain Booking In Process</string>
     <string name="domain_booking_process_message">Your Domain will be activated within 48 hours.</string>
+    <string name="domain_booking_failed">Domain booking falied.</string>
     <string name="domain_booking_successful_message">Your Domain: \n %s \n has been registered to the DNS server and successfully mapped.</string>
     <string name="drop_us_contact"><![CDATA[You can drop us a line at <b><font color=#ffb900>ria@nowfloats.com</font></b> or call us at <b><font color=#ffb900>1860-123-1233 </font></b> if you\'d like to enable this feature.]]></string>
     <string name="hello_do_you_want_this">Hello Do you want to set this</string>

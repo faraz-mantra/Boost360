@@ -1,5 +1,6 @@
 package com.nowfloats.Analytics_Screen.Search_Query_Adapter;
 
+
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -55,7 +56,6 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
     public VmnCallAdapter(Context context,ArrayList<ArrayList<VmnCallModel>> hashMap){
         mContext = context;
         listData = hashMap;
-        Log.v("ggg",listData.size()+" ");
         handler = new Handler();
         connectToVmn = new ConnectToVmnPlayer();
     }
@@ -134,7 +134,7 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
             convertView.setTag(childHolder);
 
         }else{
-           childHolder = (MyChildHolder) convertView.getTag();
+            childHolder = (MyChildHolder) convertView.getTag();
         }
 
         childHolder.date.setText(connectToVmn.getDate(Methods.getFormattedDate(childModel.getCallDateTime())));
@@ -349,7 +349,7 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
                         PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(mContext,R.color.gray_transparent), PorterDuff.Mode.SRC_IN);
                         childHolder.downloadImage.setColorFilter(porterDuffColorFilter);
                         Toast.makeText(mContext, mContext.getString(R.string.downloading), Toast.LENGTH_SHORT).show();
-                       
+
                         if(isExternalStorageWritable()){
                             new Thread(new Runnable() {
                                 @Override
@@ -418,7 +418,7 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
         }
     }
     private void downloadFile(String fileurl, String filename, final ImageView downloadImage){
-       // Log.v("ggg",Environment.getExternalStoragePublicDirectory().getAbsolutePath()+" "+Environment.getExternalStorageDirectory().getAbsolutePath());
+        // Log.v("ggg",Environment.getExternalStoragePublicDirectory().getAbsolutePath()+" "+Environment.getExternalStorageDirectory().getAbsolutePath());
         File file = initProfilePicFolder(filename);
         int count = 0;
         try {
@@ -516,4 +516,3 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
         void requestStoragePermission();
     }
 }
-
