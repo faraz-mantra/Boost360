@@ -6,7 +6,7 @@
     <include android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>
+        layout="@layout/subscriber_toolbar"/>
 
     <ExpandableListView
         android:id="@+id/exp_list"

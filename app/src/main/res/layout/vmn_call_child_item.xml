@@ -35,7 +35,7 @@
             android:text="@string/play_with_underline"
             android:padding="10dp"
             android:textColor="@color/gray"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:layout_marginRight="16dp" />
     </LinearLayout>
     <View

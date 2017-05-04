@@ -93,6 +93,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                 }
             }
         });
+        deleteImage.setVisibility(View.VISIBLE);
         deleteImage.setOnClickListener(this);
         searchImage.setOnClickListener(this);
 

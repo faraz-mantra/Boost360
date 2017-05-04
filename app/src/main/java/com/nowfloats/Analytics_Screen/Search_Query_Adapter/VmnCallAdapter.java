@@ -170,6 +170,7 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
         return convertView;
     }
 
+
     public class ConnectToVmnPlayer implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener, View.OnClickListener {
         VmnMediaPlayer vmnMediaPlayer;
         MediaHolder childHolder;
@@ -281,7 +282,7 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
                     childHolder.recCurrPoint.setText(time);
                     return;
                 }
-                Log.v("ggg",duration+" "+time);
+
                 childHolder.seekBar.setProgress(seekBarPos);
                 childHolder.recCurrPoint.setText(time);
                 handler.postDelayed(updateSeekBar,1000);
@@ -307,7 +308,6 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
             childHolder.seekBar.setProgress(0);
             childHolder.recCurrPoint.setText("0:00");
             childHolder.playButton.setImageResource(R.drawable.ic_play_arrow);
-            Log.v("ggg","complete");
         }
 
         @Override
@@ -349,14 +349,19 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
                         PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(mContext,R.color.gray_transparent), PorterDuff.Mode.SRC_IN);
                         childHolder.downloadImage.setColorFilter(porterDuffColorFilter);
                         Toast.makeText(mContext, mContext.getString(R.string.downloading), Toast.LENGTH_SHORT).show();
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                downloadFile(mediaData.getCallRecordingUri(),mediaData.getCallerNumber(),childHolder.downloadImage);
-                            }
-                        }).start();
+                       
+                        if(isExternalStorageWritable()){
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    downloadFile(mediaData.getCallRecordingUri(),mediaData.getCallerNumber(),childHolder.downloadImage);
+                                }
+                            }).start();
+                        }else{
+                            Toast.makeText(mContext, "External storage becomes unavailable", Toast.LENGTH_SHORT).show();
+                        }
                     }else{
-                        ((RequestPermission)mContext).reuestStoragePermission();
+                        ((RequestPermission)mContext).requestStoragePermission();
                     }
                     break;
 
@@ -409,9 +414,11 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
             recEndPoint = (TextView) itemView.findViewById(R.id.tv_end_time);
             recCurrPoint = (TextView) itemView.findViewById(R.id.tv_current_time);
             seekBar = (SeekBar) itemView.findViewById(R.id.seekBar);
+            number.setSelected(true);
         }
     }
     private void downloadFile(String fileurl, String filename, final ImageView downloadImage){
+       // Log.v("ggg",Environment.getExternalStoragePublicDirectory().getAbsolutePath()+" "+Environment.getExternalStorageDirectory().getAbsolutePath());
         File file = initProfilePicFolder(filename);
         int count = 0;
         try {
@@ -432,15 +439,14 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
             while ((count = input.read(data)) != -1) {
                 total += count;
                 // publishing the progress....
-                Log.v("ggg",(int)(total*100/lenghtOfFile)+" ");
-                publishHandler(downloadImage,total,lenghtOfFile);
+                //Log.v("ggg",(int)(total*100/lenghtOfFile)+" ");
+                publishHandler(downloadImage,total,lenghtOfFile,file.getAbsolutePath());
                 output.write(data, 0, count);
             }
             output.flush();
             output.close();
             input.close();
         } catch (Exception e) {
-            Log.v("ggg",count+" "+e.getMessage());
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -452,23 +458,31 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
         }
     }
 
-    private void publishHandler(final ImageView downloadImage, final long total, final int lengthOfFile){
+    private void publishHandler(final ImageView downloadImage, final long total, final int lengthOfFile, final String path){
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 if((int)(total*100/lengthOfFile) == 100){
                     PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(mContext,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
                     downloadImage.setColorFilter(porterDuffColorFilter);
-                    Toast.makeText(mContext, mContext.getString(R.string.successfully_downloaded), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, path+" "+mContext.getString(R.string.successfully_downloaded), Toast.LENGTH_SHORT).show();
                 }
             }
         },500);
     }
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
     private File initProfilePicFolder(String file) {
-        String dateFile = file+"_"+new SimpleDateFormat("dd-MM-yyyy_KK_mm_a", Locale.ENGLISH).format(new Date());
-        File ProfilePicFolder = new File(Environment.getExternalStorageDirectory() + File.separator + "Boost/");
+        String dateFile = file+"_"+new SimpleDateFormat("ddMMyyyy_HH:mm", Locale.ENGLISH).format(new Date());
+        File ProfilePicFolder = new File(Environment.getExternalStorageDirectory().getAbsolutePath()  + File.separator + "Boost/");
         if (!ProfilePicFolder.exists()) {
-            Log.v("ggg",ProfilePicFolder.mkdirs()+" ");
+            ProfilePicFolder.mkdirs();
+            //Log.v("ggg",ProfilePicFolder.mkdirs()+" ");
         }
         File ProfilePicFile;
         for (int i=1;;i++)
@@ -491,7 +505,6 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.v("ggg","error");
                 }
                 break;
             }
@@ -500,7 +513,7 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
     }
 
     public interface RequestPermission{
-        void reuestStoragePermission();
+        void requestStoragePermission();
     }
 }
 
