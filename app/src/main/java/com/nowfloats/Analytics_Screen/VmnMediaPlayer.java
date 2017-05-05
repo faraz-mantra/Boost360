@@ -50,8 +50,8 @@ public class VmnMediaPlayer {
     }
 
     private int seekToDuration(int i){
-        int totalDuration = mediaPlayer.getDuration();
-        return (i*totalDuration)/100;
+        //int totalDuration = mediaPlayer.getDuration();
+        return i;
     }
 
     public int getCurrentPosition(){

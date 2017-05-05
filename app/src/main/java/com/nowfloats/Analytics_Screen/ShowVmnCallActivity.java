@@ -63,13 +63,14 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCallAda
         searchImage = (ImageView) findViewById(R.id.search_image);
         autoTextView = (AutoCompleteTextView) findViewById(R.id.search_edittext);
         autoTextView.setInputType(InputType.TYPE_CLASS_PHONE);
-        searchAdapter = new VmnCallAdapter(this,searchList);
+        searchAdapter = new VmnCallAdapter(this, searchList);
         Intent intent = getIntent();
-        if(intent != null){
-            Type type = new TypeToken<ArrayList<VmnCallModel>>(){}.getType();
-            ArrayList<VmnCallModel> list =  new Gson().fromJson(intent.getStringExtra("calls"),type);
+        if (intent != null) {
+            Type type = new TypeToken<ArrayList<VmnCallModel>>() {
+            }.getType();
+            ArrayList<VmnCallModel> list = new Gson().fromJson(intent.getStringExtra("calls"), type);
             numberWiseSeparation(list);
-        }else{
+        } else {
             return;
         }
         searchImage.setOnClickListener(this);
@@ -92,17 +93,17 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCallAda
 
             @Override
             public void afterTextChanged(Editable s) {
-                Log.v("ggg",isSearchAdapter+" ");
+                Log.v("ggg", isSearchAdapter + " ");
                 String key = autoTextView.getText().toString().trim();
-                if(key.length() == 0) {
-                    if(adapter != null && isSearchAdapter) {
+                if (key.length() == 0) {
+                    if (adapter != null && isSearchAdapter) {
                         expList.setAdapter(adapter);
                         isSearchAdapter = false;
                     }
-                    Log.v("ggg",sortedList.size()+" ");
-                }else{
+                    Log.v("ggg", sortedList.size() + " ");
+                } else {
                     autoCompleteSearch(key);
-                    Log.v("ggg",searchList.size()+" ");
+                    Log.v("ggg", searchList.size() + " ");
                 }
             }
         });
@@ -111,24 +112,24 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCallAda
 
 
     private void autoCompleteSearch(String key) {
-        if(searchList.size()>0) {
+        if (searchList.size() > 0) {
             searchList.clear();
         }
-        for (ArrayList<VmnCallModel> list: sortedList ){
-            if(list.get(0).getCallerNumber().contains(key)) {
+        for (ArrayList<VmnCallModel> list : sortedList) {
+            if (list.get(0).getCallerNumber().contains(key)) {
                 searchList.add(list);
             }
         }
         searchAdapter.notifyDataSetChanged();
-        if(!isSearchAdapter) {
+        if (!isSearchAdapter) {
             expList.setAdapter(searchAdapter);
             isSearchAdapter = true;
         }
     }
 
-    private void numberWiseSeparation(ArrayList<VmnCallModel> list){
+    private void numberWiseSeparation(ArrayList<VmnCallModel> list) {
         HashMap<Object, ArrayList<VmnCallModel>> hashMap = new HashMap<>();
-        for(VmnCallModel model: list) {
+        for (VmnCallModel model : list) {
 
             if (!hashMap.containsKey(model.getCallerNumber())) {
                 ArrayList<VmnCallModel> subList = new ArrayList<>();
@@ -136,7 +137,7 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCallAda
 
                 hashMap.put(model.getCallerNumber(), subList);
             } else {
-                hashMap.get(model.getCallerNumber()).add(0,model);
+                hashMap.get(model.getCallerNumber()).add(0, model);
             }
         }
         sortedList = new ArrayList<>(hashMap.values());
@@ -148,7 +149,7 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCallAda
                 return second.compareToIgnoreCase(first);
             }
         });
-        adapter = new VmnCallAdapter(this,sortedList);
+        adapter = new VmnCallAdapter(this, sortedList);
         expList.setAdapter(adapter);
 
     }
@@ -156,18 +157,17 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCallAda
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
 
-            if(autoTextView.getVisibility() == View.VISIBLE){
+            if (autoTextView.getVisibility() == View.VISIBLE) {
                 autoTextView.setText("");
                 autoTextView.clearFocus();
                 autoTextView.setVisibility(View.GONE);
                 title.setVisibility(View.VISIBLE);
                 searchImage.setVisibility(View.VISIBLE);
-                InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(autoTextView.getWindowToken(), 0);
-            }else
-            {
+            } else {
                 onBackPressed();
             }
             return true;
@@ -178,14 +178,14 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCallAda
     @Override
     public void onBackPressed() {
 
-        if(adapter != null){
-            adapter.releaseResources();
+        if (adapter != null && adapter.connectToVmn != null) {
+            adapter.connectToVmn.releaseResources();
         }
         super.onBackPressed();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
-    public void gotoSetting(){
+    public void gotoSetting() {
         Intent intent = new Intent();
         intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         Uri uri = Uri.fromParts("package", getPackageName(), null);
@@ -193,11 +193,12 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCallAda
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+
     @Override
     public void requestStoragePermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},REQUEST_PERMISSION);
-        }else{
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_PERMISSION);
+        } else {
             new MaterialDialog.Builder(this)
                     .title("Recording Download")
                     .content("we need write to external storage permission to download this file.")
@@ -226,7 +227,7 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCallAda
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.search_image:
                 title.setVisibility(View.GONE);
                 searchImage.setVisibility(View.GONE);
