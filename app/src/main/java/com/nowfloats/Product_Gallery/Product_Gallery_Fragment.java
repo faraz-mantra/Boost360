@@ -407,7 +407,7 @@ public class Product_Gallery_Fragment extends Fragment {
                 try {
 
                     if (!TextUtils.isEmpty(session.getRootAliasURI())) {
-                        selectedProducts = selectedProducts + session.getRootAliasURI();
+                        selectedProducts = selectedProducts + session.getRootAliasURI()+"/";
                     } else {
                         selectedProducts = selectedProducts + "https://" + session.getFpTag() + ".nowfloats.com/";
                     }
