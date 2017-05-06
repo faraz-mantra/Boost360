@@ -63,6 +63,7 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCallAda
         searchImage = (ImageView) findViewById(R.id.search_image);
         autoTextView = (AutoCompleteTextView) findViewById(R.id.search_edittext);
         autoTextView.setInputType(InputType.TYPE_CLASS_PHONE);
+        autoTextView.setHint(getString(R.string.search));
         searchAdapter = new VmnCallAdapter(this, searchList);
         Intent intent = getIntent();
         if (intent != null) {
