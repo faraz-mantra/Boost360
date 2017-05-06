@@ -751,6 +751,14 @@ public class Site_Meter_Fragment extends Fragment {
                remove below domains as per Rachit
             */
             this.arrDomainExtensions = arrExtensions;
+
+            if(arrDomainExtensions.contains(".IN")){
+                arrDomainExtensions.remove(".IN");
+                //String firstIndexValue = arrDomainExtensions.get(0);
+                arrDomainExtensions.add(0,".IN");
+            }
+
+
             arrDomainExtensions.remove(".CA");
             arrDomainExtensions.remove(".CO.ZA");
             bookDomain();
@@ -759,6 +767,7 @@ public class Site_Meter_Fragment extends Fragment {
         }
 
     }
+
 
     private MaterialDialog domainBookDialog = null;
 
