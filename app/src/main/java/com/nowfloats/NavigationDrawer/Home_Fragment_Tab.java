@@ -3,6 +3,7 @@ package com.nowfloats.NavigationDrawer;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -167,7 +168,7 @@ public class Home_Fragment_Tab extends Fragment {
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
-                return getResources().getColor(R.color.white);
+                return ContextCompat.getColor(getContext(),R.color.white);
             }
         });
         // Setting the ViewPager For the SlidingTabsLayout

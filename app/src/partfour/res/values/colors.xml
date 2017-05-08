@@ -17,7 +17,7 @@
         <drawable name="focused">#30000000</drawable>
         <drawable name="selected">#30000000</drawable>
 
-        <color name="tabOnclickColor">#33ffffff</color>
+        <color name="tabOnclickColor">#75d6ff</color>
 
         <color name="greenDark">#458b00</color>
         <color name="product_delete_btn">#ff3f3f</color>
