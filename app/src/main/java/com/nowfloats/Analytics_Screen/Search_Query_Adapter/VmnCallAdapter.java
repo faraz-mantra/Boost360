@@ -222,7 +222,7 @@ public class VmnCallAdapter extends BaseExpandableListAdapter {
                     })
                     .build();
             childHolder = new MediaHolder(mediaDialog.getCustomView());
-            Log.v("ggg", childHolder.toString());
+
             childHolder.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

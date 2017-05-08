@@ -37,9 +37,9 @@ import com.nowfloats.NavigationDrawer.API.DomainApiService;
 import com.nowfloats.NavigationDrawer.Create_Message_Activity;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
-import com.nowfloats.Twitter.TwitterConstants;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
+import com.nowfloats.Twitter.TwitterConstants;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BusProvider;
@@ -49,7 +49,6 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.ProgressBarAnimation;
-import com.nowfloats.util.Utils;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -481,12 +480,27 @@ public class Site_Meter_Fragment extends Fragment {
                 break;
             case domain:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_GET_YOUR_OWN_IDENTITY, null);
-                if (Utils.isNetworkConnected(getActivity())) {
-                    showLoader(getString(R.string.please_wait));
-                    domainApiService.getDomainDetails(session.getFpTag(), getDomainDetailsParam());
-                } else {
-                    Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
+                MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
+                        .title("Get A Domain")
+                        .customView(R.layout.dialog_link_layout,false)
+                        .positiveText(getString(R.string.ok))
+                        .positiveColorRes(R.color.primaryColor)
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                super.onPositive(dialog);
+                            }
+
+                        });
+                if(!activity.isFinishing()) {
+                    builder.show();
                 }
+//                if (Utils.isNetworkConnected(getActivity())) {
+//                    showLoader(getString(R.string.please_wait));
+//                    domainApiService.getDomainDetails(session.getFpTag(), getDomainDetailsParam());
+//                } else {
+//                    Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
+//                }
                 break;
             case phone:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_PHONE_NUMBER, null);

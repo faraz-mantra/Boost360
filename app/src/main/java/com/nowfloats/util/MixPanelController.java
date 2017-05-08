@@ -26,8 +26,9 @@ public class MixPanelController {
     public static final String LINK_DOMAIN = "LinkDomain";
     public static final String BOOK_DOMAIN = "BookDomain";
     public static final String DOMAIN_SEARCH = "DomainSearch";
+    public static final String VMN_CALL_TRACKER = "VmnCallTracker";
 
-	private static MixpanelAPI mixPanel;
+    private static MixpanelAPI mixPanel;
 	public static String Bhours = "bhours", Signup = "SignUpActivity",
 			landingPage = "LandingPage",
 			BusinessDetailActivity = "BIZdetailActivity",

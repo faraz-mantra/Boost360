@@ -17,6 +17,7 @@ import com.nowfloats.Analytics_Screen.model.VmnCallModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 import java.text.SimpleDateFormat;
@@ -49,7 +50,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vmn_call_cards);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-
+        MixPanelController.track(MixPanelController.VMN_CALL_TRACKER,null);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             setTitle("Call Tracker");

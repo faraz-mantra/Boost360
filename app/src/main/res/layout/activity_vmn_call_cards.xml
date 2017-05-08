@@ -48,7 +48,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Call Tracker Number"/>
+                    android:text="Your Number"/>
                 <TextView
                     android:textSize="12sp"
                     android:layout_margin="15dp"
@@ -76,33 +76,28 @@
             android:gravity="center"
             android:layout_height="wrap_content">
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:text="Total Calls"/>
-            <TextView
                 android:id="@+id/total_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:textColor="@color/primary"
                 android:text="0"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:text="Total Calls"/>
         </LinearLayout>
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/gray_transparent"/>
+            android:background="@color/divider"/>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center"
             android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:text="Received Calls"/>
             <TextView
                 android:id="@+id/received_count"
                 android:layout_width="wrap_content"
@@ -110,11 +105,17 @@
                 android:textSize="18sp"
                 android:textColor="@color/primary"
                 android:text="0"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:text="Received Calls"/>
+
         </LinearLayout>
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="@color/gray_transparent"/>
+            android:background="@color/divider"/>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
@@ -122,17 +123,18 @@
             android:gravity="center"
             android:layout_height="wrap_content">
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:text="Missed Calls"/>
-            <TextView
                 android:id="@+id/missed_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:textColor="@color/primary"
                 android:text="0"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:text="Missed Calls"/>
+
         </LinearLayout>
 
     </LinearLayout>
