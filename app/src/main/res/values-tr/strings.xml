@@ -1209,6 +1209,7 @@
     <string name="whatsapp_bubble_close">You can disable this feature from your Boost app</string>
     <string name="downloading">File downloading&#8230;</string>
     <string name="play_with_underline"><u>PLAY</u></string>
+    <string name="vmn_message_text">This is displayed on your website, and you can track all customer calls &amp; logs here.</string>
 
 
     <string-array name="spinner_list_item_array">
