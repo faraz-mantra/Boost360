@@ -31,7 +31,8 @@ public class DataAccessbilityServiceV4 extends AccessibilityService {
 
     public static final String PK_NAME_WHATSAPP = "com.whatsapp";
     public static final String PK_NAME_NOWFLOATS = "com.biz2.nowfloats";
-    public static final String PK_NAME_SUGGESTIONS = "com.nowfloats.swipecard.SuggestionsActivity";
+    private String SUGGESTIONS_CLASS_NAME = "com.nowfloats.swipecard.SuggestionsActivity";
+    private String BUBBLE_CLASS_NAME = "com.nowfloats.accessbility.BubbleDialog";
 
     private SharedPreferences pref;
 
@@ -88,7 +89,7 @@ public class DataAccessbilityServiceV4 extends AccessibilityService {
                 }
             } else if ((event.getPackageName().toString().equalsIgnoreCase(getLauncherPackage())
                     || (!TextUtils.isEmpty(event.getClassName()) &&
-                    event.getClassName().toString().equalsIgnoreCase(PK_NAME_SUGGESTIONS)))
+                    event.getClassName().toString().equalsIgnoreCase(SUGGESTIONS_CLASS_NAME)))
                    /* && pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)*/) {
                 Intent intent = new Intent(DataAccessbilityServiceV4.this, BubblesService.class);
                 intent.putExtra(Key_Preferences.DIALOG_FROM, BubblesService.FROM.LAUNCHER_HOME_ACTIVITY);
@@ -106,8 +107,6 @@ public class DataAccessbilityServiceV4 extends AccessibilityService {
             }
         }
     }
-
-    private String BUBBLE_CLASS_NAME = "com.nowfloats.accessbility.BubbleDialog";
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
