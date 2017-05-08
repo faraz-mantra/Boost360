@@ -1193,4 +1193,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="successfully_downloaded">Successfully Downloaded</string>
     <string name="downloading">File downloading&#8230;</string>
     <string name="play_with_underline" translatable="false"><u>PLAY</u></string>
+    <string name="later">Later</string>
+
 </resources>

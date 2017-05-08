@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.nowfloats.bubble.BubblesService;
+import com.nowfloats.swipecard.SuggestionsActivity;
 import com.nowfloats.util.Key_Preferences;
 import com.thinksity.R;
 
@@ -31,6 +32,9 @@ public class TempDisplayDialog extends AppCompatActivity {
             case HOME_ACTIVITY:
                 it = new Intent(TempDisplayDialog.this, BubbleInAppDialog.class);
 
+                break;
+            case LAUNCHER_HOME_ACTIVITY:
+                it = new Intent(TempDisplayDialog.this, SuggestionsActivity.class);
                 break;
             case WHATSAPP_DIALOG:
                 break;

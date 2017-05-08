@@ -60,8 +60,7 @@
         <item name="android:background">#FFC90E</item>
     </style>
 
-    <style name="Theme.CustomTheme.TitleTextStyle"
-        parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+    <style name="Theme.CustomTheme.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">#FFFFFF</item>
     </style>
 
@@ -215,5 +214,9 @@
         <!-- inactive track color (30% transparency) -->
         <item name="android:colorForeground">#42221f1f
         </item>
+    </style>
+
+    <style name="CircularProgress" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/primary_color</item>
     </style>
 </resources>

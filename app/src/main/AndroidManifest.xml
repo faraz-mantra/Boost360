@@ -412,6 +412,7 @@
         <activity
             android:name="com.nowfloats.Analytics_Screen.VmnCallCardsActivity"
             android:screenOrientation="portrait" />
+
         <provider
             android:name="com.nowfloats.sync.ContentProvider.BoostContentProvider"
             android:authorities="${applicationId}.provider" />
@@ -425,7 +426,7 @@
         <activity android:name="com.nowfloats.NavigationDrawer.HelpAndSupportActivity" />
         <activity android:name="com.nowfloats.Store.ProductCheckoutActivity" />
         <activity android:name="com.nowfloats.NavigationDrawer.RiaWebViewActivity" />
-        <activity android:name="com.nowfloats.Analytics_Screen.SearchRankingActivity"/>
+        <activity android:name="com.nowfloats.Analytics_Screen.SearchRankingActivity" />
 
         <service
             android:name="com.nowfloats.accessbility.DataAccessbilityServiceV4"
@@ -466,18 +467,18 @@
             android:name="com.nowfloats.accessbility.WhatsAppDialog"
             android:autoRemoveFromRecents="true"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
             android:launchMode="singleInstance"
             android:noHistory="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.custom"
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
         <activity
             android:name="com.nowfloats.accessbility.OverlayDialog"
             android:autoRemoveFromRecents="true"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
             android:launchMode="singleInstance"
             android:noHistory="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.custom"
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
         <activity
@@ -487,7 +488,15 @@
             android:launchMode="singleInstance"
             android:noHistory="true"
             android:theme="@style/Theme.custom"
-            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden"/>
+            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
+        <activity
+            android:name="com.nowfloats.swipecard.SuggestionsActivity"
+            android:autoRemoveFromRecents="true"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance"
+            android:noHistory="true"
+            android:theme="@style/Theme.custom"
+            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
     </application>
 
 </manifest>

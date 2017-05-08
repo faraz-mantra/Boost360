@@ -44,7 +44,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.nowfloats.accessbility.BubbleDialog;
 import com.nowfloats.accessbility.TempDisplayDialog;
 import com.nowfloats.accessbility.WhatsAppBubbleCloseDialog;
 import com.nowfloats.util.Constants;
@@ -56,9 +55,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import static com.nowfloats.accessbility.BubbleDialog.ACTION_KILL_DIALOG;
-import static com.nowfloats.accessbility.BubbleDialog.ACTION_RESET_BUBBLE;
-
 
 public class BubblesService extends Service {
     private List<BubbleLayout> bubbles = new ArrayList<BubbleLayout>();
@@ -68,12 +64,20 @@ public class BubblesService extends Service {
     private FROM from;
     private SharedPreferences pref;
     private IntentFilter resertIntentFilters = new IntentFilter(ACTION_RESET_BUBBLE);
+    private IntentFilter moveRightIntentFilters = new IntentFilter(ACTION_GO_TO_RIGHT_WALL);
+    private IntentFilter moveSpecificIntentFilters = new IntentFilter(ACTION_GO_TO_RIGHT_WALL_CARDS);
     private float initAplha = 0.5f;
+
+    public static final String ACTION_KILL_DIALOG = "nowfloats.bubblebutton.bubble.ACTION_KILL_DIALOG";
+    public static final String ACTION_RESET_BUBBLE = "nowfloats.bubblebutton.bubble.ACTION_RESET_BUBBLE";
+    public static final String ACTION_GO_TO_RIGHT_WALL = "nowfloats.bubblebutton.bubble.ACTION_GO_TO_RIGHT_WALL";
+    public static final String ACTION_GO_TO_RIGHT_WALL_CARDS = "nowfloats.bubblebutton.bubble.ACTION_GO_TO_RIGHT_WALL_CARDS";
 
     public enum FROM{
         HOME_ACTIVITY,
         WHATSAPP,
-        WHATSAPP_DIALOG
+        WHATSAPP_DIALOG,
+        LAUNCHER_HOME_ACTIVITY
     }
 
     BroadcastReceiver resetReceiver = new BroadcastReceiver() {
@@ -81,7 +85,13 @@ public class BubblesService extends Service {
         public void onReceive(Context context, Intent intent) {
 
             if(bubbleView!=null){
+
+                if (intent.getAction().equalsIgnoreCase(ACTION_RESET_BUBBLE))
                 bubbleView.applyAlpha();
+                else if (intent.getAction().equalsIgnoreCase(ACTION_GO_TO_RIGHT_WALL))
+                    bubbleView.goToRightWall();
+                else if (intent.getAction().equalsIgnoreCase(ACTION_GO_TO_RIGHT_WALL_CARDS))
+                    bubbleView.goToRightWallForCards();
             }
         }
 
@@ -146,7 +156,7 @@ public class BubblesService extends Service {
                         killDialog();
                     } else {
                         killDialog();
-                        bubbleView.restAlpha();
+                        bubbleView.resetAlpha();
                         bubble.goToRightWall();
                         Intent intent = new Intent(BubblesService.this, TempDisplayDialog.class).
                                 setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -230,11 +240,13 @@ public class BubblesService extends Service {
     public void onCreate() {
         super.onCreate();
         registerReceiver(resetReceiver,resertIntentFilters);
+        registerReceiver(resetReceiver, moveRightIntentFilters);
+        registerReceiver(resetReceiver, moveSpecificIntentFilters);
 
     }
 
     private void killDialog() {
-        sendBroadcast(new Intent(BubbleDialog.ACTION_KILL_DIALOG));
+        sendBroadcast(new Intent(ACTION_KILL_DIALOG));
     }
 
 

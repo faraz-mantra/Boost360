@@ -6,6 +6,8 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
@@ -29,19 +31,19 @@ public class DataAccessbilityServiceV4 extends AccessibilityService {
 
     public static final String PK_NAME_WHATSAPP = "com.whatsapp";
     public static final String PK_NAME_NOWFLOATS = "com.biz2.nowfloats";
+    public static final String PK_NAME_SUGGESTIONS = "com.nowfloats.swipecard.SuggestionsActivity";
 
-    //    public static final String PK_NAME_WHATSAPP = "com.twitter.android";
     private SharedPreferences pref;
 
     @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
         pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-        if(!TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG,""))
-        && pref.getBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG,true)) {
+        if (!TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, ""))
+                && pref.getBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG, true)) {
             showWhatsAppDialog();
-            pref.edit().putBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG,false).apply();
-            pref.edit().putBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED,true).apply();
+            pref.edit().putBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG, false).apply();
+            pref.edit().putBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED, true).apply();
         }
         AccessibilityServiceInfo info = new AccessibilityServiceInfo();
         info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK;
@@ -53,15 +55,15 @@ public class DataAccessbilityServiceV4 extends AccessibilityService {
     }
 
     private void showWhatsAppDialog() {
-        MixPanelController.track(MixPanelController.WHATS_APP_DIALOG,null);
-        Intent intent = new Intent(this,WhatsAppDialog.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
+        MixPanelController.track(MixPanelController.WHATS_APP_DIALOG, null);
+        Intent intent = new Intent(this, WhatsAppDialog.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
     }
 
     private void showOverlayDialog() {
-        Intent intent = new Intent(this,OverlayDialog.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
+        Intent intent = new Intent(this, OverlayDialog.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);
     }
 
@@ -69,7 +71,7 @@ public class DataAccessbilityServiceV4 extends AccessibilityService {
     public void onAccessibilityEvent(AccessibilityEvent event) {
 
         if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
-            Log.v("ggg",event.toString());
+            Log.v("ggg", event.toString());
             if (event.getPackageName().toString().equalsIgnoreCase(PK_NAME_WHATSAPP)
                     || (!TextUtils.isEmpty(event.getClassName()) && (
                     event.getClassName().toString().equalsIgnoreCase(BUBBLE_CLASS_NAME)))) {
@@ -80,17 +82,24 @@ public class DataAccessbilityServiceV4 extends AccessibilityService {
                     showOverlayDialog();
                 } else if (!isMyServiceRunning(BubblesService.class) &&
                         !TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null))
-                        && pref.getBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED,false)) {
+                        && pref.getBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED, false)) {
                     Intent intent = new Intent(DataAccessbilityServiceV4.this, BubblesService.class);
                     startService(intent);
                 }
+            } else if ((event.getPackageName().toString().equalsIgnoreCase(getLauncherPackage())
+                    || (!TextUtils.isEmpty(event.getClassName()) &&
+                    event.getClassName().toString().equalsIgnoreCase(PK_NAME_SUGGESTIONS)))
+                   /* && pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)*/) {
+                Intent intent = new Intent(DataAccessbilityServiceV4.this, BubblesService.class);
+                intent.putExtra(Key_Preferences.DIALOG_FROM, BubblesService.FROM.LAUNCHER_HOME_ACTIVITY);
+                startService(intent);
             } else {
 
-                if(!TextUtils.isEmpty(event.getClassName()) && event.getPackageName().toString().equalsIgnoreCase(PK_NAME_NOWFLOATS) &&
-                !event.getClassName().toString().contains(PK_NAME_NOWFLOATS)){
+                if (!TextUtils.isEmpty(event.getClassName()) && event.getPackageName().toString().equalsIgnoreCase(PK_NAME_NOWFLOATS) &&
+                        !event.getClassName().toString().contains(PK_NAME_NOWFLOATS)) {
 
-                }else{
-                    Log.v("ggg1","closed");
+                } else {
+                    Log.v("ggg1", "closed");
                     stopService(new Intent(DataAccessbilityServiceV4.this, BubblesService.class));
                 }
 
@@ -110,6 +119,14 @@ public class DataAccessbilityServiceV4 extends AccessibilityService {
         return false;
     }
 
+    private String getLauncherPackage() {
+
+        Intent intent1 = new Intent(Intent.ACTION_MAIN);
+        intent1.addCategory(Intent.CATEGORY_HOME);
+        ResolveInfo resolveInfo = getPackageManager().resolveActivity(intent1, PackageManager.MATCH_DEFAULT_ONLY);
+        return resolveInfo.activityInfo.packageName;
+    }
+
     @Override
     public void onInterrupt() {
 
@@ -118,7 +135,7 @@ public class DataAccessbilityServiceV4 extends AccessibilityService {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        pref.edit().putBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG,true).apply();
-        pref.edit().putBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED,false).apply();
+        pref.edit().putBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG, true).apply();
+        pref.edit().putBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED, false).apply();
     }
 }

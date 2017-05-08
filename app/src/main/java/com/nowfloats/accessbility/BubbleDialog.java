@@ -21,6 +21,7 @@ import android.widget.FrameLayout;
 
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
+import com.nowfloats.bubble.BubblesService;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
@@ -30,8 +31,6 @@ import com.thinksity.R;
  */
 
 public class BubbleDialog extends AppCompatActivity {
-    public static final String ACTION_KILL_DIALOG = "nowfloats.bubblebutton.bubble.ACTION_KILL_DIALOG";
-    public static final String ACTION_RESET_BUBBLE = "nowfloats.bubblebutton.bubble.ACTION_RESET_BUBBLE";
 
     private Product_Gallery_Fragment productGalleryFragment;
     private FrameLayout mainFrame;
@@ -165,7 +164,7 @@ public class BubbleDialog extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(ACTION_KILL_DIALOG);
+        intentFilter.addAction(BubblesService.ACTION_KILL_DIALOG);
         registerReceiver(killListener, intentFilter);
     }
 
@@ -206,7 +205,7 @@ public class BubbleDialog extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        sendBroadcast(new Intent(ACTION_RESET_BUBBLE));
+        sendBroadcast(new Intent(BubblesService.ACTION_RESET_BUBBLE));
         super.onDestroy();
     }
 
