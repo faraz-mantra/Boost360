@@ -1,17 +1,20 @@
 package com.nowfloats.riachatsdk.activities;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.os.ResultReceiver;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -52,6 +55,7 @@ import com.nowfloats.riachatsdk.models.RiaCardModel;
 import com.nowfloats.riachatsdk.models.Section;
 import com.nowfloats.riachatsdk.services.FileUploadService;
 import com.nowfloats.riachatsdk.utils.Constants;
+import com.nowfloats.riachatsdk.utils.Utils;
 
 import net.alhazmy13.mediapicker.Image.ImagePicker;
 import net.alhazmy13.mediapicker.Video.VideoPicker;
@@ -61,6 +65,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -106,6 +111,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     private RequestQueue mRequestQueue;
     private PickAddressFragment fragment;
     private FileUploadResultReceiver mReceiver;
+    private ImageView ivAgentIcon;
+    private TextView tvAgentName;
+    private int mSectionCounter = 0;
 
     private Runnable mAutoCallRunnable = new Runnable() {
         @Override
@@ -159,11 +167,18 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         ivSendMessage = (ImageView) findViewById(R.id.iv_send_msg);
         tvPrefix = (TextView) findViewById(R.id.tv_prefix);
         tvPostfix = (TextView) findViewById(R.id.tv_postfix);
+        ivAgentIcon = (ImageView) toolbar.findViewById(R.id.iv_agent_icon);
+        tvAgentName = (TextView) findViewById(R.id.tv_agent_name);
 
         Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024);
         Network network = new BasicNetwork(new HurlStack());
         mRequestQueue = new RequestQueue(cache, network);
         mRequestQueue.start();
+
+        Section headerSection = new Section();
+        headerSection.setSectionType(Constants.SectionType.TYPE_HEADER);
+        headerSection.setFromRia(false);
+        mSectionList.add(headerSection);
 
         ivSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,6 +216,28 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     rvButtonsContainer.setVisibility(View.INVISIBLE);
                     cvChatInput.setVisibility(GONE);
                     showNextNode(mNextNodeId);
+                }
+            }
+        });
+
+        rvChatData.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int position = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+                if(position!=0){
+                    toolbar.setBackgroundColor(Color.parseColor("#ffb900"));
+                    tvAgentName.setVisibility(View.VISIBLE);
+                    ivAgentIcon.setVisibility(View.VISIBLE);
+                }else {
+                    toolbar.setBackgroundColor(ContextCompat.getColor(ChatViewActivity.this, android.R.color.transparent));
+                    tvAgentName.setVisibility(View.INVISIBLE);
+                    ivAgentIcon.setVisibility(View.INVISIBLE);
                 }
             }
         });
@@ -286,11 +323,12 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     private void replyToRia(String msg, String type){
         mHandler.removeCallbacks(mAutoCallRunnable);
         Section section = new Section();
+        section.setDateTime(Utils.getFormattedDate(new Date()));
         switch (type) {
             case Constants.SectionType.TYPE_TEXT:
                 section.setFromRia(false);
                 section.setSectionType(Constants.SectionType.TYPE_TEXT);
-                section.setText(msg);
+                section.setText(getParsedPrefixPostfixText(msg));
                 mSectionList.add(section);
                 mAdapter.notifyItemInserted(mSectionList.size() - 1);
                 rvChatData.smoothScrollToPosition(mSectionList.size() - 1);
@@ -323,6 +361,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 rvChatData.smoothScrollToPosition(mSectionList.size() - 1);
                 break;
         }
+        section.setShowDate(true);
     }
 
     @Override
@@ -406,7 +445,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             }
         });
         fragment.show(getFragmentManager(), "Test");
-
     }
 
     private void getImage(Button btn){
@@ -504,6 +542,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     }
 
     private void startChat(final RiaCardModel node){
+        mSectionCounter = 0;
         if(node==null)
             return;
         mDefaultButton = null;
@@ -547,6 +586,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    mSectionCounter+=1;
                     String str = null;
                     if(section.getText()!=null){
                         str = section.getText();
@@ -562,6 +602,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         section.setText(str);
                     }
                     section.setFromRia(true);
+                    section.setDateTime(Utils.getFormattedDate(new Date()));
                     mSectionList.set(mSectionList.size()-1, section);
                     mAdapter.notifyItemChanged(mSectionList.size()-1);
                 }
@@ -571,6 +612,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                mSectionList.get(mSectionList.size()-1).setShowDate(true);
+                mAdapter.notifyItemChanged(mSectionList.size()-1);
                 rvButtonsContainer.setVisibility(View.VISIBLE);
                 etChatInput.setAdapter(null);
                 for(Button btn:node.getButtons()){
@@ -579,10 +622,10 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     }
                     if(btn.getButtonType().equals(Constants.ButtonType.TYPE_GET_TEXT) && !btn.isHidden()){
                         if(btn.getPrefixText()!=null){
-                            tvPrefix.setText(btn.getPrefixText().trim());
+                            tvPrefix.setText(getParsedPrefixPostfixText(btn.getPrefixText().trim()));
                         }
                         if(btn.getPostfixText()!=null){
-                            tvPostfix.setText(btn.getPostfixText().trim());
+                            tvPostfix.setText(getParsedPrefixPostfixText(btn.getPostfixText().trim()));
                         }
                         cvChatInput.setVisibility(View.VISIBLE);
                         etChatInput.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -591,10 +634,10 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         mCurrButton = btn;
                     }else if(btn.getButtonType().equals(Constants.ButtonType.TYPE_GET_NUMBER) && !btn.isHidden()){
                         if(btn.getPrefixText()!=null){
-                            tvPrefix.setText(btn.getPrefixText().trim());
+                            tvPrefix.setText(getParsedPrefixPostfixText(btn.getPrefixText().trim()));
                         }
                         if(btn.getPostfixText()!=null){
-                            tvPostfix.setText(btn.getPostfixText().trim());
+                            tvPostfix.setText(getParsedPrefixPostfixText(btn.getPostfixText().trim()));
                         }
                         cvChatInput.setVisibility(View.VISIBLE);
                         etChatInput.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -604,10 +647,10 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
                     }else if(btn.getButtonType().equals(Constants.ButtonType.TYPE_GET_EMAIL) && !btn.isHidden()){
                         if(btn.getPrefixText()!=null){
-                            tvPrefix.setText(btn.getPrefixText().trim());
+                            tvPrefix.setText(getParsedPrefixPostfixText(btn.getPrefixText().trim()));
                         }
                         if(btn.getPostfixText()!=null){
-                            tvPostfix.setText(btn.getPostfixText().trim());
+                            tvPostfix.setText(getParsedPrefixPostfixText(btn.getPostfixText().trim()));
                         }
                         cvChatInput.setVisibility(View.VISIBLE);
                         etChatInput.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
@@ -616,10 +659,10 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         mCurrButton = btn;
                     }else if(btn.getButtonType().equals(Constants.ButtonType.TYPE_GET_PHONE_NUMBER) && !btn.isHidden()){
                         if(btn.getPrefixText()!=null){
-                            tvPrefix.setText(btn.getPrefixText().trim());
+                            tvPrefix.setText(getParsedPrefixPostfixText(btn.getPrefixText().trim()));
                         }
                         if(btn.getPostfixText()!=null){
-                            tvPostfix.setText(btn.getPostfixText().trim());
+                            tvPostfix.setText(getParsedPrefixPostfixText(btn.getPostfixText().trim()));
                         }
                         cvChatInput.setVisibility(View.VISIBLE);
                         etChatInput.setInputType(InputType.TYPE_CLASS_PHONE);
@@ -628,10 +671,10 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         mCurrButton = btn;
                     }else if(btn.getButtonType().equals(Constants.ButtonType.TYPE_GET_ITEM_FROM_SOURCE) && !btn.isHidden()){
                         if(btn.getPrefixText()!=null){
-                            tvPrefix.setText(btn.getPrefixText().trim());
+                            tvPrefix.setText(getParsedPrefixPostfixText(btn.getPrefixText().trim()));
                         }
                         if(btn.getPostfixText()!=null){
-                            tvPostfix.setText(btn.getPostfixText().trim());
+                            tvPostfix.setText(getParsedPrefixPostfixText(btn.getPostfixText().trim()));
                         }
                         handleAutoComplete(btn);
                         mCurrButton = btn;
@@ -661,6 +704,16 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             }
         }, time);
 
+    }
+
+    private String getParsedPrefixPostfixText(String text) {
+        Matcher m = Pattern.compile("\\[~(.*?)\\]").matcher(text);
+        while (m.find()) {
+            if (mDataMap.get(m.group()) != null) {
+                text = text.replace(m.group(), mDataMap.get(m.group()));
+            }
+        }
+        return text;
     }
 
     private void handleAutoComplete(final Button btn){
@@ -762,8 +815,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         mButtonsAdapter = new RvButtonsAdapter(mButtonList);
         mButtonsAdapter.setOnCItemClickListener(this);
-        rvButtonsContainer.setLayoutManager(new LinearLayoutManager(ChatViewActivity.this,
-                LinearLayoutManager.HORIZONTAL, false));
+        LinearLayoutManager buttonsLayoutManager = new LinearLayoutManager(ChatViewActivity.this,
+                LinearLayoutManager.HORIZONTAL, false);
+        rvButtonsContainer.setLayoutManager(buttonsLayoutManager);
         rvButtonsContainer.setAdapter(mButtonsAdapter);
 
         startChat(mAllNodes.get(0));

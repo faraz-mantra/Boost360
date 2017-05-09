@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:gravity="left"
     android:layout_marginTop="5dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
     android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/iv_ria_chat_head"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:src="@drawable/ria_cirlce_image"/>
     <LinearLayout
         android:id="@+id/ll_bubble_container"
-        android:layout_marginLeft="10dp"
-        android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/chat_layout_bg">
         <TextView
             android:id="@+id/tv_message_text"
             android:autoLink="all"
+            android:padding="10dp"
             android:textColorLink="@color/white"
             android:layout_width="wrap_content"
-            android:maxWidth="200dp"
             android:layout_height="wrap_content"/>
     </LinearLayout>
+    <TextView
+        android:id="@+id/tv_date_time"
+        android:textSize="10sp"
+        android:textColor="#767676"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

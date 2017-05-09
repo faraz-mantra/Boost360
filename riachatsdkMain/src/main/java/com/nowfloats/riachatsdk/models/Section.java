@@ -95,6 +95,28 @@ public class Section implements Serializable{
     @SerializedName("IsLoading")
     @Expose
     private boolean isLoading;
+    @SerializedName("ShowDdate")
+    @Expose
+    private boolean showDate;
+    @SerializedName("DateTime")
+    @Expose
+    private String dateTime;
+
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public boolean isShowDate() {
+        return showDate;
+    }
+
+    public void setShowDate(boolean showDate) {
+        this.showDate = showDate;
+    }
 
     public boolean isLoading() {
         return isLoading;

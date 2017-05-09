@@ -134,6 +134,7 @@ dependencies {
     compile 'com.github.freshdesk:hotline-android:1.2.0'
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
     compile project(':messagelibrary')
+    compile project(':riachatsdkMain')
 }
 
 apply plugin: 'com.google.gms.google-services'

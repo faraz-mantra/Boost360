@@ -2,10 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="#ECEFF1"
+    android:background="@drawable/chat_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -13,19 +12,22 @@
         android:layout_height="?android:attr/actionBarSize"
         android:elevation="4dp"
         app:theme="@style/MyCustomToolBarTheme"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:background="?attr/colorPrimary">
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <ImageView
+                android:id="@+id/iv_agent_icon"
+                android:visibility="invisible"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ria_cirlce_image"
+                android:src="@drawable/ria_circle_image"
                 android:layout_gravity="center_vertical"/>
             <TextView
+                android:id="@+id/tv_agent_name"
                 android:layout_marginLeft="16dp"
                 android:layout_width="0dp"
+                android:visibility="invisible"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:gravity="left|center_vertical"
@@ -63,7 +65,8 @@
         <android.support.v7.widget.RecyclerView
             android:visibility="invisible"
             android:id="@+id/rv_reply_button_container"
-            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
         </android.support.v7.widget.RecyclerView>
@@ -75,17 +78,14 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#CED7DB" />
             <LinearLayout
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/tv_prefix"
+                    android:layout_marginLeft="20dp"
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -96,27 +96,30 @@
                     android:layout_height="wrap_content"
                     android:minHeight="40dp"
                     android:maxLines="5"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginEnd="2dp"
                     android:background="@drawable/et_bg"
-                    android:paddingLeft="5dp"
+                    android:paddingLeft="15dp"
                     android:hint="Say Something..."
-                    android:layout_marginRight="5dp"
                     android:layout_weight="1"/>
                 <TextView
                     android:id="@+id/tv_postfix"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginRight="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"/>
                 <ImageView
+                    android:layout_marginEnd="10dp"
                     android:id="@+id/iv_send_msg"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
                     android:layout_marginRight="5dp"
                     android:layout_gravity="center_vertical"
-                    android:tint="?attr/colorPrimary"
-                    android:src="@drawable/ic_send_black_24dp"/>
+                    android:background="@drawable/send_btn_bg"
+                    android:src="@drawable/ic_send_message_btn"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

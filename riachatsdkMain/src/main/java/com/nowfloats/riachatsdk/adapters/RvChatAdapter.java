@@ -1,6 +1,5 @@
 package com.nowfloats.riachatsdk.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -26,10 +25,13 @@ import com.bumptech.glide.Glide;
 import com.nowfloats.riachatsdk.CustomWidget.playpause.PlayPauseView;
 import com.nowfloats.riachatsdk.R;
 import com.nowfloats.riachatsdk.models.Section;
+import com.nowfloats.riachatsdk.utils.Utils;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.concurrent.RunnableFuture;
+import java.util.Locale;
 
 /**
  * Created by NowFloats on 16-03-2017.
@@ -39,7 +41,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public enum SectionTypeEnum
     {
-        Image(0), Text(1), Graph(2), Gif(3), Audio(4), Video(5), Link(6), EmbeddedHtml(7), Carousel(8), Typing(9);
+        Header(-1), Image(0), Text(1), Graph(2), Gif(3), Audio(4), Video(5), Link(6), EmbeddedHtml(7), Carousel(8), Typing(9);
         private final int val;
         private SectionTypeEnum(int val){
             this.val = val;
@@ -60,15 +62,17 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemViewType(int position) {
-        Section section  = mChatSections.get(position);
+        Section section = mChatSections.get(position);
         return SectionTypeEnum.valueOf(section.getSectionType()).getValue();
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        int layout;
         View v;
         switch (viewType){
+            case -1:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_chat_head, parent, false);
+                return new HeaderViewHolder(v);
             case 0:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_image_row_layout, parent, false);
                 return new ImageViewHolder(v);
@@ -103,26 +107,51 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Section section = mChatSections.get(position);
-        if(holder instanceof TextViewHolder){
+        if(holder instanceof  HeaderViewHolder){
+            HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
+            SimpleDateFormat format = new SimpleDateFormat("EEE, dd MMM", Locale.US);
+            headerViewHolder.tvDateTime.setText(format.format(new Date()));
+        } else if(holder instanceof TextViewHolder){
             TextViewHolder textViewHolder = (TextViewHolder) holder;
             textViewHolder.tvMessageText.setText(Html.fromHtml(section.getText()));
+            if(section.isShowDate()) {
+                textViewHolder.tvDateTime.setVisibility(View.VISIBLE);
+                textViewHolder.tvDateTime.setText(section.getDateTime());
+            }else {
+                textViewHolder.tvDateTime.setVisibility(View.GONE);
+            }
             if(!section.isFromRia()){
                 ((LinearLayout) textViewHolder.itemView).setGravity(Gravity.RIGHT);
-                textViewHolder.ivRiaChatHead.setVisibility(View.GONE);
-                textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.chat_layout_reply_bg);
+                if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
+                    textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.chat_layout_reply_init_bg);
+                }else {
+                    textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.chat_layout_reply_bg);
+                }
+                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) textViewHolder.llBubbleContainer.getLayoutParams();
+                lp.setMargins(Utils.dpToPx(mContext, 34), 0, Utils.dpToPx(mContext, 10), 0);
+                textViewHolder.llBubbleContainer.setLayoutParams(lp);
                 textViewHolder.tvMessageText.setTextColor(Color.parseColor("#ffffff"));
             }else {
                 ((LinearLayout) textViewHolder.itemView).setGravity(Gravity.LEFT);
-                textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.chat_layout_bg);
                 textViewHolder.tvMessageText.setTextColor(Color.parseColor("#808080"));
+
                 if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
-                    textViewHolder.ivRiaChatHead.setVisibility(View.INVISIBLE);
+                    textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.chat_layout_bg);
                 }else {
-                    textViewHolder.ivRiaChatHead.setVisibility(View.VISIBLE);
+                    textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.chat_layout_init_bg);
                 }
+                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) textViewHolder.llBubbleContainer.getLayoutParams();
+                lp.setMargins(Utils.dpToPx(mContext, 10), 0, Utils.dpToPx(mContext, 34), 0);
+                textViewHolder.llBubbleContainer.setLayoutParams(lp);
             }
         }else if(holder instanceof ImageViewHolder){
             ImageViewHolder imageViewHolder = (ImageViewHolder) holder;
+            if(section.isShowDate()) {
+                imageViewHolder.tvDateTime.setVisibility(View.VISIBLE);
+                imageViewHolder.tvDateTime.setText(section.getDateTime());
+            }else {
+                imageViewHolder.tvDateTime.setVisibility(View.GONE);
+            }
             if(section.isLoading()){
                 imageViewHolder.pbLoading.setVisibility(View.VISIBLE);
             }else {
@@ -145,17 +174,20 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
             if(!section.isFromRia()){
                 ((LinearLayout) imageViewHolder.itemView).setGravity(Gravity.RIGHT);
-                imageViewHolder.ivRiaChatHead.setVisibility(View.GONE);
             }else {
                 ((LinearLayout) imageViewHolder.itemView).setGravity(Gravity.LEFT);
                 if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
-                    imageViewHolder.ivRiaChatHead.setVisibility(View.INVISIBLE);
                 }else {
-                    imageViewHolder.ivRiaChatHead.setVisibility(View.VISIBLE);
                 }
             }
         }else if(holder instanceof GifViewHolder){
             GifViewHolder imageViewHolder = (GifViewHolder) holder;
+            if(section.isShowDate()) {
+                imageViewHolder.tvDateTime.setVisibility(View.VISIBLE);
+                imageViewHolder.tvDateTime.setText(section.getDateTime());
+            }else {
+                imageViewHolder.tvDateTime.setVisibility(View.GONE);
+            }
             if(section.getTitle()!=null && !section.getTitle().trim().equals("")) {
                 imageViewHolder.tvImageTitle.setText(section.getTitle());
             }else {
@@ -174,13 +206,10 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
             if(!section.isFromRia()){
                 ((LinearLayout) imageViewHolder.itemView).setGravity(Gravity.RIGHT);
-                imageViewHolder.ivRiaChatHead.setVisibility(View.GONE);
             }else {
                 ((LinearLayout) imageViewHolder.itemView).setGravity(Gravity.LEFT);
                 if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
-                    imageViewHolder.ivRiaChatHead.setVisibility(View.INVISIBLE);
                 }else {
-                    imageViewHolder.ivRiaChatHead.setVisibility(View.VISIBLE);
                 }
             }
         }else if(holder instanceof EmbeddedHtmlViewHolder){
@@ -200,13 +229,10 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             embeddedHtmlViewHolder.tvCaption.setText(section.getCaption());
             if(!section.isFromRia()){
                 ((LinearLayout) embeddedHtmlViewHolder.itemView).setGravity(Gravity.RIGHT);
-                embeddedHtmlViewHolder.ivRiaChatHead.setVisibility(View.GONE);
             }else {
                 ((LinearLayout) embeddedHtmlViewHolder.itemView).setGravity(Gravity.LEFT);
                 if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
-                    embeddedHtmlViewHolder.ivRiaChatHead.setVisibility(View.INVISIBLE);
                 }else {
-                    embeddedHtmlViewHolder.ivRiaChatHead.setVisibility(View.VISIBLE);
                 }
             }
         }else  if(holder instanceof VideoViewHolder){
@@ -229,13 +255,10 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
             if(!section.isFromRia()){
                 ((LinearLayout) videoViewHolder.itemView).setGravity(Gravity.RIGHT);
-                videoViewHolder.ivRiaChatHead.setVisibility(View.GONE);
             }else {
                 ((LinearLayout) videoViewHolder.itemView).setGravity(Gravity.LEFT);
                 if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
-                    videoViewHolder.ivRiaChatHead.setVisibility(View.INVISIBLE);
                 }else {
-                    videoViewHolder.ivRiaChatHead.setVisibility(View.VISIBLE);
                 }
             }
         }else if(holder instanceof AudioViewHolder){
@@ -244,13 +267,10 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             if(!section.isFromRia()){
                 ((LinearLayout) audioViewHolder.itemView).setGravity(Gravity.RIGHT);
-                audioViewHolder.ivRiaChatHead.setVisibility(View.GONE);
             }else {
                 ((LinearLayout) audioViewHolder.itemView).setGravity(Gravity.LEFT);
                 if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
-                    audioViewHolder.ivRiaChatHead.setVisibility(View.INVISIBLE);
                 }else {
-                    audioViewHolder.ivRiaChatHead.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -301,11 +321,21 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return mChatSections.size();
     }
 
+    private class HeaderViewHolder extends RecyclerView.ViewHolder{
+
+        TextView tvDateTime;
+
+
+        public HeaderViewHolder(View itemView) {
+            super(itemView);
+            tvDateTime = (TextView) itemView.findViewById(R.id.tv_date_time);
+        }
+    }
+
 
     private class ImageViewHolder extends RecyclerView.ViewHolder{
 
-        ImageView ivRiaChatHead;
-        TextView tvImageTitle;
+        TextView tvImageTitle, tvDateTime;
         ImageView ivMainImage;
         TextView tvImageCaption;
         ProgressBar pbLoading;
@@ -314,19 +344,18 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public ImageViewHolder(View itemView) {
             super(itemView);
 
-            ivRiaChatHead = (ImageView) itemView.findViewById(R.id.iv_ria_chat_head);
             tvImageTitle = (TextView) itemView.findViewById(R.id.tv_title);
             ivMainImage = (ImageView) itemView.findViewById(R.id.iv_main_row_image);
             tvImageCaption = (TextView) itemView.findViewById(R.id.tv_caption);
             pbLoading = (ProgressBar) itemView.findViewById(R.id.pb_loading);
+            tvDateTime = (TextView) itemView.findViewById(R.id.tv_date_time);
 
         }
     }
 
     private class TextViewHolder extends RecyclerView.ViewHolder{
 
-        TextView tvMessageText;
-        ImageView ivRiaChatHead;
+        TextView tvMessageText, tvDateTime;
         View itemView;
         LinearLayout llBubbleContainer;
 
@@ -336,7 +365,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             this.itemView = itemView;
 
             tvMessageText = (TextView) itemView.findViewById(R.id.tv_message_text);
-            ivRiaChatHead = (ImageView) itemView.findViewById(R.id.iv_ria_chat_head);
+            tvDateTime = (TextView) itemView.findViewById(R.id.tv_date_time);
             llBubbleContainer = (LinearLayout) itemView.findViewById(R.id.ll_bubble_container);
         }
     }
@@ -350,24 +379,21 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private class GifViewHolder extends RecyclerView.ViewHolder{
 
-        ImageView ivRiaChatHead;
-        TextView tvImageTitle;
+        TextView tvImageTitle, tvDateTime;
         ImageView ivMainImage;
         TextView tvImageCaption;
 
         public GifViewHolder(View itemView) {
             super(itemView);
 
-            ivRiaChatHead = (ImageView) itemView.findViewById(R.id.iv_ria_chat_head);
             tvImageTitle = (TextView) itemView.findViewById(R.id.tv_title);
             ivMainImage = (ImageView) itemView.findViewById(R.id.iv_main_row_image);
+            tvDateTime = (TextView) itemView.findViewById(R.id.tv_date_time);
             tvImageCaption = (TextView) itemView.findViewById(R.id.tv_caption);
         }
     }
 
     private class AudioViewHolder extends RecyclerView.ViewHolder{
-
-        ImageView ivRiaChatHead;
         PlayPauseView ppvAudio;
         SeekBar sbAudio;
         ProgressBar pbAudioLoading;
@@ -375,7 +401,6 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public AudioViewHolder(View itemView) {
             super(itemView);
 
-            ivRiaChatHead = (ImageView) itemView.findViewById(R.id.iv_ria_chat_head);
             ppvAudio = (PlayPauseView) itemView.findViewById(R.id.ppv_audio);
             sbAudio = (SeekBar) itemView.findViewById(R.id.sb_audio);
             pbAudioLoading = (ProgressBar) itemView.findViewById(R.id.pb_audio_loading);
@@ -385,7 +410,6 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private class VideoViewHolder extends RecyclerView.ViewHolder{
 
-        ImageView ivRiaChatHead;
         TextView tvTitle;
         VideoView vvMainVideo;
         ProgressBar pbVideoLoading;
@@ -393,7 +417,6 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public VideoViewHolder(View itemView) {
             super(itemView);
 
-            ivRiaChatHead = (ImageView) itemView.findViewById(R.id.iv_ria_chat_head);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
             vvMainVideo = (VideoView) itemView.findViewById(R.id.vv_main_video);
             pbVideoLoading = (ProgressBar) itemView.findViewById(R.id.pb_video_loading);
@@ -402,14 +425,12 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private class EmbeddedHtmlViewHolder extends RecyclerView.ViewHolder{
 
-        ImageView ivRiaChatHead;
         WebView wvEmbeddedHtml;
         TextView tvTitle, tvOpenInBrowser, tvCaption;
 
         public EmbeddedHtmlViewHolder(View itemView) {
             super(itemView);
 
-            ivRiaChatHead = (ImageView) itemView.findViewById(R.id.iv_ria_chat_head);
             wvEmbeddedHtml = (WebView) itemView.findViewById(R.id.wv_embedded_html);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
             tvOpenInBrowser = (TextView) itemView.findViewById(R.id.tv_open_in_browser);
@@ -420,19 +441,14 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private class TypingViewHolder extends RecyclerView.ViewHolder{
 
-        ImageView ivRiaChatHead;
-
         public TypingViewHolder(View itemView) {
             super(itemView);
 
-            ivRiaChatHead = (ImageView) itemView.findViewById(R.id.iv_ria_chat_head);
             Section section = mChatSections.get(mChatSections.size()-1);
             if(!section.isFromRia()){
                 ((LinearLayout) itemView).setGravity(Gravity.RIGHT);
-                ivRiaChatHead.setVisibility(View.GONE);
             }else {
                 if(mChatSections!= null && mChatSections.size()>0 && mChatSections.get(mChatSections.size()-1).isFromRia()){
-                    ivRiaChatHead.setVisibility(View.INVISIBLE);
                 }
             }
         }

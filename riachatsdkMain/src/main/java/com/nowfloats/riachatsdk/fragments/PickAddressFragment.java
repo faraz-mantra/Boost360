@@ -6,6 +6,8 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -125,7 +127,11 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        try {
+            getDialog().getWindow().setBackgroundDrawableResource(R.drawable.place_pick_dialog_bg);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return v;
     }
 

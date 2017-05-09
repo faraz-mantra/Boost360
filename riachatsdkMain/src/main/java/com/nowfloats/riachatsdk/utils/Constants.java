@@ -19,6 +19,7 @@ public class Constants {
         String TYPE_IMAGE = "Image";
         String TYPE_AUDIO = "Audio";
         String TYPE_VIDEO = "Video";
+        String TYPE_HEADER = "Header";
     }
     public interface ApiType{
         String TYPE_GET = "GET";

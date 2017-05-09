@@ -1,5 +1,6 @@
 package com.nowfloats.riachatsdk.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +45,9 @@ public class RvButtonsAdapter extends RecyclerView.Adapter<RvButtonsAdapter.Butt
                 }
             }
         });
+        if(position==0){
+            holder.view.setBackgroundResource(R.drawable.first_button_bg);
+        }
     }
 
     @Override

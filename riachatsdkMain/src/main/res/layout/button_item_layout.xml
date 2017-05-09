@@ -5,11 +5,16 @@
     android:padding="10dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
+    android:minWidth="150dp"
+    android:gravity="center"
+    android:elevation="3dp"
+    android:layout_marginBottom="10dp"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="40dp">
     <TextView
         android:id="@+id/tv_btn_text"
-        android:textColor="#ffb900"
+        android:textColor="#8c8c8c"
+        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
