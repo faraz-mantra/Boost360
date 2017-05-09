@@ -15,4 +15,9 @@ public class AccountDetailModel {
     public String CreatedOn;
     public String _id;
     public String ToBeActivatedOn;
+    public PurchasedPackageDetails purchasedPackageDetails;
+
+    public class PurchasedPackageDetails{
+        public Integer packType;
+    }
 }

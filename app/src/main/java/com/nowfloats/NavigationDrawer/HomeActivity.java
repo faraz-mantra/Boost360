@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -44,6 +45,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.appsflyer.AppsFlyerConversionListener;
 import com.appsflyer.AppsFlyerLib;
@@ -57,6 +59,7 @@ import com.mixpanel.android.mpmetrics.GCMReceiver;
 import com.nfx.leadmessages.ReadMessages;
 import com.nineoldandroids.animation.Animator;
 import com.nowfloats.AccountDetails.AccountInfoActivity;
+import com.nowfloats.AccountDetails.Model.AccountDetailModel;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueries;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
@@ -91,7 +94,6 @@ import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.nowfloats.RiaFCM.RiaFirebaseMessagingService;
 import com.nowfloats.SiteAppearance.SiteAppearanceFragment;
 import com.nowfloats.Store.DomainLookup;
-import com.nowfloats.Store.Model.ActiveWidget;
 import com.nowfloats.Store.Model.StoreEvent;
 import com.nowfloats.Store.Model.StoreModel;
 import com.nowfloats.Store.Service.API_Service;
@@ -385,7 +387,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         });
         //registerChat();
         checkExpire();
-
+        showFacebookReviewDialog();
         Intent intent = getIntent();
         if(intent!=null && intent.getData()!=null){
             String action = intent.getAction();
@@ -721,7 +723,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         BoostLog.d(TAG, "In onDestroy");
         prefsEditor = pref.edit();
         prefsEditor.putBoolean("EXPIRE_DIALOG",false);
-        prefsEditor.commit();
+        prefsEditor.apply();
 
     }
 
@@ -782,7 +784,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
     }
     private void isAppUpdatedNeeded() {
-        if(session.get_FIRST_TIME() == true)
+        if(session.get_FIRST_TIME())
         {
             String curVersion;
             try {
@@ -984,6 +986,58 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         }
     }
 
+    private void showFacebookReviewDialog(){
+        String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
+        if(!paymentState.equals("1") || !pref.getBoolean(Key_Preferences.SHOW_FACEBOOK_REVIEW,true)){
+            return;
+        }
+        final MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .title("Review")
+                .content("Looks like you are liking NowFloats product. Do you want to review?")
+                .negativeText("Later")
+                .negativeColorRes(R.color.primary_color)
+                .positiveColorRes(R.color.primary_color)
+                .positiveText("Review")
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                })
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                        Methods.likeUsFacebook(HomeActivity.this,"");
+                        prefsEditor.putBoolean(Key_Preferences.SHOW_FACEBOOK_REVIEW,false).apply();
+                    }
+                }).build();
+        AccountInfoActivity.AccInfoInterface infoInterface = Constants.restAdapter.create(AccountInfoActivity.AccInfoInterface.class);
+        HashMap<String,String> values = new HashMap<>();
+        values.put("clientId", Constants.clientId);
+        values.put("fpId",session.getFPID());
+        infoInterface.getAccDetails(values,new Callback<ArrayList<AccountDetailModel>>() {
+            @Override
+            public void success(ArrayList<AccountDetailModel> accountDetailModels, Response response) {
+                int count =0;
+                for(AccountDetailModel model : accountDetailModels){
+                    if(model.purchasedPackageDetails.packType == 0){
+                        count++;
+                    }
+                }
+                if(count>1){
+                    dialog.show();
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
+
+
+    }
     private void renewKitsune(int expiryType) {
         String dialogTitle = null;
         String dialogMessage = null;
@@ -994,7 +1048,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         int days;
         prefsEditor = pref.edit();
         prefsEditor.putBoolean("EXPIRE_DIALOG",true);
-        prefsEditor.commit();
+        prefsEditor.apply();
         boolean dialogShowFlag = true;
         switch (expiryType) {
             case LIGHT_HOUSE_EXPIRE:
