@@ -1176,6 +1176,7 @@
     <string name="search_ranking">Search Ranking</string>
     <string name="spinner_title">Filter</string>
     <string name="website_domain_name">.nowfloats.com</string>
+    <string name="faqs_url" />
 
 
     <string-array name="spinner_list_item_array">

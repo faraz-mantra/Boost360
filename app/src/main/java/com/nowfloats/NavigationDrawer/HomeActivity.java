@@ -1386,7 +1386,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     public void onRenewPlanSelected() {
         prefsEditor = pref.edit();
         prefsEditor.putBoolean("EXPIRE_DIALOG",false);
-        prefsEditor.commit();
+        prefsEditor.apply();
         checkExpire();
     }
 

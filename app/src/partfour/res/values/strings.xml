@@ -403,7 +403,7 @@
     <string name="settings_feedback_link">support@digitalseoz.com</string>
     <string name="settings_facebook_like_link">https://www.facebook.com/129528697583648/</string>
     <string name="settings_about_us_link">http://digitalseoz.com/</string>
-    <string name="faqs_url">https://www.nowfloats.com/faq</string>
+    <string name="faqs_url">https://www.digitalseoz.com/faq</string>
     <string name="settings_tou_url">https://digitalseoz.com/tnc/</string>
     <string name="settings_privacy_url">https://digitalseoz.com/privacy/</string>
     <string name="settings_rate_us_link"></string>
@@ -520,5 +520,8 @@
 
 
     <string name="fb_login_protocol_scheme">fb1641508162754092</string>
+
+
+    <string name="email_id_to_request_plans">accounts@digitalseoz.com</string>
 
 </resources>

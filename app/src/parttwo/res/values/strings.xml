@@ -536,7 +536,7 @@
     </string-array>
     <!--FAQ hardcoded string end-->
 
-
+    <string name="email_id_to_request_plans">support@sibername.com</string>
 
     <string name="fb_login_protocol_scheme">fb1641508162754092</string>
 
