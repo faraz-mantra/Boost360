@@ -818,6 +818,7 @@ public class Site_Meter_Fragment extends Fragment {
                     android.R.layout.simple_spinner_item, arrDomainExtensions);
             spDomainTypes.setAdapter(arrayAdapter);
             spDomainTypes.setSelection(0);
+            get_fp_details_model = null;
             tvCompanyName.setText(get_fp_details_model.getTag());
             tvTag.setText(get_fp_details_model.getAliasTag());
             tvAddress.setText(get_fp_details_model.getAddress());

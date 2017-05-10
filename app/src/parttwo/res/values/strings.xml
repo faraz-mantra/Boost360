@@ -537,6 +537,14 @@
     <!--FAQ hardcoded string end-->
 
 
+    <string name="kitsune_pre_signup_text1">manage and update your</string>
+    <string name="kitsune_pre_signup_text2">kitsune powered website</string>
+    <string name="kitsune_renew_dialog_title">Renew your plan to get all the features</string>
+    <string name="kitsune_renew_dialog_body">Your subscription has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
+    <string name="kitsune_demo_expire_dialog_title">Subscribe now get all the features</string>
+    <string name="kitsune_demo_expire_dialog_body">Your demo subscription has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
+
+
 
     <string name="fb_login_protocol_scheme">fb1641508162754092</string>
 

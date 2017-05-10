@@ -69,10 +69,11 @@ public class DataAccessbilityServiceV4 extends AccessibilityService {
     public void onAccessibilityEvent(AccessibilityEvent event) {
 
         if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
-            Log.v("ggg",event.toString());
-            if (event.getPackageName().toString().equalsIgnoreCase(PK_NAME_WHATSAPP)
-                    || (!TextUtils.isEmpty(event.getClassName()) && (
-                    event.getClassName().toString().equalsIgnoreCase(BUBBLE_CLASS_NAME)))) {
+
+            if (!TextUtils.isEmpty(event.getPackageName()) &&
+                    (event.getPackageName().toString().equalsIgnoreCase(PK_NAME_WHATSAPP)
+                    || (!TextUtils.isEmpty(event.getClassName()) &&
+                            event.getClassName().toString().equalsIgnoreCase(BUBBLE_CLASS_NAME)))) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
 //                    Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
 //                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

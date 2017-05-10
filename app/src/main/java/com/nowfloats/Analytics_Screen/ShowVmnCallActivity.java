@@ -26,7 +26,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Analytics_Screen.Search_Query_Adapter.VmnCallAdapter;
 import com.nowfloats.Analytics_Screen.model.VmnCallModel;
-import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 import java.lang.reflect.Type;
@@ -130,7 +129,7 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCallAda
     }
 
     private void numberWiseSeparation(ArrayList<VmnCallModel> list) {
-        HashMap<Object, ArrayList<VmnCallModel>> hashMap = new HashMap<>();
+        HashMap<String, ArrayList<VmnCallModel>> hashMap = new HashMap<>();
         for (VmnCallModel model : list) {
 
             if (!hashMap.containsKey(model.getCallerNumber())) {
