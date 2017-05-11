@@ -14,6 +14,7 @@ public class AccountDetailModel {
     public String widgetKey;
     public String CreatedOn;
     public String _id;
+    public Boolean isActive;
     public String ToBeActivatedOn;
     public PurchasedPackageDetails purchasedPackageDetails;
 
