@@ -20,7 +20,11 @@ import com.nowfloats.util.Constants;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by guru on 27-04-2015.
@@ -44,7 +48,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
         // each data item is just a string in this case
         public ImageView imageView;
         CardView cardView;
-        public TextView titleText,descText,readmore,priceText,knowMoreText;
+        public TextView titleText,descText,readmore,priceText,knowMoreText, tvPlanStatus;
         public LinearLayout store_product_layout;
         public ViewHolder(View v) {
             super(v);
@@ -55,6 +59,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
             priceText = (TextView)itemView.findViewById(R.id.priceText);
             cardView = (CardView) itemView.findViewById(R.id.new_card);
             knowMoreText = (TextView)itemView.findViewById(R.id.knowMoreText);
+            tvPlanStatus = (TextView)itemView.findViewById(R.id.tvPlanStatus);
             store_product_layout = (LinearLayout)itemView.findViewById(R.id.store_product_layout);
         }
     }
@@ -96,6 +101,8 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
                     holder.readmore.setVisibility(View.GONE);
                     holder.knowMoreText.setVisibility(View.VISIBLE);
                     holder.knowMoreText.setText(appContext.getString(R.string.know_more));
+                    holder.tvPlanStatus.setVisibility(View.VISIBLE);
+                    holder.tvPlanStatus.setText(getPackageStatus(storeData.get(position)));
 //                    holder.validityText.setVisibility(View.VISIBLE);
 //                    holder.validityText.setText("("+storeData.get(position).ExpiryInMths+" months plan,"
 //                            +storeData.get(position).ValiditiyInMths+" months left"+")");
@@ -103,6 +110,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
                     holder.priceText.setVisibility(View.VISIBLE);
                     holder.readmore.setVisibility(View.VISIBLE);
                     holder.knowMoreText.setVisibility(View.GONE);
+                    holder.tvPlanStatus.setVisibility(View.GONE);
 //                    holder.validityText.setVisibility(View.GONE);
                     String currency = " ";
                     if (storeData.get(position).CurrencyCode!=null && !storeData.get(position).CurrencyCode.equals("null") && storeData.get(position).CurrencyCode.length()>0)
@@ -123,6 +131,20 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
                 });
             }
         }catch(Exception e){e.printStackTrace();}
+    }
+
+    private String getPackageStatus(StoreModel storeModel) {
+        float validity = storeModel.TotalMonthsValidity;
+        SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd yyyy", Locale.US);
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(Long.parseLong(storeModel.ToBeActivatedOn.replace("/Date(","").replace(")/", "")));
+        cal.add(Calendar.MONTH, (int)validity);
+        cal.add(Calendar.DATE, (int)((validity-Math.floor((double)validity))*30));
+        if(cal.getTimeInMillis()>System.currentTimeMillis()){
+            return "Expires on " + format.format(new Date(cal.getTimeInMillis()));
+        }else{
+            return "Expired on " + format.format(new Date(cal.getTimeInMillis()));
+        }
     }
 
     @Override

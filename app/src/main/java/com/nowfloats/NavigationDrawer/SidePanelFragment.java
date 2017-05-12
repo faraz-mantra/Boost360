@@ -17,6 +17,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -28,27 +29,22 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.nowfloats.BusinessProfile.UI.API.UploadPictureAsyncTask;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DeleteBackgroundImageAsyncTask;
 import com.nowfloats.Twitter.TwitterConstants;
-import com.nowfloats.Volley.AppController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
@@ -91,7 +87,7 @@ public class SidePanelFragment extends Fragment {
     TextView StoreTextView;
     TextView cspTextView;
     //TextView enqCount;
-    TextView settingsText, chatText, callText, shareText /*tvSiteAppearance*/;
+    TextView settingsText, chatText, callText, shareText,tvBoostBubble /*tvSiteAppearance*/;
     public static TextView fpNameTextView;
     UserSessionManager session;
     public static ImageView iconImage;
@@ -109,11 +105,12 @@ public class SidePanelFragment extends Fragment {
     Uri imageUri;
     private static final int GALLERY_PHOTO = 2;
     private static final int CAMERA_PHOTO = 1;
-
+    private Switch bubbleSwitch;
 //    protected ImageLoader imageLoader = ImageLoader.getInstance();
 
-    LinearLayout homeLayout, profileLayout, analyticsLayout, storeLayout, /*customerQueriesLayout,*/ imageGalleryLayout, cspLayout,
-            productGalleryLayout, Store_Layout, settingsLayout, chatLayout, callLayout, shareLayout, llGetInTouch /*llSiteAppearance*/;
+    LinearLayout homeLayout, profileLayout, analyticsLayout, storeLayout, /*customerQueriesLayout,*/
+            imageGalleryLayout, cspLayout,
+            productGalleryLayout, Store_Layout, settingsLayout, chatLayout, callLayout, shareLayout, llGetInTouch, bubbleLayout /*llSiteAppearance*/;
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
     private ProgressBar progressbar;
@@ -351,6 +348,7 @@ public class SidePanelFragment extends Fragment {
         callLayout = (LinearLayout) card.findViewById(R.id.seventhRow_Layout);
         shareLayout = (LinearLayout) card.findViewById(R.id.eigthRow_Layout);
         llGetInTouch = (LinearLayout) card.findViewById(R.id.ll_get_in_touch);
+        bubbleLayout = (LinearLayout) card.findViewById(R.id.ninethRow_Layout);
         //llSiteAppearance = (LinearLayout) card.findViewById(R.id.ll_site_appearance);
 
         if (session.getIsThinksity().equals("true")) {
@@ -382,8 +380,32 @@ public class SidePanelFragment extends Fragment {
         chatText = (TextView) chatLayout.findViewById(R.id.sixthRow_TextView);
         callText = (TextView) callLayout.findViewById(R.id.seventhRow_TextView);
         shareText = (TextView) shareLayout.findViewById(R.id.eighthRow_TextView);
+        tvBoostBubble = (TextView) bubbleLayout.findViewById(R.id.ninethRow_TextView);
+        bubbleSwitch = (Switch) bubbleLayout.findViewById(R.id.ninethRow_Switch);
         //tvSiteAppearance = (TextView) llSiteAppearance.findViewById(R.id.tv_site_appearance);
+        if(!Methods.isAccessibilitySettingsOn(getActivity())) {
+           session.setBubbleStatus(false);
+        }
+        bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
 
+        bubbleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(!isChecked) {
+                    session.setBubbleStatus(isChecked);
+                }else{
+
+                    if ((android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity()))
+                            || (!Methods.isAccessibilitySettingsOn(getActivity()))) {
+                        session.setBubbleTime(-1);
+                        ((OnItemClickListener) mainActivity).onClick(getString(R.string.home));
+                    }else {
+                        session.setBubbleStatus(isChecked);
+                    }
+
+                }
+            }
+        });
 
         lockWidgetImageView = (ImageView) imageGalleryLayout.findViewById(R.id.lock_widget);
         lockWidget_ProductGallery = (ImageView) productGalleryLayout.findViewById(R.id.lock_product_gal);
@@ -587,6 +609,8 @@ public class SidePanelFragment extends Fragment {
             }
         });
         //enqCount = (TextView)view.findViewById(R.id.enquiry_count_textview);
+        Log.d("Executing Async: ", Constants.beCountUrl + "?clientId=" + Constants.clientId + "&fpId=" + session.getFPID());
+       /* RequestQueue queue = AppController.getInstance().getRequestQueue();
         BoostLog.d("Executing Async: ", Constants.beCountUrl + "?clientId=" + Constants.clientId + "&fpId=" + session.getFPID());
         /*RequestQueue queue = AppController.getInstance().getRequestQueue();
         StringRequest beCountRequest = new StringRequest(Request.Method.GET, Constants.beCountUrl + "?clientId=" + Constants.clientId + "&fpId=" + session.getFPID(), new Response.Listener<String>() {
@@ -1169,6 +1193,7 @@ public class SidePanelFragment extends Fragment {
                 chatLayout.setVisibility(View.GONE);
                 siteMeter.setVisibility(View.GONE);
             }
+            bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
 
             // mDrawerLayout.openDrawer(Gravity.LEFT);
         }
@@ -1282,19 +1307,20 @@ public class SidePanelFragment extends Fragment {
             meterValue.setText(siteMeterTotalWeight + "%");
         }
 
-        private void onclickColorChange(ImageView img, TextView tv, LinearLayout llPaletes) {
-            dashBoardTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-            businessProfileTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-            //customerQueries.setTextColor(getResources().getColor(R.color.cell_text_color));
-            imageGalleryTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-            StoreTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-            cspTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-            productGalleryTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
-            settingsText.setTextColor(getResources().getColor(R.color.cell_text_color));
-            chatText.setTextColor(getResources().getColor(R.color.cell_text_color));
-            callText.setTextColor(getResources().getColor(R.color.cell_text_color));
-            shareText.setTextColor(getResources().getColor(R.color.cell_text_color));
-            //tvSiteAppearance.setTextColor(getResources().getColor(R.color.cell_text_color));
+    private void onclickColorChange(ImageView img, TextView tv, LinearLayout llPaletes) {
+        dashBoardTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+        businessProfileTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+        //customerQueries.setTextColor(getResources().getColor(R.color.cell_text_color));
+        imageGalleryTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+        StoreTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+        cspTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+        productGalleryTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
+        settingsText.setTextColor(getResources().getColor(R.color.cell_text_color));
+        chatText.setTextColor(getResources().getColor(R.color.cell_text_color));
+        callText.setTextColor(getResources().getColor(R.color.cell_text_color));
+        shareText.setTextColor(getResources().getColor(R.color.cell_text_color));
+        tvBoostBubble.setTextColor(getResources().getColor(R.color.cell_text_color));
+        //tvSiteAppearance.setTextColor(getResources().getColor(R.color.cell_text_color));
 
             shareImageView.setColorFilter(defaultLabelFilter);
             dasbBoardImageView.setColorFilter(defaultLabelFilter);

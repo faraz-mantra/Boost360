@@ -1,107 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/listing_screen_product_detail_relative_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/screen_bg">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cvProducts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:cardCornerRadius="3dp"
-        app:cardElevation="3dp"
         android:layout_margin="9dp"
+        android:background="@color/screen_bg"
+        android:orientation="vertical"
         app:cardBackgroundColor="@color/screen_bg"
-        android:background="@color/screen_bg">
+        app:cardCornerRadius="3dp"
+        app:cardElevation="3dp">
 
-        <FrameLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center">
 
-            <LinearLayout
+            <FrameLayout
+                android:id="@+id/flMain"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/proudct_image_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="162dp"
-                    android:scaleType="centerCrop"/>
-
+                android:layout_alignParentBottom="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:paddingLeft="10dp"
-                    android:gravity="center"
-                    android:background="@color/white"
+                    android:layout_height="match_parent"
                     android:orientation="vertical">
 
-                    <LinearLayout
+
+                    <ImageView
+                        android:id="@+id/proudct_image_view"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_height="162dp"
+                        android:scaleType="centerCrop" />
 
-                        <TextView
-                            android:id="@+id/product_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/primaryColor"
-                            android:text="I'm Late Wallclock"
-                            android:singleLine="true"
-                            fontPath="Roboto-Medium.ttf"
-                            android:textSize="14sp"
-                            tools:ignore="MissingPrefix" />
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:orientation="horizontal">
+                        android:layout_height="60dp"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingLeft="10dp">
 
-                        <TextView
-                            android:id="@+id/product_currency"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/inr"
-                            fontPath="Roboto-Medium.ttf"
-                            android:textColor="@color/product_price"
-                            android:layout_marginRight="2dp"
-                            android:textSize="10sp"
-                            tools:ignore="MissingPrefix" />
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/product_price"
-                            android:layout_width="wrap_content"
+                            <TextView
+                                android:id="@+id/product_name"
+                                fontPath="Roboto-Medium.ttf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:singleLine="true"
+                                android:text="I'm Late Wallclock"
+                                android:textColor="@color/primaryColor"
+                                android:textSize="14sp"
+                                tools:ignore="MissingPrefix" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="0dp"
-                            android:textColor="@color/product_price"
-                            android:text="900"
-                            fontPath="Roboto-Medium.ttf"
-                            android:textSize="10sp"
-                            tools:ignore="MissingPrefix" />
+                            android:layout_marginTop="2dp"
+                            android:orientation="horizontal">
 
+                            <TextView
+                                android:id="@+id/product_currency"
+                                fontPath="Roboto-Medium.ttf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="2dp"
+                                android:text="@string/inr"
+                                android:textColor="@color/product_price"
+                                android:textSize="10sp"
+                                tools:ignore="MissingPrefix" />
+
+                            <TextView
+                                android:id="@+id/product_price"
+                                fontPath="Roboto-Medium.ttf"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="0dp"
+                                android:text="900"
+                                android:textColor="@color/product_price"
+                                android:textSize="10sp"
+                                tools:ignore="MissingPrefix" />
+
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
 
-            <ImageView
-                android:id="@+id/proudct_share"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|top"
-                android:layout_marginRight="3dp"
-                android:layout_marginTop="3dp"
-                android:scaleType="centerCrop"
-                android:visibility="gone"
-                android:src="@drawable/share_product" />
-        </FrameLayout>
+                <ImageView
+                    android:id="@+id/proudct_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|top"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginTop="3dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/share_product"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/flOverlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:visibility="gone">
+
+                <View
+                    android:id="@+id/vwOverlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:forceHasOverlappingRendering="true" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_tick_mark" />
+            </FrameLayout>
+        </RelativeLayout>
     </android.support.v7.widget.CardView>
-
-</LinearLayout>
+</RelativeLayout>

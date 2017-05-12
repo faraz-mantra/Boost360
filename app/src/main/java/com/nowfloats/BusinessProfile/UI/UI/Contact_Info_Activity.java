@@ -12,7 +12,11 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -36,6 +40,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,6 +50,9 @@ public class Contact_Info_Activity extends ActionBarActivity implements View.OnT
     public static TextView saveTextView;
     UserSessionManager session;
     Bus bus;
+    ImageView ivProtoColSpinner;
+
+    private String[] mProtoCols = {"http://", "https://"};
 
     public static EditText primaryNumber, alternateNumber_1,alternateNumber_2, alternateNumber_3, emailAddress,websiteAddress,facebookPage ;
     Boolean flag4emailaddress = false, flag4websiteaddress = false, flag4fbagename = false,flag4alternate1 = false, flag4alternate3=false, flag4primaryno = false,flag4alternate2 = false,flag4digitlimit0=false,flag4digitlimit1=false,flag4digitlimit=false,flag4digitlimit2=false;
@@ -53,7 +61,9 @@ public class Contact_Info_Activity extends ActionBarActivity implements View.OnT
     private TextView titleTextView;
     public static String primary="",alternate1="",alternate2="", alternate3="";
     private boolean allBoundaryCondtn = true;
+    Spinner protocolSpinner;
     private boolean VMN_Dialog;
+    private int mSelectionCounter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +100,47 @@ public class Contact_Info_Activity extends ActionBarActivity implements View.OnT
         emailAddress = (EditText) findViewById(R.id.contactInfo_emailId);
         websiteAddress = (EditText) findViewById(R.id.websiteAddress);
         facebookPage = (EditText) findViewById(R.id.facebookPage);
+
+        protocolSpinner = (Spinner) findViewById(R.id.sp_web_address);
+        protocolSpinner.setAdapter(new ArrayAdapter<>(this, R.layout.protocol_spinner_bg, mProtoCols));
         initializeData();
         facebookPage.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FBPAGENAME));
+
+        ivProtoColSpinner = (ImageView) findViewById(R.id.iv_protocol_spinner);
+        ivProtoColSpinner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                protocolSpinner.performClick();
+            }
+        });
+
+        protocolSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    mSelectionCounter+=1;
+                    msgtxt4website = websiteAddress.getText().toString().trim();
+
+                    int len = msgtxt4website.length();
+                    if (len > 0 && mSelectionCounter>1) {
+
+                        flag4websiteaddress= true;
+                        saveTextView.setVisibility(View.VISIBLE);
+
+                    } else {
+
+                        saveTextView.setVisibility(View.GONE);
+
+                    }
+                } catch (Exception e) {
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         emailAddress.addTextChangedListener(new TextWatcher() {
 
@@ -448,7 +497,7 @@ public class Contact_Info_Activity extends ActionBarActivity implements View.OnT
             if(isValidWebsite(msgtxt4website)){
                 try {
                     obj1.put("key", "URL");
-                    obj1.put("value", msgtxt4website);
+                    obj1.put("value", msgtxt4website + protocolSpinner.getSelectedItem());
                 } catch (Exception ex) {
                     System.out.println();
                 }
@@ -686,8 +735,8 @@ public class Contact_Info_Activity extends ActionBarActivity implements View.OnT
             if(isValidWebsite(msgtxt4website)){
                 try {
                     obj1.put("key", "URL");
-                    obj1.put("value", msgtxt4website);
-                      session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE,msgtxt4website);
+                    obj1.put("value", protocolSpinner.getSelectedItem() + msgtxt4website);
+                      session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE,protocolSpinner.getSelectedItem() + msgtxt4website);
 
                 } catch (Exception ex) {
                     System.out.println();
@@ -995,7 +1044,16 @@ public class Contact_Info_Activity extends ActionBarActivity implements View.OnT
         alternateNumber_2.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1));
         alternateNumber_3.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3));
         emailAddress.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
-        websiteAddress.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE));
+        String websiteAddr= session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE);
+        if(websiteAddr!=null && !websiteAddr.equals("")) {
+            if (websiteAddr.split("://")[0].equals("http") && websiteAddr.split("://").length==2) {
+                protocolSpinner.setSelection(0);
+                websiteAddress.setText(websiteAddr.split("://")[1]);
+            } else if (websiteAddr.split("://")[0].equals("https") && websiteAddr.split("://").length==2) {
+                protocolSpinner.setSelection(1);
+                websiteAddress.setText(websiteAddr.split("://")[1]);
+            }
+        }
         facebookPage.setText(session.getFacebookPage());
 
 

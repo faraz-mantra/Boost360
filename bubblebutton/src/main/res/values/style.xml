@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.custom" parent="Theme.AppCompat.Light.Dialog">
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:background">@null</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+    </style>
+</resources>

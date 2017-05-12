@@ -56,6 +56,8 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         if(!Util.isNullOrEmpty(deepLinkUrl)) {
             final PackageManager manager = getPackageManager();
             intent = manager.getLaunchIntentForPackage(getPackageName());
+            intent.putExtra("from", "notification");
+            intent.putExtra("url", deepLinkUrl);
         }
         PendingIntent pendingIntent = null;
         if(intent!=null) {

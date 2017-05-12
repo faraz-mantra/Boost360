@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android = "http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+        <include
+            layout="@layout/toolbar"
+            android:id="@+id/toolbar"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/primary_color"
+            android:id="@+id/parent_layout"
+            android:orientation="vertical"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/subscriber_email"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:text="@string/email"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/subcriber_date"
+                android:textStyle="italic"
+                android:layout_marginTop="5dp"
+                android:text="@string/date"/>
+        </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/call_subscriber"
+        android:gravity="center_vertical"
+        android:padding="30dp"
+        android:visibility="gone"
+        android:drawablePadding="20dp"
+        android:textSize="18sp"
+        android:text="Call Subscriber"
+        android:drawableStart="@drawable/ic_phone_in_talk_black_24dp"
+        android:drawableLeft="@drawable/ic_phone_in_talk_black_24dp"/>
+    <View android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:background="@color/md_divider_black"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:drawableStart="@drawable/ic_markunread_black_24dp"
+        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:id="@+id/message_subscriber"
+        android:padding="30dp"
+        android:drawablePadding="20dp"
+        android:background="@color/white"
+        android:textSize="18sp"
+        android:text="Send Message"
+        android:drawableLeft="@drawable/ic_markunread_black_24dp"/>
+    <View android:layout_height="1dp"
+        android:layout_width="match_parent"
+        android:background="@color/black_translucent"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/unsubscribe"
+        android:drawableStart="@drawable/ic_delete_black_24dp"
+        android:gravity="center_vertical"
+        android:padding="30dp"
+        android:visibility="gone"
+        android:drawablePadding="20dp"
+        android:textSize="18sp"
+        android:background="@color/white"
+        android:text="Unsubscribe"
+        android:drawableLeft="@drawable/ic_delete_black_24dp"/>
+</LinearLayout>

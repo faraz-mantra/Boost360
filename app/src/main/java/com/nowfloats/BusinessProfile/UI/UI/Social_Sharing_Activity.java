@@ -13,7 +13,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
@@ -139,6 +141,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
     MaterialDialog mExpireDailog;
     private CallbackManager callbackManager;
+    private TextView arrowTextView;
+    private QuikrGuidelinesActivity showArrayFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,8 +173,10 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
         headerText.setText("Social Sharing");
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         facebookHome = (ImageView) findViewById(R.id.social_sharing_facebook_profile_image);
         facebookPage = (ImageView) findViewById(R.id.social_sharing_facebook_page_image);
@@ -184,6 +190,19 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         connectTextView = (TextView) findViewById(R.id.connectTextView);
         //autoPostTextView = (TextView) findViewById(R.id.autoPostTextView);
         topFeatureTextView = (TextView) findViewById(R.id.topFeatureText);
+        arrowTextView = (TextView)findViewById(R.id.guidelines_arrow_text);
+        //Quikr added
+        CardView card = (CardView) findViewById(R.id.quikr_card);
+        final String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
+        //Log.v("ggg",quikrArray[3]+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase());
+        if("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
+            for (String category : quikrArray) {
+                if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
+                    card.setVisibility(View.VISIBLE);
+                    break;
+                }
+            }
+        }
 
         facebookHomeStatus.setTypeface(myCustomFont);
         facebookPageStatus.setTypeface(myCustomFont);
@@ -198,7 +217,17 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         connectTextView.setTypeface(myCustomFont_Medium);
         //autoPostTextView.setTypeface(myCustomFont);
         topFeatureTextView.setTypeface(myCustomFont_Medium);
+        arrowTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                Intent intent = new Intent(Social_Sharing_Activity.this,QuikrGuidelinesActivity.class);
+                intent.putExtra("array",getResources().getStringArray(R.array.quikr_tip_points));
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+            }
+        });
 
         facebookPageCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -393,6 +422,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         InitShareResources();
         setStatus();
     }
+
     private void renewKitsune(int expiryType) {
         String dialogTitle = null;
         String dialogMessage = null;
@@ -672,6 +702,14 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
     }
 //added
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(!isAuthenticated()){
+            twitterCheckBox.setChecked(false);
+        }
+    }
 
     public void fbPageData(final int from) {
         if(from==FROM_AUTOPOST)
@@ -1080,6 +1118,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+
+        overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
     }
 
     @Override
@@ -1089,7 +1129,6 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if(id == android.R.id.home){
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             onBackPressed();
             return true;
         }
@@ -1197,6 +1236,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         prefsEditor.putBoolean("fbShareEnabled", false);
         prefsEditor.commit();
         //Log.v("ggg","hello fberror");
+        facebookHomeCheckBox.setChecked(false);
         LoginManager.getInstance().logOut();
         com.facebook.AccessToken.refreshCurrentAccessTokenAsync();
     }
@@ -1231,7 +1271,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
         if(session.getFPDetails(Key_Preferences.FB_PULL_ENABLED).equals("true")){
             facebookautopost.setChecked(true);
-            ivFbPageAutoPull.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
+            ivFbPageAutoPull.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebook_page));
+            ivFbPageAutoPull.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
             fbPullStatus.setVisibility(View.VISIBLE);
 
             fbPullStatus.setText(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME));
@@ -1240,7 +1281,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 
 
         if (!Util.isNullOrEmpty(Constants.FACEBOOK_USER_ACCESS_ID)) {
-            facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
+            facebookHome.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebook_icon));
+            facebookHome.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
             facebookHomeStatus.setText(getString(R.string.connected));
             String fbUName = pref.getString("fbUserName", "");
             prefsEditor.putBoolean("fbShareEnabled", true);
@@ -1273,40 +1315,47 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
    private void setStatus(){
         //Log.v("ggg","resime" +facebookHomeCheckBox.isChecked());
         Methods.isOnline(Social_Sharing_Activity.this);
-        facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon_inactive));
+        facebookHome.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebook_icon_inactive));
+        facebookHome.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
         facebookHomeCheckBox.setChecked(false);
 
-        facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebookpage_icon_inactive));
+        facebookPage.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebookpage_icon_inactive));
+        facebookPage.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
         facebookPageCheckBox.setChecked(false);
 
         ivFbPageAutoPull.setImageResource(R.drawable.facebookpage_icon_inactive);
+        ivFbPageAutoPull.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
         facebookautopost.setChecked(pref.getBoolean("FBFeedPullAutoPublish",false));
         if(pref.getInt("fbStatus", 0)==2){
             Methods.showSnackBarNegative(this,"Your Facebook session has expired. Please login.");
         }
         if (!Util.isNullOrEmpty(session.getFacebookName()) && (pref.getInt("fbStatus", 0)==1 || pref.getInt("fbStatus",0)==3)) {
             //Log.v("ggg"," ok");
-            facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
+            facebookHome.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebook_icon));
+            facebookHome.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
             facebookHomeCheckBox.setChecked(true);
             facebookHomeStatus.setVisibility(View.VISIBLE);
             facebookHomeStatus.setText(session.getFacebookName());
 
         }
         if (!Util.isNullOrEmpty(session.getFacebookPage()) && pref.getInt("fbPageStatus", 0)==1) {
-            facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
+            facebookPage.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebook_page));
+            facebookPage.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
             facebookPageCheckBox.setChecked(true);
             facebookPageStatus.setVisibility(View.VISIBLE);
             facebookPageStatus.setText(session.getFacebookPage());
         }
         if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))&& pref.getBoolean("FBFeedPullAutoPublish",false)){
             ivFbPageAutoPull.setImageResource(R.drawable.facebook_page);
+            ivFbPageAutoPull.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
             fbPullStatus.setText(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME));
             fbPullStatus.setVisibility(View.VISIBLE);
         }
         if (!isAuthenticated()) {
             //twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
             // String fbUName = pref.getString(TwitterConstants.PREF_USER_NAME, "");
-            twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
+            twitter.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.twitter_icon_inactive));
+            twitter.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
             twitterCheckBox.setChecked(false);
             twitterStatus.setVisibility(View.GONE);
             //twitterStatus.setText("Disconnected");
@@ -1315,7 +1364,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             String twitterName = mSharedPreferences.getString(TwitterConstants.PREF_USER_NAME, "");
             twitterStatus.setVisibility(View.VISIBLE);
             twitterStatus.setText("@" + twitterName);
-            twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
+            twitter.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.twitter_icon_active));
+            twitter.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
         }
     }
 
@@ -1478,6 +1528,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             case FBTYPE:
                 Constants.fbShareEnabled = true;
                 facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
+                facebookHome.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
                 facebookHomeCheckBox.setChecked(true);
                 facebookHomeStatus.setVisibility(View.VISIBLE);
                 facebookHomeStatus.setText(name);
@@ -1488,6 +1539,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 break;
             case FBPAGETYPE:
                 facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
+                facebookPage.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
                 facebookPageStatus.setVisibility(View.VISIBLE);
                 facebookPageStatus.setText("" + name);
                 facebookPageCheckBox.setChecked(true);
@@ -1504,6 +1556,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 twitterStatus.setVisibility(View.VISIBLE);
                 twitterStatus.setText("@" + name);
                 twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
+                twitter.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
                 //twitterStatus.setText("Connected");
                 twitterCheckBox.setHighlightColor(getResources().getColor(R.color.primaryColor));
                 twitterCheckBox.setChecked(true);
@@ -1516,6 +1569,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 session.storeFacebookPageID("");
                 session.storeFacebookAccessToken("");
                 facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebookpage_icon_inactive));
+                facebookPage.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
                 facebookPageStatus.setVisibility(View.GONE);
                 //facebookPageStatus.setText("Disconnected");
                 prefsEditor = pref.edit();
@@ -1530,6 +1584,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 //Log.v("ggg",session.getFacebookName()+"deactivate name");
                 session.storeFacebookAccessToken("");
                 facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon_inactive));
+                facebookHome.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
                 facebookHomeStatus.setVisibility(View.GONE);
                 //facebookHomeStatus.setText("Disconnected");
                 prefsEditor = pref.edit();
@@ -1540,6 +1595,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 twitterStatus.setVisibility(View.GONE);
                 //twitterStatus.setText("Disconnected");
                 twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
+                twitter.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
                 logoutFromTwitter();
                 SharedPreferences.Editor twitterPrefEditor = mSharedPreferences.edit();
                 twitterPrefEditor.putBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false);

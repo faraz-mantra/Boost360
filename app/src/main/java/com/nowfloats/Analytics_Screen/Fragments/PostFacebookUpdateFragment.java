@@ -9,8 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.nowfloats.Analytics_Screen.SocialAnalytics;
 import com.nowfloats.NavigationDrawer.Create_Message_Activity;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 
@@ -19,8 +22,25 @@ import com.thinksity.R;
  */
 
 public class PostFacebookUpdateFragment extends Fragment {
-    Button postToFacebook;
+    Button postUpdate;
     Context context;
+    String mType;
+
+    public static Fragment getInstance(Bundle b){
+        Fragment frag = new PostFacebookUpdateFragment();
+        frag.setArguments(b);
+        return frag;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(getArguments() != null){
+            Bundle b = getArguments();
+            mType = b.getString("mType");
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,12 +57,25 @@ public class PostFacebookUpdateFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        postToFacebook= (Button) view.findViewById(R.id.create_facebook_update_button);
-        postToFacebook.setOnClickListener(new View.OnClickListener() {
+        postUpdate= (Button) view.findViewById(R.id.create_update_button);
+        TextView message = (TextView) view.findViewById(R.id.message);
+
+        String socialTypeText1 = null,socialTypeText2 = null;
+        if(SocialAnalytics.FACEBOOK.equals(mType)){
+            socialTypeText2 = "Facebook Page";
+            socialTypeText1 = "Facebook Page";
+        }else if(SocialAnalytics.QUIKR.equals(mType)){
+            socialTypeText2 = "Quikr";
+            socialTypeText1 = "Quikr account";
+        }
+        String text = "Looks like you haven\'t posted any update on your "+socialTypeText1+" through Boost yet Make sure you select the <b>"+socialTypeText2+" option</b> while creating an update";
+        message.setText(Methods.fromHtml(text));
+        postUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, Create_Message_Activity.class);
                 startActivity(i);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
     }

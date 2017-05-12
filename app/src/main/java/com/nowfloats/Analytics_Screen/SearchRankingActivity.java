@@ -9,14 +9,12 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -85,7 +83,7 @@ public class SearchRankingActivity extends AppCompatActivity {
 
     private void getSearchRankings(){
         pd.show();
-        RestAdapter adapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_API_URL).build();
+        RestAdapter adapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_MEMORY_API_URL).build();
         SearchQueryApi queryApi = adapter.create(SearchQueryApi.class);
         queryApi.getKeyWordRanks(mSession.getFpTag(), new Callback<List<SearchRankModel>>() {
             @Override

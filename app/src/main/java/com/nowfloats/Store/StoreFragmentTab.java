@@ -137,7 +137,7 @@ public class StoreFragmentTab extends Fragment {
     @Subscribe
     public void getStoreList(StoreEvent response){
         ArrayList<StoreModel> allModels = response.model.AllPackages;
-        ArrayList<ActiveWidget> activeIdArray = response.model.ActivePackages;
+        ArrayList<StoreModel> activeIdArray = response.model.ActivePackages;
         ArrayList<StoreModel> additionalPlans = response.model.AllPackages;
         if(allModels!=null && activeIdArray!=null){
             LoadActivePlans(activity,allModels,additionalPlans,activeIdArray);
@@ -153,7 +153,7 @@ public class StoreFragmentTab extends Fragment {
 
 
 
-    private void LoadActivePlans(final Activity activity, ArrayList<StoreModel> allModels, final ArrayList<StoreModel> additionalPlan, ArrayList<ActiveWidget> acIdarray) {
+    private void LoadActivePlans(final Activity activity, ArrayList<StoreModel> allModels, final ArrayList<StoreModel> additionalPlan, ArrayList<StoreModel> acIdarray) {
         activeWidgetModels.clear();
         additionalWidgetModels.clear();
         try {
@@ -187,7 +187,7 @@ public class StoreFragmentTab extends Fragment {
                             boolean flag = false;
                             for (int j=0; j<acIdarray.size(); j++){
                                 if(allModels.get(i)._id.equals(acIdarray.get(j).ClientProductId)){
-                                    activeWidgetModels.add(allModels.get(i));
+                                    //activeWidgetModels.add(allModels.get(i));
                                     flag = true;
                                 }
                             }
@@ -195,10 +195,12 @@ public class StoreFragmentTab extends Fragment {
                                 additionalWidgetModels.add(allModels.get(i));
                             }
                         }
+                        activeWidgetModels = new ArrayList<>(acIdarray);
                     }else{
                         additionalWidgetModels = allModels;
 //                        Methods.showSnackBarNegative(activity,"Something went wrong");
                     }
+
 //                }
 //                @Override
 //                public void failure(RetrofitError error) {
