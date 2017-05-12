@@ -37,9 +37,9 @@ import com.nowfloats.NavigationDrawer.API.DomainApiService;
 import com.nowfloats.NavigationDrawer.Create_Message_Activity;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
-import com.nowfloats.Twitter.TwitterConstants;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
+import com.nowfloats.Twitter.TwitterConstants;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BusProvider;
@@ -49,7 +49,6 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.ProgressBarAnimation;
-import com.nowfloats.util.Utils;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -481,12 +480,27 @@ public class Site_Meter_Fragment extends Fragment {
                 break;
             case domain:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_GET_YOUR_OWN_IDENTITY, null);
-                if (Utils.isNetworkConnected(getActivity())) {
-                    showLoader(getString(R.string.please_wait));
-                    domainApiService.getDomainDetails(session.getFpTag(), getDomainDetailsParam());
-                } else {
-                    Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
+                MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
+                        .title("Get A Domain")
+                        .customView(R.layout.dialog_link_layout,false)
+                        .positiveText(getString(R.string.ok))
+                        .positiveColorRes(R.color.primaryColor)
+                        .callback(new MaterialDialog.ButtonCallback() {
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                super.onPositive(dialog);
+                            }
+
+                        });
+                if(!activity.isFinishing()) {
+                    builder.show();
                 }
+//                if (Utils.isNetworkConnected(getActivity())) {
+//                    showLoader(getString(R.string.please_wait));
+//                    domainApiService.getDomainDetails(session.getFpTag(), getDomainDetailsParam());
+//                } else {
+//                    Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
+//                }
                 break;
             case phone:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_PHONE_NUMBER, null);
@@ -619,6 +633,8 @@ public class Site_Meter_Fragment extends Fragment {
     public void getDomainDetails(DomainDetails domainDetails) {
 //        domainDetails = null;
         hideLoader();
+
+
         if (domainDetails != null && domainDetails.response) {
 
             if (domainDetails.getProcessingStatus().equalsIgnoreCase(DOMAIN_SUCCESS_STATUS) &&
@@ -749,6 +765,14 @@ public class Site_Meter_Fragment extends Fragment {
                remove below domains as per Rachit
             */
             this.arrDomainExtensions = arrExtensions;
+
+            if(arrDomainExtensions.contains(".IN")){
+                arrDomainExtensions.remove(".IN");
+                //String firstIndexValue = arrDomainExtensions.get(0);
+                arrDomainExtensions.add(0,".IN");
+            }
+
+
             arrDomainExtensions.remove(".CA");
             arrDomainExtensions.remove(".CO.ZA");
             bookDomain();
@@ -757,6 +781,7 @@ public class Site_Meter_Fragment extends Fragment {
         }
 
     }
+
 
     private MaterialDialog domainBookDialog = null;
 
@@ -793,6 +818,7 @@ public class Site_Meter_Fragment extends Fragment {
                     android.R.layout.simple_spinner_item, arrDomainExtensions);
             spDomainTypes.setAdapter(arrayAdapter);
             spDomainTypes.setSelection(0);
+            get_fp_details_model = null;
             tvCompanyName.setText(get_fp_details_model.getTag());
             tvTag.setText(get_fp_details_model.getAliasTag());
             tvAddress.setText(get_fp_details_model.getAddress());
@@ -813,6 +839,7 @@ public class Site_Meter_Fragment extends Fragment {
                     .setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            Methods.hideKeyboard(getActivity());
                             String domainName = edtDomainName.getText().toString();
                             if (TextUtils.isEmpty(domainName)) {
                                 Methods.showSnackBarNegative(getActivity(),
@@ -844,7 +871,7 @@ public class Site_Meter_Fragment extends Fragment {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     tvPriceDef.setText(String.format(getString(R.string.price_of_domain), arrDomainExtensions.get(position)));
                     if (hmPrices.containsKey(arrDomainExtensions.get(position))) {
-                        tvPrice.setText(hmPrices.get(arrDomainExtensions.get(position))+"*");
+                        tvPrice.setText(hmPrices.get(arrDomainExtensions.get(position)) + "*");
                     } else {
                         tvPrice.setText("");
                     }
@@ -912,6 +939,8 @@ public class Site_Meter_Fragment extends Fragment {
                         Methods.showSnackBarNegative(getActivity(),
                                 getString(R.string.please_enter_message));
                     } else {
+
+                        MixPanelController.track(MixPanelController.LINK_DOMAIN,null);
                         materialDialog.dismiss();
                         HashMap<String, String> hashMap = new HashMap<String, String>();
                         hashMap.put("Subject", subject);
@@ -988,7 +1017,7 @@ public class Site_Meter_Fragment extends Fragment {
                         switch (dialogFrom) {
 
                             case DOMAIN_AVAILABLE:
-
+                                MixPanelController.track(MixPanelController.DOMAIN_SEARCH,null);
                                 break;
                             case DEFAULT:
 
@@ -1005,37 +1034,54 @@ public class Site_Meter_Fragment extends Fragment {
     }
 
     private void prepareAndPublishDomain() {
+        MixPanelController.track(MixPanelController.BOOK_DOMAIN,null);
         HashMap<String, String> hashMap = new HashMap<String, String>();
         hashMap.put("clientId", Constants.clientId);
         hashMap.put("domainName", get_fp_details_model.getDomainName());
         hashMap.put("domainType", get_fp_details_model.getDomainType());
         hashMap.put("existingFPTag", session.getFpTag());
-        hashMap.put("addressLine1", get_fp_details_model.getAddress());
-        hashMap.put("city", get_fp_details_model.getCity());
-        hashMap.put("companyName", get_fp_details_model.getTag());
-        hashMap.put("contactName", TextUtils.isEmpty(get_fp_details_model.getContactName()) ?
-                session.getFpTag() : get_fp_details_model.getContactName());
-        hashMap.put("country", get_fp_details_model.getCountry());
-        hashMap.put("countryCode", get_fp_details_model.getLanguageCode());
-        hashMap.put("email", get_fp_details_model.getEmail());
-        hashMap.put("lat", get_fp_details_model.getLat());
-        hashMap.put("lng", get_fp_details_model.getLng());
-        hashMap.put("phoneISDCode", get_fp_details_model.getCountryPhoneCode());
-        if (get_fp_details_model.getCategory() != null && get_fp_details_model.getCategory().size() > 0)
-            hashMap.put("primaryCategory", get_fp_details_model.getCategory().get(0));
-        else
-            hashMap.put("primaryCategory", "");
-        hashMap.put("primaryNumber", get_fp_details_model.getPrimaryNumber());
-        hashMap.put("regService", "");
-        hashMap.put("state", get_fp_details_model.getPaymentState());
-        hashMap.put("zip", get_fp_details_model.getPinCode());
+//        hashMap.put("addressLine1", get_fp_details_model.getAddress());
+//        hashMap.put("city", get_fp_details_model.getCity());
+//        hashMap.put("companyName", get_fp_details_model.getTag());
+//        hashMap.put("contactName", TextUtils.isEmpty(get_fp_details_model.getContactName()) ?
+//                session.getFpTag() : get_fp_details_model.getContactName());
+//        hashMap.put("country", get_fp_details_model.getCountry());
+//        hashMap.put("countryCode", get_fp_details_model.getLanguageCode());
+//        hashMap.put("email", get_fp_details_model.getEmail());
+//        hashMap.put("lat", get_fp_details_model.getLat());
+//        hashMap.put("lng", get_fp_details_model.getLng());
+//        hashMap.put("phoneISDCode", get_fp_details_model.getCountryPhoneCode());
+//        if (get_fp_details_model.getCategory() != null && get_fp_details_model.getCategory().size() > 0)
+//            hashMap.put("primaryCategory", get_fp_details_model.getCategory().get(0));
+//        else
+//            hashMap.put("primaryCategory", "");
+//        hashMap.put("primaryNumber", get_fp_details_model.getPrimaryNumber());
+//        hashMap.put("regService", "");
+//        hashMap.put("state", get_fp_details_model.getPaymentState());
+//        hashMap.put("zip", get_fp_details_model.getPinCode());
         domainApiService.buyDomain(hashMap);
     }
 
     @Subscribe
-    public void domainBookStatus(String content) {
-        showCustomDialog(getString(R.string.book_a_new_domain),
-                content,
-                getString(R.string.ok), null, DialogFrom.DEFAULT);
+    public void domainBookStatus(String response) {
+        if (domainBookDialog != null && domainBookDialog.isShowing())
+            domainBookDialog.dismiss();
+
+        if (!TextUtils.isEmpty(response) &&
+                response.equalsIgnoreCase(getString(R.string.domain_booking_process_message))) {
+
+            showCustomDialog(getString(R.string.domain_booking_process),
+                    getString(R.string.domain_booking_process_message),
+                    getString(R.string.ok), null, DialogFrom.DEFAULT);
+
+        } else {
+
+            if(TextUtils.isEmpty(response)){
+                response = getString(R.string.domain_booking_failed);
+            }
+            showCustomDialog(getString(R.string.book_a_new_domain),
+                    response,
+                    getString(R.string.ok), null, DialogFrom.DEFAULT);
+        }
     }
 }

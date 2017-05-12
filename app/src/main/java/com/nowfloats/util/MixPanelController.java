@@ -23,7 +23,12 @@ public class MixPanelController {
 	public static final String BUBBLE_DIALOG_SHARE = "BubbleWhatsAppProductShareClicked";
 	public static final String BUBBLE_CLOSED = "BubbleClosedByUser";
 	public static final String WHATSAPP_TO_BOOST = "whatsapp_to_boost";
-	private static MixpanelAPI mixPanel;
+    public static final String LINK_DOMAIN = "LinkDomain";
+    public static final String BOOK_DOMAIN = "BookDomain";
+    public static final String DOMAIN_SEARCH = "DomainSearch";
+    public static final String VMN_CALL_TRACKER = "VmnCallTracker";
+
+    private static MixpanelAPI mixPanel;
 	public static String Bhours = "bhours", Signup = "SignUpActivity",
 			landingPage = "LandingPage",
 			BusinessDetailActivity = "BIZdetailActivity",

@@ -406,7 +406,12 @@
         <activity
             android:name="com.nowfloats.Analytics_Screen.SubscribersActivity"
             android:screenOrientation="portrait" />
-
+        <activity
+            android:name="com.nowfloats.Analytics_Screen.ShowVmnCallActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.Analytics_Screen.VmnCallCardsActivity"
+            android:screenOrientation="portrait" />
         <provider
             android:name="com.nowfloats.sync.ContentProvider.BoostContentProvider"
             android:authorities="${applicationId}.provider" />
@@ -420,10 +425,10 @@
         <activity android:name="com.nowfloats.NavigationDrawer.HelpAndSupportActivity" />
         <activity android:name="com.nowfloats.Store.ProductCheckoutActivity" />
         <activity android:name="com.nowfloats.NavigationDrawer.RiaWebViewActivity" />
-        <activity android:name="com.nowfloats.Analytics_Screen.SearchRankingActivity"></activity>
+        <activity android:name="com.nowfloats.Analytics_Screen.SearchRankingActivity"/>
 
         <service
-            android:name="com.nowfloats.accessbility.DataAccessbilityServiceV3"
+            android:name="com.nowfloats.accessbility.DataAccessbilityServiceV4"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter android:priority="2147483647">
                 <action android:name="android.accessibilityservice.AccessibilityService" />

@@ -43,11 +43,13 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ViewPortHandler;
+import com.nowfloats.Analytics_Screen.API.CallTrackerApis;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueries;
 import com.nowfloats.Analytics_Screen.SearchRankingActivity;
 import com.nowfloats.Analytics_Screen.SocialAnalytics;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
+import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.CustomWidget.VerticalTextView;
 import com.nowfloats.Login.UserSessionManager;
@@ -62,6 +64,7 @@ import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.RiaEventLogger;
@@ -83,9 +86,9 @@ import retrofit.client.Response;
  */
 public class Analytics_Fragment extends Fragment {
     View rootView = null;
-    public static TextView visitCount,visitorsCount, subscriberCount,searchQueriesCount, businessEnqCount,facebokImpressions;
+    public static TextView visitCount,visitorsCount, subscriberCount,vmnTotalCallCount,searchQueriesCount, businessEnqCount,facebokImpressions;
     private int noOfSearchQueries = 0;
-    public static ProgressBar visits_progressBar,visitors_progressBar,subscriber_progress, search_query_progress, businessEnqProgress;
+    public static ProgressBar visits_progressBar,visitors_progressBar,vmnProgressBar,subscriber_progress, search_query_progress, businessEnqProgress;
     UserSessionManager session;
     private Context context;
     private Bus bus;
@@ -265,7 +268,20 @@ public class Analytics_Fragment extends Fragment {
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
-
+        if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
+                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)) ||
+                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME))) {
+            CardView vmnCallCard = (CardView) rootView.findViewById(R.id.card_view_vmn_call);
+            vmnCallCard.setVisibility(View.VISIBLE);
+            vmnCallCard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+            });
+        }
         LinearLayout llSearchRanking = (LinearLayout) rootView.findViewById(R.id.analytics_screen_search_ranking);
         llSearchRanking.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -283,12 +299,15 @@ public class Analytics_Fragment extends Fragment {
         tvRiaCardHeader = (TextView) rootView.findViewById(R.id.tvRiaCardHeader);
         llRiaCardSections = (LinearLayout) rootView.findViewById(R.id.llRiaCardSections);
 
-        PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+        PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(context,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
         ImageView galleryBack = (ImageView) rootView.findViewById(R.id.pop_up_gallery_img);
         ImageView subsBack = (ImageView) rootView.findViewById(R.id.pop_up_subscribers_img);
         ImageView searchBack = (ImageView) rootView.findViewById(R.id.pop_up_search_img);
         ImageView businessEnqBg = (ImageView) rootView.findViewById(R.id.business_enq_bg);
         ImageView ivFbAnalytics = (ImageView) rootView.findViewById(R.id.iv_fb_page_analytics);
+        ImageView vmnCallBack = (ImageView) rootView.findViewById(R.id.pop_up_vmn_call_img);
+        ImageView visitorsBack = (ImageView) rootView.findViewById(R.id.visitors_image_bg);
+        ImageView searchRankBack = (ImageView) rootView.findViewById(R.id.pop_up_search_ranking_img);
 
 
         galleryBack.setColorFilter(porterDuffColorFilter);
@@ -296,11 +315,15 @@ public class Analytics_Fragment extends Fragment {
         searchBack.setColorFilter(porterDuffColorFilter);
         businessEnqBg.setColorFilter(porterDuffColorFilter);
         ivFbAnalytics.setColorFilter(porterDuffColorFilter);
+        vmnCallBack.setColorFilter(porterDuffColorFilter);
+        visitorsBack.setColorFilter(porterDuffColorFilter);
+        searchRankBack.setColorFilter(porterDuffColorFilter);
 
         visitCount = (TextView) rootView.findViewById(R.id.analytics_screen_visitor_count);
         visitorsCount = (TextView) rootView.findViewById(R.id.visitors_count);
         subscriberCount = (TextView) rootView.findViewById(R.id.analytics_screen_subscriber_count);
         searchQueriesCount = (TextView) rootView.findViewById(R.id.analytics_screen_search_queries_count);
+        vmnTotalCallCount = (TextView) rootView.findViewById(R.id.analytics_screen_vmn_tracker_count);
         businessEnqCount = (TextView) rootView.findViewById(R.id.analytics_screen_business_enq_count);
         facebokImpressions = (TextView) rootView.findViewById(R.id.analytics_screen_updates_count);
         searchQueriesCount.setVisibility(View.INVISIBLE);
@@ -310,6 +333,7 @@ public class Analytics_Fragment extends Fragment {
         visitors_progressBar.setVisibility(View.VISIBLE);
         subscriber_progress = (ProgressBar) rootView.findViewById(R.id.subscriber_progressBar);
         subscriber_progress.setVisibility(View.VISIBLE);
+        vmnProgressBar = (ProgressBar) rootView.findViewById(R.id.vmn_progressbar);
         search_query_progress = (ProgressBar) rootView.findViewById(R.id.search_query_progressBar);
         search_query_progress.setVisibility(View.VISIBLE);
         businessEnqProgress = (ProgressBar) rootView.findViewById(R.id.business_enq_progressBar);
@@ -378,7 +402,7 @@ public class Analytics_Fragment extends Fragment {
         }
 
         initRiaCard();
-
+        setVmnTotalCallCount();
         return rootView;
     }
 
@@ -733,5 +757,27 @@ public class Analytics_Fragment extends Fragment {
         public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
             return Math.round(value)+"";
         }
+    }
+
+    private void setVmnTotalCallCount(){
+        vmnProgressBar.setVisibility(View.VISIBLE);
+        vmnTotalCallCount.setVisibility(View.GONE);
+        CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
+        trackerApis.getTotalCalls(Constants.clientId, session.getFPID(), new Callback<String>() {
+            @Override
+            public void success(String s, Response response) {
+                vmnProgressBar.setVisibility(View.GONE);
+                vmnTotalCallCount.setVisibility(View.VISIBLE);
+                if(s == null || s.equals("null") || response.getStatus() != 200){
+                    return;
+                }
+                vmnTotalCallCount.setText(s);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                vmnProgressBar.setVisibility(View.GONE);
+            }
+        });
     }
 }

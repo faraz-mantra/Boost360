@@ -88,7 +88,9 @@ public class Home_Fragment_Tab extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+
         bus.unregister(this);
+
     }
 
     @Override
@@ -261,7 +263,9 @@ public class Home_Fragment_Tab extends Fragment {
         super.onStop();
 
         if(getActivity()==null) return;
-
+        if(!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")){
+            return;
+        }
         getActivity().stopService(new Intent(getActivity(),BubblesService.class));
         getActivity().unregisterReceiver(clickReceiver);
     }
@@ -284,7 +288,7 @@ public class Home_Fragment_Tab extends Fragment {
         long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, -1);
         long newTime = calendar.getTimeInMillis();
         long diff = 3 * 24 * 60 * 60 * 1000;
-        Log.v("ggg", oldTime + "");
+        //Log.v("ggg", oldTime + "");
 //Log.v("ggg",String.valueOf(diff)+" "+String.valueOf(newTime-oldTime));
         if (oldTime != -1 && ((newTime - oldTime) < diff)) {
             return;
@@ -420,8 +424,10 @@ public class Home_Fragment_Tab extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        checkOverlay();
-        getActivity().registerReceiver(clickReceiver,clickIntentFilters);
+        if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+            checkOverlay();
+            getActivity().registerReceiver(clickReceiver, clickIntentFilters);
+        }
     }
 
     BroadcastReceiver clickReceiver = new BroadcastReceiver() {

@@ -27,7 +27,7 @@
         android:layout_gravity="end"
         android:gravity="center"
         android:layout_marginEnd="24dp"
-        android:textColor="@color/primary"
+        android:textColor="@color/primaryColor"
         android:text="Open Boost"
         android:layout_marginBottom="8dp"
         android:layout_marginRight="24dp" />

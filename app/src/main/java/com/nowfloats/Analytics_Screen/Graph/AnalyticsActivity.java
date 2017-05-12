@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.Locale;
 
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -60,7 +59,6 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
     ViewPager pager;
     public boolean rowExist=true;
     AnalyticsAdapter analyticsAdapter;
-    private final static String endpoint = " https://api.withfloats.com";
     public int yearData,monthData,weekData;
     private String startDate="01-01-2016",endDate ;
     ContentLoadingProgressBar progressBar;
@@ -247,8 +245,8 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         map.put("endDate",dashboardDetails.getEndDate());
         map.put("detailstype",String.valueOf(tableName));
         map.put("scope",session.getISEnterprise().equals("true") ? "1" : "0");
-        RestAdapter adapter = new RestAdapter.Builder().setEndpoint(endpoint).build();
-        AnalyticsFetch.FetchDetails details = adapter.create(AnalyticsFetch.FetchDetails.class);
+
+        AnalyticsFetch.FetchDetails details = Constants.restAdapter.create(AnalyticsFetch.FetchDetails.class);
         details.getDataCount(dashboardDetails.getfpTag(),map, new Callback<DashboardResponse>() {
             @Override
             public void success(final DashboardResponse dashboardResponse, Response response) {
@@ -300,8 +298,8 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
             map.put("scope",session.getISEnterprise().equals("true") ? "1" : "0");
             BoostLog.d("Current Start:", firstDate + " -  " + lastDate);
 
-            RestAdapter adapter = new RestAdapter.Builder().setEndpoint(endpoint).build();
-            AnalyticsFetch.FetchDetails details = adapter.create(AnalyticsFetch.FetchDetails.class);
+
+            AnalyticsFetch.FetchDetails details = Constants.restAdapter.create(AnalyticsFetch.FetchDetails.class);
             details.getDataCount(session.getFpTag(),map, new Callback<DashboardResponse>() {
                 @Override
                 public void success(final DashboardResponse dashboardResponse, Response response) {

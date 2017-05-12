@@ -9,7 +9,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
 import android.location.Address;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
@@ -77,11 +76,15 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class PreSignUpActivity extends AppCompatActivity implements
@@ -142,6 +145,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
     ArrayAdapter<String> adapter;
     ArrayList<String> signUpCountryList=new ArrayList<>();
     private GoogleApiClient mGoogleApiClient;
+    private ArrayList<String> categories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -342,30 +346,51 @@ public class PreSignUpActivity extends AppCompatActivity implements
                 businessCategory_Selected = true;
                 country_Selected = false;
 
-                new FetchCategory().execute();
+                if(categories == null )
+                {
+                    final ProgressDialog pd = ProgressDialog.show(PreSignUpActivity.this, "", getResources().getString(R.string.wait_while_loading_category));
+                    API_Layer api = Constants.restAdapter.create(API_Layer.class);
+                    api.getCategories(new Callback<ArrayList<String>>() {
+                        @Override
+                        public void success(ArrayList<String> strings, Response response) {
+                            if(pd!=null && pd.isShowing()){
+                                pd.dismiss();
+                            }
+                            categories =strings;
+                            showCategoryDialog(categories);
+                        }
 
-
-                /*if (Constants.storeBusinessCategories == null) {
-                    Constants.storeBusinessCategories = API_Layer.getBusinessCategories(activity);
-                } else {
-
-                    new MaterialDialog.Builder(activity)
-                            .title("Select a Category")
-                            .items(Constants.storeBusinessCategories)
-                            .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
-                                @Override
-                                public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                    businessCategoryEditText.setText(text);
-
-                                    Util.changeDefaultBackgroundImage(text.toString());
-                                    return false;
-                                }
-                            })
-                            .show();
-                }*/
+                        @Override
+                        public void failure(RetrofitError error) {
+                            if(pd!=null && pd.isShowing()){
+                                pd.dismiss();
+                            }
+                            showCategoryDialog(new ArrayList<String>(Arrays.asList(Constants.storeBusinessCategories)));
+                            Toast.makeText(PreSignUpActivity.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }else
+                {
+                    showCategoryDialog(categories);
+                }
             }
         });
         updateBasedOnMostRecentLocation(Constants.lastKnownAddress);
+    }
+    private void showCategoryDialog(ArrayList<String> categories){
+        new MaterialDialog.Builder(activity)
+                .title("Select a Category")
+                .items(categories)
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        businessCategoryEditText.setText(text);
+
+                        Util.changeDefaultBackgroundImage(text.toString());
+                        return false;
+                    }
+                })
+                .show();
     }
     private void makeAutoCompleteFilter(String country_code){
 
@@ -939,48 +964,6 @@ public class PreSignUpActivity extends AppCompatActivity implements
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
-    }
-
-    private class FetchCategory extends AsyncTask<String, Void, String>{
-
-        ProgressDialog pd = null;
-
-        @Override
-        protected void onPreExecute() {
-
-            pd = ProgressDialog.show(PreSignUpActivity.this, "", "Wait While Loading Categories...");
-            //return
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            API_Layer.getBusinessCategories(PreSignUpActivity.this);
-            return null;
-        }
-
-
-
-        @Override
-        protected void onPostExecute(String result) {
-        //Log.v("Test",Constants.storeBusinessCategories.length+" length");
-            if(pd!=null && pd.isShowing()){
-                pd.dismiss();
-            }
-            new MaterialDialog.Builder(activity)
-                    .title("Select a Category")
-                    .items(Constants.storeBusinessCategories)
-                    .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
-                        @Override
-                        public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                            businessCategoryEditText.setText(text);
-
-                            Util.changeDefaultBackgroundImage(text.toString());
-                            return false;
-                        }
-                    })
-                    .show();
-            //return
-        }
     }
 
 }

@@ -19,6 +19,9 @@ import android.widget.TextView;
 
 import com.nowfloats.CustomPage.Model.CustomPageModel;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
 import com.squareup.otto.Bus;
 import com.thinksity.R;
 
@@ -27,6 +30,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by guru on 27-04-2015.
@@ -137,7 +144,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
                     @Override
                     public void onClick(View v) {
                         int POs = Integer.parseInt(v.getTag().toString());
-                        Log.v("ggg",POs+"");
+                        //Log.v("ggg",POs+"");
                         if (deleteCheck){
                             if (CustomPageActivity.posList.contains(POs+"")){
                                 if(CustomPageActivity.posList.size()==1){
@@ -178,7 +185,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
 //                        prev_view = v;
 //                        int c = v.get;
                         int POs = Integer.parseInt(v.getTag().toString());
-                        Log.v("ggg",POs+"");
+                        //Log.v("ggg",POs+"");
                         if (CustomPageActivity.posList.contains(POs+"")){
                             if(CustomPageActivity.posList.size()==1){
                                 deleteCheck = false;

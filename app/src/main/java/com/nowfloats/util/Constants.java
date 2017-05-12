@@ -29,7 +29,7 @@ import retrofit.android.AndroidLog;
 
 
 public class Constants {
-    public static final boolean APK_MODE_RELEASE = true;
+    public static final boolean APK_MODE_RELEASE = false;
     public static final String APP_TAG = "Boost App";
     public static final String RIA_NODE_DATA = "riaNodeDatas" ;
     public static final int VISITS_TABLE = 0;
@@ -78,7 +78,7 @@ public class Constants {
     public final static String TEST_API_URL = "http://api.nowfloatsdev.com";
     public final static String BASE_IMAGE_URL = "https://content.withfloats.com";
     public final static String RIA_MEMORY_API_URL = "http://riamemory.withfloats.com";
-    public final static String PLUGIN_API_URL = "http://plugin.withfloats.com";
+    public final static String PLUGIN_API_URL = "https://plugin.withfloats.com";
     public final static String RIA_API_URL = "https://ria.withfloats.com";
     // public final static String NOW_FLOATS_API_URL		=	"https://nftestbed.azurewebsites.net";
     public final static String HTTP_PUT = "PUT";
@@ -100,7 +100,7 @@ public class Constants {
     public static NotificationInterface alertInterface = Constants.restAdapter.create(NotificationInterface.class);
 
     //http://api.withfloats.com/Discover/v3/FloatingPoint/create
-    public static String NFX_WITH_NOWFLOATS="http://nfx.withfloats.com";
+    public static String NFX_WITH_NOWFLOATS="https://nfx.withfloats.com";
     public static String createStoreV3 = NOW_FLOATS_API_URL + "/Discover/v3/FloatingPoint/create";
     public static String createStoreV2 = NOW_FLOATS_API_URL + "/Discover/v2/FloatingPoint/create";
     public static String loginUrl = NOW_FLOATS_API_URL + "/discover/v1/login/";
