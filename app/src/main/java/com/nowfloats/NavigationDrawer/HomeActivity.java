@@ -125,6 +125,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -952,6 +954,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
     }
     private void checkExpiry1(){
+        if(Constants.PACKAGE_NAME.equals("com.kitsune.biz")){
+            return;
+        }
         String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
         String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
         Calendar calendar = Calendar.getInstance();
@@ -971,26 +976,32 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 if(fpCreatedDate.contains("/Date")){
                     fpCreatedDate = fpCreatedDate.replace("/Date(", "").replace(")/", "");
                 }
-                int days = (int) ((currentTime-Long.valueOf(fpCreatedDate))/(1000*60*60*24));
+                float days = ((currentTime-Long.valueOf(fpCreatedDate))/(float)(1000*60*60*24));
+
                 if( days <= 7){
                     //seven days dialog ervery day
                     showDialog1(DEMO_DAYS_LEFT,days);
                 }else if(days< 30){
                     //once a week
                     long prev = pref.getLong("expire_dialog",-1);
-                    if((currentTime-prev)/1000 >= 60*60*24*7) {
+                    if((currentTime-prev)/(60*60*24*1000) >= 7) {
                         showDialog1(DEMO_DAYS_LEFT,days);
                     }
                 }
                 break;
             case 1:
+                if(!BuildConfig.APPLICATION_ID.equals("com.kitsune.biz")){
+                    if (checkExpiry() && !session.isSiteAppearanceShown()) {
+                        showSiteVisibilityDialog();
+                    }
+                }
                 getAccountDetails();
                 break;
         }
 
     }
-    private void showDialog1(int showDialog,int days){
-        Log.v("ggg",days+" days left");
+    private void showDialog1(int showDialog,float days){
+
         String callUsButtonText,cancelButtonText,dialogTitle,dialogMessage;
         int dialogImage,dialogImageBgColor;
 
@@ -1025,13 +1036,23 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 callUsButtonText = getString(R.string.buy_in_capital);
                 cancelButtonText = getString(R.string.later_in_capital);
                 dialogTitle = getString(R.string.buy_light_house_plan);
-                dialogMessage = getString(R.string.demo_plan_will_expire);
+                if(days<1){
+                    dialogMessage = getString(R.string.demo_plan_will_expire)+" < "+1;
+                }else{
+                    dialogMessage = getString(R.string.demo_plan_will_expire)+" "+(int)days;
+                }
                 break;
             case LIGHT_HOUSE_DAYS_LEFT:
                 callUsButtonText = getString(R.string.buy_in_capital);
                 cancelButtonText = getString(R.string.later_in_capital);
                 dialogTitle = getString(R.string.renew_light_house_plan);
-                dialogMessage = getString(R.string.light_house_pla_will_expire);
+
+                if(days<1){
+                    dialogMessage = getString(R.string.light_house_pla_will_expire)+" < "+1;
+                }else{
+                    dialogMessage = getString(R.string.light_house_pla_will_expire)+" "+(int)days;
+                }
+
                 dialogImage = R.drawable.androidexpiryxxxhdpi;
                 dialogImageBgColor = Color.parseColor("#ff0010");
                 break;
@@ -1039,6 +1060,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 return;
         }
         pref.edit().putLong("expire_dialog",Calendar.getInstance().getTimeInMillis()).apply();
+
         MaterialDialog mExpireDailog = new MaterialDialog.Builder(this)
                 .customView(R.layout.pop_up_restrict_post_message, false)
                 .backgroundColorRes(R.color.white)
@@ -1058,6 +1080,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         dialog.dismiss();
+                        openStore();
                         /*prefsEditor = pref.edit();
                         prefsEditor.putBoolean("EXPIRE_DIALOG", true);
                         prefsEditor.apply();*/
@@ -1122,7 +1145,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         if(!paymentState.equals("1") || !pref.getBoolean(Key_Preferences.SHOW_FACEBOOK_REVIEW,true)){
             return;
         }
-        MaterialDialog dialog = new MaterialDialog.Builder(this)
+        new MaterialDialog.Builder(this)
                 .title("Review")
                 .content("Looks like you are liking NowFloats product. Do you want to review?")
                 .negativeText("Later")
@@ -1157,41 +1180,50 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 if(accountDetailModels == null){
                     return;
                 }
-
+                Collections.sort(accountDetailModels, new Comparator<AccountDetailModel>() {
+                    @Override
+                    public int compare(AccountDetailModel o1, AccountDetailModel o2) {
+                        return o2.ToBeActivatedOn.compareToIgnoreCase(o1.ToBeActivatedOn);
+                    }
+                });
                 Calendar calendar = Calendar.getInstance();
                 Long current = calendar.getTimeInMillis();
+                boolean showWildFire = true,flag = true;
+                long prevShown = pref.getLong("expire_dialog",-1);
                 for (AccountDetailModel model : accountDetailModels){
                     if(model.purchasedPackageDetails.packType == 0) {
                         count++;
-                        if (model.isActive) {
+
+                        if(flag) {
+                            flag = false;
                             String Sdate = model.ToBeActivatedOn;
-                            if(Sdate.contains("/Date")){
+                            if (Sdate.contains("/Date")) {
                                 Sdate = Sdate.replace("/Date(", "").replace(")/", "");
                             }
                             long date = Long.valueOf(Sdate);
                             calendar.setTimeInMillis(date);
-                            calendar.add(Calendar.MONTH,Integer.parseInt(model.totalMonthsValidity));
-                            //Log.v("ggg",(current- calendar.getTimeInMillis())/(60*60*24*1000) +" day");
-                            //Log.v("ggg", Methods.getFormattedDate(Sdate));
-                            int days = (int) ((current-calendar.getTimeInMillis())/(1000*60*60*24));
-                            if(days<0){
-                                continue;
-                            }
-                            else if( days <= 7){
+                            calendar.add(Calendar.MONTH, Integer.parseInt(model.totalMonthsValidity));
+
+                            float days = ((calendar.getTimeInMillis()-current) / (float)(1000 * 60 * 60 * 24));
+
+                            if (days <= 7) {
                                 //seven days dialog ervery day
-                                showDialog1(LIGHT_HOUSE_DAYS_LEFT,days);
-                            }else if(days< 30)
-                            {
+                                showDialog1(LIGHT_HOUSE_DAYS_LEFT, days);
+                                showWildFire = false;
+                            } else if (days < 30) {
                                 //once a week
-                                long prev = pref.getLong("expire_dialog",-1);
-                                if((current-prev)/1000>=60*60*24*7) {
-                                    showDialog1(LIGHT_HOUSE_DAYS_LEFT,days);
+                                if ((current - prevShown) / (60 * 60 * 24 * 1000) >= 7) {
+                                    showDialog1(LIGHT_HOUSE_DAYS_LEFT, days);
+                                    showWildFire = false;
                                 }
                             }
-
                         }
                     }
                 }
+
+               /* if(showWildFire && (current-prevShown)/(60*60*24*1000)>=7) {
+                    showDialog1(WILD_FIRE_EXPIRE,-1);
+                }*/
 
                 if (count > 1) {
                     showFacebookReviewDialog();
@@ -1224,6 +1256,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 dialogMessage = getString(R.string.kitsune_renew_dialog_body);
                 dialogImage = R.drawable.androidexpiryxxxhdpi;
                 dialogImageBgColor = Color.parseColor("#ff0010");
+
                 break;
             case DEMO_EXPIRE:
                 dialogImage = R.drawable.androidexpiryxxxhdpi;
@@ -1253,7 +1286,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                             mExpireDailog.dismiss();
                             prefsEditor = pref.edit();
                             prefsEditor.putBoolean("EXPIRE_DIALOG", true);
-                            prefsEditor.commit();
+                            prefsEditor.apply();
                         }
 
                         @Override
@@ -1626,7 +1659,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     public void onRenewPlanSelected() {
         prefsEditor = pref.edit();
         prefsEditor.putBoolean("EXPIRE_DIALOG",false);
-        prefsEditor.commit();
+        prefsEditor.apply();
         checkExpire();
     }
 
@@ -1637,7 +1670,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         try {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             Bundle bundle = new Bundle();
-            bundle.putBoolean(StoreFragmentTab.IS_FROM_WILD_FIRE_MINI, true);
+            bundle.putBoolean(StoreFragmentTab.IS_FROM_WILD_FIRE_MINI, false);
             storeFragment.setArguments(bundle);
             ft.replace(R.id.mainFrame, storeFragment)
                     .commit();

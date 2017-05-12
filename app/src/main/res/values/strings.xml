@@ -636,8 +636,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="ignore_in_capital">IGNORE</string>
     <string name="buy_light_house_plan">Buy Lighthouse plan to get all the features</string>
     <string name="demo_plan_expired">Your demo plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
-    <string name="demo_plan_will_expire">Demo plan will expire in 30 days</string>
-    <string name="light_house_pla_will_expire">Lighthouse plan will expire in 30 days</string>
+    <string name="demo_plan_will_expire">Demo plan will expire in days</string>
+    <string name="light_house_pla_will_expire">Lighthouse plan will expire in days</string>
 
     <string name="wildfire_will_expire">Wildfire plan will expire in</string>
     <string name="days">days</string>
@@ -1147,10 +1147,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="kitsune_pre_signup_text2">kitsune powered website</string>
     <string name="error_invoice">Error while creating invoice</string>
     <string name="login_status_error">Please Logout and Login again to continue</string>
-    <string name="kitsune_renew_dialog_title">Renew your plan to get all the features</string>
-    <string name="kitsune_renew_dialog_body">Your subscription has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
-    <string name="kitsune_demo_expire_dialog_title">Subscribe now get all the features</string>
-    <string name="kitsune_demo_expire_dialog_body">Your demo subscription has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
     <string name="opc_card_text">Pay through OPC</string>
     <string name="opc_main_text">If you have been assisted by a NowFloats Sales Executive, you can enter an Online Payment Code (OPC) here. It will auto-populate the details of your pro-forma invoice and enable you to subscribe to a NowFloats package online. Please connect with our customer support team to know more about it.</string>
     <string name="opc_title">Pay through OPC</string>
@@ -1190,7 +1186,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="required_overlay_permission">Give us this permission to see our new feature \"Boost Bubble\"</string>
     <string name="bubble_for_whatsapp">Bubble for WhatsApp</string>
     <string name="whatsapp_bubble_close">You can disable this feature from your Boost app</string>
-    <string name="missed_calls">MiSSED CALLS</string>
+    <string name="missed_calls">MISSED CALLS</string>
     <string name="received_call">RECEIVED CALLS</string>
     <string name="call_tracker">Call Tracker</string>
     <string name="data_is_empty">Calls are empty</string>

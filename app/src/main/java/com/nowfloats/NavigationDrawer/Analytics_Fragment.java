@@ -299,13 +299,15 @@ public class Analytics_Fragment extends Fragment {
         tvRiaCardHeader = (TextView) rootView.findViewById(R.id.tvRiaCardHeader);
         llRiaCardSections = (LinearLayout) rootView.findViewById(R.id.llRiaCardSections);
 
-        PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+        PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(context,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
         ImageView galleryBack = (ImageView) rootView.findViewById(R.id.pop_up_gallery_img);
         ImageView subsBack = (ImageView) rootView.findViewById(R.id.pop_up_subscribers_img);
         ImageView searchBack = (ImageView) rootView.findViewById(R.id.pop_up_search_img);
         ImageView businessEnqBg = (ImageView) rootView.findViewById(R.id.business_enq_bg);
         ImageView ivFbAnalytics = (ImageView) rootView.findViewById(R.id.iv_fb_page_analytics);
         ImageView vmnCallBack = (ImageView) rootView.findViewById(R.id.pop_up_vmn_call_img);
+        ImageView visitorsBack = (ImageView) rootView.findViewById(R.id.visitors_image_bg);
+        ImageView searchRankBack = (ImageView) rootView.findViewById(R.id.pop_up_search_ranking_img);
 
 
         galleryBack.setColorFilter(porterDuffColorFilter);
@@ -314,6 +316,8 @@ public class Analytics_Fragment extends Fragment {
         businessEnqBg.setColorFilter(porterDuffColorFilter);
         ivFbAnalytics.setColorFilter(porterDuffColorFilter);
         vmnCallBack.setColorFilter(porterDuffColorFilter);
+        visitorsBack.setColorFilter(porterDuffColorFilter);
+        searchRankBack.setColorFilter(porterDuffColorFilter);
 
         visitCount = (TextView) rootView.findViewById(R.id.analytics_screen_visitor_count);
         visitorsCount = (TextView) rootView.findViewById(R.id.visitors_count);

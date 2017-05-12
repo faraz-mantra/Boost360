@@ -36,6 +36,9 @@ public class DataAccessbilityServiceV4 extends AccessibilityService {
     @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
+        if(!Constants.PACKAGE_NAME.equals(PK_NAME_NOWFLOATS)){
+            return;
+        }
         pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         if(!TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG,""))
         && pref.getBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG,true)) {
@@ -43,6 +46,7 @@ public class DataAccessbilityServiceV4 extends AccessibilityService {
             pref.edit().putBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG,false).apply();
             pref.edit().putBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED,true).apply();
         }
+
         AccessibilityServiceInfo info = new AccessibilityServiceInfo();
         info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK;
         info.notificationTimeout = 100;
@@ -68,6 +72,9 @@ public class DataAccessbilityServiceV4 extends AccessibilityService {
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
 
+        if(!Constants.PACKAGE_NAME.equals(PK_NAME_NOWFLOATS)){
+            return;
+        }
         if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
 
             if (!TextUtils.isEmpty(event.getPackageName()) &&
