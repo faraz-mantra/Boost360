@@ -143,6 +143,8 @@
                     android:id="@+id/iv_protocol_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:scaleX=".75"
+                    android:scaleY=".75"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/ic__drop_down"/>
                 <android.support.v7.widget.AppCompatSpinner

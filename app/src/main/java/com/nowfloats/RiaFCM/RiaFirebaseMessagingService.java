@@ -60,8 +60,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         }
         PendingIntent pendingIntent = null;
         if(intent!=null) {
-            pendingIntent = PendingIntent.getActivity(this, 0, intent,
-                    PendingIntent.FLAG_ONE_SHOT);
+            pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         }
 
         /*intent.putExtra("payload", payload);

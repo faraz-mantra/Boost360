@@ -2,11 +2,13 @@ package com.nowfloats.BusinessProfile.UI.UI;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -19,10 +21,12 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.nowfloats.BusinessProfile.UI.API.Business_Info_Upload_Service;
+import com.nowfloats.BusinessProfile.UI.API.UpdatePrimaryNumApi;
 import com.nowfloats.BusinessProfile.UI.API.UploadProfileAsyncTask;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -32,6 +36,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.SmsVerifyModel;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -40,10 +45,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class Contact_Info_Activity extends ActionBarActivity implements View.OnTouchListener {
     private Toolbar toolbar;
@@ -268,7 +277,14 @@ public class Contact_Info_Activity extends ActionBarActivity implements View.OnT
             public void afterTextChanged(Editable s) {
             }
         });
-        primaryNumber.setOnTouchListener(this);
+        primaryNumber.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                showOtpDialog();
+
+                return true;
+            }
+        });
        /* primaryNumber.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -428,6 +444,34 @@ public class Contact_Info_Activity extends ActionBarActivity implements View.OnT
         });
     }
 
+    private void showOtpDialog() {
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_otp,null);
+        final EditText number = (EditText) view.findViewById(R.id.editText);
+        new MaterialDialog.Builder(this)
+                .customView(view,false)
+                .negativeText("Cancel")
+                .positiveText("Change")
+                .canceledOnTouchOutside(false)
+                .negativeColorRes(R.color.primary_color)
+                .positiveColorRes(R.color.primary_color)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        String numText = number.getText().toString().trim();
+                        if(numText.length()>0) {
+                            sendSms(numText);
+                        }
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                }).show();
+
+
+    }
 
 
     public void uploadContactDetails_retrofit(Contact_Info_Activity activity, JSONObject jsonObject, Bus bus)
@@ -1175,4 +1219,80 @@ public class Contact_Info_Activity extends ActionBarActivity implements View.OnT
         }
         return false;
     }
+
+    private void sendSms(String number){
+        Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("via","sms");
+        hashMap.put("locale",session.getFPDetails(Key_Preferences.LANGUAGE_CODE));
+        hashMap.put("phone_number",number);
+        hashMap.put("country_code",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
+        smsApi.sendSms(hashMap, new Callback<SmsVerifyModel>() {
+            @Override
+            public void success(SmsVerifyModel model, Response response) {
+                if(model == null){
+                    Methods.showSnackBarNegative(Contact_Info_Activity.this, getString(R.string.something_went_wrong_try_again));
+                    return;
+                }
+                if(model.getSuccess()){
+
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Methods.showSnackBarNegative(Contact_Info_Activity.this, getString(R.string.something_went_wrong_try_again));
+            }
+        });
+    }
+
+    private void verifySms(String number,String otpCode){
+        Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("verification_code",otpCode);
+        hashMap.put("phone_number",number);
+        hashMap.put("country_code",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
+        smsApi.verifySmsCode(hashMap, new Callback<SmsVerifyModel>() {
+            @Override
+            public void success(SmsVerifyModel model, Response response) {
+                if(model == null){
+                    Methods.showSnackBarNegative(Contact_Info_Activity.this, getString(R.string.something_went_wrong_try_again));
+                    return;
+                }
+                if(model.getSuccess()){
+
+                }else{
+
+                }
+                Methods.showSnackBarPositive(Contact_Info_Activity.this,model.getMessage());
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Methods.showSnackBarNegative(Contact_Info_Activity.this, getString(R.string.something_went_wrong_try_again));
+            }
+        });
+    }
+
+    private void changePrimary(final String number){
+        UpdatePrimaryNumApi updateApi = Constants.restAdapter.create(UpdatePrimaryNumApi.class);
+        updateApi.changeNumber(Constants.clientId, session.getFPID(), number, new Callback<String>() {
+            @Override
+            public void success(String s, Response response) {
+                if(s == null || response.getStatus()!=200){
+                    Methods.showSnackBarNegative(Contact_Info_Activity.this,getString(R.string.something_went_wrong_try_again));
+                }
+                session.storeFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM,number);
+                primaryNumber.setText(number);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Methods.showSnackBarNegative(Contact_Info_Activity.this,getString(R.string.something_went_wrong_try_again));
+            }
+        });
+    }
+
 }

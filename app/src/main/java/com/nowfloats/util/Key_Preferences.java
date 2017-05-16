@@ -91,6 +91,7 @@ public class Key_Preferences {
     public static final String IS_FP_SITE_APPEARNCE_SHOWN = "site_appearance_shown";
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
+    public static final String LANGUAGE_CODE = "LanguageCode";
     public static final String MAIN_PRIMARY_CONTACT_NUM = "mainPrimaryContactNum";
 
     public static final String FB_PULL_ENABLED = "fb_pull_enabled";

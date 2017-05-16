@@ -181,7 +181,7 @@ public class StoreDataActivity extends AppCompatActivity {
 //                            product_pay.setBackgroundColor(getResources().getColor(R.color.greenDark));}
 //                    }
                     try {
-                        if (product.Name.contains("NowFloats Dictate") || product.Name.contains("NowFloats WildFire")) {
+                        if (product.Name.contains("Dictate") || product.Name.contains("WildFire")) {
                             ProductPrice.setText(getString(R.string.contact_us));
                         }
                     }catch(Exception e){e.printStackTrace();}

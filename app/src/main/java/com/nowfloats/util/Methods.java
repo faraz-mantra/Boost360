@@ -48,13 +48,19 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 
+import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
+import retrofit.http.GET;
+import retrofit.http.Headers;
+import retrofit.http.POST;
+import retrofit.http.QueryMap;
 
 /**
  * Created by Guru on 21-04-2015.
@@ -465,6 +471,18 @@ public class Methods {
     public static int dpToPx(int dp,Context context) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+    }
+
+
+    public interface SmsApi{
+
+        @Headers({"X-Authy-API-Key:gXYHhTa0gJb6VlJxw0aEqWxHHrw5AEi5"})
+        @POST("/protected/json/phones/verification/start")
+        void sendSms(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
+
+        @Headers({"X-Authy-API-Key:gXYHhTa0gJb6VlJxw0aEqWxHHrw5AEi5"})
+        @GET("/protected/json/phones/verification/check")
+        void verifySmsCode(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
     }
 
 }

@@ -1040,7 +1040,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 if(days<1){
                     dialogMessage = String.format(getString(R.string.demo_plan_will_expire),"< 1");
                 }else{
-                    dialogMessage = String.format(getString(R.string.demo_plan_will_expire),(int)days+" ");
+                    dialogMessage = String.format(getString(R.string.demo_plan_will_expire),(int)Math.floor(days)+" ");
                 }
                 break;
             case LIGHT_HOUSE_DAYS_LEFT:
@@ -1051,7 +1051,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 if(days<1){
                     dialogMessage = String.format(getString(R.string.light_house_pla_will_expire),"< 1");
                 }else{
-                    dialogMessage = String.format(getString(R.string.light_house_pla_will_expire),(int)days+" ");
+                    dialogMessage = String.format(getString(R.string.light_house_pla_will_expire),(int)Math.floor(days)+" ");
                 }
 
                 dialogImage = R.drawable.androidexpiryxxxhdpi;
@@ -1142,13 +1142,16 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     }
 
     private void showFacebookReviewDialog(){
+        Calendar calendar = Calendar.getInstance();
+        final Long current = calendar.getTimeInMillis();
         String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-        if(!paymentState.equals("1") || !pref.getBoolean(Key_Preferences.SHOW_FACEBOOK_REVIEW,true)){
+        long prev = pref.getLong(Key_Preferences.SHOW_FACEBOOK_REVIEW,-1);
+        if(!paymentState.equals("1") || (current-prev)/(1000*60*60*24)<=7){
             return;
         }
         new MaterialDialog.Builder(this)
                 .title("Review")
-                .content("Looks like you are liking "+getString(R.string.nowfloats)+" product. Do you want to review?")
+                .content("How are you liking our product? If you think, we have added value to your business, please rate us!")
                 .negativeText("Later")
                 .negativeColorRes(R.color.primary_color)
                 .positiveColorRes(R.color.primary_color)
@@ -1157,14 +1160,16 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         dialog.dismiss();
+                        pref.edit().putLong(Key_Preferences.SHOW_FACEBOOK_REVIEW,current).apply();
                     }
                 })
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         dialog.dismiss();
+                        MixPanelController.track(MixPanelController.FACEBOOK_REVIEW,null);
                         Methods.likeUsFacebook(HomeActivity.this,"");
-                        pref.edit().putBoolean(Key_Preferences.SHOW_FACEBOOK_REVIEW,false).apply();
+                        pref.edit().putLong(Key_Preferences.SHOW_FACEBOOK_REVIEW,Long.MAX_VALUE).apply();
                     }
                 }).show();
 
