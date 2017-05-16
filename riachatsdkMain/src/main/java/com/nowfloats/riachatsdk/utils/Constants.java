@@ -20,6 +20,7 @@ public class Constants {
         String TYPE_AUDIO = "Audio";
         String TYPE_VIDEO = "Video";
         String TYPE_HEADER = "Header";
+        String TYPE_CARD = "Card";
     }
     public interface ApiType{
         String TYPE_GET = "GET";
@@ -64,5 +65,6 @@ public class Constants {
         String LOCATION_DATA_STREET = PACKAGE_NAME + ".LOCATION_DATA_STREET";
         java.lang.String LOCATION_DATA_COUNTRY = PACKAGE_NAME + ".LOCATION_DATA_COUNTRY";
         String LOCATION_DATA_PIN = PACKAGE_NAME + ".LOCATION_DATA_PIN";
+        String LOCATION_DATA_LOCALITY = PACKAGE_NAME + ".LOCATION_DATA_LOCALITY";
     }
 }

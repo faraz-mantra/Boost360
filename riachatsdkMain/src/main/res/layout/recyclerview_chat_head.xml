@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_marginTop="50dp"
     android:layout_marginBottom="50dp"
@@ -15,6 +16,7 @@
             android:layout_height="70dp"
             android:layout_marginLeft="20dp"
             android:elevation="3dp"
+            android:background="@drawable/ria_round_icon_bg"
             android:src="@drawable/ria_circle_image" />
 
         <LinearLayout
@@ -25,14 +27,17 @@
             android:orientation="vertical">
             <TextView
                 android:id="@+id/tv_agent_name"
+                android:fontFamily="sans-serif-light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="30sp"
+                android:textSize="40sp"
                 android:text="@string/chat_agent_name"/>
             <TextView
                 android:id="@+id/tv_agent_full_name"
+                android:fontFamily="sans-serif-light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="16sp"
                 android:text="@string/chat_agent_name_full"/>
         </LinearLayout>
     </LinearLayout>

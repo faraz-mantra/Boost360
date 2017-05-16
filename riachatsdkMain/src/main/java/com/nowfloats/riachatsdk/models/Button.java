@@ -56,6 +56,26 @@ public class Button implements Serializable{
     @Expose
     private String postfixText;
 
+    @SerializedName("ConfirmInput")
+    @Expose
+    private boolean confirmInput;
+
+    public Boolean getDefaultButton() {
+        return defaultButton;
+    }
+
+    public Boolean getHidden() {
+        return hidden;
+    }
+
+    public boolean isConfirmInput() {
+        return confirmInput;
+    }
+
+    public void setConfirmInput(boolean confirmInput) {
+        this.confirmInput = confirmInput;
+    }
+
     public String getPrefixText() {
         return prefixText;
     }

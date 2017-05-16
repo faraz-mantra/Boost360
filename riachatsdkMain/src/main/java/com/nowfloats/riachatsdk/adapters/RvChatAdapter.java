@@ -6,6 +6,8 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.Gravity;
@@ -41,7 +43,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public enum SectionTypeEnum
     {
-        Header(-1), Image(0), Text(1), Graph(2), Gif(3), Audio(4), Video(5), Link(6), EmbeddedHtml(7), Carousel(8), Typing(9);
+        Header(-1), Image(0), Text(1), Graph(2), Gif(3), Audio(4), Video(5), Link(6), EmbeddedHtml(7), Carousel(8), Typing(9), Card(10);
         private final int val;
         private SectionTypeEnum(int val){
             this.val = val;
@@ -97,6 +99,9 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case 9:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_typing_row_layout, parent, false);
                 return new TypingViewHolder(v);
+            case 10:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_card_row_layout, parent, false);
+                return new CardViewHolder(v);
             default:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_typing_row_layout, parent, false);
                 return new TypingViewHolder(v);
@@ -111,6 +116,27 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             SimpleDateFormat format = new SimpleDateFormat("EEE, dd MMM", Locale.US);
             headerViewHolder.tvDateTime.setText(format.format(new Date()));
+        } else if(holder instanceof CardViewHolder){
+            CardViewHolder cardViewHolder = (CardViewHolder) holder;
+            cardViewHolder.tvConfirmationText.setText(Html.fromHtml(section.getText()));
+            if(section.isShowDate()) {
+                cardViewHolder.tvDateTime.setVisibility(View.VISIBLE);
+                cardViewHolder.tvDateTime.setText(section.getDateTime());
+            }else {
+                cardViewHolder.tvDateTime.setVisibility(View.GONE);
+            }
+            ((LinearLayout) cardViewHolder.itemView).setGravity(Gravity.RIGHT);
+            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) cardViewHolder.llBubbleContainer.getLayoutParams();
+            if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
+                cardViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.reply_main_bubble);
+                lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 5), 0);
+            }else {
+                cardViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.reply_followup_bubble);
+                lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 15), 0);
+            }
+            cardViewHolder.llBubbleContainer.setLayoutParams(lp);
+            cardViewHolder.tvConfirmationText.setTextColor(Color.parseColor("#ffffff"));
+
         } else if(holder instanceof TextViewHolder){
             TextViewHolder textViewHolder = (TextViewHolder) holder;
             textViewHolder.tvMessageText.setText(Html.fromHtml(section.getText()));
@@ -122,26 +148,30 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
             if(!section.isFromRia()){
                 ((LinearLayout) textViewHolder.itemView).setGravity(Gravity.RIGHT);
-                if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
-                    textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.chat_layout_reply_init_bg);
-                }else {
-                    textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.chat_layout_reply_bg);
-                }
                 LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) textViewHolder.llBubbleContainer.getLayoutParams();
-                lp.setMargins(Utils.dpToPx(mContext, 34), 0, Utils.dpToPx(mContext, 10), 0);
+                if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
+                    textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.reply_main_bubble);
+                    lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 5), 0);
+                }else {
+                    textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.reply_followup_bubble);
+                    lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 15), 0);
+                }
+
                 textViewHolder.llBubbleContainer.setLayoutParams(lp);
                 textViewHolder.tvMessageText.setTextColor(Color.parseColor("#ffffff"));
             }else {
                 ((LinearLayout) textViewHolder.itemView).setGravity(Gravity.LEFT);
                 textViewHolder.tvMessageText.setTextColor(Color.parseColor("#808080"));
-
-                if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
-                    textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.chat_layout_bg);
-                }else {
-                    textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.chat_layout_init_bg);
-                }
                 LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) textViewHolder.llBubbleContainer.getLayoutParams();
-                lp.setMargins(Utils.dpToPx(mContext, 10), 0, Utils.dpToPx(mContext, 34), 0);
+                if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
+                    textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.ria_followup_bubble);
+                    lp.setMargins(Utils.dpToPx(mContext, 15), 0, Utils.dpToPx(mContext, 60), 0);
+                }else {
+                    textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.ria_main_bubble);
+                    lp.setMargins(Utils.dpToPx(mContext, 5), 0, Utils.dpToPx(mContext, 60), 0);
+                }
+
+
                 textViewHolder.llBubbleContainer.setLayoutParams(lp);
             }
         }else if(holder instanceof ImageViewHolder){
@@ -370,6 +400,23 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
+    private class CardViewHolder extends RecyclerView.ViewHolder{
+
+        TextView tvConfirmationText, tvDateTime;
+        View itemView;
+        LinearLayout llBubbleContainer;
+
+        public CardViewHolder(View itemView) {
+            super(itemView);
+
+            this.itemView = itemView;
+
+            this.tvConfirmationText = (TextView) itemView.findViewById(R.id.tv_confirmation_text);
+            this.tvDateTime = (TextView) itemView.findViewById(R.id.tv_date_time);
+            this.llBubbleContainer = (LinearLayout) itemView.findViewById(R.id.ll_bubble_container);
+        }
+    }
+
     private class GraphViewholder extends RecyclerView.ViewHolder{
 
         public GraphViewholder(View itemView) {
@@ -441,9 +488,16 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private class TypingViewHolder extends RecyclerView.ViewHolder{
 
+        ImageView ivTyping;
+
         public TypingViewHolder(View itemView) {
             super(itemView);
-
+            ivTyping = (ImageView) itemView.findViewById(R.id.iv_typing_gif);
+            Glide.with(mContext)
+                    .load(R.drawable.typing)
+                    .asGif()
+                    .centerCrop()
+                    .into(ivTyping);
             Section section = mChatSections.get(mChatSections.size()-1);
             if(!section.isFromRia()){
                 ((LinearLayout) itemView).setGravity(Gravity.RIGHT);

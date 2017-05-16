@@ -11,22 +11,28 @@
         android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/chat_layout_bg">
-        <com.nowfloats.riachatsdk.CustomWidget.LoadingDots
+        android:background="@drawable/typing_layout_bg">
+        <!--<com.nowfloats.riachatsdk.CustomWidget.LoadingDots
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="15dp"
+            android:padding="10dp"
             app:LoadingDots_auto_play="true"
             app:LoadingDots_dots_color="#808080"
-            app:LoadingDots_dots_count="4"
-            app:LoadingDots_dots_size="4dp"
+            app:LoadingDots_dots_count="3"
+            app:LoadingDots_dots_size="6dp"
             app:LoadingDots_dots_space="2dp"
 
-            app:LoadingDots_loop_duration="800"
+            app:LoadingDots_loop_duration="900"
             app:LoadingDots_loop_start_delay="100"
 
-            app:LoadingDots_jump_duration="200"
-            app:LoadingDots_jump_height="4dp" />
+            app:LoadingDots_jump_duration="300"
+            app:LoadingDots_jump_height="4dp" />-->
+        <ImageView
+            android:padding="10dp"
+            android:tint="#808080"
+            android:id="@+id/iv_typing_gif"
+            android:layout_width="60dp"
+            android:layout_height="35dp" />
     </LinearLayout>
 
 </LinearLayout>

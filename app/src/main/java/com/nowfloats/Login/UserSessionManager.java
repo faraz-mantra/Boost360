@@ -688,12 +688,12 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     }
 
     /**
-     * Check login method will check user login status
+     * sent_check login method will check user login status
      * If false it will redirect user to login page
      * Else do anything
      * */
     public boolean checkLogin(){
-        // Check login status
+        // sent_check login status
         DataBase db =new DataBase(activity);
         Cursor cursor = db.getLoginStatus();
         boolean isLogin = false ;
@@ -938,7 +938,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     }
 
 
-    // Check for login
+    // sent_check for login
     public boolean isUserLoggedIn(){
         //Log.d("isUserLoggedIn", "isUserLoggedIn : "+IS_USER_LOGIN);
         return pref.getBoolean(IS_USER_LOGIN, false);
