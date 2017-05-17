@@ -1212,7 +1212,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
                             float days = ((calendar.getTimeInMillis()-current) / (float)(1000 * 60 * 60 * 24));
 
-                            if (days <= 7) {
+                            if(days<=0){
+                                showDialog1(LIGHT_HOUSE_EXPIRE, -1);
+                            } else if (days <= 7) {
                                 //seven days dialog ervery day
                                 showDialog1(LIGHT_HOUSE_DAYS_LEFT, days);
                                 showWildFire = false;
@@ -1232,7 +1234,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 }*/
 
                 if (count > 1) {
-                    showFacebookReviewDialog();
+                   // showFacebookReviewDialog();
                 }
 
             }
@@ -1666,7 +1668,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         prefsEditor = pref.edit();
         prefsEditor.putBoolean("EXPIRE_DIALOG",false);
         prefsEditor.apply();
-        checkExpire();
+        //checkExpire();
     }
 
     private void openStore(){
@@ -1726,7 +1728,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 }else{
                     return;
                 }
-                renewPlanDialog(WILD_FIRE_EXPIRE);
+                //renewPlanDialog(WILD_FIRE_EXPIRE);
                 //showWildFire();
                 return;
             }

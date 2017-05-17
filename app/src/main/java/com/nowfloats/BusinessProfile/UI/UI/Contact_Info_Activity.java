@@ -1,13 +1,23 @@
 package com.nowfloats.BusinessProfile.UI.UI;
 
+import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +30,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -54,13 +65,14 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class Contact_Info_Activity extends ActionBarActivity implements View.OnTouchListener {
+public class Contact_Info_Activity extends AppCompatActivity implements View.OnTouchListener {
+
     private Toolbar toolbar;
     public static TextView saveTextView;
     UserSessionManager session;
     Bus bus;
     ImageView ivProtoColSpinner;
-
+    MaterialDialog progressDialog;
     private String[] mProtoCols = {"http://", "https://"};
 
     public static EditText primaryNumber, alternateNumber_1,alternateNumber_2, alternateNumber_3, emailAddress,websiteAddress,facebookPage ;
@@ -73,6 +85,8 @@ public class Contact_Info_Activity extends ActionBarActivity implements View.OnT
     Spinner protocolSpinner;
     private boolean VMN_Dialog;
     private int mSelectionCounter = 0;
+    EditText otpEditText;
+    private MaterialDialog otpDialog,progressbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,11 +95,22 @@ public class Contact_Info_Activity extends ActionBarActivity implements View.OnT
         Methods.isOnline(Contact_Info_Activity.this);
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         saveTextView = (TextView) toolbar.findViewById(R.id.saveTextView);
-
+        progressbar = new MaterialDialog.Builder(this)
+                .autoDismiss(false)
+                /*.backgroundColorRes(R.color.transparent)*/
+                .content("Verifying OTP")
+                .progress(true, 0)
+                .build();
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(),Contact_Info_Activity.this);
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
         titleTextView.setText(getResources().getString(R.string.contact__info));
+        progressDialog = new MaterialDialog.Builder(this)
+                .autoDismiss(false)
+                /*.backgroundColorRes(R.color.transparent)*/
+                .content("Fetching OTP from SMS inbox")
+                .progress(true, 0)
+                .build();
 
         saveTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -280,7 +305,9 @@ public class Contact_Info_Activity extends ActionBarActivity implements View.OnT
         primaryNumber.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                showOtpDialog();
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+                    showOtpDialog();
+                }
 
                 return true;
             }
@@ -447,19 +474,25 @@ public class Contact_Info_Activity extends ActionBarActivity implements View.OnT
     private void showOtpDialog() {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_otp,null);
         final EditText number = (EditText) view.findViewById(R.id.editText);
-        new MaterialDialog.Builder(this)
+        MaterialDialog dialog = new MaterialDialog.Builder(this)
                 .customView(view,false)
+                .titleColorRes(R.color.primary_color)
+                .title("Change Primary Number")
                 .negativeText("Cancel")
-                .positiveText("Change")
+                .positiveText("Send OTP")
+                .autoDismiss(false)
                 .canceledOnTouchOutside(false)
-                .negativeColorRes(R.color.primary_color)
+                .negativeColorRes(R.color.gray_transparent)
                 .positiveColorRes(R.color.primary_color)
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         String numText = number.getText().toString().trim();
                         if(numText.length()>0) {
-                            sendSms(numText);
+                            otpVerifyDialog(numText);
+                            dialog.dismiss();
+                        }else{
+                            Toast.makeText(Contact_Info_Activity.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
                         }
                     }
                 })
@@ -470,7 +503,28 @@ public class Contact_Info_Activity extends ActionBarActivity implements View.OnT
                     }
                 }).show();
 
+        final TextView positive = dialog.getActionButton(DialogAction.POSITIVE);
+        positive.setTextColor(ContextCompat.getColor(Contact_Info_Activity.this,R.color.gray_transparent));
+        number.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(number.getText().toString().trim().length()>0){
+                    positive.setTextColor(ContextCompat.getColor(Contact_Info_Activity.this,R.color.primary));
+                }else{
+                    positive.setTextColor(ContextCompat.getColor(Contact_Info_Activity.this,R.color.gray_transparent));
+                }
+            }
+        });
     }
 
 
@@ -1219,8 +1273,77 @@ public class Contact_Info_Activity extends ActionBarActivity implements View.OnT
         }
         return false;
     }
+    private void otpVerifyDialog(final String number){
+        //call send otp api
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_otp_verify,null);
+        final EditText otp = (EditText) view.findViewById(R.id.editText);
+        otpEditText =otp;
+        TextView resend = (TextView) view.findViewById(R.id.resend_tv);
+        resend.setPaintFlags(resend.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        resend.setText(Methods.fromHtml(getString(R.string.resend)));
+        resend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((TextView)v).setTextColor(ContextCompat.getColor(Contact_Info_Activity.this,R.color.gray_transparent));
+                sendSms(number);
+            }
+        });
+        otpDialog  = new MaterialDialog.Builder(this)
+                .customView(view,false)
+                .negativeText("Cancel")
+                .autoDismiss(false)
+                .titleColorRes(R.color.primary_color)
+                .positiveText("Submit")
+                .title("One Time Password")
+                .canceledOnTouchOutside(false)
+                .negativeColorRes(R.color.gray_transparent)
+                .positiveColorRes(R.color.primary_color)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        String numText = otp.getText().toString().trim();
+                        if(numText.length()>0) {
+                            verifySms(number,numText);
+                        }else{
+                            Toast.makeText(Contact_Info_Activity.this, "Enter OTP", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                }).show();
 
+        final TextView positive = otpDialog.getActionButton(DialogAction.POSITIVE);
+        positive.setTextColor(ContextCompat.getColor(Contact_Info_Activity.this,R.color.gray_transparent));
+        otp.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(otp.getText().toString().trim().length()>0){
+                    positive.setTextColor(ContextCompat.getColor(Contact_Info_Activity.this,R.color.primary));
+                }else{
+                    positive.setTextColor(ContextCompat.getColor(Contact_Info_Activity.this,R.color.gray_transparent));
+                }
+            }
+        });
+        sendSms(number);
+    }
     private void sendSms(String number){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
+            startProgressDialog();
+        }
         Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("via","sms");
@@ -1231,23 +1354,29 @@ public class Contact_Info_Activity extends ActionBarActivity implements View.OnT
             @Override
             public void success(SmsVerifyModel model, Response response) {
                 if(model == null){
-                    Methods.showSnackBarNegative(Contact_Info_Activity.this, getString(R.string.something_went_wrong_try_again));
+                    stopProgressDialog();
+                    Toast.makeText(Contact_Info_Activity.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(model.getSuccess()){
 
+                }else{
+                    stopProgressDialog();
+                    Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Methods.showSnackBarNegative(Contact_Info_Activity.this, getString(R.string.something_went_wrong_try_again));
+                stopProgressDialog();
+                Toast.makeText(Contact_Info_Activity.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void verifySms(String number,String otpCode){
+    private void verifySms(final String number, String otpCode){
+        showProgressbar();
         Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("verification_code",otpCode);
@@ -1257,42 +1386,104 @@ public class Contact_Info_Activity extends ActionBarActivity implements View.OnT
             @Override
             public void success(SmsVerifyModel model, Response response) {
                 if(model == null){
-                    Methods.showSnackBarNegative(Contact_Info_Activity.this, getString(R.string.something_went_wrong_try_again));
+                    hideProgressbar();
+                    Toast.makeText(Contact_Info_Activity.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(model.getSuccess()){
-
+                    changePrimary(number);
                 }else{
-
+                    hideProgressbar();
+                    Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-                Methods.showSnackBarPositive(Contact_Info_Activity.this,model.getMessage());
+
 
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Methods.showSnackBarNegative(Contact_Info_Activity.this, getString(R.string.something_went_wrong_try_again));
+                hideProgressbar();
+                Toast.makeText(Contact_Info_Activity.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    private void showProgressbar() {
+        if(progressbar != null){
+            progressbar.show();
+        }
+    }
+    private void hideProgressbar(){
+        if(progressbar != null && progressbar.isShowing()){
+            progressbar.dismiss();
+        }
+    }
+
     private void changePrimary(final String number){
         UpdatePrimaryNumApi updateApi = Constants.restAdapter.create(UpdatePrimaryNumApi.class);
-        updateApi.changeNumber(Constants.clientId, session.getFPID(), number, new Callback<String>() {
+        updateApi.changeNumber(Constants.PrimaryNumberClientId, session.getFPID(), number, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
+                hideProgressbar();
+                otpDialogDismiss();
                 if(s == null || response.getStatus()!=200){
                     Methods.showSnackBarNegative(Contact_Info_Activity.this,getString(R.string.something_went_wrong_try_again));
                 }
                 session.storeFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM,number);
                 primaryNumber.setText(number);
+                Methods.showSnackBarPositive(Contact_Info_Activity.this,"Primary number changed successfully");
             }
 
             @Override
             public void failure(RetrofitError error) {
+                hideProgressbar();
+                otpDialogDismiss();
                 Methods.showSnackBarNegative(Contact_Info_Activity.this,getString(R.string.something_went_wrong_try_again));
             }
         });
     }
 
+    private void otpDialogDismiss() {
+        if(otpDialog!=null && otpDialog.isShowing()){
+            otpDialog.dismiss();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mSmsReceiver,new IntentFilter(Constants.SMS_OTP_RECEIVER));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mSmsReceiver);
+    }
+    private BroadcastReceiver mSmsReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent == null){
+                return;
+            }
+            String otp = intent.getStringExtra("OTP_CODE");
+            otp = otp.replaceAll("[^0-9]", "");
+            if(otpEditText !=null) {
+                otpEditText.setText(otp);
+                Log.v("otp",otp);
+            }
+            stopProgressDialog();
+        }
+    };
+
+    private void startProgressDialog(){
+        Log.v("ggg"," start");
+        if(progressDialog!=null)
+            progressDialog.show();
+    }
+    private  void stopProgressDialog(){
+        if(progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
 }

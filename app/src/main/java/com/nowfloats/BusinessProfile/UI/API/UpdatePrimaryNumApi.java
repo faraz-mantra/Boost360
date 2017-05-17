@@ -12,6 +12,6 @@ import retrofit.http.Query;
  */
 public interface UpdatePrimaryNumApi {
 
-    @POST("Discover/v1/floatingPoint/UpdateFloatingPointPrimaryNumber")
+    @POST("/Discover/v1/floatingPoint/UpdateFloatingPointPrimaryNumber")
     void changeNumber(@Query("clientId") String clientId, @Query("fpId") String fpId,@Body String number, Callback<String> response);
 }

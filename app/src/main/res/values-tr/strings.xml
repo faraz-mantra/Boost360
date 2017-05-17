@@ -1212,6 +1212,7 @@
     <string name="downloading">File downloading&#8230;</string>
     <string name="play_with_underline"><u>PLAY</u></string>
     <string name="vmn_message_text">This is displayed on your website and you can track all customer calls &amp; logs here.</string>
+    <string name="resend"><![CDATA[<b>Resend</b>]]></string>
 
 
     <string-array name="spinner_list_item_array">
