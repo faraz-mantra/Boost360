@@ -1,10 +1,9 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="match_parent"
     android:background="@color/screen_bg"
     android:focusable="true"
     android:focusableInTouchMode="true"
@@ -13,10 +12,16 @@
     <include
         android:id="@+id/app_bar"
         layout="@layout/app_bar" />
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/app_bar"
+        android:layout_above="@+id/create_layout"
+        android:id="@+id/scrollview">
+    <LinearLayout
+        android:id="@+id/card_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="31dp"
         android:layout_marginLeft="10dp"
@@ -29,19 +34,6 @@
             android:layout_gravity="center_horizontal"
             card_view:cardCornerRadius="1dp">
 
-            <EditText
-                android:id="@+id/websiteTitleTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="22sp"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="41dp"
-                android:layout_gravity="center_horizontal"
-                android:textColor="@color/primaryColor"
-                fontPath="Roboto-Light.ttf"
-                android:text="@string/website_name"
-                android:background="#00000000"/>
-
             <TextView
                 android:id="@+id/domainNameTextView"
                 android:layout_width="wrap_content"
@@ -52,6 +44,19 @@
                 android:textSize="13sp"
                 fontPath="Roboto-Light.ttf"
                 android:textColor="#858585"/>
+
+            <EditText
+                android:id="@+id/websiteTitleTextView"
+                fontPath="Roboto-Light.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="41dp"
+                android:background="#00000000"
+                android:gravity="center_horizontal"
+                android:text="@string/website_name"
+                android:textColor="@color/primaryColor"
+                android:textSize="22sp" />
 
         </android.support.v7.widget.CardView>
 
@@ -81,9 +86,36 @@
 
         </LinearLayout>
 
+    </LinearLayout>
+    </ScrollView>
+    <LinearLayout
+        android:id="@+id/create_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/checkbox"
+                android:checked="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/term_policy_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dp"
+                android:text="@string/by_pressing_above_button_to_agree"/>
+        </LinearLayout>
+
         <Button
             android:id="@+id/createButton"
-            android:layout_marginTop="180dp"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center"
@@ -92,31 +124,6 @@
             android:textSize="15sp"
             android:textColor="#FFFFFF"
             android:background="@color/primaryColor"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="25dp">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            fontPath="Roboto-Light.ttf"
-            android:textColor="#545454"
-            android:text="@string/by_pressing_above_button_to_agree"/>
-
-            <TextView
-                android:id="@+id/policyTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                fontPath="Roboto-Light.ttf"
-                android:textColor="#545454"
-                android:text="@string/policy_terms"/>
-
-        </LinearLayout>
-
     </LinearLayout>
-</LinearLayout>
+
+</RelativeLayout>

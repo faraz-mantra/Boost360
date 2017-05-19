@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fafafa"
-    android:gravity="bottom|center|center_horizontal"
     android:orientation="vertical" >
 
     <RelativeLayout
@@ -24,7 +23,7 @@
             android:textSize="20sp"
             tools:ignore="MissingPrefix" />
 
-        <LinearLayout
+       <!-- <LinearLayout
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,16 +43,19 @@
                 android:src="@drawable/ic_action_forward"
 
                 />
-        </LinearLayout>
+        </LinearLayout>-->
     </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/business_address_top_bar"
+        android:layout_above="@+id/verify_button"
+        android:id="@+id/scrollview"
         >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="16dp"
@@ -200,8 +202,7 @@
                     android:layout_height="25dp"
                     android:src="@drawable/phone_xhdpi"
                     android:scaleType="fitXY"
-                    android:layout_marginBottom="4dp"
-                    />
+                    android:layout_marginBottom="4dp" />
 
                 <TextView
                     android:id="@+id/countrycode_signupscreen"
@@ -224,5 +225,15 @@
 
         </LinearLayout>
     </ScrollView>
-
-</LinearLayout>
+    <Button
+        android:id="@+id/verify_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:background="@color/primary_color"
+        android:text="verify and create website"/>
+</RelativeLayout>

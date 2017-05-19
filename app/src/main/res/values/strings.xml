@@ -525,7 +525,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="basic_info">Basic Information</string>
     <string name="business_name_more_than_3char">Business Name should be more than 3 letters</string>
     <string name="try_again">Try again&#8230;</string>
-    <string name="wait_while_loading_category">Wait While Loading Categories&#8230;</string>
+    <string name="wait_while_loading_category">Loading Categories&#8230;</string>
     <string name="select_category">Select a Category</string>
     <string name="both_password_not_matched">Both the passwords don\'t match.</string>
     <string name="min_6char_required">Min 6 characters are required.</string>
@@ -742,7 +742,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="pay">Pay</string>
     <string name="purchase_failed_try">Purchase failed. Please try again</string>
     <string name="success_pack_is_active">Success! Your pack is now activated.</string>
-    <string name="username">username</string>
+    <string name="username">Username</string>
     <string name="plans_in_use">PLANS IN USE</string>
     <string name="buy">Buy</string>
     <string name="plan_name">Plan Name</string>
@@ -841,8 +841,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="update_your_website_to_increase_discoverability">Update your website to increase its discoverability</string>
     <string name="update_logo">Update Logo</string>
     <string name="of">of</string>
-    <string name="password">password</string>
-    <string name="forgot_your_password">forgot your password</string>
+    <string name="password">Password</string>
+    <string name="forgot_your_password">forgot password?</string>
     <string name="open_in_browser">OPEN IN BROWSER</string>
     <string name="auto_share_to_social_networks">Auto Share\nTo Social Networks</string>
     <string name="website_posts">Website\nPosts</string>
@@ -855,7 +855,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="business_contact">Business Contacts</string>
     <string name="donot_like_it_tap_on_card">Dont like it? Tap on card to change</string>
     <string name="create_website">CREATE MY WEBSITE</string>
-    <string name="by_pressing_above_button_to_agree">By Pressing above button,You agree to our</string>
+    <string name="by_pressing_above_button_to_agree">By clicking Login, you agree to our Terms and Conditions and that you have read our Privacy Policy</string>
     <string name="policy_terms">Policy and Terms</string>
     <string name="text">text</string>
     <string name="number_tocall_says">+919535576625 says &#8230;</string>

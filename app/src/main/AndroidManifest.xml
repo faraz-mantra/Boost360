@@ -128,6 +128,7 @@
         <activity
             android:name="com.nowfloats.signup.UI.UI.WebSiteAddressActivity"
             android:label="@string/title_activity_web_site_address"
+            android:clearTaskOnLaunch="true"
             android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -426,7 +427,8 @@
         <activity android:name="com.nowfloats.SiteAppearance.SiteAppearanceActivity" />
         <activity android:name="com.nowfloats.NavigationDrawer.CreateOffersActivity" />
         <activity android:name="com.nowfloats.NavigationDrawer.OffersFullScreenActivity" />
-        <activity android:name="com.nowfloats.PreSignUp.KitsunePreSignUpActivity" />
+        <activity android:name="com.nowfloats.PreSignUp.KitsunePreSignUpActivity"
+            android:launchMode="singleInstance"/>
         <activity android:name="com.nowfloats.NavigationDrawer.HelpAndSupportActivity" />
         <activity android:name="com.nowfloats.Store.ProductCheckoutActivity" />
         <activity android:name="com.nowfloats.NavigationDrawer.RiaWebViewActivity" />

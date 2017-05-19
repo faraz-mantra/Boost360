@@ -151,18 +151,15 @@
                 android:layout_marginTop="20dp"
                 android:gravity="center_horizontal"
                 android:textColor="#969696"/>
-
             <TextView
                 fontPath="Roboto-Light.ttf"
-                android:id="@+id/loginStatus"
+                android:id="@+id/term_and_policy"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:textSize="18sp"
-                android:textColor="@color/primaryColor"
-                android:layout_marginTop="30dp"
+                android:text="term and condition"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
-                />
+                android:textColor="#969696"/>
 
 
             <!--<LinearLayout

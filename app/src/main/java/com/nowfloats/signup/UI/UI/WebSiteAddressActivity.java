@@ -5,20 +5,22 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,7 +35,6 @@ import com.android.volley.toolbox.Volley;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
 import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
 import com.nowfloats.signup.UI.API.Download_Facebook_Image;
 import com.nowfloats.signup.UI.API.Signup_Descriptinon;
 import com.nowfloats.signup.UI.Model.Create_Store_Event;
@@ -46,6 +47,7 @@ import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -83,14 +85,16 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
     Bus bus;
     UserSessionManager session ;
     private DataBase dataBase;
-
-
+    AppCompatCheckBox termAndPolicyCheckbox;
+    TextView termAndPolicyTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_site_address);
         dataBase = new DataBase(WebSiteAddressActivity.this);
         createButton = (Button) findViewById(R.id.createButton);
+        termAndPolicyCheckbox = (AppCompatCheckBox) findViewById(R.id.checkbox);
+        termAndPolicyTextView = (TextView) findViewById(R.id.term_policy_textview);
         webSiteTextView = (EditText) findViewById(R.id.websiteTitleTextView);
 
         webSiteCardView = (CardView) findViewById(R.id.websiteTitleCardView);
@@ -131,7 +135,19 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        final float scale = this.getResources().getDisplayMetrics().density;
+        termAndPolicyTextView.setText(Methods.fromHtml("By clicking Login, you agree to our <a href=\""+getString(R.string.settings_tou_url)+"\"><u>Terms and Conditions</u></a>  and that you have read our <a href=\""+getString(R.string.settings_privacy_url)+"\"><u>Privacy Policy</u></a>."));
+        termAndPolicyTextView.setMovementMethod(LinkMovementMethod.getInstance());
+        termAndPolicyCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    createButton.setBackgroundColor(ContextCompat.getColor(WebSiteAddressActivity.this,R.color.primary_color));
+                }else{
+                    createButton.setBackgroundColor(ContextCompat.getColor(WebSiteAddressActivity.this,R.color.gray_transparent));
+                }
+            }
+        });
         webSiteTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start,
@@ -163,20 +179,6 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
             }
         });
 
-
-
-        TextView policyTextView = (TextView) findViewById(R.id.policyTextView);
-        policyTextView.setPaintFlags( Paint.UNDERLINE_TEXT_FLAG);
-        policyTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String url =   "http://nowfloats.com/privacy/";   ;//"https://www.facebook.com/thinksity";
-                Intent showWebSiteIntent = new Intent(WebSiteAddressActivity.this,Mobile_Site_Activity.class);
-                // showWebSiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                showWebSiteIntent.putExtra("WEBSITE_NAME", url);
-                startActivity(showWebSiteIntent);
-            }
-        });
         createButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -186,20 +188,13 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                     //MixPanelController.track(EventKeysWL.WEBSITE_ADDRESS_SCREEN_EDIT_DOMAIN,null);
                     // getEditTextBundle();
 
-                    if(addressTagValid){
+                    if(addressTagValid && termAndPolicyCheckbox.isChecked()){
                         MixPanelController.track("CreateMyWebsite", null);
                          createStore_retrofit(WebSiteAddressActivity.this,getJSONData(),bus);
-//                        CreateStoreTask createStore = new CreateStoreTask(getJSONData(),WebSiteAddressActivity.this);
-//                        createStore.setCreateTaskInterfaceListener(WebSiteAddressActivity.this);
-//                        createStore.execute();
-
-
                     }
 
-
-
+                    return true;
                 }
-
                 return false;
             }
         });
@@ -503,7 +498,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                                     domainCheck = false;
                                     // domainCheckPD.setVisibility(View.GONE);
                                     domainCheckStatus.setVisibility(View.VISIBLE);
-                                    domainCheckStatus.setBackgroundResource(R.drawable.domain_available);
+                                    domainCheckStatus.setImageDrawable(ContextCompat.getDrawable(WebSiteAddressActivity.this,R.drawable.domain_available));
                                 } else if (xTags.contains(ttag)) {
                                     // invalid tag
                                     mtag = ttag;
@@ -511,7 +506,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                                     domainCheck = false;
                                     //domainCheckPD.setVisibility(View.GONE);
                                     domainCheckStatus.setVisibility(View.VISIBLE);
-                                    domainCheckStatus.setImageDrawable(getResources().getDrawable(R.drawable.domain_not_available));
+                                    domainCheckStatus.setImageDrawable(ContextCompat.getDrawable(WebSiteAddressActivity.this,R.drawable.domain_not_available));
                                 } else {
                                     mtag = ttag;
 
@@ -523,9 +518,8 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                                 domainCheck = false;
                                 //domainCheckPD.setVisibility(View.GONE);
                                 domainCheckStatus.setVisibility(View.VISIBLE);
-                                domainCheckStatus.setBackgroundResource(R.drawable.domain_not_available);
+                                domainCheckStatus.setImageDrawable(ContextCompat.getDrawable(WebSiteAddressActivity.this,R.drawable.domain_not_available));
                             }
-                        } else {
                         }
 
                     }
@@ -620,7 +614,8 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
         int id = item.getItemId();
 
         if(id==android.R.id.home){
-            NavUtils.navigateUpFromSameTask(this);
+            finish();
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         }
 
         return super.onOptionsItemSelected(item);

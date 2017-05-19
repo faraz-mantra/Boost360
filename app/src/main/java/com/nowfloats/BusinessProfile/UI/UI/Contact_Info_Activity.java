@@ -17,7 +17,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -1429,6 +1428,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 if(s == null || response.getStatus()!=200){
                     Methods.showSnackBarNegative(Contact_Info_Activity.this,getString(R.string.something_went_wrong_try_again));
                 }
+                MixPanelController.track(MixPanelController.PRIMARY_NUMBER_CHANGE,null);
                 session.storeFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM,number);
                 primaryNumber.setText(number);
                 Methods.showSnackBarPositive(Contact_Info_Activity.this,"Primary number changed successfully");
@@ -1470,14 +1470,12 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
             otp = otp.replaceAll("[^0-9]", "");
             if(otpEditText !=null) {
                 otpEditText.setText(otp);
-                Log.v("otp",otp);
             }
             stopProgressDialog();
         }
     };
 
     private void startProgressDialog(){
-        Log.v("ggg"," start");
         if(progressDialog!=null)
             progressDialog.show();
     }

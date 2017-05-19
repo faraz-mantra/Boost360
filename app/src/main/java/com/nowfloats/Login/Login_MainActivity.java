@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -80,6 +81,7 @@ public class Login_MainActivity extends AppCompatActivity implements
             Manifest.permission.RECEIVE_SMS,Manifest.permission.READ_PHONE_STATE};
     private final static int READ_MESSAGES_ID=221;
     LinearLayout parent_layout;
+    TextView termAndPolicyTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +94,7 @@ public class Login_MainActivity extends AppCompatActivity implements
         dashboardIntent = new Intent(Login_MainActivity.this, HomeActivity.class);
         parent_layout = (LinearLayout) findViewById(R.id.parent_layout);
         toolbar = (Toolbar) findViewById(R.id.app_bar);
+        termAndPolicyTextView = (TextView) findViewById(R.id.term_and_policy);
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
         headerText.setText(getString(R.string.welcome_back));
         setSupportActionBar(toolbar);
@@ -126,6 +129,8 @@ public class Login_MainActivity extends AppCompatActivity implements
         });
         forgotPassword = (TextView) findViewById(R.id.forgotPwdTextView);
         forgotPassword.setOnClickListener(this);
+        termAndPolicyTextView.setText(Methods.fromHtml("By clicking Login, you agree to our <a href=\""+getString(R.string.settings_tou_url)+"\"><u>Terms and Conditions</u></a>  and that you have read our <a href=\""+getString(R.string.settings_privacy_url)+"\"><u>Privacy Policy</u></a>."));
+        termAndPolicyTextView.setMovementMethod(LinkMovementMethod.getInstance());
 
         ImageView userNameIcon = (ImageView) findViewById(R.id.userNameIcon);
         ImageView passwordIcon = (ImageView) findViewById(R.id.passwordIcon);
