@@ -39,7 +39,7 @@ android {
 
     useLibrary 'org.apache.http.legacy'
 
-    lintOptions{
+    lintOptions {
         abortOnError false
     }
 
@@ -97,6 +97,8 @@ dependencies {
         transitive = true;
     }
 
+    compile project(':messagelibrary')
+    compile project(':riachatsdkMain')
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.android.support:cardview-v7:25.3.0'
@@ -133,8 +135,7 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.github.freshdesk:hotline-android:1.2.0'
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
-    compile project(':messagelibrary')
-    compile project(':riachatsdkMain')
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
 
 apply plugin: 'com.google.gms.google-services'

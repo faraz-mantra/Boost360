@@ -2,6 +2,7 @@ package com.nowfloats.riachatsdk.utils;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,5 +20,15 @@ public class Utils {
     public static String getFormattedDate(Date date) {
         SimpleDateFormat format = new SimpleDateFormat("hh:mm a");
         return format.format(date);
+    }
+
+    public static String getMapUrlFromLocation(String lattitude, String longitude){
+
+        String url =  "http://maps.google.com/maps/api/staticmap?center=" + lattitude + ","
+                + longitude + "&zoom=19&size=1000x300&sensor=false" + "&markers=color:yellow%7Clabel:C%7C"
+                + lattitude + "," + longitude + "&key="
+                + Constants.MAP_KEY;
+        Log.d("LatLong", url);
+        return url;
     }
 }

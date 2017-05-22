@@ -14,4 +14,7 @@
     <string name="house_plot_num">HOUSE/PLOT NUMBER</string>
     <string name="locality">LOCALITY</string>
     <string name="land_mark">LANDMARK (OPTIONAL)</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

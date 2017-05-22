@@ -6,33 +6,21 @@
     android:gravity="left"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <LinearLayout
+    <RelativeLayout
         android:layout_marginLeft="10dp"
         android:padding="10dp"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:background="@drawable/typing_layout_bg">
-        <!--<com.nowfloats.riachatsdk.CustomWidget.LoadingDots
+
+        <com.nowfloats.riachatsdk.CustomWidget.AVLoadingIndicatorView
+            android:id="@+id/ldi_dots"
+            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            app:LoadingDots_auto_play="true"
-            app:LoadingDots_dots_color="#808080"
-            app:LoadingDots_dots_count="3"
-            app:LoadingDots_dots_size="6dp"
-            app:LoadingDots_dots_space="2dp"
+            app:indicatorColor="#808080"
+            app:indicatorName="BallPulseSyncIndicator"/>
 
-            app:LoadingDots_loop_duration="900"
-            app:LoadingDots_loop_start_delay="100"
-
-            app:LoadingDots_jump_duration="300"
-            app:LoadingDots_jump_height="4dp" />-->
-        <ImageView
-            android:padding="10dp"
-            android:tint="#808080"
-            android:id="@+id/iv_typing_gif"
-            android:layout_width="60dp"
-            android:layout_height="35dp" />
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

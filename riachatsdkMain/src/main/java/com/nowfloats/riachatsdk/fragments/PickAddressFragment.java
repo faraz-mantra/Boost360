@@ -108,7 +108,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                 //TODO: Callback Interface
                 if(mResultListener!=null && verifyData()){
                     mResultListener.OnResult(etStreetAddr.getText().toString().trim(),
-                            mAreaOutput, mCityOutput, mStateOutput, mCountryOutput, mCenterLatLong.latitude, mCenterLatLong.latitude, mPin);
+                            mAreaOutput, mCityOutput, mStateOutput, mCountryOutput, mCenterLatLong.latitude, mCenterLatLong.longitude, mPin);
                     Fragment fragment = ((AppCompatActivity)getActivity())
                             .getSupportFragmentManager()
                             .findFragmentById(R.id.map);

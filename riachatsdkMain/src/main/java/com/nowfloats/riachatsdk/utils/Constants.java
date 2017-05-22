@@ -12,6 +12,7 @@ public class Constants {
     public static final String KEY_FILE_URL = "file_url";
     public static final int RESULT_OK = 0;
     public static final int RESULT_CANCELLED = 1;
+    public static final String MAP_KEY = "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
 
     public interface SectionType{
         String TYPE_TEXT = "Text";
@@ -21,6 +22,7 @@ public class Constants {
         String TYPE_VIDEO = "Video";
         String TYPE_HEADER = "Header";
         String TYPE_CARD = "Card";
+        String TYPE_ADDRESS_CARD = "AddressCard";
     }
     public interface ApiType{
         String TYPE_GET = "GET";
@@ -66,5 +68,10 @@ public class Constants {
         java.lang.String LOCATION_DATA_COUNTRY = PACKAGE_NAME + ".LOCATION_DATA_COUNTRY";
         String LOCATION_DATA_PIN = PACKAGE_NAME + ".LOCATION_DATA_PIN";
         String LOCATION_DATA_LOCALITY = PACKAGE_NAME + ".LOCATION_DATA_LOCALITY";
+    }
+    public interface ConfirmationType{
+        String BIZ_NAME = "biz_name";
+        String ADDRESS_ENTRY = "address_entry";
+
     }
 }

@@ -24,6 +24,8 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.nowfloats.riachatsdk.CustomWidget.AVLoadingIndicatorView;
 import com.nowfloats.riachatsdk.CustomWidget.playpause.PlayPauseView;
 import com.nowfloats.riachatsdk.R;
 import com.nowfloats.riachatsdk.models.Section;
@@ -43,7 +45,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public enum SectionTypeEnum
     {
-        Header(-1), Image(0), Text(1), Graph(2), Gif(3), Audio(4), Video(5), Link(6), EmbeddedHtml(7), Carousel(8), Typing(9), Card(10);
+        Header(-1), Image(0), Text(1), Graph(2), Gif(3), Audio(4), Video(5), Link(6), EmbeddedHtml(7), Carousel(8), Typing(9), Card(10), AddressCard(11);
         private final int val;
         private SectionTypeEnum(int val){
             this.val = val;
@@ -102,6 +104,9 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case 10:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_card_row_layout, parent, false);
                 return new CardViewHolder(v);
+            case 11:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_address_card_row_layout, parent, false);
+                return new AddressCardViewHolder(v);
             default:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_typing_row_layout, parent, false);
                 return new TypingViewHolder(v);
@@ -136,6 +141,32 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
             cardViewHolder.llBubbleContainer.setLayoutParams(lp);
             cardViewHolder.tvConfirmationText.setTextColor(Color.parseColor("#ffffff"));
+
+        }else if(holder instanceof AddressCardViewHolder){
+            AddressCardViewHolder cardViewHolder = (AddressCardViewHolder) holder;
+            cardViewHolder.tvAddressText.setText(Html.fromHtml(section.getText()));
+            Glide.with(mContext)
+                    .load(section.getUrl())
+                    .placeholder(R.drawable.default_product_image)
+                    .error(R.drawable.default_product_image)
+                    .into(cardViewHolder.ivMap);
+            if(section.isShowDate()) {
+                cardViewHolder.tvDateTime.setVisibility(View.VISIBLE);
+                cardViewHolder.tvDateTime.setText(section.getDateTime());
+            }else {
+                cardViewHolder.tvDateTime.setVisibility(View.GONE);
+            }
+            ((LinearLayout) cardViewHolder.itemView).setGravity(Gravity.RIGHT);
+            LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) cardViewHolder.llBubbleContainer.getLayoutParams();
+            if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
+                cardViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.reply_main_bubble);
+                lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 5), 0);
+            }else {
+                cardViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.reply_followup_bubble);
+                lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 15), 0);
+            }
+            cardViewHolder.llBubbleContainer.setLayoutParams(lp);
+            cardViewHolder.tvAddressText.setTextColor(Color.parseColor("#ffffff"));
 
         } else if(holder instanceof TextViewHolder){
             TextViewHolder textViewHolder = (TextViewHolder) holder;
@@ -417,6 +448,24 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
+    private class AddressCardViewHolder extends RecyclerView.ViewHolder{
+        TextView tvAddressText, tvDateTime;
+        View itemView;
+        LinearLayout llBubbleContainer;
+        ImageView ivMap;
+        public AddressCardViewHolder(View itemView) {
+            super(itemView);
+
+            this.itemView = itemView;
+
+            ivMap = (ImageView) itemView.findViewById(R.id.iv_map_data);
+
+            this.tvAddressText = (TextView) itemView.findViewById(R.id.tv_confirmation_text);
+            this.tvDateTime = (TextView) itemView.findViewById(R.id.tv_date_time);
+            this.llBubbleContainer = (LinearLayout) itemView.findViewById(R.id.ll_bubble_container);
+        }
+    }
+
     private class GraphViewholder extends RecyclerView.ViewHolder{
 
         public GraphViewholder(View itemView) {
@@ -487,17 +536,12 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     private class TypingViewHolder extends RecyclerView.ViewHolder{
-
-        ImageView ivTyping;
+        AVLoadingIndicatorView ldiDots;
 
         public TypingViewHolder(View itemView) {
             super(itemView);
-            ivTyping = (ImageView) itemView.findViewById(R.id.iv_typing_gif);
-            Glide.with(mContext)
-                    .load(R.drawable.typing)
-                    .asGif()
-                    .centerCrop()
-                    .into(ivTyping);
+            ldiDots = (AVLoadingIndicatorView) itemView.findViewById(R.id.ldi_dots);
+            ldiDots.smoothToShow();
             Section section = mChatSections.get(mChatSections.size()-1);
             if(!section.isFromRia()){
                 ((LinearLayout) itemView).setGravity(Gravity.RIGHT);
