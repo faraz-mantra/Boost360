@@ -16,9 +16,9 @@
     </style>
 
 
-        <style name="MyActionButtonOverflow" parent="android:style/Widget.Holo.ActionButton.Overflow">
-            <item name="android:src">@drawable/down_arrow</item>
-        </style>
+    <style name="MyActionButtonOverflow" parent="android:style/Widget.Holo.ActionButton.Overflow">
+        <item name="android:src">@drawable/down_arrow</item>
+    </style>
 
 
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
@@ -31,6 +31,7 @@
         <item name="colorControlNormal">#eeeeee</item>
         <item name="android:windowDisablePreview">true</item>
     </style>
+
     <style name="AppTheme.Splash" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- customize the color palette -->
         <item name="colorPrimary">@color/primaryColor</item>
@@ -40,6 +41,7 @@
         <item name="colorControlHighlight">@color/accentColor</item>
         <item name="colorControlNormal">#eeeeee</item>
     </style>
+
     <style name="MyCustomToolBarTheme" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:textColorPrimary">#FFFFFF</item>
         <item name="android:textColorSecondary">#FFFFFF</item>
@@ -58,7 +60,8 @@
         <item name="android:background">#FFC90E</item>
     </style>
 
-    <style name="Theme.CustomTheme.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+    <style name="Theme.CustomTheme.TitleTextStyle"
+        parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">#FFFFFF</item>
     </style>
 
@@ -104,7 +107,7 @@
 
     <style name="white_label_style" parent="Theme.AppCompat.Light.NoActionBar">
 
-       <item name="android:background">@color/primaryColor</item>
+        <item name="android:background">@color/primaryColor</item>
     </style>
 
     <style name="MenuButtonsStyle">
@@ -116,6 +119,7 @@
         <item name="fab_colorPressed">#F2AB00</item>
         <item name="fab_colorRipple">#D99200</item>
     </style>
+
     <style name="Theme.Transparent" parent="android:Theme">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -124,10 +128,12 @@
         <item name="android:windowIsFloating">true</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+
     <style name="MyCheckBox" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/primaryColor</item>
         <item name="colorControlActivated">@color/primaryColor</item>
     </style>
+
     <style name="PopupMenuStyle" parent="@android:style/Widget.PopupMenu">
         <item name="android:popupBackground">@android:color/white</item>
     </style>
@@ -136,6 +142,27 @@
         <item name="android:background">@drawable/bg_spinner</item>
     </style>
 
+    <style name="Theme.custom" parent="Theme.AppCompat.Light.Dialog">
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryDark">@color/primary_color_dark</item>
+        <item name="android:background">@null</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="colorAccent">@color/primary_color</item>
+        <item name="colorButtonNormal">@color/primary_color</item>
+    </style>
+
+    <style name="Theme.bubbleInApp" parent="Theme.AppCompat.Light.Dialog">
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryDark">@color/primary_color_dark</item>
+        <item name="android:background">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.8</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="colorAccent">@color/primary_color</item>
+        <item name="colorButtonNormal">@color/primary_color</item>
+    </style>
     <!--<style name="Theme.Mobihelp" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryDark">@color/primaryColorDark</item>
@@ -149,4 +176,44 @@
         <item name="mh_ic_attach">@drawable/mobihelp_ic_action_attach_light</item>
 
     </style>-->
+
+
+    <style name="MaterialSearchViewStyle">
+        <!-- Background for the search bar -->
+        <item name="searchBackground">@color/primaryColor</item>
+
+        <!-- Change clear text icon -->
+        <item name="searchCloseIcon">@drawable/ic_action_navigation_close_inverted</item>
+
+        <!-- Change up icon -->
+        <item name="searchBackIcon">@drawable/ic_action_navigation_arrow_back_inverted</item>
+
+        <!-- Change icon for the suggestions -->
+        <item name="searchSuggestionIcon">@drawable/ic_suggestion</item>
+
+        <!-- Change background for the suggestions list view -->
+        <item name="searchSuggestionBackground">@android:color/white</item>
+
+        <!-- Change text color for edit text. This will also be the color of the cursor -->
+        <item name="android:textColor">@color/white</item>
+
+        <!-- Change hint text color for edit text -->
+        <item name="android:textColorHint">@color/gray</item>
+
+        <!-- Hint for edit text -->
+        <item name="android:hint">""</item>
+    </style>
+
+    <style name="SCBSwitch" parent="Theme.AppCompat.Light">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">@color/primaryColor</item>
+
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">#f1f1f1
+        </item>
+
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">#42221f1f
+        </item>
+    </style>
 </resources>

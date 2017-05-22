@@ -233,7 +233,8 @@ public class Create_Message_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 int status = pref.getInt("quikrStatus", -1);
                 if (status == 0) {
-                    Methods.showSnackBar(activity,"Sorry, You have reached your daily limit of one post");
+                    MixPanelController.track(Key_Preferences.POST_TO_QUIKR_SECOND_TIME,null);
+                    Methods.showSnackBar(activity,"You cannot post more than one ad on Quikr in a day");
                 }else if(status == -1){
                     Methods.showSnackBarNegative(activity,"Something went wrong, please restart the application");
                 } else{
@@ -519,6 +520,7 @@ public class Create_Message_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(checkBox.isChecked()) {
+                    MixPanelController.track(Key_Preferences.QUIKR_DIALOG_DISABLED,null);
                     prefsEditor.putBoolean("show_quikr_guidelines",false).apply();
                     Methods.materialDialog(activity,"Quikr Guidelines",getString(R.string.message_quikr));
                 }

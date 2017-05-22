@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -176,7 +177,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
     private String TAG = HomeActivity.class.getSimpleName();
     private String[] permission = new String[]{Manifest.permission.READ_SMS,Manifest.permission.RECEIVE_SMS
-    ,Manifest.permission.READ_PHONE_STATE};
+    ,Manifest.permission.READ_PHONE_STATE, Settings.ACTION_ACCESSIBILITY_SETTINGS};
     private final static int READ_MESSAGES_ID=221;
 
     @Override
@@ -200,7 +201,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         session = new UserSessionManager(getApplicationContext(),HomeActivity.this);
         setHotlineUser();
 
-        //Log.v("ggg ",FirebaseInstanceId.getInstance().getToken());
         BoostLog.d(TAG, "In on CreateView");
         deepLinkUrl = RiaFirebaseMessagingService.deepLinkUrl;
         FPID = session.getFPID();
@@ -402,7 +402,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     private void getPermissions() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED) {
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED) {
             Intent intent = new Intent(this, ReadMessages.class);
             startService(intent);
             // start the service to send data to firebase
@@ -1225,7 +1226,16 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 Constants.showStoreScreen=false;
                 Home_Fragment_Tab.viewPager.setCurrentItem(2,true);
             }*/
+                    boolean callMethod = false;
+                    Home_Fragment_Tab myFragment = (Home_Fragment_Tab) getSupportFragmentManager().findFragmentByTag("homeFragment");
+                    if (myFragment != null && myFragment.isVisible() && session.getBubbleTime()==-1) {
+                        callMethod = true;
+                    }
+
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,homeFragment, "homeFragment").commit();
+                    if(callMethod){
+                        homeFragment.checkOverlay();
+                    }
                     //   getSupportFragmentManager().beginTransaction().
                     //           replace(R.id.mainFrame, homeFragment).addToBackStack("Home").commit();
                 }else if(nextScreen.equals(getString(R.string.chat)))
@@ -1288,6 +1298,15 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, customPageActivity).commit();
 //            Intent in = new Intent(HomeActivity.this, CustomPageActivity.class);
 //            startActivity(in);
+                }else if(nextScreen.equals(getString(R.string.contact__info))){
+                    Intent contactIntent =  new Intent(HomeActivity.this, Contact_Info_Activity.class);
+                    startActivity(contactIntent);
+                }else if(nextScreen.equals(getString(R.string.basic_info))){
+                    Intent basicInfoIntent =  new Intent(HomeActivity.this, Edit_Profile_Activity.class);
+                    startActivity(basicInfoIntent);
+                }else if(nextScreen.equals(getString(R.string.business__address))){
+                    Intent businessAddressIntent =  new Intent(HomeActivity.this, Business_Address_Activity.class);
+                    startActivity(businessAddressIntent);
                 }
             }
         }, 200);

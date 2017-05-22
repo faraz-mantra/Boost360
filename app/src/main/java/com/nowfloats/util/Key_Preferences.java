@@ -7,8 +7,19 @@ public class Key_Preferences {
 
 
     public static final String EVENT_WILDFIRE_BUY = "eventWildfireBuy";
+    public static final String INTENT_BUBBLE_CLASS = "com.intent.bubbleService";
+    public static final String GET_EVENT_PACKAGE_NAME = "com.nowfloats.NavigationDrawer";
+    public static final String SHOW_BUBBLE_TIME = "bubble_time";
+    public static final String SHOW_BUBBLE_COACH_MARK = "bubble_coach_mark";
+    public static final String SHOW_WHATS_APP_DIALOG ="whatsapp_dialog" ;
+    public static final String QUIKR_GUIDELINES_ACTIVITY = "quikr_guidelines_activity" ;
+    public static final String POST_TO_QUIKR_SECOND_TIME = "quikr_post_second_time";
+    public static final String QUIKR_DIALOG_DISABLED = "quikr_dialog_disabled";
+    public static final String SHOW_QUIKR_ANALYTICS = "show_quikr_analytics";
+    public static final String SHOW_WHATSAPP_CLOSE_DIALOG = "whatsApp_close";
     public static  String GET_FP_DETAILS_CITY = "GET_FP_DETAILS_CITY";
     public static  String GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG";
+    public static  String IS_BOOST_BUBBLE_ENABLED = "IS_BOOST_BUBBLE_ENABLED";
     public static  String GET_FP_DETAILS_ADDRESS ="GET_FP_DETAILS_ADDRESS" ;
     public static String GET_FP_DETAILS_CATEGORY = "GET_FP_DETAILS_CATEGORY";
     public static String GET_FP_DETAILS_CONTACTNAME = "GET_FP_DETAILS_CONTACTNAME";
@@ -86,4 +97,9 @@ public class Key_Preferences {
     public static final String FB_PULL_COUNT = "fb_pull_count";
 
     public static final String FCM_TOKEN = "fcm_token";
+
+    public static final String DIALOG_FROM = "dialogFrom";
+    public static final String BUBBLE_POS = "bubble_pos";
+    public static final String BUBBLE_POS_Y = "bubble_pos_y";
+    public static final String BUBBLE_POS_X = "bubble_pos_x";
 }

@@ -25,7 +25,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     public static final String TAG = AppController.class.getSimpleName();
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
-    private static AppController mInstance;
+    private static AppController mInstance ;
 
     @Override
     public void onCreate() {
@@ -149,6 +149,9 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     }
 
     public void addToRequstQueue(Request request){
+        if (mRequestQueue == null) {
+            getRequestQueue();
+        }
         mRequestQueue.add(request);
     }
 

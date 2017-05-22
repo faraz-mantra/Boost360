@@ -47,7 +47,7 @@ public class FetchAddressIntentService extends IntentService {
 
         mReceiver = intent.getParcelableExtra(Constants.LocationConstants.RECEIVER);
 
-        // Check if receiver was properly registered.
+        // sent_check if receiver was properly registered.
         if (mReceiver == null) {
             //Log.wtf(TAG, "No receiver received. There is nowhere to send the results.");
             return;
@@ -127,9 +127,10 @@ public class FetchAddressIntentService extends IntentService {
             bundle.putString(Constants.LocationConstants.RESULT_DATA_KEY, message);
             bundle.putString(Constants.LocationConstants.LOCATION_DATA_AREA, address.getSubLocality());
             bundle.putString(Constants.LocationConstants.LOCATION_DATA_CITY, address.getLocality());
-            bundle.putString(Constants.LocationConstants.LOCATION_DATA_STREET, address.getAddressLine(0));
+            bundle.putString(Constants.LocationConstants.LOCATION_DATA_STREET, address.getAddressLine(0) + ", " + address.getAddressLine(1));
             bundle.putString(Constants.LocationConstants.LOCATION_DATA_COUNTRY, address.getCountryName());
             bundle.putString(Constants.LocationConstants.LOCATION_DATA_PIN, address.getPostalCode());
+            bundle.putString(Constants.LocationConstants.LOCATION_DATA_LOCALITY, address.getLocality());
             mReceiver.send(resultCode, bundle);
         } catch (Exception e) {
             e.printStackTrace();

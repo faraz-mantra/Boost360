@@ -442,7 +442,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                 UploadPictureAsyncTask upload = new UploadPictureAsyncTask(activity, filepath);
                 upload.setOnUploadListener(Image_Gallery_Fragment.this);
                 upload.execute();
-                // Check if the specified image exists.
+                // sent_check if the specified image exists.
             }catch(Exception e){e.printStackTrace();
             } catch(OutOfMemoryError E){
                 E.printStackTrace();

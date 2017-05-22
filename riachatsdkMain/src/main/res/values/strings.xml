@@ -1,12 +1,20 @@
 <resources>
     <string name="app_name">riachatsdk</string>
     <string name="please_wait">Please Wait...</string>
-    <string name="street_address">Street Address</string>
-    <string name="city">City</string>
-    <string name="country">Country</string>
-    <string name="pincode">Pincode</string>
+    <string name="street_address">STREET ADDRESS</string>
+    <string name="loc_city">CITY</string>
+    <string name="loc_country">COUNTRY</string>
+    <string name="loc_pincode">PINCODE</string>
     <string name="empty_address_warn">Address can\'t be empty</string>
     <string name="empty_city_warn">City can\'t be empty</string>
     <string name="empty_country_warn">Country can\'t be empty</string>
     <string name="empty_pin_warn">Pin can\'t be empty</string>
+    <string name="chat_agent_name">Ria</string>
+    <string name="chat_agent_name_full">(Relationship Intelligence Agent)</string>
+    <string name="house_plot_num">HOUSE/PLOT NUMBER</string>
+    <string name="locality">LOCALITY</string>
+    <string name="land_mark">LANDMARK (OPTIONAL)</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

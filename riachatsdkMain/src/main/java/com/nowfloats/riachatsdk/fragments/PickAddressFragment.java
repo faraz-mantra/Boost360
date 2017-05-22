@@ -6,6 +6,8 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -13,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +36,8 @@ import com.nowfloats.riachatsdk.R;
 import com.nowfloats.riachatsdk.services.FetchAddressIntentService;
 import com.nowfloats.riachatsdk.utils.Constants;
 
+import org.w3c.dom.Text;
+
 /**
  * Created by NowFloats on 27-03-2017 by Romio Ranjan Jena.
  *
@@ -40,7 +45,7 @@ import com.nowfloats.riachatsdk.utils.Constants;
 
 public class PickAddressFragment extends DialogFragment implements LocationListener{
 
-    EditText etStreetAddr, etCity, etCountry, etPin;
+    TextInputEditText etStreetAddr, etCity, etCountry, etPin, etLocality;
     Button btnSave;
     private GoogleMap mGoogleMap;
 
@@ -52,6 +57,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
     protected String mStateOutput;
     protected String mCountryOutput;
     protected String mPin;
+    protected String mLocality;
 
     private static final long MIN_TIME = 400;
     private static final float MIN_DISTANCE = 1000;
@@ -87,10 +93,11 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_pick_address, container, false);
         setCancelable(false);
-        etCity = (EditText) v.findViewById(R.id.et_city);
-        etStreetAddr = (EditText) v.findViewById(R.id.et_street_address);
-        etCountry = (EditText) v.findViewById(R.id.et_country);
-        etPin = (EditText) v.findViewById(R.id.et_pincode);
+        etCity = (TextInputEditText) v.findViewById(R.id.et_city);
+        etStreetAddr = (TextInputEditText) v.findViewById(R.id.et_street_address);
+        etCountry = (TextInputEditText) v.findViewById(R.id.et_country);
+        etPin = (TextInputEditText) v.findViewById(R.id.et_pincode);
+        etLocality = (TextInputEditText) v.findViewById(R.id.et_locality);
         btnSave = (Button) v.findViewById(R.id.btn_save);
 
         btnSave = (Button) v.findViewById(R.id.btn_save);
@@ -101,7 +108,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                 //TODO: Callback Interface
                 if(mResultListener!=null && verifyData()){
                     mResultListener.OnResult(etStreetAddr.getText().toString().trim(),
-                            mAreaOutput, mCityOutput, mStateOutput, mCountryOutput, mCenterLatLong.latitude, mCenterLatLong.latitude, mPin);
+                            mAreaOutput, mCityOutput, mStateOutput, mCountryOutput, mCenterLatLong.latitude, mCenterLatLong.longitude, mPin);
                     Fragment fragment = ((AppCompatActivity)getActivity())
                             .getSupportFragmentManager()
                             .findFragmentById(R.id.map);
@@ -125,7 +132,11 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        try {
+            getDialog().getWindow().setBackgroundDrawableResource(R.drawable.place_pick_dialog_bg);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return v;
     }
 
@@ -299,6 +310,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
             mStateOutput = resultData.getString(Constants.LocationConstants.LOCATION_DATA_STREET);
             mCountryOutput = resultData.getString(Constants.LocationConstants.LOCATION_DATA_COUNTRY);
             mPin = resultData.getString(Constants.LocationConstants.LOCATION_DATA_PIN);
+            mLocality = resultData.getString(Constants.LocationConstants.LOCATION_DATA_LOCALITY);
+
 
             displayAddressOutput();
 
@@ -308,8 +321,9 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
     protected void displayAddressOutput() {
         etCity.setText(mCityOutput);
         etCountry.setText(mCountryOutput);
-        etStreetAddr.setText(mAddressOutput.replaceAll("[\r\n]+", " "));
+        etStreetAddr.setText(mStateOutput.replaceAll("[\r\n]+", " "));
         etPin.setText(mPin);
+        etLocality.setText(mLocality);
         btnSave.setVisibility(View.VISIBLE);
     }
 

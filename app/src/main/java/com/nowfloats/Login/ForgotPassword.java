@@ -148,7 +148,7 @@ public class ForgotPassword extends Activity {
 //            TextView text = (TextView) dialog
 //                    .findViewById(R.id.textview_heading);
 //
-//            text.setText("Check your email!");
+//            text.setText("sent_check your email!");
 //
 //            ImageView image = (ImageView) dialog
 //                    .findViewById(R.id.alert_imageView);

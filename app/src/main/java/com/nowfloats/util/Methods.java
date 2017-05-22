@@ -9,11 +9,14 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.Spanned;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +27,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.nowfloats.accessbility.DataAccessbilityServiceV3;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.squareup.okhttp.OkHttpClient;
 import com.thinksity.R;
@@ -56,7 +60,7 @@ import retrofit.client.OkClient;
  * Created by Guru on 21-04-2015.
  */
 public class Methods {
-    public static SimpleDateFormat dateFormatDefault = new SimpleDateFormat("dd/MM/yyyy");
+    public static SimpleDateFormat dateFormatDefault = new SimpleDateFormat("dd/MM/yyyy",Locale.US);
     public static boolean isOnline(Activity context) {
         boolean status = false;
         try {
@@ -95,14 +99,54 @@ public class Methods {
     public static void likeUsFacebook(Context context,String review){
         MixPanelController.track("LikeUsOnFacebook", null);
         Intent facebookIntent;
-        try {
+        if(review.trim().length() == 0) {
+            try {
                 context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
                 facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_PAGE_WITH_ID));
             } catch (Exception e) {
-                facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_URL+review));
+                facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_URL + review));
             }
+        }else{
+            facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_URL + review));
+        }
         facebookIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
         context.startActivity(facebookIntent);
+    }
+    public static boolean isAccessibilitySettingsOn(Context mContext) {
+        int accessibilityEnabled = 0;
+        final String service = mContext.getPackageName() + "/" + DataAccessbilityServiceV3.class.getCanonicalName();
+        try {
+            accessibilityEnabled = Settings.Secure.getInt(mContext.getApplicationContext().getContentResolver(),
+                    android.provider.Settings.Secure.ACCESSIBILITY_ENABLED);
+            Log.v("ggg", "accessibilityEnabled = " + accessibilityEnabled);
+        } catch (Settings.SettingNotFoundException e) {
+            Log.e("ggg", "Error finding setting, default accessibility to not found: "
+                    + e.getMessage());
+        }
+        TextUtils.SimpleStringSplitter mStringColonSplitter = new TextUtils.SimpleStringSplitter(':');
+
+        if (accessibilityEnabled == 1) {
+            Log.v("ggg", "***ACCESSIBILITY IS ENABLED*** -----------------");
+            String settingValue = Settings.Secure.getString(
+                    mContext.getApplicationContext().getContentResolver(),
+                    Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES);
+            if (settingValue != null) {
+                mStringColonSplitter.setString(settingValue);
+                while (mStringColonSplitter.hasNext()) {
+                    String accessibilityService = mStringColonSplitter.next();
+
+                    Log.v("ggg", "-------------- > accessibilityService :: " + accessibilityService + " " + service);
+                    if (accessibilityService.equalsIgnoreCase(service)) {
+                        Log.v("ggg", "We've found the correct setting - accessibility is switched on!");
+                        return true;
+                    }
+                }
+            }
+        } else {
+            Log.v("ggg", "***ACCESSIBILITY IS DISABLED***");
+        }
+
+        return false;
     }
     public static void showSnackBar(Activity context,String msg){
         android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), msg, android.support.design.widget.Snackbar.LENGTH_LONG);
@@ -398,6 +442,11 @@ public class Methods {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static int dpToPx(int dp,Context context) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
 }

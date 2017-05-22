@@ -42,6 +42,7 @@ import com.nowfloats.signup.UI.Model.Facebook_Event;
 import com.nowfloats.signup.UI.Model.LocationProvider;
 import com.nowfloats.signup.UI.Service.Facebook_Pages_Service;
 import com.nowfloats.signup.UI.UI.PreSignUpActivity;
+import com.nowfloats.signup.UI.UI.RiaChatInitActivity;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -132,11 +133,14 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
                     public void run() {
                         getLastKnownLocation();
                     }
-                }).start();*/
+                }).start();
                 MixPanelController.track(EventKeysWL.CREATE_WEBSITE_BUTTON, null);
-                /*API_Layer.getBusinessCategories(PreSignUp_MainActivity.this);
+                API_Layer.getBusinessCategories(PreSignUp_MainActivity.this);
                 Intent signUpIntent = new Intent(PreSignUp_MainActivity.this, PreSignUpActivity.class);
                 startActivity(signUpIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
+                /*Intent i = new Intent(PreSignUp_MainActivity.this, RiaChatInitActivity.class);
+                startActivity(i);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
                 ChatManager.getInstance(PreSignUp_MainActivity.this).startChat();
             }
@@ -163,12 +167,7 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
             }
         });
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                getLastKnownLocation();
-            }
-        }).start();
+        getLastKnownLocation();
 
         mAdapter = new PreSignupFragmentAdapter(getSupportFragmentManager());
 

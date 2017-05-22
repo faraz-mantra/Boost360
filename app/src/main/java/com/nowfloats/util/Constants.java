@@ -77,7 +77,10 @@ public class Constants {
     public final static String NOW_FLOATS_API_URL = "https://api.withfloats.com";
     public final static String TEST_API_URL = "http://api.nowfloatsdev.com";
     public final static String BASE_IMAGE_URL = "https://content.withfloats.com";
-    public final static String RIA_API_URL = "http://riamemory.withfloats.com";
+    public final static String RIA_MEMORY_API_URL = "http://riamemory.withfloats.com";
+    public final static String RIA_MEMORY_TEST_API_URL = "http://ria.nowfloatsdev.com";
+    public final static String PLUGIN_API_URL = "http://plugin.withfloats.com";
+    public final static String RIA_API_URL = "https://ria.withfloats.com";
     // public final static String NOW_FLOATS_API_URL		=	"https://nftestbed.azurewebsites.net";
     public final static String HTTP_PUT = "PUT";
     public final static String HTTP_POST = "POST";
@@ -90,9 +93,11 @@ public class Constants {
     //    public static RestAdapter validEmailAdapter = null;
     public static final RestAdapter validEmailAdapter = new RestAdapter.Builder().setEndpoint("https://bpi.briteverify.com").build();
     //    public static RestAdapter restAdapter = null;
-    public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
+    public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL)./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).*/build();
 
     public static final RestAdapter testRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.TEST_API_URL).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).build();
+    public static final RestAdapter pluginRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.PLUGIN_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
+    public static final RestAdapter riaRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
     public static NotificationInterface alertInterface = Constants.restAdapter.create(NotificationInterface.class);
 
     //http://api.withfloats.com/Discover/v3/FloatingPoint/create
@@ -337,6 +342,15 @@ public class Constants {
             "CONSTRUCTION MATERIAL",
             "FREELANCER",
             "CONSULTANTS"};
+
+    public enum SubscriberStatus {
+        UNSUBSCRIBED(30), SUBSCRIBED(20),REQUESTED(10);
+        public int value;
+        SubscriberStatus(int i){
+            value = i;
+        }
+    }
+
     public static ArrayList<String> signUpCountryList = new ArrayList<>();
     public static int DefaultBackgroundImage;
     public static boolean imageNotSet = false;

