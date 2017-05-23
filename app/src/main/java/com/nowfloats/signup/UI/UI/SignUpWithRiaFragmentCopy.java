@@ -8,9 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -20,13 +17,18 @@ import com.nowfloats.signup.UI.AnimationTool;
 import com.nowfloats.signup.UI.AnimationType;
 import com.thinksity.R;
 
+import static com.nowfloats.signup.UI.AnimationType.RIA_ZOOM_IN;
+import static com.nowfloats.signup.UI.AnimationType.RIA_ZOOM_OUT;
 import static com.nowfloats.signup.UI.AnimationType.SLIDE_DOWN;
+import static com.nowfloats.signup.UI.AnimationType.SLIDE_LEFT;
+import static com.nowfloats.signup.UI.AnimationType.SLIDE_RIA_LEFT;
+import static com.nowfloats.signup.UI.AnimationType.SLIDE_RIA_RIGHT;
 import static com.nowfloats.signup.UI.AnimationType.SLIDE_RIGHT;
 import static com.nowfloats.signup.UI.AnimationType.SLIDE_UP;
 import static com.nowfloats.signup.UI.AnimationType.ZOOM_IN;
 
 
-public class SignUpWithRiaFragment extends Fragment implements AnimationTool.AnimationListener {
+public class SignUpWithRiaFragmentCopy extends Fragment implements AnimationTool.AnimationListener {
 
     private LoginAndSignUpFragment.OnFragmentInteraction mFragmentInteraction;
 
@@ -44,7 +46,7 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
 
     private String navigateTo = "";
 
-    public SignUpWithRiaFragment() {
+    public SignUpWithRiaFragmentCopy() {
     }
 
     public static SignUpWithRiaFragment newInstance() {
@@ -120,11 +122,11 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
             }
         });
 
-        ivStart.setOnClickListener(new View.OnClickListener() {
+        llStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navigateTo = "chatactivity";
-                mFragmentInteraction.OnInteraction(navigateTo);
+                reverseAnimation();
             }
         });
     }
@@ -132,22 +134,13 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
     private void reverseAnimation() {
 
         isBackPress = true;
-        ivBack.setVisibility(View.INVISIBLE);
-        ivStart.setVisibility(View.INVISIBLE);
+        ivBack.setVisibility(View.GONE);
         animationTool.setVisbilityStatus(isBackPress);
-//        animationTool.setAnimationType(SLIDE_RIA_RIGHT)
-//                .duration(100)
-//                .repeat(0)
-//                .interpolate(new AccelerateInterpolator())
-//                .playOn(ivStart);
-        ivRiaZoomLeft.setVisibility(View.INVISIBLE);
-        ivRiaZoomRight.setVisibility(View.INVISIBLE);
-        ivRiaZoomTop.setVisibility(View.INVISIBLE);
-        animationTool.setAnimationType(SLIDE_UP)
+        animationTool.setAnimationType(SLIDE_RIA_RIGHT)
                 .duration(100)
                 .repeat(0)
                 .interpolate(new AccelerateInterpolator())
-                .playOn(llRia);
+                .playOn(ivStart);
     }
 
     /*
@@ -174,47 +167,45 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
          */
         int height = (displayMetrics.heightPixels * 40) / 100;
         int width = (displayMetrics.widthPixels * 40) / 100;
-        int topMargin = (displayMetrics.heightPixels * 2) / 100;
+        int topMargin = (displayMetrics.heightPixels * 10) / 100;
         int leftMargin = (displayMetrics.widthPixels * 5) / 100;
-        int bottomMargin = (displayMetrics.widthPixels * 5) / 100;
         if (width > height) {
             width = height;
         }
 
         RelativeLayout.LayoutParams llParams = new RelativeLayout.LayoutParams(
                 width, width);
-        llParams.setMargins(leftMargin, topMargin, 0, bottomMargin);
+        llParams.setMargins(leftMargin, topMargin, 0, 0);
         ivRia.setLayoutParams(llParams);
 
 
         RelativeLayout.LayoutParams llParams1 = new RelativeLayout.LayoutParams(
                 width, width);
-        llParams1.setMargins(leftMargin, topMargin, 0, 0);
+        llParams1.setMargins(0, topMargin, 0, 0);
         ivRiaZoomLeft.setLayoutParams(llParams1);
 
         RelativeLayout.LayoutParams llParams2 = new RelativeLayout.LayoutParams(
                 width, width);
-        llParams2.setMargins(leftMargin, topMargin, leftMargin, 0);
+        llParams2.setMargins(leftMargin + 50, topMargin + 20, 0, 0);
         ivRiaZoomRight.setLayoutParams(llParams2);
-
 
         RelativeLayout.LayoutParams llParams3 = new RelativeLayout.LayoutParams(
                 width, width);
-        llParams3.setMargins(leftMargin, topMargin, 0, 0);
+        llParams3.setMargins(leftMargin, topMargin - 50, 0, 0);
         ivRiaZoomTop.setLayoutParams(llParams3);
 
         ivRia.bringToFront();
 
 
-//        /*
-//         * Ria Text Configurations
-//         */
-//
+        /*
+         * Ria Text Configurations
+         */
+
         leftMargin = (displayMetrics.widthPixels * 10) / 100;
-//        height = (displayMetrics.heightPixels * 40) / 100;
-        LinearLayout.LayoutParams rlContentParams = new LinearLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        llContent.setPadding(leftMargin, 20, 0, 0);
+        height = (displayMetrics.heightPixels * 40) / 100;
+        RelativeLayout.LayoutParams rlContentParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        llContent.setPadding(leftMargin, height, 0, 0);
         llContent.setClipToPadding(false);
         llContent.setLayoutParams(rlContentParams);
 
@@ -257,7 +248,8 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
     * used this variable in callback
     */
 
-    private AnimationSet animationSet = null;
+    private int stepCount = 0;
+    private boolean isCalled = false;
 
     @Override
     public void onAnimationEnd(AnimationType animationType) {
@@ -265,17 +257,58 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
 
             switch (animationType) {
                 case SLIDE_RIA_RIGHT:
-                    ivRiaZoomLeft.setVisibility(View.INVISIBLE);
-                    ivRiaZoomRight.setVisibility(View.INVISIBLE);
-                    ivRiaZoomTop.setVisibility(View.INVISIBLE);
-                    animationTool.setAnimationType(SLIDE_UP)
+                    stepCount = 0;
+                    ivBack.setVisibility(View.GONE);
+                    animationTool.setAnimationType(SLIDE_RIA_LEFT)
                             .duration(100)
                             .repeat(0)
                             .interpolate(new AccelerateInterpolator())
-                            .playOn(llRia);
+                            .playOn(tvRiaMessage);
+                    break;
+                case SLIDE_RIA_LEFT:
+                    if (stepCount == 0) {
+                        stepCount++;
+                        animationTool.setAnimationType(SLIDE_RIA_LEFT)
+                                .duration(100)
+                                .repeat(0)
+                                .interpolate(new AccelerateInterpolator())
+                                .playOn(tvRia);
+                    } else {
+                        stepCount = 0;
+                        animationTool.setAnimationType(SLIDE_UP)
+                                .duration(100)
+                                .repeat(0)
+                                .interpolate(new AccelerateInterpolator())
+                                .playOn(ivRia);
+                    }
                     break;
                 case SLIDE_UP:
-                    mFragmentInteraction.OnInteraction(navigateTo);
+                    if (stepCount == 0) {
+                        stepCount++;
+
+                        ivRiaZoomLeft.setVisibility(View.GONE);
+                        ivRiaZoomTop.setVisibility(View.GONE);
+                        ivRiaZoomRight.setVisibility(View.GONE);
+
+                        animationTool.setAnimationType(SLIDE_UP)
+                                .duration(100)
+                                .repeat(0)
+                                .interpolate(new AccelerateInterpolator())
+                                .playOn(llRia);
+                    } else {
+                        stepCount = 0;
+                        animationTool.setAnimationType(ZOOM_IN)
+                                .duration(100)
+                                .repeat(0)
+                                .interpolate(new AccelerateInterpolator())
+                                .playOn(llStart);
+                    }
+                    break;
+                case ZOOM_IN:
+                    if (!isCalled) {
+                        isCalled = true;
+                        mFragmentInteraction.OnInteraction(navigateTo);
+                    }
                     break;
             }
         } else {
@@ -289,152 +322,84 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
                             .playOn(llRia);
                     break;
                 case SLIDE_DOWN:
-                    animationTool.setAnimationType(SLIDE_RIGHT)
-                            .duration(100)
-                            .repeat(0)
-                            .interpolate(new AccelerateInterpolator())
-                            .playOn(ivStart);
-                    ivBack.setVisibility(View.VISIBLE);
+                    if (stepCount == 0) {
+                        stepCount++;
+                        animationTool.setAnimationType(SLIDE_DOWN)
+                                .duration(100)
+                                .repeat(0)
+                                .interpolate(new AccelerateInterpolator())
+                                .playOn(ivRia);
+                    } else {
+                        stepCount = 0;
+                        animationTool.setAnimationType(SLIDE_LEFT)
+                                .duration(100)
+                                .repeat(0)
+                                .interpolate(new AccelerateInterpolator())
+                                .playOn(tvRia);
+                    }
                     break;
-
+                case SLIDE_LEFT:
+                    if (stepCount == 0) {
+                        stepCount++;
+                        animationTool.setAnimationType(SLIDE_LEFT)
+                                .duration(100)
+                                .repeat(0)
+                                .interpolate(new AccelerateInterpolator())
+                                .playOn(tvRiaMessage);
+                    } else {
+                        stepCount = 0;
+                        animationTool.setAnimationType(SLIDE_RIGHT)
+                                .duration(100)
+                                .repeat(0)
+                                .interpolate(new AccelerateInterpolator())
+                                .playOn(ivStart);
+                        ivBack.setVisibility(View.VISIBLE);
+                    }
+                    break;
                 case SLIDE_RIGHT:
-                    animationSet = new AnimationSet(true);
+                case RIA_ZOOM_OUT:
+                    if (!isBackPress) {
 
-                    leftAnimation();
-                    rightAnimation();
-                    topAnimation();
-                    animationSet.start();
+                        animationTool.setAnimationType(RIA_ZOOM_IN)
+                                .duration(100)
+                                .repeat(0)
+                                .interpolate(new AccelerateInterpolator())
+                                .playOn(ivRiaZoomLeft);
+                        animationTool.setAnimationType(RIA_ZOOM_IN)
+                                .duration(100)
+                                .repeat(0)
+                                .interpolate(new AccelerateInterpolator())
+                                .playOn(ivRiaZoomRight);
+                        animationTool.setAnimationType(RIA_ZOOM_IN)
+                                .duration(100)
+                                .repeat(0)
+                                .interpolate(new AccelerateInterpolator())
+                                .playOn(ivRiaZoomTop);
+                    }
                     break;
+                case RIA_ZOOM_IN:
 
+                    if (!isBackPress) {
+
+                        animationTool.setAnimationType(RIA_ZOOM_OUT)
+                                .duration(100)
+                                .repeat(0)
+                                .interpolate(new AccelerateInterpolator())
+                                .playOn(ivRiaZoomLeft);
+                        animationTool.setAnimationType(RIA_ZOOM_OUT)
+                                .duration(100)
+                                .repeat(0)
+                                .interpolate(new AccelerateInterpolator())
+                                .playOn(ivRiaZoomRight);
+                        animationTool.setAnimationType(RIA_ZOOM_OUT)
+                                .duration(100)
+                                .repeat(0)
+                                .interpolate(new AccelerateInterpolator())
+                                .playOn(ivRiaZoomTop);
+                    }
+                    break;
             }
         }
-    }
-
-    private void leftAnimation() {
-
-        ivRiaZoomLeft.setVisibility(View.VISIBLE);
-        Animation leftAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.ria_circle_left_out);
-        ivRiaZoomLeft.setAnimation(leftAnimation);
-        leftAnimation.setAnimationListener(new Animation.AnimationListener() {
-            int i = 0;
-
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-
-                if (isBackPress) {
-                    animation.cancel();
-                } else {
-                    if (i == 0) {
-                        i = 1;
-                        animation = AnimationUtils.loadAnimation(getActivity(), R.anim.ria_circle_left_in);
-                    } else {
-                        i = 0;
-                        animation = AnimationUtils.loadAnimation(getActivity(), R.anim.ria_circle_left_out);
-                    }
-                    ivRiaZoomLeft.setAnimation(animation);
-                    animation.setAnimationListener(this);
-                    animation.start();
-                }
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-        animationSet.addAnimation(leftAnimation);
-//        leftAnimation.start();
-
-    }
-
-    private void rightAnimation() {
-
-        ivRiaZoomRight.setVisibility(View.VISIBLE);
-        Animation rightAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.ria_circle_right_in);
-        ivRiaZoomRight.setAnimation(rightAnimation);
-        rightAnimation.setAnimationListener(new Animation.AnimationListener() {
-            int i = 0;
-
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-
-                if (isBackPress) {
-                    animation.cancel();
-                } else {
-
-                    if (i == 0) {
-                        i = 1;
-                        animation = AnimationUtils.loadAnimation(getActivity(), R.anim.ria_circle_right_out);
-                    } else {
-                        i = 0;
-                        animation = AnimationUtils.loadAnimation(getActivity(), R.anim.ria_circle_right_in);
-                    }
-                    ivRiaZoomRight.setAnimation(animation);
-                    animation.setAnimationListener(this);
-                    animation.start();
-                }
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-        animationSet.addAnimation(rightAnimation);
-
-    }
-
-    private void topAnimation() {
-
-        ivRiaZoomTop.setVisibility(View.VISIBLE);
-        Animation topAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.ria_circle_top_in);
-        ivRiaZoomTop.setAnimation(topAnimation);
-        topAnimation.setAnimationListener(new Animation.AnimationListener() {
-            int i = 0;
-
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-
-                if (isBackPress) {
-                    animation.cancel();
-                } else {
-                    if (i == 0) {
-                        i = 1;
-                        animation = AnimationUtils.loadAnimation(getActivity(), R.anim.ria_circle_top_out);
-                    } else {
-                        i = 0;
-                        animation = AnimationUtils.loadAnimation(getActivity(), R.anim.ria_circle_top_in);
-                    }
-                    ivRiaZoomTop.setAnimation(animation);
-                    animation.setAnimationListener(this);
-                    animation.start();
-                }
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-//        topAnimation.start();
-        animationSet.addAnimation(topAnimation);
     }
 
     public void onDetach() {

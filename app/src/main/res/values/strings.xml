@@ -1186,4 +1186,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="bubble_for_whatsapp">Bubble for WhatsApp</string>
     <string name="whatsapp_bubble_close">You can disable this feature from your Boost app</string>
     <string name="sign_up_with_ria">Sign up with ria</string>
+    <string name="ria_chat_message">And I\'ll help you get\nyour website up\nand running\nin no time\nat all.</string>
+    <string name="ria_chat_header">Hi, I\'m Ria.</string>
 </resources>

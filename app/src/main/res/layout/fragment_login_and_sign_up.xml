@@ -2,32 +2,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary"
+    android:background="@color/white"
     tools:context="com.nowfloats.signup.UI.UI.LoginAndSignUpFragment">
+
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="vertical"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:orientation="vertical">
+
         <Button
             android:id="@+id/btn_login"
-            android:background="@drawable/login_signup_btn_bg"
-            android:layout_marginBottom="10dp"
-            android:text="@string/login"
-            android:textColor="@color/primary"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/login_signup_btn_bg"
+            android:text="@string/login"
+            android:textColor="@color/white" />
+
         <Button
             android:id="@+id/btn_signup"
-            android:background="@drawable/login_signup_btn_bg"
-            android:layout_marginTop="10dp"
-            android:text="@string/sign_up_with_ria"
-            android:textColor="@color/primary"
-            android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/login_signup_btn_bg"
+            android:text="@string/sign_up_with_ria"
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </FrameLayout>

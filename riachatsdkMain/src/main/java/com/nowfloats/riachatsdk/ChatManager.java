@@ -20,51 +20,50 @@ public class ChatManager {
 
     private static ChatManager sChatManager;
 
-    public static ChatManager getInstance(Activity context){
-        if(sChatManager==null){
+    public static ChatManager getInstance(Activity context) {
+        if (sChatManager == null) {
             sChatManager = new ChatManager(context);
         }
 
         return sChatManager;
     }
 
-    private ChatManager(Activity context){
+    private ChatManager(Activity context) {
         mContext = context;
     }
 
 
-    public void setBotImage(Bitmap bitmap){
+    public void setBotImage(Bitmap bitmap) {
         mChatConfig.botImage = bitmap;
     }
 
-    public void setBotName(String botName){
+    public void setBotName(String botName) {
         mChatConfig.botName = botName;
     }
 
-    public void setChatBgColor(String color){
+    public void setChatBgColor(String color) {
         mChatConfig.chatBgColor = color;
     }
 
-    public void setBotBubbleColor(String color){
+    public void setBotBubbleColor(String color) {
         mChatConfig.botBubbleColor = color;
     }
 
-    public void setUserBubbleColor(String color){
+    public void setUserBubbleColor(String color) {
         mChatConfig.userBubbleColor = color;
     }
 
-    public void setChatTextColor(String color){
+    public void setChatTextColor(String color) {
         mChatConfig.chatTextColor = color;
     }
 
-    public void startChat(){
+    public void startChat() {
         Intent i = new Intent(mContext, ChatViewActivity.class);
         i.putExtra(Constants.PARCEL_NAME, mChatConfig);
         mContext.startActivity(i);
-        mContext.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
-    public void endChat(){
+    public void endChat() {
         mChatConfig = null;
         mContext = null;
         sChatManager = null;

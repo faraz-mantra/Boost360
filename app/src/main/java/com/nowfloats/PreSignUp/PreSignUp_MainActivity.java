@@ -35,8 +35,6 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.nowfloats.Login.Login_MainActivity;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.riachatsdk.ChatManager;
-import com.nowfloats.signup.UI.API.API_Layer;
 import com.nowfloats.signup.UI.API.LoadCountryData;
 import com.nowfloats.signup.UI.Model.Facebook_Event;
 import com.nowfloats.signup.UI.Model.LocationProvider;
@@ -139,10 +137,10 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
                 Intent signUpIntent = new Intent(PreSignUp_MainActivity.this, PreSignUpActivity.class);
                 startActivity(signUpIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
-                /*Intent i = new Intent(PreSignUp_MainActivity.this, RiaChatInitActivity.class);
+                Intent i = new Intent(PreSignUp_MainActivity.this, RiaChatInitActivity.class);
                 startActivity(i);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
-                ChatManager.getInstance(PreSignUp_MainActivity.this).startChat();
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                ChatManager.getInstance(PreSignUp_MainActivity.this).startChat();
             }
         });
 

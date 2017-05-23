@@ -253,7 +253,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                         Toast.makeText(Create_Message_Activity.this, "Quikr Enabled", Toast.LENGTH_SHORT).show();
                     }
                 /*Animation anim = AnimationUtils.loadAnimation(Create_Message_Activity.this,R.anim.slide_up_slow);
-                Animation anim2 = AnimationUtils.loadAnimation(Create_Message_Activity.this,R.anim.slide_down_slow);
+                Animation anim2 = AnimationUtils.loadAnimation(Create_Message_Activity.this,R.anim.slide_out_up);
                 title_card.setAnimation(anim);
                 message_card.setAnimation(anim2);
                 title_card.setVisibility(View.VISIBLE);

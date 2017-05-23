@@ -2,7 +2,6 @@ package com.nowfloats.signup.UI.UI;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -29,10 +28,10 @@ public class LoginAndSignUpFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if(activity instanceof OnFragmentInteraction){
+        if (activity instanceof OnFragmentInteraction) {
             mFragmentInteraction = (OnFragmentInteraction) activity;
-        }else {
-            throw  new RuntimeException("Interface not implemented");
+        } else {
+            throw new RuntimeException("Interface not implemented");
         }
     }
 
@@ -44,7 +43,7 @@ public class LoginAndSignUpFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v =  inflater.inflate(R.layout.fragment_login_and_sign_up, container, false);
+        View v = inflater.inflate(R.layout.fragment_login_and_sign_up, container, false);
         btnLogin = (Button) v.findViewById(R.id.btn_login);
         btnSignUp = (Button) v.findViewById(R.id.btn_signup);
 
@@ -62,10 +61,8 @@ public class LoginAndSignUpFragment extends Fragment {
             }
         });
 
-        return  v;
+        return v;
     }
-
-
 
 
     @Override
@@ -73,7 +70,7 @@ public class LoginAndSignUpFragment extends Fragment {
         super.onDetach();
     }
 
-    public interface OnFragmentInteraction{
+    public interface OnFragmentInteraction {
         public void OnInteraction(String fragment);
     }
 }
