@@ -3,5 +3,5 @@
 <layoutAnimation xmlns:android="http://schemas.android.com/apk/res/android"
     android:delay="30%"
     android:animationOrder="reverse"
-    android:repeatMode="restart"
+    android:repeatMode="reverse"
     android:animation="@anim/scale_up"/>

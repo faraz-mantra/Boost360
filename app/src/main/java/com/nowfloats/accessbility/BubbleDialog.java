@@ -196,7 +196,7 @@ public class BubbleDialog extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
-        overridePendingTransition(R.anim.slide_in_up,R.anim.slide_out_down);
+        overridePendingTransition(R.anim.slide_in_up,R.anim.slide_out_up);
     }
 
     @Override
