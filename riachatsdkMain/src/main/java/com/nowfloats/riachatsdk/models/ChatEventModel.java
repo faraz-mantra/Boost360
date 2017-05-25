@@ -14,6 +14,7 @@ public class ChatEventModel {
     public String EventName;
     public String NodeId;
     public HashMap<String, String> EventData;
+    public HashMap<String, String> UserData;
 
     public ChatEventModel setEventCategory(String eventCategory) {
         EventCategory = eventCategory;
@@ -47,6 +48,11 @@ public class ChatEventModel {
 
     public ChatEventModel setEventData(HashMap<String, String> eventData) {
         EventData = eventData;
+        return this;
+    }
+
+    public ChatEventModel setUserData(HashMap<String, String> userData) {
+        UserData = userData;
         return this;
     }
 }

@@ -97,7 +97,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     Toolbar toolbar;
     RecyclerView rvChatData, rvButtonsContainer;
-    ProgressDialog pg;
     LinearLayout cvChatInput;
     AutoCompleteTextView etChatInput;
     ImageView ivSendMessage, ivScrollDown;
@@ -159,7 +158,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        overridePendingTransition(R.anim.slide_out_down, R.anim.slide_out_up);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_view);
 
@@ -175,9 +173,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.primary));
         }
 
-        pg = new ProgressDialog(this);
+        /*pg = new ProgressDialog(this);
         pg.setMessage(getString(R.string.please_wait));
-        pg.setCancelable(false);
+        pg.setCancelable(false);*/
 
         rvChatData = (RecyclerView) findViewById(R.id.rv_chat_data);
         rvButtonsContainer = (RecyclerView) findViewById(R.id.rv_reply_button_container);
@@ -228,6 +226,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         rvButtonsContainer.setVisibility(View.INVISIBLE);
                         cvChatInput.setVisibility(View.INVISIBLE);
                         showConfirmation(Constants.ConfirmationType.BIZ_NAME, chatText.toString().trim());
+                        ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                                mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), null,
+                                null, mCurrButton.getButtonType());
                         mAutoComplDataHash = null;
                         mButtonList.clear();
                         mButtonsAdapter.notifyDataSetChanged();
@@ -237,12 +238,12 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                             if(mAutoComplDataHash==null || mAutoComplDataHash.get(etChatInput.getText().toString().trim())==null) {
                                 mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
                                 ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
-                                        mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), mCurrVarName,
+                                        mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), mCurrVarName.replace("[~", "").replace("]", ""),
                                         etChatInput.getText().toString().trim(), mCurrButton.getButtonType());
                             }else {
                                 mDataMap.put("[~" + mCurrVarName + "]", mAutoComplDataHash.get(etChatInput.getText().toString().trim()));
                                 ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
-                                        mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), mCurrVarName,
+                                        mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), mCurrVarName.replace("[~", "").replace("]", ""),
                                         mAutoComplDataHash.get(etChatInput.getText().toString().trim()), mCurrButton.getButtonType());
                             }
                         }
@@ -395,6 +396,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        finish();
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.slide_out_right);
     }
 
@@ -492,12 +494,19 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     }
                     mDataMap.put("[~"+mCurrVarName+"]", str);
                     ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
-                            mCurrNodeId, button.getId(), button.getButtonText(), mCurrVarName,
+                            mCurrNodeId, button.getId(), button.getButtonText(), mCurrVarName.replace("[~", "").replace("]", ""),
                             button.getVariableValue(), button.getButtonType());
+                }else {
+                    ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                            mCurrNodeId, button.getId(), button.getButtonText(), null,
+                            null, button.getButtonType());
                 }
                 showNextNode(button.getNextNodeId());
                 break;
             case Constants.ButtonType.TYPE_GET_ADDR:
+                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                        mCurrNodeId, button.getId(), button.getButtonText(), null,
+                        null, button.getButtonType());
                 getUserAddress(button);
                 break;
             case Constants.ButtonType.TYPE_GET_IMAGE:
@@ -511,6 +520,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 break;
             case Constants.ButtonType.TYPE_DEEP_LINK:
                 handleDeepLink(button);
+                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                        mCurrNodeId, button.getId(), button.getButtonText(), null,
+                        null, button.getButtonType());
                 break;
 
         }
@@ -526,7 +538,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 //replyToRia(address + "\nCity: " + city + "\nCountry: " + country + "\nPin: " + pin, Constants.SectionType.TYPE_TEXT);
                 ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, btn.getId(), btn.getButtonText(), ChatLogger.EventStatus.COMPLETED.getValue(),
-                        "[~" + "STREET_ADDRESS" + "]", address, btn.getButtonType());
+                        "STREET_ADDRESS", address, btn.getButtonType());
                 mDataMap.put("[~" + "CITY" + "]", city);
                 mDataMap.put("[~" + "COUNTRY" + "]", country);
                 mDataMap.put("[~" + "STREET_ADDRESS" + "]", address);
@@ -868,8 +880,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
 
     private void fetchChatJson(){
-        if(null!=pg && !pg.isShowing())
-            pg.show();
+        /*if(null!=pg && !pg.isShowing())
+            pg.show();*/
         RestAdapter adapter = new RestAdapter.Builder().setEndpoint(Constants.SERVER_URL).build();
         ChatJsonInterface chatJsonInterface = adapter.create(ChatJsonInterface.class);
         Map<String, String> query = new HashMap<>();
@@ -886,7 +898,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         chatJsonInterface.getChatJson(query, new Callback<List<RiaCardModel>>() {
             @Override
             public void success(List<RiaCardModel> riaCardModels, Response response) {
-                pg.dismiss();
+                //pg.dismiss();
                 if(riaCardModels!=null && riaCardModels.size()>0){
                     initChat(riaCardModels);
                 }
@@ -894,7 +906,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
             @Override
             public void failure(RetrofitError error) {
-                pg.dismiss();
+                //pg.dismiss();
                 error.printStackTrace();
                 //(RiaOnBoardingActivity.this, getString(R.string.something_went_wrong));
             }
@@ -1047,14 +1059,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         if(mCurrVarName!=null){
             if(mAutoComplDataHash==null || mAutoComplDataHash.get(etChatInput.getText().toString().trim())==null) {
                 mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
-                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
-                        mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), mCurrVarName,
-                        etChatInput.getText().toString().trim(), mCurrButton.getButtonType());
             }else {
                 mDataMap.put("[~" + mCurrVarName + "]", mAutoComplDataHash.get(etChatInput.getText().toString().trim()));
-                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
-                        mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), mCurrVarName,
-                        mAutoComplDataHash.get(etChatInput.getText().toString().trim()), mCurrButton.getButtonType());
             }
         }
         showNextNode(mNextNodeId);

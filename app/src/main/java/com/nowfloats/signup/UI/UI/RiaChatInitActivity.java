@@ -45,7 +45,7 @@ public class RiaChatInitActivity extends AppCompatActivity
             case "chatactivity":
                 signUpWithRiaFragment = null;
                 finish();
-                overridePendingTransition(R.anim.zoom_exit, R.anim.slide_in_up);
+                overridePendingTransition(android.R.anim.fade_in, R.anim.slide_out_up);
                 ChatManager.getInstance(this).startChat();
                 break;
         }
