@@ -204,7 +204,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="bottom">
 
@@ -233,7 +233,12 @@
                     android:inputType="text"
                     android:textColor="#575757"/>
             </LinearLayout>
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:textColor="@color/gray_transparent"
+                android:text="@string/facebook_url_message"/>
         </LinearLayout>
 
     </LinearLayout>

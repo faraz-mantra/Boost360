@@ -19,8 +19,8 @@
 
         <LinearLayout
             android:id="@+id/mainContainer"
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="5dp"
             android:focusable="true"
@@ -55,14 +55,9 @@
                     android:inputType="text"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:hint="@string/username"
-
-                    />
-
+                    android:hint="@string/username" />
 
             </LinearLayout>
-
-
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -142,23 +137,29 @@
                 </FrameLayout>
             </android.support.v7.widget.CardView>
             <TextView
-                fontPath="Roboto-LightItalic.ttf"
+                fontPath="Roboto-Regular-.ttf"
                 android:id="@+id/forgotPwdTextView"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/forgot_your_password"
                 android:textSize="13sp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:layout_marginTop="20dp"
                 android:gravity="center_horizontal"
                 android:textColor="#969696"/>
             <TextView
                 fontPath="Roboto-Light.ttf"
                 android:id="@+id/term_and_policy"
-                android:layout_width="fill_parent"
+                android:textSize="12sp"
+                android:focusable="true"
+                android:layout_marginTop="20dp"
+                android:focusableInTouchMode="true"
+                android:lineSpacingExtra="2dp"
+                android:layout_width="328dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
-                android:text="term and condition"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
+                android:text="@string/Setting_terms_of_use"
                 android:textColor="#969696"/>
 
 

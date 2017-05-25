@@ -33,7 +33,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -113,7 +112,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
     ListView l;
     // static List<String> countries;
     HeaderText title;
-    Button verifyButton;
+    ImageView forwardButton;
     Bus bus;
     public static ProgressBar cityProgress;
     private static EditText businessNameEditText, businessCategoryEditText, countryEditText, emailEditText, phoneEditText;
@@ -187,7 +186,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
         countryEditText = (EditText) findViewById(R.id.editText_Country);
         emailEditText = (EditText) findViewById(R.id.editText_Email);
         phoneEditText = (EditText) findViewById(R.id.editText_Phone);
-        verifyButton = (Button) findViewById(R.id.verify_button);
+        forwardButton = (ImageView) findViewById(R.id.forward_button_signup_screen);
         countryPhoneCode = (TextView) findViewById(R.id.countrycode_signupscreen);
         cityProgress = (ProgressBar) findViewById(R.id.city_progressbar);
         cityProgress.setVisibility(View.GONE);
@@ -241,7 +240,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
         bizzCtry.setColorFilter(whiteLabelFilter);
 
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        verifyButton.setOnClickListener(this);
+        forwardButton.setOnClickListener(this);
 
         cityEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -257,50 +256,52 @@ public class PreSignUpActivity extends AppCompatActivity implements
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                String country_code = null;
-                if(Country_CodeMap!=null) {
-                    country_code = Country_CodeMap.get(countryEditText.getText().toString());
-                }
-                makeAutoCompleteFilter(country_code);
-
-                final PendingResult<AutocompletePredictionBuffer> result =
-                        Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, cityEditText.getText().toString().trim(),
-                                null, filter );
-
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        AutocompletePredictionBuffer a=result.await();
-                        //Log.v("ggg","ok");
-                        citys.clear();
-                        for (int i=0;i<a.getCount();i++){
-                            //Log.v("ggg",a.get(i).getFullText(new StyleSpan(Typeface.NORMAL)).toString()+" length "+citys.size());
-                            citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString());
-                        }
-
-                        a.release();
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                adapter = new ArrayAdapter<>(PreSignUpActivity.this,
-                                        android.R.layout.simple_dropdown_item_1line, citys);
-                                if (!isFinishing()) {
-                                    cityEditText.setAdapter(adapter);
-                                    adapter.notifyDataSetChanged();
-                                }
-                            }
-                        });
-                    }
-                }).start();
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 //ArrayList<String> citys=new ArrayList<String>();
                 //cityEditText.setAdapter(null);
+                try {
+                    String country_code = null;
+                    if (Country_CodeMap != null) {
+                        country_code = Country_CodeMap.get(countryEditText.getText().toString());
+                    }
+                    makeAutoCompleteFilter(country_code);
 
+                    final PendingResult<AutocompletePredictionBuffer> result =
+                            Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, cityEditText.getText().toString().trim(),
+                                    null, filter);
+
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            AutocompletePredictionBuffer a = result.await();
+                            //Log.v("ggg","ok");
+                            citys.clear();
+                            for (int i = 0; i < a.getCount(); i++) {
+                                //Log.v("ggg",a.get(i).getFullText(new StyleSpan(Typeface.NORMAL)).toString()+" length "+citys.size());
+                                citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString());
+                            }
+
+                            a.release();
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    adapter = new ArrayAdapter<>(PreSignUpActivity.this,
+                                            android.R.layout.simple_dropdown_item_1line, citys);
+                                    if (!isFinishing()) {
+                                        cityEditText.setAdapter(adapter);
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                }
+                            });
+                        }
+                    }).start();
+                }catch (Exception e){
+
+                }
             }
         });
 
@@ -668,7 +669,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             return true;
         }
-        else if (id == R.id.verify_button) {
+        else if (id == R.id.forward_button_signup_screen) {
 
             getEditTextData();
 
@@ -727,8 +728,8 @@ public class PreSignUpActivity extends AppCompatActivity implements
         if (value.equals("Success")) {
             // PreSignUpDialog.showDialog_WebSiteCreation(activity,"Valid Phone number. . .","Congrats . . .");
             //goToNextScreen = true ;
-
-            otpVerifyDialog(phoneEditText.getText().toString());
+            startWebsiteActivity();
+            //otpVerifyDialog(phoneEditText.getText().toString());
 
         } else if (value.equals("Failure")) {
             boolean wrapInScrollView = true;
@@ -865,11 +866,11 @@ public class PreSignUpActivity extends AppCompatActivity implements
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.verify_button) {
+        if (v.getId() == R.id.forward_button_signup_screen) {
             try {
                 if (getEditTextData()) {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(verifyButton.getWindowToken(), 0);
+                    imm.hideSoftInputFromWindow(forwardButton.getWindowToken(), 0);
                     validateEmail(PreSignUpActivity.this, emailEditText.getText().toString(), Validate_Email_API_KEY, bus);
                 }
             } catch (Exception e) {

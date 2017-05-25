@@ -476,11 +476,11 @@ public class Methods {
 
     public interface SmsApi{
 
-        @Headers({"X-Authy-API-Key:gXYHhTa0gJb6VlJxw0aEqWxHHrw5AEi5"})
+        @Headers({"X-Authy-API-Key:"+Constants.TWILIO_AUTHY_API_KEY})
         @POST("/protected/json/phones/verification/start")
         void sendSms(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
 
-        @Headers({"X-Authy-API-Key:gXYHhTa0gJb6VlJxw0aEqWxHHrw5AEi5"})
+        @Headers({"X-Authy-API-Key:"+Constants.TWILIO_AUTHY_API_KEY})
         @GET("/protected/json/phones/verification/check")
         void verifySmsCode(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
     }

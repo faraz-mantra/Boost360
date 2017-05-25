@@ -23,40 +23,44 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="31dp"
+        android:paddingTop="31dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
 
         <android.support.v7.widget.CardView
             android:id="@+id/websiteTitleCardView"
             android:layout_width="340dp"
-            android:layout_height="120dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             card_view:cardCornerRadius="1dp">
-
-            <TextView
-                android:id="@+id/domainNameTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/website_domain_name"
-                android:layout_marginBottom="18dp"
-                android:layout_gravity="center|bottom"
-                android:textSize="13sp"
-                fontPath="Roboto-Light.ttf"
-                android:textColor="#858585"/>
-
-            <EditText
-                android:id="@+id/websiteTitleTextView"
-                fontPath="Roboto-Light.ttf"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="41dp"
-                android:background="#00000000"
-                android:gravity="center_horizontal"
-                android:text="@string/website_name"
-                android:textColor="@color/primaryColor"
-                android:textSize="22sp" />
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <EditText
+                    android:id="@+id/websiteTitleTextView"
+                    fontPath="Roboto-Regular-.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="#00000000"
+                    android:inputType="textVisiblePassword"
+                    android:gravity="center_horizontal"
+                    android:text="@string/website_name"
+                    android:textColor="@color/primaryColor"
+                    android:textSize="22sp" />
+                <TextView
+                    android:id="@+id/domainNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/website_domain_name"
+                    android:layout_gravity="center|bottom"
+                    android:textSize="13sp"
+                    fontPath="Roboto-Light.ttf"
+                    android:textColor="#858585"/>
+            </LinearLayout>
 
         </android.support.v7.widget.CardView>
 
@@ -64,23 +68,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
             android:gravity="center">
 
             <ImageView
                 android:id="@+id/domainCheckStatus"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:scaleType="fitXY"/>
+                android:layout_marginEnd="5dp"
+                android:scaleType="fitXY"
+                android:layout_marginRight="5dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
                 android:text="@string/donot_like_it_tap_on_card"
                 android:textSize="12sp"
                 fontPath="Roboto-Light.ttf"
-                android:gravity="bottom"
                 android:textColor="#606060"
                 android:id="@+id/domainAvailable" />
 
@@ -93,12 +98,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp">
+            android:orientation="horizontal">
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/checkbox"
                 android:checked="true"
@@ -106,18 +110,23 @@
                 android:layout_height="wrap_content" />
             <TextView
                 android:id="@+id/term_policy_textview"
+                fontPath="Roboto-Light.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:lineSpacingExtra="2dp"
                 android:layout_marginLeft="8dp"
-                android:text="@string/by_pressing_above_button_to_agree"/>
+                android:layout_marginRight="8dp"
+                android:textColor="#969696"
+                android:text="@string/by_pressing_above_button_to_agree"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <Button
             android:id="@+id/createButton"
-            android:layout_marginTop="20dp"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             fontPath="Roboto-Medium.ttf"
             android:text="@string/create_website"

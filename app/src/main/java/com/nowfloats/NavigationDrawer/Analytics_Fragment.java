@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
@@ -626,7 +625,7 @@ public class Analytics_Fragment extends Fragment {
                 }
                 BarDataSet dataSet = new BarDataSet(dataEntry, null);
                 //dataSet.setDrawFilled(true);
-                dataSet.setColor(Color.parseColor("#ffb900"));
+                dataSet.setColor(ContextCompat.getColor(getActivity(),R.color.primary));
                 dataSet.setValueTextSize(10);
                 dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
                 dataSets.add(dataSet);

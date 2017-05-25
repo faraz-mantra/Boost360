@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
@@ -135,7 +137,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         final float scale = this.getResources().getDisplayMetrics().density;
-        termAndPolicyTextView.setText(Methods.fromHtml("By clicking Login, you agree to our <a href=\""+getString(R.string.settings_tou_url)+"\"><u>Terms and Conditions</u></a>  and that you have read our <a href=\""+getString(R.string.settings_privacy_url)+"\"><u>Privacy Policy</u></a>."));
+        termAndPolicyTextView.setText(Methods.fromHtml("By clicking Create My Website, you agree to our <a href=\""+getString(R.string.settings_tou_url)+"\"><u>Terms and Conditions</u></a>  and that you have read our <a href=\""+getString(R.string.settings_privacy_url)+"\"><u>Privacy Policy</u></a>."));
         termAndPolicyTextView.setMovementMethod(LinkMovementMethod.getInstance());
         termAndPolicyCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -143,6 +145,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                 if(isChecked){
                     createButton.setBackgroundColor(ContextCompat.getColor(WebSiteAddressActivity.this,R.color.primary_color));
                 }else{
+                    MixPanelController.track(MixPanelController.TERM_AND_POLICY_CHECKBOX,null);
                     createButton.setBackgroundColor(ContextCompat.getColor(WebSiteAddressActivity.this,R.color.gray_transparent));
                 }
             }
@@ -418,7 +421,8 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                     addressTagValid = false;
 
                     domainCheckStatus.setVisibility(View.VISIBLE);
-                    domainCheckStatus.setImageDrawable(getResources().getDrawable(R.drawable.domain_not_available));
+                    domainCheckStatus.clearColorFilter();
+                    domainCheckStatus.setImageDrawable(ContextCompat.getDrawable(WebSiteAddressActivity.this,R.drawable.domain_not_available));
                 } else if (mesg!=null && mesg
                         .contains("type java.lang.String cannot be converted to JSONObject")) {
                     mesg = mesg.replace(
@@ -438,7 +442,10 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                         domainCheck = false;
                         //domainCheckPD.setVisibility(View.GONE);
                         domainCheckStatus.setVisibility(View.VISIBLE);
-                        domainCheckStatus.setImageDrawable(getResources().getDrawable(R.drawable.domain_available));
+                        domainCheckStatus.setImageDrawable(ContextCompat.getDrawable(WebSiteAddressActivity.this,R.drawable.domain_available));
+                        PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(WebSiteAddressActivity.this,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+                        domainCheckStatus.setColorFilter(porterDuffColorFilter);
+
                     } else {
                         rTags.add(mesg);
                         aTag = mesg;
@@ -447,8 +454,10 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                         domainCheck = false;
                         // domainCheckPD.setVisibility(View.GONE);
                         domainCheckStatus.setVisibility(View.VISIBLE);
-                        domainCheckStatus
-                                .setImageDrawable(getResources().getDrawable(R.drawable.domain_not_available));
+                        domainCheckStatus.clearColorFilter();
+                        domainCheckStatus.setImageDrawable(ContextCompat.getDrawable(WebSiteAddressActivity.this,R.drawable.domain_not_available));
+                        //PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(WebSiteAddressActivity.this,R.color.red), PorterDuff.Mode.SRC_IN);
+
                     }
                 }
             }
@@ -498,6 +507,9 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                                     // domainCheckPD.setVisibility(View.GONE);
                                     domainCheckStatus.setVisibility(View.VISIBLE);
                                     domainCheckStatus.setImageDrawable(ContextCompat.getDrawable(WebSiteAddressActivity.this,R.drawable.domain_available));
+                                    PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(WebSiteAddressActivity.this,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+                                    domainCheckStatus.setColorFilter(porterDuffColorFilter);
+
                                 } else if (xTags.contains(ttag)) {
                                     // invalid tag
                                     mtag = ttag;
@@ -505,6 +517,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                                     domainCheck = false;
                                     //domainCheckPD.setVisibility(View.GONE);
                                     domainCheckStatus.setVisibility(View.VISIBLE);
+                                    domainCheckStatus.clearColorFilter();
                                     domainCheckStatus.setImageDrawable(ContextCompat.getDrawable(WebSiteAddressActivity.this,R.drawable.domain_not_available));
                                 } else {
                                     mtag = ttag;
@@ -516,6 +529,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                                 label.setText(getString(R.string.enter_valid_website_name));
                                 domainCheck = false;
                                 //domainCheckPD.setVisibility(View.GONE);
+                                domainCheckStatus.clearColorFilter();
                                 domainCheckStatus.setVisibility(View.VISIBLE);
                                 domainCheckStatus.setImageDrawable(ContextCompat.getDrawable(WebSiteAddressActivity.this,R.drawable.domain_not_available));
                             }

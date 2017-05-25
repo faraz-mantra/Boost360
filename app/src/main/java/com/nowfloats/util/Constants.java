@@ -447,7 +447,7 @@ public class Constants {
     public static boolean FbFeedPullAutoPublish;
     public static String FACEBOOK_URL = Specific.FACEBOOK_URL;
     public static String PACKAGE_NAME = Specific.PACKAGE_NAME;
-
+    public static final String TWILIO_AUTHY_API_KEY = Specific.TWILIO_AUTHY_API_KEY;
     public static final String FACEBOOK_PAGE_WITH_ID = Specific.FACEBOOK_PAGEID;
 
 }

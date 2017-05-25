@@ -44,8 +44,9 @@ public class MixPanelController {
 			FacebookActivity="FacebookAnalytics";
 	private static String KEY = "";
 	public static MixpanelAPI.People people = null;
+    public static String TERM_AND_POLICY_CHECKBOX = "termAndPolicyUnCheck";
 
-	public static void setMixPanel(Activity app, String key) {
+    public static void setMixPanel(Activity app, String key) {
 		KEY = key;
 		if (mixPanel != null)
 			mixPanel.flush();

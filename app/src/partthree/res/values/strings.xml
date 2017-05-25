@@ -15,6 +15,7 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+    <string name="facebook_url_message">If your Facebook page URL is facebook.com/kitsune; then your username is kitsune</string>
     <string name="title_activity_business_profile__home">Business Profile</string>
     <string name="title_activity_business__address_">Business Address</string>
     <string name="title_activity_contact__info_">Contact Information</string>

@@ -219,9 +219,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             smsPref.edit().putString(com.nfx.leadmessages.Constants.FP_ID, FPID).apply();
             getPermissions();
         }
-        /*if (getIntent().hasExtra("message")){
-            StorebizFloats = getIntent().getExtras().getParcelableArrayList("message");
-        }*/
 
         AppsFlyerLib.registerConversionListener(this, new AppsFlyerConversionListener() {
             public String campaign = "";
@@ -972,7 +969,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     showDialog1(DEMO_EXPIRE,-1);
                 }
                 break;
-            case 0:
+            /*case 0:
                 String fpCreatedDate = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON);
                 if(fpCreatedDate.contains("/Date")){
                     fpCreatedDate = fpCreatedDate.replace("/Date(", "").replace(")/", "");
@@ -997,7 +994,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     }
                 }
                 getAccountDetails();
-                break;
+                break;*/
         }
 
     }
@@ -1497,7 +1494,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,homeFragment, "homeFragment").commit();
                     if(callMethod){
-                        homeFragment.checkOverlay();
+                        homeFragment.checkOverlay(Home_Fragment_Tab.DrawOverLay.FromHome);
                     }
                     //   getSupportFragmentManager().beginTransaction().
                     //           replace(R.id.mainFrame, homeFragment).addToBackStack("Home").commit();
@@ -1910,16 +1907,5 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         DeepLinkPage(deepLinkUrl, isFromRia);
     }
 
- /*   public void wildFireStatus(){
-        RestAdapter adapter =new RestAdapter.Builder()
-                .setEndpoint("http://wmt.withfloats.com")
-                .build();
-        WildFire wildfire = adapter.create(WildFire.class);
-        wildfire.getStatus(Constants.clientId,);
-    }
-    public interface WildFire{
-        @GET("/testingapi/api/v1/account/accountstatus")
-        void getStatus(@Query("clientId") String clientId,@Query("accountId") String Callback<String> response);
-    }*/
-}
 
+}

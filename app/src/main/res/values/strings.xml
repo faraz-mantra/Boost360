@@ -838,11 +838,12 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="alternate_number1">Alternate Number 1</string>
     <string name="alternate_number2">Alternate Number 2</string>
     <string name="facebook_page_name">Facebook Page Name</string>
-    <string name="update_your_website_to_increase_discoverability">Update your website to increase its discoverability</string>
+    <string name="update_your_website_to_increase_discoverability">Update your website regularly to get more customers</string>
     <string name="update_logo">Update Logo</string>
     <string name="of">of</string>
     <string name="password">Password</string>
-    <string name="forgot_your_password">forgot password?</string>
+    <string name="facebook_url_message">If your Facebook page URL is facebook.com/nowfloats; then your username is nowfloats</string>
+    <string name="forgot_your_password">Forgot Password?</string>
     <string name="open_in_browser">OPEN IN BROWSER</string>
     <string name="auto_share_to_social_networks">Auto Share\nTo Social Networks</string>
     <string name="website_posts">Website\nPosts</string>
