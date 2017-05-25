@@ -93,7 +93,6 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_web_site_address);
         dataBase = new DataBase(WebSiteAddressActivity.this);
         createButton = (Button) findViewById(R.id.createButton);
-        termAndPolicyCheckbox = (AppCompatCheckBox) findViewById(R.id.checkbox);
         termAndPolicyTextView = (TextView) findViewById(R.id.term_policy_textview);
         webSiteTextView = (EditText) findViewById(R.id.websiteTitleTextView);
 
