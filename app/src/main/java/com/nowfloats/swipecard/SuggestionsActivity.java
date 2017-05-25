@@ -17,8 +17,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -27,10 +31,13 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.bubble.BubblesService;
+import com.nowfloats.swipecard.coachmarks.CoachMark;
+import com.nowfloats.swipecard.coachmarks.PunchHoleCoachMark;
 import com.nowfloats.swipecard.models.MessageDO;
 import com.nowfloats.swipecard.models.SMSSuggestions;
 import com.nowfloats.swipecard.models.SugUpdates;
@@ -51,6 +58,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.nowfloats.swipecard.SuggestionsActivity.TARGETVIEW.CALL;
+import static com.nowfloats.swipecard.SuggestionsActivity.TARGETVIEW.DELETE;
+import static com.nowfloats.swipecard.SuggestionsActivity.TARGETVIEW.MESSAGE;
+import static com.nowfloats.swipecard.SuggestionsActivity.TARGETVIEW.REMIND;
+import static com.nowfloats.swipecard.SuggestionsActivity.TARGETVIEW.SHARE;
+import static com.nowfloats.swipecard.SuggestionsActivity.TARGETVIEW.VIEW_MORE;
+
+
 public class SuggestionsActivity extends AppCompatActivity implements SwipeStack.SwipeStackListener {
 
     private SwipeStack mSwipeStack;
@@ -58,9 +73,11 @@ public class SuggestionsActivity extends AppCompatActivity implements SwipeStack
     private SuggestionsApi suggestionsApi;
     private Bus mBus;
     private UserSessionManager session;
-    private ImageView ivMail, ivCall, ivSms;
-    private Button btnShare, btnLater, btnBack, btnExit;
-    private LinearLayout llStackView, llProductsView;
+    private ImageView ivShare, ivCall, ivSms;
+    private Button btnBack, btnShare;
+    private ImageView ivDelete, ivViewMore, ivRemind;
+    private LinearLayout llStackView, llProductsView, llCoachMark, llSuggestions;
+    private FrameLayout flTopView;
     private GridView gvSuggestions;
     private SuggestionListAdapter suggestionListAdapter;
     private ProgressBar pbView;
@@ -88,16 +105,21 @@ public class SuggestionsActivity extends AppCompatActivity implements SwipeStack
     }
 
     private void initializeControls() {
-        setDisplayMetrcis(0.80f, 0.40f, true);
+        setDisplayMetrics(0.80f, 0.40f, true);
         mSwipeStack = (SwipeStack) findViewById(R.id.swipeStack);
-        ivMail = (ImageView) findViewById(R.id.ivMail);
+        ivShare = (ImageView) findViewById(R.id.ivShare);
         ivCall = (ImageView) findViewById(R.id.ivCall);
         ivSms = (ImageView) findViewById(R.id.ivSms);
-        btnShare = (Button) findViewById(R.id.btnShare);
-        btnLater = (Button) findViewById(R.id.btnLater);
+        ivViewMore = (ImageView) findViewById(R.id.ivViewMore);
+        ivRemind = (ImageView) findViewById(R.id.ivRemind);
+        ivDelete = (ImageView) findViewById(R.id.ivDelete);
         btnBack = (Button) findViewById(R.id.btnBack);
+        btnShare = (Button) findViewById(R.id.btnShare);
         llStackView = (LinearLayout) findViewById(R.id.llStackView);
+        flTopView = (FrameLayout) findViewById(R.id.flTopView);
         llProductsView = (LinearLayout) findViewById(R.id.llProductsView);
+        llCoachMark = (LinearLayout) findViewById(R.id.llCoachMark);
+        llSuggestions = (LinearLayout) findViewById(R.id.llSuggestions);
         gvSuggestions = (GridView) findViewById(R.id.gvSuggestions);
         pbView = (ProgressBar) findViewById(R.id.pbView);
         pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
@@ -112,7 +134,7 @@ public class SuggestionsActivity extends AppCompatActivity implements SwipeStack
         loadData();
     }
 
-    private void setDisplayMetrcis(float width, float height, boolean isCenter) {
+    private void setDisplayMetrics(float width, float height, boolean isCenter) {
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int screenHeight = (int) (metrics.heightPixels * height);
         int screenWidth = (int) (metrics.widthPixels * width);
@@ -125,10 +147,22 @@ public class SuggestionsActivity extends AppCompatActivity implements SwipeStack
     }
 
     private void setOnClickListeners() {
-        ivMail.setOnClickListener(new View.OnClickListener() {
+        ivShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prepareMessageForShare(SHARE_VIA.GMAIL);
+                SuggestionsDO mSuggestionsDO = mSwipeStackAdapter.getTopItem();
+                if (mSuggestionsDO.getUpdates().size() > 0) {
+                    sendBroadcast(new Intent(BubblesService.ACTION_GO_TO_RIGHT_WALL));
+                    llProductsView.setVisibility(View.VISIBLE);
+                    llStackView.setVisibility(View.GONE);
+                    llSuggestions.setVisibility(View.GONE);
+                    suggestionListAdapter.refreshDetails((ArrayList<SugUpdates>) mSuggestionsDO.getUpdates());
+                    gvSuggestions.setAdapter(suggestionListAdapter);
+                    setDisplayMetrics(1.0f, 0.80f, false);
+                } else {
+
+                }
+
             }
         });
 
@@ -147,11 +181,17 @@ public class SuggestionsActivity extends AppCompatActivity implements SwipeStack
             @Override
             public void onClick(View v) {
 
-                prepareMessageForShare(SHARE_VIA.SMS);
+                SuggestionsDO mSuggestionsDO = mSwipeStackAdapter.getTopItem();
+                Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                smsIntent.setType("vnd.android-dir/mms-sms");
+                smsIntent.putExtra("address", mSuggestionsDO.getValue());
+                smsIntent.putExtra("sms_body", "");
+                startActivity(smsIntent);
+//                prepareMessageForShare(SHARE_VIA.SMS);
             }
         });
 
-        btnShare.setOnClickListener(new View.OnClickListener() {
+        ivViewMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SuggestionsDO mSuggestionsDO = mSwipeStackAdapter.getTopItem();
@@ -159,23 +199,33 @@ public class SuggestionsActivity extends AppCompatActivity implements SwipeStack
 
                 if (mSuggestionsDO.getUpdates().size() > 0) {
                     sendBroadcast(new Intent(BubblesService.ACTION_GO_TO_RIGHT_WALL));
-                    llProductsView.setVisibility(View.VISIBLE);
+                    llSuggestions.setVisibility(View.VISIBLE);
                     llStackView.setVisibility(View.GONE);
-                    suggestionListAdapter.refreshDetails((ArrayList<SugUpdates>) mSuggestionsDO.getUpdates());
-                    gvSuggestions.setAdapter(suggestionListAdapter);
-                    setDisplayMetrcis(1.0f, 0.80f, false);
+                    setDisplayMetrics(0.80f, 0.40f, true);
+
+                    if (pref.getBoolean(Key_Preferences.IS_TO_SHOW_COACH_MARKS_STWO, true)) {
+                        coachMessage = getString(R.string.coach_mark_msg_view_call);
+                        targetView = ivCall;
+                        addHoleCoachMark(CALL);
+                    }
+
                 } else {
 
                 }
             }
         });
 
-        btnLater.setOnClickListener(new View.OnClickListener() {
+        ivRemind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SuggestionsDO mSuggestionsDO = mSwipeStackAdapter.getItem(mSwipeStack.getCurrentPosition());
-                mSuggestionsDO.setStatus(0);
                 mSwipeStack.swipeTopViewToRight();
+            }
+        });
+
+        ivDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSwipeStack.swipeTopViewToLeft();
             }
         });
 
@@ -200,9 +250,17 @@ public class SuggestionsActivity extends AppCompatActivity implements SwipeStack
             @Override
             public void onClick(View v) {
                 sendBroadcast(new Intent(BubblesService.ACTION_GO_TO_RIGHT_WALL));
-                setDisplayMetrcis(0.80f, 0.40f, true);
+                setDisplayMetrics(0.80f, 0.40f, true);
                 llProductsView.setVisibility(View.GONE);
+                llSuggestions.setVisibility(View.GONE);
                 llStackView.setVisibility(View.VISIBLE);
+            }
+        });
+
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                prepareMessageForShare(SHARE_VIA.GMAIL);
             }
         });
 
@@ -298,7 +356,8 @@ public class SuggestionsActivity extends AppCompatActivity implements SwipeStack
     private void loadData() {
 
         HashMap<String, String> offersParam = new HashMap<>();
-        offersParam.put("fpId", session.getFPID());
+//        offersParam.put("fpId", session.getFPID());
+        offersParam.put("fpId", "579b35949ec66a0820e9c1cd");
         suggestionsApi.getMessages(offersParam);
     }
 
@@ -309,10 +368,118 @@ public class SuggestionsActivity extends AppCompatActivity implements SwipeStack
         if (suggestions != null && suggestions.getSuggestion() != null
                 && suggestions.getSuggestion().size() > 0) {
             mSwipeStackAdapter.refresh(suggestions.getSuggestion());
+            llStackView.setVisibility(View.VISIBLE);
+
+            if (pref.getBoolean(Key_Preferences.IS_TO_SHOW_COACH_MARKS_SONE, true))
+                addCoachMarks();
         } else {
             Methods.showSnackBarNegative(SuggestionsActivity.this, getString(R.string.no_info_avail));
             finish();
         }
+    }
+
+
+    private void addCoachMarks() {
+
+        llCoachMark.setVisibility(View.VISIBLE);
+        View view = LayoutInflater.from(SuggestionsActivity.this)
+                .inflate(R.layout.coach_mark_swipe_view, llCoachMark);
+
+        AnimationSet animationSet = new AnimationSet(true);
+
+        Animation rightAnimation = AnimationUtils.loadAnimation(SuggestionsActivity.this, R.anim.slide_coach_mark_right);
+        Animation leftAnimation = AnimationUtils.loadAnimation(SuggestionsActivity.this, R.anim.slide_coach_mark_left);
+        animationSet.addAnimation(rightAnimation);
+        animationSet.addAnimation(leftAnimation);
+
+        llCoachMark.findViewById(R.id.ivRight).setAnimation(rightAnimation);
+        llCoachMark.findViewById(R.id.ivLeft).setAnimation(leftAnimation);
+        animationSet.start();
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                llCoachMark.removeAllViews();
+                llCoachMark.setVisibility(View.GONE);
+                coachMessage = getString(R.string.coach_mark_msg_delete);
+                targetView = ivDelete;
+
+                addHoleCoachMark(DELETE);
+
+            }
+        });
+    }
+
+    private CoachMark mPunchHoleCoachMark;
+    private String coachMessage = "";
+    private View targetView;
+
+    enum TARGETVIEW {
+        DELETE,
+        REMIND,
+        VIEW_MORE,
+        CALL,
+        MESSAGE,
+        SHARE
+    }
+
+    private void addHoleCoachMark(final TARGETVIEW targetview) {
+
+        RelativeLayout punchHoleContent = (RelativeLayout) LayoutInflater.from(SuggestionsActivity.this).
+                inflate(R.layout.sample_customised_punchhole_content, null);
+
+        mPunchHoleCoachMark = new PunchHoleCoachMark.PunchHoleCoachMarkBuilder(
+                SuggestionsActivity.this, flTopView, punchHoleContent)
+                .setTargetView(targetView)
+                .setTimeout(0)
+                .build();
+
+        ((TextView) punchHoleContent.findViewById(R.id.tvContent))
+                .setText(coachMessage);
+        punchHoleContent.findViewById(R.id.btnClose)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        mPunchHoleCoachMark.dismiss();
+                        switch (targetview) {
+                            case DELETE:
+                                coachMessage = getString(R.string.coach_mark_msg_view_more);
+                                targetView = ivViewMore;
+                                addHoleCoachMark(VIEW_MORE);
+                                break;
+                            case VIEW_MORE:
+                                coachMessage = getString(R.string.coach_mark_msg_remind);
+                                targetView = ivRemind;
+                                addHoleCoachMark(REMIND);
+                                break;
+                            case REMIND:
+                                pref.edit().putBoolean(Key_Preferences.IS_TO_SHOW_COACH_MARKS_SONE, false).apply();
+                                break;
+                            case CALL:
+                                coachMessage = getString(R.string.coach_mark_msg_view_message);
+                                targetView = ivSms;
+                                addHoleCoachMark(MESSAGE);
+                                break;
+                            case MESSAGE:
+                                coachMessage = getString(R.string.coach_mark_msg_view_share);
+                                targetView = ivShare;
+                                addHoleCoachMark(SHARE);
+                                break;
+                            case SHARE:
+                                pref.edit().putBoolean(Key_Preferences.IS_TO_SHOW_COACH_MARKS_STWO, false).apply();
+                                break;
+                        }
+                    }
+                });
+
+        getWindow().getDecorView().getRootView().post(new Runnable() {
+            @Override
+            public void run() {
+                mPunchHoleCoachMark.show();
+            }
+        });
+
     }
 
     @Override
@@ -333,7 +500,7 @@ public class SuggestionsActivity extends AppCompatActivity implements SwipeStack
 
     @Override
     public void onViewSwipedToRight(int position) {
-        mSwipeStackAdapter.getItem(position).setStatus(-1);
+        mSwipeStackAdapter.getItem(position).setStatus(0);
         processMessage(mSwipeStackAdapter.getItem(position));
     }
 
@@ -406,19 +573,21 @@ public class SuggestionsActivity extends AppCompatActivity implements SwipeStack
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.suggestions_card_list_item, parent, false);
                 viewHolder = new ViewHolder();
-                viewHolder.textViewCard = (TextView) convertView.findViewById(R.id.textViewCard);
+                viewHolder.tvMessage = (TextView) convertView.findViewById(R.id.tvMessage);
+                viewHolder.tvSource = (TextView) convertView.findViewById(R.id.tvSource);
                 convertView.setTag(viewHolder);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
 
 
-            viewHolder.textViewCard.setText(suggestions.getAction());
+            viewHolder.tvSource.setText(suggestions.getSource());
+            viewHolder.tvMessage.setText(getString(R.string.customer_has_sent_an_enquiry));
             return convertView;
         }
 
         private class ViewHolder {
-            TextView textViewCard;
+            TextView tvSource, tvMessage;
         }
 
     }

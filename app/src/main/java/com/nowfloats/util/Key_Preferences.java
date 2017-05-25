@@ -11,17 +11,19 @@ public class Key_Preferences {
     public static final String GET_EVENT_PACKAGE_NAME = "com.nowfloats.NavigationDrawer";
     public static final String SHOW_BUBBLE_TIME = "bubble_time";
     public static final String SHOW_BUBBLE_COACH_MARK = "bubble_coach_mark";
-    public static final String SHOW_WHATS_APP_DIALOG ="whatsapp_dialog" ;
-    public static final String QUIKR_GUIDELINES_ACTIVITY = "quikr_guidelines_activity" ;
+    public static final String SHOW_WHATS_APP_DIALOG = "whatsapp_dialog";
+    public static final String QUIKR_GUIDELINES_ACTIVITY = "quikr_guidelines_activity";
     public static final String POST_TO_QUIKR_SECOND_TIME = "quikr_post_second_time";
     public static final String QUIKR_DIALOG_DISABLED = "quikr_dialog_disabled";
     public static final String SHOW_QUIKR_ANALYTICS = "show_quikr_analytics";
     public static final String SHOW_WHATSAPP_CLOSE_DIALOG = "whatsApp_close";
     public static final String HAS_SUGGESTIONS = "HAS_SUGGESTIONS";
-    public static  String GET_FP_DETAILS_CITY = "GET_FP_DETAILS_CITY";
-    public static  String GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG";
-    public static  String IS_BOOST_BUBBLE_ENABLED = "IS_BOOST_BUBBLE_ENABLED";
-    public static  String GET_FP_DETAILS_ADDRESS ="GET_FP_DETAILS_ADDRESS" ;
+    public static final String IS_TO_SHOW_COACH_MARKS_SONE = "IS_TO_SHOW_COACH_MARKS_SONE";
+    public static final String IS_TO_SHOW_COACH_MARKS_STWO = "IS_TO_SHOW_COACH_MARKS_STWO";
+    public static String GET_FP_DETAILS_CITY = "GET_FP_DETAILS_CITY";
+    public static String GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG";
+    public static String IS_BOOST_BUBBLE_ENABLED = "IS_BOOST_BUBBLE_ENABLED";
+    public static String GET_FP_DETAILS_ADDRESS = "GET_FP_DETAILS_ADDRESS";
     public static String GET_FP_DETAILS_CATEGORY = "GET_FP_DETAILS_CATEGORY";
     public static String GET_FP_DETAILS_CONTACTNAME = "GET_FP_DETAILS_CONTACTNAME";
     public static String GET_FP_DETAILS_EMAIL = "GET_FP_DETAILS_EMAIL";
@@ -81,7 +83,7 @@ public class Key_Preferences {
 
     public static String GET_FP_DETAILS_WEBSITE = "GET_FP_DETAILS_WEBSITE";
 
-    public static String GET_FP_DETAILS_BG_IMAGE= "GET_FP_DETAILS_BG_IMG";
+    public static String GET_FP_DETAILS_BG_IMAGE = "GET_FP_DETAILS_BG_IMG";
     public static String GET_FP_DETAILS_APPLICATION_ID = "GET_FP_DETAILS_APPLICATION_ID";
 
     public static String GET_FP_DETAILS_PAYMENTSTATE = "GET_FP_DETAILS_PAYMENTSTATE";

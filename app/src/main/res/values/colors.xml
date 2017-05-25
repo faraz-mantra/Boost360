@@ -2,7 +2,6 @@
 <resources>
 
 
-
     <color name="whiteLable">#ffb900</color>
     <color name="expire_dialog_img_bg">#ff0010</color>
 
@@ -129,4 +128,7 @@
     <color name="group_color2">#F5F5F5</color>
     <color name="product_price">#6A6A6A</color>
     <color name="very_light_gray">#ededed</color>
+
+    <color name="transluscent_background">#BF000000</color>
+
 </resources>

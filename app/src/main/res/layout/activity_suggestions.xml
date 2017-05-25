@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/flTopView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:clipChildren="false"
+    android:background="@color/screen_bg"
     android:orientation="vertical">
 
     <ProgressBar
@@ -14,14 +14,15 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:theme="@style/CircularProgress" />
+        android:theme="@style/CircularProgress"
+        android:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/llStackView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <com.nowfloats.swipecard.SwipeStack
             android:id="@+id/swipeStack"
@@ -30,53 +31,93 @@
             android:layout_weight="1"
             android:padding="@dimen/margin_10"
             app:stack_rotation="10"
-            app:stack_size="3" />
+            app:stack_size="10" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@color/primary"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btnLater"
-                fontPath="Roboto-Regular.ttf"
+            <ImageView
+                android:id="@+id/ivDelete"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@color/primary_color"
-                android:elevation="5dp"
-                android:padding="@dimen/margin_10"
-                android:text="@string/later"
-                android:textAllCaps="false"
-                android:textColor="@drawable/yellow_btn_hover_text_color"
-                android:textSize="@dimen/medium_text_size"
-                android:visibility="visible"
-                tools:ignore="MissingPrefix" />
+                android:src="@drawable/ic_delete" />
 
-            <Button
-                android:id="@+id/btnShare"
-                fontPath="Roboto-Regular.ttf"
+            <ImageView
+                android:id="@+id/ivViewMore"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@color/primary_color_dark"
-                android:elevation="5dp"
-                android:padding="@dimen/margin_10"
-                android:text="@string/share"
-                android:textAllCaps="false"
-                android:textColor="@drawable/yellow_btn_hover_text_color"
-                android:textSize="@dimen/medium_text_size"
-                android:visibility="visible"
-                tools:ignore="MissingPrefix" />
+                android:src="@drawable/ic_more" />
+
+
+            <ImageView
+                android:id="@+id/ivRemind"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/ic_remind" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llSuggestions"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvEnquiry"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="@dimen/margin_20"
+            android:text="The Enquiry Says"
+            android:textColor="@color/black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@color/primary"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:id="@+id/ivCall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_call_black_24dp" />
+
+            <ImageView
+                android:id="@+id/ivSms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/sms_bg" />
+
+            <ImageView
+                android:id="@+id/ivShare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_share" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/llProductsView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -89,50 +130,12 @@
             android:stretchMode="columnWidth"></GridView>
 
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cvShare"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_10"
-            android:layout_marginLeft="@dimen/margin_10"
-            android:layout_marginRight="@dimen/margin_10"
-            android:layout_marginTop="@dimen/margin_20"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/ivMail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/email_bg" />
-
-                <ImageView
-                    android:id="@+id/ivCall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_call_black_24dp" />
-
-                <ImageView
-                    android:id="@+id/ivSms"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/sms_bg" />
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:orientation="horizontal">
+
 
             <Button
                 android:id="@+id/btnBack"
@@ -152,7 +155,7 @@
                 tools:ignore="MissingPrefix" />
 
             <Button
-                android:id="@+id/btnExit"
+                android:id="@+id/btnShare"
                 fontPath="Roboto-Regular.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -161,7 +164,7 @@
                 android:background="@color/primary_color_dark"
                 android:elevation="5dp"
                 android:padding="@dimen/margin_10"
-                android:text="Exit"
+                android:text="Share"
                 android:textAllCaps="false"
                 android:textColor="@drawable/yellow_btn_hover_text_color"
                 android:textSize="@dimen/medium_text_size"
@@ -169,4 +172,13 @@
                 tools:ignore="MissingPrefix" />
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llCoachMark"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+    </LinearLayout>
+</FrameLayout>

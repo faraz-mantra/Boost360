@@ -13,8 +13,19 @@ public class SuggestionsDO {
     private String fpId;
     private String messageId;
     private String type;
+    private String source;
     private String value;
-    private int status=-1;
+    private int status = -1;
+    private List<SugProducts> products = null;
+    private List<SugUpdates> updates = null;
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
 
     public String getType() {
         return type;
@@ -39,9 +50,6 @@ public class SuggestionsDO {
     public void setStatus(int status) {
         this.status = status;
     }
-
-    private List<SugProducts> products = null;
-    private List<SugUpdates> updates = null;
 
     public String getAction() {
         return Action;

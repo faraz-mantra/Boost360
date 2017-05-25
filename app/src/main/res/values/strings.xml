@@ -71,6 +71,7 @@
     <string name="title_activity_image__gallery__main">Image Gallery</string>
     <string name="title_activity_home__main">Home_MainActivity</string>
     <string name="home">Home</string>
+    <string name="customer_has_sent_an_enquiry">Customer has sent an enquiry</string>
     <string name="title_activity_create__message_">Post an Update</string>
     <string name="side_panel_row_one">Dashboard</string>
     <string name="side_panel_row_two">Profile</string>
@@ -1194,5 +1195,11 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="downloading">File downloading&#8230;</string>
     <string name="play_with_underline" translatable="false"><u>PLAY</u></string>
     <string name="later">Later</string>
+    <string name="coach_mark_msg_delete">Click on highlighted view to delete</string>
+    <string name="coach_mark_msg_remind">Click on highlighted view to remind</string>
+    <string name="coach_mark_msg_view_more">Click on highlighted view to see more details</string>
+    <string name="coach_mark_msg_view_call">Click on highlighted view to call lead</string>
+    <string name="coach_mark_msg_view_message">Click on highlighted view to message</string>
+    <string name="coach_mark_msg_view_share">We have suggestion for you\n SMS/EMAIL/WHATSAPP Share</string>
 
 </resources>

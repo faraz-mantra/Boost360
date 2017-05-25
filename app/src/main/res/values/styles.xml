@@ -219,4 +219,10 @@
     <style name="CircularProgress" parent="Theme.AppCompat.Light">
         <item name="colorAccent">@color/primary_color</item>
     </style>
+
+    <style name="CoachMarkAnimation">
+        <item name="@android:windowEnterAnimation">@anim/coach_mark_show</item>
+        <item name="@android:windowExitAnimation">@anim/coach_mark_hide</item>
+    </style>
+
 </resources>
