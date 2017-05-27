@@ -166,7 +166,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-                <data android:scheme="com.biz2.nowfloats" />
+                <data android:scheme="${applicationId}" />
             </intent-filter>
         </activity>
         <activity
@@ -269,16 +269,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
 
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="com.biz2.nowfloats"
-                    android:scheme="https" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity"

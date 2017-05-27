@@ -50,6 +50,9 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         Log.d("Message", message.toString());
         deepLinkUrl = message.get("url");
         //Log.v("ggg","notif "+deepLinkUrl);
+        if(deepLinkUrl == null || !deepLinkUrl.contains(Constants.PACKAGE_NAME)){
+            return;
+        }
         String title = message.get("title");
         Intent intent = null;
         if(!Util.isNullOrEmpty(deepLinkUrl)) {
