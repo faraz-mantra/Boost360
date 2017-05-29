@@ -488,6 +488,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="feching_search_detail">Fetching Search details&#8230;</string>
     <string name="week">week</string>
     <string name="visits">Visits</string>
+    <string name="unique_visitors">Unique Visitors</string>
     <string name="no_info_avail">No information available!</string>
     <string name="visit_this_week">visits this week</string>
     <string name="visit_this_month">visits this month</string>
@@ -524,7 +525,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="basic_info">Basic Information</string>
     <string name="business_name_more_than_3char">Business Name should be more than 3 letters</string>
     <string name="try_again">Try again&#8230;</string>
-    <string name="wait_while_loading_category">Wait While Loading Categories&#8230;</string>
+    <string name="wait_while_loading_category">Loading Categories&#8230;</string>
     <string name="select_category">Select a Category</string>
     <string name="both_password_not_matched">Both the passwords don\'t match.</string>
     <string name="min_6char_required">Min 6 characters are required.</string>
@@ -553,8 +554,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="enter_the_title">Enter the title</string>
     <string name="enter_the_description">Enter the description</string>
     <string name="page_successfully_created">Page Successfully created</string>
-    <string name="enter_different_title_try_again">Enter different Title and try again</string>
-    <string name="something_went_wrong_try_again">Something went wrong,Try again</string>
+    <string name="enter_different_title_try_again">Enter different Title and try again.</string>
+    <string name="something_went_wrong_try_again">Something went wrong, please try again.</string>
     <string name="page_updated">Page updated</string>
     <string name="enter_image_url">Enter Image Url</string>
     <string name="enter_hyperlink_url">Enter Hyperlink Url</string>
@@ -625,18 +626,22 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="please_enter_message">Please enter message</string>
     <string name="your_website_appearance_changed">Your Website Appearance is changed</string>
     <string name="can_not_change_appearance">Couldn\'t change Website Appearance</string>
+
     <string name="buy_in_capital">BUY</string>
     <string name="later_in_capital">LATER</string>
-    <string name="buy_light_house_plan">Buy Lighthouse plan to get all the features</string>
-    <string name="demo_plan_expired">Your demo plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
-    <string name="renew_in_capital">RENEW</string>
-    <string name="ignore_in_capital">IGNORE</string>
-    <string name="renew_wildfire_plan">Renew Wildfire plan</string>
-    <string name="continue_auto_promoting_on_google">Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.</string>
-    <string name="wildfire_will_expire">Wildfire plan will expire in</string>
-    <string name="days">days</string>
     <string name="renew_light_house_plan">Renew Lighthouse plan to get all the features</string>
     <string name="light_house_plan_expired_some_features_visible">Your Lighthouse plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others</string>
+    <string name="renew_wildfire_plan">Renew Wildfire plan</string>
+    <string name="continue_auto_promoting_on_google">Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.</string>
+    <string name="renew_in_capital">RENEW</string>
+    <string name="ignore_in_capital">IGNORE</string>
+    <string name="buy_light_house_plan">Buy Lighthouse plan to get all the features</string>
+    <string name="demo_plan_expired">Your demo plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
+    <string name="demo_plan_will_expire"><Data><![CDATA[Your Demo plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
+    <string name="light_house_pla_will_expire"><Data><![CDATA[Your Lighthouse plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
+
+    <string name="wildfire_will_expire">Wildfire plan will expire in</string>
+    <string name="days">days</string>
     <string name="share_with">Share with:</string>
     <string name="chat">Chat</string>
     <string name="site__meter">Site Meter</string>
@@ -704,16 +709,16 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="read_more">Read More</string>
     <string name="know_more">KNOW MORE</string>
     <string name="book_domain">Book Domain</string>
-    <string name="unique_visitors">Unique Visitors</string>
     <string name="domain_lookup">Domain LookUp</string>
     <string name="enter_domain_nmae_to_continue">Enter domain name to continue</string>
     <string name="domain_is_available">Domain is available..</string>
-    <string name="domain_not_available">Domain is not available..</string>
+    <string name="domain_not_available">Domain not available. Please try another name.</string>
     <string name="domain_booking_confirmation">Domain Booking Confirmation</string>
     <string name="domain_configuration">Domain Configuration</string>
     <string name="domain_booking_successful">Domain Booking Successful</string>
     <string name="domain_booking_process">Domain Booking In Process</string>
-    <string name="domain_booking_process_message">Your Domain will be activated within 24 hours.</string>
+    <string name="domain_booking_process_message">Your Domain will be activated within 48 hours.</string>
+    <string name="domain_booking_failed">Domain booking falied.</string>
     <string name="domain_booking_successful_message">Your Domain: \n %s \n has been registered to the DNS server and successfully mapped.</string>
     <string name="drop_us_contact"><![CDATA[You can drop us a line at <b><font color=#ffb900>ria@nowfloats.com</font></b> or call us at <b><font color=#ffb900>1860-123-1233 </font></b> if you\'d like to enable this feature.]]></string>
     <string name="hello_do_you_want_this">Hello Do you want to set this</string>
@@ -737,7 +742,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="pay">Pay</string>
     <string name="purchase_failed_try">Purchase failed. Please try again</string>
     <string name="success_pack_is_active">Success! Your pack is now activated.</string>
-    <string name="username">username</string>
+    <string name="username">Username</string>
     <string name="plans_in_use">PLANS IN USE</string>
     <string name="buy">Buy</string>
     <string name="plan_name">Plan Name</string>
@@ -833,11 +838,12 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="alternate_number1">Alternate Number 1</string>
     <string name="alternate_number2">Alternate Number 2</string>
     <string name="facebook_page_name">Facebook Page Name</string>
-    <string name="update_your_website_to_increase_discoverability">Update your website to increase its discoverability</string>
+    <string name="update_your_website_to_increase_discoverability">Update your website regularly to get more customers</string>
     <string name="update_logo">Update Logo</string>
     <string name="of">of</string>
-    <string name="password">password</string>
-    <string name="forgot_your_password">forgot your password</string>
+    <string name="password">Password</string>
+    <string name="facebook_url_message">If your Facebook page URL is facebook.com/nowfloats; then your username is nowfloats</string>
+    <string name="forgot_your_password">Forgot Password?</string>
     <string name="open_in_browser">OPEN IN BROWSER</string>
     <string name="auto_share_to_social_networks">Auto Share\nTo Social Networks</string>
     <string name="website_posts">Website\nPosts</string>
@@ -850,7 +856,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="business_contact">Business Contacts</string>
     <string name="donot_like_it_tap_on_card">Dont like it? Tap on card to change</string>
     <string name="create_website">CREATE MY WEBSITE</string>
-    <string name="by_pressing_above_button_to_agree">By Pressing above button,You agree to our</string>
+    <string name="by_pressing_above_button_to_agree">By clicking Login, you agree to our Terms and Conditions and that you have read our Privacy Policy</string>
     <string name="policy_terms">Policy and Terms</string>
     <string name="text">text</string>
     <string name="number_tocall_says">+919535576625 says &#8230;</string>
@@ -966,7 +972,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="offers_image_error">Choose an image for the offer</string>
     <string name="offer_uri">Offer Url:</string>
     <string name="offer_upload_failure">Error while posting your offer</string>
-    <string name="offer_image_upload_dialog_text">Uploading image for the offer...</string>
+    <string name="offer_image_upload_dialog_text">Uploading image for the offer&#8230;</string>
     <string name="suucessfull_offer_post">Your offer is successfully posted</string>
     <string name="error_offer_post">Error while uploading image for your offer</string>
     <string name="offers_image_size_error">Image Size is more than 4MB. Please choose an image of size less than 4MB</string>
@@ -981,7 +987,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="do_you_have_opc">Proceed with an Online Payment Code</string>
     <string name="opc_edit_text_hint">Enter the OPC</string>
     <string name="proceed">Proceed</string>
-    <string name="verify_opc">Verifying OPC...</string>
+    <string name="verify_opc">Verifying OPC&#8230;</string>
     <string name="error_verifying_opc">Error while verifying OPC</string>
     <string name="pay_now">Pay Now</string>
     <string name="opc_hint_text">Connect with our sales executives to get an Online Payment Code (OPC).</string>
@@ -1142,10 +1148,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="kitsune_pre_signup_text2">kitsune powered website</string>
     <string name="error_invoice">Error while creating invoice</string>
     <string name="login_status_error">Please Logout and Login again to continue</string>
-    <string name="kitsune_renew_dialog_title">Renew your plan to get all the features</string>
-    <string name="kitsune_renew_dialog_body">Your subscription has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
-    <string name="kitsune_demo_expire_dialog_title">Subscribe now get all the features</string>
-    <string name="kitsune_demo_expire_dialog_body">Your demo subscription has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
     <string name="opc_card_text">Pay through OPC</string>
     <string name="opc_main_text">If you have been assisted by a NowFloats Sales Executive, you can enter an Online Payment Code (OPC) here. It will auto-populate the details of your pro-forma invoice and enable you to subscribe to a NowFloats package online. Please connect with our customer support team to know more about it.</string>
     <string name="opc_title">Pay through OPC</string>
@@ -1185,4 +1187,17 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="required_overlay_permission">Give us this permission to see our new feature \"Boost Bubble\"</string>
     <string name="bubble_for_whatsapp">Bubble for WhatsApp</string>
     <string name="whatsapp_bubble_close">You can disable this feature from your Boost app</string>
+    <string name="missed_calls">MISSED CALLS</string>
+    <string name="received_call">RECEIVED CALLS</string>
+    <string name="call_tracker">Call Tracker</string>
+    <string name="data_is_empty">Calls are empty</string>
+    <string name="successfully_downloaded">Successfully Downloaded</string>
+    <string name="downloading">File downloading&#8230;</string>
+    <string name="play_with_underline" translatable="false"><u>PLAY</u></string>
+    <string name="vmn_message_text">This is displayed on your website and you can track all customer calls &amp; logs here.</string>
+    <string name="website_domain_name">.nowfloats.com</string>
+    <string name="faqs_url">https://nowfloats.com/faq</string>
+    <string name="email_id_to_request_plans">lead@nowfloats.com</string>
+    <string name="resend"><u>Resend</u></string>
+
 </resources>

@@ -20,9 +20,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +46,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.appsflyer.AppsFlyerConversionListener;
 import com.appsflyer.AppsFlyerLib;
@@ -57,6 +60,7 @@ import com.mixpanel.android.mpmetrics.GCMReceiver;
 import com.nfx.leadmessages.ReadMessages;
 import com.nineoldandroids.animation.Animator;
 import com.nowfloats.AccountDetails.AccountInfoActivity;
+import com.nowfloats.AccountDetails.Model.AccountDetailModel;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueries;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
@@ -91,7 +95,6 @@ import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.nowfloats.RiaFCM.RiaFirebaseMessagingService;
 import com.nowfloats.SiteAppearance.SiteAppearanceFragment;
 import com.nowfloats.Store.DomainLookup;
-import com.nowfloats.Store.Model.ActiveWidget;
 import com.nowfloats.Store.Model.StoreEvent;
 import com.nowfloats.Store.Model.StoreModel;
 import com.nowfloats.Store.Service.API_Service;
@@ -122,6 +125,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -131,9 +136,11 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+
 public class HomeActivity extends AppCompatActivity implements  SidePanelFragment.OnItemClickListener
         ,DeepLinkInterface,CustomPageDeleteInterface,Home_Main_Fragment.OnRenewPlanClickListener,
         CardAdapter_V3.Permission, OffersFragment.OnRenewPlanClickListener, Analytics_Fragment.RiaCardDeepLinkListener {
+
 
     private Toolbar toolbar;
     private SharedPreferences pref = null;
@@ -170,6 +177,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     private final int LIGHT_HOUSE_EXPIRE = 0;
     private final int WILD_FIRE_EXPIRE = 1;
     private final int DEMO_EXPIRE = 3;
+    private static final int DEMO_DAYS_LEFT = 4;
+    private static final int LIGHT_HOUSE_DAYS_LEFT = 5;
     private static final int WILD_FIRE_PURCHASE = 2;
     SharedPreferences.Editor prefsEditor;
     private boolean isShownExpireDialog = false;
@@ -179,6 +188,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     private String[] permission = new String[]{Manifest.permission.READ_SMS,Manifest.permission.RECEIVE_SMS
     ,Manifest.permission.READ_PHONE_STATE, Settings.ACTION_ACCESSIBILITY_SETTINGS};
     private final static int READ_MESSAGES_ID=221;
+    //private ArrayList<AccountDetailModel> accountDetailsModel = new ArrayList<>();
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -209,9 +219,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             smsPref.edit().putString(com.nfx.leadmessages.Constants.FP_ID, FPID).apply();
             getPermissions();
         }
-        /*if (getIntent().hasExtra("message")){
-            StorebizFloats = getIntent().getExtras().getParcelableArrayList("message");
-        }*/
 
         AppsFlyerLib.registerConversionListener(this, new AppsFlyerConversionListener() {
             public String campaign = "";
@@ -384,8 +391,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             }
         });
         //registerChat();
-        checkExpire();
-
+        //checkExpire();
+        checkExpiry1();
         Intent intent = getIntent();
         if(intent!=null && intent.getData()!=null){
             String action = intent.getAction();
@@ -721,7 +728,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         BoostLog.d(TAG, "In onDestroy");
         prefsEditor = pref.edit();
         prefsEditor.putBoolean("EXPIRE_DIALOG",false);
-        prefsEditor.commit();
+        prefsEditor.apply();
 
     }
 
@@ -782,7 +789,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
     }
     private void isAppUpdatedNeeded() {
-        if(session.get_FIRST_TIME() == true)
+        if(session.get_FIRST_TIME())
         {
             String curVersion;
             try {
@@ -944,6 +951,153 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         }
 
     }
+    private void checkExpiry1(){
+        if(Constants.PACKAGE_NAME.equals("com.kitsune.biz")){
+            return;
+        }
+        String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
+        String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
+        Calendar calendar = Calendar.getInstance();
+        Long currentTime = calendar.getTimeInMillis();
+
+        switch (Integer.parseInt(paymentState)){
+
+            case -1:
+                if(Integer.parseInt(paymentLevel) > 10){
+                    showDialog1(LIGHT_HOUSE_EXPIRE,-1);
+                }else{
+                    showDialog1(DEMO_EXPIRE,-1);
+                }
+                break;
+            /*case 0:
+                String fpCreatedDate = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON);
+                if(fpCreatedDate.contains("/Date")){
+                    fpCreatedDate = fpCreatedDate.replace("/Date(", "").replace(")/", "");
+                }
+                float days = ((currentTime-Long.valueOf(fpCreatedDate))/(float)(1000*60*60*24));
+
+                if( days <= 7){
+                    //seven days dialog ervery day
+                    showDialog1(DEMO_DAYS_LEFT,days);
+                }else if(days< 30){
+                    //once a week
+                    long prev = pref.getLong("expire_dialog",-1);
+                    if((currentTime-prev)/(60*60*24*1000) >= 7) {
+                        showDialog1(DEMO_DAYS_LEFT,days);
+                    }
+                }
+                break;
+            case 1:
+                if(!BuildConfig.APPLICATION_ID.equals("com.kitsune.biz")){
+                    if (checkExpiry() && !session.isSiteAppearanceShown()) {
+                        showSiteVisibilityDialog();
+                    }
+                }
+                getAccountDetails();
+                break;*/
+        }
+
+    }
+    private void showDialog1(int showDialog,float days){
+
+        String callUsButtonText,cancelButtonText,dialogTitle,dialogMessage;
+        int dialogImage,dialogImageBgColor;
+
+        switch (showDialog){
+            case LIGHT_HOUSE_EXPIRE:
+                callUsButtonText = getString(R.string.buy_in_capital);
+                cancelButtonText = getString(R.string.later_in_capital);
+                dialogTitle = getString(R.string.renew_light_house_plan);
+                dialogMessage = getString(R.string.light_house_plan_expired_some_features_visible);
+                dialogImage = R.drawable.androidexpiryxxxhdpi;
+                dialogImageBgColor = Color.parseColor("#ff0010");
+                break;
+            case WILD_FIRE_EXPIRE:
+                dialogTitle = getString(R.string.renew_wildfire_plan);
+                dialogMessage = getString(R.string.continue_auto_promoting_on_google);
+                callUsButtonText = getString(R.string.renew_in_capital);
+                cancelButtonText = getString(R.string.ignore_in_capital);
+                dialogImage = R.drawable.wild_fire_expire;
+                dialogImageBgColor = Color.parseColor("#ffffff");
+                break;
+            case DEMO_EXPIRE:
+                dialogImage = R.drawable.androidexpiryxxxhdpi;
+                dialogImageBgColor = Color.parseColor("#ff0010");
+                callUsButtonText = getString(R.string.buy_in_capital);
+                cancelButtonText = getString(R.string.later_in_capital);
+                dialogTitle = getString(R.string.buy_light_house_plan);
+                dialogMessage = getString(R.string.demo_plan_expired);
+                break;
+            case DEMO_DAYS_LEFT:
+                dialogImage = R.drawable.androidexpiryxxxhdpi;
+                dialogImageBgColor = Color.parseColor("#ff0010");
+                callUsButtonText = getString(R.string.buy_in_capital);
+                cancelButtonText = getString(R.string.later_in_capital);
+                dialogTitle = getString(R.string.buy_light_house_plan);
+                if(days<1){
+                    dialogMessage = String.format(getString(R.string.demo_plan_will_expire),"< 1");
+                }else{
+                    dialogMessage = String.format(getString(R.string.demo_plan_will_expire),(int)Math.floor(days)+" ");
+                }
+                break;
+            case LIGHT_HOUSE_DAYS_LEFT:
+                callUsButtonText = getString(R.string.buy_in_capital);
+                cancelButtonText = getString(R.string.later_in_capital);
+                dialogTitle = getString(R.string.renew_light_house_plan);
+
+                if(days<1){
+                    dialogMessage = String.format(getString(R.string.light_house_pla_will_expire),"< 1");
+                }else{
+                    dialogMessage = String.format(getString(R.string.light_house_pla_will_expire),(int)Math.floor(days)+" ");
+                }
+
+                dialogImage = R.drawable.androidexpiryxxxhdpi;
+                dialogImageBgColor = Color.parseColor("#ff0010");
+                break;
+            default:
+                return;
+        }
+        pref.edit().putLong("expire_dialog",Calendar.getInstance().getTimeInMillis()).apply();
+
+        MaterialDialog mExpireDailog = new MaterialDialog.Builder(this)
+                .customView(R.layout.pop_up_restrict_post_message, false)
+                .backgroundColorRes(R.color.white)
+                .positiveText(callUsButtonText)
+                .negativeText(cancelButtonText)
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                       /* prefsEditor = pref.edit();
+                        prefsEditor.putBoolean("EXPIRE_DIALOG", true);
+                        prefsEditor.putBoolean("IGNORE_CLICKED", true);
+                        prefsEditor.apply();*/
+                    }
+                })
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                        openStore();
+                        /*prefsEditor = pref.edit();
+                        prefsEditor.putBoolean("EXPIRE_DIALOG", true);
+                        prefsEditor.apply();*/
+                    }
+                })
+                .show();
+
+        View view = mExpireDailog.getCustomView();
+
+        roboto_md_60_212121 title = (roboto_md_60_212121) view.findViewById(R.id.textView1);
+        title.setText(dialogTitle);
+
+        ImageView expireImage = (ImageView) view.findViewById(R.id.img_warning);
+        expireImage.setBackgroundColor(dialogImageBgColor);
+        expireImage.setImageDrawable(ContextCompat.getDrawable(this,dialogImage));
+
+        roboto_lt_24_212121 message = (roboto_lt_24_212121) view.findViewById(R.id.pop_up_create_message_body);
+        message.setText(Methods.fromHtml(dialogMessage));
+    }
     private void checkExpire(){
         isExpiredCheck = pref.getBoolean("EXPIRE_DIALOG",false);
         if(!isExpiredCheck) {
@@ -984,6 +1138,111 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         }
     }
 
+    private void showFacebookReviewDialog(){
+        Calendar calendar = Calendar.getInstance();
+        final Long current = calendar.getTimeInMillis();
+        String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
+        long prev = pref.getLong(Key_Preferences.SHOW_FACEBOOK_REVIEW,-1);
+        if(!paymentState.equals("1") || (current-prev)/(1000*60*60*24)<=7){
+            return;
+        }
+        new MaterialDialog.Builder(this)
+                .title("Review")
+                .content("How are you liking our product? If you think, we have added value to your business, please rate us!")
+                .negativeText("Later")
+                .negativeColorRes(R.color.primary_color)
+                .positiveColorRes(R.color.primary_color)
+                .positiveText("Review")
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                        pref.edit().putLong(Key_Preferences.SHOW_FACEBOOK_REVIEW,current).apply();
+                    }
+                })
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                        MixPanelController.track(MixPanelController.FACEBOOK_REVIEW,null);
+                        Methods.likeUsFacebook(HomeActivity.this,"");
+                        pref.edit().putLong(Key_Preferences.SHOW_FACEBOOK_REVIEW,Long.MAX_VALUE).apply();
+                    }
+                }).show();
+
+    }
+    private void getAccountDetails(){
+        AccountInfoActivity.AccInfoInterface infoInterface = Constants.restAdapter.create(AccountInfoActivity.AccInfoInterface.class);
+        HashMap<String,String> values = new HashMap<>();
+        values.put("clientId", Constants.clientId);
+        values.put("fpId",session.getFPID());
+        infoInterface.getAccDetails(values,new Callback<ArrayList<AccountDetailModel>>() {
+            @Override
+            public void success(ArrayList<AccountDetailModel> accountDetailModels, Response response) {
+                int count =0;
+                if(accountDetailModels == null){
+                    return;
+                }
+                Collections.sort(accountDetailModels, new Comparator<AccountDetailModel>() {
+                    @Override
+                    public int compare(AccountDetailModel o1, AccountDetailModel o2) {
+                        return o2.ToBeActivatedOn.compareToIgnoreCase(o1.ToBeActivatedOn);
+                    }
+                });
+                Calendar calendar = Calendar.getInstance();
+                Long current = calendar.getTimeInMillis();
+                boolean showWildFire = true,flag = true;
+                long prevShown = pref.getLong("expire_dialog",-1);
+                for (AccountDetailModel model : accountDetailModels){
+                    if(model.purchasedPackageDetails.packType == 0) {
+                        count++;
+
+                        if(flag) {
+                            flag = false;
+                            String Sdate = model.ToBeActivatedOn;
+                            if (Sdate.contains("/Date")) {
+                                Sdate = Sdate.replace("/Date(", "").replace(")/", "");
+                            }
+                            long date = Long.valueOf(Sdate);
+                            calendar.setTimeInMillis(date);
+                            calendar.add(Calendar.MONTH, Integer.parseInt(model.totalMonthsValidity));
+
+                            float days = ((calendar.getTimeInMillis()-current) / (float)(1000 * 60 * 60 * 24));
+
+                            if(days<=0){
+                                showDialog1(LIGHT_HOUSE_EXPIRE, -1);
+                            } else if (days <= 7) {
+                                //seven days dialog ervery day
+                                showDialog1(LIGHT_HOUSE_DAYS_LEFT, days);
+                                showWildFire = false;
+                            } else if (days < 30) {
+                                //once a week
+                                if ((current - prevShown) / (60 * 60 * 24 * 1000) >= 7) {
+                                    showDialog1(LIGHT_HOUSE_DAYS_LEFT, days);
+                                    showWildFire = false;
+                                }
+                            }
+                        }
+                    }
+                }
+
+               /* if(showWildFire && (current-prevShown)/(60*60*24*1000)>=7) {
+                    showDialog1(WILD_FIRE_EXPIRE,-1);
+                }*/
+
+                if (count > 1) {
+                   // showFacebookReviewDialog();
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                error.printStackTrace();
+            }
+        });
+    }
+
     private void renewKitsune(int expiryType) {
         String dialogTitle = null;
         String dialogMessage = null;
@@ -994,7 +1253,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         int days;
         prefsEditor = pref.edit();
         prefsEditor.putBoolean("EXPIRE_DIALOG",true);
-        prefsEditor.commit();
+        prefsEditor.apply();
         boolean dialogShowFlag = true;
         switch (expiryType) {
             case LIGHT_HOUSE_EXPIRE:
@@ -1002,6 +1261,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 dialogMessage = getString(R.string.kitsune_renew_dialog_body);
                 dialogImage = R.drawable.androidexpiryxxxhdpi;
                 dialogImageBgColor = Color.parseColor("#ff0010");
+
                 break;
             case DEMO_EXPIRE:
                 dialogImage = R.drawable.androidexpiryxxxhdpi;
@@ -1031,7 +1291,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                             mExpireDailog.dismiss();
                             prefsEditor = pref.edit();
                             prefsEditor.putBoolean("EXPIRE_DIALOG", true);
-                            prefsEditor.commit();
+                            prefsEditor.apply();
                         }
 
                         @Override
@@ -1233,8 +1493,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     }
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,homeFragment, "homeFragment").commit();
-                    if(callMethod){
-                        homeFragment.checkOverlay();
+                    if(callMethod && Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")){
+
+                        homeFragment.checkOverlay(Home_Fragment_Tab.DrawOverLay.FromHome);
                     }
                     //   getSupportFragmentManager().beginTransaction().
                     //           replace(R.id.mainFrame, homeFragment).addToBackStack("Home").commit();
@@ -1404,8 +1665,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     public void onRenewPlanSelected() {
         prefsEditor = pref.edit();
         prefsEditor.putBoolean("EXPIRE_DIALOG",false);
-        prefsEditor.commit();
-        checkExpire();
+        prefsEditor.apply();
+        //checkExpire();
     }
 
     private void openStore(){
@@ -1415,7 +1676,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         try {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             Bundle bundle = new Bundle();
-            bundle.putBoolean(StoreFragmentTab.IS_FROM_WILD_FIRE_MINI, true);
+            bundle.putBoolean(StoreFragmentTab.IS_FROM_WILD_FIRE_MINI, false);
             storeFragment.setArguments(bundle);
             ft.replace(R.id.mainFrame, storeFragment)
                     .commit();
@@ -1465,7 +1726,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 }else{
                     return;
                 }
-                renewPlanDialog(WILD_FIRE_EXPIRE);
+                //renewPlanDialog(WILD_FIRE_EXPIRE);
                 //showWildFire();
                 return;
             }
@@ -1647,16 +1908,5 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         DeepLinkPage(deepLinkUrl, isFromRia);
     }
 
- /*   public void wildFireStatus(){
-        RestAdapter adapter =new RestAdapter.Builder()
-                .setEndpoint("http://wmt.withfloats.com")
-                .build();
-        WildFire wildfire = adapter.create(WildFire.class);
-        wildfire.getStatus(Constants.clientId,);
-    }
-    public interface WildFire{
-        @GET("/testingapi/api/v1/account/accountstatus")
-        void getStatus(@Query("clientId") String clientId,@Query("accountId") String Callback<String> response);
-    }*/
-}
 
+}

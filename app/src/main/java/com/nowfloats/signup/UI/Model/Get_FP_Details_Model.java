@@ -36,7 +36,6 @@ public class Get_FP_Details_Model {
     public String Pwd ;
     public String Ratings;
     public String SearchTags;
-
     public ArrayList<String> SecondaryImages;
     public ArrayList<String> SecondaryTileImages;
     public ArrayList<TimingDetailsModel> Timings ;

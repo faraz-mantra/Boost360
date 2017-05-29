@@ -61,7 +61,6 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
     private static final int PAGE_NO_FOUND = 404;
     private SharedPreferences pref = null;
     SharedPreferences.Editor prefsEditor;
-    private Activity activity;
 
     int size = 0;
     boolean[] checkedPages;
@@ -208,6 +207,8 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
                 .setmUserAccessTokenKey(accessToken)
                 .setmUserAccessTokenSecret("null")
                 .setmUserAccountId(id)
+                .setmAppAccessTokenKey("")
+                .setmAppAccessTokenSecret("")
                 .setmCallType(FBTYPE)
                 .setmName(userName);
         requestClient.connectNfx();
@@ -223,7 +224,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
 
         session.storeFacebookName(userName);
         session.storeFacebookAccessToken(accessToken);
-        DataBase dataBase = new DataBase(activity);
+        DataBase dataBase = new DataBase(getActivity());
         dataBase.updateFacebookNameandToken(userName, accessToken);
 
         prefsEditor.putString("fbId", Constants.FACEBOOK_USER_ID);
@@ -440,13 +441,15 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
                 .setmUserAccessTokenKey(pageAccessToken)
                 .setmUserAccessTokenSecret("null")
                 .setmUserAccountId(pageID)
+                .setmAppAccessTokenKey("")
+                .setmAppAccessTokenSecret("")
                 .setmCallType(FBPAGETYPE)
                 .setmName(pageName);
         requestClient.connectNfx();
         if(!isAdded())
             pd = ProgressDialog.show(mContext, "", getString(R.string.wait_while_subscribing));
 
-        DataBase dataBase = new DataBase(activity);
+        DataBase dataBase = new DataBase(getActivity());
         dataBase.updateFacebookPage(pageName, pageID, pageAccessToken);
 
         obj = new JSONObject();
@@ -536,7 +539,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
                 ((OpenOtherFacebookScreen)mContext).showFragment();
                 break;
             case PAGE_NO_FOUND:
-                Methods.materialDialog(activity, "Alert", getString(R.string.look_like_no_facebook_page));
+                Methods.materialDialog(getActivity(), "Alert", getString(R.string.look_like_no_facebook_page));
                 break;
             default:
                 break;

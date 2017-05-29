@@ -127,7 +127,8 @@ public class NotificationFragment extends Fragment{
                         if(alertModelsList.size() == 0){
                             emptylayout.setVisibility(View.VISIBLE);
                         }
-                    }else{
+                    }else
+                    {
                         int count = alertModelsList.size();
                         for ( int i = 0; i<alertModels.size() ;i++){
 
@@ -146,7 +147,9 @@ public class NotificationFragment extends Fragment{
                 public void failure(RetrofitError error) {
                     stop =false;
                     Log.i("ggg",""+error.getMessage());
-                    Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong_try_again));
+                    if(isAdded()) {
+                        Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+                    }
                     progress_layout.setVisibility(View.GONE);
                 }
             });

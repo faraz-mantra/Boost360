@@ -3,6 +3,7 @@ package com.nowfloats.Analytics_Screen.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ public class FetchFacebookDataFragment extends Fragment {
         TextView textView2 = (TextView) view.findViewById(R.id.facebook_analytics_connect_text2);
         ImageView image = (ImageView) view.findViewById(R.id.boost_app_icon);
         String socialType = null;
+        Log.v("ggg",mType+" ");
         if(SocialAnalytics.FACEBOOK.equals(mType)){
             image.setImageResource(R.drawable.boost_with_facebook);
             socialType = "Facebook Page";

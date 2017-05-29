@@ -35,13 +35,12 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         if (Hotline.isHotlineNotification(remoteMessage)) {
             Hotline.getInstance(this).handleFcmMessage(remoteMessage);
         } else {
-
             //Calling method to generate notification
             sendNotification(remoteMessage.getData());
             Constants.GCM_Msg = true;
             //Handle notifications with data payload for your app
         }
-
+        Log.v("Message","received bubble");
     }
 
     //This method is only generating push notification
@@ -51,6 +50,9 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         Log.d("Message", message.toString());
         deepLinkUrl = message.get("url");
         //Log.v("ggg","notif "+deepLinkUrl);
+        if(deepLinkUrl != null && !deepLinkUrl.contains(Constants.PACKAGE_NAME)){
+            return;
+        }
         String title = message.get("title");
         Intent intent = null;
         if(!Util.isNullOrEmpty(deepLinkUrl)) {
@@ -61,8 +63,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         }
         PendingIntent pendingIntent = null;
         if(intent!=null) {
-            pendingIntent = PendingIntent.getActivity(this, 0, intent,
-                    PendingIntent.FLAG_ONE_SHOT);
+            pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         }
 
         /*intent.putExtra("payload", payload);

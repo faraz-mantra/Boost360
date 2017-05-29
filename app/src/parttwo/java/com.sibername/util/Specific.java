@@ -41,4 +41,5 @@ public class Specific {
     public static String FACEBOOK_PAGEID = "fb://page/35829503050";
     public static final String TWITTER_URL = "https://twitter.com/sibername";
     public static final String TWITTER_ID_URL = "twitter://user?screen_name=sibername";
+    public static final String TWILIO_AUTHY_API_KEY = "gXYHhTa0gJb6VlJxw0aEqWxHHrw5AEi5";
 }
