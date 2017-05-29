@@ -349,24 +349,6 @@ public class PreSignUpActivity extends AppCompatActivity implements
             }
         });
 
-       /* cityEditText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String s = cityEditText.getText().toString().trim();
-                String city = s.split("\\,")[0];
-                String country = s.split("\\,")[1];
-                cityEditText.setText(city);
-                countryEditText.setText(country);
-                try {
-                    String country_code = Country_CodeMap.get(country.toString());
-                    String phone_code = Code_PhoneMap.get(country_code);
-                    countryPhoneCode.setText("+" + phone_code);
-                    sessionManager.storeFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE, phone_code);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });*/
 
         businessCategoryEditText.setOnClickListener(new View.OnClickListener() {
             @Override

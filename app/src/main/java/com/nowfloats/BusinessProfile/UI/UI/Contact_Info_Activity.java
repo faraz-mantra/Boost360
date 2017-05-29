@@ -305,7 +305,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_UP) {
-                    if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")||Constants.PACKAGE_NAME.equals("com.boostwebz")) {
+                    if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")||Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
                         showOtpDialog();
                     }else{
                         MaterialDialog dialog = dialog();

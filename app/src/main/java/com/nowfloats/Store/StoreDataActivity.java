@@ -163,7 +163,7 @@ public class StoreDataActivity extends AppCompatActivity {
 //                if (("91").equals(countryPhoneCode)){
                  if (/*true*//*product.ExternalApplicationDetails==null || product.ExternalApplicationDetails.equals("null")
                         || product.ExternalApplicationDetails.size()==0*/!sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).equalsIgnoreCase("India")
-                         ||Constants.PACKAGE_NAME.equalsIgnoreCase("com.boostwebz")||Constants.PACKAGE_NAME.equalsIgnoreCase("com.sibername")){
+                         ||Constants.PACKAGE_NAME.equalsIgnoreCase("com.digitalseoz")||Constants.PACKAGE_NAME.equalsIgnoreCase("com.sibername")){
                     materialProgress.dismiss();
                     ProductPrice.setText(getString(R.string.interest));
                     product_validity.setVisibility(View.GONE);

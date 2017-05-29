@@ -34,6 +34,7 @@ public class Constants {
     public static final String RIA_NODE_DATA = "riaNodeDatas" ;
     public static final int VISITS_TABLE = 0;
     public static final int VISITORS_TABLE = 1;
+    public static final String PDF_LOADER_URL = "https://drive.google.com/viewerng/viewer?embedded=true&url=";
     public static boolean LOGOUPLOADED = false;
     public static boolean IS_SUNDAY_CHECKED = false;
     public static boolean IS_MONDAY_CHECKED = false;
@@ -72,8 +73,7 @@ public class Constants {
     public static ArrayList<String> currencyArray = new ArrayList<>();
     public static Activity app = null;
     public static Activity home = null;
-
-    // public final static String NOW_FLOATS_API_URL		=	"https://api.nowfloatsdev.com";
+    //public final static String NOW_FLOATS_API_URL		=	"https://api.nowfloatsdev.com";
     public final static String NOW_FLOATS_API_URL = "https://api.withfloats.com";
     public final static String TEST_API_URL = "http://api.nowfloatsdev.com";
     public final static String BASE_IMAGE_URL = "https://content.withfloats.com";
@@ -101,6 +101,7 @@ public class Constants {
 
     //http://api.withfloats.com/Discover/v3/FloatingPoint/create
     public static String NFX_WITH_NOWFLOATS="https://nfx.withfloats.com";
+    public static String NFX_DEV_NOWFLOATS="http://nfx.nowfloatsdev.com";
     public static String createStoreV3 = NOW_FLOATS_API_URL + "/Discover/v3/FloatingPoint/create";
     public static String createStoreV2 = NOW_FLOATS_API_URL + "/Discover/v2/FloatingPoint/create";
     public static String loginUrl = NOW_FLOATS_API_URL + "/discover/v1/login/";

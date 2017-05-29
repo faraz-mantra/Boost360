@@ -25,7 +25,7 @@ public class Specific {
 
     public static String access_level = "20";
     public static final String CONTACT_EMAIL_ID = "support@digitalseoz.com";
-    public static final String FACEBOOK_API_KEY 	= "539836972828386";  // Boost
+    public static final String FACEBOOK_API_KEY 	= "298916947224187";  // Boost
 
 //    public static String TWITTER_TOK 				= "h5lB3rvjU66qOXHgrZK41Q";
 //    public static String TWITTER_SEC 				= "L0Bo08aevt2U1fLjuuYAMtANSAzWWi8voGuvbrdtcY4";
@@ -33,7 +33,7 @@ public class Specific {
     public static final String TWITTER_TOK 		= "VSfjudvcrSvfOesMgaHzlq8eG";
     public static final String TWITTER_SEC 		= "jM656pIF5dSjyNI09I8OrAl1hdZ20oaPbAaYtMqHAarA025Xy9";
     public static final String FACEBOOK_URL = "https://www.facebook.com/253526008455749";
-    public static final String PACKAGE_NAME = "com.boostwebz";
+    public static final String PACKAGE_NAME = "com.digitalseoz";
     public static final String FACEBOOK_PAGEID = "fb://page/253526008455749";
     public static final String TWITTER_URL = "https://twitter.com/digitalseoz3";
     public static final String TWITTER_ID_URL = "twitter://user?screen_name=digitalseoz3";

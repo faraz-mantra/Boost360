@@ -202,8 +202,10 @@ public class MonthFragment extends Fragment {
     }
    public void getWeeksAcordingToMonth(int month){
        Calendar currentCalendar = Calendar.getInstance();
+
        int end =-1;
        Calendar calendar = Calendar.getInstance();
+       calendar.setFirstDayOfWeek(Calendar.SUNDAY);
        calendar.set(Calendar.MONTH,month-1);
        calendar.set(Calendar.DATE,1);
        int currMonth = calendar.get(Calendar.MONTH);

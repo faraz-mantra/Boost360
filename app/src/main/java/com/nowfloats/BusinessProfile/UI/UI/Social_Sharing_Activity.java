@@ -70,7 +70,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import oauth.signpost.OAuth;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
@@ -250,6 +249,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                             .setmUserAccessTokenKey("")
                             .setmUserAccessTokenSecret("")
                             .setmUserAccountId("")
+                            .setmAppAccessTokenKey("")
+                            .setmAppAccessTokenSecret("")
                             .setmCallType(FB_PAGE_DEACTIVATION)
                             .setmName("");
                     requestClient.connectNfx();
@@ -278,6 +279,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                             .setmType("facebookusertimeline")
                             .setmUserAccessTokenKey("")
                             .setmUserAccessTokenSecret("")
+                            .setmAppAccessTokenKey("")
+                            .setmAppAccessTokenSecret("")
                             .setmUserAccountId("")
                             .setmCallType(FB_DECTIVATION)
                             .setmName("");
@@ -288,6 +291,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                             .setmType("facebookpage")
                             .setmUserAccessTokenKey("")
                             .setmUserAccessTokenSecret("")
+                            .setmAppAccessTokenKey("")
+                            .setmAppAccessTokenSecret("")
                             .setmUserAccountId("")
                             .setmCallType(FB_PAGE_DEACTIVATION)
                             .setmName("");
@@ -396,6 +401,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                             .setmType("twitter")
                             .setmUserAccessTokenKey("")
                             .setmUserAccessTokenSecret("")
+                            .setmAppAccessTokenKey("")
+                            .setmAppAccessTokenSecret("")
                             .setmUserAccountId(String.valueOf(""))
                             .setmCallType(TWITTER_DEACTIVATION)
                             .setmName("");
@@ -1056,6 +1063,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 .setmType("facebookpage")
                 .setmUserAccessTokenKey(pageAccessToken)
                 .setmUserAccessTokenSecret("null")
+                .setmAppAccessTokenKey("")
+                .setmAppAccessTokenSecret("")
                 .setmUserAccountId(pageID)
                 .setmCallType(FBPAGETYPE)
                 .setmName(pageName);
@@ -1208,6 +1217,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 .setmUserAccessTokenKey(accessToken)
                 .setmUserAccessTokenSecret("null")
                 .setmUserAccountId(id)
+                .setmAppAccessTokenKey("")
+                .setmAppAccessTokenSecret("")
                 .setmCallType(FBTYPE)
                 .setmName(userName);
         requestClient.connectNfx();
@@ -1263,8 +1274,6 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         Constants.FACEBOOK_PAGE_ACCESS_ID = pref.getString("fbPageAccessId", "");
         Constants.fbPageShareEnabled = pref.getBoolean("fbPageShareEnabled", false);
         Constants.twitterShareEnabled = mSharedPreferences.getBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false);
-        Constants.TWITTER_TOK = pref.getString(OAuth.OAUTH_TOKEN, "");
-        Constants.TWITTER_SEC = pref.getString(OAuth.OAUTH_TOKEN_SECRET, "");
         Constants.FbFeedPullAutoPublish = pref.getBoolean("FBFeedPullAutoPublish", false);
         Constants.fbPageFullUrl = pref.getString("fbPageFullUrl", "");
         Constants.fbFromWhichPage = pref.getString("fbFromWhichPage", "");
@@ -1414,6 +1423,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                         .setmUserAccessTokenKey(accessToken.getToken())
                         .setmUserAccessTokenSecret(accessToken.getTokenSecret())
                         .setmUserAccountId(String.valueOf(userID))
+                        .setmAppAccessTokenKey(Constants.TWITTER_TOK)
+                        .setmAppAccessTokenSecret(Constants.TWITTER_SEC)
                         .setmCallType(TWITTERTYPE)
                         .setmName(username);
                 requestClient.connectNfx();

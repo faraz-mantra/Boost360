@@ -142,7 +142,7 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
             progress.show();
     }
     private void hideDialog(){
-        if(!isFinishing()&& progress.isShowing())
+        if(progress.isShowing())
             progress.hide();
     }
 

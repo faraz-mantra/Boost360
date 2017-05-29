@@ -714,7 +714,9 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
                 } else {
                     path = getRealPathFromURI(picUri);
                     CameraBitmap = Util.getBitmap(path, activity);
-                    productImage.setImageBitmap(CameraBitmap);
+                    if(CameraBitmap != null) {
+                        productImage.setImageBitmap(CameraBitmap);
+                    }
                     if (replaceImage) replaceProductImage(product_data._id);
                 }
             }
@@ -848,7 +850,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
         try {
             // use standard intent to capture an image
             if (ActivityCompat.checkSelfPermission(Product_Detail_Activity_V45.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(Product_Detail_Activity_V45.this, Manifest.permission.CAMERA)!=
+                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(Product_Detail_Activity_V45.this, Manifest.permission.CAMERA)!=
                     PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(Product_Detail_Activity_V45.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                         media_req_id);

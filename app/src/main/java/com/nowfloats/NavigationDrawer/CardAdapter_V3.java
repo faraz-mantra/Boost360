@@ -75,18 +75,19 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View convertView = null;
+        View convertView;
         MyViewHolder.WelcomeViewHolder welcomeViewHolder = null ;
         MyViewHolder.Image_Text_ViewHolder image_text_viewHolder = null ;
 
         if(viewType == VIEW_TYPE_WELCOME)
         {
-              if (convertView == null ) {
-                  convertView = mInflater.inflate(R.layout.card_welcome, parent, false);
-              }
-              welcomeViewHolder = new MyViewHolder.WelcomeViewHolder(convertView);
+
+            convertView = mInflater.inflate(R.layout.card_welcome, parent, false);
+            welcomeViewHolder = new MyViewHolder.WelcomeViewHolder(convertView);
+
             if (Home_Main_Fragment.emptyMsgLayout!=null)
                 Home_Main_Fragment.emptyMsgLayout.setVisibility(View.GONE);
+
               return welcomeViewHolder ;
         }
         else

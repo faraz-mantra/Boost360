@@ -116,7 +116,7 @@ public class MixPanelController {
                 dateTime = format.format(date);
             store.put("$Created On", dateTime);
             MixPanelController.createUser(fpTAG.toUpperCase(), store);
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

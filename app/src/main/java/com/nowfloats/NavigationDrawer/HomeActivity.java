@@ -1493,7 +1493,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     }
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,homeFragment, "homeFragment").commit();
-                    if(callMethod){
+                    if(callMethod && Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")){
+
                         homeFragment.checkOverlay(Home_Fragment_Tab.DrawOverLay.FromHome);
                     }
                     //   getSupportFragmentManager().beginTransaction().

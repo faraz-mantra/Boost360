@@ -116,6 +116,7 @@ public class Site_Meter_Fragment extends Fragment {
 
     private void showLoader(final String message) {
 
+        if(!isAdded()) return;
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -818,8 +819,12 @@ public class Site_Meter_Fragment extends Fragment {
                     android.R.layout.simple_spinner_item, arrDomainExtensions);
             spDomainTypes.setAdapter(arrayAdapter);
             spDomainTypes.setSelection(0);
-            tvCompanyName.setText(get_fp_details_model.getTag());
+            if(get_fp_details_model == null) {
+                get_fp_details_model = new Get_FP_Details_Model();
+            }
+
             tvTag.setText(get_fp_details_model.getAliasTag());
+            tvCompanyName.setText(get_fp_details_model.getTag());
             tvAddress.setText(get_fp_details_model.getAddress());
             tvCity.setText(get_fp_details_model.getCity());
             if (!TextUtils.isEmpty(get_fp_details_model.getPinCode())) {

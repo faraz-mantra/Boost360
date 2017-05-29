@@ -156,7 +156,10 @@ public class Home_Fragment_Tab extends Fragment {
         alertCountTv = (TextView)view.findViewById(R.id.alert_count_textview);
         bubbleOverlay = (LinearLayout) view.findViewById(R.id.floating_bubble_overlay);
         alertCountTv.setVisibility(View.GONE);
-        getProducts();
+        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+            getProducts();
+        }
+
         viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -323,7 +326,7 @@ public class Home_Fragment_Tab extends Fragment {
 
     }
     public void checkOverlay(DrawOverLay from){
-        if(!isProductAvaiable){
+        if(!isProductAvaiable || !isAdded() || getActivity() == null){
             return;
         }else if(from == DrawOverLay.FromHome && activity!= null){
 
@@ -345,6 +348,7 @@ public class Home_Fragment_Tab extends Fragment {
             checkAccessibility = false;
             dialogForOverlayPath(from);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
             checkAccessibility = canDrawOverlaysUsingReflection(getActivity());
             if (!checkAccessibility) {
                 dialogForOverlayPath(from);
@@ -410,8 +414,11 @@ public class Home_Fragment_Tab extends Fragment {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
-
-                        requestOverlayPermission();
+                        try {
+                            requestOverlayPermission();
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
                         dialog.dismiss();
                     }
                 }).show();
@@ -423,11 +430,14 @@ public class Home_Fragment_Tab extends Fragment {
 
     private void requestOverlayPermission() {
 
-        if (android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null) {
+        if(getActivity() == null){
+             return;
+        }
+        if (android.os.Build.VERSION.SDK_INT >= 23) {
 
             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getActivity().getPackageName()));
             startActivityForResult(intent, PERM_REQUEST_CODE_DRAW_OVERLAYS);
-        } else if (getActivity() != null) {
+        } else {
 //            Intent intent = new Intent();
 //            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
 //            Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);

@@ -249,8 +249,11 @@ public class Analytics_Fragment extends Fragment {
         facebookLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-                int status = pref.getInt("fbPageStatus", 0);
+              /*  if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
+                    Toast.makeText(context, "This feature is coming soon", Toast.LENGTH_LONG).show();
+                } else {*/
+                    SharedPreferences pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+                    int status = pref.getInt("fbPageStatus", 0);
 
                 /*if(pref.getBoolean("fbPageShareEnabled",false) && status==1)
                 {
@@ -259,12 +262,12 @@ public class Analytics_Fragment extends Fragment {
                 }
                 else
                 {*/
-                //Log.v("ggg",pref.getBoolean("fbPageShareEnabled",false)+"frag_ana"+status);
-                Intent i = new Intent(getActivity(), SocialAnalytics.class);
-                i.putExtra("GetStatus", status);
-                startActivity(i);
+                    //Log.v("ggg",pref.getBoolean("fbPageShareEnabled",false)+"frag_ana"+status);
+                    Intent i = new Intent(getActivity(), SocialAnalytics.class);
+                    i.putExtra("GetStatus", status);
+                    startActivity(i);
 
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
         if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||

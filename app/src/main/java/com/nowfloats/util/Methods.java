@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.accessbility.DataAccessbilityServiceV4;
@@ -117,7 +118,12 @@ public class Methods {
         }*/
 
         facebookIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
-        context.startActivity(facebookIntent);
+        try {
+            context.startActivity(facebookIntent);
+        }catch (Exception e){
+            Toast.makeText(context, "unable to open facebook", Toast.LENGTH_SHORT).show();
+        }
+
     }
     public static boolean isAccessibilitySettingsOn(Context mContext) {
         int accessibilityEnabled = 0;

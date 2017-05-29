@@ -1,7 +1,5 @@
 package com.nowfloats.NFXApi;
 
-import android.util.Log;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
@@ -27,7 +25,9 @@ import java.util.Map;
 public class NfxRequestClient {
     private String mType;
     private String mUserAccessTokenKey;
+    private String mAppAccessTokenKey;
     private String mUserAccessTokenSecret;
+    private String mAppAccessTokenSecret;
     private String mUserAccountId;
     private String mFpId;
     private String mName;
@@ -39,8 +39,10 @@ public class NfxRequestClient {
      */
     private final String TYPE = "Type";
     private final String USERACCESSTOKENKEY = "UserAccessTokenKey";
+    private final String APPACCESSTOKENKEY = "AppAccessTokenKey";
     private final String USERACCOUNTNAME = "UserAccountName";
     private final String USERACCESSTOKENSECRET = "UserAccessTokenSecret";
+    private final String APPACCESSTOKENSECRET = "AppAccessTokenSecret";
     private final String USERACCOUNTID = "UserAccountId";
     private final String ACCESSTOKEN = "accessToken";
     private final String CLIENTID = "clientId";
@@ -69,12 +71,30 @@ public class NfxRequestClient {
         return this;
     }
 
+    public String getmAppAccessTokenKey() {
+        return mAppAccessTokenKey;
+    }
+
+    public NfxRequestClient setmAppAccessTokenKey(String mAppAccessTokenKey) {
+        this.mAppAccessTokenKey = mAppAccessTokenKey;
+        return this;
+    }
+
     public String getmType() {
         return mType;
     }
 
     public NfxRequestClient setmType(String mType) {
         this.mType = mType;
+        return this;
+    }
+
+    public String getmAppAccessTokenSecret() {
+        return mAppAccessTokenSecret;
+    }
+
+    public NfxRequestClient setmAppAccessTokenSecret(String mAppAccessTokenSecret) {
+        this.mAppAccessTokenSecret = mAppAccessTokenSecret;
         return this;
     }
 
@@ -86,6 +106,7 @@ public class NfxRequestClient {
         this.mUserAccessTokenSecret = mUserAccessTokenSecret;
         return this;
     }
+
 
     public String getmUserAccountId() {
         return mUserAccountId;
@@ -144,7 +165,6 @@ public class NfxRequestClient {
                 map.put("key","78234i249123102398");
                 map.put("pwd","JYUYTJH*(*&BKJ787686876bbbhl");
                 map.put("Content-Type","application/json");
-                Log.v("ggg","map");
                 return map;
             }
 
@@ -191,7 +211,6 @@ public class NfxRequestClient {
                 map.put("key","78234i249123102398");
                 map.put("pwd","JYUYTJH*(*&BKJ787686876bbbhl");
                 map.put("Content-Type","application/json");
-                Log.v("ggg","map");
                 return map;
             }
         };
@@ -204,7 +223,9 @@ public class NfxRequestClient {
             JSONObject internalParams = new JSONObject();
             internalParams.put(TYPE, getmType());
             internalParams.put(USERACCESSTOKENKEY,getmUserAccessTokenKey());
+            internalParams.put(APPACCESSTOKENKEY,getmAppAccessTokenKey());
             internalParams.put(USERACCESSTOKENSECRET, getmUserAccessTokenSecret());
+            internalParams.put(APPACCESSTOKENSECRET,getmAppAccessTokenSecret() );
             internalParams.put(USERACCOUNTID, getmUserAccountId());
             internalParams.put(USERACCOUNTNAME, getmName());
             JSONObject param = new JSONObject();

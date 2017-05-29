@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="twitter_consumer_key">4CiUg5gcIbvYre8XjGd8GsElV</string>
-    <string name="twitter_consumer_secret">4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9</string>
+    <string name="twitter_consumer_key">VSfjudvcrSvfOesMgaHzlq8eG</string>
+    <string name="twitter_consumer_secret">jM656pIF5dSjyNI09I8OrAl1hdZ20oaPbAaYtMqHAarA025Xy9</string>
     <string name="website_domain_name">.digitalseoz.com</string>
     <string name="package_name_aviary">com.thinksity.AviaryCdsProvider</string>
     <string name="app_name">Digitalseoz</string>
@@ -73,7 +73,8 @@
         <item>Week 6</item>
     </string-array>
 
-    <string name="facebook_app_id">539836972828386</string>
+    <string name="facebook_app_id">298916947224187</string>
+
     <string name="title_activity_image__gallery__main">Image Gallery</string>
     <string name="title_activity_home__main">Home_MainActivity</string>
     <string name="title_activity_card__full__view__main">Home</string>

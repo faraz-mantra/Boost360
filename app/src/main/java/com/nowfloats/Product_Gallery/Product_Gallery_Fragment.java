@@ -175,7 +175,10 @@ public class Product_Gallery_Fragment extends Fragment {
                     Methods.launchFromFragment(activity, view, intent);
                 } else {
 
-                    final ProductListModel productItemModel = (ProductListModel) view.getTag(R.string.key_details);
+                    ProductListModel productItemModel = (ProductListModel) view.getTag(R.string.key_details);
+                    if(productItemModel == null){
+                        return;
+                    }
                     if (isAnyProductSelected && !productItemModel.isProductSelected) {
                         Toast.makeText(activity, "You can select only one product", Toast.LENGTH_LONG).show();
                     } else {

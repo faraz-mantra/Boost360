@@ -147,7 +147,9 @@ public class NotificationFragment extends Fragment{
                 public void failure(RetrofitError error) {
                     stop =false;
                     Log.i("ggg",""+error.getMessage());
-                    Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong_try_again));
+                    if(isAdded()) {
+                        Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+                    }
                     progress_layout.setVisibility(View.GONE);
                 }
             });
