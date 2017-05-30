@@ -11,31 +11,19 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.nowfloats.Analytics_Screen.API.CallTrackerApis;
 import com.nowfloats.Analytics_Screen.model.VmnCallModel;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 /**
  * Created by Admin on 27-04-2017.
  */
 
-public class VmnCallCardsActivity extends AppCompatActivity implements View.OnClickListener{
+public class VmnCallCardsActivity extends AppCompatActivity implements View.OnClickListener,VmnDataSingleton.ConnectToVmnData {
 
     ArrayList<VmnCallModel> totalCalls = new ArrayList<>();
 
@@ -66,57 +54,10 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         viewCallLogCard = (CardView) findViewById(R.id.card_view_view_calllog);
 
         viewCallLogCard.setOnClickListener(this);
-
-        getVmnCalls();
-    }
-    private void getVmnCalls(){
         mProgressBar.setVisibility(View.VISIBLE);
-        String endDate =new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(new Date());
-        Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("clientId", Constants.clientId);
-        hashMap.put("fpid",sessionManager.getFPID());
-        hashMap.put("offset","0");
-        hashMap.put("startDate","2011-01-01");
-        hashMap.put("endDate",endDate);
-
-        CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
-        trackerApis.getLastCallInfo(hashMap, new Callback<ArrayList<VmnCallModel>>() {
-            @Override
-            public void success(ArrayList<VmnCallModel> vmnCallModels, Response response) {
-                mProgressBar.setVisibility(View.GONE);
-                String vNumber = "";
-                int missCount =0, receiveCount =0;
-                if(vmnCallModels == null || response.getStatus() != 200)
-                {
-                    Methods.showSnackBarNegative(VmnCallCardsActivity.this,getString(R.string.something_went_wrong_try_again));
-                    return;
-                }
-                totalCalls = vmnCallModels;
-                for (VmnCallModel model : vmnCallModels){
-                    if(vNumber.equals("")) {
-                        vNumber = model.getVirtualNumber();
-                    }
-                    if(model.getCallStatus().equalsIgnoreCase("MISSED")){
-                        missCount++;
-                    }
-                    else
-                    {
-                        receiveCount++;
-                    }
-                }
-                totalCount.setText(String.valueOf(totalCalls.size()));
-                missedCount.setText(String.valueOf(missCount));
-                receivedCount.setText(String.valueOf(receiveCount));
-                virtualNumber.setText(vNumber);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                mProgressBar.setVisibility(View.GONE);
-                Methods.showSnackBarNegative(VmnCallCardsActivity.this,getString(R.string.something_went_wrong_try_again));
-            }
-        });
+        VmnDataSingleton.getInstance().requestVmnData(VmnCallCardsActivity.this,sessionManager.getFPID());
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home){
@@ -142,10 +83,40 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
                     Methods.showSnackBarNegative(VmnCallCardsActivity.this,"You do not have call logs.");
                     return;
                 }
-                i.putExtra("calls",new Gson().toJson(totalCalls));
                 startActivity(i);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
+        }
+    }
+
+    @Override
+    public void onDataLoaded(ArrayList<VmnCallModel> vmnData) {
+        mProgressBar.setVisibility(View.GONE);
+        if(vmnData == null){
+            Methods.showSnackBarNegative(VmnCallCardsActivity.this,getString(R.string.something_went_wrong_try_again));
+        }else
+        {
+            String vNumber = "";
+            int missCount =0, receiveCount =0;
+
+            totalCalls = vmnData;
+            for (VmnCallModel model : vmnData)
+            {
+                if(vNumber.equals("")) {
+                    vNumber = model.getVirtualNumber();
+                }
+                if(model.getCallStatus().equalsIgnoreCase("MISSED")){
+                    missCount++;
+                }
+                else
+                {
+                    receiveCount++;
+                }
+            }
+            totalCount.setText(String.valueOf(totalCalls.size()));
+            missedCount.setText(String.valueOf(missCount));
+            receivedCount.setText(String.valueOf(receiveCount));
+            virtualNumber.setText(vNumber);
         }
     }
 }

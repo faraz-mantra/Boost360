@@ -97,7 +97,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
         createButton = (Button) findViewById(R.id.createButton);
         termAndPolicyTextView = (TextView) findViewById(R.id.term_policy_textview);
         webSiteTextView = (EditText) findViewById(R.id.websiteTitleTextView);
-
+        termAndPolicyCheckbox = (AppCompatCheckBox) findViewById(R.id.checkbox);
         webSiteCardView = (CardView) findViewById(R.id.websiteTitleCardView);
 
         session = new UserSessionManager(getApplicationContext(),WebSiteAddressActivity.this);
@@ -189,8 +189,9 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
 
                     //MixPanelController.track(EventKeysWL.WEBSITE_ADDRESS_SCREEN_EDIT_DOMAIN,null);
                     // getEditTextBundle();
-
-                    if(addressTagValid && termAndPolicyCheckbox.isChecked()){
+                    if(!termAndPolicyCheckbox.isChecked()) {
+                        Toast.makeText(WebSiteAddressActivity.this, "You must agree with the terms and conditions to proceed", Toast.LENGTH_LONG).show();
+                    }else if(addressTagValid){
                         MixPanelController.track("CreateMyWebsite", null);
                          createStore_retrofit(WebSiteAddressActivity.this,getJSONData(),bus);
                     }

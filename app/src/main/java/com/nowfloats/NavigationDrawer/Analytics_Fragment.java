@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.charts.BarChart;
@@ -49,6 +50,7 @@ import com.nowfloats.Analytics_Screen.SearchRankingActivity;
 import com.nowfloats.Analytics_Screen.SocialAnalytics;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
+import com.nowfloats.Analytics_Screen.VmnDataSingleton;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.CustomWidget.VerticalTextView;
 import com.nowfloats.Login.UserSessionManager;
@@ -116,6 +118,7 @@ public class Analytics_Fragment extends Fragment {
     @Override
     public void onResume() {
 
+        VmnDataSingleton.getInstance().setVmnDataNull();
         //Log.d("FCM Token", FirebaseInstanceId.getInstance().getToken());
         getFPDetails(getActivity(), session.getFPID(), Constants.clientId, bus);
 
@@ -249,25 +252,18 @@ public class Analytics_Fragment extends Fragment {
         facebookLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              /*  if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
+                if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
                     Toast.makeText(context, "This feature is coming soon", Toast.LENGTH_LONG).show();
-                } else {*/
+                } else {
                     SharedPreferences pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
                     int status = pref.getInt("fbPageStatus", 0);
 
-                /*if(pref.getBoolean("fbPageShareEnabled",false) && status==1)
-                {
-                    Intent i = new Intent(getActivity(), ShowWebView.class);
-                    startActivity(i);
-                }
-                else
-                {*/
-                    //Log.v("ggg",pref.getBoolean("fbPageShareEnabled",false)+"frag_ana"+status);
                     Intent i = new Intent(getActivity(), SocialAnalytics.class);
                     i.putExtra("GetStatus", status);
                     startActivity(i);
 
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
             }
         });
         if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
