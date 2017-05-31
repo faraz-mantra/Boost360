@@ -36,7 +36,7 @@ public class WhatsAppBubbleCloseDialog extends AppCompatActivity {
                 stopService(new Intent(WhatsAppBubbleCloseDialog.this, BubblesService.class));
                 MixPanelController.track(MixPanelController.WHATSAPP_TO_BOOST,null);
                 try {
-                    Intent launchIntent = getPackageManager().getLaunchIntentForPackage(DataAccessbilityServiceV4.PK_NAME_NOWFLOATS);
+                    Intent launchIntent = getPackageManager().getLaunchIntentForPackage(DataAccessibilityServiceV6.PK_NAME_NOWFLOATS);
                     startActivity(launchIntent);
                 }catch(Exception e){
                     e.printStackTrace();
