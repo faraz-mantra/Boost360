@@ -36,7 +36,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_5"
             android:background="@color/primary"
             android:orientation="horizontal">
 
@@ -79,9 +78,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center_vertical"
             android:padding="@dimen/margin_20"
             android:text="The Enquiry Says"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/large_text_size" />
 
         <LinearLayout
             android:layout_width="match_parent"

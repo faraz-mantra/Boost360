@@ -15,9 +15,18 @@ public class SuggestionsDO {
     private String type;
     private String source;
     private String value;
+    private String actualMessage;
     private int status = -1;
     private List<SugProducts> products = null;
     private List<SugUpdates> updates = null;
+
+    public String getActualMessage() {
+        return actualMessage;
+    }
+
+    public void setActualMessage(String actualMessage) {
+        this.actualMessage = actualMessage;
+    }
 
     public String getSource() {
         return source;

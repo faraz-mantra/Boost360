@@ -8,9 +8,11 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -31,13 +33,10 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.bubble.BubblesService;
-import com.nowfloats.swipecard.coachmarks.CoachMark;
-import com.nowfloats.swipecard.coachmarks.PunchHoleCoachMark;
 import com.nowfloats.swipecard.models.MessageDO;
 import com.nowfloats.swipecard.models.SMSSuggestions;
 import com.nowfloats.swipecard.models.SugUpdates;
@@ -53,10 +52,13 @@ import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.thinksity.R;
+import com.wooplr.spotlight.SpotlightView;
+import com.wooplr.spotlight.utils.SpotlightListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import static com.nowfloats.swipecard.SuggestionsActivity.TARGETVIEW.CALL;
 import static com.nowfloats.swipecard.SuggestionsActivity.TARGETVIEW.DELETE;
@@ -76,6 +78,7 @@ public class SuggestionsActivity extends AppCompatActivity implements SwipeStack
     private ImageView ivShare, ivCall, ivSms;
     private Button btnBack, btnShare;
     private ImageView ivDelete, ivViewMore, ivRemind;
+    private TextView tvEnquiry;
     private LinearLayout llStackView, llProductsView, llCoachMark, llSuggestions;
     private FrameLayout flTopView;
     private GridView gvSuggestions;
@@ -121,6 +124,8 @@ public class SuggestionsActivity extends AppCompatActivity implements SwipeStack
         llCoachMark = (LinearLayout) findViewById(R.id.llCoachMark);
         llSuggestions = (LinearLayout) findViewById(R.id.llSuggestions);
         gvSuggestions = (GridView) findViewById(R.id.gvSuggestions);
+        gvSuggestions = (GridView) findViewById(R.id.gvSuggestions);
+        tvEnquiry = (TextView) findViewById(R.id.tvEnquiry);
         pbView = (ProgressBar) findViewById(R.id.pbView);
         pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         killListener = new KillListener();
@@ -162,7 +167,6 @@ public class SuggestionsActivity extends AppCompatActivity implements SwipeStack
                 } else {
 
                 }
-
             }
         });
 
@@ -182,11 +186,18 @@ public class SuggestionsActivity extends AppCompatActivity implements SwipeStack
             public void onClick(View v) {
 
                 SuggestionsDO mSuggestionsDO = mSwipeStackAdapter.getTopItem();
-                Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                smsIntent.setType("vnd.android-dir/mms-sms");
-                smsIntent.putExtra("address", mSuggestionsDO.getValue());
-                smsIntent.putExtra("sms_body", "");
+                Intent smsIntent = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    smsIntent = new Intent(Intent.ACTION_SENDTO);
+                    smsIntent.setData(Uri.parse("smsto:" + Uri.encode(mSuggestionsDO.getValue())));
+                } else {
+                    smsIntent = new Intent(Intent.ACTION_VIEW);
+                    smsIntent.setType("vnd.android-dir/mms-sms");
+                    smsIntent.putExtra("address", mSuggestionsDO.getValue());
+                    smsIntent.putExtra("sms_body", "");
+                }
                 startActivity(smsIntent);
+
 //                prepareMessageForShare(SHARE_VIA.SMS);
             }
         });
@@ -195,8 +206,6 @@ public class SuggestionsActivity extends AppCompatActivity implements SwipeStack
             @Override
             public void onClick(View v) {
                 SuggestionsDO mSuggestionsDO = mSwipeStackAdapter.getTopItem();
-
-
                 if (mSuggestionsDO.getUpdates().size() > 0) {
                     sendBroadcast(new Intent(BubblesService.ACTION_GO_TO_RIGHT_WALL));
                     llSuggestions.setVisibility(View.VISIBLE);
@@ -206,8 +215,11 @@ public class SuggestionsActivity extends AppCompatActivity implements SwipeStack
                     if (pref.getBoolean(Key_Preferences.IS_TO_SHOW_COACH_MARKS_STWO, true)) {
                         coachMessage = getString(R.string.coach_mark_msg_view_call);
                         targetView = ivCall;
-                        addHoleCoachMark(CALL);
+                        showCoachMark(CALL);
                     }
+
+                    tvEnquiry.setText("The enquiry says\n"
+                            + mSuggestionsDO.getActualMessage());
 
                 } else {
 
@@ -252,8 +264,8 @@ public class SuggestionsActivity extends AppCompatActivity implements SwipeStack
                 sendBroadcast(new Intent(BubblesService.ACTION_GO_TO_RIGHT_WALL));
                 setDisplayMetrics(0.80f, 0.40f, true);
                 llProductsView.setVisibility(View.GONE);
-                llSuggestions.setVisibility(View.GONE);
-                llStackView.setVisibility(View.VISIBLE);
+                llSuggestions.setVisibility(View.VISIBLE);
+                llStackView.setVisibility(View.GONE);
             }
         });
 
@@ -357,7 +369,7 @@ public class SuggestionsActivity extends AppCompatActivity implements SwipeStack
 
         HashMap<String, String> offersParam = new HashMap<>();
 //        offersParam.put("fpId", session.getFPID());
-        offersParam.put("fpId", "579b35949ec66a0820e9c1cd");
+        offersParam.put("fpId", "590462167ca16e051830201a");
         suggestionsApi.getMessages(offersParam);
     }
 
@@ -369,6 +381,9 @@ public class SuggestionsActivity extends AppCompatActivity implements SwipeStack
                 && suggestions.getSuggestion().size() > 0) {
             mSwipeStackAdapter.refresh(suggestions.getSuggestion());
             llStackView.setVisibility(View.VISIBLE);
+//            ViewGroup.LayoutParams vwLayoutParams = new ViewGroup.LayoutParams(
+//                    ViewGroup.LayoutParams.MATCH_PARENT, mSwipeStack.getHeight() + 100);
+//            mSwipeStack.setLayoutParams(vwLayoutParams);
 
             if (pref.getBoolean(Key_Preferences.IS_TO_SHOW_COACH_MARKS_SONE, true))
                 addCoachMarks();
@@ -401,16 +416,14 @@ public class SuggestionsActivity extends AppCompatActivity implements SwipeStack
             public void onClick(View v) {
                 llCoachMark.removeAllViews();
                 llCoachMark.setVisibility(View.GONE);
-                coachMessage = getString(R.string.coach_mark_msg_delete);
-                targetView = ivDelete;
+                coachMessage = getString(R.string.coach_mark_msg_view_more);
+                targetView = ivViewMore;
 
-                addHoleCoachMark(DELETE);
-
+                showCoachMark(VIEW_MORE);
             }
         });
     }
 
-    private CoachMark mPunchHoleCoachMark;
     private String coachMessage = "";
     private View targetView;
 
@@ -423,63 +436,69 @@ public class SuggestionsActivity extends AppCompatActivity implements SwipeStack
         SHARE
     }
 
-    private void addHoleCoachMark(final TARGETVIEW targetview) {
+    private void prepareCoachMark(final TARGETVIEW targetview) {
 
-        RelativeLayout punchHoleContent = (RelativeLayout) LayoutInflater.from(SuggestionsActivity.this).
-                inflate(R.layout.sample_customised_punchhole_content, null);
 
-        mPunchHoleCoachMark = new PunchHoleCoachMark.PunchHoleCoachMarkBuilder(
-                SuggestionsActivity.this, flTopView, punchHoleContent)
-                .setTargetView(targetView)
-                .setTimeout(0)
-                .build();
+        switch (targetview) {
+            case VIEW_MORE:
+                coachMessage = getString(R.string.coach_mark_msg_remind);
+                targetView = ivRemind;
+                showCoachMark(REMIND);
+                break;
+            case REMIND:
+                coachMessage = getString(R.string.coach_mark_msg_delete);
+                targetView = ivDelete;
+                showCoachMark(DELETE);
+                break;
+            case DELETE:
+                pref.edit().putBoolean(Key_Preferences.IS_TO_SHOW_COACH_MARKS_SONE, false).apply();
+                break;
+            case CALL:
+                coachMessage = getString(R.string.coach_mark_msg_view_message);
+                targetView = ivSms;
+                showCoachMark(MESSAGE);
+                break;
+            case MESSAGE:
+                coachMessage = getString(R.string.coach_mark_msg_view_share);
+                targetView = ivShare;
+                showCoachMark(SHARE);
+                break;
+            case SHARE:
+                pref.edit().putBoolean(Key_Preferences.IS_TO_SHOW_COACH_MARKS_STWO, false).apply();
+                break;
+        }
 
-        ((TextView) punchHoleContent.findViewById(R.id.tvContent))
-                .setText(coachMessage);
-        punchHoleContent.findViewById(R.id.btnClose)
-                .setOnClickListener(new View.OnClickListener() {
+
+    }
+
+    private void showCoachMark(final TARGETVIEW targetview) {
+
+        SpotlightView.Builder spBuilder = new SpotlightView.Builder(this)
+                .introAnimationDuration(400)
+                .enableRevealAnimation(true)
+                .performClick(true)
+                .fadeinTextDuration(400)
+                .headingTvColor(getResources().getColor(R.color.white))
+                .headingTvSize(32)
+                .headingTvText("Hello")
+                .subHeadingTvColor(Color.parseColor("#ffffff"))
+                .subHeadingTvSize(16)
+                .subHeadingTvText(coachMessage)
+                .maskColor(Color.parseColor("#dc000000"))
+                .target(targetView)
+                .lineAnimDuration(400)
+                .lineAndArcColor(getResources().getColor(R.color.primary_color))
+                .dismissOnTouch(true)
+                .dismissOnBackPress(true)
+                .enableDismissAfterShown(true)
+                .setListener(new SpotlightListener() {
                     @Override
-                    public void onClick(View v) {
-
-                        mPunchHoleCoachMark.dismiss();
-                        switch (targetview) {
-                            case DELETE:
-                                coachMessage = getString(R.string.coach_mark_msg_view_more);
-                                targetView = ivViewMore;
-                                addHoleCoachMark(VIEW_MORE);
-                                break;
-                            case VIEW_MORE:
-                                coachMessage = getString(R.string.coach_mark_msg_remind);
-                                targetView = ivRemind;
-                                addHoleCoachMark(REMIND);
-                                break;
-                            case REMIND:
-                                pref.edit().putBoolean(Key_Preferences.IS_TO_SHOW_COACH_MARKS_SONE, false).apply();
-                                break;
-                            case CALL:
-                                coachMessage = getString(R.string.coach_mark_msg_view_message);
-                                targetView = ivSms;
-                                addHoleCoachMark(MESSAGE);
-                                break;
-                            case MESSAGE:
-                                coachMessage = getString(R.string.coach_mark_msg_view_share);
-                                targetView = ivShare;
-                                addHoleCoachMark(SHARE);
-                                break;
-                            case SHARE:
-                                pref.edit().putBoolean(Key_Preferences.IS_TO_SHOW_COACH_MARKS_STWO, false).apply();
-                                break;
-                        }
+                    public void onUserClicked(String s) {
+                        prepareCoachMark(targetview);
                     }
-                });
-
-        getWindow().getDecorView().getRootView().post(new Runnable() {
-            @Override
-            public void run() {
-                mPunchHoleCoachMark.show();
-            }
-        });
-
+                })
+                .usageId(UUID.randomUUID().toString());//UNIQUE ID
+        spBuilder.show();
     }
 
     @Override

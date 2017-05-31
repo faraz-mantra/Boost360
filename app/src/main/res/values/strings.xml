@@ -1197,7 +1197,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="later">Later</string>
     <string name="coach_mark_msg_delete">Click on highlighted view to delete</string>
     <string name="coach_mark_msg_remind">Click on highlighted view to remind</string>
-    <string name="coach_mark_msg_view_more">Click on highlighted view to see more details</string>
+    <string name="coach_mark_msg_view_more">Click to see more details</string>
     <string name="coach_mark_msg_view_call">Click on highlighted view to call lead</string>
     <string name="coach_mark_msg_view_message">Click on highlighted view to message</string>
     <string name="coach_mark_msg_view_share">We have suggestion for you\n SMS/EMAIL/WHATSAPP Share</string>
