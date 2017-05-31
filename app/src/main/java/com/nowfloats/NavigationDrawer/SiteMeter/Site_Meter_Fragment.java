@@ -39,9 +39,9 @@ import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
-import com.nowfloats.Twitter.TwitterConstants;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -90,7 +90,7 @@ public class Site_Meter_Fragment extends Fragment {
             social = 10, address = 5, email = 3, post = 9, logo = 8, businessHours = 6;
     private Activity activity;
     private SharedPreferences mSharedPreferences, pref;
-    private DomainApiService domainApiService;
+    //private DomainApiService domainApiService;
     private Bus mBus;
     private ProgressDialog progressDialog;
 //    private ScaleInAnimationAdapter scaleAdapter;
@@ -152,7 +152,7 @@ public class Site_Meter_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        domainApiService = new DomainApiService(mBus);
+        //domainApiService = new DomainApiService(mBus);
         return inflater.inflate(R.layout.fragment_site__meter, container, false);
     }
 
@@ -170,8 +170,8 @@ public class Site_Meter_Fragment extends Fragment {
         Constants.fbShareEnabled = pref.getBoolean("fbShareEnabled", false);
         Constants.fbPageShareEnabled = pref.getBoolean("fbPageShareEnabled", false);
 
-        mSharedPreferences = getActivity().getSharedPreferences(TwitterConstants.PREF_NAME, Context.MODE_PRIVATE);
-        Constants.twitterShareEnabled = mSharedPreferences.getBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false);
+        mSharedPreferences = getActivity().getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE);
+        Constants.twitterShareEnabled = mSharedPreferences.getBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false);
         final LinearLayout progressLayout = (LinearLayout) view.findViewById(R.id.progress_layout);
         progressLayout.setVisibility(View.VISIBLE);
         new Thread(new Runnable() {
@@ -659,8 +659,7 @@ public class Site_Meter_Fragment extends Fragment {
             }
         } else {
             showLoader(getString(R.string.please_wait));
-            domainApiService.getDomainFPDetails(session.getFPID(),
-                    getDomainDetailsParam());
+            //domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
         }
 
     }
@@ -732,7 +731,7 @@ public class Site_Meter_Fragment extends Fragment {
                         public void onClick(View v) {
                             materialDialog.dismiss();
                             showLoader(getString(R.string.please_wait));
-                            domainApiService.getDomainSupportedTypes(getDomainDetailsParam());
+                            //domainApiService.getDomainSupportedTypes(getDomainDetailsParam());
                         }
                     });
             materialDialog.getCustomView().findViewById(R.id.btnLinkDomain)
@@ -858,8 +857,7 @@ public class Site_Meter_Fragment extends Fragment {
                                 get_fp_details_model.setDomainName(domainName);
                                 get_fp_details_model.setDomainType(spDomainTypes.getSelectedItem().toString());
                                 get_fp_details_model.setPinCode(edtZip.getText().toString());
-                                domainApiService.checkDomainAvailability(domainName,
-                                        getDomainAvailabilityParam((String) spDomainTypes.getSelectedItem()));
+                                //domainApiService.checkDomainAvailability(domainName, getDomainAvailabilityParam((String) spDomainTypes.getSelectedItem()));
                             }
                         }
                     });
@@ -951,8 +949,7 @@ public class Site_Meter_Fragment extends Fragment {
                         HashMap<String, String> hashMap = new HashMap<String, String>();
                         hashMap.put("Subject", subject);
                         hashMap.put("Mesg", edtComments.getText().toString());
-                        domainApiService.linkDomain(hashMap,
-                                getLinkDomainParam());
+                        //domainApiService.linkDomain(hashMap, getLinkDomainParam());
                     }
                 }
             });
@@ -1065,7 +1062,7 @@ public class Site_Meter_Fragment extends Fragment {
 //        hashMap.put("regService", "");
 //        hashMap.put("state", get_fp_details_model.getPaymentState());
 //        hashMap.put("zip", get_fp_details_model.getPinCode());
-        domainApiService.buyDomain(hashMap);
+        //domainApiService.buyDomain(hashMap);
     }
 
     @Subscribe

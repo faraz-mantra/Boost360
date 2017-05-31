@@ -365,14 +365,6 @@
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQ_QandA_Activity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.nowfloats.Twitter.TwitterAuthenticationActivity"
-            android:launchMode="singleInstance"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.nowfloats.BusinessProfile.UI.UI.TwitterLoginActivity"
-            android:launchMode="singleInstance"
-            android:screenOrientation="portrait" />
 
         <!--
         <receiver

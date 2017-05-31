@@ -599,7 +599,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         try {
             // use standard intent to capture an image
             if (ActivityCompat.checkSelfPermission(Edit_Profile_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(Edit_Profile_Activity.this, Manifest.permission.CAMERA)!=
+                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(Edit_Profile_Activity.this, Manifest.permission.CAMERA)!=
                     PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(Edit_Profile_Activity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                         media_req_id);
@@ -627,7 +627,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
     public void galleryIntent(){
         try {
             if (ActivityCompat.checkSelfPermission(Edit_Profile_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(Edit_Profile_Activity.this, Manifest.permission.CAMERA)!=
+                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(Edit_Profile_Activity.this, Manifest.permission.CAMERA)!=
                     PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(Edit_Profile_Activity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                         gallery_req_id);

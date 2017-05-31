@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.nowfloats.Analytics_Screen.model.VmnCallModel;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
@@ -52,6 +53,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         totalCount = (TextView) findViewById(R.id.total_count);
         virtualNumber = (TextView) findViewById(R.id.tv_virtual_number);
         viewCallLogCard = (CardView) findViewById(R.id.card_view_view_calllog);
+        virtualNumber.setText(sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
 
         viewCallLogCard.setOnClickListener(this);
         mProgressBar.setVisibility(View.VISIBLE);
@@ -96,15 +98,11 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
             Methods.showSnackBarNegative(VmnCallCardsActivity.this,getString(R.string.something_went_wrong_try_again));
         }else
         {
-            String vNumber = "";
             int missCount =0, receiveCount =0;
 
             totalCalls = vmnData;
             for (VmnCallModel model : vmnData)
             {
-                if(vNumber.equals("")) {
-                    vNumber = model.getVirtualNumber();
-                }
                 if(model.getCallStatus().equalsIgnoreCase("MISSED")){
                     missCount++;
                 }
@@ -116,7 +114,6 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
             totalCount.setText(String.valueOf(totalCalls.size()));
             missedCount.setText(String.valueOf(missCount));
             receivedCount.setText(String.valueOf(receiveCount));
-            virtualNumber.setText(vNumber);
         }
     }
 }

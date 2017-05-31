@@ -79,7 +79,7 @@ public class BusinessAddressUpdateApi {
         callApi.updateAddress(addressModel, new Callback<JsonArray>() {
             @Override
             public void success(JsonArray jsonElements, Response response) {
-                if(pd!=null)
+                if(pd!=null && pd.isShowing())
                     pd.dismiss();
                 if(response.getStatus()!=200 ||jsonElements==null) return;
                 Toast.makeText(appContext,"Update Address successful",Toast.LENGTH_SHORT).show();
@@ -91,7 +91,7 @@ public class BusinessAddressUpdateApi {
 
             @Override
             public void failure(RetrofitError error) {
-                if(pd!=null)
+                if(pd!=null && pd.isShowing())
                     pd.dismiss();
                 //Log.v("ggg",error+"update address json error");
             }

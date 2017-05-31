@@ -32,7 +32,6 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NFXApi.NfxRequestClient;
-import com.nowfloats.Twitter.TwitterConstants;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
@@ -119,7 +118,6 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
         session = new UserSessionManager(getContext(), getActivity());
         pref = mContext.getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
         prefsEditor = pref.edit();
-        mSharedPreferences = mContext.getSharedPreferences(TwitterConstants.PREF_NAME, Context.MODE_PRIVATE);
 
         Button button = (Button) view.findViewById(R.id.facebook_login);
         button.setOnClickListener(new View.OnClickListener() {

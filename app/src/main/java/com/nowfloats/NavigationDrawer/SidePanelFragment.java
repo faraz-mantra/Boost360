@@ -43,8 +43,8 @@ import com.nowfloats.BusinessProfile.UI.API.UploadPictureAsyncTask;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DeleteBackgroundImageAsyncTask;
-import com.nowfloats.Twitter.TwitterConstants;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
@@ -1030,7 +1030,7 @@ public class SidePanelFragment extends Fragment {
         try {
             // use standard intent to capture an image
             if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)!=
+                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)!=
                     PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                         media_req_id);
@@ -1056,7 +1056,7 @@ public class SidePanelFragment extends Fragment {
         public void galleryIntent() {
             try {
                 if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                        PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)!=
+                        PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)!=
                         PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                             gallery_req_id);
@@ -1248,10 +1248,10 @@ public class SidePanelFragment extends Fragment {
     }*/
         public void siteMeterCalculation() {
             SharedPreferences pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-            SharedPreferences mSharedPreferences = getActivity().getSharedPreferences(TwitterConstants.PREF_NAME,Context.MODE_PRIVATE);
+            SharedPreferences mSharedPreferences = getActivity().getSharedPreferences(TwitterConnection.PREF_NAME,Context.MODE_PRIVATE);
             Constants.fbShareEnabled = pref.getBoolean("fbShareEnabled", false);
             Constants.fbPageShareEnabled = pref.getBoolean("fbPageShareEnabled", false);
-            Constants.twitterShareEnabled = mSharedPreferences.getBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false);
+            Constants.twitterShareEnabled = mSharedPreferences.getBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false);
             siteMeterTotalWeight = 0;
             if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
                 siteMeterTotalWeight += 10;

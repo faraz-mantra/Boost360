@@ -252,9 +252,9 @@ public class Analytics_Fragment extends Fragment {
         facebookLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
+               /* if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
                     Toast.makeText(context, "This feature is coming soon", Toast.LENGTH_LONG).show();
-                } else {
+                } else {*/
                     SharedPreferences pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
                     int status = pref.getInt("fbPageStatus", 0);
 
@@ -263,7 +263,7 @@ public class Analytics_Fragment extends Fragment {
                     startActivity(i);
 
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }
+               // }
             }
         });
         if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||

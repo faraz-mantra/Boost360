@@ -3,33 +3,30 @@ package com.nowfloats.BusinessProfile.UI.UI;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -45,12 +42,8 @@ import com.nowfloats.CustomWidget.roboto_md_60_212121;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NFXApi.NfxRequestClient;
 import com.nowfloats.NavigationDrawer.API.twitter.FacebookFeedPullRegistrationAsyncTask;
-import com.nowfloats.Twitter.ITwitterCallbacks;
-import com.nowfloats.Twitter.TokenRequest;
-import com.nowfloats.Twitter.TwitterAuthenticationActivity;
-import com.nowfloats.Twitter.TwitterConstants;
-import com.nowfloats.Twitter.Utils;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
@@ -58,8 +51,10 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
-import com.thinksity.BuildConfig;
 import com.thinksity.R;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,19 +62,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-import twitter4j.User;
-import twitter4j.auth.AccessToken;
-import twitter4j.auth.RequestToken;
-import twitter4j.conf.Configuration;
-import twitter4j.conf.ConfigurationBuilder;
-
-public class Social_Sharing_Activity extends AppCompatActivity implements ITwitterCallbacks, NfxRequestClient.NfxCallBackListener {
+public class Social_Sharing_Activity extends AppCompatActivity implements NfxRequestClient.NfxCallBackListener,TwitterConnection.TwitterResult {
     private static final int PAGE_NO_FOUND = 404;
     private Toolbar toolbar;
     int size = 0;
@@ -116,8 +103,6 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
     private String mCallbackUrl = null;
     private String mAuthVerifier = null;
     private String mTwitterVerifier = null;
-    private Twitter mTwitter = null;
-    private RequestToken mRequestToken = null;
     private SharedPreferences mSharedPreferences = null;
     private boolean called = false;
     private ProgressDialog pd = null;
@@ -142,6 +127,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
     private CallbackManager callbackManager;
     private TextView arrowTextView;
     private QuikrGuidelinesActivity showArrayFrag;
+    private TwitterConnection twitterConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,8 +145,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         Methods.isOnline(Social_Sharing_Activity.this);
         pref = this.getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
         prefsEditor = pref.edit();
-        TwitterAuthenticationActivity.setListener(this);
-        mSharedPreferences = this.getSharedPreferences(TwitterConstants.PREF_NAME,MODE_PRIVATE);
+        mSharedPreferences = this.getSharedPreferences(TwitterConnection.PREF_NAME,MODE_PRIVATE);
         activity = Social_Sharing_Activity.this;
 
         toolbar = (Toolbar) findViewById(R.id.app_bar_social);
@@ -306,51 +291,22 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         facebookautopost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*if (facebookautopost.isChecked()) {
-
-                    if (session.getShowUpdates() && !Util.isNullOrEmpty(Constants.fbPageFullUrl))
-                        selectNumberUpdatesDialog();
-                    if(!called){
-                        autoPostSelectListener();
-                    }
-
-
-                } else {
-                    session.setShowUpdates(false);
-                    final JSONObject obj = new JSONObject();
-                    try {
-                        obj.put("fpId", session.getFPID());
-                        obj.put("autoPublish", false);
-                        obj.put("clientId", Constants.clientId);
-                        obj.put("FacebookPageName", Constants.fbFromWhichPage);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    FacebookFeedPullAutoPublishAsyncTask fap = new FacebookFeedPullAutoPublishAsyncTask(Social_Sharing_Activity.this, obj, false, facebookPageStatus);
-                    fap.execute();
-
-
-                }*/
+              
                 String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
                 String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
                 if (paymentState.equals("-1")) {
                     try {
-                        if (Integer.parseInt(paymentLevel) > 10) {
-                            //LH expire
-                            if(BuildConfig.APPLICATION_ID.equals("com.kitsune.biz")){
-                                renewKitsune(LIGHT_HOUSE_EXPIRE);
-                            }else {
-                                renewPlanDialog(LIGHT_HOUSE_EXPIRE);
-                            }
-                        } else{
-                            //Demo expire
 
-                            if(BuildConfig.APPLICATION_ID.equals("com.kitsune.biz")){
-                                renewKitsune(DEMO_EXPIRE);
-                            }else {
-                                renewPlanDialog(DEMO_EXPIRE);
-                            }
+                        if(Constants.PACKAGE_NAME.equals("com.kitsune.biz")){
+                            return;
                         }
+                        
+                        if(Integer.parseInt(paymentLevel) > 10){
+                            showDialog1(LIGHT_HOUSE_EXPIRE,-1);
+                        }else{
+                            showDialog1(DEMO_EXPIRE,-1);
+                        }
+                        
                     }catch (Exception e){
                         e.printStackTrace();
                     }
@@ -373,26 +329,14 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             public void onClick(View v) {
 
                 if (twitterCheckBox.isChecked()) {
-                    /*twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
-                    twitterStatus.setText("Connected");
-                    twitterCheckBox.setHighlightColor(getResources().getColor(R.color.primaryColor));
-                    Constants.twitterShareEnabled = true;
-                    MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_TWITTER, null);*/
-                    //Rahul twitter
-                    if (!Utils.isNetworkConnected(Social_Sharing_Activity.this)) {
+                    
+                    if (!Methods.isOnline(Social_Sharing_Activity.this)) {
                         showAlertBox();
                     } else {
-                        mConsumerKey = getApplicationContext().getResources().getString(R.string.twitter_consumer_key);
-                        mConsumerSecret = getApplicationContext().getResources().getString(R.string.twitter_consumer_secret);
-                        mAuthVerifier = "oauth_verifier";
-                        final ConfigurationBuilder builder = new ConfigurationBuilder();
-                        builder.setOAuthConsumerKey(mConsumerKey);
-                        builder.setOAuthConsumerSecret(mConsumerSecret);
-                        final Configuration configuration = builder.build();
-                        final TwitterFactory factory = new TwitterFactory(configuration);
-                        mTwitter = factory.getInstance();
-                        new TokenRequest(Social_Sharing_Activity.this).execute();
-                        initTwitterSDK(Social_Sharing_Activity.this);
+                        if(twitterConnection == null) {
+                            twitterConnection = new TwitterConnection(Social_Sharing_Activity.this);
+                        }
+                        twitterConnection.authorize();
                     }
                     //Rahul twitter
                 }else {
@@ -419,90 +363,19 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 showDialog("Tip!", message);
             }
         });
-        /*findViewById(R.id.iv_help_auto_pull).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String message = "Updates will reflect on your website one hour after getting posted on the Facebook Page. Do not select this option if you are using social share from your website.";
-                showDialog(message);
-            }
-        });*/
+       
         InitShareResources();
         setStatus();
     }
 
-    private void renewKitsune(int expiryType) {
-        String dialogTitle = null;
-        String dialogMessage = null;
-        String callUsButtonText = "";
-        String cancelButtonText = null;
-        int dialogImage = 0;
-        int dialogImageBgColor = 0;
-        int days;
-        prefsEditor.putBoolean("EXPIRE_DIALOG",true);
-        prefsEditor.commit();
-        boolean dialogShowFlag = true;
-        switch (expiryType) {
+    private void showDialog1(int showDialog,float days){
+
+        String callUsButtonText,cancelButtonText,dialogTitle,dialogMessage;
+        int dialogImage,dialogImageBgColor;
+
+        switch (showDialog){
             case LIGHT_HOUSE_EXPIRE:
-                dialogTitle = getString(R.string.kitsune_renew_dialog_title);
-                dialogMessage = getString(R.string.kitsune_renew_dialog_body);
-                dialogImage = R.drawable.androidexpiryxxxhdpi;
-                dialogImageBgColor = Color.parseColor("#ff0010");
-                break;
-            case DEMO_EXPIRE:
-                dialogImage = R.drawable.androidexpiryxxxhdpi;
-                dialogImageBgColor = Color.parseColor("#ff0010");
-                dialogTitle = getString(R.string.kitsune_demo_expire_dialog_title);
-                dialogMessage = getString(R.string.kitsune_demo_expire_dialog_body);
-                break;
-            default:
-                callUsButtonText = "";
-                cancelButtonText = "";
-                dialogTitle = "";
-                dialogMessage = "";
-                dialogImage = -1;
-                break;
-        }
-        mExpireDailog = new MaterialDialog.Builder(this)
-                .customView(R.layout.pop_up_restrict_post_message, false)
-                .backgroundColorRes(R.color.white)
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onNegative(MaterialDialog mExpireDailog) {
-                        super.onNegative(mExpireDailog);
-                        mExpireDailog.dismiss();
-                        prefsEditor.putBoolean("EXPIRE_DIALOG", true);
-                        prefsEditor.putBoolean("IGNORE_CLICKED", true);
-                        prefsEditor.commit();
-                    }
-                }).show();
-
-            mExpireDailog.setCancelable(true);
-            View view = mExpireDailog.getCustomView();
-            if(view == null) return;
-            roboto_md_60_212121 title = (roboto_md_60_212121) view.findViewById(R.id.textView1);
-            title.setText(dialogTitle);
-
-            ImageView expireImage = (ImageView) view.findViewById(R.id.img_warning);
-            expireImage.setBackgroundColor(dialogImageBgColor);
-            expireImage.setImageDrawable(getResources().getDrawable(dialogImage));
-
-            roboto_lt_24_212121 message = (roboto_lt_24_212121) view.findViewById(R.id.pop_up_create_message_body);
-            message.setText(dialogMessage);
-    }
-    private void renewPlanDialog(final int expireAccount) {
-        String dialogTitle = null;
-        String dialogMessage = null;
-        String callUsButtonText = "";
-        String cancelButtonText = null;
-        int dialogImage = 0;
-        int dialogImageBgColor = 0;
-
-        prefsEditor.putBoolean("EXPIRE_DIALOG",true);
-        prefsEditor.commit();
-        boolean dialogShowFlag = true;
-        switch (expireAccount) {
-            case LIGHT_HOUSE_EXPIRE:
-                callUsButtonText = "Ok";
+                callUsButtonText = getString(R.string.buy_in_capital);
                 cancelButtonText = getString(R.string.later_in_capital);
                 dialogTitle = getString(R.string.renew_light_house_plan);
                 dialogMessage = getString(R.string.light_house_plan_expired_some_features_visible);
@@ -512,48 +385,48 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             case DEMO_EXPIRE:
                 dialogImage = R.drawable.androidexpiryxxxhdpi;
                 dialogImageBgColor = Color.parseColor("#ff0010");
-                callUsButtonText = "Ok";
+                callUsButtonText = getString(R.string.buy_in_capital);
                 cancelButtonText = getString(R.string.later_in_capital);
                 dialogTitle = getString(R.string.buy_light_house_plan);
                 dialogMessage = getString(R.string.demo_plan_expired);
                 break;
             default:
-                callUsButtonText = "";
-                cancelButtonText = "";
-                dialogTitle = "";
-                dialogMessage = "";
-                dialogImage = -1;
-                break;
+                return;
         }
-        mExpireDailog = new MaterialDialog.Builder(this)
+        pref.edit().putLong("expire_dialog",Calendar.getInstance().getTimeInMillis()).apply();
+
+        MaterialDialog mExpireDailog = new MaterialDialog.Builder(this)
                 .customView(R.layout.pop_up_restrict_post_message, false)
                 .backgroundColorRes(R.color.white)
+                .positiveText(callUsButtonText)
                 .negativeText(cancelButtonText)
-                .callback(new MaterialDialog.ButtonCallback() {
-
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void onNegative(MaterialDialog mExpireDailog) {
-                        super.onNegative(mExpireDailog);
-                        mExpireDailog.dismiss();
-                        prefsEditor.putBoolean("EXPIRE_DIALOG", true);
-                        prefsEditor.putBoolean("IGNORE_CLICKED", true);
-                        prefsEditor.commit();
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
                     }
-                }).show();
+                })
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
 
-            mExpireDailog.setCancelable(true);
-            View view = mExpireDailog.getCustomView();
-            if(view == null ) return;
-            roboto_md_60_212121 title = (roboto_md_60_212121) view.findViewById(R.id.textView1);
-            title.setText(dialogTitle);
+        View view = mExpireDailog.getCustomView();
 
-            ImageView expireImage = (ImageView) view.findViewById(R.id.img_warning);
-            expireImage.setBackgroundColor(dialogImageBgColor);
-            expireImage.setImageDrawable(getResources().getDrawable(dialogImage));
+        roboto_md_60_212121 title = (roboto_md_60_212121) view.findViewById(R.id.textView1);
+        title.setText(dialogTitle);
 
-            roboto_lt_24_212121 message = (roboto_lt_24_212121) view.findViewById(R.id.pop_up_create_message_body);
-            message.setText(dialogMessage);
+        ImageView expireImage = (ImageView) view.findViewById(R.id.img_warning);
+        expireImage.setBackgroundColor(dialogImageBgColor);
+        expireImage.setImageDrawable(ContextCompat.getDrawable(this,dialogImage));
+
+        roboto_lt_24_212121 message = (roboto_lt_24_212121) view.findViewById(R.id.pop_up_create_message_body);
+        message.setText(Methods.fromHtml(dialogMessage));
     }
+
     private void updateAutopull(String name,boolean autoPublish) {
         numberOfUpdatesSelected = false;
         FacebookFeedPullModel.Update obj = new FacebookFeedPullModel().new Update();
@@ -665,43 +538,15 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 }).show();
     }
 
-    @Override
-    public void returnToken(Intent data) {
-        if (materialProgress != null) {
-            materialProgress.dismiss();
-        }
-        if (data != null) {
-            mTwitterVerifier = data.getExtras().getString(mAuthVerifier);
-            AccessToken accessToken;
-            try {
-                if (mTwitter == null) {
-                    final ConfigurationBuilder builder = new ConfigurationBuilder();
-                    builder.setOAuthConsumerKey(mConsumerKey);
-                    builder.setOAuthConsumerSecret(mConsumerSecret);
-                    final Configuration configuration = builder.build();
-                    final TwitterFactory factory = new TwitterFactory(configuration);
-                    mTwitter = factory.getInstance();
-                }
-                accessToken = mTwitter.getOAuthAccessToken(mRequestToken, mTwitterVerifier);
-                long userID = accessToken.getUserId();
-                final User user = mTwitter.showUser(userID);
-                String username = user.getName();
-                twitterStatus.setVisibility(View.VISIBLE);
-                twitterStatus.setText(username);
-                saveTwitterInformation(accessToken);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }else{
-            Toast.makeText(Social_Sharing_Activity.this, getString(R.string.problem_with_twitter_try_later), Toast.LENGTH_SHORT).show();
-        }
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);//added
 
+        if(twitterConnection != null){
+            twitterConnection.onActivityResult(requestCode,resultCode,data);
+        }
         //facebook.authorizeCallback(requestCode, resultCode, data);//removed
         if (materialProgress != null) {
             materialProgress.dismiss();
@@ -1273,7 +1118,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
 //        Constants.FACEBOOK_PAGE_ID 			= pref.getString("fbPageId", "");
         Constants.FACEBOOK_PAGE_ACCESS_ID = pref.getString("fbPageAccessId", "");
         Constants.fbPageShareEnabled = pref.getBoolean("fbPageShareEnabled", false);
-        Constants.twitterShareEnabled = mSharedPreferences.getBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false);
+        Constants.twitterShareEnabled = mSharedPreferences.getBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false);
         Constants.FbFeedPullAutoPublish = pref.getBoolean("FBFeedPullAutoPublish", false);
         Constants.fbPageFullUrl = pref.getString("fbPageFullUrl", "");
         Constants.fbFromWhichPage = pref.getString("fbFromWhichPage", "");
@@ -1362,7 +1207,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         }
         if (!isAuthenticated()) {
             //twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
-            // String fbUName = pref.getString(TwitterConstants.PREF_USER_NAME, "");
+            // String fbUName = pref.getString(TwitterConnection.PREF_USER_NAME, "");
             twitter.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.twitter_icon_inactive));
             twitter.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
             twitterCheckBox.setChecked(false);
@@ -1370,7 +1215,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             //twitterStatus.setText("Disconnected");
         } else {
             twitterCheckBox.setChecked(true);
-            String twitterName = mSharedPreferences.getString(TwitterConstants.PREF_USER_NAME, "");
+            String twitterName = mSharedPreferences.getString(TwitterConnection.PREF_USER_NAME, "");
             twitterStatus.setVisibility(View.VISIBLE);
             twitterStatus.setText("@" + twitterName);
             twitter.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.twitter_icon_active));
@@ -1378,51 +1223,22 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
         }
     }
 
-
-
-    //Rahul Twitter handling
-    private void initTwitterSDK(Context context) { // it is fixed for user
-        // check whether this could be changed or not
-        /*If key and secret key are null ,then it not possbile to communicate with twitter*/
-        if (TextUtils.isEmpty(mConsumerKey) || TextUtils.isEmpty(mConsumerSecret)) {
-            return;
-        }
-
-        Uri uri = getIntent().getData();
-        if (uri != null && uri.toString().startsWith(mCallbackUrl)) {
-            String verifier = uri.getQueryParameter(mAuthVerifier);
-            try {
-                AccessToken accessToken = mTwitter.getOAuthAccessToken(
-                        mRequestToken, verifier);
-                //send twitter info
-                saveTwitterInformation(accessToken);
-                Toast.makeText(getApplicationContext(), getString(R.string.success), Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-                Toast.makeText(getApplicationContext(), getString(R.string.failed), Toast.LENGTH_SHORT).show();
-                BoostLog.d("Failed to login ",
-                        e.getMessage());
-            }
-
-        }
-    }
     //check about aleady authenticated
     protected boolean isAuthenticated() {
-        return mSharedPreferences.getBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false);
+        return mSharedPreferences.getBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false);
     }
-    private void saveTwitterInformation(AccessToken accessToken) {
+    private void saveTwitterInformation(TwitterSession twitterSession) {
         {
-            long userID = accessToken.getUserId();
-            User user;
             try {
-                user = mTwitter.showUser(userID);
-                String username = user.getName();
+
+                String username = twitterSession.getUserName();
 
                 NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) Social_Sharing_Activity.this)
                         .setmFpId(session.getFPID())
                         .setmType("twitter")
-                        .setmUserAccessTokenKey(accessToken.getToken())
-                        .setmUserAccessTokenSecret(accessToken.getTokenSecret())
-                        .setmUserAccountId(String.valueOf(userID))
+                        .setmUserAccessTokenKey(twitterSession.getAuthToken().token)
+                        .setmUserAccessTokenSecret(twitterSession.getAuthToken().secret)
+                        .setmUserAccountId(String.valueOf(twitterSession.getUserId()))
                         .setmAppAccessTokenKey(Constants.TWITTER_TOK)
                         .setmAppAccessTokenSecret(Constants.TWITTER_SEC)
                         .setmCallType(TWITTERTYPE)
@@ -1432,10 +1248,10 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
                 pd = ProgressDialog.show(this, "", getString(R.string.wait_while_subscribing));
 
                 SharedPreferences.Editor e = mSharedPreferences.edit();
-                e.putString(TwitterConstants.PREF_KEY_OAUTH_TOKEN, accessToken.getToken());
-                e.putString(TwitterConstants.PREF_KEY_OAUTH_SECRET, accessToken.getTokenSecret());
-                //e.putBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, true);
-                e.putString(TwitterConstants.PREF_USER_NAME, username);
+                e.putString(TwitterConnection.PREF_KEY_OAUTH_TOKEN, twitterSession.getAuthToken().token);
+                e.putString(TwitterConnection.PREF_KEY_OAUTH_SECRET, twitterSession.getAuthToken().secret);
+                //e.putBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, true);
+                e.putString(TwitterConnection.PREF_USER_NAME, username);
                 //Log.v("ggg",username+"twittername");
                 e.apply();
 
@@ -1446,25 +1262,15 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
     }
     public  void logoutFromTwitter() {
         SharedPreferences.Editor e = mSharedPreferences.edit();
-        e.remove(TwitterConstants.PREF_KEY_OAUTH_TOKEN);
-        e.remove(TwitterConstants.PREF_KEY_OAUTH_SECRET);
-        e.remove(TwitterConstants.PREF_KEY_TWITTER_LOGIN);
-        e.remove(TwitterConstants.PREF_USER_NAME);
+        e.remove(TwitterConnection.PREF_KEY_OAUTH_TOKEN);
+        e.remove(TwitterConnection.PREF_KEY_OAUTH_SECRET);
+        e.remove(TwitterConnection.PREF_KEY_TWITTER_LOGIN);
+        e.remove(TwitterConnection.PREF_USER_NAME);
         //Log.v("ggg","twitternameremoved");
         e.apply();
         Constants.twitterShareEnabled = false;
-        CookieSyncManager cookieSyncMngr = CookieSyncManager.createInstance(this);
-        CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.removeAllCookie();
     }
-    @Override
-    public void startWebAuthentication(String url, RequestToken requestToken) {
-        mRequestToken = requestToken;
-        final Intent intent = new Intent(this,
-                com.nowfloats.Twitter.TwitterAuthenticationActivity.class);
-        intent.putExtra(com.nowfloats.Twitter.TwitterAuthenticationActivity.EXTRA_URL, url);
-        startActivityForResult(intent, TwitterConstants.WEBVIEW_REQUEST_CODE);
-    }
+
     private void showAlertBox() {
         AlertDialog malertDialog = null;
         AlertDialog.Builder mdialogBuilder = null;
@@ -1562,7 +1368,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             case TWITTERTYPE:
                 Constants.twitterShareEnabled = true;
                 SharedPreferences.Editor e = mSharedPreferences.edit();
-                e.putBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, true);
+                e.putBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, true);
                 e.apply();
                 twitterStatus.setVisibility(View.VISIBLE);
                 twitterStatus.setText("@" + name);
@@ -1605,11 +1411,11 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             case TWITTER_DEACTIVATION:
                 twitterStatus.setVisibility(View.GONE);
                 //twitterStatus.setText("Disconnected");
-                twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
+                twitter.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.twitter_icon_inactive));
                 twitter.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
                 logoutFromTwitter();
                 SharedPreferences.Editor twitterPrefEditor = mSharedPreferences.edit();
-                twitterPrefEditor.putBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false);
+                twitterPrefEditor.putBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false);
                 twitterPrefEditor.apply();
                 Constants.twitterShareEnabled = false;
                 twitterCheckBox.setChecked(false);
@@ -1617,6 +1423,16 @@ public class Social_Sharing_Activity extends AppCompatActivity implements ITwitt
             case PAGE_NO_FOUND:
                 Methods.materialDialog(activity, "Alert", getString(R.string.look_like_no_facebook_page));
                 break;
+        }
+    }
+
+    @Override
+    public void onTwitterConnected(Result<TwitterSession> result) {
+        if(result == null){
+            Methods.showSnackBarNegative(this,getString(R.string.something_went_wrong));
+        }else{
+            TwitterSession twitter = result.data;
+            saveTwitterInformation(twitter);
         }
     }
 }

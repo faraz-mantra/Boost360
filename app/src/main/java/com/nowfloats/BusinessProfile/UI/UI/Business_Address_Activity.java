@@ -130,8 +130,7 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
         state = (EditText) findViewById(R.id.businessAddress_stateEditText);
         areaCode = (EditText) findViewById(R.id.businessAddress_pinCodeEditText);
         country = (EditText) findViewById(R.id.businessAddress_countryEditText);
-        adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_dropdown_item_1line,citys);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line,citys);
         cityAutoText.setAdapter(adapter);
         country.setKeyListener(null);
 
@@ -231,8 +230,6 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
                         saveTextView.setVisibility(View.GONE);
 
                     }
-                } catch (Exception e) {
-                }
 
                 final PendingResult<AutocompletePredictionBuffer> result =
                         Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, cityAutoText.getText().toString().trim(),
@@ -264,6 +261,10 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
                         });
                     }
                 }).start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
 
             @Override
