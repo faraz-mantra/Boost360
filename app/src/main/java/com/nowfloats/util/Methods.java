@@ -25,9 +25,10 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.nowfloats.accessbility.DataAccessbilityServiceV4;
+import com.nowfloats.accessbility.DataAccessibilityServiceV7;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.squareup.okhttp.OkHttpClient;
 import com.thinksity.R;
@@ -48,13 +49,19 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 
+import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.client.OkClient;
+import retrofit.http.GET;
+import retrofit.http.Headers;
+import retrofit.http.POST;
+import retrofit.http.QueryMap;
 
 /**
  * Created by Guru on 21-04-2015.
@@ -99,22 +106,28 @@ public class Methods {
     public static void likeUsFacebook(Context context,String review){
         MixPanelController.track("LikeUsOnFacebook", null);
         Intent facebookIntent;
-        if(review.trim().length() == 0) {
+        //if(review.trim().length() == 0) {
             try {
                 context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
                 facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_PAGE_WITH_ID));
             } catch (Exception e) {
                 facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_URL + review));
             }
-        }else{
+       /* }else{
             facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_URL + review));
-        }
+        }*/
+
         facebookIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
-        context.startActivity(facebookIntent);
+        try {
+            context.startActivity(facebookIntent);
+        }catch (Exception e){
+            Toast.makeText(context, "unable to open facebook", Toast.LENGTH_SHORT).show();
+        }
+
     }
     public static boolean isAccessibilitySettingsOn(Context mContext) {
         int accessibilityEnabled = 0;
-        final String service = mContext.getPackageName() + "/" + DataAccessbilityServiceV4.class.getCanonicalName();
+        final String service = mContext.getPackageName() + "/" + DataAccessibilityServiceV7.class.getCanonicalName();
         try {
             accessibilityEnabled = Settings.Secure.getInt(mContext.getApplicationContext().getContentResolver(),
                     android.provider.Settings.Secure.ACCESSIBILITY_ENABLED);
@@ -464,6 +477,18 @@ public class Methods {
     public static int dpToPx(int dp,Context context) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+    }
+
+
+    public interface SmsApi{
+
+        @Headers({"X-Authy-API-Key:"+Constants.TWILIO_AUTHY_API_KEY})
+        @POST("/protected/json/phones/verification/start")
+        void sendSms(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
+
+        @Headers({"X-Authy-API-Key:"+Constants.TWILIO_AUTHY_API_KEY})
+        @GET("/protected/json/phones/verification/check")
+        void verifySmsCode(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
     }
 
 }

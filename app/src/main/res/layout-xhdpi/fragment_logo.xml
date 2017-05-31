@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/app_bar"
-        layout="@layout/app_bar" />
+        layout="@layout/app_bar_home" />
 
        <android.support.v7.widget.CardView
             android:layout_width="match_parent"

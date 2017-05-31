@@ -113,7 +113,7 @@ public class SearchRankingActivity extends AppCompatActivity {
         }
         llRankContainer.setVisibility(View.VISIBLE);
         llEmptyLayout.setVisibility(View.INVISIBLE);
-        if(!pd.isShowing()){
+        if(!isFinishing() && !pd.isShowing()){
             pd.show();
         }
         new Thread(new Runnable() {

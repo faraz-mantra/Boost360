@@ -9,14 +9,12 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:padding="10dp"
-        android:background="@drawable/ripple_spinner"
         android:src="@drawable/facebook_round"/>
     <ImageView
         android:id="@+id/quikr"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:padding="10dp"
-        android:background="@drawable/ripple_spinner"
         android:src="@drawable/quikr"/>
 
 </LinearLayout>

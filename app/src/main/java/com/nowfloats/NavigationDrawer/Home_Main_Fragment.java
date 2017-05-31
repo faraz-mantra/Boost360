@@ -327,7 +327,7 @@ public class Home_Main_Fragment extends Fragment implements
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new FadeInUpAnimator());
         myOnClickListener = new MyOnClickListener(getActivity());
-        recyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
+        recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int scrollState) {
                 if (scrollState == RecyclerView.SCROLL_STATE_IDLE) {
@@ -431,7 +431,7 @@ public class Home_Main_Fragment extends Fragment implements
 
         SharedPreferences.Editor editor = mPref.edit();
         editor.putBoolean(Constants.SYNCED, true);
-        editor.commit();
+        editor.apply();
 
         cAdapter.notifyDataSetChanged();
         progressBar.setVisibility(View.GONE);

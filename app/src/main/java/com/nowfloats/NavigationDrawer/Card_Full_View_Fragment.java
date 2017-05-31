@@ -1,13 +1,20 @@
 package com.nowfloats.NavigationDrawer;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.util.Log;
@@ -17,10 +24,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.MessageTag_Async_Task;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -37,6 +50,7 @@ public class Card_Full_View_Fragment extends Fragment {
     public static final String MessageIdKey = "messageIdTag";
 
     static View.OnClickListener mylongOnClickListener;
+    private Activity appContext;
 
     public Card_Full_View_Fragment() {
         // Required empty public constructor
@@ -116,6 +130,11 @@ public class Card_Full_View_Fragment extends Fragment {
         return mainView;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        appContext = (Activity)context;
+    }
 
     public class MyLongClickListener implements View.OnClickListener {
         private final Context context;
@@ -182,13 +201,101 @@ public class Card_Full_View_Fragment extends Fragment {
 
     }
 
-    private void setValues(View mainView, String imageUri, String mainText, String dateText,String msgID) {
+    private void setValues(View mainView, final String imageUri, final String mainText, String dateText, final String msgID) {
         //Log.d("Set Values","values  :"+imagePath+" , "+mainText+" , "+dateText);
         ImageView imageView = (ImageView) mainView.findViewById(R.id.mainImageView);
         TextView mainTextView = (TextView) mainView.findViewById(R.id.headingTextView);
         TextView dateTextView = (TextView) mainView.findViewById(R.id.dateTextView);
         TextView messageTag = (TextView) mainView.findViewById(R.id.messagetag);
+        UserSessionManager session = new UserSessionManager(appContext,appContext);
+        String mainFpUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+        if (!Util.isNullOrEmpty(mainFpUrl)) {
+            mainFpUrl = mainFpUrl.toLowerCase();
+        }else{
+            mainFpUrl = "http://"+ session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
+                    + appContext.getResources().getString(R.string.tag_for_partners);
+        }
+        final String finalFpUrl = mainFpUrl;
+        mainView.findViewById(R.id.shareData).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MixPanelController.track("SharePost", null);
+                // final Intent shareIntent = null;
+                final ProgressDialog pd = ProgressDialog.show(appContext, "", "Sharing . . .");
 
+                final Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                if (!imageUri.contains("/Tile/deal.png") && !Util.isNullOrEmpty(imageUri)) {
+                    if (Methods.isOnline(appContext)) {
+                        String url;
+                        if (imageUri.contains("BizImages")) {
+                            url = Constants.NOW_FLOATS_API_URL + "" + imageUri;
+                        } else {
+                            url = imageUri;
+                        }
+                        Picasso.with(appContext)
+                                .load(url)
+                                .into(new Target() {
+                                    @Override
+                                    public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                                        pd.dismiss();
+                                        Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                                        View view = new View(appContext);
+                                        view.draw(new Canvas(mutableBitmap));
+                                        try {
+                                            String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
+                                            BoostLog.d("Path is:", path);
+                                            Uri uri = Uri.parse(path);
+                                            shareIntent.putExtra(Intent.EXTRA_TEXT, mainText + " View more at: " +
+                                                    finalFpUrl + "/bizFloat/" + msgID);
+                                            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                                            shareIntent.setType("image/*");
+
+
+                                            if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
+                                                appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
+                                            } else {
+                                                Methods.showSnackBarNegative(appContext,appContext.getString(R.string.no_app_available_for_action));
+                                            }
+                                        }catch (Exception e){
+                                            ActivityCompat.requestPermissions(appContext, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA}, 2);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onBitmapFailed(Drawable errorDrawable) {
+                                        pd.dismiss();
+                                        Methods.showSnackBarNegative(appContext, appContext.getString(R.string.failed_to_download_image));
+
+                                    }
+
+                                    @Override
+                                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                                    }
+                                });
+
+
+                    } else {
+                        pd.dismiss();
+                        Methods.showSnackBarNegative(appContext, appContext.getString(R.string.can_not_share_image_offline_mode));
+                    }
+
+
+                } else {
+                    pd.dismiss();
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, mainText + " View more at: " +
+                            finalFpUrl + "/bizFloat/" + msgID);
+                    if (shareIntent.resolveActivity(appContext.getPackageManager()) != null) {
+                        appContext.startActivityForResult(Intent.createChooser(shareIntent, appContext.getString(R.string.share_message)), 1);
+                    } else {
+                        Methods.showSnackBarNegative(appContext, appContext.getString(R.string.no_app_available_for_action));
+                    }
+
+                }
+            }
+
+        });
         MessageTag_Async_Task tag = new MessageTag_Async_Task(getActivity(),messageTag,msgID);
         tag.execute();
 

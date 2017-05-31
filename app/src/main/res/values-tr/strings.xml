@@ -1207,8 +1207,12 @@
     <string name="data_is_empty">Calls are empty</string>
     <string name="successfully_downloaded">Successfully Downloaded</string>
     <string name="whatsapp_bubble_close">You can disable this feature from your Boost app</string>
+    <string name="website_domain_name">.nowfloats.com</string>
+    <string name="faqs_url" />
     <string name="downloading">File downloading&#8230;</string>
     <string name="play_with_underline"><u>PLAY</u></string>
+    <string name="vmn_message_text">This is displayed on your website and you can track all customer calls &amp; logs here.</string>
+    <string name="resend"><![CDATA[<b>Resend</b>]]></string>
 
 
     <string-array name="spinner_list_item_array">

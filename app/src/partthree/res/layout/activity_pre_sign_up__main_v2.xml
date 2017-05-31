@@ -139,8 +139,8 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            android:paddingTop="5dp"
-            android:paddingBottom="7dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="15dp"
             android:gravity="center">
 
             <TextView
@@ -149,7 +149,6 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:textColor="#5e5d5d"
-                android:textSize="12sp"
                 tools:ignore="MissingPrefix"
                 android:text="@string/presignup_login_text" />
 
@@ -157,11 +156,10 @@
                 android:id="@+id/onlyloginText"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:layout_toRightOf="@+id/pre_signUp_bottom_text"
                 android:textColor="#5e5d5d"
                 android:textSize="14sp"
                 tools:ignore="MissingPrefix"
-                android:text="@string/log_in" />
+                android:text="@string/cap_login" />
 
 
         </LinearLayout>

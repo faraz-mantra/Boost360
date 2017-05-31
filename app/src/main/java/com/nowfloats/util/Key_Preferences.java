@@ -20,10 +20,11 @@ public class Key_Preferences {
     public static final String HAS_SUGGESTIONS = "HAS_SUGGESTIONS";
     public static final String IS_TO_SHOW_COACH_MARKS_SONE = "IS_TO_SHOW_COACH_MARKS_SONE";
     public static final String IS_TO_SHOW_COACH_MARKS_STWO = "IS_TO_SHOW_COACH_MARKS_STWO";
-    public static String GET_FP_DETAILS_CITY = "GET_FP_DETAILS_CITY";
-    public static String GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG";
-    public static String IS_BOOST_BUBBLE_ENABLED = "IS_BOOST_BUBBLE_ENABLED";
-    public static String GET_FP_DETAILS_ADDRESS = "GET_FP_DETAILS_ADDRESS";
+    public static final String SHOW_FACEBOOK_REVIEW = "facebook_review";
+    public static  String GET_FP_DETAILS_CITY = "GET_FP_DETAILS_CITY";
+    public static  String GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG";
+    public static  String IS_BOOST_BUBBLE_ENABLED = "IS_BOOST_BUBBLE_ENABLED";
+    public static  String GET_FP_DETAILS_ADDRESS ="GET_FP_DETAILS_ADDRESS" ;
     public static String GET_FP_DETAILS_CATEGORY = "GET_FP_DETAILS_CATEGORY";
     public static String GET_FP_DETAILS_CONTACTNAME = "GET_FP_DETAILS_CONTACTNAME";
     public static String GET_FP_DETAILS_EMAIL = "GET_FP_DETAILS_EMAIL";
@@ -93,6 +94,7 @@ public class Key_Preferences {
     public static final String IS_FP_SITE_APPEARNCE_SHOWN = "site_appearance_shown";
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
+    public static final String LANGUAGE_CODE = "LanguageCode";
     public static final String MAIN_PRIMARY_CONTACT_NUM = "mainPrimaryContactNum";
 
     public static final String FB_PULL_ENABLED = "fb_pull_enabled";

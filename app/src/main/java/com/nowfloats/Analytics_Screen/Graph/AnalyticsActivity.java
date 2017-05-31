@@ -251,7 +251,11 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
             @Override
             public void success(final DashboardResponse dashboardResponse, Response response) {
                 //Log.v("ggg",startDate+"success"+endDate);
-                new Task(dashboardResponse).execute();
+                try {
+                    new Task(dashboardResponse).execute();
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -318,27 +322,31 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
                     }catch (ParseException e){
                         weekDataArr = new int[6];
                     }
-                    int sum = 0;
-                    for(DashboardResponse.Entity list :dashboardResponse.getEntity()) {
-                        String s = list.getCreatedDate().substring(list.getCreatedDate().indexOf('(') + 1,
-                                list.getCreatedDate().indexOf(')') - 5);
-                        Calendar c = new SimpleDateFormat(pattern, Locale.ENGLISH).getCalendar();
-                        c.setTimeInMillis(Long.valueOf(s));
-                        int weekOfMonth = c.get(Calendar.WEEK_OF_MONTH);
-                        weekDataArr[weekOfMonth-1]+=list.getDataCount();
-                        sum+=list.getDataCount();
+                    try {
+                        int sum = 0;
+                        for (DashboardResponse.Entity list : dashboardResponse.getEntity()) {
+                            String s = list.getCreatedDate().substring(list.getCreatedDate().indexOf('(') + 1,
+                                    list.getCreatedDate().indexOf(')') - 5);
+                            Calendar c = new SimpleDateFormat(pattern, Locale.ENGLISH).getCalendar();
+                            c.setTimeInMillis(Long.valueOf(s));
+                            int weekOfMonth = c.get(Calendar.WEEK_OF_MONTH);
+                            weekDataArr[weekOfMonth - 1] += list.getDataCount();
+                            sum += list.getDataCount();
+                        }
+                        Bundle b = new Bundle();
+                        b.putIntArray(PARAMETER1, weekDataArr);
+                        b.putInt(PARAMETER2, sum);
+                        b.putInt(PARAMETER3, 1);
+                        b.putString(PARAMETER4, "Visits in " + getResources().getStringArray(R.array.months)[month - 1]);
+                        b.putInt(MONTH_PARAMETER, month);
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .add(R.id.activity_main_analytics, MonthFragment.newInstance(b), "MothFragment")
+                                .addToBackStack("MothFragment")
+                                .commit();
+                    }catch (Exception e){
+                        e.printStackTrace();
                     }
-                    Bundle b=new Bundle();
-                    b.putIntArray(PARAMETER1,weekDataArr);
-                    b.putInt(PARAMETER2,sum);
-                    b.putInt(PARAMETER3,1);
-                    b.putString(PARAMETER4, "Visits in " + getResources().getStringArray(R.array.months)[month-1]);
-                    b.putInt(MONTH_PARAMETER, month);
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .add(R.id.activity_main_analytics, MonthFragment.newInstance(b),"MothFragment")
-                            .addToBackStack("MothFragment")
-                            .commit();
                 }
 
                 @Override
@@ -376,7 +384,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         return sdf1.format(dddd);
     }
 
-    class Task extends AsyncTask<Void,Void,Void>{
+    private class Task extends AsyncTask<Void,Void,Void>{
 
         DashboardResponse dashboardResponse;
         Task(DashboardResponse dashboardResponse){

@@ -27,6 +27,7 @@ import com.nowfloats.Analytics_Screen.Fragments.PostFacebookUpdateFragment;
 import com.nowfloats.Analytics_Screen.model.GetFacebookAnalyticsData;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.BoostLog;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
@@ -141,7 +142,7 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
             progress.show();
     }
     private void hideDialog(){
-        if(!isFinishing()&& progress.isShowing())
+        if(progress.isShowing())
             progress.hide();
     }
 
@@ -279,7 +280,7 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
 
 
     private String makeUrl(String mType, String fpId){
-        String mAnalyticsUrl="http://nfx.withfloats.com/dataexchange/v1/fetch/analytics?" +
+        String mAnalyticsUrl= Constants.NFX_WITH_NOWFLOATS+"/dataexchange/v1/fetch/analytics?" +
                 "identifier="+mType+"&nowfloats_id=";
         return mAnalyticsUrl + fpId;
     }

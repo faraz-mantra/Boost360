@@ -26,8 +26,11 @@ public class MixPanelController {
     public static final String LINK_DOMAIN = "LinkDomain";
     public static final String BOOK_DOMAIN = "BookDomain";
     public static final String DOMAIN_SEARCH = "DomainSearch";
+    public static final String VMN_CALL_TRACKER = "VmnCallTracker";
+    public static final String FACEBOOK_REVIEW = "FacebookReview";
+    public static final String PRIMARY_NUMBER_CHANGE = "PrimaryNumberChanged";
 
-	private static MixpanelAPI mixPanel;
+    private static MixpanelAPI mixPanel;
 	public static String Bhours = "bhours", Signup = "SignUpActivity",
 			landingPage = "LandingPage",
 			BusinessDetailActivity = "BIZdetailActivity",
@@ -41,8 +44,9 @@ public class MixPanelController {
 			FacebookActivity="FacebookAnalytics";
 	private static String KEY = "";
 	public static MixpanelAPI.People people = null;
+    public static String TERM_AND_POLICY_CHECKBOX = "termAndPolicyUnCheck";
 
-	public static void setMixPanel(Activity app, String key) {
+    public static void setMixPanel(Activity app, String key) {
 		KEY = key;
 		if (mixPanel != null)
 			mixPanel.flush();
@@ -112,7 +116,7 @@ public class MixPanelController {
                 dateTime = format.format(date);
             store.put("$Created On", dateTime);
             MixPanelController.createUser(fpTAG.toUpperCase(), store);
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
