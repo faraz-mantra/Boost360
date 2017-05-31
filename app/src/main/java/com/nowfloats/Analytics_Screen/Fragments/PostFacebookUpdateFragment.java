@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.nowfloats.Analytics_Screen.SocialAnalytics;
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.Create_Message_Activity;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
@@ -57,9 +60,9 @@ public class PostFacebookUpdateFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         postUpdate= (Button) view.findViewById(R.id.create_update_button);
         TextView message = (TextView) view.findViewById(R.id.message);
-
         String socialTypeText1 = null,socialTypeText2 = null;
         if(SocialAnalytics.FACEBOOK.equals(mType)){
             socialTypeText2 = "Facebook Page";
@@ -70,12 +73,22 @@ public class PostFacebookUpdateFragment extends Fragment {
         }
         String text = "Looks like you haven\'t posted any update on your "+socialTypeText1+" through Boost yet Make sure you select the <b>"+socialTypeText2+" option</b> while creating an update";
         message.setText(Methods.fromHtml(text));
+
+        if(!isAdded()) return;
+
+        final UserSessionManager session = new UserSessionManager(context,getActivity());
         postUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(context, Create_Message_Activity.class);
-                startActivity(i);
-                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
+                String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
+                if(TextUtils.isEmpty(paymentState) || TextUtils.isEmpty(paymentLevel)){
+
+                }else if(Integer.valueOf(paymentState)>0 && Integer.valueOf(paymentLevel)>=10 ){
+                    Intent i = new Intent(context, Create_Message_Activity.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
             }
         });
     }

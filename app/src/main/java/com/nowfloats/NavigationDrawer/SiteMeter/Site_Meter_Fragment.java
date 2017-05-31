@@ -159,7 +159,7 @@ public class Site_Meter_Fragment extends Fragment {
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        if(getActivity()==null || !isAdded()) return;
         progressBar = (ProgressBar) view.findViewById(R.id.ProgressBar);
         meterReading = (TextView) view.findViewById(R.id.site_meter_reading);
         recyclerView = (RecyclerView) view.findViewById(R.id.sitemeter_recycler_view);
@@ -191,6 +191,7 @@ public class Site_Meter_Fragment extends Fragment {
 //                        scaleAdapter = new ScaleInAnimationAdapter(alphaAdapter);
 //                        scaleAdapter.setFirstOnly(false);
 //                        scaleAdapter.setInterpolator(new OvershootInterpolator());
+
                         siteData = loadData();
                         adapter = new SiteMeterAdapter(activity, Site_Meter_Fragment.this, siteData);
                         siteMeterCalculation();
@@ -225,6 +226,7 @@ public class Site_Meter_Fragment extends Fragment {
     private ArrayList<SiteMeterModel> loadData() {
 
         //Set percentage according to the partners
+        if(!isAdded()) return null;
         //0
         siteData.clear();
         if (!(getResources().getString(R.string.buydomain_percentage).equals("0")))

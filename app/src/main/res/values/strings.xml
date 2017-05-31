@@ -1199,5 +1199,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="faqs_url">https://nowfloats.com/faq</string>
     <string name="email_id_to_request_plans">lead@nowfloats.com</string>
     <string name="resend"><u>Resend</u></string>
+    <string name="terms_n_cond_toast">You must agree with the terms and conditions to proceed</string>
 
 </resources>

@@ -158,7 +158,7 @@ public class Fetch_Home_Data {
             }
 
             if(HomeActivity.StorebizFloats!=null && HomeActivity.StorebizFloats.size()==0){
-                if (Home_Main_Fragment.emptyMsgLayout!=null && !Constants.fromLogin) {
+                if (Home_Main_Fragment.emptyMsgLayout!=null && !Constants.isWelcomScreenToBeShown) {
                         Home_Main_Fragment.emptyMsgLayout.setVisibility(View.VISIBLE);
                 }
             }else{

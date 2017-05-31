@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.charts.BarChart;
@@ -49,6 +50,7 @@ import com.nowfloats.Analytics_Screen.SearchRankingActivity;
 import com.nowfloats.Analytics_Screen.SocialAnalytics;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
+import com.nowfloats.Analytics_Screen.VmnDataSingleton;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.CustomWidget.VerticalTextView;
 import com.nowfloats.Login.UserSessionManager;
@@ -116,6 +118,7 @@ public class Analytics_Fragment extends Fragment {
     @Override
     public void onResume() {
 
+        VmnDataSingleton.getInstance().setVmnDataNull();
         //Log.d("FCM Token", FirebaseInstanceId.getInstance().getToken());
         getFPDetails(getActivity(), session.getFPID(), Constants.clientId, bus);
 
@@ -147,9 +150,12 @@ public class Analytics_Fragment extends Fragment {
                 @Override
                 public void run() {
                     if(getActivity()!=null && mButtonId!=null && mNextNodeId!=null){
-                        mListener.onResponse(mButtonId, mNextNodeId);
+                        if(RiaEventLogger.isLastEventCompleted){
+                            mListener.onResponse(mButtonId, mNextNodeId);
+                        }
+
                     }else if(mNextNodeId== null){
-                        if(RiaEventLogger.lastEventStatus) {
+                        if(RiaEventLogger.isLastEventCompleted) {
                             cvRiaCard.setVisibility(View.GONE);
                             bus.post(new ArrayList<RiaCardModel>());
                             RiaEventLogger.lastEventStatus = false;
@@ -249,25 +255,18 @@ public class Analytics_Fragment extends Fragment {
         facebookLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              /*  if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
+                if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
                     Toast.makeText(context, "This feature is coming soon", Toast.LENGTH_LONG).show();
-                } else {*/
+                } else {
                     SharedPreferences pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
                     int status = pref.getInt("fbPageStatus", 0);
 
-                /*if(pref.getBoolean("fbPageShareEnabled",false) && status==1)
-                {
-                    Intent i = new Intent(getActivity(), ShowWebView.class);
-                    startActivity(i);
-                }
-                else
-                {*/
-                    //Log.v("ggg",pref.getBoolean("fbPageShareEnabled",false)+"frag_ana"+status);
                     Intent i = new Intent(getActivity(), SocialAnalytics.class);
                     i.putExtra("GetStatus", status);
                     startActivity(i);
 
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
             }
         });
         if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
@@ -455,6 +454,7 @@ public class Analytics_Fragment extends Fragment {
         llTwoButtons.setVisibility(View.GONE);
         llSingleButtonLayout.setVisibility(View.GONE);
         tvRiaCardHeader.setText(rootCard.getHeaderText());
+        RiaEventLogger.isLastEventCompleted = false;
         if(rootCard.getButtons()==null || rootCard.getButtons().size()==0){
 
         }else if(rootCard.getButtons()!=null && rootCard.getButtons().size()==1){
@@ -482,6 +482,8 @@ public class Analytics_Fragment extends Fragment {
                         intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnSingle.getUrl());
                         intent.putExtra(RiaWebViewActivity.RIA_NODE_DATA, new RiaNodeDataModel(rootCard.getId(), btnSingle.getId(),
                                 btnSingle.getButtonText()));
+                        mButtonId = btnSingle.getId();
+                        mNextNodeId = btnSingle.getNextNodeId();
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
@@ -515,6 +517,8 @@ public class Analytics_Fragment extends Fragment {
                         intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnLeft.getUrl());
                         intent.putExtra(RiaWebViewActivity.RIA_NODE_DATA, new RiaNodeDataModel(rootCard.getId(), btnLeft.getId(),
                                 btnLeft.getButtonText()));
+                        mButtonId = btnLeft.getId();
+                        mNextNodeId = btnLeft.getNextNodeId();
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
@@ -537,6 +541,7 @@ public class Analytics_Fragment extends Fragment {
                     } else if (btnRight.getButtonType().equals(BUTTON_TYPE_NEXT_NODE) && btnRight.getNextNodeId() != null) {
                         listener.onResponse(btnRight.getId(), btnRight.getNextNodeId());
                     } else if (btnRight.getButtonType().equals(BUTTON_TYPE_EXIT)) {
+                        RiaEventLogger.lastEventStatus = true;
                         cvRiaCard.setVisibility(View.GONE);
                         bus.post(new ArrayList<RiaCardModel>());
                     } else if (btnRight.getButtonType().equals(BUTTON_TYPE_OPEN_URL)) {
@@ -544,6 +549,8 @@ public class Analytics_Fragment extends Fragment {
                         intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnRight.getUrl());
                         intent.putExtra(RiaWebViewActivity.RIA_NODE_DATA, new RiaNodeDataModel(rootCard.getId(), btnRight.getId(),
                                 btnRight.getButtonText()));
+                        mButtonId = btnRight.getId();
+                        mNextNodeId = btnRight.getNextNodeId();
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }

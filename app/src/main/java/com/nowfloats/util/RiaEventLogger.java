@@ -21,6 +21,7 @@ public class RiaEventLogger {
     private DatabaseReference mDatabase;
     //private static Bus mBus;
     public static boolean lastEventStatus;
+    public static boolean isLastEventCompleted;
     public static RiaEventLogger getInstance(){
         if(sRiaEventLogger==null){
             sRiaEventLogger = new RiaEventLogger();
@@ -83,12 +84,13 @@ public class RiaEventLogger {
     }
 
     public void logPostEvent(String FPTag, String NodeId, String buttonId, String buttonLabel, int status){
+        if(status == EventStatus.COMPLETED.getValue()){
+            isLastEventCompleted = true;
+        }else {
+            isLastEventCompleted = false;
+        }
         if(!BuildConfig.DEBUG) {
-            if(status == EventStatus.COMPLETED.getValue()){
-                lastEventStatus = true;
-            }else {
-                lastEventStatus = false;
-            }
+
             DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
             df.setTimeZone(TimeZone.getTimeZone("UTC"));
             HashMap<String, String> EventData = new HashMap<>();

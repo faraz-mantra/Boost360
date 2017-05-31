@@ -326,11 +326,12 @@ public class Home_Fragment_Tab extends Fragment {
 
     }
     public void checkOverlay(DrawOverLay from){
-        if(!isProductAvaiable || !isAdded() || getActivity() == null){
+        if(!isAdded() || getActivity() == null){
             return;
-        }else if(from == DrawOverLay.FromHome && activity!= null){
+        }else if(!isProductAvaiable && from == DrawOverLay.FromHome && activity!= null){
 
             Toast.makeText(activity, "you do not have products into ProductGallery", Toast.LENGTH_SHORT).show();
+            return;
         }
         Calendar calendar = Calendar.getInstance();
         long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, -1);
@@ -343,7 +344,7 @@ public class Home_Fragment_Tab extends Fragment {
         }
 
         boolean checkAccessibility = true;
-
+        pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME,Calendar.getInstance().getTimeInMillis()).apply();
         if (android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity())) {
             checkAccessibility = false;
             dialogForOverlayPath(from);
@@ -395,17 +396,17 @@ public class Home_Fragment_Tab extends Fragment {
         }
     }*/
     private void dialogForOverlayPath(DrawOverLay from){
-
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_bubble_overlay_permission,null);
+        if(getActivity() == null) return;
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_bubble_overlay_permission,null);
         ImageView image = (ImageView) view.findViewById(R.id.gif_image);
         try {
             GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(image);
-            Glide.with(getActivity()).load(R.drawable.overlay_gif).into(target);
+            Glide.with(getContext()).load(R.drawable.overlay_gif).into(target);
         }catch(Exception e){
             e.printStackTrace();
         }
         if(overLayDialog == null){
-        overLayDialog = new MaterialDialog.Builder(getActivity())
+        overLayDialog = new MaterialDialog.Builder(getContext())
                 .customView(view,false)
                 .positiveColorRes(R.color.primary)
                 .positiveText(getString(R.string.open_setting))
@@ -461,8 +462,6 @@ public class Home_Fragment_Tab extends Fragment {
         if(getActivity() ==null) return;
         if(!Methods.isAccessibilitySettingsOn(getActivity())) {
             showBubble();
-        }else if(pref!=null){
-            pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME,Calendar.getInstance().getTimeInMillis()).apply();
         }
     }
     private void addOverlay(){

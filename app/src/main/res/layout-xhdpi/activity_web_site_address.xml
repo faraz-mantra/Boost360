@@ -105,7 +105,8 @@
             android:orientation="horizontal">
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/checkbox"
-                android:checked="true"
+                android:checked="false"
+                android:buttonTint="@color/primaryColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
@@ -132,7 +133,7 @@
             android:text="@string/create_website"
             android:textSize="15sp"
             android:textColor="#FFFFFF"
-            android:background="@color/primaryColor"/>
+            android:background="@color/gray_transparent"/>
     </LinearLayout>
 
 </RelativeLayout>
