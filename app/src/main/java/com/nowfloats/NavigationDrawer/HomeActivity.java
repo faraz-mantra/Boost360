@@ -13,6 +13,8 @@ import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
@@ -852,7 +854,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 if(clickCnt == 0){
                     MixPanelController.track(EventKeysWL.WELCOME_SCREEN_2, null);
                     titleTextView.setText(getResources().getString(R.string.onboarding_screen_2_title));
-                    descTextView.setText(Html.fromHtml(getString(R.string.update_website_twice_week)));
+                    descTextView.setText(Methods.fromHtml(getString(R.string.update_website_twice_week)));
                     showNextButton.setText(getString(R.string.got_it_next));
                     imageView.setImageResource(R.drawable.onboarding_popup_two_image);
                     imageView.setBackgroundColor(getResources().getColor(R.color.primaryColor));
@@ -863,6 +865,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     descTextView.setText(Html.fromHtml(getString(R.string.people_are_searching_keep_your_updates)));
                     showNextButton.setText(getString(R.string.greate_thanks));
                     imageView.setImageResource(R.drawable.onboarding_popup_three);
+                    PorterDuffColorFilter colorFilter = new PorterDuffColorFilter(ContextCompat.getColor(HomeActivity.this,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+                    imageView.setColorFilter(colorFilter);
                     imageView.setBackgroundColor(getResources().getColor(R.color.white));
                     clickCnt++;
                 }else {
@@ -949,7 +953,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             DeepLinkPage(RiaFirebaseMessagingService.deepLinkUrl, false);
             Constants.GCM_Msg = false;
         }
-
     }
     private void checkExpiry1(){
         if(Constants.PACKAGE_NAME.equals("com.kitsune.biz")){
@@ -957,6 +960,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         }
         String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
         String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
+        if(TextUtils.isEmpty(paymentState) || TextUtils.isEmpty(paymentLevel)){
+            return;
+        }
         Calendar calendar = Calendar.getInstance();
         Long currentTime = calendar.getTimeInMillis();
 

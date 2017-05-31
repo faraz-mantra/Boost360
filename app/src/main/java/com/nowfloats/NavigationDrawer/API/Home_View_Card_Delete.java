@@ -195,7 +195,7 @@ public class Home_View_Card_Delete  extends AsyncTask<Void,String, String> {
                 }
             }
             if(HomeActivity.StorebizFloats!=null && HomeActivity.StorebizFloats.size()==0){
-                if (Home_Main_Fragment.emptyMsgLayout!=null)
+                if (Home_Main_Fragment.emptyMsgLayout!=null && !Constants.isWelcomScreenToBeShown)
                     Home_Main_Fragment.emptyMsgLayout.setVisibility(View.VISIBLE);
             }
             if (cardrefresh!=null)

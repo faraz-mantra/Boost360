@@ -22,13 +22,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Analytics_Screen.Search_Query_Adapter.VmnCallAdapter;
 import com.nowfloats.Analytics_Screen.model.VmnCallModel;
+import com.nowfloats.Login.UserSessionManager;
 import com.thinksity.R;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -38,7 +36,7 @@ import java.util.HashMap;
  * Created by Admin on 27-04-2017.
  */
 
-public class ShowVmnCallActivity extends AppCompatActivity implements VmnCallAdapter.RequestPermission, View.OnClickListener {
+public class ShowVmnCallActivity extends AppCompatActivity implements VmnCallAdapter.RequestPermission, View.OnClickListener,VmnDataSingleton.ConnectToVmnData {
 
 
     ExpandableListView expList;
@@ -65,17 +63,9 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCallAda
         autoTextView.setInputType(InputType.TYPE_CLASS_PHONE);
         autoTextView.setHint(getString(R.string.search));
         searchAdapter = new VmnCallAdapter(this, searchList);
-        Intent intent = getIntent();
-        if (intent != null) {
-            Type type = new TypeToken<ArrayList<VmnCallModel>>() {
-            }.getType();
-            ArrayList<VmnCallModel> list = new Gson().fromJson(intent.getStringExtra("calls"), type);
-            numberWiseSeparation(list);
-        } else {
-            return;
-        }
         searchImage.setOnClickListener(this);
         setSupportActionBar(toolbar);
+
         if (getSupportActionBar() != null) {
             title.setText("Call Logs");
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -108,7 +98,7 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCallAda
                 }
             }
         });
-
+        VmnDataSingleton.getInstance().requestVmnData(this,new UserSessionManager(this,this).getFPID());
     }
 
 
@@ -236,5 +226,13 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCallAda
                 autoTextView.requestFocus();
                 break;
         }
+    }
+
+    @Override
+    public void onDataLoaded(ArrayList<VmnCallModel> vmnData) {
+        if(vmnData != null){
+            numberWiseSeparation(vmnData);
+        }
+
     }
 }

@@ -100,8 +100,8 @@ public class Constants {
     public static NotificationInterface alertInterface = Constants.restAdapter.create(NotificationInterface.class);
 
     //http://api.withfloats.com/Discover/v3/FloatingPoint/create
+    //public static String NFX_DEV_NOWFLOATS="http://nfx.nowfloatsdev.com";
     public static String NFX_WITH_NOWFLOATS="https://nfx.withfloats.com";
-    public static String NFX_DEV_NOWFLOATS="http://nfx.nowfloatsdev.com";
     public static String createStoreV3 = NOW_FLOATS_API_URL + "/Discover/v3/FloatingPoint/create";
     public static String createStoreV2 = NOW_FLOATS_API_URL + "/Discover/v2/FloatingPoint/create";
     public static String loginUrl = NOW_FLOATS_API_URL + "/discover/v1/login/";

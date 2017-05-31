@@ -130,7 +130,7 @@ public class BubbleDialog extends AppCompatActivity {
 //        Intent sendIntent = new Intent();
 //        sendIntent.setAction(Intent.ACTION_SEND);
 //        sendIntent.setType("image/jpeg");
-//        sendIntent.setPackage(DataAccessibilityServiceV6.PK_NAME_WHATSAPP);
+//        sendIntent.setPackage(DataAccessibilityServiceV7.PK_NAME_WHATSAPP);
 //        sendIntent.putExtra(Intent.EXTRA_TEXT,"");
 //        sendIntent.putParcelableArrayListExtra("android.intent.extra.STREAM", localArrayList);
 //        sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -143,7 +143,7 @@ public class BubbleDialog extends AppCompatActivity {
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, message);
         sendIntent.setType("text/plain");
-        sendIntent.setPackage(DataAccessibilityServiceV6.PK_NAME_WHATSAPP);
+        sendIntent.setPackage(DataAccessibilityServiceV7.PK_NAME_WHATSAPP);
         sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(sendIntent);
     }

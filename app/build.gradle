@@ -47,8 +47,8 @@ android {
         applicationId 'com.thinksity'
         minSdkVersion 15
         targetSdkVersion 25
-        versionName "4.6.6"
-        versionCode 2017050031
+        versionName "4.6.7"
+        versionCode 2017060001
         multiDexEnabled true
     }
     buildTypes {

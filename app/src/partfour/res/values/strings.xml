@@ -31,6 +31,8 @@
     <string name="ps_sc2_lbl2">Creation</string>
     <string name="ps_sc2_lbl3">Get a business website \nthat is instantly created and \neasily managed using this app.</string>
     <string name="ps_sc3_lbl1">Connect to</string>
+    <string name="update_website_twice_week"><![CDATA[<font>Update your website </font>\" + \"<font color=\'#009EDF\'>twice a week. </font>\"+\"<font>Just press the plus button at the bottom and simply tell your customers about your products, services or offers </font>]]></string>
+    <string name="people_are_searching_keep_your_updates"><![CDATA[<font>People around your business are searching for stuff you sell, so keep your updates </font>\" + \"<font color=\'#009EDF\'>relevant and fresh.</font>\" + \"<font>This will you lead to attract more customers and generate more revenue.</font>]]></string>
     <string name="ps_sc3_lbl2">Facebook</string>
     <string name="ps_sc3_lbl3">Sign in with your Facebook page to \ncreate and update your website instantly. \nHighly recommended!</string>
     <string name="ps_sc4_lbl1">Discoverable</string>
