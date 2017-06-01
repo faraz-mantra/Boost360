@@ -62,7 +62,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
@@ -219,13 +218,6 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 if (facebookPageCheckBox.isChecked()) {
                     Toast.makeText(Social_Sharing_Activity.this,"Reconnect with facebook",Toast.LENGTH_SHORT).show();
                     facebookPageCheckBox.setChecked(false);
-//                    final Handler handler = new Handler();
-//                    handler.postDelayed(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            fbPageData(FROM_FB_PAGE);
-//                        }
-//                    }, 200);
 //
                 } else {
                     NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) Social_Sharing_Activity.this)
@@ -393,7 +385,6 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
             default:
                 return;
         }
-        pref.edit().putLong("expire_dialog",Calendar.getInstance().getTimeInMillis()).apply();
 
         MaterialDialog mExpireDailog = new MaterialDialog.Builder(this)
                 .customView(R.layout.pop_up_restrict_post_message, false)
@@ -1410,7 +1401,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 break;
             case TWITTER_DEACTIVATION:
                 twitterStatus.setVisibility(View.GONE);
-                //twitterStatus.setText("Disconnected");
+
                 twitter.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.twitter_icon_inactive));
                 twitter.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
                 logoutFromTwitter();

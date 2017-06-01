@@ -30,10 +30,10 @@ public class TwitterConnection {
     private Context mContext;
 
 
-    TwitterConfig config;
     private TwitterAuthClient client;
 
     public TwitterConnection(Context context){
+        TwitterConfig config;
         config = new TwitterConfig.Builder(context)
                 .logger(new DefaultLogger(Log.DEBUG))
                 .twitterAuthConfig(new TwitterAuthConfig(Constants.CONSUMER_KEY, Constants.CONSUMER_SECRET))
@@ -49,8 +49,6 @@ public class TwitterConnection {
             @Override
             public void success(Result<TwitterSession> result) {
                 ((TwitterResult)mContext).onTwitterConnected(result);
-                TwitterSession session = result.data;
-                Log.v("ggg",session.getAuthToken()+" "+session.getUserId()+" "+session.toString());
             }
 
             @Override
