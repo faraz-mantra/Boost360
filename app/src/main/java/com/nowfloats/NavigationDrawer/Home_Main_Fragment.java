@@ -190,6 +190,7 @@ public class Home_Main_Fragment extends Fragment implements
         mIsNewMsg = true;
         getNewAvailableUpdates();
         mPref.edit().putString("msg_post","").apply();
+        mPref.edit().putInt("quikrStatus",0).apply();
         mPref.edit().putString("image_post","").apply();
     }
 
@@ -204,6 +205,7 @@ public class Home_Main_Fragment extends Fragment implements
 
             Constants.createMsg =false;
             mPref.edit().putString("msg_post","").apply();
+            mPref.edit().putInt("quikrStatus",0).apply();
             mPref.edit().putString("image_post","").apply();
             //path = pref.getString("image_post",null);
         }
@@ -331,7 +333,7 @@ public class Home_Main_Fragment extends Fragment implements
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new FadeInUpAnimator());
         myOnClickListener = new MyOnClickListener(getActivity());
-        recyclerView.setOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
+        recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int scrollState) {
                 if (scrollState == RecyclerView.SCROLL_STATE_IDLE) {
@@ -439,7 +441,7 @@ public class Home_Main_Fragment extends Fragment implements
 
         SharedPreferences.Editor editor = mPref.edit();
         editor.putBoolean(Constants.SYNCED, true);
-        editor.commit();
+        editor.apply();
 
         cAdapter.notifyDataSetChanged();
         progressBar.setVisibility(View.GONE);

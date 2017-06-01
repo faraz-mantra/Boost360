@@ -1,11 +1,12 @@
 package com.nowfloats.NavigationDrawer.businessApps;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +15,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.gson.JsonObject;
 import com.nowfloats.CustomWidget.MaterialProgressBar;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.NavigationDrawer.API.BusinessAppApis;
+import com.nowfloats.Store.Service.StoreInterface;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -35,6 +41,7 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
     private String type;
     private Context context;
     UserSessionManager session;
+    SharedPreferences pref;
     public static Fragment getInstance(String type){
         Fragment frag=new BusinessAppStudio();
         Bundle b=new Bundle();
@@ -68,17 +75,16 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
         if(!isAdded()){
             return;
         }
-
+        pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         session=new UserSessionManager(context,getActivity());
 
-        Button previewButton= (Button) view.findViewById(R.id.preview_button);
-        Button getAppButton= (Button) view.findViewById(R.id.get_app_button);
-        ImageView iconImage= (ImageView) view.findViewById(R.id.imgview_icon_type);
-        ImageView logoImage= (ImageView) view.findViewById(R.id.business_app_preview_android_image);
-        TextView freeText= (TextView) view.findViewById(R.id.tv_free);
-        TextView nameTextView= (TextView) view.findViewById(R.id.app_name);
-        LinearLayout comming_soon= (LinearLayout) view.findViewById(R.id.comming_soon);
-        LinearLayout buttonLayout= (LinearLayout) view.findViewById(R.id.button_layout);
+        Button previewButton = (Button) view.findViewById(R.id.preview_button);
+        Button getAppButton = (Button) view.findViewById(R.id.get_app_button);
+        ImageView iconImage = (ImageView) view.findViewById(R.id.imgview_icon_type);
+        ImageView logoImage = (ImageView) view.findViewById(R.id.business_app_preview_android_image);
+        TextView nameTextView = (TextView) view.findViewById(R.id.app_name);
+        LinearLayout comming_soon = (LinearLayout) view.findViewById(R.id.comming_soon);
+        LinearLayout buttonLayout = (LinearLayout) view.findViewById(R.id.button_layout);
 
         previewButton.setOnClickListener(this);
         getAppButton.setOnClickListener(this);
@@ -86,13 +92,18 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
         nameTextView.setText(name);
 
         if(type.equals("android")){
-            getAppButton.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context,R.drawable.android_icon_white), null, null, null );
-            getAppButton.setText(getResources().getString(R.string.get_android_app));
+            //getAppButton.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context,R.drawable.android_icon_white), null, null, null );
+            if(!pref.getBoolean(Key_Preferences.BUSINESS_APP_REQUESTED,false)){
+                getAppButton.setText(getString(R.string.interest));
+                getAppButton.setBackgroundResource(R.color.business_button_black);
+            }else{
+                getAppButton.setText(getString(R.string.already_requested));
+                getAppButton.setBackgroundResource(R.color.business_button_gray);
+            }
             previewButton.setText(getResources().getString(R.string.android_app_preview));
             iconImage.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.android_green_padding));
         }
         else {
-            freeText.setVisibility(View.GONE);
             buttonLayout.setVisibility(View.GONE);
             comming_soon.setVisibility(View.VISIBLE);
             getAppButton.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context,R.drawable.ios_icon_white), null, null, null );
@@ -103,18 +114,59 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(final View view) {
         final BusinessAppPreview frag= (BusinessAppPreview) getParentFragment();
         switch (view.getId()){
             case R.id.preview_button:
-                frag.showScreenShots();
+                if(frag!=null ) {
+                    frag.showScreenShots();
+                }
                 break;
             case R.id.get_app_button:
 
-                if(frag!=null) {
+                if(isAdded()) {
                     if (type.equals("android")) {
-                        MaterialProgressBar.startProgressBar(getActivity(),"requesting for Business App",false);
-                        BusinessAppApis.AppApis apis=BusinessAppApis.getRestAdapter();
+
+                        if (!pref.getBoolean(Key_Preferences.BUSINESS_APP_REQUESTED, false)) {
+                            MaterialProgressBar.startProgressBar(getActivity(), "Requesting for business app", false);
+
+                            Map<String, String> params = new HashMap<>();
+                            params.put("clientId", session.getSourceClientId());
+                            params.put("planType", "BizApps");
+                            params.put("toEmail", getString(R.string.email_id_to_request_plans));
+                            StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
+                            storeInterface.requestWidget(session.getFPID(), params, new Callback<String>() {
+                                @Override
+                                public void success(String s, Response response) {
+                                    MaterialProgressBar.dismissProgressBar();
+                                    if(response.getStatus() != 200){
+                                        Methods.showSnackBarNegative(getActivity(),getString(R.string.something_went_wrong_try_again));
+                                        return;
+                                    }
+                                    pref.edit().putBoolean(Key_Preferences.BUSINESS_APP_REQUESTED,true).apply();
+                                    MixPanelController.track(MixPanelController.BUSINESS_APP,null);
+                                    ((Button) view).setText(getString(R.string.already_requested));
+                                    (view).setBackgroundResource(R.color.business_button_gray);
+                                    new MaterialDialog.Builder(context)
+                                            .title(getString(R.string.thank_you_for_your_interest))
+                                            .content(getString(R.string.business_app_requested_success))
+                                            .negativeText(getString(R.string.ok))
+                                            .negativeColorRes(R.color.primary_color)
+                                            .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                                @Override
+                                                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                                    dialog.dismiss();
+                                                }
+                                            }).show();
+                                }
+
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    MaterialProgressBar.dismissProgressBar();
+                                    Methods.showSnackBarNegative(getActivity(),getString(R.string.something_went_wrong_try_again));
+                                }
+                            });
+                       /* BusinessAppApis.AppApis apis=BusinessAppApis.getRestAdapter();
                         apis.getGenerate(Constants.clientId, session.getFPID(), new Callback<JsonObject>() {
                             @Override
                             public void success(JsonObject s, Response response) {
@@ -137,7 +189,20 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
                                 MaterialProgressBar.dismissProgressBar();
                                 showMessage("There was an error processing your request. Please try again in few minutes");
                             }
-                        });
+                        });*/
+                        }else{
+                            new MaterialDialog.Builder(context)
+                                    .title(getString(R.string.thank_you_for_your_interest))
+                                    .content(getString(R.string.business_app_requested_success))
+                                    .negativeText(getString(R.string.ok))
+                                    .negativeColorRes(R.color.primary_color)
+                                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                            dialog.dismiss();
+                                        }
+                                    }).show();
+                        }
                     }
                 }
                 break;

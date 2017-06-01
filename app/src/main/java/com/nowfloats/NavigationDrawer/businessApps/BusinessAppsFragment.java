@@ -70,16 +70,17 @@ public class BusinessAppsFragment extends Fragment {
         mButton= (Button) view.findViewById(R.id.customer_apps_get_store_link_button);
         mAdapter = new viewPagerAdapter(getChildFragmentManager());
         mPager = (ViewPager) view.findViewById(R.id.ps_pager);
-        mPager.setClipToPadding(false);
+       // mPager.setClipToPadding(false);
         // set padding manually, the more you set the padding the more you see of prev & next page
-        mPager.setPadding(50, 30, 50, 10);
+        mPager.setPadding(30, 30, 30, 0);
         // sets a margin b/w individual pages to ensure that there is a gap b/w them
         mPager.setPageMargin(30);
 
         mPager.setAdapter(mAdapter);
         mIndicator = (CirclePageIndicator) view.findViewById(R.id.ps_indicator);
         mIndicator.setViewPager(mPager);
-        mIndicator.setFillColor(R.color.primaryColor);
+        mIndicator.setStrokeColor(R.color.black_translucent);
+        mIndicator.setFillColor(R.color.dark_black_color);
 //        mIndicator.setRadius(5);
         mIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

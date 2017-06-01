@@ -2,9 +2,13 @@ package com.nowfloats.CustomPage;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -97,6 +101,7 @@ public class CustomPageActivity extends Fragment  {
         return mainView;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -109,7 +114,7 @@ public class CustomPageActivity extends Fragment  {
         progress_layout = (LinearLayout) view.findViewById(R.id.progress_custom_page);
         progress_layout.setVisibility(View.VISIBLE);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-        recyclerView.setItemAnimator(new FadeInUpAnimator());
+        recyclerView.setItemAnimator(null);
 
         LoadPageList(activity, bus);
 

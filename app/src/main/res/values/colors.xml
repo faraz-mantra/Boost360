@@ -9,6 +9,8 @@
     <drawable name="focused">#30000000</drawable>
     <drawable name="selected">#30000000</drawable>
 
+    <color name="divider">#D6D6D6</color>
+
     <color name="primaryColor">#ffb900</color>
     <color name="primaryColorDark">#F9A825</color>
     <color name="tabOnclickColor">#FFE5A0</color>
@@ -28,7 +30,8 @@
     <color name="side_panel_progress_bar_text">#8c8c8c</color>
 
     <color name="dark_black_color">#6e6e6e</color>
-
+    <color name="business_button_black">#8c8c8c</color>
+    <color name="business_button_gray">#CACACA</color>
     <color name="light_black_color">#a4a4a4</color>
     <color name="search_date_color">#8c8c8c</color>
     <color name="title_popup">#212121</color>
@@ -154,4 +157,6 @@
         <item>@color/third_background</item>
         <item>@color/fourth_background</item>
     </integer-array>
+    <color name="red">#F20A0A</color>
+    <color name="primary">@color/primaryColor</color>
 </resources>

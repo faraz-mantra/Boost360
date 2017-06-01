@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.Locale;
 
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -60,7 +59,6 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
     ViewPager pager;
     public boolean rowExist=true;
     AnalyticsAdapter analyticsAdapter;
-    private final static String endpoint = " https://api.withfloats.com";
     public int yearData,monthData,weekData;
     private String startDate="01-01-2016",endDate ;
     ContentLoadingProgressBar progressBar;
@@ -247,13 +245,17 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         map.put("endDate",dashboardDetails.getEndDate());
         map.put("detailstype",String.valueOf(tableName));
         map.put("scope",session.getISEnterprise().equals("true") ? "1" : "0");
-        RestAdapter adapter = new RestAdapter.Builder().setEndpoint(endpoint).build();
-        AnalyticsFetch.FetchDetails details = adapter.create(AnalyticsFetch.FetchDetails.class);
+
+        AnalyticsFetch.FetchDetails details = Constants.restAdapter.create(AnalyticsFetch.FetchDetails.class);
         details.getDataCount(dashboardDetails.getfpTag(),map, new Callback<DashboardResponse>() {
             @Override
             public void success(final DashboardResponse dashboardResponse, Response response) {
                 //Log.v("ggg",startDate+"success"+endDate);
-                new Task(dashboardResponse).execute();
+                try {
+                    new Task(dashboardResponse).execute();
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -278,13 +280,13 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
 
 
     @Override
-    public void onYearDataClicked(int dataSetIndex) {
+    public void onYearDataClicked(final int dataSetIndex) {
         final Calendar calendar = Calendar.getInstance();
         progressBar.setVisibility(View.VISIBLE);
         try {
             final int month = dataSetIndex + 1;
             String dateString = month + "-01-" + calendar.get(Calendar.YEAR);
-            final DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+            final DateFormat dateFormat = new SimpleDateFormat(pattern,Locale.ENGLISH);
             Date date = dateFormat.parse(dateString);
             String firstDate = getFirstDay(date);
             String lastDate = (month + 1) + "-01-" + calendar.get(Calendar.YEAR);
@@ -300,8 +302,8 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
             map.put("scope",session.getISEnterprise().equals("true") ? "1" : "0");
             BoostLog.d("Current Start:", firstDate + " -  " + lastDate);
 
-            RestAdapter adapter = new RestAdapter.Builder().setEndpoint(endpoint).build();
-            AnalyticsFetch.FetchDetails details = adapter.create(AnalyticsFetch.FetchDetails.class);
+
+            AnalyticsFetch.FetchDetails details = Constants.restAdapter.create(AnalyticsFetch.FetchDetails.class);
             details.getDataCount(session.getFpTag(),map, new Callback<DashboardResponse>() {
                 @Override
                 public void success(final DashboardResponse dashboardResponse, Response response) {
@@ -309,32 +311,42 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
                     int[] weekDataArr;
                     try {
                         Calendar localCalendar = Calendar.getInstance();
-                        localCalendar.setTime(dateFormat.parse(lastDateUsed));
-                        weekDataArr = new int[localCalendar.get(Calendar.WEEK_OF_MONTH)];
+                        if(localCalendar.get(Calendar.MONTH) == dataSetIndex){
+
+                            weekDataArr = new int[localCalendar.get(Calendar.WEEK_OF_MONTH)];
+                        }
+                        else {
+                            localCalendar.setTime(dateFormat.parse(lastDateUsed));
+                            weekDataArr = new int[localCalendar.get(Calendar.WEEK_OF_MONTH)];
+                        }
                     }catch (ParseException e){
                         weekDataArr = new int[6];
                     }
-                    int sum = 0;
-                    for(DashboardResponse.Entity list :dashboardResponse.getEntity()) {
-                        String s = list.getCreatedDate().substring(list.getCreatedDate().indexOf('(') + 1,
-                                list.getCreatedDate().indexOf(')') - 5);
-                        Calendar c = new SimpleDateFormat(pattern, Locale.ENGLISH).getCalendar();
-                        c.setTimeInMillis(Long.valueOf(s));
-                        int weekOfMonth = c.get(Calendar.WEEK_OF_MONTH);
-                        weekDataArr[weekOfMonth-1]+=list.getDataCount();
-                        sum+=list.getDataCount();
+                    try {
+                        int sum = 0;
+                        for (DashboardResponse.Entity list : dashboardResponse.getEntity()) {
+                            String s = list.getCreatedDate().substring(list.getCreatedDate().indexOf('(') + 1,
+                                    list.getCreatedDate().indexOf(')') - 5);
+                            Calendar c = new SimpleDateFormat(pattern, Locale.ENGLISH).getCalendar();
+                            c.setTimeInMillis(Long.valueOf(s));
+                            int weekOfMonth = c.get(Calendar.WEEK_OF_MONTH);
+                            weekDataArr[weekOfMonth - 1] += list.getDataCount();
+                            sum += list.getDataCount();
+                        }
+                        Bundle b = new Bundle();
+                        b.putIntArray(PARAMETER1, weekDataArr);
+                        b.putInt(PARAMETER2, sum);
+                        b.putInt(PARAMETER3, 1);
+                        b.putString(PARAMETER4, "Visits in " + getResources().getStringArray(R.array.months)[month - 1]);
+                        b.putInt(MONTH_PARAMETER, month);
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .add(R.id.activity_main_analytics, MonthFragment.newInstance(b), "MothFragment")
+                                .addToBackStack("MothFragment")
+                                .commit();
+                    }catch (Exception e){
+                        e.printStackTrace();
                     }
-                    Bundle b=new Bundle();
-                    b.putIntArray(PARAMETER1,weekDataArr);
-                    b.putInt(PARAMETER2,sum);
-                    b.putInt(PARAMETER3,1);
-                    b.putString(PARAMETER4, "Visits in " + getResources().getStringArray(R.array.months)[month-1]);
-                    b.putInt(MONTH_PARAMETER, month);
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .add(R.id.activity_main_analytics, MonthFragment.newInstance(b),"MothFragment")
-                            .addToBackStack("MothFragment")
-                            .commit();
                 }
 
                 @Override
@@ -358,7 +370,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         calendar.setTime(d);
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         Date dddd = calendar.getTime();
-        SimpleDateFormat sdf1 = new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat sdf1 = new SimpleDateFormat(pattern,Locale.ENGLISH);
         return sdf1.format(dddd);
     }
 
@@ -368,11 +380,11 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         calendar.setTime(d);
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         Date dddd = calendar.getTime();
-        SimpleDateFormat sdf1 = new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat sdf1 = new SimpleDateFormat(pattern,Locale.ENGLISH);
         return sdf1.format(dddd);
     }
 
-    class Task extends AsyncTask<Void,Void,Void>{
+    private class Task extends AsyncTask<Void,Void,Void>{
 
         DashboardResponse dashboardResponse;
         Task(DashboardResponse dashboardResponse){

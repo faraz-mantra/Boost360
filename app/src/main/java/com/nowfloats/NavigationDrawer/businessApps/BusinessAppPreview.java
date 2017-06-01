@@ -120,7 +120,7 @@ public class BusinessAppPreview extends Fragment {
                     return;
                 }
                 status = s.get("Status").getAsString();
-                Log.v("ggg",status);
+
                 if(status == null){
                     MaterialProgressBar.dismissProgressBar();
                     Methods.showSnackBarNegative(getActivity(),getResources().getString(R.string.something_went_wrong_try_again));

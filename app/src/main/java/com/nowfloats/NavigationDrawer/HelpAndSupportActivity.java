@@ -4,10 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +20,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.RiaNetworkInterface;
 import com.nowfloats.NavigationDrawer.model.RiaSupportModel;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 import java.util.HashMap;
@@ -34,7 +35,7 @@ public class HelpAndSupportActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     TextView headerText, tvConsultantName, tvConsultantNumber, tvEmail, tvTextHelp, tvTextRia,
-            tvTextFaq;
+            tvTextFaq1, tvTextFaq2;
     Button btnSendEmail, btnCall, btnSchedule;
     ImageView ivHelpAvatar;
     ProgressDialog pd;
@@ -62,7 +63,8 @@ public class HelpAndSupportActivity extends AppCompatActivity {
         tvEmail = (TextView) findViewById(R.id.tv_consultant_email);
         tvTextHelp = (TextView) findViewById(R.id.tv_text_help);
         tvTextRia = (TextView)  findViewById(R.id.tv_ria_text);
-        tvTextFaq = (TextView) findViewById(R.id.tv_text_faq);
+        tvTextFaq1 = (TextView) findViewById(R.id.tv_text_faq1);
+        tvTextFaq2 = (TextView) findViewById(R.id.tv_text_faq2);
 
         ivHelpAvatar = (ImageView) findViewById(R.id.iv_help_avatar);
 
@@ -90,14 +92,14 @@ public class HelpAndSupportActivity extends AppCompatActivity {
 
                     if(riaSupportModel.getGender()==1) {
                         tvConsultantName.setText("Ms. " + riaSupportModel.getName());
-                        ivHelpAvatar.setImageDrawable(getResources().getDrawable(R.drawable.help_female_avatar));
+                        ivHelpAvatar.setImageDrawable(ContextCompat.getDrawable(HelpAndSupportActivity.this,R.drawable.help_female_avatar));
                         btnCall.setText("CALL HER");
                     }else {
                         tvConsultantName.setText("Mr. " + riaSupportModel.getName());
-                        ivHelpAvatar.setImageDrawable(getResources().getDrawable(R.drawable.help_male_avatar));
+                        ivHelpAvatar.setImageDrawable(ContextCompat.getDrawable(HelpAndSupportActivity.this,R.drawable.help_male_avatar));
                         btnCall.setText("CALL HIM");
                     }
-                    tvConsultantNumber.setText(Html.fromHtml("<a href=\"\">" + riaSupportModel.getPhoneNumber() + "</a>"));
+                    tvConsultantNumber.setText(Methods.fromHtml("<a href=\"\">" + riaSupportModel.getPhoneNumber() + "</a>"));
                     tvConsultantNumber.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -108,9 +110,9 @@ public class HelpAndSupportActivity extends AppCompatActivity {
 
                         }
                     });
-                    tvEmail.setText(Html.fromHtml("<a href=\"mail:" + riaSupportModel.getEmail()+ "\">" + riaSupportModel.getEmail() + "</a>"));
+                    tvEmail.setText(Methods.fromHtml("<a href=\"mail:" + riaSupportModel.getEmail()+ "\">" + riaSupportModel.getEmail() + "</a>"));
                     String genderVal = (riaSupportModel.getGender()==1)? "her" :"him";
-                    tvTextHelp.setText(Html.fromHtml(riaSupportModel.getName() + " is your dedicated web consultant who will be assisting you with all your queries related to your NowFloats website. You can call "+ genderVal + " anytime from <b>9.30 am to 6.30 pm</b> on all working days."));
+                    tvTextHelp.setText(Methods.fromHtml(riaSupportModel.getName() + " is your dedicated web consultant who will be assisting you with all your queries related to your NowFloats website. You can call "+ genderVal + " anytime from <b>9.30 am to 6.30 pm</b> on all working days."));
                 }
                 else
                 {
@@ -170,9 +172,11 @@ public class HelpAndSupportActivity extends AppCompatActivity {
         });
 
 
-        tvTextRia.setText(Html.fromHtml("If your query is unanswered, please contact us at"));
-        tvTextFaq.setText(Html.fromHtml("<a href=\"mailto:ria@nowfloats.com\">ria@nowfloats.com</a>. Product related queries, please refer to our <a href=\"https://www.nowfloats.com/faq\">FAQs</a>"));
-        tvTextFaq.setMovementMethod(LinkMovementMethod.getInstance());
+        tvTextRia.setText(Methods.fromHtml("If your query is unanswered, please contact us at"));
+        tvTextFaq1.setText(Methods.fromHtml("<a href=\"mailto:"+getString(R.string.settings_feedback_link)+"\">"+getString(R.string.settings_feedback_link)+"</a> or call at "+getString(R.string.contact_us_number)+"."));
+        tvTextFaq1.setMovementMethod(LinkMovementMethod.getInstance());
+        tvTextFaq2.setText(Methods.fromHtml("Product related queries, please refer to our <a href=\""+getString(R.string.faqs_url)+"\">FAQs</a>"));
+        tvTextFaq2.setMovementMethod(LinkMovementMethod.getInstance());
 
         pd = ProgressDialog.show(this, "", getString(R.string.please_wait));
     }

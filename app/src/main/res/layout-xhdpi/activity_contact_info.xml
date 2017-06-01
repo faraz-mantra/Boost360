@@ -1,8 +1,11 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:background="@color/screen_bg">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <include
         android:id="@+id/app_bar"
@@ -12,6 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:focusable="false"
+        android:focusableInTouchMode="true"
         android:layout_marginTop="5dp"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
@@ -35,9 +40,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="bottom"
-                android:cursorVisible="false"
                 android:textSize="14sp"
-                android:textColor="#BDBDBD">
+                android:textColor="#575757">
                 </EditText>
 
         </LinearLayout>
@@ -137,13 +141,40 @@
                 android:layout_marginLeft="5dp"
                 android:textColor="#BDBDBD"/>
 
-            <EditText
-                android:id="@+id/websiteAddress"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
-                android:textSize="14sp"
-                android:textColor="#575757"/>
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_protocol_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleX=".75"
+                    android:scaleY=".75"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic__drop_down"/>
+                <android.support.v7.widget.AppCompatSpinner
+                    android:background="@drawable/bg_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sp_web_address">
+
+                </android.support.v7.widget.AppCompatSpinner>
+                <!--<Spinner
+                    android:background="@drawable/bg_spinner"
+                    android:gravity="right"
+                    android:id="@+id/sp_web_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </Spinner>-->
+                <EditText
+                    android:id="@+id/websiteAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="bottom"
+                    android:textSize="14sp"
+                    android:textColor="#575757"/>
+            </LinearLayout>
 
         </LinearLayout>
         <LinearLayout
@@ -173,7 +204,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="bottom">
 
@@ -202,15 +233,22 @@
                     android:inputType="text"
                     android:textColor="#575757"/>
             </LinearLayout>
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:textColor="@color/gray_transparent"
+                android:text="@string/facebook_url_message"/>
         </LinearLayout>
 
     </LinearLayout>
-
-
-
-
-
-
-
 </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
+</FrameLayout>

@@ -2,7 +2,5 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/actionbar_shadow"
         android:state_pressed="true" />
-    <item android:drawable="@drawable/focused"
-        android:state_focused="true" />
     <item android:drawable="@drawable/corner_white_backgrnd_yellow" />
 </selector>

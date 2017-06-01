@@ -100,6 +100,7 @@ public interface EventKeysWL
 
     String BUY_NOW_STORE_CLICKED = "InitiatePayment";
     String PAYMENT_SUCCESSFULL  = "PaymentSuccess";
+    String NOTIFICATION_CLICKED = "NotificationClicked";
 
     // PRODUCT_GALLERY_
 

@@ -72,7 +72,7 @@ public class GridViewAdapter extends BaseAdapter {
 
             //imageCache.put(1,imageView);
 
-            //imageView.setImageUrl(imageURI,imgLoader);
+            //imageView.setImageUrl(picimageURI,imgLoader);
 
         } else {
             grid = (View) convertView;

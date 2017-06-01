@@ -1,0 +1,903 @@
+package com.nowfloats.riachatsdk.activities;
+
+import android.Manifest;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.v4.os.ResultReceiver;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.text.InputType;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Cache;
+import com.android.volley.Network;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.TedPermission;
+import com.nowfloats.riachatsdk.R;
+import com.nowfloats.riachatsdk.adapters.RvButtonsAdapter;
+import com.nowfloats.riachatsdk.adapters.RvChatAdapter;
+import com.nowfloats.riachatsdk.fragments.PickAddressFragment;
+import com.nowfloats.riachatsdk.helpers.ChatLogger;
+import com.nowfloats.riachatsdk.helpers.DeviceDetails;
+import com.nowfloats.riachatsdk.interfaces.ChatJsonInterface;
+import com.nowfloats.riachatsdk.models.Button;
+import com.nowfloats.riachatsdk.models.RiaCardModel;
+import com.nowfloats.riachatsdk.models.Section;
+import com.nowfloats.riachatsdk.services.FileUploadService;
+import com.nowfloats.riachatsdk.utils.Constants;
+
+import net.alhazmy13.mediapicker.Image.ImagePicker;
+import net.alhazmy13.mediapicker.Video.VideoPicker;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
+import static android.view.View.GONE;
+
+public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdapter.OnItemClickListener{
+    private final String KEY_NEXT_NODE_ID = "NextNodeId";
+    private static final int AUDIO_REQUEST_CODE = 56;
+
+    Toolbar toolbar;
+    RecyclerView rvChatData, rvButtonsContainer;
+    ProgressDialog pg;
+    LinearLayout cvChatInput;
+    AutoCompleteTextView etChatInput;
+    ImageView ivSendMessage;
+    TextView tvPrefix, tvPostfix;
+
+    private Handler mHandler;
+
+    private String mCurrentDeepLink;
+    private String mCurrNodeId;
+    private Button mCurrButton, mDefaultButton;
+
+    private List<RiaCardModel> mAllNodes = null;
+    private Map<String, String> mDataMap = new HashMap<>();
+    private List<Section> mSectionList = new ArrayList<>();
+    private List<Button> mButtonList = new ArrayList<>();
+    private String mNextNodeId = "-1";
+    private String mCurrVarName = null;
+    private Map<String, String> mAutoComplDataHash;
+
+    private RvChatAdapter mAdapter;
+    private RvButtonsAdapter mButtonsAdapter;
+    private RequestQueue mRequestQueue;
+    private PickAddressFragment fragment;
+    private FileUploadResultReceiver mReceiver;
+
+    private Runnable mAutoCallRunnable = new Runnable() {
+        @Override
+        public void run() {
+            onItemClick(mDefaultButton);
+        }
+    };
+
+    private PermissionListener mPermissionListener = new PermissionListener() {
+        @Override
+        public void onPermissionGranted() {
+            switch (mCurrentDeepLink){
+                case Constants.DeepLinkUrl.ASK_LOC_PERM:
+                    showNextNode(mNextNodeId);
+                    break;
+            }
+            Toast.makeText(ChatViewActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+            switch (mCurrentDeepLink){
+                case Constants.DeepLinkUrl.ASK_LOC_PERM:
+                    showNextNode(mNextNodeId);
+                    break;
+            }
+            Toast.makeText(ChatViewActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+        }
+
+
+    };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_chat_view);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        pg = new ProgressDialog(this);
+        pg.setMessage(getString(R.string.please_wait));
+        pg.setCancelable(false);
+
+        rvChatData = (RecyclerView) findViewById(R.id.rv_chat_data);
+        rvButtonsContainer = (RecyclerView) findViewById(R.id.rv_reply_button_container);
+        cvChatInput = (LinearLayout) findViewById(R.id.cv_chat_input);
+        etChatInput  =(AutoCompleteTextView) findViewById(R.id.et_chat_input);
+        ivSendMessage = (ImageView) findViewById(R.id.iv_send_msg);
+        tvPrefix = (TextView) findViewById(R.id.tv_prefix);
+        tvPostfix = (TextView) findViewById(R.id.tv_postfix);
+
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024);
+        Network network = new BasicNetwork(new HurlStack());
+        mRequestQueue = new RequestQueue(cache, network);
+        mRequestQueue.start();
+
+        ivSendMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!etChatInput.getText().toString().trim().equals("") && mNextNodeId!=null && !mNextNodeId.equals("-1")
+                        && isValidInput(etChatInput.getText().toString().trim())){
+                    hideSoftKeyboard();
+                    StringBuffer chatText = new StringBuffer("");
+                    if(mCurrButton.getPrefixText()!=null){
+                        chatText.append(mCurrButton.getPrefixText());
+                    }
+                    chatText.append(etChatInput.getText().toString().trim());
+                    if(mCurrButton.getPostfixText()!=null){
+                        chatText.append(mCurrButton.getPostfixText());
+                    }
+                    replyToRia(chatText.toString(), Constants.SectionType.TYPE_TEXT);
+                    if(mCurrVarName!=null){
+                        if(mAutoComplDataHash==null || mAutoComplDataHash.get(etChatInput.getText().toString().trim())==null) {
+                            mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
+                            ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                                    mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), mCurrVarName,
+                                    etChatInput.getText().toString().trim(), mCurrButton.getButtonType());
+                        }else {
+                            mDataMap.put("[~" + mCurrVarName + "]", mAutoComplDataHash.get(etChatInput.getText().toString().trim()));
+                            ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                                    mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), mCurrVarName,
+                                    mAutoComplDataHash.get(etChatInput.getText().toString().trim()), mCurrButton.getButtonType());
+                        }
+                    }
+                    mAutoComplDataHash = null;
+                    //TODO:Check ButtonType and do the action accordingly
+                    etChatInput.setText("");
+                    mButtonList.clear();
+                    mButtonsAdapter.notifyDataSetChanged();
+                    rvButtonsContainer.setVisibility(View.INVISIBLE);
+                    cvChatInput.setVisibility(GONE);
+                    showNextNode(mNextNodeId);
+                }
+            }
+        });
+
+        mReceiver = new FileUploadResultReceiver(new Handler());
+        fetchChatJson();
+
+    }
+
+    private boolean isValidInput(String input){
+        if(mCurrButton.getButtonType()==null)
+            return false;
+        switch (mCurrButton.getButtonType()){
+            case Constants.ButtonType.TYPE_GET_EMAIL:
+                String EMAIL_PATTERN =
+                        "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+                Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+                Matcher matcher = pattern.matcher(input);
+                if(!matcher.matches())
+                    showErrorMessage("Please Enter a valid E-mail");
+                return matcher.matches();
+            case Constants.ButtonType.TYPE_GET_PHONE_NUMBER:
+                if(!input.matches("\\d{6,15}$"))
+                    showErrorMessage("Please Enter a valid Phone Number");
+                return input.matches("\\d{6,15}$");
+            case Constants.ButtonType.TYPE_GET_ITEM_FROM_SOURCE:
+                if(mAutoComplDataHash.get(input)==null)
+                    showErrorMessage("This Category is not available");
+                return mAutoComplDataHash.get(input)!=null;
+            default:
+                return true;
+        }
+    }
+
+    private void showErrorMessage(String msg){
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK){
+            List<String> mPaths = (List<String>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH);
+            Intent i = new Intent(this, FileUploadService.class);
+            i.putExtra(Constants.FILE_PATH, mPaths.get(0));
+            i.putExtra(Constants.RECEIVER, mReceiver);
+            startService(i);
+            replyToRia(mPaths.get(0), Constants.SectionType.TYPE_IMAGE);
+        }else if(requestCode == AUDIO_REQUEST_CODE && resultCode == RESULT_OK && data!=null && data.getData()!=null){
+            Uri uri = data.getData();
+            File file = new File(uri.getPath());
+            Intent i = new Intent(this, FileUploadService.class);
+            i.putExtra(Constants.FILE_PATH, file.getAbsolutePath());
+            i.putExtra(Constants.RECEIVER, mReceiver);
+            startService(i);
+            replyToRia(file.getAbsolutePath(), Constants.SectionType.TYPE_AUDIO);
+        }else if(requestCode == VideoPicker.VIDEO_PICKER_REQUEST_CODE && resultCode == RESULT_OK && data!=null && data.getData()!=null){
+            List<String> mPaths = (List<String>) data.getSerializableExtra(VideoPicker.EXTRA_VIDEO_PATH);
+            Intent i = new Intent(this, FileUploadService.class);
+            i.putExtra(Constants.FILE_PATH, mPaths.get(0));
+            i.putExtra(Constants.RECEIVER, mReceiver);
+            startService(i);
+            replyToRia(mPaths.get(0), Constants.SectionType.TYPE_IMAGE);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
+
+    private void replyToRia(String msg, String type){
+        mHandler.removeCallbacks(mAutoCallRunnable);
+        Section section = new Section();
+        switch (type) {
+            case Constants.SectionType.TYPE_TEXT:
+                section.setFromRia(false);
+                section.setSectionType(Constants.SectionType.TYPE_TEXT);
+                section.setText(msg);
+                mSectionList.add(section);
+                mAdapter.notifyItemInserted(mSectionList.size() - 1);
+                rvChatData.smoothScrollToPosition(mSectionList.size() - 1);
+                break;
+            case Constants.SectionType.TYPE_IMAGE:
+                section.setFromRia(false);
+                section.setSectionType(Constants.SectionType.TYPE_IMAGE);
+                section.setUrl(msg);
+                section.setLoading(true);
+                mSectionList.add(section);
+                mAdapter.notifyItemInserted(mSectionList.size() - 1);
+                rvChatData.smoothScrollToPosition(mSectionList.size() - 1);
+                break;
+            case Constants.SectionType.TYPE_AUDIO:
+                section.setFromRia(false);
+                section.setSectionType(Constants.SectionType.TYPE_AUDIO);
+                section.setUrl(msg);
+                section.setLoading(true);
+                mSectionList.add(section);
+                mAdapter.notifyItemInserted(mSectionList.size() - 1);
+                rvChatData.smoothScrollToPosition(mSectionList.size() - 1);
+                break;
+            case Constants.SectionType.TYPE_VIDEO:
+                section.setFromRia(false);
+                section.setSectionType(Constants.SectionType.TYPE_VIDEO);
+                section.setUrl(msg);
+                section.setLoading(true);
+                mSectionList.add(section);
+                mAdapter.notifyItemInserted(mSectionList.size() - 1);
+                rvChatData.smoothScrollToPosition(mSectionList.size() - 1);
+                break;
+        }
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        onItemClick(mButtonList.get(position));
+    }
+
+    private void onItemClick(Button button){
+        if(button==null)
+            return;
+        if(!button.isHidden()) {
+            replyToRia(button.getButtonText(), Constants.SectionType.TYPE_TEXT);
+        }
+
+        //TODO:Check ButtonType and do the action accordingly
+        mButtonList.clear();
+        mButtonsAdapter.notifyDataSetChanged();
+        rvButtonsContainer.setVisibility(View.INVISIBLE);
+        cvChatInput.setVisibility(GONE);
+        switch (button.getButtonType()){
+            case Constants.ButtonType.TYPE_NEXT_NODE:
+                if(mCurrVarName!=null && button.getVariableValue()!=null && !button.getVariableValue().isEmpty()){
+                    String str = null;
+                    if(button.getVariableValue()!=null){
+                        str = button.getVariableValue();
+                        Matcher m = Pattern.compile("\\[~(.*?)\\]").matcher(str);
+                        //Log.d("DataMap", mDataMap.toString());
+                        while (m.find()) {
+                            if(mDataMap.get(m.group())!=null) {
+                                str = str.replace(m.group(), mDataMap.get(m.group()));
+                            }
+                        }
+                    }
+                    mDataMap.put("[~"+mCurrVarName+"]", str);
+                    ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                            mCurrNodeId, button.getId(), button.getButtonText(), mCurrVarName,
+                            button.getVariableValue(), button.getButtonType());
+                }
+                showNextNode(button.getNextNodeId());
+                break;
+            case Constants.ButtonType.TYPE_GET_ADDR:
+                getUserAddress(button);
+                break;
+            case Constants.ButtonType.TYPE_GET_IMAGE:
+                getImage(button);
+                break;
+            case Constants.ButtonType.TYPE_GET_AUDIO:
+                getAudio(button);
+                break;
+            case Constants.ButtonType.TYPE_GET_VIDEO:
+                getVideo(button);
+                break;
+            case Constants.ButtonType.TYPE_DEEP_LINK:
+                handleDeepLink(button);
+                break;
+
+        }
+    }
+
+
+    private void getUserAddress(final Button btn){
+        fragment = new PickAddressFragment();
+        fragment.setResultListener(new PickAddressFragment.OnResultReceive() {
+            @Override
+            public void OnResult(String address, String area, String city, String state, String country, double lat, double lon, String pin) {
+                //TODO: saveREsult
+                replyToRia(address + "\nCity: " + city + "\nCountry: " + country + "\nPin: " + pin, Constants.SectionType.TYPE_TEXT);
+                ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                        mCurrNodeId, btn.getId(), btn.getButtonText(), ChatLogger.EventStatus.COMPLETED.getValue(),
+                        "[~" + "STREET_ADDRESS" + "]", address, btn.getButtonType());
+                mDataMap.put("[~" + "CITY" + "]", city);
+                mDataMap.put("[~" + "COUNTRY" + "]", country);
+                mDataMap.put("[~" + "STREET_ADDRESS" + "]", address);
+                mDataMap.put("[~" + "PINCODE" + "]", pin);
+                mDataMap.put("[~" + "LAT" + "]", lat+"");
+                mDataMap.put("[~" + "LNG" + "]", lon+"");
+                fragment.setResultListener(null);
+                fragment.dismiss();
+                fragment = null;
+                showNextNode(btn.getNextNodeId());
+            }
+        });
+        fragment.show(getFragmentManager(), "Test");
+
+    }
+
+    private void getImage(Button btn){
+        mNextNodeId = btn.getNextNodeId();
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.media_picker_select_from))
+                .setPositiveButton(getString(R.string.media_picker_camera), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        new ImagePicker.Builder(ChatViewActivity.this)
+                                .mode(ImagePicker.Mode.CAMERA)
+                                .directory(ImagePicker.Directory.DEFAULT)
+                                .allowMultipleImages(false)
+                                .enableDebuggingMode(true)
+                                .build();
+                    }
+                })
+                .setNegativeButton(getString(R.string.media_picker_gallery), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        new ImagePicker.Builder(ChatViewActivity.this)
+                                .mode(ImagePicker.Mode.GALLERY)
+                                .directory(ImagePicker.Directory.DEFAULT)
+                                .allowMultipleImages(false)
+                                .enableDebuggingMode(true)
+                                .build();
+                    }
+                })
+                .setCancelable(false)
+                .show();
+    }
+
+    private void getAudio(Button btn){
+        mNextNodeId = btn.getNextNodeId();
+        Intent intent_upload = new Intent();
+        intent_upload.setType("audio/*");
+        intent_upload.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent_upload,AUDIO_REQUEST_CODE);
+    }
+
+    private void getVideo(Button btn){
+        mNextNodeId = btn.getNextNodeId();
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.media_picker_select_from))
+                .setPositiveButton(getString(R.string.media_picker_camera), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        new VideoPicker.Builder(ChatViewActivity.this)
+                                .mode(VideoPicker.Mode.CAMERA)
+                                .directory(VideoPicker.Directory.DEFAULT)
+                                .enableDebuggingMode(true)
+                                .build();
+                    }
+                })
+                .setNegativeButton(getString(R.string.media_picker_gallery), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        new VideoPicker.Builder(ChatViewActivity.this)
+                                .mode(VideoPicker.Mode.GALLERY)
+                                .directory(VideoPicker.Directory.DEFAULT)
+                                .enableDebuggingMode(true)
+                                .build();
+                    }
+                })
+                .setCancelable(false)
+                .show();
+    }
+
+    private void handleDeepLink(Button btn){
+        switch (btn.getDeepLinkUrl()){
+            case Constants.DeepLinkUrl.ASK_LOC_PERM:
+                mCurrentDeepLink = btn.getDeepLinkUrl();
+                askLocationPermission();
+                mNextNodeId = btn.getNextNodeId();
+                break;
+
+        }
+
+    }
+
+    private void askLocationPermission(){
+        new TedPermission(this)
+                .setPermissionListener(mPermissionListener)
+                .setDeniedMessage("If you reject permission, you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+                .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+                .check();
+    }
+
+    private void showNextNode(String nodeId){
+        for(RiaCardModel node:mAllNodes){
+            if(node.getId().equals(nodeId)){
+                startChat(node);
+            }
+        }
+    }
+
+    private void startChat(final RiaCardModel node){
+        if(node==null)
+            return;
+        mDefaultButton = null;
+        tvPrefix.setText("");
+        tvPostfix.setText("");
+        mCurrNodeId = node.getId();
+        etChatInput.setHint("");
+        ChatLogger.getInstance().logViewEvent(DeviceDetails.getDeviceId(this), mCurrNodeId);
+        mCurrVarName = null;
+        mHandler = new Handler(Looper.getMainLooper());
+        if(node.getVariableName()!=null){
+            mCurrVarName = node.getVariableName();
+        }
+        if(node.getNodeType()!=null && node.getNodeType().equals(Constants.NodeType.TYPE_API_CALL)
+                && node.getApiMethod()!=null){
+            switch (node.getApiMethod()){
+                case Constants.ApiType.TYPE_GET:
+                    handleGetRequest(node);
+                    break;
+                case Constants.ApiType.TYPE_POST:
+                    handlePostRequest(node);
+                    break;
+            }
+            return;
+        }
+        final List<Section> sectionList = node.getSections();
+        int time = 0;
+        final Section typingSection = new Section();
+        typingSection.setSectionType(Constants.SectionType.TYPE_TYPING);
+        for(final Section section:sectionList){
+            time+=1000;
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mSectionList.add(typingSection);
+                    mAdapter.notifyItemInserted(mSectionList.size()-1);
+                    rvChatData.smoothScrollToPosition(mSectionList.size()-1);
+                }
+            }, time);
+            time+=section.getDelayInMs();
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    String str = null;
+                    if(section.getText()!=null){
+                        str = section.getText();
+                        Matcher m = Pattern.compile("\\[~(.*?)\\]").matcher(str);
+                        //Log.d("DataMap", mDataMap.toString());
+                        while (m.find()) {
+                            if(mDataMap.get(m.group())!=null) {
+                                str = str.replace(m.group(), mDataMap.get(m.group()));
+                            }
+                        }
+                    }
+                    if(null!=str){
+                        section.setText(str);
+                    }
+                    section.setFromRia(true);
+                    mSectionList.set(mSectionList.size()-1, section);
+                    mAdapter.notifyItemChanged(mSectionList.size()-1);
+                }
+            }, time);
+        }
+        time+=1000;
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                rvButtonsContainer.setVisibility(View.VISIBLE);
+                etChatInput.setAdapter(null);
+                for(Button btn:node.getButtons()){
+                    if(btn.isDefaultButton()){
+                        mDefaultButton = btn;
+                    }
+                    if(btn.getButtonType().equals(Constants.ButtonType.TYPE_GET_TEXT) && !btn.isHidden()){
+                        if(btn.getPrefixText()!=null){
+                            tvPrefix.setText(btn.getPrefixText().trim());
+                        }
+                        if(btn.getPostfixText()!=null){
+                            tvPostfix.setText(btn.getPostfixText().trim());
+                        }
+                        cvChatInput.setVisibility(View.VISIBLE);
+                        etChatInput.setInputType(InputType.TYPE_CLASS_TEXT);
+                        etChatInput.setHint(btn.getPlaceholderText());
+                        mNextNodeId = btn.getNextNodeId();
+                        mCurrButton = btn;
+                    }else if(btn.getButtonType().equals(Constants.ButtonType.TYPE_GET_NUMBER) && !btn.isHidden()){
+                        if(btn.getPrefixText()!=null){
+                            tvPrefix.setText(btn.getPrefixText().trim());
+                        }
+                        if(btn.getPostfixText()!=null){
+                            tvPostfix.setText(btn.getPostfixText().trim());
+                        }
+                        cvChatInput.setVisibility(View.VISIBLE);
+                        etChatInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        etChatInput.setHint(btn.getPlaceholderText());
+                        mNextNodeId = btn.getNextNodeId();
+                        mCurrButton = btn;
+
+                    }else if(btn.getButtonType().equals(Constants.ButtonType.TYPE_GET_EMAIL) && !btn.isHidden()){
+                        if(btn.getPrefixText()!=null){
+                            tvPrefix.setText(btn.getPrefixText().trim());
+                        }
+                        if(btn.getPostfixText()!=null){
+                            tvPostfix.setText(btn.getPostfixText().trim());
+                        }
+                        cvChatInput.setVisibility(View.VISIBLE);
+                        etChatInput.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                        etChatInput.setHint(btn.getPlaceholderText());
+                        mNextNodeId = btn.getNextNodeId();
+                        mCurrButton = btn;
+                    }else if(btn.getButtonType().equals(Constants.ButtonType.TYPE_GET_PHONE_NUMBER) && !btn.isHidden()){
+                        if(btn.getPrefixText()!=null){
+                            tvPrefix.setText(btn.getPrefixText().trim());
+                        }
+                        if(btn.getPostfixText()!=null){
+                            tvPostfix.setText(btn.getPostfixText().trim());
+                        }
+                        cvChatInput.setVisibility(View.VISIBLE);
+                        etChatInput.setInputType(InputType.TYPE_CLASS_PHONE);
+                        etChatInput.setHint(btn.getPlaceholderText());
+                        mNextNodeId = btn.getNextNodeId();
+                        mCurrButton = btn;
+                    }else if(btn.getButtonType().equals(Constants.ButtonType.TYPE_GET_ITEM_FROM_SOURCE) && !btn.isHidden()){
+                        if(btn.getPrefixText()!=null){
+                            tvPrefix.setText(btn.getPrefixText().trim());
+                        }
+                        if(btn.getPostfixText()!=null){
+                            tvPostfix.setText(btn.getPostfixText().trim());
+                        }
+                        handleAutoComplete(btn);
+                        mCurrButton = btn;
+                    }else{
+                        if(!btn.isHidden()) {
+                            String str = null;
+                            if (btn.getButtonText() != null) {
+                                str = btn.getButtonText();
+                                Matcher m = Pattern.compile("\\[~(.*?)\\]").matcher(str);
+                                while (m.find()) {
+                                    if (mDataMap.get(m.group()) != null) {
+                                        str = str.replace(m.group(), mDataMap.get(m.group()));
+                                    }
+                                }
+                            }
+                            if (str != null) {
+                                btn.setButtonText(str);
+                            }
+                            mButtonList.add(btn);
+                        }
+                    }
+                }
+                mButtonsAdapter.notifyDataSetChanged();
+                if(mDefaultButton!=null && node.getTimeoutInMs()!=-1L){
+                    mHandler.postDelayed(mAutoCallRunnable, node.getTimeoutInMs());
+                }
+            }
+        }, time);
+
+    }
+
+    private void handleAutoComplete(final Button btn){
+        showTyping();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, btn.getUrl(), null,
+                new com.android.volley.Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        removeTyping();
+                        Iterator<?> keys = response.keys();
+                        List<String> mAutoComplRes = new ArrayList<>();
+                        mAutoComplDataHash = new HashMap<>();
+                        while(keys.hasNext()){
+                            try {
+                                String key = (String) keys.next();
+                                mAutoComplRes.add(response.getString(key));
+                                mAutoComplDataHash.put(response.getString(key), key);
+                            }catch (JSONException e){
+                                e.printStackTrace();
+                            }
+                        }
+                        ArrayAdapter<String> adapter  = new ArrayAdapter<>(ChatViewActivity.this,
+                                android.R.layout.select_dialog_item, mAutoComplRes);
+                        etChatInput.setAdapter(adapter);
+                        etChatInput.setThreshold(0);
+                        etChatInput.setHint(btn.getPlaceholderText());
+                        cvChatInput.setVisibility(View.VISIBLE);
+                    }
+                }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //TODO: shopw unable to process
+            }
+        });
+        mRequestQueue.add(request);
+        mNextNodeId = btn.getNextNodeId();
+    }
+
+    private void showTyping(){
+        final Section typingSection = new Section();
+        typingSection.setSectionType(Constants.SectionType.TYPE_TYPING);
+        mSectionList.add(typingSection);
+        mAdapter.notifyItemInserted(mSectionList.size()-1);
+        Log.d("Chat View Activity", "This is Executing");
+    }
+
+    private void removeTyping(){
+        mSectionList.remove(mSectionList.size()-1);
+        mAdapter.notifyItemRemoved(mSectionList.size());
+    }
+
+
+    private void fetchChatJson(){
+        if(null!=pg && !pg.isShowing())
+            pg.show();
+        RestAdapter adapter = new RestAdapter.Builder().setEndpoint(Constants.SERVER_URL).build();
+        ChatJsonInterface chatJsonInterface = adapter.create(ChatJsonInterface.class);
+        Map<String, String> query = new HashMap<>();
+        query.put("deviceId", DeviceDetails.getDeviceId(this));
+        query.put("libVersion", DeviceDetails.getLibVersionName());
+        query.put("osVersion", DeviceDetails.getAndroidVersion());
+        query.put("osTimeZone", DeviceDetails.getTimeZone());
+        query.put("osCountry", DeviceDetails.getCountry());
+        query.put("osLanguage", DeviceDetails.getLanguage());
+        query.put("deviceBrand", DeviceDetails.getBrand());
+        query.put("deviceModel", DeviceDetails.getDeviceModel());
+        query.put("screenWidth", DeviceDetails.getScreenWidth(this) + "");
+        query.put("screenHeight", DeviceDetails.getScreenHeight(this) + "");
+        chatJsonInterface.getChatJson(query, new Callback<List<RiaCardModel>>() {
+            @Override
+            public void success(List<RiaCardModel> riaCardModels, Response response) {
+                pg.dismiss();
+                if(riaCardModels!=null && riaCardModels.size()>0){
+                    initChat(riaCardModels);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                pg.dismiss();
+                error.printStackTrace();
+                //(RiaOnBoardingActivity.this, getString(R.string.something_went_wrong));
+            }
+        });
+
+    }
+
+    private void initChat(List<RiaCardModel> riaCardModels){
+        mAllNodes = riaCardModels;
+        //TODO:Run on Another thread
+        mAdapter = new RvChatAdapter(mSectionList, this);
+
+        LinearLayoutManager layoutManager= new LinearLayoutManager(this);
+        layoutManager.setStackFromEnd(true);
+        layoutManager.setReverseLayout(false);
+
+        rvChatData.setLayoutManager(layoutManager);
+        rvChatData.setAdapter(mAdapter);
+
+        mButtonsAdapter = new RvButtonsAdapter(mButtonList);
+        mButtonsAdapter.setOnCItemClickListener(this);
+        rvButtonsContainer.setLayoutManager(new LinearLayoutManager(ChatViewActivity.this,
+                LinearLayoutManager.HORIZONTAL, false));
+        rvButtonsContainer.setAdapter(mButtonsAdapter);
+
+        startChat(mAllNodes.get(0));
+    }
+
+    public void hideSoftKeyboard() {
+        if(getCurrentFocus()!=null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
+
+    private void handleGetRequest(RiaCardModel node){
+        //TODO: show the typing
+        StringBuilder urlBuilder = new StringBuilder(node.getApiUrl());
+        urlBuilder.append("?");
+        for(String key: node.getRequiredVariables()){
+            urlBuilder.append(key + "=" + mDataMap.get("[~" + key + "]") + "&");
+        }
+        urlBuilder.append("deviceId=" + DeviceDetails.getDeviceId(this));
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, urlBuilder.toString(), null,
+                new com.android.volley.Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("ChatView", response.toString());
+                        Iterator<?> keys = response.keys();
+                        while (keys.hasNext()){
+                            String key = (String)keys.next();
+                            if(!key.equals(KEY_NEXT_NODE_ID)){
+                                try {
+                                    mDataMap.put("[~" + key + "]", response.getString(key));
+                                }catch (JSONException e){
+                                    e.printStackTrace();
+                                    //TODO:Add unable to process in the sectionList
+                                }
+                            }
+                        }
+                        try {
+                            showNextNode(response.getString(KEY_NEXT_NODE_ID));
+
+
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                            //TODO:Add unable to process in the sectionList
+                        }
+                    }
+                }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //TODO:Add unable to process in the sectionList
+            }
+        });
+        mRequestQueue.add(request);
+    }
+
+    private void handlePostRequest(final RiaCardModel node){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, node.getApiUrl() +
+                "?deviceId=" + DeviceDetails.getDeviceId(this),
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String result) {
+                        try {
+                            JSONObject response = new JSONObject(result);
+                            Log.d("ChatView", response.toString());
+                            Iterator<?> keys = response.keys();
+                            while (keys.hasNext()) {
+                                String key = (String) keys.next();
+                                if (!key.equals(KEY_NEXT_NODE_ID)) {
+                                    try {
+                                        mDataMap.put("[~" + key + "]", response.getString(key));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                        //TODO:Add unable to process in the sectionList
+                                    }
+                                }
+
+                            }
+                            showNextNode(response.getString(KEY_NEXT_NODE_ID));
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                //TODO:Add unable to process in the sectionList
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> param = new HashMap<>();
+                for(String key: node.getRequiredVariables()){
+                    param.put(key, mDataMap.get("[~" + key + "]"));
+                }
+                return param;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("Content-Type","application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+
+        mRequestQueue.add(stringRequest);
+    }
+
+
+    private class FileUploadResultReceiver extends ResultReceiver{
+
+        /**
+         * Create a new ResultReceive to receive results.  Your
+         * {@link #onReceiveResult} method will be called from the thread running
+         * <var>handler</var> if given, or from an arbitrary thread if null.
+         *
+         * @param handler
+         */
+        public FileUploadResultReceiver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+            if(resultData!=null && resultCode==Constants.RESULT_OK && mCurrVarName!=null){
+                mDataMap.put("[~" + mCurrVarName + "]", resultData.getString(Constants.KEY_FILE_URL));
+            }
+            mSectionList.get(mSectionList.size()-1).setLoading(false);
+            mAdapter.notifyItemChanged(mSectionList.size()-1);
+            //TODO: Start Next Node;
+            if(mNextNodeId!=null){
+                showNextNode(mNextNodeId);
+            }
+        }
+    }
+}

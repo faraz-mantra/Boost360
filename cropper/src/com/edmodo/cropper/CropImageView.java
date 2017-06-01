@@ -380,7 +380,9 @@ public class CropImageView extends FrameLayout {
                     (int) actualCropY,
                     (int) actualCropWidth,
                     (int) actualCropHeight);
-        }catch(Exception e){e.printStackTrace(); System.gc();}
+        }catch(Exception e){
+            e.printStackTrace(); System.gc();
+        }
         return croppedBitmap;
     }
 

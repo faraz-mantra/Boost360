@@ -55,6 +55,7 @@ public class Settings_Fragment extends Fragment {
     public static String FACEBOOK_URL = "https://www.facebook.com/nowfloats";
     public static String FACEBOOK_PAGE_ID = "nowfloats";
     public static final String TWITTER_URL = "https://twitter.com/Nowfloats";
+    private Context mContext;
     //facebook page constant
 
     @Override
@@ -66,6 +67,12 @@ public class Settings_Fragment extends Fragment {
         }
         if (HomeActivity.headerText != null)
             HomeActivity.headerText.setText(getString(R.string.setting));
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
     }
 
     @Override
@@ -183,7 +190,7 @@ public class Settings_Fragment extends Fragment {
         likeusFacebookLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Methods.likeUsFacebook(getActivity(),"");
+                Methods.likeUsFacebook(mContext,"");
             }
         });
 
@@ -264,6 +271,7 @@ public class Settings_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), FAQMainAcivity.class);
+                i.putExtra("array",getResources().getStringArray(R.array.faqmain));
                 activity.startActivity(i);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app ="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_width="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:drawableStart="@drawable/circle_bullets"
+        android:drawableLeft="@drawable/circle_bullets" />
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:autoLink="all"
+        android:text="hello"
+        android:layout_marginLeft="5dp">
+
+    </TextView>
+
+</LinearLayout>
+

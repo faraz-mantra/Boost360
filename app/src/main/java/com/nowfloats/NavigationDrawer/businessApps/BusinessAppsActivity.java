@@ -34,7 +34,7 @@ public class BusinessAppsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         session=new UserSessionManager(this,this);
         if(getSupportActionBar()!=null){
-            setTitle("Business Apps");
+            setTitle(getString(R.string.business_apps));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
@@ -138,7 +138,7 @@ public class BusinessAppsActivity extends AppCompatActivity {
                 onBackPressed();
                 return true;
             case R.id.action_notif:
-                Methods.materialDialog(this,"Send Push Notification","Inform your app users about your latest product offerings via push notifications. This feature will get activated once your App is live.");
+                Methods.materialDialog(this,"Send Push Notification","Inform your app users about your latest product offerings via push notifications. This feature is coming soon.");
                 return true;
             case R.id.action_settings:
                 addFragments(SHOW_SETTING);

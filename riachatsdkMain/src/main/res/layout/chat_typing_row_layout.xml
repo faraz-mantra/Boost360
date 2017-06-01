@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_margin="10dp"
+    android:gravity="left"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/iv_ria_chat_head"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ria_cirlce_image"/>
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/chat_layout_bg">
+        <com.nowfloats.riachatsdk.CustomWidget.LoadingDots
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:LoadingDots_auto_play="true"
+            app:LoadingDots_dots_color="#808080"
+            app:LoadingDots_dots_count="4"
+            app:LoadingDots_dots_size="3dp"
+            app:LoadingDots_dots_space="1dp"
+
+            app:LoadingDots_loop_duration="800"
+            app:LoadingDots_loop_start_delay="100"
+
+            app:LoadingDots_jump_duration="200"
+            app:LoadingDots_jump_height="4dp" />
+    </LinearLayout>
+
+</LinearLayout>

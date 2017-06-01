@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -87,7 +86,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
         deletePage.setVisibility(View.GONE);
         final TextView title = (TextView) toolbar.findViewById(R.id.titleProduct);
         title.setVisibility(View.VISIBLE);
-        title.setText(getString(R.string.new_page));
+        title.setText("New page");
         save.setImageResource(R.drawable.checkmark_icon);
         session = new UserSessionManager(getApplicationContext(),activity);
 

@@ -12,8 +12,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
-import com.appsflyer.AppsFlyerLib;
-
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.nowfloats.util.Constants;
@@ -26,7 +24,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     public static final String TAG = AppController.class.getSimpleName();
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
-    private static AppController mInstance;
+    private static AppController mInstance ;
 
     @Override
     public void onCreate() {
@@ -37,7 +35,7 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
         //AppIce SDk
  //       ContextApplication.initSdk(getApplicationContext(), this);
 
-        AppsFlyerLib.setAppsFlyerKey("drr3ek3vNxVmxJZgtBpfnR");
+        //AppsFlyerLib.setAppsFlyerKey("drr3ek3vNxVmxJZgtBpfnR");
         try {
             //Fabric.with(this, new Crashlytics());
         }catch(Exception e){e.printStackTrace();}
@@ -150,6 +148,9 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
     }
 
     public void addToRequstQueue(Request request){
+        if (mRequestQueue == null) {
+            getRequestQueue();
+        }
         mRequestQueue.add(request);
     }
 

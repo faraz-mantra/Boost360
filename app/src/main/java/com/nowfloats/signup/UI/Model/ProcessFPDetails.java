@@ -38,6 +38,7 @@ public class ProcessFPDetails {
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON,get_fp_details_model.CreatedOn);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_EXPIRY_DATE, get_fp_details_model.ExpiryDate);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE, get_fp_details_model.PaymentState);
+            session.storeFPDetails(Key_Preferences.LANGUAGE_CODE, get_fp_details_model.LanguageCode);
             if("0".equals(get_fp_details_model.lat) &&"0".equals(get_fp_details_model.lng)){
                 session.storeFPDetails(Key_Preferences.LATITUDE, "");
                 session.storeFPDetails(Key_Preferences.LONGITUDE, "");

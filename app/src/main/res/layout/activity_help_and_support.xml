@@ -220,7 +220,20 @@
                     android:text="Still having queries? Please write to us at "
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:id="@+id/tv_text_faq"
+                    android:id="@+id/tv_text_faq1"
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    android:gravity="center"
+                    android:autoLink="all"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textStyle="bold|italic"
+                    android:textSize="12sp"
+                    fontPath="Roboto-Thin.ttf"
+                    android:text="ria@nowfloats.com. Product related queries, please refer to our FAQs"/>
+                <TextView
+                    android:id="@+id/tv_text_faq2"
                     android:layout_width="wrap_content"
                     android:layout_marginLeft="50dp"
                     android:layout_marginRight="50dp"
@@ -231,7 +244,7 @@
                     android:textSize="12sp"
                     fontPath="Roboto-Thin.ttf"
                     android:layout_marginBottom="15dp"
-                    android:text="ria@nowfloats.com. Product related queries, please refer to our FAQs"/>
+                    android:text="Product related queries, please refer to our FAQs"/>
             </LinearLayout>
 
         </LinearLayout>

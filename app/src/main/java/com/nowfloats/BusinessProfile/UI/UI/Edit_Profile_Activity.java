@@ -12,7 +12,6 @@ import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -50,6 +49,13 @@ import com.thinksity.R;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 public class Edit_Profile_Activity extends AppCompatActivity {
     public static EditText yourname, category, buzzname, buzzdescription;
     public static ImageView featuredImage, businessCategoryImage;
@@ -75,6 +81,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
     private final int media_req_id = 5;
     private final int gallery_req_id = 6;
     private RiaNodeDataModel mRiaNodeDataModel;
+    private ArrayList<String> categories;
 
 
     @Override
@@ -105,7 +112,33 @@ public class Edit_Profile_Activity extends AppCompatActivity {
         category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectCats();
+                if(categories == null )
+                {
+                    final ProgressDialog pd = ProgressDialog.show(Edit_Profile_Activity.this, "", getResources().getString(R.string.wait_while_loading_category));
+                    API_Layer api = Constants.restAdapter.create(API_Layer.class);
+                    api.getCategories(new Callback<ArrayList<String>>() {
+                        @Override
+                        public void success(ArrayList<String> strings, Response response) {
+                            if(pd!=null && pd.isShowing()){
+                                pd.dismiss();
+                            }
+                            categories =strings;
+                            showCategoryDialog(categories);
+                        }
+
+                        @Override
+                        public void failure(RetrofitError error) {
+                            if(pd!=null && pd.isShowing()){
+                                pd.dismiss();
+                            }
+                            showCategoryDialog(new ArrayList<String>(Arrays.asList(Constants.storeBusinessCategories)));
+                            Toast.makeText(Edit_Profile_Activity.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }else
+                {
+                    showCategoryDialog(categories);
+                }
             }
         });
         toolbar = (Toolbar) findViewById(R.id.app_bar);
@@ -335,69 +368,20 @@ public class Edit_Profile_Activity extends AppCompatActivity {
             mRiaNodeDataModel = null;
         }
     }
-
-    public void selectCats() {
-
-//        final Dialog dialog = new Dialog(this);
-//
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        dialog.setContentView(R.layout.custom_dialog_with_search);
-//
-//        l = (ListView) dialog.findViewById(R.id.search_dialog_listview);
-//        ArrayList<String> stringList = new ArrayList<String>(Arrays.asList(cat));
-//        adapter = new CustomFilterableAdapter(stringList, this);
-//        l.setAdapter(adapter);
-//        title = (HeaderText) dialog
-//                .findViewById(R.id.message_top_bar_store_txt);
-//        title.setText("Select a Category");
-//        l.setTextFilterEnabled(true);
-//
-//        EditText editTxt = (EditText) dialog.findViewById(R.id.searchString);
-//        editTxt.setVisibility(View.GONE);
-//
-//        dialog.show();
-
-//        l.setOnItemClickListener(new OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-//                                    long arg3) {
-//                String strName = adapter.getItem(arg2);
-//                category.setText(strName);
-//                int index = (int) ((Math.random() * 10000000) % 23f);
-//                MainFragment main = new MainFragment();
-//                main.setIndex(index);
-//                dialog.dismiss();
-//
-////				SetBusinessCategoryAsyncTask buc = new SetBusinessCategoryAsyncTask(BusinessProfileFragment.this, strName);
-////				buc.execute();
-//            }
-//        });
-
-        /*if(businessCategoryList == null)
-        {
-            businessCategoryList = API_Layer.getBusinessCategories(Edit_Profile_Activity.this);
-        }
-        else {
-
-            // PreSignUpDialog.showDialog(PreSignUpActivity.this, businessCategoryList, "Select a Category");
-            new MaterialDialog.Builder(Edit_Profile_Activity.this)
-                    .title("Select a Category")
-                    .items(businessCategoryList)
-                    .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
-                        @Override
-                        public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                            category.setText(text);
-                            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY,category.getText().toString());
-                            //Util.changeDefaultBackgroundImage(text.toString());
-                            return false;
-                        }
-                    })
-                    .show();
-        }*/
-        new FetchCategory().execute();
-
+    private void showCategoryDialog(ArrayList<String> categories){
+        new MaterialDialog.Builder(Edit_Profile_Activity.this)
+                .title(getString(R.string.select_category))
+                .items(categories)
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        category.setText(text);
+                        session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY,category.getText().toString());
+                        //Util.changeDefaultBackgroundImage(text.toString());
+                        return false;
+                    }
+                }).show();
     }
-
 
     public void uploadProfile() {
         int i=0;
@@ -753,8 +737,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
     }
     public void uploadPrimaryPicture(String path) {
         //Picasso.with(Edit_Profile_Activity.this).load(path).placeholder(R.drawable.featured_photo_default).into(editProfileImageView);
-        uploadIMAGEURI uploadAsyncTask = new uploadIMAGEURI(Edit_Profile_Activity.this,
-                path,session.getFPID());
+        uploadIMAGEURI uploadAsyncTask = new uploadIMAGEURI(Edit_Profile_Activity.this, path,session.getFPID());
         uploadAsyncTask.execute();
 
 
@@ -794,47 +777,6 @@ public class Edit_Profile_Activity extends AppCompatActivity {
 
 //        UploadPictureAsyncTask upa = new UploadPictureAsyncTask(Edit_Profile_Activity.this, path, true,false,session.getFPID());
 //        upa.execute();
-    }
-    private class FetchCategory extends AsyncTask<String, Void, String> {
-
-        ProgressDialog pd = null;
-
-        @Override
-        protected void onPreExecute() {
-
-            pd = ProgressDialog.show(Edit_Profile_Activity.this, "", getResources().getString(R.string.wait_while_loading_category));
-            //return
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            API_Layer.getBusinessCategories(Edit_Profile_Activity.this);
-            return null;
-        }
-
-
-
-        @Override
-        protected void onPostExecute(String result) {
-
-            if(pd!=null && pd.isShowing()){
-                pd.dismiss();
-            }
-            new MaterialDialog.Builder(Edit_Profile_Activity.this)
-                    .title(getString(R.string.select_category))
-                    .items(Constants.storeBusinessCategories)
-                    .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
-                        @Override
-                        public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                            category.setText(text);
-                            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY,category.getText().toString());
-                            //Util.changeDefaultBackgroundImage(text.toString());
-                            return false;
-                        }
-                    })
-                    .show();
-            //return
-        }
     }
 
 }

@@ -95,13 +95,14 @@
             </LinearLayout>
 
         </LinearLayout>
+
         <TextView
             android:id="@+id/textview_congrates"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:textSize="12sp"
-            android:text="@string/congratulation_android_business_app_development"/>
+            android:text="@string/congratulation_android_business_app_development"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -115,7 +116,7 @@
             android:paddingStart="5dp"
             android:textAllCaps="false"
             android:drawableStart="@drawable/business_white_eye"
-            android:background="#CACACA"
+            android:background="@color/business_button_black"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:layout_marginTop="10dp"
@@ -143,7 +144,7 @@
             android:layout_marginStart="2.5dp"
             android:id="@+id/site_health"
             android:drawableStart="@drawable/site_health"
-            android:background="#CACACA"
+            android:background="@color/business_button_black"
             android:textColor="@color/white"
             android:layout_height="match_parent"
             android:text="@string/increase_our_site_health"
