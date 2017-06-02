@@ -1,14 +1,17 @@
 package com.nowfloats.NavigationDrawer.businessApps;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,13 +20,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 
 /**
  * Created by Admin on 12/27/2016.
  */
-public class BusinessAppDevelopment extends Fragment implements View.OnClickListener, ViewTreeObserver.OnGlobalLayoutListener {
+public class BusinessAppDevelopment extends Fragment implements View.OnClickListener {
     private static final int SHOW_PREVIEW = 0,SITE_HEALTH=2;
 
     private String type;
@@ -45,6 +49,9 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
         super.onCreate(savedInstanceState);
         if(getArguments()!=null){
             type=getArguments().getString("type","android");
+            if(type.equals("android")){
+                setHasOptionsMenu(true);
+            }
         }
     }
 
@@ -76,7 +83,6 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
         ImageView logoImage = (ImageView) view.findViewById(R.id.app_logo);
         back = (ImageView) view.findViewById(R.id.background_image_view);
         parent = (LinearLayout) view.findViewById(R.id.anim_parent);
-        parent.getViewTreeObserver().addOnGlobalLayoutListener(this);
         previewButton.setOnClickListener(this);
         siteHealthButton.setOnClickListener(this);
 
@@ -106,7 +112,7 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
         if(type.equalsIgnoreCase("android")){
             androidTextView.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context,R.drawable.android_green), null, null, null );
             androidTextView.setText(getResources().getString(R.string.android_app));
-            previewButton.setText(getResources().getString(R.string.android_app_preview));
+            previewButton.setText(getResources().getString(R.string.tips_for_business_app));
             congratesTextView.setText(getResources().getString(R.string.congratulation_android_business_app_development));
         }else{
             siteHealthButton.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context,R.drawable.studio),null,null,null);
@@ -121,8 +127,8 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.preview_button:
-                BusinessAppPreview frag= (BusinessAppPreview) getParentFragment();
-                frag.showScreenShots();
+                startActivity(new Intent(context,BusinessAppTipsActivity.class));
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             case R.id.site_health:
                 ((BusinessAppsActivity)context).addFragments(SITE_HEALTH);
@@ -133,12 +139,30 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
     }
 
     @Override
-    public void onGlobalLayout() {
-      /*  float f = parent.getWidth()/(float)back.getWidth();
-        Log.v("ggg","anim "+back.getWidth()+" "+parent.getWidth()+" "+f);
-        TranslateAnimation anim = new TranslateAnimation(-100,f*100,0f,0f);
-        anim.setDuration(2000);
-        anim.setRepeatCount(Animation.INFINITE);
-        back.startAnimation(anim);*/
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final BusinessAppPreview frag= (BusinessAppPreview) getParentFragment();
+        if(!isAdded()) return false;
+        switch(item.getItemId()){
+            case R.id.action_notif:
+                Methods.materialDialog(getActivity(),"Send Push Notification","Inform your app users about your latest product offerings via push notifications. This feature is coming soon.");
+                return true;
+            case R.id.app_preview:
+                frag.showScreenShots();
+                return true;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.business_app,menu);
+        MenuItem item = menu.findItem(R.id.app_preview);
+        if(item != null) {
+            item.setVisible(true);
+        }
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
 }

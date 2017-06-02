@@ -7,9 +7,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -43,6 +45,7 @@ public class BusinessAppPreview extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_business_app_preview,container,false);
     }
 
@@ -50,6 +53,7 @@ public class BusinessAppPreview extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         session=new UserSessionManager(context,getActivity());
+        //setHasOptionsMenu(true);
     }
 
     @Override
@@ -213,18 +217,7 @@ public class BusinessAppPreview extends Fragment {
     }
 
     private void showImageDialog() {
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-
        ImageDialogFragment dialog = ImageDialogFragment.getInstance(screenShots);
-       /* Window window = dialog.getDialog().getWindow();
-
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        if(window!=null) {
-            lp.copyFrom(window.getAttributes());
-            window.setAttributes(lp);
-            window.getAttributes().windowAnimations = R.style.DialogTheme;
-        }*/
         dialog.show(getChildFragmentManager(),"dialog");
     }
 
@@ -255,4 +248,14 @@ public class BusinessAppPreview extends Fragment {
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 }

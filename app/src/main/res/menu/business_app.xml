@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:icon="@drawable/notify"
         android:id="@+id/action_notif"
-        android:title="@string/create_push_notification"
-        app:showAsAction="always"/>
-    <item android:icon="@drawable/ic_settings"
-        android:id="@+id/action_settings"
+        android:title="@string/push_notif"
+        app:showAsAction="never"/>
+    <item android:icon="@drawable/business_white_eye"
+        android:id="@+id/app_preview"
         android:visible="false"
-        android:title="@string/edit_details"
-        app:showAsAction="always"/>
+        android:title="@string/app_preview"
+        app:showAsAction="never"/>
 </menu>

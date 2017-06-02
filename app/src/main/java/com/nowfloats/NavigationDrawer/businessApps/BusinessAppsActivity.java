@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -117,11 +116,11 @@ public class BusinessAppsActivity extends AppCompatActivity {
         }
         transaction.commit();
     }
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.business_app,menu);
         return true;
-    }
+    }*/
 
     @Override
     public void onBackPressed() {
@@ -139,9 +138,6 @@ public class BusinessAppsActivity extends AppCompatActivity {
                 return true;
             case R.id.action_notif:
                 Methods.materialDialog(this,"Send Push Notification","Inform your app users about your latest product offerings via push notifications. This feature is coming soon.");
-                return true;
-            case R.id.action_settings:
-                addFragments(SHOW_SETTING);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

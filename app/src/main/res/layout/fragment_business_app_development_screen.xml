@@ -113,23 +113,13 @@
         <Button
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:paddingStart="5dp"
-            android:textAllCaps="false"
-            android:drawableStart="@drawable/business_white_eye"
             android:background="@color/business_button_black"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginRight="2.5dp"
-            android:layout_marginEnd="2.5dp"
+            android:layout_margin="10dp"
             android:id="@+id/preview_button"
             android:layout_height="match_parent"
-            android:text="@string/android_app_preview"
-            android:drawableLeft="@drawable/business_white_eye"
-            android:paddingLeft="5dp"
-            android:layout_marginLeft="10dp" />
+            android:text="@string/tips_for_business_app" />
 
         <Button
             android:layout_width="0dp"
@@ -137,6 +127,7 @@
             android:paddingStart="5dp"
             android:layout_gravity="center_vertical"
             android:textSize="12sp"
+            android:visibility="gone"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_marginRight="10dp"

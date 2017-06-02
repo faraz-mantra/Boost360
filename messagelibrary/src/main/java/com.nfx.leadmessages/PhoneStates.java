@@ -13,7 +13,6 @@ import android.provider.CallLog;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -140,11 +139,15 @@ public class PhoneStates extends BroadcastReceiver {
                                 type = "outgoing";
                             }*/
                             try {
-                                Thread.sleep(2000);
+                                Thread.sleep(4000);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                            onCallEnd(context);
+                            try {
+                                onCallEnd(context);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
                         }
                     }).start();
                     break;

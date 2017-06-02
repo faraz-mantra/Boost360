@@ -8,6 +8,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -55,6 +58,9 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         if(getArguments()!=null){
             type=getArguments().getString("type","android");
+            if(type.equals("android")){
+                setHasOptionsMenu(true);
+            }
         }
     }
 
@@ -218,5 +224,24 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
         new MaterialDialog.Builder(context)
                 .customView(view,false)
                 .build().show();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(!isAdded()) return false;
+        switch(item.getItemId()){
+            case R.id.action_notif:
+                Methods.materialDialog(getActivity(),"Send Push Notification","Inform your app users about your latest product offerings via push notifications. This feature is coming soon.");
+                return true;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.business_app,menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 }

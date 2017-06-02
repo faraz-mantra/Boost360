@@ -1116,6 +1116,20 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item><a href="http://bangalore.quikr.com/html/privacy.php">Privacy Policy</a></item>
         <item><a href="http://hyderabad.quikr.com/html/policies.php">Listing Policy</a></item>
     </string-array>
+    <string-array name="business_app_tips_description">
+        <item>Regularly post text and image business updates</item>
+        <item>Add at least 4 products to product gallery</item>
+        <item>Add at least 6 photos to image gallery </item>
+        <item>Make sure your contact details are accurate</item>
+        <item>Make sure your business hours are correct</item>
+    </string-array>
+    <string-array name="business_app_tips">
+        <item>Post updates</item>
+        <item>Add products</item>
+        <item>Add photos</item>
+        <item>Contact details</item>
+        <item>Business hours</item>
+    </string-array>
     <string name="quikr_tip_points_heading">Good news! You can now publish your updates as product ads to Quikr.</string>
     <string-array name="quikr_tip_on_dialog">
         <item> Be as detailed as possible in the description of the update. For example, if you are posting an update about a car, mention the brand, model and year. If you are posting an update about an apartment, mention whether it\'s for rent or sale, the area and the number of rooms (1 BHK, 2BHK etc)</item>
@@ -1180,6 +1194,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="congratulation_ios_business_app_development">Congrats! Your iOS app is under development. You will be able to download and share this app once it is published to the App Store.</string>
 
     <string name="android_app_preview">PREVIEW YOUR\nANDROID APP</string>
+    <string name="tips_for_business_app">Tips for business app</string>
 
     <string name="ios_app_preview">PREVIEW YOUR\niOS APP</string>
 
@@ -1257,6 +1272,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="email_id_to_request_plans">lead@nowfloats.com</string>
     <string name="resend"><u>Resend</u></string>
     <string name="add_logo_message">Please add a logo for your business before proceeding.</string>
+    <string name="push_notif">Send notification</string>
+    <string name="app_preview">App preview</string>
 
 
 </resources>

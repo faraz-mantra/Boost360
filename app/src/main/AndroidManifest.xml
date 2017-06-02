@@ -112,20 +112,6 @@
                 android:value="com.nowfloats.Analytics_Screen.SocialAnalytics" />
         </activity>
         <activity
-            android:name="com.nowfloats.NavigationDrawer.API.twitter.PrepareRequestTokenActivity"
-            android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="callback"
-                    android:scheme="x-oauthflow-twitter" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name="com.nowfloats.signup.UI.UI.WebSiteAddressActivity"
             android:label="@string/title_activity_web_site_address"
             android:clearTaskOnLaunch="true"
@@ -234,6 +220,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.NavigationDrawer.businessApps.BusinessAppsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.NavigationDrawer.businessApps.BusinessAppTipsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.Image_Gallery.FullScreen_Gallery_Image"
