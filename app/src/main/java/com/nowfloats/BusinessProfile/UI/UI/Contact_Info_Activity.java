@@ -1102,6 +1102,17 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
             alternateNumber_3.setOnTouchListener(this);
             VMN_Dialog = true;
     }
+        if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1))){
+            alternateNumber_2.setEnabled(false);
+        }
+        if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3))){
+            alternateNumber_3.setEnabled(false);
+        }
+        if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME))){
+            alternateNumber_1.setEnabled(false);
+        }
+
+       // initializeData();
         bus.register(this);
         this.setTitle("Contact Information");
     }

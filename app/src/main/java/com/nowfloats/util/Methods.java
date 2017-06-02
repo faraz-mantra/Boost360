@@ -93,6 +93,7 @@ public class Methods {
         }
         return status;
     }
+
     @SuppressWarnings("deprecation")
     public static Spanned fromHtml(String html){
         Spanned result;

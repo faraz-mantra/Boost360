@@ -45,7 +45,7 @@ public interface EventKeysWL
     String SIDE_PANEL_BUSINESS_ENQUIRIES = "BusinessEnquiries";
     String SIDE_PANEL_IMAGE_GALLERY = "ImageGallery";
     String SIDE_PANEL_PRODUCT_GALLERY = "ProductGallery";
-    String SIDE_PANEL_SETTINGS = "Settings";
+    String SIDE_PANEL_SETTINGS = "ic_settings";
     String SIDE_PANEL_CHANGE_BACKGROUND_GALLERY = "ChangeBackgroundGallery";
     String SIDE_PANEL_CHANGE_BACKGROUND_CAMERA = "ChangeBackgroundCamera";
     String IMAGE_GALLERY_DELETE_IMAGE = "ImageGalleryDelete";
@@ -109,7 +109,7 @@ public interface EventKeysWL
 
 
     // String SELECT_FACEBOOK_
-    // Settings , Social Sharing
+    // ic_settings , Social Sharing
 
 
 }

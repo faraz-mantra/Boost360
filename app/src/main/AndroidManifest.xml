@@ -233,6 +233,9 @@
             android:name="com.nowfloats.BusinessProfile.UI.UI.QuikrGuidelinesActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.nowfloats.NavigationDrawer.businessApps.BusinessAppsActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.nowfloats.Image_Gallery.FullScreen_Gallery_Image"
             android:label="Gallery Image"
             android:screenOrientation="portrait"

@@ -50,8 +50,6 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.appsflyer.AppsFlyerConversionListener;
-import com.appsflyer.AppsFlyerLib;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.freshdesk.hotline.Hotline;
@@ -91,6 +89,7 @@ import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
 import com.nowfloats.NavigationDrawer.API.KitsuneApi;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
+import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.Product_Gallery.Product_Detail_Activity_V45;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
@@ -131,7 +130,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -192,6 +190,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     private final static int READ_MESSAGES_ID=221;
     //private ArrayList<AccountDetailModel> accountDetailsModel = new ArrayList<>();
 
+
     @Override
     protected void attachBaseContext(Context newBase) {
        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -202,7 +201,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_v3);
         pref = getSharedPreferences(Constants.PREF_NAME,Activity.MODE_PRIVATE);
-        AppsFlyerLib.sendTracking(getApplicationContext());
         BoostLog.d("HomeActivity ONcreate","onCreate");
         bus = BusProvider.getInstance().getBus();
         activity = HomeActivity.this;
@@ -221,42 +219,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             smsPref.edit().putString(com.nfx.leadmessages.Constants.FP_ID, FPID).apply();
             getPermissions();
         }
-
-        AppsFlyerLib.registerConversionListener(this, new AppsFlyerConversionListener() {
-            public String campaign = "";
-
-            @Override
-                    public void onInstallConversionDataLoaded(Map<String, String> stringStringMap) {
-                        for (String attrName : stringStringMap.keySet()){
-
-                            String status = stringStringMap.get("af_status");
-                            String source = stringStringMap.get("media_source");
-                            campaign = stringStringMap.get("campaign");
-
-                            MixPanelController.setProperties("InstallType", status);
-                            MixPanelController.setProperties("AcquisitionSource", source);
-                            MixPanelController.setProperties("CampaignName", campaign);
-
-                            BoostLog.d("AppsFlyerTest","attribute: "+attrName+" = "+stringStringMap.get(attrName));
-                            BoostLog.d("AppsFlyerTest","attribute: "+attrName+" = "+stringStringMap.get(attrName));
-
-                        }
-
-                if(campaign!=null && campaign.trim().length()>0 && campaign.contains("domain"))
-                {
-                    if(!session.getIsFreeDomainDisplayed().equals("true")) {
-                        session.storeIsFreeDomainDisplayed("true");
-                        showLookupDomain = true;
-                    }
-                }
-            }
-                    @Override
-                    public void onInstallConversionFailure(String s) {}
-                    @Override
-                    public void onAppOpenAttribution(Map<String, String> stringStringMap) {}
-                    @Override
-                    public void onAttributionFailure(String s) {}
-                });
 
         MixPanelController.sendMixPanelProperties(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME),
                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
@@ -1466,6 +1428,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 //                            // Add this transaction to the back stack
 //                    .addToBackStack("Profile")
 //                    .commit();
+                }else if(nextScreen.equals(getResources().getString(R.string.business_apps))) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,new BusinessAppsFragment()).commit();
                 }else if(nextScreen.equals(getResources().getString(R.string.side_panel_site_appearance))){
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,mSiteAppearanceFragement).
                             commit();
@@ -1514,7 +1478,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 }else  if(nextScreen.equals(getString(R.string.call)))
                 {
                     String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-                    if(paymentState==null || paymentState.equals("-1") || paymentState.equals("0")) {
+                    if(paymentState==null || paymentState.equals("-1")|| paymentState.equals("0")) {
                         Intent call = new Intent(Intent.ACTION_DIAL);
                         String callString = "tel:" + getString(R.string.contact_us_number);
                         call.setData(Uri.parse(callString));
@@ -1720,7 +1684,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 String date = allModels.get(i).CreatedOn;
                 float totalMonthsValidity = allModels.get(i).TotalMonthsValidity;
                 int remainingDay = verifyTime(date.substring(date.indexOf("(")+1,date.indexOf(")")),totalMonthsValidity);
-                //Log.v("ggg",remainingDay+" days");
                 if(remainingDay>0 && remainingDay<7){
                     prefsEditor = pref.edit();
                     prefsEditor.putInt("Days_remain", remainingDay);

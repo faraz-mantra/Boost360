@@ -1,0 +1,165 @@
+package com.nowfloats.NavigationDrawer.businessApps;
+
+import android.content.ActivityNotFoundException;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.text.Html;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
+import com.nowfloats.NavigationDrawer.model.StoreAndGoModel;
+import com.nowfloats.util.Key_Preferences;
+import com.thinksity.R;
+
+import java.util.List;
+
+/**
+ * Created by Admin on 12/27/2016.
+ */
+
+public class BusinessAppCompleteFragment extends Fragment implements View.OnClickListener {
+    private String type;
+    private UserSessionManager session;
+    private Context context;
+    List<StoreAndGoModel.PublishStatusModel> modelList;
+    public static Fragment getInstance(String type,String list){
+        Fragment frag=new BusinessAppCompleteFragment();
+        Bundle b=new Bundle();
+        b.putString("type",type);
+        b.putString("modelList",list);
+        frag.setArguments(b);
+        return  frag;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(getArguments()!=null){
+            type=getArguments().getString("type","android");
+            modelList = new Gson().fromJson(getArguments().getString("modelList"),StoreAndGoModel.class).getPublishStatusModelList();
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context=context;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        return inflater.inflate(R.layout.fragment_business_app_complete,container,false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        if(!isAdded()) return;
+
+        session = new UserSessionManager(context, getActivity());
+
+        TextView appNameTextView= (TextView) view.findViewById(R.id.app_name);
+        appNameTextView.setSelected(true);
+        TextView firstCharText= (TextView) view.findViewById(R.id.textcharacter);
+        ImageView logoImage = (ImageView) view.findViewById(R.id.app_logo);
+        Button shareButton= (Button) view.findViewById(R.id.share_app);
+        Button previewButton= (Button) view.findViewById(R.id.preview_app);
+        Button openButton= (Button) view.findViewById(R.id.open_app);
+        TextView appTextView= (TextView) view.findViewById(R.id.android_app);
+
+        shareButton.setOnClickListener(this);
+        previewButton.setOnClickListener(this);
+        openButton.setOnClickListener(this);
+
+        String logo = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
+
+        String name=session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME);
+        appNameTextView.setSelected(true);
+        appNameTextView.setText(name);
+
+        if(logo==null || logo.isEmpty()){
+            firstCharText.setText(String.valueOf(name.charAt(0)));
+            firstCharText.setVisibility(View.VISIBLE);
+        }
+        else if(!logo.contains("http")){
+            logo = "https://"+logo;
+        }
+        Glide.with(context)
+                .load(logo)
+                .placeholder(getResources().getDrawable(R.drawable.studio_architecture))
+                .into(logoImage);
+
+        if(type.equals("android")){
+            appTextView.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.android_green), null, null, null );
+            appTextView.setText(getResources().getString(R.string.android_app));
+        }else{
+            appTextView.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ios_icon_black), null, null, null );
+            appTextView.setText(getResources().getString(R.string.ios_app));
+        }
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.share_app:
+                for(StoreAndGoModel.PublishStatusModel model : modelList){
+                    if(model.getKey().equals("ShareLink")){
+                        share(model.getValue());
+                        break;
+                    }
+                }
+                break;
+            case R.id.open_app:
+                for(StoreAndGoModel.PublishStatusModel model : modelList){
+                    if(model.getKey().equals("AppStoreLink")){
+                        rateUsPlayStore(model.getValue());
+                        break;
+                    }
+                }
+
+                break;
+            case R.id.preview_app:
+                BusinessAppPreview frag= (BusinessAppPreview) getParentFragment();
+                frag.showScreenShots();
+                break;
+            default:
+                break;
+        }
+    }
+    private void share(String url){
+        Intent i =new Intent(Intent.ACTION_SEND);
+        i.setType("text/plain");
+        i.putExtra(Intent.EXTRA_TEXT, Html.fromHtml("Download the new app<a href="+url+">"+url+"</a>"));
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(Intent.createChooser(i,"send to:"));
+    }
+    private void rateUsPlayStore(String url){
+        Uri uri = Uri.parse("market://" +url.substring(url.indexOf("details?id=")));
+        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        // To count with Play market backstack, After pressing back button,
+        // to taken back to our application, we need to add following flags to intent.
+        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        try {
+            startActivity(Intent.createChooser(goToMarket,"options"));
+        } catch (ActivityNotFoundException e) {
+            Intent showWebSiteIntent = new Intent(context, Mobile_Site_Activity.class);
+            showWebSiteIntent.putExtra("WEBSITE_NAME", url);
+            context.startActivity(showWebSiteIntent);
+            getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        }
+    }
+}

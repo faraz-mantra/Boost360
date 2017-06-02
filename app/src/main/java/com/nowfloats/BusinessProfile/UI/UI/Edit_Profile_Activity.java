@@ -149,8 +149,10 @@ public class Edit_Profile_Activity extends AppCompatActivity {
 
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar()!=null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         saveTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,7 +168,6 @@ public class Edit_Profile_Activity extends AppCompatActivity {
                 //UploadProfileAsyncTask upload = new UploadProfileAsyncTask(Edit_Profile_Activity.this,)
             }
         });
-
 
 
 

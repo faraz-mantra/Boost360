@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/business_screen_cardview"
+    xmlns:card="http://schemas.android.com/apk/res-auto"
+    card:cardCornerRadius="3dp"
+    android:layout_gravity="center"
+    android:layout_margin="10dp"
+    card:cardElevation="3dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_weight="2"
+            android:id="@+id/llayout"
+            android:layout_height="0dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:id="@+id/imageview_circle"
+                android:src="@drawable/businessapp_first"
+                android:scaleType="centerCrop"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:id="@+id/busines_screen_text_layout"
+            android:gravity="center"
+            android:background="@color/white"
+            android:layout_height="0dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/business_screen_bold_text"
+                android:text="@string/business_apps"
+                android:textSize="20sp"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/business_apps"
+                android:id="@+id/business_screen_small_text"
+                android:textSize="12sp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

@@ -515,5 +515,4 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

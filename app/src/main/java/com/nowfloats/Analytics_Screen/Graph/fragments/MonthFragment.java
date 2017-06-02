@@ -162,7 +162,6 @@ public class MonthFragment extends Fragment {
         }
         graph.invalidate();
 
-
     }
     private List<IBarDataSet> getDataSet() {
         List<IBarDataSet> dataSets = null;

@@ -30,6 +30,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -82,7 +83,7 @@ public class SidePanelFragment extends Fragment {
     TextView dashBoardTextView;
     TextView businessProfileTextView;
     TextView customerQueries;
-    TextView imageGalleryTextView;
+    TextView imageGalleryTextView,businessAppTextview;
     TextView productGalleryTextView;
     TextView StoreTextView;
     TextView cspTextView;
@@ -108,9 +109,8 @@ public class SidePanelFragment extends Fragment {
     private Switch bubbleSwitch;
 //    protected ImageLoader imageLoader = ImageLoader.getInstance();
 
-    LinearLayout homeLayout, profileLayout, analyticsLayout, storeLayout, /*customerQueriesLayout,*/
-            imageGalleryLayout, cspLayout,
-            productGalleryLayout, Store_Layout, settingsLayout, chatLayout, callLayout, shareLayout, llGetInTouch, bubbleLayout /*llSiteAppearance*/;
+    LinearLayout homeLayout, profileLayout, businessAppsLayout, storeLayout, /*customerQueriesLayout,*/ imageGalleryLayout, cspLayout,
+            productGalleryLayout, Store_Layout, settingsLayout, chatLayout, callLayout, shareLayout, llGetInTouch,bubbleLayout /*llSiteAppearance*/;
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
     private ProgressBar progressbar;
@@ -123,11 +123,12 @@ public class SidePanelFragment extends Fragment {
     private final int gallery_req_id=6;
 
     private ImageView lockWidgetImageView, lockWidget_ProductGallery, /*lockWidgetImageView_BusinessEnq,*/ lockWidgetImageView_CSP;
-
+    private Button newButton;
     private static HashMap<String, Integer> backgroundImages = new HashMap<String, Integer>();
     private ImageView shareImageView, businessProfileImageView, dasbBoardImageView, callImageView, chatImageView, cspImageView,
-            settingsImageView, StoreImageView, productGalleryImageView, imageGalleryImageView/*, customerQueriesImageView*/ /*ivSiteAppearance*/;
+            settingsImageView, StoreImageView, productGalleryImageView,businessappImageView, imageGalleryImageView/*, customerQueriesImageView*/ /*ivSiteAppearance*/;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
+    private ImageView businessLockImage;
 
 
     public interface OnItemClickListener {
@@ -166,6 +167,8 @@ public class SidePanelFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //Log.d("ILUD", "Hello");
+        final String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
+        final String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
 
         progressbar = (ProgressBar) view.findViewById(R.id.ProgressBar);
         meterValue = (TextView) view.findViewById(R.id.fragment_side_panel_progress_meter_value);
@@ -340,6 +343,7 @@ public class SidePanelFragment extends Fragment {
         profileLayout = (LinearLayout) card.findViewById(R.id.secondRow_Layout);
         cspLayout = (LinearLayout) card.findViewById(R.id.csp_Layout);
         //customerQueriesLayout = (LinearLayout) card.findViewById(R.id.thirdRow_Layout);
+        businessAppsLayout = (LinearLayout) card.findViewById(R.id.customer_app_Layout);
         imageGalleryLayout = (LinearLayout) card.findViewById(R.id.fourthRow_Layout);
         productGalleryLayout = (LinearLayout) card.findViewById(R.id.product_gal_Layout);
         Store_Layout = (LinearLayout) card.findViewById(R.id.storeRow_Layout);
@@ -361,6 +365,7 @@ public class SidePanelFragment extends Fragment {
             profileLayout.setVisibility(View.GONE);
             cspLayout.setVisibility(View.GONE);
             imageGalleryLayout.setVisibility(View.GONE);
+            businessAppsLayout.setVisibility(View.GONE);
             chatLayout.setVisibility(View.GONE);
             siteMeter.setVisibility(View.GONE);
             callLayout.setVisibility(View.GONE);
@@ -377,6 +382,7 @@ public class SidePanelFragment extends Fragment {
         settingsText = (TextView) settingsLayout.findViewById(R.id.fifthRow_TextView);
         businessProfileTextView = (TextView) profileLayout.findViewById(R.id.secondRow_TextView);
         cspTextView = (TextView) cspLayout.findViewById(R.id.csp_TextView);
+        businessAppTextview = (TextView) businessAppsLayout.findViewById(R.id.customer_app_TextView);
         chatText = (TextView) chatLayout.findViewById(R.id.sixthRow_TextView);
         callText = (TextView) callLayout.findViewById(R.id.seventhRow_TextView);
         shareText = (TextView) shareLayout.findViewById(R.id.eighthRow_TextView);
@@ -408,11 +414,12 @@ public class SidePanelFragment extends Fragment {
         });
 
         lockWidgetImageView = (ImageView) imageGalleryLayout.findViewById(R.id.lock_widget);
+        businessLockImage = (ImageView) businessAppsLayout.findViewById(R.id.business_lock_widget);
         lockWidget_ProductGallery = (ImageView) productGalleryLayout.findViewById(R.id.lock_product_gal);
         //lockWidgetImageView_BusinessEnq = (ImageView) customerQueriesLayout.findViewById(R.id.lock_widget_business_enquiries);
         lockWidgetImageView_CSP = (ImageView) cspLayout.findViewById(R.id.lock_widget_csp);
         //Constants.ImageGalleryWidget = false ;
-
+        newButton = (Button) businessAppsLayout.findViewById(R.id.new_business_button);
         // Constants.BusinessEnquiryWidget = true;
 
         if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_GALLERY).contains("IMAGEGALLERY")) {
@@ -420,7 +427,11 @@ public class SidePanelFragment extends Fragment {
         } else {
             lockWidgetImageView.setVisibility(View.GONE);
         }
-
+        if (Integer.parseInt(paymentState)>0 && Integer.parseInt(paymentLevel) > 10) {
+            newButton.setVisibility(View.VISIBLE);
+        } else {
+            businessLockImage.setVisibility(View.VISIBLE);
+        }
         if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_PRODUCT_GALLERY).contains("PRODUCTCATALOGUE")) {
             lockWidget_ProductGallery.setVisibility(View.VISIBLE);
         } else {
@@ -443,6 +454,7 @@ public class SidePanelFragment extends Fragment {
         dasbBoardImageView = (ImageView) homeLayout.findViewById(R.id.firstrow_ImageView);
         businessProfileImageView = (ImageView) profileLayout.findViewById(R.id.secondRow_ImageView);
         //customerQueriesImageView = (ImageView) customerQueriesLayout.findViewById(R.id.thirdRow_ImageView);
+        businessappImageView = (ImageView) businessAppsLayout.findViewById(R.id.customer_app_ImageView);
         imageGalleryImageView = (ImageView) imageGalleryLayout.findViewById(R.id.fourthRow_ImageView);
         productGalleryImageView = (ImageView) productGalleryLayout.findViewById(R.id.Product_Gal_ImageView);
         StoreImageView = (ImageView) Store_Layout.findViewById(R.id.storeRow_ImageView);
@@ -585,7 +597,22 @@ public class SidePanelFragment extends Fragment {
                 onclickColorChange(callImageView, callText, callLayout);
             }
         });
+        businessAppTextview.setTypeface(robotoMedium);
+        businessAppsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+               if (Integer.parseInt(paymentState)>0 && Integer.parseInt(paymentLevel) > 10) {
+                    MixPanelController.track("BusinessApps", null);
+                    onclickColorChange(businessappImageView, businessAppTextview,businessAppsLayout);
+                    ((OnItemClickListener) mainActivity).onClick(getString(R.string.business_apps));
+                }
+                else {
+                    showAlertMaterialDialog();
+                }
+
+            }
+        });
         shareLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1320,10 +1347,12 @@ public class SidePanelFragment extends Fragment {
         callText.setTextColor(getResources().getColor(R.color.cell_text_color));
         shareText.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvBoostBubble.setTextColor(getResources().getColor(R.color.cell_text_color));
+        tvBoostBubble.setTextColor(getResources().getColor(R.color.cell_text_color));
         //tvSiteAppearance.setTextColor(getResources().getColor(R.color.cell_text_color));
 
             shareImageView.setColorFilter(defaultLabelFilter);
             dasbBoardImageView.setColorFilter(defaultLabelFilter);
+            businessappImageView.setColorFilter(defaultLabelFilter);
             businessProfileImageView.setColorFilter(defaultLabelFilter);
             //customerQueriesImageView.setColorFilter(defaultLabelFilter);
             imageGalleryImageView.setColorFilter(defaultLabelFilter);
@@ -1341,6 +1370,7 @@ public class SidePanelFragment extends Fragment {
             //storeLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
             //customerQueriesLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
             imageGalleryLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+            businessAppsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
             cspLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
             productGalleryLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
             Store_Layout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
