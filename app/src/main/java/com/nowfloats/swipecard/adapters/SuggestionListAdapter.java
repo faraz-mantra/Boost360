@@ -1,4 +1,4 @@
-package com.nowfloats.swipecard;
+package com.nowfloats.swipecard.adapters;
 
 import android.app.Activity;
 import android.content.res.Resources;
@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by guru
@@ -42,8 +43,9 @@ public class SuggestionListAdapter extends BaseAdapter {
     private Product_Gallery_Fragment.FROM from;
     private ArrayList<SugUpdates> productItemModelList;
 
-    public SuggestionListAdapter(Activity activity) {
+    public SuggestionListAdapter(Activity activity, List<SugUpdates> productItemModelList) {
         this.activity = activity;
+        this.productItemModelList = (ArrayList<SugUpdates>) productItemModelList;
         mResources = activity.getResources();
         this.from = from;
         //this.currencyType = currency;
@@ -145,7 +147,7 @@ public class SuggestionListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public ArrayList<SugUpdates> getDetails(){
+    public ArrayList<SugUpdates> getDetails() {
         return productItemModelList;
     }
 

@@ -67,7 +67,8 @@ import retrofit.http.QueryMap;
  * Created by Guru on 21-04-2015.
  */
 public class Methods {
-    public static SimpleDateFormat dateFormatDefault = new SimpleDateFormat("dd/MM/yyyy",Locale.US);
+    public static SimpleDateFormat dateFormatDefault = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
+
     public static boolean isOnline(Activity context) {
         boolean status = false;
         try {
@@ -83,7 +84,7 @@ public class Methods {
                         && netInfo.getState() == NetworkInfo.State.CONNECTED)
                     status = true;
             }
-            if (!status){
+            if (!status) {
                 snackbarNoInternet(context);
             }
         } catch (Exception e) {
@@ -93,38 +94,41 @@ public class Methods {
         }
         return status;
     }
+
     @SuppressWarnings("deprecation")
-    public static Spanned fromHtml(String html){
+    public static Spanned fromHtml(String html) {
         Spanned result;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
-        { result = Html.fromHtml(html,Html.FROM_HTML_MODE_LEGACY);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            result = Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
         } else {
             result = Html.fromHtml(html);
         }
         return result;
     }
-    public static void likeUsFacebook(Context context,String review){
+
+    public static void likeUsFacebook(Context context, String review) {
         MixPanelController.track("LikeUsOnFacebook", null);
         Intent facebookIntent;
         //if(review.trim().length() == 0) {
-            try {
-                context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
-                facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_PAGE_WITH_ID));
-            } catch (Exception e) {
-                facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_URL + review));
-            }
+        try {
+            context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
+            facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_PAGE_WITH_ID));
+        } catch (Exception e) {
+            facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_URL + review));
+        }
        /* }else{
             facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.FACEBOOK_URL + review));
         }*/
 
-        facebookIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
+        facebookIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
         try {
             context.startActivity(facebookIntent);
-        }catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(context, "unable to open facebook", Toast.LENGTH_SHORT).show();
         }
 
     }
+
     public static boolean isAccessibilitySettingsOn(Context mContext) {
         int accessibilityEnabled = 0;
         final String service = mContext.getPackageName() + "/" + DataAccessibilityServiceV7.class.getCanonicalName();
@@ -161,7 +165,8 @@ public class Methods {
 
         return false;
     }
-    public static void showSnackBar(Activity context,String msg){
+
+    public static void showSnackBar(Activity context, String msg) {
         android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), msg, android.support.design.widget.Snackbar.LENGTH_LONG);
         snackBar.getView().setBackgroundColor(Color.GRAY);
         snackBar.show();
@@ -173,7 +178,7 @@ public class Methods {
                 ,context); // activity where it is displayed*/
     }
 
-    public static void showSnackBarPositive(Activity context,String msg){
+    public static void showSnackBarPositive(Activity context, String msg) {
         android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), msg, android.support.design.widget.Snackbar.LENGTH_LONG);
         snackBar.getView().setBackgroundColor(Color.parseColor("#5DAC01"));
         snackBar.show();
@@ -185,7 +190,7 @@ public class Methods {
                 ,context); // activity where it is displayed*/
     }
 
-    public static void showSnackBarNegative(Activity context,String msg){
+    public static void showSnackBarNegative(Activity context, String msg) {
         android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), msg, android.support.design.widget.Snackbar.LENGTH_LONG);
         snackBar.getView().setBackgroundColor(Color.parseColor("#E02200"));
         snackBar.show();
@@ -197,7 +202,7 @@ public class Methods {
                 ,context); // activity where it is displayed*/
     }
 
-    public static void snackbarNoInternet(Activity context){
+    public static void snackbarNoInternet(Activity context) {
         android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), context.getString(R.string.noInternet), android.support.design.widget.Snackbar.LENGTH_LONG);
         snackBar.getView().setBackgroundColor(Color.parseColor("#E02200"));
         snackBar.show();
@@ -210,26 +215,26 @@ public class Methods {
     }
 
     public static void setListViewHeightBasedOnChildren(ExpandableListView listView) {
-       ListAdapter listAdapter = listView.getAdapter();
-       if (listAdapter == null)
-           return;
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null)
+            return;
 
-       int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-       int totalHeight = 0;
-       View view = null;
-       for (int i = 0; i < listAdapter.getCount(); i++) {
-           view = listAdapter.getView(i, view, listView);
-           if (i == 0)
-               view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ListView.LayoutParams.WRAP_CONTENT));
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, listView);
+            if (i == 0)
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ListView.LayoutParams.WRAP_CONTENT));
 
-           view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-           totalHeight += view.getMeasuredHeight();
-       }
-       ViewGroup.LayoutParams params = listView.getLayoutParams();
-       params.height = 120 + totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-       listView.setLayoutParams(params);
-       listView.requestLayout();
-   }
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = 120 + totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+    }
 
     public static void launch(AppCompatActivity activity, View transitionView, Intent intent) {
         ActivityOptionsCompat options =
@@ -237,15 +242,17 @@ public class Methods {
                         activity, transitionView, "imageKey");
         ActivityCompat.startActivity(activity, intent, options.toBundle());
     }
+
     public static void launchFromFragment(Activity activity, View transitionView, Intent intent) {
         ActivityOptionsCompat options =
                 ActivityOptionsCompat.makeSceneTransitionAnimation(
                         activity, transitionView, "imageKey");
         ActivityCompat.startActivity(activity, intent, options.toBundle());
     }
-    public static void hideKeyboard(EditText editText,Context context){
+
+    public static void hideKeyboard(EditText editText, Context context) {
         try {
-            InputMethodManager imm = (InputMethodManager)context.getSystemService(Service.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Service.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
         } catch (Exception e) {
             e.printStackTrace();
@@ -285,30 +292,32 @@ public class Methods {
                     })
                     .build()
                     .show();
-        }catch(Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public static String setDateFormat(String value,String formatType){
-        try{
-            Log.i("formatValue--",value);
+    public static String setDateFormat(String value, String formatType) {
+        try {
+            Log.i("formatValue--", value);
             Long epochTime = Long.parseLong(value);
             Date date = new Date(epochTime);
             DateFormat dateFormat = new SimpleDateFormat(formatType);//dd/MM/yyyy HH:mm:ss
             dateFormat.setTimeZone(TimeZone.getDefault());
             value = dateFormat.format(date);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return value;
     }
 
-    public static boolean compareDate(Date one,Date cur_date){
+    public static boolean compareDate(Date one, Date cur_date) {
         try {
 //            Date purchaseDate = dateFormatDefault.parse(one);
 //            Date expiryDate = dateFormatDefault.parse(two);
 
             if (one.after(cur_date)) return true;
-            else if(one.equals(cur_date)) return true;
+            else if (one.equals(cur_date)) return true;
             else return false;
 
         } catch (Exception e) {
@@ -318,8 +327,8 @@ public class Methods {
     }
 
     public static String getFormattedDate(String Sdate) {
-        String formatted = "",dateTime = "";
-        if(Sdate.contains("/Date")){
+        String formatted = "", dateTime = "";
+        if (Sdate.contains("/Date")) {
             Sdate = Sdate.replace("/Date(", "").replace(")/", "");
         }
 
@@ -334,7 +343,7 @@ public class Methods {
             String hrsTemp;
             String amMarker;
             dateTemp = dateTime.split(" ");
-            hrsTemp=dateTemp[1];
+            hrsTemp = dateTemp[1];
             amMarker = dateTemp[2];
             dateTemp = dateTemp[0].split("-");
 
@@ -391,23 +400,24 @@ public class Methods {
                         break;
                 }
             }
-            formatted+=" at "+hrsTemp+" "+amMarker;
+            formatted += " at " + hrsTemp + " " + amMarker;
         }
         return formatted;
     }
-    public static byte[] compressTobyte(String path,Activity act) {
+
+    public static byte[] compressTobyte(String path, Activity act) {
         File img = new File(path);
-        File f = new File(img.getAbsolutePath() + File.separator );
+        File f = new File(img.getAbsolutePath() + File.separator);
         try {
             f.createNewFile();
         } catch (IOException e1) {
             e1.printStackTrace();
         }
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        Bitmap bmp = Util.getBitmap(path,act);
-        if((f.length()/1024)>1024){
+        Bitmap bmp = Util.getBitmap(path, act);
+        if ((f.length() / 1024) > 1024) {
             bmp.compress(Bitmap.CompressFormat.JPEG, 80, bos);
-        } else{
+        } else {
             bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
         }
         return bos.toByteArray();
@@ -415,17 +425,17 @@ public class Methods {
 
     public static String getCurrentTime() {
         String result = "";
-        try{
-            DateFormat dateFormat = new SimpleDateFormat("hh:mm aa",Locale.ENGLISH);//dd/MM/yyyy HH:mm:ss
+        try {
+            DateFormat dateFormat = new SimpleDateFormat("hh:mm aa", Locale.ENGLISH);//dd/MM/yyyy HH:mm:ss
             dateFormat.setTimeZone(TimeZone.getDefault());
             result = dateFormat.format(Calendar.getInstance().getTime());
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
     }
 
-    public static RestAdapter createAdapter(Context context,String url) throws IOException {
+    public static RestAdapter createAdapter(Context context, String url) throws IOException {
         try {
             OkHttpClient okHttpClient = new OkHttpClient();
 
@@ -474,21 +484,91 @@ public class Methods {
         return null;
     }
 
-    public static int dpToPx(int dp,Context context) {
+    public static int dpToPx(int dp, Context context) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
 
-    public interface SmsApi{
+    public interface SmsApi {
 
-        @Headers({"X-Authy-API-Key:"+Constants.TWILIO_AUTHY_API_KEY})
+        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
         @POST("/protected/json/phones/verification/start")
         void sendSms(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
 
-        @Headers({"X-Authy-API-Key:"+Constants.TWILIO_AUTHY_API_KEY})
+        @Headers({"X-Authy-API-Key:" + Constants.TWILIO_AUTHY_API_KEY})
         @GET("/protected/json/phones/verification/check")
         void verifySmsCode(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
     }
 
+
+    public static String getFormattedDate(long milliseconds) {
+
+        Date date = new Date(milliseconds);
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);//dd/MM/yyyy HH:mm:ss
+        format.setTimeZone(TimeZone.getDefault());
+        String dateTime = format.format(date);
+        String formatted = "";
+        if (!Util.isNullOrEmpty(dateTime)) {
+            String[] dateTemp;
+            dateTemp = dateTime.split(" ");
+            dateTemp = dateTemp[0].split("-");
+
+            if (dateTemp.length > 0) {
+                int month = Integer.parseInt(dateTemp[1]);
+                switch (month) {
+                    case 01:
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " January " + dateTemp[2];
+                        break;
+                    case 2:
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " February " + dateTemp[2];
+                        break;
+                    case 3:
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " March " + dateTemp[2];
+                        break;
+                    case 4:
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " April " + dateTemp[2];
+                        break;
+                    case 5:
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " May " + dateTemp[2];
+                        break;
+                    case 6:
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " June " + dateTemp[2];
+                        break;
+                    case 7:
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " July " + dateTemp[2];
+                        break;
+                    case 8:
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " August " + dateTemp[2];
+                        break;
+                    case 9:
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " September " + dateTemp[2];
+                        break;
+                    case 10:
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " October " + dateTemp[2];
+                        break;
+                    case 11:
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " November " + dateTemp[2];
+                        break;
+                    case 12:
+                        dateTemp[0] = Util.AddSuffixForDay(dateTemp[0]);
+                        formatted = dateTemp[0] + " December " + dateTemp[2];
+                        break;
+                }
+            }
+//            formatted += " at " + hrsTemp + " " + amMarker;
+        }
+        return "THURSDAY, " + formatted;
+    }
 }

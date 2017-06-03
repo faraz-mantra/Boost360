@@ -9,11 +9,11 @@ import java.util.List;
 public class SMSSuggestions {
     public List<SuggestionsDO> suggestion = null;
 
-    public List<SuggestionsDO> getSuggestion() {
+    public List<SuggestionsDO> getSuggestionList() {
         return suggestion;
     }
 
-    public void setSuggestion(List<SuggestionsDO> suggestion) {
-        this.suggestion = suggestion;
+    public void setSuggestionList(List<SuggestionsDO> suggestionList) {
+        this.suggestion = suggestionList;
     }
 }

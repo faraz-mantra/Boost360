@@ -19,7 +19,7 @@ public class CustomAutoCompleteTextView extends AutoCompleteTextView {
 	/** Returns the place description corresponding to the selected item */
 	/*@Override
 	protected CharSequence convertSelectionToString(Object selectedItem) {
-		*//** Each item in the autocompetetextview suggestion list is a hashmap object *//*
+		*//** Each item in the autocompetetextview suggestionList list is a hashmap object *//*
         Places.clear();
         String result = " ";
         try {
@@ -37,7 +37,7 @@ public class CustomAutoCompleteTextView extends AutoCompleteTextView {
 
    /* @Override
     protected CharSequence convertSelectionToString(Object selectedItem) {
-        *//** Each item in the autocompetetextview suggestion list is a hashmap object *//*
+        *//** Each item in the autocompetetextview suggestionList list is a hashmap object *//*
         HashMap<String, ArrayList<PlacesModel>> hm = (HashMap<String, ArrayList<PlacesModel>>) selectedItem;
         String result = " ";
         try {

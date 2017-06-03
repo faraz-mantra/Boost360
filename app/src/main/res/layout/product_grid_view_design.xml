@@ -38,7 +38,7 @@
                     <ImageView
                         android:id="@+id/proudct_image_view"
                         android:layout_width="match_parent"
-                        android:layout_height="162dp"
+                        android:layout_height="80dip"
                         android:scaleType="centerCrop" />
 
 

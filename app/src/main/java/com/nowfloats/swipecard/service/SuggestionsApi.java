@@ -35,7 +35,7 @@ public class SuggestionsApi {
 
             @Override
             public void failure(RetrofitError error) {
-
+                mBus.post(new SMSSuggestions());
             }
         });
 

@@ -1195,6 +1195,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="successfully_downloaded">Successfully Downloaded</string>
     <string name="downloading">File downloading&#8230;</string>
     <string name="play_with_underline" translatable="false"><u>PLAY</u></string>
+    <string name="cta" translatable="false"><u>CTA</u></string>
+    <string name="view_details" translatable="false"><u>View Details</u></string>
     <string name="vmn_message_text">This is displayed on your website and you can track all customer calls &amp; logs here.</string>
     <string name="website_domain_name">.nowfloats.com</string>
     <string name="faqs_url">https://nowfloats.com/faq</string>
@@ -1208,6 +1210,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="coach_mark_msg_view_more">Click to see more details</string>
     <string name="coach_mark_msg_view_call">Click on highlighted view to call lead</string>
     <string name="coach_mark_msg_view_message">Click on highlighted view to message</string>
-    <string name="coach_mark_msg_view_share">We have suggestion for you\n SMS/EMAIL/WHATSAPP Share</string>
+    <string name="coach_mark_msg_view_share">We have suggestionList for you\n SMS/EMAIL/WHATSAPP Share</string>
 
 </resources>

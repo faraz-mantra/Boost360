@@ -17,8 +17,26 @@ public class SuggestionsDO {
     private String value;
     private String actualMessage;
     private int status = -1;
+    private boolean isShareEnabled = false;
+    private boolean isExpandGroup = false;
     private List<SugProducts> products = null;
     private List<SugUpdates> updates = null;
+
+    public boolean isExpandGroup() {
+        return isExpandGroup;
+    }
+
+    public void setExpandGroup(boolean expandGroup) {
+        isExpandGroup = expandGroup;
+    }
+
+    public boolean isShareEnabled() {
+        return isShareEnabled;
+    }
+
+    public void setShareEnabled(boolean shareEnabled) {
+        isShareEnabled = shareEnabled;
+    }
 
     public String getActualMessage() {
         return actualMessage;
