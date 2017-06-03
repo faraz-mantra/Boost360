@@ -78,6 +78,7 @@ public class OnBoardingFragment extends Fragment {
                 } else {
                     tvGetStarted.setText("NEXT");
                 }
+                ps_indicator.onPageSelected(position);
             }
 
             @Override

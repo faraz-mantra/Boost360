@@ -46,14 +46,15 @@
         </LinearLayout>
 
 
-        <com.nowfloats.CustomWidget.roboto_lt_24_212121
+        <TextView
             android:id="@+id/tvDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_10"
             android:background="@color/very_light_gray"
             android:padding="@dimen/margin_10"
-            android:textColor="@color/black"
+            android:textColor="@color/black_translucent"
+            android:textSize="@dimen/small_text_size"
             android:textStyle="" />
 
         <LinearLayout

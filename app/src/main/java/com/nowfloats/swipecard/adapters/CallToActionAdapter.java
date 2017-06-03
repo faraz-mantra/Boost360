@@ -77,31 +77,6 @@ public class CallToActionAdapter extends RecyclerView.Adapter<CallToActionAdapte
             @Override
             public void onClick(View v) {
 
-//                if (suggestionsDO.isExpandGroup()) {
-//                    suggestionsDO.setShareEnabled(!suggestionsDO.isShareEnabled());
-//                    setShareLayouts(suggestionsDO.isShareEnabled(), holder);
-//
-//                    if (suggestionsDO.isShareEnabled()) {
-//                       /* YoYo.with(Techniques.SlideInUp)
-//                                .duration(500)
-//                                .playOn(holder.llShare);*/
-//
-//                        callToActionFragment.
-//                    } else {
-//                        YoYo.with(Techniques.SlideInUp)
-//                                .duration(1000)
-//                                .playOn(holder.llMessage);
-//                    }
-//
-//                } else {
-//                    suggestionsDO.setExpandGroup(true);
-//                    setShareLayouts(suggestionsDO.isShareEnabled(), holder);
-//
-//                    YoYo.with(Techniques.SlideInUp)
-//                            .duration(1000)
-//                            .playOn(holder.llMessage);
-//                }
-
                 if (holder.tvCTA.getText().toString()
                         .equalsIgnoreCase(callToActionFragment.getActivity().getString(R.string.cta))) {
 

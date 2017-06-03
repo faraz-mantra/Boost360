@@ -8,12 +8,12 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.bubble.BubblesService;
@@ -181,17 +181,12 @@ public class SuggestionsActivity extends AppCompatActivity {
     @Subscribe
     public void processSMSDetails(SMSSuggestions suggestions) {
 
-        actionItemsFragment.pbView.setVisibility(View.GONE);
-        if (suggestions != null && suggestions.getSuggestionList() != null
-                && suggestions.getSuggestionList().size() > 0) {
+        smsSuggestions = suggestions;
 
-            smsSuggestions = suggestions;
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.flTopView);
+        if (fragment != null && fragment instanceof ActionItemsFragment) {
             actionItemsFragment.filterData();
-
-        } /*else {
-            Methods.showSnackBarNegative(SuggestionsActivity.this, getString(R.string.no_info_avail));
-            finish();
-        }*/
+        }
 
     }
 
@@ -218,6 +213,7 @@ public class SuggestionsActivity extends AppCompatActivity {
             callToActionFragment.displayCTA();
         } else {
             super.onBackPressed();
+            finish();
         }
 
     }

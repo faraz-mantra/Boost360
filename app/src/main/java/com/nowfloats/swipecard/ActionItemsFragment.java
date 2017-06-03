@@ -74,7 +74,8 @@ public class ActionItemsFragment extends Fragment {
         int callCount = 0, emailCount = 0;
 
         if (((SuggestionsActivity) getActivity()).smsSuggestions != null) {
-            List<SuggestionsDO> smSuggestions = ((SuggestionsActivity) getActivity()).smsSuggestions.getSuggestionList();
+            List<SuggestionsDO> smSuggestions =
+                    ((SuggestionsActivity) getActivity()).smsSuggestions.getSuggestionList();
 
             if (smSuggestions != null) {
                 for (SuggestionsDO mSuggestionsDO : smSuggestions) {
@@ -89,11 +90,11 @@ public class ActionItemsFragment extends Fragment {
 
 
         ActionItemsDO caActionItemsDO = new ActionItemsDO();
-        caActionItemsDO.setActionItemName("Calls To Make");
+        caActionItemsDO.setActionItemName("Calls to make");
         caActionItemsDO.setActionItemCount(callCount);
 
         ActionItemsDO emActionItemsDO = new ActionItemsDO();
-        emActionItemsDO.setActionItemName("Emails To Sent");
+        emActionItemsDO.setActionItemName("Emails to send");
         emActionItemsDO.setActionItemCount(emailCount);
 
         actionItemsDOList.add(caActionItemsDO);
