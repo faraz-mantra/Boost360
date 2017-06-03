@@ -11,6 +11,7 @@ import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;
+import retrofit.http.PUT;
 import retrofit.http.Path;
 import retrofit.http.QueryMap;
 
@@ -36,7 +37,7 @@ public interface DomainInterface {
     public void linkDomain(@QueryMap Map<String, String> map,@Body Map<String,String> bodyMap, Callback<Boolean> callback);
 
     @Headers({"Content-Type: application/json"})
-    @POST("/DomainService/v1/domainWithWebsite/create")
+    @PUT("/DomainService/v1/domainWithWebsite/create")
     public void buyDomain(@Body Map<String,String> bodyMap, Callback<String> callback);
 
     @GET("/Discover/v2/floatingPoint/nf-app/{fpid}")

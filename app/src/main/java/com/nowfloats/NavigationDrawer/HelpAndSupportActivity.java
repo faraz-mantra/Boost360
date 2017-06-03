@@ -4,10 +4,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
@@ -92,14 +92,14 @@ public class HelpAndSupportActivity extends AppCompatActivity {
 
                     if(riaSupportModel.getGender()==1) {
                         tvConsultantName.setText("Ms. " + riaSupportModel.getName());
-                        ivHelpAvatar.setImageDrawable(getResources().getDrawable(R.drawable.help_female_avatar));
+                        ivHelpAvatar.setImageDrawable(ContextCompat.getDrawable(HelpAndSupportActivity.this,R.drawable.help_female_avatar));
                         btnCall.setText("CALL HER");
                     }else {
                         tvConsultantName.setText("Mr. " + riaSupportModel.getName());
-                        ivHelpAvatar.setImageDrawable(getResources().getDrawable(R.drawable.help_male_avatar));
+                        ivHelpAvatar.setImageDrawable(ContextCompat.getDrawable(HelpAndSupportActivity.this,R.drawable.help_male_avatar));
                         btnCall.setText("CALL HIM");
                     }
-                    tvConsultantNumber.setText(Html.fromHtml("<a href=\"\">" + riaSupportModel.getPhoneNumber() + "</a>"));
+                    tvConsultantNumber.setText(Methods.fromHtml("<a href=\"\">" + riaSupportModel.getPhoneNumber() + "</a>"));
                     tvConsultantNumber.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -110,9 +110,9 @@ public class HelpAndSupportActivity extends AppCompatActivity {
 
                         }
                     });
-                    tvEmail.setText(Html.fromHtml("<a href=\"mail:" + riaSupportModel.getEmail()+ "\">" + riaSupportModel.getEmail() + "</a>"));
+                    tvEmail.setText(Methods.fromHtml("<a href=\"mail:" + riaSupportModel.getEmail()+ "\">" + riaSupportModel.getEmail() + "</a>"));
                     String genderVal = (riaSupportModel.getGender()==1)? "her" :"him";
-                    tvTextHelp.setText(Html.fromHtml(riaSupportModel.getName() + " is your dedicated web consultant who will be assisting you with all your queries related to your NowFloats website. You can call "+ genderVal + " anytime from <b>9.30 am to 6.30 pm</b> on all working days."));
+                    tvTextHelp.setText(Methods.fromHtml(riaSupportModel.getName() + " is your dedicated web consultant who will be assisting you with all your queries related to your NowFloats website. You can call "+ genderVal + " anytime from <b>9.30 am to 6.30 pm</b> on all working days."));
                 }
                 else
                 {
@@ -173,9 +173,9 @@ public class HelpAndSupportActivity extends AppCompatActivity {
 
 
         tvTextRia.setText(Methods.fromHtml("If your query is unanswered, please contact us at"));
-        tvTextFaq1.setText(Methods.fromHtml("<a href=\"mailto:ria@nowfloats.com\">ria@nowfloats.com</a> or call at "+getString(R.string.contact_us_number)+"."));
+        tvTextFaq1.setText(Methods.fromHtml("<a href=\"mailto:"+getString(R.string.settings_feedback_link)+"\">"+getString(R.string.settings_feedback_link)+"</a> or call at "+getString(R.string.contact_us_number)+"."));
         tvTextFaq1.setMovementMethod(LinkMovementMethod.getInstance());
-        tvTextFaq2.setText(Methods.fromHtml("Product related queries, please refer to our <a href=\"https://www.nowfloats.com/faq\">FAQs</a>"));
+        tvTextFaq2.setText(Methods.fromHtml("Product related queries, please refer to our <a href=\""+getString(R.string.faqs_url)+"\">FAQs</a>"));
         tvTextFaq2.setMovementMethod(LinkMovementMethod.getInstance());
 
         pd = ProgressDialog.show(this, "", getString(R.string.please_wait));

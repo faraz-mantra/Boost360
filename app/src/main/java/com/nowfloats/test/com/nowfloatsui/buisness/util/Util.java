@@ -953,6 +953,9 @@ public class Util {
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
     public static Bitmap getBitmap(String path, Activity app, int mWidth) {
+        if(path == null){
+            return null;
+        }
         Uri uri = Uri.fromFile(new File(path));
         float rotation = Util.rotationForImage(app, uri);
         Matrix matrix = new Matrix();

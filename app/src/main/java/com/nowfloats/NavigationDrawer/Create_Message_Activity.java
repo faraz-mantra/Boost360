@@ -292,28 +292,30 @@ public class Create_Message_Activity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
+                    Toast.makeText(Create_Message_Activity.this, "This feature is coming soon", Toast.LENGTH_LONG).show();
+                } else {
+                    if (mSharedPreferences.getBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false)) {
+                        if (Constants.twitterShareEnabled) {
+                            Constants.twitterShareEnabled = false;
+                            mTwitterShare = 0;
+                            twitterloginButton.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.twitter_icon_inactive));
+                            twitterloginButton.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
+                            Toast.makeText(Create_Message_Activity.this, "Twitter Disabled", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Constants.twitterShareEnabled = true;
+                            mTwitterShare = 1;
+                            twitterloginButton.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.twitter_icon_active));
+                            twitterloginButton.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
+                            Toast.makeText(Create_Message_Activity.this, "Twitter Enabled", Toast.LENGTH_SHORT).show();
+                        }
 
-                if(mSharedPreferences.getBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false)){
-                    if(Constants.twitterShareEnabled){
-                        Constants.twitterShareEnabled = false;
-                        mTwitterShare = 0;
-                        twitterloginButton.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this,R.drawable.twitter_icon_inactive));
-                        twitterloginButton.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
-                        Toast.makeText(Create_Message_Activity.this, "Twitter Disabled", Toast.LENGTH_SHORT).show();
-                    }else {
-                        Constants.twitterShareEnabled = true;
-                        mTwitterShare = 1;
-                        twitterloginButton.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this,R.drawable.twitter_icon_active));
-                        twitterloginButton.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
-                        Toast.makeText(Create_Message_Activity.this, "Twitter Enabled", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Intent i = new Intent(Create_Message_Activity.this, Social_Sharing_Activity.class);
+                        startActivity(i);
+                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                     }
-
-                }else {
-                    Intent i = new Intent(Create_Message_Activity.this, Social_Sharing_Activity.class);
-                    startActivity(i);
-                    overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 }
-
 
             }
         });
@@ -379,27 +381,30 @@ public class Create_Message_Activity extends AppCompatActivity {
         facebookPageShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
+                    Toast.makeText(Create_Message_Activity.this, "This feature is coming soon", Toast.LENGTH_LONG).show();
+                } else {
 
-
-                if(!Util.isNullOrEmpty(session.getFacebookPage()) && pref.getInt("fbPageStatus",0) ==1) {
-                    if(mFbPageShare==1){
-                        mFbPageShare = 0;
-                        facebookPageShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this,R.drawable.facebookpage_icon_inactive));
-                        facebookPageShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
-                        Toast.makeText(Create_Message_Activity.this, "Facebook Page Disabled", Toast.LENGTH_SHORT).show();
-                    }else {
-                        mFbPageShare = 1;
-                        Toast.makeText(Create_Message_Activity.this, "Facebook Page Enabled", Toast.LENGTH_SHORT).show();
-                        facebookPageShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this,R.drawable.facebook_page));
-                        facebookPageShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
+                    if (!Util.isNullOrEmpty(session.getFacebookPage()) && pref.getInt("fbPageStatus", 0) == 1) {
+                        if (mFbPageShare == 1) {
+                            mFbPageShare = 0;
+                            facebookPageShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.facebookpage_icon_inactive));
+                            facebookPageShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
+                            Toast.makeText(Create_Message_Activity.this, "Facebook Page Disabled", Toast.LENGTH_SHORT).show();
+                        } else {
+                            mFbPageShare = 1;
+                            Toast.makeText(Create_Message_Activity.this, "Facebook Page Enabled", Toast.LENGTH_SHORT).show();
+                            facebookPageShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.facebook_page));
+                            facebookPageShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
                         /* PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(Create_Message_Activity.this,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
                         facebookPageShare.setColorFilter(porterDuffColorFilter);*/
-                    }
+                        }
 
-                }else {
-                    Intent i = new Intent(Create_Message_Activity.this, Social_Sharing_Activity.class);
-                    startActivity(i);
-                    overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                    } else {
+                        Intent i = new Intent(Create_Message_Activity.this, Social_Sharing_Activity.class);
+                        startActivity(i);
+                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                    }
                 }
 
             }
@@ -411,26 +416,30 @@ public class Create_Message_Activity extends AppCompatActivity {
         facebookShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!Util.isNullOrEmpty(session.getFacebookName()) && (pref.getInt("fbStatus", 0)==1 || pref.getInt("fbStatus",0)==3)){
-                    if(mFbProfileShare==1){
-                        mFbProfileShare = 0;
-                        facebookShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this,R.drawable.facebook_icon_inactive));
-                        facebookShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
-                        Toast.makeText(Create_Message_Activity.this, "Facebook Disabled", Toast.LENGTH_SHORT).show();
-                    }else {
-                        mFbProfileShare = 1;
-                        facebookShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this,R.drawable.facebook_icon));
-                        facebookShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
-                        Toast.makeText(Create_Message_Activity.this, "Facebook Enabled", Toast.LENGTH_SHORT).show();
+                if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
+                    Toast.makeText(Create_Message_Activity.this, "This feature is coming soon", Toast.LENGTH_LONG).show();
+                } else {
+                    if (!Util.isNullOrEmpty(session.getFacebookName()) && (pref.getInt("fbStatus", 0) == 1 || pref.getInt("fbStatus", 0) == 3)) {
+                        if (mFbProfileShare == 1) {
+                            mFbProfileShare = 0;
+                            facebookShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.facebook_icon_inactive));
+                            facebookShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.light_gray));
+                            Toast.makeText(Create_Message_Activity.this, "Facebook Disabled", Toast.LENGTH_SHORT).show();
+                        } else {
+                            mFbProfileShare = 1;
+                            facebookShare.setImageDrawable(ContextCompat.getDrawable(Create_Message_Activity.this, R.drawable.facebook_icon));
+                            facebookShare.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
+                            Toast.makeText(Create_Message_Activity.this, "Facebook Enabled", Toast.LENGTH_SHORT).show();
 
+                        }
+
+                    } else {
+                        Intent i = new Intent(Create_Message_Activity.this, Social_Sharing_Activity.class);
+                        startActivity(i);
+                        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                     }
 
-                }else {
-                    Intent i = new Intent(Create_Message_Activity.this, Social_Sharing_Activity.class);
-                    startActivity(i);
-                    overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 }
-
             }
         });
 
@@ -490,11 +499,15 @@ public class Create_Message_Activity extends AppCompatActivity {
         String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
         //Log.v("ggg",quikrArray[3]+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase());
         LinearLayout layout = (LinearLayout) findViewById(R.id.float_a_picture_share_quikr_parent);
-        if("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
-            for (String category : quikrArray) {
-                if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
-                    layout.setVisibility(View.VISIBLE);
-                    break;
+        if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
+            layout.setVisibility(View.GONE);
+        }else {
+            if ("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
+                for (String category : quikrArray) {
+                    if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
+                        layout.setVisibility(View.VISIBLE);
+                        break;
+                    }
                 }
             }
         }

@@ -133,7 +133,6 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
                     }
                 }).start();
                 MixPanelController.track(EventKeysWL.CREATE_WEBSITE_BUTTON, null);
-                API_Layer.getBusinessCategories(PreSignUp_MainActivity.this);
                 Intent signUpIntent = new Intent(PreSignUp_MainActivity.this, PreSignUpActivity.class);
                 startActivity(signUpIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
@@ -291,155 +290,6 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
             }
         });
         loginManager.logInWithReadPermissions(this, readPermissions);
-
-        /*if (access_token != null) {
-            facebook.setAccessToken(access_token);
-        }
-        facebook.authorize(this, PERMISSIONS, new Facebook.DialogListener() {
-            public void onComplete(Bundle values) {
-
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            JSONObject me = new JSONObject(facebook.request("me"));
-                            facebook_email = me.getString("email");
-                            facebook_contact_name = me.getString("name");
-                            session.storeFacebookName(facebook_contact_name);
-                            JSONObject pageMe = new JSONObject(facebook.request("me/accounts"));
-                            FbPageList = pageMe.getJSONArray("data");
-                            if (FbPageList != null) {
-                                pagesLengthSize = FbPageList.length();
-
-                                if (pagesLengthSize > 0) {
-                                    pageItems = new ArrayList<String>();
-                                    for (int i = 0; i < pagesLengthSize; i++) {
-                                        pageItems.add(i, (String) ((JSONObject) FbPageList
-                                                .get(i)).get("name"));
-                                    }
-
-
-                                }
-                            }
-
-
-                            System.out.println("******facebook.getAccessToken()****" + facebook.getAccessToken());
-
-                            access_token = facebook.getAccessToken();
-                            session.storeFacebookAccessToken(access_token);
-                            //                              new Facebook_Pages_Service(PreSignUp_MainActivity.this,access_token,bus);
-
-                        } catch (Exception e) {
-
-                            Log.d("E", "E : " + e);
-                            // TODO: handle exception
-                        } finally {
-                            PreSignUp_MainActivity.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (pageItems != null && pageItems.size() > 0) {
-                                        final String[] array = pageItems.toArray(new String[pageItems.size()]);
-                                        new MaterialDialog.Builder(PreSignUp_MainActivity.this)
-                                                .title("Choose a Facebook Page")
-                                                .positiveText("Choose")
-                                                .items(array)
-                                                .widgetColorRes(R.color.primaryColor)
-                                                .dismissListener(new DialogInterface.OnDismissListener() {
-                                                    @Override
-                                                    public void onDismiss(DialogInterface dialog) {
-                                                        progressDialog.dismiss();
-                                                    }
-                                                })
-                                                .itemsCallbackSingleChoice(0, new MaterialDialog.ListCallbackSingleChoice() {
-                                                    @Override
-                                                    public boolean onSelection(MaterialDialog dialog, View view, int position, CharSequence text) {
-                                                        selectPosition[0] = position;
-                                                        String strName = array[position];
-                                                        session.storeFacebookPage(strName);
-
-                                                        try {
-                                                            String FACEBOOK_PAGE_ID = (String) ((JSONObject) FbPageList.get(position)).get("id");
-                                                            String page_access_token = ((String) ((JSONObject) FbPageList.get(position)).get("access_token"));
-                                                            session.storePageAccessToken(page_access_token);
-                                                            getFacebookImage_FeaturedImage(FACEBOOK_PAGE_ID);
-                                                            session.storeFacebookPageID(FACEBOOK_PAGE_ID);
-
-                                                        } catch (JSONException e) {
-                                                            e.printStackTrace();
-                                                        }
-
-                                                        new Facebook_Pages_Service(PreSignUp_MainActivity.this, access_token, session.getFacebookPageID(), bus);
-                                                        // getFacebookImage_FeaturedImage(session.getFacebookPageID());
-                                                        //  pageSeleted(position,strName,session.getFacebookPageID(),session.getPageAccessToken());
-                                                        dialog.dismiss();
-                                                        return true;
-                                                    }
-                                                })
-                                                .callback(new MaterialDialog.ButtonCallback() {
-                                                    @Override
-                                                    public void onPositive(MaterialDialog dialog) {
-                                                        super.onPositive(dialog);
-                                                        int position = selectPosition[0];
-                                                        String strName = array[position];
-                                                        session.storeFacebookPage(strName);
-
-                                                        try {
-                                                            String FACEBOOK_PAGE_ID = (String) ((JSONObject) FbPageList.get(position)).get("id");
-                                                            String page_access_token = ((String) ((JSONObject) FbPageList.get(position)).get("access_token"));
-                                                            session.storePageAccessToken(page_access_token);
-                                                            getFacebookImage_FeaturedImage(FACEBOOK_PAGE_ID);
-                                                            session.storeFacebookPageID(FACEBOOK_PAGE_ID);
-                                                        } catch (JSONException e) {
-                                                            e.printStackTrace();
-                                                        }
-
-                                                        new Facebook_Pages_Service(PreSignUp_MainActivity.this, access_token, session.getFacebookPageID(), bus);
-                                                        // getFacebookImage_FeaturedImage(session.getFacebookPageID());
-                                                        //  pageSeleted(position,strName,session.getFacebookPageID(),session.getPageAccessToken());
-                                                        dialog.dismiss();
-
-                                                    }
-                                                })
-                                                .show();
-
-                                    } else {
-                                        Methods.materialDialog(PreSignUp_MainActivity.this, "Uh oh~", "Looks like there is no Facebook page\nlinked to this account.");
-                                    }
-                                }
-                            });
-                        }
-
-                    }
-                }).start();
-            }
-
-            public void onFacebookError(FacebookError error) {
-                if(progressDialog!=null)
-                {
-                    progressDialog.dismiss();
-                }
-            }
-
-            public void onError(DialogError e) {
-                if(progressDialog!=null)
-                {
-                    progressDialog.dismiss();
-                }
-            }
-
-            public void onCancel() {
-                if(progressDialog!=null)
-                {
-                    progressDialog.dismiss();
-                }
-            }
-        });
-        //     }
-
-        return access_token;*/
-//        else {
-//            new getFacebookData().execute();
-//        }
 
     }
 
@@ -685,15 +535,18 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
 
         switch (requestCode) {
             case 0: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-               getLastKnownLocation();
+                    getLastKnownLocation();
+
+                }
+
             }
-                return;
-            }
+        }
 
             // other 'case' lines to check for other
             // permissions this app might request
-        }
+    }
 
     @Override
     protected void onDestroy() {
@@ -704,7 +557,7 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
     private void getLastKnownLocation() {
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(PreSignUp_MainActivity.this, permission, permision_request_id);
 

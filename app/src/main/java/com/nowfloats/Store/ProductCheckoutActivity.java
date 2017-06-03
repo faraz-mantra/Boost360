@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -158,8 +157,10 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             clientId = mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID);
         }
         double totalTax = 0;
-        for(TaxDetail taxData : StoreDataActivity.product.Taxes/*taxes*/){
-            totalTax+=taxData.getValue();
+        if(StoreDataActivity.product.Taxes != null) {
+            for (TaxDetail taxData : StoreDataActivity.product.Taxes/*taxes*/) {
+                totalTax += taxData.getValue();
+            }
         }
         purchaseDetail.setBasePrice(Double.parseDouble(StoreDataActivity.product.Price));
         purchaseDetail.setClientId(clientId);

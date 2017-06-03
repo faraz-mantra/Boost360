@@ -36,5 +36,6 @@ public class Specific {
     public static final String FACEBOOK_PAGEID = "fb://page/277931445614143";
     public static final String TWITTER_URL = "https://twitter.com/Nowfloats";
     public static final String TWITTER_ID_URL = "twitter://user?screen_name=nowfloats";
+    public static final String TWILIO_AUTHY_API_KEY = "gXYHhTa0gJb6VlJxw0aEqWxHHrw5AEi5";
 
 }

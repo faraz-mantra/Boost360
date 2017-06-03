@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.Login.UserSessionManager;
@@ -272,11 +273,16 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                             socialSharingLayout.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    MixPanelController.track(EventKeysWL.SOCIAL_SHARING, null);
-                                    Intent socialSharingIntent = new Intent(activity, Social_Sharing_Activity.class);
-                                    startActivity(socialSharingIntent);
-                                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                }
+                                    if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
+                                        Toast.makeText(activity, "This feature is coming soon", Toast.LENGTH_LONG).show();
+                                    }else {
+                                        MixPanelController.track(EventKeysWL.SOCIAL_SHARING, null);
+                                        Intent socialSharingIntent = new Intent(activity, Social_Sharing_Activity.class);
+                                        startActivity(socialSharingIntent);
+                                        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                    }
+                                    }
+                               // }
                             });
                             progressLayout.setVisibility(View.GONE);
                             profileLayout.setVisibility(View.VISIBLE);

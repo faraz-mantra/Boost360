@@ -89,6 +89,8 @@ public class NotificationFragment extends Fragment{
         //get alert Values
         if(!mIsAlertShown){
             loadAlerts();
+        }else if(alertModelsList.size()==0){
+            emptylayout.setVisibility(View.VISIBLE);
         }
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -123,11 +125,12 @@ public class NotificationFragment extends Fragment{
                 public void success(ArrayList<AlertModel> alertModels, Response response) {
 
                     progress_layout.setVisibility(View.GONE);
-                    if (alertModels==null){
+                    if (alertModels==null || alertModels.size() == 0){
                         if(alertModelsList.size() == 0){
                             emptylayout.setVisibility(View.VISIBLE);
                         }
-                    }else{
+                    }else
+                    {
                         int count = alertModelsList.size();
                         for ( int i = 0; i<alertModels.size() ;i++){
 
@@ -146,7 +149,9 @@ public class NotificationFragment extends Fragment{
                 public void failure(RetrofitError error) {
                     stop =false;
                     Log.i("ggg",""+error.getMessage());
-                    Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong_try_again));
+                    if(isAdded()) {
+                        Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+                    }
                     progress_layout.setVisibility(View.GONE);
                 }
             });

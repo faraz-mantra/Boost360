@@ -123,11 +123,13 @@ public class uploadIMAGEURI extends AsyncTask<Void,String, String> {
 
         BitmapFactory.Options options = new BitmapFactory.Options();
         Bitmap bmp = BitmapFactory.decodeFile(imagePath,options);
-        if((f.length()/1024)>100){
-            bmp.compress(Bitmap.CompressFormat.JPEG, 70, bos);}else{
-            bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+        if(bmp != null) {
+            if ((f.length() / 1024) > 100) {
+                bmp.compress(Bitmap.CompressFormat.JPEG, 70, bos);
+            } else {
+                bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            }
         }
-
         byte[] bitmapdata = bos.toByteArray();
 
         try {
