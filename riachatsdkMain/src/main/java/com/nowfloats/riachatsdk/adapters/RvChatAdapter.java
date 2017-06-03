@@ -6,14 +6,13 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,7 +23,6 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.nowfloats.riachatsdk.CustomWidget.AVLoadingIndicatorView;
 import com.nowfloats.riachatsdk.CustomWidget.playpause.PlayPauseView;
 import com.nowfloats.riachatsdk.R;
@@ -204,6 +202,12 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
                 textViewHolder.llBubbleContainer.setLayoutParams(lp);
+
+                if(!section.isAnimApplied()){
+                    textViewHolder.llBubbleContainer
+                            .startAnimation(AnimationUtils.loadAnimation(mContext,R.anim.slide_in_left));
+                    section.setIsAnimApplied(true);
+                }
             }
         }else if(holder instanceof ImageViewHolder){
             ImageViewHolder imageViewHolder = (ImageViewHolder) holder;
@@ -422,9 +426,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         public TextViewHolder(View itemView) {
             super(itemView);
-
             this.itemView = itemView;
-
             tvMessageText = (TextView) itemView.findViewById(R.id.tv_message_text);
             tvDateTime = (TextView) itemView.findViewById(R.id.tv_date_time);
             llBubbleContainer = (LinearLayout) itemView.findViewById(R.id.ll_bubble_container);

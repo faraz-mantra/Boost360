@@ -102,6 +102,16 @@ public class Section implements Serializable{
     @Expose
     private String dateTime;
 
+    private boolean isAnimApplied = false;
+
+    public boolean isAnimApplied() {
+        return isAnimApplied;
+    }
+
+    public void setIsAnimApplied(boolean isAnimApplied) {
+        this.isAnimApplied = isAnimApplied;
+    }
+
     public String getDateTime() {
         return dateTime;
     }
