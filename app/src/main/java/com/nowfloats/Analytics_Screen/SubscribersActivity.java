@@ -93,6 +93,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                 }
             }
         });
+        deleteImage.setVisibility(View.VISIBLE);
         deleteImage.setOnClickListener(this);
         searchImage.setOnClickListener(this);
 
@@ -100,7 +101,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
         emptyLayout = (LinearLayout) findViewById(R.id.emplty_layout);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowHomeEnabled(false);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 

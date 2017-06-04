@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -102,7 +103,13 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
                     holder.knowMoreText.setVisibility(View.VISIBLE);
                     holder.knowMoreText.setText(appContext.getString(R.string.know_more));
                     holder.tvPlanStatus.setVisibility(View.VISIBLE);
-                    holder.tvPlanStatus.setText(getPackageStatus(storeData.get(position)));
+                    String status = getPackageStatus(storeData.get(position));
+                    if(status.toLowerCase().contains("expired")){
+                        holder.tvPlanStatus.setTextColor(ContextCompat.getColor(appContext,R.color.red));
+                    }else{
+                        holder.tvPlanStatus.setTextColor(ContextCompat.getColor(appContext,R.color.green));
+                    }
+                    holder.tvPlanStatus.setText(status);
 //                    holder.validityText.setVisibility(View.VISIBLE);
 //                    holder.validityText.setText("("+storeData.get(position).ExpiryInMths+" months plan,"
 //                            +storeData.get(position).ValiditiyInMths+" months left"+")");

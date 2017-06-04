@@ -1,10 +1,14 @@
 package com.nowfloats.NavigationDrawer.API;
 
+import android.text.TextUtils;
+
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.squareup.otto.Bus;
+
+import org.apache.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +44,7 @@ public class DomainApiService {
             public void success(DomainDetails domainDetails, Response response) {
                 if (domainDetails != null) {
                     domainDetails.response = true;
-                }else{
+                } else {
                     domainDetails = new DomainDetails();
                     domainDetails.response = false;
                 }
@@ -80,7 +84,7 @@ public class DomainApiService {
         domainInterface.checkDomainAvailability(domainName, data, new Callback<Boolean>() {
             @Override
             public void success(Boolean flag, Response response) {
-                if(flag)
+                if (flag)
                     mBus.post(DomainAPI.CHECK_DOMAIN);
                 else
                     mBus.post(DomainAPI.DOMAIN_NOT_AVAILABLE);
@@ -97,10 +101,10 @@ public class DomainApiService {
 
     public void linkDomain(HashMap<String, String> bodyData, HashMap<String, String> data) {
         DomainInterface domainInterface = Constants.riaRestAdapter.create(DomainInterface.class);
-        domainInterface.linkDomain(data,bodyData,new Callback<Boolean>() {
+        domainInterface.linkDomain(data, bodyData, new Callback<Boolean>() {
             @Override
             public void success(Boolean flag, Response response) {
-                if(flag)
+                if (flag)
                     mBus.post(DomainAPI.LINK_DOMAIN);
                 else
                     mBus.post(DomainAPI.DOMAIN_NOT_AVAILABLE);
@@ -117,16 +121,21 @@ public class DomainApiService {
 
     public void buyDomain(HashMap<String, String> bodyData) {
         DomainInterface domainInterface = Constants.pluginRestAdapter.create(DomainInterface.class);
-        domainInterface.buyDomain(bodyData,new Callback<String>() {
+        domainInterface.buyDomain(bodyData, new Callback<String>() {
             @Override
             public void success(String domainMsg, Response response) {
+
+                if (TextUtils.isEmpty(domainMsg) || response.getStatus() != HttpStatus.SC_OK) {
+                    domainMsg = "Domain book error";
+                }else{
+                    domainMsg = "Your Domain will be activated within 48 hours.";
+                }
                 mBus.post(domainMsg);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                BoostLog.d("DomainApiService", error.getMessage());
-                mBus.post(DomainAPI.ERROR_DOMAIN);
+                mBus.post(error.getMessage());
             }
         });
 
@@ -135,7 +144,7 @@ public class DomainApiService {
 
     public void getDomainFPDetails(String fpId, HashMap<String, String> data) {
         DomainInterface domainInterface = Constants.restAdapter.create(DomainInterface.class);
-        domainInterface.getFPDetails(fpId,data,new Callback<Get_FP_Details_Model>() {
+        domainInterface.getFPDetails(fpId, data, new Callback<Get_FP_Details_Model>() {
             @Override
             public void success(Get_FP_Details_Model get_fp_details_model, Response response) {
                 mBus.post(get_fp_details_model);
@@ -145,7 +154,7 @@ public class DomainApiService {
             public void failure(RetrofitError error) {
                 BoostLog.d("DomainApiService", error.getMessage());
                 Get_FP_Details_Model get_fp_details_model = new Get_FP_Details_Model();
-                get_fp_details_model.response = error.getMessage()+"";
+                get_fp_details_model.response = error.getMessage() + "";
                 mBus.post(get_fp_details_model);
             }
         });

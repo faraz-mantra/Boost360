@@ -1,6 +1,9 @@
 package com.nowfloats.riachatsdk.activities;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,6 +30,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -54,6 +60,7 @@ import com.nowfloats.riachatsdk.adapters.RvButtonsAdapter;
 import com.nowfloats.riachatsdk.adapters.RvChatAdapter;
 import com.nowfloats.riachatsdk.fragments.AddressCardFragment;
 import com.nowfloats.riachatsdk.fragments.BusinessNameConfirmFragment;
+import com.nowfloats.riachatsdk.fragments.BusinessNameConfirmedFragment;
 import com.nowfloats.riachatsdk.fragments.PickAddressFragment;
 import com.nowfloats.riachatsdk.helpers.ChatLogger;
 import com.nowfloats.riachatsdk.helpers.DeviceDetails;
@@ -223,7 +230,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     }
 
                     if(mCurrButton.isConfirmInput()){
-                        rvButtonsContainer.setVisibility(View.INVISIBLE);
+                        rvButtonsContainer.setVisibility(View.GONE);
                         cvChatInput.setVisibility(View.INVISIBLE);
                         showConfirmation(Constants.ConfirmationType.BIZ_NAME, chatText.toString().trim());
                         ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
@@ -313,6 +320,21 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     private void showConfirmation(String confirmationType, String... data) {
         flConfirmationCard.setVisibility(View.VISIBLE);
+        //Animation
+        Animation a = new TranslateAnimation(
+                Animation.ABSOLUTE, //from xType
+                0,
+                Animation.ABSOLUTE, //to xType
+                0,
+                Animation.ABSOLUTE, //from yType
+                200,
+                Animation.ABSOLUTE, //to yType
+                0
+        );
+        a.setDuration(500);
+        flConfirmationCard.setAnimation(a);
+        a.start();
+        //Anim end
         switch (confirmationType){
             case Constants.ConfirmationType.BIZ_NAME:
                 getSupportFragmentManager().beginTransaction()
@@ -324,6 +346,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         .replace(R.id.fl_cards, AddressCardFragment.newInstance(data[0], data[1], data[2]))
                         .commit();
         }
+
     }
 
     private boolean isValidInput(String input){
@@ -1044,26 +1067,66 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     }
 
     @Override
-    public void onPositiveResponse(String confirmationType, String... confirmationText) {
-        flConfirmationCard.setVisibility(GONE);
-        cvChatInput.setVisibility(GONE);
+    public void onPositiveResponse(final String confirmationType, final String... confirmationText) {
         etChatInput.setText("");
-        switch (confirmationType){
-            case Constants.ConfirmationType.BIZ_NAME:
-                replyToRia(Constants.SectionType.TYPE_CARD, confirmationText[0]);
-                break;
-            case Constants.ConfirmationType.ADDRESS_ENTRY:
-                replyToRia(Constants.SectionType.TYPE_ADDRESS_CARD, confirmationText[0], confirmationText[1]);
-                break;
-        }
-        if(mCurrVarName!=null){
-            if(mAutoComplDataHash==null || mAutoComplDataHash.get(etChatInput.getText().toString().trim())==null) {
-                mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
-            }else {
-                mDataMap.put("[~" + mCurrVarName + "]", mAutoComplDataHash.get(etChatInput.getText().toString().trim()));
+        cvChatInput.setVisibility(GONE);
+        //cvChatInput.setVisibility(GONE);
+        AnimatorSet animationSet = (AnimatorSet) AnimatorInflater.loadAnimator(this,
+                R.animator.card_flip_right_out);
+        animationSet.setTarget(flConfirmationCard);
+        animationSet.start();
+        //flConfirmationCard.setVisibility(GONE);
+        animationSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
             }
-        }
-        showNextNode(mNextNodeId);
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                flConfirmationCard.setAlpha((float)1.0);
+                flConfirmationCard.setRotationY((float)0);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fl_cards, BusinessNameConfirmedFragment.newInstance(confirmationText[0]))
+                        .commit();
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch (confirmationType){
+                            case Constants.ConfirmationType.BIZ_NAME:
+                                replyToRia(Constants.SectionType.TYPE_CARD, confirmationText[0]);
+                                break;
+                            case Constants.ConfirmationType.ADDRESS_ENTRY:
+                                replyToRia(Constants.SectionType.TYPE_ADDRESS_CARD, confirmationText[0], confirmationText[1]);
+                                break;
+                        }
+                        if(mCurrVarName!=null){
+                            if(mAutoComplDataHash==null || mAutoComplDataHash.get(etChatInput.getText().toString().trim())==null) {
+                                mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
+                            }else {
+                                mDataMap.put("[~" + mCurrVarName + "]", mAutoComplDataHash.get(etChatInput.getText().toString().trim()));
+                            }
+                        }
+
+
+
+                        showNextNode(mNextNodeId);
+                        flConfirmationCard.setVisibility(GONE);
+                    }
+                }, 500);
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
     }
 
     @Override

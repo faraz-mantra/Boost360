@@ -113,7 +113,7 @@
             android:id="@+id/visitors_card"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="70dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             card_view:cardBackgroundColor="#FFFFFF"
@@ -132,11 +132,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="24dp">
+                    android:layout_marginLeft="20dp">
 
 
                     <ImageView
-                        android:id="@+id/visitors_image"
+                        android:id="@+id/visitors_image_bg"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:src="@drawable/circle_bakground" />
@@ -181,9 +181,9 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textColor="@color/primaryColor"
-                            android:text="25"
+                            android:text="28"
                             android:visibility="visible"
-                            android:textSize="33sp"
+                            android:textSize="25sp"
                             tools:ignore="MissingPrefix" />
                     </LinearLayout>
 
@@ -203,7 +203,7 @@
             android:id="@+id/card_view"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="70dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             card_view:cardBackgroundColor="#FFFFFF"
@@ -222,7 +222,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="24dp">
+                    android:layout_marginLeft="20dp">
 
 
                     <ImageView
@@ -273,7 +273,7 @@
                             android:textColor="@color/primaryColor"
                             android:text="25"
                             android:visibility="visible"
-                            android:textSize="33sp"
+                            android:textSize="28sp"
                             tools:ignore="MissingPrefix" />
                     </LinearLayout>
 
@@ -293,7 +293,7 @@
             android:id="@+id/card_view_business_enq"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="70dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             card_view:cardBackgroundColor="#FFFFFF"
@@ -312,7 +312,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="24dp">
+                    android:layout_marginLeft="20dp">
 
 
                     <ImageView
@@ -358,7 +358,7 @@
                             android:layout_height="wrap_content"
                             android:visibility="visible"
                             android:text="25"
-                            android:textSize="33sp"
+                            android:textSize="28sp"
                             android:textColor="@color/primaryColor"
                             tools:ignore="MissingPrefix" />
                     </FrameLayout>
@@ -375,7 +375,7 @@
             android:id="@+id/card_view_1"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="70dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             card_view:cardBackgroundColor="#FFFFFF"
@@ -394,7 +394,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="24dp">
+                    android:layout_marginLeft="20dp">
 
 
                     <ImageView
@@ -438,7 +438,7 @@
                             android:layout_height="wrap_content"
                             android:visibility="visible"
                             android:text="25"
-                            android:textSize="33sp"
+                            android:textSize="28sp"
                             android:textColor="@color/primaryColor"
                             tools:ignore="MissingPrefix" />
                     </FrameLayout>
@@ -459,7 +459,7 @@
             android:id="@+id/card_view_2"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="70dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             card_view:cardBackgroundColor="#FFFFFF"
@@ -478,7 +478,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="24dp">
+                    android:layout_marginLeft="20dp">
 
 
                     <ImageView
@@ -516,15 +516,98 @@
                             android:layout_height="wrap_content"
                             android:visibility="gone"
                             android:id="@+id/search_query_progressBar" />
+
                         <TextView
-                            fontPath="Roboto-Medium.ttf"
                             android:id="@+id/analytics_screen_search_queries_count"
+                            fontPath="Roboto-Medium.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:visibility="visible"
                             android:text="25"
-                            android:textSize="33sp"
                             android:textColor="@color/primaryColor"
+                            android:textSize="28sp"
+                            android:visibility="visible"
+                            tools:ignore="MissingPrefix" />
+                    </FrameLayout>
+                    <ImageView
+                        android:layout_width="34dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/next" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view_vmn_call"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginLeft="10dp"
+            android:visibility="gone"
+            android:layout_marginRight="10dp"
+            card_view:cardBackgroundColor="#FFFFFF"
+            card_view:cardCornerRadius="3dp"
+            android:elevation="3dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:id="@+id/analytics_screen_vmn_call"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp">
+
+
+                    <ImageView
+                        android:id="@+id/pop_up_vmn_call_img"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/circle_bakground" />
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:tint="@color/white"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_call_white" />
+                </FrameLayout>
+
+                <com.nowfloats.CustomWidget.roboto_lt_24_212121
+                    android:layout_width="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:text="@string/call_tracker" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="right">
+                    <FrameLayout android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+                        <ProgressBar
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:id="@+id/vmn_progressbar" />
+
+                        <TextView
+                            android:id="@+id/analytics_screen_vmn_tracker_count"
+                            fontPath="Roboto-Medium.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:textColor="@color/primaryColor"
+                            android:textSize="28sp"
+                            android:visibility="visible"
                             tools:ignore="MissingPrefix" />
                     </FrameLayout>
                     <ImageView
@@ -540,7 +623,7 @@
             android:id="@+id/card_view_serach_ranking"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="70dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             card_view:cardBackgroundColor="#FFFFFF"
@@ -559,7 +642,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="24dp">
+                    android:layout_marginLeft="20dp">
 
 
                     <ImageView
@@ -602,7 +685,7 @@
             android:id="@+id/facebook_analytics_card_view"
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="70dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             card_view:cardBackgroundColor="#FFFFFF"
@@ -624,7 +707,7 @@
                     android:id="@+id/iv_fb_page_analytics"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:layout_marginLeft="24dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_gravity="center"
                     android:src="@drawable/analytics_facebook" />
 
@@ -663,7 +746,7 @@
                             android:textColor="@color/primaryColor"
                             android:text=""
                             android:visibility="gone"
-                            android:textSize="33sp"
+                            android:textSize="28sp"
                             tools:ignore="MissingPrefix" />
                     </LinearLayout>
 

@@ -14,6 +14,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -130,17 +132,31 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }else {
                 cardViewHolder.tvDateTime.setVisibility(View.GONE);
             }
-            ((LinearLayout) cardViewHolder.itemView).setGravity(Gravity.RIGHT);
+            ((LinearLayout) cardViewHolder.itemView).setGravity(Gravity.CENTER);
+
             LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) cardViewHolder.llBubbleContainer.getLayoutParams();
             if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
-                cardViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.reply_main_bubble);
-                lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 5), 0);
+                cardViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.card_bg);
+                //lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 5), 0);
             }else {
-                cardViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.reply_followup_bubble);
-                lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 15), 0);
+                cardViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.card_bg);
+                //lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 15), 0);
             }
             cardViewHolder.llBubbleContainer.setLayoutParams(lp);
             cardViewHolder.tvConfirmationText.setTextColor(Color.parseColor("#ffffff"));
+            Animation a = new TranslateAnimation(
+                    Animation.ABSOLUTE, //from xType
+                    0,
+                    Animation.ABSOLUTE, //to xType
+                    0,
+                    Animation.ABSOLUTE, //from yType
+                    500,
+                    Animation.ABSOLUTE, //to yType
+                    0
+            );
+            a.setDuration(500);
+            cardViewHolder.itemView.setAnimation(a);
+            a.start();
 
         }else if(holder instanceof AddressCardViewHolder){
             AddressCardViewHolder cardViewHolder = (AddressCardViewHolder) holder;
@@ -187,7 +203,21 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.reply_followup_bubble);
                     lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 15), 0);
                 }
-
+                //Anim Start
+                Animation a = new TranslateAnimation(
+                        Animation.ABSOLUTE, //from xType
+                        -200,
+                        Animation.ABSOLUTE, //to xType
+                        0,
+                        Animation.ABSOLUTE, //from yType
+                        200,
+                        Animation.ABSOLUTE, //to yType
+                        0
+                );
+                a.setDuration(500);
+                textViewHolder.itemView.setAnimation(a);
+                a.start();
+                //Anim End
                 textViewHolder.llBubbleContainer.setLayoutParams(lp);
                 textViewHolder.tvMessageText.setTextColor(Color.parseColor("#ffffff"));
             }else {

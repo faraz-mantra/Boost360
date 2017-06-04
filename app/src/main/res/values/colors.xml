@@ -9,6 +9,8 @@
     <drawable name="focused">#30000000</drawable>
     <drawable name="selected">#30000000</drawable>
 
+    <color name="divider">#D6D6D6</color>
+
     <color name="primaryColor">#ffb900</color>
     <color name="primaryColorDark">#F9A825</color>
     <color name="tabOnclickColor">#FFE5A0</color>
@@ -129,4 +131,6 @@
     <color name="group_color2">#F5F5F5</color>
     <color name="product_price">#6A6A6A</color>
     <color name="very_light_gray">#ededed</color>
+    <color name="red">#F20A0A</color>
+    <color name="primary">@color/primaryColor</color>
 </resources>

@@ -38,5 +38,6 @@ public class Specific {
     public static final String TWITTER_URL = "https://twitter.com/getkitsune";
     public static final String TWITTER_ID_URL = "twitter://user?screen_name=getkitsune";
 
+    public static final String TWILIO_AUTHY_API_KEY = "gXYHhTa0gJb6VlJxw0aEqWxHHrw5AEi5";
 
 }

@@ -2,9 +2,9 @@ package com.nowfloats.NavigationDrawer;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,9 +14,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
-import com.edmodo.cropper.cropwindow.handle.Handle;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.RiaEventLogger;
 import com.thinksity.R;
 
@@ -91,7 +91,11 @@ public class RiaWebViewActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
         wbRiaContent.setWebChromeClient(new MyWebChromeClient());
         wbRiaContent.setWebViewClient(new MyWebViewClient());
-        wbRiaContent.loadUrl(url);
+        if(url.endsWith(".pdf")){
+            wbRiaContent.loadUrl(Constants.PDF_LOADER_URL+url);
+        }else {
+            wbRiaContent.loadUrl(url);
+        }
 
     }
 

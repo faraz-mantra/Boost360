@@ -49,7 +49,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -61,7 +60,6 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
     private static final int PAGE_NO_FOUND = 404;
     private SharedPreferences pref = null;
     SharedPreferences.Editor prefsEditor;
-    private Activity activity;
 
     int size = 0;
     boolean[] checkedPages;
@@ -133,17 +131,17 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
     }
 
     public void fbData() {
-        List<String> readPermissions = Arrays.asList("email"
-                , "public_profile", "user_friends", "read_insights", "business_management");
-        final List<String> publishPermissions = Arrays.asList("publish_actions",
-                "publish_pages", "manage_pages");
+        List<String> readPermissions = Arrays.asList("email", "public_profile", "user_friends", "read_insights", "business_management");
+        final List<String> publishPermissions = Arrays.asList("publish_actions", "publish_pages", "manage_pages");
         final LoginManager loginManager = LoginManager.getInstance();
         loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Set permissions = loginResult.getAccessToken().getPermissions();
-                if (!permissions.containsAll(new HashSet(publishPermissions))) {
-                    loginManager.logInWithPublishPermissions(getActivity(), publishPermissions);
+                Set<String> permissions = loginResult.getAccessToken().getPermissions();
+                boolean contain=permissions.containsAll(publishPermissions);
+                // Log.v("ggg",contain+"permission"+loginResult.getAccessToken().getPermissions());
+                if(!contain){
+                    loginManager.logInWithPublishPermissions(LoginFragment.this, publishPermissions);
                 } else {
 
                     final String FACEBOOK_ACCESS_TOKEN = loginResult.getAccessToken().getToken();
@@ -208,6 +206,8 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
                 .setmUserAccessTokenKey(accessToken)
                 .setmUserAccessTokenSecret("null")
                 .setmUserAccountId(id)
+                .setmAppAccessTokenKey("")
+                .setmAppAccessTokenSecret("")
                 .setmCallType(FBTYPE)
                 .setmName(userName);
         requestClient.connectNfx();
@@ -223,7 +223,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
 
         session.storeFacebookName(userName);
         session.storeFacebookAccessToken(accessToken);
-        DataBase dataBase = new DataBase(activity);
+        DataBase dataBase = new DataBase(getActivity());
         dataBase.updateFacebookNameandToken(userName, accessToken);
 
         prefsEditor.putString("fbId", Constants.FACEBOOK_USER_ID);
@@ -234,65 +234,47 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
 
     public void fbPageData(final int from) {
 
-        List<String> readPermissions = Arrays.asList("email"
-                , "public_profile", "user_friends", "read_insights", "business_management");
-        final List<String> publishPermissions = Arrays.asList("publish_actions",
-                "publish_pages", "manage_pages");
+        List<String> readPermissions = Arrays.asList("email", "public_profile", "user_friends", "read_insights", "business_management");
+        final List<String> publishPermissions = Arrays.asList("publish_actions", "publish_pages", "manage_pages");
         final LoginManager loginManager = LoginManager.getInstance();
-        com.facebook.AccessToken currentToken = com.facebook.AccessToken.getCurrentAccessToken();
-        //Log.v("ggg", "fbpagedata " + currentToken);
-        if (currentToken != null &&!currentToken.isExpired()&& currentToken.getPermissions().containsAll(publishPermissions)) {
-            //Log.v("ggg", "getnewtokenforpage");
-            GraphRequest request = GraphRequest.newGraphPathRequest(
-                    currentToken,
-                    "/me/accounts",
-                    new GraphRequest.Callback() {
-                        @Override
-                        public void onCompleted(GraphResponse response) {
-                            // Insert your code here
-                            processGraphResponse(response, from);
-                        }
-                    });
 
-            request.executeAsync();
-        } else {
-            loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-                @Override
-                public void onSuccess(LoginResult loginResult) {
-                    boolean contain=loginResult.getAccessToken().getPermissions().containsAll(publishPermissions);
-                    if (!contain) {
-                        loginManager.logInWithPublishPermissions(getActivity(), publishPermissions);
-                    } else {
-                        GraphRequest request = GraphRequest.newGraphPathRequest(
-                                loginResult.getAccessToken(),
-                                "/me/accounts",
-                                new GraphRequest.Callback() {
-                                    @Override
-                                    public void onCompleted(GraphResponse response) {
-                                        // Insert your code here
-                                        processGraphResponse(response, from);
-                                    }
-                                });
+        loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                boolean contain=loginResult.getAccessToken().getPermissions().containsAll(publishPermissions);
+                if (!contain) {
+                    loginManager.logInWithPublishPermissions(getActivity(), publishPermissions);
+                } else {
+                    GraphRequest request = GraphRequest.newGraphPathRequest(
+                            loginResult.getAccessToken(),
+                            "/me/accounts",
+                            new GraphRequest.Callback() {
+                                @Override
+                                public void onCompleted(GraphResponse response) {
+                                    // Insert your code here
+                                    processGraphResponse(response, from);
+                                }
+                            });
 
-                        request.executeAsync();
-                    }
-
+                    request.executeAsync();
                 }
 
-                @Override
-                public void onCancel() {
-                    onFBPageError();
-                }
+            }
 
-                @Override
-                public void onError(FacebookException error) {
-                    onFBPageError();
-                    error.printStackTrace();
-                    com.facebook.AccessToken.refreshCurrentAccessTokenAsync();
-                }
-            });
-            loginManager.logInWithReadPermissions(this, readPermissions);
-        }
+            @Override
+            public void onCancel() {
+                onFBPageError();
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                onFBPageError();
+                error.printStackTrace();
+                LoginManager.getInstance().logOut();
+                com.facebook.AccessToken.refreshCurrentAccessTokenAsync();
+            }
+        });
+        loginManager.logInWithReadPermissions(this, readPermissions);
     }
 
     void onFBError() {
@@ -440,13 +422,15 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
                 .setmUserAccessTokenKey(pageAccessToken)
                 .setmUserAccessTokenSecret("null")
                 .setmUserAccountId(pageID)
+                .setmAppAccessTokenKey("")
+                .setmAppAccessTokenSecret("")
                 .setmCallType(FBPAGETYPE)
                 .setmName(pageName);
         requestClient.connectNfx();
         if(!isAdded())
             pd = ProgressDialog.show(mContext, "", getString(R.string.wait_while_subscribing));
 
-        DataBase dataBase = new DataBase(activity);
+        DataBase dataBase = new DataBase(getActivity());
         dataBase.updateFacebookPage(pageName, pageID, pageAccessToken);
 
         obj = new JSONObject();
@@ -536,7 +520,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
                 ((OpenOtherFacebookScreen)mContext).showFragment();
                 break;
             case PAGE_NO_FOUND:
-                Methods.materialDialog(activity, "Alert", getString(R.string.look_like_no_facebook_page));
+                Methods.materialDialog(getActivity(), "Alert", getString(R.string.look_like_no_facebook_page));
                 break;
             default:
                 break;

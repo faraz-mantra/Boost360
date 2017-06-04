@@ -1,24 +1,33 @@
 package com.nowfloats.signup.UI.UI;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
 import android.location.Address;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.style.StyleSpan;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -31,6 +40,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -61,6 +71,7 @@ import com.nowfloats.util.HeaderText;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.SmsVerifyModel;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -77,11 +88,16 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class PreSignUpActivity extends AppCompatActivity implements
@@ -107,7 +123,8 @@ public class PreSignUpActivity extends AppCompatActivity implements
 
     ImageView bizzName, bizzCat, bizCity, bizzCtry, bizzEmail, bizPh;
 
-
+    EditText otpEditText;
+    private MaterialDialog otpDialog,progressDialog,progressbar;
     private boolean businessCategory_Selected = false;
     SharedPreferences sharedpreferences;
     private boolean country_Selected = false;
@@ -142,6 +159,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
     ArrayAdapter<String> adapter;
     ArrayList<String> signUpCountryList=new ArrayList<>();
     private GoogleApiClient mGoogleApiClient;
+    private ArrayList<String> categories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +167,18 @@ public class PreSignUpActivity extends AppCompatActivity implements
         setContentView(R.layout.pre_sign_up_trial_3);
         activity = PreSignUpActivity.this;
         Methods.isOnline(activity);
+        progressbar = new MaterialDialog.Builder(this)
+                .autoDismiss(false)
+                /*.backgroundColorRes(R.color.transparent)*/
+                .content("Verifying OTP")
+                .progress(true, 0)
+                .build();
+        progressDialog = new MaterialDialog.Builder(this)
+                .autoDismiss(false)
+                /*.backgroundColorRes(R.color.transparent)*/
+                .content("Fetching OTP from SMS inbox")
+                .progress(true, 0)
+                .build();
         bus = BusProvider.getInstance().getBus();
         businessNameEditText = (EditText) findViewById(R.id.editText_businessName);
         businessCategoryEditText = (EditText) findViewById(R.id.editText_businessCategory);
@@ -226,50 +256,52 @@ public class PreSignUpActivity extends AppCompatActivity implements
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                String country_code = null;
-                if(Country_CodeMap!=null) {
-                    country_code = Country_CodeMap.get(countryEditText.getText().toString());
-                }
-                makeAutoCompleteFilter(country_code);
-
-                final PendingResult<AutocompletePredictionBuffer> result =
-                        Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, cityEditText.getText().toString().trim(),
-                                null, filter );
-
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        AutocompletePredictionBuffer a=result.await();
-                        //Log.v("ggg","ok");
-                        citys.clear();
-                        for (int i=0;i<a.getCount();i++){
-                            //Log.v("ggg",a.get(i).getFullText(new StyleSpan(Typeface.NORMAL)).toString()+" length "+citys.size());
-                            citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString());
-                        }
-
-                        a.release();
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                adapter = new ArrayAdapter<>(PreSignUpActivity.this,
-                                        android.R.layout.simple_dropdown_item_1line, citys);
-                                if (!isFinishing()) {
-                                    cityEditText.setAdapter(adapter);
-                                    adapter.notifyDataSetChanged();
-                                }
-                            }
-                        });
-                    }
-                }).start();
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 //ArrayList<String> citys=new ArrayList<String>();
                 //cityEditText.setAdapter(null);
+                try {
+                    String country_code = null;
+                    if (Country_CodeMap != null) {
+                        country_code = Country_CodeMap.get(countryEditText.getText().toString());
+                    }
+                    makeAutoCompleteFilter(country_code);
 
+                    final PendingResult<AutocompletePredictionBuffer> result =
+                            Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, cityEditText.getText().toString().trim(),
+                                    null, filter);
+
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            AutocompletePredictionBuffer a = result.await();
+                            //Log.v("ggg","ok");
+                            citys.clear();
+                            for (int i = 0; i < a.getCount(); i++) {
+                                //Log.v("ggg",a.get(i).getFullText(new StyleSpan(Typeface.NORMAL)).toString()+" length "+citys.size());
+                                citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString());
+                            }
+
+                            a.release();
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    adapter = new ArrayAdapter<>(PreSignUpActivity.this,
+                                            android.R.layout.simple_dropdown_item_1line, citys);
+                                    if (!isFinishing()) {
+                                        cityEditText.setAdapter(adapter);
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                }
+                            });
+                        }
+                    }).start();
+                }catch (Exception e){
+
+                }
             }
         });
 
@@ -317,24 +349,6 @@ public class PreSignUpActivity extends AppCompatActivity implements
             }
         });
 
-       /* cityEditText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String s = cityEditText.getText().toString().trim();
-                String city = s.split("\\,")[0];
-                String country = s.split("\\,")[1];
-                cityEditText.setText(city);
-                countryEditText.setText(country);
-                try {
-                    String country_code = Country_CodeMap.get(country.toString());
-                    String phone_code = Code_PhoneMap.get(country_code);
-                    countryPhoneCode.setText("+" + phone_code);
-                    sessionManager.storeFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE, phone_code);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });*/
 
         businessCategoryEditText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -342,30 +356,51 @@ public class PreSignUpActivity extends AppCompatActivity implements
                 businessCategory_Selected = true;
                 country_Selected = false;
 
-                new FetchCategory().execute();
+                if(categories == null )
+                {
+                    final ProgressDialog pd = ProgressDialog.show(PreSignUpActivity.this, "", getResources().getString(R.string.wait_while_loading_category));
+                    API_Layer api = Constants.restAdapter.create(API_Layer.class);
+                    api.getCategories(new Callback<ArrayList<String>>() {
+                        @Override
+                        public void success(ArrayList<String> strings, Response response) {
+                            if(pd!=null && pd.isShowing()){
+                                pd.dismiss();
+                            }
+                            categories =strings;
+                            showCategoryDialog(categories);
+                        }
 
-
-                /*if (Constants.storeBusinessCategories == null) {
-                    Constants.storeBusinessCategories = API_Layer.getBusinessCategories(activity);
-                } else {
-
-                    new MaterialDialog.Builder(activity)
-                            .title("Select a Category")
-                            .items(Constants.storeBusinessCategories)
-                            .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
-                                @Override
-                                public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                    businessCategoryEditText.setText(text);
-
-                                    Util.changeDefaultBackgroundImage(text.toString());
-                                    return false;
-                                }
-                            })
-                            .show();
-                }*/
+                        @Override
+                        public void failure(RetrofitError error) {
+                            if(pd!=null && pd.isShowing()){
+                                pd.dismiss();
+                            }
+                            showCategoryDialog(new ArrayList<String>(Arrays.asList(Constants.storeBusinessCategories)));
+                            Toast.makeText(PreSignUpActivity.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }else
+                {
+                    showCategoryDialog(categories);
+                }
             }
         });
         updateBasedOnMostRecentLocation(Constants.lastKnownAddress);
+    }
+    private void showCategoryDialog(ArrayList<String> categories){
+        new MaterialDialog.Builder(activity)
+                .title("Select a Category")
+                .items(categories)
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        businessCategoryEditText.setText(text);
+
+                        Util.changeDefaultBackgroundImage(text.toString());
+                        return false;
+                    }
+                })
+                .show();
     }
     private void makeAutoCompleteFilter(String country_code){
 
@@ -459,7 +494,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
     @Subscribe
     public void post_SuggestTag(Suggest_Tag_Event response) {
         fpTag = response.fpTag;
-
+        Log.v("ggg","post tag");
         // Close Progress Dialog
 
         MaterialProgressBar.dismissProgressBar();
@@ -487,7 +522,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
 //            {
 //                editTextBundle.putS
 //            }
-        editor.commit();
+        editor.apply();
         String setLatLong = data_city.replaceAll(" ", "+") + "," + data_country.replaceAll(" ", "+");
         setLatLong.replaceAll(" ", "+");
 
@@ -495,6 +530,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
         Intent webSiteCreationIntent = new Intent(activity, WebSiteAddressActivity.class);
         webSiteCreationIntent.putExtras(editTextBundle);
         startActivity(webSiteCreationIntent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     @Override
@@ -551,6 +587,9 @@ public class PreSignUpActivity extends AppCompatActivity implements
         if (sharedpreferences.contains(Save_Phone)) {
             phoneEditText.setText(sharedpreferences.getString(Save_Phone, ""));
         }
+        if (sharedpreferences.contains(Save_Phone)) {
+            phoneEditText.setText(sharedpreferences.getString(Save_Phone, ""));
+        }
     }
 
     private boolean getEditTextData() {
@@ -562,6 +601,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
             data_country = countryEditText.getText().toString();
             data_email = emailEditText.getText().toString();
             data_phone = phoneEditText.getText().toString();
+            data_country_code = countryPhoneCode.getText().toString();
             allFieldsValid = true;
             if (data_businessName.trim().length() == 0) {
                 allFieldsValid = false;
@@ -670,34 +710,8 @@ public class PreSignUpActivity extends AppCompatActivity implements
         if (value.equals("Success")) {
             // PreSignUpDialog.showDialog_WebSiteCreation(activity,"Valid Phone number. . .","Congrats . . .");
             //goToNextScreen = true ;
-
-            Bundle editTextBundle = new Bundle();
-
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            editor.putString(Save_Name, data_businessName);
-            editor.putString(Save_Cat, data_businessCategory);
-            editor.putString(Save_City, data_city);
-            editor.putString(Save_Country, data_country);
-            editor.putString(Save_Email, data_email);
-            editor.putString(Save_Phone, data_phone);
-
-            editTextBundle.putString("signup_business_name", data_businessName);
-            editTextBundle.putString("signup_business_category", data_businessCategory);
-            editTextBundle.putString("signup_city", data_city);
-            editTextBundle.putString("signup_country", data_country);
-            editTextBundle.putString("signup_email", data_email);
-            editTextBundle.putString("signup_phone", data_phone);
-            editTextBundle.putString("signup_country_code", countryPhoneCode.getText().toString());
-            editTextBundle.putString("tag", fpTag);
-            editor.commit();
-            String setLatLong = data_city.replaceAll(" ", "+") + "," + data_country.replaceAll(" ", "+");
-            setLatLong.replaceAll(" ", "+");
-
-            setLatLong(setLatLong);
-            Intent webSiteCreationIntent = new Intent(activity, WebSiteAddressActivity.class);
-            webSiteCreationIntent.putExtras(editTextBundle);
-            startActivity(webSiteCreationIntent);
-
+            startWebsiteActivity();
+            //otpVerifyDialog(phoneEditText.getText().toString());
 
         } else if (value.equals("Failure")) {
             boolean wrapInScrollView = true;
@@ -722,6 +736,35 @@ public class PreSignUpActivity extends AppCompatActivity implements
         // pd.dismiss();
         // PreSignUpDialog.showDialog_WebSiteCreation(activity,"Congrats . . . ","Web Site Creation");
 
+    }
+    private void startWebsiteActivity(){
+        Bundle editTextBundle = new Bundle();
+
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putString(Save_Name, data_businessName);
+        editor.putString(Save_Cat, data_businessCategory);
+        editor.putString(Save_City, data_city);
+        editor.putString(Save_Country, data_country);
+        editor.putString(Save_Email, data_email);
+        editor.putString(Save_Phone, data_phone);
+
+        editTextBundle.putString("signup_business_name", data_businessName);
+        editTextBundle.putString("signup_business_category", data_businessCategory);
+        editTextBundle.putString("signup_city", data_city);
+        editTextBundle.putString("signup_country", data_country);
+        editTextBundle.putString("signup_email", data_email);
+        editTextBundle.putString("signup_phone", data_phone);
+        editTextBundle.putString("signup_country_code", countryPhoneCode.getText().toString());
+        editTextBundle.putString("tag", fpTag);
+        editor.apply();
+        String setLatLong = data_city.replaceAll(" ", "+") + "," + data_country.replaceAll(" ", "+");
+        setLatLong = setLatLong.replaceAll(" ", "+");
+
+        setLatLong(setLatLong);
+        Intent webSiteCreationIntent = new Intent(activity, WebSiteAddressActivity.class);
+        webSiteCreationIntent.putExtras(editTextBundle);
+        startActivity(webSiteCreationIntent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     @Override
@@ -941,46 +984,191 @@ public class PreSignUpActivity extends AppCompatActivity implements
 
     }
 
-    private class FetchCategory extends AsyncTask<String, Void, String>{
-
-        ProgressDialog pd = null;
-
-        @Override
-        protected void onPreExecute() {
-
-            pd = ProgressDialog.show(PreSignUpActivity.this, "", "Wait While Loading Categories...");
-            //return
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            API_Layer.getBusinessCategories(PreSignUpActivity.this);
-            return null;
-        }
-
-
-
-        @Override
-        protected void onPostExecute(String result) {
-        //Log.v("Test",Constants.storeBusinessCategories.length+" length");
-            if(pd!=null && pd.isShowing()){
-                pd.dismiss();
+    private void otpVerifyDialog(final String number){
+        //call send otp api
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_otp_verify,null);
+        final EditText otp = (EditText) view.findViewById(R.id.editText);
+        otpEditText =otp;
+        TextView resend = (TextView) view.findViewById(R.id.resend_tv);
+        resend.setPaintFlags(resend.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        resend.setText(Methods.fromHtml(getString(R.string.resend)));
+        resend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((TextView)v).setTextColor(ContextCompat.getColor(PreSignUpActivity.this,R.color.gray_transparent));
+                sendSms(number);
             }
-            new MaterialDialog.Builder(activity)
-                    .title("Select a Category")
-                    .items(Constants.storeBusinessCategories)
-                    .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
-                        @Override
-                        public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                            businessCategoryEditText.setText(text);
-
-                            Util.changeDefaultBackgroundImage(text.toString());
-                            return false;
+        });
+        otpDialog  = new MaterialDialog.Builder(this)
+                .customView(view,false)
+                .negativeText("Cancel")
+                .autoDismiss(false)
+                .titleColorRes(R.color.primary_color)
+                .positiveText("Submit")
+                .title("One Time Password")
+                .canceledOnTouchOutside(false)
+                .negativeColorRes(R.color.gray_transparent)
+                .positiveColorRes(R.color.primary_color)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        String numText = otp.getText().toString().trim();
+                        if(numText.length()>0) {
+                            verifySms(number,numText);
+                        }else{
+                            Toast.makeText(PreSignUpActivity.this, "Enter OTP", Toast.LENGTH_SHORT).show();
                         }
-                    })
-                    .show();
-            //return
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                }).show();
+
+        final TextView positive = otpDialog.getActionButton(DialogAction.POSITIVE);
+        positive.setTextColor(ContextCompat.getColor(PreSignUpActivity.this,R.color.gray_transparent));
+        otp.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(otp.getText().toString().trim().length()>0){
+                    positive.setTextColor(ContextCompat.getColor(PreSignUpActivity.this,R.color.primary));
+                }else{
+                    positive.setTextColor(ContextCompat.getColor(PreSignUpActivity.this,R.color.gray_transparent));
+                }
+            }
+        });
+        sendSms(number);
+    }
+    private void sendSms(String number){
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
+            startProgressDialog();
+        }
+        Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("via","sms");
+        hashMap.put("locale",Locale.getDefault().getLanguage());
+        hashMap.put("phone_number","9695787711");
+        hashMap.put("country_code","91");
+        smsApi.sendSms(hashMap, new Callback<SmsVerifyModel>() {
+            @Override
+            public void success(SmsVerifyModel model, Response response) {
+                if(model == null){
+                    stopProgressDialog();
+                    Toast.makeText(PreSignUpActivity.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(model.getSuccess()){
+
+                }else{
+                    stopProgressDialog();
+                    Toast.makeText(PreSignUpActivity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                stopProgressDialog();
+                Toast.makeText(PreSignUpActivity.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void verifySms(final String number, String otpCode){
+        showProgressbar();
+        Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("verification_code",otpCode);
+        hashMap.put("phone_number","9695787711");
+        hashMap.put("country_code","91");
+        smsApi.verifySmsCode(hashMap, new Callback<SmsVerifyModel>() {
+            @Override
+            public void success(SmsVerifyModel model, Response response) {
+                hideProgressbar();
+                if(model == null){
+                    Toast.makeText(PreSignUpActivity.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(model.getSuccess()){
+                    otpDialogDismiss();
+                    startWebsiteActivity();
+                }else{
+                    Toast.makeText(PreSignUpActivity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                hideProgressbar();
+                Toast.makeText(PreSignUpActivity.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void showProgressbar() {
+        if(progressbar != null){
+            progressbar.show();
+        }
+    }
+    private void hideProgressbar(){
+        if(progressbar != null && progressbar.isShowing()){
+            progressbar.dismiss();
         }
     }
 
+    private void otpDialogDismiss() {
+        if(otpDialog!=null && otpDialog.isShowing()){
+            otpDialog.dismiss();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mSmsReceiver,new IntentFilter(Constants.SMS_OTP_RECEIVER));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mSmsReceiver);
+    }
+    private BroadcastReceiver mSmsReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent == null){
+                return;
+            }
+            String otp = intent.getStringExtra("OTP_CODE");
+            otp = otp.replaceAll("[^0-9]", "");
+            if(otpEditText !=null) {
+                otpEditText.setText(otp);
+            }
+            stopProgressDialog();
+        }
+    };
+
+    private void startProgressDialog(){
+        if(progressDialog!=null)
+            progressDialog.show();
+    }
+    private  void stopProgressDialog(){
+        if(progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
 }
+

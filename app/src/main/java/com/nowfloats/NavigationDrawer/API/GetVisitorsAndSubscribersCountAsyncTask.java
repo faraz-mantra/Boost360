@@ -3,7 +3,6 @@ package com.nowfloats.NavigationDrawer.API;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.view.View;
 
 import com.nowfloats.Login.UserSessionManager;
@@ -80,14 +79,14 @@ public class GetVisitorsAndSubscribersCountAsyncTask extends AsyncTask<Void, Str
                             Analytics_Fragment.subscriberCount.setVisibility(View.VISIBLE);
                             Analytics_Fragment.subscriber_progress.setVisibility(View.GONE);
                             Analytics_Fragment.subscriberCount.setText(numberOfSubscribers);
-                            Log.i("Subscribers",""+numberOfSubscribers);
+                            //Log.i("Subscribers",""+numberOfSubscribers);
                         }
                         if(Analytics_Fragment.visitCount != null && Analytics_Fragment.visits_progressBar!=null)
                         {
                             Analytics_Fragment.visitCount.setVisibility(View.VISIBLE);
                             Analytics_Fragment.visits_progressBar.setVisibility(View.GONE);
                             Analytics_Fragment.visitCount.setText(numberOfViews);
-                            Log.i("Visitors",""+numberOfViews);
+                            //Log.i("Visitors",""+numberOfViews);
                         }
                         if(Analytics_Fragment.visitorsCount != null && Analytics_Fragment.visitors_progressBar!=null)
                         {
@@ -136,9 +135,9 @@ public class GetVisitorsAndSubscribersCountAsyncTask extends AsyncTask<Void, Str
             int code = responseOfSite.getStatusLine().getStatusCode();
 
 			if(entity!=null){
-                Log.i("Count--",""+entity);
+                //Log.i("Count--",""+entity);
 				String responseString = EntityUtils.toString(entity);
-                Log.i("responseString--",""+responseString);
+                //Log.i("responseString--",""+responseString);
                 JSONObject responseJson = new JSONObject(responseString);
                 JSONArray entityArray = responseJson.getJSONArray("Entity");
 

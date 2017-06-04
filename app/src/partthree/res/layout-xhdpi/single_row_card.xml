@@ -531,6 +531,42 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/ninethRow_Layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sidepanel_cell_height"
+            android:background="@color/cell_background_color"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            android:orientation="horizontal">
 
+            <ImageView
+                android:id="@+id/ninethRow_ImageView"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:layout_marginLeft="@dimen/icon_left_margin"
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:padding="5dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_info" />
+
+            <TextView
+                android:id="@+id/ninethRow_TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/bubble_for_whatsapp"
+                android:textColor="@color/cell_text_color"
+                android:textSize="@dimen/cell_text_size" />
+            <Switch
+                android:id="@+id/ninethRow_Switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center"
+                android:checked="false"
+                android:padding="3dp"
+                android:textColorHighlight="@color/product_price" />
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

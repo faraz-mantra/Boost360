@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
@@ -31,6 +33,8 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.AlertCountEvent;
 import com.nowfloats.NavigationDrawer.model.RiaCardModel;
 import com.nowfloats.NotificationCenter.NotificationFragment;
+import com.nowfloats.Product_Gallery.Model.ProductListModel;
+import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
 import com.nowfloats.bubble.BubblesService;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
@@ -43,6 +47,11 @@ import com.thinksity.R;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 import static com.nowfloats.accessbility.BubbleDialog.ACTION_KILL_DIALOG;
 
@@ -65,7 +74,8 @@ public class Home_Fragment_Tab extends Fragment {
     SharedPreferences pref;
     private IntentFilter clickIntentFilters = new IntentFilter(ACTION_KILL_DIALOG);
     private MaterialDialog overLayDialog;
-
+    private Boolean isProductAvaiable = false;
+    public static enum DrawOverLay { FromHome,FromTab};
     @Override
     public void onResume() {
         super.onResume();
@@ -87,14 +97,14 @@ public class Home_Fragment_Tab extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+
         bus.unregister(this);
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = getActivity();
-        session = new UserSessionManager(activity.getApplicationContext(),activity);
         bus = BusProvider.getInstance().getBus();
         /*new Thread(new Runnable() {
             @Override
@@ -105,6 +115,12 @@ public class Home_Fragment_Tab extends Fragment {
         }).start();*/
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = getActivity();
+        session = new UserSessionManager(activity.getApplicationContext(),activity);
+    }
 
     @Subscribe
     public void getalertCountEvent(AlertCountEvent ev){
@@ -140,6 +156,10 @@ public class Home_Fragment_Tab extends Fragment {
         alertCountTv = (TextView)view.findViewById(R.id.alert_count_textview);
         bubbleOverlay = (LinearLayout) view.findViewById(R.id.floating_bubble_overlay);
         alertCountTv.setVisibility(View.GONE);
+        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+            getProducts();
+        }
+
         viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -198,7 +218,7 @@ public class Home_Fragment_Tab extends Fragment {
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
-                return getResources().getColor(R.color.white);
+                return ContextCompat.getColor(getContext(),R.color.white);
             }
         });
         // Setting the ViewPager For the SlidingTabsLayout
@@ -260,10 +280,37 @@ public class Home_Fragment_Tab extends Fragment {
         super.onStop();
 
         if(getActivity()==null) return;
+        if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")){
+            getActivity().stopService(new Intent(getActivity(),BubblesService.class));
+            getActivity().unregisterReceiver(clickReceiver);
+        }
 
-        getActivity().stopService(new Intent(getActivity(),BubblesService.class));
-        getActivity().unregisterReceiver(clickReceiver);
     }
+
+    private void getProducts(){
+        HashMap<String,String> values = new HashMap<>();
+        values.put("clientId", Constants.clientId);
+        values.put("skipBy","0");
+        values.put("fpTag",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
+        //invoke getProduct api
+        ProductGalleryInterface productInterface = Constants.restAdapter.create(ProductGalleryInterface.class);
+        productInterface.getProducts(values, new Callback<ArrayList<ProductListModel>>() {
+            @Override
+            public void success(ArrayList<ProductListModel> productListModels, Response response) {
+                if(productListModels == null || productListModels.size() == 0 || response.getStatus() != 200){
+                    return;
+                }
+                isProductAvaiable = true;
+                checkOverlay(DrawOverLay.FromTab);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+    }
+
     private  void showBubble(){
 
         if(!pref.getBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK,false)) {
@@ -278,26 +325,34 @@ public class Home_Fragment_Tab extends Fragment {
         activity.startService(intent);
 
     }
-    public void checkOverlay() {
+    public void checkOverlay(DrawOverLay from){
+        if(!isAdded() || getActivity() == null){
+            return;
+        }else if(!isProductAvaiable && from == DrawOverLay.FromHome && activity!= null){
+
+            Toast.makeText(activity, "you do not have products into ProductGallery", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Calendar calendar = Calendar.getInstance();
         long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, -1);
         long newTime = calendar.getTimeInMillis();
         long diff = 3 * 24 * 60 * 60 * 1000;
-        Log.v("ggg", oldTime + "");
+        //Log.v("ggg", oldTime + "");
 //Log.v("ggg",String.valueOf(diff)+" "+String.valueOf(newTime-oldTime));
         if (oldTime != -1 && ((newTime - oldTime) < diff)) {
             return;
         }
 
         boolean checkAccessibility = true;
-
+        pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME,Calendar.getInstance().getTimeInMillis()).apply();
         if (android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity())) {
             checkAccessibility = false;
-            dialogForOverlayPath();
+            dialogForOverlayPath(from);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
             checkAccessibility = canDrawOverlaysUsingReflection(getActivity());
             if (!checkAccessibility) {
-                dialogForOverlayPath();
+                dialogForOverlayPath(from);
             }
         }
 
@@ -340,18 +395,18 @@ public class Home_Fragment_Tab extends Fragment {
             checkForAccessibility();
         }
     }*/
-    private void dialogForOverlayPath(){
-
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_bubble_overlay_permission,null);
+    private void dialogForOverlayPath(DrawOverLay from){
+        if(getActivity() == null) return;
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_bubble_overlay_permission,null);
         ImageView image = (ImageView) view.findViewById(R.id.gif_image);
         try {
             GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(image);
-            Glide.with(getActivity()).load(R.drawable.overlay_gif).into(target);
+            Glide.with(getContext()).load(R.drawable.overlay_gif).into(target);
         }catch(Exception e){
             e.printStackTrace();
         }
         if(overLayDialog == null){
-        overLayDialog = new MaterialDialog.Builder(getActivity())
+        overLayDialog = new MaterialDialog.Builder(getContext())
                 .customView(view,false)
                 .positiveColorRes(R.color.primary)
                 .positiveText(getString(R.string.open_setting))
@@ -360,21 +415,30 @@ public class Home_Fragment_Tab extends Fragment {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
-
-                        requestOverlayPermission();
+                        try {
+                            requestOverlayPermission();
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
                         dialog.dismiss();
                     }
                 }).show();
+        }
+        else if(from == DrawOverLay.FromHome){
+            overLayDialog.show();
         }
     }
 
     private void requestOverlayPermission() {
 
-        if (android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null) {
+        if(getActivity() == null){
+             return;
+        }
+        if (android.os.Build.VERSION.SDK_INT >= 23) {
 
             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getActivity().getPackageName()));
             startActivityForResult(intent, PERM_REQUEST_CODE_DRAW_OVERLAYS);
-        } else if (getActivity() != null) {
+        } else {
 //            Intent intent = new Intent();
 //            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
 //            Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
@@ -398,8 +462,6 @@ public class Home_Fragment_Tab extends Fragment {
         if(getActivity() ==null) return;
         if(!Methods.isAccessibilitySettingsOn(getActivity())) {
             showBubble();
-        }else if(pref!=null){
-            pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME,Calendar.getInstance().getTimeInMillis()).apply();
         }
     }
     private void addOverlay(){
@@ -419,8 +481,9 @@ public class Home_Fragment_Tab extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        checkOverlay();
-        getActivity().registerReceiver(clickReceiver,clickIntentFilters);
+        if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+            getActivity().registerReceiver(clickReceiver, clickIntentFilters);
+        }
     }
 
     BroadcastReceiver clickReceiver = new BroadcastReceiver() {

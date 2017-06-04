@@ -75,18 +75,19 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View convertView = null;
+        View convertView;
         MyViewHolder.WelcomeViewHolder welcomeViewHolder = null ;
         MyViewHolder.Image_Text_ViewHolder image_text_viewHolder = null ;
 
         if(viewType == VIEW_TYPE_WELCOME)
         {
-              if (convertView == null ) {
-                  convertView = mInflater.inflate(R.layout.card_welcome, parent, false);
-              }
-              welcomeViewHolder = new MyViewHolder.WelcomeViewHolder(convertView);
+
+            convertView = mInflater.inflate(R.layout.card_welcome, parent, false);
+            welcomeViewHolder = new MyViewHolder.WelcomeViewHolder(convertView);
+
             if (Home_Main_Fragment.emptyMsgLayout!=null)
                 Home_Main_Fragment.emptyMsgLayout.setVisibility(View.GONE);
+
               return welcomeViewHolder ;
         }
         else
@@ -150,6 +151,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                     }
 
                     Constants.isWelcomScreenToBeShown = false;
+
                     initialCard.setVisibility(View.GONE);
                     Intent showWebSiteIntent = new Intent(appContext,Mobile_Site_Activity.class);
                     showWebSiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -263,7 +265,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
 
             });
 
-            if(Constants.isWelcomScreenToBeShown == true) {
+            if(Constants.isWelcomScreenToBeShown) {
                 Constants.isWelcomScreenToBeShown = false ;
                 data = HomeActivity.StorebizFloats.get(position - 1);
             } else {
@@ -402,7 +404,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
     }
         @Override
     public int getItemViewType(int position) {
-        if(Constants.isWelcomScreenToBeShown == true) {
+        if(Constants.isWelcomScreenToBeShown) {
             return VIEW_TYPE_WELCOME;
         } else {
             return VIEW_TYPE_IMAGE_TEXT;
@@ -411,7 +413,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
 
     @Override
     public int getItemCount() {
-        if(Constants.isWelcomScreenToBeShown == true)
+        if(Constants.isWelcomScreenToBeShown)
         {
             return 1;
         }

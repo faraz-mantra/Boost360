@@ -7,7 +7,7 @@
 
     <include
         android:id="@+id/app_bar"
-        layout="@layout/app_bar"></include>
+        layout="@layout/app_bar_home"></include>
 
 
     <RelativeLayout

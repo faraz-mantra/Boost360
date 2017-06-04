@@ -277,3 +277,10 @@
 -keepclassmembers class com.google.android.gms.R$styleable {*;}
 -dontwarn com.semusi.sdksample**
 -dontwarn semusi.ruleengine.pushmanager**
+
+
+# Twilio Client
+-keep class com.twilio.** { *; }
+
+# Apache HttpClient
+-dontwarn org.apache.http.**

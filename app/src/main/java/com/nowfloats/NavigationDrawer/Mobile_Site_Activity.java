@@ -13,6 +13,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
@@ -22,6 +23,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class Mobile_Site_Activity extends AppCompatActivity {
 
     private WebView webView;
+
     String url ;
 
     @Override
@@ -39,7 +41,7 @@ public class Mobile_Site_Activity extends AppCompatActivity {
         if (extras != null) {
             url = extras.getString("WEBSITE_NAME");
         }
-
+        TextView tvClose = (TextView)findViewById(R.id.close_web);
         /*TextView close = (TextView)findViewById(R.id.close_web);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,8 +59,12 @@ public class Mobile_Site_Activity extends AppCompatActivity {
             }
         });
         webView = (WebView)findViewById(R.id.webView1);
+//        startWebView(url);
         startWebView(url);
     }
+
+
+
 
     private void startWebView(String url) {
         //Create new webview Client to show progress dialog
@@ -171,4 +177,5 @@ public class Mobile_Site_Activity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

@@ -34,6 +34,7 @@ public class Constants {
     public static final String RIA_NODE_DATA = "riaNodeDatas" ;
     public static final int VISITS_TABLE = 0;
     public static final int VISITORS_TABLE = 1;
+    public static final String PDF_LOADER_URL = "https://drive.google.com/viewerng/viewer?embedded=true&url=";
     public static boolean LOGOUPLOADED = false;
     public static boolean IS_SUNDAY_CHECKED = false;
     public static boolean IS_MONDAY_CHECKED = false;
@@ -47,7 +48,7 @@ public class Constants {
     public static String UserId = "";
     public static Typeface hel_bold, hel_roman;
     public static String PREF_NAME = "nowfloatsPrefs";
-
+    public static final String SMS_OTP_RECEIVER = "sms_otp_receiver";
     public static String clientIdThinksity = "217FF5B9CE214CDDAC4985C853AE7F75AAFA11AF2C4B47CB877BCA26EC217E6D";
 
     public static String clientId = Specific.clientId2;
@@ -72,14 +73,13 @@ public class Constants {
     public static ArrayList<String> currencyArray = new ArrayList<>();
     public static Activity app = null;
     public static Activity home = null;
-
-    // public final static String NOW_FLOATS_API_URL		=	"https://api.nowfloatsdev.com";
+    //public final static String NOW_FLOATS_API_URL		=	"https://api.nowfloatsdev.com";
     public final static String NOW_FLOATS_API_URL = "https://api.withfloats.com";
     public final static String TEST_API_URL = "http://api.nowfloatsdev.com";
     public final static String BASE_IMAGE_URL = "https://content.withfloats.com";
     public final static String RIA_MEMORY_API_URL = "http://riamemory.withfloats.com";
+    public final static String PLUGIN_API_URL = "https://plugin.withfloats.com";
     public final static String RIA_MEMORY_TEST_API_URL = "http://ria.nowfloatsdev.com";
-    public final static String PLUGIN_API_URL = "http://plugin.withfloats.com";
     public final static String RIA_API_URL = "https://ria.withfloats.com";
     // public final static String NOW_FLOATS_API_URL		=	"https://nftestbed.azurewebsites.net";
     public final static String HTTP_PUT = "PUT";
@@ -89,19 +89,20 @@ public class Constants {
     //Retrofit Single Instance
     public static final RestAdapter chatRestAdapter = new RestAdapter.Builder().setEndpoint("http://dbapi.fostergem.com").build();
     public static final RestAdapter chatsendRestAdapter = new RestAdapter.Builder().setEndpoint("http://api.fostergem.com").build();
-
+    public static final RestAdapter smsVerifyAdapter = new RestAdapter.Builder().setEndpoint("https://api.authy.com").setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     //    public static RestAdapter validEmailAdapter = null;
     public static final RestAdapter validEmailAdapter = new RestAdapter.Builder().setEndpoint("https://bpi.briteverify.com").build();
     //    public static RestAdapter restAdapter = null;
     public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL)./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).*/build();
 
-    public static final RestAdapter testRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.TEST_API_URL).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).build();
+    public static final RestAdapter testRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.TEST_API_URL)./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).*/build();
     public static final RestAdapter pluginRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.PLUGIN_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
     public static final RestAdapter riaRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
     public static NotificationInterface alertInterface = Constants.restAdapter.create(NotificationInterface.class);
 
     //http://api.withfloats.com/Discover/v3/FloatingPoint/create
-    public static String NFX_WITH_NOWFLOATS="http://nfx.withfloats.com";
+    //public static String NFX_DEV_NOWFLOATS="http://nfx.nowfloatsdev.com";
+    public static String NFX_WITH_NOWFLOATS="https://nfx.withfloats.com";
     public static String createStoreV3 = NOW_FLOATS_API_URL + "/Discover/v3/FloatingPoint/create";
     public static String createStoreV2 = NOW_FLOATS_API_URL + "/Discover/v2/FloatingPoint/create";
     public static String loginUrl = NOW_FLOATS_API_URL + "/discover/v1/login/";
@@ -342,6 +343,7 @@ public class Constants {
             "CONSTRUCTION MATERIAL",
             "FREELANCER",
             "CONSULTANTS"};
+    public static String PrimaryNumberClientId = "726F12B41F6242CC9A2B23BF101199B54449370AD7F44B069C9B5E7CC4A7A20D";
 
     public enum SubscriberStatus {
         UNSUBSCRIBED(30), SUBSCRIBED(20),REQUESTED(10);
@@ -447,7 +449,7 @@ public class Constants {
     public static boolean FbFeedPullAutoPublish;
     public static String FACEBOOK_URL = Specific.FACEBOOK_URL;
     public static String PACKAGE_NAME = Specific.PACKAGE_NAME;
-
+    public static final String TWILIO_AUTHY_API_KEY = Specific.TWILIO_AUTHY_API_KEY;
     public static final String FACEBOOK_PAGE_WITH_ID = Specific.FACEBOOK_PAGEID;
 
 }
