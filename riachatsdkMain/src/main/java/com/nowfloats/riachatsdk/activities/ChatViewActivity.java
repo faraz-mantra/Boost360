@@ -853,6 +853,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         }
                     }
                 }
+                showKeyBoard();
                 if (mButtonList.size() > 0) {
                     rvButtonsContainer.setVisibility(View.VISIBLE);
                     mButtonsAdapter.notifyDataSetChanged();
@@ -876,6 +877,16 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 }
             }
         }, time);
+
+    }
+
+    private void showKeyBoard(){
+
+        if(cvChatInput.getVisibility() == View.VISIBLE){
+            etChatInput.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+        }
 
     }
 
@@ -914,6 +925,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         etChatInput.setThreshold(0);
                         etChatInput.setHint(btn.getPlaceholderText());
                         cvChatInput.setVisibility(View.VISIBLE);
+                        showKeyBoard();
                     }
                 }, new com.android.volley.Response.ErrorListener() {
             @Override
@@ -1173,6 +1185,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         switch (confirmationType) {
             case Constants.ConfirmationType.BIZ_NAME:
                 cvChatInput.setVisibility(View.VISIBLE);
+                showKeyBoard();
                 break;
             case Constants.ConfirmationType.ADDRESS_ENTRY:
                 getUserAddress(mCurrButton);
