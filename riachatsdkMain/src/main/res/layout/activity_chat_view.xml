@@ -1,174 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="@drawable/chat_bg"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/chat_bg"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:elevation="4dp"
         android:background="@color/primary"
-        app:theme="@style/MyCustomToolBarTheme"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        android:elevation="4dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/MyCustomToolBarTheme">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/iv_agent_icon"
-                android:visibility="visible"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
                 android:src="@drawable/ria_circle_image"
-                android:layout_gravity="center_vertical"/>
+                android:visibility="visible" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
+
                 <TextView
                     android:id="@+id/tv_agent_name"
-                    android:layout_gravity="bottom"
-                    android:layout_marginLeft="15dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="15dp"
                     android:gravity="center"
-                    android:textSize="20sp"
+                    android:text="Ria"
                     android:textColor="@color/white"
-                    android:text="Ria"/>
+                    android:textSize="20sp" />
+
                 <TextView
                     android:id="@+id/tv_ria_typing"
-                    android:visibility="invisible"
-                    android:layout_marginLeft="3dp"
-                    android:layout_gravity="bottom"
-                    android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="3dp"
                     android:text="is typing..."
-                    />
+                    android:textColor="@color/white"
+                    android:visibility="invisible" />
             </LinearLayout>
+
             <ImageView
                 android:id="@+id/iv_attach"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:visibility="invisible"
-                android:layout_marginRight="16dp"
                 android:layout_gravity="center_vertical"
+                android:layout_marginRight="16dp"
                 android:rotation="-45"
                 android:src="@drawable/ic_attach_file_black_24dp"
-                android:tint="@color/white"/>
+                android:tint="@color/white"
+                android:visibility="invisible" />
         </LinearLayout>
 
     </android.support.v7.widget.Toolbar>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:paddingBottom="5dp">
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_chat_data"
-            android:clipToPadding="false"
-            android:paddingBottom="20dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="20dp">
 
         </android.support.v7.widget.RecyclerView>
+
         <ImageView
             android:id="@+id/iv_scroll_down"
-            android:paddingTop="5dp"
-            android:visibility="invisible"
-            android:background="@drawable/scroll_down_shape"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
             android:layout_marginBottom="10dp"
             android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
+            android:background="@drawable/scroll_down_shape"
+            android:paddingTop="5dp"
             android:src="@drawable/ic_keyboard_arrow_down_black_40dp"
             android:tint="@color/white"
-            android:layout_width="35dp"
-            android:layout_height="35dp" />
+            android:visibility="invisible" />
 
-    </RelativeLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:minHeight="50dp"
-        android:gravity="center"
-        android:layout_height="wrap_content">
-        <FrameLayout
-            android:id="@+id/fl_cards"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </FrameLayout>
-        <android.support.v7.widget.RecyclerView
-            android:visibility="invisible"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="15dp"
-            android:id="@+id/rv_reply_button_container"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-        </android.support.v7.widget.RecyclerView>
         <LinearLayout
-            android:layout_marginTop="5dp"
-            android:id="@+id/cv_chat_input"
-            android:visibility="gone"
-            android:background="#fff"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/margin_10"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:minHeight="50dp"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/fl_cards"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/tv_prefix"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"/>
-                <AutoCompleteTextView
-                    android:id="@+id/et_chat_input"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:minHeight="40dp"
-                    android:maxLines="5"
-                    android:textSize="15sp"
-                    android:textCursorDrawable="@drawable/custom_edit_text_cursor"
-                    android:textColorHint="#406f6f6f"
-                    android:background="@drawable/et_bg"
-                    android:paddingLeft="15dp"
-                    android:hint="Say Something..."
-                    android:layout_weight="1"/>
-                <TextView
-                    android:id="@+id/tv_postfix"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLines="1"/>
-                <ImageView
-                    android:layout_marginEnd="10dp"
-                    android:id="@+id/iv_send_msg"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:paddingRight="12dp"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="8dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/send_btn_bg"
-                    android:src="@drawable/ic_send_message_btn"/>
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+            </FrameLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_reply_button_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:visibility="invisible">
+
+            </android.support.v7.widget.RecyclerView>
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/cv_chat_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="#fff"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tv_prefix"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:maxLines="1" />
+
+            <AutoCompleteTextView
+                android:id="@+id/et_chat_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/et_bg"
+                android:hint="Say Something..."
+                android:maxLines="5"
+                android:minHeight="40dp"
+                android:paddingLeft="15dp"
+                android:textColorHint="#406f6f6f"
+                android:textCursorDrawable="@drawable/custom_edit_text_cursor"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tv_postfix"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="20dp"
+                android:maxLines="1" />
+
+            <ImageView
+                android:id="@+id/iv_send_msg"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/send_btn_bg"
+                android:paddingBottom="10dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="12dp"
+                android:paddingTop="10dp"
+                android:src="@drawable/ic_send_message_btn" />
         </LinearLayout>
     </LinearLayout>
-
 
 </LinearLayout>

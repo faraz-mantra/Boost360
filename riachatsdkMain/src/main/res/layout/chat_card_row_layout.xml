@@ -10,9 +10,12 @@
     android:layout_height="wrap_content">
     <LinearLayout
         android:orientation="vertical"
+        android:layout_gravity="center"
         android:id="@+id/ll_bubble_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_height="150dp">
             <TextView
                 android:id="@+id/tv_confirmation_text"
                 android:gravity="left|center_vertical"

@@ -59,6 +59,7 @@ public class ChatManager {
 
     public void startChat() {
         Intent i = new Intent(mContext, ChatViewActivity.class);
+        mContext.overridePendingTransition(R.anim.slide_out_down, R.anim.slide_out_up);
         i.putExtra(Constants.PARCEL_NAME, mChatConfig);
         mContext.startActivity(i);
     }

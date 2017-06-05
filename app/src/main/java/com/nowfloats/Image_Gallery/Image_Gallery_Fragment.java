@@ -453,6 +453,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                 }
                 upload.setOnUploadListener(Image_Gallery_Fragment.this);
                 upload.execute();
+                // Check if the specified image exists.
             } catch (Exception e) {
                 e.printStackTrace();
             } catch (OutOfMemoryError E) {
@@ -486,7 +487,7 @@ public class Image_Gallery_Fragment extends Fragment implements
             // For getting images from default gallery app.
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
             Cursor cursor = activity.getContentResolver().query(imgUri, filePathColumn, null, null, null);
-            if (cursor != null) {
+            if(cursor != null) {
                 cursor.moveToFirst();
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 filePath = cursor.getString(columnIndex);
@@ -518,7 +519,7 @@ public class Image_Gallery_Fragment extends Fragment implements
 
                     String filePath = "";
                     Cursor cursor = activity.getContentResolver().query(uri, filePathColumn, null, null, null);
-                    if (cursor != null) {
+                    if(cursor != null) {
                         cursor.moveToFirst();
                         int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                         filePath = cursor.getString(columnIndex);
@@ -544,7 +545,7 @@ public class Image_Gallery_Fragment extends Fragment implements
      * other file-based ContentProviders.
      *
      * @param context The context.
-     * @param uri     The Uri to query.
+     * @param uri The Uri to query.
      * @author paulburke
      */
     public static String getPath(final Context context, final Uri uri) {
@@ -590,7 +591,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                 }
 
                 final String selection = "_id=?";
-                final String[] selectionArgs = new String[]{
+                final String[] selectionArgs = new String[] {
                         split[1]
                 };
 
@@ -613,9 +614,9 @@ public class Image_Gallery_Fragment extends Fragment implements
      * Get the value of the data column for this Uri. This is useful for
      * MediaStore Uris, and other file-based ContentProviders.
      *
-     * @param context       The context.
-     * @param uri           The Uri to query.
-     * @param selection     (Optional) Filter used in the query.
+     * @param context The context.
+     * @param uri The Uri to query.
+     * @param selection (Optional) Filter used in the query.
      * @param selectionArgs (Optional) Selection arguments used in the query.
      * @return The value of the _data column, which is typically a file path.
      */

@@ -488,6 +488,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="feching_search_detail">Fetching Search details&#8230;</string>
     <string name="week">week</string>
     <string name="visits">Visits</string>
+    <string name="unique_visitors">Unique Visitors</string>
     <string name="no_info_avail">No information available!</string>
     <string name="visit_this_week">visits this week</string>
     <string name="visit_this_month">visits this month</string>
@@ -625,8 +626,15 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="please_enter_message">Please enter message</string>
     <string name="your_website_appearance_changed">Your Website Appearance is changed</string>
     <string name="can_not_change_appearance">Couldn\'t change Website Appearance</string>
+
     <string name="buy_in_capital">BUY</string>
     <string name="later_in_capital">LATER</string>
+    <string name="renew_light_house_plan">Renew Lighthouse plan to get all the features</string>
+    <string name="light_house_plan_expired_some_features_visible">Your Lighthouse plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others</string>
+    <string name="renew_wildfire_plan">Renew Wildfire plan</string>
+    <string name="continue_auto_promoting_on_google">Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.</string>
+    <string name="renew_in_capital">RENEW</string>
+    <string name="ignore_in_capital">IGNORE</string>
     <string name="buy_light_house_plan">Buy Lighthouse plan to get all the features</string>
     <string name="demo_plan_expired">Your demo plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
     <string name="demo_plan_will_expire"><Data><![CDATA[Your Demo plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
@@ -701,7 +709,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="read_more">Read More</string>
     <string name="know_more">KNOW MORE</string>
     <string name="book_domain">Book Domain</string>
-    <string name="unique_visitors">Unique Visitors</string>
     <string name="domain_lookup">Domain LookUp</string>
     <string name="enter_domain_nmae_to_continue">Enter domain name to continue</string>
     <string name="domain_is_available">Domain is available..</string>
@@ -965,7 +972,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="offers_image_error">Choose an image for the offer</string>
     <string name="offer_uri">Offer Url:</string>
     <string name="offer_upload_failure">Error while posting your offer</string>
-    <string name="offer_image_upload_dialog_text">Uploading image for the offer...</string>
+    <string name="offer_image_upload_dialog_text">Uploading image for the offer&#8230;</string>
     <string name="suucessfull_offer_post">Your offer is successfully posted</string>
     <string name="error_offer_post">Error while uploading image for your offer</string>
     <string name="offers_image_size_error">Image Size is more than 4MB. Please choose an image of size less than 4MB</string>
