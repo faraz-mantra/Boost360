@@ -115,7 +115,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Section section = mChatSections.get(position);
+        final Section section = mChatSections.get(position);
 
         /*if (holder instanceof TypingViewHolder) {
             ((TypingViewHolder) holder).rlLoadingDots.
@@ -171,7 +171,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             cardViewHolder.tvAddressText.setTextColor(Color.parseColor("#ffffff"));
 
         } else if (holder instanceof TextViewHolder) {
-            TextViewHolder textViewHolder = (TextViewHolder) holder;
+            final TextViewHolder textViewHolder = (TextViewHolder) holder;
             textViewHolder.tvMessageText.setText(Html.fromHtml(section.getText()));
             if (section.isShowDate()) {
                 textViewHolder.tvDateTime.setVisibility(View.VISIBLE);
@@ -180,6 +180,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 textViewHolder.tvDateTime.setVisibility(View.GONE);
             }
             if (!section.isFromRia()) {
+                textViewHolder.llBubbleContainer.setVisibility(View.VISIBLE);
                 ((LinearLayout) textViewHolder.itemView).setGravity(Gravity.RIGHT);
                 LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) textViewHolder.llBubbleContainer.getLayoutParams();
                 if (mChatSections != null && mChatSections.size() > 0 && position > 0 && mChatSections.get(position - 1).isFromRia()) {
@@ -195,7 +196,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             } else {
                 ((LinearLayout) textViewHolder.itemView).setGravity(Gravity.LEFT);
                 textViewHolder.tvMessageText.setTextColor(Color.parseColor("#808080"));
-                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) textViewHolder.llBubbleContainer.getLayoutParams();
+                final LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) textViewHolder.llBubbleContainer.getLayoutParams();
                 if (mChatSections != null && mChatSections.size() > 0 && position > 0 && mChatSections.get(position - 1).isFromRia()) {
                     textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.ria_followup_bubble);
                     lp.setMargins(Utils.dpToPx(mContext, 15), 0, Utils.dpToPx(mContext, 60), 0);
@@ -204,14 +205,24 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     lp.setMargins(Utils.dpToPx(mContext, 5), 0, Utils.dpToPx(mContext, 60), 0);
                 }
 
-
                 textViewHolder.llBubbleContainer.setLayoutParams(lp);
-
                 if (!section.isAnimApplied()) {
-                    textViewHolder.llBubbleContainer
-                            .startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.slide_in_left));
-                    section.setIsAnimApplied(true);
+                    textViewHolder.llBubbleContainer.setVisibility(View.INVISIBLE);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            textViewHolder.llBubbleContainer.setVisibility(View.VISIBLE);
+                            textViewHolder.llBubbleContainer
+                                    .startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.slide_in_left));
+                            section.setIsAnimApplied(true);
+                        }
+                    }, 500);
+                }else{
+                    textViewHolder.llBubbleContainer.setVisibility(View.VISIBLE);
+                    textViewHolder.llBubbleContainer.setLayoutParams(lp);
                 }
+
+
             }
         } else if (holder instanceof ImageViewHolder) {
             ImageViewHolder imageViewHolder = (ImageViewHolder) holder;

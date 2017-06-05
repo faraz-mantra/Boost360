@@ -123,6 +123,8 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
             @Override
             public void onClick(View v) {
                 navigateTo = "chatactivity";
+                llStart.setVisibility(View.GONE);
+                ivStart.setVisibility(View.GONE);
                 mFragmentInteraction.OnInteraction(navigateTo);
             }
         });
@@ -132,7 +134,8 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
 
         isBackPress = true;
         ivBack.setVisibility(View.INVISIBLE);
-        ivStart.setVisibility(View.INVISIBLE);
+        llStart.setVisibility(View.GONE);
+        ivStart.setVisibility(View.GONE);
         animationTool.setVisbilityStatus(isBackPress);
         ivRiaZoomLeft.setVisibility(View.INVISIBLE);
         ivRiaZoomRight.setVisibility(View.INVISIBLE);

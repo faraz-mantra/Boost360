@@ -136,7 +136,7 @@
             android:paddingLeft="@dimen/margin_20"
             android:paddingRight="@dimen/margin_20"
             android:paddingTop="@dimen/margin_10"
-            android:text="START" />
+            android:text="GET STARTED" />
     </LinearLayout>
 </RelativeLayout>
 
