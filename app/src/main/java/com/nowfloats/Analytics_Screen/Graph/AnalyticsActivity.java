@@ -456,7 +456,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         pagerSlidingTabStrip.setViewPager(pager);
     }
 
-    class AnalyticsAdapter extends FragmentStatePagerAdapter {
+    private class AnalyticsAdapter extends FragmentStatePagerAdapter {
 
         AnalyticsAdapter(FragmentManager fm) {
             super(fm);

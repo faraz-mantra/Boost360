@@ -226,7 +226,7 @@ public class Site_Meter_Fragment extends Fragment {
     private ArrayList<SiteMeterModel> loadData() {
 
         //Set percentage according to the partners
-        if(!isAdded()) return null;
+        if(!isAdded()) return siteData;
         //0
         siteData.clear();
         if (!(getResources().getString(R.string.buydomain_percentage).equals("0")))

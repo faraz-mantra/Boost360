@@ -56,7 +56,7 @@ public class BusinessAppsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if( HomeActivity.headerText!=null)
-        HomeActivity.headerText.setText(getString(R.string.business_apps));
+        HomeActivity.headerText.setText(getString(R.string.my_business_apps));
     }
 
     @Override

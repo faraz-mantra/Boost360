@@ -26,11 +26,6 @@
         <item name="colorControlHighlight">@color/accentColor</item>
         <item name="colorControlNormal">#eeeeee</item>
     </style>
-    <style name="MyCustomToolBarTheme" parent="ThemeOverlay.AppCompat.Dark">
-        <item name="android:textColorPrimary">#FFFFFF</item>
-        <item name="android:textColorSecondary">#FFFFFF</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_action_back</item>
-    </style>
 
     <style name="MyCustomToolBarEditBoxTheme" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:textColorPrimary">#FFFFFF</item>

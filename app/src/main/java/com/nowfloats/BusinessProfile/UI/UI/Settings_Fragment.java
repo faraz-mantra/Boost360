@@ -114,7 +114,11 @@ public class Settings_Fragment extends Fragment {
         flFollowTwitter = (FrameLayout) view.findViewById(R.id.follow_us_twitter_Layout);
         flTermsOfUse = (FrameLayout) view.findViewById(R.id.terms_of_use_Layout);
         flPrivacyPolicy = (FrameLayout) view.findViewById(R.id.privacy_policy_Layout);
-        if(Long.parseLong(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON).split("\\(")[1].split("\\)")[0])/1000 > 1470614400){
+        String Sdate = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON);
+        if(Sdate.contains("/Date")){
+            Sdate = Sdate.replace("/Date(", "").replace(")/", "");
+        }
+        if(Long.parseLong(Sdate)/1000 > 1470614400){
             flSiteAppearance.setVisibility(View.GONE);
         }
 

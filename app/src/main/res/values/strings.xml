@@ -1170,14 +1170,14 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="boost_overlay_permission">Boost Bubble</string>
     <string name="allow_boost_to_read_your">Please allow Boost to read your Facebook Page insights.</string>
     <string name="gathering_fcebook_analytics">Gathering Facebook Page analytics</string>
-    <string name="please_wait_while_collecting_facebook_data">Please wait, as we are collecting statistics from your Facebook Page. It usually takes upto 24 hours to fetch data.</string>
+    <string name="please_wait_while_collecting_facebook_data">Please wait, as we are collecting statistics from your Facebook Page. It usually takes up to 24 hours to fetch data.</string>
     <string name="updates_not_found">Updates not found!</string>
     <string name="looks_like_you_have_not_posted_any_updates">Looks like you haven\'t posted any update on your Facebook Page through Boost yet Make sure you select the <b>Facebook Page option</b> while creating an update</string>
     <string name="facebook_analytics">Social Analytics</string>
     <string name="session_expired">Please login again your Session has expired</string>
     <string name="getlink">Next</string>
 
-    <string name="business_apps">Business App</string>
+    <string name="my_business_apps">My Business App</string>
 
     <string name="increse_site_score">Increase site score</string>
 
@@ -1194,7 +1194,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="congratulation_ios_business_app_development">Congrats! Your iOS app is under development. You will be able to download and share this app once it is published to the App Store.</string>
 
     <string name="android_app_preview">PREVIEW YOUR\nANDROID APP</string>
-    <string name="tips_for_business_app">Tips for business app</string>
+    <string name="tips_for_business_app_completeness">Tips For App Completeness</string>
 
     <string name="ios_app_preview">PREVIEW YOUR\niOS APP</string>
 

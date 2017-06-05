@@ -38,7 +38,7 @@ public class BusinessAppTipsActivity extends AppCompatActivity implements DeepLi
         String[] mainText = getResources().getStringArray( R.array.business_app_tips);
         String[] descriptions = getResources().getStringArray( R.array.business_app_tips_description);
         if(getSupportActionBar()!= null ){
-            setTitle("Business App Tips");
+            setTitle(getString(R.string.tips_for_business_app_completeness));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
@@ -66,7 +66,7 @@ public class BusinessAppTipsActivity extends AppCompatActivity implements DeepLi
            getSupportFragmentManager().popBackStack();
             parentLayout.setVisibility(View.GONE);
             list.setVisibility(View.VISIBLE);
-            setTitle("Business App Tips");
+            setTitle(getString(R.string.tips_for_business_app_completeness));
         }else {
             super.onBackPressed();
             overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);

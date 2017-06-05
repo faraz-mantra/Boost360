@@ -605,7 +605,7 @@ public class SidePanelFragment extends Fragment {
                if (Integer.parseInt(paymentState)>0 && Integer.parseInt(paymentLevel) > 10) {
                     MixPanelController.track("BusinessApps", null);
                     onclickColorChange(businessappImageView, businessAppTextview,businessAppsLayout);
-                    ((OnItemClickListener) mainActivity).onClick(getString(R.string.business_apps));
+                    ((OnItemClickListener) mainActivity).onClick(getString(R.string.my_business_apps));
                 }
                 else {
                     showAlertMaterialDialog();

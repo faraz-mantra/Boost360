@@ -111,7 +111,7 @@ public class BusinessAppDetailsFragment extends Fragment implements View.OnTouch
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        getActivity().setTitle(getString(R.string.business_apps));
+        getActivity().setTitle(getString(R.string.my_business_apps));
     }
 
     @Override

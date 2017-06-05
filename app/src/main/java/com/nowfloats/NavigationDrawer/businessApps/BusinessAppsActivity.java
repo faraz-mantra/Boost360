@@ -33,7 +33,7 @@ public class BusinessAppsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         session=new UserSessionManager(this,this);
         if(getSupportActionBar()!=null){
-            setTitle(getString(R.string.business_apps));
+            setTitle(getString(R.string.my_business_apps));
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }

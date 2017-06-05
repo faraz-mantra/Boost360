@@ -6,7 +6,7 @@
     <include android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>
+        layout="@layout/app_bar"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"

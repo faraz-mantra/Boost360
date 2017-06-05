@@ -32,6 +32,7 @@ import com.nowfloats.NavigationDrawer.viewHolder.MyViewHolder;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.DownloadLargeImage;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -60,6 +61,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
     UserSessionManager session;
 
     static ProgressDialog pd ;
+    private DownloadLargeImage imgLoader;
 
     public interface Permission{
          void getPermission();
@@ -71,6 +73,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
         this.appContext = (HomeActivity) appContext ;
         this.session = session;
         mInflater = (LayoutInflater) appContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        imgLoader = new DownloadLargeImage(appContext);
     }
 
     @Override
@@ -292,7 +295,8 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                         imagePresent = true ;
                         imageView.setVisibility(View.VISIBLE);
                         baseName = Constants.BASE_IMAGE_URL + imageUri;
-                        Picasso.with(appContext).load(baseName).placeholder(R.drawable.default_product_image).into(imageView);
+                        imgLoader.DisplayImage(baseName, imageView);
+                        //Glide.with(appContext).load(baseName).placeholder(R.drawable.default_product_image).into(imageView);
 //                        imageLoader.displayImage(baseName,imageView,options);
                     }
                     else if(imageUri.contains("/storage/emulated") || imageUri.contains("/mnt/sdcard") )
@@ -300,15 +304,16 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                         imagePresent = true;
 
                         imageView.setVisibility(View.VISIBLE);
-                        Bitmap bmp = Util.getBitmap(imageUri.toString(),appContext);
+                        Bitmap bmp = Util.getBitmap(imageUri,appContext);
                         imageView.setImageBitmap(bmp);
                     }
                     else
                     {
-                        imagePresent = true ;
+                        imagePresent = true;
                         imageView.setVisibility(View.VISIBLE);
                         baseName = imageUri ;
-                        Picasso.with(appContext).load(baseName).placeholder(R.drawable.default_product_image).into(imageView);
+                        imgLoader.DisplayImage(baseName, imageView);
+                        //Glide.with(appContext).load(baseName).placeholder(R.drawable.default_product_image).into(imageView);
 //                        imageLoader.displayImage(baseName,imageView,options);
                     }
                 }

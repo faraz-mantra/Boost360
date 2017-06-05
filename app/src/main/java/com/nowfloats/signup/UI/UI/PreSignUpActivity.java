@@ -705,8 +705,10 @@ public class PreSignUpActivity extends AppCompatActivity implements
     @Override
     public void CheckUniqueNumber_postExecute(String value) {
 
+        if(pd == null || isFinishing()) {
+            return;
+        }
         pd.dismiss();
-
         if (value.equals("Success")) {
             // PreSignUpDialog.showDialog_WebSiteCreation(activity,"Valid Phone number. . .","Congrats . . .");
             //goToNextScreen = true ;
@@ -726,8 +728,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
                             final EditText text = (EditText) dialog.findViewById(R.id.editContactNumber);
                             phoneEditText.setText(text.getText().toString());
                         }
-                    })
-                    .build()
+                    }).build()
                     .show();
 
             //PreSignUpDialog.showDialog_WebSiteCreation(activity,"Number Already Registered. . .","Try Again . . .");

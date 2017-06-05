@@ -177,7 +177,10 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         //Quikr added
         CardView card = (CardView) findViewById(R.id.quikr_card);
         final String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
-        //Log.v("ggg",quikrArray[3]+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase());
+
+         /* if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
+            card.setVisibility(View.GONE);
+        }else {*/
         if("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
             for (String category : quikrArray) {
                 if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
@@ -1011,7 +1014,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                                                     FACEBOOK_ACCESS_TOKEN,
                                                     resp.getString("id"));
                                             fbPageData(FROM_FB_PAGE);
-                                        }catch (JSONException e){
+                                        }catch (Exception e){
                                             e.printStackTrace();
                                         }
                                     }
@@ -1075,13 +1078,13 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         prefsEditor.putString("fbId", Constants.FACEBOOK_USER_ID);
         prefsEditor.putString("fbAccessId", Constants.FACEBOOK_USER_ACCESS_ID);
         prefsEditor.putString("fbUserName", userName);
-        prefsEditor.commit();
+        prefsEditor.apply();
     }
 
     void onFBError() {
         Constants.fbShareEnabled = false;
         prefsEditor.putBoolean("fbShareEnabled", false);
-        prefsEditor.commit();
+        prefsEditor.apply();
         //Log.v("ggg","hello fberror");
         facebookHomeCheckBox.setChecked(false);
         LoginManager.getInstance().logOut();

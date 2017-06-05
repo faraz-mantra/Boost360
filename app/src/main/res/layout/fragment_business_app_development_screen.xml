@@ -119,7 +119,7 @@
             android:layout_margin="10dp"
             android:id="@+id/preview_button"
             android:layout_height="match_parent"
-            android:text="@string/tips_for_business_app" />
+            android:text="@string/tips_for_business_app_completeness" />
 
         <Button
             android:layout_width="0dp"

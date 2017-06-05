@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/cell_text_size"
                 android:textColor="@color/cell_text_color"
-                android:text="Your Customer's App" />
+                android:text="@string/my_business_apps" />
 
             <LinearLayout
                 android:layout_width="match_parent"
