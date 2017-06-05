@@ -282,6 +282,12 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
 //                            .repeat(0)
 //                            .interpolate(new AccelerateInterpolator())
 //                            .playOn(ivStart);
+                    animationSet = new AnimationSet(true);
+
+                    leftAnimation();
+                    rightAnimation();
+                    topAnimation();
+                    animationSet.start();
                     ivStart.setVisibility(View.VISIBLE);
                     ivBack.setVisibility(View.VISIBLE);
                     break;
@@ -296,12 +302,6 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
                     break;
 
                 case SLIDE_RIGHT:
-                    animationSet = new AnimationSet(true);
-
-                    leftAnimation();
-                    rightAnimation();
-                    topAnimation();
-                    animationSet.start();
                     break;
 
             }

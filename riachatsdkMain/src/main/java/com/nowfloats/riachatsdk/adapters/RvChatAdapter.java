@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -435,7 +436,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         TextView tvConfirmationText, tvDateTime;
         View itemView;
-        LinearLayout llBubbleContainer;
+        RelativeLayout llBubbleContainer;
 
         public CardViewHolder(View itemView) {
             super(itemView);
@@ -444,7 +445,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             this.tvConfirmationText = (TextView) itemView.findViewById(R.id.tv_confirmation_text);
             this.tvDateTime = (TextView) itemView.findViewById(R.id.tv_date_time);
-            this.llBubbleContainer = (LinearLayout) itemView.findViewById(R.id.ll_bubble_container);
+            this.llBubbleContainer = (RelativeLayout) itemView.findViewById(R.id.ll_bubble_container);
         }
     }
 
