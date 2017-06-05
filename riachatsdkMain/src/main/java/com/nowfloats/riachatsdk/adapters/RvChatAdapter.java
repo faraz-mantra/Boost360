@@ -6,16 +6,13 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
+import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,7 +23,6 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.nowfloats.riachatsdk.CustomWidget.AVLoadingIndicatorView;
 import com.nowfloats.riachatsdk.CustomWidget.playpause.PlayPauseView;
 import com.nowfloats.riachatsdk.R;
@@ -132,31 +128,15 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }else {
                 cardViewHolder.tvDateTime.setVisibility(View.GONE);
             }
-            ((LinearLayout) cardViewHolder.itemView).setGravity(Gravity.CENTER);
-
+            ((LinearLayout) cardViewHolder.itemView).setGravity(Gravity.RIGHT);
             LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) cardViewHolder.llBubbleContainer.getLayoutParams();
             if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
                 cardViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.card_bg);
-                //lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 5), 0);
             }else {
                 cardViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.card_bg);
-                //lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 15), 0);
             }
             cardViewHolder.llBubbleContainer.setLayoutParams(lp);
             cardViewHolder.tvConfirmationText.setTextColor(Color.parseColor("#ffffff"));
-            Animation a = new TranslateAnimation(
-                    Animation.ABSOLUTE, //from xType
-                    0,
-                    Animation.ABSOLUTE, //to xType
-                    0,
-                    Animation.ABSOLUTE, //from yType
-                    500,
-                    Animation.ABSOLUTE, //to yType
-                    0
-            );
-            a.setDuration(500);
-            cardViewHolder.itemView.setAnimation(a);
-            a.start();
 
         }else if(holder instanceof AddressCardViewHolder){
             AddressCardViewHolder cardViewHolder = (AddressCardViewHolder) holder;
@@ -203,21 +183,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.reply_followup_bubble);
                     lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 15), 0);
                 }
-                //Anim Start
-                Animation a = new TranslateAnimation(
-                        Animation.ABSOLUTE, //from xType
-                        -200,
-                        Animation.ABSOLUTE, //to xType
-                        0,
-                        Animation.ABSOLUTE, //from yType
-                        200,
-                        Animation.ABSOLUTE, //to yType
-                        0
-                );
-                a.setDuration(500);
-                textViewHolder.itemView.setAnimation(a);
-                a.start();
-                //Anim End
+
                 textViewHolder.llBubbleContainer.setLayoutParams(lp);
                 textViewHolder.tvMessageText.setTextColor(Color.parseColor("#ffffff"));
             }else {
@@ -234,6 +200,12 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
                 textViewHolder.llBubbleContainer.setLayoutParams(lp);
+
+                if(!section.isAnimApplied()){
+                    textViewHolder.llBubbleContainer
+                            .startAnimation(AnimationUtils.loadAnimation(mContext,R.anim.slide_in_left));
+                    section.setIsAnimApplied(true);
+                }
             }
         }else if(holder instanceof ImageViewHolder){
             ImageViewHolder imageViewHolder = (ImageViewHolder) holder;
@@ -452,9 +424,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         public TextViewHolder(View itemView) {
             super(itemView);
-
             this.itemView = itemView;
-
             tvMessageText = (TextView) itemView.findViewById(R.id.tv_message_text);
             tvDateTime = (TextView) itemView.findViewById(R.id.tv_date_time);
             llBubbleContainer = (LinearLayout) itemView.findViewById(R.id.ll_bubble_container);

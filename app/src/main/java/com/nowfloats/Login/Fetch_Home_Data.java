@@ -175,11 +175,11 @@ public class Fetch_Home_Data {
             }
         }else{
 
-                if (fetchHomeDataInterface!=null && interfaceType==0){
-                    fetchHomeDataInterface.dataFetched(Integer.parseInt(skip), isNewMessage);
-                }else if (fetchHomeDataInterface!=null && interfaceType==1){
-                    fetchHomeDataInterface.sendFetched(sendJson);
-                }
+            if (fetchHomeDataInterface!=null && interfaceType==0){
+                fetchHomeDataInterface.dataFetched(Integer.parseInt(skip), isNewMessage);
+            }else if (fetchHomeDataInterface!=null && interfaceType==1){
+                fetchHomeDataInterface.sendFetched(sendJson);
+            }
 
         }
     }

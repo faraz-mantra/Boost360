@@ -186,7 +186,7 @@ public class Login_MainActivity extends AppCompatActivity implements
 
     @Override
     public void onClick(View v) {
-        if(v.getId()==R.id.forgotPwdTextView   ){
+        if(v.getId()==R.id.forgotPwdTextView){
             new MaterialDialog.Builder(this)
                     .title(getString(R.string.forgot_password))
                     .inputType(InputType.TYPE_CLASS_TEXT)

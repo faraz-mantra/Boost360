@@ -1187,9 +1187,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="required_overlay_permission">Give us this permission to see our new feature \"Boost Bubble\"</string>
     <string name="bubble_for_whatsapp">Bubble for WhatsApp</string>
     <string name="whatsapp_bubble_close">You can disable this feature from your Boost app</string>
-    <string name="sign_up_with_ria">Sign up with ria</string>
-    <string name="ria_chat_message">And I\'ll help you get\nyour website up\nand running\nin no time\nat all.</string>
-    <string name="ria_chat_header">Hi, I\'m Ria.</string>
     <string name="missed_calls">MISSED CALLS</string>
     <string name="received_call">RECEIVED CALLS</string>
     <string name="call_tracker">Call Tracker</string>
@@ -1203,5 +1200,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="email_id_to_request_plans">lead@nowfloats.com</string>
     <string name="resend"><u>Resend</u></string>
     <string name="terms_n_cond_toast">You must agree with the terms and conditions to proceed</string>
+    <string name="sign_up_with_ria">Sign up with ria</string>
+    <string name="ria_chat_message">And I\'ll help you get\nyour website up\nand running\nin no time\nat all.</string>
+    <string name="ria_chat_header">Hi, I\'m Ria.</string>
 
 </resources>
