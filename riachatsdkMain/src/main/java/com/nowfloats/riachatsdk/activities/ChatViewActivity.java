@@ -1111,7 +1111,13 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fl_cards, BusinessNameConfirmedFragment.newInstance(confirmationText[0]))
                 .commit();
-
+        if (mCurrVarName != null && mCurrVarName.trim().length()>0) {
+            if (mAutoComplDataHash == null || mAutoComplDataHash.get(etChatInput.getText().toString().trim()) == null) {
+                mDataMap.put("[~" + mCurrVarName + "]", confirmationText[0]);
+            } else {
+                mDataMap.put("[~" + mCurrVarName + "]", mAutoComplDataHash.get(confirmationText[0]));
+            }
+        }
         AnimatorSet animationSet = (AnimatorSet) AnimatorInflater.loadAnimator(this,
                 R.animator.card_flip_right_out);
         animationSet.setTarget(flConfirmationCard);
@@ -1138,13 +1144,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                                 replyToRia(Constants.SectionType.TYPE_ADDRESS_CARD, confirmationText[0], confirmationText[1]);
                                 break;
                         }
-                        if (mCurrVarName != null) {
-                            if (mAutoComplDataHash == null || mAutoComplDataHash.get(etChatInput.getText().toString().trim()) == null) {
-                                mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
-                            } else {
-                                mDataMap.put("[~" + mCurrVarName + "]", mAutoComplDataHash.get(etChatInput.getText().toString().trim()));
-                            }
-                        }
+
                         flConfirmationCard.setVisibility(GONE);
                         showNextNode(mNextNodeId);
 
