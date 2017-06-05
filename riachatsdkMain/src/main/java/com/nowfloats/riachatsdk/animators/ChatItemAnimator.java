@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.nowfloats.riachatsdk.R;
@@ -12,11 +13,11 @@ import com.nowfloats.riachatsdk.adapters.RvChatAdapter;
 /**
  * Created by Miroslaw Stanek on 06.01.2016.
  */
-public class MyItemAnimator extends DefaultItemAnimator {
+public class ChatItemAnimator extends DefaultItemAnimator {
 
     private Context mContext;
 
-    public MyItemAnimator(Context mContext) {
+    public ChatItemAnimator(Context mContext) {
         this.mContext = mContext;
     }
 
@@ -33,8 +34,10 @@ public class MyItemAnimator extends DefaultItemAnimator {
 
 
         if (oldHolder instanceof RvChatAdapter.TypingViewHolder) {
+            Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.slide_out_right);
             ((RvChatAdapter.TypingViewHolder) oldHolder).rlLoadingDots.
-                    startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.slide_out_right));
+                    setAnimation(animation);
+
         }
         return super.animateChange(oldHolder, newHolder, preInfo, postInfo);
     }
