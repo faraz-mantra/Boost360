@@ -221,11 +221,11 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     hideSoftKeyboard();
                     StringBuffer chatText = new StringBuffer("");
                     if (mCurrButton.getPrefixText() != null) {
-                        chatText.append(mCurrButton.getPrefixText());
+                        chatText.append(getParsedPrefixPostfixText(mCurrButton.getPrefixText()));
                     }
                     chatText.append(etChatInput.getText().toString().trim());
                     if (mCurrButton.getPostfixText() != null) {
-                        chatText.append(mCurrButton.getPostfixText());
+                        chatText.append(getParsedPrefixPostfixText(mCurrButton.getPrefixText()));
                     }
 
                     if (mCurrButton.isConfirmInput()) {
