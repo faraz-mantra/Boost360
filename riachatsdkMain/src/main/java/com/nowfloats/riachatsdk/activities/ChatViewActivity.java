@@ -1184,6 +1184,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         flConfirmationCard.setVisibility(GONE);
         switch (confirmationType) {
             case Constants.ConfirmationType.BIZ_NAME:
+                rvChatData.setPadding(rvChatData.getPaddingLeft(),
+                        rvChatData.getPaddingTop(), rvChatData.getPaddingRight(),
+                        50);
                 cvChatInput.setVisibility(View.VISIBLE);
                 showKeyBoard();
                 break;
