@@ -1099,69 +1099,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         mRequestQueue.add(stringRequest);
     }
 
-//    @Override
-//    public void onPositiveResponse(final String confirmationType, final String... confirmationText) {
-//        etChatInput.setText("");
-//        cvChatInput.setVisibility(GONE);
-//        //cvChatInput.setVisibility(GONE);
-//        AnimatorSet animationSet = (AnimatorSet) AnimatorInflater.loadAnimator(this,
-//                R.animator.card_flip_right_out);
-//        animationSet.setTarget(flConfirmationCard);
-//        animationSet.start();
-//        //flConfirmationCard.setVisibility(GONE);
-//        animationSet.addListener(new Animator.AnimatorListener() {
-//            @Override
-//            public void onAnimationStart(Animator animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//                flConfirmationCard.setAlpha((float)1.0);
-//                flConfirmationCard.setRotationY((float)0);
-//                getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.fl_cards, BusinessNameConfirmedFragment.newInstance(confirmationText[0]))
-//                        .commit();
-//                mHandler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        switch (confirmationType){
-//                            case Constants.ConfirmationType.BIZ_NAME:
-//                                replyToRia(Constants.SectionType.TYPE_CARD, confirmationText[0]);
-//                                break;
-//                            case Constants.ConfirmationType.ADDRESS_ENTRY:
-//                                replyToRia(Constants.SectionType.TYPE_ADDRESS_CARD, confirmationText[0], confirmationText[1]);
-//                                break;
-//                        }
-//                        if(mCurrVarName!=null){
-//                            if(mAutoComplDataHash==null || mAutoComplDataHash.get(etChatInput.getText().toString().trim())==null) {
-//                                mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
-//                            }else {
-//                                mDataMap.put("[~" + mCurrVarName + "]", mAutoComplDataHash.get(etChatInput.getText().toString().trim()));
-//                            }
-//                        }
-//
-//
-//
-//                        showNextNode(mNextNodeId);
-//                        flConfirmationCard.setVisibility(GONE);
-//                    }
-//                }, 500);
-//
-//            }
-//
-//            @Override
-//            public void onAnimationCancel(Animator animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationRepeat(Animator animation) {
-//
-//            }
-//        });
-//    }
-//
     @Override
     public void onPositiveResponse(final String confirmationType, final String... confirmationText) {
         etChatInput.setText("");
