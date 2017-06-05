@@ -1,49 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_marginTop="4dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_gravity="center"
+    android:layout_marginTop="4dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
         android:id="@+id/ll_bubble_container"
         android:layout_width="match_parent"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_height="150dp">
-            <TextView
-                android:id="@+id/tv_confirmation_text"
-                android:gravity="left|center_vertical"
-                android:textSize="27sp"
-                android:fontFamily="sans-serif"
-                android:lineSpacingExtra="2dp"
-                android:paddingTop="20dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <ImageView
-                android:tint="@color/white"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="end"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/sent_check"/>
-    </LinearLayout>
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/margin_30"
+        android:layout_marginRight="@dimen/margin_30"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="end"
+            android:layout_marginRight="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_10"
+            android:src="@drawable/sent_check"
+            android:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_confirmation_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:lineSpacingExtra="2dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="20dp"
+            android:textSize="27sp" />
+
+
+    </RelativeLayout>
+
     <TextView
         android:id="@+id/tv_date_time"
-        android:textSize="10sp"
-        android:textColor="#767676"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:textColor="#767676"
+        android:textSize="10sp" />
 
 </LinearLayout>
 

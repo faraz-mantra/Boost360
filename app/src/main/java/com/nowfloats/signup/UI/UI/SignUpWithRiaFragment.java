@@ -21,7 +21,6 @@ import com.nowfloats.signup.UI.AnimationType;
 import com.thinksity.R;
 
 import static com.nowfloats.signup.UI.AnimationType.SLIDE_DOWN;
-import static com.nowfloats.signup.UI.AnimationType.SLIDE_RIGHT;
 import static com.nowfloats.signup.UI.AnimationType.SLIDE_UP;
 import static com.nowfloats.signup.UI.AnimationType.ZOOM_IN;
 
@@ -135,11 +134,6 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
         ivBack.setVisibility(View.INVISIBLE);
         ivStart.setVisibility(View.INVISIBLE);
         animationTool.setVisbilityStatus(isBackPress);
-//        animationTool.setAnimationType(SLIDE_RIA_RIGHT)
-//                .duration(100)
-//                .repeat(0)
-//                .interpolate(new AccelerateInterpolator())
-//                .playOn(ivStart);
         ivRiaZoomLeft.setVisibility(View.INVISIBLE);
         ivRiaZoomRight.setVisibility(View.INVISIBLE);
         ivRiaZoomTop.setVisibility(View.INVISIBLE);
@@ -245,11 +239,12 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
         /*
          * starting first animation
          */
-        animationTool.setAnimationType(ZOOM_IN)
+
+        animationTool.setAnimationType(SLIDE_DOWN)
                 .duration(100)
                 .repeat(0)
                 .interpolate(new AccelerateInterpolator())
-                .playOn(llStart);
+                .playOn(llRia);
     }
 
     /*
@@ -282,28 +277,31 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
 
             switch (animationType) {
                 case ZOOM_IN:
-                    animationTool.setAnimationType(SLIDE_DOWN)
-                            .duration(100)
-                            .repeat(0)
-                            .interpolate(new AccelerateInterpolator())
-                            .playOn(llRia);
-                    break;
-                case SLIDE_DOWN:
-                    animationTool.setAnimationType(SLIDE_RIGHT)
-                            .duration(100)
-                            .repeat(0)
-                            .interpolate(new AccelerateInterpolator())
-                            .playOn(ivStart);
-                    ivBack.setVisibility(View.VISIBLE);
-                    break;
-
-                case SLIDE_RIGHT:
+//                    animationTool.setAnimationType(SLIDE_RIGHT)
+//                            .duration(100)
+//                            .repeat(0)
+//                            .interpolate(new AccelerateInterpolator())
+//                            .playOn(ivStart);
                     animationSet = new AnimationSet(true);
 
                     leftAnimation();
                     rightAnimation();
                     topAnimation();
                     animationSet.start();
+                    ivStart.setVisibility(View.VISIBLE);
+                    ivBack.setVisibility(View.VISIBLE);
+                    break;
+                case SLIDE_DOWN:
+
+                    animationTool.setAnimationType(ZOOM_IN)
+                            .duration(100)
+                            .repeat(0)
+                            .interpolate(new AccelerateInterpolator())
+                            .playOn(llStart);
+
+                    break;
+
+                case SLIDE_RIGHT:
                     break;
 
             }
