@@ -12,7 +12,9 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -183,6 +185,23 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 }else {
                     textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.reply_followup_bubble);
                     lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 15), 0);
+                }
+                if(!section.isAnimApplied()){
+                    Animation a = new TranslateAnimation(
+                                                    Animation.ABSOLUTE, //from xType
+                                                    -200,
+                                                    Animation.ABSOLUTE, //to xType
+                                                    0,
+                                                    Animation.ABSOLUTE, //from yType
+                                                    200,
+                                                    Animation.ABSOLUTE, //to yType
+                                                    0
+                                                    );
+                                    a.setDuration(500);
+                                    textViewHolder.itemView.setAnimation(a);
+                                    a.start();
+                                    //Anim End
+                    section.setIsAnimApplied(true);
                 }
 
                 textViewHolder.llBubbleContainer.setLayoutParams(lp);
@@ -436,16 +455,16 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         TextView tvConfirmationText, tvDateTime;
         View itemView;
-        RelativeLayout llBubbleContainer;
+        LinearLayout llBubbleContainer;
 
         public CardViewHolder(View itemView) {
             super(itemView);
 
             this.itemView = itemView;
 
-            this.tvConfirmationText = (TextView) itemView.findViewById(R.id.tv_confirmation_text);
+            this.tvConfirmationText = (TextView) itemView.findViewById(R.id.tv_confirmed_business_text);
             this.tvDateTime = (TextView) itemView.findViewById(R.id.tv_date_time);
-            this.llBubbleContainer = (RelativeLayout) itemView.findViewById(R.id.ll_bubble_container);
+            this.llBubbleContainer = (LinearLayout) itemView.findViewById(R.id.ll_bubble_container);
         }
     }
 
