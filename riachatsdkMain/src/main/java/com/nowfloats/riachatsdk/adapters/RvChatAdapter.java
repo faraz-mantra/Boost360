@@ -42,15 +42,15 @@ import java.util.Locale;
 
 public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public enum SectionTypeEnum
-    {
+    public enum SectionTypeEnum {
         Header(-1), Image(0), Text(1), Graph(2), Gif(3), Audio(4), Video(5), Link(6), EmbeddedHtml(7), Carousel(8), Typing(9), Card(10), AddressCard(11);
         private final int val;
-        private SectionTypeEnum(int val){
+
+        private SectionTypeEnum(int val) {
             this.val = val;
         }
 
-        public int getValue(){
+        public int getValue() {
             return val;
         }
     }
@@ -72,7 +72,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v;
-        switch (viewType){
+        switch (viewType) {
             case -1:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_chat_head, parent, false);
                 return new HeaderViewHolder(v);
@@ -116,30 +116,35 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Section section = mChatSections.get(position);
-        if(holder instanceof  HeaderViewHolder){
+
+        /*if (holder instanceof TypingViewHolder) {
+            ((TypingViewHolder) holder).rlLoadingDots.
+                    startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.slide_in_left));
+        } else*/
+        if (holder instanceof HeaderViewHolder) {
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             SimpleDateFormat format = new SimpleDateFormat("EEE, dd MMM", Locale.US);
             headerViewHolder.tvDateTime.setText(format.format(new Date()));
-        } else if(holder instanceof CardViewHolder){
+        } else if (holder instanceof CardViewHolder) {
             CardViewHolder cardViewHolder = (CardViewHolder) holder;
             cardViewHolder.tvConfirmationText.setText(Html.fromHtml(section.getText()));
-            if(section.isShowDate()) {
+            if (section.isShowDate()) {
                 cardViewHolder.tvDateTime.setVisibility(View.VISIBLE);
                 cardViewHolder.tvDateTime.setText(section.getDateTime());
-            }else {
+            } else {
                 cardViewHolder.tvDateTime.setVisibility(View.GONE);
             }
             ((LinearLayout) cardViewHolder.itemView).setGravity(Gravity.RIGHT);
             LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) cardViewHolder.llBubbleContainer.getLayoutParams();
-            if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
+            if (mChatSections != null && mChatSections.size() > 0 && position > 0 && mChatSections.get(position - 1).isFromRia()) {
                 cardViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.card_bg);
-            }else {
+            } else {
                 cardViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.card_bg);
             }
             cardViewHolder.llBubbleContainer.setLayoutParams(lp);
             cardViewHolder.tvConfirmationText.setTextColor(Color.parseColor("#ffffff"));
 
-        }else if(holder instanceof AddressCardViewHolder){
+        } else if (holder instanceof AddressCardViewHolder) {
             AddressCardViewHolder cardViewHolder = (AddressCardViewHolder) holder;
             cardViewHolder.tvAddressText.setText(Html.fromHtml(section.getText()));
             Glide.with(mContext)
@@ -147,54 +152,54 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     .placeholder(R.drawable.default_product_image)
                     .error(R.drawable.default_product_image)
                     .into(cardViewHolder.ivMap);
-            if(section.isShowDate()) {
+            if (section.isShowDate()) {
                 cardViewHolder.tvDateTime.setVisibility(View.VISIBLE);
                 cardViewHolder.tvDateTime.setText(section.getDateTime());
-            }else {
+            } else {
                 cardViewHolder.tvDateTime.setVisibility(View.GONE);
             }
             ((LinearLayout) cardViewHolder.itemView).setGravity(Gravity.RIGHT);
             LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) cardViewHolder.llBubbleContainer.getLayoutParams();
-            if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
+            if (mChatSections != null && mChatSections.size() > 0 && position > 0 && mChatSections.get(position - 1).isFromRia()) {
                 cardViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.reply_main_bubble);
                 lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 5), 0);
-            }else {
+            } else {
                 cardViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.reply_followup_bubble);
                 lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 15), 0);
             }
             cardViewHolder.llBubbleContainer.setLayoutParams(lp);
             cardViewHolder.tvAddressText.setTextColor(Color.parseColor("#ffffff"));
 
-        } else if(holder instanceof TextViewHolder){
+        } else if (holder instanceof TextViewHolder) {
             TextViewHolder textViewHolder = (TextViewHolder) holder;
             textViewHolder.tvMessageText.setText(Html.fromHtml(section.getText()));
-            if(section.isShowDate()) {
+            if (section.isShowDate()) {
                 textViewHolder.tvDateTime.setVisibility(View.VISIBLE);
                 textViewHolder.tvDateTime.setText(section.getDateTime());
-            }else {
+            } else {
                 textViewHolder.tvDateTime.setVisibility(View.GONE);
             }
-            if(!section.isFromRia()){
+            if (!section.isFromRia()) {
                 ((LinearLayout) textViewHolder.itemView).setGravity(Gravity.RIGHT);
                 LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) textViewHolder.llBubbleContainer.getLayoutParams();
-                if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
+                if (mChatSections != null && mChatSections.size() > 0 && position > 0 && mChatSections.get(position - 1).isFromRia()) {
                     textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.reply_main_bubble);
                     lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 5), 0);
-                }else {
+                } else {
                     textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.reply_followup_bubble);
                     lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 15), 0);
                 }
 
                 textViewHolder.llBubbleContainer.setLayoutParams(lp);
                 textViewHolder.tvMessageText.setTextColor(Color.parseColor("#ffffff"));
-            }else {
+            } else {
                 ((LinearLayout) textViewHolder.itemView).setGravity(Gravity.LEFT);
                 textViewHolder.tvMessageText.setTextColor(Color.parseColor("#808080"));
                 LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) textViewHolder.llBubbleContainer.getLayoutParams();
-                if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
+                if (mChatSections != null && mChatSections.size() > 0 && position > 0 && mChatSections.get(position - 1).isFromRia()) {
                     textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.ria_followup_bubble);
                     lp.setMargins(Utils.dpToPx(mContext, 15), 0, Utils.dpToPx(mContext, 60), 0);
-                }else {
+                } else {
                     textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.ria_main_bubble);
                     lp.setMargins(Utils.dpToPx(mContext, 5), 0, Utils.dpToPx(mContext, 60), 0);
                 }
@@ -202,28 +207,28 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                 textViewHolder.llBubbleContainer.setLayoutParams(lp);
 
-                if(!section.isAnimApplied()){
+                if (!section.isAnimApplied()) {
                     textViewHolder.llBubbleContainer
-                            .startAnimation(AnimationUtils.loadAnimation(mContext,R.anim.slide_in_left));
+                            .startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.slide_in_left));
                     section.setIsAnimApplied(true);
                 }
             }
-        }else if(holder instanceof ImageViewHolder){
+        } else if (holder instanceof ImageViewHolder) {
             ImageViewHolder imageViewHolder = (ImageViewHolder) holder;
-            if(section.isShowDate()) {
+            if (section.isShowDate()) {
                 imageViewHolder.tvDateTime.setVisibility(View.VISIBLE);
                 imageViewHolder.tvDateTime.setText(section.getDateTime());
-            }else {
+            } else {
                 imageViewHolder.tvDateTime.setVisibility(View.GONE);
             }
-            if(section.isLoading()){
+            if (section.isLoading()) {
                 imageViewHolder.pbLoading.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 imageViewHolder.pbLoading.setVisibility(View.INVISIBLE);
             }
-            if(section.getTitle()!=null && !section.getTitle().trim().equals("")) {
+            if (section.getTitle() != null && !section.getTitle().trim().equals("")) {
                 imageViewHolder.tvImageTitle.setText(section.getTitle());
-            }else {
+            } else {
                 imageViewHolder.tvImageTitle.setVisibility(View.GONE);
             }
             Glide.with(mContext)
@@ -231,30 +236,30 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     .centerCrop()
                     .placeholder(R.drawable.default_product_image)
                     .into(imageViewHolder.ivMainImage);
-            if(section.getCaption()!=null && !section.getCaption().trim().equals("")) {
+            if (section.getCaption() != null && !section.getCaption().trim().equals("")) {
                 imageViewHolder.tvImageCaption.setText(section.getCaption());
-            }else {
+            } else {
                 imageViewHolder.tvImageCaption.setVisibility(View.GONE);
             }
-            if(!section.isFromRia()){
+            if (!section.isFromRia()) {
                 ((LinearLayout) imageViewHolder.itemView).setGravity(Gravity.RIGHT);
-            }else {
+            } else {
                 ((LinearLayout) imageViewHolder.itemView).setGravity(Gravity.LEFT);
-                if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
-                }else {
+                if (mChatSections != null && mChatSections.size() > 0 && position > 0 && mChatSections.get(position - 1).isFromRia()) {
+                } else {
                 }
             }
-        }else if(holder instanceof GifViewHolder){
+        } else if (holder instanceof GifViewHolder) {
             GifViewHolder imageViewHolder = (GifViewHolder) holder;
-            if(section.isShowDate()) {
+            if (section.isShowDate()) {
                 imageViewHolder.tvDateTime.setVisibility(View.VISIBLE);
                 imageViewHolder.tvDateTime.setText(section.getDateTime());
-            }else {
+            } else {
                 imageViewHolder.tvDateTime.setVisibility(View.GONE);
             }
-            if(section.getTitle()!=null && !section.getTitle().trim().equals("")) {
+            if (section.getTitle() != null && !section.getTitle().trim().equals("")) {
                 imageViewHolder.tvImageTitle.setText(section.getTitle());
-            }else {
+            } else {
                 imageViewHolder.tvImageTitle.setVisibility(View.GONE);
             }
             Glide.with(mContext)
@@ -263,25 +268,25 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     .centerCrop()
                     .placeholder(R.drawable.default_product_image)
                     .into(imageViewHolder.ivMainImage);
-            if(section.getCaption()!=null && !section.getCaption().trim().equals("")) {
+            if (section.getCaption() != null && !section.getCaption().trim().equals("")) {
                 imageViewHolder.tvImageCaption.setText(section.getCaption());
-            }else {
+            } else {
                 imageViewHolder.tvImageCaption.setVisibility(View.GONE);
             }
-            if(!section.isFromRia()){
+            if (!section.isFromRia()) {
                 ((LinearLayout) imageViewHolder.itemView).setGravity(Gravity.RIGHT);
-            }else {
+            } else {
                 ((LinearLayout) imageViewHolder.itemView).setGravity(Gravity.LEFT);
-                if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
-                }else {
+                if (mChatSections != null && mChatSections.size() > 0 && position > 0 && mChatSections.get(position - 1).isFromRia()) {
+                } else {
                 }
             }
-        }else if(holder instanceof EmbeddedHtmlViewHolder){
+        } else if (holder instanceof EmbeddedHtmlViewHolder) {
             EmbeddedHtmlViewHolder embeddedHtmlViewHolder = (EmbeddedHtmlViewHolder) holder;
             embeddedHtmlViewHolder.tvTitle.setText(section.getTitle());
             embeddedHtmlViewHolder.wvEmbeddedHtml.getSettings().setJavaScriptEnabled(true);
             embeddedHtmlViewHolder.wvEmbeddedHtml.loadUrl(section.getUrl());
-            if(section.isDisplayOpenInBrowserButton()){
+            if (section.isDisplayOpenInBrowserButton()) {
                 embeddedHtmlViewHolder.tvOpenInBrowser.setVisibility(View.VISIBLE);
             }
             embeddedHtmlViewHolder.tvOpenInBrowser.setOnClickListener(new View.OnClickListener() {
@@ -291,57 +296,57 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 }
             });
             embeddedHtmlViewHolder.tvCaption.setText(section.getCaption());
-            if(!section.isFromRia()){
+            if (!section.isFromRia()) {
                 ((LinearLayout) embeddedHtmlViewHolder.itemView).setGravity(Gravity.RIGHT);
-            }else {
+            } else {
                 ((LinearLayout) embeddedHtmlViewHolder.itemView).setGravity(Gravity.LEFT);
-                if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
-                }else {
+                if (mChatSections != null && mChatSections.size() > 0 && position > 0 && mChatSections.get(position - 1).isFromRia()) {
+                } else {
                 }
             }
-        }else  if(holder instanceof VideoViewHolder){
+        } else if (holder instanceof VideoViewHolder) {
             //TODO: set loading icon
             MediaController mediaControls = new MediaController(mContext);
             VideoViewHolder videoViewHolder = (VideoViewHolder) holder;
             videoViewHolder.tvTitle.setText(section.getTitle());
 
-            if(section.isLoading()){
+            if (section.isLoading()) {
                 videoViewHolder.pbVideoLoading.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 videoViewHolder.pbVideoLoading.setVisibility(View.INVISIBLE);
             }
 
-            try{
+            try {
                 videoViewHolder.vvMainVideo.setMediaController(mediaControls);
                 videoViewHolder.vvMainVideo.setVideoURI(Uri.parse(section.getUrl()));
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            if(!section.isFromRia()){
+            if (!section.isFromRia()) {
                 ((LinearLayout) videoViewHolder.itemView).setGravity(Gravity.RIGHT);
-            }else {
+            } else {
                 ((LinearLayout) videoViewHolder.itemView).setGravity(Gravity.LEFT);
-                if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
-                }else {
+                if (mChatSections != null && mChatSections.size() > 0 && position > 0 && mChatSections.get(position - 1).isFromRia()) {
+                } else {
                 }
             }
-        }else if(holder instanceof AudioViewHolder){
+        } else if (holder instanceof AudioViewHolder) {
 
             final AudioViewHolder audioViewHolder = (AudioViewHolder) holder;
 
-            if(!section.isFromRia()){
+            if (!section.isFromRia()) {
                 ((LinearLayout) audioViewHolder.itemView).setGravity(Gravity.RIGHT);
-            }else {
+            } else {
                 ((LinearLayout) audioViewHolder.itemView).setGravity(Gravity.LEFT);
-                if(mChatSections!= null && mChatSections.size()>0 && position>0 && mChatSections.get(position-1).isFromRia()){
-                }else {
+                if (mChatSections != null && mChatSections.size() > 0 && position > 0 && mChatSections.get(position - 1).isFromRia()) {
+                } else {
                 }
             }
 
-            if(section.isLoading()){
+            if (section.isLoading()) {
                 audioViewHolder.pbAudioLoading.setVisibility(View.VISIBLE);
                 audioViewHolder.ppvAudio.setEnabled(false);
-            }else {
+            } else {
                 audioViewHolder.pbAudioLoading.setVisibility(View.GONE);
                 audioViewHolder.ppvAudio.setEnabled(true);
             }
@@ -351,14 +356,14 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             try {
                 mediaPlayer.setDataSource(section.getUrl());
                 mediaPlayer.prepareAsync();
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             final Handler handler = new Handler();
             final Runnable runnable = new Runnable() {
                 @Override
                 public void run() {
-                    int mCurrentPosition = (mediaPlayer.getCurrentPosition()/mediaPlayer.getDuration())*100;
+                    int mCurrentPosition = (mediaPlayer.getCurrentPosition() / mediaPlayer.getDuration()) * 100;
                     audioViewHolder.sbAudio.setProgress(mCurrentPosition);
                     handler.postDelayed(this, 1000);
                 }
@@ -366,10 +371,10 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             audioViewHolder.ppvAudio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mediaPlayer.isPlaying()){
+                    if (mediaPlayer.isPlaying()) {
                         mediaPlayer.pause();
                         handler.removeCallbacks(null);
-                    }else {
+                    } else {
                         mediaPlayer.start();
                         handler.post(runnable);
                     }
@@ -385,7 +390,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return mChatSections.size();
     }
 
-    private class HeaderViewHolder extends RecyclerView.ViewHolder{
+    private class HeaderViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvDateTime;
 
@@ -397,7 +402,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
 
-    private class ImageViewHolder extends RecyclerView.ViewHolder{
+    private class ImageViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvImageTitle, tvDateTime;
         ImageView ivMainImage;
@@ -417,11 +422,11 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    private class TextViewHolder extends RecyclerView.ViewHolder{
+    public class TextViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvMessageText, tvDateTime;
         View itemView;
-        LinearLayout llBubbleContainer;
+        public LinearLayout llBubbleContainer;
 
         public TextViewHolder(View itemView) {
             super(itemView);
@@ -432,7 +437,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    private class CardViewHolder extends RecyclerView.ViewHolder{
+    private class CardViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvConfirmationText, tvDateTime;
         View itemView;
@@ -449,11 +454,12 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    private class AddressCardViewHolder extends RecyclerView.ViewHolder{
+    private class AddressCardViewHolder extends RecyclerView.ViewHolder {
         TextView tvAddressText, tvDateTime;
         View itemView;
         LinearLayout llBubbleContainer;
         ImageView ivMap;
+
         public AddressCardViewHolder(View itemView) {
             super(itemView);
 
@@ -467,14 +473,14 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    private class GraphViewholder extends RecyclerView.ViewHolder{
+    private class GraphViewholder extends RecyclerView.ViewHolder {
 
         public GraphViewholder(View itemView) {
             super(itemView);
         }
     }
 
-    private class GifViewHolder extends RecyclerView.ViewHolder{
+    private class GifViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvImageTitle, tvDateTime;
         ImageView ivMainImage;
@@ -490,7 +496,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    private class AudioViewHolder extends RecyclerView.ViewHolder{
+    private class AudioViewHolder extends RecyclerView.ViewHolder {
         PlayPauseView ppvAudio;
         SeekBar sbAudio;
         ProgressBar pbAudioLoading;
@@ -505,7 +511,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    private class VideoViewHolder extends RecyclerView.ViewHolder{
+    private class VideoViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvTitle;
         VideoView vvMainVideo;
@@ -520,7 +526,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    private class EmbeddedHtmlViewHolder extends RecyclerView.ViewHolder{
+    private class EmbeddedHtmlViewHolder extends RecyclerView.ViewHolder {
 
         WebView wvEmbeddedHtml;
         TextView tvTitle, tvOpenInBrowser, tvCaption;
@@ -536,18 +542,20 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    private class TypingViewHolder extends RecyclerView.ViewHolder{
+    public class TypingViewHolder extends RecyclerView.ViewHolder {
         AVLoadingIndicatorView ldiDots;
+        public RelativeLayout rlLoadingDots;
 
         public TypingViewHolder(View itemView) {
             super(itemView);
             ldiDots = (AVLoadingIndicatorView) itemView.findViewById(R.id.ldi_dots);
+            rlLoadingDots = (RelativeLayout) itemView.findViewById(R.id.rl_typing_container);
             ldiDots.smoothToShow();
-            Section section = mChatSections.get(mChatSections.size()-1);
-            if(!section.isFromRia()){
+            Section section = mChatSections.get(mChatSections.size() - 1);
+            if (!section.isFromRia()) {
                 ((LinearLayout) itemView).setGravity(Gravity.RIGHT);
-            }else {
-                if(mChatSections!= null && mChatSections.size()>0 && mChatSections.get(mChatSections.size()-1).isFromRia()){
+            } else {
+                if (mChatSections != null && mChatSections.size() > 0 && mChatSections.get(mChatSections.size() - 1).isFromRia()) {
                 }
             }
         }
