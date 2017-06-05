@@ -857,7 +857,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
                             rvChatData.setPadding(rvChatData.getPaddingLeft(),
                                     rvChatData.getPaddingTop(), rvChatData.getPaddingRight(),
-                                    bottom + 20);
+                                    bottom*2);
                             rvButtonsContainer.removeOnLayoutChangeListener(this);
                         }
                     });
