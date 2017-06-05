@@ -81,7 +81,7 @@ public abstract class Indicator extends Drawable implements Animatable {
             return;
         }
 
-        // If the animators has not ended, do nothing.
+        // If the AnimComp has not ended, do nothing.
         if (isStarted()) {
             return;
         }

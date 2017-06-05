@@ -56,6 +56,7 @@ import com.gun0912.tedpermission.TedPermission;
 import com.nowfloats.riachatsdk.R;
 import com.nowfloats.riachatsdk.adapters.RvButtonsAdapter;
 import com.nowfloats.riachatsdk.adapters.RvChatAdapter;
+import com.nowfloats.riachatsdk.animators.MyItemAnimator;
 import com.nowfloats.riachatsdk.fragments.AddressCardFragment;
 import com.nowfloats.riachatsdk.fragments.BusinessNameConfirmFragment;
 import com.nowfloats.riachatsdk.fragments.BusinessNameConfirmedFragment;
@@ -351,7 +352,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 rvChatData.setPadding(rvChatData.getPaddingLeft(),
                         rvChatData.getPaddingTop(), rvChatData.getPaddingRight(),
                         bottom);
-                rvChatData.smoothScrollToPosition(mSectionList.size()-1);
+                rvChatData.smoothScrollToPosition(mSectionList.size() - 1);
             }
         });
 
@@ -769,7 +770,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             public void run() {
                 mSectionList.get(mSectionList.size() - 1).setShowDate(true);
                 mAdapter.notifyItemChanged(mSectionList.size() - 1);
-                rvChatData.smoothScrollToPosition(mSectionList.size()-1);
+                rvChatData.smoothScrollToPosition(mSectionList.size() - 1);
                 etChatInput.setAdapter(null);
                 for (Button btn : node.getButtons()) {
                     if (btn.isDefaultButton()) {
@@ -860,7 +861,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
                             rvChatData.setPadding(rvChatData.getPaddingLeft(),
                                     rvChatData.getPaddingTop(), rvChatData.getPaddingRight(),
-                                    bottom*2);
+                                    bottom * 2);
                             rvButtonsContainer.removeOnLayoutChangeListener(this);
                         }
                     });
@@ -982,6 +983,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         layoutManager.setStackFromEnd(true);
         layoutManager.setReverseLayout(false);
 
+        rvChatData.setItemAnimator(new MyItemAnimator(ChatViewActivity.this));
         rvChatData.setLayoutManager(layoutManager);
         rvChatData.setAdapter(mAdapter);
 
@@ -1145,7 +1147,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         }
                         flConfirmationCard.setVisibility(GONE);
                         showNextNode(mNextNodeId);
-
 
 
                     }
