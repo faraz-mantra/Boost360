@@ -56,7 +56,7 @@ import com.gun0912.tedpermission.TedPermission;
 import com.nowfloats.riachatsdk.R;
 import com.nowfloats.riachatsdk.adapters.RvButtonsAdapter;
 import com.nowfloats.riachatsdk.adapters.RvChatAdapter;
-import com.nowfloats.riachatsdk.animators.MyItemAnimator;
+import com.nowfloats.riachatsdk.animators.ChatItemAnimator;
 import com.nowfloats.riachatsdk.fragments.AddressCardFragment;
 import com.nowfloats.riachatsdk.fragments.BusinessNameConfirmFragment;
 import com.nowfloats.riachatsdk.fragments.BusinessNameConfirmedFragment;
@@ -221,11 +221,11 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     hideSoftKeyboard();
                     StringBuffer chatText = new StringBuffer("");
                     if (mCurrButton.getPrefixText() != null) {
-                        chatText.append(mCurrButton.getPrefixText());
+                        chatText.append(getParsedPrefixPostfixText(mCurrButton.getPrefixText()));
                     }
                     chatText.append(etChatInput.getText().toString().trim());
                     if (mCurrButton.getPostfixText() != null) {
-                        chatText.append(mCurrButton.getPostfixText());
+                        chatText.append(getParsedPrefixPostfixText(mCurrButton.getPrefixText()));
                     }
 
                     if (mCurrButton.isConfirmInput()) {
@@ -983,7 +983,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         layoutManager.setStackFromEnd(true);
         layoutManager.setReverseLayout(false);
 
-        rvChatData.setItemAnimator(new MyItemAnimator(ChatViewActivity.this));
+        rvChatData.setItemAnimator(new ChatItemAnimator(ChatViewActivity.this));
         rvChatData.setLayoutManager(layoutManager);
         rvChatData.setAdapter(mAdapter);
 
