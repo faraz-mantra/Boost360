@@ -964,6 +964,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                                 String strVal = adapter.getItem(which);
                                 dialog.dismiss();
                                 replyToRia(Constants.SectionType.TYPE_TEXT, strVal);
+                                if(mCurrVarName!=null){
+                                    mDataMap.put("[~" + mCurrVarName + "]", strVal);
+                                }
                                 showNextNode(btn.getNextNodeId());
                             }
                         });
