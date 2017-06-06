@@ -22,12 +22,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/iv_map_data"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:scaleType="centerCrop" />
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/iv_map_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:scaleType="centerCrop" />
+                <ImageView
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/add_marker"/>
+            </RelativeLayout>
+
 
             <TextView
                 android:id="@+id/tv_address_text"
