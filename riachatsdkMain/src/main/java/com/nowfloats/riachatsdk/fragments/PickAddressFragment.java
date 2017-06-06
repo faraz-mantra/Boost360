@@ -45,7 +45,7 @@ import org.w3c.dom.Text;
 
 public class PickAddressFragment extends DialogFragment implements LocationListener{
 
-    TextInputEditText etStreetAddr, etCity, etCountry, etPin, etLocality;
+    TextInputEditText etStreetAddr, etCity, etCountry, etPin, etLocality,etHousePlotNum,etLandmark;
     Button btnSave;
     private GoogleMap mGoogleMap;
 
@@ -98,6 +98,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         etCountry = (TextInputEditText) v.findViewById(R.id.et_country);
         etPin = (TextInputEditText) v.findViewById(R.id.et_pincode);
         etLocality = (TextInputEditText) v.findViewById(R.id.et_locality);
+        etHousePlotNum = (TextInputEditText) v.findViewById(R.id.et_house_plot_num);
+        etLandmark = (TextInputEditText) v.findViewById(R.id.et_landmark);
         btnSave = (Button) v.findViewById(R.id.btn_save);
 
         btnSave = (Button) v.findViewById(R.id.btn_save);
@@ -108,7 +110,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                 //TODO: Callback Interface
                 if(mResultListener!=null && verifyData()){
                     mResultListener.OnResult(etStreetAddr.getText().toString().trim(),
-                            mAreaOutput, mCityOutput, mStateOutput, mCountryOutput, mCenterLatLong.latitude, mCenterLatLong.longitude, mPin);
+                            mAreaOutput, mCityOutput, mStateOutput, mCountryOutput, mCenterLatLong.latitude, mCenterLatLong.longitude, mPin,
+                            etHousePlotNum.getText().toString(),etLandmark.getText().toString());
                     Fragment fragment = ((AppCompatActivity)getActivity())
                             .getSupportFragmentManager()
                             .findFragmentById(R.id.map);
@@ -312,7 +315,6 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
             mPin = resultData.getString(Constants.LocationConstants.LOCATION_DATA_PIN);
             mLocality = resultData.getString(Constants.LocationConstants.LOCATION_DATA_LOCALITY);
 
-
             displayAddressOutput();
 
         }
@@ -328,7 +330,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
     }
 
     public interface OnResultReceive{
-        void OnResult(String address, String area, String city, String state, String country, double lat, double lon, String pin);
+        void OnResult(String address, String area, String city, String state, String country, double lat, double lon, String pin,String housePlotNum,String landmark);
     }
 
 

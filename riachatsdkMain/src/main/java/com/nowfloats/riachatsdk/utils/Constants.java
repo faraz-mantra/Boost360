@@ -68,6 +68,9 @@ public class Constants {
         java.lang.String LOCATION_DATA_COUNTRY = PACKAGE_NAME + ".LOCATION_DATA_COUNTRY";
         String LOCATION_DATA_PIN = PACKAGE_NAME + ".LOCATION_DATA_PIN";
         String LOCATION_DATA_LOCALITY = PACKAGE_NAME + ".LOCATION_DATA_LOCALITY";
+        String LOCATION_DATA_HOUSE_NUMBER = PACKAGE_NAME + ".LOCATION_DATA_HOUSE_NUMBER";
+        String LOCATION_DATA_LANDMARK = PACKAGE_NAME + ".LOCATION_DATA_LANDMARK";
+
     }
     public interface ConfirmationType{
         String BIZ_NAME = "biz_name";

@@ -19,4 +19,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="confirm_business_name">Confirm your business name</string>
     <string name="confirmed_business_name">CONFIRMED BUSINESS NAME</string>
+    <string name="confirmed_business_addr">CONFIRMED BUSINESS ADDRESS</string>
+    <string name="skip">SKIP</string>
 </resources>

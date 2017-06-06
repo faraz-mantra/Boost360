@@ -133,8 +133,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/margin_10"
-            android:paddingLeft="@dimen/margin_20"
-            android:paddingRight="@dimen/margin_20"
+            android:paddingLeft="@dimen/margin_10"
+            android:paddingRight="@dimen/margin_10"
             android:paddingTop="@dimen/margin_10"
             android:text="GET STARTED" />
     </LinearLayout>
