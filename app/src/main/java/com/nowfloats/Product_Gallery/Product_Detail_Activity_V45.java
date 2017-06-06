@@ -661,8 +661,9 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if(id==android.R.id.home){
-            finish();
+            onBackPressed();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -670,7 +671,6 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
     public String showCurrencyList(Activity activity,final String[] currencyList){

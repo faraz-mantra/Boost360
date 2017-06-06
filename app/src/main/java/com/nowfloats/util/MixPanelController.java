@@ -28,7 +28,11 @@ public class MixPanelController {
     public static final String VMN_CALL_TRACKER = "VmnCallTracker";
     public static final String FACEBOOK_REVIEW = "FacebookReview";
     public static final String PRIMARY_NUMBER_CHANGE = "PrimaryNumberChanged";
-    public static final String BUSINESS_APP = "BizApps";
+    public static final String BUSINESS_APP_REQUEST = "BusinessAppRequest";
+    public static final String BUSINESS_APP_BUILD_IN_PROCESS = "BusinessAppInProcess";
+    public static final String BUSINESS_APP_INTRESTED = "BizAppsIntrested";
+    public static final String BUSINESS_APP_PUBLISHED = "BusinessAppPublished";
+    public static final String SHARE_BUSINESS_APP = "BusinessAppShare";
 
     private static MixpanelAPI mixPanel;
 	public static String Bhours = "bhours", Signup = "SignUpActivity",
@@ -148,4 +152,5 @@ public class MixPanelController {
             //e.printStackTrace();
         }
     }
+
 }

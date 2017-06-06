@@ -62,6 +62,7 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
                 setHasOptionsMenu(true);
             }
         }
+        MixPanelController.track(MixPanelController.BUSINESS_APP_REQUEST,null);
     }
 
     @Override
@@ -150,7 +151,7 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
                                         return;
                                     }
                                     pref.edit().putBoolean(Key_Preferences.BUSINESS_APP_REQUESTED,true).apply();
-                                    MixPanelController.track(MixPanelController.BUSINESS_APP,null);
+                                    MixPanelController.track(MixPanelController.BUSINESS_APP_INTRESTED,null);
                                     ((Button) view).setText(getString(R.string.already_requested));
                                     (view).setBackgroundResource(R.color.business_button_gray);
                                     new MaterialDialog.Builder(context)

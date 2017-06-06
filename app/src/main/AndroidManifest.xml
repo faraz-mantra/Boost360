@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2017030028"
-    android:versionName="4.6.1">
+    android:versionCode="2017050031"
+    android:versionName="4.6.6">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
@@ -145,6 +145,7 @@
         <activity
             android:name="com.nowfloats.NavigationDrawer.HomeActivity"
             android:label="@string/title_activity_home"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait">
             <intent-filter android:label="Queries">
                 <action android:name="android.intent.action.VIEW" />
@@ -223,7 +224,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.NavigationDrawer.businessApps.BusinessAppTipsActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
             android:name="com.nowfloats.Image_Gallery.FullScreen_Gallery_Image"
             android:label="Gallery Image"
@@ -410,7 +412,7 @@
         <activity android:name="com.nowfloats.Analytics_Screen.SearchRankingActivity"/>
 
         <service
-            android:name="com.nowfloats.accessbility.DataAccessbilityServiceV4"
+            android:name="com.nowfloats.accessbility.DataAccessibilityServiceV7"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter android:priority="2147483647">
                 <action android:name="android.accessibilityservice.AccessibilityService" />

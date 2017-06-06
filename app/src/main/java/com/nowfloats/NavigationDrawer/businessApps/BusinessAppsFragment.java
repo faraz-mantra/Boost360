@@ -70,9 +70,9 @@ public class BusinessAppsFragment extends Fragment {
         mButton= (Button) view.findViewById(R.id.customer_apps_get_store_link_button);
         mAdapter = new viewPagerAdapter(getChildFragmentManager());
         mPager = (ViewPager) view.findViewById(R.id.ps_pager);
-       // mPager.setClipToPadding(false);
+        mPager.setClipToPadding(false);
         // set padding manually, the more you set the padding the more you see of prev & next page
-        mPager.setPadding(30, 30, 30, 0);
+        mPager.setPadding(50, 30, 50,15);
         // sets a margin b/w individual pages to ensure that there is a gap b/w them
         mPager.setPageMargin(30);
 

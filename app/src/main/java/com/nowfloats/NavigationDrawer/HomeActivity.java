@@ -597,6 +597,10 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 ft.replace(R.id.mainFrame, settingsFragment)
                         .commit();
             }
+            else if(url.contains(getResources().getString(R.string.deeplink_business_app))){
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.mainFrame, new BusinessAppsFragment()).commit();
+            }
             else if(url.contains(getResources().getString(R.string.deeplink_socailsharing))){
                 Intent queries = new Intent(HomeActivity.this, Social_Sharing_Activity.class);
                 startActivity(queries);
@@ -606,8 +610,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             }
             else if(url.contains(getResources().getString(R.string.deeplink_profile))){
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.mainFrame,
-                businessFragment,"Profile").commit();
+                ft.replace(R.id.mainFrame, businessFragment,"Profile").commit();
             }
             else if(url.contains(getResources().getString(R.string.deeplink_contact))){
                 Intent queries = new Intent(HomeActivity.this, Contact_Info_Activity.class);

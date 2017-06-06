@@ -22,6 +22,9 @@ import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.thinksity.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -209,7 +212,7 @@ public class NotificationFragment extends Fragment{
         }
     }
 
-    public static void getAlertCount(UserSessionManager session,NotificationInterface notificationInterface,final Bus bus){
+    public static void getAlertCount(final UserSessionManager session, NotificationInterface notificationInterface, final Bus bus){
 
         try{
         HashMap<String,String> map = new HashMap<>();
@@ -221,7 +224,13 @@ public class NotificationFragment extends Fragment{
             public void success(String s, Response response) {
                 Home_Fragment_Tab.alertCountVal = s;
                 bus.post(new AlertCountEvent(s));
-                MixPanelController.track("AlertCount-"+s, null);
+                JSONObject object = new JSONObject();
+                try {
+                    object.put(session.getFpTag(),s);
+                    MixPanelController.track("AlertCount",object);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

@@ -1347,7 +1347,7 @@ public class SidePanelFragment extends Fragment {
         callText.setTextColor(getResources().getColor(R.color.cell_text_color));
         shareText.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvBoostBubble.setTextColor(getResources().getColor(R.color.cell_text_color));
-        tvBoostBubble.setTextColor(getResources().getColor(R.color.cell_text_color));
+        businessAppTextview.setTextColor(getResources().getColor(R.color.cell_text_color));
         //tvSiteAppearance.setTextColor(getResources().getColor(R.color.cell_text_color));
 
             shareImageView.setColorFilter(defaultLabelFilter);

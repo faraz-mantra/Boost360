@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 
@@ -53,6 +54,7 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
                 setHasOptionsMenu(true);
             }
         }
+        MixPanelController.track(MixPanelController.BUSINESS_APP_BUILD_IN_PROCESS,null);
     }
 
     @Override

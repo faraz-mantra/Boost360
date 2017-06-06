@@ -1,27 +1,18 @@
 package com.nowfloats.NavigationDrawer.businessApps;
 
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.Shape;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.thinksity.R;
-
-import static android.R.attr.background;
-import static android.R.attr.shape;
 
 
 /**
@@ -74,7 +65,8 @@ public class BusinessAppScreenOneFragment extends Fragment {
 
         layout.setBackgroundColor(backgroundColors[position]);
         //(cardView.getBackground()).setColorFilter(circleColors[position],PorterDuff.Mode.MULTIPLY);
-        circleImage.setImageDrawable(getResources().getDrawable(circleImages[position]));
+        //circleImage.setImageDrawable(ContextCompat.getDrawable(getContext(),circleImages[position]));
+        Glide.with(this).load(circleImages[position]).into(circleImage);
         boldText.setText(boldTextsArray[position]);
         smallText.setText(smallTextsArray[position]);
         boldText.setTextColor(circleColors[position]);

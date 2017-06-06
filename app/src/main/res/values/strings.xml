@@ -1275,5 +1275,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="push_notif">Send notification</string>
     <string name="app_preview">App preview</string>
 
+    <string name="terms_n_cond_toast">You must agree with the terms and conditions to proceed</string>
+    <string name="deeplink_business_app">businessapp</string>
 
 </resources>

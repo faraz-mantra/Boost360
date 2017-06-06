@@ -24,7 +24,7 @@ import com.nowfloats.util.MixPanelController;
  */
 
 @RequiresApi(api = Build.VERSION_CODES.DONUT)
-public class DataAccessbilityServiceV4 extends AccessibilityService {
+public class DataAccessibilityServiceV7 extends AccessibilityService {
 
 
     public static final String PK_NAME_WHATSAPP = "com.whatsapp";
@@ -89,7 +89,7 @@ public class DataAccessbilityServiceV4 extends AccessibilityService {
                 } else if (!isMyServiceRunning(BubblesService.class) &&
                         !TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null))
                         && pref.getBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED,false)) {
-                    Intent intent = new Intent(DataAccessbilityServiceV4.this, BubblesService.class);
+                    Intent intent = new Intent(DataAccessibilityServiceV7.this, BubblesService.class);
                     startService(intent);
                 }
             } else {
@@ -99,7 +99,7 @@ public class DataAccessbilityServiceV4 extends AccessibilityService {
 
                 }else{
                     Log.v("ggg1","closed");
-                    stopService(new Intent(DataAccessbilityServiceV4.this, BubblesService.class));
+                    stopService(new Intent(DataAccessibilityServiceV7.this, BubblesService.class));
                 }
 
             }

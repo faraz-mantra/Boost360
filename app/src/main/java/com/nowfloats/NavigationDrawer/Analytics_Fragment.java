@@ -150,9 +150,12 @@ public class Analytics_Fragment extends Fragment {
                 @Override
                 public void run() {
                     if(getActivity()!=null && mButtonId!=null && mNextNodeId!=null){
-                        mListener.onResponse(mButtonId, mNextNodeId);
+                        if(RiaEventLogger.isLastEventCompleted){
+                            mListener.onResponse(mButtonId, mNextNodeId);
+                        }
+
                     }else if(mNextNodeId== null){
-                        if(RiaEventLogger.lastEventStatus) {
+                        if(RiaEventLogger.isLastEventCompleted) {
                             cvRiaCard.setVisibility(View.GONE);
                             bus.post(new ArrayList<RiaCardModel>());
                             RiaEventLogger.lastEventStatus = false;
@@ -451,6 +454,7 @@ public class Analytics_Fragment extends Fragment {
         llTwoButtons.setVisibility(View.GONE);
         llSingleButtonLayout.setVisibility(View.GONE);
         tvRiaCardHeader.setText(rootCard.getHeaderText());
+        RiaEventLogger.isLastEventCompleted = false;
         if(rootCard.getButtons()==null || rootCard.getButtons().size()==0){
 
         }else if(rootCard.getButtons()!=null && rootCard.getButtons().size()==1){
@@ -478,6 +482,8 @@ public class Analytics_Fragment extends Fragment {
                         intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnSingle.getUrl());
                         intent.putExtra(RiaWebViewActivity.RIA_NODE_DATA, new RiaNodeDataModel(rootCard.getId(), btnSingle.getId(),
                                 btnSingle.getButtonText()));
+                        mButtonId = btnSingle.getId();
+                        mNextNodeId = btnSingle.getNextNodeId();
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
@@ -511,6 +517,8 @@ public class Analytics_Fragment extends Fragment {
                         intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnLeft.getUrl());
                         intent.putExtra(RiaWebViewActivity.RIA_NODE_DATA, new RiaNodeDataModel(rootCard.getId(), btnLeft.getId(),
                                 btnLeft.getButtonText()));
+                        mButtonId = btnLeft.getId();
+                        mNextNodeId = btnLeft.getNextNodeId();
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
@@ -533,6 +541,7 @@ public class Analytics_Fragment extends Fragment {
                     } else if (btnRight.getButtonType().equals(BUTTON_TYPE_NEXT_NODE) && btnRight.getNextNodeId() != null) {
                         listener.onResponse(btnRight.getId(), btnRight.getNextNodeId());
                     } else if (btnRight.getButtonType().equals(BUTTON_TYPE_EXIT)) {
+                        RiaEventLogger.lastEventStatus = true;
                         cvRiaCard.setVisibility(View.GONE);
                         bus.post(new ArrayList<RiaCardModel>());
                     } else if (btnRight.getButtonType().equals(BUTTON_TYPE_OPEN_URL)) {
@@ -540,6 +549,8 @@ public class Analytics_Fragment extends Fragment {
                         intent.putExtra(RiaWebViewActivity.RIA_WEB_CONTENT_URL, btnRight.getUrl());
                         intent.putExtra(RiaWebViewActivity.RIA_NODE_DATA, new RiaNodeDataModel(rootCard.getId(), btnRight.getId(),
                                 btnRight.getButtonText()));
+                        mButtonId = btnRight.getId();
+                        mNextNodeId = btnRight.getNextNodeId();
                         startActivity(intent);
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }

@@ -96,6 +96,7 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
         dataBase = new DataBase(WebSiteAddressActivity.this);
         createButton = (Button) findViewById(R.id.createButton);
         termAndPolicyTextView = (TextView) findViewById(R.id.term_policy_textview);
+        termAndPolicyCheckbox = (AppCompatCheckBox) findViewById(R.id.checkbox);
         webSiteTextView = (EditText) findViewById(R.id.websiteTitleTextView);
         termAndPolicyCheckbox = (AppCompatCheckBox) findViewById(R.id.checkbox);
         webSiteCardView = (CardView) findViewById(R.id.websiteTitleCardView);
@@ -194,6 +195,8 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
                     }else if(addressTagValid){
                         MixPanelController.track("CreateMyWebsite", null);
                          createStore_retrofit(WebSiteAddressActivity.this,getJSONData(),bus);
+                    }else if(!termAndPolicyCheckbox.isChecked()){
+                        Toast.makeText(WebSiteAddressActivity.this, getString(R.string.terms_n_cond_toast), Toast.LENGTH_SHORT).show();
                     }
 
                     return true;

@@ -1281,5 +1281,6 @@
     <string name="add_logo_message">Please add a logo for your business before proceeding.</string>
     <string name="push_notif">Send notification</string>
     <string name="app_preview">App preview</string>
+    <string name="deeplink_business_app">businessapp</string>
 
 </resources>

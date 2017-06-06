@@ -9,6 +9,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,6 +24,8 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
 import com.nowfloats.NavigationDrawer.model.StoreAndGoModel;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 import java.util.List;
@@ -49,7 +54,11 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
         if(getArguments()!=null){
             type=getArguments().getString("type","android");
             modelList = new Gson().fromJson(getArguments().getString("modelList"),StoreAndGoModel.class).getPublishStatusModelList();
+            if(type.equals("android")){
+                setHasOptionsMenu(true);
+            }
         }
+        MixPanelController.track(MixPanelController.BUSINESS_APP_PUBLISHED,null);
     }
 
     @Override
@@ -141,6 +150,7 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
         }
     }
     private void share(String url){
+        MixPanelController.track(MixPanelController.SHARE_BUSINESS_APP,null);
         Intent i =new Intent(Intent.ACTION_SEND);
         i.setType("text/plain");
         i.putExtra(Intent.EXTRA_TEXT, Html.fromHtml("Download the new app<a href="+url+">"+url+"</a>"));
@@ -161,5 +171,24 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
             context.startActivity(showWebSiteIntent);
             getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(!isAdded()) return false;
+        switch(item.getItemId()){
+            case R.id.action_notif:
+                Methods.materialDialog(getActivity(),"Send Push Notification","Inform your app users about your latest product offerings via push notifications. This feature is coming soon.");
+                return true;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.business_app,menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 }

@@ -6,7 +6,6 @@
     xmlns:card="http://schemas.android.com/apk/res-auto"
     card:cardCornerRadius="3dp"
     android:layout_gravity="center"
-    android:layout_margin="10dp"
     card:cardElevation="3dp">
 
     <LinearLayout
