@@ -96,7 +96,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static android.view.View.GONE;
 
-public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdapter.OnItemClickListener,
+public class ChatViewActivityCopy extends AppCompatActivity implements RvButtonsAdapter.OnItemClickListener,
         IConfirmationCallbackInterface {
     private final String KEY_NEXT_NODE_ID = "NextNodeId";
     private static final int AUDIO_REQUEST_CODE = 56;
@@ -146,7 +146,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     showNextNode(mNextNodeId);
                     break;
             }
-            Toast.makeText(ChatViewActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ChatViewActivityCopy.this, "Permission Granted", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -156,7 +156,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     showNextNode(mNextNodeId);
                     break;
             }
-            Toast.makeText(ChatViewActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(ChatViewActivityCopy.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
         }
 
 
@@ -232,7 +232,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         rvButtonsContainer.setVisibility(View.GONE);
                         cvChatInput.setVisibility(View.GONE);
                         showConfirmation(Constants.ConfirmationType.BIZ_NAME, chatText.toString().trim());
-                        ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                        ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivityCopy.this),
                                 mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), null,
                                 null, mCurrButton.getButtonType());
                         mAutoComplDataHash = null;
@@ -243,12 +243,12 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         if (mCurrVarName != null) {
                             if (mAutoComplDataHash == null || mAutoComplDataHash.get(etChatInput.getText().toString().trim()) == null) {
                                 mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
-                                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivityCopy.this),
                                         mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), mCurrVarName.replace("[~", "").replace("]", ""),
                                         etChatInput.getText().toString().trim(), mCurrButton.getButtonType());
                             } else {
                                 mDataMap.put("[~" + mCurrVarName + "]", mAutoComplDataHash.get(etChatInput.getText().toString().trim()));
-                                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivityCopy.this),
                                         mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), mCurrVarName.replace("[~", "").replace("]", ""),
                                         mAutoComplDataHash.get(etChatInput.getText().toString().trim()), mCurrButton.getButtonType());
                             }
@@ -258,7 +258,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         etChatInput.setText("");
                         mButtonList.clear();
                         mButtonsAdapter.notifyDataSetChanged();
-                        rvButtonsContainer.setVisibility(View.GONE);
+                        rvButtonsContainer.setVisibility(View.INVISIBLE);
                         cvChatInput.setVisibility(GONE);
                         showNextNode(mNextNodeId);
                     }
@@ -523,7 +523,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         //TODO:sent_check ButtonType and do the action accordingly
         mButtonList.clear();
         mButtonsAdapter.notifyDataSetChanged();
-        rvButtonsContainer.setVisibility(View.GONE);
+        rvButtonsContainer.setVisibility(View.INVISIBLE);
         cvChatInput.setVisibility(GONE);
         switch (button.getButtonType()) {
             case Constants.ButtonType.TYPE_NEXT_NODE:
@@ -540,18 +540,18 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         }
                     }
                     mDataMap.put("[~" + mCurrVarName + "]", str);
-                    ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                    ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivityCopy.this),
                             mCurrNodeId, button.getId(), button.getButtonText(), mCurrVarName.replace("[~", "").replace("]", ""),
                             button.getVariableValue(), button.getButtonType());
                 } else {
-                    ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                    ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivityCopy.this),
                             mCurrNodeId, button.getId(), button.getButtonText(), null,
                             null, button.getButtonType());
                 }
                 showNextNode(button.getNextNodeId());
                 break;
             case Constants.ButtonType.TYPE_GET_ADDR:
-                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivityCopy.this),
                         mCurrNodeId, button.getId(), button.getButtonText(), null,
                         null, button.getButtonType());
                 getUserAddress(button);
@@ -567,7 +567,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 break;
             case Constants.ButtonType.TYPE_DEEP_LINK:
                 handleDeepLink(button);
-                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivityCopy.this),
                         mCurrNodeId, button.getId(), button.getButtonText(), null,
                         null, button.getButtonType());
                 break;
@@ -583,7 +583,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             public void OnResult(String address, String area, String city, String state, String country, double lat, double lon, String pin) {
                 //TODO: saveREsult
                 //replyToRia(address + "\nCity: " + city + "\nCountry: " + country + "\nPin: " + pin, Constants.SectionType.TYPE_TEXT);
-                ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivityCopy.this),
                         mCurrNodeId, btn.getId(), btn.getButtonText(), ChatLogger.EventStatus.COMPLETED.getValue(),
                         "STREET_ADDRESS", address, btn.getButtonType());
                 mDataMap.put("[~" + "CITY" + "]", city);
@@ -610,7 +610,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 .setPositiveButton(getString(R.string.media_picker_camera), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        new ImagePicker.Builder(ChatViewActivity.this)
+                        new ImagePicker.Builder(ChatViewActivityCopy.this)
                                 .mode(ImagePicker.Mode.CAMERA)
                                 .directory(ImagePicker.Directory.DEFAULT)
                                 .allowMultipleImages(false)
@@ -621,7 +621,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 .setNegativeButton(getString(R.string.media_picker_gallery), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        new ImagePicker.Builder(ChatViewActivity.this)
+                        new ImagePicker.Builder(ChatViewActivityCopy.this)
                                 .mode(ImagePicker.Mode.GALLERY)
                                 .directory(ImagePicker.Directory.DEFAULT)
                                 .allowMultipleImages(false)
@@ -648,7 +648,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 .setPositiveButton(getString(R.string.media_picker_camera), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        new VideoPicker.Builder(ChatViewActivity.this)
+                        new VideoPicker.Builder(ChatViewActivityCopy.this)
                                 .mode(VideoPicker.Mode.CAMERA)
                                 .directory(VideoPicker.Directory.DEFAULT)
                                 .enableDebuggingMode(true)
@@ -658,7 +658,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 .setNegativeButton(getString(R.string.media_picker_gallery), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        new VideoPicker.Builder(ChatViewActivity.this)
+                        new VideoPicker.Builder(ChatViewActivityCopy.this)
                                 .mode(VideoPicker.Mode.GALLERY)
                                 .directory(VideoPicker.Directory.DEFAULT)
                                 .enableDebuggingMode(true)
@@ -690,23 +690,12 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     }
 
     private void showNextNode(String nodeId) {
-
-        hasSearchInput = false;
-        hasButtonInput = false;
-
         for (RiaCardModel node : mAllNodes) {
             if (node.getId().equals(nodeId)) {
                 startChat(node);
             }
         }
-
-
-//        if (mDefaultButton != null && node.getTimeoutInMs() != -1L) {
-//            mHandler.postDelayed(mAutoCallRunnable, node.getTimeoutInMs());
-//        }
     }
-
-    private boolean hasSearchInput = false,hasButtonInput = false;
 
     private void startChat(final RiaCardModel node) {
         if (node == null)
@@ -775,20 +764,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 }
             }, time);
         }
-        time += 500;
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                rvChatData.setPadding(rvChatData.getPaddingLeft(),
-                        rvChatData.getPaddingTop(), rvChatData.getPaddingRight(),
-                        300);
-                rvChatData.smoothScrollToPosition(mSectionList.size() - 1);
-
-            }
-        },time);
-
-        time +=2500;
+        time += 1000;
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -796,7 +772,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 mAdapter.notifyItemChanged(mSectionList.size() - 1);
                 rvChatData.smoothScrollToPosition(mSectionList.size() - 1);
                 etChatInput.setAdapter(null);
-                hasSearchInput = false;
+                boolean hasSearchInput = false;
                 for (Button btn : node.getButtons()) {
                     if (btn.isDefaultButton()) {
                         mDefaultButton = btn;
@@ -879,33 +855,44 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     }
                 }
                 if (mButtonList.size() > 0) {
-                   hasButtonInput =true;
+                    rvButtonsContainer.setVisibility(View.VISIBLE);
+                    mButtonsAdapter.notifyDataSetChanged();
+                    rvButtonsContainer.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                        @Override
+                        public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                            rvChatData.setPadding(rvChatData.getPaddingLeft(),
+                                    rvChatData.getPaddingTop(), rvChatData.getPaddingRight(),
+                                    bottom * 2);
+                            rvChatData.scrollToPosition(mSectionList.size() - 1);
+                            rvButtonsContainer.removeOnLayoutChangeListener(this);
+                        }
+                    });
+
                 } else {
                     rvButtonsContainer.setVisibility(GONE);
                     mButtonsAdapter.notifyDataSetChanged();
                 }
-
                 if (hasSearchInput) {
 
                     rvChatData.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
                         @Override
                         public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
                             cvChatInput.setVisibility(View.VISIBLE);
-                            showKeyBoard();
-                            rvChatData.removeOnLayoutChangeListener(this);
-                        }
-                    });
-                }else if(hasButtonInput){
-                    rvChatData.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-                        @Override
-                        public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                            rvButtonsContainer.setVisibility(View.VISIBLE);
-                            mButtonsAdapter.notifyDataSetChanged();
+                            new Handler(getMainLooper()).postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showKeyBoard();
+                                }
+                            }, 10000);
                             rvChatData.removeOnLayoutChangeListener(this);
                         }
                     });
                 }
 
+
+                if (mDefaultButton != null && node.getTimeoutInMs() != -1L) {
+                    mHandler.postDelayed(mAutoCallRunnable, node.getTimeoutInMs());
+                }
             }
         }, time);
 
@@ -950,7 +937,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                                 e.printStackTrace();
                             }
                         }
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(ChatViewActivity.this,
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(ChatViewActivityCopy.this,
                                 android.R.layout.select_dialog_item, mAutoComplRes);
                         etChatInput.setAdapter(adapter);
                         etChatInput.setThreshold(0);
@@ -1026,13 +1013,13 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         layoutManager.setStackFromEnd(true);
         layoutManager.setReverseLayout(false);
 
-        rvChatData.setItemAnimator(new ChatItemAnimator(ChatViewActivity.this));
+        rvChatData.setItemAnimator(new ChatItemAnimator(ChatViewActivityCopy.this));
         rvChatData.setLayoutManager(layoutManager);
         rvChatData.setAdapter(mAdapter);
 
         mButtonsAdapter = new RvButtonsAdapter(mButtonList);
         mButtonsAdapter.setOnCItemClickListener(this);
-        LinearLayoutManager buttonsLayoutManager = new LinearLayoutManager(ChatViewActivity.this,
+        LinearLayoutManager buttonsLayoutManager = new LinearLayoutManager(ChatViewActivityCopy.this,
                 LinearLayoutManager.HORIZONTAL, false);
         rvButtonsContainer.setLayoutManager(buttonsLayoutManager);
         rvButtonsContainer.setAdapter(mButtonsAdapter);
