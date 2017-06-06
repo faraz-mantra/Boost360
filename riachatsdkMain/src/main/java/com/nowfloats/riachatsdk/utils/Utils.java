@@ -25,7 +25,7 @@ public class Utils {
     public static String getMapUrlFromLocation(String lattitude, String longitude){
 
         String url =  "http://maps.google.com/maps/api/staticmap?center=" + lattitude + ","
-                + longitude + "&zoom=19&size=1000x300&sensor=false" + "&markers=color:yellow%7Clabel:C%7C"
+                + longitude + "&zoom=19&size=1000x300&sensor=false" + "&markers=color:red%7Clabel:C%7C"
                 + lattitude + "," + longitude + "&key="
                 + Constants.MAP_KEY;
         Log.d("LatLong", url);

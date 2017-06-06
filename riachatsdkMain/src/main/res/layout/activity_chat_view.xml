@@ -28,7 +28,8 @@
                 android:visibility="visible" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="match_parent">
 
                 <TextView
@@ -54,20 +55,20 @@
                     android:visibility="invisible" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/iv_attach"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+            <TextView
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="16dp"
-                android:rotation="-45"
-                android:src="@drawable/ic_attach_file_black_24dp"
-                android:tint="@color/white"
-                android:visibility="invisible" />
+                android:textSize="16sp"
+                android:alpha="0.8"
+                android:textStyle="bold"
+                android:id="@+id/tv_skip"
+                android:textColor="@color/white"
+                android:layout_marginRight="@dimen/margin_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/skip"/>
         </LinearLayout>
 
     </android.support.v7.widget.Toolbar>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

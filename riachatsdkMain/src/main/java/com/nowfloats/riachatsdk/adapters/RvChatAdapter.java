@@ -138,11 +138,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
             ((LinearLayout) cardViewHolder.itemView).setGravity(Gravity.RIGHT);
             LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) cardViewHolder.llBubbleContainer.getLayoutParams();
-            if (mChatSections != null && mChatSections.size() > 0 && position > 0 && mChatSections.get(position - 1).isFromRia()) {
-                cardViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.card_bg);
-            } else {
-                cardViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.card_bg);
-            }
+
             cardViewHolder.llBubbleContainer.setLayoutParams(lp);
             cardViewHolder.tvConfirmationText.setTextColor(Color.parseColor("#ffffff"));
 
@@ -162,13 +158,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
             ((LinearLayout) cardViewHolder.itemView).setGravity(Gravity.RIGHT);
             LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) cardViewHolder.llBubbleContainer.getLayoutParams();
-            if (mChatSections != null && mChatSections.size() > 0 && position > 0 && mChatSections.get(position - 1).isFromRia()) {
-                cardViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.reply_main_bubble);
-                lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 5), 0);
-            } else {
-                cardViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.reply_followup_bubble);
-                lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 15), 0);
-            }
+
             cardViewHolder.llBubbleContainer.setLayoutParams(lp);
             cardViewHolder.tvAddressText.setTextColor(Color.parseColor("#ffffff"));
 

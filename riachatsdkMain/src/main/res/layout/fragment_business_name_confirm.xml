@@ -60,7 +60,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="Edit"
-                    android:textColor="#cd4e5974"
+                    android:textColor="#804e5974"
                     android:layout_width="0dp"
                     android:layout_height="50dp" />
             </LinearLayout>
