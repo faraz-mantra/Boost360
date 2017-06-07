@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_marginTop="4dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
     android:layout_width="match_parent"
@@ -14,38 +15,54 @@
         android:id="@+id/ll_bubble_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <android.support.v7.widget.CardView
-            android:layout_margin="10dp"
-            app:cardCornerRadius="7dp"
-            app:cardElevation="0dp"
+        <RelativeLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/iv_map_data"
-                android:scaleType="centerCrop"
-
+            <android.support.v7.widget.CardView
+                android:layout_margin="10dp"
+                app:cardCornerRadius="7dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="#727272"
                 android:layout_width="match_parent"
-                android:layout_height="170dp" />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_map_data"
+                    android:scaleType="centerCrop"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp" />
+                <ImageView
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/add_marker"/>
+
+            </android.support.v7.widget.CardView>
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="4dp"
+                android:padding="4dp"
                 android:background="@drawable/green_check_bg"
-                android:layout_gravity="end"
+                android:layout_marginRight="4dp"
+                android:layout_alignParentRight="true"
                 android:src="@drawable/green_check"/>
-        </android.support.v7.widget.CardView>
+        </RelativeLayout>
+
         <TextView
             android:id="@+id/tv_confirmation_text"
-            android:gravity="center"
             android:lineSpacingExtra="3dp"
             android:textSize="17sp"
             android:padding="15dp"
+            android:gravity="left|center_vertical"
             android:fontFamily="sans-serif"
             android:paddingTop="20dp"
+            android:paddingLeft="40dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
+            android:paddingRight="40dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <View
@@ -54,17 +71,16 @@
             android:layout_marginTop="15dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:background="#e3e3e3" />
+            android:background="#99e3e3e3" />
         <TextView
             android:layout_marginTop="7dp"
-            android:layout_marginBottom="21dp"
-            android:textSize="12sp"
-            android:gravity="center"
+            android:layout_marginBottom="7dp"
+            android:textSize="11sp"
             android:fontFamily="sans-serif-light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/confirmed_business_addr"
-            android:textColor="#e3e3e3"
+            android:text="@string/confirmed_business_name"
+            android:textColor="#99e3e3e3"
             android:layout_gravity="center_horizontal"
             />
     </LinearLayout>
