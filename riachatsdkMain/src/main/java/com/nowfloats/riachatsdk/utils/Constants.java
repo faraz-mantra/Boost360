@@ -48,6 +48,7 @@ public class Constants {
 
     public interface DeepLinkUrl{
         String ASK_LOC_PERM = "asklocationpermission";
+        String LOGIN = "login";
     }
     public interface LocationConstants {
         int SUCCESS_RESULT = 0;
