@@ -125,6 +125,7 @@
     <dimen name="small_text_size">12sp</dimen>
     <dimen name="medium_text_size">15sp</dimen>
     <dimen name="large_text_size">18sp</dimen>
+    <dimen name="llarge_text_size">20sp</dimen>
     <dimen name="xlarge_text_size">23sp</dimen>
     <dimen name="xxlarge_text_size">28sp</dimen>
     <dimen name="margin_5">5dp</dimen>

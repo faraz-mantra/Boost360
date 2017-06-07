@@ -35,7 +35,7 @@ public class CallToActionAdapter extends RecyclerView.Adapter<CallToActionAdapte
 
     @Override
     public ActionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.csp_fragment_cta_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.csp_fragment_cta_list_item_v1, parent, false);
         ActionViewHolder actionViewHolder = new ActionViewHolder(view);
         return actionViewHolder;
     }

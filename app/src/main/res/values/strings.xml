@@ -1196,7 +1196,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="downloading">File downloading&#8230;</string>
     <string name="play_with_underline" translatable="false"><u>PLAY</u></string>
     <string name="cta" translatable="false"><u>CTA</u></string>
-    <string name="view_details" translatable="false"><u>View Details</u></string>
+    <string name="view_details" translatable="false"><u>Details</u></string>
     <string name="vmn_message_text">This is displayed on your website and you can track all customer calls &amp; logs here.</string>
     <string name="website_domain_name">.nowfloats.com</string>
     <string name="faqs_url">https://nowfloats.com/faq</string>

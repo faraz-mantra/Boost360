@@ -15,52 +15,93 @@
     card_view:cardCornerRadius="3dp">
 
     <LinearLayout
-        android:background="#9c9c9c"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="horizontal">
 
-
-            <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
-                android:id="@+id/tvValue"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/margin_10"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="5dp"
+                android:paddingTop="15dp">
 
-            <com.nowfloats.CustomWidget.roboto_lt_33_6e6e6e
-                android:id="@+id/tvCTA"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="3dp">
+
+                    <!-- <TextView
+                         fontPath="Roboto-Medium.ttf"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_marginRight="2dp"
+                         android:singleLine="true"
+                         android:text="From:"
+                         android:textColor="@color/white"
+                         android:textSize="14sp"
+                         tools:ignore="MissingPrefix" />-->
+
+
+                    <TextView
+                        android:id="@+id/tvValue"
+                        fontPath="Roboto-Medium.ttf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scrollHorizontally="false"
+                        android:singleLine="true"
+                        android:text="@string/number_tocall_says"
+                        android:textSize="15sp"
+                        tools:ignore="MissingPrefix" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sent_on"
+                    android:textSize="10sp"
+                    tools:ignore="MissingPrefix" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/contactButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/margin_10"
-                android:gravity="right"
-                android:text="@string/cta" />
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginRight="8dp">
 
+
+                <TextView
+                    android:id="@+id/tvCTA"
+                    fontPath="Roboto-Regular.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/margin_10"
+                    android:gravity="right"
+                    android:text="@string/cta"
+                    android:textSize="@dimen/medium_text_size"
+                    tools:ignore="MissingPrefix" />
+
+            </FrameLayout>
         </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/tvDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10"
-            android:padding="@dimen/margin_10"
-            android:textColor="@color/black_translucent"
-            android:textSize="@dimen/small_text_size"
-            android:textStyle="" />
 
         <LinearLayout
             android:id="@+id/llMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_5"
             android:background="@color/very_light_gray"
             android:orientation="vertical"
             android:paddingBottom="@dimen/margin_10"
@@ -73,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/margin_5"
                 android:background="@color/very_light_gray"
-                android:text="Actual Message" />
+                android:text="Lead Details" />
 
             <TextView
                 android:id="@+id/tvActualMessage"
@@ -86,9 +127,7 @@
                 android:paddingBottom="@dimen/margin_10"
                 android:paddingLeft="@dimen/margin_10"
                 android:paddingRight="@dimen/margin_10"
-                android:paddingTop="@dimen/margin_20"
-                android:textColor="@color/light_black"
-                android:textStyle="bold" />
+                android:paddingTop="@dimen/margin_20" />
 
             <com.nowfloats.CustomWidget.roboto_lt_24_212121
                 android:id="@+id/tvSource"

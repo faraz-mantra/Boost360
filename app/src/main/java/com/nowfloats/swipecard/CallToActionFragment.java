@@ -96,7 +96,7 @@ public class CallToActionFragment extends Fragment {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
         ((SuggestionsActivity) getActivity()).setSupportActionBar(toolbar);
-        getActivity().setTitle("Boost Your Productivity");
+        getActivity().setTitle("Make Calls");
 
         ((SuggestionsActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setTitleTextColor(ContextCompat.getColor(getActivity(), R.color.white));

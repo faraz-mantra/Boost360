@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +62,7 @@ public class ActionItemsFragment extends Fragment {
         pbView.setVisibility(View.VISIBLE);
 
         ((SuggestionsActivity) getActivity()).setSupportActionBar(toolbar);
-        getActivity().setTitle("Action Items");
+        getActivity().setTitle(Html.fromHtml("Sam <i>says..</i>"));
         toolbar.setTitleTextColor(ContextCompat.getColor(getActivity(), R.color.white));
     }
 
@@ -90,11 +91,11 @@ public class ActionItemsFragment extends Fragment {
 
 
         ActionItemsDO caActionItemsDO = new ActionItemsDO();
-        caActionItemsDO.setActionItemName("Calls to make");
+        caActionItemsDO.setActionItemName("Make Calls");
         caActionItemsDO.setActionItemCount(callCount);
 
         ActionItemsDO emActionItemsDO = new ActionItemsDO();
-        emActionItemsDO.setActionItemName("Emails to send");
+        emActionItemsDO.setActionItemName("Send Emails");
         emActionItemsDO.setActionItemCount(emailCount);
 
         actionItemsDOList.add(caActionItemsDO);
