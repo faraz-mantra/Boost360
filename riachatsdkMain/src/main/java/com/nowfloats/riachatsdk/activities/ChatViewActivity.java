@@ -4,6 +4,7 @@ import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,6 +31,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -95,7 +98,6 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-import static android.R.attr.button;
 import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
 
@@ -935,12 +937,10 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     }
 
     private void handleAutoComplete(final Button btn) {
-        showTyping();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, btn.getUrl(), null,
                 new com.android.volley.Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        removeTyping();
                         Iterator<?> keys = response.keys();
                         List<String> mAutoComplRes = new ArrayList<>();
                         mAutoComplDataHash = new HashMap<>();
@@ -970,7 +970,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                                 showNextNode(btn.getNextNodeId());
                             }
                         });
-                        builderSingle.show();
+                        Dialog dialog = builderSingle.show();
+                        dialog.setCancelable(false);
                     }
                 }, new com.android.volley.Response.ErrorListener() {
             @Override
@@ -1185,8 +1186,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         }
 
         AnimatorSet animationSet = (AnimatorSet) AnimatorInflater.loadAnimator(this,
-                R.animator.card_flip_right_out);
+                R.animator.card_flip_right_in);
         animationSet.setTarget(flConfirmationCard);
+
         animationSet.start();
 
         animationSet.addListener(new Animator.AnimatorListener() {
@@ -1197,8 +1199,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                flConfirmationCard.setAlpha((float) 1.0);
-                flConfirmationCard.setRotationY((float) 0);
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {

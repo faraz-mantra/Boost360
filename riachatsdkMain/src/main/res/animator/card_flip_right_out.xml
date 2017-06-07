@@ -4,8 +4,6 @@
     <objectAnimator
         android:valueFrom="180"
         android:valueTo="0"
-        android:pivotX="50%"
-        android:pivotY="50%"
         android:propertyName="rotationY"
         android:duration="500" />
 
