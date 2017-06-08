@@ -102,7 +102,7 @@ public class OtherImagesAdapter extends BaseAdapter {
     }
 
     public int getCount() {
-        if(imagesList != null)
+        if(Constants.storeSecondaryImages != null)
             count = Constants.storeSecondaryImages.size();
         Log.d(TAG, "Count : " + count);
         return count;

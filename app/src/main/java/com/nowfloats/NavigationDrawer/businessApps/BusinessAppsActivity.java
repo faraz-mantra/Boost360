@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,7 +23,7 @@ import com.thinksity.R;
 
 public class BusinessAppsActivity extends AppCompatActivity {
 
-    private final static int SHOW_PREVIEW=0,SHOW_SETTING=1,SHOW_SITE_HEALTH = 2;
+    public final static int SHOW_PREVIEW=0,SHOW_ABOUT_APP=1,SHOW_SITE_HEALTH = 2;
     private UserSessionManager session;
 
     @Override
@@ -88,8 +89,8 @@ public class BusinessAppsActivity extends AppCompatActivity {
                     transaction.show(fragA);
                 }
                 break;
-            case SHOW_SETTING:
-                Fragment frag=new BusinessAppDetailsFragment();
+            case SHOW_ABOUT_APP:
+                Fragment frag=new BusinessAppsFragment();
                 if(fragA!=null && fragA.isVisible()){
                     transaction.hide(fragA);
                 }
@@ -97,7 +98,7 @@ public class BusinessAppsActivity extends AppCompatActivity {
                     transaction.hide(siteHealthFrag);
                 }
                 transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left,android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-                transaction.add(R.id.linearlayout_business_app,frag,"BusinessAppDetails");
+                transaction.add(R.id.linearlayout_business_app,frag,"BusinessAppFragment");
                 transaction.addToBackStack(null);
                 break;
             case SHOW_SITE_HEALTH:
@@ -134,6 +135,11 @@ public class BusinessAppsActivity extends AppCompatActivity {
         switch (item.getItemId())
         {
             case android.R.id.home :
+                FragmentManager manager = getSupportFragmentManager();
+                BusinessAppsFragment frag = (BusinessAppsFragment) manager.findFragmentByTag("BusinessAppFragment");
+                if(frag != null && frag.isVisible()){
+                    manager.beginTransaction().remove(frag).commit();
+                }
                 onBackPressed();
                 return true;
             case R.id.action_notif:

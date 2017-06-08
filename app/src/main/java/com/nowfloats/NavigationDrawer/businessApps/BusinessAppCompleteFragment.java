@@ -3,11 +3,12 @@ package com.nowfloats.NavigationDrawer.businessApps;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Html;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,12 +24,15 @@ import com.google.gson.Gson;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
 import com.nowfloats.NavigationDrawer.model.StoreAndGoModel;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 import java.util.List;
+
+import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsActivity.SHOW_ABOUT_APP;
 
 /**
  * Created by Admin on 12/27/2016.
@@ -39,6 +43,8 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
     private UserSessionManager session;
     private Context context;
     List<StoreAndGoModel.PublishStatusModel> modelList;
+    SharedPreferences pref;
+
     public static Fragment getInstance(String type,String list){
         Fragment frag=new BusinessAppCompleteFragment();
         Bundle b=new Bundle();
@@ -58,6 +64,7 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
                 setHasOptionsMenu(true);
             }
         }
+        pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         MixPanelController.track(MixPanelController.BUSINESS_APP_PUBLISHED,null);
     }
 
@@ -112,10 +119,10 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
                 .into(logoImage);
 
         if(type.equals("android")){
-            appTextView.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.android_green), null, null, null );
+            appTextView.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context,R.drawable.android_green), null, null, null );
             appTextView.setText(getResources().getString(R.string.android_app));
         }else{
-            appTextView.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ios_icon_black), null, null, null );
+            appTextView.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context,R.drawable.ios_icon_black), null, null, null );
             appTextView.setText(getResources().getString(R.string.ios_app));
         }
 
@@ -149,13 +156,14 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
                 break;
         }
     }
+
     private void share(String url){
         MixPanelController.track(MixPanelController.SHARE_BUSINESS_APP,null);
         Intent i =new Intent(Intent.ACTION_SEND);
         i.setType("text/plain");
-        i.putExtra(Intent.EXTRA_TEXT, Html.fromHtml("Download the new app<a href="+url+">"+url+"</a>"));
+        i.putExtra(Intent.EXTRA_TEXT, "Download the new app "+url);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(Intent.createChooser(i,"send to:"));
+        startActivity(Intent.createChooser(i,"Share with:"));
     }
     private void rateUsPlayStore(String url){
         Uri uri = Uri.parse("market://" +url.substring(url.indexOf("details?id=")));
@@ -180,6 +188,9 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
             case R.id.action_notif:
                 Methods.materialDialog(getActivity(),"Send Push Notification","Inform your app users about your latest product offerings via push notifications. This feature is coming soon.");
                 return true;
+            case R.id.about:
+                ((BusinessAppsActivity)context).addFragments(SHOW_ABOUT_APP);
+                return true;
             default:
                 break;
         }
@@ -189,6 +200,12 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.business_app,menu);
+        MenuItem about = menu.findItem(R.id.about);
+        if(pref != null){
+            about.setVisible(!pref.getBoolean(Key_Preferences.ABOUT_BUSINESS_APP,true));
+            pref.edit().putBoolean(Key_Preferences.ABOUT_BUSINESS_APP,false).apply();
+        }
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 }

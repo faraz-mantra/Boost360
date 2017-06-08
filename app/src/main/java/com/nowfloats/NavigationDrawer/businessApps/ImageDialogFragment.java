@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -53,17 +54,29 @@ public class ImageDialogFragment extends DialogFragment {
         }else if(container instanceof RelativeLayout){
             Log.v("ggg","relative");
         }
-        View v = inflater.inflate(R.layout.dialog_images,container,false);
-        return v;
+        return inflater.inflate(R.layout.dialog_images,container,false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         ViewPager pager = (ViewPager) view.findViewById(R.id.viewpager);
+        ImageView cancel = (ImageView) view.findViewById(R.id.cancel);
         ScreenShotsAdapter adapter = new ScreenShotsAdapter(getChildFragmentManager(),screenShots);
         CirclePageIndicator mIndicator = (CirclePageIndicator) view.findViewById(R.id.ps_indicator);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               BusinessAppPreview frag = (BusinessAppPreview) getParentFragment();
+                if(frag != null){
+                    frag.hideImageDialog();
+                }
+            }
+        });
         pager.setAdapter(adapter);
-        mIndicator.setFillColor(R.color.white);
+        mIndicator.setPageColor(R.color.white);
+        mIndicator.setStrokeWidth(0);
+        mIndicator.setStrokeColor(R.color.white);
+        mIndicator.setFillColor(R.color.primaryColor);
         mIndicator.setViewPager(pager);
     }
 }

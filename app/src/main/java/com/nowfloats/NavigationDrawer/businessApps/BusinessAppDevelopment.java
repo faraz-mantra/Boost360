@@ -2,6 +2,7 @@ package com.nowfloats.NavigationDrawer.businessApps;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,9 +20,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
 
@@ -29,13 +32,13 @@ import com.thinksity.R;
  * Created by Admin on 12/27/2016.
  */
 public class BusinessAppDevelopment extends Fragment implements View.OnClickListener {
-    private static final int SHOW_PREVIEW = 0,SITE_HEALTH=2;
 
     private String type;
     private Context context;
     private UserSessionManager session;
     ImageView back;
     LinearLayout parent;
+    SharedPreferences pref;
 
     public static Fragment getInstance(String type){
         Fragment frag=new BusinessAppDevelopment();
@@ -54,6 +57,7 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
                 setHasOptionsMenu(true);
             }
         }
+        pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         MixPanelController.track(MixPanelController.BUSINESS_APP_BUILD_IN_PROCESS,null);
     }
 
@@ -65,7 +69,6 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_business_app_development_screen,container,false);
     }
 
@@ -106,7 +109,7 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
         else if(!logo.contains("http")){
             logo = "https://"+logo;
         }
-        Glide.with(context)
+        Picasso.with(context)
                 .load(logo)
                 .placeholder(ContextCompat.getDrawable(context,R.drawable.studio_architecture))
                 .into(logoImage);
@@ -133,7 +136,7 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
             case R.id.site_health:
-                ((BusinessAppsActivity)context).addFragments(SITE_HEALTH);
+                ((BusinessAppsActivity)context).addFragments(BusinessAppsActivity.SHOW_SITE_HEALTH);
                 break;
             default:
                 break;
@@ -151,19 +154,29 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
             case R.id.app_preview:
                 frag.showScreenShots();
                 return true;
+            case R.id.about:
+                ((BusinessAppsActivity)context).addFragments(BusinessAppsActivity.SHOW_ABOUT_APP);
+                return true;
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.business_app,menu);
         MenuItem item = menu.findItem(R.id.app_preview);
+        MenuItem about = menu.findItem(R.id.about);
         if(item != null) {
             item.setVisible(true);
         }
+        if(pref != null){
+            about.setVisible(!pref.getBoolean(Key_Preferences.ABOUT_BUSINESS_APP,true));
+            pref.edit().putBoolean(Key_Preferences.ABOUT_BUSINESS_APP,false).apply();
+        }
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 

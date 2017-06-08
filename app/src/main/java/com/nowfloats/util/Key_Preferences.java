@@ -20,6 +20,7 @@ public class Key_Preferences {
     public static final String SHOW_FACEBOOK_REVIEW = "facebook_review";
     public static final String GET_FP_DETAILS_WIDGET_BUSINESS_APP = "GET_FP_DETAILS_BUSINESS_APP";
     public static final String BUSINESS_APP_REQUESTED = "BUSINESS_APP_REQUESTED";
+    public static final String ABOUT_BUSINESS_APP = "AboutBusinessApp";
     public static  String GET_FP_DETAILS_CITY = "GET_FP_DETAILS_CITY";
     public static  String GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG";
     public static  String IS_BOOST_BUBBLE_ENABLED = "IS_BOOST_BUBBLE_ENABLED";

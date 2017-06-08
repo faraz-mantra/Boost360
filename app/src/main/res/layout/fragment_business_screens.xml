@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:id="@+id/business_screen_cardview"
     xmlns:card="http://schemas.android.com/apk/res-auto"
-    card:cardCornerRadius="3dp"
+    card:cardCornerRadius="2dp"
     android:layout_gravity="center"
     card:cardElevation="3dp">
 

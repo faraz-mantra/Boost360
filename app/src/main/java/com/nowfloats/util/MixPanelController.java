@@ -33,6 +33,7 @@ public class MixPanelController {
     public static final String BUSINESS_APP_INTRESTED = "BizAppsIntrested";
     public static final String BUSINESS_APP_PUBLISHED = "BusinessAppPublished";
     public static final String SHARE_BUSINESS_APP = "BusinessAppShare";
+    public static final String BUSINESS_APP = "BusinessApps";
 
     private static MixpanelAPI mixPanel;
 	public static String Bhours = "bhours", Signup = "SignUpActivity",

@@ -43,6 +43,14 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
         this.modelKey = key;
         this.mSessionManager = sessionManager;
         mInflater = (LayoutInflater) appContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if(storeData == null){
+            return;
+        }
+        for(StoreModel model :storeData){
+            if(model.Name != null && model.Name.toLowerCase().contains("demo")){
+                storeData.remove(model);
+            }
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -86,6 +94,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
                         Picasso.with(appContext).load(url).into(holder.imageView);
                     }
                 if (storeData.get(position).Name!=null) {
+
                     holder.titleText.setText(storeData.get(position).Name);
                     if(holder.titleText.getText().toString().toLowerCase().contains("mini")){
                         holder.cardView.setVisibility(View.VISIBLE);

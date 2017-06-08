@@ -118,7 +118,7 @@ public class BusinessAppPreview extends Fragment {
             @Override
             public void success(JsonObject s, Response response) {
 
-                if(s == null || response.getStatus() != 200){
+                if(s == null || !isAdded() || response.getStatus() != 200){
                     MaterialProgressBar.dismissProgressBar();
                     getActivity().finish();
                     return;
@@ -167,7 +167,7 @@ public class BusinessAppPreview extends Fragment {
                         @Override
                         public void success(List<StoreAndGoModel.PublishStatusModel> modelList, Response response) {
                             MaterialProgressBar.dismissProgressBar();
-                            if(modelList == null || modelList.size() == 0 ||response.getStatus() != 200){
+                            if(modelList == null || !isAdded()|| modelList.size() == 0 ||response.getStatus() != 200){
                                 getActivity().finish();
                                 return;
                             }
@@ -220,7 +220,12 @@ public class BusinessAppPreview extends Fragment {
        ImageDialogFragment dialog = ImageDialogFragment.getInstance(screenShots);
         dialog.show(getChildFragmentManager(),"dialog");
     }
-
+    public void hideImageDialog(){
+        ImageDialogFragment dialog = (ImageDialogFragment) getChildFragmentManager().findFragmentByTag("dialog");
+        if(dialog != null && dialog.isVisible()){
+            getChildFragmentManager().beginTransaction().remove(dialog).commit();
+        }
+    }
     private void getScreenShots(){
         MaterialProgressBar.startProgressBar(getActivity(),"Processing...",false);
         final BusinessAppApis.AppApis apis=BusinessAppApis.getRestAdapter();

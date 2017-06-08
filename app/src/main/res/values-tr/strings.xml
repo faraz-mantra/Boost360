@@ -1282,5 +1282,6 @@
     <string name="push_notif">Send notification</string>
     <string name="app_preview">App preview</string>
     <string name="deeplink_business_app">businessapp</string>
+    <string name="about_app">About app</string>
 
 </resources>

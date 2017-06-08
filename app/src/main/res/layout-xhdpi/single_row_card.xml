@@ -15,7 +15,6 @@
             android:id="@+id/firstRow_Layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/sidepanel_cell_height"
-
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:background="@color/cell_background_color">
@@ -51,9 +50,9 @@
                 android:id="@+id/customer_app_ImageView"
                 android:layout_width="38dp"
                 android:scaleType="centerInside"
-                android:padding="10dp"
                 android:layout_height="38dp"
-                android:src="@drawable/business_apps"
+                android:padding="3dp"
+                android:src="@drawable/new_business_app"
                 android:layout_marginStart="@dimen/icon_left_margin"
                 android:layout_marginEnd="@dimen/icon_right_margin"
                 android:layout_marginLeft="@dimen/icon_left_margin"

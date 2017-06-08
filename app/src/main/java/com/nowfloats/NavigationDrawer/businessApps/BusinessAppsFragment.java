@@ -20,6 +20,7 @@ import android.widget.Button;
 
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -35,6 +36,8 @@ public class BusinessAppsFragment extends Fragment {
     viewPagerAdapter mAdapter;
     Button mButton;
     Context context;
+    private SharedPreferences pref;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -48,8 +51,18 @@ public class BusinessAppsFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        setHasOptionsMenu(true);
         this.context=context;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        if(pref.getBoolean(Key_Preferences.ABOUT_BUSINESS_APP,true)) {
+            setHasOptionsMenu(true);
+        }else{
+            setHasOptionsMenu(false);
+        }
     }
 
     @Override
@@ -79,8 +92,10 @@ public class BusinessAppsFragment extends Fragment {
         mPager.setAdapter(mAdapter);
         mIndicator = (CirclePageIndicator) view.findViewById(R.id.ps_indicator);
         mIndicator.setViewPager(mPager);
-        mIndicator.setStrokeColor(R.color.black_translucent);
-        mIndicator.setFillColor(R.color.dark_black_color);
+        mIndicator.setPageColor(R.color.screen_bg);
+        mIndicator.setStrokeWidth(0);
+        mIndicator.setStrokeColor(R.color.screen_bg);
+        mIndicator.setFillColor(R.color.black);
 //        mIndicator.setRadius(5);
         mIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -89,9 +104,14 @@ public class BusinessAppsFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
+
                 switch(position) {
                     case 3:
-                        mButton.setText("GO AHEAD");
+                        if(pref.getBoolean(Key_Preferences.ABOUT_BUSINESS_APP,true)) {
+                            mButton.setText("GO AHEAD");
+                        }else{
+                            mButton.setText("GOT IT");
+                        }
                         break;
                     default:
                         mButton.setText("NEXT");
@@ -112,12 +132,13 @@ public class BusinessAppsFragment extends Fragment {
                     mPager.setCurrentItem(mPager.getCurrentItem()+1,true);
                 }else if(Methods.isOnline(getActivity()))
                 {
-                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-                    int siteMeter = Integer.parseInt(sharedPreferences.getString("sitescore", "0"));
+                    if(pref.getBoolean(Key_Preferences.ABOUT_BUSINESS_APP,true)) {
+                        Intent i = new Intent(context, BusinessAppsActivity.class);
+                        startActivity(i);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }else{
 
-                    Intent i=new Intent(context,BusinessAppsActivity.class);
-                    startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
                 }
             }
         });
@@ -143,7 +164,9 @@ public class BusinessAppsFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.business_app_main_menu,menu);
+        if(pref.getBoolean(Key_Preferences.ABOUT_BUSINESS_APP,true)) {
+            inflater.inflate(R.menu.business_app_main_menu, menu);
+        }
     }
 
     @Override

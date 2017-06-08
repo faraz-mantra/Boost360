@@ -44,6 +44,7 @@ import com.nowfloats.BusinessProfile.UI.API.UploadPictureAsyncTask;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DeleteBackgroundImageAsyncTask;
+import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
@@ -129,6 +130,7 @@ public class SidePanelFragment extends Fragment {
             settingsImageView, StoreImageView, productGalleryImageView,businessappImageView, imageGalleryImageView/*, customerQueriesImageView*/ /*ivSiteAppearance*/;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
     private ImageView businessLockImage;
+    SharedPreferences pref, mSharedPreferences;
 
 
     public interface OnItemClickListener {
@@ -167,6 +169,9 @@ public class SidePanelFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //Log.d("ILUD", "Hello");
+        pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        mSharedPreferences = getActivity().getSharedPreferences(TwitterConnection.PREF_NAME,Context.MODE_PRIVATE);
+
         final String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
         final String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
 
@@ -601,11 +606,16 @@ public class SidePanelFragment extends Fragment {
         businessAppsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-               if (Integer.parseInt(paymentState)>0 && Integer.parseInt(paymentLevel) > 10) {
-                    MixPanelController.track("BusinessApps", null);
-                    onclickColorChange(businessappImageView, businessAppTextview,businessAppsLayout);
-                    ((OnItemClickListener) mainActivity).onClick(getString(R.string.my_business_apps));
+                if (Integer.parseInt(paymentState)>0 && Integer.parseInt(paymentLevel) > 10) {
+                    MixPanelController.track(MixPanelController.BUSINESS_APP, null);
+                    onclickColorChange(businessappImageView, businessAppTextview, businessAppsLayout);
+                    if(pref.getBoolean(Key_Preferences.ABOUT_BUSINESS_APP,true)){
+                        ((OnItemClickListener) mainActivity).onClick(getString(R.string.my_business_apps));
+                    }else {
+                        Intent i = new Intent(getContext(), BusinessAppsActivity.class);
+                        startActivity(i);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }
                 }
                 else {
                     showAlertMaterialDialog();
@@ -1274,8 +1284,6 @@ public class SidePanelFragment extends Fragment {
         meterValue.setText(siteMeterTotalWeight+"%");
     }*/
         public void siteMeterCalculation() {
-            SharedPreferences pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-            SharedPreferences mSharedPreferences = getActivity().getSharedPreferences(TwitterConnection.PREF_NAME,Context.MODE_PRIVATE);
             Constants.fbShareEnabled = pref.getBoolean("fbShareEnabled", false);
             Constants.fbPageShareEnabled = pref.getBoolean("fbPageShareEnabled", false);
             Constants.twitterShareEnabled = mSharedPreferences.getBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false);

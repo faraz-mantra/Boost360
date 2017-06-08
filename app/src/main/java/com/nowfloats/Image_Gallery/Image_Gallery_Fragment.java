@@ -213,8 +213,8 @@ public class Image_Gallery_Fragment extends Fragment implements
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(selectedPOS);
         final int maxNumberofImages = adapter.getCount();
-        currentTextView.setText(Integer.toString(selectedPOS + 1));
-        maxCountTextView.setText(Integer.toString(maxNumberofImages));
+        currentTextView.setText(String.valueOf(selectedPOS + 1));
+        maxCountTextView.setText(String.valueOf(maxNumberofImages));
         //currentTextView.setId(R.id.custom_view_pager);
         // viewPager.setId(R.id.custom_view_pager);
 
@@ -224,7 +224,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                 // BoostLog.d("Image_Gallery_Fragment","Current POS : "+selectedPOS);
                 int selectedPosition = getItem(-1);
                 viewPager.setCurrentItem(selectedPosition, true);
-                currentTextView.setText(Integer.toString(selectedPosition));
+                currentTextView.setText(String.valueOf(selectedPosition));
 
             }
         });
@@ -235,7 +235,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                 BoostLog.d("Image_Gallery_Fragment", "Current POS : " + currentPos);
                 int selectedPosition = getItem(+1);
                 viewPager.setCurrentItem(selectedPosition, true);
-                currentTextView.setText(Integer.toString(selectedPosition));
+                currentTextView.setText(String.valueOf(selectedPosition));
             }
         });
 

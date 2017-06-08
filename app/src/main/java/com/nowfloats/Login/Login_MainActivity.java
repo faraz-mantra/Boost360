@@ -329,11 +329,13 @@ public class Login_MainActivity extends AppCompatActivity implements
                             public void run() {
 //                                Methods.showSnackBarPositive(Login_MainActivity.this,"\n" +
 //                                        "We’ve sent you an email with your login details");
-                                new MaterialDialog.Builder(Login_MainActivity.this)
-                                        .title(getString(R.string.check_your_email))
-                                        .content(getString(R.string.we_sent_email_with_password))
-                                        .positiveText(getString(R.string.ok))
-                                        .show();
+                                if(!isFinishing()) {
+                                    new MaterialDialog.Builder(Login_MainActivity.this)
+                                            .title(getString(R.string.check_your_email))
+                                            .content(getString(R.string.we_sent_email_with_password))
+                                            .positiveText(getString(R.string.ok))
+                                            .show();
+                                }
                             }
                         });
                     }catch (Exception e){
