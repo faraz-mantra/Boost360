@@ -56,6 +56,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+import com.jakewharton.retrofit.Ok3Client;
 import com.nowfloats.riachatsdk.R;
 import com.nowfloats.riachatsdk.adapters.RvButtonsAdapter;
 import com.nowfloats.riachatsdk.adapters.RvChatAdapter;
@@ -89,9 +90,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import okhttp3.OkHttpClient;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -1000,7 +1003,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     private void fetchChatJson() {
         /*if(null!=pg && !pg.isShowing())
             pg.show();*/
-        RestAdapter adapter = new RestAdapter.Builder().setEndpoint(Constants.SERVER_URL).build();
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        OkHttpClient client = builder.connectTimeout(60, TimeUnit.SECONDS).readTimeout(60, TimeUnit.SECONDS).build();
+        RestAdapter adapter = new RestAdapter.Builder().setClient(new Ok3Client(client)).setEndpoint(Constants.SERVER_URL).build();
         ChatJsonInterface chatJsonInterface = adapter.create(ChatJsonInterface.class);
         Map<String, String> query = new HashMap<>();
         query.put("deviceId", DeviceDetails.getDeviceId(this));
