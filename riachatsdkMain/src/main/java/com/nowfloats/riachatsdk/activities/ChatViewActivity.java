@@ -1,7 +1,10 @@
 package com.nowfloats.riachatsdk.activities;
 
 import android.Manifest;
-import android.app.Activity;
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,7 +31,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -56,7 +58,6 @@ import com.nowfloats.riachatsdk.R;
 import com.nowfloats.riachatsdk.adapters.RvButtonsAdapter;
 import com.nowfloats.riachatsdk.adapters.RvChatAdapter;
 import com.nowfloats.riachatsdk.animators.ChatItemAnimator;
-import com.nowfloats.riachatsdk.animators.FlipAnimation;
 import com.nowfloats.riachatsdk.fragments.AddressCardConfirmedFragment;
 import com.nowfloats.riachatsdk.fragments.AddressCardFragment;
 import com.nowfloats.riachatsdk.fragments.BusinessNameConfirmFragment;
@@ -108,7 +109,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     LinearLayout cvChatInput;
     AutoCompleteTextView etChatInput;
     ImageView ivSendMessage, ivScrollDown;
-    TextView tvPrefix, tvPostfix, tvSkip;
+    TextView tvPrefix, tvPostfix,tvSkip;
 
     private Handler mHandler;
 
@@ -224,7 +225,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         Uri.parse("nowfloats://com.riasdk.skip/riachat"));
                 intent.addCategory(Intent.CATEGORY_BROWSABLE);
                 intent.setAction(Intent.ACTION_VIEW);
-                if (intent.resolveActivity(getPackageManager()) != null) {
+                if(intent.resolveActivity(getPackageManager())!=null) {
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
@@ -447,7 +448,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        hideKeyboard(ChatViewActivity.this);
         finish();
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.slide_out_right);
     }
@@ -529,7 +529,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     private void onItemClick(Button button) {
         if (button == null)
             return;
-        if (!button.isHidden() && button.getButtonType() != null && !button.getButtonType().equals(Constants.ButtonType.TYPE_GET_ITEM_FROM_SOURCE)) {
+        if (!button.isHidden() && button.getButtonType()!=null && !button.getButtonType().equals(Constants.ButtonType.TYPE_GET_ITEM_FROM_SOURCE)) {
             replyToRia(Constants.SectionType.TYPE_TEXT, button.getButtonText());
         }
 
@@ -597,7 +597,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         fragment = new PickAddressFragment();
         fragment.setResultListener(new PickAddressFragment.OnResultReceive() {
             @Override
-            public void OnResult(String address, String area, String city, String state, String country, double lat, double lon, String pin, String housePlotNum, String landmark) {
+            public void OnResult(String address, String area, String city, String state, String country, double lat, double lon, String pin,String housePlotNum,String landmark){
                 //TODO: saveREsult
                 //replyToRia(address + "\nCity: " + city + "\nCountry: " + country + "\nPin: " + pin, Constants.SectionType.TYPE_TEXT);
                 ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
@@ -614,7 +614,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 fragment = null;
                 mNextNodeId = btn.getNextNodeId();
                 mCurrButton = btn;
-                showConfirmation(Constants.ConfirmationType.ADDRESS_ENTRY, housePlotNum + ", " + address + ", " + city + ", " + country + ", " + pin + ", " + landmark, lat + "", lon + "");
+                showConfirmation(Constants.ConfirmationType.ADDRESS_ENTRY, housePlotNum +", "+ address + ", " + city + ", " + country + ", " + pin +", "+ landmark, lat + "", lon + "");
             }
         });
         fragment.show(getFragmentManager(), "Test");
@@ -693,17 +693,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 askLocationPermission();
                 mNextNodeId = btn.getNextNodeId();
                 break;
-            case Constants.DeepLinkUrl.LOGIN:
-                Intent intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("nowfloats://com.riasdk.login/riachat"));
-                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setAction(Intent.ACTION_VIEW);
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }
 
-                break;
         }
 
     }
@@ -904,18 +894,19 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             }
         }, time);
 
-        time += 500;
+        time+=500;
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 mSectionList.get(mSectionList.size() - 1).setShowDate(true);
                 mAdapter.notifyItemChanged(mSectionList.size() - 1);
                 rvChatData.scrollToPosition(mSectionList.size() - 1);
-                if (cvChatInput.getVisibility() == INVISIBLE) {
+                if(cvChatInput.getVisibility() == INVISIBLE){
                     cvChatInput.setVisibility(View.VISIBLE);
                     showKeyBoard();
                 }
-                if (rvButtonsContainer.getVisibility() == INVISIBLE) {
+                if(rvButtonsContainer.getVisibility() == INVISIBLE)
+                {
                     rvButtonsContainer.setVisibility(View.VISIBLE);
                 }
             }
@@ -923,25 +914,14 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     }
 
-    private void showKeyBoard() {
+    private void showKeyBoard(){
 
-        if (cvChatInput.getVisibility() == View.VISIBLE) {
+        if(cvChatInput.getVisibility() == View.VISIBLE){
             etChatInput.requestFocus();
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
         }
 
-    }
-
-    private void hideKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        //Find the currently focused view, so we can grab the correct window token from it.
-        View view = activity.getCurrentFocus();
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
-        if (view == null) {
-            view = new View(activity);
-        }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     private String getParsedPrefixPostfixText(String text) {
@@ -982,13 +962,14 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                                 String strVal = adapter.getItem(which);
                                 dialog.dismiss();
                                 replyToRia(Constants.SectionType.TYPE_TEXT, strVal);
-                                if (mCurrVarName != null) {
+                                if(mCurrVarName!=null){
                                     mDataMap.put("[~" + mCurrVarName + "]", strVal);
                                 }
                                 showNextNode(btn.getNextNodeId());
                             }
                         });
-                        builderSingle.show();
+                        Dialog dialog = builderSingle.show();
+                        dialog.setCancelable(false);
                     }
                 }, new com.android.volley.Response.ErrorListener() {
             @Override
@@ -1181,7 +1162,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     @Override
     public void onPositiveResponse(final String confirmationType, final String... confirmationText) {
-        if (mCurrVarName != null && mCurrVarName.trim().length() > 0) {
+        if (mCurrVarName != null && mCurrVarName.trim().length()>0) {
             if (mAutoComplDataHash == null || mAutoComplDataHash.get(etChatInput.getText().toString().trim()) == null) {
                 mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
             } else {
@@ -1202,56 +1183,50 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         .commit();
         }
 
-        FlipAnimation.create().with(flConfirmationCard)
-                .setDuration(5000)
-                .setRepeatCount(FlipAnimation.INFINITE)
-                .start();
+        AnimatorSet animationSet = (AnimatorSet) AnimatorInflater.loadAnimator(this,
+                R.animator.card_flip_right_in);
+        animationSet.setTarget(flConfirmationCard);
 
-//        AnimatorSet animationSet = (AnimatorSet) AnimatorInflater.loadAnimator(this,
-//                R.animator.card_flip_right_out);
-//        animationSet.setTarget(flConfirmationCard);
-//        animationSet.start();
-//
-//        animationSet.addListener(new Animator.AnimatorListener() {
-//            @Override
-//            public void onAnimationStart(Animator animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//                flConfirmationCard.setAlpha((float) 1.0);
-//                flConfirmationCard.setRotationY((float) 0);
-//                mHandler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        switch (confirmationType) {
-//                            case Constants.ConfirmationType.BIZ_NAME:
-//                                replyToRia(Constants.SectionType.TYPE_CARD, confirmationText[0]);
-//                                break;
-//                            case Constants.ConfirmationType.ADDRESS_ENTRY:
-//                                replyToRia(Constants.SectionType.TYPE_ADDRESS_CARD, confirmationText[0], confirmationText[1]);
-//                                break;
-//                        }
-//
-//                        flConfirmationCard.setVisibility(GONE);
-//                        showNextNode(mNextNodeId);
-//
-//
-//                    }
-//                }, 600);
-//            }
-//
-//            @Override
-//            public void onAnimationCancel(Animator animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationRepeat(Animator animation) {
-//
-//            }
-//        });
+        animationSet.start();
+
+        animationSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch (confirmationType) {
+                            case Constants.ConfirmationType.BIZ_NAME:
+                                replyToRia(Constants.SectionType.TYPE_CARD, confirmationText[0]);
+                                break;
+                            case Constants.ConfirmationType.ADDRESS_ENTRY:
+                                replyToRia(Constants.SectionType.TYPE_ADDRESS_CARD, confirmationText[0], confirmationText[1]);
+                                break;
+                        }
+
+                        flConfirmationCard.setVisibility(GONE);
+                        showNextNode(mNextNodeId);
+
+
+                    }
+                }, 600);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
 
 
     }
@@ -1262,8 +1237,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         switch (confirmationType) {
             case Constants.ConfirmationType.BIZ_NAME:
                 rvChatData.setPadding(rvChatData.getPaddingLeft(),
-                        rvChatData.getPaddingTop(), rvChatData.getPaddingRight(),
-                        50);
+                                                rvChatData.getPaddingTop(), rvChatData.getPaddingRight(),
+                                                50);
                 cvChatInput.setVisibility(View.VISIBLE);
                 showKeyBoard();
                 break;
