@@ -6,6 +6,8 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -17,10 +19,13 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -33,14 +38,16 @@ import com.nowfloats.riachatsdk.R;
 import com.nowfloats.riachatsdk.services.FetchAddressIntentService;
 import com.nowfloats.riachatsdk.utils.Constants;
 
+import java.io.IOException;
+import java.util.List;
+
 /**
  * Created by NowFloats on 27-03-2017 by Romio Ranjan Jena.
- *
  */
 
-public class PickAddressFragment extends DialogFragment implements LocationListener{
+public class PickAddressFragment extends DialogFragment implements LocationListener {
 
-    TextInputEditText etStreetAddr, etCity, etCountry, etPin, etLocality,etHousePlotNum,etLandmark;
+    TextInputEditText etStreetAddr, etCity, etCountry, etPin, etLocality, etHousePlotNum, etLandmark;
     Button btnSave;
     private GoogleMap mGoogleMap;
 
@@ -58,7 +65,6 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
     private static final float MIN_DISTANCE = 1000;
 
     private LocationManager mLocationManager;
-
 
     private LatLng mCenterLatLong;
 
@@ -103,16 +109,20 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
             @Override
             public void onClick(View v) {
                 //TODO: Callback Interface
-                if(mResultListener!=null && verifyData()){
+                if (mResultListener != null && verifyData()) {
+
                     mResultListener.OnResult(etStreetAddr.getText().toString().trim(),
-                            mAreaOutput, mCityOutput, mStateOutput, mCountryOutput, mCenterLatLong.latitude, mCenterLatLong.longitude, mPin,
-                            etHousePlotNum.getText().toString(),etLandmark.getText().toString());
-                    Fragment fragment = ((AppCompatActivity)getActivity())
+                            mAreaOutput, mCityOutput, mStateOutput, mCountryOutput, mCenterLatLong.latitude, mCenterLatLong.longitude,
+                            etPin.getText().toString(),
+                            etHousePlotNum.getText().toString(), etLandmark.getText().toString());
+
+                    Fragment fragment = ((AppCompatActivity) getActivity())
                             .getSupportFragmentManager()
                             .findFragmentById(R.id.map);
-                    if (fragment != null){
-                        ((AppCompatActivity)getActivity())
-                            .getSupportFragmentManager().beginTransaction()
+
+                    if (fragment != null) {
+                        ((AppCompatActivity) getActivity())
+                                .getSupportFragmentManager().beginTransaction()
                                 .remove(fragment)
                                 .commit();
                     }
@@ -122,7 +132,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         });
 
         mResultReceiver = new AddressResultReceiver(new Handler());
-        mAddressOutput ="";
+        mAddressOutput = "";
 
         try {
             // Loading map
@@ -132,26 +142,78 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         }
         try {
             getDialog().getWindow().setBackgroundDrawableResource(R.drawable.place_pick_dialog_bg);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+        etStreetAddr.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    reverseGeoCode();
+                }
+                return false;
+            }
+        });
+
         return v;
     }
 
-    private boolean verifyData(){
-        if(etStreetAddr.getText().toString().trim().equals("")){
+    private void reverseGeoCode() {
+
+        String content = "";
+        Geocoder gc = new Geocoder(getActivity());
+        if (gc.isPresent()) {
+            List<Address> list = null;
+            try {
+                Address address = null;
+                list = gc.getFromLocationName(etStreetAddr.getText().toString() + " " + etCity.getText().toString(), 1);
+                double lat = 0, lng = 0;
+                if (list != null && list.size() > 0) {
+
+                    address = list.get(0);
+                    lat = address.getLatitude();
+                    lng = address.getLongitude();
+
+                    /*for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+                        content += address.getAddressLine(i)+" ";
+                    }*/
+//                    if (!TextUtils.isEmpty(content)) {
+
+//                    etStreetAddr.setText(content);
+//                    etStreetAddr.setSelection(etStreetAddr.getText().toString().length());
+//
+//                    etPin.setText(list.get(0).getPostalCode());
+
+                    LatLng latLong = new LatLng(lat, lng);
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(latLong).zoom(18f).build();
+                    mGoogleMap.animateCamera(CameraUpdateFactory
+                            .newCameraPosition(cameraPosition));
+//                    }
+                }
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private boolean verifyData() {
+        if (etStreetAddr.getText().toString().trim().equals("")) {
             Toast.makeText(getActivity(), getString(R.string.empty_address_warn), Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(etCity.getText().toString().trim().equals("")){
+        if (etCity.getText().toString().trim().equals("")) {
             Toast.makeText(getActivity(), getString(R.string.empty_city_warn), Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(etCountry.getText().toString().trim().equals("")){
+        if (etCountry.getText().toString().trim().equals("")) {
             Toast.makeText(getActivity(), getString(R.string.empty_country_warn), Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(etPin.getText().toString().trim().equals("")){
+        if (etPin.getText().toString().trim().equals("")) {
             Toast.makeText(getActivity(), getString(R.string.empty_pin_warn), Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -161,64 +223,64 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
     private void initMap() {
         if (mGoogleMap == null) {
-            ((SupportMapFragment)((AppCompatActivity)getActivity())
+            ((SupportMapFragment) ((AppCompatActivity) getActivity())
                     .getSupportFragmentManager()
                     .findFragmentById(R.id.map))
                     .getMapAsync(new OnMapReadyCallback() {
-                @Override
-                public void onMapReady(GoogleMap googleMap) {
-                    mGoogleMap = googleMap;
-                    if (ActivityCompat.checkSelfPermission(getActivity(),
-                            Manifest.permission.ACCESS_FINE_LOCATION) ==
-                            PackageManager.PERMISSION_GRANTED &&
-                            ActivityCompat.checkSelfPermission(getActivity(),
-                                    Manifest.permission.ACCESS_COARSE_LOCATION) ==
-                                    PackageManager.PERMISSION_GRANTED) {
-                        mGoogleMap.setMyLocationEnabled(true);
-                        mGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
-                    }
+                        @Override
+                        public void onMapReady(GoogleMap googleMap) {
+                            mGoogleMap = googleMap;
+                            if (ActivityCompat.checkSelfPermission(getActivity(),
+                                    Manifest.permission.ACCESS_FINE_LOCATION) ==
+                                    PackageManager.PERMISSION_GRANTED &&
+                                    ActivityCompat.checkSelfPermission(getActivity(),
+                                            Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                                            PackageManager.PERMISSION_GRANTED) {
+                                mGoogleMap.setMyLocationEnabled(true);
+                                mGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
+                            }
 
-                    // check if map is created successfully or not
-                    if (mGoogleMap != null) {
-                        mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
-                        LatLng latLong;
+                            // check if map is created successfully or not
+                            if (mGoogleMap != null) {
+                                mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
+                                LatLng latLong;
 
 
-                        latLong = new LatLng(28.5707228, 77.0218132);
-                        if (ActivityCompat.checkSelfPermission(getActivity(),
-                                Manifest.permission.ACCESS_FINE_LOCATION) ==
-                                PackageManager.PERMISSION_GRANTED &&
-                                ActivityCompat.checkSelfPermission(getActivity(),
-                                        Manifest.permission.ACCESS_COARSE_LOCATION) ==
-                                        PackageManager.PERMISSION_GRANTED) {
-                            mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-                            mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, PickAddressFragment.this);
-                            //latLong = new LatLng(location.getLatitude(), location.getLongitude());
+                                latLong = new LatLng(28.5707228, 77.0218132);
+                                if (ActivityCompat.checkSelfPermission(getActivity(),
+                                        Manifest.permission.ACCESS_FINE_LOCATION) ==
+                                        PackageManager.PERMISSION_GRANTED &&
+                                        ActivityCompat.checkSelfPermission(getActivity(),
+                                                Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                                                PackageManager.PERMISSION_GRANTED) {
+                                    mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+                                    mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, PickAddressFragment.this);
+                                    //latLong = new LatLng(location.getLatitude(), location.getLongitude());
+                                }
+
+                                CameraPosition cameraPosition = new CameraPosition.Builder()
+                                        .target(latLong).zoom(18f).build();
+
+                                if (ActivityCompat.checkSelfPermission(getActivity(),
+                                        Manifest.permission.ACCESS_FINE_LOCATION) ==
+                                        PackageManager.PERMISSION_GRANTED &&
+                                        ActivityCompat.checkSelfPermission(getActivity(),
+                                                Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                                                PackageManager.PERMISSION_GRANTED) {
+                                    mGoogleMap.setMyLocationEnabled(true);
+                                    mGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
+                                }
+                                mGoogleMap.animateCamera(CameraUpdateFactory
+                                        .newCameraPosition(cameraPosition));
+
+                            } else {
+                                Toast.makeText(getActivity(),
+                                        "Sorry! unable to create maps", Toast.LENGTH_SHORT)
+                                        .show();
+                            }
+                            setCameraChangeListener();
                         }
-
-                        CameraPosition cameraPosition = new CameraPosition.Builder()
-                                .target(latLong).zoom(18f).build();
-
-                        if (ActivityCompat.checkSelfPermission(getActivity(),
-                                Manifest.permission.ACCESS_FINE_LOCATION) ==
-                                PackageManager.PERMISSION_GRANTED &&
-                                ActivityCompat.checkSelfPermission(getActivity(),
-                                        Manifest.permission.ACCESS_COARSE_LOCATION) ==
-                                        PackageManager.PERMISSION_GRANTED) {
-                            mGoogleMap.setMyLocationEnabled(true);
-                            mGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
-                        }
-                        mGoogleMap.animateCamera(CameraUpdateFactory
-                                .newCameraPosition(cameraPosition));
-
-                    } else {
-                        Toast.makeText(getActivity(),
-                                "Sorry! unable to create maps", Toast.LENGTH_SHORT)
-                                .show();
-                    }
-                    setCameraChangeListener();
-                }
-            });
+                    });
 
 
         } else {
@@ -227,7 +289,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
     }
 
-    public void setResultListener(OnResultReceive onResultReceive){
+    public void setResultListener(OnResultReceive onResultReceive) {
         mResultListener = onResultReceive;
     }
 
@@ -254,6 +316,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
             }
         });
     }
+
     protected void startIntentService(Location mLocation) {
         Intent intent = new Intent(getActivity(), FetchAddressIntentService.class);
 
@@ -315,18 +378,18 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         }
 
     }
+
     protected void displayAddressOutput() {
         etCity.setText(mCityOutput);
         etCountry.setText(mCountryOutput);
         etStreetAddr.setText(mStateOutput.replaceAll("[\r\n]+", " "));
+        etStreetAddr.setSelection(etStreetAddr.getText().toString().length());
         etPin.setText(mPin);
         etLocality.setText(mLocality);
         btnSave.setVisibility(View.VISIBLE);
     }
 
-    public interface OnResultReceive{
-        void OnResult(String address, String area, String city, String state, String country, double lat, double lon, String pin,String housePlotNum,String landmark);
+    public interface OnResultReceive {
+        void OnResult(String address, String area, String city, String state, String country, double lat, double lon, String pin, String housePlotNum, String landmark);
     }
-
-
 }
