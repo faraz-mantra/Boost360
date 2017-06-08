@@ -57,7 +57,7 @@
                 android:lineSpacingExtra="3dp"
                 android:textSize="17sp"
                 android:padding="15dp"
-                android:gravity="center"
+                android:gravity="left|center_vertical"
                 android:fontFamily="sans-serif"
                 android:paddingTop="20dp"
                 android:paddingLeft="40dp"

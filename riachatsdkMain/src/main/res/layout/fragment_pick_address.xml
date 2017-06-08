@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="16dp"
-    android:background="@drawable/address_main_bg">
+    android:background="@drawable/address_main_bg"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/mapFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_below="@+id/container_toolbar">
 
-        <FrameLayout
-            android:id="@+id/mapFragment"
+        <fragment
+            android:id="@+id/map"
+            class="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/container_toolbar">
+            android:layout_height="185dp" />
 
-            <fragment
-                android:id="@+id/map"
-                class="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="185dp" />
+        <ImageView
+            android:id="@+id/imageMarker"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="18dp"
+            android:src="@drawable/add_marker" />
 
-            <ImageView
-                android:id="@+id/imageMarker"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="18dp"
-                android:src="@drawable/add_marker" />
+    </FrameLayout>
 
-        </FrameLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -139,17 +140,17 @@
             </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
+    </ScrollView>
 
 
-        <Button
-            android:id="@+id/btn_save"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_gravity="right"
-            android:background="@drawable/done_button_bg"
-            android:text="DONE"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="right"
+        android:background="@drawable/done_button_bg"
+        android:text="DONE"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>

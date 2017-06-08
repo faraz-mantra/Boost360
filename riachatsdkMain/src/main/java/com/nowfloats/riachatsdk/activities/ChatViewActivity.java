@@ -1,9 +1,6 @@
 package com.nowfloats.riachatsdk.activities;
 
 import android.Manifest;
-import android.animation.Animator;
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -54,6 +51,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+import com.jakewharton.retrofit.Ok3Client;
 import com.nowfloats.riachatsdk.R;
 import com.nowfloats.riachatsdk.adapters.RvButtonsAdapter;
 import com.nowfloats.riachatsdk.adapters.RvChatAdapter;
@@ -87,9 +85,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import okhttp3.OkHttpClient;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -998,7 +998,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     private void fetchChatJson() {
         /*if(null!=pg && !pg.isShowing())
             pg.show();*/
-        RestAdapter adapter = new RestAdapter.Builder().setEndpoint(Constants.SERVER_URL).build();
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        OkHttpClient client = builder.connectTimeout(60, TimeUnit.SECONDS).readTimeout(60, TimeUnit.SECONDS).build();
+        RestAdapter adapter = new RestAdapter.Builder().setClient(new Ok3Client(client)).setEndpoint(Constants.SERVER_URL).build();
         ChatJsonInterface chatJsonInterface = adapter.create(ChatJsonInterface.class);
         Map<String, String> query = new HashMap<>();
         query.put("deviceId", DeviceDetails.getDeviceId(this));
@@ -1183,7 +1185,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         .commit();
         }
 
-        AnimatorSet animationSet = (AnimatorSet) AnimatorInflater.loadAnimator(this,
+        /*AnimatorSet animationSet = (AnimatorSet) AnimatorInflater.loadAnimator(this,
                 R.animator.card_flip_right_in);
         animationSet.setTarget(flConfirmationCard);
 
@@ -1226,8 +1228,85 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             public void onAnimationRepeat(Animator animation) {
 
             }
-        });
+        });*/
 
+        Animation flipInAnimation = AnimationUtils.loadAnimation(this, R.anim.flip_in_anim);
+        flConfirmationCard.setAnimation(flipInAnimation);
+        flipInAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch (confirmationType) {
+                            case Constants.ConfirmationType.BIZ_NAME:
+                                replyToRia(Constants.SectionType.TYPE_CARD, confirmationText[0]);
+                                break;
+                            case Constants.ConfirmationType.ADDRESS_ENTRY:
+                                replyToRia(Constants.SectionType.TYPE_ADDRESS_CARD, confirmationText[0], confirmationText[1]);
+                                break;
+                        }
+
+                        flConfirmationCard.setVisibility(GONE);
+                        showNextNode(mNextNodeId);
+
+
+                    }
+                }, 600);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        flipInAnimation.start();
+        /*AnimationSet animationSet = new AnimationSet(false);
+        Animation flipInAnimation = AnimationUtils.loadAnimation(this, R.anim.flip_in_anim);
+
+        Animation flipOutAnimation = AnimationUtils.loadAnimation(this, R.anim.flip_out_anim);
+        animationSet.addAnimation(flipInAnimation);
+        animationSet.addAnimation(flipOutAnimation);
+
+        animationSet.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch (confirmationType) {
+                            case Constants.ConfirmationType.BIZ_NAME:
+                                replyToRia(Constants.SectionType.TYPE_CARD, confirmationText[0]);
+                                break;
+                            case Constants.ConfirmationType.ADDRESS_ENTRY:
+                                replyToRia(Constants.SectionType.TYPE_ADDRESS_CARD, confirmationText[0], confirmationText[1]);
+                                break;
+                        }
+
+                        flConfirmationCard.setVisibility(GONE);
+                        showNextNode(mNextNodeId);
+
+
+                    }
+                }, 600);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        flConfirmationCard.startAnimation(animationSet);*/
 
     }
 
