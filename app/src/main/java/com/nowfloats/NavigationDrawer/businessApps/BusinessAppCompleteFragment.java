@@ -33,6 +33,8 @@ import com.thinksity.R;
 import java.util.List;
 
 import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsActivity.SHOW_ABOUT_APP;
+import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO;
+import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_PAID;
 
 /**
  * Created by Admin on 12/27/2016.
@@ -86,7 +88,9 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
         if(!isAdded()) return;
 
         session = new UserSessionManager(context, getActivity());
-
+        if(pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_DEMO) == BIZ_APP_DEMO){
+            pref.edit().putInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_PAID).apply();
+        }
         TextView appNameTextView= (TextView) view.findViewById(R.id.app_name);
         appNameTextView.setSelected(true);
         TextView firstCharText= (TextView) view.findViewById(R.id.textcharacter);
@@ -202,8 +206,7 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
         inflater.inflate(R.menu.business_app,menu);
         MenuItem about = menu.findItem(R.id.about);
         if(pref != null){
-            about.setVisible(!pref.getBoolean(Key_Preferences.ABOUT_BUSINESS_APP,true));
-            pref.edit().putBoolean(Key_Preferences.ABOUT_BUSINESS_APP,false).apply();
+            about.setVisible(pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_DEMO)>BIZ_APP_PAID);
         }
 
         super.onCreateOptionsMenu(menu, inflater);

@@ -29,8 +29,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -44,7 +44,6 @@ import com.nowfloats.BusinessProfile.UI.API.UploadPictureAsyncTask;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DeleteBackgroundImageAsyncTask;
-import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
@@ -609,13 +608,7 @@ public class SidePanelFragment extends Fragment {
                 if (Integer.parseInt(paymentState)>0 && Integer.parseInt(paymentLevel) > 10) {
                     MixPanelController.track(MixPanelController.BUSINESS_APP, null);
                     onclickColorChange(businessappImageView, businessAppTextview, businessAppsLayout);
-                    if(pref.getBoolean(Key_Preferences.ABOUT_BUSINESS_APP,true)){
-                        ((OnItemClickListener) mainActivity).onClick(getString(R.string.my_business_apps));
-                    }else {
-                        Intent i = new Intent(getContext(), BusinessAppsActivity.class);
-                        startActivity(i);
-                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    }
+                    ((OnItemClickListener) mainActivity).onClick(getString(R.string.my_business_apps));
                 }
                 else {
                     showAlertMaterialDialog();

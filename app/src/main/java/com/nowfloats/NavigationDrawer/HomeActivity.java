@@ -89,6 +89,7 @@ import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
 import com.nowfloats.NavigationDrawer.API.KitsuneApi;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
+import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsActivity;
 import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.Product_Gallery.Product_Detail_Activity_V45;
@@ -135,6 +136,10 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
+import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO;
+import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO_REMOVE;
+import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_PAID;
 
 
 public class HomeActivity extends AppCompatActivity implements  SidePanelFragment.OnItemClickListener
@@ -598,8 +603,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                         .commit();
             }
             else if(url.contains(getResources().getString(R.string.deeplink_business_app))){
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.mainFrame, new BusinessAppsFragment()).commit();
+               startBusinessApp();
             }
             else if(url.contains(getResources().getString(R.string.deeplink_socailsharing))){
                 Intent queries = new Intent(HomeActivity.this, Social_Sharing_Activity.class);
@@ -1432,7 +1436,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 //                    .addToBackStack("Profile")
 //                    .commit();
                 }else if(nextScreen.equals(getResources().getString(R.string.my_business_apps))) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,new BusinessAppsFragment()).commit();
+                    startBusinessApp();
                 }else if(nextScreen.equals(getResources().getString(R.string.side_panel_site_appearance))){
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,mSiteAppearanceFragement).
                             commit();
@@ -1547,6 +1551,19 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
     }
 
+    private void startBusinessApp(){
+        int businessAppStatus = pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_DEMO);
+        if(businessAppStatus == BIZ_APP_DEMO){
+            getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,new BusinessAppsFragment()).commit();
+        }else {
+            if(businessAppStatus == BIZ_APP_PAID){
+                pref.edit().putInt(Key_Preferences.ABOUT_BUSINESS_APP, BIZ_APP_DEMO_REMOVE).apply();
+            }
+            Intent i = new Intent(this, BusinessAppsActivity.class);
+            startActivity(i);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        }
+    }
     public void shareWebsite(String text) {
         final Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");

@@ -37,6 +37,7 @@ public class BusinessAppsFragment extends Fragment {
     Button mButton;
     Context context;
     private SharedPreferences pref;
+    public static final int BIZ_APP_PAID =0,BIZ_APP_DEMO_REMOVE =1,BIZ_APP_DEMO = -1;
 
     @Nullable
     @Override
@@ -58,11 +59,7 @@ public class BusinessAppsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-        if(pref.getBoolean(Key_Preferences.ABOUT_BUSINESS_APP,true)) {
-            setHasOptionsMenu(true);
-        }else{
-            setHasOptionsMenu(false);
-        }
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -107,10 +104,10 @@ public class BusinessAppsFragment extends Fragment {
 
                 switch(position) {
                     case 3:
-                        if(pref.getBoolean(Key_Preferences.ABOUT_BUSINESS_APP,true)) {
-                            mButton.setText("GO AHEAD");
-                        }else{
+                        if(pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_DEMO)>BIZ_APP_PAID) {
                             mButton.setText("GOT IT");
+                        }else{
+                            mButton.setText("GO AHEAD");
                         }
                         break;
                     default:
@@ -132,12 +129,12 @@ public class BusinessAppsFragment extends Fragment {
                     mPager.setCurrentItem(mPager.getCurrentItem()+1,true);
                 }else if(Methods.isOnline(getActivity()))
                 {
-                    if(pref.getBoolean(Key_Preferences.ABOUT_BUSINESS_APP,true)) {
+                    if(pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_DEMO)<=BIZ_APP_PAID) {
                         Intent i = new Intent(context, BusinessAppsActivity.class);
                         startActivity(i);
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }else{
-
+                        //finish
                     }
                 }
             }
@@ -164,7 +161,7 @@ public class BusinessAppsFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        if(pref.getBoolean(Key_Preferences.ABOUT_BUSINESS_APP,true)) {
+        if(pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_DEMO)<=BIZ_APP_PAID) {
             inflater.inflate(R.menu.business_app_main_menu, menu);
         }
     }

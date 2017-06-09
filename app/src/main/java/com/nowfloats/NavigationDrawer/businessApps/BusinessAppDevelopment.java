@@ -27,6 +27,9 @@ import com.nowfloats.util.MixPanelController;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
+import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO;
+import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_PAID;
+
 
 /**
  * Created by Admin on 12/27/2016.
@@ -78,6 +81,9 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
         if(!isAdded()) return;
 
         session = new UserSessionManager(context, getActivity());
+        if(pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_DEMO) == BIZ_APP_DEMO){
+            pref.edit().putInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_PAID).apply();
+        }
 
         TextView androidTextView= (TextView) view.findViewById(R.id.android_app);
         TextView appNameTextView= (TextView) view.findViewById(R.id.app_name);
@@ -173,8 +179,7 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
             item.setVisible(true);
         }
         if(pref != null){
-            about.setVisible(!pref.getBoolean(Key_Preferences.ABOUT_BUSINESS_APP,true));
-            pref.edit().putBoolean(Key_Preferences.ABOUT_BUSINESS_APP,false).apply();
+            about.setVisible(pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_DEMO)>BIZ_APP_DEMO);
         }
 
         super.onCreateOptionsMenu(menu, inflater);
