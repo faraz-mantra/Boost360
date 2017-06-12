@@ -246,10 +246,13 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         chatText.append(getParsedPrefixPostfixText(mCurrButton.getPrefixText()));
                     }
 
-                    if (mCurrButton.isConfirmInput()) {
+                    if (!mCurrButton.isPostToChat()) {
                         rvButtonsContainer.setVisibility(View.INVISIBLE);
                         cvChatInput.setVisibility(View.INVISIBLE);
-                        showConfirmation(Constants.ConfirmationType.BIZ_NAME, chatText.toString().trim());
+                        if (mCurrVarName != null) {
+                            mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
+                        }
+                        showNextNode(mCurrButton.getNextNodeId());
                         ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                                 mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), null,
                                 null, mCurrButton.getButtonType());
@@ -510,6 +513,12 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         mHandler.removeCallbacks(mAutoCallRunnable);
         Section section = new Section();
         section.setDateTime(Utils.getFormattedDate(new Date()));
+
+
+        rvChatData.setPadding(rvChatData.getPaddingLeft(),
+                rvChatData.getPaddingTop(), rvChatData.getPaddingRight(),
+                50);
+        riaCardModel.getSections().get(0).setText(getParsedPrefixPostfixText(riaCardModel.getSections().get(0).getText()));
         section.setFromRia(false);
         section.setSectionType(type);
         section.setCardModel(riaCardModel);

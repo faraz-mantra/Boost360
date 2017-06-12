@@ -156,7 +156,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }else if(holder instanceof UnConfirmedCardViewHolder){
             RiaCardModel model = section.getCardModel();
             UnConfirmedCardViewHolder cardViewHolder = (UnConfirmedCardViewHolder) holder;
-            cardViewHolder.tvConfirmationTitle.setText(model.getHeaderText());
+            cardViewHolder.tvConfirmationTitle.setText(model.getCardHeader());
             cardViewHolder.tvConfirmationText.setText(model.getSections().get(0).getText());
 
         } else if (holder instanceof AddressCardViewHolder) {
