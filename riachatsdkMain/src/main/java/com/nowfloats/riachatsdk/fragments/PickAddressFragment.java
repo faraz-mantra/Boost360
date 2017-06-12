@@ -24,6 +24,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -115,17 +117,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         super.onStart();
 
         Dialog dialog = getDialog();
-
-        if (dialog != null) {
-            switch (pick_type) {
-                case USE_GPS:
-                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                    break;
-                case MANUAL:
-                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    break;
-            }
-        }
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
     @Nullable
@@ -138,15 +130,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         llUseGPS = (LinearLayout) v.findViewById(R.id.llUseGPS);
         btnSave = (Button) v.findViewById(R.id.btn_save);
 
-        if (pick_type == PICK_TYPE.MANUAL) {
-            llManual.setVisibility(View.VISIBLE);
-            btnSave.setVisibility(View.VISIBLE);
-            btnSave.setText(getActivity().getResources().getString(R.string.locate_on_map));
-        } else {
-            btnSave.setVisibility(View.INVISIBLE);
-            llUseGPS.setVisibility(View.VISIBLE);
-            btnSave.setText(getActivity().getResources().getString(R.string.done));
-        }
+        llManual.setVisibility(View.VISIBLE);
+        btnSave.setText(getActivity().getResources().getString(R.string.locate_on_map));
 
         etCity = (TextInputEditText) v.findViewById(R.id.et_city);
         etStreetAddr = (TextInputEditText) v.findViewById(R.id.et_street_address);
@@ -158,27 +143,78 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         tvAddress = (TextView) v.findViewById(R.id.tvAddress);
 
         btnSave = (Button) v.findViewById(R.id.btn_save);
+        btnSave.setVisibility(View.GONE);
+        llManual.bringToFront();
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Callback Interface
-                if (mResultListener != null && verifyData()) {
 
-                    mResultListener.OnResult(etStreetAddr.getText().toString().trim(),
-                            mAreaOutput, mCityOutput, mStateOutput, mCountryOutput, mCenterLatLong.latitude, mCenterLatLong.longitude,
-                            etPin.getText().toString(),
-                            etHousePlotNum.getText().toString(), etLandmark.getText().toString());
+                if (btnSave.getText().toString().equalsIgnoreCase(getResources().getString(R.string.locate_on_map))) {
 
-                    Fragment fragment = ((AppCompatActivity) getActivity())
-                            .getSupportFragmentManager()
-                            .findFragmentById(R.id.map);
+                    getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+                            getResources().getDisplayMetrics().heightPixels - 100);
 
-                    if (fragment != null) {
-                        ((AppCompatActivity) getActivity())
-                                .getSupportFragmentManager().beginTransaction()
-                                .remove(fragment)
-                                .commit();
+                    Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down);
+                    llManual.setAnimation(animation);
+                    llUseGPS.setVisibility(View.VISIBLE);
+                    animation.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+//
+                            Animation fadeIn = AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in);
+                            fadeIn.setDuration(3000);
+                            llUseGPS.setAnimation(fadeIn);
+                            fadeIn.setAnimationListener(new Animation.AnimationListener() {
+                                @Override
+                                public void onAnimationStart(Animation animation) {
+
+                                }
+
+                                @Override
+                                public void onAnimationEnd(Animation animation) {
+                                    btnSave.setText(getResources().getString(R.string.done));
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animation animation) {
+
+                                }
+                            });
+                            fadeIn.start();
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            llManual.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                    animation.start();
+
+                } else {
+
+                    if (mResultListener != null && verifyData()) {
+
+                        mResultListener.OnResult(etStreetAddr.getText().toString().trim(),
+                                mAreaOutput, mCityOutput, mStateOutput, mCountryOutput, mCenterLatLong.latitude, mCenterLatLong.longitude,
+                                etPin.getText().toString(),
+                                etHousePlotNum.getText().toString(), etLandmark.getText().toString());
+
+                        Fragment fragment = ((AppCompatActivity) getActivity())
+                                .getSupportFragmentManager()
+                                .findFragmentById(R.id.map);
+
+                        if (fragment != null) {
+                            ((AppCompatActivity) getActivity())
+                                    .getSupportFragmentManager().beginTransaction()
+                                    .remove(fragment)
+                                    .commit();
+                        }
                     }
                 }
 
@@ -294,13 +330,9 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                                 mGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
                             }
 
-                            // check if map is created successfully or not
                             if (mGoogleMap != null) {
                                 mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
-//                                LatLng latLong;
 
-
-//                                latLong = new LatLng(28.5707228, 77.0218132);
                                 if (ActivityCompat.checkSelfPermission(getActivity(),
                                         Manifest.permission.ACCESS_FINE_LOCATION) ==
                                         PackageManager.PERMISSION_GRANTED &&
@@ -309,11 +341,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                                                 PackageManager.PERMISSION_GRANTED) {
                                     mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
                                     mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, PickAddressFragment.this);
-                                    //latLong = new LatLng(location.getLatitude(), location.getLongitude());
                                 }
-
-//                                CameraPosition cameraPosition = new CameraPosition.Builder()
-//                                        .target(latLong).zoom(18f).build();
 
                                 if (ActivityCompat.checkSelfPermission(getActivity(),
                                         Manifest.permission.ACCESS_FINE_LOCATION) ==
@@ -324,8 +352,6 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                                     mGoogleMap.setMyLocationEnabled(true);
                                     mGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
                                 }
-//                                mGoogleMap.animateCamera(CameraUpdateFactory
-//                                        .newCameraPosition(cameraPosition));
 
                             } else {
                                 Toast.makeText(getActivity(),
@@ -333,6 +359,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                                         .show();
                             }
                             setCameraChangeListener();
+                            fetchAddress();
                         }
                     });
 
@@ -352,23 +379,25 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
             @Override
             public void onCameraIdle() {
                 mCenterLatLong = mGoogleMap.getCameraPosition().target;
-
-
                 mGoogleMap.clear();
-
-                try {
-
-                    Location mLocation = new Location("");
-                    mLocation.setLatitude(mCenterLatLong.latitude);
-                    mLocation.setLongitude(mCenterLatLong.longitude);
-
-                    startIntentService(mLocation);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                fetchAddress();
             }
         });
+    }
+
+    private void fetchAddress() {
+
+        try {
+
+            Location mLocation = new Location("");
+            mLocation.setLatitude(mCenterLatLong.latitude);
+            mLocation.setLongitude(mCenterLatLong.longitude);
+
+            startIntentService(mLocation);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     protected void startIntentService(Location mLocation) {
@@ -389,6 +418,11 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         mGoogleMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
         mLocationManager.removeUpdates(this);
+
+        if (llManual.getVisibility() == View.VISIBLE) {
+            mCenterLatLong = latLng;
+            fetchAddress();
+        }
     }
 
     @Override
@@ -437,8 +471,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         etCity.setText(mCityOutput);
         etCountry.setText(mCountryOutput);
 
-        if(!TextUtils.isEmpty(mStateOutput)){
-            etStreetAddr.setText(mStateOutput.replaceAll("[\r\n]+", " ")+"");
+        if (!TextUtils.isEmpty(mStateOutput)) {
+            etStreetAddr.setText(mStateOutput.replaceAll("[\r\n]+", " ") + "");
         }
         etStreetAddr.setSelection(etStreetAddr.getText().toString().length());
 
@@ -448,12 +482,13 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
 //        if(TextUtils.isEmpty(tvAddress.getText().toString())){
 
-            String address = etHousePlotNum.getText().toString() + ", " + etLandmark.getText().toString() + ", " +
-                    etStreetAddr.getText().toString().trim() + ", " +
-                    mCityOutput + ", " + mCountryOutput + ", " +
-                    etPin.getText().toString();
+        String address = etHousePlotNum.getText().toString() + ", " + etLandmark.getText().toString() + ", " +
+                etStreetAddr.getText().toString().trim() + ", " +
+                mCityOutput + ", " + mCountryOutput + ", " +
+                etPin.getText().toString();
 
-            tvAddress.setText(address);
+        tvAddress.setText(address);
+        btnSave.setVisibility(View.VISIBLE);
 //        }
 
     }
