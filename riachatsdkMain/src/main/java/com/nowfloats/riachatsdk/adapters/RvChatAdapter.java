@@ -1,5 +1,6 @@
 package com.nowfloats.riachatsdk.adapters;
 
+import android.animation.LayoutTransition;
 import android.content.Context;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -113,6 +114,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 return new TypingViewHolder(v);
 
         }
+        ((LinearLayout)v).setLayoutTransition(new LayoutTransition());
     }
 
     @Override

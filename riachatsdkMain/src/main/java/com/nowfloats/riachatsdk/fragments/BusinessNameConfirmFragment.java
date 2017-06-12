@@ -9,13 +9,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.nowfloats.riachatsdk.R;
-import com.nowfloats.riachatsdk.interfaces.IConfirmationCallbackInterface;
+import com.nowfloats.riachatsdk.interfaces.IConfirmationCallback;
 import com.nowfloats.riachatsdk.utils.Constants;
 
 public class BusinessNameConfirmFragment extends Fragment {
     private static final String ARG_BIZ_NAME = "business_name";
 
-    private IConfirmationCallbackInterface mCallBack;
+    private IConfirmationCallback mCallBack;
     private String mBizName;
 
 
@@ -33,10 +33,10 @@ public class BusinessNameConfirmFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if(activity instanceof IConfirmationCallbackInterface){
-            mCallBack = (IConfirmationCallbackInterface) activity;
+        if(activity instanceof IConfirmationCallback){
+            mCallBack = (IConfirmationCallback) activity;
         }else {
-            throw new RuntimeException("Not Instance of IConfirmationCallbackInterface");
+            throw new RuntimeException("Not Instance of IConfirmationCallback");
         }
     }
 

@@ -1,7 +1,6 @@
 package com.nowfloats.riachatsdk.fragments;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,7 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.nowfloats.riachatsdk.R;
-import com.nowfloats.riachatsdk.interfaces.IConfirmationCallbackInterface;
+import com.nowfloats.riachatsdk.interfaces.IConfirmationCallback;
 import com.nowfloats.riachatsdk.utils.Constants;
 import com.nowfloats.riachatsdk.utils.Utils;
 
@@ -26,7 +25,7 @@ public class AddressCardFragment extends Fragment {
     private String mLatitiude;
     private String mLongitude;
 
-    private IConfirmationCallbackInterface mCallback;
+    private IConfirmationCallback mCallback;
 
     public AddressCardFragment() {
     }
@@ -44,8 +43,8 @@ public class AddressCardFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if(activity instanceof IConfirmationCallbackInterface){
-            mCallback = (IConfirmationCallbackInterface) activity;
+        if(activity instanceof IConfirmationCallback){
+            mCallback = (IConfirmationCallback) activity;
         }else {
             throw new RuntimeException("Callback not implemented");
         }

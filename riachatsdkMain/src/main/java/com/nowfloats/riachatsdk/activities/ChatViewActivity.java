@@ -65,7 +65,8 @@ import com.nowfloats.riachatsdk.fragments.PickAddressFragment;
 import com.nowfloats.riachatsdk.helpers.ChatLogger;
 import com.nowfloats.riachatsdk.helpers.DeviceDetails;
 import com.nowfloats.riachatsdk.interfaces.ChatJsonInterface;
-import com.nowfloats.riachatsdk.interfaces.IConfirmationCallbackInterface;
+import com.nowfloats.riachatsdk.interfaces.IChatAnimCallback;
+import com.nowfloats.riachatsdk.interfaces.IConfirmationCallback;
 import com.nowfloats.riachatsdk.models.Button;
 import com.nowfloats.riachatsdk.models.RiaCardModel;
 import com.nowfloats.riachatsdk.models.Section;
@@ -99,9 +100,10 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
 
 public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdapter.OnItemClickListener,
-        IConfirmationCallbackInterface {
+        IConfirmationCallback, IChatAnimCallback {
     private final String KEY_NEXT_NODE_ID = "NextNodeId";
     private static final int AUDIO_REQUEST_CODE = 56;
 
@@ -110,7 +112,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     LinearLayout cvChatInput;
     AutoCompleteTextView etChatInput;
     ImageView ivSendMessage, ivScrollDown;
-    TextView tvPrefix, tvPostfix,tvSkip;
+    TextView tvPrefix, tvPostfix, tvSkip;
 
     private Handler mHandler;
 
@@ -226,7 +228,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         Uri.parse("nowfloats://com.riasdk.skip/riachat"));
                 intent.addCategory(Intent.CATEGORY_BROWSABLE);
                 intent.setAction(Intent.ACTION_VIEW);
-                if(intent.resolveActivity(getPackageManager())!=null) {
+                if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
@@ -530,7 +532,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     private void onItemClick(Button button) {
         if (button == null)
             return;
-        if (!button.isHidden() && button.getButtonType()!=null && !button.getButtonType().equals(Constants.ButtonType.TYPE_GET_ITEM_FROM_SOURCE)) {
+        if (!button.isHidden() && button.getButtonType() != null && !button.getButtonType().equals(Constants.ButtonType.TYPE_GET_ITEM_FROM_SOURCE)) {
             replyToRia(Constants.SectionType.TYPE_TEXT, button.getButtonText());
         }
 
@@ -598,7 +600,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         fragment = new PickAddressFragment();
         fragment.setResultListener(new PickAddressFragment.OnResultReceive() {
             @Override
-            public void OnResult(String address, String area, String city, String state, String country, double lat, double lon, String pin,String housePlotNum,String landmark){
+            public void OnResult(String address, String area, String city, String state, String country, double lat, double lon, String pin, String housePlotNum, String landmark) {
                 //TODO: saveREsult
                 //replyToRia(address + "\nCity: " + city + "\nCountry: " + country + "\nPin: " + pin, Constants.SectionType.TYPE_TEXT);
                 ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
@@ -615,7 +617,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 fragment = null;
                 mNextNodeId = btn.getNextNodeId();
                 mCurrButton = btn;
-                showConfirmation(Constants.ConfirmationType.ADDRESS_ENTRY, housePlotNum +", "+ address + ", " + city + ", " + country + ", " + pin +", "+ landmark, lat + "", lon + "");
+                showConfirmation(Constants.ConfirmationType.ADDRESS_ENTRY, housePlotNum + ", " + address + ", " + city + ", " + country + ", " + pin + ", " + landmark, lat + "", lon + "");
             }
         });
         fragment.show(getFragmentManager(), "Test");
@@ -756,6 +758,14 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     rvChatData.scrollToPosition(mSectionList.size() - 1);
                 }
             }, time);
+
+            if (section.getDelayInMs() < getResources().getInteger(android.R.integer.config_longAnimTime)) {
+                Log.e("section",section.getText()+500);
+                section.setDelayInMs(getResources().getInteger(android.R.integer.config_longAnimTime));
+            }else{
+                Log.e("section",section.getText()+section.getDelayInMs());
+            }
+
             time += section.getDelayInMs();
             mHandler.postDelayed(new Runnable() {
                 @Override
@@ -895,29 +905,38 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             }
         }, time);
 
-        time+=500;
+        time += 800;
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 mSectionList.get(mSectionList.size() - 1).setShowDate(true);
                 mAdapter.notifyItemChanged(mSectionList.size() - 1);
                 rvChatData.scrollToPosition(mSectionList.size() - 1);
-                if(cvChatInput.getVisibility() == INVISIBLE){
+                if (cvChatInput.getVisibility() == INVISIBLE) {
                     cvChatInput.setVisibility(View.VISIBLE);
-                    showKeyBoard();
                 }
-                if(rvButtonsContainer.getVisibility() == INVISIBLE)
-                {
+                if (rvButtonsContainer.getVisibility() == INVISIBLE) {
                     rvButtonsContainer.setVisibility(View.VISIBLE);
+                }
+            }
+        }, time);
+
+        time += 300;
+
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (cvChatInput.getVisibility() == VISIBLE) {
+                    showKeyBoard();
                 }
             }
         }, time);
 
     }
 
-    private void showKeyBoard(){
+    private void showKeyBoard() {
 
-        if(cvChatInput.getVisibility() == View.VISIBLE){
+        if (cvChatInput.getVisibility() == View.VISIBLE) {
             etChatInput.requestFocus();
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
@@ -963,7 +982,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                                 String strVal = adapter.getItem(which);
                                 dialog.dismiss();
                                 replyToRia(Constants.SectionType.TYPE_TEXT, strVal);
-                                if(mCurrVarName!=null){
+                                if (mCurrVarName != null) {
                                     mDataMap.put("[~" + mCurrVarName + "]", strVal);
                                 }
                                 showNextNode(btn.getNextNodeId());
@@ -1165,7 +1184,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     @Override
     public void onPositiveResponse(final String confirmationType, final String... confirmationText) {
-        if (mCurrVarName != null && mCurrVarName.trim().length()>0) {
+        if (mCurrVarName != null && mCurrVarName.trim().length() > 0) {
             if (mAutoComplDataHash == null || mAutoComplDataHash.get(etChatInput.getText().toString().trim()) == null) {
                 mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
             } else {
@@ -1317,8 +1336,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         switch (confirmationType) {
             case Constants.ConfirmationType.BIZ_NAME:
                 rvChatData.setPadding(rvChatData.getPaddingLeft(),
-                                                rvChatData.getPaddingTop(), rvChatData.getPaddingRight(),
-                                                50);
+                        rvChatData.getPaddingTop(), rvChatData.getPaddingRight(),
+                        50);
                 cvChatInput.setVisibility(View.VISIBLE);
                 showKeyBoard();
                 break;
@@ -1326,6 +1345,11 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 getUserAddress(mCurrButton);
                 break;
         }
+    }
+
+    @Override
+    public void onAnimationend() {
+
     }
 
 
