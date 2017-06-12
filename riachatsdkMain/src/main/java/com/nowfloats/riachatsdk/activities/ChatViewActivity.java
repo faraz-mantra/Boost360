@@ -249,10 +249,13 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         chatText.append(getParsedPrefixPostfixText(mCurrButton.getPrefixText()));
                     }
 
-                    if (mCurrButton.isConfirmInput()) {
+                    if (!mCurrButton.isPostToChat()) {
                         rvButtonsContainer.setVisibility(View.INVISIBLE);
                         cvChatInput.setVisibility(View.INVISIBLE);
-                        showConfirmation(Constants.ConfirmationType.BIZ_NAME, chatText.toString().trim());
+                        if (mCurrVarName != null) {
+                            mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
+                        }
+                        showNextNode(mCurrButton.getNextNodeId());
                         ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                                 mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), null,
                                 null, mCurrButton.getButtonType());
@@ -517,7 +520,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         rvChatData.setPadding(rvChatData.getPaddingLeft(),
                 rvChatData.getPaddingTop(), rvChatData.getPaddingRight(),
                 50);
-
+        riaCardModel.getSections().get(0).setText(getParsedPrefixPostfixText(riaCardModel.getSections().get(0).getText()));
         section.setFromRia(false);
         section.setSectionType(type);
         section.setCardModel(riaCardModel);
@@ -1228,43 +1231,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             case Constants.ConfirmationType.ADDRESS_ENTRY:
                 showNextNode(data[1]);
         }
-
-        Animation flipInAnimation = AnimationUtils.loadAnimation(this, R.anim.flip_in_anim);
-        flConfirmationCard.setAnimation(flipInAnimation);
-        flipInAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        switch (confirmationType) {
-                            case Constants.ConfirmationType.BIZ_NAME:
-                                replyToRia(Constants.SectionType.TYPE_CARD, data[0]);
-                                break;
-                            case Constants.ConfirmationType.ADDRESS_ENTRY:
-                                replyToRia(Constants.SectionType.TYPE_ADDRESS_CARD, data[0], data[1]);
-                                break;
-                        }
-
-                        flConfirmationCard.setVisibility(GONE);
-                        showNextNode(mNextNodeId);
-
-
-                    }
-                }, 600);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-        flipInAnimation.start();
 
 
     }

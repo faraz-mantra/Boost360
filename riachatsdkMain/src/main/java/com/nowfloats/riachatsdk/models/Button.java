@@ -60,6 +60,18 @@ public class Button implements Serializable{
     @Expose
     private boolean confirmInput;
 
+    @SerializedName("PostToChat")
+    @Expose
+    private boolean postToChat;
+
+    public boolean isPostToChat() {
+        return postToChat;
+    }
+
+    public void setPostToChat(boolean postToChat) {
+        this.postToChat = postToChat;
+    }
+
     public Boolean getDefaultButton() {
         return defaultButton;
     }
