@@ -527,12 +527,13 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 showNextNode(riaCardModel.getNextNodeId());
                 return;
             }
-            for(final Button btn : riaCardModel.getButtons()){
-                if(btn.getButtonType().equals(Constants.ButtonType.TYPE_NEXT_NODE) && btn.isHidden()){
+            for(Button btn : riaCardModel.getButtons()){
+                if(btn.getButtonType().equals(Constants.ButtonType.TYPE_NEXT_NODE) && btn.isDefaultButton()){
+                    final Button button = btn;
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            showNextNode(btn.getNextNodeId());
+                            showNextNode(button.getNextNodeId());
                         }
                     }, btn.getBounceTimeout());
                     break;
@@ -1031,7 +1032,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                             public void onClick(DialogInterface dialog, int which) {
                                 String strVal = adapter.getItem(which);
                                 dialog.dismiss();
-                                replyToRia(Constants.SectionType.TYPE_TEXT, strVal);
+                                //replyToRia(Constants.SectionType.TYPE_TEXT, strVal);
                                 if (mCurrVarName != null) {
                                     mDataMap.put("[~" + mCurrVarName + "]", strVal);
                                 }
