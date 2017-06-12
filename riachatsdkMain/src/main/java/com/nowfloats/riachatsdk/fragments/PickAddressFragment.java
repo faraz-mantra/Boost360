@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,8 +48,14 @@ import java.util.List;
 
 public class PickAddressFragment extends DialogFragment implements LocationListener {
 
-    TextInputEditText etStreetAddr, etCity, etCountry, etPin, etLocality, etHousePlotNum, etLandmark;
-    Button btnSave;
+    private TextInputEditText etStreetAddr, etCity, etCountry, etPin, etLocality, etHousePlotNum, etLandmark;
+
+    private Button btnSave;
+
+    private TextView tvAddress;
+
+    private LinearLayout llManual, llUseGPS;
+
     private GoogleMap mGoogleMap;
 
     private AddressResultReceiver mResultReceiver;
@@ -70,9 +77,31 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
     private OnResultReceive mResultListener;
 
+    private static final String ARG_MAP_TYPE = "map_type";
+
+    private PICK_TYPE pick_type;
+
+    public static PickAddressFragment newInstance(PICK_TYPE pick_type) {
+
+        PickAddressFragment fragment = new PickAddressFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_MAP_TYPE, pick_type);
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
+    public enum PICK_TYPE {
+        USE_GPS,
+        MANUAL
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            pick_type = (PICK_TYPE) getArguments().get(ARG_MAP_TYPE);
+        }
     }
 
     @Override
@@ -83,9 +112,18 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
     @Override
     public void onStart() {
         super.onStart();
+
         Dialog dialog = getDialog();
+
         if (dialog != null) {
-            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            switch (pick_type) {
+                case USE_GPS:
+                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                    break;
+                case MANUAL:
+                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    break;
+            }
         }
     }
 
@@ -94,6 +132,21 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_pick_address, container, false);
         setCancelable(false);
+
+        llManual = (LinearLayout) v.findViewById(R.id.llManual);
+        llUseGPS = (LinearLayout) v.findViewById(R.id.llUseGPS);
+        btnSave = (Button) v.findViewById(R.id.btn_save);
+
+        if (pick_type == PICK_TYPE.MANUAL) {
+            llManual.setVisibility(View.VISIBLE);
+            btnSave.setVisibility(View.VISIBLE);
+            btnSave.setText(getActivity().getResources().getString(R.string.locate_on_map));
+        } else {
+            btnSave.setVisibility(View.INVISIBLE);
+            llUseGPS.setVisibility(View.VISIBLE);
+            btnSave.setText(getActivity().getResources().getString(R.string.done));
+        }
+
         etCity = (TextInputEditText) v.findViewById(R.id.et_city);
         etStreetAddr = (TextInputEditText) v.findViewById(R.id.et_street_address);
         etCountry = (TextInputEditText) v.findViewById(R.id.et_country);
@@ -101,10 +154,10 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         etLocality = (TextInputEditText) v.findViewById(R.id.et_locality);
         etHousePlotNum = (TextInputEditText) v.findViewById(R.id.et_house_plot_num);
         etLandmark = (TextInputEditText) v.findViewById(R.id.et_landmark);
-        btnSave = (Button) v.findViewById(R.id.btn_save);
+        tvAddress = (TextView) v.findViewById(R.id.tvAddress);
 
         btnSave = (Button) v.findViewById(R.id.btn_save);
-        btnSave.setVisibility(View.INVISIBLE);
+
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -387,6 +440,14 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         etPin.setText(mPin);
         etLocality.setText(mLocality);
         btnSave.setVisibility(View.VISIBLE);
+
+        String address = etStreetAddr.getText().toString().trim() + ", " +
+                mCityOutput + ", " + mCountryOutput + ", " +
+                etPin.getText().toString() + ", " +
+                etHousePlotNum.getText().toString() + ", " + etLandmark.getText().toString();
+
+        tvAddress.setText(address);
+
     }
 
     public interface OnResultReceive {

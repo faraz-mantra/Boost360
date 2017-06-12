@@ -22,4 +22,6 @@
     <string name="confirmed_business_name">CONFIRMED BUSINESS NAME</string>
     <string name="confirmed_business_addr">CONFIRMED BUSINESS ADDRESS</string>
     <string name="skip">SKIP</string>
+    <string name="done">DONE</string>
+    <string name="locate_on_map">LOCATE ON MAP</string>
 </resources>

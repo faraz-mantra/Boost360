@@ -6,142 +6,170 @@
     android:background="@drawable/address_main_bg"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/mapFragment"
+    <LinearLayout
+        android:id="@+id/llManual"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/container_toolbar">
+        android:layout_marginBottom="@dimen/margin_20"
+        android:layout_marginTop="@dimen/margin_20"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <fragment
-            android:id="@+id/map"
-            class="com.google.android.gms.maps.SupportMapFragment"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="185dp" />
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-        <ImageView
-            android:id="@+id/imageMarker"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="18dp"
-            android:src="@drawable/add_marker" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:orientation="vertical">
 
-    </FrameLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/house_plot_num">
 
-    <ScrollView
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/et_house_plot_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/street_address">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/et_street_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/locality">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/et_locality"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/land_mark">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/et_landmark"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/loc_city">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/et_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/loc_country"
+                    android:inputType="text">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/et_country"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/loc_pincode">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/et_pincode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llUseGPS"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/mapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/container_toolbar"
+            android:layout_weight="1">
+
+            <fragment
+                android:id="@+id/map"
+                class="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:id="@+id/imageMarker"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="18dp"
+                android:src="@drawable/add_marker" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:orientation="vertical">
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/house_plot_num">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/et_house_plot_num"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/street_address">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/et_street_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:imeOptions="actionDone"
-                    android:inputType="text"
-                    android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/locality">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/et_locality"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/land_mark">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/et_landmark"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/loc_city">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/et_city"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/loc_country"
-                android:inputType="text">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/et_country"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/loc_pincode">
-
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/et_pincode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
-
-            </android.support.design.widget.TextInputLayout>
-
-        </LinearLayout>
-    </ScrollView>
-
+            android:padding="@dimen/margin_40"
+            android:textSize="@dimen/large_text_size" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_save"
@@ -149,7 +177,7 @@
         android:layout_height="60dp"
         android:layout_gravity="right"
         android:background="@drawable/done_button_bg"
-        android:text="DONE"
+        android:text="@string/done"
         android:textColor="@color/white"
         android:textSize="18sp" />
 

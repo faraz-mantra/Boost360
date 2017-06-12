@@ -28,7 +28,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -57,10 +56,8 @@ import com.nowfloats.riachatsdk.R;
 import com.nowfloats.riachatsdk.adapters.RvButtonsAdapter;
 import com.nowfloats.riachatsdk.adapters.RvChatAdapter;
 import com.nowfloats.riachatsdk.animators.ChatItemAnimator;
-import com.nowfloats.riachatsdk.fragments.AddressCardConfirmedFragment;
 import com.nowfloats.riachatsdk.fragments.AddressCardFragment;
 import com.nowfloats.riachatsdk.fragments.BusinessNameConfirmFragment;
-import com.nowfloats.riachatsdk.fragments.BusinessNameConfirmedFragment;
 import com.nowfloats.riachatsdk.fragments.PickAddressFragment;
 import com.nowfloats.riachatsdk.helpers.ChatLogger;
 import com.nowfloats.riachatsdk.helpers.DeviceDetails;
@@ -130,7 +127,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     private RvChatAdapter mAdapter;
     private RvButtonsAdapter mButtonsAdapter;
     private RequestQueue mRequestQueue;
-    private PickAddressFragment fragment;
+    private PickAddressFragment pickAddressFragment;
     private FileUploadResultReceiver mReceiver;
     private ImageView ivAgentIcon;
     private TextView tvRiaTyping;
@@ -447,6 +444,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        hideSoftKeyboard();
         finish();
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.slide_out_right);
     }
@@ -512,15 +510,10 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         mHandler.removeCallbacks(mAutoCallRunnable);
         Section section = new Section();
         section.setDateTime(Utils.getFormattedDate(new Date()));
-
-
-        rvChatData.setPadding(rvChatData.getPaddingLeft(),
-                rvChatData.getPaddingTop(), rvChatData.getPaddingRight(),
-                50);
-
         section.setFromRia(false);
         section.setSectionType(type);
         section.setCardModel(riaCardModel);
+
         if(isReplace){
             mSectionList.set(mSectionList.size()-1, section);
             mAdapter.notifyItemChanged(mSectionList.size() - 1);
@@ -607,8 +600,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
 
     private void getUserAddress(final Button btn) {
-        fragment = new PickAddressFragment();
-        fragment.setResultListener(new PickAddressFragment.OnResultReceive() {
+        pickAddressFragment = PickAddressFragment.newInstance(PickAddressFragment.PICK_TYPE.USE_GPS);
+
+        pickAddressFragment.setResultListener(new PickAddressFragment.OnResultReceive() {
             @Override
             public void OnResult(String address, String area, String city, String state, String country, double lat, double lon, String pin, String housePlotNum, String landmark) {
                 //TODO: saveREsult
@@ -622,15 +616,15 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 mDataMap.put("[~" + "PINCODE" + "]", pin);
                 mDataMap.put("[~" + "LAT" + "]", lat + "");
                 mDataMap.put("[~" + "LNG" + "]", lon + "");
-                fragment.setResultListener(null);
-                fragment.dismiss();
-                fragment = null;
+                pickAddressFragment.setResultListener(null);
+                pickAddressFragment.dismiss();
+                pickAddressFragment = null;
                 mNextNodeId = btn.getNextNodeId();
                 mCurrButton = btn;
                 showConfirmation(Constants.ConfirmationType.ADDRESS_ENTRY, housePlotNum + ", " + address + ", " + city + ", " + country + ", " + pin + ", " + landmark, lat + "", lon + "");
             }
         });
-        fragment.show(getFragmentManager(), "Test");
+        pickAddressFragment.show(getFragmentManager(), "Test");
     }
 
     private void getImage(Button btn) {
@@ -1229,42 +1223,42 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 showNextNode(data[1]);
         }
 
-        Animation flipInAnimation = AnimationUtils.loadAnimation(this, R.anim.flip_in_anim);
-        flConfirmationCard.setAnimation(flipInAnimation);
-        flipInAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        switch (confirmationType) {
-                            case Constants.ConfirmationType.BIZ_NAME:
-                                replyToRia(Constants.SectionType.TYPE_CARD, data[0]);
-                                break;
-                            case Constants.ConfirmationType.ADDRESS_ENTRY:
-                                replyToRia(Constants.SectionType.TYPE_ADDRESS_CARD, data[0], data[1]);
-                                break;
-                        }
-
-                        flConfirmationCard.setVisibility(GONE);
-                        showNextNode(mNextNodeId);
-
-
-                    }
-                }, 600);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-        flipInAnimation.start();
+//        Animation flipInAnimation = AnimationUtils.loadAnimation(this, R.anim.flip_in_anim);
+//        flConfirmationCard.setAnimation(flipInAnimation);
+//        flipInAnimation.setAnimationListener(new Animation.AnimationListener() {
+//            @Override
+//            public void onAnimationStart(Animation animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animation animation) {
+//                mHandler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        switch (confirmationType) {
+//                            case Constants.ConfirmationType.BIZ_NAME:
+//                                replyToRia(Constants.SectionType.TYPE_CARD, data[0]);
+//                                break;
+//                            case Constants.ConfirmationType.ADDRESS_ENTRY:
+//                                replyToRia(Constants.SectionType.TYPE_ADDRESS_CARD, data[0], data[1]);
+//                                break;
+//                        }
+//
+//                        flConfirmationCard.setVisibility(GONE);
+//                        showNextNode(mNextNodeId);
+//
+//
+//                    }
+//                }, 600);
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animation animation) {
+//
+//            }
+//        });
+//        flipInAnimation.start();
 
 
     }
