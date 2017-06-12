@@ -50,7 +50,8 @@ import java.util.Locale;
 public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public enum SectionTypeEnum {
-        Header(-1), Image(0), Text(1), Graph(2), Gif(3), Audio(4), Video(5), Link(6), EmbeddedHtml(7), Carousel(8), Typing(9), Card(10), AddressCard(11), UnConfirmedCard(12);
+        Header(-1), Image(0), Text(1), Graph(2), Gif(3), Audio(4), Video(5), Link(6), EmbeddedHtml(7),
+        Carousel(8), Typing(9), Card(10), AddressCard(11), UnConfirmedCard(12), UnConfirmedAddressCard(13);
         private final int val;
 
         private SectionTypeEnum(int val) {
@@ -519,7 +520,8 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             this.tvEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mConfirmationCallback.onNegativeResponse(Constants.ConfirmationType.BIZ_NAME);
+                    mConfirmationCallback.onNegativeResponse(Constants.ConfirmationType.BIZ_NAME,
+                            mChatSections.get(getAdapterPosition()).getCardModel().getButtons().get(1).getNextNodeId());
                 }
             });
         }

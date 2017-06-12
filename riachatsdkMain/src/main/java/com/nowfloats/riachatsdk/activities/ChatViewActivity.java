@@ -1232,53 +1232,15 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 showNextNode(data[1]);
         }
 
-//        Animation flipInAnimation = AnimationUtils.loadAnimation(this, R.anim.flip_in_anim);
-//        flConfirmationCard.setAnimation(flipInAnimation);
-//        flipInAnimation.setAnimationListener(new Animation.AnimationListener() {
-//            @Override
-//            public void onAnimationStart(Animation animation) {
-//
-//            }
-//
-//            @Override
-//            public void onAnimationEnd(Animation animation) {
-//                mHandler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        switch (confirmationType) {
-//                            case Constants.ConfirmationType.BIZ_NAME:
-//                                replyToRia(Constants.SectionType.TYPE_CARD, data[0]);
-//                                break;
-//                            case Constants.ConfirmationType.ADDRESS_ENTRY:
-//                                replyToRia(Constants.SectionType.TYPE_ADDRESS_CARD, data[0], data[1]);
-//                                break;
-//                        }
-//
-//                        flConfirmationCard.setVisibility(GONE);
-//                        showNextNode(mNextNodeId);
-//
-//
-//                    }
-//                }, 600);
-//            }
-//
-//            @Override
-//            public void onAnimationRepeat(Animation animation) {
-//
-//            }
-//        });
-//        flipInAnimation.start();
-
-
     }
 
     @Override
-    public void onNegativeResponse(String confirmationType) {
-        flConfirmationCard.setVisibility(GONE);
+    public void onNegativeResponse(String confirmationType, final String... data) {
+        mSectionList.remove(mSectionList.size()-1);
+        mAdapter.notifyItemRemoved(mSectionList.size());
         switch (confirmationType) {
             case Constants.ConfirmationType.BIZ_NAME:
-                cvChatInput.setVisibility(View.VISIBLE);
-                showKeyBoard();
+                showNextNode(data[0]);
                 break;
             case Constants.ConfirmationType.ADDRESS_ENTRY:
                 getUserAddress(mCurrButton);

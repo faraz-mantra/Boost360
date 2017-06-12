@@ -24,6 +24,7 @@ public class Constants {
         String TYPE_CARD = "Card";
         String TYPE_ADDRESS_CARD = "AddressCard";
         String TYPE_UNCONFIRMED_CARD = "UnConfirmedCard";
+        String TYPE_UNCONFIRMED_ADDR_CARD = "UnConfirmedAddressCard";
     }
     public interface ApiType{
         String TYPE_GET = "GET";
