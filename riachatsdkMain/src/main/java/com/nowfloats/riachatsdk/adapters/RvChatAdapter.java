@@ -1,6 +1,5 @@
 package com.nowfloats.riachatsdk.adapters;
 
-import android.animation.LayoutTransition;
 import android.content.Context;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -46,7 +45,8 @@ import java.util.Locale;
 public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public enum SectionTypeEnum {
-        Header(-1), Image(0), Text(1), Graph(2), Gif(3), Audio(4), Video(5), Link(6), EmbeddedHtml(7), Carousel(8), Typing(9), Card(10), AddressCard(11);
+        Header(-1), Image(0), Text(1), Graph(2), Gif(3), Audio(4), Video(5), Link(6), EmbeddedHtml(7),
+        Carousel(8), Typing(9), Card(10), AddressCard(11),BusinessCard(12);
         private final int val;
 
         private SectionTypeEnum(int val) {
@@ -109,12 +109,14 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case 11:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_address_card_row_layout, parent, false);
                 return new AddressCardViewHolder(v);
+            case 12:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_business_name_confirm, parent, false);
+                return new BusinessCardHolder(v);
             default:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_typing_row_layout, parent, false);
                 return new TypingViewHolder(v);
 
         }
-        ((LinearLayout)v).setLayoutTransition(new LayoutTransition());
     }
 
     @Override
@@ -184,21 +186,21 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.reply_followup_bubble);
                     lp.setMargins(Utils.dpToPx(mContext, 60), 0, Utils.dpToPx(mContext, 15), 0);
                 }
-                if(!section.isAnimApplied()){
+                if (!section.isAnimApplied()) {
                     Animation a = new TranslateAnimation(
-                                                    Animation.ABSOLUTE, //from xType
-                                                    -200,
-                                                    Animation.ABSOLUTE, //to xType
-                                                    0,
-                                                    Animation.ABSOLUTE, //from yType
-                                                    200,
-                                                    Animation.ABSOLUTE, //to yType
-                                                    0
-                                                    );
-                                    a.setDuration(500);
-                                    textViewHolder.itemView.setAnimation(a);
-                                    a.start();
-                                    //Anim End
+                            Animation.ABSOLUTE, //from xType
+                            -200,
+                            Animation.ABSOLUTE, //to xType
+                            0,
+                            Animation.ABSOLUTE, //from yType
+                            200,
+                            Animation.ABSOLUTE, //to yType
+                            0
+                    );
+                    a.setDuration(500);
+                    textViewHolder.itemView.setAnimation(a);
+                    a.start();
+                    //Anim End
                     section.setIsAnimApplied(true);
                 }
 
@@ -228,7 +230,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             section.setIsAnimApplied(true);
                         }
                     }, 500);
-                }else{
+                } else {
                     textViewHolder.llBubbleContainer.setVisibility(View.VISIBLE);
                     textViewHolder.llBubbleContainer.setLayoutParams(lp);
                 }
@@ -404,6 +406,10 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             });
 
 
+        } else if (holder instanceof BusinessCardHolder) {
+
+            final BusinessCardHolder businessCardHolder = (BusinessCardHolder) holder;
+
         }
     }
 
@@ -420,6 +426,19 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public HeaderViewHolder(View itemView) {
             super(itemView);
             tvDateTime = (TextView) itemView.findViewById(R.id.tv_date_time);
+        }
+    }
+
+    private class BusinessCardHolder extends RecyclerView.ViewHolder {
+
+        TextView tvTitle, tvMessage, tvEdit, tvConfirm;
+
+        public BusinessCardHolder(View itemView) {
+            super(itemView);
+            tvTitle = (TextView) itemView.findViewById(R.id.tv_confirmation_title);
+            tvMessage = (TextView) itemView.findViewById(R.id.tv_confirmation_text);
+            tvEdit = (TextView) itemView.findViewById(R.id.tv_edit);
+            tvConfirm = (TextView) itemView.findViewById(R.id.tv_confirm);
         }
     }
 

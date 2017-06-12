@@ -13,7 +13,8 @@
         android:supportsRtl="true">
         <activity
             android:name="com.nowfloats.riachatsdk.activities.ChatViewActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustResize">
 
         </activity>
 

@@ -23,6 +23,7 @@ public class Constants {
         String TYPE_HEADER = "Header";
         String TYPE_CARD = "Card";
         String TYPE_ADDRESS_CARD = "AddressCard";
+        String TYPE_BUSINESS_CARD = "BusinessCard";
     }
     public interface ApiType{
         String TYPE_GET = "GET";
