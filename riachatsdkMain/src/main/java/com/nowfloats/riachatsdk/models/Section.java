@@ -101,6 +101,16 @@ public class Section implements Serializable{
     @SerializedName("DateTime")
     @Expose
     private String dateTime;
+    private RiaCardModel cardModel;
+
+
+    public RiaCardModel getCardModel() {
+        return cardModel;
+    }
+
+    public void setCardModel(RiaCardModel cardModel) {
+        this.cardModel = cardModel;
+    }
 
     private boolean isAnimApplied = false;
 

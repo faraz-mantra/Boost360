@@ -30,7 +30,11 @@ import com.bumptech.glide.Glide;
 import com.nowfloats.riachatsdk.CustomWidget.AVLoadingIndicatorView;
 import com.nowfloats.riachatsdk.CustomWidget.playpause.PlayPauseView;
 import com.nowfloats.riachatsdk.R;
+import com.nowfloats.riachatsdk.interfaces.IConfirmationCallback;
+import com.nowfloats.riachatsdk.models.Button;
+import com.nowfloats.riachatsdk.models.RiaCardModel;
 import com.nowfloats.riachatsdk.models.Section;
+import com.nowfloats.riachatsdk.utils.Constants;
 import com.nowfloats.riachatsdk.utils.Utils;
 
 import java.io.IOException;
@@ -46,7 +50,7 @@ import java.util.Locale;
 public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public enum SectionTypeEnum {
-        Header(-1), Image(0), Text(1), Graph(2), Gif(3), Audio(4), Video(5), Link(6), EmbeddedHtml(7), Carousel(8), Typing(9), Card(10), AddressCard(11);
+        Header(-1), Image(0), Text(1), Graph(2), Gif(3), Audio(4), Video(5), Link(6), EmbeddedHtml(7), Carousel(8), Typing(9), Card(10), AddressCard(11), UnConfirmedCard(12);
         private final int val;
 
         private SectionTypeEnum(int val) {
@@ -60,10 +64,14 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private List<Section> mChatSections;
     private Context mContext;
+    private IConfirmationCallback mConfirmationCallback;
 
     public RvChatAdapter(List<Section> mChatSections, Context context) {
         this.mChatSections = mChatSections;
         mContext = context;
+        if(context instanceof IConfirmationCallback){
+            mConfirmationCallback = (IConfirmationCallback) mContext;
+        }
     }
 
     @Override
@@ -109,29 +117,30 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case 11:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_address_card_row_layout, parent, false);
                 return new AddressCardViewHolder(v);
+            case 12:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_card_unconfirmed_layout, parent, false);
+                return new UnConfirmedCardViewHolder(v);
             default:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_typing_row_layout, parent, false);
                 return new TypingViewHolder(v);
 
         }
-        ((LinearLayout)v).setLayoutTransition(new LayoutTransition());
+        //((LinearLayout)v).setLayoutTransition(new LayoutTransition());
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final Section section = mChatSections.get(position);
 
-        /*if (holder instanceof TypingViewHolder) {
-            ((TypingViewHolder) holder).rlLoadingDots.
-                    startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.slide_in_left));
-        } else*/
-        if (holder instanceof HeaderViewHolder) {
+        /*if (holder instanceof HeaderViewHolder) {
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             SimpleDateFormat format = new SimpleDateFormat("EEE, dd MMM", Locale.US);
             headerViewHolder.tvDateTime.setText(format.format(new Date()));
-        } else if (holder instanceof CardViewHolder) {
+        } else */
+        if (holder instanceof CardViewHolder) {
             CardViewHolder cardViewHolder = (CardViewHolder) holder;
-            cardViewHolder.tvConfirmationText.setText(Html.fromHtml(section.getText()));
+            cardViewHolder.tvConfirmationText.setText(Html.fromHtml(section.getCardModel().getSections().get(0).getText()));
+            cardViewHolder.tvConfirmedHintText.setText(Html.fromHtml(section.getCardModel().getCardFooter()));
             if (section.isShowDate()) {
                 cardViewHolder.tvDateTime.setVisibility(View.VISIBLE);
                 cardViewHolder.tvDateTime.setText(section.getDateTime());
@@ -143,6 +152,12 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             cardViewHolder.llBubbleContainer.setLayoutParams(lp);
             cardViewHolder.tvConfirmationText.setTextColor(Color.parseColor("#ffffff"));
+
+        }else if(holder instanceof UnConfirmedCardViewHolder){
+            RiaCardModel model = section.getCardModel();
+            UnConfirmedCardViewHolder cardViewHolder = (UnConfirmedCardViewHolder) holder;
+            cardViewHolder.tvConfirmationTitle.setText(model.getHeaderText());
+            cardViewHolder.tvConfirmationText.setText(model.getSections().get(0).getText());
 
         } else if (holder instanceof AddressCardViewHolder) {
             AddressCardViewHolder cardViewHolder = (AddressCardViewHolder) holder;
@@ -461,7 +476,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private class CardViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvConfirmationText, tvDateTime;
+        TextView tvConfirmationText, tvDateTime, tvConfirmedHintText;
         View itemView;
         LinearLayout llBubbleContainer;
 
@@ -471,8 +486,42 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             this.itemView = itemView;
 
             this.tvConfirmationText = (TextView) itemView.findViewById(R.id.tv_confirmed_business_text);
+            this.tvConfirmedHintText = (TextView) itemView.findViewById(R.id.tv_confirmed_hint_text);
             this.tvDateTime = (TextView) itemView.findViewById(R.id.tv_date_time);
             this.llBubbleContainer = (LinearLayout) itemView.findViewById(R.id.ll_bubble_container);
+        }
+    }
+
+    private class UnConfirmedCardViewHolder extends RecyclerView.ViewHolder{
+
+        TextView tvConfirmationTitle, tvConfirmationText;
+        TextView tvConfirm, tvEdit;
+        View itemView;
+
+        public UnConfirmedCardViewHolder(View itemView) {
+            super(itemView);
+
+            this.itemView = itemView;
+            this.tvConfirmationText = (TextView) itemView.findViewById(R.id.tv_confirmation_text);
+            this.tvConfirmationTitle = (TextView) itemView.findViewById(R.id.tv_confirmation_title);
+            this.tvConfirm = (TextView) itemView.findViewById(R.id.tv_confirm);
+            this.tvEdit = (TextView) itemView.findViewById(R.id.tv_edit);
+
+            this.tvConfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mConfirmationCallback.onPositiveResponse(Constants.ConfirmationType.BIZ_NAME,
+                            tvConfirmationText.getText().toString(),
+                            mChatSections.get(getAdapterPosition()).getCardModel().getButtons().get(0).getNextNodeId());
+                }
+            });
+
+            this.tvEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mConfirmationCallback.onNegativeResponse(Constants.ConfirmationType.BIZ_NAME);
+                }
+            });
         }
     }
 

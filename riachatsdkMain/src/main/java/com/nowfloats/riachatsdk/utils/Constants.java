@@ -23,6 +23,7 @@ public class Constants {
         String TYPE_HEADER = "Header";
         String TYPE_CARD = "Card";
         String TYPE_ADDRESS_CARD = "AddressCard";
+        String TYPE_UNCONFIRMED_CARD = "UnConfirmedCard";
     }
     public interface ApiType{
         String TYPE_GET = "GET";
@@ -30,6 +31,7 @@ public class Constants {
     }
     public interface NodeType{
         String TYPE_API_CALL = "ApiCall";
+        String TYPE_CARD = "Card";
     }
 
     public interface ButtonType{

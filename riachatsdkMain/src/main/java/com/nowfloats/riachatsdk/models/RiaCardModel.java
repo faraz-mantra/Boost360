@@ -44,12 +44,56 @@ public class RiaCardModel implements Serializable{
     @SerializedName("ApiUrl")
     @Expose
     private String apiUrl;
+    @SerializedName("CardHeader")
+    @Expose
+    private String cardHeader;
+    @SerializedName("CardFooter")
+    @Expose
+    private String cardFooter;
+    @SerializedName("Placement")
+    @Expose
+    private String placement;
     @SerializedName("ApiType")
     @Expose
     private String apiType;
+    @SerializedName("NextNodeId")
+    @Expose
+    private String nextNodeId;
     @SerializedName("RequiredVariables")
     @Expose
     private List<String> requiredVariables = null;
+
+    public String getNextNodeId() {
+        return nextNodeId;
+    }
+
+    public void setNextNodeId(String nextNodeId) {
+        this.nextNodeId = nextNodeId;
+    }
+
+    public String getCardHeader() {
+        return cardHeader;
+    }
+
+    public void setCardHeader(String cardHeader) {
+        this.cardHeader = cardHeader;
+    }
+
+    public String getCardFooter() {
+        return cardFooter;
+    }
+
+    public void setCardFooter(String cardFooter) {
+        this.cardFooter = cardFooter;
+    }
+
+    public String getPlacement() {
+        return placement;
+    }
+
+    public void setPlacement(String placement) {
+        this.placement = placement;
+    }
 
     public String getApiType() {
         return apiType;
