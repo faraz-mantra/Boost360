@@ -100,7 +100,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
-import static android.view.View.VISIBLE;
 
 public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdapter.OnItemClickListener,
         IConfirmationCallback, IChatAnimCallback {
@@ -251,8 +250,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     }
 
                     if (mCurrButton.isConfirmInput()) {
-                        rvButtonsContainer.setVisibility(View.GONE);
-                        cvChatInput.setVisibility(View.GONE);
+                        rvButtonsContainer.setVisibility(View.INVISIBLE);
+                        cvChatInput.setVisibility(View.INVISIBLE);
                         showConfirmation(Constants.ConfirmationType.BIZ_NAME, chatText.toString().trim());
                         ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                                 mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), null,
@@ -281,7 +280,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         mButtonList.clear();
                         mButtonsAdapter.notifyDataSetChanged();
                         rvButtonsContainer.setVisibility(View.INVISIBLE);
-                        cvChatInput.setVisibility(GONE);
+                        cvChatInput.setVisibility(View.INVISIBLE);
                         showNextNode(mNextNodeId);
                     }
                 }
@@ -320,21 +319,19 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 int position = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+
                 if (position < (mSectionList.size() - 2)) {
                     ivScrollDown.setVisibility(View.VISIBLE);
                 } else {
                     ivScrollDown.setVisibility(View.INVISIBLE);
                 }
-                /*int position = ((LinearLayoutManager)recyclerView.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
-                if(position!=0){
-                    ivAgentIcon.setVisibility(View.VISIBLE);
-                }else {
-                    ivAgentIcon.setVisibility(View.GONE);
-                }*/
             }
         });
 
-        mReceiver = new FileUploadResultReceiver(new Handler());
+        mReceiver = new
+
+                FileUploadResultReceiver(new Handler());
+
         fetchChatJson();
 
     }
@@ -355,7 +352,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         a.setDuration(500);
         flConfirmationCard.setAnimation(a);
         a.start();
-        //Anim end
         switch (confirmationType) {
             case Constants.ConfirmationType.BIZ_NAME:
                 getSupportFragmentManager().beginTransaction()
@@ -460,11 +456,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         Section section = new Section();
         section.setDateTime(Utils.getFormattedDate(new Date()));
 
-
-        rvChatData.setPadding(rvChatData.getPaddingLeft(),
-                rvChatData.getPaddingTop(), rvChatData.getPaddingRight(),
-                50);
-
         switch (type) {
             case Constants.SectionType.TYPE_ADDRESS_CARD:
                 section.setFromRia(false);
@@ -560,7 +551,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         mButtonList.clear();
         mButtonsAdapter.notifyDataSetChanged();
         rvButtonsContainer.setVisibility(View.INVISIBLE);
-        cvChatInput.setVisibility(GONE);
+        cvChatInput.setVisibility(View.INVISIBLE);
         switch (button.getButtonType()) {
             case Constants.ButtonType.TYPE_NEXT_NODE:
                 if (mCurrVarName != null && button.getVariableValue() != null && !button.getVariableValue().isEmpty()) {
@@ -790,10 +781,10 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             }, time);
 
             if (section.getDelayInMs() < getResources().getInteger(android.R.integer.config_longAnimTime)) {
-                Log.e("section",section.getText()+500);
+                Log.e("section", section.getText() + 500);
                 section.setDelayInMs(getResources().getInteger(android.R.integer.config_longAnimTime));
-            }else{
-                Log.e("section",section.getText()+section.getDelayInMs());
+            } else {
+                Log.e("section", section.getText() + section.getDelayInMs());
             }
 
             time += section.getDelayInMs();
@@ -910,24 +901,12 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         }
                     }
                 }
+                mButtonsAdapter.notifyDataSetChanged();
+                rvButtonsContainer.setVisibility(View.INVISIBLE);
 
-                if (mButtonList.size() > 0) {
-
-                    mButtonsAdapter.notifyDataSetChanged();
-                    rvButtonsContainer.setVisibility(View.INVISIBLE);
-                    rvButtonsContainer.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-                        @Override
-                        public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                            rvChatData.setPadding(rvChatData.getPaddingLeft(),
-                                    rvChatData.getPaddingTop(), rvChatData.getPaddingRight(),
-                                    bottom * 2);
-                        }
-                    });
-
-                } else {
-                    rvButtonsContainer.setVisibility(GONE);
-                    mButtonsAdapter.notifyDataSetChanged();
-                }
+                mSectionList.get(mSectionList.size() - 1).setShowDate(true);
+                mAdapter.notifyItemChanged(mSectionList.size() - 1);
+                rvChatData.scrollToPosition(mSectionList.size() - 1);
 
                 if (mDefaultButton != null && node.getTimeoutInMs() != -1L) {
                     mHandler.postDelayed(mAutoCallRunnable, node.getTimeoutInMs());
@@ -939,15 +918,17 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mSectionList.get(mSectionList.size() - 1).setShowDate(true);
-                mAdapter.notifyItemChanged(mSectionList.size() - 1);
-                rvChatData.scrollToPosition(mSectionList.size() - 1);
-                if (cvChatInput.getVisibility() == INVISIBLE) {
-                    cvChatInput.setVisibility(View.VISIBLE);
+
+                if (mButtonList.size() > 0) {
+                    if (rvButtonsContainer.getVisibility() == INVISIBLE) {
+                        rvButtonsContainer.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    if (cvChatInput.getVisibility() == INVISIBLE) {
+                        cvChatInput.setVisibility(View.VISIBLE);
+                    }
                 }
-                if (rvButtonsContainer.getVisibility() == INVISIBLE) {
-                    rvButtonsContainer.setVisibility(View.VISIBLE);
-                }
+
             }
         }, time);
 
@@ -956,9 +937,26 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (cvChatInput.getVisibility() == VISIBLE) {
-                    showKeyBoard();
-                }
+
+                showKeyBoard();
+
+                rvChatData.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                    @Override
+                    public void onLayoutChange(View v,
+                                               int left, int top, int right, int bottom,
+                                               int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                        if (bottom < oldBottom) {
+                            rvChatData.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    rvChatData.smoothScrollToPosition(
+                                            rvChatData.getAdapter().getItemCount() - 1);
+                                }
+                            }, 50);
+                        }
+                    }
+                });
+
             }
         }, time);
 
@@ -1088,8 +1086,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         mAdapter = new RvChatAdapter(mSectionList, this);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setStackFromEnd(true);
-        layoutManager.setReverseLayout(false);
+//        layoutManager.setStackFromEnd(true);
+//        layoutManager.setReverseLayout(false);
 
         rvChatData.setItemAnimator(new ChatItemAnimator(ChatViewActivity.this));
         rvChatData.setLayoutManager(layoutManager);
@@ -1222,7 +1220,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             }
         }
         etChatInput.setText("");
-        cvChatInput.setVisibility(GONE);
+        cvChatInput.setVisibility(View.INVISIBLE);
         switch (confirmationType) {
             case Constants.ConfirmationType.BIZ_NAME:
                 showNextNode(data[1]);
@@ -1231,6 +1229,44 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 showNextNode(data[1]);
         }
 
+        Animation flipInAnimation = AnimationUtils.loadAnimation(this, R.anim.flip_in_anim);
+        flConfirmationCard.setAnimation(flipInAnimation);
+        flipInAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch (confirmationType) {
+                            case Constants.ConfirmationType.BIZ_NAME:
+                                replyToRia(Constants.SectionType.TYPE_CARD, data[0]);
+                                break;
+                            case Constants.ConfirmationType.ADDRESS_ENTRY:
+                                replyToRia(Constants.SectionType.TYPE_ADDRESS_CARD, data[0], data[1]);
+                                break;
+                        }
+
+                        flConfirmationCard.setVisibility(GONE);
+                        showNextNode(mNextNodeId);
+
+
+                    }
+                }, 600);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        flipInAnimation.start();
+
+
     }
 
     @Override
@@ -1238,9 +1274,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         flConfirmationCard.setVisibility(GONE);
         switch (confirmationType) {
             case Constants.ConfirmationType.BIZ_NAME:
-                rvChatData.setPadding(rvChatData.getPaddingLeft(),
-                        rvChatData.getPaddingTop(), rvChatData.getPaddingRight(),
-                        50);
                 cvChatInput.setVisibility(View.VISIBLE);
                 showKeyBoard();
                 break;

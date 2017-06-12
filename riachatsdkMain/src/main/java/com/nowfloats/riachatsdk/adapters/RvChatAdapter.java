@@ -243,7 +243,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             section.setIsAnimApplied(true);
                         }
                     }, 500);
-                }else{
+                } else {
                     textViewHolder.llBubbleContainer.setVisibility(View.VISIBLE);
                     textViewHolder.llBubbleContainer.setLayoutParams(lp);
                 }
