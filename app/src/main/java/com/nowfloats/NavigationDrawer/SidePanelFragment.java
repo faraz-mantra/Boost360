@@ -272,9 +272,10 @@ public class SidePanelFragment extends Fragment {
                     url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
                             + getActivity().getResources().getString(R.string.tag_for_partners);
                 }
-                Uri uri = Uri.parse(url);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+                Intent showWebSiteIntent = new Intent(getContext(), Mobile_Site_Activity.class);
+                // showWebSiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                showWebSiteIntent.putExtra("WEBSITE_NAME", url);
+                startActivity(showWebSiteIntent);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });

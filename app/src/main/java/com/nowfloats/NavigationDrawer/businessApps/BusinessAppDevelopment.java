@@ -179,7 +179,7 @@ public class BusinessAppDevelopment extends Fragment implements View.OnClickList
             item.setVisible(true);
         }
         if(pref != null){
-            about.setVisible(pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_DEMO)>BIZ_APP_DEMO);
+            about.setVisible(pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_DEMO)>BIZ_APP_PAID);
         }
 
         super.onCreateOptionsMenu(menu, inflater);

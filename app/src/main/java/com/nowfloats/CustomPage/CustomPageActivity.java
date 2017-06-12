@@ -2,10 +2,8 @@ package com.nowfloats.CustomPage;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -84,6 +82,7 @@ public class CustomPageActivity extends Fragment  {
         deleteInterface.DeletePageTrigger(0,false,null);
 //        getSupportActionBar().setDisplayShowTitleEnabled(true);
 //        getSupportActionBar().setBackgroundDrawable(defaultColor);
+        if(titleTextView != null)
         titleTextView.setText(getString(R.string.custom_pages));
         delete.setVisibility(View.GONE);
         customPageDeleteCheck = false;
@@ -154,6 +153,7 @@ public class CustomPageActivity extends Fragment  {
 
         //Title
         titleTextView = HomeActivity.headerText;
+        if(titleTextView != null)
         titleTextView.setText(getString(R.string.custom_pages));
         final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources()
                 .getColor(R.color.white), PorterDuff.Mode.SRC_IN);
@@ -204,6 +204,7 @@ public class CustomPageActivity extends Fragment  {
             deleteInterface.DeletePageTrigger(0,false,null);
 //            getSupportActionBar().setDisplayShowTitleEnabled(false);
 //            getSupportActionBar().setBackgroundDrawable(defaultColor);
+            if(titleTextView != null)
             titleTextView.setText(getString(R.string.custom_pages));
             delete.setVisibility(View.GONE);
             customPageDeleteCheck = false;
@@ -231,6 +232,7 @@ public class CustomPageActivity extends Fragment  {
             posList = new ArrayList<String>();
 //            getSupportActionBar().setDisplayShowTitleEnabled(false);
 //            getSupportActionBar().setBackgroundDrawable(defaultColor);
+            if(titleTextView != null)
             titleTextView.setText(getString(R.string.custom_pages));
             delete.setVisibility(View.GONE);
             customPageDeleteCheck = false;
@@ -259,7 +261,8 @@ public class CustomPageActivity extends Fragment  {
         if (posList.size()>0){
             size = posList.size()+"";
         }
-        titleTextView.setText(size+getString(R.string.page_selected));
+        if(titleTextView != null)
+        titleTextView.setText(size+""+getString(R.string.page_selected));
         delete.setImageResource(R.drawable.delete_dustbin_small);
         delete.setVisibility(View.VISIBLE);
         customPageDeleteCheck = true;
@@ -291,6 +294,7 @@ public class CustomPageActivity extends Fragment  {
                                     deleteInterface.DeletePageTrigger(0,false,null);
 //                                    getSupportActionBar().setDisplayShowTitleEnabled(false);
 //                                    getSupportActionBar().setBackgroundDrawable(defaultColor);
+                                    if(titleTextView != null)
                                     titleTextView.setText(getString(R.string.custom_pages));
                                     delete.setVisibility(View.GONE);
                                     customPageDeleteCheck = false;
@@ -301,6 +305,7 @@ public class CustomPageActivity extends Fragment  {
                                     deleteInterface.DeletePageTrigger(0,false,null);
 //                                    getSupportActionBar().setDisplayShowTitleEnabled(false);
 //                                    getSupportActionBar().setBackgroundDrawable(defaultColor);
+                                    if(titleTextView != null)
                                     titleTextView.setText(getString(R.string.custom_pages));
                                     delete.setVisibility(View.GONE);
                                     customPageDeleteCheck = false;
@@ -321,6 +326,7 @@ public class CustomPageActivity extends Fragment  {
                                 deleteInterface.DeletePageTrigger(0,false,null);
 //                                getSupportActionBar().setDisplayShowTitleEnabled(false);
 //                                getSupportActionBar().setBackgroundDrawable(defaultColor);
+                                if(titleTextView != null)
                                 titleTextView.setText(getString(R.string.custom_pages));
                                 delete.setVisibility(View.GONE);
                                 customPageDeleteCheck = false;
@@ -338,13 +344,15 @@ public class CustomPageActivity extends Fragment  {
             String size = "";
             if (posList.size()>0){
                 size = posList.size()+"";
-                titleTextView.setText(size+getString(R.string.page_selected));
+                if(titleTextView != null)
+                titleTextView.setText(size+""+getString(R.string.page_selected));
             }
             if(posList.size()==0){
                 posList = new ArrayList<String>();
                 deleteInterface.DeletePageTrigger(0,false,null);
 //                getSupportActionBar().setDisplayShowTitleEnabled(false);
 //                getSupportActionBar().setBackgroundDrawable(defaultColor);
+                if(titleTextView != null)
                 titleTextView.setText(getString(R.string.custom_pages));
                 delete.setVisibility(View.GONE);
                 customPageDeleteCheck = false;

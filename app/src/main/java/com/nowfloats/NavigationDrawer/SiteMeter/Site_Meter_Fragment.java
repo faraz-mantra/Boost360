@@ -274,7 +274,7 @@ public class Site_Meter_Fragment extends Fragment {
 
     public void siteMeterCalculation() {
         siteMeterTotalWeight = 0;
-        if(siteData == null) return;
+        if(siteData == null || !isAdded()) return;
         for (int i = 0; i < siteData.size(); i++) {
             if (siteData.get(i).position == domain) {
                 if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {

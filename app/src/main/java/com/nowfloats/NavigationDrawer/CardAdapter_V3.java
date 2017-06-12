@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.UserSessionManager;
@@ -206,10 +207,10 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                                         @Override
                                         public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
                                             pd.dismiss();
-                                            Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-                                            View view = new View(appContext);
-                                            view.draw(new Canvas(mutableBitmap));
                                             try {
+                                                Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                                                View view = new View(appContext);
+                                                view.draw(new Canvas(mutableBitmap));
                                                 String path = MediaStore.Images.Media.insertImage(appContext.getContentResolver(), mutableBitmap, "Nur", null);
                                                 BoostLog.d("Path is:", path);
                                                 Uri uri = Uri.parse(path);
@@ -224,7 +225,9 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                                                 } else {
                                                     Methods.showSnackBarNegative(appContext,appContext.getString(R.string.no_app_available_for_action));
                                                 }
-                                            }catch (Exception e){
+                                            }catch(OutOfMemoryError e){
+                                                Toast.makeText(appContext, "Image size is large, not able to share", Toast.LENGTH_SHORT).show();
+                                            } catch (Exception e){
                                                 ActivityCompat.requestPermissions(appContext, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.CAMERA}, 2);
                                             }
                                         }

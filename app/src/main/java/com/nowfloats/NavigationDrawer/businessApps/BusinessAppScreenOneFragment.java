@@ -22,7 +22,7 @@ import com.thinksity.R;
 public class BusinessAppScreenOneFragment extends Fragment {
 
     int[] circleImages={R.drawable.businessapp_first,R.drawable.businessapp_second,
-            R.drawable.businessapp_third,R.drawable.businessapp_fourth},backgroundColors,circleColors;
+            R.drawable.businessapp_third,R.drawable.businessapp_fourth};
     int position=-1;
     private String[] boldTextsArray,smallTextsArray;
 
@@ -51,8 +51,7 @@ public class BusinessAppScreenOneFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        backgroundColors=getResources().getIntArray(R.array.business_colors);
-        circleColors=getResources().getIntArray(R.array.business_circle_colors);
+
         boldTextsArray=getResources().getStringArray(R.array.businessboldtext);
         smallTextsArray=getResources().getStringArray(R.array.businesssmalltext);
 
@@ -63,13 +62,11 @@ public class BusinessAppScreenOneFragment extends Fragment {
         CardView cardView= (CardView) view.findViewById(R.id.business_screen_cardview);
         ImageView circleImage= (ImageView) view.findViewById(R.id.imageview_circle);
 
-        layout.setBackgroundColor(backgroundColors[position]);
         //(cardView.getBackground()).setColorFilter(circleColors[position],PorterDuff.Mode.MULTIPLY);
         //circleImage.setImageDrawable(ContextCompat.getDrawable(getContext(),circleImages[position]));
         Glide.with(this).load(circleImages[position]).into(circleImage);
         boldText.setText(boldTextsArray[position]);
         smallText.setText(smallTextsArray[position]);
-        boldText.setTextColor(circleColors[position]);
     }
 
 

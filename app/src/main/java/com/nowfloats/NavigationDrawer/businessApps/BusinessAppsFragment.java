@@ -84,16 +84,16 @@ public class BusinessAppsFragment extends Fragment {
         // set padding manually, the more you set the padding the more you see of prev & next page
         mPager.setPadding(50, 30, 50,15);
         // sets a margin b/w individual pages to ensure that there is a gap b/w them
-        mPager.setPageMargin(30);
+        mPager.setPageMargin(20);
 
         mPager.setAdapter(mAdapter);
         mIndicator = (CirclePageIndicator) view.findViewById(R.id.ps_indicator);
         mIndicator.setViewPager(mPager);
-        mIndicator.setPageColor(R.color.screen_bg);
+        mIndicator.setPageColor(R.color.business_button_gray);
         mIndicator.setStrokeWidth(0);
-        mIndicator.setStrokeColor(R.color.screen_bg);
-        mIndicator.setFillColor(R.color.black);
-//        mIndicator.setRadius(5);
+        mIndicator.setStrokeColor(R.color.business_button_gray);
+        mIndicator.setFillColor(R.color.business_button_black);
+        mIndicator.setRadius(5);
         mIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -134,7 +134,10 @@ public class BusinessAppsFragment extends Fragment {
                         startActivity(i);
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }else{
-                        //finish
+                        BusinessAppsActivity activity = ((BusinessAppsActivity)context);
+                        if(activity != null){
+                            activity.onBackPressed();
+                        }
                     }
                 }
             }

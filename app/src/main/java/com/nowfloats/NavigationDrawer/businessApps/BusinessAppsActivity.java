@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -123,6 +122,7 @@ public class BusinessAppsActivity extends AppCompatActivity {
         return true;
     }*/
 
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -135,11 +135,11 @@ public class BusinessAppsActivity extends AppCompatActivity {
         switch (item.getItemId())
         {
             case android.R.id.home :
-                FragmentManager manager = getSupportFragmentManager();
+               /* FragmentManager manager = getSupportFragmentManager();
                 BusinessAppsFragment frag = (BusinessAppsFragment) manager.findFragmentByTag("BusinessAppFragment");
                 if(frag != null && frag.isVisible()){
                     manager.beginTransaction().remove(frag).commit();
-                }
+                }*/
                 onBackPressed();
                 return true;
             case R.id.action_notif:

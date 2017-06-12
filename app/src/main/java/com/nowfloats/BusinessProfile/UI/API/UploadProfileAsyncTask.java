@@ -68,7 +68,10 @@ public class UploadProfileAsyncTask extends AsyncTask<Void, String, String> {
 	@Override
 	protected void onPostExecute(String result) {
       String ch="";
-        pd.dismiss();
+		if(pd ==null || !pd.isShowing()) {
+			pd.dismiss();
+		}
+
         try {
             for (int i = 0; i < 3; i++) {
                 if (arr[i] == "CONTACTNAME") {

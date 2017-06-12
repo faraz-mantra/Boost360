@@ -801,77 +801,79 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                         public void run() {
                             if (items != null && items.size() > 0) {
                                 final String[] array = items.toArray(new String[items.size()]);
-                                new MaterialDialog.Builder(Social_Sharing_Activity.this)
-                                        .title(getString(R.string.select_page))
-                                        .items(array)
-                                        .widgetColorRes(R.color.primaryColor)
-                                        .cancelable(false)
-                                        .positiveText("Ok")
-                                        .negativeText("Cancel")
-                                        .negativeColorRes(R.color.light_gray)
-                                        .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
-                                            @Override
-                                            public boolean onSelection(MaterialDialog dialog, View view, int position, CharSequence text) {
+                                if(!isFinishing()) {
+                                    new MaterialDialog.Builder(Social_Sharing_Activity.this)
+                                            .title(getString(R.string.select_page))
+                                            .items(array)
+                                            .widgetColorRes(R.color.primaryColor)
+                                            .cancelable(false)
+                                            .positiveText("Ok")
+                                            .negativeText("Cancel")
+                                            .negativeColorRes(R.color.light_gray)
+                                            .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                                                @Override
+                                                public boolean onSelection(MaterialDialog dialog, View view, int position, CharSequence text) {
 
-                                                //dialog.dismiss();
-                                                mNewPosition = position;
-                                                return true;
-                                            }
-                                        })
-                                        .callback(new MaterialDialog.ButtonCallback() {
-                                            @Override
-                                            public void onPositive(MaterialDialog dialog) {
-                                                mNewPosition = dialog.getSelectedIndex();
-                                                if(mNewPosition == -1){
-                                                    Toast.makeText(Social_Sharing_Activity.this, "Please select any Facebook page", Toast.LENGTH_SHORT).show();
-                                                    if(from==FROM_FB_PAGE){
-                                                        facebookPageCheckBox.setChecked(false);
-                                                    }else if(from == FROM_AUTOPOST){
-                                                        facebookautopost.setChecked(false);
-                                                    }
-                                                }else {
-                                                    String strName = array[mNewPosition];
-                                                    String FACEBOOK_PAGE_ID = null;
-                                                    String page_access_token = null;
-                                                    try {
-                                                        FACEBOOK_PAGE_ID = (String) ((JSONObject) Constants.FbPageList.get(mNewPosition)).get("id");
-                                                        page_access_token = ((String) ((JSONObject) Constants.FbPageList.get(mNewPosition)).get("access_token"));
-                                                    } catch (JSONException e) {
-
-                                                    }
-                                                    if (from == FROM_FB_PAGE && !Util.isNullOrEmpty(FACEBOOK_PAGE_ID) && !Util.isNullOrEmpty(page_access_token)) {
-                                                        session.storePageAccessToken(page_access_token);
-                                                        session.storeFacebookPageID(FACEBOOK_PAGE_ID);
-                                                        if (Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))
-                                                                || !pref.getBoolean("FBFeedPullAutoPublish",false)
-                                                                || !strName.equals(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))) {
-                                                            pageSeleted(mNewPosition, strName, session.getFacebookPageID(), session.getPageAccessToken());
-                                                        }else {
+                                                    //dialog.dismiss();
+                                                    mNewPosition = position;
+                                                    return true;
+                                                }
+                                            })
+                                            .callback(new MaterialDialog.ButtonCallback() {
+                                                @Override
+                                                public void onPositive(MaterialDialog dialog) {
+                                                    mNewPosition = dialog.getSelectedIndex();
+                                                    if (mNewPosition == -1) {
+                                                        Toast.makeText(Social_Sharing_Activity.this, "Please select any Facebook page", Toast.LENGTH_SHORT).show();
+                                                        if (from == FROM_FB_PAGE) {
                                                             facebookPageCheckBox.setChecked(false);
-                                                            showDialog("Alert", "You cannot select the same Facebook Page to share your updates. This will lead to an indefinite loop of updates on your website and Facebook Page.");
-                                                        }
-                                                        //pageSeleted(position, strName, session.getFacebookPageID(), session.getPageAccessToken());
-                                                    } else if (from == FROM_AUTOPOST) {
-                                                        if (Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))) {
-                                                            selectNumberUpdatesDialog(FACEBOOK_PAGE_ID);
-                                                        }else if(!strName.equals(session.getFacebookPage())){
-                                                            updateAutopull(FACEBOOK_PAGE_ID,true);
-                                                        }else {
-                                                            //Toast.makeText(getApplicationContext(), "You can't post and pull from the same Facebook page", Toast.LENGTH_SHORT).show();
+                                                        } else if (from == FROM_AUTOPOST) {
                                                             facebookautopost.setChecked(false);
-                                                            showDialog("Alert", "You cannot select the same Facebook Page to auto-update your website. This will lead to an indefinite loop of updates on your website and Facebook Page.");
                                                         }
+                                                    } else {
+                                                        String strName = array[mNewPosition];
+                                                        String FACEBOOK_PAGE_ID = null;
+                                                        String page_access_token = null;
+                                                        try {
+                                                            FACEBOOK_PAGE_ID = (String) ((JSONObject) Constants.FbPageList.get(mNewPosition)).get("id");
+                                                            page_access_token = ((String) ((JSONObject) Constants.FbPageList.get(mNewPosition)).get("access_token"));
+                                                        } catch (JSONException e) {
+
+                                                        }
+                                                        if (from == FROM_FB_PAGE && !Util.isNullOrEmpty(FACEBOOK_PAGE_ID) && !Util.isNullOrEmpty(page_access_token)) {
+                                                            session.storePageAccessToken(page_access_token);
+                                                            session.storeFacebookPageID(FACEBOOK_PAGE_ID);
+                                                            if (Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))
+                                                                    || !pref.getBoolean("FBFeedPullAutoPublish", false)
+                                                                    || !strName.equals(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))) {
+                                                                pageSeleted(mNewPosition, strName, session.getFacebookPageID(), session.getPageAccessToken());
+                                                            } else {
+                                                                facebookPageCheckBox.setChecked(false);
+                                                                showDialog("Alert", "You cannot select the same Facebook Page to share your updates. This will lead to an indefinite loop of updates on your website and Facebook Page.");
+                                                            }
+                                                            //pageSeleted(position, strName, session.getFacebookPageID(), session.getPageAccessToken());
+                                                        } else if (from == FROM_AUTOPOST) {
+                                                            if (Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))) {
+                                                                selectNumberUpdatesDialog(FACEBOOK_PAGE_ID);
+                                                            } else if (!strName.equals(session.getFacebookPage())) {
+                                                                updateAutopull(FACEBOOK_PAGE_ID, true);
+                                                            } else {
+                                                                //Toast.makeText(getApplicationContext(), "You can't post and pull from the same Facebook page", Toast.LENGTH_SHORT).show();
+                                                                facebookautopost.setChecked(false);
+                                                                showDialog("Alert", "You cannot select the same Facebook Page to auto-update your website. This will lead to an indefinite loop of updates on your website and Facebook Page.");
+                                                            }
+                                                        }
+                                                        dialog.dismiss();
                                                     }
+                                                }
+
+                                                @Override
+                                                public void onNegative(MaterialDialog dialog) {
+                                                    onFBPageError(from);
                                                     dialog.dismiss();
                                                 }
-                                            }
-
-                                            @Override
-                                            public void onNegative(MaterialDialog dialog) {
-                                                onFBPageError(from);
-                                                dialog.dismiss();
-                                            }
-                                        }).show();
+                                            }).show();
+                                }
                             } else {
                                 onFBPageError(from);
 

@@ -73,10 +73,11 @@ public class ImageDialogFragment extends DialogFragment {
             }
         });
         pager.setAdapter(adapter);
-        mIndicator.setPageColor(R.color.white);
+        mIndicator.setPageColor(R.color.business_button_gray);
         mIndicator.setStrokeWidth(0);
-        mIndicator.setStrokeColor(R.color.white);
-        mIndicator.setFillColor(R.color.primaryColor);
+        mIndicator.setStrokeColor(R.color.business_button_gray);
+        mIndicator.setFillColor(R.color.business_button_black);
+        mIndicator.setRadius(5);
         mIndicator.setViewPager(pager);
     }
 }
