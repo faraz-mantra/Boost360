@@ -498,13 +498,23 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         section.setShowDate(true);
     }
 
-    private void replyToRia(String type, RiaCardModel riaCardModel, boolean isReplace){
+    private void replyToRia(String type, final RiaCardModel riaCardModel, boolean isReplace){
 
         mHandler.removeCallbacks(mAutoCallRunnable);
         Section section = new Section();
         section.setDateTime(Utils.getFormattedDate(new Date()));
 
-        riaCardModel.getSections().get(0).setText(getParsedPrefixPostfixText(riaCardModel.getSections().get(0).getText()));
+        //riaCardModel.getSections().get(0).setText();
+        for(Section sect: riaCardModel.getSections()){
+            switch (sect.getSectionType()){
+                case Constants.SectionType.TYPE_TEXT:
+                    sect.setText(getParsedPrefixPostfixText(sect.getText()));
+                    break;
+                case Constants.SectionType.TYPE_IMAGE:
+                    sect.setUrl(getParsedPrefixPostfixText(sect.getUrl()));
+                    break;
+            }
+        }
         section.setFromRia(false);
         section.setSectionType(type);
         section.setCardModel(riaCardModel);
@@ -513,7 +523,21 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             mSectionList.set(mSectionList.size()-1, section);
             mAdapter.notifyItemChanged(mSectionList.size() - 1);
             rvChatData.scrollToPosition(mSectionList.size() - 1);
-            showNextNode(riaCardModel.getNextNodeId());
+            if(riaCardModel.getNextNodeId()!=null) {
+                showNextNode(riaCardModel.getNextNodeId());
+                return;
+            }
+            for(final Button btn : riaCardModel.getButtons()){
+                if(btn.getButtonType().equals(Constants.ButtonType.TYPE_NEXT_NODE) && btn.isHidden()){
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            showNextNode(btn.getNextNodeId());
+                        }
+                    }, btn.getBounceTimeout());
+                    break;
+                }
+            }
         }else {
             mSectionList.add(section);
             mAdapter.notifyItemInserted(mSectionList.size() - 1);
@@ -616,7 +640,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 pickAddressFragment = null;
                 mNextNodeId = btn.getNextNodeId();
                 mCurrButton = btn;
-                showConfirmation(Constants.ConfirmationType.ADDRESS_ENTRY, housePlotNum + ", " + address + ", " + city + ", " + country + ", " + pin + ", " + landmark, lat + "", lon + "");
+                mDataMap.put("[~" + "ADDRESSMAP_IMAGE" + "]", Utils.getMapUrlFromLocation(lat + "", lon + ""));
+                showNextNode(mCurrButton.getNextNodeId());
+                //showConfirmation(Constants.ConfirmationType.ADDRESS_ENTRY, housePlotNum + ", " + address + ", " + city + ", " + country + ", " + pin + ", " + landmark, lat + "", lon + "");
             }
         });
         pickAddressFragment.show(getFragmentManager(), "Test");
@@ -732,12 +758,19 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         }
 
         if(node.getNodeType() != null && node.getNodeType().equals(Constants.NodeType.TYPE_CARD) && node.getPlacement().equals("Center")){
-            replyToRia(Constants.SectionType.TYPE_UNCONFIRMED_CARD, node, false);
+            if(node.getSections().size()==2 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_IMAGE)){
+                replyToRia(Constants.SectionType.TYPE_UNCONFIRMED_ADDR_CARD, node, false);
+            }else if(node.getSections().size()==1 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_TEXT)) {
+                replyToRia(Constants.SectionType.TYPE_UNCONFIRMED_CARD, node, false);
+            }
             return;
         }
         if(node.getNodeType() != null && node.getNodeType().equals(Constants.NodeType.TYPE_CARD) && node.getPlacement().equals("Outgoing")){
-            replyToRia(Constants.SectionType.TYPE_CARD, node, true);
-
+            if(node.getSections().size()==2 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_IMAGE)){
+                replyToRia(Constants.SectionType.TYPE_ADDRESS_CARD, node, true);
+            }else if(node.getSections().size()==1 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_TEXT)) {
+                replyToRia(Constants.SectionType.TYPE_CARD, node, true);
+            }
             return;
         }
 
@@ -1216,6 +1249,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 break;
             case Constants.ConfirmationType.ADDRESS_ENTRY:
                 showNextNode(data[1]);
+                break;
         }
 
     }
