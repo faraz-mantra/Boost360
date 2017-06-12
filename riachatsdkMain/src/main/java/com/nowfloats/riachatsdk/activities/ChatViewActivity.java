@@ -95,7 +95,6 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
 
 public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdapter.OnItemClickListener,
@@ -498,15 +497,15 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         section.setShowDate(true);
     }
 
-    private void replyToRia(String type, final RiaCardModel riaCardModel, boolean isReplace){
+    private void replyToRia(String type, final RiaCardModel riaCardModel, boolean isReplace) {
 
         mHandler.removeCallbacks(mAutoCallRunnable);
         Section section = new Section();
         section.setDateTime(Utils.getFormattedDate(new Date()));
 
         //riaCardModel.getSections().get(0).setText();
-        for(Section sect: riaCardModel.getSections()){
-            switch (sect.getSectionType()){
+        for (Section sect : riaCardModel.getSections()) {
+            switch (sect.getSectionType()) {
                 case Constants.SectionType.TYPE_TEXT:
                     sect.setText(getParsedPrefixPostfixText(sect.getText()));
                     break;
@@ -519,16 +518,16 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         section.setSectionType(type);
         section.setCardModel(riaCardModel);
 
-        if(isReplace){
-            mSectionList.set(mSectionList.size()-1, section);
+        if (isReplace) {
+            mSectionList.set(mSectionList.size() - 1, section);
             mAdapter.notifyItemChanged(mSectionList.size() - 1);
             rvChatData.scrollToPosition(mSectionList.size() - 1);
-            if(riaCardModel.getNextNodeId()!=null) {
+            if (riaCardModel.getNextNodeId() != null) {
                 showNextNode(riaCardModel.getNextNodeId());
                 return;
             }
-            for(final Button btn : riaCardModel.getButtons()){
-                if(btn.getButtonType().equals(Constants.ButtonType.TYPE_NEXT_NODE) && btn.isHidden()){
+            for (final Button btn : riaCardModel.getButtons()) {
+                if (btn.getButtonType().equals(Constants.ButtonType.TYPE_NEXT_NODE) && btn.isHidden()) {
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -538,7 +537,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     break;
                 }
             }
-        }else {
+        } else {
             mSectionList.add(section);
             mAdapter.notifyItemInserted(mSectionList.size() - 1);
             rvChatData.scrollToPosition(mSectionList.size() - 1);
@@ -619,7 +618,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
 
     private void getUserAddress(final Button btn) {
-        pickAddressFragment = PickAddressFragment.newInstance(PickAddressFragment.PICK_TYPE.USE_GPS);
+        pickAddressFragment = PickAddressFragment.newInstance(PickAddressFragment.PICK_TYPE.MANUAL);
 
         pickAddressFragment.setResultListener(new PickAddressFragment.OnResultReceive() {
             @Override
@@ -757,18 +756,18 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             mCurrVarName = node.getVariableName();
         }
 
-        if(node.getNodeType() != null && node.getNodeType().equals(Constants.NodeType.TYPE_CARD) && node.getPlacement().equals("Center")){
-            if(node.getSections().size()==2 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_IMAGE)){
+        if (node.getNodeType() != null && node.getNodeType().equals(Constants.NodeType.TYPE_CARD) && node.getPlacement().equals("Center")) {
+            if (node.getSections().size() == 2 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_IMAGE)) {
                 replyToRia(Constants.SectionType.TYPE_UNCONFIRMED_ADDR_CARD, node, false);
-            }else if(node.getSections().size()==1 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_TEXT)) {
+            } else if (node.getSections().size() == 1 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_TEXT)) {
                 replyToRia(Constants.SectionType.TYPE_UNCONFIRMED_CARD, node, false);
             }
             return;
         }
-        if(node.getNodeType() != null && node.getNodeType().equals(Constants.NodeType.TYPE_CARD) && node.getPlacement().equals("Outgoing")){
-            if(node.getSections().size()==2 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_IMAGE)){
+        if (node.getNodeType() != null && node.getNodeType().equals(Constants.NodeType.TYPE_CARD) && node.getPlacement().equals("Outgoing")) {
+            if (node.getSections().size() == 2 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_IMAGE)) {
                 replyToRia(Constants.SectionType.TYPE_ADDRESS_CARD, node, true);
-            }else if(node.getSections().size()==1 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_TEXT)) {
+            } else if (node.getSections().size() == 1 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_TEXT)) {
                 replyToRia(Constants.SectionType.TYPE_CARD, node, true);
             }
             return;
@@ -1256,7 +1255,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     @Override
     public void onNegativeResponse(String confirmationType, final String... data) {
-        mSectionList.remove(mSectionList.size()-1);
+        mSectionList.remove(mSectionList.size() - 1);
         mAdapter.notifyItemRemoved(mSectionList.size());
         switch (confirmationType) {
             case Constants.ConfirmationType.BIZ_NAME:
@@ -1305,4 +1304,5 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
+
 }
