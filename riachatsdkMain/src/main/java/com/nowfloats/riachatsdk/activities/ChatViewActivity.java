@@ -364,16 +364,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         .commit();
         }
 
-        flConfirmationCard.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                rvChatData.setPadding(rvChatData.getPaddingLeft(),
-                        rvChatData.getPaddingTop(), rvChatData.getPaddingRight(),
-                        bottom);
-                rvChatData.scrollToPosition(mSectionList.size() - 1);
-            }
-        });
-
     }
 
 
@@ -514,10 +504,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         Section section = new Section();
         section.setDateTime(Utils.getFormattedDate(new Date()));
 
-
-        rvChatData.setPadding(rvChatData.getPaddingLeft(),
-                rvChatData.getPaddingTop(), rvChatData.getPaddingRight(),
-                50);
         riaCardModel.getSections().get(0).setText(getParsedPrefixPostfixText(riaCardModel.getSections().get(0).getText()));
         section.setFromRia(false);
         section.setSectionType(type);

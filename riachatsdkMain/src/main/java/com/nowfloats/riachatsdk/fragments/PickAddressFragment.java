@@ -19,6 +19,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -296,10 +297,10 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                             // check if map is created successfully or not
                             if (mGoogleMap != null) {
                                 mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
-                                LatLng latLong;
+//                                LatLng latLong;
 
 
-                                latLong = new LatLng(28.5707228, 77.0218132);
+//                                latLong = new LatLng(28.5707228, 77.0218132);
                                 if (ActivityCompat.checkSelfPermission(getActivity(),
                                         Manifest.permission.ACCESS_FINE_LOCATION) ==
                                         PackageManager.PERMISSION_GRANTED &&
@@ -311,8 +312,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                                     //latLong = new LatLng(location.getLatitude(), location.getLongitude());
                                 }
 
-                                CameraPosition cameraPosition = new CameraPosition.Builder()
-                                        .target(latLong).zoom(18f).build();
+//                                CameraPosition cameraPosition = new CameraPosition.Builder()
+//                                        .target(latLong).zoom(18f).build();
 
                                 if (ActivityCompat.checkSelfPermission(getActivity(),
                                         Manifest.permission.ACCESS_FINE_LOCATION) ==
@@ -323,8 +324,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                                     mGoogleMap.setMyLocationEnabled(true);
                                     mGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
                                 }
-                                mGoogleMap.animateCamera(CameraUpdateFactory
-                                        .newCameraPosition(cameraPosition));
+//                                mGoogleMap.animateCamera(CameraUpdateFactory
+//                                        .newCameraPosition(cameraPosition));
 
                             } else {
                                 Toast.makeText(getActivity(),
@@ -435,18 +436,25 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
     protected void displayAddressOutput() {
         etCity.setText(mCityOutput);
         etCountry.setText(mCountryOutput);
-        etStreetAddr.setText(mStateOutput.replaceAll("[\r\n]+", " "));
+
+        if(!TextUtils.isEmpty(mStateOutput)){
+            etStreetAddr.setText(mStateOutput.replaceAll("[\r\n]+", " ")+"");
+        }
         etStreetAddr.setSelection(etStreetAddr.getText().toString().length());
+
         etPin.setText(mPin);
         etLocality.setText(mLocality);
         btnSave.setVisibility(View.VISIBLE);
 
-        String address = etStreetAddr.getText().toString().trim() + ", " +
-                mCityOutput + ", " + mCountryOutput + ", " +
-                etPin.getText().toString() + ", " +
-                etHousePlotNum.getText().toString() + ", " + etLandmark.getText().toString();
+//        if(TextUtils.isEmpty(tvAddress.getText().toString())){
 
-        tvAddress.setText(address);
+            String address = etHousePlotNum.getText().toString() + ", " + etLandmark.getText().toString() + ", " +
+                    etStreetAddr.getText().toString().trim() + ", " +
+                    mCityOutput + ", " + mCountryOutput + ", " +
+                    etPin.getText().toString();
+
+            tvAddress.setText(address);
+//        }
 
     }
 
