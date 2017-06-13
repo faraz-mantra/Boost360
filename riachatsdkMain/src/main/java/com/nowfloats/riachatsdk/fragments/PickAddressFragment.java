@@ -64,6 +64,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
+
 /**
  * Created by NowFloats on 27-03-2017 by Romio Ranjan Jena.
  */
@@ -105,7 +107,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
     private PICK_TYPE pick_type;
 
-    private HashMap<String, String> Country_CodeMap;
+    private HashMap<String, String> Country_CodeMap = new HashMap<>();
 
     private AutocompleteFilter filter;
 
@@ -180,14 +182,15 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         tvAddress = (TextView) v.findViewById(R.id.tvAddress);
 
         btnSave = (Button) v.findViewById(R.id.btn_save);
-        btnSave.setVisibility(View.GONE);
+
         llManual.bringToFront();
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(verifyData()){
+                if (verifyData()) {
+                    btnSave.getVisibility(View.INVISIBLE);
                     if (btnSave.getText().toString().equalsIgnoreCase(getResources().getString(R.string.locate_on_map))) {
 
                         getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -225,7 +228,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                             @Override
                             public void onAnimationEnd(Animation animation) {
                                 llManual.setVisibility(View.GONE);
-                                if(pick_type == PICK_TYPE.MANUAL){
+                                if (pick_type == PICK_TYPE.MANUAL) {
                                     reverseGeoCode();
                                 }
                             }
@@ -290,12 +293,17 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
         if (pick_type == PICK_TYPE.MANUAL) {
 
-            mGoogleApiClient = new GoogleApiClient
-                    .Builder(getActivity())
-                    .addApi(Places.GEO_DATA_API)
-                    .addApi(Places.PLACE_DETECTION_API)
-                    .enableAutoManage((FragmentActivity) getActivity(), this)
-                    .build();
+            btnSave.setVisibility(View.VISIBLE);
+
+            if (mGoogleApiClient == null) {
+
+                mGoogleApiClient = new GoogleApiClient
+                        .Builder(getActivity())
+                        .addApi(Places.GEO_DATA_API)
+                        .addApi(Places.PLACE_DETECTION_API)
+                        .enableAutoManage((FragmentActivity) getActivity(), this)
+                        .build();
+            }
 
             loadCountries();
 
@@ -364,6 +372,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                     }
                 }
             });
+        } else {
+            btnSave.setVisibility(View.GONE);
         }
 
         return v;
@@ -397,8 +407,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                     address = list.get(0);
                     lat = address.getLatitude();
                     lng = address.getLongitude();
-
                     /*for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+
                         content += address.getAddressLine(i)+" ";
                     }*/
 //                    if (!TextUtils.isEmpty(content)) {
@@ -522,11 +532,14 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
         try {
 
-            Location mLocation = new Location("");
-            mLocation.setLatitude(mCenterLatLong.latitude);
-            mLocation.setLongitude(mCenterLatLong.longitude);
+            if(mCenterLatLong!=null){
 
-            startIntentService(mLocation);
+                Location mLocation = new Location("");
+                mLocation.setLatitude(mCenterLatLong.latitude);
+                mLocation.setLongitude(mCenterLatLong.longitude);
+
+                startIntentService(mLocation);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -552,7 +565,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                 .newCameraPosition(cameraPosition));
         mLocationManager.removeUpdates(this);
 
-        if (llManual.getVisibility() == View.VISIBLE) {
+        if (pick_type == PICK_TYPE.USE_GPS) {
             mCenterLatLong = latLng;
             fetchAddress();
         }
@@ -621,16 +634,17 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                 etPin.getText().toString();
 
         tvAddress.setText(address);
-        btnSave.setVisibility(View.VISIBLE);
 //        }
 
     }
 
     private void loadCountries() {
         String[] locales = Locale.getISOCountries();
+
         for (String countryCode : locales) {
             Locale obj = new Locale("", countryCode);
             signUpCountryList.add(obj.getDisplayCountry());
+            Country_CodeMap.put(obj.getDisplayCountry(), obj.getCountry());
         }
         Collections.sort(signUpCountryList);
     }
@@ -657,4 +671,14 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                 })
                 .show();
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.stopAutoManage((FragmentActivity) getActivity());
+            mGoogleApiClient.disconnect();
+        }
+    }
+
 }
