@@ -28,8 +28,8 @@
                 android:scaleType="centerCrop" />
 
             <ImageView
-                android:layout_width="17dp"
-                android:layout_height="17dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_centerInParent="true"
                 android:layout_marginBottom="15dp"
                 android:src="@drawable/add_marker" />

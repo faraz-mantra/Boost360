@@ -41,6 +41,7 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Cache;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -79,6 +80,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
@@ -445,6 +447,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     }
 
     private void replyToRia(String type, String... msg) {
+
+
         mHandler.removeCallbacks(mAutoCallRunnable);
         Section section = new Section();
         section.setDateTime(Utils.getFormattedDate(new Date()));
@@ -557,7 +561,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     private void onItemClick(Button button) {
         if (button == null)
             return;
-        if (!button.isHidden() && button.getButtonType() != null && !button.getButtonType().equals(Constants.ButtonType.TYPE_GET_ITEM_FROM_SOURCE)) {
+        if (!button.isHidden() && button.getButtonType() != null && !button.getButtonType().equals(Constants.ButtonType.TYPE_GET_ITEM_FROM_SOURCE) && button.isPostToChat()) {
             replyToRia(Constants.SectionType.TYPE_TEXT, button.getButtonText());
         }
 
@@ -622,7 +626,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
 
     private void getUserAddress(final Button btn) {
-        pickAddressFragment = PickAddressFragment.newInstance(PickAddressFragment.PICK_TYPE.MANUAL);
+        pickAddressFragment = PickAddressFragment.newInstance(PickAddressFragment.PICK_TYPE.USE_GPS);
 
         pickAddressFragment.setResultListener(new PickAddressFragment.OnResultReceive() {
             @Override
@@ -634,7 +638,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         "STREET_ADDRESS", address, btn.getButtonType());
                 mDataMap.put("[~" + "CITY" + "]", city);
                 mDataMap.put("[~" + "COUNTRY" + "]", country);
-                mDataMap.put("[~" + "STREET_ADDRESS" + "]", address);
+                mDataMap.put("[~" + "STREET_ADDRESS" + "]", housePlotNum+", "+area+", "+address+", "+landmark);
                 mDataMap.put("[~" + "PINCODE" + "]", pin);
                 mDataMap.put("[~" + "LAT" + "]", lat + "");
                 mDataMap.put("[~" + "LNG" + "]", lon + "");
@@ -760,22 +764,26 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             mCurrVarName = node.getVariableName();
         }
 
+
         if(node.getNodeType() != null && node.getNodeType().equals(Constants.NodeType.TYPE_CARD) && node.getPlacement().equals("Center")){
 
             if(node.getSections().size()==2 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_IMAGE)){
-                if(mIsPreviousTypeCard){
+                if(mSectionList.get(mSectionList.size()-1).getCardModel()!=null &&
+                        mSectionList.get(mSectionList.size()-1).getCardModel().getPlacement().equals("Center")){
                     replyToRia(Constants.SectionType.TYPE_UNCONFIRMED_ADDR_CARD, node, true);
                 }else {
                     replyToRia(Constants.SectionType.TYPE_UNCONFIRMED_ADDR_CARD, node, false);
                 }
             }else if(node.getSections().size()==1 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_TEXT)) {
-                if(mIsPreviousTypeCard){
+                if(mSectionList.get(mSectionList.size()-1).getCardModel()!=null &&
+                        mSectionList.get(mSectionList.size()-1).getCardModel().getPlacement().equals("Center")){
                     replyToRia(Constants.SectionType.TYPE_UNCONFIRMED_CARD, node, true);
                 }else {
                     replyToRia(Constants.SectionType.TYPE_UNCONFIRMED_CARD, node, false);
                 }
             }else if(node.getSections().size()==1 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_PRINT_OTP)) {
-                if(mIsPreviousTypeCard){
+                if(mSectionList.get(mSectionList.size()-1).getCardModel()!=null &&
+                        mSectionList.get(mSectionList.size()-1).getCardModel().getPlacement().equals("Center")){
                     replyToRia(Constants.SectionType.TYPE_PRINT_OTP, node, true);
                 }else {
                     replyToRia(Constants.SectionType.TYPE_PRINT_OTP, node, false);
@@ -936,6 +944,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                             }
                             mButtonList.add(btn);
                         }
+                        node.setToShowInput(false);
                     }
                 }
                 mButtonsAdapter.notifyDataSetChanged();
@@ -946,7 +955,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 rvChatData.scrollToPosition(mSectionList.size() - 1);
 
                 if (mDefaultButton != null && node.getTimeoutInMs() != -1L) {
-                    mHandler.postDelayed(mAutoCallRunnable, node.getTimeoutInMs());
+                    mHandler.postDelayed(mAutoCallRunnable, mDefaultButton.getBounceTimeout());
                 }
             }
         }, time);
@@ -960,6 +969,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     if (rvButtonsContainer.getVisibility() == INVISIBLE) {
                         rvButtonsContainer.setVisibility(View.VISIBLE);
                     }
+                } else if (!node.isToShowInput()) {
+
                 } else {
                     if (cvChatInput.getVisibility() == INVISIBLE) {
                         cvChatInput.setVisibility(View.VISIBLE);
@@ -1022,6 +1033,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     }
 
     private void handleAutoComplete(final Button btn) {
+
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, btn.getUrl(), null,
                 new com.android.volley.Response.Listener<JSONObject>() {
                     @Override
@@ -1064,8 +1076,13 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 //TODO: shopw unable to process
             }
         });
+
+        request.setRetryPolicy(new DefaultRetryPolicy( 40000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         mRequestQueue.add(request);
         mNextNodeId = btn.getNextNodeId();
+
+
     }
 
     private void showTyping() {
@@ -1149,7 +1166,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         }
     }
 
-    private void handleGetRequest(RiaCardModel node) {
+    private void handleGetRequest(final RiaCardModel node) {
         //TODO: show the typing
         StringBuilder urlBuilder = new StringBuilder(node.getApiUrl());
         urlBuilder.append("?");
@@ -1162,6 +1179,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         }
         urlBuilder.append("deviceId=" + DeviceDetails.getDeviceId(this));
+        Log.e("urlBuilder",urlBuilder.toString());
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, urlBuilder.toString(), null,
                 new com.android.volley.Response.Listener<JSONObject>() {
                     @Override
@@ -1181,7 +1199,11 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                             }
                         }
                         try {
-                            showNextNode(response.getString(KEY_NEXT_NODE_ID));
+                            if(TextUtils.isEmpty(response.optString(KEY_NEXT_NODE_ID))) {
+                                showNextNode(node.getNextNodeId());
+                            }else {
+                                showNextNode(response.getString(KEY_NEXT_NODE_ID));
+                            }
 
 
                         } catch (JSONException e) {
@@ -1192,11 +1214,12 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //Log.d("Hello", "Error");
+                Log.d("Hello", "Error");
 
                 //TODO:Add unable to process in the sectionList
             }
         });
+        request.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         mRequestQueue.add(request);
     }
 
@@ -1250,7 +1273,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 return params;
             }
         };
-
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(0, -1, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         mRequestQueue.add(stringRequest);
     }
 

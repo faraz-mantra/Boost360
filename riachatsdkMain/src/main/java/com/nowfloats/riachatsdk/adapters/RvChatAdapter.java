@@ -186,6 +186,9 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     }
                 });
             }else {
+
+                cardViewHolder.tvEdit.setVisibility(View.VISIBLE);
+
                 cardViewHolder.tvConfirm.setText(mChatSections.get(position).getCardModel().getButtons().get(0).getButtonText());
                 cardViewHolder.tvEdit.setText(mChatSections.get(position).getCardModel().getButtons().get(1).getButtonText());
 
@@ -228,37 +231,40 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     }
                 });
             }else {
-            cardViewHolder.tvConfirm.setText(mChatSections.get(position).getCardModel().getButtons().get(0).getButtonText());
-            cardViewHolder.tvEdit.setText(mChatSections.get(position).getCardModel().getButtons().get(1).getButtonText());
+                cardViewHolder.tvEdit.setVisibility(View.VISIBLE);
 
-            cardViewHolder.tvConfirm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mDataMap.put("[~" + model.getVariableName() + "]", cardViewHolder.etOTPConfirmation.getText().toString().trim());
-                    cardViewHolder.etOTPConfirmation.clearFocus();
-                    cardViewHolder.etOTPConfirmation.setEnabled(false);
+                cardViewHolder.tvConfirm.setText(mChatSections.get(position).getCardModel().getButtons().get(0).getButtonText());
+                cardViewHolder.tvEdit.setText(mChatSections.get(position).getCardModel().getButtons().get(1).getButtonText());
 
-                    mConfirmationCallback.onPositiveResponse(Constants.ConfirmationType.BIZ_NAME,
-                            cardViewHolder.etOTPConfirmation.getText().toString(),
-                            mChatSections.get(position).getCardModel().getButtons().get(0).getNextNodeId());
-                }
-            });
+                cardViewHolder.tvConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mDataMap.put("[~" + model.getVariableName() + "]", cardViewHolder.etOTPConfirmation.getText().toString().trim());
+                        cardViewHolder.etOTPConfirmation.clearFocus();
+                        cardViewHolder.etOTPConfirmation.setEnabled(false);
 
-            cardViewHolder.tvEdit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    cardViewHolder.etOTPConfirmation.setText("");
-                    cardViewHolder.etOTPConfirmation.setEnabled(true);
-                    mConfirmationCallback.onNegativeResponse(Constants.ConfirmationType.BIZ_NAME,
-                            cardViewHolder.etOTPConfirmation.getText().toString(),
-                            mChatSections.get(position).getCardModel().getButtons().get(1).getNextNodeId());
-                }
-            });
+                        mConfirmationCallback.onPositiveResponse(Constants.ConfirmationType.BIZ_NAME,
+                                cardViewHolder.etOTPConfirmation.getText().toString(),
+                                mChatSections.get(position).getCardModel().getButtons().get(0).getNextNodeId());
+                    }
+                });
+
+                cardViewHolder.tvEdit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        cardViewHolder.etOTPConfirmation.setText("");
+                        cardViewHolder.etOTPConfirmation.setEnabled(true);
+                        mConfirmationCallback.onNegativeResponse(Constants.ConfirmationType.BIZ_NAME,
+                                cardViewHolder.etOTPConfirmation.getText().toString(),
+                                mChatSections.get(position).getCardModel().getButtons().get(1).getNextNodeId());
+                    }
+                });
             }
 
         } else if (holder instanceof AddressCardViewHolder) {
             AddressCardViewHolder cardViewHolder = (AddressCardViewHolder) holder;
             cardViewHolder.tvAddressText.setText(Html.fromHtml(getParsedPrefixPostfixText(section.getCardModel().getSections().get(1).getText())));
+            cardViewHolder.tvAddrFooter.setText(Html.fromHtml(getParsedPrefixPostfixText(section.getCardModel().getCardFooter())));
             Glide.with(mContext)
                     .load(getParsedPrefixPostfixText(section.getCardModel().getSections().get(0).getUrl()))
                     .placeholder(R.drawable.default_product_image)
@@ -376,7 +382,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 imageViewHolder.tvImageTitle.setVisibility(View.GONE);
             }
             Glide.with(mContext)
-                    .load(section.getUrl())
+                    .load(getParsedPrefixPostfixText(section.getUrl()))
                     .centerCrop()
                     .placeholder(R.drawable.default_product_image)
                     .into(imageViewHolder.ivMainImage);
@@ -637,7 +643,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     private class AddressCardViewHolder extends RecyclerView.ViewHolder {
-        TextView tvAddressText, tvDateTime;
+        TextView tvAddressText, tvDateTime, tvAddrFooter;
         View itemView;
         LinearLayout llBubbleContainer;
         ImageView ivMap;
@@ -650,6 +656,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             ivMap = (ImageView) itemView.findViewById(R.id.iv_map_data);
 
             this.tvAddressText = (TextView) itemView.findViewById(R.id.tv_confirmation_text);
+            this.tvAddrFooter = (TextView) itemView.findViewById(R.id.tv_addr_footer);
             this.tvDateTime = (TextView) itemView.findViewById(R.id.tv_date_time);
             this.llBubbleContainer = (LinearLayout) itemView.findViewById(R.id.ll_bubble_container);
         }

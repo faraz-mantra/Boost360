@@ -63,6 +63,16 @@ public class RiaCardModel implements Serializable{
     @Expose
     private List<String> requiredVariables = null;
 
+    private boolean isToShowInput = true;
+
+    public boolean isToShowInput() {
+        return isToShowInput;
+    }
+
+    public void setToShowInput(boolean toShowInput) {
+        isToShowInput = toShowInput;
+    }
+
     public String getNextNodeId() {
         return nextNodeId;
     }

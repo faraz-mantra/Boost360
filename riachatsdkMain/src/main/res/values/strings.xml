@@ -7,6 +7,8 @@
     <string name="loc_pincode">PINCODE</string>
     <string name="empty_address_warn">Address can\'t be empty</string>
     <string name="empty_city_warn">City can\'t be empty</string>
+    <string name="locality_warn">Locality can\'t be empty</string>
+    <string name="house_no_warn">House No can\'t be empty</string>
     <string name="empty_country_warn">Country can\'t be empty</string>
     <string name="empty_pin_warn">Pin can\'t be empty</string>
     <string name="chat_agent_name">Ria</string>
