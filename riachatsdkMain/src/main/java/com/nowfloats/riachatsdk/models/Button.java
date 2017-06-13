@@ -39,7 +39,7 @@ public class Button implements Serializable{
     private String url;
     @SerializedName("BounceTimeout")
     @Expose
-    private Integer bounceTimeout;
+    private long bounceTimeout;
     @SerializedName("VariableValue")
     @Expose
     private String variableValue;
@@ -184,11 +184,11 @@ public class Button implements Serializable{
         this.url = url;
     }
 
-    public Integer getBounceTimeout() {
+    public long getBounceTimeout() {
         return bounceTimeout;
     }
 
-    public void setBounceTimeout(Integer bounceTimeout) {
+    public void setBounceTimeout(long bounceTimeout) {
         this.bounceTimeout = bounceTimeout;
     }
 

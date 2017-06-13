@@ -21,6 +21,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
@@ -78,6 +79,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -95,7 +97,6 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
 
 public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdapter.OnItemClickListener,
@@ -132,6 +133,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     private ImageView ivAgentIcon;
     private TextView tvRiaTyping;
     private FrameLayout flConfirmationCard;
+    private boolean mIsPreviousTypeCard = false;
 
     private Runnable mAutoCallRunnable = new Runnable() {
         @Override
@@ -504,7 +506,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         Section section = new Section();
         section.setDateTime(Utils.getFormattedDate(new Date()));
 
-        //riaCardModel.getSections().get(0).setText();
+        /*//riaCardModel.getSections().get(0).setText();
         for(Section sect: riaCardModel.getSections()){
             switch (sect.getSectionType()){
                 case Constants.SectionType.TYPE_TEXT:
@@ -514,7 +516,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     sect.setUrl(getParsedPrefixPostfixText(sect.getUrl()));
                     break;
             }
-        }
+        }*/
         section.setFromRia(false);
         section.setSectionType(type);
         section.setCardModel(riaCardModel);
@@ -620,7 +622,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
 
     private void getUserAddress(final Button btn) {
-        pickAddressFragment = PickAddressFragment.newInstance(PickAddressFragment.PICK_TYPE.USE_GPS);
+        pickAddressFragment = PickAddressFragment.newInstance(PickAddressFragment.PICK_TYPE.MANUAL);
 
         pickAddressFragment.setResultListener(new PickAddressFragment.OnResultReceive() {
             @Override
@@ -759,14 +761,31 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         }
 
         if(node.getNodeType() != null && node.getNodeType().equals(Constants.NodeType.TYPE_CARD) && node.getPlacement().equals("Center")){
+
             if(node.getSections().size()==2 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_IMAGE)){
-                replyToRia(Constants.SectionType.TYPE_UNCONFIRMED_ADDR_CARD, node, false);
+                if(mIsPreviousTypeCard){
+                    replyToRia(Constants.SectionType.TYPE_UNCONFIRMED_ADDR_CARD, node, true);
+                }else {
+                    replyToRia(Constants.SectionType.TYPE_UNCONFIRMED_ADDR_CARD, node, false);
+                }
             }else if(node.getSections().size()==1 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_TEXT)) {
-                replyToRia(Constants.SectionType.TYPE_UNCONFIRMED_CARD, node, false);
+                if(mIsPreviousTypeCard){
+                    replyToRia(Constants.SectionType.TYPE_UNCONFIRMED_CARD, node, true);
+                }else {
+                    replyToRia(Constants.SectionType.TYPE_UNCONFIRMED_CARD, node, false);
+                }
+            }else if(node.getSections().size()==1 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_PRINT_OTP)) {
+                if(mIsPreviousTypeCard){
+                    replyToRia(Constants.SectionType.TYPE_PRINT_OTP, node, true);
+                }else {
+                    replyToRia(Constants.SectionType.TYPE_PRINT_OTP, node, false);
+                }
             }
+            mIsPreviousTypeCard = true;
             return;
         }
         if(node.getNodeType() != null && node.getNodeType().equals(Constants.NodeType.TYPE_CARD) && node.getPlacement().equals("Outgoing")){
+            mIsPreviousTypeCard = false;
             if(node.getSections().size()==2 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_IMAGE)){
                 replyToRia(Constants.SectionType.TYPE_ADDRESS_CARD, node, true);
             }else if(node.getSections().size()==1 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_TEXT)) {
@@ -787,6 +806,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             }
             return;
         }
+        mIsPreviousTypeCard = false;
         final List<Section> sectionList = node.getSections();
         int time = 0;
         final Section typingSection = new Section();
@@ -817,13 +837,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     String str = null;
                     if (section.getText() != null) {
                         str = section.getText();
-                        Matcher m = Pattern.compile("\\[~(.*?)\\]").matcher(str);
-                        //Log.d("DataMap", mDataMap.toString());
-                        while (m.find()) {
-                            if (mDataMap.get(m.group()) != null) {
-                                str = str.replace(m.group(), mDataMap.get(m.group()));
-                            }
-                        }
+                        str = getParsedPrefixPostfixText(str);
                     }
                     if (null != str) {
                         section.setText(str);
@@ -996,6 +1010,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     }
 
     private String getParsedPrefixPostfixText(String text) {
+        if(text==null)
+            return null;
         Matcher m = Pattern.compile("\\[~(.*?)\\]").matcher(text);
         while (m.find()) {
             if (mDataMap.get(m.group()) != null) {
@@ -1106,7 +1122,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     private void initChat(List<RiaCardModel> riaCardModels) {
         mAllNodes = riaCardModels;
         //TODO:Run on Another thread
-        mAdapter = new RvChatAdapter(mSectionList, this);
+        mAdapter = new RvChatAdapter(mSectionList, mDataMap, this);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 //        layoutManager.setStackFromEnd(true);
@@ -1138,7 +1154,12 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         StringBuilder urlBuilder = new StringBuilder(node.getApiUrl());
         urlBuilder.append("?");
         for (String key : node.getRequiredVariables()) {
-            urlBuilder.append(key + "=" + mDataMap.get("[~" + key + "]") + "&");
+            try{
+                urlBuilder.append(key + "=" + URLEncoder.encode(mDataMap.get("[~" + key + "]"),"UTF-8") + "&");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
         }
         urlBuilder.append("deviceId=" + DeviceDetails.getDeviceId(this));
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, urlBuilder.toString(), null,
@@ -1236,13 +1257,15 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     @Override
     public void onPositiveResponse(final String confirmationType, final String... data) {
         if (mCurrVarName != null && mCurrVarName.trim().length() > 0) {
-            if (mAutoComplDataHash == null || mAutoComplDataHash.get(etChatInput.getText().toString().trim()) == null) {
+            /*if (mAutoComplDataHash == null || !TextUtils.isEmpty(mAutoComplDataHash.get(etChatInput.getText().toString().trim()))) {
                 mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
             } else {
                 mDataMap.put("[~" + mCurrVarName + "]", mAutoComplDataHash.get(etChatInput.getText().toString().trim()));
-            }
+            }*/
+            mDataMap.put("[~" + mCurrVarName + "]", data[0]);
         }
         etChatInput.setText("");
+        hideSoftKeyboard();
         cvChatInput.setVisibility(View.INVISIBLE);
         switch (confirmationType) {
             case Constants.ConfirmationType.BIZ_NAME:

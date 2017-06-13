@@ -89,6 +89,9 @@ public class Section implements Serializable{
     @SerializedName("DurationInSec")
     @Expose
     private Integer durationInSec;
+    @SerializedName("Length")
+    @Expose
+    private Integer otpLength;
     @SerializedName("DisplayOpenInBrowserButton")
     @Expose
     private boolean displayOpenInBrowserButton;
@@ -103,6 +106,13 @@ public class Section implements Serializable{
     private String dateTime;
     private RiaCardModel cardModel;
 
+    public Integer getOtpLength() {
+        return otpLength;
+    }
+
+    public void setOtpLength(Integer otpLength) {
+        this.otpLength = otpLength;
+    }
 
     public RiaCardModel getCardModel() {
         return cardModel;
