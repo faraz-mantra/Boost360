@@ -154,7 +154,15 @@
         <item name="colorAccent">@color/primary_color</item>
         <item name="colorButtonNormal">@color/primary_color</item>
     </style>
-
+    <style name="imageDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.8</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="colorAccent">@color/primary_color</item>
+        <item name="colorButtonNormal">@color/primary_color</item>
+    </style>
     <style name="Theme.bubbleInApp" parent="Theme.AppCompat.Light.Dialog">
         <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/primary_color</item>

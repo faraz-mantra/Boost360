@@ -41,7 +41,7 @@ public class ImageDialogFragment extends DialogFragment {
             screenShots = getArguments().getStringArrayList("list");
             //Log.v("ggg",screenShots.size()+"");
         }
-        setStyle(STYLE_NO_TITLE, android.R.style.Theme_Holo_Dialog);
+        setStyle(STYLE_NO_TITLE,android.R.style.Theme_Holo_Dialog_NoActionBar);
     }
 
     @Nullable
@@ -73,11 +73,11 @@ public class ImageDialogFragment extends DialogFragment {
             }
         });
         pager.setAdapter(adapter);
-        mIndicator.setPageColor(R.color.business_button_gray);
+        mIndicator.setPageColor(R.color.background_grey_onclick);
         mIndicator.setStrokeWidth(0);
-        mIndicator.setStrokeColor(R.color.business_button_gray);
+        mIndicator.setStrokeColor(R.color.white);
         mIndicator.setFillColor(R.color.business_button_black);
-        mIndicator.setRadius(5);
+        mIndicator.setRadius(8);
         mIndicator.setViewPager(pager);
     }
 }

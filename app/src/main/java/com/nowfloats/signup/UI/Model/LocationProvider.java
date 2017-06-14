@@ -179,7 +179,7 @@ public class LocationProvider extends Service implements LocationListener {
         alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
 
         // On pressing ic_settings button
-        alertDialog.setPositiveButton("ic_settings", new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton("settings", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog,int which) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 dialog.dismiss();

@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupWindow;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -30,6 +31,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+
 /**
  * Created by Abhi on 12/12/2016.
  */
@@ -41,6 +43,8 @@ public class BusinessAppPreview extends Fragment {
     private UserSessionManager session;
     String status=null;
     private ArrayList<String> screenShots;
+    private PopupWindow popup;
+    private View parentView;
 
     @Nullable
     @Override
@@ -112,6 +116,8 @@ public class BusinessAppPreview extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if(!isAdded()) return;
+        parentView = view;
         MaterialProgressBar.startProgressBar(getActivity(),"Processing...",false);
         final BusinessAppApis.AppApis apis=BusinessAppApis.getRestAdapter();
         apis.getStatus(Constants.clientId, session.getFPID(), new Callback<JsonObject>() {
@@ -217,6 +223,7 @@ public class BusinessAppPreview extends Fragment {
     }
 
     private void showImageDialog() {
+
        ImageDialogFragment dialog = ImageDialogFragment.getInstance(screenShots);
         dialog.show(getChildFragmentManager(),"dialog");
     }

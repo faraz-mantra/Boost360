@@ -1283,5 +1283,9 @@
     <string name="app_preview">App preview</string>
     <string name="deeplink_business_app">businessapp</string>
     <string name="about_app">About app</string>
+    <string name="fb_page_creation_message">gather more leads and drive more traffic to your website through Facebook</string>
+    <string name="get_facebook_page">Get a Facebook page</string>
+    <string name="fb_page_creation_title">Looks like you don’t have a Facebook page</string>
+    <string name="more_details">More details</string>
 
 </resources>

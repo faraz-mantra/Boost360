@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:attrs="http://schemas.android.com/apk/res-auto"
     android:background="@color/gray_transparent"
     android:clipToPadding="false">
 
@@ -12,15 +13,28 @@
         android:layout_height="match_parent">
 
     </android.support.v4.view.ViewPager>
-
-    <com.viewpagerindicator.CirclePageIndicator
+    <com.rd.PageIndicatorView
+        android:id="@+id/ps_indicator"
+        android:layout_width="wrap_content"
+        android:padding="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:layout_above="@+id/customer_apps_get_store_link_button"
+        android:layout_height="wrap_content"
+        attrs:piv_viewPager="@id/viewPager"
+        attrs:piv_animationType="slide"
+        attrs:piv_unselectedColor="@color/business_button_gray"
+        attrs:piv_selectedColor="@color/business_button_black"
+        attrs:piv_radius="4dp"
+        attrs:piv_count="4"/>
+   <!-- <com.viewpagerindicator.CirclePageIndicator
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/ps_indicator"
         android:padding="5dp"
         android:layout_marginBottom="5dp"
         android:layout_above="@+id/customer_apps_get_store_link_button"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent" />
+        android:layout_width="match_parent" />-->
 
     <Button
         android:layout_width="match_parent"

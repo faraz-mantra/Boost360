@@ -22,8 +22,8 @@ import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.rd.PageIndicatorView;
 import com.thinksity.R;
-import com.viewpagerindicator.CirclePageIndicator;
 
 
 /**
@@ -32,7 +32,6 @@ import com.viewpagerindicator.CirclePageIndicator;
 
 public class BusinessAppsFragment extends Fragment {
     ViewPager mPager;
-    CirclePageIndicator mIndicator;
     viewPagerAdapter mAdapter;
     Button mButton;
     Context context;
@@ -87,14 +86,15 @@ public class BusinessAppsFragment extends Fragment {
         mPager.setPageMargin(20);
 
         mPager.setAdapter(mAdapter);
-        mIndicator = (CirclePageIndicator) view.findViewById(R.id.ps_indicator);
-        mIndicator.setViewPager(mPager);
-        mIndicator.setPageColor(R.color.business_button_gray);
+        PageIndicatorView pageIndicatorView = (PageIndicatorView) view.findViewById(R.id.ps_indicator);
+        pageIndicatorView.setViewPager(mPager);
+     /*   mIndicator.setViewPager(mPager);
+        mIndicator.setPageColor(R.color.background_grey_onclick);
         mIndicator.setStrokeWidth(0);
-        mIndicator.setStrokeColor(R.color.business_button_gray);
+        mIndicator.setStrokeColor(R.color.white);
         mIndicator.setFillColor(R.color.business_button_black);
-        mIndicator.setRadius(5);
-        mIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mIndicator.setRadius(8);*/
+        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }

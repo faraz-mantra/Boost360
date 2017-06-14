@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@android:color/transparent"
+    android:background="@android:color/white"
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_height="match_parent"
@@ -17,16 +17,15 @@
         <com.viewpagerindicator.CirclePageIndicator
             android:id="@+id/ps_indicator"
             android:padding="5dp"
-            android:background="@color/white"
             android:layout_height="wrap_content"
             android:layout_width="match_parent" />
     </LinearLayout>
     <ImageView
         android:id="@+id/cancel"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="end"
-        android:background="@color/black_translucent"
-        android:src="@drawable/cancel1"/>
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:padding="7dp"
+        android:layout_gravity="right"
+        android:src="@drawable/rect_cancel"/>
 </FrameLayout>
 

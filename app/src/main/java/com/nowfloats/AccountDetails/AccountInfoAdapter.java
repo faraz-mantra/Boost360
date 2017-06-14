@@ -44,15 +44,6 @@ public class AccountInfoAdapter extends RecyclerView.Adapter<AccountInfoAdapter.
         this.detailModels = detailModels;
         dateFormat = new SimpleDateFormat("MMM dd, yyyy");
         dateFormat.setTimeZone(TimeZone.getDefault());
-        if(detailModels == null){
-            return;
-        }
-        for(AccountDetailModel model :detailModels){
-            if(model.NameOfWidget != null && model.NameOfWidget.toLowerCase().contains("demo")){
-                detailModels.remove(model);
-            }
-        }
-
     }
 
     @Override

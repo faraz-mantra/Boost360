@@ -43,14 +43,6 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
         this.modelKey = key;
         this.mSessionManager = sessionManager;
         mInflater = (LayoutInflater) appContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        if(storeData == null){
-            return;
-        }
-        for(StoreModel model :storeData){
-            if(model.Name != null && model.Name.toLowerCase().contains("demo")){
-                storeData.remove(model);
-            }
-        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

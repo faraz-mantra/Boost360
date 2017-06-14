@@ -480,7 +480,6 @@ public class Methods {
         return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
-
     public interface SmsApi{
 
         @Headers({"X-Authy-API-Key:"+Constants.TWILIO_AUTHY_API_KEY})

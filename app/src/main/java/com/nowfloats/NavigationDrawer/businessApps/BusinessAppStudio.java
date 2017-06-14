@@ -102,11 +102,12 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
             //getAppButton.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context,R.drawable.android_icon_white), null, null, null );
             if(!pref.getBoolean(Key_Preferences.BUSINESS_APP_REQUESTED,false)){
                 getAppButton.setText(getString(R.string.interest));
-                getAppButton.setBackgroundResource(R.color.business_button_black);
+                getAppButton.setBackgroundResource(R.drawable.black_round_corner);
             }else{
-                getAppButton.setText(getString(R.string.already_requested));
-                getAppButton.setBackgroundResource(R.color.business_button_gray);
+                getAppButton.setText("Already\nRequested");
+                getAppButton.setBackgroundResource(R.drawable.gray_round_corner);
             }
+            getAppButton.setPadding(Methods.dpToPx(15,context),0,0,0);
             previewButton.setText(getResources().getString(R.string.android_app_preview));
             iconImage.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.android_green_padding));
         }
@@ -125,6 +126,7 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
         final BusinessAppPreview frag= (BusinessAppPreview) getParentFragment();
         switch (view.getId()){
             case R.id.preview_button:
+
                 if(frag!=null ) {
                     frag.showScreenShots();
                 }
@@ -135,7 +137,7 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
                     if (type.equals("android")) {
 
                         if (!pref.getBoolean(Key_Preferences.BUSINESS_APP_REQUESTED, false)) {
-                            MaterialProgressBar.startProgressBar(getActivity(), "Requesting for business app", false);
+                            MaterialProgressBar.startProgressBar(getActivity(), getString(R.string.submiting_request), false);
 
                             Map<String, String> params = new HashMap<>();
                             params.put("clientId", session.getSourceClientId());
@@ -152,7 +154,7 @@ public class BusinessAppStudio extends Fragment implements View.OnClickListener 
                                     }
                                     pref.edit().putBoolean(Key_Preferences.BUSINESS_APP_REQUESTED,true).apply();
                                     MixPanelController.track(MixPanelController.BUSINESS_APP_INTRESTED,null);
-                                    ((Button) view).setText(getString(R.string.already_requested));
+                                    ((Button) view).setText("Already\nRequested");
                                     (view).setBackgroundResource(R.color.business_button_gray);
                                     new MaterialDialog.Builder(context)
                                             .title(getString(R.string.thank_you_for_your_interest))

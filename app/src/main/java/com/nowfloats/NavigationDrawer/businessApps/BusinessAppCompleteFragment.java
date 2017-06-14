@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
@@ -28,6 +27,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
 import java.util.List;
@@ -117,9 +117,9 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
         else if(!logo.contains("http")){
             logo = "https://"+logo;
         }
-        Glide.with(context)
+        Picasso.with(context)
                 .load(logo)
-                .placeholder(getResources().getDrawable(R.drawable.studio_architecture))
+                .placeholder(ContextCompat.getDrawable(context,R.drawable.studio_architecture))
                 .into(logoImage);
 
         if(type.equals("android")){
