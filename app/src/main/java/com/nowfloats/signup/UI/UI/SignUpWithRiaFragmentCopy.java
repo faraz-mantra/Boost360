@@ -252,6 +252,11 @@ public class SignUpWithRiaFragmentCopy extends Fragment implements AnimationTool
     private boolean isCalled = false;
 
     @Override
+    public void onAnimationStart(AnimationType animationType) {
+
+    }
+
+    @Override
     public void onAnimationEnd(AnimationType animationType) {
         if (isBackPress) {
 
