@@ -146,10 +146,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <RelativeLayout
                 android:id="@+id/mapFragment"
+                android:visibility="invisible"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -173,9 +174,11 @@
             </RelativeLayout>
 
             <TextView
+                android:visibility="invisible"
                 android:id="@+id/tvAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="120dp"
                 android:padding="@dimen/margin_40"
                 android:textSize="@dimen/large_text_size" />
         </LinearLayout>

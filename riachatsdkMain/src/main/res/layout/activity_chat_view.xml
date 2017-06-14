@@ -6,88 +6,82 @@
     android:background="@drawable/chat_bg"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/primary"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/MyCustomToolBarTheme">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            android:background="@color/primary"
-            android:elevation="4dp"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:theme="@style/MyCustomToolBarTheme">
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_agent_icon"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ria_circle_image"
+                android:visibility="visible" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/iv_agent_icon"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ria_circle_image"
-                    android:visibility="visible" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/tv_agent_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="bottom"
-                        android:layout_marginLeft="15dp"
-                        android:gravity="center"
-                        android:text="Ria"
-                        android:textColor="@color/white"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/tv_ria_typing"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_marginLeft="3dp"
-                        android:text="is typing..."
-                        android:textColor="@color/white"
-                        android:textStyle="italic"
-                        android:visibility="invisible" />
-                </LinearLayout>
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/tv_skip"
+                    android:id="@+id/tv_agent_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center"
+                    android:text="Ria"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tv_ria_typing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="@dimen/margin_10"
-                    android:alpha="0.5"
-                    android:fontFamily="sans-serif"
-                    android:text="@string/skip"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="3dp"
+                    android:text="is typing..."
                     android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:textStyle="normal" />
+                    android:textStyle="italic"
+                    android:visibility="invisible" />
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/tv_skip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/margin_10"
+                android:alpha="0.5"
+                android:visibility="gone"
+                android:fontFamily="sans-serif"
+                android:text="@string/skip"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="normal" />
+            <com.github.ybq.android.spinkit.SpinKitView
+                android:id="@+id/progress"
+                style="@style/SpinKitView.Circle"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:visibility="gone"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/margin_10"
+                app:SpinKit_Color="@color/white" />
+        </LinearLayout>
 
-        </android.support.v7.widget.Toolbar>
 
-        <ProgressBar
-            android:id="@+id/progress"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginTop="50dip"
-            android:indeterminate="true"
-            android:minHeight="20dp"
-            android:visibility="gone" />
-
-    </FrameLayout>
+    </android.support.v7.widget.Toolbar>
 
 
     <RelativeLayout
@@ -111,7 +105,7 @@
             android:layout_height="35dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="80dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/scroll_down_shape"
             android:paddingTop="5dp"
@@ -156,68 +150,6 @@
             android:layout_alignParentBottom="true"
             android:background="#fff"
             android:orientation="vertical"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp">
-
-                <TextView
-                    android:id="@+id/tv_prefix"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:maxLines="1" />
-
-                <AutoCompleteTextView
-                    android:id="@+id/et_chat_input"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/et_bg"
-                    android:hint="Say Something..."
-                    android:maxLines="5"
-                    android:minHeight="40dp"
-                    android:paddingLeft="15dp"
-                    android:textColorHint="#406f6f6f"
-                    android:textCursorDrawable="@drawable/custom_edit_text_cursor"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/tv_postfix"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="20dp"
-                    android:maxLines="1" />
-
-                <ImageView
-                    android:id="@+id/iv_send_msg"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/send_btn_bg"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="12dp"
-                    android:paddingTop="10dp"
-                    android:src="@drawable/ic_send_message_btn" />
-            </LinearLayout>
-        </LinearLayout>
-    </RelativeLayout>
-    <!--
-        <LinearLayout
-            android:id="@+id/cv_chat_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#fff"
-            android:orientation="vertical"
             android:visibility="invisible">
 
             <LinearLayout
@@ -245,6 +177,7 @@
                     android:maxLines="5"
                     android:minHeight="40dp"
                     android:paddingLeft="15dp"
+                    android:paddingRight="10dp"
                     android:textColorHint="#406f6f6f"
                     android:textCursorDrawable="@drawable/custom_edit_text_cursor"
                     android:textSize="15sp" />
@@ -255,6 +188,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="20dp"
+                    android:layout_marginLeft="10dp"
                     android:maxLines="1" />
 
                 <ImageView
@@ -271,6 +205,7 @@
                     android:paddingTop="10dp"
                     android:src="@drawable/ic_send_message_btn" />
             </LinearLayout>
-        </LinearLayout>-->
+        </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

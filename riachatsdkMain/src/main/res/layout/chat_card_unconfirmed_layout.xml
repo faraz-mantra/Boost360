@@ -27,6 +27,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:text="@string/confirm_business_name"
                 android:textSize="12sp"
                 android:visibility="visible" />
@@ -39,7 +41,8 @@
                 android:gravity="center"
                 android:paddingBottom="@dimen/margin_40"
                 android:paddingTop="15dp"
-                android:text="hfushfhksdhf"
+                android:paddingLeft="35dp"
+                android:paddingRight="35dp"
                 android:textSize="22sp" />
 
 

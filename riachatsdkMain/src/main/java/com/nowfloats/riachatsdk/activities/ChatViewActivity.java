@@ -1143,6 +1143,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     initChat(riaCardModels);
                 }
                 progressBar.setVisibility(View.GONE);
+                tvSkip.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -1150,6 +1151,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 //pg.dismiss();
                 error.printStackTrace();
                 progressBar.setVisibility(View.GONE);
+                tvSkip.setVisibility(View.VISIBLE);
                 //(RiaOnBoardingActivity.this, getString(R.string.something_went_wrong));
             }
         });
@@ -1274,7 +1276,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                progressBar.setVisibility(View.GONE);
+
                 //TODO:Add unable to process in the sectionList
             }
         }) {

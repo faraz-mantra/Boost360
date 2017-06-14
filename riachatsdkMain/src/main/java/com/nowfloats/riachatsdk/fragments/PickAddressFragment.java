@@ -30,12 +30,15 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -82,6 +85,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
     private GoogleMap mGoogleMap;
 
     private AddressResultReceiver mResultReceiver;
+
+    private RelativeLayout rlMapContainer;
 
 //    protected String mAddressOutput;
 //    protected String mAreaOutput;
@@ -168,6 +173,13 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getDialog().getWindow()
+                .getAttributes().windowAnimations = R.style.DialogAnimation;
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
 
@@ -196,6 +208,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         etHousePlotNum = (TextInputEditText) v.findViewById(R.id.et_house_plot_num);
         etLandmark = (TextInputEditText) v.findViewById(R.id.et_landmark);
         tvAddress = (TextView) v.findViewById(R.id.tvAddress);
+        rlMapContainer = (RelativeLayout) v.findViewById(R.id.mapFragment);
 
         populateData();
 
@@ -216,14 +229,41 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                         getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
                                 getResources().getDisplayMetrics().heightPixels - 100);
 
-//                        Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down);
-//                        llManual.setAnimation(animation);
-                        llManual.setVisibility(View.GONE);
+                        Animation animation = AnimationUtils.loadAnimation(getActivity(), R.anim.map_form_scale_down);
+                        llManual.setAnimation(animation);
+                        animation.start();
+                        rlMapContainer.setVisibility(View.VISIBLE);
+                        Animation animation1 = AnimationUtils.loadAnimation(getActivity(), R.anim.map_scale_up);
+                        rlMapContainer.setAnimation(animation1);
+                        animation1.start();
+                        /*llManual.setVisibility(View.GONE);
                         llUseGPS.setVisibility(View.VISIBLE);
-                        btnSave.setText(getResources().getString(R.string.done));
+                        btnSave.setText(getResources().getString(R.string.done));*/
                         if (pick_type == PICK_TYPE.MANUAL) {
                             reverseGeoCode();
                         }
+
+                        animation.setAnimationListener(new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                llManual.setVisibility(View.GONE);
+                                llUseGPS.setVisibility(View.VISIBLE);
+                                tvAddress.setVisibility(View.VISIBLE);
+                                btnSave.setText(getResources().getString(R.string.done));
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {
+
+                            }
+                        });
+
+
 
 //                        animation.setAnimationListener(new Animation.AnimationListener() {
 //                            @Override
