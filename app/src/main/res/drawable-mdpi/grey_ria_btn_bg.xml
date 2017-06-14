@@ -5,7 +5,7 @@
         <shape>
             <solid android:color="@color/gray" />
             <corners android:radius="@dimen/margin_5" />
-            <padding android:bottom="@dimen/margin_5" android:left="@dimen/margin_30" android:right="@dimen/margin_30" android:top="@dimen/margin_5" />
+            <padding android:bottom="@dimen/margin_2" android:left="@dimen/margin_25" android:right="@dimen/margin_25" android:top="@dimen/margin_2" />
         </shape>
     </item>
 
@@ -13,7 +13,7 @@
         <shape xmlns:android="http://schemas.android.com/apk/res/android">
             <stroke android:width="@dimen/margin_1" android:color="@color/gray" />
             <solid android:color="@color/white" />
-            <padding android:bottom="@dimen/margin_5" android:left="@dimen/margin_30" android:right="@dimen/margin_30" android:top="@dimen/margin_5" />
+            <padding android:bottom="@dimen/margin_2" android:left="@dimen/margin_25" android:right="@dimen/margin_25" android:top="@dimen/margin_2" />
             <corners android:radius="@dimen/margin_5" />
         </shape>
     </item>

@@ -5,5 +5,8 @@
     <color name="blue">#1565C0</color>
     <color name="primary">#ffb900</color>
     <color name="gray">#616161</color>
+    <color name="send_msg_bg">#007BFF</color>
+    <color name="send_msg_idle">#007BFF</color>
+    <color name="progress_bar">#157EFB</color>
 
 </resources>

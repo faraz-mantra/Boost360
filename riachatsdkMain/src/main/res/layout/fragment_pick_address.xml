@@ -55,7 +55,6 @@
                             android:id="@+id/et_street_address"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:imeOptions="actionDone"
                             android:inputType="text"
                             android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
@@ -98,7 +97,10 @@
                             android:id="@+id/et_city"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:completionThreshold="1"
+                            android:imeOptions="actionNext"
                             android:inputType="text"
+                            android:singleLine="true"
                             android:textCursorDrawable="@drawable/custom_edit_text_cursor" />
 
                     </android.support.design.widget.TextInputLayout>

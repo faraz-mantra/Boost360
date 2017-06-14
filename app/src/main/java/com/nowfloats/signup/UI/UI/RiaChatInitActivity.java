@@ -17,7 +17,7 @@ public class RiaChatInitActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ria_chat_init);
 
-        LoginAndSignUpFragment fragment = LoginAndSignUpFragment.newInstance();
+        SignUpWithRiaFragment fragment = SignUpWithRiaFragment.newInstance();
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragment_container, fragment)
@@ -28,24 +28,27 @@ public class RiaChatInitActivity extends AppCompatActivity
     public void OnInteraction(String fragmentName) {
         switch (fragmentName) {
             case "signup":
-                signUpWithRiaFragment = SignUpWithRiaFragment.newInstance();
+               /* signUpWithRiaFragment = SignUpWithRiaFragment.newInstance();
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, signUpWithRiaFragment)
-                        .commit();
+                        .commit();*/
+                signUpWithRiaFragment = null;
+                finish();
                 break;
             case "back":
                 signUpWithRiaFragment = null;
-                LoginAndSignUpFragment loginAndSignUpFragment = LoginAndSignUpFragment.newInstance();
+
+                /*LoginAndSignUpFragment loginAndSignUpFragment = LoginAndSignUpFragment.newInstance();
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_container, loginAndSignUpFragment)
-                        .commit();
+                        .commit();*/
                 break;
             case "chatactivity":
                 signUpWithRiaFragment = null;
                 finish();
-                overridePendingTransition(android.R.anim.fade_in, R.anim.slide_out_up);
+                overridePendingTransition(R.anim.ria_fade_in, R.anim.slide_out_up);
                 ChatManager.getInstance(this).startChat();
                 break;
         }

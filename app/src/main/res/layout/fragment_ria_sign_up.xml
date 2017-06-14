@@ -86,17 +86,17 @@
                 android:id="@+id/tvRia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
+                android:fontFamily="sans-serif-thin"
                 android:text="@string/ria_chat_header"
                 android:textColor="@color/white"
-                android:textSize="@dimen/xxxxlarge_text_size"
+                android:textSize="@dimen/xxxxxlarge_text_size"
                 android:visibility="visible" />
 
             <TextView
                 android:id="@+id/tvRiaMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_5"
                 android:fontFamily="sans-serif-light"
                 android:text="@string/ria_chat_message"
                 android:textColor="@color/white"
@@ -116,7 +116,10 @@
         android:background="@drawable/traingle_bg"
         android:gravity="right|center"
         android:orientation="horizontal"
-        android:visibility="invisible"></LinearLayout>
+        android:visibility="invisible">
+
+
+    </LinearLayout>
 
 
     <LinearLayout
@@ -124,17 +127,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:alpha="0.7"
         android:background="@drawable/grey_ria_btn_bg"
         android:textColor="@color/gray"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/margin_10"
-            android:paddingLeft="@dimen/margin_10"
-            android:paddingRight="@dimen/margin_10"
             android:paddingTop="@dimen/margin_10"
             android:text="GET STARTED" />
     </LinearLayout>

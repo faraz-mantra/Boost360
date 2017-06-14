@@ -30,9 +30,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -40,7 +39,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -63,8 +61,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
+import java.util.Map;
 
 /**
  * Created by NowFloats on 27-03-2017 by Romio Ranjan Jena.
@@ -104,6 +101,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
     private OnResultReceive mResultListener;
 
     private static final String ARG_MAP_TYPE = "map_type";
+    private static final String ARG_MAP_DATA = "map_data";
 
     private PICK_TYPE pick_type;
 
@@ -117,11 +115,28 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
     private GoogleApiClient mGoogleApiClient;
 
+    private Map<String, String> mDataMap = new HashMap<>();
+
     public static PickAddressFragment newInstance(PICK_TYPE pick_type) {
 
         PickAddressFragment fragment = new PickAddressFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_MAP_TYPE, pick_type);
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
+    public static PickAddressFragment newInstance(PICK_TYPE pick_type, HashMap<String, String> mDataMap) {
+
+        PickAddressFragment fragment = new PickAddressFragment();
+
+        Bundle args = new Bundle();
+
+        args.putSerializable(ARG_MAP_TYPE, pick_type);
+        fragment.setArguments(args);
+
+        args.putSerializable(ARG_MAP_DATA, mDataMap);
         fragment.setArguments(args);
 
         return fragment;
@@ -142,6 +157,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             pick_type = (PICK_TYPE) getArguments().get(ARG_MAP_TYPE);
+            mDataMap = (Map<String, String>) getArguments().get(ARG_MAP_DATA);
         }
 
     }
@@ -181,6 +197,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         etLandmark = (TextInputEditText) v.findViewById(R.id.et_landmark);
         tvAddress = (TextView) v.findViewById(R.id.tvAddress);
 
+        populateData();
+
         btnSave = (Button) v.findViewById(R.id.btn_save);
 
         llManual.bringToFront();
@@ -190,6 +208,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
             public void onClick(View v) {
 
                 if (verifyData()) {
+                    btnSave.setClickable(false);
+                    btnSave.setEnabled(false);
                     btnSave.setVisibility(View.INVISIBLE);
                     if (btnSave.getText().toString().equalsIgnoreCase(getResources().getString(R.string.locate_on_map))) {
 
@@ -202,7 +222,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                         llUseGPS.setVisibility(View.VISIBLE);
                         btnSave.setText(getResources().getString(R.string.done));
                         if (pick_type == PICK_TYPE.MANUAL) {
-                                    reverseGeoCode();
+                            reverseGeoCode();
                         }
 
 //                        animation.setAnimationListener(new Animation.AnimationListener() {
@@ -250,8 +270,14 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
                         if (mResultListener != null) {
 
+                            double lat=0,lng = 0;
+                            if(mCenterLatLong!=null){
+                                lat = mCenterLatLong.latitude;
+                                lng = mCenterLatLong.longitude;
+                            }
                             mResultListener.OnResult(etStreetAddr.getText().toString().trim(),
-                                    etLocality.getText().toString(), etCity.getText().toString(), "", etCountry.getText().toString(), mCenterLatLong.latitude, mCenterLatLong.longitude,
+                                    etLocality.getText().toString(), etCity.getText().toString(), "",
+                                    etCountry.getText().toString(), lat, lng,
                                     etPin.getText().toString(),
                                     etHousePlotNum.getText().toString(), etLandmark.getText().toString());
 
@@ -299,6 +325,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         if (pick_type == PICK_TYPE.MANUAL) {
 
             btnSave.setVisibility(View.VISIBLE);
+            btnSave.setClickable(true);
+            btnSave.setEnabled(true);
 
             if (mGoogleApiClient == null) {
 
@@ -312,13 +340,13 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
             loadCountries();
 
-            etCountry.setFocusable(false);
-            etCountry.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    selectCountry();
-                }
-            });
+//            etCountry.setFocusable(false);
+//            etCountry.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    selectCountry();
+//                }
+//            });
 
             etCity.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -335,46 +363,72 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                 public void afterTextChanged(Editable s) {
                     //ArrayList<String> citys=new ArrayList<String>();
                     //cityEditText.setAdapter(null);
-                    try {
-                        String country_code = null;
-                        if (Country_CodeMap != null) {
-                            country_code = Country_CodeMap.get(etCity.getText().toString());
-                        }
-                        makeAutoCompleteFilter(country_code);
+                    if (etCity.getTag() != null && !(boolean) etCity.getTag()) {
 
-                        final PendingResult<AutocompletePredictionBuffer> result =
-                                Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, etCity.getText().toString().trim(),
-                                        null, filter);
-
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                AutocompletePredictionBuffer a = result.await();
-                                //Log.v("ggg","ok");
-                                citys.clear();
-                                for (int i = 0; i < a.getCount(); i++) {
-                                    //Log.v("ggg",a.get(i).getFullText(new StyleSpan(Typeface.NORMAL)).toString()+" length "+citys.size());
-                                    citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString());
-                                }
-
-                                a.release();
-
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        adapter = new ArrayAdapter<>(getActivity(),
-                                                android.R.layout.simple_dropdown_item_1line, citys);
-                                        if (!getActivity().isFinishing()) {
-                                            etCity.setAdapter(adapter);
-                                            adapter.notifyDataSetChanged();
-                                        }
-                                    }
-                                });
+                    } else {
+                        try {
+                            String country_code = null;
+                            if (Country_CodeMap != null) {
+                                country_code = Country_CodeMap.get(etCity.getText().toString());
                             }
-                        }).start();
-                    } catch (Exception e) {
+                            makeAutoCompleteFilter(country_code);
 
+                            final PendingResult<AutocompletePredictionBuffer> result =
+                                    Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, etCity.getText().toString().trim(),
+                                            null, filter);
+
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AutocompletePredictionBuffer a = result.await();
+                                    //Log.v("ggg","ok");
+                                    citys.clear();
+                                    for (int i = 0; i < a.getCount(); i++) {
+                                        //Log.v("ggg",a.get(i).getFullText(new StyleSpan(Typeface.NORMAL)).toString()+" length "+citys.size());
+                                        citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString() + "," + a.get(i).getSecondaryText(new StyleSpan(Typeface.NORMAL)).toString());
+                                    }
+
+                                    a.release();
+
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            adapter = new ArrayAdapter<>(getActivity(),
+                                                    android.R.layout.simple_dropdown_item_1line, citys);
+                                            if (!getActivity().isFinishing()) {
+                                                etCity.setAdapter(adapter);
+                                                adapter.notifyDataSetChanged();
+                                            }
+                                        }
+                                    });
+                                }
+                            }).start();
+                        } catch (Exception e) {
+
+                        }
                     }
+
+                }
+            });
+
+            etCity.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    String city = ((TextView) view).getText().toString();
+                    if (city.contains(",")) {
+                        String country[] = city.split(",");
+                        city = country[0];
+                        if (country.length == 3) {
+                            etCountry.setText(country[2].trim());
+                        } else if (country.length == 2)
+                            etCountry.setText(country[1].trim());
+                        etCountry.setFocusable(true);
+                    }
+                    etCity.setTag(false);
+                    etCity.setText(city);
+                    etCity.setTag(true);
+
                 }
             });
         } else {
@@ -382,6 +436,18 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         }
 
         return v;
+    }
+
+    private void populateData() {
+        if (mDataMap != null && mDataMap.size() > 0) {
+            etHousePlotNum.setText(mDataMap.get("[~" + "PICK_HOUSEPLOTNO" + "]"));
+            etLocality.setText(mDataMap.get("[~" + "PICK_AREA" + "]"));
+            etStreetAddr.setText(mDataMap.get("[~" + "PICK_ADDRESS" + "]"));
+            etLandmark.setText(mDataMap.get("[~" + "PICK_LANDMARK" + "]"));
+            etCity.setText(mDataMap.get("[~" + "CITY" + "]"));
+            etCountry.setText(mDataMap.get("[~" + "COUNTRY" + "]"));
+            etPin.setText(mDataMap.get("[~" + "PINCODE" + "]"));
+        }
     }
 
     private void makeAutoCompleteFilter(String country_code) {
@@ -538,7 +604,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
             public void onCameraIdle() {
                 mCenterLatLong = mGoogleMap.getCameraPosition().target;
                 mGoogleMap.clear();
-                btnSave.setVisibility(View.VISIBLE);
+//                btnSave.setVisibility(View.VISIBLE);
 
             }
         });
@@ -548,7 +614,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
         try {
 
-            if(mCenterLatLong!=null){
+            if (mCenterLatLong != null) {
 
                 Location mLocation = new Location("");
                 mLocation.setLatitude(mCenterLatLong.latitude);
@@ -647,13 +713,15 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
     protected void displayAddressOutput() {
 
 
-        String address = etHousePlotNum.getText().toString() + ", " + etLocality.getText().toString()+", "+etLandmark.getText().toString() + ", " +
-                etStreetAddr.getText().toString().trim() + ", " +
+        String address = etHousePlotNum.getText().toString() + ", " + etLocality.getText().toString() + ", " +
+                etStreetAddr.getText().toString().trim() + ", " + etLandmark.getText().toString() + ", " +
                 etCity.getText().toString() + ", " + etCountry.getText().toString() + ", " +
                 etPin.getText().toString();
 
         tvAddress.setText(address);
         btnSave.setVisibility(View.VISIBLE);
+        btnSave.setClickable(true);
+        btnSave.setEnabled(true);
     }
 
     private void loadCountries() {
@@ -672,23 +740,23 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
     }
 
 
-    public void selectCountry() {
-        final List<String> stringList = signUpCountryList;
-        String[] countryList = new String[stringList.size()];
-        countryList = stringList.toArray(countryList);
-
-        new MaterialDialog.Builder(getActivity())
-                .title("Select Country")
-                .items(countryList)
-                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
-                    @Override
-                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        etCountry.setText(text);
-                        return false;
-                    }
-                })
-                .show();
-    }
+//    public void selectCountry() {
+//        final List<String> stringList = signUpCountryList;
+//        String[] countryList = new String[stringList.size()];
+//        countryList = stringList.toArray(countryList);
+//
+//        new MaterialDialog.Builder(getActivity())
+//                .title("Select Country")
+//                .items(countryList)
+//                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+//                    @Override
+//                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+//                        etCountry.setText(text);
+//                        return false;
+//                    }
+//                })
+//                .show();
+//    }
 
     @Override
     public void onStop() {

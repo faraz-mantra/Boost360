@@ -17,7 +17,7 @@ public class BallPulseSyncIndicator extends Indicator {
     @Override
     public void draw(Canvas canvas, Paint paint) {
         float circleSpacing=8;
-        float radius=(getWidth()-circleSpacing*2)/6;
+        float radius=(getWidth()-circleSpacing*2)/7;
         float x = getWidth()/ 2-(radius*2+circleSpacing);
         for (int i = 0; i < 3; i++) {
             canvas.save();
@@ -32,7 +32,7 @@ public class BallPulseSyncIndicator extends Indicator {
     public ArrayList<ValueAnimator> onCreateAnimators() {
         ArrayList<ValueAnimator> animators=new ArrayList<>();
         float circleSpacing=8;
-        float radius=(getWidth()-circleSpacing*2)/6;
+        float radius=(getWidth()-circleSpacing*2)/7;
         int[] delays=new int[]{70,140,210};
         for (int i = 0; i < 3; i++) {
             final int index=i;

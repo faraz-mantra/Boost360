@@ -25,7 +25,6 @@ import com.thinksity.R;
 
 import static com.nowfloats.signup.UI.AnimationType.SLIDE_DOWN;
 import static com.nowfloats.signup.UI.AnimationType.SLIDE_UP;
-import static com.nowfloats.signup.UI.AnimationType.ZOOM_IN;
 
 
 public class SignUpWithRiaFragment extends Fragment implements AnimationTool.AnimationListener {
@@ -236,7 +235,7 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
                 RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         rlStartParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         rlStartParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        rlStartParams.setMargins(0, 0, (displayMetrics.heightPixels * 6) / 100, (displayMetrics.heightPixels * 6) / 100);
+        rlStartParams.setMargins((displayMetrics.heightPixels * 82) / 100, 0, (displayMetrics.heightPixels * 8) / 100, (displayMetrics.heightPixels * 8) / 100);
         ivStart.setLayoutParams(rlStartParams);
 
 
@@ -245,7 +244,7 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
          */
 
         animationTool.setAnimationType(SLIDE_DOWN)
-                .duration(100)
+                .duration(200)
                 .repeat(0)
                 .interpolate(new AccelerateInterpolator())
                 .playOn(llRia);
@@ -307,6 +306,10 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
                     new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            Animation animation = AnimationUtils.loadAnimation(getActivity(),R.anim.fadein);
+                            animation.setDuration(200);
+                            ivStart.startAnimation(animation);
+
                             ivStart.setVisibility(View.VISIBLE);
                             leftAnimation();
                             rightAnimation();
@@ -314,7 +317,7 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
                             animationSet.start();
                         }
                     }, 200);
-
+//                    llStart.setVisibility(View.VISIBLE);
                     break;
                     /*animationTool.setAnimationType(ZOOM_IN)
                             .duration(100)
