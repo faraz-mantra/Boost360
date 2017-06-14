@@ -23,6 +23,7 @@ public class AnimationTool {
 
     public interface AnimationListener {
         void onAnimationEnd(AnimationType animationType);
+        void onAnimationStart(AnimationType animationType);
     }
 
     public AnimationTool(Activity mContext) {
@@ -58,7 +59,9 @@ public class AnimationTool {
 
         @Override
         public void onAnimationStart(Animation animation) {
-
+            if (animationListener != null) {
+                animationListener.onAnimationStart(animationType);
+            }
         }
 
         @Override

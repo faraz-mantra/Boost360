@@ -2,6 +2,8 @@ package com.nowfloats.signup.UI.UI;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -123,8 +126,6 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
             @Override
             public void onClick(View v) {
                 navigateTo = "chatactivity";
-                llStart.setVisibility(View.GONE);
-                ivStart.setVisibility(View.GONE);
                 mFragmentInteraction.OnInteraction(navigateTo);
             }
         });
@@ -258,6 +259,21 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
     private AnimationSet animationSet = null;
 
     @Override
+    public void onAnimationStart(AnimationType animationType) {
+        switch (animationType) {
+            case SLIDE_DOWN:
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        llStart.setVisibility(View.VISIBLE);
+                    }
+                }, 350);
+        }
+
+    }
+
+    @Override
     public void onAnimationEnd(AnimationType animationType) {
         if (isBackPress) {
 
@@ -269,7 +285,7 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
                     animationTool.setAnimationType(SLIDE_UP)
                             .duration(100)
                             .repeat(0)
-                            .interpolate(new AccelerateInterpolator())
+                            .interpolate(new DecelerateInterpolator())
                             .playOn(llRia);
                     break;
                 case SLIDE_UP:
@@ -285,24 +301,26 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
 //                            .repeat(0)
 //                            .interpolate(new AccelerateInterpolator())
 //                            .playOn(ivStart);
-                    animationSet = new AnimationSet(true);
 
-                    leftAnimation();
-                    rightAnimation();
-                    topAnimation();
-                    animationSet.start();
-                    ivStart.setVisibility(View.VISIBLE);
-                    ivBack.setVisibility(View.VISIBLE);
-                    break;
                 case SLIDE_DOWN:
+                    animationSet = new AnimationSet(true);
+                    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            ivStart.setVisibility(View.VISIBLE);
+                            leftAnimation();
+                            rightAnimation();
+                            topAnimation();
+                            animationSet.start();
+                        }
+                    }, 200);
 
-                    animationTool.setAnimationType(ZOOM_IN)
+                    break;
+                    /*animationTool.setAnimationType(ZOOM_IN)
                             .duration(100)
                             .repeat(0)
                             .interpolate(new AccelerateInterpolator())
-                            .playOn(llStart);
-
-                    break;
+                            .playOn(llStart);*/
 
                 case SLIDE_RIGHT:
                     break;

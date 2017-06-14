@@ -116,7 +116,7 @@
         android:background="@drawable/traingle_bg"
         android:gravity="right|center"
         android:orientation="horizontal"
-        android:visibility="gone"></LinearLayout>
+        android:visibility="invisible"></LinearLayout>
 
 
     <LinearLayout
@@ -127,7 +127,7 @@
         android:layout_alignParentRight="true"
         android:background="@drawable/grey_ria_btn_bg"
         android:textColor="@color/gray"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <TextView
             android:layout_width="wrap_content"
