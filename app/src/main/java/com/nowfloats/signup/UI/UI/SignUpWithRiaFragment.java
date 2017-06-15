@@ -117,7 +117,7 @@ public class SignUpWithRiaFragment extends Fragment implements AnimationTool.Ani
             public void onClick(View v) {
                 navigateTo = "back";
                 reverseAnimation();
-
+                mFragmentInteraction.OnInteraction(navigateTo);
             }
         });
 

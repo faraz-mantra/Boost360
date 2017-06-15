@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.location.Address;
@@ -55,7 +54,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.nowfloats.riachatsdk.R;
-import com.nowfloats.riachatsdk.services.FetchAddressIntentService;
 import com.nowfloats.riachatsdk.utils.Constants;
 
 import java.io.IOException;
@@ -84,7 +82,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
     private GoogleMap mGoogleMap;
 
-    private AddressResultReceiver mResultReceiver;
+//    private AddressResultReceiver mResultReceiver;
 
     private RelativeLayout rlMapContainer;
 
@@ -263,49 +261,6 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                             }
                         });
 
-
-
-//                        animation.setAnimationListener(new Animation.AnimationListener() {
-//                            @Override
-//                            public void onAnimationStart(Animation animation) {
-////
-//                                Animation fadeIn = AnimationUtils.loadAnimation(getActivity(), android.R.anim.fade_in);
-//                                fadeIn.setDuration(3000);
-//                                llUseGPS.setAnimation(fadeIn);
-//                                fadeIn.setAnimationListener(new Animation.AnimationListener() {
-//                                    @Override
-//                                    public void onAnimationStart(Animation animation) {
-//
-//                                    }
-//
-//                                    @Override
-//                                    public void onAnimationEnd(Animation animation) {
-//                                        btnSave.setText(getResources().getString(R.string.done));
-//                                    }
-//
-//                                    @Override
-//                                    public void onAnimationRepeat(Animation animation) {
-//
-//                                    }
-//                                });
-//                                fadeIn.start();
-//                            }
-//
-//                            @Override
-//                            public void onAnimationEnd(Animation animation) {
-//                                llManual.setVisibility(View.GONE);
-//                                if (pick_type == PICK_TYPE.MANUAL) {
-//                                    reverseGeoCode();
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onAnimationRepeat(Animation animation) {
-//
-//                            }
-//                        });
-//                        animation.start();
-
                     } else {
 
                         if (mResultListener != null) {
@@ -338,7 +293,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
             }
         });
 
-        mResultReceiver = new AddressResultReceiver(new Handler());
+//        mResultReceiver = new AddressResultReceiver(new Handler());
 
         try {
             // Loading map
@@ -378,9 +333,9 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                         .build();
             }
 
-            loadCountries();
+//            loadCountries();
 
-//            etCountry.setFocusable(false);
+            etCountry.setFocusable(false);
 //            etCountry.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
@@ -537,6 +492,27 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                     mGoogleMap.animateCamera(CameraUpdateFactory
                             .newCameraPosition(cameraPosition));
 //                    }
+                }else{
+                    if (ActivityCompat.checkSelfPermission(getActivity(),
+                            Manifest.permission.ACCESS_FINE_LOCATION) ==
+                            PackageManager.PERMISSION_GRANTED &&
+                            ActivityCompat.checkSelfPermission(getActivity(),
+                                    Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                                    PackageManager.PERMISSION_GRANTED) {
+                        mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+                        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, PickAddressFragment.this);
+                    }
+
+                    if (ActivityCompat.checkSelfPermission(getActivity(),
+                            Manifest.permission.ACCESS_FINE_LOCATION) ==
+                            PackageManager.PERMISSION_GRANTED &&
+                            ActivityCompat.checkSelfPermission(getActivity(),
+                                    Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                                    PackageManager.PERMISSION_GRANTED) {
+                        mGoogleMap.setMyLocationEnabled(true);
+                        mGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
+                    }
+
                 }
 
                 displayAddressOutput();
@@ -596,34 +572,13 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
                             if (mGoogleMap != null) {
                                 mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
-
-                                if (ActivityCompat.checkSelfPermission(getActivity(),
-                                        Manifest.permission.ACCESS_FINE_LOCATION) ==
-                                        PackageManager.PERMISSION_GRANTED &&
-                                        ActivityCompat.checkSelfPermission(getActivity(),
-                                                Manifest.permission.ACCESS_COARSE_LOCATION) ==
-                                                PackageManager.PERMISSION_GRANTED) {
-                                    mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-                                    mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, PickAddressFragment.this);
-                                }
-
-                                if (ActivityCompat.checkSelfPermission(getActivity(),
-                                        Manifest.permission.ACCESS_FINE_LOCATION) ==
-                                        PackageManager.PERMISSION_GRANTED &&
-                                        ActivityCompat.checkSelfPermission(getActivity(),
-                                                Manifest.permission.ACCESS_COARSE_LOCATION) ==
-                                                PackageManager.PERMISSION_GRANTED) {
-                                    mGoogleMap.setMyLocationEnabled(true);
-                                    mGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
-                                }
-
                             } else {
                                 Toast.makeText(getActivity(),
                                         "Sorry! unable to create maps", Toast.LENGTH_SHORT)
                                         .show();
                             }
                             setCameraChangeListener();
-                            fetchAddress();
+//                            fetchAddress();
                         }
                     });
 
@@ -649,34 +604,34 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
             }
         });
     }
+//
+//    private void fetchAddress() {
+//
+//        try {
+//
+//            if (mCenterLatLong != null) {
+//
+//                Location mLocation = new Location("");
+//                mLocation.setLatitude(mCenterLatLong.latitude);
+//                mLocation.setLongitude(mCenterLatLong.longitude);
+//
+//                startIntentService(mLocation);
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-    private void fetchAddress() {
-
-        try {
-
-            if (mCenterLatLong != null) {
-
-                Location mLocation = new Location("");
-                mLocation.setLatitude(mCenterLatLong.latitude);
-                mLocation.setLongitude(mCenterLatLong.longitude);
-
-                startIntentService(mLocation);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    protected void startIntentService(Location mLocation) {
-        Intent intent = new Intent(getActivity(), FetchAddressIntentService.class);
-
-        intent.putExtra(Constants.LocationConstants.RECEIVER, mResultReceiver);
-
-        intent.putExtra(Constants.LocationConstants.LOCATION_DATA_EXTRA, mLocation);
-
-        getActivity().startService(intent);
-    }
+//    protected void startIntentService(Location mLocation) {
+//        Intent intent = new Intent(getActivity(), FetchAddressIntentService.class);
+//
+//        intent.putExtra(Constants.LocationConstants.RECEIVER, mResultReceiver);
+//
+//        intent.putExtra(Constants.LocationConstants.LOCATION_DATA_EXTRA, mLocation);
+//
+//        getActivity().startService(intent);
+//    }
 
     @Override
     public void onLocationChanged(Location location) {
@@ -687,10 +642,10 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                 .newCameraPosition(cameraPosition));
         mLocationManager.removeUpdates(this);
 
-        if (pick_type == PICK_TYPE.USE_GPS) {
-            mCenterLatLong = latLng;
-            fetchAddress();
-        }
+//        if (pick_type == PICK_TYPE.USE_GPS) {
+//            mCenterLatLong = latLng;
+//            fetchAddress();
+//        }
     }
 
     @Override
