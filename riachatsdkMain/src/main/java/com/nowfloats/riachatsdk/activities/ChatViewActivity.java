@@ -446,7 +446,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(mHandler!=null)
+        if (mHandler != null)
             mHandler.removeCallbacksAndMessages(null);
         hideSoftKeyboard();
         finish();
@@ -873,7 +873,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             }, time);
         }
 
-        if(time>0)
+        if (time > 0)
             time += 1200;
 
         mHandler.postDelayed(new Runnable() {
@@ -976,8 +976,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             }
         }, time);
 
-        if(time>0)
-          time += 800;
+        if (time > 0)
+            time += 800;
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -994,7 +994,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         /*
                          * hardcoded for fptag
                          */
-                        if(node.getId().equalsIgnoreCase("58db0a6cc7d8bf2c80901ce7")){
+                        if (node.getId().equalsIgnoreCase("58db0a6cc7d8bf2c80901ce7")) {
                             etChatInput.setInputType(InputType.TYPE_CLASS_TEXT);
                         }
 
@@ -1011,7 +1011,10 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             @Override
             public void run() {
 
-                showKeyBoard();
+                if (cvChatInput.getVisibility() == View.VISIBLE) {
+                    etChatInput.requestFocus();
+                    showKeyBoard();
+                }
 
                 rvChatData.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
                     @Override
@@ -1036,13 +1039,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     }
 
     private void showKeyBoard() {
-
-        if (cvChatInput.getVisibility() == View.VISIBLE) {
-            etChatInput.requestFocus();
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-        }
-
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 
     private String getParsedPrefixPostfixText(String text) {
@@ -1077,6 +1075,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                             }
                         }
 
+                        progressBar.setVisibility(View.GONE);
+
                         final ArrayAdapter<String> adapter = new ArrayAdapter<>(ChatViewActivity.this,
                                 android.R.layout.select_dialog_singlechoice, mAutoComplRes);
                         AlertDialog.Builder builderSingle = new AlertDialog.Builder(ChatViewActivity.this);
@@ -1100,6 +1100,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             @Override
             public void onErrorResponse(VolleyError error) {
                 //TODO: shopw unable to process
+                progressBar.setVisibility(View.GONE);
             }
         });
 
