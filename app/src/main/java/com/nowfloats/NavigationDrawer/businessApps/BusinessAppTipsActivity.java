@@ -93,7 +93,7 @@ public class BusinessAppTipsActivity extends AppCompatActivity implements DeepLi
                 if(imageGallery == null){
                     imageGallery = new Image_Gallery_Fragment();
                 }
-                setTitle("ImageGallery");
+                setTitle(getString(R.string.side_panel_row_four));
                 manager.beginTransaction()
                         .add(R.id.parent_layout,imageGallery,"imagegallery").addToBackStack(null).setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left).commit();
                 return;

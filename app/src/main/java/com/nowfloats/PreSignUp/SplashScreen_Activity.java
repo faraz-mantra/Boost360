@@ -75,13 +75,15 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
                             MixPanelController.setMixPanel(SplashScreen_Activity.this, MixPanelController.mainActivity);
                             if (session.checkLogin()) {
                                 loginCheck = "true";
-                            } else {
-                                loginCheck = "false";
-                            }
-                            if (session.checkLogin()) {
                                 displayHomeScreen();
                             } else {
+                                loginCheck = "false";
                                 displayPreSignUpScreens();
+                            }
+                            if (session.checkLogin()) {
+
+                            } else {
+
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

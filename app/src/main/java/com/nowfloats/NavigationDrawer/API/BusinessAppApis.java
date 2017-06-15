@@ -16,8 +16,6 @@ import retrofit.http.Query;
 
 public class BusinessAppApis {
 
-    private final static String BUSINESS_APIS_END_POINT ="http://api.nowfloatsdev.com/storeongo";
-
      public static AppApis getRestAdapter(){
         return Constants.restAdapter.create(AppApis.class);
     }

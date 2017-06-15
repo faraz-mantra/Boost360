@@ -128,6 +128,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
     private TextView arrowTextView;
     private QuikrGuidelinesActivity showArrayFrag;
     private TwitterConnection twitterConnection;
+    private String fpPageName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -222,7 +223,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 if (facebookPageCheckBox.isChecked()) {
                     Toast.makeText(Social_Sharing_Activity.this,"Reconnect with facebook",Toast.LENGTH_SHORT).show();
                     facebookPageCheckBox.setChecked(false);
-//
+
                 } else {
                     NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) Social_Sharing_Activity.this)
                             .setmFpId(session.getFPID())
@@ -1407,7 +1408,6 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 break;
             case TWITTER_DEACTIVATION:
                 twitterStatus.setVisibility(View.GONE);
-
                 twitter.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.twitter_icon_inactive));
                 twitter.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
                 logoutFromTwitter();
@@ -1419,49 +1419,39 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 break;
             case PAGE_NO_FOUND:
                 Methods.materialDialog(activity, "Alert", getString(R.string.look_like_no_facebook_page));
-               /* final MaterialDialog builder = new MaterialDialog.Builder(activity)
-                        .customView(R.layout.dialog_no_facebook_page, false)
-                        .positiveColorRes(R.color.primaryColor).build();
-                ((Button) builder.getCustomView().findViewById(R.id.create_page)).
-                        setOnClickListener(new View.OnClickListener() {
+                /*final MaterialDialog builder = new MaterialDialog.Builder(this)
+                        .customView(R.layout.dialog_no_facebook_page, false).build();
+                ((Button) builder.getCustomView().findViewById(R.id.create_page))
+                        .setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 builder.dismiss();
                                 createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
                             }
                         });
-                builder.show();*/
+                if(!isFinishing())
+                    builder.show();*/
                 break;
             case FB_PAGE_CREATION:
-               /* if(response.equals("success")){
-                    Methods.showSnackBarPositive(Social_Sharing_Activity.this,"page is created");
-                }else if(response.equals("error_creating_page")){
-                    MaterialDialog.Builder builder1 = new MaterialDialog.Builder(Social_Sharing_Activity.this)
-                            .title("Problem To Create Facebook Page")
-                            .customView(R.layout.dialog_link_layout,false)
-                            .positiveText(getString(R.string.ok))
-                            .positiveColorRes(R.color.primaryColor)
-                            .callback(new MaterialDialog.ButtonCallback() {
-                                @Override
-                                public void onPositive(MaterialDialog dialog) {
-                                    super.onPositive(dialog);
-                                    dialog.dismiss();
-                                }
-
-                            });
-                    if(!Social_Sharing_Activity.this.isFinishing()) {
-                        builder1.show();
-                    }
-                }else if(response.equals("invalid_name")){
-                    subscriberDialog();
-                }else{
-                    Toast.makeText(this, "Something went wrong!!! Please try later.", Toast.LENGTH_SHORT).show();
-                }*/
+                switch (response){
+                    case "success":
+                        //pageCreatedDialog();
+                        break;
+                    case "error_creating_page":
+                        Methods.showSnackBarNegative(Social_Sharing_Activity.this,getString(R.string.something_went_wrong));
+                        break;
+                    case "invalid_name":
+                        //pageSuggestionDialog();
+                        break;
+                    default:
+                        Toast.makeText(this, "Something went wrong!!! Please try later.", Toast.LENGTH_SHORT).show();
+                        break;
+                }
         }
     }
 
-    /*private void createFBPage(String fpName) {
-
+   /* private void createFBPage(String fpName) {
+        fpPageName = fpName;
         String businessDesciption = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION);
 
         String businessCategory = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY);
@@ -1494,31 +1484,75 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
 
     }
 
-    private void subscriberDialog() {
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_add_subscriber,null);
-        ((TextView) view.findViewById(R.id.title)).setText("Page name is not available");
-        final EditText pageName = (EditText) view.findViewById(R.id.edittext);
-        pageName.setHint("Enter facebook page name");
-        new MaterialDialog.Builder(this)
+    private void pageSuggestionDialog() {
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_fb_page_edit,null);
+        final MaterialDialog dialog = new MaterialDialog.Builder(this)
                 .customView(view,false)
-                .positiveText("Create Page")
-                .negativeText("Cancel")
-                .negativeColorRes(R.color.gray_transparent)
-                .positiveColorRes(R.color.primary_color)
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        super.onPositive(dialog);
-                        dialog.dismiss();
-                        createFBPage(pageName.getText().toString());
-                    }
+                .build();
+        final EditText pageName = (EditText) view.findViewById(R.id.et_page_name);
+        pageName.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)+" "+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY));
+        pageName.requestFocus();
+        Button proceed = (Button) view.findViewById(R.id.btn_proceed);
+        proceed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String page = pageName.getText().toString().trim();
+                if(page.length()>0){
+                    dialog.dismiss();
+                    createFBPage(page);
+                }else
+                {
+                    Toast.makeText(Social_Sharing_Activity.this, "Page name can't be empty", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        if(!isFinishing()){
+            dialog.show();
+        }
 
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        super.onNegative(dialog);
-                        dialog.dismiss();
-                    }
-                }).build().show();
+    }
+    private void pageCreatedDialog() {
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_fb_page_created,null);
+        final MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .customView(view,false)
+                .build();
+        Button connect = (Button) view.findViewById(R.id.btn_connect);
+        TextView pageName = (TextView) view.findViewById(R.id.tv_fb_page_name);
+        pageName.setText(fpPageName);
+        ImageView logoImage = (ImageView) view.findViewById(R.id.img_logo);
+        ImageView featureImage = (ImageView) view.findViewById(R.id.img_feature);
+        String baseNameProfileImage = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
+        if (baseNameProfileImage != null && !baseNameProfileImage.contains("http")) {
+            baseNameProfileImage = Constants.BASE_IMAGE_URL + "" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
+        }
+
+        Picasso.with(this)
+                .load(baseNameProfileImage)
+                .resize(0,200)
+                .placeholder(R.drawable.general_services_background_img)
+                .into(featureImage);
+
+        String logoURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
+        if(!logoURI.contains("http")){
+            logoURI = "https://"+logoURI;
+        }
+        Picasso.with(this)
+                .load(logoURI)
+                .resize(0,75)
+                .placeholder(R.drawable.facebook_page2)
+                .into(logoImage);
+
+        connect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                fbPageData(FROM_FB_PAGE);
+            }
+        });
+
+        if(!isFinishing()){
+            dialog.show();
+        }
     }*/
     @Override
     public void onTwitterConnected(Result<TwitterSession> result) {

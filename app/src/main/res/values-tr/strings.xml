@@ -1287,5 +1287,11 @@
     <string name="get_facebook_page">Get a Facebook page</string>
     <string name="fb_page_creation_title">Looks like you don’t have a Facebook page</string>
     <string name="more_details">More details</string>
+    <string name="fb_page_unavailable">A Facebook page with your business name is unavailable.</string>
+    <string name="suggestions_for_page_name">Here\'s a suggestion for an available Page name</string>
+    <string name="your_facebook_page_is_created">Your Facebook Page is created</string>
+    <string name="connect_page_to_nowfloats">Connect this page to the NowFloats Boost app to automatically share all updates to your page.\\nYou can see all your Facebook Page analytics in</string>
+    <string name="you_can_see_your_page_analytics"><![CDATA[You can see all your Facebook Page\\nanalytics in\\n\\nanalytics->social analytics->\\nfacebook analytics]]></string>
+    <string name="control">Connect</string>
 
 </resources>

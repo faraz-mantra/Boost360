@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="179dp">
+        <ImageView
+            android:id="@+id/img_feature"
+            android:layout_width="match_parent"
+            android:layout_height="154dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_product_image"/>
+        <ImageView
+            android:id="@+id/img_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+
+            android:background="@drawable/transparant_gray_round_corner"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/facebook_page2"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="30dp"
+        android:paddingEnd="30dp"
+        android:paddingBottom="30dp"
+        android:orientation="vertical"
+        android:paddingRight="30dp">
+        <TextView
+            android:id="@+id/tv_fb_page_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/facebook_page"
+            android:layout_marginTop="5dp"
+            android:textSize="18sp"
+            android:textColor="@color/com_facebook_blue"
+            android:layout_marginBottom="10dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/congratulations"
+            android:textSize="13sp"
+            android:textAllCaps="true"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:textColor="@color/light_black"
+            android:text="@string/your_facebook_page_is_created"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/connect_page_to_nowfloats"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btn_connect"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/control"
+            android:padding="8dp"
+            android:background="@drawable/blue_round_corner"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</LinearLayout>

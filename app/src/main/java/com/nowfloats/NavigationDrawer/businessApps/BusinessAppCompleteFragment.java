@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.nowfloats.Login.UserSessionManager;
@@ -61,7 +62,10 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
         super.onCreate(savedInstanceState);
         if(getArguments()!=null){
             type=getArguments().getString("type","android");
-            modelList = new Gson().fromJson(getArguments().getString("modelList"),StoreAndGoModel.class).getPublishStatusModelList();
+            StoreAndGoModel model = new Gson().fromJson(getArguments().getString("modelList"),StoreAndGoModel.class);
+            if(model !=null) {
+                modelList = model.getPublishStatusModelList();
+            }
             if(type.equals("android")){
                 setHasOptionsMenu(true);
             }
@@ -136,6 +140,10 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.share_app:
+                if(modelList == null){
+                    Toast.makeText(context, "App is not ready for share", Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 for(StoreAndGoModel.PublishStatusModel model : modelList){
                     if(model.getKey().equals("ShareLink")){
                         share(model.getValue());
@@ -144,6 +152,10 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
                 }
                 break;
             case R.id.open_app:
+                if(modelList == null){
+                    Toast.makeText(context, "App is not ready to see", Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 for(StoreAndGoModel.PublishStatusModel model : modelList){
                     if(model.getKey().equals("AppStoreLink")){
                         rateUsPlayStore(model.getValue());

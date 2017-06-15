@@ -81,7 +81,7 @@
     <string name="side_panel_row_five">Settings</string>
     <string name="side_panel_row_six">Write to Ria</string>
     <string name="side_panel_row_seven">Contact us</string>
-    <string name="side_panel_row_eight">Share</string>
+    <string name="side_panel_row_eight">Share My Website</string>
     <string name="setting_change_pwd">Change password</string>
     <string name="setting_feedback">Feedback</string>
     <string name="setting_rate_us_on_play_store">Rate us on Play Store</string>
@@ -1279,9 +1279,15 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="terms_n_cond_toast">You must agree with the terms and conditions to proceed</string>
     <string name="deeplink_business_app">businessapp</string>
     <string name="about_app">About app</string>
-    <string name="fb_page_creation_message">Gather more leads and drive more traffic to your website through a Facebook page</string>
+    <string name="fb_page_creation_message">Gather more leads and drive more\ntraffic to your website through a\nFacebook Page</string>
     <string name="get_facebook_page">Get a Facebook page</string>
-    <string name="fb_page_creation_title">Looks like you don’t have a Facebook page</string>
+    <string name="fb_page_creation_title">Looks like you don’t have a\nFacebook page</string>
     <string name="more_details">More details</string>
+    <string name="fb_page_unavailable">A Facebook page with\nyour business name is\nunavailable.</string>
+    <string name="suggestions_for_page_name">Here\'s a suggestion\nfor an available Page name</string>
+    <string name="your_facebook_page_is_created">Your facebook page is created</string>
+    <string name="connect_page_to_nowfloats">Connect your account to\nautomatically share all updates\nto your Facebook Page.</string>
+    <string name="you_can_see_your_page_analytics">analytics->social analytics->\nfacebook analytics</string>
+    <string name="control">Connect</string>
 
 </resources>

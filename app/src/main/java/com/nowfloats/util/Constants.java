@@ -147,7 +147,7 @@ public class Constants {
     public static String nfxApi = NOW_FLOATS_API_URL + "/Discover/v2/floatingPoint/updateSocialAccessToken";
     public static String beCountUrl = NOW_FLOATS_API_URL + "/Discover/v1/businessenquiries/count";
     public static String nfxUpdateTokens = NFX_WITH_NOWFLOATS + "/dataexchange/v1/updateAccessTokens";
-    public static String nfxFBPageCreation = NFX_DEV_NOWFLOATS+"/dataexchange/v1/process";
+    public static String nfxFBPageCreation = NFX_WITH_NOWFLOATS+"/dataexchange/v1/process";
 
     public static final String TWITTER_URL = Specific.TWITTER_URL;
     public static final String TWITTER_ID_URL = Specific.TWITTER_ID_URL;

@@ -26,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.charts.BarChart;
@@ -786,6 +785,7 @@ public class Analytics_Fragment extends Fragment {
             @Override
             public void failure(RetrofitError error) {
                 vmnProgressBar.setVisibility(View.GONE);
+                vmnTotalCallCount.setVisibility(View.VISIBLE);
             }
         });
     }

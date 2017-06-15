@@ -42,6 +42,6 @@ public interface ProductGalleryInterface {
     void deleteProduct(@Body HashMap<String,String> map, Callback<String> callback);
 
     @Headers({"Content-Type: application/json"})
-    @com.nowfloats.Product_Gallery.Model.DELETE("/Product/v2/DeleteImage")
+    @DELETE("/Product/v2/DeleteImage")
     void deleteProductImage(@Body HashMap<String, String> map, Callback<String> callback);
 }

@@ -44,7 +44,6 @@ import com.nowfloats.Product_Gallery.Model.UpdateValue;
 import com.nowfloats.Product_Gallery.Service.ProductAPIService;
 import com.nowfloats.Product_Gallery.Service.ProductDelete;
 import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
-import com.nowfloats.Product_Gallery.Service.ProductImageReplaceV45;
 import com.nowfloats.Product_Gallery.Service.ProductImageUploadV45;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
@@ -654,18 +653,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
     private void replaceProductImage(String productId) {
         try{
             MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_UPDATEIMAGE, null);
-            if (product_data.TileImageUri!=null &&  product_data.TileImageUri.trim().length()>0){
-                String[] temp = product_data.TileImageUri.split("\\/");
-                String oldPic = temp[temp.length-1];
-                String valuesStr = "clientId="+Constants.clientId
-                        +"&requestType=sequential&requestId="+Constants.deviceId
-                        +"&totalChunks=1&currentChunkNumber=1&productId="+productId+"&imageFileName="+oldPic;
-                String url = Constants.NOW_FLOATS_API_URL + "/Product/v2/ReplaceImage?" +valuesStr;
-                byte[] imageBytes = Methods.compressTobyte(path,activity);
-                new ProductImageReplaceV45(url,imageBytes,Product_Detail_Activity_V45.this).execute();
-            }else {
-                uploadProductImage(productId);
-            }
+            uploadProductImage(productId);
         }catch(Exception e){
             e.printStackTrace();
             Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
