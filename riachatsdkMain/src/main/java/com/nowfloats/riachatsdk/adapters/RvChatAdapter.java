@@ -1,5 +1,6 @@
 package com.nowfloats.riachatsdk.adapters;
 
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -156,6 +157,13 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             } else {
                 cardViewHolder.tvDateTime.setVisibility(View.GONE);
             }
+
+            if(!section.isAnimApplied()){
+                Animation animation  =AnimationUtils.loadAnimation(mContext, R.anim.flip_in_anim);
+                cardViewHolder.llBubbleContainer.setAnimation(animation);
+                animation.start();
+                section.setIsAnimApplied(true);
+            }
             /*((LinearLayout) cardViewHolder.itemView).setGravity(Gravity.RIGHT);
             LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) cardViewHolder.llBubbleContainer.getLayoutParams();
 
@@ -294,6 +302,12 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 cardViewHolder.tvDateTime.setText(section.getDateTime());
             } else {
                 cardViewHolder.tvDateTime.setVisibility(View.GONE);
+            }
+            if(!section.isAnimApplied()){
+                Animation animation  =AnimationUtils.loadAnimation(mContext, R.anim.flip_in_anim);
+                cardViewHolder.llBubbleContainer.setAnimation(animation);
+                animation.start();
+                section.setIsAnimApplied(true);
             }
 
         } else if (holder instanceof UnconfirmedAddressCardViewHolder) {

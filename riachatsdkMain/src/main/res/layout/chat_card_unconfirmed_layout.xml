@@ -53,7 +53,7 @@
                 android:id="@+id/llConfirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="visible">
+                android:visibility="invisible">
 
                 <TextView
                     android:id="@+id/tv_edit"
@@ -86,15 +86,15 @@
 
             <TextView
                 android:id="@+id/tvSubmit"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_weight="1"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:gravity="center"
+                android:layout_centerInParent="true"
                 android:text="Confirming..."
                 android:textColor="#60808080"
-                android:visibility="invisible" />
+                android:visibility="visible" />
         </RelativeLayout>
     </LinearLayout>
 

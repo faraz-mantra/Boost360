@@ -25,7 +25,7 @@ public class AVLoadingIndicatorView extends View {
     private static final BallPulseSyncIndicator DEFAULT_INDICATOR=new BallPulseSyncIndicator();
 
     private static final int MIN_SHOW_TIME = 500; // ms
-    private static final int MIN_DELAY = 1000; // ms
+    private static final int MIN_DELAY = 500; // ms
 
     private long mStartTime = -1;
 
@@ -74,7 +74,7 @@ public class AVLoadingIndicatorView extends View {
 
     public AVLoadingIndicatorView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs,0, R.style.AVLoadingIndicatorView);
+        init(context, attrs,0,R.style.AVLoadingIndicatorView);
     }
 
     public AVLoadingIndicatorView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -89,10 +89,10 @@ public class AVLoadingIndicatorView extends View {
     }
 
     private void init(Context context,AttributeSet attrs,int defStyleAttr, int defStyleRes) {
-        mMinWidth = 12;
-        mMaxWidth = 24;
-        mMinHeight = 12;
-        mMaxHeight = 24;
+        mMinWidth = 24;
+        mMaxWidth = 48;
+        mMinHeight = 24;
+        mMaxHeight = 48;
 
         final TypedArray a = context.obtainStyledAttributes(
                 attrs, R.styleable.AVLoadingIndicatorView, defStyleAttr, defStyleRes);
@@ -414,6 +414,7 @@ public class AVLoadingIndicatorView extends View {
         removeCallbacks(mDelayedHide);
         removeCallbacks(mDelayedShow);
     }
+
 
 
 }
