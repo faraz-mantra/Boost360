@@ -38,7 +38,7 @@ public class RiaChatInitActivity extends AppCompatActivity
                 break;
             case "back":
                 signUpWithRiaFragment = null;
-
+                finish();
                 /*LoginAndSignUpFragment loginAndSignUpFragment = LoginAndSignUpFragment.newInstance();
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -60,6 +60,7 @@ public class RiaChatInitActivity extends AppCompatActivity
             signUpWithRiaFragment.onBackPressed();
         } else {
             super.onBackPressed();
+            finish();
         }
     }
 }
