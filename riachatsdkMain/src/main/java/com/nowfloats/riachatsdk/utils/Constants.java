@@ -6,7 +6,7 @@ package com.nowfloats.riachatsdk.utils;
 
 public class Constants {
     public static final String PARCEL_NAME  = "config_parcel";
-    public static final String SERVER_URL  = "http://ria.nowfloatsdev.com";
+    public static final String SERVER_URL  = "https://onboarding-boost.withfloats.com";
     public static final String FILE_PATH = "file_path";
     public static final String RECEIVER = "receiver";
     public static final String KEY_FILE_URL = "file_url";
