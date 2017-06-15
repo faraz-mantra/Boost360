@@ -6,83 +6,88 @@
     android:background="@drawable/chat_bg"
     android:orientation="vertical">
 
-
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:background="@color/primary"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:theme="@style/MyCustomToolBarTheme">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/iv_agent_icon"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/ria_circle_image"
-                android:visibility="visible" />
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/primary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/MyCustomToolBarTheme">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/tv_agent_name"
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/iv_agent_icon"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ria_circle_image"
+                    android:visibility="visible" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="bottom"
-                    android:layout_marginLeft="15dp"
-                    android:gravity="center"
-                    android:text="Ria"
-                    android:textColor="@color/white"
-                    android:textSize="20sp" />
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_agent_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="15dp"
+                        android:gravity="center"
+                        android:text="Ria"
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tv_ria_typing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="3dp"
+                        android:text="is typing..."
+                        android:textColor="@color/white"
+                        android:textStyle="italic"
+                        android:visibility="invisible" />
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tv_ria_typing"
+                    android:id="@+id/tv_skip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginLeft="3dp"
-                    android:text="is typing..."
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/margin_10"
+                    android:alpha="0.5"
+                    android:fontFamily="sans-serif"
+                    android:text="@string/skip"
                     android:textColor="@color/white"
-                    android:textStyle="italic"
-                    android:visibility="invisible" />
+                    android:textSize="16sp"
+                    android:textStyle="normal"
+                    android:visibility="gone" />
+
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_skip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/margin_10"
-                android:alpha="0.5"
-                android:visibility="gone"
-                android:fontFamily="sans-serif"
-                android:text="@string/skip"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="normal" />
-            <com.github.ybq.android.spinkit.SpinKitView
-                android:id="@+id/progress"
-                style="@style/SpinKitView.Circle"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:visibility="gone"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/margin_10"
-                app:SpinKit_Color="@color/white" />
-        </LinearLayout>
 
+        </android.support.v7.widget.Toolbar>
 
-    </android.support.v7.widget.Toolbar>
-
+        <ProgressBar
+            android:id="@+id/progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="50dip"
+            android:indeterminate="true"
+            android:minHeight="20dp"
+            android:visibility="gone" />
+    </FrameLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -187,8 +192,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginRight="20dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
                     android:maxLines="1" />
 
                 <ImageView

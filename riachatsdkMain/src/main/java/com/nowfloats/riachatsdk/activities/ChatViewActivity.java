@@ -800,6 +800,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 } else {
                     replyToRia(Constants.SectionType.TYPE_PRINT_OTP, node, false);
                 }
+                showKeyBoard();
             }
             mIsPreviousTypeCard = true;
             return;
@@ -989,6 +990,14 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
                 } else {
                     if (cvChatInput.getVisibility() == INVISIBLE) {
+
+                        /*
+                         * hardcoded for fptag
+                         */
+                        if(node.getId().equalsIgnoreCase("58db0a6cc7d8bf2c80901ce7")){
+                            etChatInput.setInputType(InputType.TYPE_CLASS_TEXT);
+                        }
+
                         cvChatInput.setVisibility(View.VISIBLE);
                     }
                 }
@@ -1049,7 +1058,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     }
 
     private void handleAutoComplete(final Button btn) {
-
+        progressBar.setVisibility(View.VISIBLE);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, btn.getUrl(), null,
                 new com.android.volley.Response.Listener<JSONObject>() {
                     @Override
