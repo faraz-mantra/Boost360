@@ -47,7 +47,7 @@
             android:id="@+id/createWebSiteText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/create_website_using"
+            android:text="@string/create_your_nowfloats_site"
             android:gravity="center"
             android:layout_marginTop="3dp"
             android:layout_marginBottom="5dp"/>
@@ -123,7 +123,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_height="fill_parent"
                         android:layout_width="wrap_content"
-                        android:text="@string/email_address"
+                        android:text="@string/chat_with_ria"
                         android:layout_centerVertical="true"
                         android:textColor="@color/white"
                         android:textSize="@dimen/small_text_size"
