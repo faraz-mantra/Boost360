@@ -5,6 +5,8 @@ package com.nowfloats.riachatsdk.interfaces;
  */
 
 public interface IConfirmationCallback {
-    void onPositiveResponse(String confirmationType, String... confirmationText);
-    void onNegativeResponse(String confirmationType, String... data);
+    /*void onPositiveResponse(String confirmationType, String... confirmationText);
+    void onNegativeResponse(String confirmationType, String... data);*/
+
+    void onCardResponse(String confirmationType, String... data);
 }

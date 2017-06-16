@@ -59,8 +59,6 @@ import com.nowfloats.riachatsdk.R;
 import com.nowfloats.riachatsdk.adapters.RvButtonsAdapter;
 import com.nowfloats.riachatsdk.adapters.RvChatAdapter;
 import com.nowfloats.riachatsdk.animators.ChatItemAnimator;
-import com.nowfloats.riachatsdk.fragments.AddressCardFragment;
-import com.nowfloats.riachatsdk.fragments.BusinessNameConfirmFragment;
 import com.nowfloats.riachatsdk.fragments.PickAddressFragment;
 import com.nowfloats.riachatsdk.helpers.ChatLogger;
 import com.nowfloats.riachatsdk.helpers.DeviceDetails;
@@ -345,35 +343,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     }
 
-    private void showConfirmation(String confirmationType, String... data) {
-        flConfirmationCard.setVisibility(View.VISIBLE);
-        //Animation
-        Animation a = new TranslateAnimation(
-                Animation.ABSOLUTE, //from xType
-                0,
-                Animation.ABSOLUTE, //to xType
-                0,
-                Animation.ABSOLUTE, //from yType
-                200,
-                Animation.ABSOLUTE, //to yType
-                0
-        );
-        a.setDuration(500);
-        flConfirmationCard.setAnimation(a);
-        a.start();
-        switch (confirmationType) {
-            case Constants.ConfirmationType.BIZ_NAME:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fl_cards, BusinessNameConfirmFragment.newInstance(data[0]))
-                        .commit();
-                break;
-            case Constants.ConfirmationType.ADDRESS_ENTRY:
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fl_cards, AddressCardFragment.newInstance(data[0], data[1], data[2]))
-                        .commit();
-        }
-
-    }
 
 
     private boolean isValidInput(String input) {
@@ -756,12 +725,19 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 .check();
     }
 
-    private void showNextNode(String nodeId) {
+    private RiaCardModel getNextNode(String currNode){
+        RiaCardModel nextNode = null;
         for (RiaCardModel node : mAllNodes) {
-            if (node.getId().equals(nodeId)) {
-                startChat(node);
+            if (node.getId().equals(currNode)) {
+                nextNode = node;
+                break;
             }
         }
+        return nextNode;
+    }
+
+    private void showNextNode(String nodeId) {
+        startChat(getNextNode(nodeId));
     }
 
     private void startChat(final RiaCardModel node) {
@@ -997,7 +973,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         /*
                          * hardcoded for fptag
                          */
-                        if (node.getId().equalsIgnoreCase("58db0a6cc7d8bf2c80901ce7")) {
+                        if (node.getId().equalsIgnoreCase("58db0a6cc7d8bf2c80901ce7") || node.getId().equalsIgnoreCase("5942a8d3c7d8bf95b0320b19")) {
                             etChatInput.setInputType(InputType.TYPE_CLASS_TEXT);
                         }
 
@@ -1313,14 +1289,14 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         mRequestQueue.add(stringRequest);
     }
 
-    @Override
+   /* @Override
     public void onPositiveResponse(final String confirmationType, final String... data) {
         if (mCurrVarName != null && mCurrVarName.trim().length() > 0) {
-            /*if (mAutoComplDataHash == null || !TextUtils.isEmpty(mAutoComplDataHash.get(etChatInput.getText().toString().trim()))) {
+            if (mAutoComplDataHash == null || !TextUtils.isEmpty(mAutoComplDataHash.get(etChatInput.getText().toString().trim()))) {
                 mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
             } else {
                 mDataMap.put("[~" + mCurrVarName + "]", mAutoComplDataHash.get(etChatInput.getText().toString().trim()));
-            }*/
+            }
             mDataMap.put("[~" + mCurrVarName + "]", data[0]);
         }
         etChatInput.setText("");
@@ -1349,7 +1325,48 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 getUserAddress(mCurrButton);
                 break;
         }
+    }*/
+
+    @Override
+    public void onCardResponse(String confirmationType, String... data) {
+        RiaCardModel nextNode = getNextNode(data[1]);
+        if(nextNode!=null && (nextNode.getNodeType().equals(Constants.NodeType.TYPE_CARD) && nextNode.getPlacement().equals("Outgoing")) ||
+                nextNode.getNodeType().equals(Constants.NodeType.TYPE_API_CALL)){
+            if (mCurrVarName != null && mCurrVarName.trim().length() > 0) {
+                /*if (mAutoComplDataHash == null || !TextUtils.isEmpty(mAutoComplDataHash.get(etChatInput.getText().toString().trim()))) {
+                    mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
+                } else {
+                    mDataMap.put("[~" + mCurrVarName + "]", mAutoComplDataHash.get(etChatInput.getText().toString().trim()));
+                }*/
+                mDataMap.put("[~" + mCurrVarName + "]", data[0]);
+            }
+            etChatInput.setText("");
+            hideSoftKeyboard();
+            cvChatInput.setVisibility(View.INVISIBLE);
+            switch (confirmationType) {
+                case Constants.ConfirmationType.BIZ_NAME:
+                    showNextNode(data[1]);
+                    break;
+                case Constants.ConfirmationType.ADDRESS_ENTRY:
+                    showNextNode(data[1]);
+                    break;
+            }
+        }else {
+            mSectionList.remove(mSectionList.size() - 1);
+            mAdapter.notifyItemRemoved(mSectionList.size());
+            switch (confirmationType) {
+                case Constants.ConfirmationType.BIZ_NAME:
+                    showNextNode(data[1]);
+                    break;
+                case Constants.ConfirmationType.ADDRESS_ENTRY:
+                    getUserAddress(mCurrButton);
+                    break;
+            }
+        }
     }
+
+
+
 
     @Override
     public void onAnimationend() {
