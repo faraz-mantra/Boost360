@@ -279,6 +279,8 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             final OTPViewHolder cardViewHolder = (OTPViewHolder) holder;
             cardViewHolder.tvConfirmationTitle.setText(getParsedPrefixPostfixText(model.getCardHeader()));
             cardViewHolder.etOTPConfirmation.setMaxEms(model.getSections().get(0).getOtpLength());
+            cardViewHolder.etOTPConfirmation.setText("");
+            cardViewHolder.etOTPConfirmation.setEnabled(true);
 
             cardViewHolder.etOTPConfirmation.requestFocus();
             InputMethodManager imm = (InputMethodManager) cardViewHolder.etOTPConfirmation.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
