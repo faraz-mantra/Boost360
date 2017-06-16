@@ -1,6 +1,5 @@
 package com.nowfloats.riachatsdk.adapters;
 
-import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -178,19 +177,17 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
             cardViewHolder.llConfirm.setVisibility(View.VISIBLE);
-            cardViewHolder.tvSubmit.setVisibility(View.INVISIBLE);
-            cardViewHolder.tvConfirm.setVisibility(View.VISIBLE);
-            cardViewHolder.tvEdit.setVisibility(View.VISIBLE);
+            cardViewHolder.tvSubmit.setVisibility(View.GONE);
 
             if (mChatSections.get(position).getCardModel().getButtons() != null && mChatSections.get(position).getCardModel().getButtons().size() == 1) {
-                cardViewHolder.tvConfirm.setVisibility(View.VISIBLE);
+                cardViewHolder.tvEdit.setText("");
                 cardViewHolder.tvEdit.setVisibility(View.GONE);
                 cardViewHolder.tvConfirm.setText(mChatSections.get(position).getCardModel().getButtons().get(0).getButtonText());
                 cardViewHolder.tvConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        cardViewHolder.llConfirm.setVisibility(View.INVISIBLE);
+                        cardViewHolder.llConfirm.setVisibility(View.GONE);
                         cardViewHolder.tvSubmit.setVisibility(View.VISIBLE);
 
                         mConfirmationCallback.onCardResponse(Constants.ConfirmationType.BIZ_NAME,
@@ -256,7 +253,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     @Override
                     public void onClick(View v) {
 
-                        cardViewHolder.llConfirm.setVisibility(View.INVISIBLE);
+                        cardViewHolder.llConfirm.setVisibility(View.GONE);
                         cardViewHolder.tvSubmit.setVisibility(View.VISIBLE);
 
                         mConfirmationCallback.onPositiveResponse(Constants.ConfirmationType.BIZ_NAME,
@@ -287,7 +284,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             imm.showSoftInput(cardViewHolder.etOTPConfirmation, InputMethodManager.SHOW_FORCED);
 
             cardViewHolder.llConfirm.setVisibility(View.VISIBLE);
-            cardViewHolder.tvSubmit.setVisibility(View.INVISIBLE);
+            cardViewHolder.tvSubmit.setVisibility(View.GONE);
 
             if (mChatSections.get(position).getCardModel().getButtons() != null && mChatSections.get(position).getCardModel().getButtons().size() == 1) {
                 cardViewHolder.tvEdit.setVisibility(View.GONE);
@@ -420,7 +417,8 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 textViewHolder.tvMessageText.setTextColor(Color.parseColor("#ffffff"));
             } else {
                 ((LinearLayout) textViewHolder.itemView).setGravity(Gravity.LEFT);
-                textViewHolder.tvMessageText.setTextColor(Color.parseColor("#808080"));
+//                textViewHolder.tvMessageText.setTextColor(Color.parseColor("#808080"));
+                textViewHolder.tvMessageText.setTextColor(Color.parseColor("#000000"));
                 final LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) textViewHolder.llBubbleContainer.getLayoutParams();
                 if (mChatSections != null && mChatSections.size() > 0 && position > 0 && mChatSections.get(position - 1).isFromRia()) {
                     textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.ria_followup_bubble);
