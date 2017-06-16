@@ -179,9 +179,59 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             cardViewHolder.llConfirm.setVisibility(View.VISIBLE);
             cardViewHolder.tvSubmit.setVisibility(View.INVISIBLE);
+            cardViewHolder.tvConfirm.setVisibility(View.VISIBLE);
+            cardViewHolder.tvEdit.setVisibility(View.VISIBLE);
 
             if (mChatSections.get(position).getCardModel().getButtons() != null && mChatSections.get(position).getCardModel().getButtons().size() == 1) {
+                cardViewHolder.tvConfirm.setVisibility(View.VISIBLE);
                 cardViewHolder.tvEdit.setVisibility(View.GONE);
+                cardViewHolder.tvConfirm.setText(mChatSections.get(position).getCardModel().getButtons().get(0).getButtonText());
+                cardViewHolder.tvConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        cardViewHolder.llConfirm.setVisibility(View.INVISIBLE);
+                        cardViewHolder.tvSubmit.setVisibility(View.VISIBLE);
+
+                        mConfirmationCallback.onCardResponse(Constants.ConfirmationType.BIZ_NAME,
+                                cardViewHolder.tvConfirmationText.getText().toString(),
+                                mChatSections.get(position).getCardModel().getButtons().get(0).getNextNodeId());
+                    }
+                });
+            }else{
+                cardViewHolder.tvConfirm.setText(mChatSections.get(position).getCardModel().getButtons().get(0).getButtonText());
+                cardViewHolder.tvEdit.setText(mChatSections.get(position).getCardModel().getButtons().get(1).getButtonText());
+                cardViewHolder.tvConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        cardViewHolder.llConfirm.setVisibility(View.INVISIBLE);
+                        cardViewHolder.tvSubmit.setVisibility(View.VISIBLE);
+
+                        mConfirmationCallback.onCardResponse(Constants.ConfirmationType.BIZ_NAME,
+                                cardViewHolder.tvConfirmationText.getText().toString(),
+                                mChatSections.get(position).getCardModel().getButtons().get(0).getNextNodeId());
+                    }
+                });
+
+                cardViewHolder.tvEdit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        cardViewHolder.llConfirm.setVisibility(View.INVISIBLE);
+                        cardViewHolder.tvSubmit.setVisibility(View.VISIBLE);
+
+                        mConfirmationCallback.onCardResponse(Constants.ConfirmationType.BIZ_NAME,
+                                cardViewHolder.tvConfirmationText.getText().toString(),
+                                mChatSections.get(position).getCardModel().getButtons().get(1).getNextNodeId());
+                    }
+                });
+            }
+
+
+
+            /*if (mChatSections.get(position).getCardModel().getButtons() != null && mChatSections.get(position).getCardModel().getButtons().size() == 1) {
+                cardViewHolder.tvConfirm.setVisibility(View.GONE);
                 cardViewHolder.tvConfirm.setText(mChatSections.get(position).getCardModel().getButtons().get(0).getButtonText());
                 cardViewHolder.tvConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -222,7 +272,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                                 mChatSections.get(position).getCardModel().getButtons().get(1).getNextNodeId());
                     }
                 });
-            }
+            }*/
 
         } else if (holder instanceof OTPViewHolder) {
             final RiaCardModel model = section.getCardModel();
@@ -250,7 +300,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         mDataMap.put("[~" + model.getVariableName() + "]", cardViewHolder.etOTPConfirmation.getText().toString().trim());
                         cardViewHolder.etOTPConfirmation.clearFocus();
                         cardViewHolder.etOTPConfirmation.setEnabled(false);
-                        mConfirmationCallback.onPositiveResponse(Constants.ConfirmationType.BIZ_NAME,
+                        mConfirmationCallback.onCardResponse(Constants.ConfirmationType.BIZ_NAME,
                                 cardViewHolder.etOTPConfirmation.getText().toString(),
                                 mChatSections.get(position).getCardModel().getButtons().get(0).getNextNodeId());
                     }
@@ -271,7 +321,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         cardViewHolder.etOTPConfirmation.clearFocus();
                         cardViewHolder.etOTPConfirmation.setEnabled(false);
 
-                        mConfirmationCallback.onPositiveResponse(Constants.ConfirmationType.BIZ_NAME,
+                        mConfirmationCallback.onCardResponse(Constants.ConfirmationType.BIZ_NAME,
                                 cardViewHolder.etOTPConfirmation.getText().toString(),
                                 mChatSections.get(position).getCardModel().getButtons().get(0).getNextNodeId());
                     }
@@ -282,7 +332,8 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     public void onClick(View v) {
                         cardViewHolder.etOTPConfirmation.setText("");
                         cardViewHolder.etOTPConfirmation.setEnabled(true);
-                        mConfirmationCallback.onNegativeResponse(Constants.ConfirmationType.BIZ_NAME,
+                        mConfirmationCallback.onCardResponse(Constants.ConfirmationType.BIZ_NAME,
+                                cardViewHolder.etOTPConfirmation.getText().toString(),
                                 mChatSections.get(position).getCardModel().getButtons().get(1).getNextNodeId());
                     }
                 });
@@ -723,7 +774,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             this.tvConfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mConfirmationCallback.onPositiveResponse(Constants.ConfirmationType.ADDRESS_ENTRY,
+                    mConfirmationCallback.onCardResponse(Constants.ConfirmationType.ADDRESS_ENTRY,
                             tvAddressText.getText().toString(),
                             mChatSections.get(getAdapterPosition()).getCardModel().getButtons().get(0).getNextNodeId());
                 }
@@ -732,7 +783,8 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             this.tvEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mConfirmationCallback.onNegativeResponse(Constants.ConfirmationType.ADDRESS_ENTRY,
+                    mConfirmationCallback.onCardResponse(Constants.ConfirmationType.ADDRESS_ENTRY,
+                            tvAddressText.getText().toString(),
                             mChatSections.get(getAdapterPosition()).getCardModel().getButtons().get(1).getNextNodeId());
                 }
             });
