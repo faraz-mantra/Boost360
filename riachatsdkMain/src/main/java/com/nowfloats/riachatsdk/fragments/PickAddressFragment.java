@@ -12,8 +12,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.ResultReceiver;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
@@ -25,13 +23,11 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.StyleSpan;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -54,21 +50,19 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.nowfloats.riachatsdk.R;
-import com.nowfloats.riachatsdk.utils.Constants;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
  * Created by NowFloats on 27-03-2017 by Romio Ranjan Jena.
  */
 
-public class PickAddressFragment extends DialogFragment implements LocationListener, GoogleApiClient.OnConnectionFailedListener {
+public class PickAddressFragment extends DialogFragment implements LocationListener,
+        GoogleApiClient.OnConnectionFailedListener {
 
     private TextInputEditText etStreetAddr, etCountry, etPin, etLocality, etHousePlotNum, etLandmark;
 
@@ -82,17 +76,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
     private GoogleMap mGoogleMap;
 
-//    private AddressResultReceiver mResultReceiver;
-
     private RelativeLayout rlMapContainer;
 
-//    protected String mAddressOutput;
-//    protected String mAreaOutput;
-//    protected String mCityOutput;
-//    protected String mStateOutput;
-//    protected String mCountryOutput;
-//    protected String mPin;
-//    protected String mLocality;
 
     private static final long MIN_TIME = 400;
     private static final float MIN_DISTANCE = 1000;
@@ -234,9 +219,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                         Animation animation1 = AnimationUtils.loadAnimation(getActivity(), R.anim.map_scale_up);
                         rlMapContainer.setAnimation(animation1);
                         animation1.start();
-                        /*llManual.setVisibility(View.GONE);
-                        llUseGPS.setVisibility(View.VISIBLE);
-                        btnSave.setText(getResources().getString(R.string.done));*/
+
                         if (pick_type == PICK_TYPE.MANUAL) {
                             reverseGeoCode();
                         }
@@ -265,8 +248,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
                         if (mResultListener != null) {
 
-                            double lat=0,lng = 0;
-                            if(mCenterLatLong!=null){
+                            double lat = 0, lng = 0;
+                            if (mCenterLatLong != null) {
                                 lat = mCenterLatLong.latitude;
                                 lng = mCenterLatLong.longitude;
                             }
@@ -293,10 +276,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
             }
         });
 
-//        mResultReceiver = new AddressResultReceiver(new Handler());
 
         try {
-            // Loading map
             initMap();
         } catch (Exception e) {
             e.printStackTrace();
@@ -307,15 +288,6 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
             e.printStackTrace();
         }
 
-
-        etStreetAddr.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
-                    reverseGeoCode();
-                }
-                return false;
-            }
-        });
 
         if (pick_type == PICK_TYPE.MANUAL) {
 
@@ -333,15 +305,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                         .build();
             }
 
-//            loadCountries();
-
             etCountry.setFocusable(false);
-//            etCountry.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    selectCountry();
-//                }
-//            });
 
             etCity.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -356,8 +320,6 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    //ArrayList<String> citys=new ArrayList<String>();
-                    //cityEditText.setAdapter(null);
                     if (etCity.getTag() != null && !(boolean) etCity.getTag()) {
 
                     } else {
@@ -376,10 +338,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                                 @Override
                                 public void run() {
                                     AutocompletePredictionBuffer a = result.await();
-                                    //Log.v("ggg","ok");
                                     citys.clear();
                                     for (int i = 0; i < a.getCount(); i++) {
-                                        //Log.v("ggg",a.get(i).getFullText(new StyleSpan(Typeface.NORMAL)).toString()+" length "+citys.size());
                                         citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString() + "," + a.get(i).getSecondaryText(new StyleSpan(Typeface.NORMAL)).toString());
                                     }
 
@@ -460,7 +420,6 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
     private void reverseGeoCode() {
 
-        String content = "";
         Geocoder gc = new Geocoder(getActivity());
         if (gc.isPresent()) {
             List<Address> list = null;
@@ -475,24 +434,13 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                     address = list.get(0);
                     lat = address.getLatitude();
                     lng = address.getLongitude();
-                    /*for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
-
-                        content += address.getAddressLine(i)+" ";
-                    }*/
-//                    if (!TextUtils.isEmpty(content)) {
-
-//                    etStreetAddr.setText(content);
-//                    etStreetAddr.setSelection(etStreetAddr.getText().toString().length());
-//
-//                    etPin.setText(list.get(0).getPostalCode());
 
                     LatLng latLong = new LatLng(lat, lng);
                     CameraPosition cameraPosition = new CameraPosition.Builder()
                             .target(latLong).zoom(18f).build();
                     mGoogleMap.animateCamera(CameraUpdateFactory
                             .newCameraPosition(cameraPosition));
-//                    }
-                }else{
+                } else {
                     if (ActivityCompat.checkSelfPermission(getActivity(),
                             Manifest.permission.ACCESS_FINE_LOCATION) ==
                             PackageManager.PERMISSION_GRANTED &&
@@ -578,7 +526,6 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                                         .show();
                             }
                             setCameraChangeListener();
-//                            fetchAddress();
                         }
                     });
 
@@ -599,39 +546,11 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
             public void onCameraIdle() {
                 mCenterLatLong = mGoogleMap.getCameraPosition().target;
                 mGoogleMap.clear();
-//                btnSave.setVisibility(View.VISIBLE);
 
             }
         });
     }
-//
-//    private void fetchAddress() {
-//
-//        try {
-//
-//            if (mCenterLatLong != null) {
-//
-//                Location mLocation = new Location("");
-//                mLocation.setLatitude(mCenterLatLong.latitude);
-//                mLocation.setLongitude(mCenterLatLong.longitude);
-//
-//                startIntentService(mLocation);
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
-//    protected void startIntentService(Location mLocation) {
-//        Intent intent = new Intent(getActivity(), FetchAddressIntentService.class);
-//
-//        intent.putExtra(Constants.LocationConstants.RECEIVER, mResultReceiver);
-//
-//        intent.putExtra(Constants.LocationConstants.LOCATION_DATA_EXTRA, mLocation);
-//
-//        getActivity().startService(intent);
-//    }
 
     @Override
     public void onLocationChanged(Location location) {
@@ -642,10 +561,6 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                 .newCameraPosition(cameraPosition));
         mLocationManager.removeUpdates(this);
 
-//        if (pick_type == PICK_TYPE.USE_GPS) {
-//            mCenterLatLong = latLng;
-//            fetchAddress();
-//        }
     }
 
     @Override
@@ -664,52 +579,14 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
     }
 
 
-    private class AddressResultReceiver extends ResultReceiver {
-        AddressResultReceiver(Handler handler) {
-            super(handler);
-        }
-
-        /**
-         * Receives data sent from FetchAddressIntentService and updates the UI in MainActivity.
-         */
-        @Override
-        protected void onReceiveResult(int resultCode, Bundle resultData) {
-
-            // Display the address string or an error message sent from the intent service.
-//            mAddressOutput = resultData.getString(Constants.LocationConstants.RESULT_DATA_KEY);
-//            mAreaOutput = resultData.getString(Constants.LocationConstants.LOCATION_DATA_AREA);
-//            mCityOutput = resultData.getString(Constants.LocationConstants.LOCATION_DATA_CITY);
-//            mStateOutput = resultData.getString(Constants.LocationConstants.LOCATION_DATA_STREET);
-//            mCountryOutput = resultData.getString(Constants.LocationConstants.LOCATION_DATA_COUNTRY);
-//            mPin = resultData.getString(Constants.LocationConstants.LOCATION_DATA_PIN);
-//            mLocality = resultData.getString(Constants.LocationConstants.LOCATION_DATA_LOCALITY);
-
-//            displayAddressOutput();
-
-            etCity.setText(resultData.getString(Constants.LocationConstants.LOCATION_DATA_CITY));
-            etCountry.setText(resultData.getString(Constants.LocationConstants.LOCATION_DATA_COUNTRY));
-
-            if (!TextUtils.isEmpty(resultData.getString(Constants.LocationConstants.LOCATION_DATA_STREET))) {
-                etStreetAddr.setText(resultData.getString(Constants.LocationConstants.LOCATION_DATA_STREET).replaceAll("[\r\n]+", " ") + "");
-            }
-
-            etStreetAddr.setSelection(etStreetAddr.getText().toString().length());
-
-            etPin.setText(resultData.getString(Constants.LocationConstants.LOCATION_DATA_PIN));
-            etLocality.setText(resultData.getString(Constants.LocationConstants.LOCATION_DATA_LOCALITY));
-
-
-            displayAddressOutput();
-
-        }
-
-    }
-
     protected void displayAddressOutput() {
 
 
+        String landmark = TextUtils.isEmpty(etLandmark.getText().toString()) ? "" : etLandmark.getText().toString() + ", ";
+
         String address = etHousePlotNum.getText().toString() + ", " + etLocality.getText().toString() + ", " +
-                etStreetAddr.getText().toString().trim() + ", " + etLandmark.getText().toString() + ", " +
+                landmark +
+                etLandmark.getText().toString() + ", " +
                 etCity.getText().toString() + ", " + etCountry.getText().toString() + ", " +
                 etPin.getText().toString();
 
@@ -719,39 +596,10 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         btnSave.setEnabled(true);
     }
 
-    private void loadCountries() {
-        String[] locales = Locale.getISOCountries();
-
-        for (String countryCode : locales) {
-            Locale obj = new Locale("", countryCode);
-            signUpCountryList.add(obj.getDisplayCountry());
-            Country_CodeMap.put(obj.getDisplayCountry(), obj.getCountry());
-        }
-        Collections.sort(signUpCountryList);
-    }
-
     public interface OnResultReceive {
         void OnResult(String address, String area, String city, String state, String country, double lat, double lon, String pin, String housePlotNum, String landmark);
     }
 
-
-//    public void selectCountry() {
-//        final List<String> stringList = signUpCountryList;
-//        String[] countryList = new String[stringList.size()];
-//        countryList = stringList.toArray(countryList);
-//
-//        new MaterialDialog.Builder(getActivity())
-//                .title("Select Country")
-//                .items(countryList)
-//                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
-//                    @Override
-//                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-//                        etCountry.setText(text);
-//                        return false;
-//                    }
-//                })
-//                .show();
-//    }
 
     @Override
     public void onStop() {

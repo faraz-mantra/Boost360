@@ -1,11 +1,10 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent_layout"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:id= "@+id/parent_layout"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <FrameLayout
         android:id="@+id/mainLayout"
@@ -16,57 +15,58 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/ps_pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </android.support.v4.view.ViewPager>
+            android:layout_height="match_parent"></android.support.v4.view.ViewPager>
 
 
         <com.viewpagerindicator.CirclePageIndicator
             android:id="@+id/ps_indicator"
-            android:layout_marginTop="20dp"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:focusableInTouchMode="false"
-            android:focusable="false"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="5dp" />
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="20dp"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
 
     </FrameLayout>
 
     <LinearLayout
         android:id="@+id/bottom_btn_holder"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_10"
         android:background="@color/white"
-        android:paddingLeft="18dp"
-        android:paddingTop="5dp"
-        android:paddingRight="12dp"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/margin_20"
+        android:paddingRight="@dimen/margin_20"
+        android:paddingTop="5dp">
 
         <TextView
             android:id="@+id/createWebSiteText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/create_website_using"
-            android:gravity="center"
+            android:layout_marginBottom="5dp"
             android:layout_marginTop="3dp"
-            android:layout_marginBottom="5dp"/>
+            android:gravity="center"
+            android:text="@string/create_website_using"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
+
             <LinearLayout
                 android:id="@+id/facebook_signup_create"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_weight="1"
+                android:layout_weight="1">
 
-                >
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:gravity="center_horizontal"
                     android:background="@drawable/rounded_corner_facebook"
                     android:orientation="horizontal">
 
@@ -74,21 +74,17 @@
                         android:id="@+id/facebook_create_img"
                         android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
-                        android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
                         android:src="@drawable/facebook_signup" />
 
                     <TextView
                         android:id="@+id/facebook_create_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:gravity="center"
-
-                        android:layout_height="fill_parent"
-                        android:layout_width="wrap_content"
-                        android:text="@string/facebook_page"
-                        android:layout_marginLeft="10dp"
-                        android:layout_centerVertical="true"
+                        android:text="@string/create_site_using_facebook_page"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/small_text_size"
+                        android:textSize="@dimen/medium_text_size"
                         tools:ignore="MissingPrefix" />
                 </LinearLayout>
 
@@ -96,16 +92,16 @@
 
             <LinearLayout
                 android:id="@+id/pre_signup_create"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_weight="1"
-                android:layout_marginLeft="9dp"
-                >
+                android:layout_marginTop="@dimen/margin_10"
+                android:layout_weight="1">
+
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:gravity="center_horizontal"
                     android:background="@drawable/rounded_corner"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -118,15 +114,13 @@
 
                     <TextView
                         android:id="@+id/create_txt"
-                        android:gravity="center"
-
-                        android:layout_marginLeft="10dp"
-                        android:layout_height="fill_parent"
                         android:layout_width="wrap_content"
-                        android:text="@string/email_address"
+                        android:layout_height="fill_parent"
                         android:layout_centerVertical="true"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/small_text_size"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center"
+                        android:text="@string/create_site_while_taking_to_ria"
+                        android:textSize="@dimen/medium_text_size"
                         tools:ignore="MissingPrefix" />
                 </LinearLayout>
 
@@ -136,31 +130,30 @@
 
         <LinearLayout
             android:id="@+id/pre_signUp_login"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="horizontal"
-            android:paddingTop="10dp"
             android:paddingBottom="15dp"
-            android:gravity="center">
+            android:paddingTop="10dp">
 
             <TextView
 
                 android:id="@+id/pre_signUp_bottom_text"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/presignup_login_text"
                 android:textColor="#5e5d5d"
-                tools:ignore="MissingPrefix"
-                android:text="@string/presignup_login_text" />
+                tools:ignore="MissingPrefix" />
 
             <TextView
                 android:id="@+id/onlyloginText"
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cap_login"
                 android:textColor="#5e5d5d"
                 android:textSize="14sp"
-                tools:ignore="MissingPrefix"
-                android:text="@string/cap_login" />
-
+                tools:ignore="MissingPrefix" />
 
         </LinearLayout>
 

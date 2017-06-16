@@ -442,7 +442,7 @@
     <string name="Message_empty">There are no messages on your website\nClick on the + button below\nto update your website</string>
     <string name="pre_signup_screen_one_text">Now Create, Manage and Update A Business website that draws more Customers</string>
     <string name="pre_signup_screen_two_text">Get a business website \nthat is instantly created and \neasily managed using this app</string>
-    <string name="presignup_login_text">Already have a NowFloats account?</string>
+    <string name="presignup_login_text">Already have a NowFloats site?</string>
     <string name="settings_feedback_link">ria@nowfloats.com</string>
     <string name="settings_facebook_like_link">https://www.facebook.com/nowfloats</string>
     <string name="settings_about_us_link">http://nowfloats.com/</string>
@@ -539,6 +539,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="subscribe_for_pulling">Subscribed for pulling</string>
     <string name="update_from">updates from</string>
     <string name="facebook_page"> Facebook Page</string>
+    <string name="create_site_using_facebook_page">Create site using Facebook Page</string>
     <string name="disconnected">Disconnected</string>
     <string name="success">Success</string>
     <string name="failed">Failed</string>
@@ -770,6 +771,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="logout">Logout</string>
     <string name="create_website_using">Create website using</string>
     <string name="email_address">Email Address</string>
+    <string name="create_site_while_taking_to_ria">Create site while talking to RIA</string>
     <string name="log_in"> Log In</string>
     <string name="complete_task_to_increase_site_score">Complete the task below to increase your site score.</string>
     <string name="high_score_translate_more_traffic">Higher scores translates more traffic to your site.</string>

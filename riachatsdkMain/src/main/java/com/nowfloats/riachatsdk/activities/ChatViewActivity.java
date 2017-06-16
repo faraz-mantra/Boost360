@@ -643,6 +643,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, btn.getId(), btn.getButtonText(), ChatLogger.EventStatus.COMPLETED.getValue(),
                         "STREET_ADDRESS", address, btn.getButtonType());
+
+                landmark = TextUtils.isEmpty(landmark) ? "" : ", "+landmark ;
+
                 mDataMap.put("[~" + "CITY" + "]", city);
                 mDataMap.put("[~" + "COUNTRY" + "]", country);
                 mDataMap.put("[~" + "PICK_HOUSEPLOTNO" + "]", housePlotNum);
@@ -650,7 +653,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 mDataMap.put("[~" + "PICK_ADDRESS" + "]", address);
                 mDataMap.put("[~" + "PICK_LANDMARK" + "]", landmark);
                 mDataMap.put("[~" + "STREET_ADDRESS" + "]",
-                        housePlotNum + ", " + area + ", " + address + ", " + landmark);
+                        housePlotNum + ", " + area + ", " + address + landmark);
                 mDataMap.put("[~" + "PINCODE" + "]", pin);
                 mDataMap.put("[~" + "LAT" + "]", lat + "");
                 mDataMap.put("[~" + "LNG" + "]", lon + "");
