@@ -47,7 +47,7 @@
             android:id="@+id/createWebSiteText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/create_your_nowfloats_site"
+            android:text="@string/create_website_using"
             android:gravity="center"
             android:layout_marginTop="3dp"
             android:layout_marginBottom="5dp"/>
@@ -76,7 +76,7 @@
                         android:layout_height="fill_parent"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:src="@drawable/facebook_signup" />
+                        android:src="@drawable/fb_signup" />
 
                     <TextView
                         android:id="@+id/facebook_create_txt"
@@ -114,7 +114,7 @@
                         android:layout_height="fill_parent"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="10dp"
-                        android:src="@drawable/facebook_mail" />
+                        android:src="@drawable/ria_chat" />
 
                     <TextView
                         android:id="@+id/create_txt"

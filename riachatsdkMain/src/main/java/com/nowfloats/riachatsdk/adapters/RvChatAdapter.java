@@ -196,6 +196,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     }
                 });
             }else{
+                cardViewHolder.tvEdit.setVisibility(View.VISIBLE);
                 cardViewHolder.tvConfirm.setText(mChatSections.get(position).getCardModel().getButtons().get(0).getButtonText());
                 cardViewHolder.tvEdit.setText(mChatSections.get(position).getCardModel().getButtons().get(1).getButtonText());
                 cardViewHolder.tvConfirm.setOnClickListener(new View.OnClickListener() {

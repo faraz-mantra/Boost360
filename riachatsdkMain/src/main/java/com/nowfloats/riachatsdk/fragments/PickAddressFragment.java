@@ -584,9 +584,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
         String landmark = TextUtils.isEmpty(etLandmark.getText().toString()) ? "" : etLandmark.getText().toString() + ", ";
 
-        String address = etHousePlotNum.getText().toString() + ", " + etLocality.getText().toString() + ", " +
+        String address = etHousePlotNum.getText().toString() + ", " + etStreetAddr.getText().toString()  + ", " +  etLocality.getText().toString() + ", " +
                 landmark +
-                etLandmark.getText().toString() + ", " +
                 etCity.getText().toString() + ", " + etCountry.getText().toString() + ", " +
                 etPin.getText().toString();
 

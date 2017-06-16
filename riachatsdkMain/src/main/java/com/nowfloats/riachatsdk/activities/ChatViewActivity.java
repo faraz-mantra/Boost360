@@ -613,7 +613,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         mCurrNodeId, btn.getId(), btn.getButtonText(), ChatLogger.EventStatus.COMPLETED.getValue(),
                         "STREET_ADDRESS", address, btn.getButtonType());
 
-                landmark = TextUtils.isEmpty(landmark) ? "" : ", "+landmark ;
+                String landmarkMap = TextUtils.isEmpty(landmark) ? "" : ", "+landmark ;
 
                 mDataMap.put("[~" + "CITY" + "]", city);
                 mDataMap.put("[~" + "COUNTRY" + "]", country);
@@ -622,7 +622,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 mDataMap.put("[~" + "PICK_ADDRESS" + "]", address);
                 mDataMap.put("[~" + "PICK_LANDMARK" + "]", landmark);
                 mDataMap.put("[~" + "STREET_ADDRESS" + "]",
-                        housePlotNum + ", " + area + ", " + address + landmark);
+                        housePlotNum + ", " + area + ", " + address + landmarkMap);
                 mDataMap.put("[~" + "PINCODE" + "]", pin);
                 mDataMap.put("[~" + "LAT" + "]", lat + "");
                 mDataMap.put("[~" + "LNG" + "]", lon + "");
@@ -950,7 +950,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 rvChatData.scrollToPosition(mSectionList.size() - 1);
 
                 if (mDefaultButton != null && node.getTimeoutInMs() != -1L) {
-                    mHandler.postDelayed(mAutoCallRunnable, mDefaultButton.getBounceTimeout());
+                    mHandler.postDelayed(mAutoCallRunnable, node.getTimeoutInMs());
                 }
             }
         }, time);
