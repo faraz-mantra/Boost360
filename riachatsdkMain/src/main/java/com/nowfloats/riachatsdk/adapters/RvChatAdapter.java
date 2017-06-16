@@ -202,7 +202,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     @Override
                     public void onClick(View v) {
 
-                        cardViewHolder.llConfirm.setVisibility(View.INVISIBLE);
+                        cardViewHolder.llConfirm.setVisibility(View.GONE);
                         cardViewHolder.tvSubmit.setVisibility(View.VISIBLE);
 
                         mConfirmationCallback.onCardResponse(Constants.ConfirmationType.BIZ_NAME,
@@ -215,7 +215,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     @Override
                     public void onClick(View v) {
 
-                        cardViewHolder.llConfirm.setVisibility(View.INVISIBLE);
+                        cardViewHolder.llConfirm.setVisibility(View.GONE);
                         cardViewHolder.tvSubmit.setVisibility(View.VISIBLE);
 
                         mConfirmationCallback.onCardResponse(Constants.ConfirmationType.BIZ_NAME,
