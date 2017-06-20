@@ -38,10 +38,11 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingBottom="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="@dimen/margin_15"
             android:gravity="center"
             android:lineSpacingExtra="2dp"
             android:textColor="@color/white"
+            android:text="gjskfgkdkjfjk"
             android:textSize="25sp" />
         <View
             android:layout_width="match_parent"

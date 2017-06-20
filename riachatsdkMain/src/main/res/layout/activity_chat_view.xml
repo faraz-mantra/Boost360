@@ -23,10 +23,19 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:id="@+id/ivBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_arrow_back_black_24dp"
+                    android:visibility="visible" />
+
+                <ImageView
                     android:id="@+id/iv_agent_icon"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/margin_10"
                     android:src="@drawable/ria_circle_image"
                     android:visibility="visible" />
 
@@ -83,7 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginTop="50dip"
+            android:layout_marginTop="40dip"
             android:indeterminate="true"
             android:minHeight="20dp"
             android:visibility="gone" />
@@ -179,6 +188,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/et_bg"
                     android:hint="Say Something..."
+                    android:imeOptions="actionDone"
                     android:maxLines="5"
                     android:minHeight="40dp"
                     android:paddingLeft="15dp"
@@ -193,7 +203,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="@dimen/margin_10"
                     android:maxLines="1" />
 
                 <ImageView
@@ -202,6 +212,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="10dp"
+                    android:layout_marginStart="@dimen/margin_10"
                     android:layout_marginRight="5dp"
                     android:background="@drawable/send_btn_bg"
                     android:paddingBottom="10dp"

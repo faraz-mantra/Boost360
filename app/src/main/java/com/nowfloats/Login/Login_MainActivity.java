@@ -163,6 +163,7 @@ public class Login_MainActivity extends AppCompatActivity implements
                 }
             }
         });
+
         //getPermission();
     }
 
@@ -221,6 +222,10 @@ public class Login_MainActivity extends AppCompatActivity implements
         if(value.equals("Success"))
         {
 
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("message",new ArrayList<FloatsMessageModel>());
+            dashboardIntent.putExtras(bundle);
+
             Date date = new Date(System.currentTimeMillis());
             String dateString = date.toString();
 
@@ -274,13 +279,13 @@ public class Login_MainActivity extends AppCompatActivity implements
     }
 
 
-    @Subscribe
-    public void getMessages(ArrayList<FloatsMessageModel> floats){
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("message",floats);
-        dashboardIntent.putExtras(bundle);
-        authenticationStatus("Success");
-    }
+//    @Subscribe
+//    public void getMessages(ArrayList<FloatsMessageModel> floats){
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelableArrayList("message",floats);
+//        dashboardIntent.putExtras(bundle);
+//        authenticationStatus("Success");
+//    }
 
     protected void sendPasswordToEmail(String enteredText) {
         // TODO Auto-generated method stub

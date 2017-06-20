@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -146,8 +147,15 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         if (getArguments() != null) {
             pick_type = (PICK_TYPE) getArguments().get(ARG_MAP_TYPE);
             mDataMap = (Map<String, String>) getArguments().get(ARG_MAP_DATA);
+            showKeyBoard();
         }
 
+    }
+
+
+    private void showKeyBoard() {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 
     @Override
@@ -305,7 +313,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                         .build();
             }
 
-            etCountry.setFocusable(false);
+//            etCountry.setFocusable(false);
 
             etCity.addTextChangedListener(new TextWatcher() {
                 @Override

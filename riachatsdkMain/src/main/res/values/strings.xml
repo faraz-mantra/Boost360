@@ -4,7 +4,7 @@
     <string name="street_address">STREET ADDRESS</string>
     <string name="loc_city">CITY</string>
     <string name="loc_country">COUNTRY</string>
-    <string name="loc_pincode">PINCODE</string>
+    <string name="loc_pincode">PINCODE/ZIP</string>
     <string name="empty_address_warn">Address can\'t be empty</string>
     <string name="empty_city_warn">City can\'t be empty</string>
     <string name="locality_warn">Locality can\'t be empty</string>
