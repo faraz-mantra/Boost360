@@ -495,10 +495,10 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
             Toast.makeText(getActivity(), getString(R.string.empty_pin_warn), Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (etLocality.getText().toString().trim().equals("")) {
-            Toast.makeText(getActivity(), getString(R.string.locality_warn), Toast.LENGTH_SHORT).show();
-            return false;
-        }
+//        if (etLocality.getText().toString().trim().equals("")) {
+//            Toast.makeText(getActivity(), getString(R.string.locality_warn), Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
         if (etHousePlotNum.getText().toString().trim().equals("")) {
             Toast.makeText(getActivity(), getString(R.string.house_no_warn), Toast.LENGTH_SHORT).show();
             return false;
@@ -592,7 +592,10 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
         String landmark = TextUtils.isEmpty(etLandmark.getText().toString()) ? "" : etLandmark.getText().toString() + ", ";
 
-        String address = etHousePlotNum.getText().toString() + ", " + etStreetAddr.getText().toString()  + ", " +  etLocality.getText().toString() + ", " +
+        String locality = TextUtils.isEmpty(etLocality.getText().toString()) ? "" : etLocality.getText().toString() + ", ";
+
+        String address = etHousePlotNum.getText().toString() + ", " + etStreetAddr.getText().toString() + ", " +
+                locality +
                 landmark +
                 etCity.getText().toString() + ", " + etCountry.getText().toString() + ", " +
                 etPin.getText().toString();

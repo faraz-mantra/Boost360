@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">riachatsdk</string>
     <string name="please_wait">Please Wait...</string>
-    <string name="street_address">STREET ADDRESS</string>
+    <string name="street_address">STREET ADDRESS 1</string>
     <string name="loc_city">CITY</string>
     <string name="loc_country">COUNTRY</string>
     <string name="loc_pincode">PINCODE/ZIP</string>
@@ -14,7 +14,7 @@
     <string name="chat_agent_name">Ria</string>
     <string name="chat_agent_name_full">(Relationship Intelligence Agent)</string>
     <string name="house_plot_num">HOUSE/PLOT NUMBER</string>
-    <string name="locality">LOCALITY</string>
+    <string name="locality">STREET ADDRESS 2</string>
     <string name="land_mark">LANDMARK (OPTIONAL)</string>
 
     <!-- TODO: Remove or change this placeholder text -->

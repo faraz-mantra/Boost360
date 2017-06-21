@@ -238,14 +238,14 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("nowfloats://com.riasdk.skip/riachat"));
-                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setAction(Intent.ACTION_VIEW);
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }
+//                Intent intent = new Intent(Intent.ACTION_VIEW,
+//                        Uri.parse("nowfloats://com.riasdk.skip/riachat"));
+//                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+//                intent.setAction(Intent.ACTION_VIEW);
+//                if (intent.resolveActivity(getPackageManager()) != null) {
+//                    startActivity(intent);
+//                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+//                }
 
 //                Intent intent = new Intent(Intent.ACTION_VIEW,
 //                        Uri.parse("com.biz2.nowfloats://com.riasdk.skip/riachat"));
@@ -262,6 +262,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 //                    startActivity(intent);
 //                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 //                }
+
+                login();
 
             }
         });
@@ -641,6 +643,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         "STREET_ADDRESS", address, btn.getButtonType());
 
                 String landmarkMap = TextUtils.isEmpty(landmark) ? "" : ", " + landmark;
+                String locality = TextUtils.isEmpty(area) ? "" : ", " + area;
 
                 mDataMap.put("[~" + "CITY" + "]", city);
                 mDataMap.put("[~" + "COUNTRY" + "]", country);
@@ -649,7 +652,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 mDataMap.put("[~" + "PICK_ADDRESS" + "]", address);
                 mDataMap.put("[~" + "PICK_LANDMARK" + "]", landmark);
                 mDataMap.put("[~" + "STREET_ADDRESS" + "]",
-                        housePlotNum + ", " + area + ", " + address + landmarkMap);
+                        housePlotNum + locality + ", " + address + landmarkMap);
                 mDataMap.put("[~" + "PINCODE" + "]", pin);
                 mDataMap.put("[~" + "LAT" + "]", lat + "");
                 mDataMap.put("[~" + "LNG" + "]", lon + "");
@@ -740,27 +743,31 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 mNextNodeId = btn.getNextNodeId();
                 break;
             case Constants.DeepLinkUrl.LOGIN:
-
-                Intent intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("com.biz2.nowfloats://com.riasdk.skip/riachat"));
-                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setAction(Intent.ACTION_VIEW);
-
-                String userKey = "USERNAME";
-                String passwordKey = "PASSWORD";
-
-                intent.putExtra("Username", mDataMap.get("[~" + userKey + "]").toLowerCase());
-                intent.putExtra("Password", mDataMap.get("[~" + passwordKey + "]"));
-
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }
-
-                finish();
+                login();
                 break;
         }
 
+    }
+
+    private void login(){
+
+        Intent intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("com.biz2.nowfloats://com.riasdk.skip/riachat"));
+        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+        intent.setAction(Intent.ACTION_VIEW);
+
+        String userKey = "USERNAME";
+        String passwordKey = "PASSWORD";
+
+        intent.putExtra("Username", mDataMap.get("[~" + userKey + "]").toLowerCase());
+        intent.putExtra("Password", mDataMap.get("[~" + passwordKey + "]"));
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        }
+
+        finish();
     }
 
     private void askLocationPermission() {
