@@ -439,7 +439,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                 double lat = 0, lng = 0;
                 if (list != null && list.size() > 0) {
 
-                    address = list.get(0);
+                    address = list.get(list.size()-1);
                     lat = address.getLatitude();
                     lng = address.getLongitude();
 
