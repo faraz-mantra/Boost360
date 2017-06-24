@@ -193,7 +193,7 @@ public class CardAdapter_V3 extends RecyclerView.Adapter<MyViewHolder> {
                         }
                     });
                     final Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                    if (!imageShare.contains("/Tile/deal.png") && !Util.isNullOrEmpty(imageShare)) {
+                    if (!Util.isNullOrEmpty(imageShare) && !imageShare.contains("/Tile/deal.png")) {
                         if (Methods.isOnline(appContext)) {
                             String url;
                             if (imageShare.contains("BizImages")) {

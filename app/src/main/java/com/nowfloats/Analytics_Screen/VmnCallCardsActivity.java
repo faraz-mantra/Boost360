@@ -8,28 +8,21 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.nowfloats.Analytics_Screen.model.VmnCallModel;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
-import java.util.ArrayList;
-
 /**
  * Created by Admin on 27-04-2017.
  */
 
-public class VmnCallCardsActivity extends AppCompatActivity implements View.OnClickListener,VmnDataSingleton.ConnectToVmnData {
-
-    ArrayList<VmnCallModel> totalCalls = new ArrayList<>();
+public class VmnCallCardsActivity extends AppCompatActivity implements View.OnClickListener {
 
     UserSessionManager sessionManager;
-    ProgressBar mProgressBar;
     CardView viewCallLogCard;
     TextView missedCount, receivedCount,totalCount, virtualNumber;
     Toolbar toolbar;
@@ -46,8 +39,8 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
             getSupportActionBar().setDisplayShowHomeEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
         sessionManager = new UserSessionManager(this,this);
-        mProgressBar = (ProgressBar) findViewById(R.id.pb_vmncall);
         missedCount = (TextView) findViewById(R.id.missed_count);
         receivedCount = (TextView) findViewById(R.id.received_count);
         totalCount = (TextView) findViewById(R.id.total_count);
@@ -55,9 +48,12 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         viewCallLogCard = (CardView) findViewById(R.id.card_view_view_calllog);
         virtualNumber.setText(sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
 
+        Intent intent = getIntent();
+        totalCount.setText(intent.getStringExtra("TotalCalls"));
+        receivedCount.setText(intent.getStringExtra("ReceivedCalls"));
+        missedCount.setText(intent.getStringExtra("MissedCalls"));
+
         viewCallLogCard.setOnClickListener(this);
-        mProgressBar.setVisibility(View.VISIBLE);
-        VmnDataSingleton.getInstance().requestVmnData(VmnCallCardsActivity.this,sessionManager.getFPID());
     }
 
     @Override
@@ -81,39 +77,13 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
 
         switch (v.getId()){
             case R.id.card_view_view_calllog:
-                if(totalCalls.size() == 0){
+                if(totalCount.getText().toString().equals("0")){
                     Methods.showSnackBarNegative(VmnCallCardsActivity.this,"You do not have call logs.");
                     return;
                 }
                 startActivity(i);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
-        }
-    }
-
-    @Override
-    public void onDataLoaded(ArrayList<VmnCallModel> vmnData) {
-        mProgressBar.setVisibility(View.GONE);
-        if(vmnData == null){
-            Methods.showSnackBarNegative(VmnCallCardsActivity.this,getString(R.string.something_went_wrong_try_again));
-        }else
-        {
-            int missCount =0, receiveCount =0;
-
-            totalCalls = vmnData;
-            for (VmnCallModel model : vmnData)
-            {
-                if(model.getCallStatus().equalsIgnoreCase("MISSED")){
-                    missCount++;
-                }
-                else
-                {
-                    receiveCount++;
-                }
-            }
-            totalCount.setText(String.valueOf(totalCalls.size()));
-            missedCount.setText(String.valueOf(missCount));
-            receivedCount.setText(String.valueOf(receiveCount));
         }
     }
 }

@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -118,7 +119,7 @@ public class Settings_Fragment extends Fragment {
         if(Sdate.contains("/Date")){
             Sdate = Sdate.replace("/Date(", "").replace(")/", "");
         }
-        if(Long.parseLong(Sdate)/1000 > 1470614400){
+        if(!TextUtils.isEmpty(Sdate) && Long.parseLong(Sdate)/1000 > 1470614400){
             flSiteAppearance.setVisibility(View.GONE);
         }
 

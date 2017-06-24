@@ -30,7 +30,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_10"
+            android:padding="@dimen/margin_10"
             android:orientation="vertical">
 
             <LinearLayout
@@ -55,7 +55,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
                     android:background="@drawable/et_bg"
-                    android:inputType="text"
+                    android:inputType="textNoSuggestions"
+                    android:digits="@string/domain_characters"
                     android:maxLines="1"
                     android:padding="@dimen/margin_10"
                     tools:ignore="MissingPrefix" />

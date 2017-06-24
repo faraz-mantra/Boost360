@@ -67,6 +67,7 @@ public class BusinessAppPreview extends Fragment {
     }
 
     public void addAndroidFragment(int id,String bundle,boolean transition){
+        if(getActivity() != null && getActivity().isFinishing()) return;
         Fragment frag;
         FragmentTransaction transaction=getChildFragmentManager().beginTransaction();
         switch (id){

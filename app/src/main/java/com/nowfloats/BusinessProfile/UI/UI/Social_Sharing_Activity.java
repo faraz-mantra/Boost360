@@ -12,16 +12,19 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +45,7 @@ import com.nowfloats.CustomWidget.roboto_md_60_212121;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NFXApi.NfxRequestClient;
 import com.nowfloats.NavigationDrawer.API.twitter.FacebookFeedPullRegistrationAsyncTask;
+import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.BoostLog;
@@ -51,6 +55,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
@@ -118,7 +123,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
     private final int FB_DECTIVATION = 3;
     private final int FB_PAGE_DEACTIVATION = 4;
     private final int TWITTER_DEACTIVATION = 11;
-
+    private final static String FB_PAGE_DEFAULT_LOGO = "https://s3.ap-south-1.amazonaws.com/nfx-content-cdn/logo.png";
+    private final static String FB_PAGE_COVER_PHOTO = "https://cdn.nowfloats.com/fpbkgd-kitsune/abstract/24.jpg";
     private final int FROM_AUTOPOST = 1;
     private final int FROM_FB_PAGE = 0;
 
@@ -223,6 +229,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 if (facebookPageCheckBox.isChecked()) {
                     Toast.makeText(Social_Sharing_Activity.this,"Reconnect with facebook",Toast.LENGTH_SHORT).show();
                     facebookPageCheckBox.setChecked(false);
+                    //startActivity(new Intent(Social_Sharing_Activity.this,LinkedinWebView.class));
+                    //createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
 
                 } else {
                     NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) Social_Sharing_Activity.this)
@@ -357,7 +365,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
             @Override
             public void onClick(View v) {
                 String message = "Updates will reflect on your website one hour after getting posted on the Facebook Page. Please <u>do not</u> select this option if you are using social share from your website.";
-                showDialog("Tip!", message);
+                showDialog("Tip!", message,"Done");
             }
         });
        
@@ -851,7 +859,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                                                                 pageSeleted(mNewPosition, strName, session.getFacebookPageID(), session.getPageAccessToken());
                                                             } else {
                                                                 facebookPageCheckBox.setChecked(false);
-                                                                showDialog("Alert", "You cannot select the same Facebook Page to share your updates. This will lead to an indefinite loop of updates on your website and Facebook Page.");
+                                                                showDialog("Alert", "You cannot select the same Facebook Page to share your updates. This will lead to an indefinite loop of updates on your website and Facebook Page.","Done");
                                                             }
                                                             //pageSeleted(position, strName, session.getFacebookPageID(), session.getPageAccessToken());
                                                         } else if (from == FROM_AUTOPOST) {
@@ -862,7 +870,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                                                             } else {
                                                                 //Toast.makeText(getApplicationContext(), "You can't post and pull from the same Facebook page", Toast.LENGTH_SHORT).show();
                                                                 facebookautopost.setChecked(false);
-                                                                showDialog("Alert", "You cannot select the same Facebook Page to auto-update your website. This will lead to an indefinite loop of updates on your website and Facebook Page.");
+                                                                showDialog("Alert", "You cannot select the same Facebook Page to auto-update your website. This will lead to an indefinite loop of updates on your website and Facebook Page.","Done");
                                                             }
                                                         }
                                                         dialog.dismiss();
@@ -1303,14 +1311,17 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
 
     }
 
-    private void showDialog(String headText, String message){
+    private void showDialog(String headText, String message, final String actionButton){
         AlertDialog dialog = null;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(Html.fromHtml(message));
+        builder.setMessage(Methods.fromHtml(message));
         builder.setTitle(headText);
-        builder.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(actionButton, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                if(actionButton.contains("Take Me There")){
+                    addSiteHealth();
+                }
                 dialog.dismiss();
             }
         });
@@ -1322,7 +1333,17 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
 
     }
 
-
+    private void addSiteHealth(){
+        FragmentManager manager = getSupportFragmentManager();
+        Site_Meter_Fragment frag = (Site_Meter_Fragment) manager.findFragmentByTag("siteHealth");
+        if(frag == null){
+            frag = new Site_Meter_Fragment();
+        }
+        manager.beginTransaction().replace(R.id.parent_layout,frag,"siteHealth")
+                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                .addToBackStack(null)
+                .commit();
+    }
 
 
     /*
@@ -1418,8 +1439,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 twitterCheckBox.setChecked(false);
                 break;
             case PAGE_NO_FOUND:
-                Methods.materialDialog(activity, "Alert", getString(R.string.look_like_no_facebook_page));
-                /*final MaterialDialog builder = new MaterialDialog.Builder(this)
+                //Methods.materialDialog(activity, "Alert", getString(R.string.look_like_no_facebook_page));
+                final MaterialDialog builder = new MaterialDialog.Builder(this)
                         .customView(R.layout.dialog_no_facebook_page, false).build();
                 ((Button) builder.getCustomView().findViewById(R.id.create_page))
                         .setOnClickListener(new View.OnClickListener() {
@@ -1430,18 +1451,25 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                             }
                         });
                 if(!isFinishing())
-                    builder.show();*/
+                    builder.show();
                 break;
             case FB_PAGE_CREATION:
+
                 switch (response){
-                    case "success":
-                        //pageCreatedDialog();
+                    case "success_fbDefaultImage":
+                        pageCreatedDialog(true);
+                        break;
+                    case "success_logoImage":
+                        pageCreatedDialog(false);
+                        break;
+                    case "profile_incomplete":
+                        showDialog("Site Health Should Be 80%",getString(R.string.business_profile_incomplete),"Take Me There");
                         break;
                     case "error_creating_page":
                         Methods.showSnackBarNegative(Social_Sharing_Activity.this,getString(R.string.something_went_wrong));
                         break;
                     case "invalid_name":
-                        //pageSuggestionDialog();
+                        pageSuggestionDialog();
                         break;
                     default:
                         Toast.makeText(this, "Something went wrong!!! Please try later.", Toast.LENGTH_SHORT).show();
@@ -1450,7 +1478,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         }
     }
 
-   /* private void createFBPage(String fpName) {
+    private void createFBPage(String fpName) {
         fpPageName = fpName;
         String businessDesciption = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION);
 
@@ -1511,31 +1539,40 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         }
 
     }
-    private void pageCreatedDialog() {
+    private void pageCreatedDialog(boolean showDefaultImageMessage) {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_fb_page_created,null);
         final MaterialDialog dialog = new MaterialDialog.Builder(this)
                 .customView(view,false)
+                .canceledOnTouchOutside(false)
                 .build();
         Button connect = (Button) view.findViewById(R.id.btn_connect);
         TextView pageName = (TextView) view.findViewById(R.id.tv_fb_page_name);
+        view.findViewById(R.id.llayout_message).setVisibility(showDefaultImageMessage?View.VISIBLE:View.GONE);
         pageName.setText(fpPageName);
         ImageView logoImage = (ImageView) view.findViewById(R.id.img_logo);
         ImageView featureImage = (ImageView) view.findViewById(R.id.img_feature);
-        String baseNameProfileImage = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
-        if (baseNameProfileImage != null && !baseNameProfileImage.contains("http")) {
-            baseNameProfileImage = Constants.BASE_IMAGE_URL + "" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
-        }
-
+        view.findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
         Picasso.with(this)
-                .load(baseNameProfileImage)
+                .load(FB_PAGE_COVER_PHOTO)
                 .resize(0,200)
                 .placeholder(R.drawable.general_services_background_img)
                 .into(featureImage);
 
-        String logoURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
-        if(!logoURI.contains("http")){
-            logoURI = "https://"+logoURI;
+        String logoURI;
+        if(showDefaultImageMessage){
+            logoURI = FB_PAGE_DEFAULT_LOGO;
+        }else{
+            logoURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
+            if(!logoURI.contains("http")){
+                logoURI = "https://"+logoURI;
+            }
         }
+
         Picasso.with(this)
                 .load(logoURI)
                 .resize(0,75)
@@ -1553,7 +1590,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         if(!isFinishing()){
             dialog.show();
         }
-    }*/
+    }
     @Override
     public void onTwitterConnected(Result<TwitterSession> result) {
         if(result == null){

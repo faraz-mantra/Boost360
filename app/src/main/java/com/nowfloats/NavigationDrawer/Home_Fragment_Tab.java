@@ -313,7 +313,7 @@ public class Home_Fragment_Tab extends Fragment {
         });
     }
 
-    private  void showBubble(){
+    private void showBubble(){
 
         if(!pref.getBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK,false)) {
             addOverlay();

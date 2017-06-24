@@ -2,7 +2,7 @@
 <resources>
     <string name="twitter_consumer_key">4CiUg5gcIbvYre8XjGd8GsElV</string>
     <string name="twitter_consumer_secret">4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9</string>
-
+    <string name="google_map_key">AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg</string>
     <string name="package_name_aviary">com.thinksity.AviaryCdsProvider</string>
     <string name="app_name">Thinksity</string>
     <string name="hello_world">Hello world!</string>
@@ -1289,5 +1289,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="connect_page_to_nowfloats">Connect your account to\nautomatically share all updates\nto your Facebook Page.</string>
     <string name="you_can_see_your_page_analytics">analytics->social analytics->\nfacebook analytics</string>
     <string name="control">Connect</string>
+    <string name="domain_characters">-0123456789abcdefghijklmnopqrstuvwxyz</string>
+    <string name="fb_page_default_logo_message">We uploaded a default profile image for you as your business logo is too small.</string>
+    <string name="business_profile_incomplete">Please complete all the steps in site health and reconnect your Facebook account to create your Facebook page</string>
 
 </resources>

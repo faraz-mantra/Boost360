@@ -432,11 +432,8 @@ public class SidePanelFragment extends Fragment {
         } else {
             lockWidgetImageView.setVisibility(View.GONE);
         }
-        if (Integer.parseInt(paymentState)>0 && Integer.parseInt(paymentLevel) > 10) {
-            newButton.setVisibility(View.VISIBLE);
-        } else {
-            businessLockImage.setVisibility(View.VISIBLE);
-        }
+        newButton.setVisibility(View.VISIBLE);
+
         if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_PRODUCT_GALLERY).contains("PRODUCTCATALOGUE")) {
             lockWidget_ProductGallery.setVisibility(View.VISIBLE);
         } else {
@@ -606,14 +603,10 @@ public class SidePanelFragment extends Fragment {
         businessAppsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Integer.parseInt(paymentState)>0 && Integer.parseInt(paymentLevel) > 10) {
-                    MixPanelController.track(MixPanelController.BUSINESS_APP, null);
-                    onclickColorChange(businessappImageView, businessAppTextview, businessAppsLayout);
-                    ((OnItemClickListener) mainActivity).onClick(getString(R.string.my_business_apps));
-                }
-                else {
-                    showAlertMaterialDialog();
-                }
+
+                MixPanelController.track(MixPanelController.BUSINESS_APP, null);
+                onclickColorChange(businessappImageView, businessAppTextview, businessAppsLayout);
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.my_business_apps));
 
             }
         });

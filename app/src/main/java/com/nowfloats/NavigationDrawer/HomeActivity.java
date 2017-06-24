@@ -3,7 +3,6 @@ package com.nowfloats.NavigationDrawer;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,7 +27,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -37,7 +35,6 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,7 +57,6 @@ import com.mixpanel.android.mpmetrics.GCMReceiver;
 import com.nfx.leadmessages.ReadMessages;
 import com.nineoldandroids.animation.Animator;
 import com.nowfloats.AccountDetails.AccountInfoActivity;
-import com.nowfloats.AccountDetails.Model.AccountDetailModel;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueries;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
@@ -86,7 +82,6 @@ import com.nowfloats.Login.Ria_Register;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.App_Update_Async_Task;
 import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
-import com.nowfloats.NavigationDrawer.API.KitsuneApi;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
 import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsActivity;
@@ -99,7 +94,6 @@ import com.nowfloats.SiteAppearance.SiteAppearanceFragment;
 import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.Model.StoreEvent;
 import com.nowfloats.Store.Model.StoreModel;
-import com.nowfloats.Store.Service.API_Service;
 import com.nowfloats.Store.StoreFragmentTab;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
@@ -127,8 +121,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -340,7 +332,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             public void onClick(View v) {
                 BoostLog.d("cek", "home selected");
                 if (drawerFragment.mDrawerToggle.isDrawerIndicatorEnabled()){
-                    ((DrawerLayout) findViewById(R.id.drawer_layout)).openDrawer(Gravity.LEFT);
+                    ((DrawerLayout) findViewById(R.id.drawer_layout)).openDrawer(Gravity.START);
                 } else {
                     try{
                         drawerFragment.mDrawerToggle.setDrawerIndicatorEnabled(true);
@@ -556,7 +548,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 Intent queries = new Intent(HomeActivity.this, SearchQueries.class);
                 startActivity(queries);
             }else if(url.contains("blog")){
-                String url1 = "";
+
                 if (!Util.isNullOrEmpty(url)) {
                     url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
                 } else {
@@ -570,25 +562,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             else if(url.contains("subscribers")){
                 Intent subscribers = new Intent(HomeActivity.this, SubscribersActivity.class);
                 startActivity(subscribers);
-            }else if(url.contains("subscribers")){
-                String url2 = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-                if (!Util.isNullOrEmpty(url)) {
-                    String eol = System.getProperty("line.separator");
-                    url2 = getString(R.string.visit_to_new_website)
-                            + eol + url.toLowerCase();
-                }
-                else{
-                    String eol = System.getProperty("line.separator");
-                    url2 = getString(R.string.visit_to_new_website)
-                            + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
-                            + getResources().getString(R.string.tag_for_partners);
-                }
-//            pref = getSharedPreferences(
-//                    Constants.PREF_NAME, Activity.MODE_PRIVATE);
-//            prefsEditor = pref.edit();
-                shareWebsite(url2);
-            }
-            else if(url.contains("accountstatus")){
+            }else if(url.contains("share")){
+                shareWebsite();
+            } else if(url.contains("accountstatus")){
                 Intent accountInfo = new Intent(HomeActivity.this, AccountInfoActivity.class);
                 startActivity(accountInfo);
             }
@@ -1073,7 +1049,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         roboto_lt_24_212121 message = (roboto_lt_24_212121) view.findViewById(R.id.pop_up_create_message_body);
         message.setText(Methods.fromHtml(dialogMessage));
     }
-    private void checkExpire(){
+   /* private void checkExpire(){
         isExpiredCheck = pref.getBoolean("EXPIRE_DIALOG",false);
         if(!isExpiredCheck) {
             String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
@@ -1201,9 +1177,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     }
                 }
 
-               /* if(showWildFire && (current-prevShown)/(60*60*24*1000)>=7) {
+               *//* if(showWildFire && (current-prevShown)/(60*60*24*1000)>=7) {
                     showDialog1(WILD_FIRE_EXPIRE,-1);
-                }*/
+                }*//*
 
                 if (count > 1) {
                    // showFacebookReviewDialog();
@@ -1216,8 +1192,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 error.printStackTrace();
             }
         });
-    }
-
+    }*/
+/*
     private void renewKitsune(int expiryType) {
         String dialogTitle = null;
         String dialogMessage = null;
@@ -1318,9 +1294,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             }
         });
         dialog.show();
-    }
+    }*/
 
-    private void enableKitsune() {
+    /*private void enableKitsune() {
         final ProgressDialog pg = ProgressDialog.show(this,"" , getString(R.string.wait_for_new_look));
         new KitsuneApi(session.getFpTag()).setResultListener(new KitsuneApi.ResultListener() {
             @Override
@@ -1352,7 +1328,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             flag = false;
         }
         return flag;
-    }
+    }*/
 
     @Override
     protected void onStart() {
@@ -1497,32 +1473,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else if(nextScreen.equals(getString(R.string.share)))
                 {
-                    String url = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-                    if (!Util.isNullOrEmpty(url)) {
-                        String eol = System.getProperty("line.separator");
-                        url = getString(R.string.visit_to_new_website)
-                                + eol + url.toLowerCase();
-                    }
-                    else{
-                        String eol = System.getProperty("line.separator");
-                        url = getString(R.string.visit_to_new_website)
-                                + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
-                                + getResources().getString(R.string.tag_for_partners);
-                    }
-//            pref = getSharedPreferences(
-//                    Constants.PREF_NAME, Activity.MODE_PRIVATE);
-//            prefsEditor = pref.edit();
-                    shareWebsite(url);
-                }/*else if(nextScreen.equals(getString(R.string.business_enquiries_title)))
-                {
-                    // ft.remove(homeFragment);
-
-                    //  ft.add(R.id.mainFrame,businessEnquiriesFragment);
-                    //  ft.commit();
-                    plusAddButton.setVisibility(View.GONE);
-
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, businessEnquiriesFragment).commit();
-                }*/else if(nextScreen.equals("Settings"))
+                    shareWebsite();
+                }else if(nextScreen.equals("Settings"))
                 {
                     //ft.replace(R.id.homeTabViewpager, settingsFragment);
                     //ft.commit();
@@ -1564,10 +1516,22 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }
     }
-    public void shareWebsite(String text) {
+    public void shareWebsite() {
+        String url = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+        if (!Util.isNullOrEmpty(url)) {
+            String eol = System.getProperty("line.separator");
+            url = getString(R.string.visit_to_new_website)
+                    + eol + url.toLowerCase();
+        }
+        else{
+            String eol = System.getProperty("line.separator");
+            url = getString(R.string.visit_to_new_website)
+                    + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
+                    + getResources().getString(R.string.tag_for_partners);
+        }
         final Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, text);
+        intent.putExtra(Intent.EXTRA_TEXT, url);
         startActivity(Intent.createChooser(intent, getString(R.string.share_with)));
 //        prefsEditor.putBoolean("shareWebsite", true);
 //        prefsEditor.commit();

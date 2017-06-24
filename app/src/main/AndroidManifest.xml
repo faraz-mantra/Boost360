@@ -123,6 +123,7 @@
         <activity
             android:name="com.nowfloats.Analytics_Screen.SearchQueries"
             android:label=""
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.Analytics_Screen.SubscriberDetailsActivity"
@@ -174,6 +175,10 @@
             android:label="@string/title_activity_business__hours_"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.nowfloats.BusinessProfile.UI.UI.LinkedinWebView"
+            android:label="Linkedin Login"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity"
             android:label="@string/title_activity_business__logo_"
             android:screenOrientation="portrait" />
@@ -198,7 +203,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg" />
+            android:value="@string/google_map_key" />
 
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.API.NewMapViewDialogBusinessAddress"

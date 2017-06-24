@@ -80,11 +80,6 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
                                 loginCheck = "false";
                                 displayPreSignUpScreens();
                             }
-                            if (session.checkLogin()) {
-
-                            } else {
-
-                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

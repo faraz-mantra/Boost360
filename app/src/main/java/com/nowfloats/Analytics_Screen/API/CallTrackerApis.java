@@ -1,5 +1,6 @@
 package com.nowfloats.Analytics_Screen.API;
 
+import com.google.gson.JsonObject;
 import com.nowfloats.Analytics_Screen.model.VmnCallModel;
 
 import java.util.ArrayList;
@@ -15,9 +16,12 @@ import retrofit.http.QueryMap;
  */
 
 public interface CallTrackerApis {
+    @GET("/Wildfire/v1/calls/tracker")
+    void trackerCalls(@QueryMap Map data, Callback<ArrayList<VmnCallModel>> response);
+
     @GET("/Wildfire/v1/calls/GetLastCallLogInfoWithRange")
     void getLastCallInfo(@QueryMap Map data, Callback<ArrayList<VmnCallModel>> response);
 
-    @GET("/Wildfire/v1/calls/totalcount")
-    void getTotalCalls(@Query("clientId") String clientId, @Query("fpid") String fpId, Callback<String> response);
+    @GET("/WildFire/v1/calls/summary")
+    void getVmnSummary(@Query("clientId") String clientId, @Query("fpid") String fpId, @Query("identifierType") String type, Callback<JsonObject> response);
 }

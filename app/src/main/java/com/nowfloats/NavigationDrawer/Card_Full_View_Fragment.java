@@ -224,7 +224,7 @@ public class Card_Full_View_Fragment extends Fragment {
                 final ProgressDialog pd = ProgressDialog.show(appContext, "", "Sharing . . .");
 
                 final Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                if (!imageUri.contains("/Tile/deal.png") && !Util.isNullOrEmpty(imageUri)) {
+                if (!Util.isNullOrEmpty(imageUri) && !imageUri.contains("/Tile/deal.png")) {
                     if (Methods.isOnline(appContext)) {
                         String url;
                         if (imageUri.contains("BizImages")) {

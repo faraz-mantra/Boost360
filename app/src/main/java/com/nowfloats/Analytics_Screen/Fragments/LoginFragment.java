@@ -209,13 +209,14 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
                 .setmCallType(FBTYPE)
                 .setmName(userName);
         requestClient.connectNfx();
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if(!isAdded())
+        if(isAdded()) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
                     pd = ProgressDialog.show(getActivity(), "", "Wait While Subscribing...");
-            }
-        });
+                }
+            });
+        }
 
         //BoostLog.d("ggg", session.getFPID());
 
@@ -425,7 +426,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
                 .setmCallType(FBPAGETYPE)
                 .setmName(pageName);
         requestClient.connectNfx();
-        if(!isAdded())
+        if(isAdded())
             pd = ProgressDialog.show(mContext, "", getString(R.string.wait_while_subscribing));
 
         DataBase dataBase = new DataBase(getActivity());

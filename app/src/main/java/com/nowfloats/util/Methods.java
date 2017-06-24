@@ -10,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.provider.Settings;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -161,6 +162,11 @@ public class Methods {
         }
 
         return false;
+    }
+    public static void showSnackBar(View view,String message,int color){
+        Snackbar snackbar = Snackbar.make(view,message,Snackbar.LENGTH_LONG);
+        snackbar.getView().setBackgroundColor(color);
+        snackbar.show();
     }
     public static void showSnackBar(Activity context,String msg){
         android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), msg, android.support.design.widget.Snackbar.LENGTH_LONG);

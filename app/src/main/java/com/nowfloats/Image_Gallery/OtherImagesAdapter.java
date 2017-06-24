@@ -126,8 +126,10 @@ public class OtherImagesAdapter extends BaseAdapter {
 
 
         final ImageView imageView = (ImageView) convertView.findViewById(R.id.grid_Image);
-
-        String serverImage = Constants.storeSecondaryImages.get(position);
+        String serverImage = null;
+        if(Constants.storeSecondaryImages != null) {
+            serverImage = Constants.storeSecondaryImages.get(position);
+        }
         //  Log.d(TAG,"server position : "+serverImage);
         //Log.d(TAG, "Server Image : "+serverImage);
         String baseName = serverImage;

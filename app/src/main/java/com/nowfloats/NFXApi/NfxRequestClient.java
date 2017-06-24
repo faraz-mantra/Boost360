@@ -3,6 +3,7 @@ package com.nowfloats.NFXApi;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
@@ -27,6 +28,7 @@ import java.util.Map;
  */
 public class NfxRequestClient {
     private static final String MERCHANT_DATA = "merchant_data";
+    private static final int ONE_MINUTE = 60000;
     private String mType;
     private String mUserAccessTokenKey;
     private String mAppAccessTokenKey;
@@ -241,6 +243,7 @@ public class NfxRequestClient {
 
     public void createFBPage(String businessName, String businessDesciption, String businessCategory, String mobileNumber,
                              String logoURL, String imageURI, String fpURI, String address, String city, String country) {
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
                 Constants.nfxFBPageCreation, getNfxParamsFBPage(businessName, businessDesciption,
                 businessCategory, mobileNumber,logoURL, imageURI, fpURI, address, city, country),
@@ -254,13 +257,30 @@ public class NfxRequestClient {
                         }
 
                         String message = response.optString("message");
-                        mCallBackListener.nfxCallBack(message, getmCallType(), getmName());
+                        String extraParam ="";
+                        if("success".equals(message)) {
+                            Boolean imageUsed = response.optBoolean("default_image_used");
+                            extraParam = imageUsed ? "_fbDefaultImage" : "_logoImage";
+                        }
+                        mCallBackListener.nfxCallBack(message+extraParam , getmCallType(), getmName());
 
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                mCallBackListener.nfxCallBack("error", getmCallType(), getmName());
+                NetworkResponse response  = error.networkResponse;
+                if(response.statusCode == 400){
+                    JSONObject res = new JSONObject();
+                    try {
+                        res.put("message","profile_incomplete");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    mCallBackListener.nfxCallBack("profile_incomplete", getmCallType(), getmName());
+                }else if(response.statusCode != 200){
+                    mCallBackListener.nfxCallBack("error", getmCallType(), getmName());
+                }
+
             }
         }) {
             @Override
@@ -291,6 +311,7 @@ public class NfxRequestClient {
                 //return new JSONObject("FACEBOOK");
             }
         };
+        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(ONE_MINUTE,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         AppController.getInstance().addToRequstQueue(jsonObjectRequest);
 
     }

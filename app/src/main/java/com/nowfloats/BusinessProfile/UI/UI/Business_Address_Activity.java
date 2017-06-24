@@ -218,7 +218,15 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
 
+            }
 
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
                 try {
                     citytext = cityAutoText.getText().toString().trim();
 
@@ -231,49 +239,39 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
 
                     }
 
-                final PendingResult<AutocompletePredictionBuffer> result =
-                        Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, cityAutoText.getText().toString().trim(),
-                                null, filter );
+                    final PendingResult<AutocompletePredictionBuffer> result =
+                            Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, cityAutoText.getText().toString().trim(),
+                                    null, filter );
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        AutocompletePredictionBuffer a=result.await();
-                        //Log.v("ggg","ok");
-                        citys.clear();
-                        for (int i=0;i<a.getCount();i++){
-                            //Log.v("ggg",a.get(i).getFullText(new StyleSpan(Typeface.NORMAL)).toString()+" length "+citys.size());
-                            citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString());
-                        }
-
-                        a.release();
-
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                adapter = new ArrayAdapter<>(Business_Address_Activity.this,
-                                        android.R.layout.simple_dropdown_item_1line, citys);
-                                if (!isFinishing()) {
-                                    cityAutoText.setAdapter(adapter);
-                                    adapter.notifyDataSetChanged();
-                                }
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            AutocompletePredictionBuffer a=result.await();
+                            //Log.v("ggg","ok");
+                            citys.clear();
+                            for (int i=0;i<a.getCount();i++){
+                                //Log.v("ggg",a.get(i).getFullText(new StyleSpan(Typeface.NORMAL)).toString()+" length "+citys.size());
+                                citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString());
                             }
-                        });
-                    }
-                }).start();
+
+                            a.release();
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    adapter = new ArrayAdapter<>(Business_Address_Activity.this,
+                                            android.R.layout.simple_dropdown_item_1line, citys);
+                                    if (!isFinishing()) {
+                                        cityAutoText.setAdapter(adapter);
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                }
+                            });
+                        }
+                    }).start();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
             }
         });
 
@@ -283,6 +281,15 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
             @Override
             public void onTextChanged(CharSequence s, int start,
                                       int before, int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
                 try {
                     pincodetext = areaCode.getText()
                             .toString().trim();
@@ -295,15 +302,6 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
                     }
                 } catch (Exception e) {
                 }
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
             }
         });
         makeAutoCompleteFilter(countryCode());
@@ -389,7 +387,7 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
 
     private void initilizeMap() {
 
-        String url = "http://maps.google.com/maps/api/staticmap?center=" + Constants.latitude + "," + Constants.longitude + "&zoom=14&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + Constants.latitude + "," + Constants.longitude + "&key=" + "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
+        String url = "http://maps.google.com/maps/api/staticmap?center=" + Constants.latitude + "," + Constants.longitude + "&zoom=14&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + Constants.latitude + "," + Constants.longitude + "&key=" +getString(R.string.google_map_key); //AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg
         //holderItem.chatImage.setVisibility(View.VISIBLE);
        // Log.d("Map Urlggg:", url);
         try {
@@ -473,7 +471,7 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
                 LatLng latLng = place.getLatLng();
                 Constants.latitude = latLng.latitude;
                 Constants.longitude = latLng.longitude;
-                String url = "http://maps.google.com/maps/api/staticmap?center=" + Constants.latitude + "," + Constants.longitude + "&zoom=14&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + Constants.latitude + "," + Constants.longitude + "&key=" + "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
+                String url = "http://maps.google.com/maps/api/staticmap?center=" + Constants.latitude + "," + Constants.longitude + "&zoom=14&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + Constants.latitude + "," + Constants.longitude + "&key=" + getString(R.string.google_map_key);
                 //holderItem.chatImage.setVisibility(View.VISIBLE);
                 try {
                     Picasso.with(this)

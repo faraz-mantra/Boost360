@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.charts.BarChart;
@@ -42,6 +43,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ViewPortHandler;
+import com.google.gson.JsonObject;
 import com.nowfloats.Analytics_Screen.API.CallTrackerApis;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueries;
@@ -111,7 +113,7 @@ public class Analytics_Fragment extends Fragment {
     private String mButtonId;
     private String mNextNodeId;
     LinearLayout llTwoButtons, llSingleButtonLayout;
-
+    private String vmnMissedCalls,vmnTotalCalls,vmnReceivedCalls;
 
 
     @Override
@@ -276,9 +278,16 @@ public class Analytics_Fragment extends Fragment {
             vmnCallCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
-                    startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    if(vmnTotalCallCount.getVisibility() == View.VISIBLE) {
+                        Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
+                        i.putExtra("TotalCalls",vmnTotalCalls);
+                        i.putExtra("ReceivedCalls",vmnReceivedCalls);
+                        i.putExtra("MissedCalls",vmnMissedCalls);
+                        startActivity(i);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }else{
+                        Toast.makeText(context, getString(R.string.please_wait), Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
         }
@@ -771,15 +780,20 @@ public class Analytics_Fragment extends Fragment {
         vmnProgressBar.setVisibility(View.VISIBLE);
         vmnTotalCallCount.setVisibility(View.GONE);
         CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
-        trackerApis.getTotalCalls(Constants.clientId, session.getFPID(), new Callback<String>() {
+        String type =session.getISEnterprise().equals("true")?"MULTI":"SINGLE";
+
+        trackerApis.getVmnSummary(Constants.clientId, session.getFPID(),type, new Callback<JsonObject>() {
             @Override
-            public void success(String s, Response response) {
+            public void success(JsonObject jsonObject, Response response) {
                 vmnProgressBar.setVisibility(View.GONE);
                 vmnTotalCallCount.setVisibility(View.VISIBLE);
-                if(s == null || s.equals("null") || response.getStatus() != 200){
+                if(jsonObject == null || jsonObject.equals("null") || response.getStatus() != 200){
                     return;
                 }
-                vmnTotalCallCount.setText(s);
+                vmnTotalCalls =  jsonObject.get("TotalCalls").getAsString();
+                vmnMissedCalls =  jsonObject.get("MissedCalls").getAsString();
+                vmnReceivedCalls =  jsonObject.get("ReceivedCalls").getAsString();
+                vmnTotalCallCount.setText(vmnTotalCalls);
             }
 
             @Override

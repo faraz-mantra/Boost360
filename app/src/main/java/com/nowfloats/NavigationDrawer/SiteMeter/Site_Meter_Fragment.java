@@ -6,11 +6,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +49,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.ProgressBarAnimation;
+import com.nowfloats.util.Utils;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -83,17 +84,17 @@ public class Site_Meter_Fragment extends Fragment {
     private RecyclerView recyclerView;
     private SiteMeterAdapter adapter;
 
-    private static ProgressBar progressBar;
+    private ProgressBar progressBar;
     private TextView meterReading;
     private ArrayList<SiteMeterModel> siteData = new ArrayList<>();
     public final int domain = 11, phone = 4, category = 2, image = 7, businessName = 0, description = 1,
             social = 10, address = 5, email = 3, post = 9, logo = 8, businessHours = 6;
     private Activity activity;
     private SharedPreferences mSharedPreferences, pref;
-    //private DomainApiService domainApiService;
+    private DomainApiService domainApiService;
     private Bus mBus;
     private ProgressDialog progressDialog;
-//    private ScaleInAnimationAdapter scaleAdapter;
+    //private ScaleInAnimationAdapter scaleAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -123,6 +124,7 @@ public class Site_Meter_Fragment extends Fragment {
             public void run() {
                 if (progressDialog == null) {
                     progressDialog = new ProgressDialog(getActivity());
+                    progressDialog.setCanceledOnTouchOutside(false);
                 }
                 progressDialog.setMessage(message);
                 progressDialog.show();
@@ -152,7 +154,7 @@ public class Site_Meter_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        //domainApiService = new DomainApiService(mBus);
+        domainApiService = new DomainApiService(mBus);
         return inflater.inflate(R.layout.fragment_site__meter, container, false);
     }
 
@@ -483,7 +485,7 @@ public class Site_Meter_Fragment extends Fragment {
                 break;
             case domain:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_GET_YOUR_OWN_IDENTITY, null);
-                MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
+              /*  MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
                         .title("Get A Domain")
                         .customView(R.layout.dialog_link_layout,false)
                         .positiveText(getString(R.string.ok))
@@ -497,13 +499,13 @@ public class Site_Meter_Fragment extends Fragment {
                         });
                 if(!activity.isFinishing()) {
                     builder.show();
+                }*/
+                if (Utils.isNetworkConnected(getActivity())) {
+                    showLoader(getString(R.string.please_wait));
+                    domainApiService.getDomainDetails(session.getFpTag(), getDomainDetailsParam());
+                } else {
+                    Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
                 }
-//                if (Utils.isNetworkConnected(getActivity())) {
-//                    showLoader(getString(R.string.please_wait));
-//                    domainApiService.getDomainDetails(session.getFpTag(), getDomainDetailsParam());
-//                } else {
-//                    Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
-//                }
                 break;
             case phone:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_PHONE_NUMBER, null);
@@ -654,12 +656,12 @@ public class Site_Meter_Fragment extends Fragment {
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
             } else {
                 showCustomDialog(getString(R.string.buy_a_domain),
-                        Html.fromHtml(getString(R.string.drop_us_contact)).toString(),
+                        Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
             }
         } else {
             showLoader(getString(R.string.please_wait));
-            //domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
+            domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
         }
 
     }
@@ -686,12 +688,12 @@ public class Site_Meter_Fragment extends Fragment {
                 if (TextUtils.isEmpty(get_fp_details_model.getEmail())
                         || get_fp_details_model.getContacts() == null) {
                     showCustomDialog(getString(R.string.domain_detail_required),
-                            Html.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
+                            Methods.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
                             getString(R.string.ok), null, DialogFrom.CONTACTS_AND_EMAIL_REQUIRED);
 
                 } else if (get_fp_details_model.getCategory() == null) {
                     showCustomDialog(getString(R.string.domain_detail_required),
-                            Html.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
+                            Methods.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
                             getString(R.string.ok), null, DialogFrom.CATEGORY_REQUIRED);
                 } else if (TextUtils.isEmpty(get_fp_details_model.getAddress())
                         || TextUtils.isEmpty(get_fp_details_model.getLat())
@@ -699,14 +701,14 @@ public class Site_Meter_Fragment extends Fragment {
                         || get_fp_details_model.getLat().equalsIgnoreCase("0")
                         || get_fp_details_model.getLng().equalsIgnoreCase("0")) {
                     showCustomDialog(getString(R.string.domain_detail_required),
-                            Html.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
+                            Methods.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
                             getString(R.string.ok), null, DialogFrom.ADDRESS_REQUIRED);
                 } else {
                     chooseDomain();
                 }
             } else {
                 showCustomDialog(getString(R.string.buy_a_domain),
-                        Html.fromHtml(getString(R.string.drop_us_contact)).toString(),
+                        Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
             }
 
@@ -731,7 +733,7 @@ public class Site_Meter_Fragment extends Fragment {
                         public void onClick(View v) {
                             materialDialog.dismiss();
                             showLoader(getString(R.string.please_wait));
-                            //domainApiService.getDomainSupportedTypes(getDomainDetailsParam());
+                            domainApiService.getDomainSupportedTypes(getDomainDetailsParam());
                         }
                     });
             materialDialog.getCustomView().findViewById(R.id.btnLinkDomain)
@@ -789,7 +791,7 @@ public class Site_Meter_Fragment extends Fragment {
 
     private void bookDomain() {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
-//                .title(getString(R.string.book_a_new_domain))
+                //.title(getString(R.string.book_a_new_domain))
                 .customView(R.layout.dialog_book_a_domain, false)
                 .positiveColorRes(R.color.primaryColor);
 
@@ -857,7 +859,7 @@ public class Site_Meter_Fragment extends Fragment {
                                 get_fp_details_model.setDomainName(domainName);
                                 get_fp_details_model.setDomainType(spDomainTypes.getSelectedItem().toString());
                                 get_fp_details_model.setPinCode(edtZip.getText().toString());
-                                //domainApiService.checkDomainAvailability(domainName, getDomainAvailabilityParam((String) spDomainTypes.getSelectedItem()));
+                                domainApiService.checkDomainAvailability(domainName, getDomainAvailabilityParam((String) spDomainTypes.getSelectedItem()));
                             }
                         }
                     });
@@ -901,18 +903,16 @@ public class Site_Meter_Fragment extends Fragment {
             Methods.showSnackBarPositive(getActivity(), "domain link available");
         } else {
 
-//            if (domainBookDialog != null)
-//                domainBookDialog.dismiss();
-//            showCustomDialog(getString(R.string.domain_not_available),
-//                    null,
-//                    getString(R.string.ok), null, DialogFrom.DEFAULT);
-            Methods.showSnackBarNegative(getActivity(), getString(R.string.domain_not_available));
+           /* showCustomDialog(getString(R.string.domain_not_available),
+                    null,
+                    getString(R.string.ok), null, DialogFrom.DEFAULT);*/
+            Methods.showSnackBar(domainBookDialog.getView(), getString(R.string.domain_not_available), Color.RED);
         }
     }
 
     private void linkDomain() {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
-//                .title(getString(R.string.have_an_existing_domain))
+                //.title(getString(R.string.have_an_existing_domain))
                 .customView(R.layout.dialog_link_domain, false)
                 .positiveColorRes(R.color.primaryColor);
         if (!activity.isFinishing()) {
@@ -949,7 +949,7 @@ public class Site_Meter_Fragment extends Fragment {
                         HashMap<String, String> hashMap = new HashMap<String, String>();
                         hashMap.put("Subject", subject);
                         hashMap.put("Mesg", edtComments.getText().toString());
-                        //domainApiService.linkDomain(hashMap, getLinkDomainParam());
+                        domainApiService.linkDomain(hashMap, getLinkDomainParam());
                     }
                 }
             });
@@ -1043,26 +1043,26 @@ public class Site_Meter_Fragment extends Fragment {
         hashMap.put("domainName", get_fp_details_model.getDomainName());
         hashMap.put("domainType", get_fp_details_model.getDomainType());
         hashMap.put("existingFPTag", session.getFpTag());
-//        hashMap.put("addressLine1", get_fp_details_model.getAddress());
-//        hashMap.put("city", get_fp_details_model.getCity());
-//        hashMap.put("companyName", get_fp_details_model.getTag());
-//        hashMap.put("contactName", TextUtils.isEmpty(get_fp_details_model.getContactName()) ?
-//                session.getFpTag() : get_fp_details_model.getContactName());
-//        hashMap.put("country", get_fp_details_model.getCountry());
-//        hashMap.put("countryCode", get_fp_details_model.getLanguageCode());
-//        hashMap.put("email", get_fp_details_model.getEmail());
-//        hashMap.put("lat", get_fp_details_model.getLat());
-//        hashMap.put("lng", get_fp_details_model.getLng());
-//        hashMap.put("phoneISDCode", get_fp_details_model.getCountryPhoneCode());
-//        if (get_fp_details_model.getCategory() != null && get_fp_details_model.getCategory().size() > 0)
-//            hashMap.put("primaryCategory", get_fp_details_model.getCategory().get(0));
-//        else
-//            hashMap.put("primaryCategory", "");
-//        hashMap.put("primaryNumber", get_fp_details_model.getPrimaryNumber());
-//        hashMap.put("regService", "");
-//        hashMap.put("state", get_fp_details_model.getPaymentState());
-//        hashMap.put("zip", get_fp_details_model.getPinCode());
-        //domainApiService.buyDomain(hashMap);
+        hashMap.put("addressLine1", get_fp_details_model.getAddress());
+        hashMap.put("city", get_fp_details_model.getCity());
+        hashMap.put("companyName", get_fp_details_model.getTag());
+        hashMap.put("contactName", TextUtils.isEmpty(get_fp_details_model.getContactName()) ?
+                session.getFpTag() : get_fp_details_model.getContactName());
+        hashMap.put("country", get_fp_details_model.getCountry());
+        hashMap.put("countryCode", get_fp_details_model.getLanguageCode());
+        hashMap.put("email", get_fp_details_model.getEmail());
+        hashMap.put("lat", get_fp_details_model.getLat());
+        hashMap.put("lng", get_fp_details_model.getLng());
+        hashMap.put("phoneISDCode", get_fp_details_model.getCountryPhoneCode());
+        if (get_fp_details_model.getCategory() != null && get_fp_details_model.getCategory().size() > 0)
+            hashMap.put("primaryCategory", get_fp_details_model.getCategory().get(0));
+        else
+            hashMap.put("primaryCategory", "");
+        hashMap.put("primaryNumber", get_fp_details_model.getPrimaryNumber());
+        hashMap.put("regService", "");
+        hashMap.put("state", get_fp_details_model.getPaymentState());
+        hashMap.put("zip", get_fp_details_model.getPinCode());
+        domainApiService.buyDomain(hashMap);
     }
 
     @Subscribe

@@ -34,7 +34,7 @@ public interface ProductGalleryInterface {
 
 
     @FormUrlEncoded
-    @PUT("/Product/v2/AddImage")
+    @PUT("/Product/v1/AddImage")
     public void uploadPic(@Body byte[] image,@QueryMap HashMap<String,String> map,Callback<String> cb);
 
     @Headers({"Content-Type: application/json"})

@@ -8,47 +8,50 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AutoCompleteTextView;
-import android.widget.ExpandableListView;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.nowfloats.Analytics_Screen.Search_Query_Adapter.VmnCallAdapter;
+import com.nowfloats.Analytics_Screen.API.CallTrackerApis;
 import com.nowfloats.Analytics_Screen.model.VmnCallModel;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.util.Constants;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by Admin on 27-04-2017.
  */
 
-public class ShowVmnCallActivity extends AppCompatActivity implements VmnCallAdapter.RequestPermission, View.OnClickListener,VmnDataSingleton.ConnectToVmnData {
+public class ShowVmnCallActivity extends AppCompatActivity implements VmnCall_v2Adapter.RequestPermission, View.OnClickListener {
 
-
-    ExpandableListView expList;
     Toolbar toolbar;
-    VmnCallAdapter adapter, searchAdapter;
     final static int REQUEST_PERMISSION = 202;
-    ImageView searchImage;
-    TextView title;
-    AutoCompleteTextView autoTextView;
-    ArrayList<ArrayList<VmnCallModel>> sortedList;
-    ArrayList<ArrayList<VmnCallModel>> searchList = new ArrayList<>();
-    boolean isSearchAdapter = false;
+
+    RecyclerView mRecyclerView;
+    UserSessionManager sessionManager;
+    LinearLayoutManager linearLayoutManager;
+    private int offset = 1;
+    VmnCall_v2Adapter vmnCallAdapter;
+    ArrayList<VmnCallModel> headerList = new ArrayList<>();
+    boolean stopApiCall;
+    ProgressBar progressBar;
+    Button loadButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,111 +59,145 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCallAda
         setContentView(R.layout.activity_vmn_calls);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        expList = (ExpandableListView) findViewById(R.id.exp_list);
-        title = (TextView) findViewById(R.id.titleTextView);
-        searchImage = (ImageView) findViewById(R.id.search_image);
-        autoTextView = (AutoCompleteTextView) findViewById(R.id.search_edittext);
-        autoTextView.setInputType(InputType.TYPE_CLASS_PHONE);
-        autoTextView.setHint(getString(R.string.search));
-        searchAdapter = new VmnCallAdapter(this, searchList);
-        searchImage.setOnClickListener(this);
         setSupportActionBar(toolbar);
 
-        if (getSupportActionBar() != null) {
-            title.setText("Call Logs");
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-        autoTextView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
+        progressBar = (ProgressBar) findViewById(R.id.progressbar);
+        loadButton = (Button) findViewById(R.id.btn_load);
+        loadButton.setOnClickListener(this);
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
+        sessionManager = new UserSessionManager(this,this);
+        linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mRecyclerView.setHasFixedSize(true);
+        vmnCallAdapter = new VmnCall_v2Adapter(this,headerList);
+        mRecyclerView.setAdapter(vmnCallAdapter);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
-            public void afterTextChanged(Editable s) {
-                Log.v("ggg", isSearchAdapter + " ");
-                String key = autoTextView.getText().toString().trim();
-                if (key.length() == 0) {
-                    if (adapter != null && isSearchAdapter) {
-                        expList.setAdapter(adapter);
-                        isSearchAdapter = false;
-                    }
-                    Log.v("ggg", sortedList.size() + " ");
-                } else {
-                    autoCompleteSearch(key);
-                    Log.v("ggg", searchList.size() + " ");
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                int totalItemCount = linearLayoutManager.getItemCount();
+                int lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+                if(lastVisibleItem>=totalItemCount-2 && !stopApiCall){
+                    getCalls();
                 }
             }
         });
-        VmnDataSingleton.getInstance().requestVmnData(this,new UserSessionManager(this,this).getFPID());
+        if (getSupportActionBar() != null) {
+            setTitle("Call Logs");
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        getCalls();
     }
-
-
-    private void autoCompleteSearch(String key) {
-        if (searchList.size() > 0) {
-            searchList.clear();
-        }
-        for (ArrayList<VmnCallModel> list : sortedList) {
-            if (list.get(0).getCallerNumber().contains(key)) {
-                searchList.add(list);
-            }
-        }
-        searchAdapter.notifyDataSetChanged();
-        if (!isSearchAdapter) {
-            expList.setAdapter(searchAdapter);
-            isSearchAdapter = true;
-        }
-    }
-
-    private void numberWiseSeparation(ArrayList<VmnCallModel> list) {
-        HashMap<String, ArrayList<VmnCallModel>> hashMap = new HashMap<>();
-        for (VmnCallModel model : list) {
-
-            if (!hashMap.containsKey(model.getCallerNumber())) {
-                ArrayList<VmnCallModel> subList = new ArrayList<>();
-                subList.add(model);
-
-                hashMap.put(model.getCallerNumber(), subList);
-            } else {
-                hashMap.get(model.getCallerNumber()).add(0, model);
-            }
-        }
-        sortedList = new ArrayList<>(hashMap.values());
-        Collections.sort(sortedList, new Comparator<ArrayList<VmnCallModel>>() {
+    private void getCalls(){
+        stopApiCall = true;
+        showProgress();
+        final String startOffset = String.valueOf(offset);
+        CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
+        Map<String, String> hashMap = new HashMap<>();
+        hashMap.put("clientId", Constants.clientId);
+        hashMap.put("fpid", sessionManager.getFPID());
+        hashMap.put("offset", startOffset);
+        hashMap.put("identifierType", sessionManager.getISEnterprise().equals("true")?"MULTI":"SINGLE");
+        trackerApis.trackerCalls(hashMap, new Callback<ArrayList<VmnCallModel>>() {
             @Override
-            public int compare(ArrayList<VmnCallModel> o1, ArrayList<VmnCallModel> o2) {
-                String first = o1.get(0).getCallDateTime();
-                String second = o2.get(0).getCallDateTime();
-                return second.compareToIgnoreCase(first);
+            public void success(ArrayList<VmnCallModel> vmnCallModels, Response response) {
+                hideProgress();
+                if(vmnCallModels == null || response.getStatus() != 200){
+                    Toast.makeText(ShowVmnCallActivity.this, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                int size =vmnCallModels.size();
+                if(size < 3){
+                    stopApiCall = true;
+                }else{
+                    stopApiCall = false;
+                }
+                saveWithViewType(vmnCallModels);
+                if(size != 0) {
+                    offset += 10;
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                hideProgress();
+                stopApiCall = false;
+                Toast.makeText(ShowVmnCallActivity.this, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
             }
         });
-        adapter = new VmnCallAdapter(this, sortedList);
-        expList.setAdapter(adapter);
-
     }
 
+    // making key for each item from date and store that for headers only
+    private void saveWithViewType(ArrayList<VmnCallModel> list){
+        String oldKey ="";
+        int headerSize=0;
+        Calendar c = Calendar.getInstance();
+        Calendar temp = Calendar.getInstance();
+        int day = c.get(Calendar.DAY_OF_YEAR);
+
+        int sizeOfList = headerList.size();
+        if(sizeOfList>0){
+            String Sdate = headerList.get(sizeOfList-1).getCallDateTime();
+            String date = Methods.getFormattedDate(Sdate);
+            if(Sdate.contains("/Date")){
+                Sdate = Sdate.replace("/Date(", "").replace(")/", "");
+            }
+            Long epochTime = Long.parseLong(Sdate);
+            temp.setTimeInMillis(epochTime);
+            oldKey = date.substring(0,date.indexOf(" at"));
+            if(c.get(Calendar.YEAR) != temp.get(Calendar.YEAR)){
+
+            }else if(temp.get(Calendar.DAY_OF_YEAR) == day){
+                oldKey = "Today, "+oldKey;
+            }else if (day == (temp.get(Calendar.DAY_OF_YEAR)+1)){
+                oldKey = "Yesterday, "+oldKey;
+            }
+        }
+        int listSize = list.size();
+
+        for (int i = 0; i<listSize; i++) {
+            VmnCallModel model = list.get(i);
+            String Sdate = model.getCallDateTime();
+            String date = Methods.getFormattedDate(Sdate);
+            String key = date.substring(0,date.indexOf(" at"));
+
+            if(Sdate.contains("/Date")){
+                Sdate = Sdate.replace("/Date(", "").replace(")/", "");
+            }
+
+            Long epochTime = Long.parseLong(Sdate);
+            temp.setTimeInMillis(epochTime);
+            if(c.get(Calendar.YEAR) != temp.get(Calendar.YEAR)){
+
+            }else if(temp.get(Calendar.DAY_OF_YEAR) == day){
+                key = "Today, "+key;
+            }else if ((temp.get(Calendar.DAY_OF_YEAR)+1) == day){
+                key = "Yesterday, "+key;
+            }
+            if (!key.equals(oldKey)) {
+                oldKey = key;
+                VmnCallModel tempModel = new VmnCallModel();
+                tempModel.setViewType(0);
+                tempModel.setCallDateTime(key);
+                headerList.add(tempModel);
+                vmnCallAdapter.notifyItemInserted(sizeOfList+headerSize+i);
+                headerSize++;
+            }
+            model.setViewType(1);
+            headerList.add(model);
+            vmnCallAdapter.notifyItemInserted(sizeOfList+headerSize+i);
+        }
+        //vmnCallAdapter.notifyDataSetChanged();
+        /*vmnCallAdapter = new VmnCall_v2Adapter(this,headerList);
+        mRecyclerView.setAdapter(vmnCallAdapter);*/
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-
-            if (autoTextView.getVisibility() == View.VISIBLE) {
-                autoTextView.setText("");
-                autoTextView.clearFocus();
-                autoTextView.setVisibility(View.GONE);
-                title.setVisibility(View.VISIBLE);
-                searchImage.setVisibility(View.VISIBLE);
-                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(autoTextView.getWindowToken(), 0);
-            } else {
-                onBackPressed();
-            }
+            onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -169,8 +206,8 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCallAda
     @Override
     public void onBackPressed() {
 
-        if (adapter != null && adapter.connectToVmn != null) {
-            adapter.connectToVmn.releaseResources();
+        if (vmnCallAdapter != null && vmnCallAdapter.connectToVmn != null) {
+            vmnCallAdapter.connectToVmn.releaseResources();
         }
         super.onBackPressed();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
@@ -185,6 +222,12 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCallAda
         startActivity(intent);
     }
 
+    private void showProgress(){
+        progressBar.setVisibility(View.VISIBLE);
+    }
+    private void hideProgress(){
+        progressBar.setVisibility(View.GONE);
+    }
     @Override
     public void requestStoragePermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -219,20 +262,10 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCallAda
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.search_image:
-                title.setVisibility(View.GONE);
-                searchImage.setVisibility(View.GONE);
-                autoTextView.setVisibility(View.VISIBLE);
-                autoTextView.requestFocus();
+            case R.id.btn_load:
+                getCalls();
                 break;
         }
     }
 
-    @Override
-    public void onDataLoaded(ArrayList<VmnCallModel> vmnData) {
-        if(vmnData != null){
-            numberWiseSeparation(vmnData);
-        }
-
-    }
 }

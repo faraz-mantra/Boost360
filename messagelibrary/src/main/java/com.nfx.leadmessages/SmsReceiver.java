@@ -69,8 +69,13 @@ public class SmsReceiver extends BroadcastReceiver {
                 try {
                     secondApp = FirebaseApp.getInstance("second app");
                 }catch(Exception e) {
-                    secondApp = FirebaseApp.initializeApp(context, options, "second app");
+                    try {
+                        secondApp = FirebaseApp.initializeApp(context, options, "second app");
+                    }catch(Exception e1){
+                        e1.printStackTrace();
+                    }
                 }
+                if(secondApp == null) return;
                 FirebaseDatabase secondDatabase = FirebaseDatabase.getInstance(secondApp);
                 DatabaseReference mDatabase = secondDatabase.getReference()
                         .child(fpId+Constants.MESSAGES)

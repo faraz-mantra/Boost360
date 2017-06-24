@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -155,13 +156,15 @@ public class CustomPageActivity extends Fragment  {
         titleTextView = HomeActivity.headerText;
         if(titleTextView != null)
         titleTextView.setText(getString(R.string.custom_pages));
-        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources()
-                .getColor(R.color.white), PorterDuff.Mode.SRC_IN);
-        HomeActivity.shareButton.setImageResource(R.drawable.delete_dustbin_small);
-        HomeActivity.shareButton.setColorFilter(whiteLabelFilter_pop_ip);
-        delete = HomeActivity.shareButton;
-        delete.setBackgroundResource(0);
-        delete.setVisibility(View.GONE);
+        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(
+                ContextCompat.getColor(getContext(),R.color.white), PorterDuff.Mode.SRC_IN);
+        if(HomeActivity.shareButton != null) {
+            HomeActivity.shareButton.setImageResource(R.drawable.delete_dustbin_small);
+            HomeActivity.shareButton.setColorFilter(whiteLabelFilter_pop_ip);
+            delete = HomeActivity.shareButton;
+            delete.setBackgroundResource(0);
+            delete.setVisibility(View.GONE);
+        }
     }
 
     private void LoadPageList(Activity activity, Bus bus) {

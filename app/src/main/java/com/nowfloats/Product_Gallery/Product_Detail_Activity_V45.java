@@ -176,7 +176,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
         if (getIntent().hasExtra("product")){
 //            product_data = getIntent().getExtras().getParcelable("product");
             final int position = Integer.parseInt(getIntent().getExtras().getString("product"));
-            if((Product_Gallery_Fragment.productItemModelList.size()-1)>=position) {
+            if(Product_Gallery_Fragment.productItemModelList != null && (Product_Gallery_Fragment.productItemModelList.size()-1)>=position) {
 
                 product_data = Product_Gallery_Fragment.productItemModelList.get(position);
                 if (product_data != null) {
@@ -773,10 +773,12 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
         try{
             String[] proj = { MediaStore.Images.Media.DATA };
             Cursor cursor = managedQuery(contentUri, proj, null, null, null);
-            int column_index = cursor
-                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            if(cursor == null) return null;
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
-            return cursor.getString(column_index);
+            String val = cursor.getString(column_index);
+            cursor.close();
+            return val;
         }catch (Exception e) {
         }
         return null;
