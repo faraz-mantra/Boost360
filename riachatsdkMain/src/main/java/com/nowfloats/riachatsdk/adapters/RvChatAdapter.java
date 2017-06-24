@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -50,8 +52,10 @@ import java.util.regex.Pattern;
 public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public enum SectionTypeEnum {
+
         Header(-1), Image(0), Text(1), Graph(2), Gif(3), Audio(4), Video(5), Link(6), EmbeddedHtml(7),
-        Carousel(8), Typing(9), Card(10), AddressCard(11), UnConfirmedCard(12), UnConfirmedAddressCard(13), PrintOTP(14);
+        Carousel(8), Typing(9), Card(10), AddressCard(11), UnConfirmedCard(12), UnConfirmedAddressCard(13), PrintOTP(14), SUBMIT_FORM(15);
+
         private final int val;
 
         private SectionTypeEnum(int val) {
@@ -129,6 +133,9 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case 14:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_print_otp_layout, parent, false);
                 return new OTPViewHolder(v);
+            case 15:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_submit_form_layout, parent, false);
+                return new FormViewHolder(v);
             default:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_typing_row_layout, parent, false);
                 return new TypingViewHolder(v);
@@ -157,12 +164,16 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 cardViewHolder.tvDateTime.setVisibility(View.GONE);
             }
 
-            if(!section.isAnimApplied()){
-                Animation animation  =AnimationUtils.loadAnimation(mContext, R.anim.flip_in_anim);
+            if (!section.isAnimApplied()) {
+                Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.flip_in_anim);
                 cardViewHolder.llBubbleContainer.setAnimation(animation);
                 animation.start();
                 section.setIsAnimApplied(true);
             }
+
+            cardViewHolder.tvCurrentPos.setText(section.getCardPos()+"");
+            cardViewHolder.tvTotalCount.setText("6");
+
             /*((LinearLayout) cardViewHolder.itemView).setGravity(Gravity.RIGHT);
             LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) cardViewHolder.llBubbleContainer.getLayoutParams();
 
@@ -195,7 +206,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                                 mChatSections.get(position).getCardModel().getButtons().get(0).getNextNodeId());
                     }
                 });
-            }else{
+            } else {
                 cardViewHolder.tvEdit.setVisibility(View.VISIBLE);
                 cardViewHolder.tvConfirm.setText(mChatSections.get(position).getCardModel().getButtons().get(0).getButtonText());
                 cardViewHolder.tvEdit.setText(mChatSections.get(position).getCardModel().getButtons().get(1).getButtonText());
@@ -339,6 +350,29 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 });
             }
 
+        } else if (holder instanceof FormViewHolder) {
+
+            FormViewHolder formViewHolder = (FormViewHolder) holder;
+
+            formViewHolder.tvBusinessName.setText(mDataMap.get("[~BUSINESSNAME]") + "");
+            formViewHolder.tvPhoneNumber.setText(mDataMap.get("[~PHONENUMBER]") + "");
+            formViewHolder.tvCategory.setText(mDataMap.get("[~CATEGORY]") + "");
+            formViewHolder.tvAddress.setText(mDataMap.get("[~ADDRESS]") + "");
+            formViewHolder.tvEmailAddress.setText(mDataMap.get("[~EMAILADDRESS]") + "");
+            formViewHolder.tvWesiteURL.setText(mDataMap.get("[~WEBSITEURL]") + "");
+
+            formViewHolder.btnCreateWebsite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    mConfirmationCallback.onCardResponse(Constants.ConfirmationType.SUBMIT_FORM,
+                            "",
+                            mChatSections.get(position).getCardModel().getButtons().get(0).getNextNodeId());
+                }
+            });
+
+
+
         } else if (holder instanceof AddressCardViewHolder) {
             AddressCardViewHolder cardViewHolder = (AddressCardViewHolder) holder;
             cardViewHolder.tvAddressText.setText(Html.fromHtml(getParsedPrefixPostfixText(section.getCardModel().getSections().get(1).getText())));
@@ -354,8 +388,8 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             } else {
                 cardViewHolder.tvDateTime.setVisibility(View.GONE);
             }
-            if(!section.isAnimApplied()){
-                Animation animation  =AnimationUtils.loadAnimation(mContext, R.anim.flip_in_anim);
+            if (!section.isAnimApplied()) {
+                Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.flip_in_anim);
                 cardViewHolder.llBubbleContainer.setAnimation(animation);
                 animation.start();
                 section.setIsAnimApplied(true);
@@ -378,7 +412,10 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         } else if (holder instanceof TextViewHolder) {
             final TextViewHolder textViewHolder = (TextViewHolder) holder;
+
+            textViewHolder.tvMessageText.setMovementMethod(LinkMovementMethod.getInstance());
             textViewHolder.tvMessageText.setText(Html.fromHtml(section.getText()));
+
             if (section.isShowDate()) {
                 textViewHolder.tvDateTime.setVisibility(View.VISIBLE);
                 textViewHolder.tvDateTime.setText(section.getDateTime());
@@ -674,7 +711,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private class CardViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvConfirmationText, tvDateTime, tvConfirmedHintText;
+        TextView tvConfirmationText, tvDateTime, tvConfirmedHintText,tvTotalCount,tvCurrentPos;
         View itemView;
         LinearLayout llBubbleContainer;
 
@@ -685,6 +722,8 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             this.tvConfirmationText = (TextView) itemView.findViewById(R.id.tv_confirmed_business_text);
             this.tvConfirmedHintText = (TextView) itemView.findViewById(R.id.tv_confirmed_hint_text);
+            this.tvCurrentPos = (TextView) itemView.findViewById(R.id.tvCurrentPos);
+            this.tvTotalCount = (TextView) itemView.findViewById(R.id.tvTotalCount);
             this.tvDateTime = (TextView) itemView.findViewById(R.id.tv_date_time);
             this.llBubbleContainer = (LinearLayout) itemView.findViewById(R.id.ll_bubble_container);
         }
@@ -708,6 +747,27 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             this.tvEdit = (TextView) itemView.findViewById(R.id.tv_edit);
             this.llConfirm = (LinearLayout) itemView.findViewById(R.id.llConfirm);
             this.tvSubmit = (TextView) itemView.findViewById(R.id.tvSubmit);
+
+        }
+    }
+
+    private class FormViewHolder extends RecyclerView.ViewHolder {
+
+        TextView tvBusinessName, tvPhoneNumber, tvCategory, tvAddress, tvEmailAddress, tvWesiteURL;
+        View itemView;
+        Button btnCreateWebsite;
+
+        public FormViewHolder(View itemView) {
+            super(itemView);
+
+            this.itemView = itemView;
+            this.tvBusinessName = (TextView) itemView.findViewById(R.id.tvBusinessName);
+            this.tvPhoneNumber = (TextView) itemView.findViewById(R.id.tvPhoneNumber);
+            this.tvCategory = (TextView) itemView.findViewById(R.id.tvCategory);
+            this.tvAddress = (TextView) itemView.findViewById(R.id.tvAddress);
+            this.tvEmailAddress = (TextView) itemView.findViewById(R.id.tvEmailAddress);
+            this.tvWesiteURL = (TextView) itemView.findViewById(R.id.tvWesiteURL);
+            this.btnCreateWebsite = (Button) itemView.findViewById(R.id.btnCreateWebsite);
 
         }
     }

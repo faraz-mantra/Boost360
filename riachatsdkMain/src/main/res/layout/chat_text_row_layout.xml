@@ -25,6 +25,7 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:paddingTop="3dp"
+            android:linksClickable="true"
             android:textColor="@android:color/black"
             android:textColorLink="@color/white"
             android:textSize="15sp" />

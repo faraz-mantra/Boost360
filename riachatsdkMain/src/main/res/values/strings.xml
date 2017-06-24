@@ -17,6 +17,13 @@
     <string name="locality">STREET ADDRESS 2 (OPTIONAL)</string>
     <string name="land_mark">LANDMARK (OPTIONAL)</string>
 
+    <string name="business_name">BUSINESS NAME</string>
+    <string name="phone_number">PHONE NUMBER</string>
+    <string name="category">CATEGORY</string>
+    <string name="address">ADDRESS</string>
+    <string name="email_address">EMAIL ADDRESS</string>
+    <string name="webiste_url">WEBSITE URL</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="is_active">Is Active</string>
@@ -25,5 +32,6 @@
     <string name="confirmed_business_addr">CONFIRMED BUSINESS ADDRESS</string>
     <string name="skip">SKIP</string>
     <string name="done">DONE</string>
+    <string name="create_my_site">CREATE MY SITE</string>
     <string name="locate_on_map">LOCATE ON MAP</string>
 </resources>

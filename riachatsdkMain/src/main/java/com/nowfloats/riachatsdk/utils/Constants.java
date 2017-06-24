@@ -26,6 +26,7 @@ public class Constants {
         String TYPE_UNCONFIRMED_CARD = "UnConfirmedCard";
         String TYPE_UNCONFIRMED_ADDR_CARD = "UnConfirmedAddressCard";
         String TYPE_PRINT_OTP = "PrintOTP";
+        String TYPE_SUBMIT_FORM = "SubmitForm";
     }
     public interface ApiType{
         String TYPE_GET = "GET";
@@ -41,6 +42,7 @@ public class Constants {
         String TYPE_GET_NUMBER = "GetNumber";
         String TYPE_NEXT_NODE = "NextNode";
         String TYPE_GET_ADDR = "GetAddress";
+        String TYPE_SHOW_CONFIRMATION = "ShowConfirmation";
         String TYPE_GET_IMAGE = "GetImage";
         String TYPE_DEEP_LINK = "DeepLink";
         String TYPE_GET_ITEM_FROM_SOURCE = "GetItemFromSource";
@@ -80,6 +82,7 @@ public class Constants {
     public interface ConfirmationType{
         String BIZ_NAME = "biz_name";
         String ADDRESS_ENTRY = "address_entry";
+        String SUBMIT_FORM = "submit_form";
 
     }
 }

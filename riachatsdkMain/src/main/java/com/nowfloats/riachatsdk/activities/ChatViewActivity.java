@@ -54,17 +54,17 @@ import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
-import com.jakewharton.retrofit.Ok3Client;
 import com.nowfloats.riachatsdk.R;
 import com.nowfloats.riachatsdk.adapters.RvButtonsAdapter;
 import com.nowfloats.riachatsdk.adapters.RvChatAdapter;
 import com.nowfloats.riachatsdk.animators.ChatItemAnimator;
+import com.nowfloats.riachatsdk.fragments.CreateMySiteFragment;
 import com.nowfloats.riachatsdk.fragments.PickAddressFragment;
 import com.nowfloats.riachatsdk.helpers.ChatLogger;
 import com.nowfloats.riachatsdk.helpers.DeviceDetails;
-import com.nowfloats.riachatsdk.interfaces.ChatJsonInterface;
 import com.nowfloats.riachatsdk.interfaces.IChatAnimCallback;
 import com.nowfloats.riachatsdk.interfaces.IConfirmationCallback;
 import com.nowfloats.riachatsdk.models.Button;
@@ -81,22 +81,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import okhttp3.OkHttpClient;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static android.view.View.INVISIBLE;
@@ -130,6 +127,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     private RvChatAdapter mAdapter;
     private RvButtonsAdapter mButtonsAdapter;
     private RequestQueue mRequestQueue;
+    private CreateMySiteFragment createMySiteFragment;
     private PickAddressFragment pickAddressFragment;
     private FileUploadResultReceiver mReceiver;
     private ImageView ivAgentIcon;
@@ -509,6 +507,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         section.setShowDate(true);
     }
 
+    private int cardCount = 0;
     private void replyToRia(String type, final RiaCardModel riaCardModel, boolean isReplace) {
 
         mHandler.removeCallbacks(mAutoCallRunnable);
@@ -526,6 +525,11 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     break;
             }
         }*/
+
+        if(type.equalsIgnoreCase(Constants.SectionType.TYPE_CARD)
+                || type.equalsIgnoreCase(Constants.SectionType.TYPE_ADDRESS_CARD)){
+            section.setCardPos(++cardCount);
+        }
         section.setFromRia(false);
         section.setSectionType(type);
         section.setCardModel(riaCardModel);
@@ -607,6 +611,12 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         null, button.getButtonType());
                 getUserAddress(button);
                 break;
+            case Constants.ButtonType.TYPE_SHOW_CONFIRMATION:
+                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                        mCurrNodeId, button.getId(), button.getButtonText(), null,
+                        null, button.getButtonType());
+                createmySite(button);
+                break;
             case Constants.ButtonType.TYPE_GET_IMAGE:
                 getImage(button);
                 break;
@@ -667,6 +677,30 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             }
         });
         pickAddressFragment.show(getFragmentManager(), "Test");
+    }
+
+
+    private void createmySite(final Button btn) {
+        createMySiteFragment = CreateMySiteFragment.newInstance((HashMap<String, String>) mDataMap);
+
+        createMySiteFragment.setResultListener(new CreateMySiteFragment.OnResultReceive() {
+            @Override
+            public void OnResult() {
+
+                ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                        mCurrNodeId, btn.getId(), btn.getButtonText(), ChatLogger.EventStatus.COMPLETED.getValue(),
+                        "CREATE_MY_SITE", "true", btn.getButtonType());
+
+                createMySiteFragment.setResultListener(null);
+                createMySiteFragment.dismiss();
+                createMySiteFragment = null;
+                mNextNodeId = btn.getNextNodeId();
+                mCurrButton = btn;
+                showNextNode(mCurrButton.getNextNodeId());
+            }
+
+        });
+        createMySiteFragment.show(getFragmentManager(), "CreateMySite");
     }
 
     private void getImage(Button btn) {
@@ -749,7 +783,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     }
 
-    private void login(){
+    private void login() {
 
         Intent intent = new Intent(Intent.ACTION_VIEW,
                 Uri.parse("com.biz2.nowfloats://com.riasdk.skip/riachat"));
@@ -1195,40 +1229,61 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         /*if(null!=pg && !pg.isShowing())
             pg.show();*/
         progressBar.setVisibility(View.VISIBLE);
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        OkHttpClient client = builder.connectTimeout(60, TimeUnit.SECONDS).readTimeout(60, TimeUnit.SECONDS).build();
-        RestAdapter adapter = new RestAdapter.Builder().setClient(new Ok3Client(client)).setEndpoint(Constants.SERVER_URL).build();
-        ChatJsonInterface chatJsonInterface = adapter.create(ChatJsonInterface.class);
-        Map<String, String> query = new HashMap<>();
-        query.put("deviceId", DeviceDetails.getDeviceId(this));
-        query.put("libVersion", DeviceDetails.getLibVersionName());
-        query.put("osVersion", DeviceDetails.getAndroidVersion());
-        query.put("osTimeZone", DeviceDetails.getTimeZone());
-        query.put("osCountry", DeviceDetails.getCountry());
-        query.put("osLanguage", DeviceDetails.getLanguage());
-        query.put("deviceBrand", DeviceDetails.getBrand());
-        query.put("deviceModel", DeviceDetails.getDeviceModel());
-        query.put("screenWidth", DeviceDetails.getScreenWidth(this) + "");
-        query.put("screenHeight", DeviceDetails.getScreenHeight(this) + "");
-        chatJsonInterface.getChatJson(query, new Callback<List<RiaCardModel>>() {
-            @Override
-            public void success(List<RiaCardModel> riaCardModels, Response response) {
-                //pg.dismiss();
-                if (riaCardModels != null && riaCardModels.size() > 0) {
-                    initChat(riaCardModels);
-                }
-                progressBar.setVisibility(View.GONE);
-            }
+//        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+//        OkHttpClient client = builder.connectTimeout(60, TimeUnit.SECONDS).readTimeout(60, TimeUnit.SECONDS).build();
+//        RestAdapter adapter = new RestAdapter.Builder().setClient(new Ok3Client(client)).setEndpoint(Constants.SERVER_URL).build();
+//        ChatJsonInterface chatJsonInterface = adapter.create(ChatJsonInterface.class);
+//        Map<String, String> query = new HashMap<>();
+//        query.put("deviceId", DeviceDetails.getDeviceId(this));
+//        query.put("libVersion", DeviceDetails.getLibVersionName());
+//        query.put("osVersion", DeviceDetails.getAndroidVersion());
+//        query.put("osTimeZone", DeviceDetails.getTimeZone());
+//        query.put("osCountry", DeviceDetails.getCountry());
+//        query.put("osLanguage", DeviceDetails.getLanguage());
+//        query.put("deviceBrand", DeviceDetails.getBrand());
+//        query.put("deviceModel", DeviceDetails.getDeviceModel());
+//        query.put("screenWidth", DeviceDetails.getScreenWidth(this) + "");
+//        query.put("screenHeight", DeviceDetails.getScreenHeight(this) + "");
+//        chatJsonInterface.getChatJson(query, new Callback<List<RiaCardModel>>() {
+//            @Override
+//            public void success(List<RiaCardModel> riaCardModels, Response response) {
+//                //pg.dismiss();
+//                if (riaCardModels != null && riaCardModels.size() > 0) {
+//                    initChat(riaCardModels);
+//                }
+//                progressBar.setVisibility(View.GONE);
+//            }
+//
+//            @Override
+//            public void failure(RetrofitError error) {
+//                //pg.dismiss();
+//                error.printStackTrace();
+//                progressBar.setVisibility(View.GONE);
+//                //(RiaOnBoardingActivity.this, getString(R.string.something_went_wrong));
+//            }
+//        });
 
-            @Override
-            public void failure(RetrofitError error) {
-                //pg.dismiss();
-                error.printStackTrace();
-                progressBar.setVisibility(View.GONE);
-                //(RiaOnBoardingActivity.this, getString(R.string.something_went_wrong));
-            }
-        });
+        List<RiaCardModel> posts = new ArrayList<RiaCardModel>();
+        Gson mGson = new Gson();
+        posts = Arrays.asList(mGson.fromJson(loadJSONFromAsset(), RiaCardModel[].class));
+        initChat(posts);
+        progressBar.setVisibility(View.GONE);
+    }
 
+    public String loadJSONFromAsset() {
+        String json = null;
+        try {
+            InputStream is = getAssets().open("json.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
     }
 
     private void initChat(List<RiaCardModel> riaCardModels) {
