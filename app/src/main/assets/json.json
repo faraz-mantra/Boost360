@@ -1,42 +1,5 @@
 [
     {
-        "Name": "Get Name",
-        "Id": "58cfb491c782bb5a241de4a5",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Awesome! Let's get the basics out of the way quick…",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58cfb8bfc782bb4ad0ab9a0d"
-            },
-            {
-                "Text": " What's your first name?",
-                "SectionType": "Text",
-                "DelayInMs": 971,
-                "Hidden": false,
-                "_id": "593f7f8eb02a290a904f05e6"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "▶",
-                "Emotion": "Cool",
-                "ButtonType": "GetText",
-                "NextNodeId": "58cfb992c782bb4ad0ab9a66",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "Enter your name",
-                "PostToChat": true,
-                "_id": "58cfb914c782bb4ad0ab9a5a"
-            }
-        ],
-        "VariableName": "PERSON_NAME"
-    },
-    {
         "Name": "1st FB Page",
         "Id": "58e2f903b02a2927fc4dba45",
         "Emotion": "Cool",
@@ -1101,41 +1064,42 @@
         "CardFooter": "CONFIRMED EMAIL ADDRESS",
         "Placement": "Outgoing"
     },
-	{
-        "Name": "T n C Confirmation",
-        "Id": "58e2555db02a292428975111",
+    {
+        "Name": "Get Name",
+        "Id": "58cfb491c782bb5a241de4a5",
         "Emotion": "Cool",
         "TimeoutInMs": 15000,
         "NodeType": "Combination",
         "Sections": [
             {
-                "Text": "Here are terms and conditions",
+                "Text": "<a href=\"https://www.nowfloats.com/Tnc\">Terms & Conditions</a> and <a href=\"https://www.nowfloats.com/Privacy\">Privacy Policy</a>",
                 "SectionType": "Text",
                 "DelayInMs": 1500,
                 "Hidden": false,
-                "_id": "58e25584b02a292428975a01"
+                "_id": "58cfb8bfc782bb4ad0ab9a0d"
             },
             {
-                "Text": "<a href=https://nowfloats.com/Tnc>Terms & Conditions</a> and <a href=https://nowfloats.com/Privacy>Privacy Policy</a>",
+                "Text": " What's your first name?",
                 "SectionType": "Text",
-                "DelayInMs": 1500,
+                "DelayInMs": 971,
                 "Hidden": false,
-                "_id": "58e26f90b02a2900843633fa"
+                "_id": "593f7f8eb02a290a904f05e6"
             }
         ],
         "Buttons": [
             {
-                "ButtonText": "I agree",
+                "ButtonText": "▶",
                 "Emotion": "Cool",
-                "ButtonType": "ShowConfirmation",
-                "NextNodeId": "58daf13d443f862698122eb1",
+                "ButtonType": "GetText",
+                "NextNodeId": "58cfb992c782bb4ad0ab9a66",
                 "DefaultButton": false,
                 "Hidden": false,
-                "PostToChat": false,
-                "_id": "58e270d9b02a290084363327"
+                "PlaceholderText": "Enter your name",
+                "PostToChat": true,
+                "_id": "58cfb914c782bb4ad0ab9a5a"
             }
         ],
-        "VariableName": ""
+        "VariableName": "PERSON_NAME"
     },
     {
         "Name": "Type Business Description",

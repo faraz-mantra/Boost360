@@ -201,8 +201,8 @@ public class Login_MainActivity extends AppCompatActivity implements
                                     sendPasswordToEmail(enteredText);
                                     dialog.dismiss();
                                 } else {
-                                     YoYo.with(Techniques.Shake).playOn(dialog.getInputEditText());
-                                     Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.enter_correct_user_name));
+                                    YoYo.with(Techniques.Shake).playOn(dialog.getInputEditText());
+                                    Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.enter_correct_user_name));
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -428,8 +428,8 @@ public class Login_MainActivity extends AppCompatActivity implements
                         .show();
             }
             else{*/
-                requestPermissions(permission,READ_MESSAGES_ID);
-           // }
+            requestPermissions(permission,READ_MESSAGES_ID);
+            // }
 
         }
 
@@ -438,12 +438,12 @@ public class Login_MainActivity extends AppCompatActivity implements
     // this method called when user react on permissions
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-       switch(requestCode){
-           case READ_MESSAGES_ID:
-               //getPermission();
-               break;
-           default:
-               break;
-       }
+        switch(requestCode){
+            case READ_MESSAGES_ID:
+                //getPermission();
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -54,7 +54,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public enum SectionTypeEnum {
 
         Header(-1), Image(0), Text(1), Graph(2), Gif(3), Audio(4), Video(5), Link(6), EmbeddedHtml(7),
-        Carousel(8), Typing(9), Card(10), AddressCard(11), UnConfirmedCard(12), UnConfirmedAddressCard(13), PrintOTP(14), SUBMIT_FORM(15);
+        Carousel(8), Typing(9), Card(10), AddressCard(11), UnConfirmedCard(12), UnConfirmedAddressCard(13), PrintOTP(14), SubmitForm(15);
 
         private final int val;
 
@@ -352,22 +352,31 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         } else if (holder instanceof FormViewHolder) {
 
-            FormViewHolder formViewHolder = (FormViewHolder) holder;
+            final FormViewHolder formViewHolder = (FormViewHolder) holder;
 
-            formViewHolder.tvBusinessName.setText(mDataMap.get("[~BUSINESSNAME]") + "");
-            formViewHolder.tvPhoneNumber.setText(mDataMap.get("[~PHONENUMBER]") + "");
-            formViewHolder.tvCategory.setText(mDataMap.get("[~CATEGORY]") + "");
-            formViewHolder.tvAddress.setText(mDataMap.get("[~ADDRESS]") + "");
-            formViewHolder.tvEmailAddress.setText(mDataMap.get("[~EMAILADDRESS]") + "");
-            formViewHolder.tvWesiteURL.setText(mDataMap.get("[~WEBSITEURL]") + "");
+            formViewHolder.tvBusinessName.setText(mDataMap.get("[~BUSINESS_NAME]") + "");
+            formViewHolder.tvPhoneNumber.setText(mDataMap.get("[~PHONE]") + "");
+            formViewHolder.tvCategory.setText(mDataMap.get("[~BUSINESS_CATEGORY]") + "");
+            formViewHolder.tvAddress.setText(mDataMap.get("[~STREET_ADDRESS]") +","+ mDataMap.get("[~CITY]") +","+ mDataMap.get("[~COUNTRY]")+"");
+            formViewHolder.tvEmailAddress.setText(mDataMap.get("[~EMAIL]")+"");
+            formViewHolder.tvWesiteURL.setText("https://"+mDataMap.get("[~TAG]") + ".nowfloats.com");
+
+            if(section.isAnimApplied()){
+                formViewHolder.btnCreateWebsite.setVisibility(View.GONE);
+            }else{
+                formViewHolder.btnCreateWebsite.setVisibility(View.VISIBLE);
+            }
+
 
             formViewHolder.btnCreateWebsite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    section.setIsAnimApplied(true);
+                    formViewHolder.btnCreateWebsite.setVisibility(View.GONE);
 
                     mConfirmationCallback.onCardResponse(Constants.ConfirmationType.SUBMIT_FORM,
                             "",
-                            mChatSections.get(position).getCardModel().getButtons().get(0).getNextNodeId());
+                            "");
                 }
             });
 
@@ -766,7 +775,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             this.tvCategory = (TextView) itemView.findViewById(R.id.tvCategory);
             this.tvAddress = (TextView) itemView.findViewById(R.id.tvAddress);
             this.tvEmailAddress = (TextView) itemView.findViewById(R.id.tvEmailAddress);
-            this.tvWesiteURL = (TextView) itemView.findViewById(R.id.tvWesiteURL);
+            this.tvWesiteURL = (TextView) itemView.findViewById(R.id.tvWebsiteURL);
             this.btnCreateWebsite = (Button) itemView.findViewById(R.id.btnCreateWebsite);
 
         }

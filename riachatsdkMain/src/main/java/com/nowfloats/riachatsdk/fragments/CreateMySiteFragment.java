@@ -40,7 +40,6 @@ public class CreateMySiteFragment extends DialogFragment {
     }
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +86,7 @@ public class CreateMySiteFragment extends DialogFragment {
         TextView tvBusinessName = (TextView) v.findViewById(R.id.tvBusinessName);
         TextView tvPhoneNumber = (TextView) v.findViewById(R.id.tvPhoneNumber);
         TextView tvCategory = (TextView) v.findViewById(R.id.tvCategory);
-        TextView tvWesiteURL = (TextView) v.findViewById(R.id.tvWesiteURL);
+        TextView tvWebsiteURL = (TextView) v.findViewById(R.id.tvWebsiteURL);
         TextView tvAddress = (TextView) v.findViewById(R.id.tvAddress);
         TextView tvEmailAddress = (TextView) v.findViewById(R.id.tvEmailAddress);
 
@@ -95,17 +94,23 @@ public class CreateMySiteFragment extends DialogFragment {
         tvBusinessName.setText(mDataMap.get("[~BUSINESS_NAME]"));
         tvPhoneNumber.setText(mDataMap.get("[~PHONE]"));
         tvCategory.setText(mDataMap.get("[~BUSINESS_CATEGORY]"));
-        tvAddress.setText(mDataMap.get("[~STREET_ADDRESS]")+mDataMap.get("[~CITY]")+mDataMap.get("[~COUNTRY]"));
-        tvWesiteURL.setText(mDataMap.get("[~TAG]")+"/nowfloats.com");
+        tvAddress.setText(mDataMap.get("[~STREET_ADDRESS]") +","+ mDataMap.get("[~CITY]") +","+ mDataMap.get("[~COUNTRY]"));
+        tvWebsiteURL.setText(mDataMap.get("[~WEBSITE_URL]"));
         tvEmailAddress.setText(mDataMap.get("[~EMAIL]"));
 
-        Button btnCreateWebsite= (Button) v.findViewById(R.id.btnCreateWebsite);
+        Button btnCreateWebsite = (Button) v.findViewById(R.id.btnCreateWebsite);
         btnCreateWebsite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mResultListener.OnResult();
             }
         });
+
+        try {
+            getDialog().getWindow().setBackgroundDrawableResource(R.drawable.place_pick_dialog_bg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return v;
     }

@@ -34,4 +34,8 @@
     <string name="done">DONE</string>
     <string name="create_my_site">CREATE MY SITE</string>
     <string name="locate_on_map">LOCATE ON MAP</string>
+
+    <string name="settings_tou_url">https://nowfloats.com/tnc/</string>
+    <string name="settings_privacy_url">https://nowfloats.com/privacy/</string>
+
 </resources>

@@ -472,6 +472,14 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 mAdapter.notifyItemInserted(mSectionList.size() - 1);
                 rvChatData.scrollToPosition(mSectionList.size() - 1);
                 break;
+            case Constants.SectionType.TYPE_SUBMIT_FORM:
+                section.setFromRia(false);
+                section.setSectionType(Constants.SectionType.TYPE_SUBMIT_FORM);
+                section.setText(msg[0]);
+                mSectionList.add(section);
+                mAdapter.notifyItemInserted(mSectionList.size() - 1);
+                rvChatData.scrollToPosition(mSectionList.size() - 1);
+                break;
             case Constants.SectionType.TYPE_TEXT:
                 section.setFromRia(false);
                 section.setSectionType(Constants.SectionType.TYPE_TEXT);
@@ -621,7 +629,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, button.getId(), button.getButtonText(), null,
                         null, button.getButtonType());
-                createmySite(button);
+//                createmySite(button);
+                mNextNodeId = button.getNextNodeId();
+                replyToRia(Constants.SectionType.TYPE_SUBMIT_FORM, button.getButtonText());
                 break;
             case Constants.ButtonType.TYPE_GET_IMAGE:
                 getImage(button);
@@ -1489,42 +1499,51 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     @Override
     public void onCardResponse(String confirmationType, String... data) {
-        RiaCardModel nextNode = getNextNode(data[1]);
-        if (nextNode != null && (nextNode.getNodeType().equals(Constants.NodeType.TYPE_CARD) && nextNode.getPlacement().equals("Outgoing")) ||
-                nextNode.getNodeType().equals(Constants.NodeType.TYPE_API_CALL)) {
-            if (mCurrVarName != null && mCurrVarName.trim().length() > 0) {
+
+        if(TextUtils.isEmpty(data[1])){
+            switch (confirmationType) {
+                case Constants.ConfirmationType.SUBMIT_FORM:
+                    showNextNode(mNextNodeId);
+                    break;
+            }
+        }else{
+            RiaCardModel nextNode = getNextNode(data[1]);
+            if (nextNode != null && (nextNode.getNodeType().equals(Constants.NodeType.TYPE_CARD) && nextNode.getPlacement().equals("Outgoing")) ||
+                    nextNode.getNodeType().equals(Constants.NodeType.TYPE_API_CALL)) {
+                if (mCurrVarName != null && mCurrVarName.trim().length() > 0) {
                 /*if (mAutoComplDataHash == null || !TextUtils.isEmpty(mAutoComplDataHash.get(etChatInput.getText().toString().trim()))) {
                     mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
                 } else {
                     mDataMap.put("[~" + mCurrVarName + "]", mAutoComplDataHash.get(etChatInput.getText().toString().trim()));
                 }*/
-                mDataMap.put("[~" + mCurrVarName + "]", data[0]);
-            }
-            etChatInput.setText("");
-            hideSoftKeyboard();
-            cvChatInput.setVisibility(View.INVISIBLE);
-            switch (confirmationType) {
-                case Constants.ConfirmationType.BIZ_NAME:
-                    showNextNode(data[1]);
-                    break;
-                case Constants.ConfirmationType.ADDRESS_ENTRY:
-                    showNextNode(data[1]);
-                    break;
-            }
-        } else {
-            mSectionList.remove(mSectionList.size() - 1);
-            mAdapter.notifyItemRemoved(mSectionList.size());
-            switch (confirmationType) {
-                case Constants.ConfirmationType.BIZ_NAME:
-                    showNextNode(data[1]);
-                    break;
-                case Constants.ConfirmationType.ADDRESS_ENTRY:
-                    getUserAddress(mCurrButton);
-                    break;
+                    mDataMap.put("[~" + mCurrVarName + "]", data[0]);
+                }
+                etChatInput.setText("");
+                hideSoftKeyboard();
+                cvChatInput.setVisibility(View.INVISIBLE);
+                switch (confirmationType) {
+                    case Constants.ConfirmationType.BIZ_NAME:
+                        showNextNode(data[1]);
+                        break;
+                    case Constants.ConfirmationType.ADDRESS_ENTRY:
+                        showNextNode(data[1]);
+                        break;
+                }
+            } else {
+                mSectionList.remove(mSectionList.size() - 1);
+                mAdapter.notifyItemRemoved(mSectionList.size());
+                switch (confirmationType) {
+                    case Constants.ConfirmationType.BIZ_NAME:
+                        showNextNode(data[1]);
+                        break;
+                    case Constants.ConfirmationType.ADDRESS_ENTRY:
+                        getUserAddress(mCurrButton);
+                        break;
+                }
             }
         }
-    }
 
+    }
 
     @Override
     public void onAnimationend() {

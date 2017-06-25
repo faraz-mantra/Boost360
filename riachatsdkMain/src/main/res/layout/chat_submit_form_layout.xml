@@ -18,14 +18,16 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
             android:text="@string/business_name"
-            android:textColor="@android:color/black" />
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/small_text_size" />
 
         <TextView
             android:id="@+id/tvBusinessName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
-            android:textColor="@color/gray"
+            android:textColor="@color/light_gray"
             android:textSize="@dimen/llarge_text_size" />
 
 
@@ -35,14 +37,16 @@
             android:layout_marginTop="@dimen/margin_15"
             android:fontFamily="sans-serif"
             android:text="@string/phone_number"
-            android:textColor="@android:color/black" />
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/small_text_size" />
 
         <TextView
             android:id="@+id/tvPhoneNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
-            android:textColor="@color/gray"
+            android:textColor="@color/light_gray"
             android:textSize="@dimen/llarge_text_size" />
 
         <TextView
@@ -51,14 +55,16 @@
             android:layout_marginTop="@dimen/margin_15"
             android:fontFamily="sans-serif"
             android:text="@string/category"
-            android:textColor="@android:color/black" />
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/small_text_size" />
 
         <TextView
             android:id="@+id/tvCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
-            android:textColor="@color/gray"
+            android:textColor="@color/light_gray"
             android:textSize="@dimen/llarge_text_size" />
 
         <TextView
@@ -67,14 +73,16 @@
             android:layout_marginTop="@dimen/margin_15"
             android:fontFamily="sans-serif"
             android:text="@string/address"
-            android:textColor="@android:color/black" />
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/small_text_size" />
 
         <TextView
             android:id="@+id/tvAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
-            android:textColor="@color/gray"
+            android:textColor="@color/light_gray"
             android:textSize="@dimen/llarge_text_size" />
 
         <TextView
@@ -83,14 +91,16 @@
             android:layout_marginTop="@dimen/margin_15"
             android:fontFamily="sans-serif"
             android:text="@string/email_address"
-            android:textColor="@android:color/black" />
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/small_text_size" />
 
         <TextView
             android:id="@+id/tvEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
-            android:textColor="@color/gray"
+            android:textColor="@color/light_gray"
             android:textSize="@dimen/llarge_text_size" />
 
 
@@ -100,21 +110,23 @@
             android:layout_marginTop="@dimen/margin_15"
             android:fontFamily="sans-serif"
             android:text="@string/webiste_url"
-            android:textColor="@android:color/black" />
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/small_text_size" />
 
         <TextView
-            android:id="@+id/tvWesiteURL"
+            android:id="@+id/tvWebsiteURL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif"
-            android:textColor="@color/gray"
+            android:textColor="@color/light_gray"
             android:textSize="@dimen/llarge_text_size" />
     </LinearLayout>
 
     <Button
         android:id="@+id/btnCreateWebsite"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:layout_gravity="right"
         android:background="@drawable/done_button_bg"
         android:fontFamily="sans-serif"
