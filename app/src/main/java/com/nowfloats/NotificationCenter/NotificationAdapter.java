@@ -29,7 +29,6 @@ import com.thinksity.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
 
@@ -145,11 +144,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
                 try {
                     String dateString = alertData.get(position).CreatedOn;
-                    dateString = dateString.replace("/Date(", "").replace(")/", "");
-                    Long epochTime = Long.parseLong(dateString);
-                    Date date = new Date(epochTime);
-                    if (date != null)
-                        holder.date.setText(format.format(date));
+                    holder.date.setText(Methods.getFormattedDate(dateString));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -332,7 +332,7 @@ public class Methods {
 
         Long epochTime = Long.parseLong(Sdate);
         Date date = new Date(epochTime);
-        DateFormat format = new SimpleDateFormat("dd-MM-yyyy KK:mm a", Locale.ENGLISH);//dd/MM/yyyy HH:mm:ss
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH);//dd/MM/yyyy HH:mm:ss
         format.setTimeZone(TimeZone.getDefault());
         dateTime = format.format(date);
 

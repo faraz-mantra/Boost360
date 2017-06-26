@@ -1320,7 +1320,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if(actionButton.contains("Take Me There")){
-                    addSiteHealth();
+                   addSiteHealth();
                 }
                 dialog.dismiss();
             }
@@ -1440,6 +1440,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 break;
             case PAGE_NO_FOUND:
                 //Methods.materialDialog(activity, "Alert", getString(R.string.look_like_no_facebook_page));
+                MixPanelController.track(MixPanelController.FACEBOOK_PAGE_NOT_FOUND,null);
                 final MaterialDialog builder = new MaterialDialog.Builder(this)
                         .customView(R.layout.dialog_no_facebook_page, false).build();
                 ((Button) builder.getCustomView().findViewById(R.id.create_page))
@@ -1458,17 +1459,22 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 switch (response){
                     case "success_fbDefaultImage":
                         pageCreatedDialog(true);
+                        MixPanelController.track(MixPanelController.FACEBOOK_PAGE_CREATED_WITH_DEFAULT_IMAGE,null);
                         break;
                     case "success_logoImage":
+                        MixPanelController.track(MixPanelController.FACEBOOK_PAGE_CREATED_WITH_LOGO,null);
                         pageCreatedDialog(false);
                         break;
                     case "profile_incomplete":
+                        MixPanelController.track(MixPanelController.FACEBOOK_PAGE_PROFILE_INCOMPLETE,null);
                         showDialog("Site Health Should Be 80%",getString(R.string.business_profile_incomplete),"Take Me There");
                         break;
                     case "error_creating_page":
+                        MixPanelController.track(MixPanelController.FACEBOOK_PAGE_ERROR_IN_CREATE,null);
                         Methods.showSnackBarNegative(Social_Sharing_Activity.this,getString(R.string.something_went_wrong));
                         break;
                     case "invalid_name":
+                        MixPanelController.track(MixPanelController.FACEBOOK_PAGE_INVALID_NAME,null);
                         pageSuggestionDialog();
                         break;
                     default:
@@ -1479,6 +1485,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
     }
 
     private void createFBPage(String fpName) {
+        MixPanelController.track(MixPanelController.CREATE_FACEBOOK_PAGE,null);
         fpPageName = fpName;
         String businessDesciption = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION);
 

@@ -34,6 +34,13 @@ public class MixPanelController {
     public static final String BUSINESS_APP_PUBLISHED = "BusinessAppPublished";
     public static final String SHARE_BUSINESS_APP = "BusinessAppShare";
     public static final String BUSINESS_APP = "BusinessApps";
+    public static final String FACEBOOK_PAGE_NOT_FOUND = "FacebookPageNotFound";
+    public static final String CREATE_FACEBOOK_PAGE = "CreateFacebookPage";
+    public static final String FACEBOOK_PAGE_CREATED_WITH_LOGO = "FacebookPageCreatedWithLogo";
+    public static final String FACEBOOK_PAGE_CREATED_WITH_DEFAULT_IMAGE ="FacebookPageCreatedWithDefaultImage" ;
+    public static final String FACEBOOK_PAGE_PROFILE_INCOMPLETE = "FacebookPageProfileIncomplete";
+    public static final String FACEBOOK_PAGE_ERROR_IN_CREATE = "FacebookPageErrorInCreate";
+    public static final String FACEBOOK_PAGE_INVALID_NAME = "FacebookPageInvalidName";
 
     private static MixpanelAPI mixPanel;
 	public static String Bhours = "bhours", Signup = "SignUpActivity",
