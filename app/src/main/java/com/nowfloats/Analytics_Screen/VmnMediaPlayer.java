@@ -6,8 +6,6 @@ import android.media.MediaPlayer;
 import android.os.PowerManager;
 import android.util.Log;
 
-import com.nowfloats.Analytics_Screen.Search_Query_Adapter.VmnCallAdapter;
-
 import java.io.IOException;
 
 /**
@@ -30,7 +28,7 @@ public class VmnMediaPlayer {
         }
         return vmnMediaPlayer;
     }
-    public void setUpPlayer(VmnCallAdapter.ConnectToVmnPlayer implementer){
+    public void setUpPlayer(VmnCall_v2Adapter.ConnectToVmnPlayer implementer){
         if(mediaPlayer == null){
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);

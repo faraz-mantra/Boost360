@@ -112,20 +112,6 @@
                 android:value="com.nowfloats.Analytics_Screen.SocialAnalytics" />
         </activity>
         <activity
-            android:name="com.nowfloats.NavigationDrawer.API.twitter.PrepareRequestTokenActivity"
-            android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="callback"
-                    android:scheme="x-oauthflow-twitter" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name="com.nowfloats.signup.UI.UI.WebSiteAddressActivity"
             android:label="@string/title_activity_web_site_address"
             android:clearTaskOnLaunch="true"
@@ -137,6 +123,7 @@
         <activity
             android:name="com.nowfloats.Analytics_Screen.SearchQueries"
             android:label=""
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.Analytics_Screen.SubscriberDetailsActivity"
@@ -159,6 +146,7 @@
         <activity
             android:name="com.nowfloats.NavigationDrawer.HomeActivity"
             android:label="@string/title_activity_home"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait">
             <intent-filter android:label="Queries">
                 <action android:name="android.intent.action.VIEW" />
@@ -187,6 +175,10 @@
             android:label="@string/title_activity_business__hours_"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.nowfloats.BusinessProfile.UI.UI.LinkedinWebView"
+            android:label="Linkedin Login"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity"
             android:label="@string/title_activity_business__logo_"
             android:screenOrientation="portrait" />
@@ -211,7 +203,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg" />
+            android:value="@string/google_map_key" />
 
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.API.NewMapViewDialogBusinessAddress"
@@ -232,6 +224,13 @@
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.QuikrGuidelinesActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.NavigationDrawer.businessApps.BusinessAppsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.NavigationDrawer.businessApps.BusinessAppTipsActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
             android:name="com.nowfloats.Image_Gallery.FullScreen_Gallery_Image"
             android:label="Gallery Image"
@@ -299,7 +298,6 @@
                 <category android:name="com.biz2.nowfloats" />
             </intent-filter>
         </receiver>
-
         <meta-data
             android:name="com.mixpanel.android.MPConfig.ResourcePackageName"
             android:value="com.biz2.nowfloats" />
@@ -365,14 +363,6 @@
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.FAQ.FAQ_QandA_Activity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name="com.nowfloats.Twitter.TwitterAuthenticationActivity"
-            android:launchMode="singleInstance"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.nowfloats.BusinessProfile.UI.UI.TwitterLoginActivity"
-            android:launchMode="singleInstance"
-            android:screenOrientation="portrait" />
 
         <!--
         <receiver
@@ -393,6 +383,7 @@
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
+           
         </service>
         <service android:name="com.nowfloats.RiaFCM.RiaFirebaseInstanceIDService">
             <intent-filter>

@@ -166,8 +166,6 @@
 
     </RelativeLayout>
 
-
-
     <include
         android:id="@+id/navigationDrawer_main_leftPane"
         layout="@layout/single_row_card"

@@ -105,8 +105,7 @@
             android:orientation="horizontal">
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/checkbox"
-                android:checked="false"
-                android:buttonTint="@color/primaryColor"
+                android:theme="@style/MyCheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView

@@ -69,8 +69,8 @@ public class FullScreen_Gallery_Image extends Activity {
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(selectedPOS);
         final int maxNumberofImages = adapter.getCount();
-        currentTextView.setText(Integer.toString(selectedPOS+1));
-        maxCountTextView.setText(Integer.toString(maxNumberofImages));
+        currentTextView.setText(String.valueOf(selectedPOS+1));
+        maxCountTextView.setText(String.valueOf(maxNumberofImages));
         //currentTextView.setId(R.id.custom_view_pager);
         // viewPager.setId(R.id.custom_view_pager);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -81,7 +81,7 @@ public class FullScreen_Gallery_Image extends Activity {
 
             @Override
             public void onPageSelected(int position) {
-                currentTextView.setText(""+(position+1));
+                currentTextView.setText(String.valueOf(position+1));
                 currentPos = position;
             }
 
@@ -100,7 +100,7 @@ public class FullScreen_Gallery_Image extends Activity {
                 if (viewPager.getCurrentItem()==0){
                     currentTextView.setText("1");
                 }else{
-                    currentTextView.setText(""+(Integer.parseInt(currentTextView.getText().toString())-1));
+                    currentTextView.setText(String.valueOf(Integer.parseInt(currentTextView.getText().toString())-1));
                 }
             }
         });
@@ -113,9 +113,9 @@ public class FullScreen_Gallery_Image extends Activity {
                 int selectedPosition = getItem(+1);
                 viewPager.setCurrentItem(selectedPosition, true);
                 if(viewPager.getAdapter().getCount()-1== viewPager.getCurrentItem()){
-                    currentTextView.setText(""+(viewPager.getAdapter().getCount()));
+                    currentTextView.setText(String.valueOf(viewPager.getAdapter().getCount()));
                 }else{
-                    currentTextView.setText(""+(Integer.parseInt(currentTextView.getText().toString())+1));
+                    currentTextView.setText(String.valueOf(Integer.parseInt(currentTextView.getText().toString())+1));
                 }
             }
         });

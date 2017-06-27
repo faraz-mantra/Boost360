@@ -184,6 +184,7 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
         for (GetFacebookAnalyticsData.Datum data :list) {
             if("facebook".equalsIgnoreCase(data.getIdentifier())){
                 session.storeFacebookImpressions(String.valueOf(data.getValues().getPostImpressions()));
+                break;
             }
         }
     }

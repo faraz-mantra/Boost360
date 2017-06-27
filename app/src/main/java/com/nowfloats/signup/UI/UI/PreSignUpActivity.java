@@ -1,25 +1,17 @@
 package com.nowfloats.signup.UI.UI;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
 import android.location.Address;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -27,7 +19,6 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.style.StyleSpan;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -40,7 +31,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -71,7 +61,6 @@ import com.nowfloats.util.HeaderText;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
-import com.nowfloats.util.SmsVerifyModel;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -93,7 +82,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -293,7 +281,6 @@ public class PreSignUpActivity extends AppCompatActivity implements
                                             android.R.layout.simple_dropdown_item_1line, citys);
                                     if (!isFinishing()) {
                                         cityEditText.setAdapter(adapter);
-                                        adapter.notifyDataSetChanged();
                                     }
                                 }
                             });
@@ -705,8 +692,10 @@ public class PreSignUpActivity extends AppCompatActivity implements
     @Override
     public void CheckUniqueNumber_postExecute(String value) {
 
+        if(pd == null || isFinishing()) {
+            return;
+        }
         pd.dismiss();
-
         if (value.equals("Success")) {
             // PreSignUpDialog.showDialog_WebSiteCreation(activity,"Valid Phone number. . .","Congrats . . .");
             //goToNextScreen = true ;
@@ -726,8 +715,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
                             final EditText text = (EditText) dialog.findViewById(R.id.editContactNumber);
                             phoneEditText.setText(text.getText().toString());
                         }
-                    })
-                    .build()
+                    }).build()
                     .show();
 
             //PreSignUpDialog.showDialog_WebSiteCreation(activity,"Number Already Registered. . .","Try Again . . .");
@@ -974,7 +962,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
             String tagName = API_Layer_Signup.getTag(activity, data_businessName, data_country, data_city, data_businessCategory);
             API_Layer_Signup.checkUniqueNumber(activity, data_phone);
         } else {
-            Toast.makeText(activity, "Invalid Email. Please enter Again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, "Invalid Email. Please enter again", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -984,7 +972,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
 
     }
 
-    private void otpVerifyDialog(final String number){
+   /* private void otpVerifyDialog(final String number){
         //call send otp api
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_otp_verify,null);
         final EditText otp = (EditText) view.findViewById(R.id.editText);
@@ -1117,8 +1105,8 @@ public class PreSignUpActivity extends AppCompatActivity implements
             }
         });
     }
-
-    private void showProgressbar() {
+*/
+   /* private void showProgressbar() {
         if(progressbar != null){
             progressbar.show();
         }
@@ -1133,20 +1121,20 @@ public class PreSignUpActivity extends AppCompatActivity implements
         if(otpDialog!=null && otpDialog.isShowing()){
             otpDialog.dismiss();
         }
-    }
+    }*/
 
     @Override
     protected void onStart() {
         super.onStart();
-        LocalBroadcastManager.getInstance(this).registerReceiver(mSmsReceiver,new IntentFilter(Constants.SMS_OTP_RECEIVER));
+        //LocalBroadcastManager.getInstance(this).registerReceiver(mSmsReceiver,new IntentFilter(Constants.SMS_OTP_RECEIVER));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mSmsReceiver);
+        //LocalBroadcastManager.getInstance(this).unregisterReceiver(mSmsReceiver);
     }
-    private BroadcastReceiver mSmsReceiver = new BroadcastReceiver() {
+   /* private BroadcastReceiver mSmsReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if(intent == null){
@@ -1169,6 +1157,6 @@ public class PreSignUpActivity extends AppCompatActivity implements
         if(progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
-    }
+    }*/
 }
 

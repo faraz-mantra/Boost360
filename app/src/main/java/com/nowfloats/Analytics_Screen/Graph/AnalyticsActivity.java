@@ -395,36 +395,37 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
             if (dashboardResponse == null||dashboardResponse.getEntity()==null){
                 return null;
             }
+            try {
 
-            for(DashboardResponse.Entity list :dashboardResponse.getEntity()) {
+                for (DashboardResponse.Entity list : dashboardResponse.getEntity()) {
 
-                String s = list.getCreatedDate().substring(list.getCreatedDate().indexOf('(')+1,
-                        list.getCreatedDate().indexOf(')') - 5);
-                Calendar c= new SimpleDateFormat(pattern, Locale.ENGLISH).getCalendar();
+                    String s = list.getCreatedDate().substring(list.getCreatedDate().indexOf('(') + 1,
+                            list.getCreatedDate().indexOf(')') - 5);
+                    Calendar c = new SimpleDateFormat(pattern, Locale.ENGLISH).getCalendar();
 
-                c.setTimeInMillis(Long.valueOf(s));
-                int year = c.get(Calendar.YEAR);
-                int weekOfMonth=c.get(Calendar.WEEK_OF_MONTH);
-                int dayOfWeek=c.get(Calendar.DAY_OF_WEEK);
-                //Log.e("ggg","doinbackground week_of_month ="+ weekOfMonth+"day_of_week = "+dayOfWeek);
-                int day = c.get(Calendar.DAY_OF_MONTH);
-                int  month = c.get(Calendar.MONTH);
-                if(year==curYear)
-                {
-                    months[month]+=list.getDataCount();
-                    yearData+=list.getDataCount();
-                    if (month == curMonth)
-                    {
-                        monthData+=list.getDataCount();
-                        weeks[weekOfMonth-1] += list.getDataCount();
-                        if (weekOfMonth == curWeek)
-                        {
-                            weekData+=list.getDataCount();
-                            days[dayOfWeek-1] += list.getDataCount();
+                    c.setTimeInMillis(Long.valueOf(s));
+                    int year = c.get(Calendar.YEAR);
+                    int weekOfMonth = c.get(Calendar.WEEK_OF_MONTH);
+                    int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+                    //Log.e("ggg","doinbackground week_of_month ="+ weekOfMonth+"day_of_week = "+dayOfWeek);
+                    int day = c.get(Calendar.DAY_OF_MONTH);
+                    int month = c.get(Calendar.MONTH);
+                    if (year == curYear) {
+                        months[month] += list.getDataCount();
+                        yearData += list.getDataCount();
+                        if (month == curMonth) {
+                            monthData += list.getDataCount();
+                            weeks[weekOfMonth - 1] += list.getDataCount();
+                            if (weekOfMonth == curWeek) {
+                                weekData += list.getDataCount();
+                                days[dayOfWeek - 1] += list.getDataCount();
+                            }
                         }
                     }
+                    // Log.v("ggg",c.get(Calendar.DATE)+" month "+month+" day_month "+day+" data "+months[month]);
                 }
-                // Log.v("ggg",c.get(Calendar.DATE)+" month "+month+" day_month "+day+" data "+months[month]);
+            }catch(Exception e){
+                e.printStackTrace();
             }
             DatabaseModel model=new DatabaseModel();
             model.setYear(months);
@@ -456,7 +457,7 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         pagerSlidingTabStrip.setViewPager(pager);
     }
 
-    class AnalyticsAdapter extends FragmentStatePagerAdapter {
+    private class AnalyticsAdapter extends FragmentStatePagerAdapter {
 
         AnalyticsAdapter(FragmentManager fm) {
             super(fm);
@@ -515,5 +516,4 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

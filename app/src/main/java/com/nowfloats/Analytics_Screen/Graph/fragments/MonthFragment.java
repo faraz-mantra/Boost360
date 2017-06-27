@@ -162,7 +162,6 @@ public class MonthFragment extends Fragment {
         }
         graph.invalidate();
 
-
     }
     private List<IBarDataSet> getDataSet() {
         List<IBarDataSet> dataSets = null;
@@ -216,7 +215,7 @@ public class MonthFragment extends Fragment {
 
            int day =calendar.get(Calendar.WEEK_OF_MONTH);
            lastDay = calendar.get(Calendar.DAY_OF_MONTH);
-           if(day>data.length) break;
+           if(day>data.length || day==0) break;
            if(start == -1){
 
                start = calendar.get(Calendar.DAY_OF_MONTH);

@@ -36,10 +36,10 @@ public class DataAccessibilityServiceV7 extends AccessibilityService {
     @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
+        pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         if(!Constants.PACKAGE_NAME.equals(PK_NAME_NOWFLOATS)){
             return;
         }
-        pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         if(!TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG,""))
         && pref.getBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG,true)) {
             showWhatsAppDialog();

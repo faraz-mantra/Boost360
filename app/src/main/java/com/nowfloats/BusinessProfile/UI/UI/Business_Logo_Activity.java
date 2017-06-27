@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
 import com.nowfloats.BusinessProfile.UI.API.Upload_Logo;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NotificationCenter.AlertArchive;
@@ -36,7 +37,6 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
-import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
 import java.io.File;
@@ -81,21 +81,19 @@ public class Business_Logo_Activity extends AppCompatActivity {
         uploadButton = (Button) findViewById(R.id.addLogoButton);
         backgroundImageView = (ImageView) findViewById(R.id.imageView);
         try {
-            if (true) {
                 String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl);
                 if(iconUrl.length()>0 && !iconUrl.contains("http")) {
                     //String baseNameProfileImage = Constants.BASE_IMAGE_URL+"" + iconUrl;
                     BoostLog.d("Logo Url:", iconUrl);
-                    Picasso.with(this).load(iconUrl).placeholder(R.drawable.logo_default_image).into(logoimageView);
+                    Glide.with(this).load(iconUrl).asGif().placeholder(R.drawable.logo_default_image).into(logoimageView);
                 }else{
                     if(iconUrl!=null && iconUrl.length()>0) {
                         BoostLog.d("Logo Url:", iconUrl);
-                        Picasso.with(this).load(iconUrl).placeholder(R.drawable.logo_default_image).into(logoimageView);
+                        Glide.with(this).load(iconUrl).placeholder(R.drawable.logo_default_image).into(logoimageView);
                     }else{
-                        Picasso.with(this).load(R.drawable.logo_default_image).into(logoimageView);
+                        Glide.with(this).load(R.drawable.logo_default_image).asGif().into(logoimageView);
                     }
                 }
-            }
         }catch(Exception e){e.printStackTrace();System.gc();}
 
         uploadButton.setOnClickListener(new View.OnClickListener() {

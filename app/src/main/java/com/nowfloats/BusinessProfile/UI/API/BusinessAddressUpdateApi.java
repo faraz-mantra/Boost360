@@ -7,12 +7,12 @@ package com.nowfloats.BusinessProfile.UI.API;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
-import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.nowfloats.BusinessProfile.UI.Model.BusinessAddressUpdateModel;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Methods;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,10 +79,10 @@ public class BusinessAddressUpdateApi {
         callApi.updateAddress(addressModel, new Callback<JsonArray>() {
             @Override
             public void success(JsonArray jsonElements, Response response) {
-                if(pd!=null)
+                if(pd!=null && pd.isShowing())
                     pd.dismiss();
                 if(response.getStatus()!=200 ||jsonElements==null) return;
-                Toast.makeText(appContext,"Update Address successful",Toast.LENGTH_SHORT).show();
+                Methods.showSnackBarPositive(appContext,"Update Address successful");
                 NewMapViewDialogBusinessAddress.updatingPostionFromMap = true;
                 for (JsonElement element:jsonElements) {
                     //Log.v("ggg","json update elements"+element.getAsString());
@@ -91,7 +91,7 @@ public class BusinessAddressUpdateApi {
 
             @Override
             public void failure(RetrofitError error) {
-                if(pd!=null)
+                if(pd!=null && pd.isShowing())
                     pd.dismiss();
                 //Log.v("ggg",error+"update address json error");
             }

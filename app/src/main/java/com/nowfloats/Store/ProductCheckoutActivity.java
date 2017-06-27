@@ -510,10 +510,12 @@ public class ProductCheckoutActivity extends AppCompatActivity {
         float taxVal = 0;
         StringBuilder taxNames= new StringBuilder();
         //double taxAmount = 0;
-        for(TaxDetail taxData : invoiceData.getPurchaseDetails().get(0).getTaxDetails()){
-            taxVal+=taxData.getValue();
-            taxNames.append(taxData.getKey() + "-" + taxData.getValue() +"%,\n ");
+
+        for (TaxDetail taxData : invoiceData.getPurchaseDetails().get(0).getTaxDetails()) {
+            taxVal += taxData.getValue();
+            taxNames.append(taxData.getKey() + "-" + taxData.getValue() + "%,\n ");
         }
+
         double taxAmount = 0;
         if(invoiceData.getPurchaseDetails().get(0).getTaxDetails().get(0).getAmountType()==0) {
             taxAmount = (netAmount * taxVal) / 100.0;
@@ -558,8 +560,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==android.R.id.home){
-            super.onBackPressed();
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);

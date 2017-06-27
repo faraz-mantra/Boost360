@@ -10,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.provider.Settings;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -93,6 +94,7 @@ public class Methods {
         }
         return status;
     }
+
     @SuppressWarnings("deprecation")
     public static Spanned fromHtml(String html){
         Spanned result;
@@ -160,6 +162,11 @@ public class Methods {
         }
 
         return false;
+    }
+    public static void showSnackBar(View view,String message,int color){
+        Snackbar snackbar = Snackbar.make(view,message,Snackbar.LENGTH_LONG);
+        snackbar.getView().setBackgroundColor(color);
+        snackbar.show();
     }
     public static void showSnackBar(Activity context,String msg){
         android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), msg, android.support.design.widget.Snackbar.LENGTH_LONG);
@@ -325,7 +332,7 @@ public class Methods {
 
         Long epochTime = Long.parseLong(Sdate);
         Date date = new Date(epochTime);
-        DateFormat format = new SimpleDateFormat("dd-MM-yyyy KK:mm a", Locale.ENGLISH);//dd/MM/yyyy HH:mm:ss
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy hh:mm a", Locale.ENGLISH);//dd/MM/yyyy HH:mm:ss
         format.setTimeZone(TimeZone.getDefault());
         dateTime = format.format(date);
 
@@ -478,7 +485,6 @@ public class Methods {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
-
 
     public interface SmsApi{
 

@@ -108,9 +108,11 @@
         android:id="@+id/float_a_picture_share_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:background="@color/white"
-        android:stretchColumns="1,2,3" >
+        android:stretchColumns="1,2,3"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <View
             android:layout_width="wrap_content"

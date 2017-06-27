@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
@@ -29,6 +28,19 @@ public class MixPanelController {
     public static final String VMN_CALL_TRACKER = "VmnCallTracker";
     public static final String FACEBOOK_REVIEW = "FacebookReview";
     public static final String PRIMARY_NUMBER_CHANGE = "PrimaryNumberChanged";
+    public static final String BUSINESS_APP_REQUEST = "BusinessAppRequest";
+    public static final String BUSINESS_APP_BUILD_IN_PROCESS = "BusinessAppInProcess";
+    public static final String BUSINESS_APP_INTRESTED = "BizAppsIntrested";
+    public static final String BUSINESS_APP_PUBLISHED = "BusinessAppPublished";
+    public static final String SHARE_BUSINESS_APP = "BusinessAppShare";
+    public static final String BUSINESS_APP = "BusinessApps";
+    public static final String FACEBOOK_PAGE_NOT_FOUND = "FacebookPageNotFound";
+    public static final String CREATE_FACEBOOK_PAGE = "CreateFacebookPage";
+    public static final String FACEBOOK_PAGE_CREATED_WITH_LOGO = "FacebookPageCreatedWithLogo";
+    public static final String FACEBOOK_PAGE_CREATED_WITH_DEFAULT_IMAGE ="FacebookPageCreatedWithDefaultImage" ;
+    public static final String FACEBOOK_PAGE_PROFILE_INCOMPLETE = "FacebookPageProfileIncomplete";
+    public static final String FACEBOOK_PAGE_ERROR_IN_CREATE = "FacebookPageErrorInCreate";
+    public static final String FACEBOOK_PAGE_INVALID_NAME = "FacebookPageInvalidName";
 
     private static MixpanelAPI mixPanel;
 	public static String Bhours = "bhours", Signup = "SignUpActivity",
@@ -148,4 +160,5 @@ public class MixPanelController {
             //e.printStackTrace();
         }
     }
+
 }

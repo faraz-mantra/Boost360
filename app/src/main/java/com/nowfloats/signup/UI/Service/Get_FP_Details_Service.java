@@ -11,13 +11,13 @@ import com.nowfloats.BusinessProfile.UI.API.Facebook_Auto_Publish_API;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.GetAutoPull;
 import com.nowfloats.PreSignUp.SplashScreen_Activity;
-import com.nowfloats.Twitter.TwitterConstants;
 import com.nowfloats.signup.UI.API.Retro_Signup_Interface;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.signup.UI.Model.ProcessFPDetails;
 import com.nowfloats.signup.UI.UI.WebSiteAddressActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -158,7 +158,7 @@ public class Get_FP_Details_Service {
     private void Storedata(Activity activity,List<NfxGetTokensResponse.NFXAccessToken> nfxGetTokensList){
         UserSessionManager session = new UserSessionManager(activity.getApplicationContext(), activity);
         SharedPreferences pref = activity.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences twitterPref = activity.getSharedPreferences(TwitterConstants.PREF_NAME,Context.MODE_PRIVATE);
+        SharedPreferences twitterPref = activity.getSharedPreferences(TwitterConnection.PREF_NAME,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean("fbShareEnabled", false);
         session.storeFacebookName(null);
@@ -171,8 +171,8 @@ public class Get_FP_Details_Service {
         editor.putInt("quikrStatus",-1);
         editor.apply();
         SharedPreferences.Editor tPrefEditor = twitterPref.edit();
-        tPrefEditor.putBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false);
-        tPrefEditor.putString(TwitterConstants.PREF_USER_NAME, null);
+        tPrefEditor.putBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false);
+        tPrefEditor.putString(TwitterConnection.PREF_USER_NAME, null);
         tPrefEditor.apply();
         for(NfxGetTokensResponse.NFXAccessToken model: nfxGetTokensList){
             if(model.getType().equalsIgnoreCase("facebookusertimeline")) {
@@ -197,10 +197,10 @@ public class Get_FP_Details_Service {
             }else if(model.getType().equalsIgnoreCase("twitter")) {
                 SharedPreferences.Editor twitterPrefEditor = twitterPref.edit();
                 if(model.getStatus().equals("1") ||model.getStatus().equals("3")) {
-                    twitterPrefEditor.putBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, true);
+                    twitterPrefEditor.putBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, true);
                     Constants.twitterShareEnabled = true;
                 }
-                twitterPrefEditor.putString(TwitterConstants.PREF_USER_NAME, model.getUserAccountName());
+                twitterPrefEditor.putString(TwitterConnection.PREF_USER_NAME, model.getUserAccountName());
                 twitterPrefEditor.apply();
             }else if(model.getType().equalsIgnoreCase("quikr")){
                 pref.edit().putInt("quikrStatus", Integer.parseInt(model.getStatus())).apply();
