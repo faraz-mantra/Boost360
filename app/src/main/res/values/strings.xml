@@ -383,9 +383,17 @@
         <item>571f7f789bfed52c543d888d</item>
     </string-array>
     <string-array name="themeNames">
+        <item>Dynamic</item>
         <item>Bold and The Beautiful</item>
         <item>Fresh Milk Light</item>
         <item>The First Fox</item>
+    </string-array>
+
+    <string-array name="themeMessages">
+        <item>We choose the theme that will work best for your business, keeping many factors in mind. By default this is the setting, because you should only focus on the content that will get the customers to your store.</item>
+        <item>Display your products or services boldly. An image-led look to showcase your products, select this if you have already uploaded your products and picture updates.</item>
+        <item>A clean white approach to website design, this theme smoothly bridges form and function. Smart use of white space makes it a clean, elegant looking website.</item>
+        <item>A smart approach to a balance between imagery and updates. If you post business updates often, this is the theme for you. Customise the background and it will make sure your updates look stunning.</item>
     </string-array>
     <string-array name="quikr_widget">
         <item>automotive</item>

@@ -543,15 +543,12 @@
     <string name="renew_light_house_plan">Renew your plan to get all the features</string>
     <string name="light_house_plan_expired_some_features_visible">Your subscription has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
     <string name="buy_light_house_plan">Subscribe now get all the features</string>
-
     <string name="buy_in_capital">BUY</string>
     <string name="later_in_capital">LATER</string>
-    <string name="light_house_plan_expired_some_features_visible">Your Lighthouse plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others</string>
     <string name="renew_wildfire_plan">Renew Wildfire plan</string>
     <string name="continue_auto_promoting_on_google">Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.</string>
     <string name="renew_in_capital">RENEW</string>
     <string name="ignore_in_capital">IGNORE</string>
-    <string name="buy_light_house_plan">Buy Lighthouse plan to get all the features</string>
     <string name="demo_plan_expired">Your Demo plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
     <string name="demo_plan_will_expire"><Data><![CDATA[Your Demo plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
     <string name="light_house_pla_will_expire"><Data><![CDATA[Your Lighthouse plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>

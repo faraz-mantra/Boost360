@@ -17,7 +17,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,9 +30,11 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
@@ -109,7 +110,6 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
     private String mAuthVerifier = null;
     private String mTwitterVerifier = null;
     private SharedPreferences mSharedPreferences = null;
-    private boolean called = false;
     private ProgressDialog pd = null;
     private int mNewPosition =-1;
 
@@ -129,12 +129,11 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
     private final int FROM_FB_PAGE = 0;
 
 
-    MaterialDialog mExpireDailog;
     private CallbackManager callbackManager;
     private TextView arrowTextView;
-    private QuikrGuidelinesActivity showArrayFrag;
     private TwitterConnection twitterConnection;
     private String fpPageName;
+    Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +141,10 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
+        if(!FacebookSdk.isInitialized()){
+            FacebookSdk.sdkInitialize(getApplicationContext());
+        }
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -227,8 +230,15 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
             @Override
             public void onClick(View v) {
                 if (facebookPageCheckBox.isChecked()) {
-                    Toast.makeText(Social_Sharing_Activity.this,"Reconnect with facebook",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(Social_Sharing_Activity.this,"Reconnect with facebook",Toast.LENGTH_SHORT).show();
                     facebookPageCheckBox.setChecked(false);
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            //Do something after 100ms
+                                fbData(FROM_FB_PAGE);
+                        }
+                    }, 200);
                     //startActivity(new Intent(Social_Sharing_Activity.this,LinkedinWebView.class));
                     //createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
 
@@ -254,12 +264,12 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
             @Override
             public void onClick(View v) {
                 if (facebookHomeCheckBox.isChecked()) {
-                    final Handler handler = new Handler();
+                    facebookHomeCheckBox.setChecked(false);
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             //Do something after 100ms
-                            fbData();
+                            fbData(FROM_FB_PAGE);
                         }
                     }, 200);
                 } else {
@@ -319,7 +329,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 }else {
                     if (facebookautopost.isChecked()) {
                         // connecting to auto pull
-                        fbPageData(FROM_AUTOPOST);
+                        facebookautopost.setChecked(false);
+                        fbData(FROM_AUTOPOST);
                     } else {
                         //disconnected to auto pull
                         updateAutopull(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME), false);
@@ -562,219 +573,25 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
     @Override
     protected void onStart() {
         super.onStart();
-        if(!isAuthenticated()){
-            twitterCheckBox.setChecked(false);
-        }
     }
 
-    public void fbPageData(final int from) {
-        if(from==FROM_AUTOPOST)
-        pd = ProgressDialog.show(this, "", getString(R.string.wait_while_subscribing));
-        List<String> readPermissions=Arrays.asList("email"
-                , "public_profile",  "user_friends", "read_insights", "business_management");
-        final List<String> publishPermissions = Arrays.asList("publish_actions",
-                "publish_pages", "manage_pages");
-        final LoginManager loginManager = LoginManager.getInstance();
-    /*    com.facebook.AccessToken currentToken = com.facebook.AccessToken.getCurrentAccessToken();
-
-        if (currentToken!=null && !currentToken.isExpired() && currentToken.getPermissions().containsAll(publishPermissions)){
-            GraphRequest request = GraphRequest.newGraphPathRequest(
-                    currentToken,
-                    "/me/accounts",
-                    new GraphRequest.Callback() {
-                        @Override
-                        public void onCompleted(GraphResponse response) {
-                            // Insert your code here
-                            processGraphResponse(response, from);
-                        }
-                    });
-
-            request.executeAsync();
-        }else {*/
-            loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-                @Override
-                public void onSuccess(LoginResult loginResult) {
-                    boolean contain=loginResult.getAccessToken().getPermissions().containsAll(publishPermissions);
-                    if(!contain){
-                        loginManager.logInWithPublishPermissions(Social_Sharing_Activity.this, publishPermissions);
-                    }else {
-                        GraphRequest request = GraphRequest.newGraphPathRequest(
-                                loginResult.getAccessToken(),
-                                "/me/accounts",
-                                new GraphRequest.Callback() {
-                                    @Override
-                                    public void onCompleted(GraphResponse response) {
-                                        // Insert your code here
-                                        processGraphResponse(response, from);
-                                    }
-                                });
-
-                        request.executeAsync();
-                    }
-
-                }
-
-                @Override
-                public void onCancel() {
-
-                    if(!isFinishing() && pd!=null)
-                    pd.dismiss();
-                    onFBPageError(from);
-                }
-
-                @Override
-                public void onError(FacebookException error) {
-                    onFBPageError(from);
-                    Log.v("ggg",error.toString()+" error");
-                    LoginManager.getInstance().logOut();
-                    com.facebook.AccessToken.refreshCurrentAccessTokenAsync();
-                   if(pd!=null && !isFinishing())
-                    pd.dismiss();
-                }
-            });
-            loginManager.logInWithReadPermissions(this, readPermissions);
-
-        }
-
-        /*facebook.authorize(this, PERMISSIONS, new Facebook.DialogListener() {
-            public void onComplete(Bundle values) {
-                new Thread(new Runnable() {
+    public void getFacebookPages(AccessToken accessToken, final int from){
+        GraphRequest request = GraphRequest.newGraphPathRequest(
+                accessToken,
+                "/me/accounts",
+                new GraphRequest.Callback() {
                     @Override
-                    public void run() {
-                        try {
-                            JSONObject pageMe = new JSONObject(facebook.request("me/accounts"));
-                            Constants.FbPageList = pageMe.getJSONArray("data");
-                            if (Constants.FbPageList != null) {
-                                size = Constants.FbPageList.length();
-
-                                checkedPages = new boolean[size];
-                                if (size > 0) {
-                                    items = new ArrayList<String>();
-                                    for (int i = 0; i < size; i++) {
-                                        items.add(i, (String) ((JSONObject) Constants.FbPageList
-                                                .get(i)).get("name"));
-                                        //BoostLog.d("ILUD Test: ", (String) ((JSONObject) Constants.FbPageList
-                                        //.get(i)).get("name"));
-                                    }
-
-                                    for (int i = 0; i < size; i++) {
-                                        checkedPages[i] = false;
-                                    }
-
-
-                                }
-                            }
-                        } catch (Exception e1) {
-                            e1.printStackTrace();
-                        } finally {
-
-                            Social_Sharing_Activity.this.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (items != null && items.size() > 0) {
-                                        final String[] array = items.toArray(new String[items.size()]);
-                                        new MaterialDialog.Builder(Social_Sharing_Activity.this)
-                                                .title(getString(R.string.select_page))
-                                                .items(array)
-                                                .widgetColorRes(R.color.primaryColor)
-                                                .cancelable(false)
-                                                .positiveText("Ok")
-                                                .negativeText("Cancel")
-                                                .negativeColorRes(R.color.light_gray)
-                                                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
-                                                    @Override
-                                                    public boolean onSelection(MaterialDialog dialog, View view, int position, CharSequence text) {
-
-                                                        //dialog.dismiss();
-                                                        mNewPosition = position;
-                                                        return true;
-                                                    }
-                                                })
-                                                .callback(new MaterialDialog.ButtonCallback() {
-                                                    @Override
-                                                    public void onPositive(MaterialDialog dialog) {
-                                                        mNewPosition = dialog.getSelectedIndex();
-                                                        if(mNewPosition == -1){
-                                                            Toast.makeText(Social_Sharing_Activity.this, "Please select any Facebook page", Toast.LENGTH_SHORT).show();
-                                                            if(from==FROM_FB_PAGE){
-                                                                facebookPageCheckBox.setChecked(false);
-                                                            }else if(from == FROM_AUTOPOST){
-                                                                facebookautopost.setChecked(false);
-                                                            }
-                                                        }else {
-                                                            String strName = array[mNewPosition];
-                                                            String FACEBOOK_PAGE_ID = null;
-                                                            String page_access_token = null;
-                                                            try {
-                                                                FACEBOOK_PAGE_ID = (String) ((JSONObject) Constants.FbPageList.get(mNewPosition)).get("id");
-                                                                page_access_token = ((String) ((JSONObject) Constants.FbPageList.get(mNewPosition)).get("access_token"));
-                                                            } catch (JSONException e) {
-
-                                                            }
-                                                            if (from == FROM_FB_PAGE && !Util.isNullOrEmpty(FACEBOOK_PAGE_ID) && !Util.isNullOrEmpty(page_access_token)) {
-                                                                session.storePageAccessToken(page_access_token);
-                                                                session.storeFacebookPageID(FACEBOOK_PAGE_ID);
-                                                                if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME)) && !strName.equals(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))) {
-                                                                    pageSeleted(mNewPosition, strName, session.getFacebookPageID(), session.getPageAccessToken());
-                                                                } else if (Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))) {
-                                                                    pageSeleted(mNewPosition, strName, session.getFacebookPageID(), session.getPageAccessToken());
-                                                                } else {
-                                                                    facebookPageCheckBox.setChecked(false);
-                                                                    showDialog("Alert", "You cannot select the same Facebook Page to share your updates. This will lead to an indefinite loop of updates on your website and Facebook Page.");
-                                                                }
-                                                                //pageSeleted(position, strName, session.getFacebookPageID(), session.getPageAccessToken());
-                                                            } else if (from == FROM_AUTOPOST) {
-                                                                if (!Util.isNullOrEmpty(session.getFacebookPage()) && !strName.equals(session.getFacebookPage())) {
-                                                                    selectNumberUpdatesDialog(strName);
-                                                                } else if (Util.isNullOrEmpty(session.getFacebookPage())) {
-                                                                    selectNumberUpdatesDialog(strName);
-                                                                } else {
-                                                                    //Toast.makeText(getApplicationContext(), "You can't post and pull from the same Facebook page", Toast.LENGTH_SHORT).show();
-                                                                    facebookautopost.setChecked(false);
-                                                                    showDialog("Alert", "You cannot select the same Facebook Page to auto-update your website. This will lead to an indefinite loop of updates on your website and Facebook Page.");
-                                                                }
-                                                            }
-                                                            dialog.dismiss();
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onNegative(MaterialDialog dialog) {
-                                                        dialog.dismiss();
-                                                    }
-                                                }).show();
-                                    } else {
-                                        Methods.materialDialog(activity, "Uh oh~", getString(R.string.look_like_no_facebook_page));
-                                    }
-                                }
-                            });
-                        }
+                    public void onCompleted(GraphResponse response) {
+                        // Insert your code here
+                        processGraphResponse(response, from);
                     }
-                }).start();
-            }
+                });
 
-            @Override
-            public void onCancel() {
-                onFBPageError(from);
-            }
-
-            @Override
-            public void onFacebookError(FacebookError e) {
-                onFBPageError(from);
-            }
-
-            @Override
-            public void onError(DialogError e) {
-                onFBPageError(from);
-            }
-
-
-        });*/
-
+        request.executeAsync();
+    }
 
     private void processGraphResponse(final GraphResponse response, final int from) {
-        if(from==FROM_AUTOPOST && pd!=null)
-            pd.dismiss();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -835,11 +652,11 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                                                     mNewPosition = dialog.getSelectedIndex();
                                                     if (mNewPosition == -1) {
                                                         Toast.makeText(Social_Sharing_Activity.this, "Please select any Facebook page", Toast.LENGTH_SHORT).show();
-                                                        if (from == FROM_FB_PAGE) {
+                                                        /*if (from == FROM_FB_PAGE) {
                                                             facebookPageCheckBox.setChecked(false);
                                                         } else if (from == FROM_AUTOPOST) {
                                                             facebookautopost.setChecked(false);
-                                                        }
+                                                        }*/
                                                     } else {
                                                         String strName = array[mNewPosition];
                                                         String FACEBOOK_PAGE_ID = null;
@@ -858,7 +675,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                                                                     || !strName.equals(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))) {
                                                                 pageSeleted(mNewPosition, strName, session.getFacebookPageID(), session.getPageAccessToken());
                                                             } else {
-                                                                facebookPageCheckBox.setChecked(false);
+                                                                //facebookPageCheckBox.setChecked(false);
                                                                 showDialog("Alert", "You cannot select the same Facebook Page to share your updates. This will lead to an indefinite loop of updates on your website and Facebook Page.","Done");
                                                             }
                                                             //pageSeleted(position, strName, session.getFacebookPageID(), session.getPageAccessToken());
@@ -869,7 +686,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                                                                 updateAutopull(FACEBOOK_PAGE_ID, true);
                                                             } else {
                                                                 //Toast.makeText(getApplicationContext(), "You can't post and pull from the same Facebook page", Toast.LENGTH_SHORT).show();
-                                                                facebookautopost.setChecked(false);
+                                                                //facebookautopost.setChecked(false);
                                                                 showDialog("Alert", "You cannot select the same Facebook Page to auto-update your website. This will lead to an indefinite loop of updates on your website and Facebook Page.","Done");
                                                             }
                                                         }
@@ -879,21 +696,22 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
 
                                                 @Override
                                                 public void onNegative(MaterialDialog dialog) {
-                                                    onFBPageError(from);
                                                     dialog.dismiss();
                                                 }
                                             }).show();
                                 }
                             } else {
-                                onFBPageError(from);
-
-                                NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) Social_Sharing_Activity.this)
-                                        .setmFpId(session.getFPID())
-                                        .setmType("facebookpage")
-                                        .setmCallType(PAGE_NO_FOUND)
-                                        .setmName("");
-                                requestClient.nfxNoPageFound();
-                                pd = ProgressDialog.show(Social_Sharing_Activity.this, "", getString(R.string.please_wait));
+                                if (from == FROM_AUTOPOST) {
+                                    Methods.materialDialog(activity, "Alert", getString(R.string.look_like_no_facebook_page));
+                                } else {
+                                    NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) Social_Sharing_Activity.this)
+                                            .setmFpId(session.getFPID())
+                                            .setmType("facebookpage")
+                                            .setmCallType(PAGE_NO_FOUND)
+                                            .setmName("");
+                                    requestClient.nfxNoPageFound();
+                                    pd = ProgressDialog.show(Social_Sharing_Activity.this, "", getString(R.string.please_wait));
+                                }
                             }
                         }
                     });
@@ -995,10 +813,12 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         return super.onOptionsItemSelected(item);
     }
 
-    public void fbData() {
+    public void fbData(final int from) {
+        //AccessToken.getCurrentAccessToken()
         List<String> readPermissions=Arrays.asList("email", "public_profile", "user_friends", "read_insights", "business_management");
         final List<String> publishPermissions = Arrays.asList("publish_actions", "publish_pages", "manage_pages");
         final LoginManager loginManager = LoginManager.getInstance();
+
         loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -1009,55 +829,58 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                     loginManager.logInWithPublishPermissions(Social_Sharing_Activity.this, publishPermissions);
                 }else {
 
-                    final String FACEBOOK_ACCESS_TOKEN = loginResult.getAccessToken().getToken();
                         //Log.v("ggg",FACEBOOK_ACCESS_TOKEN+"ppnull");
-                    if(Profile.getCurrentProfile()==null){
-                        Bundle parameters = new Bundle();
-                        parameters.putString("fields", "id,name,email");
-                        GraphRequest meRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(),
-                                new GraphRequest.GraphJSONObjectCallback() {
-                                    @Override
-                                    public void onCompleted(
-                                            JSONObject object,
-                                            GraphResponse response) {
-                                        try {
-                                            JSONObject resp = response.getJSONObject();
-                                            saveFbLoginResults(resp.getString("name"),
-                                                    FACEBOOK_ACCESS_TOKEN,
-                                                    resp.getString("id"));
-                                            fbPageData(FROM_FB_PAGE);
-                                        }catch (Exception e){
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                });
-                        meRequest.setParameters(parameters);
-                        meRequest.executeAsync();
-
+                    if(Profile.getCurrentProfile()==null && from == FROM_FB_PAGE){
+                       getFacebookProfile(loginResult.getAccessToken(),from);
                     }else {
                         //Log.v("ggg",Profile.getCurrentProfile().toString());
-                        fbPageData(FROM_FB_PAGE);
-                        saveFbLoginResults(Profile.getCurrentProfile().getName(),
-                                FACEBOOK_ACCESS_TOKEN,
-                                Profile.getCurrentProfile().getId());
+                        if(from == FROM_FB_PAGE) {
+                            saveFbLoginResults(Profile.getCurrentProfile().getName(),
+                                    loginResult.getAccessToken().getToken(),
+                                    Profile.getCurrentProfile().getId());
+                        }
+                        getFacebookPages(loginResult.getAccessToken(),from);
                     }
                 }
             }
 
             @Override
             public void onCancel() {
-                onFBError();
+                onFBPageError(from);
             }
 
             @Override
             public void onError(FacebookException error) {
-                onFBError();
+                onFBPageError(from);
                 //Log.v("ggg",error.toString()+"fberror");
             }
         });
         loginManager.logInWithReadPermissions(this, readPermissions);
     }
 
+    private void getFacebookProfile(final AccessToken accessToken, final int from){
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,email");
+        GraphRequest meRequest = GraphRequest.newMeRequest(accessToken,
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(
+                            JSONObject object,
+                            GraphResponse response) {
+                        try {
+                            JSONObject resp = response.getJSONObject();
+                            saveFbLoginResults(resp.getString("name"),
+                                    accessToken.getToken(),
+                                    resp.getString("id"));
+                            getFacebookPages(accessToken,from);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                });
+        meRequest.setParameters(parameters);
+        meRequest.executeAsync();
+    }
     private void saveFbLoginResults(String userName, String accessToken, String id) {
         //String FACEBOOK_USER_NAME = Profile.getCurrentProfile().getName();
         Constants.FACEBOOK_USER_ACCESS_ID = accessToken;
@@ -1097,24 +920,23 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         Constants.fbShareEnabled = false;
         prefsEditor.putBoolean("fbShareEnabled", false);
         prefsEditor.apply();
-        //Log.v("ggg","hello fberror");
         facebookHomeCheckBox.setChecked(false);
-        LoginManager.getInstance().logOut();
-        com.facebook.AccessToken.refreshCurrentAccessTokenAsync();
+        facebookProfileConnected(false);
     }
 
     void onFBPageError(int from) {
         //Log.v("ggg","fbpage error");
         if(from==FROM_AUTOPOST){
-            facebookautopost.setChecked(false);
+            facebookAutoPullConnect(false);
         }else if(from==FROM_FB_PAGE){
-            facebookPageCheckBox.setChecked(false);
+           facebookPageConnected(false);
             Constants.fbPageShareEnabled = false;
             prefsEditor.putBoolean("fbPageShareEnabled", false).apply();
         }
+        LoginManager.getInstance().logOut();
+        com.facebook.AccessToken.refreshCurrentAccessTokenAsync();
 
     }
-
 
 
     public void InitShareResources() {
@@ -1129,106 +951,101 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         Constants.fbPageFullUrl = pref.getString("fbPageFullUrl", "");
         Constants.fbFromWhichPage = pref.getString("fbFromWhichPage", "");
 
-        if(session.getFPDetails(Key_Preferences.FB_PULL_ENABLED).equals("true")){
-            facebookautopost.setChecked(true);
-            ivFbPageAutoPull.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebook_page));
-            ivFbPageAutoPull.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
-            fbPullStatus.setVisibility(View.VISIBLE);
-
-            fbPullStatus.setText(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME));
-        }
-
-
-
-        if (!Util.isNullOrEmpty(Constants.FACEBOOK_USER_ACCESS_ID)) {
-            facebookHome.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebook_icon));
-            facebookHome.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
-            facebookHomeStatus.setText(getString(R.string.connected));
-            String fbUName = pref.getString("fbUserName", "");
-            prefsEditor.putBoolean("fbShareEnabled", true);
-            facebookHomeCheckBox.setChecked(true);
-            prefsEditor.commit();
-        }
-
     }
-
-
-
-    /*public void pullFacebookFeedDialog() {
-
-        final JSONObject obj = new JSONObject();
-        try {
-            obj.put("ClientId", Constants.clientId);
-            obj.put("Count", 5);
-            obj.put("Tag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
-            obj.put("FacebookPageName", Constants.fbPageFullUrl);
-            obj.put("AutoPublish", true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        FacebookFeedPullRegistrationAsyncTask fpa = new FacebookFeedPullRegistrationAsyncTask(Social_Sharing_Activity.this, obj, facebookPageStatus, facebookautopost);
-        fpa.execute();
-
-    }*/
 
 
    private void setStatus(){
         //Log.v("ggg","resime" +facebookHomeCheckBox.isChecked());
         Methods.isOnline(Social_Sharing_Activity.this);
-        facebookHome.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebook_icon_inactive));
-        facebookHome.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
-        facebookHomeCheckBox.setChecked(false);
-
-        facebookPage.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebookpage_icon_inactive));
-        facebookPage.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
-        facebookPageCheckBox.setChecked(false);
-
-        ivFbPageAutoPull.setImageResource(R.drawable.facebookpage_icon_inactive);
-        ivFbPageAutoPull.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
-        facebookautopost.setChecked(pref.getBoolean("FBFeedPullAutoPublish",false));
         if(pref.getInt("fbStatus", 0)==2){
             Methods.showSnackBarNegative(this,"Your Facebook session has expired. Please login.");
         }
+
         if (!Util.isNullOrEmpty(session.getFacebookName()) && (pref.getInt("fbStatus", 0)==1 || pref.getInt("fbStatus",0)==3)) {
             //Log.v("ggg"," ok");
-            facebookHome.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebook_icon));
-            facebookHome.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
-            facebookHomeCheckBox.setChecked(true);
-            facebookHomeStatus.setVisibility(View.VISIBLE);
-            facebookHomeStatus.setText(session.getFacebookName());
+            facebookProfileConnected(true);
+        }else{
+           facebookProfileConnected(false);
+        }
 
-        }
         if (!Util.isNullOrEmpty(session.getFacebookPage()) && pref.getInt("fbPageStatus", 0)==1) {
-            facebookPage.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebook_page));
-            facebookPage.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
-            facebookPageCheckBox.setChecked(true);
-            facebookPageStatus.setVisibility(View.VISIBLE);
-            facebookPageStatus.setText(session.getFacebookPage());
+            facebookPageConnected(true);
+        }else{
+            facebookPageConnected(false);
         }
+
         if(!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))&& pref.getBoolean("FBFeedPullAutoPublish",false)){
-            ivFbPageAutoPull.setImageResource(R.drawable.facebook_page);
-            ivFbPageAutoPull.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
-            fbPullStatus.setText(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME));
-            fbPullStatus.setVisibility(View.VISIBLE);
+            facebookAutoPullConnect(true);
+        }else{
+            facebookAutoPullConnect(false);
         }
         if (!isAuthenticated()) {
             //twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_inactive));
             // String fbUName = pref.getString(TwitterConnection.PREF_USER_NAME, "");
-            twitter.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.twitter_icon_inactive));
-            twitter.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
-            twitterCheckBox.setChecked(false);
-            twitterStatus.setVisibility(View.GONE);
+            twitterProfileConnect(false);
             //twitterStatus.setText("Disconnected");
         } else {
-            twitterCheckBox.setChecked(true);
+            twitterProfileConnect(true);
+        }
+    }
+
+    private  void twitterProfileConnect(boolean isConnect){
+        if (isConnect){
             String twitterName = mSharedPreferences.getString(TwitterConnection.PREF_USER_NAME, "");
             twitterStatus.setVisibility(View.VISIBLE);
             twitterStatus.setText("@" + twitterName);
             twitter.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.twitter_icon_active));
             twitter.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
+        }else{
+            twitter.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.twitter_icon_inactive));
+            twitter.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
+            twitterStatus.setVisibility(View.GONE);
         }
+        Constants.fbShareEnabled = isConnect;
+        twitterCheckBox.setChecked(isConnect);
     }
+    private void facebookProfileConnected(boolean isConnect){
+        if(isConnect){
+            facebookHome.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebook_icon));
+            facebookHome.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
+            facebookHomeStatus.setVisibility(View.VISIBLE);
+            facebookHomeStatus.setText(session.getFacebookName());
+        }else{
+            facebookHome.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebook_icon_inactive));
+            facebookHome.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
+            facebookHomeStatus.setText("");
+        }
+        facebookHomeCheckBox.setChecked(isConnect);
+        Constants.fbShareEnabled = isConnect;
+    }
+    private void facebookAutoPullConnect(boolean isConnect){
+        if (isConnect){
+            ivFbPageAutoPull.setImageResource(R.drawable.facebook_page);
+            ivFbPageAutoPull.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
+            fbPullStatus.setText(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME));
+            fbPullStatus.setVisibility(View.VISIBLE);
+        }else{
+            ivFbPageAutoPull.setImageResource(R.drawable.facebookpage_icon_inactive);
+            ivFbPageAutoPull.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
+            fbPullStatus.setText("");
+        }
+        facebookautopost.setChecked(isConnect);
+    }
+    private void facebookPageConnected(boolean isConnect){
+        if(isConnect){
+            facebookPage.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebook_page));
+            facebookPage.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
+            facebookPageStatus.setVisibility(View.VISIBLE);
+            facebookPageStatus.setText(session.getFacebookPage());
+        }else{
+            facebookPage.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebookpage_icon_inactive));
+            facebookPage.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
 
+            facebookPageStatus.setText("");
+        }
+        facebookPageCheckBox.setChecked(isConnect);
+        Constants.fbPageShareEnabled = isConnect;
+    }
     //check about aleady authenticated
     protected boolean isAuthenticated() {
         return mSharedPreferences.getBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false);
@@ -1352,7 +1169,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
      */
     @Override
     public void nfxCallBack(String response, int callType, String name) {
-        if(pd!=null){
+        if(pd!=null && pd.isShowing()){
             pd.dismiss();
         }
         if(response.equals("error")){
@@ -1362,23 +1179,16 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         BoostLog.d("ggg: ", response + callType + ":");
         switch (callType){
             case FBTYPE:
-                Constants.fbShareEnabled = true;
-                facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon));
-                facebookHome.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
-                facebookHomeCheckBox.setChecked(true);
-                facebookHomeStatus.setVisibility(View.VISIBLE);
-                facebookHomeStatus.setText(name);
+                session.storeFacebookName(name);
+               facebookProfileConnected(true);
                 prefsEditor = pref.edit();
                 prefsEditor.putBoolean("fbShareEnabled", true);
                 prefsEditor.putInt("fbStatus",1);
                 prefsEditor.apply();
                 break;
             case FBPAGETYPE:
-                facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebook_page));
-                facebookPage.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
-                facebookPageStatus.setVisibility(View.VISIBLE);
-                facebookPageStatus.setText("" + name);
-                facebookPageCheckBox.setChecked(true);
+                session.storeFacebookPage(name);
+                facebookPageConnected(true);
                 prefsEditor.putBoolean("fbPageShareEnabled", true);
                 prefsEditor.putInt("fbPageStatus",1);
                 prefsEditor.apply();
@@ -1387,15 +1197,9 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
             case TWITTERTYPE:
                 Constants.twitterShareEnabled = true;
                 SharedPreferences.Editor e = mSharedPreferences.edit();
-                e.putBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, true);
-                e.apply();
-                twitterStatus.setVisibility(View.VISIBLE);
-                twitterStatus.setText("@" + name);
-                twitter.setImageDrawable(getResources().getDrawable(R.drawable.twitter_icon_active));
-                twitter.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
-                //twitterStatus.setText("Connected");
-                twitterCheckBox.setHighlightColor(getResources().getColor(R.color.primaryColor));
-                twitterCheckBox.setChecked(true);
+                e.putBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, true).apply();
+                e.putString(TwitterConnection.PREF_USER_NAME, name).apply();
+                twitterProfileConnect(true);
                 MixPanelController.track(EventKeysWL.CREATE_MESSAGE_ACTIVITY_TWITTER, null);
                 break;
             case FB_PAGE_DEACTIVATION:
@@ -1404,14 +1208,11 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 session.storeFacebookPage("");
                 session.storeFacebookPageID("");
                 session.storeFacebookAccessToken("");
-                facebookPage.setImageDrawable(getResources().getDrawable(R.drawable.facebookpage_icon_inactive));
-                facebookPage.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
-                facebookPageStatus.setVisibility(View.GONE);
+               facebookPageConnected(false);
                 //facebookPageStatus.setText("Disconnected");
                 prefsEditor = pref.edit();
                 prefsEditor.putBoolean("fbPageShareEnabled", false);
                 prefsEditor.apply();
-                facebookPageCheckBox.setChecked(false);
                 break;
             case FB_DECTIVATION:
                 DataBase fb_dataBase = new DataBase(activity);
@@ -1419,24 +1220,19 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 session.storeFacebookName("");
                 //Log.v("ggg",session.getFacebookName()+"deactivate name");
                 session.storeFacebookAccessToken("");
-                facebookHome.setImageDrawable(getResources().getDrawable(R.drawable.facebook_icon_inactive));
-                facebookHome.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
-                facebookHomeStatus.setVisibility(View.GONE);
+                facebookProfileConnected(false);
                 //facebookHomeStatus.setText("Disconnected");
                 prefsEditor = pref.edit();
                 prefsEditor.putBoolean("fbShareEnabled", false);
                 prefsEditor.apply();
                 break;
             case TWITTER_DEACTIVATION:
-                twitterStatus.setVisibility(View.GONE);
-                twitter.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.twitter_icon_inactive));
-                twitter.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
+               twitterProfileConnect(false);
                 logoutFromTwitter();
                 SharedPreferences.Editor twitterPrefEditor = mSharedPreferences.edit();
                 twitterPrefEditor.putBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false);
                 twitterPrefEditor.apply();
                 Constants.twitterShareEnabled = false;
-                twitterCheckBox.setChecked(false);
                 break;
             case PAGE_NO_FOUND:
                 //Methods.materialDialog(activity, "Alert", getString(R.string.look_like_no_facebook_page));
@@ -1590,7 +1386,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                fbPageData(FROM_FB_PAGE);
+                fbData(FROM_FB_PAGE);
             }
         });
 

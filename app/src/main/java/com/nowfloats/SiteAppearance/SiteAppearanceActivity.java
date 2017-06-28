@@ -1,7 +1,7 @@
 package com.nowfloats.SiteAppearance;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -29,8 +29,36 @@ public class SiteAppearanceActivity extends AppCompatActivity {
         siteAppearanceFragment = new SiteAppearanceFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.fm_site_appearance,siteAppearanceFragment).
                 commit();
+
+       /* ViewPager mPager = (ViewPager) findViewById(R.id.ps_pager);
+        PageIndicatorView mIndicator = (PageIndicatorView) findViewById(R.id.ps_indicator);
+        mPager.setClipToPadding(false);
+        mPager.setPadding(70, 50, 70,0);
+        // sets a margin b/w individual pages to ensure that there is a gap b/w them
+        mPager.setPageMargin(30);
+
+        mPager.setAdapter(new PagerThemeAdapter(getSupportFragmentManager()));
+        mIndicator.setViewPager(mPager);*/
     }
 
+    /*public class PagerThemeAdapter extends FragmentStatePagerAdapter {
+
+        FragmentManager manager;
+        public PagerThemeAdapter(FragmentManager fm) {
+            super(fm);
+            manager = fm;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+           return ThemeSelectorFragment.getInstanse(position);
+        }
+
+        @Override
+        public int getCount() {
+            return 4;
+        }
+    }*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {

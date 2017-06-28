@@ -87,7 +87,7 @@ public class BusinessAppPreview extends Fragment {
                 transaction.replace(R.id.card_view_android,frag,"complete");
                 break;
             default:
-                break;
+                return;
         }
         transaction.commit();
     }
@@ -109,7 +109,7 @@ public class BusinessAppPreview extends Fragment {
                 transaction.replace(R.id.card_view_ios,frag,"complete");
                 break;
             default:
-                break;
+                return;
         }
         transaction.commit();
     }

@@ -359,6 +359,7 @@ public class PreSignUpActivity extends AppCompatActivity implements
 
                         @Override
                         public void failure(RetrofitError error) {
+
                             if(pd!=null && pd.isShowing()){
                                 pd.dismiss();
                             }

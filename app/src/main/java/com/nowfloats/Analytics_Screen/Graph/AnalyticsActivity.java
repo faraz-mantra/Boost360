@@ -98,114 +98,102 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
 
         SaveDataCounts saveDataCounts =new SaveDataCounts(AnalyticsActivity.this,tableName);
         DatabaseModel modelResponse =saveDataCounts.getDataArrays();
-        if(modelResponse == null)
-        {
-            rowExist=false;
-            startDate="01-01-"+curYear;
-            details.setData(session.getFpTag(), Constants.clientId,startDate,endDate );
-            //Log.v("ggg",startDate);
-            getEntityList(details);
-        }else
-        {
-            String date=modelResponse.getDate();
-            rowExist=true;
-            Calendar dbCalender = new SimpleDateFormat(pattern, Locale.ENGLISH).getCalendar();
-            startDate =new SimpleDateFormat(pattern, Locale.ENGLISH).format(new Date(Long.valueOf(date)));
-            dbCalender.setTimeInMillis(Long.valueOf(date));
-
-            int dbyear = dbCalender.get(Calendar.YEAR);
-            int dbweekOfMonth = dbCalender.get(Calendar.WEEK_OF_MONTH);
-            int dbdayOfWeek = dbCalender.get(Calendar.DAY_OF_WEEK);
-            int dbmonth = dbCalender.get(Calendar.MONTH);
-
-            int[] dbWeeks = modelResponse.getMonth()!=null ? modelResponse.getMonth():new int[curWeek];
-            int[] dbMonths = modelResponse.getYear()!=null ? modelResponse.getYear():new int[curMonth+1];
-            int[] dbDays = modelResponse.getWeek()!=null ? modelResponse.getWeek():new int[curDay];
-
-            if(curYear!=dbyear)
-            {
+        try {
+            if (modelResponse == null) {
+                rowExist = false;
                 startDate = "01-01-" + curYear;
-            }else if(curMonth!=dbmonth)
-            {
-                if(curMonth>dbmonth)
-                {
-                    months = Arrays.copyOf(dbMonths, curMonth + 1);
+                details.setData(session.getFpTag(), Constants.clientId, startDate, endDate);
+                //Log.v("ggg",startDate);
+                getEntityList(details);
+            } else {
+                String date = modelResponse.getDate();
+                rowExist = true;
+                Calendar dbCalender = new SimpleDateFormat(pattern, Locale.ENGLISH).getCalendar();
+                startDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(new Date(Long.valueOf(date)));
+                dbCalender.setTimeInMillis(Long.valueOf(date));
 
-                    int[] days=Arrays.copyOf(dbDays,dbdayOfWeek);
-                    months[dbmonth]-=days[dbdayOfWeek-1];
+                int dbyear = dbCalender.get(Calendar.YEAR);
+                int dbweekOfMonth = dbCalender.get(Calendar.WEEK_OF_MONTH);
+                int dbdayOfWeek = dbCalender.get(Calendar.DAY_OF_WEEK);
+                int dbmonth = dbCalender.get(Calendar.MONTH);
 
+                int[] dbWeeks = modelResponse.getMonth() != null ? modelResponse.getMonth() : new int[curWeek];
+                int[] dbMonths = modelResponse.getYear() != null ? modelResponse.getYear() : new int[curMonth + 1];
+                int[] dbDays = modelResponse.getWeek() != null ? modelResponse.getWeek() : new int[curDay];
+
+                if (curYear != dbyear) {
+                    startDate = "01-01-" + curYear;
+                } else if (curMonth != dbmonth) {
+                    if (curMonth > dbmonth) {
+                        months = Arrays.copyOf(dbMonths, curMonth + 1);
+
+                        int[] days = Arrays.copyOf(dbDays, dbdayOfWeek);
+                        months[dbmonth] -= days[dbdayOfWeek - 1];
+
+                        yearData = addArray(months);
+                    } else {
+                        startDate = curMonth + 1 + "-01-" + curYear;
+                        months = Arrays.copyOf(dbMonths, curMonth + 1);
+                        months[curMonth] = 0;
+                        yearData = addArray(months);
+                    }
+                } else if (curWeek != dbweekOfMonth) {
+                    if (curWeek > dbweekOfMonth) {
+                        months = Arrays.copyOf(dbMonths, curMonth + 1);
+                        weeks = Arrays.copyOf(dbWeeks, curWeek);
+
+                        int[] days = Arrays.copyOf(dbDays, dbdayOfWeek);
+                        months[dbmonth] -= days[dbdayOfWeek - 1];
+                        weeks[dbweekOfMonth - 1] -= days[dbdayOfWeek - 1];
+
+                        yearData = addArray(months);
+                        monthData = addArray(weeks);
+                    } else {
+                        startDate = curMonth + 1 + "-01-" + curYear;
+                        months = Arrays.copyOf(dbMonths, curMonth + 1);
+                        months[curMonth] = 0;
+                        yearData = addArray(months);
+                    }
+                } else if (dbdayOfWeek != curDay) {
+                    if (dbdayOfWeek < curDay) {
+                        months = Arrays.copyOf(dbMonths, curMonth + 1);
+                        weeks = Arrays.copyOf(dbWeeks, curWeek);
+                        days = Arrays.copyOf(dbDays, curDay);
+                        int deleteData = days[dbdayOfWeek - 1];
+
+                        days[dbdayOfWeek - 1] = 0;
+                        months[dbmonth] -= deleteData;
+                        weeks[dbweekOfMonth - 1] -= deleteData;
+
+                        weekData = addArray(days);
+                        monthData = addArray(weeks);
+                        yearData = addArray(months);
+                    } else {
+                        startDate = curMonth + 1 + "-01-" + curYear;
+                        months = Arrays.copyOf(dbMonths, curMonth + 1);
+                        months[curMonth] = 0;
+                        yearData = addArray(months);
+                    }
+                } else {
+                    weeks = dbWeeks;
+                    months = dbMonths;
+                    days = dbDays;
+
+                    int deleteData = days[curDay - 1];
+                    days[curDay - 1] = 0;
+                    months[curMonth] -= deleteData;
+                    weeks[curWeek - 1] -= deleteData;
+
+                    weekData = addArray(days);
+                    monthData = addArray(weeks);
                     yearData = addArray(months);
                 }
-                else
-                {
-                    startDate = curMonth + 1 + "-01-" + curYear;
-                    months = Arrays.copyOf(dbMonths, curMonth + 1);
-                    months[curMonth] = 0;
-                    yearData = addArray(months);
-                }
-            }else if(curWeek!=dbweekOfMonth)
-            {
-                if(curWeek>dbweekOfMonth)
-                {
-                    months = Arrays.copyOf(dbMonths, curMonth + 1);
-                    weeks= Arrays.copyOf(dbWeeks,curWeek);
-
-                    int[] days=Arrays.copyOf(dbDays,dbdayOfWeek);
-                    months[dbmonth]-=days[dbdayOfWeek-1];
-                    weeks[dbweekOfMonth-1]-=days[dbdayOfWeek-1];
-
-                    yearData = addArray(months);
-                    monthData=addArray(weeks);
-                }
-                else
-                {
-                    startDate = curMonth + 1 + "-01-" + curYear;
-                    months = Arrays.copyOf(dbMonths, curMonth + 1);
-                    months[curMonth] = 0;
-                    yearData = addArray(months);
-                }
-            }else if(dbdayOfWeek!=curDay)
-            {
-                if(dbdayOfWeek<curDay)
-                {
-                    months = Arrays.copyOf(dbMonths, curMonth + 1);
-                    weeks= Arrays.copyOf(dbWeeks,curWeek);
-                    days=Arrays.copyOf(dbDays,curDay);
-                    int deleteData=days[dbdayOfWeek-1];
-
-                    days[dbdayOfWeek-1]=0;
-                    months[dbmonth]-=deleteData;
-                    weeks[dbweekOfMonth-1]-=deleteData;
-
-                    weekData=addArray(days);
-                    monthData=addArray(weeks);
-                    yearData = addArray(months);
-                }
-                else
-                {
-                    startDate = curMonth + 1 + "-01-" + curYear;
-                    months = Arrays.copyOf(dbMonths, curMonth + 1);
-                    months[curMonth] = 0;
-                    yearData = addArray(months);
-                }
-            }else
-            {
-                weeks = dbWeeks;
-                months = dbMonths;
-                days = dbDays;
-
-                int deleteData=days[curDay-1];
-                days[curDay-1]=0;
-                months[curMonth]-=deleteData;
-                weeks[curWeek-1]-=deleteData;
-
-                weekData=addArray(days);
-                monthData=addArray(weeks);
-                yearData = addArray(months);
+                //Log.v("ggg",startDate);
+                details.setData(session.getFpTag(), Constants.clientId, startDate, endDate);
+                getEntityList(details);
             }
-            //Log.v("ggg",startDate);
-            details.setData(session.getFpTag(), Constants.clientId, startDate, endDate);
-            getEntityList(details);
+        }catch(Exception e){
+
         }
     }
 

@@ -170,7 +170,8 @@ public class SiteAppearanceFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        HomeActivity.headerText.setText(getResources().getString(R.string.side_panel_site_appearance));
+        if(HomeActivity.headerText != null)
+            HomeActivity.headerText.setText(getResources().getString(R.string.side_panel_site_appearance));
     }
 
     private void showFeedBackDialog(){
