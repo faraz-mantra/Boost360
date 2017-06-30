@@ -187,18 +187,19 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         arrowTextView = (TextView)findViewById(R.id.guidelines_arrow_text);
         //Quikr added
         CardView card = (CardView) findViewById(R.id.quikr_card);
-        final String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
 
-         /* if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
+          if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
             card.setVisibility(View.GONE);
-        }else {*/
-        if("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
-            for (String category : quikrArray) {
-                if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
-                    card.setVisibility(View.VISIBLE);
-                    break;
-                }
-            }
+        }else {
+              final String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
+              if ("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
+                  for (String category : quikrArray) {
+                      if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
+                          card.setVisibility(View.VISIBLE);
+                          break;
+                      }
+                  }
+              }
         }
 
         facebookHomeStatus.setTypeface(myCustomFont);
@@ -1180,7 +1181,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         switch (callType){
             case FBTYPE:
                 session.storeFacebookName(name);
-               facebookProfileConnected(true);
+                facebookProfileConnected(true);
                 prefsEditor = pref.edit();
                 prefsEditor.putBoolean("fbShareEnabled", true);
                 prefsEditor.putInt("fbStatus",1);
