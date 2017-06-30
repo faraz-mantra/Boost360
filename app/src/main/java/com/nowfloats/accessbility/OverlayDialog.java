@@ -51,12 +51,16 @@ public class OverlayDialog extends AppCompatActivity {
                         @Override
                         public void onPositive(MaterialDialog dialog) {
                             super.onPositive(dialog);
-
-                            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                            dialog.dismiss();
-                            finish();
+                            try {
+                                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                            }catch(Exception e){
+                                e.printStackTrace();
+                            }finally {
+                                dialog.dismiss();
+                                finish();
+                            }
                         }
                     }).show();
         }

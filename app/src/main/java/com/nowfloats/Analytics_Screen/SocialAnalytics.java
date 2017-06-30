@@ -102,22 +102,26 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
             addFragment(LOGIN_FACEBOOK,FACEBOOK);
         }
 
-        String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
-        //Log.v("ggg",quikrArray[3]+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase());
-        if("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
-            for (String category : quikrArray) {
-                if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
-                    spinner.setVisibility(View.VISIBLE);
-                    break;
+        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+            spinner.setVisibility(View.GONE);
+        }else {
+            String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
+            //Log.v("ggg",quikrArray[3]+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase());
+            if ("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
+                for (String category : quikrArray) {
+                    if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
+                        spinner.setVisibility(View.VISIBLE);
+                        break;
+                    }
                 }
             }
+            spinner.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    initiatePopupWindow(spinner);
+                }
+            });
         }
-        spinner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initiatePopupWindow(spinner);
-            }
-        });
 
     }
     private void initiatePopupWindow(View image) {

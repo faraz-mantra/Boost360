@@ -5,8 +5,6 @@
     android:versionCode="2017050031"
     android:versionName="4.6.6">
 
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
