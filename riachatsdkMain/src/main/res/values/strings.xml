@@ -11,10 +11,11 @@
     <string name="house_no_warn">House No can\'t be empty</string>
     <string name="empty_country_warn">Country can\'t be empty</string>
     <string name="empty_pin_warn">Pin can\'t be empty</string>
+    <string name="pin_code_length_error">pincode length cannot be more than size.Please enter valid pincode</string>
     <string name="chat_agent_name">Ria</string>
     <string name="chat_agent_name_full">(Relationship Intelligence Agent)</string>
     <string name="house_plot_num">HOUSE/PLOT NUMBER</string>
-    <string name="locality">STREET ADDRESS 2 (OPTIONAL)</string>
+    <string name="street_address_opt">STREET ADDRESS 2 (OPTIONAL)</string>
     <string name="land_mark">LANDMARK (OPTIONAL)</string>
 
     <string name="business_name">BUSINESS NAME</string>
@@ -37,5 +38,22 @@
 
     <string name="settings_tou_url">https://nowfloats.com/tnc/</string>
     <string name="settings_privacy_url">https://nowfloats.com/privacy/</string>
+    <string name="you_can_move_pinch_zoom_map_to_exact_location">"You can move,pinch,zoom the map to exact location."</string>
+
+
+    <string name="sure_lets_go">Sure, let\'s go</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="no_i_dont_want_to_change_details">No, I don’t want to change details.</string>
+    <string name="yes_i_want_to_make_changes">Yes, I want to make changes.</string>
+
+    <string name="server_error_content">Something has gone wrong on our side,
+so I am going to shift all the information you have shared with me to a manual form. Just click  “Create My Website” there and it should work. Cool?.</string>
+
+
+    <string name="edit_title">Are you looking to edit this \n information?</string>
+    <string name="edit_content">In that case, I would need to shift all the information you have
+        shared with me to a manual form. Since you\'ve already verified your mobile number with an OTP, you dont need to do it again.</string>
 
 </resources>

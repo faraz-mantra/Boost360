@@ -87,6 +87,7 @@ public class Util {
         DataOutputStream outputStream = null;
         try {
 
+
             Thread.sleep(1000);
             URL new_url = new URL(serverUrl);
             HttpURLConnection connection = (HttpURLConnection) new_url
@@ -689,17 +690,17 @@ public class Util {
         if (originalDay.startsWith("0"))
             originalDay = originalDay.replace("0", "");
 
-        if (originalDay.equals("01") || originalDay.equals("1")
-                || originalDay.equals("21") || originalDay.equals("31"))
-            day = originalDay + "";
-        else if (originalDay.equals("02") || originalDay.equals("2")
-                || originalDay.equals("22"))
-            day = originalDay + "";
-        else if (originalDay.equals("03") || originalDay.equals("3")
-                || originalDay.equals("23"))
-            day = originalDay + "";
-
-        else
+//        if (originalDay.equals("01") || originalDay.equals("1")
+//                || originalDay.equals("21") || originalDay.equals("31"))
+//            day = originalDay + "";
+//        else if (originalDay.equals("02") || originalDay.equals("2")
+//                || originalDay.equals("22"))
+//            day = originalDay + "";
+//        else if (originalDay.equals("03") || originalDay.equals("3")
+//                || originalDay.equals("23"))
+//            day = originalDay + "";
+//
+//        else
             day = originalDay + "";
 
         return day;

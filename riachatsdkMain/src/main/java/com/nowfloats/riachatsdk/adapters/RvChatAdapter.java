@@ -1,6 +1,8 @@
 package com.nowfloats.riachatsdk.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -8,7 +10,12 @@ import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.URLSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +40,9 @@ import com.bumptech.glide.Glide;
 import com.nowfloats.riachatsdk.CustomWidget.AVLoadingIndicatorView;
 import com.nowfloats.riachatsdk.CustomWidget.playpause.PlayPauseView;
 import com.nowfloats.riachatsdk.R;
+import com.nowfloats.riachatsdk.activities.ChatViewActivity;
+import com.nowfloats.riachatsdk.activities.ChatWebViewActivity;
+import com.nowfloats.riachatsdk.fragments.CustomDialogFragment;
 import com.nowfloats.riachatsdk.interfaces.IConfirmationCallback;
 import com.nowfloats.riachatsdk.models.RiaCardModel;
 import com.nowfloats.riachatsdk.models.Section;
@@ -171,7 +181,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 section.setIsAnimApplied(true);
             }
 
-            cardViewHolder.tvCurrentPos.setText(section.getCardPos()+"");
+            cardViewHolder.tvCurrentPos.setText(section.getCardPos() + "");
             cardViewHolder.tvTotalCount.setText("6");
 
             /*((LinearLayout) cardViewHolder.itemView).setGravity(Gravity.RIGHT);
@@ -355,31 +365,52 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             final FormViewHolder formViewHolder = (FormViewHolder) holder;
 
             formViewHolder.tvBusinessName.setText(mDataMap.get("[~BUSINESS_NAME]") + "");
-            formViewHolder.tvPhoneNumber.setText(mDataMap.get("[~PHONE]") + "");
+            formViewHolder.tvPhoneNumber.setText(mDataMap.get("[~COUNTRYCODE]") + mDataMap.get("[~PHONE]") + "");
             formViewHolder.tvCategory.setText(mDataMap.get("[~BUSINESS_CATEGORY]") + "");
-            formViewHolder.tvAddress.setText(mDataMap.get("[~STREET_ADDRESS]") +","+ mDataMap.get("[~CITY]") +","+ mDataMap.get("[~COUNTRY]")+"");
-            formViewHolder.tvEmailAddress.setText(mDataMap.get("[~EMAIL]")+"");
-            formViewHolder.tvWesiteURL.setText("https://"+mDataMap.get("[~TAG]") + ".nowfloats.com");
+            formViewHolder.tvAddress.setText(mDataMap.get("[~STREET_ADDRESS]") + ", " + mDataMap.get("[~CITY]") + ", " + mDataMap.get("[~COUNTRY]") + "");
+            formViewHolder.tvEmailAddress.setText(mDataMap.get("[~EMAIL]") + "");
+            formViewHolder.tvWebsiteURL.setText("https://" + mDataMap.get("[~TAG]") + ".nowfloats.com");
 
-            if(section.isAnimApplied()){
-                formViewHolder.btnCreateWebsite.setVisibility(View.GONE);
-            }else{
-                formViewHolder.btnCreateWebsite.setVisibility(View.VISIBLE);
+            CharSequence charSequence = Html.fromHtml("By clicking on 'Create my site' you agree to our " +
+                    "<a href=\"" + mContext.getString(R.string.settings_tou_url) + "\"><u>Terms</u></a> and <a href=\"" + mContext.getString(R.string.settings_privacy_url) + "\"><u>Privacy Policy</u></a>.");
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(charSequence);
+            makeLinkClickable(spannableStringBuilder, charSequence);
+
+            formViewHolder.tvtermAndPolicy.setMovementMethod(LinkMovementMethod.getInstance());
+            formViewHolder.tvtermAndPolicy.setText(spannableStringBuilder);
+
+            if (section.isAnimApplied()) {
+                formViewHolder.btnCreateWebsite.setEnabled(false);
+                formViewHolder.btnCreateWebsite.setClickable(false);
+                formViewHolder.btnCreateWebsite.setBackgroundResource(R.drawable.done_button_bg_grey);
+            } else {
+                formViewHolder.btnCreateWebsite.setEnabled(true);
+                formViewHolder.btnCreateWebsite.setClickable(true);
+                formViewHolder.btnCreateWebsite.setBackgroundResource(R.drawable.done_button_bg);
             }
 
+
+            formViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((ChatViewActivity) mContext).showCustomDialog(
+                            CustomDialogFragment.DialogFrom.CREATE_MY_SITE);
+                }
+            });
 
             formViewHolder.btnCreateWebsite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     section.setIsAnimApplied(true);
-                    formViewHolder.btnCreateWebsite.setVisibility(View.GONE);
+                    formViewHolder.btnCreateWebsite.setEnabled(false);
+                    formViewHolder.btnCreateWebsite.setClickable(false);
+                    formViewHolder.btnCreateWebsite.setBackgroundResource(R.drawable.done_button_bg_grey);
 
                     mConfirmationCallback.onCardResponse(Constants.ConfirmationType.SUBMIT_FORM,
                             "",
                             "");
                 }
             });
-
 
 
         } else if (holder instanceof AddressCardViewHolder) {
@@ -420,10 +451,17 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }*/
 
         } else if (holder instanceof TextViewHolder) {
+
             final TextViewHolder textViewHolder = (TextViewHolder) holder;
 
+
+            CharSequence charSequence = Html.fromHtml(section.getText());
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(charSequence);
+            makeLinkClickable(spannableStringBuilder, charSequence);
+
             textViewHolder.tvMessageText.setMovementMethod(LinkMovementMethod.getInstance());
-            textViewHolder.tvMessageText.setText(Html.fromHtml(section.getText()));
+            textViewHolder.tvMessageText.setText(spannableStringBuilder);
+
 
             if (section.isShowDate()) {
                 textViewHolder.tvDateTime.setVisibility(View.VISIBLE);
@@ -530,6 +568,14 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 } else {
                 }
             }
+
+            imageViewHolder.ivMainImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((ChatViewActivity) mContext).showImageDilaog(section.getUrl());
+                }
+            });
+
         } else if (holder instanceof GifViewHolder) {
             GifViewHolder imageViewHolder = (GifViewHolder) holder;
             if (section.isShowDate()) {
@@ -703,6 +749,30 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
+    protected void makeLinkClickable(SpannableStringBuilder sp, CharSequence charSequence) {
+
+        URLSpan[] spans = sp.getSpans(0, charSequence.length(), URLSpan.class);
+
+        for (final URLSpan urlSpan : spans) {
+
+            ClickableSpan clickableSpan = new ClickableSpan() {
+                public void onClick(View view) {
+                    Log.e("urlSpan", urlSpan.getURL());
+
+                    Intent intent = new Intent(mContext, ChatWebViewActivity.class);
+                    intent.putExtra(ChatWebViewActivity.KEY_URL, urlSpan.getURL());
+                    mContext.startActivity(intent);
+
+                    ((Activity) mContext).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+            };
+
+            sp.setSpan(clickableSpan, sp.getSpanStart(urlSpan),
+                    sp.getSpanEnd(urlSpan), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+        }
+
+    }
+
     public class TextViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvMessageText, tvDateTime;
@@ -720,7 +790,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private class CardViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvConfirmationText, tvDateTime, tvConfirmedHintText,tvTotalCount,tvCurrentPos;
+        TextView tvConfirmationText, tvDateTime, tvConfirmedHintText, tvTotalCount, tvCurrentPos;
         View itemView;
         LinearLayout llBubbleContainer;
 
@@ -762,7 +832,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     private class FormViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvBusinessName, tvPhoneNumber, tvCategory, tvAddress, tvEmailAddress, tvWesiteURL;
+        TextView tvBusinessName, tvPhoneNumber, tvCategory, tvAddress, tvEmailAddress, tvWebsiteURL, tvtermAndPolicy;
         View itemView;
         Button btnCreateWebsite;
 
@@ -775,7 +845,8 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             this.tvCategory = (TextView) itemView.findViewById(R.id.tvCategory);
             this.tvAddress = (TextView) itemView.findViewById(R.id.tvAddress);
             this.tvEmailAddress = (TextView) itemView.findViewById(R.id.tvEmailAddress);
-            this.tvWesiteURL = (TextView) itemView.findViewById(R.id.tvWebsiteURL);
+            this.tvWebsiteURL = (TextView) itemView.findViewById(R.id.tvWebsiteURL);
+            this.tvtermAndPolicy = (TextView) itemView.findViewById(R.id.tvtermAndPolicy);
             this.btnCreateWebsite = (Button) itemView.findViewById(R.id.btnCreateWebsite);
 
         }

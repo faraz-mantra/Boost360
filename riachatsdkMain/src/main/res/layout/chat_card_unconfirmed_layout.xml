@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"
+    android:layout_marginLeft="@dimen/margin_20"
+    android:layout_marginRight="@dimen/margin_20"
     android:layout_marginTop="8dp"
     android:visibility="visible"
     app:cardBackgroundColor="@color/white"
@@ -23,9 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:paddingRight="15dp"
-            android:paddingLeft="15dp"
             android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:text="@string/confirm_business_name"
             android:textSize="12sp"
             android:visibility="visible" />
@@ -39,7 +39,7 @@
             android:paddingBottom="@dimen/margin_35"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:paddingTop="15dp"
+            android:paddingTop="10dp"
             android:text="hfushfhksdhf"
             android:textColor="@android:color/black"
             android:textSize="22sp" />
@@ -48,6 +48,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginTop="@dimen/margin_5"
             android:background="#e3e3e3" />
 
 

@@ -1,5 +1,80 @@
 [
     {
+        "Name": "Website Screenshot 2",
+        "Id": "58e4e02fc7d8bf4a08b44beb",
+        "Emotion": "Cool",
+        "TimeoutInMs": 10000,
+        "NodeType": "Combination",
+        "Sections": [
+            {
+                "Text": "Here's what your site looks like now!",
+                "SectionType": "Text",
+                "DelayInMs": 925,
+                "Hidden": false,
+                "_id": "58e4e02fc7d8bf4a08b44bf1"
+            },
+            {
+                "HeightInPixels": 0,
+                "WidthInPixels": 0,
+                "Url": "https://d388w23p6r1vqc.cloudfront.net/AKIAJG3CT5OQ4AWJLDAQ/2014/10/Nowfloats-lead.jpg",
+                "SizeInKb": 0,
+                "SectionType": "Image",
+                "DelayInMs": 0,
+                "Hidden": false,
+                "_id": "58e4e02fc7d8bf4a08b44bf2"
+            }
+        ],
+        "Buttons": [
+            {
+                "ButtonText": "Awesome! Tell me more",
+                "Emotion": "Cool",
+                "ButtonType": "NextNode",
+                "NextNodeId": "58e342a7b02a29234844419c",
+                "DefaultButton": false,
+                "Hidden": false,
+                "PostToChat": true,
+                "_id": "58e4ec2ec7d8bf4a08b44cfb"
+            }
+        ]
+    },
+    {
+        "Name": "Get Name",
+        "Id": "58cfb491c782bb5a241de4a5",
+        "Emotion": "Cool",
+        "TimeoutInMs": 15000,
+        "NodeType": "Combination",
+        "Sections": [
+            {
+                "Text": "<a href=\"https://www.nowfloats.com/Tnc\">Terms & Conditions</a> and <a href=\"https://www.nowfloats.com/Privacy\">Privacy Policy</a>",
+                "SectionType": "Text",
+                "DelayInMs": 1500,
+                "Hidden": false,
+                "_id": "58cfb8bfc782bb4ad0ab9a0d"
+            },
+            {
+                "Text": " What's your first name?",
+                "SectionType": "Text",
+                "DelayInMs": 971,
+                "Hidden": false,
+                "_id": "593f7f8eb02a290a904f05e6"
+            }
+        ],
+        "Buttons": [
+            {
+                "ButtonText": "▶",
+                "Emotion": "Cool",
+                "ButtonType": "GetText",
+                "NextNodeId": "58cfb992c782bb4ad0ab9a66",
+                "DefaultButton": false,
+                "Hidden": false,
+                "PlaceholderText": "Enter your name",
+                "PostToChat": true,
+                "_id": "58cfb914c782bb4ad0ab9a5a"
+            }
+        ],
+        "VariableName": "PERSON_NAME"
+    },
+    {
         "Name": "1st FB Page",
         "Id": "58e2f903b02a2927fc4dba45",
         "Emotion": "Cool",
@@ -1064,42 +1139,41 @@
         "CardFooter": "CONFIRMED EMAIL ADDRESS",
         "Placement": "Outgoing"
     },
-    {
-        "Name": "Get Name",
-        "Id": "58cfb491c782bb5a241de4a5",
+	{
+        "Name": "T n C Confirmation",
+        "Id": "58e2555db02a292428975111",
         "Emotion": "Cool",
         "TimeoutInMs": 15000,
         "NodeType": "Combination",
         "Sections": [
             {
-                "Text": "<a href=\"https://www.nowfloats.com/Tnc\">Terms & Conditions</a> and <a href=\"https://www.nowfloats.com/Privacy\">Privacy Policy</a>",
+                "Text": "Here are terms and conditions",
                 "SectionType": "Text",
                 "DelayInMs": 1500,
                 "Hidden": false,
-                "_id": "58cfb8bfc782bb4ad0ab9a0d"
+                "_id": "58e25584b02a292428975a01"
             },
             {
-                "Text": " What's your first name?",
+                "Text": "<a href=\"https://nowfloats.com/Tnc>Terms & Conditions\"</a> and <a href=\"https://nowfloats.com/Privacy>Privacy Policy\"</a>",
                 "SectionType": "Text",
-                "DelayInMs": 971,
+                "DelayInMs": 1500,
                 "Hidden": false,
-                "_id": "593f7f8eb02a290a904f05e6"
+                "_id": "58e26f90b02a2900843633fa"
             }
         ],
         "Buttons": [
             {
-                "ButtonText": "▶",
+                "ButtonText": "I agree",
                 "Emotion": "Cool",
-                "ButtonType": "GetText",
-                "NextNodeId": "58cfb992c782bb4ad0ab9a66",
+                "ButtonType": "ShowConfirmation",
+                "NextNodeId": "58daf13d443f862698122eb1",
                 "DefaultButton": false,
                 "Hidden": false,
-                "PlaceholderText": "Enter your name",
-                "PostToChat": true,
-                "_id": "58cfb914c782bb4ad0ab9a5a"
+                "PostToChat": false,
+                "_id": "58e270d9b02a290084363327"
             }
         ],
-        "VariableName": "PERSON_NAME"
+        "VariableName": ""
     },
     {
         "Name": "Type Business Description",

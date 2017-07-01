@@ -23,6 +23,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -54,6 +55,7 @@ import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.bumptech.glide.Glide;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.jakewharton.retrofit.Ok3Client;
@@ -62,6 +64,7 @@ import com.nowfloats.riachatsdk.adapters.RvButtonsAdapter;
 import com.nowfloats.riachatsdk.adapters.RvChatAdapter;
 import com.nowfloats.riachatsdk.animators.ChatItemAnimator;
 import com.nowfloats.riachatsdk.fragments.CreateMySiteFragment;
+import com.nowfloats.riachatsdk.fragments.CustomDialogFragment;
 import com.nowfloats.riachatsdk.fragments.PickAddressFragment;
 import com.nowfloats.riachatsdk.helpers.ChatLogger;
 import com.nowfloats.riachatsdk.helpers.DeviceDetails;
@@ -95,6 +98,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import it.sephiroth.android.library.imagezoom.ImageViewTouch;
 import okhttp3.OkHttpClient;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -135,12 +139,16 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     private RequestQueue mRequestQueue;
     private CreateMySiteFragment createMySiteFragment;
     private PickAddressFragment pickAddressFragment;
+    private CustomDialogFragment customDialogFragment;
     private FileUploadResultReceiver mReceiver;
     private ImageView ivAgentIcon;
     private TextView tvRiaTyping;
     private FrameLayout flConfirmationCard;
     private boolean mIsPreviousTypeCard = false;
     private ProgressBar progressBar;
+
+    private DisplayMetrics displayMetrics;
+    private boolean isFPCreated = false;
     private Runnable mAutoCallRunnable = new Runnable() {
         @Override
         public void run() {
@@ -192,7 +200,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         /*pg = new ProgressDialog(this);
         pg.setMessage(getString(R.string.please_wait));
         pg.setCancelable(false);*/
-
+        displayMetrics = getResources().getDisplayMetrics();
         rvChatData = (RecyclerView) findViewById(R.id.rv_chat_data);
         rvButtonsContainer = (RecyclerView) findViewById(R.id.rv_reply_button_container);
         cvChatInput = (LinearLayout) findViewById(R.id.cv_chat_input);
@@ -267,8 +275,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 //                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 //                }
 
-                login();
-
+//                login();
+                skip();
             }
         });
 
@@ -349,7 +357,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             }
         });
 
-
         rvChatData.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -374,7 +381,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 FileUploadResultReceiver(new Handler());
 
         fetchChatJson();
-
     }
 
 
@@ -522,6 +528,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     }
 
     private int cardCount = 0;
+
     private void replyToRia(String type, final RiaCardModel riaCardModel, boolean isReplace) {
 
         mHandler.removeCallbacks(mAutoCallRunnable);
@@ -540,8 +547,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             }
         }*/
 
-        if(type.equalsIgnoreCase(Constants.SectionType.TYPE_CARD)
-                || type.equalsIgnoreCase(Constants.SectionType.TYPE_ADDRESS_CARD)){
+        if (type.equalsIgnoreCase(Constants.SectionType.TYPE_CARD)
+                || type.equalsIgnoreCase(Constants.SectionType.TYPE_ADDRESS_CARD)) {
             section.setCardPos(++cardCount);
         }
         section.setFromRia(false);
@@ -696,6 +703,35 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     }
 
 
+    public void showImageDilaog(String url) {
+        final Dialog dialog = new Dialog(ChatViewActivity.this);
+        dialog.setContentView(R.layout.image_dialog_layout);
+
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.width = displayMetrics.widthPixels;
+        params.height = displayMetrics.heightPixels / 2;
+        dialog.getWindow().setAttributes((WindowManager.LayoutParams) params);
+
+
+        ImageViewTouch ivContent = (ImageViewTouch) dialog.findViewById(R.id.ivContent);
+
+        Glide.with(ChatViewActivity.this)
+                .load(getParsedPrefixPostfixText(url))
+                .fitCenter()
+                .placeholder(R.drawable.default_product_image)
+                .into(ivContent);
+
+        ImageView ivClose = (ImageView) dialog.findViewById(R.id.ivClose);
+        ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
     private void createmySite(final Button btn) {
         createMySiteFragment = CreateMySiteFragment.newInstance((HashMap<String, String>) mDataMap);
 
@@ -818,6 +854,59 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         }
 
         finish();
+    }
+
+    public static final String Save_Name = "nameKey";
+    public static final String Save_Cat = "categoryKey";
+    public static final String Save_Phone = "phoneNumberKey";
+    public static final String Save_Phone_code = "phoneCodeKey";
+    public static final String Save_Email = "emailKey";
+    public static final String Save_Country = "countryKey";
+    public static final String Save_City = "cityKey";
+    public static final String Save_Lat = "ria_latKey";
+    public static final String Save_Lng = "ria_lngKey";
+
+    public static final String Save_Website_Address = "websiteAdressKey";
+    public static final String Save_Otp = "otpKey";
+    public static final String Save_IS_FP_AVAILABLE = "isFPAvailable";
+    public static final String Save_Pin_Code = "pincodeKey";
+    public static final String Save_Street_Address = "streetAddressKey";
+    public static final String Save_Locality = "localityKey";
+
+    private void skip() {
+
+        Bundle mBundle = new Bundle();
+
+        mBundle.putString(Save_Name, mDataMap.get("[~BUSINESS_NAME]"));
+        mBundle.putString(Save_Cat, mDataMap.get("[~BUSINESS_CATEGORY]"));
+        mBundle.putString(Save_City, mDataMap.get("[~CITY]"));
+        mBundle.putString(Save_Country, mDataMap.get("[~COUNTRY]"));
+        mBundle.putString(Save_Email, mDataMap.get("[~EMAIL]"));
+
+        if (mDataMap.containsKey("[~PHONE]")) {
+            mBundle.putString(Save_Phone, mDataMap.get("[~PHONE]"));
+            mBundle.putString(Save_Phone_code, mDataMap.get("[~COUNTRYCODE]"));
+        }
+
+        mBundle.putString(Save_Website_Address, mDataMap.get("[~TAG]"));
+        mBundle.putString(Save_Pin_Code, mDataMap.get("[~PINCODE]"));
+        mBundle.putString(Save_Street_Address, mDataMap.get("[~STREET_ADDRESS]"));
+        mBundle.putString(Save_Locality, mDataMap.get("[~PICK_LANDMARK]"));
+        mBundle.putString(Save_Otp, mDataMap.get("[~IsOTPValid]"));
+        mBundle.putString(Save_IS_FP_AVAILABLE, mDataMap.get("[~IsFPTagAvailable]"));
+        mBundle.putString(Save_Lat, mDataMap.get("[~LAT]"));
+        mBundle.putString(Save_Lng, mDataMap.get("[~LNG]"));
+
+        Intent intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("nowfloats://com.riasdk.skip/riachat"));
+        intent.putExtra("mBundle", mBundle);
+        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+        intent.setAction(Intent.ACTION_VIEW);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            finish();
+        }
     }
 
     private void askLocationPermission() {
@@ -1076,8 +1165,15 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         /*
                          * hardcoded for fptag
                          */
-                        if (node.getId().equalsIgnoreCase("58db0a6cc7d8bf2c80901ce7") || node.getId().equalsIgnoreCase("5942a8d3c7d8bf95b0320b19")) {
+                        if (node.getId().equalsIgnoreCase("58db0a6cc7d8bf2c80901ce7")
+                                || node.getId().equalsIgnoreCase("5942a8d3c7d8bf95b0320b19")) {
                             etChatInput.setInputType(InputType.TYPE_CLASS_TEXT);
+                        } else if (node.getId().equalsIgnoreCase("5943e654c7d8bf85885c0893")
+                                || node.getId().equalsIgnoreCase("58e2555db02a2924289750a0")) {
+                            /*
+                             * business updates,business description
+                             */
+                            etChatInput.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
                         }
 
                         if (TextUtils.isEmpty(tvPostfix.getText().toString())) {
@@ -1216,6 +1312,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             public void onErrorResponse(VolleyError error) {
                 //TODO: shopw unable to process
 //                progressBar.setVisibility(View.GONE);
+                showCustomDialog(CustomDialogFragment.DialogFrom.SKIP);
             }
         });
 
@@ -1275,6 +1372,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 //pg.dismiss();
                 error.printStackTrace();
                 progressBar.setVisibility(View.GONE);
+                showCustomDialog(CustomDialogFragment.DialogFrom.SKIP);
                 //(RiaOnBoardingActivity.this, getString(R.string.something_went_wrong));
             }
         });
@@ -1338,6 +1436,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         //TODO: show the typing
 
         if (node.getApiUrl().equalsIgnoreCase(CREATE_FP_URL)) {
+            isFPCreated = true;
             progressBar.setVisibility(View.VISIBLE);
         }
         StringBuilder urlBuilder = new StringBuilder(node.getApiUrl());
@@ -1383,6 +1482,10 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                             e.printStackTrace();
                             //TODO:Add unable to process in the sectionList
                         }
+
+//                        if (node.getApiUrl().equalsIgnoreCase(CREATE_FP_URL)) {
+//                            isFPCreated = true;
+//                        }
                         progressBar.setVisibility(View.GONE);
 
                     }
@@ -1392,9 +1495,13 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 Log.d("Hello", "Error");
                 progressBar.setVisibility(View.GONE);
 
+//                if (node.getApiUrl().equalsIgnoreCase(CREATE_FP_URL)) {
+//                    tvSkip.setVisibility(View.VISIBLE);
+//                }
                 if (node.getApiUrl().equalsIgnoreCase(CREATE_FP_URL)) {
-                    tvSkip.setVisibility(View.VISIBLE);
+                    isFPCreated = false;
                 }
+                showCustomDialog(CustomDialogFragment.DialogFrom.SKIP);
 
                 //TODO:Add unable to process in the sectionList
             }
@@ -1435,7 +1542,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 }, new com.android.volley.Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                showCustomDialog(CustomDialogFragment.DialogFrom.SKIP);
                 //TODO:Add unable to process in the sectionList
             }
         }) {
@@ -1500,13 +1607,13 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     @Override
     public void onCardResponse(String confirmationType, String... data) {
 
-        if(TextUtils.isEmpty(data[1])){
+        if (TextUtils.isEmpty(data[1])) {
             switch (confirmationType) {
                 case Constants.ConfirmationType.SUBMIT_FORM:
                     showNextNode(mNextNodeId);
                     break;
             }
-        }else{
+        } else {
             RiaCardModel nextNode = getNextNode(data[1]);
             if (nextNode != null && (nextNode.getNodeType().equals(Constants.NodeType.TYPE_CARD) && nextNode.getPlacement().equals("Outgoing")) ||
                     nextNode.getNodeType().equals(Constants.NodeType.TYPE_API_CALL)) {
@@ -1581,5 +1688,28 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+
+    public void showCustomDialog(
+            final CustomDialogFragment.DialogFrom dialogFrom) {
+
+        if(!isFPCreated){
+
+            customDialogFragment = CustomDialogFragment.newInstance(dialogFrom);
+            customDialogFragment.show(getFragmentManager(), "Test");
+            customDialogFragment.setResultListener(new CustomDialogFragment.OnResultReceive() {
+                @Override
+                public void createmysite() {
+                    customDialogFragment.dismiss();
+                    skip();
+                }
+
+                @Override
+                public void dismissPopup() {
+                    customDialogFragment.dismiss();
+                }
+            });
+        }
     }
 }
