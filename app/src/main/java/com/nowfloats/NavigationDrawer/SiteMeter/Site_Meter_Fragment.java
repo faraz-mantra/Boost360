@@ -1055,7 +1055,7 @@ public class Site_Meter_Fragment extends Fragment {
         hashMap.put("lng", get_fp_details_model.getLng());
         hashMap.put("phoneISDCode", get_fp_details_model.getCountryPhoneCode());
         if (get_fp_details_model.getCategory() != null && get_fp_details_model.getCategory().size() > 0)
-            hashMap.put("primaryCategory", get_fp_details_model.getCategory().get(0));
+            hashMap.put("primaryCategory", get_fp_details_model.getCategory().get(0).getKey());
         else
             hashMap.put("primaryCategory", "");
         hashMap.put("primaryNumber", get_fp_details_model.getPrimaryNumber());

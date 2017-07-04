@@ -130,6 +130,8 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
             popup = new PopupWindow(this);
             View layout = LayoutInflater.from(this).inflate(R.layout.pop_up_window, null);
             popup.setContentView(layout);
+            popup.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
+            popup.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
             popup.setOutsideTouchable(true);
             popup.setFocusable(true);
             popup.showAsDropDown(image,-10,0);
@@ -276,8 +278,6 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
                     frag = LoginFragment.getInstance(facebookStatus);
 
                 transaction.replace(R.id.linearlayout,frag,"LoginFragment").commit();
-                break;
-            default:
                 break;
         }
     }

@@ -72,7 +72,6 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
     CirclePageIndicator mIndicator;
     Address lastKnownAddress;
     FrameLayout mainScreen;
-    TextView belowText;
     /*final Facebook facebook = new Facebook(Constants.FACEBOOK_API_KEY);
     AsyncFacebookRunner mAsyncRunner = new AsyncFacebookRunner(facebook);*/
     String access_token;
@@ -110,16 +109,15 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
         TextView signUpEmailText = (TextView) findViewById(R.id.create_txt);
         signUpEmailText.setTypeface(robotoRegular);
 
-        TextView loginText = (TextView) findViewById(R.id.pre_signUp_bottom_text);
-        loginText.setTypeface(robotoRegular);
-
         TextView onlyLoginText = (TextView) findViewById(R.id.onlyloginText);
         onlyLoginText.setTypeface(robotoRegular);
 
         callbackManager = CallbackManager.Factory.create();
 
         mainScreen = (FrameLayout) findViewById(R.id.mainLayout);
-        belowText = (TextView) findViewById(R.id.pre_signUp_bottom_text);
+        TextView belowText = (TextView) findViewById(R.id.pre_signUp_bottom_text);
+        belowText.setTypeface(robotoRegular);
+
         session = new UserSessionManager(getApplicationContext(), PreSignUp_MainActivity.this);
         signUpButton = (LinearLayout) findViewById(R.id.pre_signup_create);
         signUpButton.setOnClickListener(new View.OnClickListener() {

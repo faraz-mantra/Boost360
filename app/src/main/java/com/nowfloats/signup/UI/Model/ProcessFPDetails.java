@@ -59,8 +59,8 @@ public class ProcessFPDetails {
             //String category = get_fp_details_model.Category.get(0);
             try{
                 if(get_fp_details_model.Category!=null && get_fp_details_model.Category.size()>0){
-                    session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY, get_fp_details_model.Category.get(0));
-                    MixPanelController.setProperties("Category",get_fp_details_model.Category.get(0));
+                    session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY, get_fp_details_model.getCategory().get(0).getKey());
+                    MixPanelController.setProperties("Category",get_fp_details_model.getCategory().get(0).getKey());
                 }
             }catch(Exception e){
                 e.printStackTrace();
@@ -73,6 +73,7 @@ public class ProcessFPDetails {
             MixPanelController.setProperties("CountryPhoneCode",get_fp_details_model.CountryPhoneCode);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME, get_fp_details_model.Name);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION, get_fp_details_model.Description);
+            session.storeFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID, get_fp_details_model.getWebTemplateId());
             session.storeFpWebTempalteType(get_fp_details_model.WebTemplateType);
             if(get_fp_details_model.Description!=null && get_fp_details_model.Description.length() == 0)
             {
@@ -89,8 +90,8 @@ public class ProcessFPDetails {
             try{
                 session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL, get_fp_details_model.PaymentLevel);
 
-                if(get_fp_details_model.PaymentLevel!=null && get_fp_details_model.PaymentLevel.toString().trim().length()>0 &&
-                        Integer.parseInt(get_fp_details_model.PaymentLevel.toString()) >= 10){
+                if(get_fp_details_model.PaymentLevel!=null && get_fp_details_model.PaymentLevel.trim().length()>0 &&
+                        Integer.parseInt(get_fp_details_model.PaymentLevel) >= 10){
                     MixPanelController.setProperties("NoAds", "True");
                 }
                 else{

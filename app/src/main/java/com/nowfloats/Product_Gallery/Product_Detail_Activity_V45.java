@@ -770,20 +770,14 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
         }
     }
     public String getRealPathFromURI(Uri contentUri) {
-        Cursor cursor = null;
+
         String val = null;
-        try{
-            String[] proj = { MediaStore.Images.Media.DATA };
-            cursor = managedQuery(contentUri, proj, null, null, null);
-            if(cursor == null) return null;
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        if(cursor != null && cursor.moveToFirst()) {
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
             val = cursor.getString(column_index);
-        }catch (Exception e) {
-        }finally {
-            if(cursor!= null){
-                cursor.close();
-            }
+            cursor.close();
         }
         return val;
     }

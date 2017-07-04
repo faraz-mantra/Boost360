@@ -486,7 +486,7 @@ public class Create_Message_Activity extends AppCompatActivity {
             String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
             if ("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
                 for (String category : quikrArray) {
-                    if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
+                    if (category.equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
                         layout.setVisibility(View.VISIBLE);
                         break;
                     }

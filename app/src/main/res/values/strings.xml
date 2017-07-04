@@ -398,14 +398,9 @@
     <string-array name="quikr_widget">
         <item>automotive</item>
         <item>tourism</item>
-        <item>hotel&amp;motels</item>
         <item>interior design</item>
-        <item>interiordesign</item>
-        <item>realestate&amp;construction</item>
-        <item>cars</item>
-        <item>usedcars</item>
         <item>hotel &amp; motels</item>
-        <item>realestate &amp; construction</item>
+        <item>real estate &amp; construction</item>
         <item>cars</item>
         <item>used cars</item>
     </string-array>

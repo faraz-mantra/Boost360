@@ -45,6 +45,7 @@ public class BusinessAppPreview extends Fragment {
     private ArrayList<String> screenShots;
     private PopupWindow popup;
     private View parentView;
+    private boolean isOnStopCalled;
 
     @Nullable
     @Override
@@ -73,23 +74,20 @@ public class BusinessAppPreview extends Fragment {
         switch (id){
             case SHOW_STUDIO:
                 frag = BusinessAppStudio.getInstance(ANDROID);
-                transaction.add(R.id.card_view_android,frag,"studio");
+                transaction.add(R.id.card_view_android,frag,"studio").commit();
                 break;
             case SHOW_DEVELOPMENT:
                 frag = BusinessAppDevelopment.getInstance(ANDROID);
                 if(transition)
                     transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
 
-                transaction.replace(R.id.card_view_android,frag,"development");
+                transaction.replace(R.id.card_view_android,frag,"development").commit();
                 break;
             case SHOW_COMPLETE:
                 frag = BusinessAppCompleteFragment.getInstance(ANDROID,bundle);
-                transaction.replace(R.id.card_view_android,frag,"complete");
+                transaction.replace(R.id.card_view_android,frag,"complete").commit();
                 break;
-            default:
-                return;
         }
-        transaction.commit();
     }
     public void addIosFragment(int id){
         Fragment frag;
@@ -97,26 +95,33 @@ public class BusinessAppPreview extends Fragment {
         switch (id){
             case SHOW_STUDIO:
                 frag = BusinessAppStudio.getInstance(IOS);
-                transaction.add(R.id.card_view_ios,frag,"studio");
+                transaction.add(R.id.card_view_ios,frag,"studio").commit();
                 break;
             case SHOW_DEVELOPMENT:
                 frag = BusinessAppDevelopment.getInstance(IOS);
                 //transaction.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left);
-                transaction.replace(R.id.card_view_ios,frag,"development");
+                transaction.replace(R.id.card_view_ios,frag,"development").commit();
                 break;
             case SHOW_COMPLETE:
                 frag = BusinessAppCompleteFragment.getInstance(IOS,"");
-                transaction.replace(R.id.card_view_ios,frag,"complete");
+                transaction.replace(R.id.card_view_ios,frag,"complete").commit();
                 break;
-            default:
-                return;
         }
-        transaction.commit();
     }
 
     @Override
+    public void onStop() {
+        isOnStopCalled = true;
+        super.onStop();
+    }
+
+    private boolean isOnStopCalled(){
+        return isOnStopCalled;
+    }
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        isOnStopCalled = false;
         if(!isAdded()) return;
         parentView = view;
         MaterialProgressBar.startProgressBar(getActivity(),"Processing...",false);
@@ -125,7 +130,7 @@ public class BusinessAppPreview extends Fragment {
             @Override
             public void success(JsonObject s, Response response) {
 
-                if(s == null || !isAdded() || response.getStatus() != 200){
+                if(s == null || !isAdded() || isOnStopCalled() || response.getStatus() != 200){
                     MaterialProgressBar.dismissProgressBar();
                     getActivity().finish();
                     return;

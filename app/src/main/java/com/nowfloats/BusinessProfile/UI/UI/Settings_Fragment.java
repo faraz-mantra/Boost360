@@ -120,7 +120,7 @@ public class Settings_Fragment extends Fragment {
             Sdate = Sdate.replace("/Date(", "").replace(")/", "");
         }
         if(!TextUtils.isEmpty(Sdate) && Long.parseLong(Sdate)/1000 > 1470614400){
-            flSiteAppearance.setVisibility(View.GONE);
+            flSiteAppearance.setVisibility(View.VISIBLE);
         }
 
         new Thread(new Runnable() {
@@ -291,7 +291,8 @@ public class Settings_Fragment extends Fragment {
         String strExpiryTime = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EXPIRY_DATE);
         long expiryTime = -1;
         if(strExpiryTime!=null){
-            expiryTime = Long.parseLong(strExpiryTime.split("\\(")[1].split("\\)")[0]);
+            strExpiryTime = strExpiryTime.replace("/Date(", "").replace(")/", "");
+            expiryTime = !TextUtils.isEmpty(strExpiryTime)? Long.parseLong(strExpiryTime):-1;
         }
         if(expiryTime!=-1 && ((expiryTime - System.currentTimeMillis())/86400000<180) && !session.getWebTemplateType().equals("6")){
             flag = true;
