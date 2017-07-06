@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_20"
@@ -35,7 +36,8 @@
                     <android.support.design.widget.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/house_plot_num">
+                        android:hint="@string/house_plot_num"
+                        app:errorTextAppearance="@style/error_appearance">
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/et_house_plot_num"
@@ -47,6 +49,7 @@
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
+                        android:id="@+id/tlStreet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/street_address">
@@ -179,14 +182,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="@dimen/margin_10"
-                    android:background="@drawable/rounded_corner_map_tip"
-                    android:paddingBottom="@dimen/margin_5"
-                    android:paddingLeft="@dimen/margin_10"
-                    android:paddingRight="@dimen/margin_10"
-                    android:paddingTop="@dimen/margin_5"
-                    android:text="@string/you_can_move_pinch_zoom_map_to_exact_location"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/small_text_size"
+                    android:background="@drawable/ic_map_tool_tip"
                     android:textStyle="italic"
                     android:visibility="visible" />
             </RelativeLayout>

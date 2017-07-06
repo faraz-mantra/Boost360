@@ -5,6 +5,9 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationListener;
@@ -98,7 +101,6 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
     private ArrayAdapter<String> adapter;
     private ArrayList<String> signUpCountryList = new ArrayList<>();
-    private List<String> citys = new ArrayList<>();
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -185,6 +187,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         View v = inflater.inflate(R.layout.fragment_pick_address, container, false);
         setCancelable(false);
 
+//        tiHouseNo = (TextInputLayout) v.findViewById(R.id.tiHouseNo);
+
         llManual = (LinearLayout) v.findViewById(R.id.llManual);
         llUseGPS = (LinearLayout) v.findViewById(R.id.llUseGPS);
         btnSave = (Button) v.findViewById(R.id.btn_save);
@@ -247,14 +251,28 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                                 tvAddress.setVisibility(View.VISIBLE);
                                 btnSave.setText(getResources().getString(R.string.done));
 
-                                tvTip.setVisibility(View.VISIBLE);
-
                                 tvTip.postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
-                                        tvTip.setVisibility(View.GONE);
+                                        tvTip.setVisibility(View.VISIBLE);
+
+                                        tvTip.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                tvTip.setVisibility(View.GONE);
+                                            }
+                                        }, 10000);
+
+
+                                        mGoogleMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
+                                            @Override
+                                            public void onCameraMove() {
+                                                tvTip.setVisibility(View.GONE);
+                                            }
+                                        });
                                     }
-                                }, 10000);
+                                }, 1000);
+
 //                                Toast.makeText(getActivity(),getString(R.string.you_can_move_pinch_zoom_map_to_exact_location),Toast.LENGTH_LONG).show();
                             }
 
@@ -325,7 +343,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                         .build();
             }
 
-//            etCountry.setFocusable(false);
+            etCountry.setFocusable(false);
 
             etCity.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -335,7 +353,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                    updateErrorList();
                 }
 
                 @Override
@@ -358,7 +376,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                                 @Override
                                 public void run() {
                                     AutocompletePredictionBuffer a = result.await();
-                                    citys.clear();
+                                    final List<String> citys = new ArrayList<>();
                                     for (int i = 0; i < a.getCount(); i++) {
                                         citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString() + "," + a.get(i).getSecondaryText(new StyleSpan(Typeface.NORMAL)).toString());
                                     }
@@ -431,6 +449,9 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
             btnSave.setVisibility(View.GONE);
         }
 
+        updateErrorList();
+        addTextChangeListners();
+
         return v;
     }
 
@@ -498,36 +519,38 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
     }
 
     private boolean verifyData() {
+
+        boolean isAllFieldsValid = true;
         if (etStreetAddr.getText().toString().trim().equals("")) {
-            Toast.makeText(getActivity(), getString(R.string.empty_address_warn), Toast.LENGTH_SHORT).show();
-            return false;
+            isAllFieldsValid = false;
+            etStreetAddr.setSupportBackgroundTintList(errorColorStateList);
         }
         if (etCity.getText().toString().trim().equals("")) {
-            Toast.makeText(getActivity(), getString(R.string.empty_city_warn), Toast.LENGTH_SHORT).show();
-            return false;
+            isAllFieldsValid = false;
+            etCity.getBackground().mutate().setColorFilter(getResources().getColor(R.color.red), PorterDuff.Mode.SRC_ATOP);
         }
         if (etCountry.getText().toString().trim().equals("")) {
-            Toast.makeText(getActivity(), getString(R.string.empty_country_warn), Toast.LENGTH_SHORT).show();
-            return false;
+            isAllFieldsValid = false;
+            etCountry.setSupportBackgroundTintList(errorColorStateList);
         }
         if (etPin.getText().toString().trim().equals("")) {
-            Toast.makeText(getActivity(), getString(R.string.empty_pin_warn), Toast.LENGTH_SHORT).show();
-            return false;
+            isAllFieldsValid = false;
+            etPin.setSupportBackgroundTintList(errorColorStateList);
         }
         if (etPin.getText().toString().trim().length() > 6) {
+            isAllFieldsValid = false;
             Toast.makeText(getActivity(), getString(R.string.pin_code_length_error), Toast.LENGTH_SHORT).show();
-            return false;
+            etPin.setSupportBackgroundTintList(errorColorStateList);
         }
-//        if (etLocality.getText().toString().trim().equals("")) {
-//            Toast.makeText(getActivity(), getString(R.string.locality_warn), Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
         if (etHousePlotNum.getText().toString().trim().equals("")) {
-            Toast.makeText(getActivity(), getString(R.string.house_no_warn), Toast.LENGTH_SHORT).show();
-            return false;
+            isAllFieldsValid = false;
+            etHousePlotNum.setSupportBackgroundTintList(errorColorStateList);
         }
 
-        return true;
+        if(!isAllFieldsValid){
+            Toast.makeText(getActivity(), "Please enter mandatory fields.", Toast.LENGTH_SHORT).show();
+        }
+        return isAllFieldsValid;
     }
 
     private void initMap() {
@@ -561,9 +584,48 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                     });
 
 
-        } else {
-            setCameraChangeListener();
         }
+
+    }
+
+    ColorStateList errorColorStateList = ColorStateList.valueOf(Color.RED);
+    ColorStateList initialColorStateList = ColorStateList.valueOf(Color.LTGRAY);
+
+    TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            updateErrorList();
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+
+    private void updateErrorList() {
+        etStreetAddr.setSupportBackgroundTintList(initialColorStateList);
+        etLocality.setSupportBackgroundTintList(initialColorStateList);
+        etLandmark.setSupportBackgroundTintList(initialColorStateList);
+        etPin.setSupportBackgroundTintList(initialColorStateList);
+        etCountry.setSupportBackgroundTintList(initialColorStateList);
+        etHousePlotNum.setSupportBackgroundTintList(initialColorStateList);
+        etCity.getBackground().mutate().setColorFilter(getResources().getColor(R.color.lt_gray), PorterDuff.Mode.SRC_ATOP);
+
+    }
+
+    private void addTextChangeListners() {
+        etStreetAddr.addTextChangedListener(textWatcher);
+        etLocality.addTextChangedListener(textWatcher);
+        etLandmark.addTextChangedListener(textWatcher);
+        etPin.addTextChangedListener(textWatcher);
+        etCountry.addTextChangedListener(textWatcher);
+        etHousePlotNum.addTextChangedListener(textWatcher);
 
     }
 

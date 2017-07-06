@@ -68,7 +68,7 @@ android {
         partthree {
             applicationId "com.kitsune.biz"
         }
-        partfour{
+        partfour {
             applicationId "com.digitalseoz"
         }
     }

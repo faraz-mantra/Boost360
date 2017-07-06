@@ -5,8 +5,8 @@ package com.nowfloats.riachatsdk.utils;
  */
 
 public class Constants {
-    public static final String PARCEL_NAME  = "config_parcel";
-    public static final String SERVER_URL  = "https://onboarding-boost.withfloats.com";
+    public static final String PARCEL_NAME = "config_parcel";
+    public static final String SERVER_URL = "https://onboarding-boost.withfloats.com";
     public static final String FILE_PATH = "file_path";
     public static final String RECEIVER = "receiver";
     public static final String KEY_FILE_URL = "file_url";
@@ -14,7 +14,7 @@ public class Constants {
     public static final int RESULT_CANCELLED = 1;
     public static final String MAP_KEY = "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
 
-    public interface SectionType{
+    public interface SectionType {
         String TYPE_TEXT = "Text";
         String TYPE_TYPING = "Typing";
         String TYPE_IMAGE = "Image";
@@ -28,16 +28,18 @@ public class Constants {
         String TYPE_PRINT_OTP = "PrintOTP";
         String TYPE_SUBMIT_FORM = "SubmitForm";
     }
-    public interface ApiType{
+
+    public interface ApiType {
         String TYPE_GET = "GET";
         String TYPE_POST = "POST";
     }
-    public interface NodeType{
+
+    public interface NodeType {
         String TYPE_API_CALL = "ApiCall";
         String TYPE_CARD = "Card";
     }
 
-    public interface ButtonType{
+    public interface ButtonType {
         String TYPE_GET_TEXT = "GetText";
         String TYPE_GET_NUMBER = "GetNumber";
         String TYPE_NEXT_NODE = "NextNode";
@@ -52,10 +54,17 @@ public class Constants {
         String TYPE_GET_VIDEO = "GetVideo";
     }
 
-    public interface DeepLinkUrl{
+    public interface VariableName {
+        String TYPE_TAG = "TAG";
+        String TYPE_BUSINESS_DESCRIPTION = "BUSINESS_DESCRIPTION";
+        String TYPE_MESSAGE_UPDATE = "MESSAGE_UPDATE";
+    }
+
+    public interface DeepLinkUrl {
         String ASK_LOC_PERM = "asklocationpermission";
         String LOGIN = "login";
     }
+
     public interface LocationConstants {
         int SUCCESS_RESULT = 0;
 
@@ -79,7 +88,8 @@ public class Constants {
         String LOCATION_DATA_LANDMARK = PACKAGE_NAME + ".LOCATION_DATA_LANDMARK";
 
     }
-    public interface ConfirmationType{
+
+    public interface ConfirmationType {
         String BIZ_NAME = "biz_name";
         String ADDRESS_ENTRY = "address_entry";
         String SUBMIT_FORM = "submit_form";

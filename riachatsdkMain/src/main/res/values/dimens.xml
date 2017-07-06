@@ -13,6 +13,8 @@
     <dimen name="margin_10">10dp</dimen>
     <dimen name="margin_15">15dp</dimen>
     <dimen name="margin_20">20dp</dimen>
+    <dimen name="margin_25">25dp</dimen>
+    <dimen name="margin_22">22dp</dimen>
     <dimen name="margin_30">30dp</dimen>
     <dimen name="margin_60">60dp</dimen>
     <dimen name="margin_65">65dp</dimen>

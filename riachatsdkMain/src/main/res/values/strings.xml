@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">riachatsdk</string>
     <string name="please_wait">Please Wait...</string>
-    <string name="street_address">STREET ADDRESS 1</string>
-    <string name="loc_city">CITY</string>
-    <string name="loc_country">COUNTRY</string>
-    <string name="loc_pincode">PINCODE/ZIP</string>
+    <string name="street_address">Street Address 1</string>
+    <string name="loc_city">City</string>
+    <string name="loc_country">Country</string>
+    <string name="loc_pincode">PIN Code/ZIP</string>
     <string name="empty_address_warn">Address can\'t be empty</string>
     <string name="empty_city_warn">City can\'t be empty</string>
     <string name="locality_warn">Locality can\'t be empty</string>
@@ -14,9 +14,10 @@
     <string name="pin_code_length_error">pincode length cannot be more than size.Please enter valid pincode</string>
     <string name="chat_agent_name">Ria</string>
     <string name="chat_agent_name_full">(Relationship Intelligence Agent)</string>
-    <string name="house_plot_num">HOUSE/PLOT NUMBER</string>
-    <string name="street_address_opt">STREET ADDRESS 2 (OPTIONAL)</string>
-    <string name="land_mark">LANDMARK (OPTIONAL)</string>
+    <string name="house_plot_num">House/Plot Number</string>
+    <string name="street_address_opt">Street Address 2 (Optional)</string>
+    <string name="land_mark">Landmark (Optional)</string>
+    <string name="noInternet">No Internet Connection</string>
 
     <string name="business_name">BUSINESS NAME</string>
     <string name="phone_number">PHONE NUMBER</string>
@@ -38,10 +39,11 @@
 
     <string name="settings_tou_url">https://nowfloats.com/tnc/</string>
     <string name="settings_privacy_url">https://nowfloats.com/privacy/</string>
-    <string name="you_can_move_pinch_zoom_map_to_exact_location">"You can move,pinch,zoom the map to exact location."</string>
+    <string name="you_can_move_pinch_zoom_map_to_exact_location">"You can move, pinch, zoom the map to exact location."</string>
 
 
     <string name="sure_lets_go">Sure, let\'s go</string>
+    <string name="ok">OK</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
@@ -53,6 +55,8 @@ so I am going to shift all the information you have shared with me to a manual f
 
 
     <string name="edit_title">Are you looking to edit this \n information?</string>
+    <string name="cannot_reach_network">Can\'t reach network.</string>
+    <string name="cannot_reach_network_msg">Looks like your internet connection is switched off. Please check your network settings and try again.</string>
     <string name="edit_content">In that case, I would need to shift all the information you have
         shared with me to a manual form. Since you\'ve already verified your mobile number with an OTP, you dont need to do it again.</string>
 

@@ -1,10 +1,7 @@
 package com.nowfloats.riachatsdk.helpers;
 
-import android.util.Log;
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.nowfloats.riachatsdk.BuildConfig;
 import com.nowfloats.riachatsdk.models.ChatEventModel;
 
 import java.text.DateFormat;
@@ -19,7 +16,7 @@ import java.util.TimeZone;
 public class ChatLogger {
     private static ChatLogger sRiaEventLogger;
     private DatabaseReference mDatabase;
-    private static final String DB_CHILD_NAME = "ChatSDKTest";
+    private static final String DB_CHILD_NAME = "ChatSDKTestAndroid";
     //private static Bus mBus;
     public static boolean lastEventStatus;
     public static ChatLogger getInstance(){

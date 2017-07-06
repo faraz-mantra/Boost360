@@ -28,6 +28,7 @@ public class CustomDialogFragment extends DialogFragment {
     public enum DialogFrom {
         CREATE_MY_SITE,
         SKIP,
+        NO_INTERNET,
         DEFAULT
     }
 
@@ -95,7 +96,7 @@ public class CustomDialogFragment extends DialogFragment {
                         .getLayoutParams();
 
                 mlp.setMargins(0, 130, 0, 0);
-
+                setCancelable(false);
                 tvContent.setText(getActivity().getString(R.string.server_error_content));
                 tvPositive.setText(getActivity().getString(R.string.sure_lets_go));
                 llNegative.setVisibility(View.GONE);
@@ -108,12 +109,29 @@ public class CustomDialogFragment extends DialogFragment {
                 });
 
                 break;
+            case NO_INTERNET:
+
+                setCancelable(false);
+                tvTitle.setText(getActivity().getString(R.string.cannot_reach_network));
+                tvContent.setText(getActivity().getString(R.string.cannot_reach_network_msg));
+                tvPositive.setText(getActivity().getString(R.string.ok));
+                llNegative.setVisibility(View.GONE);
+
+                llPositive.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getActivity().finish();
+                    }
+                });
+
+                break;
             case CREATE_MY_SITE:
 
                 tvTitle.setText(getActivity().getString(R.string.edit_title));
                 tvContent.setText(getActivity().getString(R.string.edit_content));
                 tvNegative.setText(getActivity().getString(R.string.yes_i_want_to_make_changes));
                 tvPositive.setText(getActivity().getString(R.string.no_i_dont_want_to_change_details));
+                setCancelable(true);
 
                 llPositive.setOnClickListener(new View.OnClickListener() {
                     @Override

@@ -33,8 +33,14 @@
         <item name="maxHeight">30dip</item>
         <item name="indicatorName">BallPulseSyncIndicator</item>
     </style>
+
     <style name="DialogAnimation">
         <item name="android:windowEnterAnimation">@anim/slide_from_up</item>
         <item name="android:windowExitAnimation">@anim/slide_to_down</item>
+    </style>
+
+    <style name="error_appearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/purple</item>
+        <item name="android:textSize">12sp</item>
     </style>
 </resources>

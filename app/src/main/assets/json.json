@@ -1,2665 +1,2673 @@
 [
-    {
-        "Name": "Website Screenshot 2",
-        "Id": "58e4e02fc7d8bf4a08b44beb",
+  {
+    "Name": "Email Address",
+    "Id": "58cfc1a5c782bb4ad0ab9b36",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Great!",
+        "SectionType": "Text",
+        "DelayInMs": 900,
+        "Hidden": false,
+        "_id": "5947ba4cb02a2911c8c2e5ca"
+      },
+      {
+        "Text": "Lastly, I need your email ID to send you your username, password and other important details.",
+        "SectionType": "Text",
+        "DelayInMs": 2883,
+        "Hidden": false,
+        "_id": "58cfc1bfc782bb4ad0ab9b3a"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "▶",
         "Emotion": "Cool",
-        "TimeoutInMs": 10000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Here's what your site looks like now!",
-                "SectionType": "Text",
-                "DelayInMs": 925,
-                "Hidden": false,
-                "_id": "58e4e02fc7d8bf4a08b44bf1"
-            },
-            {
-                "HeightInPixels": 0,
-                "WidthInPixels": 0,
-                "Url": "https://d388w23p6r1vqc.cloudfront.net/AKIAJG3CT5OQ4AWJLDAQ/2014/10/Nowfloats-lead.jpg",
-                "SizeInKb": 0,
-                "SectionType": "Image",
-                "DelayInMs": 0,
-                "Hidden": false,
-                "_id": "58e4e02fc7d8bf4a08b44bf2"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Awesome! Tell me more",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58e342a7b02a29234844419c",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "58e4ec2ec7d8bf4a08b44cfb"
-            }
-        ]
-    },
-    {
-        "Name": "Get Name",
-        "Id": "58cfb491c782bb5a241de4a5",
+        "ButtonType": "GetEmail",
+        "NextNodeId": "593f76f0b02a2907a482fc6e",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "Enter your email address",
+        "PostToChat": false,
+        "_id": "58cfc1e9c782bb4ad0ab9b48"
+      }
+    ],
+    "VariableName": "EMAIL",
+    "RequiredVariables": []
+  },
+  {
+    "Name": "Get Name",
+    "Id": "58cfb491c782bb5a241de4a5",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Awesome! Let's get the basics out of the way quick…",
+        "SectionType": "Text",
+        "DelayInMs": 1500,
+        "Hidden": false,
+        "_id": "58cfb8bfc782bb4ad0ab9a0d"
+      },
+      {
+        "Text": " What's your first name?",
+        "SectionType": "Text",
+        "DelayInMs": 971,
+        "Hidden": false,
+        "_id": "593f7f8eb02a290a904f05e6"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "▶",
         "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "<a href=\"https://www.nowfloats.com/Tnc\">Terms & Conditions</a> and <a href=\"https://www.nowfloats.com/Privacy\">Privacy Policy</a>",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58cfb8bfc782bb4ad0ab9a0d"
-            },
-            {
-                "Text": " What's your first name?",
-                "SectionType": "Text",
-                "DelayInMs": 971,
-                "Hidden": false,
-                "_id": "593f7f8eb02a290a904f05e6"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "▶",
-                "Emotion": "Cool",
-                "ButtonType": "GetText",
-                "NextNodeId": "58cfb992c782bb4ad0ab9a66",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "Enter your name",
-                "PostToChat": true,
-                "_id": "58cfb914c782bb4ad0ab9a5a"
-            }
-        ],
-        "VariableName": "PERSON_NAME"
-    },
-    {
-        "Name": "1st FB Page",
-        "Id": "58e2f903b02a2927fc4dba45",
+        "ButtonType": "GetText",
+        "NextNodeId": "58cfb992c782bb4ad0ab9a66",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "Enter your name",
+        "PostToChat": true,
+        "_id": "58cfb914c782bb4ad0ab9a5a"
+      }
+    ],
+    "VariableName": "PERSON_NAME"
+  },
+  {
+    "Name": "Confirm your Address",
+    "Id": "593f125fb02a2920287c253f",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Title": "Address Map Image",
+        "HeightInPixels": 0,
+        "WidthInPixels": 0,
+        "Url": "[~ADDRESSMAP_IMAGE]",
+        "SizeInKb": 0,
+        "SectionType": "Image",
+        "DelayInMs": 927,
+        "Hidden": false,
+        "_id": "593f8423b02a290a904f05fb"
+      },
+      {
+        "Text": "[~STREET_ADDRESS], [~CITY], [~COUNTRY], [~PINCODE]",
+        "SectionType": "Text",
+        "DelayInMs": 888,
+        "Hidden": false,
+        "_id": "593f125fb02a2920287c2545"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Confirm",
         "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "HeightInPixels": 0,
-                "WidthInPixels": 0,
-                "Url": "[~FP_PAGE_1_IMAGE_URL]",
-                "SizeInKb": 0,
-                "SectionType": "Image",
-                "DelayInMs": 0,
-                "Hidden": false,
-                "_id": "58e336e4b02a2927fc4dba65"
-            },
-            {
-                "Text": "[~FP_PAGE_1_NAME]",
-                "SectionType": "Text",
-                "DelayInMs": 425,
-                "Hidden": false,
-                "_id": "58e3371ab02a2927fc4dba69"
-            },
-            {
-                "Text": "[~FP_PAGE_1_LIKES]",
-                "SectionType": "Text",
-                "DelayInMs": 450,
-                "Hidden": false,
-                "_id": "58e33724b02a2927fc4dba6b"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Yes",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58e4d998c7d8bf4a08b44bb0",
-                "DefaultButton": false,
-                "Hidden": false,
-                "VariableValue": "[~FP_PAGE_1_ID]",
-                "PostToChat": true,
-                "_id": "58e2f903b02a2927fc4dba48"
-            },
-            {
-                "ButtonText": "No",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58e4d81bc7d8bf4a08b44b6f",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "58e2f903b02a2927fc4dba49"
-            }
-        ],
-        "VariableName": "FB_PAGEID"
-    },
-    {
-        "Name": "Pitch",
-        "Id": "58e2f301b02a2927fc4db9e6",
+        "ButtonType": "NextNode",
+        "NextNodeId": "593f12ffb02a2920287c255c",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": false,
+        "_id": "593f125fb02a2920287c2543"
+      },
+      {
+        "ButtonText": "Edit",
         "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Congratulations! ",
-                "SectionType": "Text",
-                "DelayInMs": 425,
-                "Hidden": false,
-                "_id": "58e2f34db02a2927fc4db9e7"
-            },
-            {
-                "Text": "You've got an exclusive evaluation access for 30 days",
-                "SectionType": "Text",
-                "DelayInMs": 1325,
-                "Hidden": false,
-                "_id": "58e2f422b02a2927fc4db9eb"
-            },
-            {
-                "Text": "Enjoy unlimited updates, automatic search engine optimization, custom pages and business enquiries from the site.",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58e2f45bb02a2927fc4db9f1"
-            },
-            {
-                "Text": "After 30 days, you can purchase an yearly plan and get access to premium features like ",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58e363c8b02a2928400822f0"
-            },
-            {
-                "Text": "Dedicated account manager, lead tracking, weekly reports and regular product trainings.",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58e363f5b02a2928400822f7"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Cool!",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58e2f590b02a2927fc4db9ff",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "58e2f549b02a2927fc4db9f9"
-            }
-        ]
-    },
-    {
-        "Name": "Tell Why Location Permission is Required",
-        "Id": "58d448a1443f863004e27beb",
+        "ButtonType": "NextNode",
+        "NextNodeId": "593f1269b02a2920287c2548",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": false,
+        "_id": "593f125fb02a2920287c2544"
+      }
+    ],
+    "CardHeader": "Confirm your business address",
+    "CardFooter": "",
+    "Placement": "Center"
+  },
+  {
+    "Name": "Confirm your Category",
+    "Id": "593f0568b02a2920287c24d9",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Text": "[~BUSINESS_CATEGORY]",
+        "SectionType": "Text",
+        "DelayInMs": 888,
+        "Hidden": false,
+        "_id": "593f058db02a2920287c24da"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Confirm",
         "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Your exact location helps in optimizing local SEO for the site. Location access is critical to locate your business on the map",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58d448a8443f863004e27bee"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Okay",
-                "Emotion": "Cool",
-                "ButtonType": "DeepLink",
-                "DeepLinkUrl": "asklocationpermission",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "58d448f6443f863004e27bfb"
-            },
-            {
-                "ButtonText": "Enter Manually",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "593e5331b02a2913bce7a118"
-            }
-        ],
-        "RequiredVariables": []
-    },
-    {
-        "Name": "Why Update",
-        "Id": "58e34a58b02a292148c864df",
+        "ButtonType": "NextNode",
+        "NextNodeId": "593f0683b02a2920287c24ea",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": false,
+        "_id": "593f0630b02a2920287c24e4"
+      },
+      {
+        "ButtonText": "Change",
         "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "When you update the site, we automatically extract keywords from it",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58e34aecb02a292148c864e7"
-            },
-            {
-                "Text": "Keywords when intepolated with your location, help build Local SEO",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58e34b56b02a292148c864ed"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Update Now",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "5943e654c7d8bf85885c0893",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "Type your update here",
-                "PostToChat": true,
-                "_id": "58e34aadb02a292148c864e0"
-            },
-            {
-                "ButtonText": "Ideas to update",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58e34958b02a292148c8641e",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "58e35337b02a292148c86501"
-            }
-        ],
-        "VariableName": ""
-    },
-    {
-        "Name": "Your mobile number",
-        "Id": "593f19bfb02a2920287c2589",
+        "ButtonType": "NextNode",
+        "NextNodeId": "593f09f0b02a2920287c2520",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": false,
+        "_id": "593f0817b02a2920287c250a"
+      }
+    ],
+    "CardHeader": "Confirm your business category",
+    "CardFooter": "",
+    "Placement": "Center"
+  },
+  {
+    "Name": "Enter OTP Card",
+    "Id": "591d8b21c7d8bf4310a0427f",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Length": 4,
+        "SectionType": "PrintOTP",
+        "DelayInMs": 929,
+        "Hidden": false,
+        "_id": "593f5292460b50525490ae5b"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Submit",
         "Emotion": "Cool",
-        "TimeoutInMs": 0,
-        "NodeType": "Card",
-        "Sections": [
-            {
-                "Text": "[~COUNTRYCODE] [~PHONE]",
-                "SectionType": "Text",
-                "DelayInMs": 991,
-                "Hidden": false,
-                "_id": "593f19f0b02a2920287c258c"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Submit",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58d45c20443f863004e27c2f",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": false,
-                "_id": "593f1a56b02a2920287c2592"
-            },
-            {
-                "ButtonText": "Edit",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "593f1a83b02a2920287c25a2",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "593f1a70b02a2920287c2596"
-            }
-        ],
-        "CardHeader": "Your mobile number",
-        "Placement": "Center"
-    },
-    {
-        "Name": "Invalid OTP Reenter card",
-        "Id": "591d9326c7d8bf4310a042c0",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58d4746a443f861008cb20a2",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "",
+        "PostToChat": false,
+        "_id": "591d8be5c7d8bf4310a04285"
+      },
+      {
+        "ButtonText": "Resend OTP",
         "Emotion": "Cool",
-        "TimeoutInMs": 0,
-        "NodeType": "Card",
-        "Sections": [
-            {
-                "Length": 4,
-                "SectionType": "PrintOTP",
-                "DelayInMs": 983,
-                "Hidden": false,
-                "_id": "593f5392460b50525490ae73"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Submit",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58d4746a443f861008cb20a2",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "",
-                "PostToChat": false,
-                "_id": "591d93d9c7d8bf4310a042ca"
-            },
-            {
-                "ButtonText": "Resend OTP again",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58d476d9443f861008cb20a5",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "593f54be460b50525490ae83"
-            }
-        ],
-        "VariableName": "OTP",
-        "CardHeader": "⚠ Please enter valid OTP",
-        "CardFooter": "A four digit OTP code which has been sent to your phone",
-        "Placement": "Center"
-    },
-    {
-        "Name": "Confirm your Address",
-        "Id": "593f125fb02a2920287c253f",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58d476d9443f861008cb20a5",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "593f5610460b50525490ae95"
+      }
+    ],
+    "VariableName": "OTP",
+    "GroupName": "",
+    "CardHeader": "Enter OTP",
+    "Placement": "Center"
+  },
+  {
+    "Name": "Business Description",
+    "Id": "58e2555db02a2924289750a0",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Describing your business on the site is the first step towards getting discovered",
+        "SectionType": "Text",
+        "DelayInMs": 3000,
+        "Hidden": false,
+        "_id": "58e25584b02a2924289750a1"
+      },
+      {
+        "Text": "A site without a description is like a building under construction. Write a short description now.",
+        "SectionType": "Text",
+        "DelayInMs": 3000,
+        "Hidden": false,
+        "_id": "58e26f90b02a29008436330f"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Let's do this",
         "Emotion": "Cool",
-        "TimeoutInMs": 0,
-        "NodeType": "Card",
-        "Sections": [
-            {
-                "Title": "Address Map Image",
-                "HeightInPixels": 0,
-                "WidthInPixels": 0,
-                "Url": "[~ADDRESSMAP_IMAGE]",
-                "SizeInKb": 0,
-                "SectionType": "Image",
-                "DelayInMs": 927,
-                "Hidden": false,
-                "_id": "593f8423b02a290a904f05fb"
-            },
-            {
-                "Text": "[~STREET_ADDRESS], [~CITY], [~COUNTRY], [~PINCODE]",
-                "SectionType": "Text",
-                "DelayInMs": 888,
-                "Hidden": false,
-                "_id": "593f125fb02a2920287c2545"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Confirm",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "593f12ffb02a2920287c255c",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": false,
-                "_id": "593f125fb02a2920287c2543"
-            },
-            {
-                "ButtonText": "Edit",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "593f1269b02a2920287c2548",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": false,
-                "_id": "593f125fb02a2920287c2544"
-            }
-        ],
-        "CardHeader": "Confirm your business address",
-        "CardFooter": "",
-        "Placement": "Center"
-    },
-    {
-        "Name": "Confirm your Category",
-        "Id": "593f0568b02a2920287c24d9",
+        "ButtonType": "NextNode",
+        "NextNodeId": "5943e750c7d8bf85885c0a03",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "Your business description goes here",
+        "PostToChat": true,
+        "_id": "58e270d9b02a290084363327"
+      },
+      {
+        "ButtonText": "What do I write? ",
         "Emotion": "Cool",
-        "TimeoutInMs": 0,
-        "NodeType": "Card",
-        "Sections": [
-            {
-                "Text": "[~BUSINESS_CATEGORY]",
-                "SectionType": "Text",
-                "DelayInMs": 888,
-                "Hidden": false,
-                "_id": "593f058db02a2920287c24da"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Confirm",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "593f0683b02a2920287c24ea",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": false,
-                "_id": "593f0630b02a2920287c24e4"
-            },
-            {
-                "ButtonText": "Change",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "593f09f0b02a2920287c2520",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": false,
-                "_id": "593f0817b02a2920287c250a"
-            }
-        ],
-        "CardHeader": "Confirm your business category",
-        "CardFooter": "",
-        "Placement": "Center"
-    },
-    {
-        "Name": "Enter OTP Card",
-        "Id": "591d8b21c7d8bf4310a0427f",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58e25954b02a2914ac4bcd77",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58e25909b02a2914ac4bcd6f"
+      }
+    ],
+    "VariableName": ""
+  },
+  {
+    "Name": "Suggested Website ",
+    "Id": "593f6a6db02a2907a482fa64",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Text": "[~TAG]<br>.nowfloats.com",
+        "SectionType": "Text",
+        "DelayInMs": 840,
+        "Hidden": false,
+        "_id": "593f6a6db02a2907a482fa6c"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Confirm",
         "Emotion": "Cool",
-        "TimeoutInMs": 0,
-        "NodeType": "Card",
-        "Sections": [
-            {
-                "Length": 4,
-                "SectionType": "PrintOTP",
-                "DelayInMs": 929,
-                "Hidden": false,
-                "_id": "593f5292460b50525490ae5b"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Submit",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58d4746a443f861008cb20a2",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "",
-                "PostToChat": false,
-                "_id": "591d8be5c7d8bf4310a04285"
-            },
-            {
-                "ButtonText": "Resend OTP",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58d476d9443f861008cb20a5",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "593f5610460b50525490ae95"
-            }
-        ],
-        "VariableName": "OTP",
-        "GroupName": "",
-        "CardHeader": "Enter OTP",
-        "Placement": "Center"
-    },
-    {
-        "Name": "Business Description",
-        "Id": "58e2555db02a2924289750a0",
+        "ButtonType": "NextNode",
+        "NextNodeId": "593f7222b02a2907a482fc32",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": false,
+        "_id": "593f6c0ab02a2907a482fa96"
+      },
+      {
+        "ButtonText": "Change",
         "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Describing your business on the site is the first step towards getting discovered",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58e25584b02a2924289750a1"
-            },
-            {
-                "Text": "A site without a description is like a building under construction. Write a short description now.",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58e26f90b02a29008436330f"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Let's do this",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "5943e750c7d8bf85885c0a03",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "Your business description goes here",
-                "PostToChat": true,
-                "_id": "58e270d9b02a290084363327"
-            },
-            {
-                "ButtonText": "What do I write? ",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58e25954b02a2914ac4bcd77",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "58e25909b02a2914ac4bcd6f"
-            }
-        ],
-        "VariableName": ""
-    },
-    {
-        "Name": "Suggested Website ",
-        "Id": "593f6a6db02a2907a482fa64",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Card",
-        "Sections": [
-            {
-                "Text": "[~TAG]<br>.nowfloats.com",
-                "SectionType": "Text",
-                "DelayInMs": 600,
-                "Hidden": false,
-                "_id": "593f6a6db02a2907a482fa6c"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Confirm",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "593f7222b02a2907a482fc32",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": false,
-                "_id": "593f6c0ab02a2907a482fa96"
-            },
-            {
-                "ButtonText": "Change",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58db0a6cc7d8bf2c80901ce7",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PrefixText": "",
-                "PostfixText": "",
-                "PlaceholderText": "",
-                "PostToChat": false,
-                "_id": "593f6a6db02a2907a482fa6b"
-            }
-        ],
-        "VariableName": "",
-        "CardHeader": "Suggested Website URL",
-        "Placement": "Center"
-    },
-    {
-        "Name": "Confirm your Email Address",
-        "Id": "593f76f0b02a2907a482fc6e",
-        "Emotion": "Cool",
-        "TimeoutInMs": 0,
-        "NodeType": "Card",
-        "Sections": [
-            {
-                "Text": "[~EMAIL]",
-                "SectionType": "Text",
-                "DelayInMs": 888,
-                "Hidden": false,
-                "_id": "593f76f0b02a2907a482fc74"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Confirm",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "593f7703b02a2907a482fc7e",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": false,
-                "_id": "593f76f0b02a2907a482fc72"
-            },
-            {
-                "ButtonText": "Edit",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "593f76f5b02a2907a482fc77",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": false,
-                "_id": "593f76f0b02a2907a482fc73"
-            }
-        ],
-        "CardHeader": "Confirm your email address",
-        "CardFooter": "",
-        "Placement": "Center"
-    },
-    {
-        "Name": "Confirm your Business Name",
-        "Id": "593f5f29b02a2907a482f9fe",
-        "Emotion": "Cool",
-        "TimeoutInMs": 0,
-        "NodeType": "Card",
-        "Sections": [
-            {
-                "Text": "[~BUSINESS_NAME]",
-                "SectionType": "Text",
-                "DelayInMs": 888,
-                "Hidden": false,
-                "_id": "593f5f29b02a2907a482fa04"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Confirm",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "593f5f37b02a2907a482fa0e",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": false,
-                "_id": "593f5f29b02a2907a482fa02"
-            },
-            {
-                "ButtonText": "Edit",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "593f5f30b02a2907a482fa07",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": false,
-                "_id": "593f5f29b02a2907a482fa03"
-            }
-        ],
-        "CardHeader": "Confirm your business name",
-        "CardFooter": "",
-        "Placement": "Center"
-    },
-    {
-        "Name": "3rd FB Page",
-        "Id": "58e4d81fc7d8bf4a08b44b7d",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "HeightInPixels": 0,
-                "WidthInPixels": 0,
-                "Url": "[~FP_PAGE_3_IMAGE_URL]",
-                "SizeInKb": 0,
-                "SectionType": "Image",
-                "DelayInMs": 0,
-                "Hidden": false,
-                "_id": "58e4d81fc7d8bf4a08b44b84"
-            },
-            {
-                "Text": "[~FP_PAGE_3_NAME]",
-                "SectionType": "Text",
-                "DelayInMs": 425,
-                "Hidden": false,
-                "_id": "58e4d81fc7d8bf4a08b44b85"
-            },
-            {
-                "Text": "[~FP_PAGE_3_LIKES]",
-                "SectionType": "Text",
-                "DelayInMs": 450,
-                "Hidden": false,
-                "_id": "58e4d81fc7d8bf4a08b44b86"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Yes",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58e4d998c7d8bf4a08b44bb0",
-                "DefaultButton": false,
-                "Hidden": false,
-                "VariableValue": "[~FP_PAGE_3_ID]",
-                "PostToChat": true,
-                "_id": "58e4d81fc7d8bf4a08b44b82"
-            },
-            {
-                "ButtonText": "No",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58e33793b02a2927fc4dba77",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "58e4d81fc7d8bf4a08b44b83"
-            }
-        ],
-        "VariableName": "FB_PAGEID"
-    },
-    {
-        "Name": "Screenshot 1",
-        "Id": "58e235d614216c1a74cb2831",
-        "Emotion": "Cool",
-        "TimeoutInMs": 10000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Here's what your site looks like!",
-                "SectionType": "Text",
-                "DelayInMs": 825,
-                "Hidden": false,
-                "_id": "58e23dd414216c1a74cb2832"
-            },
-            {
-                "HeightInPixels": 0,
-                "WidthInPixels": 0,
-                "Url": "[~SITE_SCREENSHOT_URL]",
-                "SizeInKb": 0,
-                "SectionType": "Image",
-                "DelayInMs": 0,
-                "Hidden": false,
-                "_id": "58e23e3e14216c1a74cb28ba"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Let's continue",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58e2f301b02a2927fc4db9e6",
-                "DefaultButton": true,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "58e23f2614216c1a74cb28bf"
-            },
-            {
-                "ButtonText": "Take me to the moon!",
-                "Emotion": "Cool",
-                "ButtonType": "DeepLink",
-                "DeepLinkUrl": "login",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "58e240db14216c1a74cb28c1"
-            }
-        ]
-    },
-    {
-        "Name": "Update",
-        "Id": "58e342a7b02a29234844419c",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Search Engine Optimization works when you update your site . . ",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58e3475bb02a2923484441ad"
-            },
-            {
-                "Text": "An update can be an offer, a product description, a customer story or a news from your industry",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58e347b8b02a2923484441b1"
-            },
-            {
-                "Text": "The possibilities are endless! 🚀",
-                "SectionType": "Text",
-                "DelayInMs": 825,
-                "Hidden": false,
-                "_id": "58e347f6b02a2923484441b7"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Update Now",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "5943e654c7d8bf85885c0893",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "Type your update here ",
-                "PostToChat": true,
-                "_id": "58e34883b02a2923484441c7"
-            },
-            {
-                "ButtonText": "Tell me more ",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58e34a58b02a292148c864df",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "58e3490cb02a2923484441dc"
-            }
-        ],
-        "VariableName": ""
-    },
-    {
-        "Name": "Enter OTP Copy",
-        "Id": "591d8a4bc7d8bf4310a04270",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "You must have received a little SMS from us. Fill in the 4-digit code below.",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "591d8a4bc7d8bf4310a04279"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "▶",
-                "Emotion": "Cool",
-                "ButtonType": "GetText",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "Enter OTP",
-                "PostToChat": true,
-                "_id": "591d8a4bc7d8bf4310a04276"
-            },
-            {
-                "ButtonText": "Resend OTP",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "591d8a4bc7d8bf4310a04277"
-            },
-            {
-                "ButtonText": "Edit Number",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "591d8a4bc7d8bf4310a04278"
-            }
-        ],
-        "VariableName": "OTP",
-        "RequiredVariables": []
-    },
-    {
-        "Name": "About Business Description",
-        "Id": "58e25954b02a2914ac4bcd77",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Write a small introduction about your business here.",
-                "SectionType": "Text",
-                "DelayInMs": 1300,
-                "Hidden": false,
-                "_id": "58e25972b02a2914ac4bcd78"
-            },
-            {
-                "Text": "You can write when your business started, what products/ services you offer.",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58e25a56b02a2914ac4bcd7c"
-            },
-            {
-                "Text": "Mention how your offerings are unique and what's the best way to contact you.",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58e25b06b02a2914ac4bcd82"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Let's do this",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "5943e750c7d8bf85885c0a03",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "Write here",
-                "PostToChat": true,
-                "_id": "58e25bafb02a2914ac4bcd89"
-            },
-            {
-                "ButtonText": "Remind me later",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58e3396fb02a2927fc4dba8c",
-                "DefaultButton": false,
-                "Hidden": false,
-                "VariableValue": "",
-                "PostToChat": true,
-                "_id": "58e25c42b02a2914ac4bcd8d"
-            }
-        ],
-        "VariableName": "BUSINESS_DESCRIPTION"
-    },
-    {
-        "Name": "Upload Logo",
-        "Id": "58dcd9c9c7d8bf1e082feec3",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Next is an important one, your business logo!",
-                "SectionType": "Text",
-                "DelayInMs": 1125,
-                "Hidden": false,
-                "_id": "58e33d57b02a2927fc4dbaca"
-            },
-            {
-                "Text": "A logo is your brand identity ",
-                "SectionType": "Text",
-                "DelayInMs": 750,
-                "Hidden": false,
-                "_id": "58dcda46c7d8bf1e082fef4d"
-            },
-            {
-                "Text": "Let's add your logo to the site . . . ",
-                "SectionType": "Text",
-                "DelayInMs": 950,
-                "Hidden": false,
-                "_id": "58e33c32b02a2927fc4dbabf"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Choose image",
-                "Emotion": "Cool",
-                "ButtonType": "GetImage",
-                "NextNodeId": "58e3410db02a29234844418e",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "58dcd9e6c7d8bf1e082feec4"
-            },
-            {
-                "ButtonText": "Remind me later",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58e4e500c7d8bf4a08b44ce1",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "58e28d24b02a291b78f8ef38"
-            }
-        ],
-        "VariableName": "BUSINESS_LOGO"
-    },
-    {
-        "Name": "FP Tag available",
-        "Id": "58dafdbac7d8bf2c80901cc3",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Card",
-        "Sections": [
-            {
-                "Text": "[~TAG]<br>.nowfloats.com",
-                "SectionType": "Text",
-                "DelayInMs": 600,
-                "Hidden": false,
-                "_id": "58dafeecc7d8bf2c80901cd2"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Make my website!",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "593f7222b02a2907a482fc32",
-                "DefaultButton": false,
-                "Hidden": false,
-                "VariableValue": "",
-                "PostToChat": true,
-                "_id": "58dafe27c7d8bf2c80901cc5"
-            },
-            {
-                "ButtonText": "Edit Website Address",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "5942a8d3c7d8bf95b0320b19",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": false,
-                "_id": "58dafe28c7d8bf2c80901cc7"
-            }
-        ],
-        "VariableName": "",
-        "CardHeader": "👍 Hallelujah! This website address is available.",
-        "Placement": "Center"
-    },
-    {
-        "Name": "Welcome Node",
-        "Id": "58cfaf0dc782bb3fec8db382",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Hi! My name is Ria, and I will help you set up your website within minutes.",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58cfaf21c782bb3fec8db386"
-            },
-            {
-                "Text": "It's really simple, so let's get started?",
-                "SectionType": "Text",
-                "DelayInMs": 1025,
-                "Hidden": false,
-                "_id": "58cfb4aec782bb5a241de4aa"
-            },
-            {
-                "Url": "https://s3-ap-southeast-1.amazonaws.com/nfcontent-cdn/ria/onboarding-content/RIA1.gif",
-                "PreFetch": false,
-                "SectionType": "Gif",
-                "DelayInMs": 0,
-                "Hidden": false,
-                "_id": "58d256dac782bb594494b542"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Let's get started",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "58cfafc6c782bb3fec8db3d5"
-            }
-        ],
-        "RequiredVariables": []
-    },
-    {
-        "Name": "Ask Location Permission",
-        "Id": "58d44487443f863004e27bb4",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "I'll use your device location to pin-point the exact address of [~BUSINESS_NAME]",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58d447ce443f863004e27bc5"
-            },
-            {
-                "Text": "Click continue to give me access",
-                "SectionType": "Text",
-                "DelayInMs": 800,
-                "Hidden": false,
-                "_id": "58d58566443f862eb0d8721c"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Continue",
-                "Emotion": "Cool",
-                "ButtonType": "DeepLink",
-                "DeepLinkUrl": "asklocationpermission",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "58d44629443f863004e27bb8"
-            },
-            {
-                "ButtonText": "Tell me more",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "58d447b1443f863004e27bc1"
-            }
-        ]
-    },
-    {
-        "Name": "Confirmed Email Address",
-        "Id": "593f7703b02a2907a482fc7e",
-        "Emotion": "Cool",
-        "TimeoutInMs": 0,
-        "NodeType": "Card",
-        "Sections": [
-            {
-                "Text": "[~EMAIL]",
-                "SectionType": "Text",
-                "DelayInMs": 828,
-                "Hidden": false,
-                "_id": "593f7703b02a2907a482fc83"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "goto",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "BounceTimeout": 1,
-                "NextNodeId": "58e2555db02a292428975111",
-                "DefaultButton": true,
-                "Hidden": true,
-                "PostToChat": false,
-                "_id": "593f7703b02a2907a482fc82"
-            }
-        ],
-        "CardFooter": "CONFIRMED EMAIL ADDRESS",
-        "Placement": "Outgoing"
-    },
-	{
-        "Name": "T n C Confirmation",
-        "Id": "58e2555db02a292428975111",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Here are terms and conditions",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58e25584b02a292428975a01"
-            },
-            {
-                "Text": "<a href=\"https://nowfloats.com/Tnc>Terms & Conditions\"</a> and <a href=\"https://nowfloats.com/Privacy>Privacy Policy\"</a>",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58e26f90b02a2900843633fa"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "I agree",
-                "Emotion": "Cool",
-                "ButtonType": "ShowConfirmation",
-                "NextNodeId": "58daf13d443f862698122eb1",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": false,
-                "_id": "58e270d9b02a290084363327"
-            }
-        ],
-        "VariableName": ""
-    },
-    {
-        "Name": "Type Business Description",
-        "Id": "5943e750c7d8bf85885c0a03",
-        "Emotion": "Cool",
-        "TimeoutInMs": 0,
-        "NodeType": "Combination",
-        "Sections": [],
-        "Buttons": [
-            {
-                "ButtonText": "▶",
-                "Emotion": "Cool",
-                "ButtonType": "GetText",
-                "NextNodeId": "58dcd9c9c7d8bf1e082feec3",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "5943e766c7d8bf85885c0a04"
-            }
-        ],
-        "VariableName": "BUSINESS_DESCRIPTION"
-    },
-    {
-        "Name": "Type Update",
-        "Id": "5943e654c7d8bf85885c0893",
-        "Emotion": "Cool",
-        "TimeoutInMs": 0,
-        "NodeType": "Combination",
-        "Sections": [],
-        "Buttons": [
-            {
-                "ButtonText": "▶",
-                "Emotion": "Cool",
-                "ButtonType": "GetText",
-                "NextNodeId": "58e353edb02a292148c86507",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "5943e670c7d8bf85885c0894"
-            }
-        ],
-        "VariableName": "MESSAGE_UPDATE"
-    },
-    {
-        "Name": "FP Tag not available",
-        "Id": "58db0cf7c7d8bf2c80901cf7",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Card",
-        "Sections": [
-            {
-                "Text": "[~TAG]<br>.nowfloats.com",
-                "SectionType": "Text",
-                "DelayInMs": 600,
-                "Hidden": false,
-                "_id": "58db0de3c7d8bf2c80901cf8"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Edit Website Address",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58db0a6cc7d8bf2c80901ce7",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": false,
-                "_id": "593f716db02a2907a482fc2c"
-            }
-        ],
-        "VariableName": "TAG",
+        "ButtonType": "NextNode",
         "NextNodeId": "58db0a6cc7d8bf2c80901ce7",
-        "CardHeader": "⚠️ Sorry, the requested website address is not available.",
-        "Placement": "Center"
-    },
-    {
-        "Name": "Phone Number Already Exists",
-        "Id": "58d4610c443f863004e27c3f",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PrefixText": "",
+        "PostfixText": "",
+        "PlaceholderText": "",
+        "PostToChat": false,
+        "_id": "593f6a6db02a2907a482fa6b"
+      }
+    ],
+    "VariableName": "",
+    "CardHeader": "Suggested Website URL",
+    "Placement": "Center"
+  },
+  {
+    "Name": "Confirm your Email Address",
+    "Id": "593f76f0b02a2907a482fc6e",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Text": "[~EMAIL]",
+        "SectionType": "Text",
+        "DelayInMs": 888,
+        "Hidden": false,
+        "_id": "593f76f0b02a2907a482fc74"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Confirm",
         "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Card",
-        "Sections": [
-            {
-                "Text": "[~COUNTRYCODE] [~PHONE]",
-                "SectionType": "Text",
-                "DelayInMs": 575,
-                "Hidden": false,
-                "_id": "58d465a6443f863004e27c4f"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Enter another number",
-                "Emotion": "Cool",
-                "ButtonType": "GetPhoneNumber",
-                "NextNodeId": "593f1a83b02a2920287c25a2",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PrefixText": "[~COUNTRYCODE]",
-                "PlaceholderText": "",
-                "PostToChat": false,
-                "_id": "58d46168443f863004e27c41"
-            }
-        ],
-        "VariableName": "PHONE",
-        "RequiredVariables": [],
-        "CardHeader": "⚠ Uh oh! This phone number already exists in our database.",
-        "Placement": "Center"
-    },
-    {
-        "Name": "Enter OTP-without resend",
-        "Id": "58d478f2443f861008cb20aa",
+        "ButtonType": "NextNode",
+        "NextNodeId": "593f7703b02a2907a482fc7e",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": false,
+        "_id": "593f76f0b02a2907a482fc72"
+      },
+      {
+        "ButtonText": "Edit",
         "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Card",
-        "Sections": [
-            {
-                "Length": 4,
-                "SectionType": "PrintOTP",
-                "DelayInMs": 762,
-                "Hidden": false,
-                "_id": "593f53f1460b50525490ae79"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Submit",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58d4746a443f861008cb20a2",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "",
-                "PostToChat": false,
-                "_id": "58d479f9443f861008cb20cf"
-            }
-        ],
-        "VariableName": "OTP",
-        "RequiredVariables": [],
-        "CardHeader": "Enter OTP",
-        "Placement": "Center"
-    },
-    {
-        "Name": "Apologies",
-        "Id": "58e33793b02a2927fc4dba77",
+        "ButtonType": "NextNode",
+        "NextNodeId": "593f76f5b02a2907a482fc77",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": false,
+        "_id": "593f76f0b02a2907a482fc73"
+      }
+    ],
+    "CardHeader": "Confirm your email address",
+    "CardFooter": "",
+    "Placement": "Center"
+  },
+  {
+    "Name": "Confirm your Business Name",
+    "Id": "593f5f29b02a2907a482f9fe",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Text": "[~BUSINESS_NAME]",
+        "SectionType": "Text",
+        "DelayInMs": 888,
+        "Hidden": false,
+        "_id": "593f5f29b02a2907a482fa04"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Confirm",
         "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Apologies, I could not find your facebook page.",
-                "SectionType": "Text",
-                "DelayInMs": 1175,
-                "Hidden": false,
-                "_id": "58e3380bb02a2927fc4dba78"
-            },
-            {
-                "Text": "You can manually add your facebook page under the social sharing section.",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58e33846b02a2927fc4dba7c"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Okay!  👍 ",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58e2555db02a2924289750a0",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "",
-                "PostToChat": true,
-                "_id": "58e3389ab02a2927fc4dba82"
-            }
-        ]
-    },
-    {
-        "Name": "Edit Website Address Without Section",
-        "Id": "5942a8d3c7d8bf95b0320b19",
+        "ButtonType": "NextNode",
+        "NextNodeId": "593f5f37b02a2907a482fa0e",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": false,
+        "_id": "593f5f29b02a2907a482fa02"
+      },
+      {
+        "ButtonText": "Edit",
         "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [],
-        "Buttons": [
-            {
-                "ButtonText": "▶",
-                "Emotion": "Cool",
-                "ButtonType": "GetText",
-                "NextNodeId": "58daf4c4c7d8bf2c80901c9c",
-                "DefaultButton": false,
-                "Hidden": false,
-                "VariableValue": "",
-                "PrefixText": "https://",
-                "PostfixText": ".nowfloats.com",
-                "PlaceholderText": "yourwebsitename",
-                "PostToChat": false,
-                "_id": "5942a8d3c7d8bf95b0320b1c"
-            }
-        ],
-        "VariableName": "TAG"
-    },
-    {
-        "Name": "OTP Verified",
-        "Id": "58daf946c7d8bf2c80901ca4",
+        "ButtonType": "NextNode",
+        "NextNodeId": "593f5f30b02a2907a482fa07",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": false,
+        "_id": "593f5f29b02a2907a482fa03"
+      }
+    ],
+    "CardHeader": "Confirm your business name",
+    "CardFooter": "",
+    "Placement": "Center"
+  },
+  {
+    "Name": "3rd FB Page",
+    "Id": "58e4d81fc7d8bf4a08b44b7d",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "HeightInPixels": 0,
+        "WidthInPixels": 0,
+        "Url": "[~FP_PAGE_3_IMAGE_URL]",
+        "SizeInKb": 0,
+        "SectionType": "Image",
+        "DelayInMs": 0,
+        "Hidden": false,
+        "_id": "58e4d81fc7d8bf4a08b44b84"
+      },
+      {
+        "Text": "[~FP_PAGE_3_NAME]",
+        "SectionType": "Text",
+        "DelayInMs": 612,
+        "Hidden": false,
+        "_id": "58e4d81fc7d8bf4a08b44b85"
+      },
+      {
+        "Text": "[~FP_PAGE_3_LIKES]",
+        "SectionType": "Text",
+        "DelayInMs": 540,
+        "Hidden": false,
+        "_id": "58e4d81fc7d8bf4a08b44b86"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Yes",
         "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Card",
-        "Sections": [
-            {
-                "Text": "[~COUNTRYCODE] [~PHONE]",
-                "SectionType": "Text",
-                "DelayInMs": 575,
-                "Hidden": false,
-                "_id": "58dafcb7c7d8bf2c80901cac"
-            }
-        ],
-        "Buttons": [
-            {
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58d481b6443f864f30fd6fb2",
-                "DefaultButton": true,
-                "Hidden": true,
-                "PostToChat": false,
-                "_id": "58daf972c7d8bf2c80901ca6"
-            }
-        ],
-        "CardHeader": "Your number has been verified",
-        "CardFooter": "CONFIRMED MOBILE NUMBER",
-        "Placement": "Outgoing"
-    },
-    {
-        "Name": "FB Page confirmation",
-        "Id": "58e2f590b02a2927fc4db9ff",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58e4d998c7d8bf4a08b44bb0",
+        "DefaultButton": false,
+        "Hidden": false,
+        "VariableValue": "[~FP_PAGE_3_ID]",
+        "PostToChat": true,
+        "_id": "58e4d81fc7d8bf4a08b44b82"
+      },
+      {
+        "ButtonText": "No",
         "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Do you have a Facebook page for your business?",
-                "SectionType": "Text",
-                "DelayInMs": 1150,
-                "Hidden": false,
-                "_id": "58e2f598b02a2927fc4dba00"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Yes",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58e78e13c7d8bf2f046b95a9",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "58e2f5dab02a2927fc4dba06"
-            },
-            {
-                "ButtonText": "No",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58e2555db02a2924289750a0",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "",
-                "PostToChat": true,
-                "_id": "58e2f5e7b02a2927fc4dba0a"
-            }
-        ]
-    },
-    {
-        "Name": "Create FP",
-        "Id": "58daf13d443f862698122eb1",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58e33793b02a2927fc4dba77",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58e4d81fc7d8bf4a08b44b83"
+      }
+    ],
+    "VariableName": "FB_PAGEID"
+  },
+  {
+    "Name": "Screenshot 1",
+    "Id": "58e235d614216c1a74cb2831",
+    "Emotion": "Cool",
+    "TimeoutInMs": 10000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Here's what your site looks like!",
+        "SectionType": "Text",
+        "DelayInMs": 1188,
+        "Hidden": false,
+        "_id": "58e23dd414216c1a74cb2832"
+      },
+      {
+        "HeightInPixels": 0,
+        "WidthInPixels": 0,
+        "Url": "[~SITE_SCREENSHOT_URL]",
+        "SizeInKb": 0,
+        "SectionType": "Image",
+        "DelayInMs": 0,
+        "Hidden": false,
+        "_id": "58e23e3e14216c1a74cb28ba"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Let's continue",
         "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "ApiCall",
-        "Sections": [],
-        "Buttons": [],
-        "ApiMethod": "GET",
-        "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/CreateFP",
-        "RequiredVariables": [
-            "STREET_ADDRESS",
-            "CITY",
-            "PERSON_NAME",
-            "COUNTRY",
-            "EMAIL",
-            "LAT",
-            "LNG",
-            "BUSINESS_NAME",
-            "PINCODE",
-            "BUSINESS_CATEGORY",
-            "PHONE",
-            "TAG"
-        ]
-    },
-    {
-        "Name": "2nd FB Page",
-        "Id": "58e4d81bc7d8bf4a08b44b6f",
+        "ButtonType": "NextNode",
+        "NextNodeId": "595a18fdb02a2933f0de1585",
+        "DefaultButton": true,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58e23f2614216c1a74cb28bf"
+      },
+      {
+        "ButtonText": "Take me to the moon!",
         "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "HeightInPixels": 0,
-                "WidthInPixels": 0,
-                "Url": "[~FP_PAGE_2_IMAGE_URL]",
-                "SizeInKb": 0,
-                "SectionType": "Image",
-                "DelayInMs": 0,
-                "Hidden": false,
-                "_id": "58e4d81bc7d8bf4a08b44b76"
-            },
-            {
-                "Text": "[~FP_PAGE_2_NAME]",
-                "SectionType": "Text",
-                "DelayInMs": 425,
-                "Hidden": false,
-                "_id": "58e4d81bc7d8bf4a08b44b77"
-            },
-            {
-                "Text": "[~FP_PAGE_2_LIKES]",
-                "SectionType": "Text",
-                "DelayInMs": 450,
-                "Hidden": false,
-                "_id": "58e4d81bc7d8bf4a08b44b78"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Yes",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58e4d998c7d8bf4a08b44bb0",
-                "DefaultButton": false,
-                "Hidden": false,
-                "VariableValue": "[~FP_PAGE_2_ID]",
-                "PostToChat": true,
-                "_id": "58e4d81bc7d8bf4a08b44b74"
-            },
-            {
-                "ButtonText": "No",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58e4d81fc7d8bf4a08b44b7d",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "58e4d81bc7d8bf4a08b44b75"
-            }
-        ],
-        "VariableName": "FB_PAGEID"
-    },
-    {
-        "Name": " Print All Variables to be sent to Create FP",
-        "Id": "58e78e13c7d8bf2f046b95a9",
+        "ButtonType": "DeepLink",
+        "DeepLinkUrl": "login",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58e240db14216c1a74cb28c1"
+      }
+    ]
+  },
+  {
+    "Name": "Update",
+    "Id": "58e342a7b02a29234844419c",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Search Engine Optimization works when you update your site . . ",
+        "SectionType": "Text",
+        "DelayInMs": 2016,
+        "Hidden": false,
+        "_id": "58e3475bb02a2923484441ad"
+      },
+      {
+        "Text": "An update can be an offer, a product description, a customer story or a news from your industry",
+        "SectionType": "Text",
+        "DelayInMs": 3000,
+        "Hidden": false,
+        "_id": "58e347b8b02a2923484441b1"
+      },
+      {
+        "Text": "The possibilities are endless! 🚀",
+        "SectionType": "Text",
+        "DelayInMs": 1188,
+        "Hidden": false,
+        "_id": "58e347f6b02a2923484441b7"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Update Now",
         "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "CITY [~CITY] <br> EMAIL [~EMAIL] <br> BUSINESS_NAME [~BUSINESS_NAME] <br> PHONE [~PHONE] <br> TAG [~TAG]",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58e78e13c7d8bf2f046b95ac"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Check for FB page",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58e2f7dab02a2927fc4dba33",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "",
-                "PostToChat": true,
-                "_id": "58e78e13c7d8bf2f046b95ab"
-            }
-        ]
-    },
-    {
-        "Name": "Address",
-        "Id": "58cfc03fc782bb4ad0ab9b00",
+        "ButtonType": "NextNode",
+        "NextNodeId": "5943e654c7d8bf85885c0893",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "Type your update here ",
+        "PostToChat": true,
+        "_id": "58e34883b02a2923484441c7"
+      },
+      {
+        "ButtonText": "Tell me more ",
         "Emotion": "Cool",
-        "TimeoutInMs": 5000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Alright, next is your business address.",
-                "SectionType": "Text",
-                "DelayInMs": 975,
-                "Hidden": false,
-                "_id": "58cfc068c782bb4ad0ab9b04"
-            },
-            {
-                "Text": "Be precise, for both your customers and the SEO.",
-                "SectionType": "Text",
-                "DelayInMs": 1200,
-                "Hidden": false,
-                "_id": "58d57e3b443f862eb0d871e9"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Enter Address",
-                "Emotion": "Cool",
-                "ButtonType": "GetAddress",
-                "NextNodeId": "593f125fb02a2920287c253f",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "",
-                "PostToChat": false,
-                "_id": "58cfc0b0c782bb4ad0ab9b1a"
-            }
-        ],
-        "VariableName": "",
-        "RequiredVariables": []
-    },
-    {
-        "Name": "Invalid Phone Number",
-        "Id": "58db14e1c7d8bf2c80901d1b",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58e34a58b02a292148c864df",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58e3490cb02a2923484441dc"
+      }
+    ],
+    "VariableName": ""
+  },
+  {
+    "Name": "Enter OTP Copy",
+    "Id": "591d8a4bc7d8bf4310a04270",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "You must have received a little SMS from us. Fill in the 4-digit code below.",
+        "SectionType": "Text",
+        "DelayInMs": 2280,
+        "Hidden": false,
+        "_id": "591d8a4bc7d8bf4310a04279"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "▶",
         "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Card",
-        "Sections": [
-            {
-                "Text": "[~COUNTRYCODE] [~PHONE]",
-                "SectionType": "Text",
-                "DelayInMs": 575,
-                "Hidden": false,
-                "_id": "58db151dc7d8bf2c80901d20"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Enter another number",
-                "Emotion": "Cool",
-                "ButtonType": "GetPhoneNumber",
-                "NextNodeId": "593f1a83b02a2920287c25a2",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PrefixText": "[~COUNTRYCODE]",
-                "PlaceholderText": "Please enter valid Phone Number",
-                "PostToChat": false,
-                "_id": "58db14f4c7d8bf2c80901d1c"
-            }
-        ],
-        "VariableName": "PHONE",
-        "CardHeader": "⚠ Please enter a valid phone number",
-        "Placement": "Center"
-    },
-    {
-        "Name": "Get Email Address",
-        "Id": "593f76f5b02a2907a482fc77",
+        "ButtonType": "GetText",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "Enter OTP",
+        "PostToChat": true,
+        "_id": "591d8a4bc7d8bf4310a04276"
+      },
+      {
+        "ButtonText": "Resend OTP",
         "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [],
-        "Buttons": [
-            {
-                "ButtonText": "Enter your Email Address",
-                "Emotion": "Cool",
-                "ButtonType": "GetEmail",
-                "Url": "https://onboarding-boost.withfloats.com/plugin/api/Service/GetFPCategories",
-                "NextNodeId": "593f76f0b02a2907a482fc6e",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "Enter your Email Address",
-                "PostToChat": false,
-                "_id": "593f76f5b02a2907a482fc7a"
-            }
-        ],
-        "VariableName": "EMAIL",
-        "RequiredVariables": []
-    },
-    {
-        "Name": "FP Tag Confirmed",
-        "Id": "593f7222b02a2907a482fc32",
+        "ButtonType": "NextNode",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "591d8a4bc7d8bf4310a04277"
+      },
+      {
+        "ButtonText": "Edit Number",
         "Emotion": "Cool",
-        "TimeoutInMs": 0,
-        "NodeType": "Card",
-        "Sections": [
-            {
-                "Text": "[~TAG]<br>.nowfloats.com",
-                "SectionType": "Text",
-                "DelayInMs": 955,
-                "Hidden": false,
-                "_id": "593f7279b02a2907a482fc34"
-            }
-        ],
-        "Buttons": [
-            {
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "BounceTimeout": 1,
-                "NextNodeId": "58cfc1a5c782bb4ad0ab9b36",
-                "DefaultButton": true,
-                "Hidden": true,
-                "PostToChat": true,
-                "_id": "593f732bb02a2907a482fc3a"
-            }
-        ],
-        "CardFooter": "YOUR CONFIRMED SUBDOMAIN",
-        "Placement": "Outgoing"
-    },
-    {
-        "Name": "Creation Successful",
-        "Id": "58e4d23cc7d8bf4a08b44a3d",
+        "ButtonType": "NextNode",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "591d8a4bc7d8bf4310a04278"
+      }
+    ],
+    "VariableName": "OTP",
+    "RequiredVariables": []
+  },
+  {
+    "Name": "About Business Description",
+    "Id": "58e25954b02a2914ac4bcd77",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Write a small introduction about your business here.",
+        "SectionType": "Text",
+        "DelayInMs": 1716,
+        "Hidden": false,
+        "_id": "58e25972b02a2914ac4bcd78"
+      },
+      {
+        "Text": "You can write when your business started, what products/ services you offer.",
+        "SectionType": "Text",
+        "DelayInMs": 2584,
+        "Hidden": false,
+        "_id": "58e25a56b02a2914ac4bcd7c"
+      },
+      {
+        "Text": "Mention how your offerings are unique and what's the best way to contact you.",
+        "SectionType": "Text",
+        "DelayInMs": 2618,
+        "Hidden": false,
+        "_id": "58e25b06b02a2914ac4bcd82"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Let's do this",
         "Emotion": "Cool",
-        "TimeoutInMs": 5000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Hold on...Creating your website",
-                "SectionType": "Text",
-                "DelayInMs": 775,
-                "Hidden": false,
-                "_id": "58e4d24cc7d8bf4a08b44a3e"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Hidden Button",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58e4d2a7c7d8bf4a08b44a44",
-                "DefaultButton": true,
-                "Hidden": true,
-                "PostToChat": true,
-                "_id": "58e4d28ec7d8bf4a08b44a42"
-            }
-        ]
-    },
-    {
-        "Name": "Confirmed Business Name",
-        "Id": "593f5f37b02a2907a482fa0e",
+        "ButtonType": "NextNode",
+        "NextNodeId": "5943e750c7d8bf85885c0a03",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "Write here",
+        "PostToChat": true,
+        "_id": "58e25bafb02a2914ac4bcd89"
+      },
+      {
+        "ButtonText": "Remind me later",
         "Emotion": "Cool",
-        "TimeoutInMs": 0,
-        "NodeType": "Card",
-        "Sections": [
-            {
-                "Text": "[~BUSINESS_NAME]",
-                "SectionType": "Text",
-                "DelayInMs": 828,
-                "Hidden": false,
-                "_id": "593f5f37b02a2907a482fa13"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "goto",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "BounceTimeout": 1,
-                "NextNodeId": "58cfc03fc782bb4ad0ab9b00",
-                "DefaultButton": true,
-                "Hidden": true,
-                "PostToChat": false,
-                "_id": "593f5f37b02a2907a482fa12"
-            }
-        ],
-        "CardFooter": "CONFIRMED BUSINESS NAME",
-        "Placement": "Outgoing"
-    },
-    {
-        "Name": "Get Business Name",
-        "Id": "593f5f30b02a2907a482fa07",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58e3396fb02a2927fc4dba8c",
+        "DefaultButton": false,
+        "Hidden": false,
+        "VariableValue": "",
+        "PostToChat": true,
+        "_id": "58e25c42b02a2914ac4bcd8d"
+      }
+    ],
+    "VariableName": "BUSINESS_DESCRIPTION"
+  },
+  {
+    "Name": "Upload Logo",
+    "Id": "58dcd9c9c7d8bf1e082feec3",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Next is an important one, your business logo!",
+        "SectionType": "Text",
+        "DelayInMs": 1530,
+        "Hidden": false,
+        "_id": "58e33d57b02a2927fc4dbaca"
+      },
+      {
+        "Text": "A logo is your brand identity ",
+        "SectionType": "Text",
+        "DelayInMs": 1110,
+        "Hidden": false,
+        "_id": "58dcda46c7d8bf1e082fef4d"
+      },
+      {
+        "Text": "Let's add your logo to the site . . . ",
+        "SectionType": "Text",
+        "DelayInMs": 1444,
+        "Hidden": false,
+        "_id": "58e33c32b02a2927fc4dbabf"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Choose image",
         "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [],
-        "Buttons": [
-            {
-                "ButtonText": "Enter your Business Name",
-                "Emotion": "Cool",
-                "ButtonType": "GetText",
-                "Url": "https://onboarding-boost.withfloats.com/plugin/api/Service/GetFPCategories",
-                "NextNodeId": "593f5f29b02a2907a482f9fe",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "Enter your Business Name",
-                "PostToChat": false,
-                "_id": "593f5f30b02a2907a482fa0a"
-            }
-        ],
-        "VariableName": "BUSINESS_NAME",
-        "RequiredVariables": []
-    },
-    {
-        "Name": "Please enter OTP-without resend Copy",
-        "Id": "591d8df1c7d8bf4310a04298",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Please enter OTP",
-                "SectionType": "Text",
-                "DelayInMs": 400,
-                "Hidden": false,
-                "_id": "591d8df1c7d8bf4310a0429e"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Edit Number",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "",
-                "PostToChat": true,
-                "_id": "591d8df1c7d8bf4310a0429c"
-            },
-            {
-                "ButtonText": "▶",
-                "Emotion": "Cool",
-                "ButtonType": "GetNumber",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "Enter OTP",
-                "PostToChat": true,
-                "_id": "591d8df1c7d8bf4310a0429d"
-            }
-        ],
-        "VariableName": "OTP",
-        "RequiredVariables": []
-    },
-    {
-        "Name": "Email Address",
-        "Id": "58cfc1a5c782bb4ad0ab9b36",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Great!",
-                "SectionType": "Text",
-                "DelayInMs": 900,
-                "Hidden": false,
-                "_id": "5947ba4cb02a2911c8c2e5ca"
-            },
-            {
-                "Text": "Lastly, I need your email ID to send you your username, password and other important details.",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58cfc1bfc782bb4ad0ab9b3a"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "▶",
-                "Emotion": "Cool",
-                "ButtonType": "GetEmail",
-                "NextNodeId": "593f76f0b02a2907a482fc6e",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "Enter your email address",
-                "PostToChat": false,
-                "_id": "58cfc1e9c782bb4ad0ab9b48"
-            }
-        ],
-        "VariableName": "EMAIL",
-        "RequiredVariables": []
-    },
-    {
-        "Name": "Remind me",
-        "Id": "58e3396fb02a2927fc4dba8c",
-        "Emotion": "Cool",
-        "TimeoutInMs": 1000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Okay, I'll remind you 😃",
-                "SectionType": "Text",
-                "DelayInMs": 600,
-                "Hidden": false,
-                "_id": "58e33a0bb02a2927fc4dba9b"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Hidden Button",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58dcd9c9c7d8bf1e082feec3",
-                "DefaultButton": true,
-                "Hidden": true,
-                "PostToChat": true,
-                "_id": "58e4e4b7c7d8bf4a08b44cdb"
-            }
-        ]
-    },
-    {
-        "Name": "Phone",
-        "Id": "58cfc338c782bb4ad0ab9b5a",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "To verify your account, I need your personal mobile number.",
-                "SectionType": "Text",
-                "DelayInMs": 1475,
-                "Hidden": false,
-                "_id": "58cfc34cc782bb4ad0ab9b5e"
-            },
-            {
-                "Text": "I will send you an OTP on this number, so please make sure your phone number is valid.",
-                "SectionType": "Text",
-                "DelayInMs": 994,
-                "Hidden": false,
-                "_id": "591d88d6c7d8bf4310a04250"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "▶",
-                "Emotion": "Cool",
-                "ButtonType": "GetPhoneNumber",
-                "NextNodeId": "593f19bfb02a2920287c2589",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PrefixText": "[~COUNTRYCODE]",
-                "PlaceholderText": "Enter your phone number",
-                "PostToChat": false,
-                "_id": "58cfc398c782bb4ad0ab9b78"
-            }
-        ],
-        "VariableName": "PHONE",
-        "RequiredVariables": [],
-        "CardHeader": "",
-        "Placement": "Incoming"
-    },
-    {
-        "Name": "Know more",
-        "Id": "58cfb992c782bb4ad0ab9a66",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Hello [~PERSON_NAME]",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58cfb9a3c782bb4ad0ab9a6a"
-            },
-            {
-                "Text": "What is your business called?",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58d58885443f862eb0d87251"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "▶",
-                "Emotion": "Cool",
-                "ButtonType": "GetText",
-                "NextNodeId": "593f5f29b02a2907a482f9fe",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "Enter your business name",
-                "PostToChat": false,
-                "_id": "58cfba49c782bb4ad0ab9a92"
-            }
-        ],
-        "VariableName": "BUSINESS_NAME",
-        "RequiredVariables": []
-    },
-    {
-        "Name": "Good job",
-        "Id": "58e340ddb02a29234844418a",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Good stuff [~PERSON_NAME]  🙌",
-                "SectionType": "Text",
-                "DelayInMs": 725,
-                "Hidden": false,
-                "_id": "58e340ddb02a29234844418c"
-            },
-            {
-                "Text": "Let's have a quick look at your site? [~WEBSITE_URL]",
-                "SectionType": "Text",
-                "DelayInMs": 1300,
-                "Hidden": false,
-                "_id": "58e342bcb02a29234844419e"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Let's have a look! ",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58e4dec1c7d8bf4a08b44bd7",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "",
-                "PostToChat": true,
-                "_id": "58e342dab02a2923484441a2"
-            }
-        ]
-    },
-    {
-        "Name": "Enter OTP",
-        "Id": "58cfc423c782bb4ad0ab9b81",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "You must have received a little SMS from us. Fill in the 4-digit code below.",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58cfc430c782bb4ad0ab9b85"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Enter OTP",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "",
-                "PostToChat": false,
-                "_id": "58cfc488c782bb4ad0ab9b9a"
-            },
-            {
-                "ButtonText": "Resend OTP",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "58d473e7443f861008cb2093"
-            }
-        ],
-        "VariableName": "",
-        "RequiredVariables": [],
-        "GroupName": "",
-        "Placement": "Incoming"
-    },
-    {
-        "Name": "Welcome Node Copy",
-        "Id": "591ee310c7d8bf39905afb7e",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Hi! My name is Ria, and I will help you set up your website within minutes.",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "591ee310c7d8bf39905afb85"
-            },
-            {
-                "Text": "It's really simple, so let's get started?",
-                "SectionType": "Text",
-                "DelayInMs": 1025,
-                "Hidden": false,
-                "_id": "591ee310c7d8bf39905afb86"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Let's get started",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "591ee310c7d8bf39905afb84"
-            }
-        ],
-        "RequiredVariables": []
-    },
-    {
-        "Name": "Website Screenshot 2",
-        "Id": "58e4e02fc7d8bf4a08b44beb",
-        "Emotion": "Cool",
-        "TimeoutInMs": 10000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Here's what your site looks like now!",
-                "SectionType": "Text",
-                "DelayInMs": 925,
-                "Hidden": false,
-                "_id": "58e4e02fc7d8bf4a08b44bf1"
-            },
-            {
-                "HeightInPixels": 0,
-                "WidthInPixels": 0,
-                "Url": "[~SITE_SCREENSHOT_URL]",
-                "SizeInKb": 0,
-                "SectionType": "Image",
-                "DelayInMs": 0,
-                "Hidden": false,
-                "_id": "58e4e02fc7d8bf4a08b44bf2"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Awesome! Tell me more",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58e342a7b02a29234844419c",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "58e4ec2ec7d8bf4a08b44cfb"
-            }
-        ]
-    },
-    {
-        "Name": "Confirmation Node",
-        "Id": "58e78bbec7d8bf2f046b94c3",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Just to confirm, here are the details:",
-                "SectionType": "Text",
-                "DelayInMs": 950,
-                "Hidden": false,
-                "_id": "58ed60c5c7d8bf58fc97661e"
-            },
-            {
-                "Text": "STREET_ADDRESS [~STREET_ADDRESS] <br>CITY [~CITY] <br> PERSON_NAME [~PERSON_NAME] <br> COUNTRY [~COUNTRY] <br> EMAIL [~EMAIL] <br> LAT [~LAT] <br> LNG [~LNG] <br> BUSINESS_NAME [~BUSINESS_NAME] <br> PINCODE [~PINCODE] <br> BUSINESS_CATEGORY [~BUSINESS_CATEGORY] <br> PHONE [~PHONE] <br> SUGGESTED_TAG [~SUGGESTED_TAG] <br> TAG [~TAG] <br> SUGGESTED_WEBSITE_URL [~SUGGESTED_WEBSITE_URL]",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58e78bc5c7d8bf2f046b94c4"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Yes",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "",
-                "PostToChat": true,
-                "_id": "58e78cd5c7d8bf2f046b95a2"
-            }
-        ]
-    },
-    {
-        "Name": "Select Category",
-        "Id": "58cfbaf5c782bb4ad0ab9aa1",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "What category of business does [~BUSINESS_NAME] belong to? ",
-                "SectionType": "Text",
-                "DelayInMs": 1475,
-                "Hidden": false,
-                "_id": "58cfbb12c782bb4ad0ab9aa7"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Select your business category",
-                "Emotion": "Cool",
-                "ButtonType": "GetItemFromSource",
-                "Url": "https://onboarding-boost.withfloats.com/plugin/api/Service/GetFPCategories",
-                "NextNodeId": "593f0568b02a2920287c24d9",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PlaceholderText": "Select your business category",
-                "PostToChat": false,
-                "_id": "58cfc15ac782bb4ad0ab9b2e"
-            }
-        ],
-        "VariableName": "BUSINESS_CATEGORY",
-        "RequiredVariables": []
-    },
-    {
-        "Name": "Unable to Create FP",
-        "Id": "58ed586ac7d8bf58fc976611",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Sorry, we could not create your website, because [~ERROR_MESSAGE]",
-                "SectionType": "Text",
-                "DelayInMs": 1500,
-                "Hidden": false,
-                "_id": "58ed5882c7d8bf58fc976612"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Try Again",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58daf13d443f862698122eb1",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "58ed58c7c7d8bf58fc976618"
-            }
-        ]
-    },
-    {
-        "Name": "Login to Boost App",
-        "Id": "58ed68e5c7d8bf58fc976716",
-        "Emotion": "Cool",
-        "TimeoutInMs": 10000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Let's go to Dashboard",
-                "SectionType": "Text",
-                "DelayInMs": 525,
-                "Hidden": false,
-                "_id": "58ee13bdc7d8bf51e0887c29"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Login",
-                "Emotion": "Cool",
-                "ButtonType": "DeepLink",
-                "DeepLinkUrl": "login",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PostToChat": true,
-                "_id": "58ed68e5c7d8bf58fc97671b"
-            }
-        ]
-    },
-    {
-        "Name": "Edit Website Address",
-        "Id": "58db0a6cc7d8bf2c80901ce7",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Please enter the website address you want…",
-                "SectionType": "Text",
-                "DelayInMs": 1050,
-                "Hidden": false,
-                "_id": "58db0a9ac7d8bf2c80901ce8"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "▶",
-                "Emotion": "Cool",
-                "ButtonType": "GetText",
-                "NextNodeId": "58daf4c4c7d8bf2c80901c9c",
-                "DefaultButton": false,
-                "Hidden": false,
-                "VariableValue": "",
-                "PrefixText": "https://",
-                "PostfixText": ".nowfloats.com",
-                "PlaceholderText": "yourwebsitename",
-                "PostToChat": false,
-                "_id": "58db0ae2c7d8bf2c80901cec"
-            }
-        ],
-        "VariableName": "TAG"
-    },
-    {
-        "Name": "Website Address Suggestion",
-        "Id": "593fa296b02a290a904f062a",
-        "Emotion": "Cool",
-        "TimeoutInMs": 0,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Almost done...",
-                "SectionType": "Text",
-                "DelayInMs": 919,
-                "Hidden": false,
-                "_id": "593fa29eb02a290a904f062b"
-            },
-            {
-                "Text": "We think this should be your business' web address…",
-                "SectionType": "Text",
-                "DelayInMs": 911,
-                "Hidden": false,
-                "_id": "593fa2b1b02a290a904f062f"
-            },
-            {
-                "Text": "Don't worry, you can always map it to an existing domain or a custom domain at a later point.",
-                "SectionType": "Text",
-                "DelayInMs": 840,
-                "Hidden": false,
-                "_id": "593fa2c7b02a290a904f0633"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Goto",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "BounceTimeout": 1,
-                "NextNodeId": "593f6a6db02a2907a482fa64",
-                "DefaultButton": true,
-                "Hidden": true,
-                "PostToChat": false,
-                "_id": "593fa2f1b02a290a904f0637"
-            }
-        ]
-    },
-    {
-        "Name": "Remind me",
-        "Id": "58e4e500c7d8bf4a08b44ce1",
-        "Emotion": "Cool",
-        "TimeoutInMs": 1000,
-        "NodeType": "Combination",
-        "Sections": [
-            {
-                "Text": "Okay, I'll remind you 😃",
-                "SectionType": "Text",
-                "DelayInMs": 600,
-                "Hidden": false,
-                "_id": "58e4e500c7d8bf4a08b44ce5"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "Hidden Button",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "NextNodeId": "58e3410db02a29234844418e",
-                "DefaultButton": true,
-                "Hidden": true,
-                "PostToChat": true,
-                "_id": "58e4e500c7d8bf4a08b44ce4"
-            }
-        ]
-    },
-    {
-        "Name": "Edit Phone",
-        "Id": "593f1a83b02a2920287c25a2",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "Combination",
-        "Sections": [],
-        "Buttons": [
-            {
-                "ButtonText": "Enter phone number",
-                "Emotion": "Cool",
-                "ButtonType": "GetPhoneNumber",
-                "NextNodeId": "593f19bfb02a2920287c2589",
-                "DefaultButton": false,
-                "Hidden": false,
-                "PrefixText": "[~COUNTRYCODE]",
-                "PlaceholderText": "Enter your phone number",
-                "PostToChat": false,
-                "_id": "593f1a83b02a2920287c25a9"
-            }
-        ],
-        "VariableName": "PHONE",
-        "RequiredVariables": [],
-        "CardHeader": "",
-        "Placement": "Center"
-    },
-    {
-        "Name": "Confirmed Address",
-        "Id": "593f12ffb02a2920287c255c",
-        "Emotion": "Cool",
-        "TimeoutInMs": 0,
-        "NodeType": "Card",
-        "Sections": [
-            {
-                "Title": "Address Map Image",
-                "HeightInPixels": 0,
-                "WidthInPixels": 0,
-                "Url": "[~ADDRESSMAP_IMAGE]",
-                "SizeInKb": 0,
-                "SectionType": "Image",
-                "DelayInMs": 973,
-                "Hidden": false,
-                "_id": "593f6697b02a2907a482fa50"
-            },
-            {
-                "Text": "[~STREET_ADDRESS], [~CITY], [~COUNTRY], [~PINCODE]",
-                "SectionType": "Text",
-                "DelayInMs": 828,
-                "Hidden": false,
-                "_id": "593f12ffb02a2920287c2561"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "goto",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "BounceTimeout": 1,
-                "NextNodeId": "58cfbaf5c782bb4ad0ab9aa1",
-                "DefaultButton": true,
-                "Hidden": true,
-                "PostToChat": false,
-                "_id": "593f12ffb02a2920287c2560"
-            }
-        ],
-        "CardFooter": "CONFIRMED BUSINESS ADDRESS",
-        "Placement": "Outgoing"
-    },
-    {
-        "Name": "Get Business Address",
-        "Id": "593f1269b02a2920287c2548",
-        "Emotion": "Cool",
-        "TimeoutInMs": 0,
-        "NodeType": "Combination",
-        "Sections": [],
-        "Buttons": [
-            {
-                "ButtonText": "Enter your Business Address",
-                "Emotion": "Cool",
-                "ButtonType": "GetAddress",
-                "Url": "https://onboarding-boost.withfloats.com/plugin/api/Service/GetFPCategories",
-                "NextNodeId": "593f125fb02a2920287c253f",
-                "DefaultButton": true,
-                "Hidden": false,
-                "PlaceholderText": "Enter your Business Address",
-                "PostToChat": false,
-                "_id": "593f1269b02a2920287c254b"
-            }
-        ],
-        "VariableName": "BUSINESS_ADDRESS",
-        "RequiredVariables": []
-    },
-    {
-        "Name": "Select Category",
-        "Id": "593f09f0b02a2920287c2520",
-        "Emotion": "Cool",
-        "TimeoutInMs": 0,
-        "NodeType": "Combination",
-        "Sections": [],
-        "Buttons": [
-            {
-                "ButtonText": "Select your business category",
-                "Emotion": "Cool",
-                "ButtonType": "GetItemFromSource",
-                "Url": "https://onboarding-boost.withfloats.com/plugin/api/Service/GetFPCategories",
-                "NextNodeId": "593f0568b02a2920287c24d9",
-                "DefaultButton": true,
-                "Hidden": false,
-                "PlaceholderText": "Select your business category",
-                "PostToChat": false,
-                "_id": "593f09f0b02a2920287c2523"
-            }
-        ],
-        "VariableName": "BUSINESS_CATEGORY",
-        "RequiredVariables": []
-    },
-    {
-        "Name": "Confirmed Category",
-        "Id": "593f0683b02a2920287c24ea",
-        "Emotion": "Cool",
-        "TimeoutInMs": 0,
-        "NodeType": "Card",
-        "Sections": [
-            {
-                "Text": "[~BUSINESS_CATEGORY]",
-                "SectionType": "Text",
-                "DelayInMs": 828,
-                "Hidden": false,
-                "_id": "593f06bfb02a2920287c24ee"
-            }
-        ],
-        "Buttons": [
-            {
-                "ButtonText": "goto",
-                "Emotion": "Cool",
-                "ButtonType": "NextNode",
-                "BounceTimeout": 1,
-                "NextNodeId": "5909b9c1c7d8bf662064588d",
-                "DefaultButton": true,
-                "Hidden": true,
-                "PostToChat": false,
-                "_id": "593f075db02a2920287c24fe"
-            }
-        ],
-        "CardFooter": "CONFIRMED BUSINESS CATEGORY",
-        "Placement": "Outgoing"
-    },
-    {
-        "Name": "API Call - Phone Verification and Send OTP",
-        "Id": "58d45c20443f863004e27c2f",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "ApiCall",
-        "Sections": [],
-        "Buttons": [],
-        "ApiMethod": "GET",
-        "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/VerifyPhoneNumberAndSendOTP",
-        "RequiredVariables": [
-            "PHONE",
-            "COUNTRYCODE"
-        ]
-    },
-    {
-        "Name": "API Call: Check FP Tag Availability",
-        "Id": "58daf4c4c7d8bf2c80901c9c",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "ApiCall",
-        "Sections": [],
-        "Buttons": [],
-        "VariableName": "TAG",
-        "ApiMethod": "GET",
-        "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/CheckFPTagAvailability",
-        "RequiredVariables": [
-            "TAG"
-        ]
-    },
-    {
-        "Id": "58e353edb02a292148c86507",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "ApiCall",
-        "Sections": [],
-        "Buttons": [],
-        "ApiMethod": "GET",
-        "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/PostAnUpdate",
-        "RequiredVariables": [
-            "TAG",
-            "MESSAGE_UPDATE"
-        ]
-    },
-    {
-        "Name": "API Call : Verify OTP",
-        "Id": "58d4746a443f861008cb20a2",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "ApiCall",
-        "Sections": [],
-        "Buttons": [],
-        "ApiMethod": "GET",
-        "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/VerifyOTP",
-        "RequiredVariables": [
-            "PHONE",
-            "COUNTRY",
-            "OTP"
-        ]
-    },
-    {
-        "Name": "API Call Get website Screenshot",
-        "Id": "58e4d2a7c7d8bf4a08b44a44",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "ApiCall",
-        "Sections": [],
-        "Buttons": [],
-        "ApiMethod": "GET",
-        "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/GetSiteScreenshot",
-        "NextNodeId": "58e235d614216c1a74cb2831",
-        "RequiredVariables": [
-            "TAG"
-        ]
-    },
-    {
-        "Name": "Submit Business Description and Logo",
-        "Id": "58e3410db02a29234844418e",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "ApiCall",
-        "Sections": [],
-        "Buttons": [],
-        "ApiMethod": "GET",
-        "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/SaveBusinessDescriptionLogo",
-        "NextNodeId": "58e340ddb02a29234844418a",
-        "RequiredVariables": [
-            "BUSINESS_LOGO",
-            "BUSINESS_DESCRIPTION",
-            "TAG"
-        ]
-    },
-    {
-        "Name": "Api Call Get website Screenshot",
-        "Id": "58e4dec1c7d8bf4a08b44bd7",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "ApiCall",
-        "Sections": [],
-        "Buttons": [],
-        "ApiMethod": "GET",
-        "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/GetSiteScreenshot",
-        "NextNodeId": "58e4e02fc7d8bf4a08b44beb",
-        "RequiredVariables": [
-            "TAG"
-        ]
-    },
-    {
-        "Name": "FB Page Search API",
-        "Id": "58e2f7dab02a2927fc4dba33",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "ApiCall",
-        "Sections": [],
-        "Buttons": [],
-        "ApiMethod": "GET",
-        "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/SearchFBPageForFP",
-        "RequiredVariables": [
-            "BUSINESS_NAME",
-            "TAG",
-            "PHONE",
-            "EMAIL",
-            "CITY"
-        ]
-    },
-    {
-        "Name": "API Call : Resend OTP",
-        "Id": "58d476d9443f861008cb20a5",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "ApiCall",
-        "Sections": [],
-        "Buttons": [],
-        "ApiMethod": "GET",
-        "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/ResendOTP",
-        "RequiredVariables": [
-            "PHONE",
-            "COUNTRY"
-        ]
-    },
-    {
-        "Name": "API Call: Get Country Code",
-        "Id": "5909b9c1c7d8bf662064588d",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "ApiCall",
-        "Sections": [],
-        "Buttons": [],
-        "ApiMethod": "GET",
-        "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/GetCountryCode",
-        "NextNodeId": "58cfc338c782bb4ad0ab9b5a",
-        "RequiredVariables": [
-            "COUNTRY"
-        ]
-    },
-    {
-        "Name": "API call for Fetching Details From FB Page",
-        "Id": "58e4d998c7d8bf4a08b44bb0",
-        "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "ApiCall",
-        "Sections": [],
-        "Buttons": [],
-        "ApiMethod": "GET",
-        "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/GetFBPageDetails",
+        "ButtonType": "GetImage",
         "NextNodeId": "58e3410db02a29234844418e",
-        "RequiredVariables": [
-            "FB_PAGEID"
-        ]
-    },
-    {
-        "Name": "API Call - Get Suggested Website Names",
-        "Id": "58d481b6443f864f30fd6fb2",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58dcd9e6c7d8bf1e082feec4"
+      },
+      {
+        "ButtonText": "Remind me later",
         "Emotion": "Cool",
-        "TimeoutInMs": 15000,
-        "NodeType": "ApiCall",
-        "Sections": [],
-        "Buttons": [],
-        "ApiMethod": "GET",
-        "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/GetSuggestedFPTag",
-        "NextNodeId": "",
-        "RequiredVariables": [
-            "CITY",
-            "COUNTRY",
-            "BUSINESS_NAME",
-            "BUSINESS_CATEGORY"
-        ]
-    }
+        "ButtonType": "NextNode",
+        "NextNodeId": "58e4e500c7d8bf4a08b44ce1",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58e28d24b02a291b78f8ef38"
+      }
+    ],
+    "VariableName": "BUSINESS_LOGO"
+  },
+  {
+    "Name": "FP Tag available",
+    "Id": "58dafdbac7d8bf2c80901cc3",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Text": "[~TAG]<br>.nowfloats.com",
+        "SectionType": "Text",
+        "DelayInMs": 936,
+        "Hidden": false,
+        "_id": "58dafeecc7d8bf2c80901cd2"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Make my website!",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "593f7222b02a2907a482fc32",
+        "DefaultButton": false,
+        "Hidden": false,
+        "VariableValue": "",
+        "PostToChat": true,
+        "_id": "58dafe27c7d8bf2c80901cc5"
+      },
+      {
+        "ButtonText": "Edit Website Address",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "5942a8d3c7d8bf95b0320b19",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": false,
+        "_id": "58dafe28c7d8bf2c80901cc7"
+      }
+    ],
+    "VariableName": "",
+    "CardHeader": "👍 Hallelujah! This website address is available.",
+    "Placement": "Center"
+  },
+  {
+    "Name": "Welcome Node",
+    "Id": "58cfaf0dc782bb3fec8db382",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Hi! My name is Ria, and I will help you set up your website within minutes.",
+        "SectionType": "Text",
+        "DelayInMs": 2325,
+        "Hidden": false,
+        "_id": "58cfaf21c782bb3fec8db386"
+      },
+      {
+        "Text": "It's really simple, so let's get started?",
+        "SectionType": "Text",
+        "DelayInMs": 1599,
+        "Hidden": false,
+        "_id": "58cfb4aec782bb5a241de4aa"
+      },
+      {
+        "Url": "https://s3-ap-southeast-1.amazonaws.com/nfcontent-cdn/ria/onboarding-content/RIA1.gif",
+        "PreFetch": false,
+        "SectionType": "Gif",
+        "DelayInMs": 0,
+        "Hidden": false,
+        "_id": "58d256dac782bb594494b542"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Let's get started",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58cfafc6c782bb3fec8db3d5"
+      }
+    ],
+    "RequiredVariables": []
+  },
+  {
+    "Name": "Ask Location Permission",
+    "Id": "58d44487443f863004e27bb4",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "I'll use your device location to pin-point the exact address of [~BUSINESS_NAME]",
+        "SectionType": "Text",
+        "DelayInMs": 2480,
+        "Hidden": false,
+        "_id": "58d447ce443f863004e27bc5"
+      },
+      {
+        "Text": "Click continue to give me access",
+        "SectionType": "Text",
+        "DelayInMs": 1184,
+        "Hidden": false,
+        "_id": "58d58566443f862eb0d8721c"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Continue",
+        "Emotion": "Cool",
+        "ButtonType": "DeepLink",
+        "DeepLinkUrl": "asklocationpermission",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58d44629443f863004e27bb8"
+      },
+      {
+        "ButtonText": "Tell me more",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58d447b1443f863004e27bc1"
+      }
+    ]
+  },
+  {
+    "Name": "2nd FB Page",
+    "Id": "58e4d81bc7d8bf4a08b44b6f",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "HeightInPixels": 0,
+        "WidthInPixels": 0,
+        "Url": "[~FP_PAGE_2_IMAGE_URL]",
+        "SizeInKb": 0,
+        "SectionType": "Image",
+        "DelayInMs": 0,
+        "Hidden": false,
+        "_id": "58e4d81bc7d8bf4a08b44b76"
+      },
+      {
+        "Text": "[~FP_PAGE_2_NAME]",
+        "SectionType": "Text",
+        "DelayInMs": 578,
+        "Hidden": false,
+        "_id": "58e4d81bc7d8bf4a08b44b77"
+      },
+      {
+        "Text": "[~FP_PAGE_2_LIKES]",
+        "SectionType": "Text",
+        "DelayInMs": 576,
+        "Hidden": false,
+        "_id": "58e4d81bc7d8bf4a08b44b78"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Yes",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58e4d998c7d8bf4a08b44bb0",
+        "DefaultButton": false,
+        "Hidden": false,
+        "VariableValue": "[~FP_PAGE_2_ID]",
+        "PostToChat": true,
+        "_id": "58e4d81bc7d8bf4a08b44b74"
+      },
+      {
+        "ButtonText": "No",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58e4d81fc7d8bf4a08b44b7d",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58e4d81bc7d8bf4a08b44b75"
+      }
+    ],
+    "VariableName": "FB_PAGEID"
+  },
+  {
+    "Name": "1st FB Page",
+    "Id": "58e2f903b02a2927fc4dba45",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "HeightInPixels": 0,
+        "WidthInPixels": 0,
+        "Url": "[~FP_PAGE_1_IMAGE_URL]",
+        "SizeInKb": 0,
+        "SectionType": "Image",
+        "DelayInMs": 0,
+        "Hidden": false,
+        "_id": "58e336e4b02a2927fc4dba65"
+      },
+      {
+        "Text": "[~FP_PAGE_1_NAME]",
+        "SectionType": "Text",
+        "DelayInMs": 510,
+        "Hidden": false,
+        "_id": "58e3371ab02a2927fc4dba69"
+      },
+      {
+        "Text": "[~FP_PAGE_1_LIKES]",
+        "SectionType": "Text",
+        "DelayInMs": 540,
+        "Hidden": false,
+        "_id": "58e33724b02a2927fc4dba6b"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Yes",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58e4d998c7d8bf4a08b44bb0",
+        "DefaultButton": false,
+        "Hidden": false,
+        "VariableValue": "[~FP_PAGE_1_ID]",
+        "PostToChat": true,
+        "_id": "58e2f903b02a2927fc4dba48"
+      },
+      {
+        "ButtonText": "No",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58e4d81bc7d8bf4a08b44b6f",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58e2f903b02a2927fc4dba49"
+      }
+    ],
+    "VariableName": "FB_PAGEID"
+  },
+  {
+    "Name": "Pitch",
+    "Id": "58e2f301b02a2927fc4db9e6",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Congratulations! ",
+        "SectionType": "Text",
+        "DelayInMs": 629,
+        "Hidden": false,
+        "_id": "58e2f34db02a2927fc4db9e7"
+      },
+      {
+        "Text": "You've got an exclusive evaluation access for 30 days",
+        "SectionType": "Text",
+        "DelayInMs": 1961,
+        "Hidden": false,
+        "_id": "58e2f422b02a2927fc4db9eb"
+      },
+      {
+        "Text": "Enjoy unlimited updates, automatic search engine optimization, custom pages and business enquiries from the site.",
+        "SectionType": "Text",
+        "DelayInMs": 3000,
+        "Hidden": false,
+        "_id": "58e2f45bb02a2927fc4db9f1"
+      },
+      {
+        "Text": "After 30 days, you can purchase an yearly plan and get access to premium features like ",
+        "SectionType": "Text",
+        "DelayInMs": 3000,
+        "Hidden": false,
+        "_id": "58e363c8b02a2928400822f0"
+      },
+      {
+        "Text": "Dedicated account manager, lead tracking, weekly reports and regular product trainings.",
+        "SectionType": "Text",
+        "DelayInMs": 2871,
+        "Hidden": false,
+        "_id": "58e363f5b02a2928400822f7"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Cool!",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58e2f549b02a2927fc4db9f9"
+      }
+    ]
+  },
+  {
+    "Name": "Tell Why Location Permission is Required",
+    "Id": "58d448a1443f863004e27beb",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Your exact location helps in optimizing local SEO for the site. Location access is critical to locate your business on the map",
+        "SectionType": "Text",
+        "DelayInMs": 3000,
+        "Hidden": false,
+        "_id": "58d448a8443f863004e27bee"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Okay",
+        "Emotion": "Cool",
+        "ButtonType": "DeepLink",
+        "DeepLinkUrl": "asklocationpermission",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58d448f6443f863004e27bfb"
+      },
+      {
+        "ButtonText": "Enter Manually",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "593e5331b02a2913bce7a118"
+      }
+    ],
+    "RequiredVariables": []
+  },
+  {
+    "Name": "Why Update",
+    "Id": "58e34a58b02a292148c864df",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "When you update the site, we automatically extract keywords from it",
+        "SectionType": "Text",
+        "DelayInMs": 2345,
+        "Hidden": false,
+        "_id": "58e34aecb02a292148c864e7"
+      },
+      {
+        "Text": "Keywords when intepolated with your location, help build Local SEO",
+        "SectionType": "Text",
+        "DelayInMs": 2574,
+        "Hidden": false,
+        "_id": "58e34b56b02a292148c864ed"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Update Now",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "5943e654c7d8bf85885c0893",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "Type your update here",
+        "PostToChat": true,
+        "_id": "58e34aadb02a292148c864e0"
+      },
+      {
+        "ButtonText": "Ideas to update",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58e34958b02a292148c8641e",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58e35337b02a292148c86501"
+      }
+    ],
+    "VariableName": ""
+  },
+  {
+    "Name": "Your mobile number",
+    "Id": "593f19bfb02a2920287c2589",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Text": "[~COUNTRYCODE] [~PHONE]",
+        "SectionType": "Text",
+        "DelayInMs": 991,
+        "Hidden": false,
+        "_id": "593f19f0b02a2920287c258c"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Submit",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58d45c20443f863004e27c2f",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": false,
+        "_id": "593f1a56b02a2920287c2592"
+      },
+      {
+        "ButtonText": "Edit",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "593f1a83b02a2920287c25a2",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "593f1a70b02a2920287c2596"
+      }
+    ],
+    "CardHeader": "Your mobile number",
+    "Placement": "Center"
+  },
+  {
+    "Name": "Invalid OTP Reenter card",
+    "Id": "591d9326c7d8bf4310a042c0",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Length": 4,
+        "SectionType": "PrintOTP",
+        "DelayInMs": 983,
+        "Hidden": false,
+        "_id": "593f5392460b50525490ae73"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Submit",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58d4746a443f861008cb20a2",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "",
+        "PostToChat": false,
+        "_id": "591d93d9c7d8bf4310a042ca"
+      },
+      {
+        "ButtonText": "Resend OTP again",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58d476d9443f861008cb20a5",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "593f54be460b50525490ae83"
+      }
+    ],
+    "VariableName": "OTP",
+    "CardHeader": "⚠ Please enter valid OTP",
+    "CardFooter": "A four digit OTP code which has been sent to your phone",
+    "Placement": "Center"
+  },
+  {
+    "Name": "Confirmed Address",
+    "Id": "593f12ffb02a2920287c255c",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Title": "Address Map Image",
+        "HeightInPixels": 0,
+        "WidthInPixels": 0,
+        "Url": "[~ADDRESSMAP_IMAGE]",
+        "SizeInKb": 0,
+        "SectionType": "Image",
+        "DelayInMs": 973,
+        "Hidden": false,
+        "_id": "593f6697b02a2907a482fa50"
+      },
+      {
+        "Text": "[~STREET_ADDRESS], [~CITY], [~COUNTRY], [~PINCODE]",
+        "SectionType": "Text",
+        "DelayInMs": 828,
+        "Hidden": false,
+        "_id": "593f12ffb02a2920287c2561"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "goto",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "BounceTimeout": 1,
+        "NextNodeId": "58cfbaf5c782bb4ad0ab9aa1",
+        "DefaultButton": true,
+        "Hidden": true,
+        "PostToChat": false,
+        "_id": "593f12ffb02a2920287c2560"
+      }
+    ],
+    "CardFooter": "CONFIRMED BUSINESS ADDRESS",
+    "Placement": "Outgoing"
+  },
+  {
+    "Name": "Edit Website Address Without Section",
+    "Id": "5942a8d3c7d8bf95b0320b19",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [],
+    "Buttons": [
+      {
+        "ButtonText": "▶",
+        "Emotion": "Cool",
+        "ButtonType": "GetText",
+        "NextNodeId": "58daf4c4c7d8bf2c80901c9c",
+        "DefaultButton": false,
+        "Hidden": false,
+        "VariableValue": "",
+        "PrefixText": "https://",
+        "PostfixText": ".nowfloats.com",
+        "PlaceholderText": "yourwebsitename",
+        "PostToChat": false,
+        "_id": "5942a8d3c7d8bf95b0320b1c"
+      }
+    ],
+    "VariableName": "TAG"
+  },
+  {
+    "Name": "Select Category",
+    "Id": "593f09f0b02a2920287c2520",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Combination",
+    "Sections": [],
+    "Buttons": [
+      {
+        "ButtonText": "Select your business category",
+        "Emotion": "Cool",
+        "ButtonType": "GetItemFromSource",
+        "Url": "https://onboarding-boost.withfloats.com/plugin/api/Service/GetFPCategories",
+        "NextNodeId": "593f0568b02a2920287c24d9",
+        "DefaultButton": true,
+        "Hidden": false,
+        "PlaceholderText": "Select your business category",
+        "PostToChat": false,
+        "_id": "593f09f0b02a2920287c2523"
+      }
+    ],
+    "VariableName": "BUSINESS_CATEGORY",
+    "RequiredVariables": []
+  },
+  {
+    "Name": "Confirmed Category",
+    "Id": "593f0683b02a2920287c24ea",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Text": "[~BUSINESS_CATEGORY]",
+        "SectionType": "Text",
+        "DelayInMs": 828,
+        "Hidden": false,
+        "_id": "593f06bfb02a2920287c24ee"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "goto",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "BounceTimeout": 1,
+        "NextNodeId": "5909b9c1c7d8bf662064588d",
+        "DefaultButton": true,
+        "Hidden": true,
+        "PostToChat": false,
+        "_id": "593f075db02a2920287c24fe"
+      }
+    ],
+    "CardFooter": "CONFIRMED BUSINESS CATEGORY",
+    "Placement": "Outgoing"
+  },
+  {
+    "Name": "Confirmed Email Address",
+    "Id": "593f7703b02a2907a482fc7e",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Text": "[~EMAIL]",
+        "SectionType": "Text",
+        "DelayInMs": 828,
+        "Hidden": false,
+        "_id": "593f7703b02a2907a482fc83"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "goto",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "BounceTimeout": 1,
+        "NextNodeId": "595267cdc7d8bf4a10676725",
+        "DefaultButton": true,
+        "Hidden": true,
+        "PostToChat": false,
+        "_id": "593f7703b02a2907a482fc82"
+      }
+    ],
+    "CardFooter": "CONFIRMED EMAIL ADDRESS",
+    "Placement": "Outgoing"
+  },
+  {
+    "Name": "Type Business Description",
+    "Id": "5943e750c7d8bf85885c0a03",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Combination",
+    "Sections": [],
+    "Buttons": [
+      {
+        "ButtonText": "▶",
+        "Emotion": "Cool",
+        "ButtonType": "GetText",
+        "NextNodeId": "58dcd9c9c7d8bf1e082feec3",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "5943e766c7d8bf85885c0a04"
+      }
+    ],
+    "VariableName": "BUSINESS_DESCRIPTION"
+  },
+  {
+    "Name": "Type Update",
+    "Id": "5943e654c7d8bf85885c0893",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Combination",
+    "Sections": [],
+    "Buttons": [
+      {
+        "ButtonText": "▶",
+        "Emotion": "Cool",
+        "ButtonType": "GetText",
+        "NextNodeId": "58e353edb02a292148c86507",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "5943e670c7d8bf85885c0894"
+      }
+    ],
+    "VariableName": "MESSAGE_UPDATE"
+  },
+  {
+    "Name": "FP Tag not available",
+    "Id": "58db0cf7c7d8bf2c80901cf7",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Text": "[~TAG]<br>.nowfloats.com",
+        "SectionType": "Text",
+        "DelayInMs": 936,
+        "Hidden": false,
+        "_id": "58db0de3c7d8bf2c80901cf8"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Edit Website Address",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58db0a6cc7d8bf2c80901ce7",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": false,
+        "_id": "593f716db02a2907a482fc2c"
+      }
+    ],
+    "VariableName": "TAG",
+    "NextNodeId": "58db0a6cc7d8bf2c80901ce7",
+    "CardHeader": "⚠️ Sorry, the requested website address is not available.",
+    "Placement": "Center"
+  },
+  {
+    "Name": "Phone Number Already Exists",
+    "Id": "58d4610c443f863004e27c3f",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Text": "[~COUNTRYCODE] [~PHONE]",
+        "SectionType": "Text",
+        "DelayInMs": 759,
+        "Hidden": false,
+        "_id": "58d465a6443f863004e27c4f"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Enter another number",
+        "Emotion": "Cool",
+        "ButtonType": "GetPhoneNumber",
+        "NextNodeId": "593f1a83b02a2920287c25a2",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PrefixText": "[~COUNTRYCODE]",
+        "PlaceholderText": "",
+        "PostToChat": false,
+        "_id": "58d46168443f863004e27c41"
+      }
+    ],
+    "VariableName": "PHONE",
+    "RequiredVariables": [],
+    "CardHeader": "⚠ Uh oh! This phone number already exists in our database.",
+    "Placement": "Center"
+  },
+  {
+    "Name": "Enter OTP-without resend",
+    "Id": "58d478f2443f861008cb20aa",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Length": 4,
+        "SectionType": "PrintOTP",
+        "DelayInMs": 762,
+        "Hidden": false,
+        "_id": "593f53f1460b50525490ae79"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Submit",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58d4746a443f861008cb20a2",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "",
+        "PostToChat": false,
+        "_id": "58d479f9443f861008cb20cf"
+      }
+    ],
+    "VariableName": "OTP",
+    "RequiredVariables": [],
+    "CardHeader": "Enter OTP",
+    "Placement": "Center"
+  },
+  {
+    "Name": "Confirmed Business Name",
+    "Id": "593f5f37b02a2907a482fa0e",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Text": "[~BUSINESS_NAME]",
+        "SectionType": "Text",
+        "DelayInMs": 828,
+        "Hidden": false,
+        "_id": "593f5f37b02a2907a482fa13"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "goto",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "BounceTimeout": 1,
+        "NextNodeId": "58cfc03fc782bb4ad0ab9b00",
+        "DefaultButton": true,
+        "Hidden": true,
+        "PostToChat": false,
+        "_id": "593f5f37b02a2907a482fa12"
+      }
+    ],
+    "CardFooter": "CONFIRMED BUSINESS NAME",
+    "Placement": "Outgoing"
+  },
+  {
+    "Name": "Apologies",
+    "Id": "58e33793b02a2927fc4dba77",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Apologies, I could not find your facebook page.",
+        "SectionType": "Text",
+        "DelayInMs": 1598,
+        "Hidden": false,
+        "_id": "58e3380bb02a2927fc4dba78"
+      },
+      {
+        "Text": "You can manually add your facebook page under the social sharing section.",
+        "SectionType": "Text",
+        "DelayInMs": 2628,
+        "Hidden": false,
+        "_id": "58e33846b02a2927fc4dba7c"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Okay!  👍 ",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "",
+        "PostToChat": true,
+        "_id": "58e3389ab02a2927fc4dba82"
+      }
+    ]
+  },
+  {
+    "Name": "OTP Verified",
+    "Id": "58daf946c7d8bf2c80901ca4",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Text": "[~COUNTRYCODE] [~PHONE]",
+        "SectionType": "Text",
+        "DelayInMs": 851,
+        "Hidden": false,
+        "_id": "58dafcb7c7d8bf2c80901cac"
+      }
+    ],
+    "Buttons": [
+      {
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58d481b6443f864f30fd6fb2",
+        "DefaultButton": true,
+        "Hidden": true,
+        "PostToChat": false,
+        "_id": "58daf972c7d8bf2c80901ca6"
+      }
+    ],
+    "CardHeader": "Your number has been verified",
+    "CardFooter": "CONFIRMED MOBILE NUMBER",
+    "Placement": "Outgoing"
+  },
+  {
+    "Name": "FB Page confirmation",
+    "Id": "58e2f590b02a2927fc4db9ff",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Do you have a Facebook page for your business?",
+        "SectionType": "Text",
+        "DelayInMs": 1518,
+        "Hidden": false,
+        "_id": "58e2f598b02a2927fc4dba00"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Yes",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58e2f7dab02a2927fc4dba33",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58e2f5dab02a2927fc4dba06"
+      },
+      {
+        "ButtonText": "No",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58e342a7b02a29234844419c",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "",
+        "PostToChat": true,
+        "_id": "58e2f5e7b02a2927fc4dba0a"
+      }
+    ]
+  },
+  {
+    "Name": "Create FP",
+    "Id": "58daf13d443f862698122eb1",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "ApiCall",
+    "Sections": [],
+    "Buttons": [],
+    "ApiMethod": "GET",
+    "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/CreateFP",
+    "RequiredVariables": [
+      "STREET_ADDRESS",
+      "CITY",
+      "PERSON_NAME",
+      "COUNTRY",
+      "EMAIL",
+      "LAT",
+      "LNG",
+      "BUSINESS_NAME",
+      "PINCODE",
+      "BUSINESS_CATEGORY",
+      "PHONE",
+      "TAG"
+    ]
+  },
+  {
+    "Name": " Print All Variables to be sent to Create FP",
+    "Id": "58e78e13c7d8bf2f046b95a9",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "CITY [~CITY] <br> EMAIL [~EMAIL] <br> BUSINESS_NAME [~BUSINESS_NAME] <br> PHONE [~PHONE] <br> TAG [~TAG]",
+        "SectionType": "Text",
+        "DelayInMs": 3000,
+        "Hidden": false,
+        "_id": "58e78e13c7d8bf2f046b95ac"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Check for FB page",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "",
+        "PostToChat": true,
+        "_id": "58e78e13c7d8bf2f046b95ab"
+      }
+    ]
+  },
+  {
+    "Name": "Address",
+    "Id": "58cfc03fc782bb4ad0ab9b00",
+    "Emotion": "Cool",
+    "TimeoutInMs": 5000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Alright, next is your business address.",
+        "SectionType": "Text",
+        "DelayInMs": 1482,
+        "Hidden": false,
+        "_id": "58cfc068c782bb4ad0ab9b04"
+      },
+      {
+        "Text": "Be precise, for both your customers and the SEO.",
+        "SectionType": "Text",
+        "DelayInMs": 1440,
+        "Hidden": false,
+        "_id": "58d57e3b443f862eb0d871e9"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Enter Address",
+        "Emotion": "Cool",
+        "ButtonType": "GetAddress",
+        "NextNodeId": "593f125fb02a2920287c253f",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "",
+        "PostToChat": false,
+        "_id": "58cfc0b0c782bb4ad0ab9b1a"
+      }
+    ],
+    "VariableName": "",
+    "RequiredVariables": []
+  },
+  {
+    "Name": "Invalid Phone Number",
+    "Id": "58db14e1c7d8bf2c80901d1b",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Text": "[~COUNTRYCODE] [~PHONE]",
+        "SectionType": "Text",
+        "DelayInMs": 805,
+        "Hidden": false,
+        "_id": "58db151dc7d8bf2c80901d20"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Enter another number",
+        "Emotion": "Cool",
+        "ButtonType": "GetPhoneNumber",
+        "NextNodeId": "593f1a83b02a2920287c25a2",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PrefixText": "[~COUNTRYCODE]",
+        "PlaceholderText": "Please enter valid Phone Number",
+        "PostToChat": false,
+        "_id": "58db14f4c7d8bf2c80901d1c"
+      }
+    ],
+    "VariableName": "PHONE",
+    "CardHeader": "⚠ Please enter a valid phone number",
+    "Placement": "Center"
+  },
+  {
+    "Name": "Get Email Address",
+    "Id": "593f76f5b02a2907a482fc77",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [],
+    "Buttons": [
+      {
+        "ButtonText": "Enter your Email Address",
+        "Emotion": "Cool",
+        "ButtonType": "GetEmail",
+        "Url": "https://onboarding-boost.withfloats.com/plugin/api/Service/GetFPCategories",
+        "NextNodeId": "593f76f0b02a2907a482fc6e",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "Enter your Email Address",
+        "PostToChat": false,
+        "_id": "593f76f5b02a2907a482fc7a"
+      }
+    ],
+    "VariableName": "EMAIL",
+    "RequiredVariables": []
+  },
+  {
+    "Name": "FP Tag Confirmed",
+    "Id": "593f7222b02a2907a482fc32",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Text": "[~TAG]<br>.nowfloats.com",
+        "SectionType": "Text",
+        "DelayInMs": 955,
+        "Hidden": false,
+        "_id": "593f7279b02a2907a482fc34"
+      }
+    ],
+    "Buttons": [
+      {
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "BounceTimeout": 1,
+        "NextNodeId": "58cfc1a5c782bb4ad0ab9b36",
+        "DefaultButton": true,
+        "Hidden": true,
+        "PostToChat": true,
+        "_id": "593f732bb02a2907a482fc3a"
+      }
+    ],
+    "CardFooter": "YOUR CONFIRMED SUBDOMAIN",
+    "Placement": "Outgoing"
+  },
+  {
+    "Name": "Creation Successful",
+    "Id": "58e4d23cc7d8bf4a08b44a3d",
+    "Emotion": "Cool",
+    "TimeoutInMs": 5000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Hold on...Creating your website",
+        "SectionType": "Text",
+        "DelayInMs": 992,
+        "Hidden": false,
+        "_id": "58e4d24cc7d8bf4a08b44a3e"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Hidden Button",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58e4d2a7c7d8bf4a08b44a44",
+        "DefaultButton": true,
+        "Hidden": true,
+        "PostToChat": true,
+        "_id": "58e4d28ec7d8bf4a08b44a42"
+      }
+    ]
+  },
+  {
+    "Name": "FP Details Confirmation",
+    "Id": "595267cdc7d8bf4a10676725",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Keywords when intepolated with your location, help build Local SEO",
+        "SectionType": "Text",
+        "DelayInMs": 2574,
+        "Hidden": false,
+        "_id": "58e34b56b02a292148c864ed"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Create FP",
+        "Emotion": "Cool",
+        "ButtonType": "ShowConfirmation",
+        "NextNodeId": "58daf13d443f862698122eb1",
+        "DefaultButton": true,
+        "Hidden": true,
+        "PostToChat": false,
+        "_id": "595267ddc7d8bf4a10676726"
+      }
+    ]
+  },
+  {
+    "Name": "Get Business Name",
+    "Id": "593f5f30b02a2907a482fa07",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [],
+    "Buttons": [
+      {
+        "ButtonText": "Enter your Business Name",
+        "Emotion": "Cool",
+        "ButtonType": "GetText",
+        "Url": "https://onboarding-boost.withfloats.com/plugin/api/Service/GetFPCategories",
+        "NextNodeId": "593f5f29b02a2907a482f9fe",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "Enter your Business Name",
+        "PostToChat": false,
+        "_id": "593f5f30b02a2907a482fa0a"
+      }
+    ],
+    "VariableName": "BUSINESS_NAME",
+    "RequiredVariables": []
+  },
+  {
+    "Name": "Please enter OTP-without resend Copy",
+    "Id": "591d8df1c7d8bf4310a04298",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Please enter OTP",
+        "SectionType": "Text",
+        "DelayInMs": 496,
+        "Hidden": false,
+        "_id": "591d8df1c7d8bf4310a0429e"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Edit Number",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "",
+        "PostToChat": true,
+        "_id": "591d8df1c7d8bf4310a0429c"
+      },
+      {
+        "ButtonText": "▶",
+        "Emotion": "Cool",
+        "ButtonType": "GetNumber",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "Enter OTP",
+        "PostToChat": true,
+        "_id": "591d8df1c7d8bf4310a0429d"
+      }
+    ],
+    "VariableName": "OTP",
+    "RequiredVariables": []
+  },
+  {
+    "Name": "Email Address",
+    "Id": "58cfc1a5c782bb4ad0ab9b36",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Great!",
+        "SectionType": "Text",
+        "DelayInMs": 900,
+        "Hidden": false,
+        "_id": "5947ba4cb02a2911c8c2e5ca"
+      },
+      {
+        "Text": "Lastly, I need your email ID to send you your username, password and other important details.",
+        "SectionType": "Text",
+        "DelayInMs": 2883,
+        "Hidden": false,
+        "_id": "58cfc1bfc782bb4ad0ab9b3a"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "▶",
+        "Emotion": "Cool",
+        "ButtonType": "GetEmail",
+        "NextNodeId": "593f76f0b02a2907a482fc6e",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "Enter your email address",
+        "PostToChat": false,
+        "_id": "58cfc1e9c782bb4ad0ab9b48"
+      }
+    ],
+    "VariableName": "EMAIL",
+    "RequiredVariables": []
+  },
+  {
+    "Name": "Remind me",
+    "Id": "58e3396fb02a2927fc4dba8c",
+    "Emotion": "Cool",
+    "TimeoutInMs": 1000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Okay, I'll remind you 😃",
+        "SectionType": "Text",
+        "DelayInMs": 912,
+        "Hidden": false,
+        "_id": "58e33a0bb02a2927fc4dba9b"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Hidden Button",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58dcd9c9c7d8bf1e082feec3",
+        "DefaultButton": true,
+        "Hidden": true,
+        "PostToChat": true,
+        "_id": "58e4e4b7c7d8bf4a08b44cdb"
+      }
+    ]
+  },
+  {
+    "Name": "Phone",
+    "Id": "58cfc338c782bb4ad0ab9b5a",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "To verify your account, I need your personal mobile number.",
+        "SectionType": "Text",
+        "DelayInMs": 1888,
+        "Hidden": false,
+        "_id": "58cfc34cc782bb4ad0ab9b5e"
+      },
+      {
+        "Text": "I will send you an OTP on this number, so please make sure your phone number is valid.",
+        "SectionType": "Text",
+        "DelayInMs": 994,
+        "Hidden": false,
+        "_id": "591d88d6c7d8bf4310a04250"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "▶",
+        "Emotion": "Cool",
+        "ButtonType": "GetPhoneNumber",
+        "NextNodeId": "593f19bfb02a2920287c2589",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PrefixText": "[~COUNTRYCODE]",
+        "PlaceholderText": "Enter your phone number",
+        "PostToChat": false,
+        "_id": "58cfc398c782bb4ad0ab9b78"
+      }
+    ],
+    "VariableName": "PHONE",
+    "RequiredVariables": [],
+    "CardHeader": "",
+    "Placement": "Incoming"
+  },
+  {
+    "Name": "Know more",
+    "Id": "58cfb992c782bb4ad0ab9a66",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Hello [~PERSON_NAME]",
+        "SectionType": "Text",
+        "DelayInMs": 1500,
+        "Hidden": false,
+        "_id": "58cfb9a3c782bb4ad0ab9a6a"
+      },
+      {
+        "Text": "What is your business called?",
+        "SectionType": "Text",
+        "DelayInMs": 1500,
+        "Hidden": false,
+        "_id": "58d58885443f862eb0d87251"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "▶",
+        "Emotion": "Cool",
+        "ButtonType": "GetText",
+        "NextNodeId": "593f5f29b02a2907a482f9fe",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "Enter your business name",
+        "PostToChat": false,
+        "_id": "58cfba49c782bb4ad0ab9a92"
+      }
+    ],
+    "VariableName": "BUSINESS_NAME",
+    "RequiredVariables": []
+  },
+  {
+    "Name": "Good job",
+    "Id": "58e340ddb02a29234844418a",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Good stuff [~PERSON_NAME]  🙌",
+        "SectionType": "Text",
+        "DelayInMs": 957,
+        "Hidden": false,
+        "_id": "58e340ddb02a29234844418c"
+      },
+      {
+        "Text": "Let's have a quick look at your site? [~WEBSITE_URL]",
+        "SectionType": "Text",
+        "DelayInMs": 1924,
+        "Hidden": false,
+        "_id": "58e342bcb02a29234844419e"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Let's have a look! ",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58e4dec1c7d8bf4a08b44bd7",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "",
+        "PostToChat": true,
+        "_id": "58e342dab02a2923484441a2"
+      }
+    ]
+  },
+  {
+    "Name": "Enter OTP",
+    "Id": "58cfc423c782bb4ad0ab9b81",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "You must have received a little SMS from us. Fill in the 4-digit code below.",
+        "SectionType": "Text",
+        "DelayInMs": 2964,
+        "Hidden": false,
+        "_id": "58cfc430c782bb4ad0ab9b85"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Enter OTP",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "",
+        "PostToChat": false,
+        "_id": "58cfc488c782bb4ad0ab9b9a"
+      },
+      {
+        "ButtonText": "Resend OTP",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58d473e7443f861008cb2093"
+      }
+    ],
+    "VariableName": "",
+    "RequiredVariables": [],
+    "GroupName": "",
+    "Placement": "Incoming"
+  },
+  {
+    "Name": "Welcome Node Copy",
+    "Id": "591ee310c7d8bf39905afb7e",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Hi! My name is Ria, and I will help you set up your website within minutes.",
+        "SectionType": "Text",
+        "DelayInMs": 2250,
+        "Hidden": false,
+        "_id": "591ee310c7d8bf39905afb85"
+      },
+      {
+        "Text": "It's really simple, so let's get started?",
+        "SectionType": "Text",
+        "DelayInMs": 1517,
+        "Hidden": false,
+        "_id": "591ee310c7d8bf39905afb86"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Let's get started",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "591ee310c7d8bf39905afb84"
+      }
+    ],
+    "RequiredVariables": []
+  },
+  {
+    "Name": "Get Business Address",
+    "Id": "593f1269b02a2920287c2548",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Combination",
+    "Sections": [],
+    "Buttons": [
+      {
+        "ButtonText": "Enter your Business Address",
+        "Emotion": "Cool",
+        "ButtonType": "GetAddress",
+        "Url": "https://onboarding-boost.withfloats.com/plugin/api/Service/GetFPCategories",
+        "NextNodeId": "593f125fb02a2920287c253f",
+        "DefaultButton": true,
+        "Hidden": false,
+        "PlaceholderText": "Enter your Business Address",
+        "PostToChat": false,
+        "_id": "593f1269b02a2920287c254b"
+      }
+    ],
+    "VariableName": "BUSINESS_ADDRESS",
+    "RequiredVariables": []
+  },
+  {
+    "Name": "Website Screenshot 2",
+    "Id": "58e4e02fc7d8bf4a08b44beb",
+    "Emotion": "Cool",
+    "TimeoutInMs": 10000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Here's what your site looks like now!",
+        "SectionType": "Text",
+        "DelayInMs": 1184,
+        "Hidden": false,
+        "_id": "58e4e02fc7d8bf4a08b44bf1"
+      },
+      {
+        "HeightInPixels": 0,
+        "WidthInPixels": 0,
+        "Url": "[~SITE_SCREENSHOT_URL]",
+        "SizeInKb": 0,
+        "SectionType": "Image",
+        "DelayInMs": 0,
+        "Hidden": false,
+        "_id": "58e4e02fc7d8bf4a08b44bf2"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Awesome! Tell me more",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58e4ec2ec7d8bf4a08b44cfb"
+      }
+    ]
+  },
+  {
+    "Name": "Confirmation Node",
+    "Id": "58e78bbec7d8bf2f046b94c3",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Just to confirm, here are the details:",
+        "SectionType": "Text",
+        "DelayInMs": 1368,
+        "Hidden": false,
+        "_id": "58ed60c5c7d8bf58fc97661e"
+      },
+      {
+        "Text": "STREET_ADDRESS [~STREET_ADDRESS] <br>CITY [~CITY] <br> PERSON_NAME [~PERSON_NAME] <br> COUNTRY [~COUNTRY] <br> EMAIL [~EMAIL] <br> LAT [~LAT] <br> LNG [~LNG] <br> BUSINESS_NAME [~BUSINESS_NAME] <br> PINCODE [~PINCODE] <br> BUSINESS_CATEGORY [~BUSINESS_CATEGORY] <br> PHONE [~PHONE] <br> SUGGESTED_TAG [~SUGGESTED_TAG] <br> TAG [~TAG] <br> SUGGESTED_WEBSITE_URL [~SUGGESTED_WEBSITE_URL]",
+        "SectionType": "Text",
+        "DelayInMs": 3000,
+        "Hidden": false,
+        "_id": "58e78bc5c7d8bf2f046b94c4"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Yes",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "",
+        "PostToChat": true,
+        "_id": "58e78cd5c7d8bf2f046b95a2"
+      }
+    ]
+  },
+  {
+    "Name": "Select Category",
+    "Id": "58cfbaf5c782bb4ad0ab9aa1",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "What category of business does [~BUSINESS_NAME] belong to? ",
+        "SectionType": "Text",
+        "DelayInMs": 2065,
+        "Hidden": false,
+        "_id": "58cfbb12c782bb4ad0ab9aa7"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Select your business category",
+        "Emotion": "Cool",
+        "ButtonType": "GetItemFromSource",
+        "Url": "https://onboarding-boost.withfloats.com/plugin/api/Service/GetFPCategories",
+        "NextNodeId": "593f0568b02a2920287c24d9",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "Select your business category",
+        "PostToChat": false,
+        "_id": "58cfc15ac782bb4ad0ab9b2e"
+      }
+    ],
+    "VariableName": "BUSINESS_CATEGORY",
+    "RequiredVariables": []
+  },
+  {
+    "Name": "Unable to Create FP",
+    "Id": "58ed586ac7d8bf58fc976611",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Sorry, we could not create your website, because [~ERROR_MESSAGE]",
+        "SectionType": "Text",
+        "DelayInMs": 1950,
+        "Hidden": false,
+        "_id": "58ed5882c7d8bf58fc976612"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Try Again",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58daf13d443f862698122eb1",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58ed58c7c7d8bf58fc976618"
+      }
+    ]
+  },
+  {
+    "Name": "Login to Boost App",
+    "Id": "58ed68e5c7d8bf58fc976716",
+    "Emotion": "Cool",
+    "TimeoutInMs": 10000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Let's go to Dashboard",
+        "SectionType": "Text",
+        "DelayInMs": 777,
+        "Hidden": false,
+        "_id": "58ee13bdc7d8bf51e0887c29"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Login",
+        "Emotion": "Cool",
+        "ButtonType": "DeepLink",
+        "DeepLinkUrl": "login",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58ed68e5c7d8bf58fc97671b"
+      }
+    ]
+  },
+  {
+    "Name": "Edit Website Address",
+    "Id": "58db0a6cc7d8bf2c80901ce7",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Please enter the website address you want…",
+        "SectionType": "Text",
+        "DelayInMs": 1638,
+        "Hidden": false,
+        "_id": "58db0a9ac7d8bf2c80901ce8"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "▶",
+        "Emotion": "Cool",
+        "ButtonType": "GetText",
+        "NextNodeId": "58daf4c4c7d8bf2c80901c9c",
+        "DefaultButton": false,
+        "Hidden": false,
+        "VariableValue": "",
+        "PrefixText": "https://",
+        "PostfixText": ".nowfloats.com",
+        "PlaceholderText": "yourwebsitename",
+        "PostToChat": false,
+        "_id": "58db0ae2c7d8bf2c80901cec"
+      }
+    ],
+    "VariableName": "TAG"
+  },
+  {
+    "Name": "Website Address Suggestion",
+    "Id": "593fa296b02a290a904f062a",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Almost done...",
+        "SectionType": "Text",
+        "DelayInMs": 919,
+        "Hidden": false,
+        "_id": "593fa29eb02a290a904f062b"
+      },
+      {
+        "Text": "We think this should be your business' web address…",
+        "SectionType": "Text",
+        "DelayInMs": 911,
+        "Hidden": false,
+        "_id": "593fa2b1b02a290a904f062f"
+      },
+      {
+        "Text": "(Don't worry, you can always map it to an existing domain or a custom domain at a later point.)",
+        "SectionType": "Text",
+        "DelayInMs": 840,
+        "Hidden": false,
+        "_id": "593fa2c7b02a290a904f0633"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Goto",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "BounceTimeout": 1,
+        "NextNodeId": "593f6a6db02a2907a482fa64",
+        "DefaultButton": true,
+        "Hidden": true,
+        "PostToChat": false,
+        "_id": "593fa2f1b02a290a904f0637"
+      }
+    ]
+  },
+  {
+    "Name": "Remind me",
+    "Id": "58e4e500c7d8bf4a08b44ce1",
+    "Emotion": "Cool",
+    "TimeoutInMs": 1000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Okay, I'll remind you 😃",
+        "SectionType": "Text",
+        "DelayInMs": 768,
+        "Hidden": false,
+        "_id": "58e4e500c7d8bf4a08b44ce5"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Hidden Button",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58e3410db02a29234844418e",
+        "DefaultButton": true,
+        "Hidden": true,
+        "PostToChat": true,
+        "_id": "58e4e500c7d8bf4a08b44ce4"
+      }
+    ]
+  },
+  {
+    "Name": "Edit Phone",
+    "Id": "593f1a83b02a2920287c25a2",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [],
+    "Buttons": [
+      {
+        "ButtonText": "Enter phone number",
+        "Emotion": "Cool",
+        "ButtonType": "GetPhoneNumber",
+        "NextNodeId": "593f19bfb02a2920287c2589",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PrefixText": "[~COUNTRYCODE]",
+        "PlaceholderText": "Enter your phone number",
+        "PostToChat": false,
+        "_id": "593f1a83b02a2920287c25a9"
+      }
+    ],
+    "VariableName": "PHONE",
+    "RequiredVariables": [],
+    "CardHeader": "",
+    "Placement": "Center"
+  },
+  {
+    "Name": "Important Questions Start Now",
+    "Id": "595a18fdb02a2933f0de1585",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Combination",
+    "Sections": [],
+    "Buttons": [
+      {
+        "ButtonText": "Sure",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58e2f590b02a2927fc4db9ff",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "595a191cb02a2933f0de1587"
+      }
+    ]
+  },
+  {
+    "Name": "API Call - Phone Verification and Send OTP",
+    "Id": "58d45c20443f863004e27c2f",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "ApiCall",
+    "Sections": [],
+    "Buttons": [],
+    "ApiMethod": "GET",
+    "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/VerifyPhoneNumberAndSendOTP",
+    "RequiredVariables": [
+      "PHONE",
+      "COUNTRYCODE"
+    ]
+  },
+  {
+    "Name": "API Call: Check FP Tag Availability",
+    "Id": "58daf4c4c7d8bf2c80901c9c",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "ApiCall",
+    "Sections": [],
+    "Buttons": [],
+    "VariableName": "TAG",
+    "ApiMethod": "GET",
+    "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/CheckFPTagAvailability",
+    "RequiredVariables": [
+      "TAG"
+    ]
+  },
+  {
+    "Id": "58e353edb02a292148c86507",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "ApiCall",
+    "Sections": [],
+    "Buttons": [],
+    "ApiMethod": "GET",
+    "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/PostAnUpdate",
+    "RequiredVariables": [
+      "TAG",
+      "MESSAGE_UPDATE"
+    ]
+  },
+  {
+    "Name": "API Call : Verify OTP",
+    "Id": "58d4746a443f861008cb20a2",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "ApiCall",
+    "Sections": [],
+    "Buttons": [],
+    "ApiMethod": "GET",
+    "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/VerifyOTP",
+    "RequiredVariables": [
+      "PHONE",
+      "COUNTRY",
+      "OTP"
+    ]
+  },
+  {
+    "Name": "API Call Get website Screenshot",
+    "Id": "58e4d2a7c7d8bf4a08b44a44",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "ApiCall",
+    "Sections": [],
+    "Buttons": [],
+    "ApiMethod": "GET",
+    "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/GetSiteScreenshot",
+    "NextNodeId": "58e235d614216c1a74cb2831",
+    "RequiredVariables": [
+      "TAG"
+    ]
+  },
+  {
+    "Name": "Submit Business Description and Logo",
+    "Id": "58e3410db02a29234844418e",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "ApiCall",
+    "Sections": [],
+    "Buttons": [],
+    "ApiMethod": "GET",
+    "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/SaveBusinessDescriptionLogo",
+    "NextNodeId": "58e340ddb02a29234844418a",
+    "RequiredVariables": [
+      "BUSINESS_LOGO",
+      "BUSINESS_DESCRIPTION",
+      "TAG"
+    ]
+  },
+  {
+    "Name": "Api Call Get website Screenshot",
+    "Id": "58e4dec1c7d8bf4a08b44bd7",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "ApiCall",
+    "Sections": [],
+    "Buttons": [],
+    "ApiMethod": "GET",
+    "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/GetSiteScreenshot",
+    "NextNodeId": "58e4e02fc7d8bf4a08b44beb",
+    "RequiredVariables": [
+      "TAG"
+    ]
+  },
+  {
+    "Name": "FB Page Search API",
+    "Id": "58e2f7dab02a2927fc4dba33",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "ApiCall",
+    "Sections": [],
+    "Buttons": [],
+    "ApiMethod": "GET",
+    "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/SearchFBPageForFP",
+    "RequiredVariables": [
+      "BUSINESS_NAME",
+      "TAG",
+      "PHONE",
+      "EMAIL",
+      "CITY"
+    ]
+  },
+  {
+    "Name": "API Call : Resend OTP",
+    "Id": "58d476d9443f861008cb20a5",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "ApiCall",
+    "Sections": [],
+    "Buttons": [],
+    "ApiMethod": "GET",
+    "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/ResendOTP",
+    "RequiredVariables": [
+      "PHONE",
+      "COUNTRY"
+    ]
+  },
+  {
+    "Name": "API Call: Get Country Code",
+    "Id": "5909b9c1c7d8bf662064588d",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "ApiCall",
+    "Sections": [],
+    "Buttons": [],
+    "ApiMethod": "GET",
+    "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/GetCountryCode",
+    "NextNodeId": "58cfc338c782bb4ad0ab9b5a",
+    "RequiredVariables": [
+      "COUNTRY"
+    ]
+  },
+  {
+    "Name": "API call for Fetching Details From FB Page",
+    "Id": "58e4d998c7d8bf4a08b44bb0",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "ApiCall",
+    "Sections": [],
+    "Buttons": [],
+    "ApiMethod": "GET",
+    "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/GetFBPageDetails",
+    "NextNodeId": "58e3410db02a29234844418e",
+    "RequiredVariables": [
+      "FB_PAGEID"
+    ]
+  },
+  {
+    "Name": "API Call - Get Suggested Website Names",
+    "Id": "58d481b6443f864f30fd6fb2",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "ApiCall",
+    "Sections": [],
+    "Buttons": [],
+    "ApiMethod": "GET",
+    "ApiUrl": "https://onboarding-boost.withfloats.com/plugin/api/Service/GetSuggestedFPTag",
+    "NextNodeId": "",
+    "RequiredVariables": [
+      "CITY",
+      "COUNTRY",
+      "BUSINESS_NAME",
+      "BUSINESS_CATEGORY"
+    ]
+  }
 ]
