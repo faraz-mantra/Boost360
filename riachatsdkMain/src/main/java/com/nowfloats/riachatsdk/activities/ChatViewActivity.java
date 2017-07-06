@@ -602,6 +602,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             for (Button btn : riaCardModel.getButtons()) {
                 if (btn.getButtonType().equals(Constants.ButtonType.TYPE_NEXT_NODE) && btn.isDefaultButton()) {
                     final Button button = btn;
+                    ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                            mCurrNodeId, button.getId(), button.getButtonText(), null,
+                            null, button.getButtonType());
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -627,10 +630,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     private void onItemClick(final Button button) {
         if (button == null)
             return;
-        if (!button.isHidden() && button.getButtonType() != null && !button.getButtonType().equals(Constants.ButtonType.TYPE_GET_ITEM_FROM_SOURCE) && button.isPostToChat()) {
-            replyToRia(Constants.SectionType.TYPE_TEXT, button.getButtonText());
-        }
-
         //TODO:sent_check ButtonType and do the action accordingly
         hideSoftKeyboard();
         mButtonList.clear();
@@ -674,6 +673,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         null, button.getButtonType());
 //                createmySite(button);
                 mNextNodeId = button.getNextNodeId();
+                mCurrButton = button;
 
                 mHandler.postDelayed(new Runnable() {
                     @Override
@@ -704,8 +704,18 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         mCurrNodeId, button.getId(), button.getButtonText(), null,
                         null, button.getButtonType());
                 break;
+            default:
+                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                        mCurrNodeId, button.getId(), button.getButtonText(), null,
+                        null, button.getButtonType());
+                break;
 
         }
+
+        if (!button.isHidden() && button.getButtonType() != null && !button.getButtonType().equals(Constants.ButtonType.TYPE_GET_ITEM_FROM_SOURCE) && button.isPostToChat()) {
+            replyToRia(Constants.SectionType.TYPE_TEXT, button.getButtonText());
+        }
+
     }
 
 
@@ -717,9 +727,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             public void OnResult(String address, String area, String city, String state, String country, double lat, double lon, String pin, String housePlotNum, String landmark) {
                 //TODO: saveREsult
                 //replyToRia(address + "\nCity: " + city + "\nCountry: " + country + "\nPin: " + pin, Constants.SectionType.TYPE_TEXT);
-                ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
-                        mCurrNodeId, btn.getId(), btn.getButtonText(), ChatLogger.EventStatus.COMPLETED.getValue(),
-                        "STREET_ADDRESS", address, btn.getButtonType());
 
                 String landmarkMap = TextUtils.isEmpty(landmark) ? "" : ", " + landmark;
                 String locality = TextUtils.isEmpty(area) ? "" : ", " + area;
@@ -735,12 +742,33 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 mDataMap.put("[~" + "PINCODE" + "]", pin);
                 mDataMap.put("[~" + "LAT" + "]", lat + "");
                 mDataMap.put("[~" + "LNG" + "]", lon + "");
+                mDataMap.put("[~" + "ADDRESSMAP_IMAGE" + "]", Utils.getMapUrlFromLocation(lat + "", lon + ""));
+
+                HashMap<String, String> userData = new HashMap<String, String>();
+                userData.put("CITY", city);
+                userData.put("COUNTRY", country);
+                userData.put("PICK_HOUSEPLOTNO", housePlotNum);
+                userData.put("PICK_AREA", area);
+                userData.put("PICK_ADDRESS", address);
+                userData.put("PICK_LANDMARK", landmark);
+                userData.put("STREET_ADDRESS",
+                        housePlotNum + locality + ", " + address + landmarkMap);
+                userData.put("PINCODE", pin);
+                userData.put("LAT", lat + "");
+                userData.put("LNG", lon + "");
+                userData.put("ADDRESSMAP_IMAGE", Utils.getMapUrlFromLocation(lat + "", lon + ""));
+
+
                 pickAddressFragment.setResultListener(null);
                 pickAddressFragment.dismiss();
                 pickAddressFragment = null;
                 mNextNodeId = btn.getNextNodeId();
                 mCurrButton = btn;
-                mDataMap.put("[~" + "ADDRESSMAP_IMAGE" + "]", Utils.getMapUrlFromLocation(lat + "", lon + ""));
+
+                ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                        mCurrNodeId, btn.getId(), btn.getButtonText(), ChatLogger.EventStatus.COMPLETED.getValue(),
+                        btn.getButtonType(), userData);
+
                 showNextNode(mCurrButton.getNextNodeId());
                 //showConfirmation(Constants.ConfirmationType.ADDRESS_ENTRY, housePlotNum + ", " + address + ", " + city + ", " + country + ", " + pin + ", " + landmark, lat + "", lon + "");
             }
@@ -776,29 +804,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         });
 
         dialog.show();
-    }
-
-    private void createmySite(final Button btn) {
-        createMySiteFragment = CreateMySiteFragment.newInstance((HashMap<String, String>) mDataMap);
-
-        createMySiteFragment.setResultListener(new CreateMySiteFragment.OnResultReceive() {
-            @Override
-            public void OnResult() {
-
-                ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
-                        mCurrNodeId, btn.getId(), btn.getButtonText(), ChatLogger.EventStatus.COMPLETED.getValue(),
-                        "CREATE_MY_SITE", "true", btn.getButtonType());
-
-                createMySiteFragment.setResultListener(null);
-                createMySiteFragment.dismiss();
-                createMySiteFragment = null;
-                mNextNodeId = btn.getNextNodeId();
-                mCurrButton = btn;
-                showNextNode(mCurrButton.getNextNodeId());
-            }
-
-        });
-        createMySiteFragment.show(getFragmentManager(), "CreateMySite");
     }
 
     private void getImage(Button btn) {
@@ -920,6 +925,23 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     public static final String Save_Locality = "localityKey";
 
     private void skip() {
+
+        if (mCurrButton != null) {
+
+            HashMap<String, String> userData = new HashMap<String, String>();
+            userData.put("BUSINESS_NAME", mDataMap.get("[~BUSINESS_NAME]") + "");
+            userData.put("COUNTRY_CODE", mDataMap.get("[~COUNTRYCODE]") + "");
+            userData.put("PHONE", mDataMap.get("[~PHONE]") + "");
+            userData.put("BUSINESS_CATEGORY", mDataMap.get("[~BUSINESS_CATEGORY]") + "");
+            userData.put("ADDRESS", mDataMap.get("[~STREET_ADDRESS]") + ", " + mDataMap.get("[~CITY]") + ", " + mDataMap.get("[~COUNTRY]") + "");
+            userData.put("EMAIL", mDataMap.get("[~EMAIL]") + "");
+            userData.put("TAG", mDataMap.get("[~TAG]") + "");
+
+            ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                    mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), ChatLogger.EventStatus.DROPPED.getValue(),
+                    mCurrButton.getButtonType(), userData);
+        }
+
 
         Bundle mBundle = new Bundle();
 
@@ -1051,21 +1073,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         final Section typingSection = new Section();
         typingSection.setSectionType(Constants.SectionType.TYPE_TYPING);
 
-//        if (node.getId().equalsIgnoreCase("595267cdc7d8bf4a10676725")) {
-//
-//            time += 1000;
-//            mHandler.postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    mSectionList.add(typingSection);
-//                    tvRiaTyping.setVisibility(View.VISIBLE);
-//                    mAdapter.notifyItemInserted(mSectionList.size() - 1);
-//                    rvChatData.scrollToPosition(mSectionList.size() - 1);
-//                }
-//            }, time);
-//        } else {
+        if (!TextUtils.isEmpty(node.getVariableName())
+                && node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_ADD_DELAY)) {
 
-        for (final Section section : sectionList) {
             time += 1000;
             mHandler.postDelayed(new Runnable() {
                 @Override
@@ -1076,37 +1086,50 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     rvChatData.scrollToPosition(mSectionList.size() - 1);
                 }
             }, time);
+        } else {
 
-            if (section.getDelayInMs() < getResources().getInteger(android.R.integer.config_longAnimTime)) {
-                Log.e("section", section.getText() + 500);
-                section.setDelayInMs(getResources().getInteger(android.R.integer.config_longAnimTime));
-            } else {
-                Log.e("section", section.getText() + section.getDelayInMs());
-            }
-
-            time += section.getDelayInMs();
-
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    String str = null;
-                    if (section.getText() != null) {
-                        str = section.getText();
-                        str = getParsedPrefixPostfixText(str);
+            for (final Section section : sectionList) {
+                time += 1000;
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSectionList.add(typingSection);
+                        tvRiaTyping.setVisibility(View.VISIBLE);
+                        mAdapter.notifyItemInserted(mSectionList.size() - 1);
+                        rvChatData.scrollToPosition(mSectionList.size() - 1);
                     }
-                    if (null != str) {
-                        section.setText(str);
-                    }
-                    section.setFromRia(true);
-                    section.setDateTime(Utils.getFormattedDate(new Date()));
-                    mSectionList.set(mSectionList.size() - 1, section);
-                    tvRiaTyping.setVisibility(View.INVISIBLE);
-                    mAdapter.notifyItemChanged(mSectionList.size() - 1);
-                    rvChatData.scrollToPosition(mSectionList.size() - 1);
+                }, time);
+
+                if (section.getDelayInMs() < getResources().getInteger(android.R.integer.config_longAnimTime)) {
+                    Log.e("section", section.getText() + 500);
+                    section.setDelayInMs(getResources().getInteger(android.R.integer.config_longAnimTime));
+                } else {
+                    Log.e("section", section.getText() + section.getDelayInMs());
                 }
-            }, time);
+
+                time += section.getDelayInMs();
+
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        String str = null;
+                        if (section.getText() != null) {
+                            str = section.getText();
+                            str = getParsedPrefixPostfixText(str);
+                        }
+                        if (null != str) {
+                            section.setText(str);
+                        }
+                        section.setFromRia(true);
+                        section.setDateTime(Utils.getFormattedDate(new Date()));
+                        mSectionList.set(mSectionList.size() - 1, section);
+                        tvRiaTyping.setVisibility(View.INVISIBLE);
+                        mAdapter.notifyItemChanged(mSectionList.size() - 1);
+                        rvChatData.scrollToPosition(mSectionList.size() - 1);
+                    }
+                }, time);
+            }
         }
-//        }
 
         if (time > 0)
             time += 1200;
@@ -1207,20 +1230,14 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
                 if (mDefaultButton != null && node.getTimeoutInMs() != -1L) {
 
-                    tvRiaTyping.setVisibility(View.VISIBLE);
-                    if (mDefaultButton.getButtonType().equalsIgnoreCase(Constants.ButtonType.TYPE_SHOW_CONFIRMATION)) {
+//                    ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+//                            mCurrNodeId, mDefaultButton.getId(), mDefaultButton.getButtonText(), null,
+//                            null, mDefaultButton.getButtonType());
 
-                        mSectionList.add(typingSection);
-                        tvRiaTyping.setVisibility(View.INVISIBLE);
-                        mAdapter.notifyItemInserted(mSectionList.size() - 1);
-                        rvChatData.scrollToPosition(mSectionList.size() - 1);
-                        mHandler.postDelayed(mAutoCallRunnable, 1500);
-                    } else {
-
-                        tvRiaTyping.setVisibility(View.INVISIBLE);
-                        mHandler.postDelayed(mAutoCallRunnable, node.getTimeoutInMs());
-                    }
+                    tvRiaTyping.setVisibility(View.INVISIBLE);
+                    mHandler.postDelayed(mAutoCallRunnable, node.getTimeoutInMs());
                 }
+
             }
         }, time);
 
@@ -1360,9 +1377,12 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                                 if (mCurrVarName != null) {
                                     mDataMap.put("[~" + mCurrVarName + "]", strVal);
 
+                                    HashMap<String, String> userData = new HashMap<String, String>();
+                                    userData.put(mCurrVarName, strVal);
+
                                     ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                                             mCurrNodeId, btn.getId(), btn.getButtonText(), ChatLogger.EventStatus.COMPLETED.getValue(),
-                                            mCurrVarName, strVal, btn.getButtonType());
+                                            btn.getButtonType(), userData);
                                 }
 
                                 showNextNode(btn.getNextNodeId());
@@ -1695,14 +1715,37 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         if (mButton != null) {
 
-            ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
-                    mCurrNodeId, mButton.getId(), mButton.getButtonText(), null,
-                    null, mButton.getButtonType());
+            if (confirmationType.equalsIgnoreCase(Constants.ConfirmationType.OTP)) {
+
+                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                        mCurrNodeId, mButton.getId(), mButton.getButtonText(), mCurrVarName,
+                        data[0], mButton.getButtonType());
+            } else {
+
+                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                        mCurrNodeId, mButton.getId(), mButton.getButtonText(), null,
+                        null, mButton.getButtonType());
+            }
         }
 
         if (TextUtils.isEmpty(data[1])) {
             switch (confirmationType) {
                 case Constants.ConfirmationType.SUBMIT_FORM:
+
+                    HashMap<String, String> userData = new HashMap<String, String>();
+                    userData.put("BUSINESS_NAME", mDataMap.get("[~BUSINESS_NAME]") + "");
+                    userData.put("COUNTRY_CODE", mDataMap.get("[~COUNTRYCODE]") + "");
+                    userData.put("PHONE", mDataMap.get("[~PHONE]") + "");
+                    userData.put("BUSINESS_CATEGORY", mDataMap.get("[~BUSINESS_CATEGORY]") + "");
+                    userData.put("ADDRESS", mDataMap.get("[~STREET_ADDRESS]") + ", " + mDataMap.get("[~CITY]") + ", " + mDataMap.get("[~COUNTRY]") + "");
+                    userData.put("EMAIL", mDataMap.get("[~EMAIL]") + "");
+                    userData.put("TAG", mDataMap.get("[~TAG]") + "");
+
+
+                    ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                            mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), ChatLogger.EventStatus.COMPLETED.getValue(),
+                            mCurrButton.getButtonType(), userData);
+
                     showNextNode(mNextNodeId);
                     break;
             }
@@ -1721,25 +1764,35 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 etChatInput.setText("");
                 hideSoftKeyboard();
                 cvChatInput.setVisibility(View.INVISIBLE);
-                switch (confirmationType) {
-                    case Constants.ConfirmationType.BIZ_NAME:
-                        showNextNode(data[1]);
-                        break;
-                    case Constants.ConfirmationType.ADDRESS_ENTRY:
-                        showNextNode(data[1]);
-                        break;
-                }
+//                switch (confirmationType) {
+//                    case Constants.ConfirmationType.BIZ_NAME:
+//                        showNextNode(data[1]);
+//                        break;
+//                    case Constants.ConfirmationType.ADDRESS_ENTRY:
+//                        showNextNode(data[1]);
+//                        break;
+//                }
             } else {
                 mSectionList.remove(mSectionList.size() - 1);
                 mAdapter.notifyItemRemoved(mSectionList.size());
-                switch (confirmationType) {
-                    case Constants.ConfirmationType.BIZ_NAME:
-                        showNextNode(data[1]);
-                        break;
-                    case Constants.ConfirmationType.ADDRESS_ENTRY:
-                        getUserAddress(mCurrButton);
-                        break;
-                }
+//                switch (confirmationType) {
+//                    case Constants.ConfirmationType.BIZ_NAME:
+//                        showNextNode(data[1]);
+//                        break;
+//                    case Constants.ConfirmationType.ADDRESS_ENTRY:
+//                        showNextNode(data[1]);
+//                        break;
+//                }
+            }
+
+            switch (confirmationType) {
+                case Constants.ConfirmationType.BIZ_NAME:
+                case Constants.ConfirmationType.OTP:
+                    showNextNode(data[1]);
+                    break;
+                case Constants.ConfirmationType.ADDRESS_ENTRY:
+                    showNextNode(data[1]);
+                    break;
             }
         }
 

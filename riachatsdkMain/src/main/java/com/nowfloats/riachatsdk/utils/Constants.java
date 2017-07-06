@@ -58,6 +58,8 @@ public class Constants {
         String TYPE_TAG = "TAG";
         String TYPE_BUSINESS_DESCRIPTION = "BUSINESS_DESCRIPTION";
         String TYPE_MESSAGE_UPDATE = "MESSAGE_UPDATE";
+        String TYPE_OTP = "OTP";
+        String TYPE_ADD_DELAY = "ADD_DELAY";
     }
 
     public interface DeepLinkUrl {
@@ -91,6 +93,7 @@ public class Constants {
 
     public interface ConfirmationType {
         String BIZ_NAME = "biz_name";
+        String OTP = "otp";
         String ADDRESS_ENTRY = "address_entry";
         String SUBMIT_FORM = "submit_form";
 
