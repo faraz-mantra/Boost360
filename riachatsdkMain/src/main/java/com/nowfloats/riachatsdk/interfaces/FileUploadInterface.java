@@ -15,6 +15,6 @@ import retrofit.mime.TypedFile;
 
 public interface FileUploadInterface {
     @Multipart
-    @POST("/riacards/api/Service/ReceiveFile")
+    @POST("/plugin/api/Service/ReceiveFile")
     void upload(@Query("filename") String fileName, @Part("file") TypedFile file, @Part("description") String description, Callback<FileResultModel> cb);
 }
