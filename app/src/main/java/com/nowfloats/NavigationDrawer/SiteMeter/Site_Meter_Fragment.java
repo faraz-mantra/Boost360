@@ -485,22 +485,24 @@ public class Site_Meter_Fragment extends Fragment {
                 break;
             case domain:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_GET_YOUR_OWN_IDENTITY, null);
-              /*  MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
-                        .title("Get A Domain")
-                        .customView(R.layout.dialog_link_layout,false)
-                        .positiveText(getString(R.string.ok))
-                        .positiveColorRes(R.color.primaryColor)
-                        .callback(new MaterialDialog.ButtonCallback() {
-                            @Override
-                            public void onPositive(MaterialDialog dialog) {
-                                super.onPositive(dialog);
-                            }
+                if(!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+                    MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
+                            .title("Get A Domain")
+                            .customView(R.layout.dialog_link_layout, false)
+                            .positiveText(getString(R.string.ok))
+                            .positiveColorRes(R.color.primaryColor)
+                            .callback(new MaterialDialog.ButtonCallback() {
+                                @Override
+                                public void onPositive(MaterialDialog dialog) {
+                                    super.onPositive(dialog);
+                                }
 
-                        });
-                if(!activity.isFinishing()) {
-                    builder.show();
-                }*/
-                if (Utils.isNetworkConnected(getActivity())) {
+                            });
+                    if (!activity.isFinishing()) {
+                        builder.show();
+                    }
+                }
+                else if (Utils.isNetworkConnected(getActivity())) {
                     showLoader(getString(R.string.please_wait));
                     domainApiService.getDomainDetails(session.getFpTag(), getDomainDetailsParam());
                 } else {

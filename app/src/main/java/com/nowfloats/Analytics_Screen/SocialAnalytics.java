@@ -285,9 +285,8 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
 
 
     private String makeUrl(String mType, String fpId){
-        String mAnalyticsUrl= Constants.NFX_WITH_NOWFLOATS+"/dataexchange/v1/fetch/analytics?" +
-                "identifier="+mType+"&nowfloats_id=";
-        return mAnalyticsUrl + fpId;
+        return Constants.NFX_WITH_NOWFLOATS+"/dataexchange/v1/fetch/analytics?" +
+                "identifier="+mType+"&nowfloats_id="+fpId;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

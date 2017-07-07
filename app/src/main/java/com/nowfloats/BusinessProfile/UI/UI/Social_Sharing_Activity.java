@@ -1236,20 +1236,24 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 Constants.twitterShareEnabled = false;
                 break;
             case PAGE_NO_FOUND:
-                //Methods.materialDialog(activity, "Alert", getString(R.string.look_like_no_facebook_page));
                 MixPanelController.track(MixPanelController.FACEBOOK_PAGE_NOT_FOUND,null);
-                final MaterialDialog builder = new MaterialDialog.Builder(this)
-                        .customView(R.layout.dialog_no_facebook_page, false).build();
-                ((Button) builder.getCustomView().findViewById(R.id.create_page))
-                        .setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                builder.dismiss();
-                                createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-                            }
-                        });
-                if(!isFinishing())
-                    builder.show();
+                if(!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")){
+                    Methods.materialDialog(activity, "Alert", getString(R.string.look_like_no_facebook_page));
+                }else
+                {
+                    final MaterialDialog builder = new MaterialDialog.Builder(this)
+                            .customView(R.layout.dialog_no_facebook_page, false).build();
+                    ((Button) builder.getCustomView().findViewById(R.id.create_page))
+                            .setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    builder.dismiss();
+                                    createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+                                }
+                            });
+                    if (!isFinishing())
+                        builder.show();
+                }
                 break;
             case FB_PAGE_CREATION:
 
