@@ -56,7 +56,7 @@ public class BubbleDialog extends AppCompatActivity {
         MixPanelController.track(MixPanelController.BUBBLE_DIALOG,null);
         initialize();
         bindControls();
-        loadData();
+        loadProductsView();
     }
 
     private void initialize() {
@@ -114,7 +114,19 @@ public class BubbleDialog extends AppCompatActivity {
 
     }
 
-    private void loadData() {
+    private void loadProductsView() {
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        productGalleryFragment = new Product_Gallery_Fragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Product_Gallery_Fragment.KEY_FROM, Product_Gallery_Fragment.FROM.BUBBLE);
+        productGalleryFragment.setArguments(bundle);
+        ft.replace(R.id.mainFrame, productGalleryFragment).
+                commit();
+
+    }
+
+    private void loadWhatsappView() {
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         productGalleryFragment = new Product_Gallery_Fragment();

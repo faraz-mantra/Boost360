@@ -45,7 +45,7 @@ public class Get_FP_Details_Service {
         Retro_Signup_Interface getFPDetails = Constants.restAdapter.create(Retro_Signup_Interface.class);
         getFPDetails.post_getFPDetails(fpID,map,new Callback<Get_FP_Details_Model>() {
             @Override
-            public void success(Get_FP_Details_Model get_fp_details_model, Response response) {
+            public void success(Get_FP_Details_Model get_fp_details_model, final Response response) {
                 if (get_fp_details_model!=null){
                     ProcessFPDetails.storeFPDetails(activity, get_fp_details_model);
                     bus.post(new Get_FP_Details_Event(get_fp_details_model));
@@ -60,6 +60,7 @@ public class Get_FP_Details_Service {
                         {
                             SplashScreen_Activity.pd.dismiss();
                         }
+                        bus.post(response);
                     }
                 });}
             }
@@ -85,6 +86,9 @@ public class Get_FP_Details_Service {
 
                     }
                 });
+
+                bus.post(error);
+
             }
         });
     }

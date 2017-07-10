@@ -104,6 +104,10 @@ public class Section implements Serializable{
     @SerializedName("DateTime")
     @Expose
     private String dateTime;
+
+    private int cardPos;
+
+
     private RiaCardModel cardModel;
 
     public Integer getOtpLength() {
@@ -142,6 +146,14 @@ public class Section implements Serializable{
 
     public boolean isShowDate() {
         return showDate;
+    }
+
+    public int getCardPos() {
+        return cardPos;
+    }
+
+    public void setCardPos(int cardPos) {
+        this.cardPos = cardPos;
     }
 
     public void setShowDate(boolean showDate) {

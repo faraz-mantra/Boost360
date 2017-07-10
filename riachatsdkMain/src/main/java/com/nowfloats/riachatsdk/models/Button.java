@@ -64,6 +64,30 @@ public class Button implements Serializable{
     @Expose
     private boolean postToChat;
 
+    @SerializedName("APIResponseMatchKey")
+    @Expose
+    private String apiResponseMatchKey;
+
+    @SerializedName("APIResponseMatchValue")
+    @Expose
+    private String apiResponseMatchValue;
+
+    public String getApiResponseMatchKey() {
+        return apiResponseMatchKey;
+    }
+
+    public void setApiResponseMatchKey(String apiResponseMatchKey) {
+        this.apiResponseMatchKey = apiResponseMatchKey;
+    }
+
+    public String getApiResponseMatchValue() {
+        return apiResponseMatchValue;
+    }
+
+    public void setApiResponseMatchValue(String apiResponseMatchValue) {
+        this.apiResponseMatchValue = apiResponseMatchValue;
+    }
+
     public boolean isPostToChat() {
         return postToChat;
     }

@@ -5,9 +5,10 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -28,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -50,8 +52,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.nowfloats.riachatsdk.R;
+import com.nowfloats.riachatsdk.utils.NFGeoCoder;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -70,7 +72,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
     private AutoCompleteTextView etCity;
 
-    private TextView tvAddress;
+    private TextView tvAddress, tvTip;
 
     private LinearLayout llManual, llUseGPS;
 
@@ -99,11 +101,11 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
     private ArrayAdapter<String> adapter;
     private ArrayList<String> signUpCountryList = new ArrayList<>();
-    private List<String> citys = new ArrayList<>();
 
     private GoogleApiClient mGoogleApiClient;
 
     private Map<String, String> mDataMap = new HashMap<>();
+    private NFGeoCoder nfGeoCoder;
 
     public static PickAddressFragment newInstance(PICK_TYPE pick_type) {
 
@@ -146,8 +148,17 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         if (getArguments() != null) {
             pick_type = (PICK_TYPE) getArguments().get(ARG_MAP_TYPE);
             mDataMap = (Map<String, String>) getArguments().get(ARG_MAP_DATA);
+            showKeyBoard();
         }
 
+        nfGeoCoder = new NFGeoCoder(getActivity());
+
+    }
+
+
+    private void showKeyBoard() {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 
     @Override
@@ -176,6 +187,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         View v = inflater.inflate(R.layout.fragment_pick_address, container, false);
         setCancelable(false);
 
+//        tiHouseNo = (TextInputLayout) v.findViewById(R.id.tiHouseNo);
+
         llManual = (LinearLayout) v.findViewById(R.id.llManual);
         llUseGPS = (LinearLayout) v.findViewById(R.id.llUseGPS);
         btnSave = (Button) v.findViewById(R.id.btn_save);
@@ -191,6 +204,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         etHousePlotNum = (TextInputEditText) v.findViewById(R.id.et_house_plot_num);
         etLandmark = (TextInputEditText) v.findViewById(R.id.et_landmark);
         tvAddress = (TextView) v.findViewById(R.id.tvAddress);
+        tvTip = (TextView) v.findViewById(R.id.tvTip);
         rlMapContainer = (RelativeLayout) v.findViewById(R.id.mapFragment);
 
         populateData();
@@ -236,6 +250,30 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                                 llUseGPS.setVisibility(View.VISIBLE);
                                 tvAddress.setVisibility(View.VISIBLE);
                                 btnSave.setText(getResources().getString(R.string.done));
+
+                                tvTip.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        tvTip.setVisibility(View.VISIBLE);
+
+                                        tvTip.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                tvTip.setVisibility(View.GONE);
+                                            }
+                                        }, 10000);
+
+
+                                        mGoogleMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
+                                            @Override
+                                            public void onCameraMove() {
+                                                tvTip.setVisibility(View.GONE);
+                                            }
+                                        });
+                                    }
+                                }, 1000);
+
+//                                Toast.makeText(getActivity(),getString(R.string.you_can_move_pinch_zoom_map_to_exact_location),Toast.LENGTH_LONG).show();
                             }
 
                             @Override
@@ -315,7 +353,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                    updateErrorList();
                 }
 
                 @Override
@@ -338,7 +376,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                                 @Override
                                 public void run() {
                                     AutocompletePredictionBuffer a = result.await();
-                                    citys.clear();
+                                    final List<String> citys = new ArrayList<>();
                                     for (int i = 0; i < a.getCount(); i++) {
                                         citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString() + "," + a.get(i).getSecondaryText(new StyleSpan(Typeface.NORMAL)).toString());
                                     }
@@ -348,9 +386,10 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                                     getActivity().runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            adapter = new ArrayAdapter<>(getActivity(),
-                                                    android.R.layout.simple_dropdown_item_1line, citys);
+
                                             if (!getActivity().isFinishing()) {
+                                                adapter = new ArrayAdapter<>(getActivity(),
+                                                        android.R.layout.simple_dropdown_item_1line, citys);
                                                 etCity.setAdapter(adapter);
                                                 adapter.notifyDataSetChanged();
                                             }
@@ -386,9 +425,32 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
                 }
             });
+
+//            etPin.addTextChangedListener(new TextWatcher() {
+//                @Override
+//                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//                }
+//
+//                @Override
+//                public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//                }
+//
+//                @Override
+//                public void afterTextChanged(Editable s) {
+//
+//                    if (etPin.getText().toString().trim().length()>6) {
+//                        Toast.makeText(getActivity(), getString(R.string.pin_code_length_error), Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            });
         } else {
             btnSave.setVisibility(View.GONE);
         }
+
+        updateErrorList();
+        addTextChangeListners();
 
         return v;
     }
@@ -420,83 +482,75 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
     private void reverseGeoCode() {
 
-        Geocoder gc = new Geocoder(getActivity());
-        if (gc.isPresent()) {
-            List<Address> list = null;
-            try {
-                Address address = null;
-                list = gc.getFromLocationName(etStreetAddr.getText().toString() + ","
-                        + etPin.getText().toString() + "," + etCity.getText().toString() + "," + etCountry.getText().toString(), 10);
 
-                double lat = 0, lng = 0;
-                if (list != null && list.size() > 0) {
+        LatLng latLong = nfGeoCoder.reverseGeoCode(etStreetAddr.getText().toString(),
+                etCity.getText().toString(), etCountry.getText().toString(), etPin.getText().toString());
 
-                    address = list.get(0);
-                    lat = address.getLatitude();
-                    lng = address.getLongitude();
+        if (latLong != null) {
 
-                    LatLng latLong = new LatLng(lat, lng);
-                    CameraPosition cameraPosition = new CameraPosition.Builder()
-                            .target(latLong).zoom(18f).build();
-                    mGoogleMap.animateCamera(CameraUpdateFactory
-                            .newCameraPosition(cameraPosition));
-                } else {
-                    if (ActivityCompat.checkSelfPermission(getActivity(),
-                            Manifest.permission.ACCESS_FINE_LOCATION) ==
-                            PackageManager.PERMISSION_GRANTED &&
-                            ActivityCompat.checkSelfPermission(getActivity(),
-                                    Manifest.permission.ACCESS_COARSE_LOCATION) ==
-                                    PackageManager.PERMISSION_GRANTED) {
-                        mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-                        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, PickAddressFragment.this);
-                    }
-
-                    if (ActivityCompat.checkSelfPermission(getActivity(),
-                            Manifest.permission.ACCESS_FINE_LOCATION) ==
-                            PackageManager.PERMISSION_GRANTED &&
-                            ActivityCompat.checkSelfPermission(getActivity(),
-                                    Manifest.permission.ACCESS_COARSE_LOCATION) ==
-                                    PackageManager.PERMISSION_GRANTED) {
-                        mGoogleMap.setMyLocationEnabled(true);
-                        mGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
-                    }
-
-                }
-
-                displayAddressOutput();
-            } catch (IOException e) {
-                e.printStackTrace();
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(latLong).zoom(18f).build();
+            mGoogleMap.animateCamera(CameraUpdateFactory
+                    .newCameraPosition(cameraPosition), 1000, null);
+        } else {
+            if (ActivityCompat.checkSelfPermission(getActivity(),
+                    Manifest.permission.ACCESS_FINE_LOCATION) ==
+                    PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(getActivity(),
+                            Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                            PackageManager.PERMISSION_GRANTED) {
+                mLocationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+                mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, PickAddressFragment.this);
             }
+
+            if (ActivityCompat.checkSelfPermission(getActivity(),
+                    Manifest.permission.ACCESS_FINE_LOCATION) ==
+                    PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(getActivity(),
+                            Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                            PackageManager.PERMISSION_GRANTED) {
+                mGoogleMap.setMyLocationEnabled(true);
+                mGoogleMap.getUiSettings().setMyLocationButtonEnabled(true);
+            }
+
         }
+
+        displayAddressOutput();
     }
 
     private boolean verifyData() {
+
+        boolean isAllFieldsValid = true;
         if (etStreetAddr.getText().toString().trim().equals("")) {
-            Toast.makeText(getActivity(), getString(R.string.empty_address_warn), Toast.LENGTH_SHORT).show();
-            return false;
+            isAllFieldsValid = false;
+            etStreetAddr.setSupportBackgroundTintList(errorColorStateList);
         }
         if (etCity.getText().toString().trim().equals("")) {
-            Toast.makeText(getActivity(), getString(R.string.empty_city_warn), Toast.LENGTH_SHORT).show();
-            return false;
+            isAllFieldsValid = false;
+            etCity.getBackground().mutate().setColorFilter(getResources().getColor(R.color.red), PorterDuff.Mode.SRC_ATOP);
         }
         if (etCountry.getText().toString().trim().equals("")) {
-            Toast.makeText(getActivity(), getString(R.string.empty_country_warn), Toast.LENGTH_SHORT).show();
-            return false;
+            isAllFieldsValid = false;
+            etCountry.setSupportBackgroundTintList(errorColorStateList);
         }
         if (etPin.getText().toString().trim().equals("")) {
-            Toast.makeText(getActivity(), getString(R.string.empty_pin_warn), Toast.LENGTH_SHORT).show();
-            return false;
+            isAllFieldsValid = false;
+            etPin.setSupportBackgroundTintList(errorColorStateList);
         }
-        if (etLocality.getText().toString().trim().equals("")) {
-            Toast.makeText(getActivity(), getString(R.string.locality_warn), Toast.LENGTH_SHORT).show();
-            return false;
+        if (etPin.getText().toString().trim().length() > 6) {
+            isAllFieldsValid = false;
+            Toast.makeText(getActivity(), getString(R.string.pin_code_length_error), Toast.LENGTH_SHORT).show();
+            etPin.setSupportBackgroundTintList(errorColorStateList);
         }
         if (etHousePlotNum.getText().toString().trim().equals("")) {
-            Toast.makeText(getActivity(), getString(R.string.house_no_warn), Toast.LENGTH_SHORT).show();
-            return false;
+            isAllFieldsValid = false;
+            etHousePlotNum.setSupportBackgroundTintList(errorColorStateList);
         }
 
-        return true;
+        if(!isAllFieldsValid){
+            Toast.makeText(getActivity(), "Please enter mandatory fields.", Toast.LENGTH_SHORT).show();
+        }
+        return isAllFieldsValid;
     }
 
     private void initMap() {
@@ -530,9 +584,48 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                     });
 
 
-        } else {
-            setCameraChangeListener();
         }
+
+    }
+
+    ColorStateList errorColorStateList = ColorStateList.valueOf(Color.RED);
+    ColorStateList initialColorStateList = ColorStateList.valueOf(Color.LTGRAY);
+
+    TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            updateErrorList();
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+
+    private void updateErrorList() {
+        etStreetAddr.setSupportBackgroundTintList(initialColorStateList);
+        etLocality.setSupportBackgroundTintList(initialColorStateList);
+        etLandmark.setSupportBackgroundTintList(initialColorStateList);
+        etPin.setSupportBackgroundTintList(initialColorStateList);
+        etCountry.setSupportBackgroundTintList(initialColorStateList);
+        etHousePlotNum.setSupportBackgroundTintList(initialColorStateList);
+        etCity.getBackground().mutate().setColorFilter(getResources().getColor(R.color.lt_gray), PorterDuff.Mode.SRC_ATOP);
+
+    }
+
+    private void addTextChangeListners() {
+        etStreetAddr.addTextChangedListener(textWatcher);
+        etLocality.addTextChangedListener(textWatcher);
+        etLandmark.addTextChangedListener(textWatcher);
+        etPin.addTextChangedListener(textWatcher);
+        etCountry.addTextChangedListener(textWatcher);
+        etHousePlotNum.addTextChangedListener(textWatcher);
 
     }
 
@@ -584,7 +677,10 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
         String landmark = TextUtils.isEmpty(etLandmark.getText().toString()) ? "" : etLandmark.getText().toString() + ", ";
 
-        String address = etHousePlotNum.getText().toString() + ", " + etStreetAddr.getText().toString()  + ", " +  etLocality.getText().toString() + ", " +
+        String locality = TextUtils.isEmpty(etLocality.getText().toString()) ? "" : etLocality.getText().toString() + ", ";
+
+        String address = etHousePlotNum.getText().toString() + ", " + etStreetAddr.getText().toString() + ", " +
+                locality +
                 landmark +
                 etCity.getText().toString() + ", " + etCountry.getText().toString() + ", " +
                 etPin.getText().toString();
@@ -597,6 +693,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
     public interface OnResultReceive {
         void OnResult(String address, String area, String city, String state, String country, double lat, double lon, String pin, String housePlotNum, String landmark);
+
     }
 
 

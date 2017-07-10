@@ -90,7 +90,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:gravity="center"
-                android:text="Submitting..."
+                android:text="Verifying..."
                 android:textColor="#60808080"
                 android:visibility="invisible" />
         </RelativeLayout>

@@ -386,6 +386,9 @@ public class PreSignUpActivity extends AppCompatActivity implements
             }
         });
         updateBasedOnMostRecentLocation(Constants.lastKnownAddress);
+
+        phoneEditText.setFocusable(false);
+        phoneEditText.setFocusableInTouchMode(false);
     }
     private void showCategoryDialog(ArrayList<String> categories){
         new MaterialDialog.Builder(activity)
@@ -737,6 +740,12 @@ public class PreSignUpActivity extends AppCompatActivity implements
         // PreSignUpDialog.showDialog_WebSiteCreation(activity,"Congrats . . . ","Web Site Creation");
 
     }
+
+    @Override
+    public void CheckUniqueNumber_postExecute(String value, String phoneNumber) {
+
+    }
+
     private void startWebsiteActivity(){
         Bundle editTextBundle = new Bundle();
 

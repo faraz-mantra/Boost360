@@ -7,6 +7,7 @@ import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.http.GET;
+import retrofit.http.Path;
 import retrofit.http.QueryMap;
 
 /**
@@ -14,6 +15,7 @@ import retrofit.http.QueryMap;
  */
 
 public interface ChatJsonInterface {
-    @GET("/chatflow/api/conversation/chat")
+    @GET("/chatdev/api/Conversation/Chat")
     void getChatJson(@QueryMap Map<String, String> query, Callback<List<RiaCardModel>> nodeList);
+
 }

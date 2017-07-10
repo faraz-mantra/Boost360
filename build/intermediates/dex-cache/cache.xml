@@ -12,12 +12,30 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\Users\NowFloats\.gradle\caches\modules-2\files-2.1\net.minidev\accessors-smart\1.2\c592b500269bfde36096641b01238a8350f8aa31\accessors-smart-1.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c592b500269bfde36096641b01238a8350f8aa31">
+        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\accessors-smart-1.2_5e80b4d8392c6250c61a1da231ed1a2bb796acd3\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\incremental-runtime-classes\partone\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
         sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
         <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10000\instant-run_027338dc8cbd7fdc2a846323bb9b72279e4b82ea\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\NowFloats\.gradle\caches\modules-2\files-2.1\org.slf4j\slf4j-api\1.7.25\da76ca59f6a57ee3102f8f9bd9cee742973efa8a\slf4j-api-1.7.25.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="da76ca59f6a57ee3102f8f9bd9cee742973efa8a">
+        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\slf4j-api-1.7.25_e86f259519ec10b2a00d8d4724a97b70b251dc7f\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -43,8 +61,17 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="73168811551a25711e03bfa56bb212ebaa09789b">
+        sha1="19a0dfd2eec7f83cdd682fe90bcc2aa268809d77">
         <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10000\instant-run-bootstrap_dbaf4d8d8798a2af32d7d472c9f6ee7807211edd\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\NowFloats\.gradle\caches\modules-2\files-2.1\com.jayway.jsonpath\json-path\2.4.0\765a4401ceb2dc8d40553c2075eb80a8fa35c2ae\json-path-2.4.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="765a4401ceb2dc8d40553c2075eb80a8fa35c2ae">
+        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\json-path-2.4.0_b1a75f169f2c7ce8ec29f8c93b2599f82d8f0978\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -63,6 +90,24 @@
         revision="25.0.2"
         sha1="a44646a3e5f7417f1fe149f22915cf06e07b8cd5">
         <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partfour\debug\folders\1000\10000\instant-run-bootstrap_04214df0b5a7dd03c35fa796be810a189430ab53\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\NowFloats\.gradle\caches\modules-2\files-2.1\net.minidev\json-smart\2.3\7396407491352ce4fa30de92efb158adb76b5b\json-smart-2.3.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="007396407491352ce4fa30de92efb158adb76b5b">
+        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\json-smart-2.3_87a52c29e1796e0d2afb0bc6914c04e4067cc72d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Program Files\Android\Android Studio\gradle\m2repository\org\ow2\asm\asm\5.0.4\asm-5.0.4.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="0da08b8cce7bbf903602a25a3a163ae252435795">
+        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\asm-5.0.4_541b317e0f1f90b3930d4c6960a5435f203bccd6\classes.dex" />
     </item>
     <item
         is-multidex="true"
