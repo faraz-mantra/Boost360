@@ -181,6 +181,10 @@
             android:label="@string/title_activity_business__logo_"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.nowfloats.BusinessProfile.UI.UI.FeedbacksActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity"
             android:label="@string/title_activity_social__sharing_"
             android:screenOrientation="portrait">

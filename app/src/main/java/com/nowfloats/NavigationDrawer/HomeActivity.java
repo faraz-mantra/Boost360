@@ -1387,7 +1387,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     @Override
     public void onClick(final String nextScreen) {
         Methods.isOnline(HomeActivity.this);
-        mDrawerLayout.closeDrawer(Gravity.LEFT);
+        mDrawerLayout.closeDrawer(Gravity.START);
         shareButton.setVisibility(View.GONE);
         new Handler().postDelayed(new Runnable() {
             @Override
