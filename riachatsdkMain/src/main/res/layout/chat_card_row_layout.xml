@@ -77,7 +77,7 @@
             android:paddingBottom="20dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:paddingTop="15dp">
+            android:paddingTop="17dp">
 
             <TextView
                 android:id="@+id/tv_confirmed_business_text"

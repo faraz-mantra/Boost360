@@ -16,6 +16,7 @@ import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTas
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
+import com.nowfloats.signup.UI.UI.PreSignUpActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
@@ -130,7 +131,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
             startActivity(i);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }else {
-            Intent i = new Intent(SplashScreen_Activity.this, PreSignUp_MainActivity.class);
+            Intent i = new Intent(SplashScreen_Activity.this, PreSignUpActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             // Staring Login Activity
             startActivity(i);
