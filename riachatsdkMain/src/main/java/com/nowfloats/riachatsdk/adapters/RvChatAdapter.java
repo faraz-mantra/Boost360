@@ -48,6 +48,7 @@ import com.nowfloats.riachatsdk.models.RiaCardModel;
 import com.nowfloats.riachatsdk.models.Section;
 import com.nowfloats.riachatsdk.utils.Constants;
 import com.nowfloats.riachatsdk.utils.Utils;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.List;
@@ -595,11 +596,14 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             } else {
                 imageViewHolder.tvImageTitle.setVisibility(View.GONE);
             }
-            Glide.with(mContext)
-                    .load(getParsedPrefixPostfixText(section.getUrl()))
-                    .centerCrop()
-                    .placeholder(R.drawable.default_product_image)
-                    .into(imageViewHolder.ivMainImage);
+//            Glide.with(mContext)
+//                    .load(getParsedPrefixPostfixText(section.getUrl()))
+//                    .centerCrop()
+//                    .placeholder(R.drawable.default_product_image)
+//                    .into(imageViewHolder.ivMainImage);
+
+            Picasso.with(mContext).load(getParsedPrefixPostfixText(section.getUrl())).into(imageViewHolder.ivMainImage);
+
             if (section.getCaption() != null && !section.getCaption().trim().equals("")) {
                 imageViewHolder.tvImageCaption.setText(section.getCaption());
             } else {

@@ -15,7 +15,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.os.ResultReceiver;
 import android.support.v7.app.AlertDialog;
@@ -28,7 +27,6 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
-import android.util.JsonReader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -63,7 +61,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonToken;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.jakewharton.retrofit.Ok3Client;
@@ -93,12 +90,10 @@ import net.alhazmy13.mediapicker.Video.VideoPicker;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringReader;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
@@ -225,6 +220,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.primary));
         }
+
+//        getWindow().setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.chat_bg));
 
         /*pg = new ProgressDialog(this);
         pg.setMessage(getString(R.string.please_wait));
@@ -515,12 +512,11 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+//        super.onBackPressed();
         if (mHandler != null)
             mHandler.removeCallbacksAndMessages(null);
         hideSoftKeyboard();
-        finish();
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.slide_out_right);
+        showCustomDialog(CustomDialogFragment.DialogFrom.BACK_PRESS);
     }
 
     private void replyToRia(String type, String... msg) {
@@ -748,7 +744,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     }
 
-    private  void fetchNewChatData(final Button button) {
+    private void fetchNewChatData(final Button button) {
         OkHttpClient client = new OkHttpClient();
 
         okhttp3.Request request = new okhttp3.Request.Builder()
@@ -769,10 +765,11 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
             @Override
             public void onResponse(Call call, okhttp3.Response response) throws IOException {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     Gson gson = new Gson();
 
-                    List<RiaCardModel> newNodes = gson.fromJson(response.body().string(), new TypeToken<List<RiaCardModel>>(){}.getType());
+                    List<RiaCardModel> newNodes = gson.fromJson(response.body().string(), new TypeToken<List<RiaCardModel>>() {
+                    }.getType());
                     mAllNodes.addAll(newNodes);
                     runOnUiThread(new Runnable() {
                         @Override
@@ -780,7 +777,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                             showNextNode(button.getNextNodeId());
                         }
                     });
-                }else {
+                } else {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -980,7 +977,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         finish();
     }
-
 
 
     private void skip() {
@@ -1198,6 +1194,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             public void run() {
 
                 etChatInput.setAdapter(null);
+
+                boolean isTextInput = true;
+
                 for (Button btn : node.getButtons()) {
                     if (btn.isDefaultButton()) {
                         mDefaultButton = btn;
@@ -1261,6 +1260,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         handleAutoComplete(btn);
                         mCurrButton = btn;
                     }*/ else {
+                        isTextInput = false;
                         if (!btn.isHidden()) {
                             String str = null;
                             if (btn.getButtonText() != null) {
@@ -1294,7 +1294,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 //                            null, mDefaultButton.getButtonType());
 
                     tvRiaTyping.setVisibility(View.INVISIBLE);
-                    mHandler.postDelayed(mAutoCallRunnable, node.getTimeoutInMs());
+                    if(!isTextInput)
+                        mHandler.postDelayed(mAutoCallRunnable, node.getTimeoutInMs());
                 }
 
             }
@@ -1634,23 +1635,23 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                                 }
                             }
                         }
-                        if(node.getButtons()!=null && node.getButtons().size()>0){
+                        if (node.getButtons() != null && node.getButtons().size() > 0) {
                             DocumentContext context = JsonPath.parse(response.toString());
                             String nextNodeId = null;
-                            for (Button btn:node.getButtons()) {
-                                if(TextUtils.isEmpty(btn.getApiResponseMatchKey()))
+                            for (Button btn : node.getButtons()) {
+                                if (TextUtils.isEmpty(btn.getApiResponseMatchKey()))
                                     continue;
                                 String keyPath = "$." + btn.getApiResponseMatchKey();
                                 String val = context.read(keyPath, String.class);
-                                if(val!=null && val.equals(btn.getApiResponseMatchValue())){
+                                if (val != null && val.equals(btn.getApiResponseMatchValue())) {
                                     nextNodeId = btn.getNextNodeId();
                                     break;
                                 }
                             }
-                            if(nextNodeId!=null){
+                            if (nextNodeId != null) {
                                 showNextNode(nextNodeId);
                             }
-                        }else {
+                        } else {
                             try {
                                 if (TextUtils.isEmpty(response.optString(KEY_NEXT_NODE_ID))) {
                                     showNextNode(node.getNextNodeId());
@@ -1716,23 +1717,23 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                                 }
 
                             }
-                            if(node.getButtons()!=null && node.getButtons().size()>0){
+                            if (node.getButtons() != null && node.getButtons().size() > 0) {
                                 DocumentContext context = JsonPath.parse(response);
                                 String nextNodeId = null;
-                                for (Button btn:node.getButtons()) {
-                                    if(TextUtils.isEmpty(btn.getApiResponseMatchKey()))
+                                for (Button btn : node.getButtons()) {
+                                    if (TextUtils.isEmpty(btn.getApiResponseMatchKey()))
                                         continue;
                                     String keyPath = "$." + btn.getApiResponseMatchKey();
                                     String val = context.read(keyPath, String.class);
-                                    if(val!=null && val.equals(btn.getApiResponseMatchValue())){
+                                    if (val != null && val.equals(btn.getApiResponseMatchValue())) {
                                         nextNodeId = btn.getNextNodeId();
                                         break;
                                     }
                                 }
-                                if(nextNodeId!=null){
+                                if (nextNodeId != null) {
                                     showNextNode(nextNodeId);
                                 }
-                            }else {
+                            } else {
                                 try {
                                     if (TextUtils.isEmpty(response.optString(KEY_NEXT_NODE_ID))) {
                                         showNextNode(node.getNextNodeId());
@@ -1980,6 +1981,12 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 @Override
                 public void dismissPopup() {
                     customDialogFragment.dismiss();
+                }
+
+                @Override
+                public void finishActivity() {
+                    finish();
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.slide_out_right);
                 }
             });
         }

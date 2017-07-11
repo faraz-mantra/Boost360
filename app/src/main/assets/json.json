@@ -1,5 +1,59 @@
 [
   {
+    "Name": "Update",
+    "Id": "58e342a7b02a29234844419c",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Search Engine Optimization works when you update your site . . ",
+        "SectionType": "Text",
+        "DelayInMs": 2016,
+        "Hidden": false,
+        "_id": "58e3475bb02a2923484441ad"
+      },
+      {
+        "Text": "An update can be an offer, a product description, a customer story or a news from your industry",
+        "SectionType": "Text",
+        "DelayInMs": 3000,
+        "Hidden": false,
+        "_id": "58e347b8b02a2923484441b1"
+      },
+      {
+        "Text": "The possibilities are endless! 🚀",
+        "SectionType": "Text",
+        "DelayInMs": 1188,
+        "Hidden": false,
+        "_id": "58e347f6b02a2923484441b7"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Update Now",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "5943e654c7d8bf85885c0893",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "Type your update here ",
+        "PostToChat": true,
+        "_id": "58e34883b02a2923484441c7"
+      },
+      {
+        "ButtonText": "Tell me more ",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58e34a58b02a292148c864df",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58e3490cb02a2923484441dc"
+      }
+    ],
+    "VariableName": ""
+  },
+  {
     "Name": "Email Address",
     "Id": "58cfc1a5c782bb4ad0ab9b36",
     "Emotion": "Cool",

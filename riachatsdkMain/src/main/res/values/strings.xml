@@ -55,6 +55,12 @@ so I am going to shift all the information you have shared with me to a manual f
 
 
     <string name="edit_title">Are you looking to edit this \n information?</string>
+
+    <string name="looking_to_go_back">Looking to go back?</string>
+    <string name="all_the_information_you_entered_will_be_lost">All the information you entered will be lost.</string>
+    <string name="thats_okay">That\'s okay</string>
+    <string name="cencel">Cancel</string>
+
     <string name="cannot_reach_network">Can\'t reach network.</string>
     <string name="cannot_reach_network_msg">Looks like your internet connection is switched off. Please check your network settings and try again.</string>
     <string name="edit_content">In that case, I would need to shift all the information you have
