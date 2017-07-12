@@ -9,6 +9,6 @@ public class WidgetPacks {
     public String ExpiryDate;
     public String ExpiryInMths;
     public String Name;
-    public String Properties;
+    public Object Properties;
     public String WidgetKey;
 }

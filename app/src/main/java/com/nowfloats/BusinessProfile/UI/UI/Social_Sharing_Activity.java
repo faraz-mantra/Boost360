@@ -98,17 +98,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
     private int numberOfUpdates = 0;
     private boolean numberOfUpdatesSelected = false;
     private Activity activity;
-    private MaterialDialog materialProgress;
-    private ImageView ivHelpTool;
 
-    //Rahul Twitter
-
-    //Variables are required to store twitter key and sec
-    private String mConsumerKey = null;
-    private String mConsumerSecret = null;
-    private String mCallbackUrl = null;
-    private String mAuthVerifier = null;
-    private String mTwitterVerifier = null;
     private SharedPreferences mSharedPreferences = null;
     private ProgressDialog pd = null;
     private int mNewPosition =-1;
@@ -346,7 +336,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
             public void onClick(View v) {
 
                 if (twitterCheckBox.isChecked()) {
-                    
+                    twitterCheckBox.setChecked(false);
                     if (!Methods.isOnline(Social_Sharing_Activity.this)) {
                         showAlertBox();
                     } else {
@@ -564,9 +554,6 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
             twitterConnection.onActivityResult(requestCode,resultCode,data);
         }
         //facebook.authorizeCallback(requestCode, resultCode, data);//removed
-        if (materialProgress != null) {
-            materialProgress.dismiss();
-        }
     }
 //added
 
@@ -1228,7 +1215,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 prefsEditor.apply();
                 break;
             case TWITTER_DEACTIVATION:
-               twitterProfileConnect(false);
+                twitterProfileConnect(false);
                 logoutFromTwitter();
                 SharedPreferences.Editor twitterPrefEditor = mSharedPreferences.edit();
                 twitterPrefEditor.putBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false);

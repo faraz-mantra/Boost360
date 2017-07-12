@@ -12,7 +12,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/black_translucent"
+            android:background="@drawable/white_to_gray"
             android:layout_weight="5"/>
         <View
             android:layout_width="match_parent"

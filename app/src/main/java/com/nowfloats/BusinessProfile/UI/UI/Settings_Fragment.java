@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -118,9 +117,6 @@ public class Settings_Fragment extends Fragment {
         String Sdate = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON);
         if(Sdate.contains("/Date")){
             Sdate = Sdate.replace("/Date(", "").replace(")/", "");
-        }
-        if(!TextUtils.isEmpty(Sdate) && Long.parseLong(Sdate)/1000 > 1470614400){
-            flSiteAppearance.setVisibility(View.VISIBLE);
         }
 
         new Thread(new Runnable() {
@@ -281,23 +277,6 @@ public class Settings_Fragment extends Fragment {
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
-        if(checkExpiry()){
-            flSiteAppearance.setVisibility(View.GONE);
-        }
-    }
-
-    private boolean checkExpiry() {
-        boolean flag = false;
-        String strExpiryTime = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EXPIRY_DATE);
-        long expiryTime = -1;
-        if(strExpiryTime!=null){
-            strExpiryTime = strExpiryTime.replace("/Date(", "").replace(")/", "");
-            expiryTime = !TextUtils.isEmpty(strExpiryTime)? Long.parseLong(strExpiryTime):-1;
-        }
-        if(expiryTime!=-1 && ((expiryTime - System.currentTimeMillis())/86400000<180) && !session.getWebTemplateType().equals("6")){
-            flag = true;
-        }
-        return flag;
     }
 
     public void logoutAlertDialog_Material() {

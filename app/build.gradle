@@ -47,8 +47,8 @@ android {
         applicationId 'com.thinksity'
         minSdkVersion 15
         targetSdkVersion 25
-        versionName "1.0.3"
-        versionCode 2017060030
+        versionName "4.7.1"
+        versionCode 2017070012
         multiDexEnabled true
     }
     buildTypes {
@@ -111,8 +111,6 @@ dependencies {
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'com.facebook.android:facebook-android-sdk:4.16.1'
     compile 'com.twitter.sdk.android:twitter-core:3.0.0'
-    compile 'com.twitter.sdk.android:tweet-ui:3.0.0'
-    compile 'com.twitter.sdk.android:tweet-composer:3.0.0'
     compile 'com.wdullaer:materialdatetimepicker:1.0.1'
     compile 'com.android.support:multidex:1.0.1'
     compile 'jp.wasabeef:recyclerview-animators:1.2.0@aar'
