@@ -1,5 +1,53 @@
 [
   {
+    "Name": "Screenshot 1",
+    "Id": "58e235d614216c1a74cb2831",
+    "Emotion": "Cool",
+    "TimeoutInMs": 10000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Here's what your site looks like!",
+        "SectionType": "Text",
+        "DelayInMs": 1188,
+        "Hidden": false,
+        "_id": "58e23dd414216c1a74cb2832"
+      },
+      {
+        "HeightInPixels": 0,
+        "WidthInPixels": 0,
+        "Url": "[~SITE_SCREENSHOT_URL]",
+        "SizeInKb": 0,
+        "SectionType": "Image",
+        "DelayInMs": 0,
+        "Hidden": false,
+        "_id": "58e23e3e14216c1a74cb28ba"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Let's continue",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "595a18fdb02a2933f0de1585",
+        "DefaultButton": true,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58e23f2614216c1a74cb28bf"
+      },
+      {
+        "ButtonText": "Take me to the moon!",
+        "Emotion": "Cool",
+        "ButtonType": "DeepLink",
+        "DeepLinkUrl": "login",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58e240db14216c1a74cb28c1"
+      }
+    ]
+  },
+  {
     "Name": "Email Address",
     "Id": "58cfc1a5c782bb4ad0ab9b36",
     "Emotion": "Cool",
