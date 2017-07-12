@@ -191,7 +191,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     private DomainAvailabilityCheck mDomainAvailabilityCheck;
     private DataBase dataBase;
 
-    public static ProgressDialog pd;
+    public ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

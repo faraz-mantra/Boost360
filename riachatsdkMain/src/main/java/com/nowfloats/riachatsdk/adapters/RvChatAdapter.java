@@ -206,7 +206,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         } else if (holder instanceof UnConfirmedCardViewHolder) {
             RiaCardModel model = section.getCardModel();
             final UnConfirmedCardViewHolder cardViewHolder = (UnConfirmedCardViewHolder) holder;
-            if(model.getCardHeader()==null)
+            if (model.getCardHeader() == null)
                 model.setCardHeader("");
             cardViewHolder.tvConfirmationTitle.setText(Html.fromHtml(getParsedPrefixPostfixText(model.getCardHeader())));
 
@@ -602,7 +602,8 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //                    .placeholder(R.drawable.default_product_image)
 //                    .into(imageViewHolder.ivMainImage);
 
-            Picasso.with(mContext).load(getParsedPrefixPostfixText(section.getUrl())).into(imageViewHolder.ivMainImage);
+            Picasso.with(mContext).load(getParsedPrefixPostfixText(section.getUrl())).placeholder(R.drawable.site_sc_default)
+                    .into(imageViewHolder.ivMainImage);
 
             if (section.getCaption() != null && !section.getCaption().trim().equals("")) {
                 imageViewHolder.tvImageCaption.setText(section.getCaption());
@@ -621,7 +622,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             imageViewHolder.ivMainImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((ChatViewActivity) mContext).showImageDilaog(section.getUrl());
+                    ((ChatViewActivity) mContext).showImageDilaog(getParsedPrefixPostfixText(section.getUrl()));
                 }
             });
 

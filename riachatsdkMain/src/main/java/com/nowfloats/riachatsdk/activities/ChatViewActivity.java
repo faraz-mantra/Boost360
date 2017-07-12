@@ -58,7 +58,6 @@ import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.gun0912.tedpermission.PermissionListener;
@@ -84,6 +83,7 @@ import com.nowfloats.riachatsdk.models.Section;
 import com.nowfloats.riachatsdk.services.FileUploadService;
 import com.nowfloats.riachatsdk.utils.Constants;
 import com.nowfloats.riachatsdk.utils.Utils;
+import com.squareup.picasso.Picasso;
 
 import net.alhazmy13.mediapicker.Image.ImagePicker;
 import net.alhazmy13.mediapicker.Video.VideoPicker;
@@ -221,7 +221,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.primary));
         }
 
-//        getWindow().setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.chat_bg));
+        getWindow().setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.doodle_bg));
 
         /*pg = new ProgressDialog(this);
         pg.setMessage(getString(R.string.please_wait));
@@ -860,10 +860,14 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         ImageViewTouch ivContent = (ImageViewTouch) dialog.findViewById(R.id.ivContent);
 
-        Glide.with(ChatViewActivity.this)
-                .load(getParsedPrefixPostfixText(url))
-                .fitCenter()
-                .placeholder(R.drawable.default_product_image)
+//        Glide.with(ChatViewActivity.this)
+//                .load(getParsedPrefixPostfixText(url))
+//                .fitCenter()
+//                .placeholder(R.drawable.default_product_image)
+//                .into(ivContent);
+
+        Picasso.with(ChatViewActivity.this).load(url)
+                .placeholder(R.drawable.site_sc_default)
                 .into(ivContent);
 
         ImageView ivClose = (ImageView) dialog.findViewById(R.id.ivClose);
@@ -969,6 +973,12 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         intent.putExtra("Username", mDataMap.get("[~" + userKey + "]").toLowerCase());
         intent.putExtra("Password", mDataMap.get("[~" + passwordKey + "]"));
+        intent.putExtra("fromLogin", true);
+
+//        Bundle loginBundle = new Bundle();
+//        loginBundle.putBoolean("fromLogin", true);
+//        Constants.isWelcomScreenToBeShown = true;
+//        webIntent.putExtras(loginBundle);
 
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
@@ -1294,7 +1304,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 //                            null, mDefaultButton.getButtonType());
 
                     tvRiaTyping.setVisibility(View.INVISIBLE);
-                    if(!isTextInput)
+                    if (!isTextInput)
                         mHandler.postDelayed(mAutoCallRunnable, node.getTimeoutInMs());
                 }
 

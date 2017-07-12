@@ -119,6 +119,31 @@
             android:visibility="gone">
 
             <LinearLayout
+                android:id="@+id/llNeg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvNeg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/margin_15"
+                    android:text="@string/yes_i_want_to_make_changes"
+                    android:textColor="@color/ria_popup_btn"
+                    android:textSize="@dimen/medium_text_size" />
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="0.3dp"
+                android:layout_height="match_parent"
+                android:src="@color/ria_popup_btn"></ImageView>
+
+            <LinearLayout
                 android:id="@+id/llPos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -137,29 +162,6 @@
                     android:textSize="@dimen/medium_text_size" />
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="0.3dp"
-                android:layout_height="match_parent"
-                android:src="@color/ria_popup_btn"></ImageView>
-
-            <LinearLayout
-                android:id="@+id/llNeg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvNeg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:padding="@dimen/margin_15"
-                    android:text="@string/yes_i_want_to_make_changes"
-                    android:textColor="@color/ria_popup_btn"
-                    android:textSize="@dimen/medium_text_size" />
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
