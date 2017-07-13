@@ -55,6 +55,7 @@
                 tools:ignore="MissingPrefix"
                 android:textColorHint="@color/primaryColor"
                 android:hint="@string/product_detail_product_name"
+                android:inputType="textCapWords"
                 app:met_floatingLabel="highlight"
                 app:met_primaryColor="@color/primaryColor"
                 app:met_singleLineEllipsis="true" />
@@ -66,6 +67,7 @@
                 android:textColor="@color/main_text_color"
                 android:textSize="15sp"
                 fontPath="Roboto-Light.ttf"
+                android:inputType="textCapSentences"
                 tools:ignore="MissingPrefix"
                 android:layout_marginBottom="5dp"
                 android:textColorHint="@color/primaryColor"
