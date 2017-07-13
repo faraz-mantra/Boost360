@@ -42,7 +42,7 @@ public class FullScreen_Gallery_Image extends AppCompatActivity {
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
         setContentView(R.layout.activity_full_screen__gallery__image);
-        Methods.isOnline(FullScreen_Gallery_Image.this);
+        Methods.isOnline(this);
 
 
 

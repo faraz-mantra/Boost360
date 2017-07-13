@@ -693,7 +693,7 @@ public class Site_Meter_Fragment extends Fragment {
                             Methods.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
                             getString(R.string.ok), null, DialogFrom.CONTACTS_AND_EMAIL_REQUIRED);
 
-                } else if (get_fp_details_model.getCategory() == null) {
+                } else if (get_fp_details_model.getCategory() == null || get_fp_details_model.getCategory().size() == 0 ) {
                     showCustomDialog(getString(R.string.domain_detail_required),
                             Methods.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
                             getString(R.string.ok), null, DialogFrom.CATEGORY_REQUIRED);
