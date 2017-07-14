@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ public class CustomDialogFragment extends DialogFragment {
     public enum DialogFrom {
         CREATE_MY_SITE,
         SKIP,
+        BACK_PRESS,
         NO_INTERNET,
         DEFAULT
     }
@@ -80,13 +82,25 @@ public class CustomDialogFragment extends DialogFragment {
         FrameLayout llRia = (FrameLayout) mView.findViewById(R.id.ivRia);
         llRia.bringToFront();
 
+        LinearLayout llHorizontal = (LinearLayout) mView.findViewById(R.id.llHorizontal);
+        LinearLayout llVertical = (LinearLayout) mView.findViewById(R.id.llVertical);
+
         LinearLayout llPositive = (LinearLayout) mView.findViewById(R.id.llPositive);
         LinearLayout llNegative = (LinearLayout) mView.findViewById(R.id.llNegative);
 
+        LinearLayout llPos = (LinearLayout) mView.findViewById(R.id.llPos);
+        LinearLayout llNeg = (LinearLayout) mView.findViewById(R.id.llNeg);
+
         TextView tvPositive = (TextView) mView.findViewById(R.id.tvPositive);
         TextView tvNegative = (TextView) mView.findViewById(R.id.tvNegative);
+
+        TextView tvPos = (TextView) mView.findViewById(R.id.tvPos);
+        TextView tvNeg = (TextView) mView.findViewById(R.id.tvNeg);
+
         TextView tvTitle = (TextView) mView.findViewById(R.id.tvTitle);
         TextView tvContent = (TextView) mView.findViewById(R.id.tvContent);
+
+        ImageView ivHorizontalSep = (ImageView) mView.findViewById(R.id.ivHorizontalSep);
 
         switch (from) {
             case SKIP:
@@ -149,6 +163,36 @@ public class CustomDialogFragment extends DialogFragment {
 
 
                 break;
+            case BACK_PRESS:
+
+                llHorizontal.setVisibility(View.VISIBLE);
+                llVertical.setVisibility(View.GONE);
+
+                ivHorizontalSep.setVisibility(View.VISIBLE);
+
+                tvTitle.setText(getActivity().getString(R.string.looking_to_go_back));
+                tvContent.setText(getActivity().getString(R.string.all_the_information_you_entered_will_be_lost));
+                tvNeg.setText(getActivity().getString(R.string.thats_okay));
+                tvPos.setText(getActivity().getString(R.string.cencel));
+                setCancelable(true);
+
+                llPos.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mResultListener.dismissPopup();
+                    }
+                });
+
+                llNeg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mResultListener.finishActivity();
+
+                    }
+                });
+
+
+                break;
         }
 
         try {
@@ -169,6 +213,8 @@ public class CustomDialogFragment extends DialogFragment {
         void createmysite();
 
         void dismissPopup();
+
+        void finishActivity();
     }
 
 
