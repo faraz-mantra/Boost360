@@ -568,7 +568,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     lp.setMargins(Utils.dpToPx(mContext, 15), 0, Utils.dpToPx(mContext, 60), 0);
                 } else {
                     textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.ria_main_bubble);
-                    lp.setMargins(Utils.dpToPx(mContext, 5), 0, Utils.dpToPx(mContext, 60), 0);
+                    lp.setMargins(Utils.dpToPx(mContext, 5), 0, Utils.dpToPx(mContext, 30), 0);
                 }
 
                 textViewHolder.llBubbleContainer.setLayoutParams(lp);
