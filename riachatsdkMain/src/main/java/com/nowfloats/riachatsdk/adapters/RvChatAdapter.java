@@ -203,7 +203,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             }
 
             cardViewHolder.tvCurrentPos.setText(section.getCardPos() + "");
-            cardViewHolder.tvTotalCount.setText(""+MAX_CARD_COUNT);
+            cardViewHolder.tvTotalCount.setText("" + MAX_CARD_COUNT);
 
             /*((LinearLayout) cardViewHolder.itemView).setGravity(Gravity.RIGHT);
             LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) cardViewHolder.llBubbleContainer.getLayoutParams();
@@ -568,7 +568,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     lp.setMargins(Utils.dpToPx(mContext, 15), 0, Utils.dpToPx(mContext, 60), 0);
                 } else {
                     textViewHolder.llBubbleContainer.setBackgroundResource(R.drawable.ria_main_bubble);
-                    lp.setMargins(Utils.dpToPx(mContext, 5), 0, Utils.dpToPx(mContext, 30), 0);
+                    lp.setMargins(Utils.dpToPx(mContext, 5), 0, Utils.dpToPx(mContext, 60), 0);
                 }
 
                 textViewHolder.llBubbleContainer.setLayoutParams(lp);
@@ -608,14 +608,21 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             } else {
                 imageViewHolder.tvImageTitle.setVisibility(View.GONE);
             }
-//            Glide.with(mContext)
-//                    .load(getParsedPrefixPostfixText(section.getUrl()))
-//                    .centerCrop()
-//                    .placeholder(R.drawable.default_product_image)
-//                    .into(imageViewHolder.ivMainImage);
 
-            Picasso.with(mContext).load(getParsedPrefixPostfixText(section.getUrl())).placeholder(R.drawable.site_sc_default)
-                    .into(imageViewHolder.ivMainImage);
+            if (!getParsedPrefixPostfixText(section.getUrl()).contains("http")) {
+
+                Glide.with(mContext)
+                        .load(getParsedPrefixPostfixText(section.getUrl()))
+                        .centerCrop()
+                        .placeholder(R.drawable.site_sc_default)
+                        .into(imageViewHolder.ivMainImage);
+
+            } else {
+
+                Picasso.with(mContext).load(getParsedPrefixPostfixText(section.getUrl())).placeholder(R.drawable.site_sc_default)
+                        .into(imageViewHolder.ivMainImage);
+            }
+
 
             if (section.getCaption() != null && !section.getCaption().trim().equals("")) {
                 imageViewHolder.tvImageCaption.setText(section.getCaption());

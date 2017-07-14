@@ -120,7 +120,7 @@
             android:layout_height="35dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginBottom="80dp"
+            android:layout_marginBottom="70dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/scroll_down_shape"
             android:paddingTop="5dp"
@@ -216,10 +216,10 @@
                     android:layout_marginRight="5dp"
                     android:layout_marginStart="@dimen/margin_10"
                     android:background="@drawable/send_btn_bg"
-                    android:paddingBottom="@dimen/margin_5"
-                    android:paddingLeft="@dimen/margin_5"
-                    android:paddingRight="@dimen/margin_10"
-                    android:paddingTop="@dimen/margin_5"
+                    android:paddingBottom="@dimen/margin_8"
+                    android:paddingLeft="@dimen/margin_8"
+                    android:paddingRight="@dimen/margin_12"
+                    android:paddingTop="@dimen/margin_8"
                     android:src="@drawable/ic_send_message_btn" />
             </LinearLayout>
         </LinearLayout>
