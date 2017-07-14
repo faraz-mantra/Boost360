@@ -210,7 +210,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_v3);
         pref = getSharedPreferences(Constants.PREF_NAME,Activity.MODE_PRIVATE);
         AppsFlyerLib.sendTracking(getApplicationContext());
         BoostLog.d("HomeActivity ONcreate","onCreate");
@@ -1818,6 +1817,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             progressDialog = null ;
         }
 
+
         createView();
 
     }
@@ -1846,6 +1846,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
     private void createView(){
 
+        setContentView(R.layout.activity_home_v3);
         BoostLog.d(TAG, "In on CreateView");
         deepLinkUrl = RiaFirebaseMessagingService.deepLinkUrl;
         FPID = session.getFPID();

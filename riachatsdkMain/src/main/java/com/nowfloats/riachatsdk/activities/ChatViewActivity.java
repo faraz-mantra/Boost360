@@ -60,6 +60,7 @@ import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.gun0912.tedpermission.PermissionListener;
@@ -67,6 +68,10 @@ import com.gun0912.tedpermission.TedPermission;
 import com.jakewharton.retrofit.Ok3Client;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
+import com.kbeanie.multipicker.api.CameraImagePicker;
+import com.kbeanie.multipicker.api.Picker;
+import com.kbeanie.multipicker.api.callbacks.ImagePickerCallback;
+import com.kbeanie.multipicker.api.entity.ChosenImage;
 import com.nowfloats.riachatsdk.R;
 import com.nowfloats.riachatsdk.adapters.RvButtonsAdapter;
 import com.nowfloats.riachatsdk.adapters.RvChatAdapter;
@@ -183,6 +188,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     private static final int FP_CREATED = 1;
     private static final int FP_NOT_CREATED = -100;
 
+    private static String PREFIX_COUNTRY_CODE = "[~COUNTRYCODE]";
 
     private Runnable mAutoCallRunnable = new Runnable() {
         @Override
@@ -501,7 +507,11 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
+        if (requestCode == Picker.PICK_IMAGE_CAMERA && resultCode == RESULT_OK) {
+            imagePicker.submit(data);
+        } else if (requestCode == Picker.PICK_IMAGE_DEVICE && resultCode == RESULT_OK) {
+            galleryImagePicker.submit(data);
+        } else if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
             List<String> mPaths = (List<String>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH);
             Intent i = new Intent(this, FileUploadService.class);
             i.putExtra(Constants.FILE_PATH, mPaths.get(0));
@@ -529,17 +539,23 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     @Override
     public void onBackPressed() {
 //        super.onBackPressed();
-        if (mHandler != null)
-            mHandler.removeCallbacksAndMessages(null);
         hideSoftKeyboard();
         if (FP_STATUS_CODE == FP_CREATED)
             showCustomDialog(CustomDialogFragment.DialogFrom.BACK_PRESS_LOGIN);
         else if (FP_STATUS_CODE == FP_NOT_CREATED)
             showCustomDialog(CustomDialogFragment.DialogFrom.BACK_PRESS);
         else {
-            finish();
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.slide_out_right);
+            goBack();
         }
+    }
+
+    private void goBack() {
+
+        if (mHandler != null)
+            mHandler.removeCallbacksAndMessages(null);
+        finish();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.slide_out_right);
+
     }
 
     private void replyToRia(String type, String... msg) {
@@ -885,18 +901,23 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         final ImageViewTouch ivContent = (ImageViewTouch) dialog.findViewById(R.id.ivContent);
 
-//        Glide.with(ChatViewActivity.this)
-//                .load(getParsedPrefixPostfixText(url))
-//                .fitCenter()
-//                .placeholder(R.drawable.default_product_image)
-//                .into(ivContent);
+        if (!url.contains("http")) {
 
-        Picasso.with(ChatViewActivity.this).load(url)
-                .placeholder(R.drawable.site_sc_default)
-                .into(ivContent);
+            Glide.with(ChatViewActivity.this)
+                    .load(getParsedPrefixPostfixText(url))
+                    .fitCenter()
+                    .placeholder(R.drawable.site_sc_default)
+                    .into(ivContent);
+        } else {
 
-        ImageView ivClose = (ImageView) dialog.findViewById(R.id.ivClose);
-        ivClose.setOnClickListener(new View.OnClickListener() {
+            Picasso.with(ChatViewActivity.this).load(url)
+                    .placeholder(R.drawable.site_sc_default)
+                    .into(ivContent);
+        }
+
+
+        LinearLayout llClose = (LinearLayout) dialog.findViewById(R.id.llClose);
+        llClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
@@ -906,6 +927,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         dialog.show();
     }
 
+    private CameraImagePicker imagePicker;
+    private com.kbeanie.multipicker.api.ImagePicker galleryImagePicker;
+
     private void getImage(Button btn) {
         mNextNodeId = btn.getNextNodeId();
         new AlertDialog.Builder(this)
@@ -913,23 +937,52 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 .setPositiveButton(getString(R.string.media_picker_camera), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        new ImagePicker.Builder(ChatViewActivity.this)
-                                .mode(ImagePicker.Mode.CAMERA)
-                                .directory(ImagePicker.Directory.DEFAULT)
-                                .allowMultipleImages(false)
-                                .enableDebuggingMode(true)
-                                .build();
+
+                        imagePicker = new CameraImagePicker(ChatViewActivity.this);
+                        imagePicker.setImagePickerCallback(new ImagePickerCallback() {
+                                                               @Override
+                                                               public void onImagesChosen(List<ChosenImage> images) {
+                                                                   Intent i = new Intent(ChatViewActivity.this, FileUploadService.class);
+                                                                   i.putExtra(Constants.FILE_PATH, images.get(0).getOriginalPath());
+                                                                   i.putExtra(Constants.RECEIVER, mReceiver);
+                                                                   startService(i);
+                                                                   replyToRia(Constants.SectionType.TYPE_IMAGE, images.get(0).getOriginalPath());
+                                                               }
+
+                                                               @Override
+                                                               public void onError(String message) {
+                                                                   // Do error handling
+                                                               }
+                                                           }
+                        );
+                        String outputPath = imagePicker.pickImage();
+
                     }
                 })
                 .setNegativeButton(getString(R.string.media_picker_gallery), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        new ImagePicker.Builder(ChatViewActivity.this)
-                                .mode(ImagePicker.Mode.GALLERY)
-                                .directory(ImagePicker.Directory.DEFAULT)
-                                .allowMultipleImages(false)
-                                .enableDebuggingMode(true)
-                                .build();
+
+                        galleryImagePicker = new
+                                com.kbeanie.multipicker.api.ImagePicker(ChatViewActivity.this);
+                        galleryImagePicker.setImagePickerCallback(new ImagePickerCallback() {
+                                                                      @Override
+                                                                      public void onImagesChosen(List<ChosenImage> images) {
+                                                                          Intent i = new Intent(ChatViewActivity.this, FileUploadService.class);
+                                                                          i.putExtra(Constants.FILE_PATH, images.get(0).getOriginalPath());
+                                                                          i.putExtra(Constants.RECEIVER, mReceiver);
+                                                                          startService(i);
+                                                                          replyToRia(Constants.SectionType.TYPE_IMAGE, images.get(0).getOriginalPath());
+                                                                      }
+
+                                                                      @Override
+                                                                      public void onError(String message) {
+                                                                          // Do error handling
+                                                                      }
+                                                                  }
+                        );
+                        galleryImagePicker.pickImage();
+
                     }
                 })
                 .setCancelable(false)
@@ -986,35 +1039,10 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     }
 
-    private void login() {
-
-        Intent intent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("com.biz2.nowfloats://com.riasdk.skip/riachat"));
-        intent.addCategory(Intent.CATEGORY_BROWSABLE);
-        intent.setAction(Intent.ACTION_VIEW);
-
-        String userKey = "USERNAME";
-        String passwordKey = "PASSWORD";
-
-        intent.putExtra("Username", mDataMap.get("[~" + userKey + "]").toLowerCase());
-        intent.putExtra("Password", mDataMap.get("[~" + passwordKey + "]"));
-        intent.putExtra("fromLogin", true);
-
-//        Bundle loginBundle = new Bundle();
-//        loginBundle.putBoolean("fromLogin", true);
-//        Constants.isWelcomScreenToBeShown = true;
-//        webIntent.putExtras(loginBundle);
-
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        }
-
-        finish();
-    }
-
-
     private void skip() {
+
+        if (mHandler != null)
+            mHandler.removeCallbacksAndMessages(null);
 
         if (mCurrButton != null) {
 
@@ -1065,6 +1093,32 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             finish();
         }
+    }
+
+
+    private void login() {
+
+        if (mHandler != null)
+            mHandler.removeCallbacksAndMessages(null);
+
+        Intent intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("com.biz2.nowfloats://com.riasdk.skip/riachat"));
+        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+        intent.setAction(Intent.ACTION_VIEW);
+
+        String userKey = "USERNAME";
+        String passwordKey = "PASSWORD";
+
+        intent.putExtra("Username", mDataMap.get("[~" + userKey + "]").toLowerCase());
+        intent.putExtra("Password", mDataMap.get("[~" + passwordKey + "]"));
+        intent.putExtra("fromLogin", true);
+
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        }
+
+        finish();
     }
 
     private void askLocationPermission() {
@@ -1315,6 +1369,23 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         node.setToShowInput(false);
                     }
                 }
+
+//                if (mCurrButton != null && !TextUtils.isEmpty(mCurrButton.getPrefixText())
+//                        && mCurrButton.getPrefixText().equalsIgnoreCase(PREFIX_COUNTRY_CODE)) {
+//                    tvPrefix.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//
+//                            if (node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_ALTERNATE_PHONE))
+//                                showCustomDialog(CustomDialogFragment.DialogFrom.COUNTRY_CODE);
+////                            else
+////                                showCustomDialog(CustomDialogFragment.DialogFrom.COUNTRY_CODE);
+//                        }
+//                    });
+//                } else {
+//                    tvPrefix.setOnClickListener(null);
+//                }
+
                 mButtonsAdapter.notifyDataSetChanged();
                 rvButtonsContainer.setVisibility(View.INVISIBLE);
 
@@ -1450,63 +1521,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                                 e.printStackTrace();
                             }
                         }
+                        showListDialog(btn, mAutoComplRes);
 
-                        final ArrayAdapter<String> adapter = new ArrayAdapter<>(ChatViewActivity.this,
-                                R.layout.search_list_item_layout, mAutoComplRes);
-
-                        AlertDialog.Builder builderSingle = new AlertDialog.Builder(ChatViewActivity.this);
-                        builderSingle.setTitle(btn.getPlaceholderText());
-
-                        View view = LayoutInflater.from(ChatViewActivity.this).inflate(R.layout.search_list_layout, null);
-                        builderSingle.setView(view);
-
-                        EditText edtSearch = (EditText) view.findViewById(R.id.edtSearch);
-                        ListView lvItems = (ListView) view.findViewById(R.id.lvItems);
-
-                        lvItems.setAdapter(adapter);
-
-
-                        final Dialog dialog = builderSingle.show();
-
-                        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                String strVal = adapter.getItem(position);
-                                dialog.dismiss();
-                                //replyToRia(Constants.SectionType.TYPE_TEXT, strVal);
-                                if (mCurrVarName != null) {
-                                    mDataMap.put("[~" + mCurrVarName + "]", strVal);
-
-                                    HashMap<String, String> userData = new HashMap<String, String>();
-                                    userData.put(mCurrVarName, strVal);
-
-                                    ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
-                                            mCurrNodeId, btn.getId(), btn.getButtonText(), ChatLogger.EventStatus.COMPLETED.getValue(),
-                                            btn.getButtonType(), userData, appVersion);
-                                }
-
-                                showNextNode(btn.getNextNodeId());
-                            }
-                        });
-
-                        edtSearch.addTextChangedListener(new TextWatcher() {
-                            @Override
-                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                            }
-
-                            @Override
-                            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                            }
-
-                            @Override
-                            public void afterTextChanged(Editable s) {
-                                adapter.getFilter().filter(s.toString().toLowerCase());
-                            }
-                        });
-
-                        dialog.setCancelable(false);
                     }
                 }, new com.android.volley.Response.ErrorListener() {
             @Override
@@ -1523,6 +1539,66 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         mNextNodeId = btn.getNextNodeId();
 
 
+    }
+
+    private void showListDialog(final Button btn, List<String> mAutoComplRes) {
+
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(ChatViewActivity.this,
+                R.layout.search_list_item_layout, mAutoComplRes);
+
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(ChatViewActivity.this);
+        builderSingle.setTitle(btn.getPlaceholderText());
+
+        View view = LayoutInflater.from(ChatViewActivity.this).inflate(R.layout.search_list_layout, null);
+        builderSingle.setView(view);
+
+        EditText edtSearch = (EditText) view.findViewById(R.id.edtSearch);
+        ListView lvItems = (ListView) view.findViewById(R.id.lvItems);
+
+        lvItems.setAdapter(adapter);
+
+
+        final Dialog dialog = builderSingle.show();
+
+        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String strVal = adapter.getItem(position);
+                dialog.dismiss();
+                //replyToRia(Constants.SectionType.TYPE_TEXT, strVal);
+                if (mCurrVarName != null) {
+                    mDataMap.put("[~" + mCurrVarName + "]", strVal);
+
+                    HashMap<String, String> userData = new HashMap<String, String>();
+                    userData.put(mCurrVarName, strVal);
+
+                    ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                            mCurrNodeId, btn.getId(), btn.getButtonText(), ChatLogger.EventStatus.COMPLETED.getValue(),
+                            btn.getButtonType(), userData, appVersion);
+                }
+
+                showNextNode(btn.getNextNodeId());
+            }
+        });
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                adapter.getFilter().filter(s.toString().toLowerCase());
+            }
+        });
+
+        dialog.setCancelable(false);
     }
 
     private void showTyping() {
@@ -2032,9 +2108,36 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 }
 
                 @Override
+                public void skipNode() {
+
+                    customDialogFragment.dismiss();
+
+                    if(mCurrButton!=null){
+
+                        rvButtonsContainer.setVisibility(View.INVISIBLE);
+                        cvChatInput.setVisibility(View.INVISIBLE);
+                        if (mCurrVarName != null) {
+                            mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
+                            ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                                    mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), mCurrVarName.replace("[~", "").replace("]", ""),
+                                    etChatInput.getText().toString().trim(), mCurrButton.getButtonType(), appVersion);
+                        } else {
+                            ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                                    mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), null,
+                                    null, mCurrButton.getButtonType(), appVersion);
+                        }
+                        showNextNode(mCurrButton.getNextNodeId());
+
+                        mAutoComplDataHash = null;
+                        mButtonList.clear();
+                        mButtonsAdapter.notifyDataSetChanged();
+                    }
+                }
+
+                @Override
                 public void finishActivity() {
-                    finish();
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.slide_out_right);
+                    customDialogFragment.dismiss();
+                    goBack();
                 }
             });
         }

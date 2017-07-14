@@ -32,6 +32,8 @@ public class CustomDialogFragment extends DialogFragment {
         BACK_PRESS,
         BACK_PRESS_LOGIN,
         NO_INTERNET,
+        COUNTRY_CODE,
+        COUNTRY_CODE_SKIP,
         SKIP_LOGIN,
         DEFAULT
     }
@@ -65,8 +67,8 @@ public class CustomDialogFragment extends DialogFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        getDialog().getWindow()
-                .getAttributes().windowAnimations = R.style.DialogAnimation;
+//        getDialog().getWindow()
+//                .getAttributes().windowAnimations = R.style.DialogAnimation;
     }
 
     @Override
@@ -103,6 +105,7 @@ public class CustomDialogFragment extends DialogFragment {
         TextView tvContent = (TextView) mView.findViewById(R.id.tvContent);
 
         ImageView ivHorizontalSep = (ImageView) mView.findViewById(R.id.ivHorizontalSep);
+        ImageView ivHorizontal = (ImageView) mView.findViewById(R.id.ivHorizontal);
 
         switch (from) {
             case SKIP:
@@ -147,7 +150,7 @@ public class CustomDialogFragment extends DialogFragment {
                 tvContent.setText(getActivity().getString(R.string.edit_content));
                 tvNegative.setText(getActivity().getString(R.string.yes_i_want_to_make_changes));
                 tvPositive.setText(getActivity().getString(R.string.no_i_dont_want_to_change_details));
-                setCancelable(true);
+                setCancelable(false);
 
                 llPositive.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -176,7 +179,7 @@ public class CustomDialogFragment extends DialogFragment {
                 tvContent.setText(getActivity().getString(R.string.all_the_information_you_entered_will_be_lost));
                 tvNeg.setText(getActivity().getString(R.string.thats_okay));
                 tvPos.setText(getActivity().getString(R.string.cancel));
-                setCancelable(true);
+                setCancelable(false);
 
                 llPos.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -202,16 +205,16 @@ public class CustomDialogFragment extends DialogFragment {
 
                 ivHorizontalSep.setVisibility(View.VISIBLE);
 
-                tvTitle.setText(getActivity().getString(R.string.sad_to_see_you_go));
+                tvTitle.setText(getActivity().getString(R.string.leave_or_login));
                 tvContent.setText(getActivity().getString(R.string.your_website_has_been_created_through));
-                tvNeg.setText(getActivity().getString(R.string.login));
-                tvPos.setText(getActivity().getString(R.string.cancel));
-                setCancelable(true);
+                tvNeg.setText(getActivity().getString(R.string.leave));
+                tvPos.setText(getActivity().getString(R.string.login));
+                setCancelable(false);
 
                 llPos.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mResultListener.dismissPopup();
+                        mResultListener.navigateToHome();
                     }
                 });
 
@@ -233,10 +236,11 @@ public class CustomDialogFragment extends DialogFragment {
                 ivHorizontalSep.setVisibility(View.VISIBLE);
 
                 tvTitle.setText(getActivity().getString(R.string.cant_wait_to_see_your_dashboard));
+                tvTitle.setVisibility(View.INVISIBLE);
                 tvContent.setText(getActivity().getString(R.string.since_you_are_eager_to_manage));
-                tvNeg.setText(getActivity().getString(R.string.login));
-                tvPos.setText(getActivity().getString(R.string.cancel));
-                setCancelable(true);
+                tvNeg.setText(getActivity().getString(R.string.skip_login));
+                tvPos.setText(getActivity().getString(R.string.continue_chat));
+                setCancelable(false);
 
                 llPos.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -249,6 +253,72 @@ public class CustomDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         mResultListener.navigateToHome();
+
+                    }
+                });
+
+
+                break;
+            case COUNTRY_CODE:
+
+                llHorizontal.setVisibility(View.VISIBLE);
+                llVertical.setVisibility(View.GONE);
+
+                ivHorizontalSep.setVisibility(View.VISIBLE);
+
+                tvTitle.setText(getActivity().getString(R.string.change_country_code));
+                tvContent.setText(getActivity().getString(R.string.country_code_msg));
+                tvNeg.setText(getActivity().getString(R.string.skip));
+
+                llNeg.setVisibility(View.GONE);
+                tvPos.setText(getActivity().getString(R.string.okay));
+                setCancelable(false);
+
+                llNegative.setVisibility(View.GONE);
+                ivHorizontal.setVisibility(View.GONE);
+
+                llPos.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mResultListener.dismissPopup();
+                    }
+                });
+
+                llNeg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mResultListener.dismissPopup();
+
+                    }
+                });
+
+
+                break;
+            case COUNTRY_CODE_SKIP:
+
+                llHorizontal.setVisibility(View.VISIBLE);
+                llVertical.setVisibility(View.GONE);
+
+                ivHorizontalSep.setVisibility(View.VISIBLE);
+
+                tvTitle.setText(getActivity().getString(R.string.change_country_code));
+                tvContent.setText(getActivity().getString(R.string.country_code_msg));
+                tvNeg.setText(getActivity().getString(R.string.skip));
+                tvNeg.setAllCaps(false);
+                tvPos.setText(getActivity().getString(R.string.continue_details));
+                setCancelable(false);
+
+                llPos.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mResultListener.dismissPopup();
+                    }
+                });
+
+                llNeg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mResultListener.skipNode();
 
                     }
                 });
@@ -277,6 +347,8 @@ public class CustomDialogFragment extends DialogFragment {
         void navigateToHome();
 
         void dismissPopup();
+
+        void skipNode();
 
         void finishActivity();
     }

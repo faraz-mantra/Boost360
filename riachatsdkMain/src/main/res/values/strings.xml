@@ -3,7 +3,10 @@
     <string name="please_wait">Please Wait...</string>
     <string name="street_address">Street Address 1</string>
     <string name="loc_city">City</string>
-    <string name="login">Login</string>
+    <string name="continue_chat">Continue Chat</string>
+    <string name="continue_details">Continue</string>
+    <string name="skip_login">Skip &amp; Login</string>
+    <string name="take_me_back">Take me back</string>
     <string name="loc_country">Country</string>
     <string name="loc_pincode">PIN Code/ZIP</string>
     <string name="empty_address_warn">Address can\'t be empty</string>
@@ -46,6 +49,7 @@
 
     <string name="sure_lets_go">Sure, let\'s go</string>
     <string name="ok">OK</string>
+    <string name="okay">Okay</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
@@ -59,12 +63,17 @@ so I am going to shift all the information you have shared with me to a manual f
     <string name="edit_title">Are you looking to edit this \n information?</string>
 
     <string name="looking_to_go_back">Looking to go back?</string>
+    <string name="alert">Alert</string>
+    <string name="you_will_lose_info">You will lose all the information you have entered so far.</string>
     <string name="sad_to_see_you_go">Sad to see you go :(</string>
     <string name="cant_wait_to_see_your_dashboard">Can\'t wait to see your Dashboard?</string>
-    <string name="since_you_are_eager_to_manage">Since you are eager to manage your website from your dashboard,
-        click on Login</string>
-    <string name="your_website_has_been_created_through">Your website has been create though!
-        I have sent the login credentials on your email as well.</string>
+    <string name="change_country_code">Unfortunately you cannot change the country code from here.</string>
+    <string name="country_code_msg">Skip the step for now, and send us your desired alternate number from “Need Help?” in the app\'s Settings section.</string>
+    <string name="since_you_are_eager_to_manage">I recommend you complete this chat, as it will improve the quality of your website. You can login at any point.</string>
+    <string name="your_website_has_been_created_through">Your website is up and running. You can simply login to the app and check it out.</string>
+    <string name="leave_or_login">Leave or Login?</string>
+    <string name="leave">Leave</string>
+    <string name="login">Login</string>
     <string name="all_the_information_you_entered_will_be_lost">The information you have entered so far will be lost if you press the back button.</string>
     <string name="thats_okay">That\'s okay</string>
     <string name="cancel">Cancel</string>

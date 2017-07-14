@@ -107,10 +107,17 @@
             android:textSize="@dimen/llarge_text_size" />
 
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginBottom="@dimen/margin_15"
+            android:layout_marginTop="@dimen/margin_15"
+            android:background="@color/light_gray" />
+
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_15"
             android:fontFamily="sans-serif"
             android:text="@string/webiste_url"
             android:textAllCaps="true"
