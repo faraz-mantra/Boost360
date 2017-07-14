@@ -326,6 +326,9 @@ public class Methods {
 
     public static String getFormattedDate(String Sdate) {
         String formatted = "",dateTime = "";
+        if(TextUtils.isEmpty(Sdate)){
+            return "";
+        }
         if(Sdate.contains("/Date")){
             Sdate = Sdate.replace("/Date(", "").replace(")/", "");
         }

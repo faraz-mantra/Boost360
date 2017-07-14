@@ -78,7 +78,7 @@ public class VmnCall_v2Adapter extends RecyclerView.Adapter<VmnCall_v2Adapter.My
     }
 
     @Override
-    public void onBindViewHolder(final MyHolder holder, final int position) {
+    public void onBindViewHolder(final MyHolder holder, int position) {
         if(holder == null){
             return;
         }
@@ -105,7 +105,7 @@ public class VmnCall_v2Adapter extends RecyclerView.Adapter<VmnCall_v2Adapter.My
                     @Override
                     public void onClick(View v) {
                         if (((TextView) v).getText().toString().equalsIgnoreCase("play")) {
-                            currentPlay = position;
+                            currentPlay = holder.getAdapterPosition();
                             holder.play.setTextColor(ContextCompat.getColor(mContext, R.color.gray_transparent));
                             connectToVmn = new ConnectToVmnPlayer(childModel);
 //                        connectToVmn.setData(childModel);

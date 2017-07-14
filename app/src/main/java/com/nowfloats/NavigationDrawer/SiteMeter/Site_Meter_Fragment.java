@@ -485,22 +485,24 @@ public class Site_Meter_Fragment extends Fragment {
                 break;
             case domain:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_GET_YOUR_OWN_IDENTITY, null);
-              /*  MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
-                        .title("Get A Domain")
-                        .customView(R.layout.dialog_link_layout,false)
-                        .positiveText(getString(R.string.ok))
-                        .positiveColorRes(R.color.primaryColor)
-                        .callback(new MaterialDialog.ButtonCallback() {
-                            @Override
-                            public void onPositive(MaterialDialog dialog) {
-                                super.onPositive(dialog);
-                            }
+                if(!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+                    MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
+                            .title("Get A Domain")
+                            .customView(R.layout.dialog_link_layout, false)
+                            .positiveText(getString(R.string.ok))
+                            .positiveColorRes(R.color.primaryColor)
+                            .callback(new MaterialDialog.ButtonCallback() {
+                                @Override
+                                public void onPositive(MaterialDialog dialog) {
+                                    super.onPositive(dialog);
+                                }
 
-                        });
-                if(!activity.isFinishing()) {
-                    builder.show();
-                }*/
-                if (Utils.isNetworkConnected(getActivity())) {
+                            });
+                    if (!activity.isFinishing()) {
+                        builder.show();
+                    }
+                }
+                else if (Utils.isNetworkConnected(getActivity())) {
                     showLoader(getString(R.string.please_wait));
                     domainApiService.getDomainDetails(session.getFpTag(), getDomainDetailsParam());
                 } else {
@@ -691,7 +693,7 @@ public class Site_Meter_Fragment extends Fragment {
                             Methods.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
                             getString(R.string.ok), null, DialogFrom.CONTACTS_AND_EMAIL_REQUIRED);
 
-                } else if (get_fp_details_model.getCategory() == null) {
+                } else if (get_fp_details_model.getCategory() == null || get_fp_details_model.getCategory().size() == 0 ) {
                     showCustomDialog(getString(R.string.domain_detail_required),
                             Methods.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
                             getString(R.string.ok), null, DialogFrom.CATEGORY_REQUIRED);
@@ -1055,7 +1057,7 @@ public class Site_Meter_Fragment extends Fragment {
         hashMap.put("lng", get_fp_details_model.getLng());
         hashMap.put("phoneISDCode", get_fp_details_model.getCountryPhoneCode());
         if (get_fp_details_model.getCategory() != null && get_fp_details_model.getCategory().size() > 0)
-            hashMap.put("primaryCategory", get_fp_details_model.getCategory().get(0));
+            hashMap.put("primaryCategory", get_fp_details_model.getCategory().get(0).getKey());
         else
             hashMap.put("primaryCategory", "");
         hashMap.put("primaryNumber", get_fp_details_model.getPrimaryNumber());

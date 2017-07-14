@@ -719,11 +719,11 @@ public class Image_Gallery_Fragment extends Fragment implements
             }
         });
         if (grid != null) {
+            grid.invalidateViews();
             if (gridViewAdapter != null)
                 gridViewAdapter.notifyDataSetChanged();
             if (emptyGalleryLayout != null)
                 emptyGalleryLayout.setVisibility(View.GONE);
-            grid.invalidateViews();
             // grid.setAdapter(gridViewAdapter);
             //  grid.invalidate();
 

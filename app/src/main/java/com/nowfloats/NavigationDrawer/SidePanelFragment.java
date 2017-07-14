@@ -256,11 +256,12 @@ public class SidePanelFragment extends Fragment {
 
         String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
         String normalURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getActivity().getResources().getString(R.string.tag_for_partners);
-        if (rootAlisasURI != null && !rootAlisasURI.equals("null") && rootAlisasURI.trim().length() > 0)
+        if (rootAlisasURI != null && !rootAlisasURI.equals("null") && rootAlisasURI.trim().length() > 0) {
             fpNameTextView.setText(Methods.fromHtml("<u>" + rootAlisasURI + "</u>"));
-        else
+        }
+        else {
             fpNameTextView.setText(Methods.fromHtml("<u>" + normalURI + "</u>"));
-
+        }
         fpNameTextView.setTypeface(robotoMedium);
         fpNameTextView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -165,12 +165,12 @@ public final class UploadPictureAsyncTask extends AsyncTask<Void, String, String
 //        Toast.makeText(appContext,"Success  "+result,Toast.LENGTH_SHORT).show();
         if (!TextUtils.isEmpty(result) && result.equals("true")) {
             Methods.showSnackBarPositive(appContext, appContext.getString(R.string.image_successfully_apdated));
-            if (pd.isShowing()) {
+            if (appContext != null && !appContext.isFinishing() && pd.isShowing()) {
                 pd.dismiss();
             }
         } else {
             Methods.showSnackBarNegative(appContext, appContext.getString(R.string.can_not_upload_image));
-            if (pd.isShowing()) {
+            if (appContext != null && !appContext.isFinishing() && pd.isShowing()) {
                 pd.dismiss();
             }
         }

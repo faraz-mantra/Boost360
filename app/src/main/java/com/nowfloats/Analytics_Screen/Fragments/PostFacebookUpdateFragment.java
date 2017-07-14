@@ -71,7 +71,7 @@ public class PostFacebookUpdateFragment extends Fragment {
             socialTypeText2 = "Quikr";
             socialTypeText1 = "Quikr account";
         }
-        String text = "Looks like you haven\'t posted any update on your "+socialTypeText1+" through Boost yet Make sure you select the <b>"+socialTypeText2+" option</b> while creating an update";
+        String text = "Looks like you haven\'t posted any update on your "+socialTypeText1+" through "+ getString(R.string.app_name)+" yet Make sure you select the <b>"+socialTypeText2+" option</b> while creating an update";
         message.setText(Methods.fromHtml(text));
 
         if(!isAdded()) return;
@@ -84,7 +84,7 @@ public class PostFacebookUpdateFragment extends Fragment {
                 String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
                 if(TextUtils.isEmpty(paymentState) || TextUtils.isEmpty(paymentLevel)){
 
-                }else if(Integer.valueOf(paymentState)>0 && Integer.valueOf(paymentLevel)>=10 ){
+                }else if(Integer.valueOf(paymentState)>=0){
                     Intent i = new Intent(context, Create_Message_Activity.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

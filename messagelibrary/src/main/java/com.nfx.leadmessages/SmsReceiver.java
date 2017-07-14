@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static android.content.Context.POWER_SERVICE;
+import static android.content.Context.POWER_SERVICE;
 
 /**
  * Created by Admin on 01-02-2017.

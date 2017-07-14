@@ -56,7 +56,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import static com.nowfloats.accessbility.BubbleDialog.ACTION_KILL_DIALOG;
 import static com.nowfloats.accessbility.BubbleDialog.ACTION_RESET_BUBBLE;
 
 
@@ -175,6 +174,9 @@ public class BubblesService extends Service {
     private boolean isDialogShowing() {
         ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+        if(taskInfo == null || taskInfo.isEmpty()){
+            return false;
+        }
         ComponentName componentInfo = taskInfo.get(0).topActivity;
         componentInfo.getPackageName();
         //Log.v("gggg",componentInfo.getClassName());

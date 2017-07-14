@@ -770,18 +770,16 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
         }
     }
     public String getRealPathFromURI(Uri contentUri) {
-        try{
-            String[] proj = { MediaStore.Images.Media.DATA };
-            Cursor cursor = managedQuery(contentUri, proj, null, null, null);
-            if(cursor == null) return null;
+
+        String val = null;
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        if(cursor != null && cursor.moveToFirst()) {
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            String val = cursor.getString(column_index);
+            val = cursor.getString(column_index);
             cursor.close();
-            return val;
-        }catch (Exception e) {
         }
-        return null;
+        return val;
     }
     public void choosePicture() {
         final MaterialDialog dialog = new MaterialDialog.Builder(activity)

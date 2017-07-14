@@ -2,9 +2,11 @@ package com.nowfloats.NavigationDrawer;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -41,14 +43,16 @@ public class Mobile_Site_Activity extends AppCompatActivity {
         if (extras != null) {
             url = extras.getString("WEBSITE_NAME");
         }
-        TextView tvClose = (TextView)findViewById(R.id.close_web);
-        /*TextView close = (TextView)findViewById(R.id.close_web);
+
+        TextView close = (TextView)findViewById(R.id.close_web);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(browserIntent);
             }
-        });*/
+        });
 
         ImageView back = (ImageView)findViewById(R.id.back_web);
         back.setColorFilter(whiteLabelFilter);

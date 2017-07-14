@@ -403,11 +403,11 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             }
 
             double totalTax = 0;
-
-            for(TaxDetail taxData : StoreDataActivity.product.Taxes/*taxes*/){
-                totalTax+=taxData.getValue();
+            if(StoreDataActivity.product.Taxes != null) {
+                for (TaxDetail taxData : StoreDataActivity.product.Taxes/*taxes*/) {
+                    totalTax += taxData.getValue();
+                }
             }
-
             purchaseDetail.setBasePrice(Double.parseDouble(StoreDataActivity.product.Price));
             purchaseDetail.setClientId(clientId);
             purchaseDetail.setDurationInMnths(StoreDataActivity.product.ValidityInMths);

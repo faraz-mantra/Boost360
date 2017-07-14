@@ -236,7 +236,7 @@ public class MonthFragment extends Fragment {
            }
            calendar.add(Calendar.DATE,1);
        }
-       if(end == -1){
+       if(end == -1 && data.length>0){
            shortArray[data.length-1]=getResources().getStringArray(R.array.months)[month-1]+"("+start+"-"+lastDay+")";
            //Log.v("ggg",start+" end "+end);
        }

@@ -28,7 +28,8 @@
                 android:hint="@string/write_page_title"
                 android:textColorHint="#d1d1d1"
                 android:textSize="14dp"
-                android:singleLine="true"
+                android:maxLines="1"
+                android:inputType="textCapWords"
                 android:background="@null"
                 fontPath = "Roboto-Medium.ttf"
                 tools:ignore="MissingPrefix" />

@@ -1387,7 +1387,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     @Override
     public void onClick(final String nextScreen) {
         Methods.isOnline(HomeActivity.this);
-        mDrawerLayout.closeDrawer(Gravity.LEFT);
+        mDrawerLayout.closeDrawer(Gravity.START);
         shareButton.setVisibility(View.GONE);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -1461,7 +1461,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 }else  if(nextScreen.equals(getString(R.string.call)))
                 {
                     String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-                    if(paymentState==null || paymentState.equals("-1")|| paymentState.equals("0")) {
+                    if(!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")||paymentState==null || paymentState.equals("-1")|| paymentState.equals("0")) {
                         Intent call = new Intent(Intent.ACTION_DIAL);
                         String callString = "tel:" + getString(R.string.contact_us_number);
                         call.setData(Uri.parse(callString));

@@ -40,7 +40,7 @@ public interface DomainInterface {
     @PUT("/DomainService/v1/domainWithWebsite/create")
     public void buyDomain(@Body Map<String,String> bodyMap, Callback<String> callback);
 
-    @GET("/Discover/v2/floatingPoint/nf-app/{fpid}")
+    @GET("/Discover/v3/floatingPoint/nf-app/{fpid}")
     public void getFPDetails(@Path("fpid") String fpid,@QueryMap Map<String,String> map, Callback<Get_FP_Details_Model> callback);
 
 }

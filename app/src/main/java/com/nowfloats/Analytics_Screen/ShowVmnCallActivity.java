@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -46,11 +47,12 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCall_v2
     RecyclerView mRecyclerView;
     UserSessionManager sessionManager;
     LinearLayoutManager linearLayoutManager;
-    private int offset = 1;
+    private int offset = 0;
     VmnCall_v2Adapter vmnCallAdapter;
     ArrayList<VmnCallModel> headerList = new ArrayList<>();
     boolean stopApiCall;
     ProgressBar progressBar;
+    LinearLayout emptyLayout;
     Button loadButton;
 
     @Override
@@ -63,6 +65,7 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCall_v2
 
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_list);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
+        emptyLayout = (LinearLayout) findViewById(R.id.emplty_layout);
         loadButton = (Button) findViewById(R.id.btn_load);
         loadButton.setOnClickListener(this);
 
@@ -115,6 +118,9 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCall_v2
                     stopApiCall = false;
                 }
                 saveWithViewType(vmnCallModels);
+
+                emptyLayout.setVisibility(headerList.size() == 0? View.VISIBLE:View.GONE);
+
                 if(size != 0) {
                     offset += 10;
                 }

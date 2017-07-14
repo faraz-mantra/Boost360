@@ -51,7 +51,6 @@ import com.nowfloats.Analytics_Screen.SearchRankingActivity;
 import com.nowfloats.Analytics_Screen.SocialAnalytics;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
-import com.nowfloats.Analytics_Screen.VmnDataSingleton;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.CustomWidget.VerticalTextView;
 import com.nowfloats.Login.UserSessionManager;
@@ -119,7 +118,6 @@ public class Analytics_Fragment extends Fragment {
     @Override
     public void onResume() {
 
-        VmnDataSingleton.getInstance().setVmnDataNull();
         //Log.d("FCM Token", FirebaseInstanceId.getInstance().getToken());
         getFPDetails(getActivity(), session.getFPID(), Constants.clientId, bus);
 
