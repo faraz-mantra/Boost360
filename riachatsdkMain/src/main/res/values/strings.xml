@@ -3,6 +3,7 @@
     <string name="please_wait">Please Wait...</string>
     <string name="street_address">Street Address 1</string>
     <string name="loc_city">City</string>
+    <string name="login">Login</string>
     <string name="loc_country">Country</string>
     <string name="loc_pincode">PIN Code/ZIP</string>
     <string name="empty_address_warn">Address can\'t be empty</string>
@@ -35,6 +36,7 @@
     <string name="skip">SKIP</string>
     <string name="done">DONE</string>
     <string name="create_my_site">CREATE MY SITE</string>
+    <string name="create_my_website">CREATE MY WEBSITE</string>
     <string name="locate_on_map">LOCATE ON MAP</string>
 
     <string name="settings_tou_url">https://nowfloats.com/tnc/</string>
@@ -57,9 +59,15 @@ so I am going to shift all the information you have shared with me to a manual f
     <string name="edit_title">Are you looking to edit this \n information?</string>
 
     <string name="looking_to_go_back">Looking to go back?</string>
-    <string name="all_the_information_you_entered_will_be_lost">All the information you entered will be lost.</string>
+    <string name="sad_to_see_you_go">Sad to see you go :(</string>
+    <string name="cant_wait_to_see_your_dashboard">Can\'t wait to see your Dashboard?</string>
+    <string name="since_you_are_eager_to_manage">Since you are eager to manage your website from your dashboard,
+        click on Login</string>
+    <string name="your_website_has_been_created_through">Your website has been create though!
+        I have sent the login credentials on your email as well.</string>
+    <string name="all_the_information_you_entered_will_be_lost">The information you have entered so far will be lost if you press the back button.</string>
     <string name="thats_okay">That\'s okay</string>
-    <string name="cencel">Cancel</string>
+    <string name="cancel">Cancel</string>
 
     <string name="cannot_reach_network">Can\'t reach network.</string>
     <string name="cannot_reach_network_msg">Looks like your internet connection is switched off. Please check your network settings and try again.</string>

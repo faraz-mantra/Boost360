@@ -146,7 +146,7 @@
         android:layout_marginTop="@dimen/margin_10"
         android:background="@drawable/done_button_bg"
         android:fontFamily="sans-serif"
-        android:text="@string/create_my_site"
+        android:text="@string/create_my_website"
         android:textColor="@color/white"
         android:textSize="18sp" />
 

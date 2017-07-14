@@ -175,7 +175,7 @@
                     android:layout_marginBottom="18dp"
                     android:src="@drawable/add_marker" />
 
-                <TextView
+                <ImageView
                     android:id="@+id/tvTip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -183,8 +183,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="@dimen/margin_10"
                     android:background="@drawable/ic_map_tool_tip"
-                    android:textStyle="italic"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
             </RelativeLayout>
 
             <TextView

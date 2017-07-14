@@ -34,6 +34,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -72,7 +73,9 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
     private AutoCompleteTextView etCity;
 
-    private TextView tvAddress, tvTip;
+    private TextView tvAddress;
+
+    private ImageView tvTip;
 
     private LinearLayout llManual, llUseGPS;
 
@@ -204,7 +207,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         etHousePlotNum = (TextInputEditText) v.findViewById(R.id.et_house_plot_num);
         etLandmark = (TextInputEditText) v.findViewById(R.id.et_landmark);
         tvAddress = (TextView) v.findViewById(R.id.tvAddress);
-        tvTip = (TextView) v.findViewById(R.id.tvTip);
+        tvTip = (ImageView) v.findViewById(R.id.tvTip);
         rlMapContainer = (RelativeLayout) v.findViewById(R.id.mapFragment);
 
         populateData();
@@ -271,7 +274,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                                             }
                                         });
                                     }
-                                }, 1000);
+                                }, 3000);
 
 //                                Toast.makeText(getActivity(),getString(R.string.you_can_move_pinch_zoom_map_to_exact_location),Toast.LENGTH_LONG).show();
                             }
@@ -547,7 +550,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
             etHousePlotNum.setSupportBackgroundTintList(errorColorStateList);
         }
 
-        if(!isAllFieldsValid){
+        if (!isAllFieldsValid) {
             Toast.makeText(getActivity(), "Please enter mandatory fields.", Toast.LENGTH_SHORT).show();
         }
         return isAllFieldsValid;

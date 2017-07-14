@@ -37,7 +37,7 @@
             android:background="@drawable/yellow_white_btn_cwhite_bg"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:padding="@dimen/margin_17">
+            android:padding="@dimen/margin_19">
 
             <ImageView
                 android:id="@+id/create_img"
@@ -55,6 +55,7 @@
                 android:gravity="center"
                 android:text="@string/create_website"
                 android:textAllCaps="true"
+                android:fontFamily="sans-serif-medium"
                 android:textColor="@color/primary"
                 android:textSize="@dimen/medium_text_size"
                 tools:ignore="MissingPrefix" />
@@ -64,11 +65,11 @@
             android:id="@+id/llLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_20"
+            android:layout_marginTop="@dimen/margin_30"
             android:background="@drawable/yellow_btn_cwhite_bg"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:padding="@dimen/margin_17">
+            android:padding="@dimen/margin_19">
 
             <ImageView
                 android:layout_width="@dimen/margin_20"
@@ -83,7 +84,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="8dp"
                 android:gravity="center"
-                android:text="@string/login"
+                android:fontFamily="sans-serif-medium"
+                android:text="LOGIN    "
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="@dimen/medium_text_size"
