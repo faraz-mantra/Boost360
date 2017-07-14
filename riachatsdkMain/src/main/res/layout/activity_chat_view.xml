@@ -85,17 +85,19 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <ProgressBar
-            android:id="@+id/progress"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginTop="48dip"
-            android:indeterminate="true"
-            android:minHeight="20dp"
-            android:visibility="gone" />
     </FrameLayout>
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="-10dp"
+        android:foregroundGravity="center_vertical"
+        android:indeterminate="true"
+        android:minHeight="@dimen/margin_15"
+        android:visibility="invisible" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -211,13 +213,13 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="10dp"
-                    android:layout_marginStart="@dimen/margin_10"
                     android:layout_marginRight="5dp"
+                    android:layout_marginStart="@dimen/margin_10"
                     android:background="@drawable/send_btn_bg"
-                    android:paddingBottom="10dp"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="12dp"
-                    android:paddingTop="10dp"
+                    android:paddingBottom="@dimen/margin_5"
+                    android:paddingLeft="@dimen/margin_5"
+                    android:paddingRight="@dimen/margin_10"
+                    android:paddingTop="@dimen/margin_5"
                     android:src="@drawable/ic_send_message_btn" />
             </LinearLayout>
         </LinearLayout>

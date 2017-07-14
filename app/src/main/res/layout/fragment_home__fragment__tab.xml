@@ -26,23 +26,23 @@
      </com.nowfloats.com.thinksity.PagerSlidingTabStrip>  <! -->
 
     <LinearLayout
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
 
         <com.nowfloats.NavigationDrawer.SlidingTabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/primaryColor"/>
+            android:background="@color/primaryColor" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/homeTabViewpager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_gravity="top"
             android:layout_marginTop="1dp"
             android:layout_weight="1"
-            android:layout_gravity="top"
             android:background="@android:color/transparent" />
 
     </LinearLayout>
@@ -50,42 +50,46 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:padding="6dp"
         android:layout_marginRight="8dp"
-        android:gravity="right|top">
+        android:gravity="right|top"
+        android:padding="6dp">
+
         <TextView
             android:id="@+id/alert_count_textview"
+            fontPath="Roboto-Bold.ttf"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:background="@drawable/alert_count_bg"
+            android:gravity="center"
             android:padding="2dp"
             android:text=""
-            android:gravity="center"
+            android:textColor="@color/white"
             android:textSize="10sp"
             android:visibility="gone"
-            android:textColor="@color/white"
-            fontPath="Roboto-Bold.ttf"
             tools:ignore="MissingPrefix" />
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/progress_layout"
-        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:visibility="gone"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
         <ProgressBar
+            android:id="@+id/visits_progressBar"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/visits_progressBar" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/floating_bubble_overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/floating_bubble_overlay"
-        android:visibility="gone"
         android:background="@android:color/transparent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
     </LinearLayout>
 </FrameLayout>

@@ -22,7 +22,7 @@
             android:id="@+id/tv_confirmation_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
@@ -34,7 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/margin_35"
+            android:layout_marginTop="@dimen/margin_15"
+            android:paddingBottom="@dimen/margin_40"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="13dp">
@@ -69,6 +70,7 @@
 
 
         <LinearLayout
+            android:splitMotionEvents="false"
             android:id="@+id/llConfirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

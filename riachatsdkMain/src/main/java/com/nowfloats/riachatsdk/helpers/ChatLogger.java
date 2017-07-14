@@ -46,13 +46,14 @@ public class ChatLogger {
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
-    public void logViewEvent(String deviceId, String NodeId) {
+    public void logViewEvent(String deviceId, String NodeId, String appVersion) {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         df.setTimeZone(TimeZone.getTimeZone("UTC"));
         ChatEventModel Event = new ChatEventModel()
                 .setEventCategory("RIA_ONBOARDING_CHAT")
                 .setEventChannel("APP_ANDR")
                 .setEventName("VIEW")
+                .setAppVersion(appVersion)
                 .setEventDateTime(System.currentTimeMillis() / 1000)
                 .setDeviceId(deviceId)
                 .setNodeId(NodeId);
@@ -61,7 +62,9 @@ public class ChatLogger {
 
     }
 
-    public void logClickEvent(String deviceId, String NodeId, String buttonId, String buttonLabel, String varName, String varValue, String buttonType) {
+    public void logClickEvent(String deviceId, String NodeId, String buttonId,
+                              String buttonLabel, String varName, String varValue, String buttonType,String appVersion) {
+
         DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
         df.setTimeZone(TimeZone.getTimeZone("UTC"));
         HashMap<String, String> EventData = new HashMap<>();
@@ -77,6 +80,7 @@ public class ChatLogger {
                     .setEventDateTime(System.currentTimeMillis() / 1000)
                     .setDeviceId(deviceId)
                     .setNodeId(NodeId)
+                    .setAppVersion(appVersion)
                     .setEventData(EventData);
         } else {
             HashMap<String, String> UserData = new HashMap<>();
@@ -88,6 +92,7 @@ public class ChatLogger {
                     .setEventDateTime(System.currentTimeMillis() / 1000)
                     .setDeviceId(deviceId)
                     .setNodeId(NodeId)
+                    .setAppVersion(appVersion)
                     .setEventData(EventData)
                     .setUserData(UserData);
 
@@ -97,7 +102,7 @@ public class ChatLogger {
     }
 
     public void logPostEvent(String deviceId, String NodeId, String buttonId, String buttonLabel,
-                             int status, String buttonType, HashMap<String, String> UserData) {
+                             int status, String buttonType, HashMap<String, String> UserData,String appVersion) {
         if (status == EventStatus.COMPLETED.getValue()) {
             lastEventStatus = true;
         } else {
@@ -121,6 +126,7 @@ public class ChatLogger {
                     .setEventDateTime(System.currentTimeMillis() / 1000)
                     .setDeviceId(deviceId)
                     .setNodeId(NodeId)
+                    .setAppVersion(appVersion)
                     .setEventData(EventData)
                     .setUserData(UserData);
         } else {
@@ -132,6 +138,7 @@ public class ChatLogger {
                     .setEventDateTime(System.currentTimeMillis() / 1000)
                     .setDeviceId(deviceId)
                     .setNodeId(NodeId)
+                    .setAppVersion(appVersion)
                     .setEventData(EventData);
         }
 

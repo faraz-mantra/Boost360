@@ -12,6 +12,7 @@ public class ChatEventModel {
     public String DeviceId;
     public String EventChannel = "APP_ANDR";
     public String EventName;
+    public String AppVersion;
     public String NodeId;
     public HashMap<String, String> EventData;
     public HashMap<String, String> UserData;
@@ -38,6 +39,11 @@ public class ChatEventModel {
 
     public ChatEventModel setEventName(String eventName) {
         EventName = eventName;
+        return this;
+    }
+
+    public ChatEventModel setAppVersion(String appVersion) {
+        AppVersion = appVersion;
         return this;
     }
 

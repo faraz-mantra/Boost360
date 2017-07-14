@@ -78,6 +78,8 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
+    private int MAX_CARD_COUNT = 6;
+
     private List<Section> mChatSections;
     private Map<String, String> mDataMap;
     private Context mContext;
@@ -194,8 +196,14 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 section.setIsAnimApplied(true);
             }
 
+            if (section.getCardPos() > MAX_CARD_COUNT) {
+                cardViewHolder.llCardPos.setVisibility(View.GONE);
+            } else {
+                cardViewHolder.llCardPos.setVisibility(View.VISIBLE);
+            }
+
             cardViewHolder.tvCurrentPos.setText(section.getCardPos() + "");
-            cardViewHolder.tvTotalCount.setText("6");
+            cardViewHolder.tvTotalCount.setText(""+MAX_CARD_COUNT);
 
             /*((LinearLayout) cardViewHolder.itemView).setGravity(Gravity.RIGHT);
             LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) cardViewHolder.llBubbleContainer.getLayoutParams();
@@ -431,8 +439,12 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             formViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((ChatViewActivity) mContext).showCustomDialog(
-                            CustomDialogFragment.DialogFrom.CREATE_MY_SITE);
+
+                    if (!section.isAnimApplied()) {
+
+                        ((ChatViewActivity) mContext).showCustomDialog(
+                                CustomDialogFragment.DialogFrom.CREATE_MY_SITE);
+                    }
                 }
             });
 
@@ -842,7 +854,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         TextView tvConfirmationText, tvDateTime, tvConfirmedHintText, tvConfirmSubText, tvTotalCount, tvCurrentPos;
         View itemView;
-        LinearLayout llBubbleContainer;
+        LinearLayout llBubbleContainer, llCardPos;
 
         public CardViewHolder(View itemView) {
             super(itemView);
@@ -856,6 +868,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             this.tvTotalCount = (TextView) itemView.findViewById(R.id.tvTotalCount);
             this.tvDateTime = (TextView) itemView.findViewById(R.id.tv_date_time);
             this.llBubbleContainer = (LinearLayout) itemView.findViewById(R.id.ll_bubble_container);
+            this.llCardPos = (LinearLayout) itemView.findViewById(R.id.llCardPos);
         }
     }
 

@@ -30,7 +30,9 @@ public class CustomDialogFragment extends DialogFragment {
         CREATE_MY_SITE,
         SKIP,
         BACK_PRESS,
+        BACK_PRESS_LOGIN,
         NO_INTERNET,
+        SKIP_LOGIN,
         DEFAULT
     }
 
@@ -173,7 +175,7 @@ public class CustomDialogFragment extends DialogFragment {
                 tvTitle.setText(getActivity().getString(R.string.looking_to_go_back));
                 tvContent.setText(getActivity().getString(R.string.all_the_information_you_entered_will_be_lost));
                 tvNeg.setText(getActivity().getString(R.string.thats_okay));
-                tvPos.setText(getActivity().getString(R.string.cencel));
+                tvPos.setText(getActivity().getString(R.string.cancel));
                 setCancelable(true);
 
                 llPos.setOnClickListener(new View.OnClickListener() {
@@ -187,6 +189,66 @@ public class CustomDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         mResultListener.finishActivity();
+
+                    }
+                });
+
+
+                break;
+            case BACK_PRESS_LOGIN:
+
+                llHorizontal.setVisibility(View.VISIBLE);
+                llVertical.setVisibility(View.GONE);
+
+                ivHorizontalSep.setVisibility(View.VISIBLE);
+
+                tvTitle.setText(getActivity().getString(R.string.sad_to_see_you_go));
+                tvContent.setText(getActivity().getString(R.string.your_website_has_been_created_through));
+                tvNeg.setText(getActivity().getString(R.string.login));
+                tvPos.setText(getActivity().getString(R.string.cancel));
+                setCancelable(true);
+
+                llPos.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mResultListener.dismissPopup();
+                    }
+                });
+
+                llNeg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mResultListener.finishActivity();
+
+                    }
+                });
+
+
+                break;
+            case SKIP_LOGIN:
+
+                llHorizontal.setVisibility(View.VISIBLE);
+                llVertical.setVisibility(View.GONE);
+
+                ivHorizontalSep.setVisibility(View.VISIBLE);
+
+                tvTitle.setText(getActivity().getString(R.string.cant_wait_to_see_your_dashboard));
+                tvContent.setText(getActivity().getString(R.string.since_you_are_eager_to_manage));
+                tvNeg.setText(getActivity().getString(R.string.login));
+                tvPos.setText(getActivity().getString(R.string.cancel));
+                setCancelable(true);
+
+                llPos.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mResultListener.dismissPopup();
+                    }
+                });
+
+                llNeg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mResultListener.navigateToHome();
 
                     }
                 });
@@ -211,6 +273,8 @@ public class CustomDialogFragment extends DialogFragment {
 
     public interface OnResultReceive {
         void createmysite();
+
+        void navigateToHome();
 
         void dismissPopup();
 
