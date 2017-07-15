@@ -204,5 +204,6 @@
     <orderEntry type="library" exported="" name="firebase-crash-9.8.0" level="project" />
     <orderEntry type="module" module-name="ZoomImageLibrary" exported="" />
     <orderEntry type="library" exported="" name="android-android-25" level="project" />
+    <orderEntry type="library" exported="" name="ZoomImageLibrary-1.1.0-SNAPSHOT" level="project" />
   </component>
 </module>
