@@ -59,6 +59,9 @@ public class Constants {
 
     public interface VariableName {
         String TYPE_TAG = "TAG";
+        String TYPE_EXISTING_WEBSITE = "EXISTING_WEBSITE";
+        String TYPE_NEW_PASSWORD = "NEW_PASSWORD";
+        String TYPE_NEW_PASSWORD_REPEAT = "NEW_PASSWORD_REPEAT";
         String TYPE_ALTERNATE_PHONE = "ALTERNATE_PHONE";
         String TYPE_BUSINESS_DESCRIPTION = "BUSINESS_DESCRIPTION";
         String TYPE_MESSAGE_UPDATE = "MESSAGE_UPDATE";

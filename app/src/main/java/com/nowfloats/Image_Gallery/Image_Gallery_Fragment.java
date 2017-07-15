@@ -213,8 +213,8 @@ public class Image_Gallery_Fragment extends Fragment implements
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(selectedPOS);
         final int maxNumberofImages = adapter.getCount();
-        currentTextView.setText(Integer.toString(selectedPOS + 1));
-        maxCountTextView.setText(Integer.toString(maxNumberofImages));
+        currentTextView.setText(String.valueOf(selectedPOS + 1));
+        maxCountTextView.setText(String.valueOf(maxNumberofImages));
         //currentTextView.setId(R.id.custom_view_pager);
         // viewPager.setId(R.id.custom_view_pager);
 
@@ -224,7 +224,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                 // BoostLog.d("Image_Gallery_Fragment","Current POS : "+selectedPOS);
                 int selectedPosition = getItem(-1);
                 viewPager.setCurrentItem(selectedPosition, true);
-                currentTextView.setText(Integer.toString(selectedPosition));
+                currentTextView.setText(String.valueOf(selectedPosition));
 
             }
         });
@@ -235,7 +235,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                 BoostLog.d("Image_Gallery_Fragment", "Current POS : " + currentPos);
                 int selectedPosition = getItem(+1);
                 viewPager.setCurrentItem(selectedPosition, true);
-                currentTextView.setText(Integer.toString(selectedPosition));
+                currentTextView.setText(String.valueOf(selectedPosition));
             }
         });
 
@@ -297,11 +297,9 @@ public class Image_Gallery_Fragment extends Fragment implements
     public void cameraIntent() {
         try {
             // use standard intent to capture an image
-            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
-                    PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) !=
-                    PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
-                        media_req_id);
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+                    || ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, media_req_id);
             } else {
                 ContentValues values = new ContentValues();
                 values.put(MediaStore.Images.Media.TITLE, "New Picture");
@@ -721,11 +719,11 @@ public class Image_Gallery_Fragment extends Fragment implements
             }
         });
         if (grid != null) {
+            grid.invalidateViews();
             if (gridViewAdapter != null)
                 gridViewAdapter.notifyDataSetChanged();
             if (emptyGalleryLayout != null)
                 emptyGalleryLayout.setVisibility(View.GONE);
-            grid.invalidateViews();
             // grid.setAdapter(gridViewAdapter);
             //  grid.invalidate();
 

@@ -76,6 +76,7 @@ so I am going to shift all the information you have shared with me to a manual f
     <string name="login">Login</string>
     <string name="all_the_information_you_entered_will_be_lost">The information you have entered so far will be lost if you press the back button.</string>
     <string name="thats_okay">That\'s okay</string>
+    <string name="exit">Exit</string>
     <string name="cancel">Cancel</string>
 
     <string name="cannot_reach_network">Can\'t reach network.</string>

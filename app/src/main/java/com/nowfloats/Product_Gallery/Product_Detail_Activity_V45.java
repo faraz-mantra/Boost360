@@ -44,7 +44,6 @@ import com.nowfloats.Product_Gallery.Model.UpdateValue;
 import com.nowfloats.Product_Gallery.Service.ProductAPIService;
 import com.nowfloats.Product_Gallery.Service.ProductDelete;
 import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
-import com.nowfloats.Product_Gallery.Service.ProductImageReplaceV45;
 import com.nowfloats.Product_Gallery.Service.ProductImageUploadV45;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
@@ -177,12 +176,14 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
         if (getIntent().hasExtra("product")){
 //            product_data = getIntent().getExtras().getParcelable("product");
             final int position = Integer.parseInt(getIntent().getExtras().getString("product"));
-            product_data =  Product_Gallery_Fragment.productItemModelList.get(position);
-            if (product_data!=null){
-                replaceImage = true;
-                save.setVisibility(View.GONE);
-                title.setText(getString(R.string.edit_product));
-                //load image
+            if(Product_Gallery_Fragment.productItemModelList != null && (Product_Gallery_Fragment.productItemModelList.size()-1)>=position) {
+
+                product_data = Product_Gallery_Fragment.productItemModelList.get(position);
+                if (product_data != null) {
+                    replaceImage = true;
+                    save.setVisibility(View.GONE);
+                    title.setText(getString(R.string.edit_product));
+                    //load image
 
               /*  try{
                     //currencyType = Constants.Currency_Country_Map.get(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).toLowerCase());
@@ -197,182 +198,205 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
                     });
                 }catch(Exception e){e.printStackTrace();}*/
 
-                String image_url = product_data.TileImageUri;
-                if(image_url!=null && image_url.length()>0 && !image_url.equals("null")) {
-                    if (!image_url.contains("http")) {
-                        image_url = Constants.BASE_IMAGE_URL + product_data.TileImageUri;
+                    String image_url = product_data.TileImageUri;
+                    if (image_url != null && image_url.length() > 0 && !image_url.equals("null")) {
+                        if (!image_url.contains("http")) {
+                            image_url = Constants.BASE_IMAGE_URL + product_data.TileImageUri;
+                        }
+                        Picasso.with(activity).load(image_url).placeholder(R.drawable.default_product_image).into(productImage);
                     }
-                    Picasso.with(activity).load(image_url).placeholder(R.drawable.default_product_image).into(productImage);
-                }
-                ViewCompat.setTransitionName(productImage, "imageKey");
-                //productName
-                String name = product_data.Name;
-                if (name!=null && name.trim().length()>0 && !name.equals("0"))  productName.setText(name);
-                textEditListener(productName);
-                //productDesc
-                String desc = product_data.Description;
-                if (desc!=null && desc.trim().length()>0 && !desc.equals("0"))  productDesc.setText(desc);
-                textEditListener(productDesc);
-                //price
-                String price = product_data.Price;
-                if (price!=null && price.trim().length()>0 && !price.equals("0"))  productPrice.setText(price);
-                textEditListener(productPrice);
-                //discount
-                String dsPrice = product_data.DiscountAmount;
-                if (dsPrice!=null && dsPrice.trim().length()>0 && !dsPrice.equals("0")) productDiscount.setText(dsPrice);
-                textEditListener(productDiscount);
-                //availability
-                String avail = product_data.IsAvailable;
-                if (avail!=null && avail.trim().length()>0 && !avail.equals("0")) {
-                    if (avail.equals("true")) {switchView.setChecked(true); switchValue = "true";}
-                    else {switchView.setChecked(false);switchValue="false";}
-                }
-                //freeShipment
-                String freeShipment = product_data.IsFreeShipmentAvailable;
-                if (freeShipment!=null && freeShipment.trim().length()>0 && !freeShipment.equals("0")){
-                    if (freeShipment.equals("true")) {svFreeShipment.setChecked(true); mIsFreeShipment = true;}
-                    else {svFreeShipment.setChecked(false);mIsFreeShipment=false;}
-                }
+                    ViewCompat.setTransitionName(productImage, "imageKey");
+                    //productName
+                    String name = product_data.Name;
+                    if (name != null && name.trim().length() > 0 && !name.equals("0"))
+                        productName.setText(name);
+                    textEditListener(productName);
+                    //productDesc
+                    String desc = product_data.Description;
+                    if (desc != null && desc.trim().length() > 0 && !desc.equals("0"))
+                        productDesc.setText(desc);
+                    textEditListener(productDesc);
+                    //price
+                    String price = product_data.Price;
+                    if (price != null && price.trim().length() > 0 && !price.equals("0"))
+                        productPrice.setText(price);
+                    textEditListener(productPrice);
+                    //discount
+                    String dsPrice = product_data.DiscountAmount;
+                    if (dsPrice != null && dsPrice.trim().length() > 0 && !dsPrice.equals("0"))
+                        productDiscount.setText(dsPrice);
+                    textEditListener(productDiscount);
+                    //availability
+                    String avail = product_data.IsAvailable;
+                    if (avail != null && avail.trim().length() > 0 && !avail.equals("0")) {
+                        if (avail.equals("true")) {
+                            switchView.setChecked(true);
+                            switchValue = "true";
+                        } else {
+                            switchView.setChecked(false);
+                            switchValue = "false";
+                        }
+                    }
+                    //freeShipment
+                    String freeShipment = product_data.IsFreeShipmentAvailable;
+                    if (freeShipment != null && freeShipment.trim().length() > 0 && !freeShipment.equals("0")) {
+                        if (freeShipment.equals("true")) {
+                            svFreeShipment.setChecked(true);
+                            mIsFreeShipment = true;
+                        } else {
+                            svFreeShipment.setChecked(false);
+                            mIsFreeShipment = false;
+                        }
+                    }
 
-                //link
-                String link = product_data.BuyOnlineLink;
-                if (link!=null && link.trim().length()>0 && !link.equals("0")) productLink.setText(link);
-                textEditListener(productLink);
-                //shipment duration
-                String shipmentDuration = product_data.ShipmentDuration;
-                if (shipmentDuration!=null && shipmentDuration.trim().length()>0 && !shipmentDuration.equals("0")) etShipmentDuration.setText(shipmentDuration);
-                textEditListener(etShipmentDuration);
-                //Currency Code
-                String currencyCode = product_data.CurrencyCode;
-                if (currencyCode!=null && currencyCode.trim().length()>0 && !currencyCode.equals("0")) productCurrency.setText(currencyCode);
-                //textEditListener(productCurrency);
+                    //link
+                    String link = product_data.BuyOnlineLink;
+                    if (link != null && link.trim().length() > 0 && !link.equals("0"))
+                        productLink.setText(link);
+                    textEditListener(productLink);
+                    //shipment duration
+                    String shipmentDuration = product_data.ShipmentDuration;
+                    if (shipmentDuration != null && shipmentDuration.trim().length() > 0 && !shipmentDuration.equals("0"))
+                        etShipmentDuration.setText(shipmentDuration);
+                    textEditListener(etShipmentDuration);
+                    //Currency Code
+                    String currencyCode = product_data.CurrencyCode;
+                    if (currencyCode != null && currencyCode.trim().length() > 0 && !currencyCode.equals("0"))
+                        productCurrency.setText(currencyCode);
+                    //textEditListener(productCurrency);
 
-                //priority
-                String priority = product_data.Priority;
-                mPriorityVal = Integer.parseInt(priority);
-                switch (priority){
-                    case "1":
-                        etPriority.setText(mPriorityList[1]);
-                        break;
-                    case "1000000" :
-                        etPriority.setText(mPriorityList[0]);
-                        break;
-                    case "2"  :
-                        etPriority.setText(mPriorityList[2]);
-                        break;
-                    case "3"   :
-                        etPriority.setText(mPriorityList[3]);
-                        break;
-                }
+                    //priority
+                    String priority = product_data.Priority;
+                    mPriorityVal = Integer.parseInt(priority);
+                    switch (priority) {
+                        case "1":
+                            etPriority.setText(mPriorityList[1]);
+                            break;
+                        case "1000000":
+                            etPriority.setText(mPriorityList[0]);
+                            break;
+                        case "2":
+                            etPriority.setText(mPriorityList[2]);
+                            break;
+                        case "3":
+                            etPriority.setText(mPriorityList[3]);
+                            break;
+                    }
 
 
-                //update onclick listener
-                save.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_UPDATE, null);
-                        try{
-                            materialProgress = new MaterialDialog.Builder(activity)
+                    //update onclick listener
+                    save.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_UPDATE, null);
+                            try {
+                                materialProgress = new MaterialDialog.Builder(activity)
                                         .widgetColorRes(R.color.accentColor)
                                         .content(getString(R.string.updating))
                                         .progress(true, 0).show();
-                            materialProgress.setCancelable(false);
-                            values = new HashMap<String, String>();
-                            boolean flag = ValidateFields(true);
-                            ArrayList<UpdateValue> updates = new ArrayList<UpdateValue>();
-                            for (Map.Entry<String, String> entry : values.entrySet()) {
-                                //String key = .toUpperCase();
-                                //BoostLog.d(Product_Detail_Activity.class.getName(), key);
-                                updates.add(new UpdateValue(entry.getKey(),entry.getValue()));
-                            }
+                                materialProgress.setCancelable(false);
+                                values = new HashMap<String, String>();
+                                boolean flag = ValidateFields(true);
+                                ArrayList<UpdateValue> updates = new ArrayList<UpdateValue>();
+                                for (Map.Entry<String, String> entry : values.entrySet()) {
+                                    //String key = .toUpperCase();
+                                    //BoostLog.d(Product_Detail_Activity.class.getName(), key);
+                                    updates.add(new UpdateValue(entry.getKey(), entry.getValue()));
+                                }
 
-                            if(flag){
-                                BoostLog.d("Product_Detail_Activity", updates.toString());
-                                Product_Gallery_Update_Model model = new Product_Gallery_Update_Model(Constants.clientId,product_data._id,updates);
-                                //BoostLog.d()
-                                productInterface.put_UpdateGalleryUpdate(model,new Callback<ArrayList<String>>() {
-                                    @Override
-                                    public void success(ArrayList<String> strings, Response response) {
-                                        Log.d("UPdate success-Response",""+response);
-                                        Log.d("UPdate success-",""+strings.size());
-                                        new Thread(new Runnable() {
+                                if (flag) {
+                                    BoostLog.d("Product_Detail_Activity", updates.toString());
+                                    Product_Gallery_Update_Model model = new Product_Gallery_Update_Model(Constants.clientId, product_data._id, updates);
+                                    //BoostLog.d()
+                                    productInterface.put_UpdateGalleryUpdate(model, new Callback<ArrayList<String>>() {
+                                        @Override
+                                        public void success(ArrayList<String> strings, Response response) {
+                                            Log.d("UPdate success-Response", "" + response);
+                                            Log.d("UPdate success-", "" + strings.size());
+                                            new Thread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    try {
+                                                        Thread.sleep(3000);
+                                                    } catch (Exception e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                    runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            materialProgress.dismiss();
+                                                            invokeGetProductList();
+                                                            Methods.showSnackBarPositive(activity, getString(R.string.product_successfully_updated));
+                                                        }
+                                                    });
+                                                }
+                                            }).start();
+                                        }
+
+                                        @Override
+                                        public void failure(RetrofitError error) {
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    materialProgress.dismiss();
+                                                    Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+                                                }
+                                            });
+                                        }
+                                    });
+                                } else {
+                                    materialProgress.dismiss();
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                materialProgress.dismiss();
+                                Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+                            }
+                        }
+                    });
+
+
+                    deleteProduct.setVisibility(View.VISIBLE);
+                    deleteProduct.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try {
+                                MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_DELETE, null);
+                                new MaterialDialog.Builder(activity)
+                                        .title(getString(R.string.are_you_sure_want_to_delete))
+                                        .positiveText(getString(R.string.delete))
+                                        .positiveColorRes(R.color.primaryColor)
+                                        .negativeText(getString(R.string.cancel))
+                                        .negativeColorRes(R.color.light_gray)
+                                        .callback(new MaterialDialog.ButtonCallback() {
                                             @Override
-                                            public void run() {
+                                            public void onPositive(MaterialDialog dialog) {
+                                                super.onPositive(dialog);
                                                 try {
-                                                    Thread.sleep(3000);
-                                                } catch (Exception e) {
+                                                    JSONObject jsonObject = new JSONObject();
+                                                    jsonObject.put("clientId", Constants.clientId);
+                                                    jsonObject.put("productId", product_data._id);
+                                                    String url = Constants.NOW_FLOATS_API_URL + "/Product/v1/Delete";
+                                                    new ProductDelete(url, jsonObject.toString(), Product_Detail_Activity_V45.this, position).execute();
+                                                } catch (JSONException e) {
                                                     e.printStackTrace();
                                                 }
-                                                runOnUiThread(new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        materialProgress.dismiss();
-                                                        invokeGetProductList();
-                                                        Methods.showSnackBarPositive(activity, getString(R.string.product_successfully_updated));
-                                                    }
-                                                });
+                                                dialog.dismiss();
                                             }
-                                        }).start();
-                                    }
 
-                                    @Override
-                                    public void failure(RetrofitError error) {
-                                        runOnUiThread(new Runnable() {
                                             @Override
-                                            public void run() {
-                                                materialProgress.dismiss();
-                                                Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+                                            public void onNegative(MaterialDialog dialog) {
+                                                super.onNegative(dialog);
+                                                dialog.dismiss();
                                             }
-                                        });
-                                    }
-                                });
-                            }else{materialProgress.dismiss();}
-                        }catch(Exception e){e.printStackTrace();
-                            materialProgress.dismiss();
-                            Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
+                                        }).show();
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                });
-
-
-                deleteProduct.setVisibility(View.VISIBLE);
-                deleteProduct.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                    try{
-                        MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_DELETE, null);
-                         new MaterialDialog.Builder(activity)
-                        .title(getString(R.string.are_you_sure_want_to_delete))
-                        .positiveText(getString(R.string.delete))
-                        .positiveColorRes(R.color.primaryColor)
-                        .negativeText(getString(R.string.cancel))
-                        .negativeColorRes(R.color.light_gray)
-                        .callback(new MaterialDialog.ButtonCallback() {
-                            @Override
-                            public void onPositive(MaterialDialog dialog) {
-                                super.onPositive(dialog);
-                                try {
-                                    JSONObject jsonObject = new JSONObject();
-                                    jsonObject.put("clientId", Constants.clientId);
-                                    jsonObject.put("productId", product_data._id);
-                                    String url = Constants.NOW_FLOATS_API_URL+"/Product/v1/Delete";
-                                    new ProductDelete(url,jsonObject.toString(),Product_Detail_Activity_V45.this,position).execute();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                dialog.dismiss();
-                            }
-
-                            @Override
-                            public void onNegative(MaterialDialog dialog) {
-                                super.onNegative(dialog);
-                                dialog.dismiss();
-                            }
-                        }).show();
-
-                    }catch(Exception e){e.printStackTrace();}
-                    }
-                });
+                    });
+                }
             }
         }else if(getIntent().hasExtra("new")){
             try{
@@ -617,7 +641,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
             String valuesStr = "clientId="+Constants.clientId
                     +"&requestType=sequential&requestId="+Constants.deviceId
                     +"&totalChunks=1&currentChunkNumber=1&productId="+productId;
-            String url = Constants.NOW_FLOATS_API_URL + "/Product/v2/AddImage?" +valuesStr;
+            String url = Constants.NOW_FLOATS_API_URL + "/Product/v1/AddImage?" +valuesStr;
             byte[] imageBytes = Methods.compressTobyte(path,activity);
             new ProductImageUploadV45(url,imageBytes,Product_Detail_Activity_V45.this).execute();
         }catch(Exception e){
@@ -629,18 +653,7 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
     private void replaceProductImage(String productId) {
         try{
             MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_UPDATEIMAGE, null);
-            if (product_data.TileImageUri!=null &&  product_data.TileImageUri.trim().length()>0){
-                String[] temp = product_data.TileImageUri.split("\\/");
-                String oldPic = temp[temp.length-1];
-                String valuesStr = "clientId="+Constants.clientId
-                        +"&requestType=sequential&requestId="+Constants.deviceId
-                        +"&totalChunks=1&currentChunkNumber=1&productId="+productId+"&imageFileName="+oldPic;
-                String url = Constants.NOW_FLOATS_API_URL + "/Product/v2/ReplaceImage?" +valuesStr;
-                byte[] imageBytes = Methods.compressTobyte(path,activity);
-                new ProductImageReplaceV45(url,imageBytes,Product_Detail_Activity_V45.this).execute();
-            }else {
-                uploadProductImage(productId);
-            }
+            uploadProductImage(productId);
         }catch(Exception e){
             e.printStackTrace();
             Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
@@ -661,8 +674,9 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if(id==android.R.id.home){
-            finish();
+            onBackPressed();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -670,7 +684,6 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 
     public String showCurrencyList(Activity activity,final String[] currencyList){
@@ -757,16 +770,16 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity{
         }
     }
     public String getRealPathFromURI(Uri contentUri) {
-        try{
-            String[] proj = { MediaStore.Images.Media.DATA };
-            Cursor cursor = managedQuery(contentUri, proj, null, null, null);
-            int column_index = cursor
-                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-            cursor.moveToFirst();
-            return cursor.getString(column_index);
-        }catch (Exception e) {
+
+        String val = null;
+        String[] proj = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        if(cursor != null && cursor.moveToFirst()) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            val = cursor.getString(column_index);
+            cursor.close();
         }
-        return null;
+        return val;
     }
     public void choosePicture() {
         final MaterialDialog dialog = new MaterialDialog.Builder(activity)

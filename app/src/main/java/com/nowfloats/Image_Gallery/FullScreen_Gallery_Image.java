@@ -1,10 +1,10 @@
 package com.nowfloats.Image_Gallery;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
-public class FullScreen_Gallery_Image extends Activity {
+public class FullScreen_Gallery_Image extends AppCompatActivity {
 
     private ImageAdapter adapter;
     ViewPager viewPager;
@@ -42,7 +42,7 @@ public class FullScreen_Gallery_Image extends Activity {
         //getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
         setContentView(R.layout.activity_full_screen__gallery__image);
-        Methods.isOnline(FullScreen_Gallery_Image.this);
+        Methods.isOnline(this);
 
 
 
@@ -69,8 +69,8 @@ public class FullScreen_Gallery_Image extends Activity {
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(selectedPOS);
         final int maxNumberofImages = adapter.getCount();
-        currentTextView.setText(Integer.toString(selectedPOS+1));
-        maxCountTextView.setText(Integer.toString(maxNumberofImages));
+        currentTextView.setText(String.valueOf(selectedPOS+1));
+        maxCountTextView.setText(String.valueOf(maxNumberofImages));
         //currentTextView.setId(R.id.custom_view_pager);
         // viewPager.setId(R.id.custom_view_pager);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -81,7 +81,7 @@ public class FullScreen_Gallery_Image extends Activity {
 
             @Override
             public void onPageSelected(int position) {
-                currentTextView.setText(""+(position+1));
+                currentTextView.setText(String.valueOf(position+1));
                 currentPos = position;
             }
 
@@ -100,7 +100,7 @@ public class FullScreen_Gallery_Image extends Activity {
                 if (viewPager.getCurrentItem()==0){
                     currentTextView.setText("1");
                 }else{
-                    currentTextView.setText(""+(Integer.parseInt(currentTextView.getText().toString())-1));
+                    currentTextView.setText(String.valueOf(Integer.parseInt(currentTextView.getText().toString())-1));
                 }
             }
         });
@@ -113,9 +113,9 @@ public class FullScreen_Gallery_Image extends Activity {
                 int selectedPosition = getItem(+1);
                 viewPager.setCurrentItem(selectedPosition, true);
                 if(viewPager.getAdapter().getCount()-1== viewPager.getCurrentItem()){
-                    currentTextView.setText(""+(viewPager.getAdapter().getCount()));
+                    currentTextView.setText(String.valueOf(viewPager.getAdapter().getCount()));
                 }else{
-                    currentTextView.setText(""+(Integer.parseInt(currentTextView.getText().toString())+1));
+                    currentTextView.setText(String.valueOf(Integer.parseInt(currentTextView.getText().toString())+1));
                 }
             }
         });

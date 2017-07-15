@@ -50,7 +50,7 @@ import com.nowfloats.NavigationDrawer.Adapter.QuikrAdapter;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
 import com.nowfloats.NotificationCenter.AlertArchive;
-import com.nowfloats.Twitter.TwitterConstants;
+import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
@@ -237,7 +237,8 @@ public class Create_Message_Activity extends AppCompatActivity {
                     Methods.showSnackBar(activity,"You cannot post more than one ad on Quikr in a day");
                 }else if(status == -1){
                     Methods.showSnackBarNegative(activity,"Something went wrong, please restart the application");
-                } else{
+                } else
+                {
                     if (mQuikrShare == 1) {
                         mQuikrShare = 0;
                         quikrButton.setImageResource(R.drawable.quikr_icon_activate);
@@ -252,14 +253,6 @@ public class Create_Message_Activity extends AppCompatActivity {
                         quikrButton.setColorFilter(ContextCompat.getColor(Create_Message_Activity.this, R.color.primaryColor));
                         Toast.makeText(Create_Message_Activity.this, "Quikr Enabled", Toast.LENGTH_SHORT).show();
                     }
-                /*Animation anim = AnimationUtils.loadAnimation(Create_Message_Activity.this,R.anim.slide_up_slow);
-                Animation anim2 = AnimationUtils.loadAnimation(Create_Message_Activity.this,R.anim.slide_out_up);
-                title_card.setAnimation(anim);
-                message_card.setAnimation(anim2);
-                title_card.setVisibility(View.VISIBLE);
-                anim2.start();
-                anim.setStartOffset(600);*/
-
                 }
             }
         });
@@ -274,8 +267,8 @@ public class Create_Message_Activity extends AppCompatActivity {
             mFbPageShare = 1;
             facebookPageShare.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.facebook_page));
         }
-        mSharedPreferences = getSharedPreferences(TwitterConstants.PREF_NAME, MODE_PRIVATE);
-        if(mSharedPreferences.getBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false)) {
+        mSharedPreferences = getSharedPreferences(TwitterConnection.PREF_NAME, MODE_PRIVATE);
+        if(mSharedPreferences.getBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false)) {
             twitterloginButton.setImageDrawable(ContextCompat.getDrawable(this,R.drawable.twitter_icon_active));
             twitterloginButton.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
             Constants.twitterShareEnabled = true;
@@ -292,10 +285,8 @@ public class Create_Message_Activity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
-                    Toast.makeText(Create_Message_Activity.this, "This feature is coming soon", Toast.LENGTH_LONG).show();
-                } else {
-                    if (mSharedPreferences.getBoolean(TwitterConstants.PREF_KEY_TWITTER_LOGIN, false)) {
+
+                    if (mSharedPreferences.getBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false)) {
                         if (Constants.twitterShareEnabled) {
                             Constants.twitterShareEnabled = false;
                             mTwitterShare = 0;
@@ -315,8 +306,6 @@ public class Create_Message_Activity extends AppCompatActivity {
                         startActivity(i);
                         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                     }
-                }
-
             }
         });
 
@@ -381,9 +370,6 @@ public class Create_Message_Activity extends AppCompatActivity {
         facebookPageShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
-                    Toast.makeText(Create_Message_Activity.this, "This feature is coming soon", Toast.LENGTH_LONG).show();
-                } else {
 
                     if (!Util.isNullOrEmpty(session.getFacebookPage()) && pref.getInt("fbPageStatus", 0) == 1) {
                         if (mFbPageShare == 1) {
@@ -405,7 +391,6 @@ public class Create_Message_Activity extends AppCompatActivity {
                         startActivity(i);
                         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                     }
-                }
 
             }
         });
@@ -416,9 +401,7 @@ public class Create_Message_Activity extends AppCompatActivity {
         facebookShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
-                    Toast.makeText(Create_Message_Activity.this, "This feature is coming soon", Toast.LENGTH_LONG).show();
-                } else {
+
                     if (!Util.isNullOrEmpty(session.getFacebookName()) && (pref.getInt("fbStatus", 0) == 1 || pref.getInt("fbStatus", 0) == 3)) {
                         if (mFbProfileShare == 1) {
                             mFbProfileShare = 0;
@@ -439,7 +422,6 @@ public class Create_Message_Activity extends AppCompatActivity {
                         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                     }
 
-                }
             }
         });
 
@@ -496,15 +478,15 @@ public class Create_Message_Activity extends AppCompatActivity {
             }
         });
 
-        String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
         //Log.v("ggg",quikrArray[3]+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase());
         LinearLayout layout = (LinearLayout) findViewById(R.id.float_a_picture_share_quikr_parent);
-        if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
+        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
             layout.setVisibility(View.GONE);
         }else {
+            String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
             if ("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
                 for (String category : quikrArray) {
-                    if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
+                    if (category.equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
                         layout.setVisibility(View.VISIBLE);
                         break;
                     }
@@ -1016,10 +998,10 @@ public class Create_Message_Activity extends AppCompatActivity {
 
     public  void logoutFromTwitter() {
         SharedPreferences.Editor e = mSharedPreferences.edit();
-        e.remove(TwitterConstants.PREF_KEY_OAUTH_TOKEN);
-        e.remove(TwitterConstants.PREF_KEY_OAUTH_SECRET);
-        e.remove(TwitterConstants.PREF_KEY_TWITTER_LOGIN);
-        e.remove(TwitterConstants.PREF_USER_NAME);
+        e.remove(TwitterConnection.PREF_KEY_OAUTH_TOKEN);
+        e.remove(TwitterConnection.PREF_KEY_OAUTH_SECRET);
+        e.remove(TwitterConnection.PREF_KEY_TWITTER_LOGIN);
+        e.remove(TwitterConnection.PREF_USER_NAME);
         e.commit();
         Constants.twitterShareEnabled = false;
         CookieSyncManager cookieSyncMngr = CookieSyncManager.createInstance(this);

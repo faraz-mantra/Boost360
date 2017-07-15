@@ -43,6 +43,7 @@
             android:layout_marginRight="3dp"
             android:gravity="center"
             android:padding="5dp"
+            android:clickable="true"
             android:text="@string/open_in_browser"
             android:textColor="@color/white"
             android:textSize="14sp"

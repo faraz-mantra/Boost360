@@ -175,9 +175,9 @@ public class CustomDialogFragment extends DialogFragment {
 
                 ivHorizontalSep.setVisibility(View.VISIBLE);
 
-                tvTitle.setText(getActivity().getString(R.string.looking_to_go_back));
-                tvContent.setText(getActivity().getString(R.string.all_the_information_you_entered_will_be_lost));
-                tvNeg.setText(getActivity().getString(R.string.thats_okay));
+                tvTitle.setText(getActivity().getString(R.string.alert));
+                tvContent.setText(getActivity().getString(R.string.you_will_lose_info));
+                tvNeg.setText(getActivity().getString(R.string.exit));
                 tvPos.setText(getActivity().getString(R.string.cancel));
                 setCancelable(false);
 
@@ -209,7 +209,7 @@ public class CustomDialogFragment extends DialogFragment {
                 tvContent.setText(getActivity().getString(R.string.your_website_has_been_created_through));
                 tvNeg.setText(getActivity().getString(R.string.leave));
                 tvPos.setText(getActivity().getString(R.string.login));
-                setCancelable(false);
+                setCancelable(true);
 
                 llPos.setOnClickListener(new View.OnClickListener() {
                     @Override

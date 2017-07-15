@@ -17,7 +17,7 @@ public class Get_FP_Details_Model {
     public String _id;
     public String Address;
 
-    public ArrayList<String> Category ;
+    public ArrayList<CategoryModel> Category ;
 //    public String Contact;
     public String ContactName;
 
@@ -72,6 +72,7 @@ public class Get_FP_Details_Model {
     public String SMSGatewayUri;
     public String AccountManagerId;
     public String ExpiryDate;
+    public String WebTemplateId;
     public String response;
     public String domainName;
     public String domainType;
@@ -164,11 +165,11 @@ public class Get_FP_Details_Model {
         Address = address;
     }
 
-    public ArrayList<String> getCategory() {
+    public ArrayList<CategoryModel> getCategory() {
         return Category;
     }
 
-    public void setCategory(ArrayList<String> category) {
+    public void setCategory(ArrayList<CategoryModel> category) {
         Category = category;
     }
 
@@ -442,6 +443,14 @@ public class Get_FP_Details_Model {
 
     public void setWebTemplateType(String webTemplateType) {
         WebTemplateType = webTemplateType;
+    }
+
+    public String getWebTemplateId() {
+        return WebTemplateId;
+    }
+
+    public void setWebTemplateId(String webTemplateId) {
+        WebTemplateId = webTemplateId;
     }
 
     public String getApplicationId() {

@@ -12,10 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nowfloats.Analytics_Screen.model.SearchQueryModel;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Kamal on 17-02-2015.
@@ -59,11 +59,8 @@ public class SearchQueryAdapter extends RecyclerView.Adapter<SearchQueryAdapter.
 
         porterDuffColorFilter = new PorterDuffColorFilter(activity.getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
         try {
-            String sDate = queryList.get(position).getCreatedOn().replace("/Date(", "").replace(")/", "");
-            String[] splitDate = sDate.split("\\+");
-            Long epochTime = Long.parseLong(splitDate[0]);
-            Date date = new Date(epochTime);
-            holder.search_query_date_text.setText(date.toString());
+            String sDate = queryList.get(position).getCreatedOn().replace("/Date(", "").replace("+0530)/", "");;
+            holder.search_query_date_text.setText(Methods.getFormattedDate(sDate));
         }catch (Exception e){
             e.printStackTrace();
         }

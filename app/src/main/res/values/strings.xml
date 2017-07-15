@@ -2,7 +2,7 @@
 <resources>
     <string name="twitter_consumer_key">4CiUg5gcIbvYre8XjGd8GsElV</string>
     <string name="twitter_consumer_secret">4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9</string>
-
+    <string name="google_map_key">AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg</string>
     <string name="package_name_aviary">com.thinksity.AviaryCdsProvider</string>
     <string name="app_name">Thinksity</string>
     <string name="hello_world">Hello world!</string>
@@ -81,7 +81,7 @@
     <string name="side_panel_row_five">Settings</string>
     <string name="side_panel_row_six">Write to Ria</string>
     <string name="side_panel_row_seven">Contact us</string>
-    <string name="side_panel_row_eight">Share</string>
+    <string name="side_panel_row_eight">Share My Website</string>
     <string name="setting_change_pwd">Change password</string>
     <string name="setting_feedback">Feedback</string>
     <string name="setting_rate_us_on_play_store">Rate us on Play Store</string>
@@ -383,21 +383,24 @@
         <item>571f7f789bfed52c543d888d</item>
     </string-array>
     <string-array name="themeNames">
+        <item>Dynamic</item>
         <item>Bold and The Beautiful</item>
-        <item>Fresh Milk Light</item>
+        <item>Fresh Milk Lite</item>
         <item>The First Fox</item>
+    </string-array>
+
+    <string-array name="themeMessages">
+        <item>We choose the theme that will work best for your business, keeping many factors in mind. By default this is the setting, because you should only focus on the content that will get the customers to your store.</item>
+        <item>Display your products or services boldly. An image-led look to showcase your products, select this if you have already uploaded your products and picture updates.</item>
+        <item>A clean white approach to website design, this theme smoothly bridges form and function. Smart use of white space makes it a clean, elegant looking website.</item>
+        <item>A smart approach to a balance between imagery and updates. If you post business updates often, this is the theme for you. Customise the background and it will make sure your updates look stunning.</item>
     </string-array>
     <string-array name="quikr_widget">
         <item>automotive</item>
         <item>tourism</item>
-        <item>hotel&amp;motels</item>
         <item>interior design</item>
-        <item>interiordesign</item>
-        <item>realestate&amp;construction</item>
-        <item>cars</item>
-        <item>usedcars</item>
         <item>hotel &amp; motels</item>
-        <item>realestate &amp; construction</item>
+        <item>real estate &amp; construction</item>
         <item>cars</item>
         <item>used cars</item>
     </string-array>
@@ -733,8 +736,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="contact_us">Contact Us</string>
     <string name="thank_you_for_your_interest">Thank you for your interest!</string>
     <string name="our_team_contact_in_48hours">Our team will get in touch with you within 48 hours to tell you more about our pricing plans.</string>
+    <string name="business_app_requested_success">We will get back to you on this as soon as we can. Thank you for your patience.</string>
     <string name="processing_request">Processing Your Request</string>
-    <string name="processing_request_we_back_in_48hours">We are processing your request. We will get back to you on this as soon as we can. Thank you for your patience</string>
+    <string name="processing_request_we_back_in_48hours">We are processing your request. We will get back to you on this as soon as we can. Thank you for your patience.</string>
     <string name="reach_out_ria">Please reach out to us at ria@nowfloats.com and will be get back to immediately.</string>
     <string name="unable_to_process_purchase">Unable to process your purchase</string>
     <string name="looks_an_issue_with_app">Looks like there is an issue with your in-app billing setup.</string>
@@ -847,7 +851,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="of">of</string>
     <string name="password">Password</string>
     <string name="facebook_url_message">If your Facebook page URL is facebook.com/nowfloats; then your username is nowfloats</string>
-    <string name="forgot_your_password">Forgot Password?</string>
+    <string name="forgot_your_password">Forgot password?</string>
     <string name="open_in_browser">OPEN IN BROWSER</string>
     <string name="auto_share_to_social_networks">Auto Share\nTo Social Networks</string>
     <string name="website_posts">Website\nPosts</string>
@@ -1013,6 +1017,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="price_of_domain">Price of %s:</string>
     <string name="activate_your_domain">Activate your domain</string>
     <string name="submit_request">Submit Request</string>
+    <string name="submiting_request">Submitting your request</string>
     <string name="book_your_domain">Book your Domain</string>
     <string name="already_included_in_your_package">*Already included in your package</string>
     <string name="link_comments">I would like to map my existing domain to my Nowfloats site %s.nowfloats.com\nplease reach out to me to discuss this in detail.</string>
@@ -1119,6 +1124,20 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item><a href="http://bangalore.quikr.com/html/privacy.php">Privacy Policy</a></item>
         <item><a href="http://hyderabad.quikr.com/html/policies.php">Listing Policy</a></item>
     </string-array>
+    <string-array name="business_app_tips_description">
+        <item>Regularly post text and image business updates</item>
+        <item>Add at least 4 products to product gallery</item>
+        <item>Add at least 6 photos to image gallery </item>
+        <item>Make sure your contact details are accurate</item>
+        <item>Make sure your business hours are correct</item>
+    </string-array>
+    <string-array name="business_app_tips">
+        <item>Post updates</item>
+        <item>Add products</item>
+        <item>Add photos</item>
+        <item>Contact details</item>
+        <item>Business hours</item>
+    </string-array>
     <string name="quikr_tip_points_heading">Good news! You can now publish your updates as product ads to Quikr.</string>
     <string-array name="quikr_tip_on_dialog">
         <item> Be as detailed as possible in the description of the update. For example, if you are posting an update about a car, mention the brand, model and year. If you are posting an update about an apartment, mention whether it\'s for rent or sale, the area and the number of rooms (1 BHK, 2BHK etc)</item>
@@ -1159,11 +1178,68 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="boost_overlay_permission">Boost Bubble</string>
     <string name="allow_boost_to_read_your">Please allow Boost to read your Facebook Page insights.</string>
     <string name="gathering_fcebook_analytics">Gathering Facebook Page analytics</string>
-    <string name="please_wait_while_collecting_facebook_data">Please wait, as we are collecting statistics from your Facebook Page. It usually takes upto 24 hours to fetch data.</string>
+    <string name="please_wait_while_collecting_facebook_data">Please wait, as we are collecting statistics from your Facebook Page. It usually takes up to 24 hours to fetch data.</string>
     <string name="updates_not_found">Updates not found!</string>
     <string name="looks_like_you_have_not_posted_any_updates">Looks like you haven\'t posted any update on your Facebook Page through Boost yet Make sure you select the <b>Facebook Page option</b> while creating an update</string>
     <string name="facebook_analytics">Social Analytics</string>
     <string name="session_expired">Please login again your Session has expired</string>
+    <string name="getlink">Next</string>
+
+    <string name="my_business_apps">My Business App</string>
+
+    <string name="increse_site_score">Increase site score</string>
+
+    <string name="your_site_meter_too_low">Your site meter score is too low</string>
+
+    <string name="you_can_not_have_app_until_score_90">You can\'t have your app up and running until or unless you update your site\'s health score up to 90%</string>
+
+    <string name="details_will_used_to_create_custoer_app">I agree that these details will be used to create my customer app and can\'t be changed once fixed</string>
+
+    <string name="Madman_design_studio">Madman\'s Design Studio</string>
+
+    <string name="congratulation_android_business_app_development">Congrats! Your Android app is under development. You will be able to download and share this app once it is published to the Play Store. This will take between 7&#8211;8 days</string>
+
+    <string name="congratulation_ios_business_app_development">Congrats! Your iOS app is under development. You will be able to download and share this app once it is published to the App Store.</string>
+
+    <string name="android_app_preview">PREVIEW YOUR\nANDROID APP</string>
+    <string name="tips_for_business_app_completeness">Tips For App Completeness</string>
+
+    <string name="ios_app_preview">PREVIEW YOUR\niOS APP</string>
+
+    <string name="get_android_app">GET YOUR ANDROID\nAPP FOR FREE</string>
+
+    <string name="get_ios_app">GET YOUR iOS APP\nFOR INR 6000/-</string>
+
+    <string name="create_push_notification">Create a push notification to your app users</string>
+
+    <string name="android_app"> Android App</string>
+
+    <string name="ios_app"> iOS App</string>
+
+    <string name="increase_our_site_health">increase your site health score</string>
+
+    <string name="more_info">More information</string>
+
+    <string name="edit_details">Edit details</string>
+
+    <string name="on_click_following_field_redirect">On clicking the following fields you will be redirected to the screen where you can make changes</string>
+    <string name="drop_us_on_email_or_call">Please drop us a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to enable this feature</string>
+
+
+    <array name="businessboldtext">
+        <item>A mobile app\nfor your customers</item>
+        <item>Make your brand\nfamous</item>
+        <item>Notify your customers\nwherever they are</item>
+        <item>Offline access to your\nbusiness details</item>
+    </array>
+
+    <array name="businesssmalltext">
+        <item>Your way to a permanent place in your\ncustomer\'s phone.</item>
+        <item>Beat your competition and be the first ones\nto get your own Mobile App.</item>
+        <item>Send personalized notifications to your\ncustomers about your products and offerings.</item>
+        <item>Now your customers can reach your store\neven without an internet connection.</item>
+    </array>
+
     <string name="help_and_support">Help and Support</string>
     <string name="product_checkout">Product Checkout</string>
     <string name="dialog_to_be_activated_null_text">Please note that you will receive an Account Verification Call before your subscription gets activated. Are you sure you want to proceed?</string>
@@ -1203,7 +1279,26 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="faqs_url">https://nowfloats.com/faq</string>
     <string name="email_id_to_request_plans">lead@nowfloats.com</string>
     <string name="resend"><u>Resend</u></string>
+    <string name="add_logo_message">Please add a logo for your business before proceeding.</string>
+    <string name="push_notif">Send notification</string>
+    <string name="app_preview">App preview</string>
+
     <string name="terms_n_cond_toast">You must agree with the terms and conditions to proceed</string>
+    <string name="deeplink_business_app">businessapp</string>
+    <string name="about_app">About app</string>
+    <string name="fb_page_creation_message">Gather more leads and drive more\ntraffic to your website through a\nFacebook Page</string>
+    <string name="get_facebook_page">Get a Facebook page</string>
+    <string name="fb_page_creation_title">Looks like you don’t have a\nFacebook page</string>
+    <string name="more_details">More details</string>
+    <string name="fb_page_unavailable">A Facebook page with\nyour business name is\nunavailable.</string>
+    <string name="suggestions_for_page_name">Here\'s a suggestion\nfor an available Page name</string>
+    <string name="your_facebook_page_is_created">Your facebook page is created</string>
+    <string name="connect_page_to_nowfloats">Connect your account to\nautomatically share all updates\nto your Facebook Page.</string>
+    <string name="you_can_see_your_page_analytics">analytics->social analytics->\nfacebook analytics</string>
+    <string name="control">Connect</string>
+    <string name="domain_characters">-0123456789abcdefghijklmnopqrstuvwxyz</string>
+    <string name="fb_page_default_logo_message">We uploaded a default profile image for you as your business logo is too small.</string>
+    <string name="business_profile_incomplete">Please complete all the steps in site health and reconnect your Facebook account to create your Facebook page</string>
     <string name="sign_up_with_ria">Sign up with ria</string>
     <string name="ria_chat_message">And I\'ll help you get\nyour website up\nand running\nin no time\nat all.</string>
     <string name="ria_chat_header">Hi, I\'m Ria.</string>

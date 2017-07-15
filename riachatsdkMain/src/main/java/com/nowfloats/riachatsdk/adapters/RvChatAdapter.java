@@ -3,7 +3,10 @@ package com.nowfloats.riachatsdk.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -16,6 +19,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.URLSpan;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +53,7 @@ import com.nowfloats.riachatsdk.models.Section;
 import com.nowfloats.riachatsdk.utils.Constants;
 import com.nowfloats.riachatsdk.utils.Utils;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.IOException;
 import java.util.List;
@@ -84,6 +89,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private Map<String, String> mDataMap;
     private Context mContext;
     private IConfirmationCallback mConfirmationCallback;
+    private float MAX_WIDTH,TARGET_WIDTH,TARGET_HEIGHT;
 
     public RvChatAdapter(List<Section> mChatSections, Map<String, String> dataMap, Context context) {
         this.mChatSections = mChatSections;
@@ -92,6 +98,12 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if (context instanceof IConfirmationCallback) {
             mConfirmationCallback = (IConfirmationCallback) mContext;
         }
+
+        Resources r = context.getResources();
+        MAX_WIDTH =  r.getDisplayMetrics().widthPixels;
+        TARGET_WIDTH = (int) (300 * r.getDisplayMetrics().density);
+        TARGET_HEIGHT = (int) (200 * r.getDisplayMetrics().density);
+
     }
 
     @Override
@@ -109,7 +121,17 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 return new HeaderViewHolder(v);
             case 0:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_image_row_layout, parent, false);
-                return new ImageViewHolder(v);
+
+                ImageViewHolder imageViewHolder = new ImageViewHolder(v);
+
+//                final android.view.ViewGroup.MarginLayoutParams layoutParams1 = (ViewGroup.MarginLayoutParams) imageViewHolder.ivMainImage.getLayoutParams();
+//                layoutParams1.width = (int) TARGET_WIDTH;
+//                layoutParams1.height = (int) TARGET_HEIGHT;
+//
+//                imageViewHolder.ivMainImage.setLayoutParams(layoutParams1);
+//                imageViewHolder.ivMainImage.setImageResource(R.drawable.site_sc_default);
+
+                return imageViewHolder;
             case 1:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_text_row_layout, parent, false);
                 return new TextViewHolder(v);
@@ -428,10 +450,12 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             if (section.isAnimApplied()) {
                 formViewHolder.btnCreateWebsite.setEnabled(false);
                 formViewHolder.btnCreateWebsite.setClickable(false);
+                formViewHolder.btnCreateWebsite.setTextColor(mContext.getResources().getColor(R.color.white));
                 formViewHolder.btnCreateWebsite.setBackgroundResource(R.drawable.done_button_bg_grey);
             } else {
                 formViewHolder.btnCreateWebsite.setEnabled(true);
                 formViewHolder.btnCreateWebsite.setClickable(true);
+                formViewHolder.btnCreateWebsite.setTextColor(mContext.getResources().getColor(R.color.white));
                 formViewHolder.btnCreateWebsite.setBackgroundResource(R.drawable.done_button_bg);
             }
 
@@ -454,6 +478,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     section.setIsAnimApplied(true);
                     formViewHolder.btnCreateWebsite.setEnabled(false);
                     formViewHolder.btnCreateWebsite.setClickable(false);
+                    formViewHolder.btnCreateWebsite.setTextColor(mContext.getResources().getColor(R.color.white));
                     formViewHolder.btnCreateWebsite.setBackgroundResource(R.drawable.done_button_bg_grey);
 
                     mConfirmationCallback.onCardResponse(Constants.ConfirmationType.SUBMIT_FORM, null,
@@ -591,7 +616,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             }
         } else if (holder instanceof ImageViewHolder) {
-            ImageViewHolder imageViewHolder = (ImageViewHolder) holder;
+            final ImageViewHolder imageViewHolder = (ImageViewHolder) holder;
             if (section.isShowDate()) {
                 imageViewHolder.tvDateTime.setVisibility(View.VISIBLE);
                 imageViewHolder.tvDateTime.setText(section.getDateTime());
@@ -609,19 +634,93 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 imageViewHolder.tvImageTitle.setVisibility(View.GONE);
             }
 
-            if (!getParsedPrefixPostfixText(section.getUrl()).contains("http")) {
+
+            String imageURL = getParsedPrefixPostfixText(section.getUrl());
+
+            if (!imageURL.contains("http")) {
+//                imageURL = "file://"+section.getUrl();
+                ((LinearLayout)imageViewHolder.itemView).setGravity(Gravity.LEFT);
+
+                imageViewHolder.ivMainImage.setImageResource(R.drawable.site_sc_default);
+
+                final android.view.ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) imageViewHolder.ivMainImage.getLayoutParams();
+                layoutParams.height = (int) TARGET_WIDTH ;
+                layoutParams.width = (int) TARGET_WIDTH;
+                imageViewHolder.ivMainImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
                 Glide.with(mContext)
-                        .load(getParsedPrefixPostfixText(section.getUrl()))
+                        .load(getParsedPrefixPostfixText(imageURL))
                         .centerCrop()
                         .placeholder(R.drawable.site_sc_default)
                         .into(imageViewHolder.ivMainImage);
 
-            } else {
+            }else{
 
-                Picasso.with(mContext).load(getParsedPrefixPostfixText(section.getUrl())).placeholder(R.drawable.site_sc_default)
-                        .into(imageViewHolder.ivMainImage);
+                imageViewHolder.ivMainImage.setScaleType(ImageView.ScaleType.FIT_XY);
+
+                ((LinearLayout)imageViewHolder.itemView).setGravity(Gravity.RIGHT);
+
+
+                Picasso.with(mContext).load(imageURL).into(new Target() {
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom loadedFrom) {
+
+                        //whatever algorithm here to compute size
+                        final android.view.ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) imageViewHolder.ivMainImage.getLayoutParams();
+
+                        if(bitmap.getWidth()> MAX_WIDTH || bitmap.getHeight()>MAX_WIDTH){
+                            if (!getParsedPrefixPostfixText(section.getUrl()).contains("http")) {
+
+                                if(bitmap.getHeight()> bitmap.getWidth()){
+                                    float ratio = (float) bitmap.getWidth() / (float) bitmap.getHeight();
+                                    float widthFloat = ((float) MAX_WIDTH) * ratio;
+                                    layoutParams.height = (int) MAX_WIDTH ;
+                                    layoutParams.width = (int) widthFloat;
+                                }else{
+                                    float ratio = (float) bitmap.getHeight() / (float) bitmap.getWidth();
+                                    float heightFloat = ((float) MAX_WIDTH) * ratio;
+                                    layoutParams.height = (int) heightFloat ;
+                                    layoutParams.width = (int) MAX_WIDTH;
+                                }
+
+                            }else{
+
+                                float ratio = (float) bitmap.getHeight() / (float) bitmap.getWidth();
+                                float heightFloat = ((float) MAX_WIDTH) * ratio;
+                                layoutParams.height = (int) heightFloat ;
+                                layoutParams.width = (int) MAX_WIDTH;
+
+                            }
+                        }else{
+
+                            layoutParams.height = (int) bitmap.getHeight() ;
+                            layoutParams.width = (int) bitmap.getWidth();
+                        }
+
+
+                        imageViewHolder.ivMainImage.setLayoutParams(layoutParams);
+//                    if(bitmap!=null && !bitmap.isRecycled())
+//                        bitmap.recycle();
+                    imageViewHolder.ivMainImage.setImageBitmap(bitmap);
+
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+                    imageViewHolder.ivMainImage.setImageResource(R.drawable.site_sc_default);
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+                    imageViewHolder.ivMainImage.setImageResource(R.drawable.site_sc_default);
+                    }
+
+                });
             }
+
+
+//
+
 
 
             if (section.getCaption() != null && !section.getCaption().trim().equals("")) {

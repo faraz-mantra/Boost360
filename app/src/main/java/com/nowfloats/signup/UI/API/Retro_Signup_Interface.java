@@ -57,6 +57,6 @@ public interface Retro_Signup_Interface {
     void post_verifyTag(@Body HashMap<String,String> map, Callback<String> callback);
 
     //    @Headers({"Content-Type: application/json","Accept: application/json"})
-    @GET("/Discover/v2/floatingPoint/nf-app/{fpid}")
+    @GET("/Discover/v3/floatingPoint/nf-app/{fpid}")
     void post_getFPDetails(@Path("fpid") String fpid,@QueryMap Map<String,String> map, Callback<Get_FP_Details_Model> callback);
 }

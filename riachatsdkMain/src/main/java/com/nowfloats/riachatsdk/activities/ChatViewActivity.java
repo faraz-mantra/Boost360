@@ -17,6 +17,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.os.ResultReceiver;
 import android.support.v7.app.AlertDialog;
@@ -25,7 +27,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
@@ -357,7 +361,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                                     null, mCurrButton.getButtonType(), appVersion);
                         }
                         showNextNode(mCurrButton.getNextNodeId());
-
                         mAutoComplDataHash = null;
                         mButtonList.clear();
                         mButtonsAdapter.notifyDataSetChanged();
@@ -553,6 +556,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         if (mHandler != null)
             mHandler.removeCallbacksAndMessages(null);
+        hideSoftKeyboard();
         finish();
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.slide_out_right);
 
@@ -929,6 +933,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     private CameraImagePicker imagePicker;
     private com.kbeanie.multipicker.api.ImagePicker galleryImagePicker;
+    private static final int RC_CODE_PICKER = 2000;
+    private static final int RC_CAMERA = 3000;
 
     private void getImage(Button btn) {
         mNextNodeId = btn.getNextNodeId();
@@ -938,24 +944,13 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        imagePicker = new CameraImagePicker(ChatViewActivity.this);
-                        imagePicker.setImagePickerCallback(new ImagePickerCallback() {
-                                                               @Override
-                                                               public void onImagesChosen(List<ChosenImage> images) {
-                                                                   Intent i = new Intent(ChatViewActivity.this, FileUploadService.class);
-                                                                   i.putExtra(Constants.FILE_PATH, images.get(0).getOriginalPath());
-                                                                   i.putExtra(Constants.RECEIVER, mReceiver);
-                                                                   startService(i);
-                                                                   replyToRia(Constants.SectionType.TYPE_IMAGE, images.get(0).getOriginalPath());
-                                                               }
-
-                                                               @Override
-                                                               public void onError(String message) {
-                                                                   // Do error handling
-                                                               }
-                                                           }
-                        );
-                        String outputPath = imagePicker.pickImage();
+                        final Activity activity = ChatViewActivity.this;
+                        final String[] permissions = new String[]{Manifest.permission.CAMERA};
+                        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(activity, permissions, RC_CAMERA);
+                        } else {
+                            captureImage();
+                        }
 
                     }
                 })
@@ -963,30 +958,68 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-                        galleryImagePicker = new
-                                com.kbeanie.multipicker.api.ImagePicker(ChatViewActivity.this);
-                        galleryImagePicker.setImagePickerCallback(new ImagePickerCallback() {
-                                                                      @Override
-                                                                      public void onImagesChosen(List<ChosenImage> images) {
-                                                                          Intent i = new Intent(ChatViewActivity.this, FileUploadService.class);
-                                                                          i.putExtra(Constants.FILE_PATH, images.get(0).getOriginalPath());
-                                                                          i.putExtra(Constants.RECEIVER, mReceiver);
-                                                                          startService(i);
-                                                                          replyToRia(Constants.SectionType.TYPE_IMAGE, images.get(0).getOriginalPath());
-                                                                      }
+//                        galleryImagePicker = new
+//                                com.kbeanie.multipicker.api.ImagePicker(ChatViewActivity.this);
+//                        galleryImagePicker.setImagePickerCallback(new ImagePickerCallback() {
+//                                                                      @Override
+//                                                                      public void onImagesChosen(List<ChosenImage> images) {
+//                                                                          Intent i = new Intent(ChatViewActivity.this, FileUploadService.class);
+//                                                                          i.putExtra(Constants.FILE_PATH, images.get(0).getOriginalPath());
+//                                                                          i.putExtra(Constants.RECEIVER, mReceiver);
+//                                                                          startService(i);
+//                                                                          replyToRia(Constants.SectionType.TYPE_IMAGE, images.get(0).getOriginalPath());
+//                                                                      }
+//
+//                                                                      @Override
+//                                                                      public void onError(String message) {
+//                                                                          // Do error handling
+//                                                                      }
+//                                                                  }
+//                        );
+//                        galleryImagePicker.pickImage();
 
-                                                                      @Override
-                                                                      public void onError(String message) {
-                                                                          // Do error handling
-                                                                      }
-                                                                  }
-                        );
-                        galleryImagePicker.pickImage();
+                        new ImagePicker.Builder(ChatViewActivity.this)
+                                .mode(ImagePicker.Mode.GALLERY)
+                                .directory(ImagePicker.Directory.DEFAULT)
+                                .allowMultipleImages(false)
+                                .enableDebuggingMode(true)
+                                .build();
 
                     }
                 })
                 .setCancelable(false)
                 .show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == RC_CAMERA) {
+            if (grantResults.length != 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                captureImage();
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    private void  captureImage(){
+        imagePicker = new CameraImagePicker(ChatViewActivity.this);
+        imagePicker.setImagePickerCallback(new ImagePickerCallback() {
+                                               @Override
+                                               public void onImagesChosen(List<ChosenImage> images) {
+                                                   Intent i = new Intent(ChatViewActivity.this, FileUploadService.class);
+                                                   i.putExtra(Constants.FILE_PATH, images.get(0).getOriginalPath());
+                                                   i.putExtra(Constants.RECEIVER, mReceiver);
+                                                   startService(i);
+                                                   replyToRia(Constants.SectionType.TYPE_IMAGE, images.get(0).getOriginalPath());
+                                               }
+
+                                               @Override
+                                               public void onError(String message) {
+                                                   // Do error handling
+                                               }
+                                           }
+        );
+        String outputPath = imagePicker.pickImage();
     }
 
     private void getAudio(Button btn) {
@@ -1425,8 +1458,15 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         /*
                          * hardcoded for fptag
                          */
-                        if (node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_TAG)) {
+                        if (node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_TAG)
+                                || node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_EXISTING_WEBSITE)
+                                || node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_NEW_PASSWORD)
+                                || node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_NEW_PASSWORD_REPEAT)) {
                             etChatInput.setInputType(InputType.TYPE_CLASS_TEXT);
+
+                            if(node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_NEW_PASSWORD_REPEAT))
+                                         etChatInput.setText("");
+
                         } else if (node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_MESSAGE_UPDATE)
                                 || node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_BUSINESS_DESCRIPTION)) {
                             /*
@@ -1441,7 +1481,53 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                             tvPostfix.setVisibility(View.VISIBLE);
                         }
 
-                        cvChatInput.setVisibility(View.VISIBLE);
+
+                        if (node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_TAG)
+                                || node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_EXISTING_WEBSITE))
+                        {
+                                    etChatInput.setFilters(new InputFilter[]
+                                    {
+                                            new InputFilter()
+                                            {
+                                                public CharSequence filter(CharSequence source, int start, int end, Spanned dst, int dstart, int dend)
+                                                {
+                                                    StringBuilder builder = new StringBuilder();
+                                                    for (int i = start; i < end; i++) {
+                                                        char currentChar = source.charAt(i);
+                                                        if (Character.isLetterOrDigit(currentChar) || currentChar == '-' || currentChar == '.') {
+                                                            builder.append(currentChar);
+                                                        }
+                                                    }
+                                                    return builder.toString();
+                                                }
+                                            }
+                                    });
+                        }else if (node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_NEW_PASSWORD)
+                                || node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_NEW_PASSWORD_REPEAT))
+                        {
+                                    etChatInput.setFilters(new InputFilter[]
+                                    {
+                                            new InputFilter()
+                                            {
+                                                public CharSequence filter(CharSequence source, int start, int end, Spanned dst, int dstart, int dend)
+                                                {
+                                                    StringBuilder builder = new StringBuilder();
+                                                    for (int i = start; i < end; i++) {
+                                                        char currentChar = source.charAt(i);
+                                                        if (!Character.isWhitespace(currentChar)) {
+                                                            builder.append(currentChar);
+                                                        }
+                                                    }
+                                                    return builder.toString();
+                                                }
+                                            }
+                                    });
+                        }else{
+                            etChatInput.setFilters(new InputFilter[]{});
+                        }
+
+
+                            cvChatInput.setVisibility(View.VISIBLE);
                     }
                 }
 
