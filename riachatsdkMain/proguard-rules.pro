@@ -23,3 +23,16 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-libraryjars libs/jackson-annotations-2.0.0.jar
+-libraryjars libs/jackson-core-2.0.0.jar
+
+-dontskipnonpubliclibraryclassmembers
+
+-keepattributes *Annotation*,EnclosingMethod
+
+-keepnames class org.codehaus.jackson.** { *; }
+
+-dontwarn javax.xml.**
+-dontwarn com.jayway.jsonpath.**
+-dontwarn javax.xml.stream.events.**
+-dontwarn com.fasterxml.jackson.databind.**

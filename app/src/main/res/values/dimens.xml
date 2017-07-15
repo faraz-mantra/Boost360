@@ -11,6 +11,7 @@
     <dimen name="actionBar_leftButtonDiv_layout_height">60dp</dimen>
     <dimen name="actionBar_leftButtonDiv_marginRight">10dip</dimen>
     <dimen name="margin_10">10dp</dimen>
+    <dimen name="margin_19">19dp</dimen>
     <dimen name="margin_15">15dp</dimen>
     <dimen name="margin_16">16dp</dimen>
     <dimen name="status_bar_height">0dp</dimen>
@@ -128,10 +129,20 @@
     <dimen name="medium_text_size">15sp</dimen>
     <dimen name="large_text_size">18sp</dimen>
     <dimen name="xlarge_text_size">23sp</dimen>
-    <dimen name="xxlarge_text_size">28sp</dimen>
+    <dimen name="xxlarge_text_size">25sp</dimen>
+    <dimen name="xxxlarge_text_size">35sp</dimen>
+    <dimen name="xxxxlarge_text_size">40sp</dimen>
+    <dimen name="xxxxxlarge_text_size">56sp</dimen>
     <dimen name="margin_5">5dp</dimen>
     <dimen name="margin_20">20dp</dimen>
+    <dimen name="margin_30">30dp</dimen>
+    <dimen name="margin_25">25dp</dimen>
+    <dimen name="margin_40">40dp</dimen>
+    <dimen name="margin_50">50dp</dimen>
     <dimen name="margin_100">100dp</dimen>
     <dimen name="margin_3">3dp</dimen>
+    <dimen name="margin_80">80dp</dimen>
+    <dimen name="margin_90">90dp</dimen>
+    <dimen name="margin_17">17dp</dimen>
 
 </resources>

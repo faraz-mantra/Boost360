@@ -445,7 +445,7 @@
     <string name="Message_empty">There are no messages on your website\nClick on the + button below\nto update your website</string>
     <string name="pre_signup_screen_one_text">Now Create, Manage and Update A Business website that draws more Customers</string>
     <string name="pre_signup_screen_two_text">Get a business website \nthat is instantly created and \neasily managed using this app</string>
-    <string name="presignup_login_text">Already have a NowFloats account?</string>
+    <string name="presignup_login_text">Already have a NowFloats site?</string>
     <string name="settings_feedback_link">ria@nowfloats.com</string>
     <string name="settings_facebook_like_link">https://www.facebook.com/nowfloats</string>
     <string name="settings_about_us_link">http://nowfloats.com/</string>
@@ -542,6 +542,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="subscribe_for_pulling">Subscribed for pulling</string>
     <string name="update_from">updates from</string>
     <string name="facebook_page"> Facebook Page</string>
+    <string name="create_site_using_facebook_page">Create site using Facebook Page</string>
     <string name="disconnected">Disconnected</string>
     <string name="success">Success</string>
     <string name="failed">Failed</string>
@@ -773,7 +774,10 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="tweet">Tweet</string>
     <string name="logout">Logout</string>
     <string name="create_website_using">Create website using</string>
+    <string name="create_your_nowfloats_site">Create your NowFloats site</string>
     <string name="email_address">Email Address</string>
+    <string name="chat_with_ria">Chat with RIA</string>
+    <string name="create_site_while_taking_to_ria">Create site while talking to RIA</string>
     <string name="log_in"> Log In</string>
     <string name="complete_task_to_increase_site_score">Complete the task below to increase your site score.</string>
     <string name="high_score_translate_more_traffic">Higher scores translates more traffic to your site.</string>
@@ -859,7 +863,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="email_in_small">Email</string>
     <string name="business_contact">Business Contacts</string>
     <string name="donot_like_it_tap_on_card">Dont like it? Tap on card to change</string>
-    <string name="create_website">CREATE MY WEBSITE</string>
+    <string name="create_website">CREATE MY WEBSITE </string>
     <string name="by_pressing_above_button_to_agree">By clicking Login, you agree to our Terms and Conditions and that you have read our Privacy Policy</string>
     <string name="policy_terms">Policy and Terms</string>
     <string name="text">text</string>
@@ -1295,5 +1299,23 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="domain_characters">-0123456789abcdefghijklmnopqrstuvwxyz</string>
     <string name="fb_page_default_logo_message">We uploaded a default profile image for you as your business logo is too small.</string>
     <string name="business_profile_incomplete">Please complete all the steps in site health and reconnect your Facebook account to create your Facebook page</string>
+    <string name="sign_up_with_ria">Sign up with ria</string>
+    <string name="ria_chat_message">And I\'ll help you get\nyour website up\nand running\nin no time\nat all.</string>
+    <string name="ria_chat_header">Hi, I\'m Ria.</string>
+
+    <string name="enter_street_address">Enter Street Address</string>
+    <string name="enter_pin_code">Enter Pin Code</string>
+    <string name="plot_number_and_street_address">PLOT NUMBER AND STREET ADDRESS</string>
+    <string name="locality">LOCALITY</string>
+    <string name="mobile_number">MOBILE NUMBER</string>
+    <string name="your_website_addres">YOUR WEBSITE ADDRESS</string>
+    <string name="otp_sent_on_mobile">OTP SENT ON MOBILE NUMBER</string>
+    <string name="business_name_ria">BUSINESS NAME</string>
+    <string name="business_category_ria">BUSINESS CATEGORY</string>
+    <string name="email_address_ria">EMAIL ADDRESS</string>
+    <string name="city_ria">CITY</string>
+    <string name="country_ria">COUNTRY</string>
+    <string name="pin_code_ria">PIN/ZIP CODE</string>
+    <string name="number_already_exists">This number already exists.Please enter another number</string>
 
 </resources>

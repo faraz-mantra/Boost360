@@ -204,6 +204,18 @@ public class Methods {
                 ,context); // activity where it is displayed*/
     }
 
+    public static void showSnackBarNegative(View mView,String msg){
+        android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(mView, msg, android.support.design.widget.Snackbar.LENGTH_LONG);
+        snackBar.getView().setBackgroundColor(Color.parseColor("#E02200"));
+        snackBar.show();
+        /*SnackbarManager.show(
+                Snackbar.with(context) // context
+                        .text(msg) // text to be displayed
+                        .textColor(Color.WHITE) // change the text color
+                        .color(Color.parseColor("#E02200")) // change the background color
+                ,context); // activity where it is displayed*/
+    }
+
     public static void snackbarNoInternet(Activity context){
         android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), context.getString(R.string.noInternet), android.support.design.widget.Snackbar.LENGTH_LONG);
         snackBar.getView().setBackgroundColor(Color.parseColor("#E02200"));

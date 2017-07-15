@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="AppTheme.Base"> 
-    
+    <style name="AppTheme" parent="AppTheme.Base">
 
-        
+
     </style>
-    
+
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- customize the color palette -->
         <item name="colorPrimary">@color/primaryColor</item>
@@ -17,6 +16,7 @@
         <item name="colorControlNormal">#eeeeee</item>
         <item name="android:windowDisablePreview">true</item>
     </style>
+
     <style name="AppTheme.Splash" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- customize the color palette -->
         <item name="colorPrimary">@color/primaryColor</item>
@@ -25,6 +25,12 @@
         <item name="colorControlActivated">@color/accentColor</item>
         <item name="colorControlHighlight">@color/accentColor</item>
         <item name="colorControlNormal">#eeeeee</item>
+    </style>
+
+    <style name="MyCustomToolBarTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textColorSecondary">#FFFFFF</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_action_back</item>
     </style>
 
     <style name="MyCustomToolBarEditBoxTheme" parent="ThemeOverlay.AppCompat.Light">
@@ -45,6 +51,16 @@
         <item name="android:layout_marginLeft">24dp</item>
     </style>
 
+    <style name="SignUp_EditText_Style_Ria" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="android:gravity">bottom</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">#383838</item>
+        <item name="android:textColorHint">#B6B6B6</item>
+        <item name="android:layout_marginLeft">10dp</item>
+    </style>
 
     <style name="SignUp_LinearLayout_Style" parent="Theme.AppCompat.Light.NoActionBar">
 
@@ -58,7 +74,7 @@
 
     <style name="white_label_style" parent="Theme.AppCompat.Light.NoActionBar">
 
-       <item name="android:background">@color/primaryColor</item>
+        <item name="android:background">@color/primaryColor</item>
     </style>
 
     <string name="save">SAVE</string>

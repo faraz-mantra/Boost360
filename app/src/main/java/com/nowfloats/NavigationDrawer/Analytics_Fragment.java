@@ -1,7 +1,6 @@
 package com.nowfloats.NavigationDrawer;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -60,7 +59,6 @@ import com.nowfloats.NavigationDrawer.model.CoordinatesSet;
 import com.nowfloats.NavigationDrawer.model.RiaCardModel;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NavigationDrawer.model.Section;
-import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
@@ -119,7 +117,7 @@ public class Analytics_Fragment extends Fragment {
     public void onResume() {
 
         //Log.d("FCM Token", FirebaseInstanceId.getInstance().getToken());
-        getFPDetails(getActivity(), session.getFPID(), Constants.clientId, bus);
+//        getFPDetails(getActivity(), session.getFPID(), Constants.clientId, bus);
 
         MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT,null);
         if(!Util.isNullOrEmpty(session.getVisitorsCount()))
@@ -189,9 +187,9 @@ public class Analytics_Fragment extends Fragment {
         }catch(Exception e){e.printStackTrace();}
 //        }
     }
-    private void getFPDetails(Activity activity, String fpId, String clientId, Bus bus) {
-        new Get_FP_Details_Service(activity,fpId,clientId,bus);
-    }
+//    private void getFPDetails(Activity activity, String fpId, String clientId, Bus bus) {
+//        new Get_FP_Details_Service(activity,fpId,clientId,bus);
+//    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_analytics, container, false);
@@ -414,7 +412,7 @@ public class Analytics_Fragment extends Fragment {
     }
 
     private void initRiaCard() {
-        RestAdapter riaCardAdapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_MEMORY_API_URL)
+        RestAdapter riaCardAdapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_MEMORY_TEST_API_URL)
                 /*.setLogLevel(RestAdapter.LogLevel.FULL)
                 .setLog(new AndroidLog("Retrofit Response"))*/
                 .build();

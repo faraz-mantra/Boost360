@@ -163,6 +163,7 @@ public class Login_MainActivity extends AppCompatActivity implements
                 }
             }
         });
+
         //getPermission();
     }
 
@@ -186,7 +187,7 @@ public class Login_MainActivity extends AppCompatActivity implements
 
     @Override
     public void onClick(View v) {
-        if(v.getId()==R.id.forgotPwdTextView   ){
+        if(v.getId()==R.id.forgotPwdTextView){
             new MaterialDialog.Builder(this)
                     .title(getString(R.string.forgot_password))
                     .inputType(InputType.TYPE_CLASS_TEXT)
@@ -200,8 +201,8 @@ public class Login_MainActivity extends AppCompatActivity implements
                                     sendPasswordToEmail(enteredText);
                                     dialog.dismiss();
                                 } else {
-                                     YoYo.with(Techniques.Shake).playOn(dialog.getInputEditText());
-                                     Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.enter_correct_user_name));
+                                    YoYo.with(Techniques.Shake).playOn(dialog.getInputEditText());
+                                    Methods.showSnackBarNegative(Login_MainActivity.this, getString(R.string.enter_correct_user_name));
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -220,6 +221,10 @@ public class Login_MainActivity extends AppCompatActivity implements
     public void authenticationStatus(String value) {
         if(value.equals("Success"))
         {
+
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList("message",new ArrayList<FloatsMessageModel>());
+            dashboardIntent.putExtras(bundle);
 
             Date date = new Date(System.currentTimeMillis());
             String dateString = date.toString();
@@ -274,13 +279,13 @@ public class Login_MainActivity extends AppCompatActivity implements
     }
 
 
-    @Subscribe
-    public void getMessages(ArrayList<FloatsMessageModel> floats){
-        Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("message",floats);
-        dashboardIntent.putExtras(bundle);
-        authenticationStatus("Success");
-    }
+//    @Subscribe
+//    public void getMessages(ArrayList<FloatsMessageModel> floats){
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelableArrayList("message",floats);
+//        dashboardIntent.putExtras(bundle);
+//        authenticationStatus("Success");
+//    }
 
     protected void sendPasswordToEmail(String enteredText) {
         // TODO Auto-generated method stub
@@ -425,8 +430,8 @@ public class Login_MainActivity extends AppCompatActivity implements
                         .show();
             }
             else{*/
-                requestPermissions(permission,READ_MESSAGES_ID);
-           // }
+            requestPermissions(permission,READ_MESSAGES_ID);
+            // }
 
         }
 
@@ -435,12 +440,12 @@ public class Login_MainActivity extends AppCompatActivity implements
     // this method called when user react on permissions
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-       switch(requestCode){
-           case READ_MESSAGES_ID:
-               //getPermission();
-               break;
-           default:
-               break;
-       }
+        switch(requestCode){
+            case READ_MESSAGES_ID:
+                //getPermission();
+                break;
+            default:
+                break;
+        }
     }
 }

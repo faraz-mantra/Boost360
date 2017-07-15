@@ -1353,7 +1353,7 @@ public class TwoWayView extends AdapterView<ListAdapter> implements
                     case TOUCH_MODE_DOWN:
                     case TOUCH_MODE_TAP:
                     case TOUCH_MODE_DONE_WAITING:
-                        // Check if we have moved far enough that it looks more like a
+                        // sent_check if we have moved far enough that it looks more like a
                         // scroll than a tap
                         maybeStartScrolling(delta);
                         break;

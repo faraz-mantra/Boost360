@@ -13,11 +13,13 @@
             <option value="$PROJECT_DIR$/app/libs" />
             <option value="$PROJECT_DIR$/app/libs/libraries" />
             <option value="$PROJECT_DIR$/app/libs/libraries/volley" />
+            <option value="$PROJECT_DIR$/bubblebutton" />
             <option value="$PROJECT_DIR$/cropper" />
             <option value="$PROJECT_DIR$/instamojoLib" />
             <option value="$PROJECT_DIR$/library" />
             <option value="$PROJECT_DIR$/messagelibrary" />
             <option value="$PROJECT_DIR$/mixpanel" />
+            <option value="$PROJECT_DIR$/riachatsdkMain" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

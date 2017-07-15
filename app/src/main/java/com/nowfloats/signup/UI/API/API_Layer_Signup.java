@@ -29,6 +29,7 @@ public class API_Layer_Signup {
 
         public void CheckUniqueNumber_postExecute(String value) ;
 
+        public void CheckUniqueNumber_postExecute(String value,String phoneNumber) ;
 
     }
 
@@ -124,11 +125,16 @@ public class API_Layer_Signup {
                 if (!Util.isNullOrEmpty(result)) {
                     if (result.equals("false")) {
                         checkUniqueNumberInterface.CheckUniqueNumber_postExecute("Success");
+                        checkUniqueNumberInterface.CheckUniqueNumber_postExecute("Success",mobileNumber);
 
                     } else {
                         checkUniqueNumberInterface.CheckUniqueNumber_postExecute("Failure");
+                        checkUniqueNumberInterface.CheckUniqueNumber_postExecute(result,mobileNumber);
                     }
 
+                }else{
+                    checkUniqueNumberInterface.CheckUniqueNumber_postExecute("Failure");
+                    checkUniqueNumberInterface.CheckUniqueNumber_postExecute("Failure",mobileNumber);
                 }
             }
 
