@@ -482,9 +482,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     showErrorMessage("Please Enter a valid E-mail");
                 return matcher.matches();
             case Constants.ButtonType.TYPE_GET_PHONE_NUMBER:
-                if (!input.matches("\\d{6,15}$"))
+                if (!input.matches("\\(?([0-9]{3})\\)?([ .-]?)([0-9]{4,9})$"))
                     showErrorMessage("Please Enter a valid Phone Number");
-                return input.matches("\\d{6,15}$");
+                return input.matches("\\(?([0-9]{3})\\)?([ .-]?)([0-9]{4,9})$");
             case Constants.ButtonType.TYPE_GET_ITEM_FROM_SOURCE:
                 if (mAutoComplDataHash.get(input) == null)
                     showErrorMessage("This Category is not available");
@@ -512,6 +512,10 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         if (requestCode == Picker.PICK_IMAGE_CAMERA && resultCode == RESULT_OK) {
             imagePicker.submit(data);
+        }else if(requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && (data==null || data.getData()==null)) {
+            showNextNode(mCurrNodeId);
+        }else if(requestCode == Picker.PICK_IMAGE_CAMERA  && (data==null || data.getData()==null)){
+            showNextNode(mCurrNodeId);
         } else if (requestCode == Picker.PICK_IMAGE_DEVICE && resultCode == RESULT_OK) {
             galleryImagePicker.submit(data);
         } else if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
@@ -1744,7 +1748,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 //(RiaOnBoardingActivity.this, getString(R.string.something_went_wrong));
             }
         });
-
+//
 //        List<RiaCardModel> posts = new ArrayList<RiaCardModel>();
 //        Gson mGson = new Gson();
 //        posts = Arrays.asList(mGson.fromJson(loadJSONFromAsset(), RiaCardModel[].class));

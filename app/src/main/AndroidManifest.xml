@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2017050031"
-    android:versionName="4.6.6">
+    android:versionCode="2017070016"
+    android:versionName="4.7.3">
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
@@ -511,7 +511,8 @@
             android:noHistory="true"
             android:theme="@style/Theme.custom"
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
-        <activity android:name="com.nowfloats.signup.UI.UI.RiaChatInitActivity"></activity>
+        <activity android:name="com.nowfloats.signup.UI.UI.RiaChatInitActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
