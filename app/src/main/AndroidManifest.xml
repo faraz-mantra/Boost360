@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2017050031"
-    android:versionName="4.6.6">
+    android:versionCode="2017070016"
+    android:versionName="4.7.3">
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
@@ -95,8 +95,8 @@
         <activity
             android:name="com.nowfloats.signup.UI.UI.PreSignUpActivityRia"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait">
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -509,11 +509,9 @@
             android:label="@string/app_name"
             android:launchMode="singleInstance"
             android:noHistory="true"
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.custom"
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
-        <activity
-            android:name="com.nowfloats.signup.UI.UI.RiaChatInitActivity"
+        <activity android:name="com.nowfloats.signup.UI.UI.RiaChatInitActivity"
             android:screenOrientation="portrait"></activity>
     </application>
 
