@@ -7,12 +7,11 @@ package com.nowfloats.BusinessProfile.UI.API;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
-import android.widget.Toast;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.nowfloats.BusinessProfile.UI.Model.BusinessAddressUpdateModel;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Methods;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,6 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.android.AndroidLog;
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.POST;
@@ -72,26 +70,23 @@ public class BusinessAddressUpdateApi {
         pd.show();
         RestAdapter adapter=new RestAdapter.Builder()
                 .setEndpoint(Constants.NOW_FLOATS_API_URL)
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .setLog(new AndroidLog("ggg"))
+                /*.setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLog(new AndroidLog("ggg"))*/
                 .build();
         UpdateCallApi callApi=adapter.create(UpdateCallApi.class);
         callApi.updateAddress(addressModel, new Callback<JsonArray>() {
             @Override
             public void success(JsonArray jsonElements, Response response) {
-                if(pd!=null)
+                if(pd!=null && pd.isShowing())
                     pd.dismiss();
                 if(response.getStatus()!=200 ||jsonElements==null) return;
-                Toast.makeText(appContext,"Update Address successful",Toast.LENGTH_SHORT).show();
+                Methods.showSnackBarPositive(appContext,"Update Address successful");
                 NewMapViewDialogBusinessAddress.updatingPostionFromMap = true;
-                for (JsonElement element:jsonElements) {
-                    //Log.v("ggg","json update elements"+element.getAsString());
-                }
             }
 
             @Override
             public void failure(RetrofitError error) {
-                if(pd!=null)
+                if(pd!=null && pd.isShowing())
                     pd.dismiss();
                 //Log.v("ggg",error+"update address json error");
             }

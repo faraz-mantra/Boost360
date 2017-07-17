@@ -1,26 +1,24 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:background="@color/screen_bg">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
     <include
         android:id="@+id/app_bar"
         layout="@layout/tool_bar_business_profile" />
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@+id/app_bar">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:focusable="false"
         android:focusableInTouchMode="true"
         android:layout_marginTop="5dp"
         android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:layout_marginLeft="2dp">
+        android:paddingRight="25dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="52dp"
@@ -42,7 +40,7 @@
                 android:gravity="bottom"
                 android:textSize="14sp"
                 android:textColor="#575757">
-                </EditText>
+            </EditText>
 
         </LinearLayout>
 
@@ -237,18 +235,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
+                android:layout_marginBottom="10dp"
                 android:textColor="@color/gray_transparent"
                 android:text="@string/facebook_url_message"/>
         </LinearLayout>
 
     </LinearLayout>
-</LinearLayout>
+</ScrollView>
+
 
     <ProgressBar
         android:id="@+id/progressbar"
         android:visibility="gone"
+        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
 
-</FrameLayout>
+</RelativeLayout>

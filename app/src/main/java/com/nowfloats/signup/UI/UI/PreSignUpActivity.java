@@ -64,6 +64,7 @@ public class PreSignUpActivity extends FragmentActivity {
                 Intent intent = new Intent(PreSignUpActivity.this, Login_MainActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                finish();
 
             }
         });
@@ -75,6 +76,7 @@ public class PreSignUpActivity extends FragmentActivity {
                 MixPanelController.track(EventKeysWL.CREATE_WEBSITE_BUTTON, null);
                 Intent signUpIntent = new Intent(PreSignUpActivity.this, RiaChatInitActivity.class);
                 startActivity(signUpIntent);
+                finish();
             }
         });
     }

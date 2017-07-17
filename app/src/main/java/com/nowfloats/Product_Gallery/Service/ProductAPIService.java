@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.nowfloats.Product_Gallery.LoadMoreProductEvent;
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
-import com.nowfloats.Product_Gallery.Product_Detail_Activity;
+import com.nowfloats.Product_Gallery.Product_Detail_Activity_V45;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
@@ -37,15 +37,15 @@ public class ProductAPIService {
                 @Override
                 public void success(ArrayList<ProductListModel> data, Response response) {
                     try {
-                        if (map.get("skipBy").equals("0") && Product_Detail_Activity.replaceImage) {
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (Product_Gallery_Fragment.progressLayout != null)
+                                    Product_Gallery_Fragment.progressLayout.setVisibility(View.GONE);
+                            }
+                        });
+                        if (map.get("skipBy").equals("0") && Product_Detail_Activity_V45.replaceImage) {
                             Product_Gallery_Fragment.productItemModelList = data;
-                            activity.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (Product_Gallery_Fragment.progressLayout != null)
-                                        Product_Gallery_Fragment.progressLayout.setVisibility(View.GONE);
-                                }
-                            });
                         }
                         if (bus != null) {
                             if (map.get("skipBy").equals("0")) {

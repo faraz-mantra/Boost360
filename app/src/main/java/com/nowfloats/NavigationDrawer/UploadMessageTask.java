@@ -15,6 +15,7 @@ import com.nowfloats.NavigationDrawer.model.PostTaskModel;
 import com.nowfloats.NavigationDrawer.model.PostTextSuccessEvent;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.UploadLargeImage;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
@@ -23,8 +24,6 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -39,7 +38,7 @@ import retrofit.http.Headers;
 import retrofit.http.PUT;
 import retrofit.http.QueryMap;
 
-public final class UploadMessageTask{
+public final class UploadMessageTask implements UploadLargeImage.ImageCompressed{
 
     private Activity appContext 	= null;
     String path 					= null;
@@ -47,6 +46,7 @@ public final class UploadMessageTask{
     String subscribers = "false";
     PostTaskModel obj;
     UserSessionManager session;
+    String textId;
 
     public UploadMessageTask(Activity context, String path,
                              PostTaskModel offerObj,UserSessionManager session) {
@@ -54,6 +54,20 @@ public final class UploadMessageTask{
         this.obj = offerObj;
         this.path	= 	path;
         this.session = session;
+    }
+
+    @Override
+    public void onImageCompressed(Bitmap bitmap) {
+        if(bitmap == null){
+            return;
+        }
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+
+        if (!Util.isNullOrEmpty(textId)) {
+            uploadImage(b, textId);
+        }
     }
 
     public interface UploadPostInterface {
@@ -73,7 +87,8 @@ public final class UploadMessageTask{
                 public void success(String txtId, Response retroResponse) {
                     //Log.d("Response", "Text Response : " + txtId);
                     if (!Util.isNullOrEmpty(txtId) && !Util.isNullOrEmpty(path) && path.length() > 1) {
-                        uploadImage(path, txtId);
+                        textId = txtId;
+                        new UploadLargeImage(appContext,UploadMessageTask.this,path,720,720).execute();
                     } else if (txtId != null && txtId.length() > 1) {
                         success = true;
                         //Constants.createMsg = false;
@@ -112,7 +127,7 @@ public final class UploadMessageTask{
         }
     }
 
-    public void uploadImage(String imagePath,final String response){
+    public void uploadImage(final byte[] bitmapdata, final String response){
         try{
             UUID uuid = UUID.randomUUID();
             String s_uuid = uuid.toString();
@@ -124,32 +139,16 @@ public final class UploadMessageTask{
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
-            HashMap<String,String> values = new HashMap<>();
+           /* HashMap<String,String> values = new HashMap<>();
             values.put("clientId",Constants.clientId);
             values.put("bizMessageId",response);
             values.put("requestType","sequential");
             values.put("requestId",s_uuid);
             values.put("sendToSubscribers",subscribers);
             values.put("totalChunks","1");
-            values.put("currentChunkNumber","1");
+            values.put("currentChunkNumber","1");*/
 
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            File img = new File(imagePath);
-            File f = new File(img.getAbsolutePath() + File.separator );
-            try {
-                f.createNewFile();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
 
-            Bitmap bmp = Util.getBitmap(imagePath,appContext);
-            if((f.length()/1024)>100){
-                bmp.compress(Bitmap.CompressFormat.JPEG, 30, bos);
-            } else{
-                bmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-            }
-
-            final byte[] bitmapdata = bos.toByteArray();
             final String uri = Constants.PictureFloatImgCreationURI+"?clientId="+ Constants.clientId+"&bizMessageId="+response+"&requestType=sequential&requestId="
                     + s_uuid + "&sendToSubscribers="+Create_Message_Activity.tosubscribers+"&"+ "totalChunks=1&currentChunkNumber=1&socialParmeters=" + obj.socialParameters ;
 

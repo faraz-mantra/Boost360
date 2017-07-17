@@ -20,15 +20,15 @@
             android:layout_marginLeft="10dp"
             android:padding="7dp"
             />
-            <ImageView
-                android:id="@+id/deleteGalleryImage"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/delete_dustbin_button"
-                android:layout_gravity="right"
-                android:padding="6dp"
-                android:layout_marginRight="10dp"
-                />
+        <ImageView
+            android:id="@+id/deleteGalleryImage"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/delete_dustbin_button"
+            android:layout_gravity="right"
+            android:padding="6dp"
+            android:layout_marginRight="10dp"
+            />
     </FrameLayout>
 
 

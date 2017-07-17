@@ -69,8 +69,8 @@ public class LinePageIndicator extends View implements PageIndicator {
         final Resources res = getResources();
 
         //Load defaults from resources
-        final int defaultSelectedColor = res.getColor(R.color.default_line_indicator_selected_color);
-        final int defaultUnselectedColor = res.getColor(R.color.default_line_indicator_unselected_color);
+        //final int defaultSelectedColor = res.getColor(R.color.default_line_indicator_selected_color);
+        //final int defaultUnselectedColor = res.getColor(R.color.default_line_indicator_unselected_color);
         final float defaultLineWidth = res.getDimension(R.dimen.default_line_indicator_line_width);
         final float defaultGapWidth = res.getDimension(R.dimen.default_line_indicator_gap_width);
         final float defaultStrokeWidth = res.getDimension(R.dimen.default_line_indicator_stroke_width);
@@ -83,8 +83,8 @@ public class LinePageIndicator extends View implements PageIndicator {
         mLineWidth = a.getDimension(R.styleable.LinePageIndicator_lineWidth, defaultLineWidth);
         mGapWidth = a.getDimension(R.styleable.LinePageIndicator_gapWidth, defaultGapWidth);
         setStrokeWidth(a.getDimension(R.styleable.LinePageIndicator_strokeWidth, defaultStrokeWidth));
-        mPaintUnselected.setColor(a.getColor(R.styleable.LinePageIndicator_unselectedColor, defaultUnselectedColor));
-        mPaintSelected.setColor(a.getColor(R.styleable.LinePageIndicator_selectedColor, defaultSelectedColor));
+       // mPaintUnselected.setColor(a.getColor(R.styleable.LinePageIndicator_unselectedColor, defaultUnselectedColor));
+        //mPaintSelected.setColor(a.getColor(R.styleable.LinePageIndicator_selectedColor, defaultSelectedColor));
 
         Drawable background = a.getDrawable(R.styleable.LinePageIndicator_android_background);
         if (background != null) {

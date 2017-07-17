@@ -25,7 +25,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Card_Full_View_MainActivity extends AppCompatActivity implements Home_View_Card_Delete.CardRefresh {
@@ -137,8 +136,8 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if(id==android.R.id.home){
-            finish();
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

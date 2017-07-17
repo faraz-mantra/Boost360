@@ -714,7 +714,8 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 phoneEditText.setEnabled(false);
                 phoneEditText.setClickable(false);
 
-                phoneEditText.setTextColor(getResources().getColor(R.color.gray));
+                countryPhoneCode.setTextColor(getResources().getColor(R.color.light_gray));
+                phoneEditText.setTextColor(getResources().getColor(R.color.light_gray));
 
             } else {
 
@@ -740,22 +741,22 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 ivWebsiteStatus.setBackgroundResource(R.drawable.green_check);
                 fpTag = mBundle.getString(Save_Website_Address, "");
                 etWebsiteAddress.setText(mBundle.getString(Save_Website_Address, ""));
-                etWebsiteAddress.setClickable(false);
-                etWebsiteAddress.setEnabled(false);
-                etWebsiteAddress.setTextColor(getResources().getColor(R.color.gray));
 
             } else {
 
-                etWebsiteAddress.setClickable(true);
-                etWebsiteAddress.setEnabled(true);
+                ivWebsiteStatus.setBackgroundResource(R.drawable.warning);
                 API_Layer_Signup.getTag(activity, businessNameEditText.getText().toString(),
                         countryEditText.getText().toString(), cityEditText.getText().toString(),
                         businessCategoryEditText.getText().toString());
-                etWebsiteAddress.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
 
-                etWebsiteAddress.setTextColor(getResources().getColor(R.color.black));
 
             }
+
+            etWebsiteAddress.setClickable(true);
+            etWebsiteAddress.setEnabled(true);
+//            etWebsiteAddress.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
+            etWebsiteAddress.setTextColor(getResources().getColor(R.color.black));
+
 
             if (!TextUtils.isEmpty(mBundle.getString(Save_Lat))) {
                 data_lat = mBundle.getString(Save_Lat);

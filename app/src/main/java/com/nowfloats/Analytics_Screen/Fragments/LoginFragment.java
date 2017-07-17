@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -32,7 +33,6 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NFXApi.NfxRequestClient;
-import com.nowfloats.Twitter.TwitterConstants;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
@@ -119,21 +119,22 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
         session = new UserSessionManager(getContext(), getActivity());
         pref = mContext.getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
         prefsEditor = pref.edit();
-        mSharedPreferences = mContext.getSharedPreferences(TwitterConstants.PREF_NAME, Context.MODE_PRIVATE);
 
         Button button = (Button) view.findViewById(R.id.facebook_login);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fbData();
+                fbData(FROM_FB_PAGE);
             }
         });
     }
 
-    public void fbData() {
-        List<String> readPermissions = Arrays.asList("email", "public_profile", "user_friends", "read_insights", "business_management");
+    public void fbData(final int from) {
+        //AccessToken.getCurrentAccessToken()
+        List<String> readPermissions=Arrays.asList("email", "public_profile", "user_friends", "read_insights", "business_management");
         final List<String> publishPermissions = Arrays.asList("publish_actions", "publish_pages", "manage_pages");
         final LoginManager loginManager = LoginManager.getInstance();
+
         loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -142,60 +143,60 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
                 // Log.v("ggg",contain+"permission"+loginResult.getAccessToken().getPermissions());
                 if(!contain){
                     loginManager.logInWithPublishPermissions(LoginFragment.this, publishPermissions);
-                } else {
+                }else {
 
-                    final String FACEBOOK_ACCESS_TOKEN = loginResult.getAccessToken().getToken();
-
-                    if (Profile.getCurrentProfile() == null) {
-                        Bundle parameters = new Bundle();
-                        parameters.putString("fields", "id,name,email");
-                        GraphRequest meRequest = GraphRequest.newMeRequest(loginResult.getAccessToken(),
-                                new GraphRequest.GraphJSONObjectCallback() {
-                                    @Override
-                                    public void onCompleted(
-                                            JSONObject object,
-                                            GraphResponse response) {
-                                        try {
-                                            //Log.v("ggg","callforpagewithnull");
-                                            JSONObject resp = response.getJSONObject();
-                                            saveFbLoginResults(resp.getString("name"),
-                                                    FACEBOOK_ACCESS_TOKEN,
-                                                    resp.getString("id"));
-                                            fbPageData(FROM_FB_PAGE);
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                });
-                        meRequest.setParameters(parameters);
-                        meRequest.executeAsync();
-
-                    } else {
-                        //Log.v("ggg","callforpage");
-                        fbPageData(FROM_FB_PAGE);
-                        saveFbLoginResults(Profile.getCurrentProfile().getName(),
-                                FACEBOOK_ACCESS_TOKEN,
-                                Profile.getCurrentProfile().getId());
+                    //Log.v("ggg",FACEBOOK_ACCESS_TOKEN+"ppnull");
+                    if(Profile.getCurrentProfile()==null && from == FROM_FB_PAGE){
+                        getFacebookProfile(loginResult.getAccessToken(),from);
+                    }else {
+                        //Log.v("ggg",Profile.getCurrentProfile().toString());
+                        if(from == FROM_FB_PAGE) {
+                            saveFbLoginResults(Profile.getCurrentProfile().getName(),
+                                    loginResult.getAccessToken().getToken(),
+                                    Profile.getCurrentProfile().getId());
+                        }
+                        getFacebookPages(loginResult.getAccessToken(),from);
                     }
                 }
             }
 
             @Override
             public void onCancel() {
-                onFBError();
+                onFBPageError(from);
             }
 
             @Override
             public void onError(FacebookException error) {
-                onFBError();
-                error.printStackTrace();
-                LoginManager.getInstance().logOut();
-                com.facebook.AccessToken.refreshCurrentAccessTokenAsync();
+                onFBPageError(from);
+                //Log.v("ggg",error.toString()+"fberror");
             }
         });
         loginManager.logInWithReadPermissions(this, readPermissions);
     }
 
+    private void getFacebookProfile(final AccessToken accessToken, final int from){
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,name,email");
+        GraphRequest meRequest = GraphRequest.newMeRequest(accessToken,
+                new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(
+                            JSONObject object,
+                            GraphResponse response) {
+                        try {
+                            JSONObject resp = response.getJSONObject();
+                            saveFbLoginResults(resp.getString("name"),
+                                    accessToken.getToken(),
+                                    resp.getString("id"));
+                            getFacebookPages(accessToken,from);
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                });
+        meRequest.setParameters(parameters);
+        meRequest.executeAsync();
+    }
     private void saveFbLoginResults(String userName, String accessToken, String id) {
         //String FACEBOOK_USER_NAME = Profile.getCurrentProfile().getName();
         Constants.FACEBOOK_USER_ACCESS_ID = accessToken;
@@ -211,13 +212,14 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
                 .setmCallType(FBTYPE)
                 .setmName(userName);
         requestClient.connectNfx();
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if(!isAdded())
+        if(isAdded()) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
                     pd = ProgressDialog.show(getActivity(), "", "Wait While Subscribing...");
-            }
-        });
+                }
+            });
+        }
 
         //BoostLog.d("ggg", session.getFPID());
 
@@ -232,63 +234,29 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
         prefsEditor.commit();
     }
 
-    public void fbPageData(final int from) {
+    public void getFacebookPages(AccessToken accessToken, final int from){
+        GraphRequest request = GraphRequest.newGraphPathRequest(
+                accessToken,
+                "/me/accounts",
+                new GraphRequest.Callback() {
+                    @Override
+                    public void onCompleted(GraphResponse response) {
+                        // Insert your code here
+                        processGraphResponse(response, from);
+                    }
+                });
 
-        List<String> readPermissions = Arrays.asList("email", "public_profile", "user_friends", "read_insights", "business_management");
-        final List<String> publishPermissions = Arrays.asList("publish_actions", "publish_pages", "manage_pages");
-        final LoginManager loginManager = LoginManager.getInstance();
-
-        loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                boolean contain=loginResult.getAccessToken().getPermissions().containsAll(publishPermissions);
-                if (!contain) {
-                    loginManager.logInWithPublishPermissions(getActivity(), publishPermissions);
-                } else {
-                    GraphRequest request = GraphRequest.newGraphPathRequest(
-                            loginResult.getAccessToken(),
-                            "/me/accounts",
-                            new GraphRequest.Callback() {
-                                @Override
-                                public void onCompleted(GraphResponse response) {
-                                    // Insert your code here
-                                    processGraphResponse(response, from);
-                                }
-                            });
-
-                    request.executeAsync();
-                }
-
-            }
-
-            @Override
-            public void onCancel() {
-                onFBPageError();
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                onFBPageError();
-                error.printStackTrace();
-                LoginManager.getInstance().logOut();
-                com.facebook.AccessToken.refreshCurrentAccessTokenAsync();
-            }
-        });
-        loginManager.logInWithReadPermissions(this, readPermissions);
+        request.executeAsync();
     }
+    void onFBPageError(int from) {
+        //Log.v("ggg","fbpage error");
+       if(from==FROM_FB_PAGE){
+            Constants.fbPageShareEnabled = false;
+            prefsEditor.putBoolean("fbPageShareEnabled", false).apply();
+        }
+        LoginManager.getInstance().logOut();
+        com.facebook.AccessToken.refreshCurrentAccessTokenAsync();
 
-    void onFBError() {
-        //Log.v("ggg","fberror");
-        Constants.fbShareEnabled = false;
-        prefsEditor.putBoolean("fbShareEnabled", false);
-        prefsEditor.commit();
-    }
-
-    void onFBPageError() {
-        //Log.v("ggg","fbpageerror");
-        Constants.fbPageShareEnabled = false;
-        prefsEditor.putBoolean("fbPageShareEnabled", false);
-        prefsEditor.commit();
     }
 
     @Override
@@ -391,7 +359,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
                                         }).show();
                             } else {
 
-                                onFBPageError();
+                                onFBPageError(from);
                                 NfxRequestClient requestClient = new NfxRequestClient(LoginFragment.this)
                                         .setmFpId(session.getFPID())
                                         .setmType("facebookpage")
@@ -427,7 +395,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
                 .setmCallType(FBPAGETYPE)
                 .setmName(pageName);
         requestClient.connectNfx();
-        if(!isAdded())
+        if(isAdded())
             pd = ProgressDialog.show(mContext, "", getString(R.string.wait_while_subscribing));
 
         DataBase dataBase = new DataBase(getActivity());
@@ -513,6 +481,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
                 MixPanelController.track(EventKeysWL.FACEBOOK_ANAYTICS,null);
                 break;
             case FBPAGETYPE://not put in pref
+                Constants.fbPageShareEnabled = true;
                 prefsEditor.putBoolean("fbPageShareEnabled",true);
                 prefsEditor.putInt("fbPageStatus",1);
                 prefsEditor.apply();

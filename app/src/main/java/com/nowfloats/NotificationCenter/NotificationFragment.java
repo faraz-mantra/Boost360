@@ -209,7 +209,7 @@ public class NotificationFragment extends Fragment{
         }
     }
 
-    public static void getAlertCount(UserSessionManager session,NotificationInterface notificationInterface,final Bus bus){
+    public static void getAlertCount(final UserSessionManager session, NotificationInterface notificationInterface, final Bus bus){
 
         try{
         HashMap<String,String> map = new HashMap<>();
@@ -221,7 +221,7 @@ public class NotificationFragment extends Fragment{
             public void success(String s, Response response) {
                 Home_Fragment_Tab.alertCountVal = s;
                 bus.post(new AlertCountEvent(s));
-                MixPanelController.track("AlertCount-"+s, null);
+                MixPanelController.setProperties("AlertCount",s);
             }
 
             @Override

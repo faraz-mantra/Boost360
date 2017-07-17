@@ -487,7 +487,8 @@ public class Product_Detail_Activity extends AppCompatActivity{
                         boolean flag = ValidateFields(false);
 
                         if (mProductImageList.isEmpty()){
-                            flag=false; Methods.showSnackBarNegative(activity,getString(R.string.upload_product_image));
+                            flag=false;
+                            Methods.showSnackBarNegative(activity,getString(R.string.upload_product_image));
                         }
                         if(flag){
                             productInterface.addProduct(values,new Callback<String>() {

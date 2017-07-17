@@ -102,22 +102,26 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
             addFragment(LOGIN_FACEBOOK,FACEBOOK);
         }
 
-        String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
-        //Log.v("ggg",quikrArray[3]+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase());
-        if("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
-            for (String category : quikrArray) {
-                if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
-                    spinner.setVisibility(View.VISIBLE);
-                    break;
+        if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+            spinner.setVisibility(View.GONE);
+        }else {
+            String[] quikrArray = getResources().getStringArray(R.array.quikr_widget);
+            //Log.v("ggg",quikrArray[3]+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase());
+            if ("91".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
+                for (String category : quikrArray) {
+                    if (category.contains(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY).toLowerCase())) {
+                        spinner.setVisibility(View.VISIBLE);
+                        break;
+                    }
                 }
             }
+            spinner.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    initiatePopupWindow(spinner);
+                }
+            });
         }
-        spinner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                initiatePopupWindow(spinner);
-            }
-        });
 
     }
     private void initiatePopupWindow(View image) {
@@ -126,6 +130,8 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
             popup = new PopupWindow(this);
             View layout = LayoutInflater.from(this).inflate(R.layout.pop_up_window, null);
             popup.setContentView(layout);
+            popup.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
+            popup.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
             popup.setOutsideTouchable(true);
             popup.setFocusable(true);
             popup.showAsDropDown(image,-10,0);
@@ -184,6 +190,7 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
         for (GetFacebookAnalyticsData.Datum data :list) {
             if("facebook".equalsIgnoreCase(data.getIdentifier())){
                 session.storeFacebookImpressions(String.valueOf(data.getValues().getPostImpressions()));
+                break;
             }
         }
     }
@@ -272,17 +279,14 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
 
                 transaction.replace(R.id.linearlayout,frag,"LoginFragment").commit();
                 break;
-            default:
-                break;
         }
     }
 
 
 
     private String makeUrl(String mType, String fpId){
-        String mAnalyticsUrl= Constants.NFX_WITH_NOWFLOATS+"/dataexchange/v1/fetch/analytics?" +
-                "identifier="+mType+"&nowfloats_id=";
-        return mAnalyticsUrl + fpId;
+        return Constants.NFX_WITH_NOWFLOATS+"/dataexchange/v1/fetch/analytics?" +
+                "identifier="+mType+"&nowfloats_id="+fpId;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

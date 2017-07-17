@@ -194,6 +194,7 @@
                         fontPath="Roboto-Light.ttf"
                         android:hint="@string/business_description"
                         android:text=""
+                        android:inputType="textCapSentences"
                         android:maxLines="3"
                         tools:ignore="MissingPrefix" />
                     <!--<TextView`

@@ -188,17 +188,12 @@ public class WebSiteAddressActivity extends AppCompatActivity  {
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
 
-                    //MixPanelController.track(EventKeysWL.WEBSITE_ADDRESS_SCREEN_EDIT_DOMAIN,null);
-                    // getEditTextBundle();
                     if(!termAndPolicyCheckbox.isChecked()) {
                         Toast.makeText(WebSiteAddressActivity.this, "You must agree with the terms and conditions to proceed", Toast.LENGTH_LONG).show();
                     }else if(addressTagValid){
                         MixPanelController.track("CreateMyWebsite", null);
                          createStore_retrofit(WebSiteAddressActivity.this,getJSONData(),bus);
-                    }else if(!termAndPolicyCheckbox.isChecked()){
-                        Toast.makeText(WebSiteAddressActivity.this, getString(R.string.terms_n_cond_toast), Toast.LENGTH_SHORT).show();
                     }
-
                     return true;
                 }
                 return false;

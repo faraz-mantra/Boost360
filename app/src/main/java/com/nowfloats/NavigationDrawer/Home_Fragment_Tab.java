@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
@@ -156,7 +157,9 @@ public class Home_Fragment_Tab extends Fragment {
         alertCountTv = (TextView)view.findViewById(R.id.alert_count_textview);
         bubbleOverlay = (LinearLayout) view.findViewById(R.id.floating_bubble_overlay);
         alertCountTv.setVisibility(View.GONE);
-        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+        String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
+
+        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") && "1".equals(paymentState)) {
             getProducts();
         }
 
@@ -301,7 +304,12 @@ public class Home_Fragment_Tab extends Fragment {
                     return;
                 }
                 isProductAvaiable = true;
-                checkOverlay(DrawOverLay.FromTab);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        checkOverlay(DrawOverLay.FromTab);
+                    }
+                },5000);
             }
 
             @Override
@@ -311,7 +319,7 @@ public class Home_Fragment_Tab extends Fragment {
         });
     }
 
-    private  void showBubble(){
+    private void showBubble(){
 
         if(!pref.getBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK,false)) {
             addOverlay();
