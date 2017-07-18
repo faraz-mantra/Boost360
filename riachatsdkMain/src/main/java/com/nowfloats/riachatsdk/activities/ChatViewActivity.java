@@ -152,7 +152,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     private List<Button> mButtonList = new ArrayList<>();
 
-    private String mCurrVarName = null,mNextNodeId = "-1",appVersion = "",mCurrNodeId,mCurrentDeepLink;
+    private String mCurrVarName = null, mNextNodeId = "-1", appVersion = "", mCurrNodeId, mCurrentDeepLink;
 
     private final String KEY_NEXT_NODE_ID = "NextNodeId";
 
@@ -190,22 +190,22 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
      **************************** CONSTANTS *******************************
      */
 
-        public static final String Save_Name = "nameKey";
-        public static final String Save_Cat = "categoryKey";
-        public static final String Save_Phone = "phoneNumberKey";
-        public static final String Save_Phone_code = "phoneCodeKey";
-        public static final String Save_Email = "emailKey";
-        public static final String Save_Country = "countryKey";
-        public static final String Save_City = "cityKey";
-        public static final String Save_Lat = "ria_latKey";
-        public static final String Save_Lng = "ria_lngKey";
+    public static final String Save_Name = "nameKey";
+    public static final String Save_Cat = "categoryKey";
+    public static final String Save_Phone = "phoneNumberKey";
+    public static final String Save_Phone_code = "phoneCodeKey";
+    public static final String Save_Email = "emailKey";
+    public static final String Save_Country = "countryKey";
+    public static final String Save_City = "cityKey";
+    public static final String Save_Lat = "ria_latKey";
+    public static final String Save_Lng = "ria_lngKey";
 
-        public static final String Save_Website_Address = "websiteAdressKey";
-        public static final String Save_Otp = "otpKey";
-        public static final String Save_IS_FP_AVAILABLE = "isFPAvailable";
-        public static final String Save_Pin_Code = "pincodeKey";
-        public static final String Save_Street_Address = "streetAddressKey";
-        public static final String Save_Locality = "localityKey";
+    public static final String Save_Website_Address = "websiteAdressKey";
+    public static final String Save_Otp = "otpKey";
+    public static final String Save_IS_FP_AVAILABLE = "isFPAvailable";
+    public static final String Save_Pin_Code = "pincodeKey";
+    public static final String Save_Street_Address = "streetAddressKey";
+    public static final String Save_Locality = "localityKey";
 
     /*
      **************************** CONSTANTS *******************************
@@ -280,7 +280,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         return false;
     }
 
-    private void initializeControls(){
+    private void initializeControls() {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -317,7 +317,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     }
 
-    private void setListeners(){
+    private void setListeners() {
 
         ivScrollDown.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1423,22 +1423,10 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                                 etChatInput.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
                             }
 
-                        } else {
-                            etChatInput.setInputType(InputType.TYPE_CLASS_TEXT);
-                        }
-
-                        if (TextUtils.isEmpty(tvPostfix.getText().toString())) {
-                            tvPostfix.setVisibility(View.GONE);
-                        } else {
-                            tvPostfix.setVisibility(View.VISIBLE);
-                        }
-
-
-                        /*
+                             /*
                          * setting input filters to edit text based on
                          * variable name
                          */
-                        if (!TextUtils.isEmpty(node.getVariableName())) {
 
                             if (node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_TAG)
                                     || node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_EXISTING_WEBSITE)) {
@@ -1477,9 +1465,18 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                             } else {
                                 etChatInput.setFilters(new InputFilter[]{});
                             }
+
                         } else {
+                            etChatInput.setInputType(InputType.TYPE_CLASS_TEXT);
                             etChatInput.setFilters(new InputFilter[]{});
                         }
+
+                        if (TextUtils.isEmpty(tvPostfix.getText().toString())) {
+                            tvPostfix.setVisibility(View.GONE);
+                        } else {
+                            tvPostfix.setVisibility(View.VISIBLE);
+                        }
+
 
                         cvChatInput.setVisibility(View.VISIBLE);
                     }
@@ -1798,7 +1795,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                                     continue;
                                 String keyPath = "$." + btn.getApiResponseMatchKey();
                                 String val = context.read(keyPath, String.class);
-                                if (val != null && val.equals(btn.getApiResponseMatchValue())) {
+                                if (val != null && val.equalsIgnoreCase(btn.getApiResponseMatchValue())) {
                                     nextNodeId = btn.getNextNodeId();
                                     break;
                                 }
@@ -2048,6 +2045,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 showNextNode(mNextNodeId);
             }
         }
+
     }
 
     @Override
