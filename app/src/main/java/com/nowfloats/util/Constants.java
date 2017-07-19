@@ -13,6 +13,7 @@ import com.nowfloats.Business_Enquiries.Model.Entity_model;
 import com.nowfloats.NotificationCenter.NotificationInterface;
 import com.nowfloats.Store.iapUtils.Purchase;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.DataMap;
+import com.squareup.okhttp.OkHttpClient;
 import com.thinksity.Specific;
 
 import org.json.JSONArray;
@@ -23,15 +24,17 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import retrofit.RestAdapter;
 import retrofit.android.AndroidLog;
+import retrofit.client.OkClient;
 
 
 public class Constants {
     public static final boolean APK_MODE_RELEASE = true;
     public static final String APP_TAG = "Boost App";
-    public static final String RIA_NODE_DATA = "riaNodeDatas" ;
+    public static final String RIA_NODE_DATA = "riaNodeDatas";
     public static final int VISITS_TABLE = 0;
     public static final int VISITORS_TABLE = 1;
     public static final String PDF_LOADER_URL = "https://drive.google.com/viewerng/viewer?embedded=true&url=";
@@ -57,7 +60,7 @@ public class Constants {
     public static String clientId1 = "39EB5FD120DC4394A10301B108030CB70FA553E91F984C829AB6ADE23B6767B7";
     public static String license_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmtfDikZcbWSvq3f+pEsAL5KQCNy3X96j++Z1PnjvidpJCEe0/S1xdPs4CfT3JkeQl7SNps/9cPu3EuOOFdx76QPpAqlqXHMKMwM9H+ikx5iUWPSilRjwLfJNjbJZT2xpuI6k32VyHhqLyU4rR95nrAPTGrocyyV1jtTFSYt77YZew8YfeePlcB2STLP3Ookho37Ah1QovelfdaG5ZNWz5OPYKnificSPyYjioYkfUmpnUJvN0INYMGFKefhfPtWPx5UCiQp15A6ir4wH0wVL3/QksonIb0JMiXpuXvWuggNb1AqEtdiPuBTleU5GovKL+HToKjwQu8NSuJsb3EacIwIDAQAB";
     public static Purchase lastPurchase = null;
-
+    public static String GOOGLE_API_KEY = "AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg";
     public static String teleCountry = "in";
     public static DisplayMetrics DISPLAY_METRICS = null;
     public static Boolean hasStoreData = false;
@@ -73,12 +76,13 @@ public class Constants {
     public static ArrayList<String> currencyArray = new ArrayList<>();
     public static Activity app = null;
     public static Activity home = null;
-    //public final static String NOW_FLOATS_API_URL		=	"https://api.nowfloatsdev.com";
+    //public final static String NOW_FLOATS_API_URL		=	"http://api.nowfloatsdev.com";
     public final static String NOW_FLOATS_API_URL = "https://api.withfloats.com";
     public final static String TEST_API_URL = "http://api.nowfloatsdev.com";
     public final static String BASE_IMAGE_URL = "https://content.withfloats.com";
     public final static String RIA_MEMORY_API_URL = "http://riamemory.withfloats.com";
     public final static String PLUGIN_API_URL = "https://plugin.withfloats.com";
+    public final static String RIA_MEMORY_TEST_API_URL = "http://ria.nowfloatsdev.com";
     public final static String RIA_API_URL = "https://ria.withfloats.com";
     public final static String SUGGESTIONS_API_URL = "http://52.77.236.226";
 
@@ -87,10 +91,18 @@ public class Constants {
     public final static String HTTP_POST = "POST";
     public final static String HTTP_DEL = "DELETE";
 
+
+    public static OkClient getClient() {
+        OkHttpClient client = new OkHttpClient();
+        client.setReadTimeout(1, TimeUnit.MINUTES);
+        client.setConnectTimeout(1, TimeUnit.MINUTES);
+        return new OkClient(client);
+    }
+
     //Retrofit Single Instance
     public static final RestAdapter chatRestAdapter = new RestAdapter.Builder().setEndpoint("http://dbapi.fostergem.com").build();
     public static final RestAdapter chatsendRestAdapter = new RestAdapter.Builder().setEndpoint("http://api.fostergem.com").build();
-    public static final RestAdapter smsVerifyAdapter = new RestAdapter.Builder().setEndpoint("https://api.authy.com").setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
+    public static final RestAdapter smsVerifyAdapter = new RestAdapter.Builder().setEndpoint("https://api.authy.com")./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).*/build();
     //    public static RestAdapter validEmailAdapter = null;
     public static final RestAdapter validEmailAdapter = new RestAdapter.Builder().setEndpoint("https://bpi.briteverify.com").build();
     //    public static RestAdapter restAdapter = null;
@@ -98,13 +110,14 @@ public class Constants {
 
     public static final RestAdapter pluginSuggestionsAdapter = new RestAdapter.Builder().setEndpoint(Constants.SUGGESTIONS_API_URL).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).build();
     public static final RestAdapter testRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.TEST_API_URL).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).build();
-    public static final RestAdapter pluginRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.PLUGIN_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
+    public static final RestAdapter pluginRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.PLUGIN_API_URL)./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).*/build();
     public static final RestAdapter riaRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
     public static NotificationInterface alertInterface = Constants.restAdapter.create(NotificationInterface.class);
 
     //http://api.withfloats.com/Discover/v3/FloatingPoint/create
-    //public static String NFX_DEV_NOWFLOATS="http://nfx.nowfloatsdev.com";
-    public static String NFX_WITH_NOWFLOATS="https://nfx.withfloats.com";
+    public static String NFX_DEV_NOWFLOATS = "http://nfx.nowfloatsdev.com";
+    public static String NFX_WITH_NOWFLOATS = "https://nfx.withfloats.com";
+    //public static String NFX_WITH_NOWFLOATS="http://nfx.nowfloatsdev.com";
     public static String createStoreV3 = NOW_FLOATS_API_URL + "/Discover/v3/FloatingPoint/create";
     public static String createStoreV2 = NOW_FLOATS_API_URL + "/Discover/v2/FloatingPoint/create";
     public static String loginUrl = NOW_FLOATS_API_URL + "/discover/v1/login/";
@@ -139,7 +152,7 @@ public class Constants {
     public static String nfxApi = NOW_FLOATS_API_URL + "/Discover/v2/floatingPoint/updateSocialAccessToken";
     public static String beCountUrl = NOW_FLOATS_API_URL + "/Discover/v1/businessenquiries/count";
     public static String nfxUpdateTokens = NFX_WITH_NOWFLOATS + "/dataexchange/v1/updateAccessTokens";
-
+    public static String nfxFBPageCreation = NFX_WITH_NOWFLOATS + "/dataexchange/v1/process";
 
     public static final String TWITTER_URL = Specific.TWITTER_URL;
     public static final String TWITTER_ID_URL = Specific.TWITTER_ID_URL;
@@ -187,7 +200,6 @@ public class Constants {
     public static final String PREF_KEY_TWITTER_LOGIN = "is_twitter_loggedin";
     public static final String PREF_USER_NAME = "twitter_user_name";
     public static final String SYNCED = "synced";
-
 
 
     public static final String[] FACEBOOK_PERMISSIONS = new String[]{"email", "user_birthday", "user_interests", "publish_actions", "photo_upload", "publish_stream"};
@@ -348,9 +360,10 @@ public class Constants {
     public static String PrimaryNumberClientId = "726F12B41F6242CC9A2B23BF101199B54449370AD7F44B069C9B5E7CC4A7A20D";
 
     public enum SubscriberStatus {
-        UNSUBSCRIBED(30), SUBSCRIBED(20),REQUESTED(10);
+        UNSUBSCRIBED(30), SUBSCRIBED(20), REQUESTED(10);
         public int value;
-        SubscriberStatus(int i){
+
+        SubscriberStatus(int i) {
             value = i;
         }
     }
@@ -451,6 +464,8 @@ public class Constants {
     public static boolean FbFeedPullAutoPublish;
     public static String FACEBOOK_URL = Specific.FACEBOOK_URL;
     public static String PACKAGE_NAME = Specific.PACKAGE_NAME;
+    public static String SUPPORT_EMAIL_ID = Specific.CONTACT_EMAIL_ID;
+
     public static final String TWILIO_AUTHY_API_KEY = Specific.TWILIO_AUTHY_API_KEY;
     public static final String FACEBOOK_PAGE_WITH_ID = Specific.FACEBOOK_PAGEID;
 

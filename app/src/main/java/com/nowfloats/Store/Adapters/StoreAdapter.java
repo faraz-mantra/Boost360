@@ -86,6 +86,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder>{
                         Picasso.with(appContext).load(url).into(holder.imageView);
                     }
                 if (storeData.get(position).Name!=null) {
+
                     holder.titleText.setText(storeData.get(position).Name);
                     if(holder.titleText.getText().toString().toLowerCase().contains("mini")){
                         holder.cardView.setVisibility(View.VISIBLE);

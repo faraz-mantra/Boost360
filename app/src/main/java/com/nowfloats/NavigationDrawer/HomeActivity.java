@@ -28,7 +28,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -37,7 +36,6 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,8 +48,6 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.appsflyer.AppsFlyerConversionListener;
-import com.appsflyer.AppsFlyerLib;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.freshdesk.hotline.Hotline;
@@ -62,7 +58,6 @@ import com.mixpanel.android.mpmetrics.GCMReceiver;
 import com.nfx.leadmessages.ReadMessages;
 import com.nineoldandroids.animation.Animator;
 import com.nowfloats.AccountDetails.AccountInfoActivity;
-import com.nowfloats.AccountDetails.Model.AccountDetailModel;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueries;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
@@ -82,15 +77,19 @@ import com.nowfloats.CustomPage.CustomPageDeleteInterface;
 import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
 import com.nowfloats.Image_Gallery.Image_Gallery_Fragment;
+import com.nowfloats.Login.API_Login;
 import com.nowfloats.Login.Login_Interface;
 import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.Login.Ria_Register;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.App_Update_Async_Task;
 import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
+import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
 import com.nowfloats.NavigationDrawer.API.KitsuneApi;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
+import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsActivity;
+import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.Product_Gallery.Product_Detail_Activity_V45;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
@@ -99,8 +98,9 @@ import com.nowfloats.SiteAppearance.SiteAppearanceFragment;
 import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.Model.StoreEvent;
 import com.nowfloats.Store.Model.StoreModel;
-import com.nowfloats.Store.Service.API_Service;
 import com.nowfloats.Store.StoreFragmentTab;
+import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
+import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
@@ -114,6 +114,7 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
+import com.thinksity.Specific;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -127,21 +128,24 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO;
+import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_DEMO_REMOVE;
+import static com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment.BIZ_APP_PAID;
+
+
 
 public class HomeActivity extends AppCompatActivity implements  SidePanelFragment.OnItemClickListener
         ,DeepLinkInterface,CustomPageDeleteInterface,Home_Main_Fragment.OnRenewPlanClickListener,
-        CardAdapter_V3.Permission, OffersFragment.OnRenewPlanClickListener, Analytics_Fragment.RiaCardDeepLinkListener {
+        CardAdapter_V3.Permission, OffersFragment.OnRenewPlanClickListener, Analytics_Fragment.RiaCardDeepLinkListener,
+        API_Login.API_Login_Interface {
 
 
     private Toolbar toolbar;
@@ -192,6 +196,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     private final static int READ_MESSAGES_ID=221;
     //private ArrayList<AccountDetailModel> accountDetailsModel = new ArrayList<>();
 
+    private ProgressDialog progressDialog ;
+
+
     @Override
     protected void attachBaseContext(Context newBase) {
        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -200,9 +207,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_v3);
         pref = getSharedPreferences(Constants.PREF_NAME,Activity.MODE_PRIVATE);
-        AppsFlyerLib.sendTracking(getApplicationContext());
         BoostLog.d("HomeActivity ONcreate","onCreate");
         bus = BusProvider.getInstance().getBus();
         activity = HomeActivity.this;
@@ -210,201 +215,15 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         StrictMode.setThreadPolicy(policy);
 //        GCMIntentService.setHomeActivity(HomeActivity.this);
         Methods.isOnline(HomeActivity.this);
+
         session = new UserSessionManager(getApplicationContext(),HomeActivity.this);
         setHotlineUser();
 
-        BoostLog.d(TAG, "In on CreateView");
-        deepLinkUrl = RiaFirebaseMessagingService.deepLinkUrl;
-        FPID = session.getFPID();
-        if(BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
-            SharedPreferences smsPref = getSharedPreferences(com.nfx.leadmessages.Constants.SHARED_PREF, Context.MODE_PRIVATE);
-            smsPref.edit().putString(com.nfx.leadmessages.Constants.FP_ID, FPID).apply();
-            getPermissions();
-        }
 
-        AppsFlyerLib.registerConversionListener(this, new AppsFlyerConversionListener() {
-            public String campaign = "";
-
-            @Override
-                    public void onInstallConversionDataLoaded(Map<String, String> stringStringMap) {
-                        for (String attrName : stringStringMap.keySet()){
-
-                            String status = stringStringMap.get("af_status");
-                            String source = stringStringMap.get("media_source");
-                            campaign = stringStringMap.get("campaign");
-
-                            MixPanelController.setProperties("InstallType", status);
-                            MixPanelController.setProperties("AcquisitionSource", source);
-                            MixPanelController.setProperties("CampaignName", campaign);
-
-                            BoostLog.d("AppsFlyerTest","attribute: "+attrName+" = "+stringStringMap.get(attrName));
-                            BoostLog.d("AppsFlyerTest","attribute: "+attrName+" = "+stringStringMap.get(attrName));
-
-                        }
-
-                if(campaign!=null && campaign.trim().length()>0 && campaign.contains("domain"))
-                {
-                    if(!session.getIsFreeDomainDisplayed().equals("true")) {
-                        session.storeIsFreeDomainDisplayed("true");
-                        showLookupDomain = true;
-                    }
-                }
-            }
-                    @Override
-                    public void onInstallConversionFailure(String s) {}
-                    @Override
-                    public void onAppOpenAttribution(Map<String, String> stringStringMap) {}
-                    @Override
-                    public void onAttributionFailure(String s) {}
-                });
-
-        MixPanelController.sendMixPanelProperties(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME),
-                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
-                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG),
-                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON));
-
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        homeFragment = new Home_Fragment_Tab();
-        businessFragment = new Business_Profile_Fragment_V2();
-        settingsFragment = new Settings_Fragment();
-        businessEnquiriesFragment = new Business_Enquiries_Fragment();
-        imageGalleryFragment = new Image_Gallery_Fragment();
-        mSiteAppearanceFragement = new SiteAppearanceFragment();
-        productGalleryFragment = new Product_Gallery_Fragment();
-        chatFragment = new ChatFragment();
-        storeFragment = new StoreFragmentTab();
-        siteMeterFragment = new Site_Meter_Fragment();
-        customPageActivity = new CustomPageActivity();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    PackageInfo info = getPackageManager().getPackageInfo(BuildConfig.APPLICATION_ID,
-                            PackageManager.GET_SIGNATURES);
-                    for (Signature signature : info.signatures) {
-                        MessageDigest md = MessageDigest.getInstance("SHA");
-                        md.update(signature.toByteArray());
-                        BoostLog.v("ggg KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-                    }
-                } catch (PackageManager.NameNotFoundException e) {
-
-                } catch (NoSuchAlgorithmException e) {
-
-                }
-
-            }
-        }).start();
-
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                SetMixPanelProperties();
-            }
-        }).start();
-
-        robotoMedium = Typeface.createFromAsset(getAssets(),"Roboto-Medium.ttf");
-        robotoLight = Typeface.createFromAsset(getAssets(),"Roboto-Light.ttf");
-
-        Intent loginIntent = getIntent();
-        boolean displayOnBoardingScreens = loginIntent.getBooleanExtra("fromLogin",false);
-        Constants.fromLogin = displayOnBoardingScreens ;
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try{
-                    final boolean chk =get_VersionUpdate();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (chk) appUpdateAlertDilog(HomeActivity.this);
-                        }
-                    });
-                }catch(Exception e){e.printStackTrace();}
-            }
-        }).start();
-
-        if(Constants.fromLogin) {
-            showOnBoardingScreens();
-            // Constants.fromLogin = false ;
-        }
-
-        toolbar = (Toolbar) findViewById(R.id.app_bar);
-        headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
-        headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-        headerText.setSelected(true);
-        headerText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try{
-                    Fragment myFragment = (Fragment)getSupportFragmentManager().findFragmentByTag("homeFragment");
-                    if (myFragment != null && myFragment.isVisible()){
-                        headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-                        headerText.setSelected(true);
-                        headerText.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-                        headerText.setSingleLine(true);
-                    }
-                }catch(Exception e){e.printStackTrace();}
-            }
-        });
-        /*This button is used in the image gallery*/
-        plusAddButton = (ImageView) toolbar.findViewById(R.id.image_gallery_add_image_button);
-        shareButton = (ImageView) toolbar.findViewById(R.id.business_profile_share_button);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        drawerFragment = (SidePanelFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
-        drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
-        mDrawerLayout.closeDrawer(Gravity.LEFT);
-
-//        ChatFragment.chatModels.add(new ChatModel("New Message",true,Methods.getCurrentTime()));
-//        ChatFragment.chatModels.add(new ChatModel("Next Message",false,Methods.getCurrentTime()));
-//        ChatFragment.chatModels.add(new ChatModel("New Message",true,Methods.getCurrentTime()));
-//        ChatFragment.chatModels.add(new ChatModel("Next Message",false,Methods.getCurrentTime()));
-        setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.mainFrame, homeFragment, "homeFragment");
-        ft.commit();
-        //DeepLinkPage(deepLinkUrl);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BoostLog.d("cek", "home selected");
-                if (drawerFragment.mDrawerToggle.isDrawerIndicatorEnabled()){
-                    ((DrawerLayout) findViewById(R.id.drawer_layout)).openDrawer(Gravity.LEFT);
-                } else {
-                    try{
-                        drawerFragment.mDrawerToggle.setDrawerIndicatorEnabled(true);
-                        headerText.setText(getString(R.string.custom_pages));
-                        shareButton.setVisibility(View.GONE);
-                        CustomPageActivity.customPageDeleteCheck = false;
-                        CustomPageAdapter.deleteCheck = false;
-                        CustomPageActivity.posList = new ArrayList<String>();
-                        if (CustomPageActivity.custompageAdapter!=null){
-                            CustomPageActivity.custompageAdapter.updateSelection(0);
-                            CustomPageActivity.custompageAdapter.notifyDataSetChanged();
-                        }
-                        if (CustomPageActivity.recyclerView!=null)
-                            CustomPageActivity.recyclerView.invalidate();
-                    }catch(Exception e){e.printStackTrace();}
-                }
-            }
-        });
-        //registerChat();
-        //checkExpire();
-        checkExpiry1();
-        Intent intent = getIntent();
-        if(intent!=null && intent.getData()!=null){
-            String action = intent.getAction();
-            String data = intent.getDataString();
-            BoostLog.d("Data: ", data.toString() + "  "+  action);
-            if(session.checkLogin()){
-                deepLink(data.substring(data.lastIndexOf("/") + 1));
-            }else {
-                finish();
-            }
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null && bundle.containsKey("Username")){
+        }else{
+            createView();
         }
 
     }
@@ -589,7 +408,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 Intent queries = new Intent(HomeActivity.this, SearchQueries.class);
                 startActivity(queries);
             }else if(url.contains("blog")){
-                String url1 = "";
+
                 if (!Util.isNullOrEmpty(url)) {
                     url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
                 } else {
@@ -603,25 +422,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             else if(url.contains("subscribers")){
                 Intent subscribers = new Intent(HomeActivity.this, SubscribersActivity.class);
                 startActivity(subscribers);
-            }else if(url.contains("subscribers")){
-                String url2 = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-                if (!Util.isNullOrEmpty(url)) {
-                    String eol = System.getProperty("line.separator");
-                    url2 = getString(R.string.visit_to_new_website)
-                            + eol + url.toLowerCase();
-                }
-                else{
-                    String eol = System.getProperty("line.separator");
-                    url2 = getString(R.string.visit_to_new_website)
-                            + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
-                            + getResources().getString(R.string.tag_for_partners);
-                }
-//            pref = getSharedPreferences(
-//                    Constants.PREF_NAME, Activity.MODE_PRIVATE);
-//            prefsEditor = pref.edit();
-                shareWebsite(url2);
-            }
-            else if(url.contains("accountstatus")){
+            }else if(url.contains("share")){
+                shareWebsite();
+            } else if(url.contains("accountstatus")){
                 Intent accountInfo = new Intent(HomeActivity.this, AccountInfoActivity.class);
                 startActivity(accountInfo);
             }
@@ -635,6 +438,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 ft.replace(R.id.mainFrame, settingsFragment)
                         .commit();
             }
+            else if(url.contains(getResources().getString(R.string.deeplink_business_app))){
+               startBusinessApp();
+            }
             else if(url.contains(getResources().getString(R.string.deeplink_socailsharing))){
                 Intent queries = new Intent(HomeActivity.this, Social_Sharing_Activity.class);
                 startActivity(queries);
@@ -644,8 +450,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             }
             else if(url.contains(getResources().getString(R.string.deeplink_profile))){
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.mainFrame,
-                businessFragment,"Profile").commit();
+                ft.replace(R.id.mainFrame, businessFragment,"Profile").commit();
             }
             else if(url.contains(getResources().getString(R.string.deeplink_contact))){
                 Intent queries = new Intent(HomeActivity.this, Contact_Info_Activity.class);
@@ -944,14 +749,23 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         Methods.isOnline(HomeActivity.this);
         //com.facebook.AppEventsLogger.activateApp(HomeActivity.this, getResources().getString(R.string.facebook_app_id));
         bus.register(this);
-        if(session.getISEnterprise().equals("true"))
-            headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-        else
-            setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-        plusAddButton.setVisibility(View.GONE);
-        if(Constants.GCM_Msg){
-            DeepLinkPage(RiaFirebaseMessagingService.deepLinkUrl, false);
-            Constants.GCM_Msg = false;
+
+        if(session!=null){
+
+            if(session.getISEnterprise().equals("true"))
+                headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+            else
+                setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+            if(plusAddButton!=null)
+                 plusAddButton.setVisibility(View.GONE);
+            if(Constants.GCM_Msg){
+                DeepLinkPage(RiaFirebaseMessagingService.deepLinkUrl, false);
+                Constants.GCM_Msg = false;
+            }
+        }
+
+        if(!isCalled){
+            navigateView();
         }
     }
     private void checkExpiry1(){
@@ -1104,7 +918,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
         roboto_lt_24_212121 message = (roboto_lt_24_212121) view.findViewById(R.id.pop_up_create_message_body);
         message.setText(Methods.fromHtml(dialogMessage));
     }
-    private void checkExpire(){
+   /* private void checkExpire(){
         isExpiredCheck = pref.getBoolean("EXPIRE_DIALOG",false);
         if(!isExpiredCheck) {
             String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
@@ -1232,9 +1046,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     }
                 }
 
-               /* if(showWildFire && (current-prevShown)/(60*60*24*1000)>=7) {
+               *//* if(showWildFire && (current-prevShown)/(60*60*24*1000)>=7) {
                     showDialog1(WILD_FIRE_EXPIRE,-1);
-                }*/
+                }*//*
 
                 if (count > 1) {
                    // showFacebookReviewDialog();
@@ -1247,8 +1061,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 error.printStackTrace();
             }
         });
-    }
-
+    }*/
+/*
     private void renewKitsune(int expiryType) {
         String dialogTitle = null;
         String dialogMessage = null;
@@ -1349,9 +1163,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             }
         });
         dialog.show();
-    }
+    }*/
 
-    private void enableKitsune() {
+    /*private void enableKitsune() {
         final ProgressDialog pg = ProgressDialog.show(this,"" , getString(R.string.wait_for_new_look));
         new KitsuneApi(session.getFpTag()).setResultListener(new KitsuneApi.ResultListener() {
             @Override
@@ -1383,7 +1197,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             flag = false;
         }
         return flag;
-    }
+    }*/
 
     @Override
     protected void onStart() {
@@ -1442,7 +1256,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     @Override
     public void onClick(final String nextScreen) {
         Methods.isOnline(HomeActivity.this);
-        mDrawerLayout.closeDrawer(Gravity.LEFT);
+        mDrawerLayout.closeDrawer(Gravity.START);
         shareButton.setVisibility(View.GONE);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -1466,6 +1280,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 //                            // Add this transaction to the back stack
 //                    .addToBackStack("Profile")
 //                    .commit();
+                }else if(nextScreen.equals(getResources().getString(R.string.my_business_apps))) {
+                    startBusinessApp();
                 }else if(nextScreen.equals(getResources().getString(R.string.side_panel_site_appearance))){
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,mSiteAppearanceFragement).
                             commit();
@@ -1514,7 +1330,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 }else  if(nextScreen.equals(getString(R.string.call)))
                 {
                     String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-                    if(paymentState==null || paymentState.equals("-1") || paymentState.equals("0")) {
+                    if(!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")||paymentState==null || paymentState.equals("-1")|| paymentState.equals("0")) {
                         Intent call = new Intent(Intent.ACTION_DIAL);
                         String callString = "tel:" + getString(R.string.contact_us_number);
                         call.setData(Uri.parse(callString));
@@ -1526,32 +1342,8 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }else if(nextScreen.equals(getString(R.string.share)))
                 {
-                    String url = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-                    if (!Util.isNullOrEmpty(url)) {
-                        String eol = System.getProperty("line.separator");
-                        url = getString(R.string.visit_to_new_website)
-                                + eol + url.toLowerCase();
-                    }
-                    else{
-                        String eol = System.getProperty("line.separator");
-                        url = getString(R.string.visit_to_new_website)
-                                + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
-                                + getResources().getString(R.string.tag_for_partners);
-                    }
-//            pref = getSharedPreferences(
-//                    Constants.PREF_NAME, Activity.MODE_PRIVATE);
-//            prefsEditor = pref.edit();
-                    shareWebsite(url);
-                }/*else if(nextScreen.equals(getString(R.string.business_enquiries_title)))
-                {
-                    // ft.remove(homeFragment);
-
-                    //  ft.add(R.id.mainFrame,businessEnquiriesFragment);
-                    //  ft.commit();
-                    plusAddButton.setVisibility(View.GONE);
-
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, businessEnquiriesFragment).commit();
-                }*/else if(nextScreen.equals("Settings"))
+                    shareWebsite();
+                }else if(nextScreen.equals("Settings"))
                 {
                     //ft.replace(R.id.homeTabViewpager, settingsFragment);
                     //ft.commit();
@@ -1580,10 +1372,35 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
     }
 
-    public void shareWebsite(String text) {
+    private void startBusinessApp(){
+        int businessAppStatus = pref.getInt(Key_Preferences.ABOUT_BUSINESS_APP,BIZ_APP_DEMO);
+        if(businessAppStatus == BIZ_APP_DEMO){
+            getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,new BusinessAppsFragment()).commit();
+        }else {
+            if(businessAppStatus == BIZ_APP_PAID){
+                pref.edit().putInt(Key_Preferences.ABOUT_BUSINESS_APP, BIZ_APP_DEMO_REMOVE).apply();
+            }
+            Intent i = new Intent(this, BusinessAppsActivity.class);
+            startActivity(i);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        }
+    }
+    public void shareWebsite() {
+        String url = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
+        if (!Util.isNullOrEmpty(url)) {
+            String eol = System.getProperty("line.separator");
+            url = getString(R.string.visit_to_new_website)
+                    + eol + url.toLowerCase();
+        }
+        else{
+            String eol = System.getProperty("line.separator");
+            url = getString(R.string.visit_to_new_website)
+                    + eol + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
+                    + getResources().getString(R.string.tag_for_partners);
+        }
         final Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_TEXT, text);
+        intent.putExtra(Intent.EXTRA_TEXT, url);
         startActivity(Intent.createChooser(intent, getString(R.string.share_with)));
 //        prefsEditor.putBoolean("shareWebsite", true);
 //        prefsEditor.commit();
@@ -1720,7 +1537,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 String date = allModels.get(i).CreatedOn;
                 float totalMonthsValidity = allModels.get(i).TotalMonthsValidity;
                 int remainingDay = verifyTime(date.substring(date.indexOf("(")+1,date.indexOf(")")),totalMonthsValidity);
-                //Log.v("ggg",remainingDay+" days");
                 if(remainingDay>0 && remainingDay<7){
                     prefsEditor = pref.edit();
                     prefsEditor.putInt("Days_remain", remainingDay);
@@ -1915,4 +1731,262 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     }
 
 
+    private boolean isCalled = false;
+    private void navigateView(){
+
+        isCalled = true;
+
+        Bundle bundle = getIntent().getExtras();
+
+        if(bundle!=null && bundle.containsKey("Username")){
+
+            progressDialog = ProgressDialog.show(HomeActivity.this, "", getString(R.string.loading));
+            progressDialog.setCancelable(false);
+
+            API_Login apiLogin = new API_Login(HomeActivity.this,session,bus);
+            apiLogin.authenticate(bundle.getString("Username"), bundle.getString("Password"), Specific.clientId2);
+
+        }
+    }
+
+    @Override
+    public void authenticationStatus(String value) {
+        if(value.equals("Success"))
+        {
+
+            Date date = new Date(System.currentTimeMillis());
+            String dateString = date.toString();
+
+            MixPanelController.setProperties("LastLoginDate", dateString);
+            MixPanelController.setProperties("LoggedIn", "True");
+
+            getFPDetails(HomeActivity.this, session.getFPID(), Constants.clientId, bus);
+            HomeActivity.registerChat(session.getFPID());
+        } else {
+            if(progressDialog != null) {
+                progressDialog.dismiss();
+                progressDialog = null ;
+            }
+        }
+    }
+
+
+    @Override
+    public void authenticationFailure(String value) {
+        if(progressDialog != null) {
+            progressDialog.dismiss();
+            progressDialog = null ;
+        }
+
+        finish();
+    }
+
+
+    private void getFPDetails(Activity activity, String fpId, String clientId, Bus bus) {
+        new Get_FP_Details_Service(activity,fpId,clientId,bus);
+    }
+
+    @Subscribe
+    public void post_getFPDetails(Get_FP_Details_Event response)
+    {
+        Bundle bundle = getIntent().getExtras();
+
+        if(bundle!=null && bundle.containsKey("Username")){
+            GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(HomeActivity.this,session);
+            visit_subcribersCountAsyncTask.execute();
+        }
+
+        if(progressDialog != null) {
+            progressDialog.dismiss();
+            progressDialog = null ;
+        }
+
+
+        createView();
+
+    }
+
+    @Subscribe
+    public void getResponse(Response response)
+    {
+
+        if(progressDialog != null) {
+            progressDialog.dismiss();
+            progressDialog = null ;
+        }
+        finish();
+    }
+
+    @Subscribe
+    public void getError(RetrofitError retrofitError)
+    {
+
+        if(progressDialog != null) {
+            progressDialog.dismiss();
+            progressDialog = null ;
+        }
+        finish();
+    }
+
+    private void createView(){
+
+        setContentView(R.layout.activity_home_v3);
+        BoostLog.d(TAG, "In on CreateView");
+        deepLinkUrl = RiaFirebaseMessagingService.deepLinkUrl;
+        FPID = session.getFPID();
+        if(BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
+            SharedPreferences smsPref = getSharedPreferences(com.nfx.leadmessages.Constants.SHARED_PREF, Context.MODE_PRIVATE);
+            smsPref.edit().putString(com.nfx.leadmessages.Constants.FP_ID, FPID).apply();
+            getPermissions();
+        }
+
+        MixPanelController.sendMixPanelProperties(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME),
+                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
+                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG),
+                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON));
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        homeFragment = new Home_Fragment_Tab();
+        businessFragment = new Business_Profile_Fragment_V2();
+        settingsFragment = new Settings_Fragment();
+        businessEnquiriesFragment = new Business_Enquiries_Fragment();
+        imageGalleryFragment = new Image_Gallery_Fragment();
+        mSiteAppearanceFragement = new SiteAppearanceFragment();
+        productGalleryFragment = new Product_Gallery_Fragment();
+        chatFragment = new ChatFragment();
+        storeFragment = new StoreFragmentTab();
+        siteMeterFragment = new Site_Meter_Fragment();
+        customPageActivity = new CustomPageActivity();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    PackageInfo info = getPackageManager().getPackageInfo(BuildConfig.APPLICATION_ID,
+                            PackageManager.GET_SIGNATURES);
+                    for (Signature signature : info.signatures) {
+                        MessageDigest md = MessageDigest.getInstance("SHA");
+                        md.update(signature.toByteArray());
+                        BoostLog.v("ggg KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+                    }
+                } catch (PackageManager.NameNotFoundException e) {
+
+                } catch (NoSuchAlgorithmException e) {
+
+                }
+
+            }
+        }).start();
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SetMixPanelProperties();
+            }
+        }).start();
+
+        robotoMedium = Typeface.createFromAsset(getAssets(),"Roboto-Medium.ttf");
+        robotoLight = Typeface.createFromAsset(getAssets(),"Roboto-Light.ttf");
+
+        Intent loginIntent = getIntent();
+        boolean displayOnBoardingScreens = loginIntent.getBooleanExtra("fromLogin",false);
+        Constants.fromLogin = displayOnBoardingScreens ;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    final boolean chk =get_VersionUpdate();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (chk) appUpdateAlertDilog(HomeActivity.this);
+                        }
+                    });
+                }catch(Exception e){e.printStackTrace();}
+            }
+        }).start();
+
+        if(Constants.fromLogin) {
+            showOnBoardingScreens();
+            // Constants.fromLogin = false ;
+        }
+
+        toolbar = (Toolbar) findViewById(R.id.app_bar);
+        headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
+        headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+        headerText.setSelected(true);
+        headerText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    Fragment myFragment = (Fragment)getSupportFragmentManager().findFragmentByTag("homeFragment");
+                    if (myFragment != null && myFragment.isVisible()){
+                        headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+                        headerText.setSelected(true);
+                        headerText.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+                        headerText.setSingleLine(true);
+                    }
+                }catch(Exception e){e.printStackTrace();}
+            }
+        });
+        /*This button is used in the image gallery*/
+        plusAddButton = (ImageView) toolbar.findViewById(R.id.image_gallery_add_image_button);
+        shareButton = (ImageView) toolbar.findViewById(R.id.business_profile_share_button);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        drawerFragment = (SidePanelFragment)getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+        drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
+        mDrawerLayout.closeDrawer(Gravity.LEFT);
+
+//        ChatFragment.chatModels.add(new ChatModel("New Message",true,Methods.getCurrentTime()));
+//        ChatFragment.chatModels.add(new ChatModel("Next Message",false,Methods.getCurrentTime()));
+//        ChatFragment.chatModels.add(new ChatModel("New Message",true,Methods.getCurrentTime()));
+//        ChatFragment.chatModels.add(new ChatModel("Next Message",false,Methods.getCurrentTime()));
+        setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.mainFrame, homeFragment, "homeFragment");
+        ft.commit();
+        //DeepLinkPage(deepLinkUrl);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BoostLog.d("cek", "home selected");
+                if (drawerFragment.mDrawerToggle.isDrawerIndicatorEnabled()){
+                    ((DrawerLayout) findViewById(R.id.drawer_layout)).openDrawer(Gravity.START);
+                } else {
+                    try{
+                        drawerFragment.mDrawerToggle.setDrawerIndicatorEnabled(true);
+                        headerText.setText(getString(R.string.custom_pages));
+                        shareButton.setVisibility(View.GONE);
+                        CustomPageActivity.customPageDeleteCheck = false;
+                        CustomPageAdapter.deleteCheck = false;
+                        CustomPageActivity.posList = new ArrayList<String>();
+                        if (CustomPageActivity.custompageAdapter!=null){
+                            CustomPageActivity.custompageAdapter.updateSelection(0);
+                            CustomPageActivity.custompageAdapter.notifyDataSetChanged();
+                        }
+                        if (CustomPageActivity.recyclerView!=null)
+                            CustomPageActivity.recyclerView.invalidate();
+                    }catch(Exception e){e.printStackTrace();}
+                }
+            }
+        });
+        //registerChat();
+        //checkExpire();
+        checkExpiry1();
+        Intent intent = getIntent();
+        if(intent!=null && intent.getData()!=null){
+            String action = intent.getAction();
+            String data = intent.getDataString();
+            BoostLog.d("Data: ", data.toString() + "  "+  action);
+            if(session.checkLogin()){
+                deepLink(data.substring(data.lastIndexOf("/") + 1));
+            }else {
+                finish();
+            }
+        }
+    }
 }

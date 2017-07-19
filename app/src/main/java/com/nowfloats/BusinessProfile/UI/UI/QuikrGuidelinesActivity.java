@@ -24,7 +24,7 @@ public class QuikrGuidelinesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quikr_guidelines);
+        setContentView(R.layout.activity_guidelines);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         MixPanelController.track(Key_Preferences.QUIKR_GUIDELINES_ACTIVITY,null);

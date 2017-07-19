@@ -82,13 +82,17 @@ public class SearchRankingActivity extends AppCompatActivity {
 
 
     private void getSearchRankings(){
-        pd.show();
+        if(!isFinishing() && !pd.isShowing()){
+            pd.show();
+        }
         RestAdapter adapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_MEMORY_API_URL).build();
         SearchQueryApi queryApi = adapter.create(SearchQueryApi.class);
         queryApi.getKeyWordRanks(mSession.getFpTag(), new Callback<List<SearchRankModel>>() {
             @Override
             public void success(List<SearchRankModel> searchRankModels, Response response) {
-                pd.dismiss();
+                if(!isFinishing() && pd.isShowing()) {
+                    pd.dismiss();
+                }
                 if(searchRankModels.size()>0){
                     mSearchRankList = searchRankModels;
                     filterList(FILTER_INCREASED);
@@ -99,7 +103,9 @@ public class SearchRankingActivity extends AppCompatActivity {
 
             @Override
             public void failure(RetrofitError error) {
-                pd.dismiss();
+                if(!isFinishing() && pd.isShowing()) {
+                    pd.dismiss();
+                }
                 Methods.showSnackBarNegative(SearchRankingActivity.this, getString(R.string.something_went_wrong));
                 showEmptyMessage();
             }
@@ -164,7 +170,7 @@ public class SearchRankingActivity extends AppCompatActivity {
                 new Handler(getMainLooper()).post(new Runnable() {
                     @Override
                     public void run() {
-                        if(pd.isShowing()){
+                        if(!isFinishing() && pd.isShowing()){
                             pd.dismiss();
                             if(mFilteredList.size()>0) {
                                 tvSearchQueryTitle.setText("Search Queries (" + mFilteredList.size() + ")");

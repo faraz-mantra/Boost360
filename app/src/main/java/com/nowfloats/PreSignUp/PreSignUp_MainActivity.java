@@ -40,6 +40,7 @@ import com.nowfloats.signup.UI.Model.Facebook_Event;
 import com.nowfloats.signup.UI.Model.LocationProvider;
 import com.nowfloats.signup.UI.Service.Facebook_Pages_Service;
 import com.nowfloats.signup.UI.UI.PreSignUpActivity;
+import com.nowfloats.signup.UI.UI.RiaChatInitActivity;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -72,7 +73,6 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
     CirclePageIndicator mIndicator;
     Address lastKnownAddress;
     FrameLayout mainScreen;
-    TextView belowText;
     /*final Facebook facebook = new Facebook(Constants.FACEBOOK_API_KEY);
     AsyncFacebookRunner mAsyncRunner = new AsyncFacebookRunner(facebook);*/
     String access_token;
@@ -110,22 +110,21 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
         TextView signUpEmailText = (TextView) findViewById(R.id.create_txt);
         signUpEmailText.setTypeface(robotoRegular);
 
-        TextView loginText = (TextView) findViewById(R.id.pre_signUp_bottom_text);
-        loginText.setTypeface(robotoRegular);
-
         TextView onlyLoginText = (TextView) findViewById(R.id.onlyloginText);
         onlyLoginText.setTypeface(robotoRegular);
 
         callbackManager = CallbackManager.Factory.create();
 
         mainScreen = (FrameLayout) findViewById(R.id.mainLayout);
-        belowText = (TextView) findViewById(R.id.pre_signUp_bottom_text);
+        TextView belowText = (TextView) findViewById(R.id.pre_signUp_bottom_text);
+        belowText.setTypeface(robotoRegular);
+
         session = new UserSessionManager(getApplicationContext(), PreSignUp_MainActivity.this);
         signUpButton = (LinearLayout) findViewById(R.id.pre_signup_create);
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Thread(new Runnable() {
+                /*new Thread(new Runnable() {
                     @Override
                     public void run() {
                         getLastKnownLocation();
@@ -134,8 +133,13 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
                 MixPanelController.track(EventKeysWL.CREATE_WEBSITE_BUTTON, null);
                 Intent signUpIntent = new Intent(PreSignUp_MainActivity.this, PreSignUpActivity.class);
                 startActivity(signUpIntent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                //ChatManager.getInstance(PreSignUp_MainActivity.this).startChat();
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
+                Intent i = new Intent(PreSignUp_MainActivity.this, RiaChatInitActivity.class);
+                startActivity(i);
+//                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+
+//                ChatManager.getInstance(PreSignUp_MainActivity.this).startChat();
             }
         });
 
@@ -160,12 +164,7 @@ public class PreSignUp_MainActivity extends FragmentActivity implements LoadCoun
             }
         });
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                getLastKnownLocation();
-            }
-        }).start();
+        getLastKnownLocation();
 
         mAdapter = new PreSignupFragmentAdapter(getSupportFragmentManager());
 

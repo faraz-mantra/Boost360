@@ -147,10 +147,13 @@ public class ProductImageReplaceV45 extends AsyncTask<String,String,String>{
                 if (responseContent!=null || responseContent.length()==0){
                     String response = responseContent.toString();
                     Log.d("Product IMage", "Upload Response : " + response);
-                    if (response==null || response.trim().length()==0) flag =false;
+                    //if (response==null || response.trim().length()==0) flag =false;
                 }else{flag = false;}
             }
-            catch(Exception e){e.printStackTrace(); flag = false;}
+            catch(Exception e){
+                e.printStackTrace();
+                flag = false;
+            }
             finally
             {
                 try{

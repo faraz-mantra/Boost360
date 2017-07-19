@@ -86,7 +86,7 @@ public class SpinnerAdapter extends BaseAdapter implements Filterable{
         protected FilterResults performFiltering(CharSequence constraint) {
             suggestions.clear();
 
-            if (originalList != null && constraint != null) { // Check if the Original List and Constraint aren't null.
+            if (originalList != null && constraint != null) { // sent_check if the Original List and Constraint aren't null.
                 for (int i = 0; i < originalList.size(); i++) {
                     if (originalList.get(i).getUserMobile().toLowerCase().contains(constraint)) { // Compare item in original list if it contains constraints.
                         suggestions.add(originalList.get(i)); // If TRUE add item in Suggestions.

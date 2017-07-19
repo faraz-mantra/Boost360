@@ -75,7 +75,7 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:visibility="gone"
+            android:visibility="visible"
             android:gravity="center">
             <ImageView
                 android:layout_width="wrap_content"
@@ -84,10 +84,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/dgts__title_text_size"
+                android:textSize="15sp"
                 android:textStyle="bold"
-                android:layout_marginTop="@dimen/dgts__padding_title"
-                android:layout_marginBottom="@dimen/dgts__padding_title"
+                android:layout_marginTop="15dp"
                 android:visibility="visible"
                 android:textColor="@color/zeroth_grey_title"
                 android:text="@string/time_to_upgrade"/>
@@ -97,7 +96,7 @@
                 android:textSize="15sp"
                 android:textColor="@color/zeroth_grey"
                 android:gravity="center"
-                android:padding="12dp"
+                android:padding="10dp"
                 android:text="@string/you_have_purchased_any_plan"/>
         </LinearLayout>
 

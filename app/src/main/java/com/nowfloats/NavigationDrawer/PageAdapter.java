@@ -7,9 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.nowfloats.Login.Model.FloatsMessageModel;
-import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Methods;
-import com.nowfloats.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;

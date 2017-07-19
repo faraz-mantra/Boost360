@@ -39,6 +39,9 @@ public class VmnCallModel {
     @SerializedName("fpId")
     @Expose
     private String fpId;
+    @SerializedName("viewType")
+    @Expose
+    private int viewType;
     @SerializedName("fpTag")
     @Expose
     private Object fpTag;
@@ -123,6 +126,14 @@ public class VmnCallModel {
 
     public Object getFpTag() {
         return fpTag;
+    }
+
+    public int getViewType() {
+        return viewType;
+    }
+
+    public void setViewType(int viewType) {
+        this.viewType = viewType;
     }
 
     public void setFpTag(Object fpTag) {

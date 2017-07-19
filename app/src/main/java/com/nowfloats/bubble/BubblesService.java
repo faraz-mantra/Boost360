@@ -186,6 +186,9 @@ public class BubblesService extends Service {
     private boolean isDialogShowing() {
         ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+        if(taskInfo == null || taskInfo.isEmpty()){
+            return false;
+        }
         ComponentName componentInfo = taskInfo.get(0).topActivity;
         componentInfo.getPackageName();
         //Log.v("gggg",componentInfo.getClassName());

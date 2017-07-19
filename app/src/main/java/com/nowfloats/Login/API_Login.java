@@ -97,6 +97,7 @@ public class API_Login {
                             bus.post(new ArrayList<FloatsMessageModel>());
                         }
                         BoostLog.d("FPID: ", fpId);
+                        apiInterface.authenticationStatus("Success");
                     } else {
                         apiInterface.authenticationFailure("true");
                         Methods.showSnackBarNegative(appContext, appContext.getString(R.string.check_your_crediential));

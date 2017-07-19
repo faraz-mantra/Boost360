@@ -9,7 +9,6 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,21 +18,14 @@ import android.widget.TextView;
 
 import com.nowfloats.CustomPage.Model.CustomPageModel;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.util.Constants;
-import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.squareup.otto.Bus;
 import com.thinksity.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 /**
  * Created by guru on 27-04-2015.
@@ -123,11 +115,7 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
                 holder.titleText.setText(storeData.get(position).DisplayName);
                 try {
                     String dateString = storeData.get(position).CreatedOn;
-                    dateString = dateString.replace("/Date(", "").replace(")/", "");
-                    Long epochTime = Long.parseLong(dateString);
-                    Date date = new Date(epochTime);
-                    if (date != null)
-                        holder.dateText.setText(format.format(date));
+                    holder.dateText.setText(Methods.getFormattedDate(dateString));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

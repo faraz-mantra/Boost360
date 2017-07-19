@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
           android:tag="cards main container"
@@ -117,82 +118,78 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
         android:background="#FFFFFF"
         card_view:cardBackgroundColor="#FFFFFF"
+        card_view:cardCornerRadius="3dp"
         card_view:cardElevation="3dp"
-        card_view:cardUseCompatPadding="true"
-        card_view:cardCornerRadius="3dp">
+        card_view:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:gravity="left"
-
-            >
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/imageView"
-                android:tag="image_tag"
-                android:visibility="gone"
+                android:layout_width="fill_parent"
                 android:layout_height="160dp"
                 android:layout_marginLeft="7dp"
                 android:layout_marginRight="7dp"
                 android:layout_marginTop="7dp"
-
                 android:layout_weight="1"
                 android:scaleType="centerCrop"
                 android:src="@drawable/logo_default_image"
-                android:layout_width="fill_parent" />
+                android:tag="image_tag"
+                android:visibility="gone" />
 
             <LinearLayout
 
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:paddingTop="25dp"
-                android:paddingLeft="25dp"
-                android:paddingRight="25dp"
-                android:paddingBottom="32dp"
                 android:gravity="top"
                 android:orientation="vertical"
-                android:layout_width="wrap_content">
+                android:paddingBottom="32dp"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:paddingTop="25dp">
 
                 <com.nowfloats.CustomWidget.roboto_lt_45_505050
                     android:id="@+id/textViewName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="4"
+                    android:text="@string/large_text"
                     android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:text="@string/large_text"/>
+                    android:textSize="16sp" />
 
 
                 <com.nowfloats.CustomWidget.roboto_md_36__565656
                     android:id="@+id/textViewEmail"
                     android:layout_width="wrap_content"
-                    android:textColor="@color/black"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="17dp"
-                    android:textSize="16sp"
                     android:text="@string/medium_text"
-                    />
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
 
         </LinearLayout>
+
         <ImageView
             android:id="@+id/shareData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|bottom"
             android:padding="20dp"
-            android:visibility="visible"
-            android:src="@drawable/share_grey"/>
+            android:src="@drawable/share_grey"
+            android:visibility="visible" />
 
     </android.support.v7.widget.CardView>
 

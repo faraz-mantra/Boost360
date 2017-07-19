@@ -143,13 +143,10 @@ public class Product_Gallery_Fragment extends Fragment {
 
                 MixPanelController.track(EventKeysWL.PRODUCT_GALLERY_ADD, null);
                 Intent intent;
-                if (/*session.getWebTemplateType().equals("6")*/false) {
-                    intent = new Intent(activity, Product_Detail_Activity.class);
-                    intent.putExtra("new", "");
-                } else {
-                    intent = new Intent(activity, Product_Detail_Activity_V45.class);
-                    intent.putExtra("new", "");
-                }
+
+                intent = new Intent(activity, Product_Detail_Activity_V45.class);
+                intent.putExtra("new", "");
+
                 startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
@@ -161,17 +158,12 @@ public class Product_Gallery_Fragment extends Fragment {
 
                 if (from == FROM.DEFAULT) {
                     Intent intent;
-                    if (/*session.getWebTemplateType().equals("6")*/false) {
-                        intent = new Intent(activity, Product_Detail_Activity.class);
+
+                    intent = new Intent(activity, Product_Detail_Activity_V45.class);
 //                Bundle bundle = new Bundle();
 //                bundle.putParcelable("product", productItemModelList.get(position));
-                        intent.putExtra("product", position + "");
-                    } else {
-                        intent = new Intent(activity, Product_Detail_Activity_V45.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putParcelable("product", productItemModelList.get(position));
-                        intent.putExtra("product", position + "");
-                    }
+                    intent.putExtra("product", position + "");
+
                     Methods.launchFromFragment(activity, view, intent);
                 } else {
 

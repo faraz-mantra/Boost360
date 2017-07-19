@@ -114,8 +114,9 @@ public class Settings_Fragment extends Fragment {
         flFollowTwitter = (FrameLayout) view.findViewById(R.id.follow_us_twitter_Layout);
         flTermsOfUse = (FrameLayout) view.findViewById(R.id.terms_of_use_Layout);
         flPrivacyPolicy = (FrameLayout) view.findViewById(R.id.privacy_policy_Layout);
-        if(Long.parseLong(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON).split("\\(")[1].split("\\)")[0])/1000 > 1470614400){
-            flSiteAppearance.setVisibility(View.GONE);
+        String Sdate = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON);
+        if(Sdate.contains("/Date")){
+            Sdate = Sdate.replace("/Date(", "").replace(")/", "");
         }
 
         new Thread(new Runnable() {
@@ -276,22 +277,6 @@ public class Settings_Fragment extends Fragment {
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
-        if(checkExpiry()){
-            flSiteAppearance.setVisibility(View.GONE);
-        }
-    }
-
-    private boolean checkExpiry() {
-        boolean flag = false;
-        String strExpiryTime = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EXPIRY_DATE);
-        long expiryTime = -1;
-        if(strExpiryTime!=null){
-            expiryTime = Long.parseLong(strExpiryTime.split("\\(")[1].split("\\)")[0]);
-        }
-        if(expiryTime!=-1 && ((expiryTime - System.currentTimeMillis())/86400000<180) && !session.getWebTemplateType().equals("6")){
-            flag = true;
-        }
-        return flag;
     }
 
     public void logoutAlertDialog_Material() {

@@ -25,14 +25,15 @@ public class RiaFirebaseInstanceIDService extends FirebaseInstanceIdService{
         //Displaying token on logcat
         Log.d(TAG, "Refreshed token: " + refreshedToken);
         saveTokenToPreferenceAndUpload(refreshedToken);
-
+        if(refreshedToken != null) {
+            Hotline.getInstance(this).updateGcmRegistrationToken(refreshedToken);
+        }
     }
 
     private void saveTokenToPreferenceAndUpload(String refreshedToken) {
         SharedPreferences pref = getSharedPreferences("nowfloatsPrefs", Context.MODE_PRIVATE);
         if(pref.getString("fpid", null)!=null){
             HomeActivity.registerChat(pref.getString("fpid", null));
-            Hotline.getInstance(this).updateGcmRegistrationToken(refreshedToken);
 
         }
     }

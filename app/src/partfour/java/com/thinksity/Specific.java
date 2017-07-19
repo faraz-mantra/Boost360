@@ -30,6 +30,7 @@ public class Specific {
 //    public static String TWITTER_TOK 				= "h5lB3rvjU66qOXHgrZK41Q";
 //    public static String TWITTER_SEC 				= "L0Bo08aevt2U1fLjuuYAMtANSAzWWi8voGuvbrdtcY4";
 
+
     public static final String TWITTER_TOK 		= "VSfjudvcrSvfOesMgaHzlq8eG";
     public static final String TWITTER_SEC 		= "jM656pIF5dSjyNI09I8OrAl1hdZ20oaPbAaYtMqHAarA025Xy9";
     public static final String FACEBOOK_URL = "https://www.facebook.com/253526008455749";

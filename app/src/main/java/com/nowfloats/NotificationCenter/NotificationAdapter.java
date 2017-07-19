@@ -29,8 +29,8 @@ import com.thinksity.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import retrofit.Callback;
@@ -67,7 +67,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         mInflater = (LayoutInflater) appContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         primaryColorFilter = new PorterDuffColorFilter(appContext.getResources().getColor(R.color.primaryColor), PorterDuff.Mode.SRC_IN);
         defaultColorFilter = new PorterDuffColorFilter(appContext.getResources().getColor(R.color.inactive_text), PorterDuff.Mode.SRC_IN);
-        format = new SimpleDateFormat("MMM dd, hh:mm aa");
+        format = new SimpleDateFormat("MMM dd, hh:mm aa", Locale.ENGLISH);
         format.setTimeZone(TimeZone.getDefault());
         imageId = R.drawable.alert_default;
         linkInterface = (DeepLinkInterface)appContext;
@@ -145,11 +145,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
                 try {
                     String dateString = alertData.get(position).CreatedOn;
-                    dateString = dateString.replace("/Date(", "").replace(")/", "");
-                    Long epochTime = Long.parseLong(dateString);
-                    Date date = new Date(epochTime);
-                    if (date != null)
-                        holder.date.setText(format.format(date));
+                    holder.date.setText(Methods.getFormattedDate(dateString));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

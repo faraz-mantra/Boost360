@@ -8,6 +8,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="next">Next</string>
+    <string name="allow_boost_to_read_your">Please allow Boost to read your Facebook Page insights.</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_web_site_address">Website Address</string>
     <string name="title_activity_login">Welcome Back</string>
@@ -387,7 +388,7 @@
     <string name="pre_signup_screen_eight_text">String belongs to Screen Eight</string>
     <string name="title_activity_mobile__site_">Mobile_Site_Activity</string>
     <string name="title_activity_site__meter__nf">Site_Meter_NF</string>
-    <string name="presignup_login_text">Already have a NowFloats account?</string>
+    <string name="presignup_login_text">Already have a NowFloats site?</string>
 
     <string name="onboarding_screen_1_title">Congratulations!</string>
     <string name="onboarding_screen_1_desc">We\'re here to help you through the way. Here are two most basic yet important things you should know.</string>
