@@ -225,4 +225,12 @@
         <item name="@android:windowExitAnimation">@anim/coach_mark_hide</item>
     </style>
 
+
+    <declare-styleable name="EllipsizeEndTextView">
+        <attr name="maxLines" format="integer" />
+        <attr name="textColor" format="color" />
+        <attr name="textSize" format="dimension" />
+        <attr name="lineSpacing" format="dimension" />
+    </declare-styleable>
+
 </resources>

@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
@@ -29,6 +28,9 @@ public class MixPanelController {
     public static final String VMN_CALL_TRACKER = "VmnCallTracker";
     public static final String FACEBOOK_REVIEW = "FacebookReview";
     public static final String PRIMARY_NUMBER_CHANGE = "PrimaryNumberChanged";
+
+    public static final String SAM_CALL = "SAMCall";
+    public static final String SAM_SHARE = "SAMShare";
 
     private static MixpanelAPI mixPanel;
 	public static String Bhours = "bhours", Signup = "SignUpActivity",

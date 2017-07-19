@@ -83,7 +83,7 @@
 //    private TextView tvEnquiry;
 //    private LinearLayout llStackView, llProductsView, llCoachMark, llSuggestions, flTopView;
 //    private GridView gvSuggestions;
-//    private SuggestionListAdapter suggestionListAdapter;
+//    private SugProductsAdapter suggestionListAdapter;
 //    private ProgressBar pbView;
 //    private SharedPreferences pref;
 //    private FragmentTransaction fragmentTransaction;
@@ -134,7 +134,7 @@
 //        mSwipeStackAdapter = new SwipeStackAdapter(null);
 //        mSwipeStack.setAdapter(mSwipeStackAdapter);
 //        mSwipeStack.setListener(this);
-//        suggestionListAdapter = new SuggestionListAdapter(SuggestionsActivityCopy.this);
+//        suggestionListAdapter = new SugProductsAdapter(SuggestionsActivityCopy.this);
 //        gvSuggestions.setAdapter(suggestionListAdapter);
 //
 //        FragmentManager manager = getSupportFragmentManager();

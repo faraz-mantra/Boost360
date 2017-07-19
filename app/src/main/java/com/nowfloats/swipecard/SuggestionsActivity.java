@@ -8,23 +8,28 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.bubble.BubblesService;
+import com.nowfloats.swipecard.models.MessageDO;
 import com.nowfloats.swipecard.models.SMSSuggestions;
+import com.nowfloats.swipecard.models.SuggestionsDO;
 import com.nowfloats.swipecard.service.SuggestionsApi;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -41,11 +46,11 @@ public class SuggestionsActivity extends AppCompatActivity {
 
     private UserSessionManager session;
 
-    private ActionItemsFragment actionItemsFragment;
-
     private CallToActionFragment callToActionFragment;
 
     public SMSSuggestions smsSuggestions;
+
+    private ProgressBar pbView;
 
     private class KillListener extends BroadcastReceiver {
 
@@ -63,6 +68,7 @@ public class SuggestionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_suggestions);
         this.setFinishOnTouchOutside(false);
 
+        pbView = (ProgressBar) findViewById(R.id.pbView);
         mBus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(), SuggestionsActivity.this);
         suggestionsApi = new SuggestionsApi(mBus);
@@ -79,6 +85,8 @@ public class SuggestionsActivity extends AppCompatActivity {
         killListener = new KillListener();
 
         fragmentManager = getSupportFragmentManager();
+
+        FirebaseLogger.getInstance().logSAMEvent("", 0, session.getFPID());
 
         fragmentManager.beginTransaction().
                 replace(R.id.flTopView, new OnBoardingFragment())
@@ -132,8 +140,6 @@ public class SuggestionsActivity extends AppCompatActivity {
         switch (switchView) {
 
             case ACTION_ITEMS:
-                loadSMSDetails();
-
                 break;
             case CALL_TO_ACTION:
                 loadCallToActionItems();
@@ -142,33 +148,17 @@ public class SuggestionsActivity extends AppCompatActivity {
         }
     }
 
-    private void loadSMSDetails() {
-
-        removeFragment();
-
-        fragmentManager.beginTransaction()
-                .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
-                .replace(R.id.flTopView, actionItemsFragment =
-                        new ActionItemsFragment())
-                .addToBackStack(null)
-                .commit();
-
-
-        HashMap<String, String> offersParam = new HashMap<>();
-        offersParam.put("fpId", "590462167ca16e051830201a");
-        suggestionsApi.getMessages(offersParam);
-    }
-
     private void loadCallToActionItems() {
 
         removeFragment();
 
-        fragmentManager.beginTransaction()
-                .setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left)
-                .replace(R.id.flTopView,
-                        callToActionFragment = new CallToActionFragment())
-                .addToBackStack(null)
-                .commit();
+        pbView.setVisibility(View.VISIBLE);
+
+        FirebaseLogger.getInstance().logSAMEvent("", 1, session.getFPID());
+
+        HashMap<String, String> offersParam = new HashMap<>();
+        offersParam.put("fpId", session.getFPID());
+        suggestionsApi.getMessages(offersParam);
     }
 
     private void removeFragment() {
@@ -181,11 +171,20 @@ public class SuggestionsActivity extends AppCompatActivity {
     @Subscribe
     public void processSMSDetails(SMSSuggestions suggestions) {
 
+        pbView.setVisibility(View.GONE);
+
         smsSuggestions = suggestions;
 
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.flTopView);
-        if (fragment != null && fragment instanceof ActionItemsFragment) {
-            actionItemsFragment.filterData();
+        if (smsSuggestions != null && smsSuggestions.getSuggestionList().size() > 0) {
+
+            fragmentManager.beginTransaction()
+                    .replace(R.id.flTopView,
+                            callToActionFragment = new CallToActionFragment())
+                    .addToBackStack(null)
+                    .commit();
+        } else {
+            pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, false).apply();
+            finish();
         }
 
     }
@@ -197,8 +196,6 @@ public class SuggestionsActivity extends AppCompatActivity {
 
             if (callToActionFragment != null && callToActionFragment.isProductsVisible()) {
                 callToActionFragment.displayCTA();
-            } else {
-                switchView(SwitchView.ACTION_ITEMS);
             }
 
         }
@@ -216,5 +213,18 @@ public class SuggestionsActivity extends AppCompatActivity {
             finish();
         }
 
+    }
+
+    public void updateActionsToServer(SuggestionsDO mSuggestionsDO) {
+
+        ArrayList<MessageDO> arrMessageDO = new ArrayList<>();
+
+        MessageDO messageDO = new MessageDO();
+        messageDO.setMessageId(mSuggestionsDO.getMessageId());
+        messageDO.setFpId(mSuggestionsDO.getFpId());
+        messageDO.setStatus(mSuggestionsDO.getStatus());
+        arrMessageDO.add(messageDO);
+
+        suggestionsApi.updateMessage(arrMessageDO);
     }
 }

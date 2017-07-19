@@ -1,16 +1,12 @@
 package com.nowfloats.swipecard.adapters;
 
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.nowfloats.swipecard.CallToActionFragment;
 import com.nowfloats.swipecard.models.SuggestionsDO;
 import com.nowfloats.util.Methods;
@@ -54,71 +50,20 @@ public class CallToActionAdapter extends RecyclerView.Adapter<CallToActionAdapte
         holder.tvDate.setText(Methods.getFormattedDate(suggestionsDO.getDate()));
         holder.tvValue.setText(suggestionsDO.getValue());
 
-        if (!suggestionsDO.isExpandGroup()) {
+        holder.llMessage.setVisibility(View.VISIBLE);
 
-            SpannableString content = new SpannableString(callToActionFragment.getActivity().getString(R.string.view_details));
-            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-            holder.tvCTA.setText(content);
-
-            holder.llMessage.setVisibility(View.GONE);
-            holder.llShare.setVisibility(View.GONE);
-        } else {
-
-            SpannableString content = new SpannableString(callToActionFragment.getActivity().getString(R.string.cta));
-            content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-            holder.tvCTA.setText(content);
-
-            holder.llMessage.setVisibility(View.VISIBLE);
-            holder.llShare.setVisibility(View.GONE);
-//            setShareLayouts(suggestionsDO.isShareEnabled(), holder);
-        }
+        holder.tvCTA.setTag(suggestionsDO);
 
         holder.tvCTA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (holder.tvCTA.getText().toString()
-                        .equalsIgnoreCase(callToActionFragment.getActivity().getString(R.string.cta))) {
-
-                    suggestionsDO.setExpandGroup(false);
-
-                    SpannableString content = new SpannableString(callToActionFragment.getActivity().getString(R.string.view_details));
-                    content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-                    holder.tvCTA.setText(content);
-
-                    holder.llMessage.setVisibility(View.GONE);
-                    callToActionFragment.performAction(suggestionsDO);
-                } else {
-                    suggestionsDO.setExpandGroup(true);
-                    setShareLayouts(suggestionsDO.isShareEnabled(), holder);
-
-                    YoYo.with(Techniques.SlideInUp)
-                            .duration(1000)
-                            .playOn(holder.llMessage);
-                }
-
+                callToActionFragment.performAction((SuggestionsDO) holder.tvCTA.getTag());
             }
         });
 
     }
 
-    private void setShareLayouts(boolean isShareEnabled,
-                                 ActionViewHolder holder) {
-
-        SpannableString content = null;
-        if (isShareEnabled) {
-            content = new SpannableString(callToActionFragment.getActivity().getString(R.string.view_details));
-            holder.llMessage.setVisibility(View.GONE);
-            holder.llShare.setVisibility(View.VISIBLE);
-        } else {
-            content = new SpannableString(callToActionFragment.getActivity().getString(R.string.cta));
-            holder.llMessage.setVisibility(View.VISIBLE);
-            holder.llShare.setVisibility(View.GONE);
-        }
-
-        content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
-        holder.tvCTA.setText(content);
-    }
 
     @Override
     public int getItemCount() {
@@ -132,7 +77,7 @@ public class CallToActionAdapter extends RecyclerView.Adapter<CallToActionAdapte
 
         private TextView tvSource, tvActualMessage,
                 tvDate, tvValue, tvCTA;
-        private LinearLayout llMessage, llShare;
+        private LinearLayout llMessage, llValue;
 
         public ActionViewHolder(View itemView) {
             super(itemView);
@@ -140,9 +85,9 @@ public class CallToActionAdapter extends RecyclerView.Adapter<CallToActionAdapte
             tvActualMessage = (TextView) itemView.findViewById(R.id.tvActualMessage);
             tvDate = (TextView) itemView.findViewById(R.id.tvDate);
             tvValue = (TextView) itemView.findViewById(R.id.tvValue);
+            llValue = (LinearLayout) itemView.findViewById(R.id.llValue);
             tvCTA = (TextView) itemView.findViewById(R.id.tvCTA);
             llMessage = (LinearLayout) itemView.findViewById(R.id.llMessage);
-            llShare = (LinearLayout) itemView.findViewById(R.id.llShare);
         }
     }
 }

@@ -58,7 +58,7 @@ public class OnBoardingFragment extends Fragment {
                     public void onClick(View v) {
 
                         if (ps_pager.getCurrentItem() == 2) {
-                            ((SuggestionsActivity) getActivity()).switchView(SuggestionsActivity.SwitchView.ACTION_ITEMS);
+                            ((SuggestionsActivity) getActivity()).switchView(SuggestionsActivity.SwitchView.CALL_TO_ACTION);
                         } else {
                             ps_pager.setCurrentItem(ps_pager.getCurrentItem() + 1);
                         }

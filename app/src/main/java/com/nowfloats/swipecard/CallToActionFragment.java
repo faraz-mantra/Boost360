@@ -1,42 +1,51 @@
 package com.nowfloats.swipecard;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.nowfloats.NavigationDrawer.SlidingTabLayout;
 import com.nowfloats.swipecard.adapters.CallToActionAdapter;
-import com.nowfloats.swipecard.adapters.SuggestionListAdapter;
+import com.nowfloats.swipecard.adapters.SugProductsAdapter;
+import com.nowfloats.swipecard.adapters.SugUpdatesAdapter;
 import com.nowfloats.swipecard.models.SugUpdates;
 import com.nowfloats.swipecard.models.SuggestionsDO;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.thinksity.R;
+
+import java.util.ArrayList;
 
 
 /**
@@ -46,9 +55,9 @@ import com.thinksity.R;
 public class CallToActionFragment extends Fragment {
 
 
-    private RecyclerView rvList;
+    private RecyclerView rvActionItems;
 
-    private GridView gvSuggestions;
+    private ViewPager vwSAM;
 
     private CallToActionAdapter actionItemsAdapter;
 
@@ -56,8 +65,12 @@ public class CallToActionFragment extends Fragment {
 
     private LinearLayout llProductView;
 
-    private ImageView ivShare, ivCall, ivSms;
+    private Button btnCall, btnShare;
 
+    private SlidingTabLayout tabs;
+
+    private final String ACTION_TYPE_NUMBER = "contactNumber";
+    private final String ACTION_TYPE_EMAIL = "email";
 
     public CallToActionFragment() {
 
@@ -83,31 +96,42 @@ public class CallToActionFragment extends Fragment {
 
     private void initializeControls(View view) {
 
-        rvList = (RecyclerView) view.findViewById(R.id.rvList);
+        rvActionItems = (RecyclerView) view.findViewById(R.id.rvActionItems);
         pbView = (ProgressBar) view.findViewById(R.id.pbView);
-        gvSuggestions = (GridView) view.findViewById(R.id.gvSuggestions);
+        vwSAM = (ViewPager) view.findViewById(R.id.vwSAM);
         llProductView = (LinearLayout) view.findViewById(R.id.llProductView);
-        ivShare = (ImageView) view.findViewById(R.id.ivShare);
-        ivCall = (ImageView) view.findViewById(R.id.ivCall);
-        ivSms = (ImageView) view.findViewById(R.id.ivSms);
+
+        btnCall = (Button) view.findViewById(R.id.btnCall);
+        btnShare = (Button) view.findViewById(R.id.btnShare);
 
         pbView.setVisibility(View.GONE);
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
         ((SuggestionsActivity) getActivity()).setSupportActionBar(toolbar);
-        getActivity().setTitle("Make Calls");
 
-        ((SuggestionsActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActivity().setTitle(Html.fromHtml("Sam <i>says..</i>"));
+        ((SuggestionsActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
         toolbar.setTitleTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+
+        tabs = (SlidingTabLayout) view.findViewById(R.id.tabs);
+        tabs.setDistributeEvenly(true);
+        tabs.setCustomTabView(R.layout.tab_text, R.id.tab_textview);
+        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return ContextCompat.getColor(getContext(), R.color.white);
+            }
+        });
 
     }
 
     private void prepareActionItemList() {
 
         actionItemsAdapter = new CallToActionAdapter(this);
-        rvList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rvList.setAdapter(actionItemsAdapter);
+        rvActionItems.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvActionItems.setAdapter(actionItemsAdapter);
 
         actionItemsAdapter.refreshList(((SuggestionsActivity) getActivity()).smsSuggestions.getSuggestionList());
 
@@ -116,56 +140,43 @@ public class CallToActionFragment extends Fragment {
     private void setOnClickListeners() {
 
 
-        gvSuggestions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final SugUpdates sugUpdates = (SugUpdates) view.getTag(R.string.key_details);
-                sugUpdates.setSelected(!sugUpdates.isSelected());
-                FrameLayout flMain = (FrameLayout) view.findViewById(R.id.flMain);
-                FrameLayout flOverlay = (FrameLayout) view.findViewById(R.id.flOverlay);
-                View vwOverlay = view.findViewById(R.id.vwOverlay);
-                if (sugUpdates.isSelected()) {
-                    flOverlay.setVisibility(View.VISIBLE);
-                    setOverlay(vwOverlay, 200, flMain.getWidth(), flMain.getHeight());
-                } else {
-                    flOverlay.setVisibility(View.GONE);
-                }
-            }
-        });
-
-        ivCall.setOnClickListener(new View.OnClickListener() {
+        btnCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                MixPanelController.track(MixPanelController.SAM_CALL, null);
+
+                FirebaseLogger.getInstance().logSAMEvent(suggestionsDO.getMessageId(), 3, suggestionsDO.getFpId());
+
+                suggestionsDO.setStatus(1);
+                ((SuggestionsActivity) getActivity()).updateActionsToServer(suggestionsDO);
+
                 Intent i = new Intent();
                 i.setAction(Intent.ACTION_DIAL);
                 i.setData(Uri.parse("tel:" + suggestionsDO.getValue()));
                 startActivity(i);
+
             }
         });
 
-        ivSms.setOnClickListener(new View.OnClickListener() {
+        btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent smsIntent = null;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    smsIntent = new Intent(Intent.ACTION_SENDTO);
-                    smsIntent.setData(Uri.parse("smsto:" + Uri.encode(suggestionsDO.getValue())));
-                } else {
-                    smsIntent = new Intent(Intent.ACTION_VIEW);
-                    smsIntent.setType("vnd.android-dir/mms-sms");
-                    smsIntent.putExtra("address", suggestionsDO.getValue());
-                    smsIntent.putExtra("sms_body", "");
+                MixPanelController.track(MixPanelController.SAM_SHARE, null);
+
+                FirebaseLogger.getInstance().logSAMEvent(suggestionsDO.getMessageId(), 3, suggestionsDO.getFpId());
+
+                suggestionsDO.setStatus(1);
+                ((SuggestionsActivity) getActivity()).updateActionsToServer(suggestionsDO);
+
+
+                if (suggestionsDO.getType().equalsIgnoreCase(ACTION_TYPE_NUMBER)) {
+                    prepareMessageForShare(SHARE_VIA.SMS);
+                } else if (suggestionsDO.getType().equalsIgnoreCase(ACTION_TYPE_EMAIL)) {
+                    prepareMessageForShare(SHARE_VIA.GMAIL);
                 }
-                startActivity(smsIntent);
 
-            }
-        });
-
-        ivShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                prepareMessageForShare(SHARE_VIA.GMAIL);
             }
         });
     }
@@ -174,16 +185,31 @@ public class CallToActionFragment extends Fragment {
 
     public void performAction(SuggestionsDO suggestionsDO) {
 
+        FirebaseLogger.getInstance().logSAMEvent(suggestionsDO.getMessageId(), 2, suggestionsDO.getFpId());
+
         this.suggestionsDO = suggestionsDO;
 
+        getActivity().setTitle(Html.fromHtml("Sam <i>suggests..</i>"));
+        ((SuggestionsActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         llProductView.setVisibility(View.VISIBLE);
-        rvList.setVisibility(View.GONE);
+        rvActionItems.setVisibility(View.GONE);
+
+
+        if (suggestionsDO.getType().equalsIgnoreCase(ACTION_TYPE_NUMBER)) {
+            btnCall.setVisibility(View.VISIBLE);
+            btnShare.setText("Message");
+        } else {
+            btnCall.setVisibility(View.GONE);
+            btnShare.setText("Share");
+        }
 
         YoYo.with(Techniques.SlideInUp)
                 .duration(500)
                 .playOn(llProductView);
 
-        gvSuggestions.setAdapter(new SuggestionListAdapter(getActivity(), suggestionsDO.getUpdates()));
+        vwSAM.setAdapter(new SAMPagerAdapter(getActivity()));
+        tabs.setViewPager(vwSAM);
     }
 
 
@@ -194,7 +220,10 @@ public class CallToActionFragment extends Fragment {
     public void displayCTA() {
 
         llProductView.setVisibility(View.GONE);
-        rvList.setVisibility(View.VISIBLE);
+        rvActionItems.setVisibility(View.VISIBLE);
+
+        getActivity().setTitle(Html.fromHtml("Sam <i>says..</i>"));
+        ((SuggestionsActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
     public void setOverlay(View v, int opac, int width, int height) {
@@ -271,11 +300,13 @@ public class CallToActionFragment extends Fragment {
                         break;
                     case SMS:
                         try {
-                            Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                            smsIntent.setType("vnd.android-dir/mms-sms");
+
+                            Uri uri = Uri.parse("smsto:" + suggestionsDO.getValue());
+                            Intent smsIntent = new Intent(Intent.ACTION_SENDTO, uri);
                             smsIntent.putExtra("address", suggestionsDO.getValue());
                             smsIntent.putExtra("sms_body", sugUpdates.getName());
                             startActivity(smsIntent);
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -287,4 +318,76 @@ public class CallToActionFragment extends Fragment {
         }
     }
 
+    public class SAMPagerAdapter extends PagerAdapter {
+
+        private LayoutInflater inflater;
+        private ArrayList<String> arrPageTitle;
+
+        public SAMPagerAdapter(Context mcContext) {
+            inflater = LayoutInflater.from(mcContext);
+            arrPageTitle = new ArrayList<>();
+
+            arrPageTitle.add("UPDATES");
+            arrPageTitle.add("PRODUCTS");
+        }
+
+        @Override
+        public int getCount() {
+            return arrPageTitle.size();
+        }
+
+        public Object instantiateItem(ViewGroup container, int position) {
+            View currentView = null;
+            Log.e("SAMPagerAdapter", "instantiateItem for " + position);
+            if (position == 0) {
+                currentView = inflater.inflate(R.layout.sug_updates_list, null);
+                RecyclerView rvSuggestions = (RecyclerView) currentView.findViewById(R.id.rvSuggestions);
+                rvSuggestions.setLayoutManager(new LinearLayoutManager(getActivity()));
+                rvSuggestions.setAdapter(new SugUpdatesAdapter((ArrayList<SugUpdates>) suggestionsDO.getUpdates()));
+
+            } else if (position == 1) {
+                currentView = inflater.inflate(R.layout.sug_products_list, null);
+
+                GridView gvSuggestions = (GridView) currentView.findViewById(R.id.gvSuggestions);
+
+                gvSuggestions.setAdapter(new SugProductsAdapter(getActivity(), suggestionsDO.getProducts()));
+
+
+                gvSuggestions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        final SugUpdates sugUpdates = (SugUpdates) view.getTag(R.string.key_details);
+                        sugUpdates.setSelected(!sugUpdates.isSelected());
+                        FrameLayout flMain = (FrameLayout) view.findViewById(R.id.flMain);
+                        FrameLayout flOverlay = (FrameLayout) view.findViewById(R.id.flOverlay);
+                        View vwOverlay = view.findViewById(R.id.vwOverlay);
+                        if (sugUpdates.isSelected()) {
+                            flOverlay.setVisibility(View.VISIBLE);
+                            setOverlay(vwOverlay, 200, flMain.getWidth(), flMain.getHeight());
+                        } else {
+                            flOverlay.setVisibility(View.GONE);
+                        }
+                    }
+                });
+            }
+            container.addView(currentView);
+            return currentView;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == ((View) object);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return arrPageTitle.get(position);
+        }
+    }
 }

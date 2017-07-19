@@ -501,6 +501,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="check_internet_connection">Check your Network Connection</string>
     <string name="email">EMAIL</string>
     <string name="call">CALL</string>
+    <string name="respond">Respond</string>
     <string name="send_email">Send email&#8230;</string>
     <string name="faqs">FAQs</string>
     <string name="answer">Answer</string>

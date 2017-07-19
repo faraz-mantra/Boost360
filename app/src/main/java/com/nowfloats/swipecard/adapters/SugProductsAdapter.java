@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
+import com.nowfloats.swipecard.models.SugProducts;
 import com.nowfloats.swipecard.models.SugUpdates;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
@@ -23,7 +24,7 @@ import java.util.List;
  * Created by guru
  */
 
-public class SuggestionListAdapter extends BaseAdapter {
+public class SugProductsAdapter extends BaseAdapter {
 
     // View lookup cache
     public static class ViewHolder {
@@ -41,11 +42,11 @@ public class SuggestionListAdapter extends BaseAdapter {
     public String currencyType = "";
     private Resources mResources;
     private Product_Gallery_Fragment.FROM from;
-    private ArrayList<SugUpdates> productItemModelList;
+    private ArrayList<SugProducts> productItemModelList;
 
-    public SuggestionListAdapter(Activity activity, List<SugUpdates> productItemModelList) {
+    public SugProductsAdapter(Activity activity, List<SugProducts> productItemModelList) {
         this.activity = activity;
-        this.productItemModelList = (ArrayList<SugUpdates>) productItemModelList;
+        this.productItemModelList = (ArrayList<SugProducts>) productItemModelList;
         mResources = activity.getResources();
         this.from = from;
         //this.currencyType = currency;
@@ -142,12 +143,12 @@ public class SuggestionListAdapter extends BaseAdapter {
         return vi;
     }
 
-    public void refreshDetails(ArrayList<SugUpdates> productItemModelList) {
+    public void refreshDetails(ArrayList<SugProducts> productItemModelList) {
         this.productItemModelList = productItemModelList;
         notifyDataSetChanged();
     }
 
-    public ArrayList<SugUpdates> getDetails() {
+    public ArrayList<SugProducts> getDetails() {
         return productItemModelList;
     }
 

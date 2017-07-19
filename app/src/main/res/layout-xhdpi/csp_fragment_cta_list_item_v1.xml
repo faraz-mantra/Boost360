@@ -1,178 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/visitors_card"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginTop="10dp"
-    android:elevation="1dp"
-    card_view:cardBackgroundColor="#FFFFFF"
-    card_view:cardCornerRadius="3dp">
+    android:background="@color/screen_bg"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:tag="cards main container">
 
-    <LinearLayout
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        card_view:cardBackgroundColor="#FFFFFF"
+        card_view:cardCornerRadius="3dp"
+        card_view:cardElevation="3dp"
+        card_view:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:paddingBottom="10dp"
-                android:paddingLeft="15dp"
-                android:paddingRight="5dp"
-                android:paddingTop="15dp">
+                android:background="#9c9c9c"
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/llValue"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="3dp">
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="15dp">
 
-                    <!-- <TextView
-                         fontPath="Roboto-Medium.ttf"
-                         android:layout_width="wrap_content"
-                         android:layout_height="wrap_content"
-                         android:layout_marginRight="2dp"
-                         android:singleLine="true"
-                         android:text="From:"
-                         android:textColor="@color/white"
-                         android:textSize="14sp"
-                         tools:ignore="MissingPrefix" />-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="3dp">
 
+                        <TextView
+                            android:id="@+id/tvValue"
+                            fontPath="Roboto-Medium.ttf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:scrollHorizontally="false"
+                            android:singleLine="true"
+                            android:text="@string/number_tocall_says"
+                            android:textColor="@android:color/white"
+                            android:textSize="15sp"
+                            tools:ignore="MissingPrefix" />
+                    </LinearLayout>
 
                     <TextView
-                        android:id="@+id/tvValue"
-                        fontPath="Roboto-Medium.ttf"
+                        android:id="@+id/tvDate"
+                        fontPath="Roboto-Regular.ttf"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:scrollHorizontally="false"
-                        android:singleLine="true"
-                        android:text="@string/number_tocall_says"
-                        android:textSize="15sp"
+                        android:text="@string/sent_on"
+                        android:textColor="@android:color/white"
+                        android:textSize="10sp"
                         tools:ignore="MissingPrefix" />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tvDate"
-                    fontPath="Roboto-Regular.ttf"
+
+                <!--<ImageView
+                    android:id="@+id/contact_icon"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/sent_on"
-                    android:textSize="10sp"
-                    tools:ignore="MissingPrefix" />
-            </LinearLayout>
-
-            <FrameLayout
-                android:id="@+id/contactButton"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginRight="8dp">
-
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_call_white_48dp"
+                    android:visibility="gone" />-->
 
                 <TextView
                     android:id="@+id/tvCTA"
-                    fontPath="Roboto-Regular.ttf"
+                    fontPath="Roboto-Bold.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="right|center_vertical"
                     android:layout_marginRight="@dimen/margin_10"
-                    android:gravity="right"
-                    android:text="@string/cta"
-                    android:textSize="@dimen/medium_text_size"
+                    android:background="@drawable/white_round_corner"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/margin_7"
+                    android:paddingLeft="@dimen/margin_15"
+                    android:paddingRight="@dimen/margin_15"
+                    android:paddingTop="@dimen/margin_7"
+                    android:text="@string/respond"
+                    android:textColor="@color/login_bkg"
+                    android:textSize="13sp"
                     tools:ignore="MissingPrefix" />
+            </LinearLayout>
 
-            </FrameLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llMessage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/very_light_gray"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/margin_10"
-            android:paddingLeft="@dimen/margin_10"
-            android:paddingRight="@dimen/margin_10"
-            android:paddingTop="@dimen/margin_20">
-
-            <com.nowfloats.CustomWidget.roboto_lt_24_212121
+            <LinearLayout
+                android:id="@+id/llMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_5"
-                android:background="@color/very_light_gray"
-                android:text="Lead Details" />
-
-            <TextView
-                android:id="@+id/tvActualMessage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_5"
-                android:background="@color/white"
-                android:drawableLeft="@drawable/alert_logo"
-                android:drawablePadding="@dimen/margin_10"
+                android:orientation="vertical"
                 android:paddingBottom="@dimen/margin_10"
                 android:paddingLeft="@dimen/margin_10"
                 android:paddingRight="@dimen/margin_10"
-                android:paddingTop="@dimen/margin_20" />
+                android:paddingTop="@dimen/margin_20">
 
-            <com.nowfloats.CustomWidget.roboto_lt_24_212121
-                android:id="@+id/tvSource"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:gravity="right"
-                android:paddingBottom="@dimen/margin_10"
-                android:paddingRight="@dimen/margin_10"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/tvSource"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="JustDial"
+                    android:textColor="#3c3c3c"
+                    android:textSize="15sp"
+                    tools:ignore="MissingPrefix" />
+
+                <TextView
+                    android:id="@+id/tvActualMessage"
+                    fontPath="Roboto-LightItalic.ttf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/margin_10"
+                    android:text="@string/wow_this_is_amazing_offer_is_it_avail_trip"
+                    android:textColor="#9c9c9c"
+                    android:textSize="13sp"
+                    tools:ignore="MissingPrefix" />
+
+
+            </LinearLayout>
         </LinearLayout>
+    </android.support.v7.widget.CardView>
 
-        <LinearLayout
-            android:id="@+id/llShare"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_5"
-            android:background="@color/very_light_gray"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/margin_10"
-            android:paddingLeft="@dimen/margin_10"
-            android:paddingRight="@dimen/margin_10"
-            android:paddingTop="@dimen/margin_20">
-
-            <ImageView
-                android:id="@+id/ivCall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/ic_call_black" />
-
-            <ImageView
-                android:id="@+id/ivSms"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/sms_bg" />
-
-            <ImageView
-                android:id="@+id/ivShare"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/ic_share" />
-
-        </LinearLayout>
-    </LinearLayout>
-</android.support.v7.widget.CardView>
+</LinearLayout>

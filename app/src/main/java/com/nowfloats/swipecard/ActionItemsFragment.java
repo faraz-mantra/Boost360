@@ -51,7 +51,7 @@ public class ActionItemsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        rvList = (RecyclerView) view.findViewById(R.id.rvList);
+        rvList = (RecyclerView) view.findViewById(R.id.rvActionItems);
         pbView = (ProgressBar) view.findViewById(R.id.pbView);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
