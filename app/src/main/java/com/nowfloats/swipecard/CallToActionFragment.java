@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -18,18 +19,26 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.nowfloats.NavigationDrawer.SlidingTabLayout;
@@ -39,6 +48,7 @@ import com.nowfloats.swipecard.adapters.SugUpdatesAdapter;
 import com.nowfloats.swipecard.models.SugUpdates;
 import com.nowfloats.swipecard.models.SuggestionsDO;
 import com.nowfloats.util.BoostLog;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.picasso.Picasso;
@@ -70,7 +80,12 @@ public class CallToActionFragment extends Fragment {
     private SlidingTabLayout tabs;
 
     private final String ACTION_TYPE_NUMBER = "contactNumber";
+
     private final String ACTION_TYPE_EMAIL = "email";
+
+    private static final int MAX_RESPONDED = 3;
+
+    private int noOfTimesResponded = 0;
 
     public CallToActionFragment() {
 
@@ -125,6 +140,66 @@ public class CallToActionFragment extends Fragment {
             }
         });
 
+        noOfTimesResponded = ((SuggestionsActivity) getActivity()).
+                pref.getInt(Key_Preferences.NO_OF_TIMES_RESPONDED, 0);
+
+        if (noOfTimesResponded >= MAX_RESPONDED) {
+            showRating();
+        }
+
+    }
+
+    private int noOfStars = 0;
+
+    private void showRating() {
+
+        noOfStars = 0;
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
+                .title(getString(R.string.enjoying_feature))
+                .customView(R.layout.csp_fragment_rating, false)
+                .positiveText(getString(R.string.submit))
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                        ((SuggestionsActivity) getActivity()).pref.edit()
+                                .putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, -MAX_RESPONDED).apply();
+                        ((SuggestionsActivity) getActivity()).updateRating(noOfStars);
+                    }
+                })
+                .positiveColorRes(R.color.primaryColor);
+
+        if (!getActivity().isFinishing()) {
+
+            final MaterialDialog materialDialog = builder.show();
+            materialDialog.setCancelable(false);
+
+            View mView = materialDialog.getCustomView();
+            final RatingBar mRatingBar = (RatingBar) mView.findViewById(R.id.ratingbar);
+            mRatingBar.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        float touchPositionX = event.getX();
+                        float width = mRatingBar.getWidth();
+                        float starsf = (touchPositionX / width) * 5.0f;
+                        int stars = (int) starsf + 1;
+                        mRatingBar.setRating(stars);
+                        noOfStars = stars;
+                        v.setPressed(false);
+                    }
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        v.setPressed(true);
+                    }
+
+                    if (event.getAction() == MotionEvent.ACTION_CANCEL) {
+                        v.setPressed(false);
+                    }
+
+                    return true;
+                }
+            });
+        }
     }
 
     private void prepareActionItemList() {
@@ -144,9 +219,11 @@ public class CallToActionFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                MixPanelController.track(MixPanelController.SAM_CALL, null);
+                FirebaseLogger.getInstance().logSAMEvent(suggestionsDO.getMessageId(), 4, suggestionsDO.getFpId());
+                MixPanelController.track(MixPanelController.SAM_BUBBLE_ACTION_CALL,null);
 
-                FirebaseLogger.getInstance().logSAMEvent(suggestionsDO.getMessageId(), 3, suggestionsDO.getFpId());
+                ((SuggestionsActivity) getActivity()).pref.edit()
+                        .putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, ++noOfTimesResponded).apply();
 
                 suggestionsDO.setStatus(1);
                 ((SuggestionsActivity) getActivity()).updateActionsToServer(suggestionsDO);
@@ -163,9 +240,12 @@ public class CallToActionFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                MixPanelController.track(MixPanelController.SAM_SHARE, null);
 
-                FirebaseLogger.getInstance().logSAMEvent(suggestionsDO.getMessageId(), 3, suggestionsDO.getFpId());
+                FirebaseLogger.getInstance().logSAMEvent(suggestionsDO.getMessageId(), 4, suggestionsDO.getFpId());
+                MixPanelController.track(MixPanelController.SAM_BUBBLE_ACTION_SHARE,null);
+
+                ((SuggestionsActivity) getActivity()).pref.edit().
+                        putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, ++noOfTimesResponded).apply();
 
                 suggestionsDO.setStatus(1);
                 ((SuggestionsActivity) getActivity()).updateActionsToServer(suggestionsDO);
@@ -185,7 +265,8 @@ public class CallToActionFragment extends Fragment {
 
     public void performAction(SuggestionsDO suggestionsDO) {
 
-        FirebaseLogger.getInstance().logSAMEvent(suggestionsDO.getMessageId(), 2, suggestionsDO.getFpId());
+        FirebaseLogger.getInstance().logSAMEvent(suggestionsDO.getMessageId(), 3, suggestionsDO.getFpId());
+        MixPanelController.track(MixPanelController.SAM_BUBBLE_SELECTED_MESSAGES,null);
 
         this.suggestionsDO = suggestionsDO;
 
@@ -242,80 +323,96 @@ public class CallToActionFragment extends Fragment {
     }
 
     private Intent shareIntent = null;
+    private String selectedProducts = "";
 
 
     private void prepareMessageForShare(SHARE_VIA share_via) {
 
         shareIntent = null;
+        selectedProducts = "";
+
+        String imageUrl = "";
+
         for (final SugUpdates sugUpdates : suggestionsDO.getUpdates()) {
-
             if (sugUpdates.isSelected()) {
-                switch (share_via) {
-                    case GMAIL:
-                        Picasso.with(getActivity())
-                                .load(sugUpdates.getImage())
-                                .into(new Target() {
-                                    @Override
-                                    public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                                        Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-                                        View view = new View(getActivity());
-                                        view.draw(new Canvas(mutableBitmap));
-                                        try {
-                                            String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), mutableBitmap, "Nur", null);
-                                            BoostLog.d("Path is:", path);
-                                            Uri uri = Uri.parse(path);
-                                            shareIntent =
-                                                    new Intent(Intent.ACTION_SEND, Uri.parse("mailto:" +
-                                                            suggestionsDO.getValue()));
-                                            shareIntent.putExtra(Intent.EXTRA_TEXT, sugUpdates.getName());
-                                            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-                                            shareIntent.setType("image/*");
 
+                try {
+                    selectedProducts = selectedProducts + sugUpdates.getName() + "\n" + " URL: " + sugUpdates.getUpdateUrl() + "\n";
+                    imageUrl = sugUpdates.getImage();
 
-                                            if (shareIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-                                                startActivity(shareIntent);
-                                            } else {
-                                                Methods.showSnackBarNegative(getActivity(),
-                                                        getString(R.string.no_app_available_for_action));
-                                            }
-
-                                        } catch (Exception e) {
-                                            ActivityCompat.requestPermissions(getActivity()
-                                                    , new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                                            android.Manifest.permission.CAMERA}, 2);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onBitmapFailed(Drawable errorDrawable) {
-                                        Methods.showSnackBarNegative(getActivity(), getString(R.string.failed_to_download_image));
-
-                                    }
-
-                                    @Override
-                                    public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                                    }
-                                });
-                        break;
-                    case SMS:
-                        try {
-
-                            Uri uri = Uri.parse("smsto:" + suggestionsDO.getValue());
-                            Intent smsIntent = new Intent(Intent.ACTION_SENDTO, uri);
-                            smsIntent.putExtra("address", suggestionsDO.getValue());
-                            smsIntent.putExtra("sms_body", sugUpdates.getName());
-                            startActivity(smsIntent);
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        break;
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-
-                break;
             }
         }
+
+        if (TextUtils.isEmpty(selectedProducts)) {
+            Methods.showSnackBarNegative(getActivity(), getString(R.string.select_update_or_product));
+        } else {
+            switch (share_via) {
+                case GMAIL:
+                    Picasso.with(getActivity())
+                            .load(imageUrl)
+                            .into(new Target() {
+                                @Override
+                                public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                                    Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                                    View view = new View(getActivity());
+                                    view.draw(new Canvas(mutableBitmap));
+                                    try {
+                                        String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), mutableBitmap, "Nur", null);
+                                        BoostLog.d("Path is:", path);
+                                        Uri uri = Uri.parse(path);
+                                        shareIntent =
+                                                new Intent(Intent.ACTION_SEND, Uri.parse("mailto:" +
+                                                        suggestionsDO.getValue()));
+                                        shareIntent.putExtra(Intent.EXTRA_TEXT, selectedProducts);
+                                        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                                        shareIntent.setType("image/*");
+
+
+                                        if (shareIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                                            startActivity(shareIntent);
+                                        } else {
+                                            Methods.showSnackBarNegative(getActivity(),
+                                                    getString(R.string.no_app_available_for_action));
+                                        }
+
+                                    } catch (Exception e) {
+                                        ActivityCompat.requestPermissions(getActivity()
+                                                , new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                                        android.Manifest.permission.CAMERA}, 2);
+                                    }
+                                }
+
+                                @Override
+                                public void onBitmapFailed(Drawable errorDrawable) {
+                                    Methods.showSnackBarNegative(getActivity(), getString(R.string.failed_to_download_image));
+
+                                }
+
+                                @Override
+                                public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                                }
+                            });
+                    break;
+                case SMS:
+                    try {
+
+                        Uri uri = Uri.parse("smsto:" + suggestionsDO.getValue());
+                        Intent smsIntent = new Intent(Intent.ACTION_SENDTO, uri);
+                        smsIntent.putExtra("address", suggestionsDO.getValue());
+                        smsIntent.putExtra("sms_body", selectedProducts);
+                        startActivity(smsIntent);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+            }
+        }
+
     }
 
     public class SAMPagerAdapter extends PagerAdapter {
@@ -336,39 +433,120 @@ public class CallToActionFragment extends Fragment {
             return arrPageTitle.size();
         }
 
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(ViewGroup container, final int position) {
             View currentView = null;
             Log.e("SAMPagerAdapter", "instantiateItem for " + position);
             if (position == 0) {
+
                 currentView = inflater.inflate(R.layout.sug_updates_list, null);
-                RecyclerView rvSuggestions = (RecyclerView) currentView.findViewById(R.id.rvSuggestions);
-                rvSuggestions.setLayoutManager(new LinearLayoutManager(getActivity()));
-                rvSuggestions.setAdapter(new SugUpdatesAdapter((ArrayList<SugUpdates>) suggestionsDO.getUpdates()));
+                TextView tvNoItems = (TextView) currentView.findViewById(R.id.tvNoItems);
+                final ImageView ivScrollDown = (ImageView) currentView.findViewById(R.id.iv_scroll_down);
+                final RecyclerView rvSuggestions = (RecyclerView) currentView.findViewById(R.id.rvSuggestions);
+
+                rvSuggestions.setVisibility(View.VISIBLE);
+                tvNoItems.setVisibility(View.GONE);
+
+
+                if (suggestionsDO.getUpdates() != null && suggestionsDO.getUpdates().size() > 0) {
+                    rvSuggestions.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    rvSuggestions.setAdapter(new SugUpdatesAdapter(getActivity(),
+                            (ArrayList<SugUpdates>) suggestionsDO.getUpdates()));
+
+                    ivScrollDown.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            rvSuggestions.smoothScrollToPosition(suggestionsDO.getUpdates().size() - 1);
+                        }
+                    });
+
+                    rvSuggestions.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                        @Override
+                        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                            super.onScrollStateChanged(recyclerView, newState);
+                        }
+
+                        @Override
+                        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                            super.onScrolled(recyclerView, dx, dy);
+                            int position = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+
+                            if (position < (suggestionsDO.getUpdates().size() - 2)) {
+                                ivScrollDown.setVisibility(View.VISIBLE);
+                            } else {
+                                ivScrollDown.setVisibility(View.INVISIBLE);
+                            }
+                        }
+                    });
+
+
+                } else {
+                    rvSuggestions.setVisibility(View.GONE);
+                    tvNoItems.setVisibility(View.VISIBLE);
+                }
 
             } else if (position == 1) {
+
                 currentView = inflater.inflate(R.layout.sug_products_list, null);
+                TextView tvNoItems = (TextView) currentView.findViewById(R.id.tvNoItems);
+                final ImageView ivScrollDown = (ImageView) currentView.findViewById(R.id.iv_scroll_down);
+                final GridView gvSuggestions = (GridView) currentView.findViewById(R.id.gvSuggestions);
 
-                GridView gvSuggestions = (GridView) currentView.findViewById(R.id.gvSuggestions);
+                gvSuggestions.setVisibility(View.VISIBLE);
+                tvNoItems.setVisibility(View.GONE);
 
-                gvSuggestions.setAdapter(new SugProductsAdapter(getActivity(), suggestionsDO.getProducts()));
+                if (suggestionsDO.getProducts() != null && suggestionsDO.getProducts().size() > 0) {
+                    gvSuggestions.setAdapter(new SugProductsAdapter(getActivity(), suggestionsDO.getProducts()));
 
+                    gvSuggestions.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                        @Override
+                        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 
-                gvSuggestions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        final SugUpdates sugUpdates = (SugUpdates) view.getTag(R.string.key_details);
-                        sugUpdates.setSelected(!sugUpdates.isSelected());
-                        FrameLayout flMain = (FrameLayout) view.findViewById(R.id.flMain);
-                        FrameLayout flOverlay = (FrameLayout) view.findViewById(R.id.flOverlay);
-                        View vwOverlay = view.findViewById(R.id.vwOverlay);
-                        if (sugUpdates.isSelected()) {
-                            flOverlay.setVisibility(View.VISIBLE);
-                            setOverlay(vwOverlay, 200, flMain.getWidth(), flMain.getHeight());
-                        } else {
-                            flOverlay.setVisibility(View.GONE);
+                            final SugUpdates sugUpdates = (SugUpdates) view.getTag(R.string.key_details);
+                            sugUpdates.setSelected(!sugUpdates.isSelected());
+                            FrameLayout flMain = (FrameLayout) view.findViewById(R.id.flMain);
+                            FrameLayout flOverlay = (FrameLayout) view.findViewById(R.id.flOverlay);
+                            View vwOverlay = view.findViewById(R.id.vwOverlay);
+                            if (sugUpdates.isSelected()) {
+                                flOverlay.setVisibility(View.VISIBLE);
+                                setOverlay(vwOverlay, 200, flMain.getWidth(), flMain.getHeight());
+                            } else {
+                                flOverlay.setVisibility(View.GONE);
+                            }
+                            return true;
                         }
-                    }
-                });
+                    });
+
+                    ivScrollDown.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            gvSuggestions.smoothScrollToPosition(suggestionsDO.getProducts().size() - 1);
+                        }
+                    });
+
+                    gvSuggestions.setOnScrollListener(new GridView.OnScrollListener() {
+                        @Override
+                        public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+                        }
+
+                        @Override
+                        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+                            if (visibleItemCount < (suggestionsDO.getUpdates().size() - 2)) {
+                                ivScrollDown.setVisibility(View.VISIBLE);
+                            } else {
+                                ivScrollDown.setVisibility(View.INVISIBLE);
+                            }
+                        }
+
+
+                    });
+
+                } else {
+                    gvSuggestions.setVisibility(View.GONE);
+                    tvNoItems.setVisibility(View.VISIBLE);
+                }
+
             }
             container.addView(currentView);
             return currentView;

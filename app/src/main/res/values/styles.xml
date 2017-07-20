@@ -245,4 +245,5 @@
         <attr name="textSize" format="dimension" />
         <attr name="lineSpacing" format="dimension" />
     </declare-styleable>
+
 </resources>

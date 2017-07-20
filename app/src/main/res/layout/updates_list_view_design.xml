@@ -27,28 +27,49 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_margin="@dimen/margin_10"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_5"
+                        android:orientation="horizontal">
 
 
-                    <ImageView
-                        android:id="@+id/proudct_image_view"
-                        android:layout_width="80dp"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop" />
+                        <ImageView
+                            android:id="@+id/proudct_image_view"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:visibility="gone" />
 
-                    <com.nowfloats.util.ExpandableTextView
-                        android:id="@+id/tvUpdate"
+                        <TextView
+                            android:id="@+id/tvUpdate"
+                            fontPath="Roboto-Medium.ttf"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:lineSpacingExtra="5dp"
+                            android:textSize="14sp"
+                            tools:ignore="MissingPrefix" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvViewMore"
                         fontPath="Roboto-Medium.ttf"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_10"
+                        android:gravity="bottom|right"
                         android:lineSpacingExtra="5dp"
+                        android:text="@string/view_more"
+                        android:textColor="@color/primary"
                         android:textSize="14sp"
                         tools:ignore="MissingPrefix" />
-
                 </LinearLayout>
 
                 <ImageView

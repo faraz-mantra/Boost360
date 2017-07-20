@@ -12,6 +12,7 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
@@ -163,7 +164,7 @@ public class Home_Fragment_Tab extends Fragment {
         alertCountTv.setVisibility(View.GONE);
         String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
 
-        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") && "1".equals(paymentState)) {
+        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") /*&& "1".equals(paymentState)*/) {
             getProducts();
         }
 
@@ -346,7 +347,8 @@ public class Home_Fragment_Tab extends Fragment {
     public void checkOverlay(DrawOverLay from) {
         if (!isAdded() || getActivity() == null) {
             return;
-        } else if (!isProductAvaiable && from == DrawOverLay.FromHome && activity != null) {
+        }
+        else if (!isProductAvaiable && from == DrawOverLay.FromHome && activity != null) {
 
             Toast.makeText(activity, "you do not have products into ProductGallery", Toast.LENGTH_SHORT).show();
             return;
@@ -457,11 +459,6 @@ public class Home_Fragment_Tab extends Fragment {
             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getActivity().getPackageName()));
             startActivityForResult(intent, PERM_REQUEST_CODE_DRAW_OVERLAYS);
         } else {
-//            Intent intent = new Intent();
-//            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-//            Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
-//            intent.setData(uri);
-//            startActivity(intent);
             startActivity(new Intent(Settings.ACTION_SETTINGS));
         }
     }
@@ -470,11 +467,18 @@ public class Home_Fragment_Tab extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PERM_REQUEST_CODE_DRAW_OVERLAYS) {
-            if (android.os.Build.VERSION.SDK_INT >= 23) {
-                if (getActivity() != null && Settings.canDrawOverlays(getActivity())) {
-                    checkForAccessibility();
+
+            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (android.os.Build.VERSION.SDK_INT >= 23) {
+
+                        if (getActivity() != null && Settings.canDrawOverlays(getActivity())) {
+                            checkForAccessibility();
+                        }
+                    }
                 }
-            }
+            }, 1000);
         }
     }
 

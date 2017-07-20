@@ -494,6 +494,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="visits">Visits</string>
     <string name="unique_visitors">Unique Visitors</string>
     <string name="no_info_avail">No information available!</string>
+    <string name="no_products_avail">No products available.</string>
+    <string name="no_updates_avail">No updates available.</string>
     <string name="visit_this_week">visits this week</string>
     <string name="visit_this_month">visits this month</string>
     <string name="visit_this_year">visits this year</string>
@@ -515,6 +517,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="setting">Settings</string>
     <string name="device_does_not_support_capturing_image">Whoops - your device doesn\'t support capturing images!</string>
     <string name="select_image_upload">Please select an image to upload</string>
+    <string name="select_update_or_product">Please select at least one update or product </string>
     <string name="visit_to_new_website">Woohoo! We have a new website. Visit it at</string>
     <string name="features_not_available">Feature not available</string>
     <string name="check_store_for_upgrade_info">Check the store for more information on upgrade plans</string>
@@ -941,6 +944,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="product_detail_delete_btn_text">Delete product</string>
     <string name="book_a_new_domain">Book a new domain</string>
     <string name="have_an_existing_domain">Have an existing domain? </string>
+    <string name="enjoying_feature">Is t helpful in managing your business leads? </string>
+    <string name="tap_a_star_to_rate_it">Tap a star to rate it</string>
     <string name="link_a_domain_nf">Link a domain (included in your NowFloats Package)</string>
     <string name="already_have_a_domain">Already have a domain</string>
     <string name="pop_up_create_msg_title">Are you sure?</string>
@@ -1238,7 +1243,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <array name="businesssmalltext">
         <item>Your way to a permanent place in your\ncustomer\'s phone.</item>
         <item>Beat your competition and be the first ones\nto get your own Mobile App.</item>
-        <item>Send personalized notifications to your\ncustomers about your products and offerings.</item>
+        <item>Send personalized notifications to your\ncustomers about your products and
+            offerings.
+        </item>
         <item>Now your customers can reach your store\neven without an internet connection.</item>
     </array>
 
@@ -1278,6 +1285,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="play_with_underline" translatable="false"><u>PLAY</u></string>
     <string name="cta" translatable="false"><u>CTA</u></string>
     <string name="view_details" translatable="false"><u>Details</u></string>
+    <string name="view_more"><u>View More</u></string>
+    <string name="view_less"><u>View Less</u></string>
     <string name="vmn_message_text">This is displayed on your website and you can track all customer calls &amp; logs here.</string>
     <string name="website_domain_name">.nowfloats.com</string>
     <string name="faqs_url">https://nowfloats.com/faq</string>

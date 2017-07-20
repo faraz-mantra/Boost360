@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +13,7 @@ import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 
 import com.nowfloats.Login.UserSessionManager;
@@ -25,6 +25,7 @@ import com.nowfloats.swipecard.service.SuggestionsApi;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -36,7 +37,7 @@ import java.util.HashMap;
 public class SuggestionsActivity extends AppCompatActivity {
 
 
-    private SharedPreferences pref;
+    public SharedPreferences pref;
 
     private SuggestionsApi suggestionsApi;
 
@@ -79,13 +80,14 @@ public class SuggestionsActivity extends AppCompatActivity {
 
     private void initializeControls() {
 
-        setDisplayMetrics(0.80f, 0.60f, true);
+        setDisplayMetrics(1.0f, 0.80f, false);
 
         pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         killListener = new KillListener();
 
         fragmentManager = getSupportFragmentManager();
 
+        MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED, null);
         FirebaseLogger.getInstance().logSAMEvent("", 0, session.getFPID());
 
         fragmentManager.beginTransaction().
@@ -95,15 +97,17 @@ public class SuggestionsActivity extends AppCompatActivity {
     }
 
     private void setDisplayMetrics(float width, float height, boolean isCenter) {
+
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int screenHeight = (int) (metrics.heightPixels * height);
         int screenWidth = (int) (metrics.widthPixels * width);
+
         if (isCenter)
             getWindow().setGravity(Gravity.CENTER);
         else
             getWindow().setGravity(Gravity.BOTTOM);
-        getWindow().setLayout(screenWidth, screenHeight);
-        getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, screenHeight);
+//        getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
     }
 
 
@@ -154,10 +158,9 @@ public class SuggestionsActivity extends AppCompatActivity {
 
         pbView.setVisibility(View.VISIBLE);
 
-        FirebaseLogger.getInstance().logSAMEvent("", 1, session.getFPID());
-
         HashMap<String, String> offersParam = new HashMap<>();
-        offersParam.put("fpId", session.getFPID());
+//        offersParam.put("fpId", session.getFPID());
+        offersParam.put("fpId", "5935119c0e88a505a82d7e00");
         suggestionsApi.getMessages(offersParam);
     }
 
@@ -175,7 +178,11 @@ public class SuggestionsActivity extends AppCompatActivity {
 
         smsSuggestions = suggestions;
 
-        if (smsSuggestions != null && smsSuggestions.getSuggestionList().size() > 0) {
+        if (smsSuggestions != null && smsSuggestions.getSuggestionList() != null &&
+                smsSuggestions.getSuggestionList().size() > 0) {
+
+            MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED_DATA,null);
+            FirebaseLogger.getInstance().logSAMEvent("", 1, session.getFPID());
 
             fragmentManager.beginTransaction()
                     .replace(R.id.flTopView,
@@ -183,6 +190,10 @@ public class SuggestionsActivity extends AppCompatActivity {
                     .addToBackStack(null)
                     .commit();
         } else {
+
+            MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED_NO_DATA,null);
+            FirebaseLogger.getInstance().logSAMEvent("", 2, session.getFPID());
+
             pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, false).apply();
             finish();
         }
@@ -226,5 +237,13 @@ public class SuggestionsActivity extends AppCompatActivity {
         arrMessageDO.add(messageDO);
 
         suggestionsApi.updateMessage(arrMessageDO);
+    }
+
+    public void updateRating(int rating) {
+
+        HashMap<String, String> offersParam = new HashMap<>();
+        offersParam.put("fpId", session.getFPID());
+        offersParam.put("rating", rating + "");
+        suggestionsApi.updateRating(offersParam);
     }
 }

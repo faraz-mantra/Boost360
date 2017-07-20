@@ -22,6 +22,7 @@ import android.widget.FrameLayout;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.nowfloats.bubble.BubblesService;
+import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
@@ -52,7 +53,7 @@ public class BubbleDialog extends AppCompatActivity {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_products);
-        MixPanelController.track(MixPanelController.BUBBLE_DIALOG,null);
+        MixPanelController.track(MixPanelController.BUBBLE_DIALOG, null);
         initialize();
         bindControls();
         loadProductsView();
@@ -73,7 +74,7 @@ public class BubbleDialog extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle(getString(R.string.select_a_product_to_share));
-        toolbar.setTitleTextColor(ContextCompat.getColor(this,R.color.white));
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
     }
 
     private void bindControls() {
@@ -90,7 +91,7 @@ public class BubbleDialog extends AppCompatActivity {
                 if (!TextUtils.isEmpty(selectedProducts)) {
                     navigateToWhatsApp(selectedProducts);
                 } else {
-
+                    Methods.showSnackBarNegative(BubbleDialog.this, getString(R.string.select_a_product_to_share));
                 }
 
             }
@@ -141,7 +142,7 @@ public class BubbleDialog extends AppCompatActivity {
 //        Intent sendIntent = new Intent();
 //        sendIntent.setAction(Intent.ACTION_SEND);
 //        sendIntent.setType("image/jpeg");
-//        sendIntent.setPackage(DataAccessibilityServiceV7.PK_NAME_WHATSAPP);
+//        sendIntent.setPackage(DataAccessibilityServiceV8.PK_NAME_WHATSAPP);
 //        sendIntent.putExtra(Intent.EXTRA_TEXT,"");
 //        sendIntent.putParcelableArrayListExtra("android.intent.extra.STREAM", localArrayList);
 //        sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -149,12 +150,12 @@ public class BubbleDialog extends AppCompatActivity {
 //    }
 
     private void navigateToWhatsApp(String message) {
-        MixPanelController.track(MixPanelController.BUBBLE_DIALOG_SHARE,null);
+        MixPanelController.track(MixPanelController.BUBBLE_DIALOG_SHARE, null);
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
         sendIntent.putExtra(Intent.EXTRA_TEXT, message);
         sendIntent.setType("text/plain");
-        sendIntent.setPackage(DataAccessibilityServiceV7.PK_NAME_WHATSAPP);
+        sendIntent.setPackage(DataAccessibilityServiceV8.PK_NAME_WHATSAPP);
         sendIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(sendIntent);
     }
@@ -207,7 +208,7 @@ public class BubbleDialog extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
-        overridePendingTransition(R.anim.slide_in_up,R.anim.slide_out_up);
+        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
     }
 
     @Override

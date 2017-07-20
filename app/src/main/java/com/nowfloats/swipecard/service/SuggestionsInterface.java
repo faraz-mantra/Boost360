@@ -25,4 +25,8 @@ public interface SuggestionsInterface {
     @POST("/saveCallData")
     public void saveCallData(@Body List<MessageDO> messages, Callback<String> callback);
 
+    @Headers({"Content-Type: application/json"})
+    @POST("/storeUserRating")
+    public void updateRating(@Body Map<String, String> bodyMap, Callback<String> callback);
+
 }

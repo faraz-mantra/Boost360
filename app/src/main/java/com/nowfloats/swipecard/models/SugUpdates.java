@@ -7,7 +7,17 @@ package com.nowfloats.swipecard.models;
 public class SugUpdates {
     private String Name;
     private String Image;
+    private String updateUrl;
     private boolean isSelected;
+    private boolean viewMore = true;
+
+    public String getUpdateUrl() {
+        return updateUrl;
+    }
+
+    public void setUpdateUrl(String updateUrl) {
+        this.updateUrl = updateUrl;
+    }
 
     public boolean isSelected() {
         return isSelected;
@@ -31,5 +41,13 @@ public class SugUpdates {
 
     public void setImage(String image) {
         Image = image;
+    }
+
+    public boolean isViewMore() {
+        return viewMore;
+    }
+
+    public void setViewMore(boolean viewMore) {
+        this.viewMore = viewMore;
     }
 }

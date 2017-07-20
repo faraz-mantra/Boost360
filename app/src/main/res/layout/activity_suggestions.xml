@@ -16,5 +16,5 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:theme="@style/CircularProgress"
-        android:visibility="gone" />
+        android:visibility="visible" />
 </FrameLayout>

@@ -111,4 +111,5 @@ public class Key_Preferences {
     public static final String BUBBLE_POS = "bubble_pos";
     public static final String BUBBLE_POS_Y = "bubble_pos_y";
     public static final String BUBBLE_POS_X = "bubble_pos_x";
+    public static final String NO_OF_TIMES_RESPONDED = "NO_OF_TIMES_RESPONDED";
 }

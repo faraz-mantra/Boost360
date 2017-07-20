@@ -12,7 +12,6 @@ import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
 import com.nowfloats.bubble.BubblesService;
@@ -28,11 +27,13 @@ import java.util.List;
  */
 
 @RequiresApi(api = Build.VERSION_CODES.DONUT)
-public class DataAccessibilityServiceV7 extends AccessibilityService {
+public class DataAccessibilityServiceV8 extends AccessibilityService {
 
 
     public static final String PK_NAME_WHATSAPP = "com.whatsapp";
     public static final String PK_NAME_NOWFLOATS = "com.biz2.nowfloats";
+    public static final String PK_NAME_NOWFLOATS_HOME_ACTIVTY = "com.nowfloats";
+
     private String SUGGESTIONS_CLASS_NAME = "com.nowfloats.swipecard.SuggestionsActivity";
     private String BUBBLE_CLASS_NAME = "com.nowfloats.accessbility.BubbleDialog";
 
@@ -42,9 +43,9 @@ public class DataAccessibilityServiceV7 extends AccessibilityService {
     protected void onServiceConnected() {
         super.onServiceConnected();
 
-        if (!Constants.PACKAGE_NAME.equals(PK_NAME_NOWFLOATS)) {
-            return;
-        }
+//        if (!Constants.PACKAGE_NAME.equals(PK_NAME_NOWFLOATS)) {
+//            return;
+//        }
         pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         if (!TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, ""))
                 && pref.getBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG, true)) {
@@ -87,35 +88,38 @@ public class DataAccessibilityServiceV7 extends AccessibilityService {
                             || (!TextUtils.isEmpty(event.getClassName()) &&
                             event.getClassName().toString().equalsIgnoreCase(BUBBLE_CLASS_NAME)))) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
-//                    Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    startActivity(intent);
                     showOverlayDialog();
                 } else if (!isMyServiceRunning(BubblesService.class) &&
                         !TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null))
                         && pref.getBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED, false)) {
-                    Intent intent = new Intent(DataAccessibilityServiceV7.this, BubblesService.class);
+                    Intent intent = new Intent(DataAccessibilityServiceV8.this, BubblesService.class);
                     startService(intent);
                 }
             } else if (((event.getPackageName().toString().equalsIgnoreCase(getLauncherPackage())
                     || (!TextUtils.isEmpty(event.getClassName()) &&
                     event.getClassName().toString().equalsIgnoreCase(SUGGESTIONS_CLASS_NAME)))
-                    && !isMyServiceRunning(BubblesService.class) &&
+                    && pref.getBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED, false) &&
                     !TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null)))
                    /* && pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)*/) {
-                Intent intent = new Intent(DataAccessibilityServiceV7.this, BubblesService.class);
-                intent.putExtra(Key_Preferences.DIALOG_FROM, BubblesService.FROM.LAUNCHER_HOME_ACTIVITY);
-                startService(intent);
+
+                if (!isMyServiceRunning(BubblesService.class)) {
+
+                    Intent intent = new Intent(DataAccessibilityServiceV8.this, BubblesService.class);
+                    intent.putExtra(Key_Preferences.DIALOG_FROM, BubblesService.FROM.LAUNCHER_HOME_ACTIVITY);
+                    startService(intent);
+                }
             } else {
 
-                if (!TextUtils.isEmpty(event.getClassName()) && event.getPackageName().toString().equalsIgnoreCase(PK_NAME_NOWFLOATS) &&
+                if (!TextUtils.isEmpty(event.getClassName()) &&
+                        event.getPackageName().toString().equalsIgnoreCase(PK_NAME_NOWFLOATS) &&
+                        event.getClassName().toString().contains(PK_NAME_NOWFLOATS_HOME_ACTIVTY)) {
+                    stopService(new Intent(DataAccessibilityServiceV8.this, BubblesService.class));
+                } else if (!TextUtils.isEmpty(event.getClassName()) && event.getPackageName().toString().equalsIgnoreCase(PK_NAME_NOWFLOATS) &&
                         !event.getClassName().toString().contains(PK_NAME_NOWFLOATS)) {
 
                 } else {
-                    Log.v("ggg1", "closed");
-                    stopService(new Intent(DataAccessibilityServiceV7.this, BubblesService.class));
+                    stopService(new Intent(DataAccessibilityServiceV8.this, BubblesService.class));
                 }
-
             }
         }
     }

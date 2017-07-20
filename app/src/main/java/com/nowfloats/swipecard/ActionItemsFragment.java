@@ -14,12 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.nowfloats.swipecard.adapters.ActionItemsAdapter;
-import com.nowfloats.swipecard.models.ActionItemsDO;
-import com.nowfloats.swipecard.models.SuggestionsDO;
 import com.thinksity.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -64,44 +59,6 @@ public class ActionItemsFragment extends Fragment {
         ((SuggestionsActivity) getActivity()).setSupportActionBar(toolbar);
         getActivity().setTitle(Html.fromHtml("Sam <i>says..</i>"));
         toolbar.setTitleTextColor(ContextCompat.getColor(getActivity(), R.color.white));
-    }
-
-    public void filterData() {
-
-        pbView.setVisibility(View.GONE);
-
-        ArrayList<ActionItemsDO> actionItemsDOList = new ArrayList<>();
-
-        int callCount = 0, emailCount = 0;
-
-        if (((SuggestionsActivity) getActivity()).smsSuggestions != null) {
-            List<SuggestionsDO> smSuggestions =
-                    ((SuggestionsActivity) getActivity()).smsSuggestions.getSuggestionList();
-
-            if (smSuggestions != null) {
-                for (SuggestionsDO mSuggestionsDO : smSuggestions) {
-                    if (mSuggestionsDO.getType().equalsIgnoreCase("contactNumber")) {
-                        callCount++;
-                    } else if (mSuggestionsDO.getType().equalsIgnoreCase("email")) {
-                        emailCount++;
-                    }
-                }
-            }
-        }
-
-
-        ActionItemsDO caActionItemsDO = new ActionItemsDO();
-        caActionItemsDO.setActionItemName("Make Calls");
-        caActionItemsDO.setActionItemCount(callCount);
-
-        ActionItemsDO emActionItemsDO = new ActionItemsDO();
-        emActionItemsDO.setActionItemName("Send Emails");
-        emActionItemsDO.setActionItemCount(emailCount);
-
-        actionItemsDOList.add(caActionItemsDO);
-        actionItemsDOList.add(emActionItemsDO);
-
-        actionItemsAdapter.refreshList(actionItemsDOList);
     }
 
 }

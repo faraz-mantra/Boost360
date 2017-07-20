@@ -1,8 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/gvSuggestions"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="1"
-    android:numColumns="2"
-    android:stretchMode="columnWidth"></GridView>
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <GridView
+            android:id="@+id/gvSuggestions"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:numColumns="2"
+            android:stretchMode="columnWidth"></GridView>
+
+        <TextView
+            android:id="@+id/tvNoItems"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/no_products_avail"
+            android:textColor="@color/primary"
+            android:textSize="15sp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_scroll_down"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/scroll_down_shape"
+        android:paddingTop="5dp"
+        android:src="@drawable/ic_keyboard_arrow_down_black_40dp"
+        android:tint="@color/white"
+        android:visibility="invisible" />
+</RelativeLayout>

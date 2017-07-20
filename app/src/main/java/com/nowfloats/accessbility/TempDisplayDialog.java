@@ -17,13 +17,14 @@ import com.thinksity.R;
 public class TempDisplayDialog extends AppCompatActivity {
 
     public final static String IN_APP_DIALOG = "com.nowfloats.accessbility.BubbleInAppDialog";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         BubblesService.FROM from = (BubblesService.FROM) getIntent().getExtras().get(Key_Preferences.DIALOG_FROM);
         Intent it = null;
-        switch (from){
+        switch (from) {
             case WHATSAPP:
                 it = new Intent(TempDisplayDialog.this, BubbleDialog.class).
                         setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -34,7 +35,8 @@ public class TempDisplayDialog extends AppCompatActivity {
 
                 break;
             case LAUNCHER_HOME_ACTIVITY:
-                it = new Intent(TempDisplayDialog.this, SuggestionsActivity.class);
+                it = new Intent(TempDisplayDialog.this, SuggestionsActivity.class).
+                        setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 break;
             case WHATSAPP_DIALOG:
                 break;

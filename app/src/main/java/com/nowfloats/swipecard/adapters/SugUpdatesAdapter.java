@@ -1,5 +1,6 @@
 package com.nowfloats.swipecard.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,9 +26,14 @@ public class SugUpdatesAdapter extends RecyclerView.Adapter<SugUpdatesAdapter.Vi
 
     private ArrayList<SugUpdates> arrUpdates;
 
-    public SugUpdatesAdapter(ArrayList<SugUpdates> arrUpdates) {
+    private Context mContext;
+
+    public SugUpdatesAdapter(Context mContext, ArrayList<SugUpdates> arrUpdates) {
+        this.mContext = mContext;
         this.arrUpdates = arrUpdates;
     }
+
+    private int MAX_LINE_COUNT = 3;
 
     @Override
     public SugUpdatesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -37,11 +43,13 @@ public class SugUpdatesAdapter extends RecyclerView.Adapter<SugUpdatesAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(SugUpdatesAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final SugUpdatesAdapter.ViewHolder viewHolder, int position) {
 
         final SugUpdates mSugUpdate = (SugUpdates) arrUpdates.get(position);
 
         final ImageView imageView = viewHolder.ProductImageView;
+        final TextView tvViewMore = viewHolder.tvViewMore;
+
         Picasso picasso = Picasso.with(activity);
         String image_url = mSugUpdate.getImage();
         if (image_url != null && image_url.length() > 0 && !image_url.equals("null")) {
@@ -57,6 +65,23 @@ public class SugUpdatesAdapter extends RecyclerView.Adapter<SugUpdatesAdapter.Vi
         }
 
         viewHolder.tvUpdate.setText(mSugUpdate.getName());
+
+        if (viewHolder.tvUpdate.getLineCount() > MAX_LINE_COUNT) {
+            tvViewMore.setVisibility(View.VISIBLE);
+        } else {
+            tvViewMore.setVisibility(View.GONE);
+        }
+
+        updateMaxLines(mSugUpdate, viewHolder.tvViewMore, viewHolder.tvUpdate);
+
+        viewHolder.tvViewMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                mSugUpdate.setViewMore(!mSugUpdate.isViewMore());
+                updateMaxLines(mSugUpdate, (TextView) view, viewHolder.tvUpdate);
+            }
+        });
 
         viewHolder.itemView.setTag(R.string.key_details, mSugUpdate);
 
@@ -77,8 +102,39 @@ public class SugUpdatesAdapter extends RecyclerView.Adapter<SugUpdatesAdapter.Vi
             }
         });
 
+//        viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View view) {
+//                final SugUpdates sugUpdates = (SugUpdates) view.getTag(R.string.key_details);
+//                sugUpdates.setSelected(!sugUpdates.isSelected());
+//                FrameLayout flMain = (FrameLayout) view.findViewById(R.id.flMain);
+//                FrameLayout flOverlay = (FrameLayout) view.findViewById(R.id.flOverlay);
+//                View vwOverlay = view.findViewById(R.id.vwOverlay);
+//                if (sugUpdates.isSelected()) {
+//                    flOverlay.setVisibility(View.VISIBLE);
+//                    setOverlay(vwOverlay, 200, flMain.getWidth(), flMain.getHeight());
+//                } else {
+//                    flOverlay.setVisibility(View.GONE);
+//                }
+//                return true;
+//            }
+//        });
 
-        setOverlay(viewHolder.vwOverlay, 200, viewHolder.flMain.getWidth(), viewHolder.flMain.getHeight());
+
+        setOverlay(viewHolder.vwOverlay, 200, viewHolder.flMain.getWidth(), viewHolder.itemView.getHeight());
+    }
+
+    private void updateMaxLines(SugUpdates mSugUpdate, TextView tvViewMore, TextView tvUpdate) {
+
+        if (mSugUpdate.isViewMore()) {
+            tvViewMore.setText(mContext.getString(R.string.view_more));
+            tvUpdate.setMaxLines(MAX_LINE_COUNT);
+
+        } else {
+            tvViewMore.setText(mContext.getString(R.string.view_less));
+            tvUpdate.setMaxLines(100);
+
+        }
     }
 
     public void setOverlay(View v, int opac, int width, int height) {
@@ -105,7 +161,7 @@ public class SugUpdatesAdapter extends RecyclerView.Adapter<SugUpdatesAdapter.Vi
     class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView ProductImageView;
-        TextView tvUpdate;
+        TextView tvUpdate, tvViewMore;
         FrameLayout flMain;
         FrameLayout flOverlay;
         View vwOverlay;
@@ -119,6 +175,7 @@ public class SugUpdatesAdapter extends RecyclerView.Adapter<SugUpdatesAdapter.Vi
 
             ProductImageView = (ImageView) itemView.findViewById(R.id.proudct_image_view);
             tvUpdate = (TextView) itemView.findViewById(R.id.tvUpdate);
+            tvViewMore = (TextView) itemView.findViewById(R.id.tvViewMore);
             flMain = (FrameLayout) itemView.findViewById(R.id.flMain);
             flOverlay = (FrameLayout) itemView.findViewById(R.id.flOverlay);
             vwOverlay = (View) itemView.findViewById(R.id.vwOverlay);

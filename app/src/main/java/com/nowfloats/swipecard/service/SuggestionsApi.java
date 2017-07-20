@@ -57,4 +57,20 @@ public class SuggestionsApi {
         });
 
     }
+
+    public void updateRating(HashMap<String, String> data) {
+        SuggestionsInterface suggestionsInterface = Constants.pluginSuggestionsAdapter.create(SuggestionsInterface.class);
+        suggestionsInterface.updateRating(data, new Callback<String>() {
+            @Override
+            public void success(String suggestions, Response response) {
+                Log.e("suggestions", "suggestions=" + suggestions);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.e("suggestions", "suggestions=" + error.toString());
+            }
+        });
+
+    }
 }
