@@ -249,7 +249,20 @@
         <activity
             android:name="com.nowfloats.signup.UI.UI.PreSignUpActivity"
             android:screenOrientation="portrait">
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
+                <data
+                    android:host="com.riasdk.presignup"
+                    android:pathPrefix="/"
+                    android:scheme="nowfloats" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.nowfloats.PreSignUp.PreSignUp_MainActivity" />
         </activity>
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.QuikrGuidelinesActivity"
@@ -260,7 +273,7 @@
         <activity
             android:name="com.nowfloats.NavigationDrawer.businessApps.BusinessAppTipsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity
             android:name="com.nowfloats.Image_Gallery.FullScreen_Gallery_Image"
             android:label="Gallery Image"

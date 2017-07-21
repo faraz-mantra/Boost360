@@ -272,7 +272,7 @@ public class Login_MainActivity extends AppCompatActivity implements
 
     @Override
     public void authenticationFailure(String value) {
-        if(progressDialog != null) {
+        if(progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
             progressDialog = null ;
         }

@@ -44,7 +44,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -80,7 +79,6 @@ import com.nowfloats.riachatsdk.R;
 import com.nowfloats.riachatsdk.adapters.RvButtonsAdapter;
 import com.nowfloats.riachatsdk.adapters.RvChatAdapter;
 import com.nowfloats.riachatsdk.animators.ChatItemAnimator;
-import com.nowfloats.riachatsdk.fragments.CreateMySiteFragment;
 import com.nowfloats.riachatsdk.fragments.CustomDialogFragment;
 import com.nowfloats.riachatsdk.fragments.PickAddressFragment;
 import com.nowfloats.riachatsdk.helpers.ChatLogger;
@@ -129,17 +127,67 @@ import static android.view.View.INVISIBLE;
 
 public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdapter.OnItemClickListener,
         IConfirmationCallback, IChatAnimCallback {
+
+    private Toolbar toolbar;
+
+    private RecyclerView rvChatData, rvButtonsContainer;
+
+    private LinearLayout cvChatInput;
+
+    private AutoCompleteTextView etChatInput;
+
+    private ImageView ivSendMessage, ivScrollDown, ivBack;
+
+    private TextView tvPrefix, tvPostfix, tvSkip;
+
+    private Handler mHandler;
+
+    private Button mCurrButton, mDefaultButton;
+
+    private List<RiaCardModel> mAllNodes = null;
+
+    private Map<String, String> mDataMap = new HashMap<>();
+
+    private List<Section> mSectionList = new ArrayList<>();
+
+    private List<Button> mButtonList = new ArrayList<>();
+
+    private String mCurrVarName = null, mNextNodeId = "-1", appVersion = "", mCurrNodeId, mCurrentDeepLink;
+
     private final String KEY_NEXT_NODE_ID = "NextNodeId";
+
     private final String KEY_FP_CREATION_STATUSCODE = "FPCREATION_STATUSCODE";
+
+    private Map<String, String> mAutoComplDataHash;
+
+    private RvChatAdapter mAdapter;
+
+    private RvButtonsAdapter mButtonsAdapter;
+
+    private RequestQueue mRequestQueue;
+
+    private PickAddressFragment pickAddressFragment;
+
+
+    private FileUploadResultReceiver mReceiver;
+
+    private TextView tvRiaTyping;
+
+    private ProgressBar progressBar;
+
+    private DisplayMetrics displayMetrics;
+
+    private int FP_STATUS_CODE = -100;
+
+    private static final int FP_CREATED = 1;
+
+    private static final int FP_NOT_CREATED = -100;
+
     private static final int AUDIO_REQUEST_CODE = 56;
 
-    Toolbar toolbar;
-    RecyclerView rvChatData, rvButtonsContainer;
-    LinearLayout cvChatInput;
-    AutoCompleteTextView etChatInput;
-    ImageView ivSendMessage, ivScrollDown, ivBack;
-    TextView tvPrefix, tvPostfix, tvSkip;
-    private Handler mHandler;
+    /*
+     **************************** CONSTANTS *******************************
+     */
 
     public static final String Save_Name = "nameKey";
     public static final String Save_Cat = "categoryKey";
@@ -158,40 +206,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     public static final String Save_Street_Address = "streetAddressKey";
     public static final String Save_Locality = "localityKey";
 
-    private String mCurrentDeepLink;
-    private String mCurrNodeId;
-    private Button mCurrButton, mDefaultButton;
-
-    private List<RiaCardModel> mAllNodes = null;
-    private Map<String, String> mDataMap = new HashMap<>();
-    private List<Section> mSectionList = new ArrayList<>();
-    private List<Button> mButtonList = new ArrayList<>();
-    private String mNextNodeId = "-1";
-    private String mCurrVarName = null;
-    private String appVersion = "";
-    private Map<String, String> mAutoComplDataHash;
-
-    private RvChatAdapter mAdapter;
-    private RvButtonsAdapter mButtonsAdapter;
-    private RequestQueue mRequestQueue;
-    private CreateMySiteFragment createMySiteFragment;
-    private PickAddressFragment pickAddressFragment;
-    private CustomDialogFragment customDialogFragment;
-    private FileUploadResultReceiver mReceiver;
-    private ImageView ivAgentIcon;
-    private TextView tvRiaTyping;
-    private FrameLayout flConfirmationCard;
-    private boolean mIsPreviousTypeCard = false;
-    private ProgressBar progressBar;
-
-    private DisplayMetrics displayMetrics;
-
-    private int FP_STATUS_CODE = -100;
-
-    private static final int FP_CREATED = 1;
-    private static final int FP_NOT_CREATED = -100;
-
-    private static String PREFIX_COUNTRY_CODE = "[~COUNTRYCODE]";
+    /*
+     **************************** CONSTANTS *******************************
+    */
 
     private Runnable mAutoCallRunnable = new Runnable() {
         @Override
@@ -233,6 +250,37 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             e.printStackTrace();
         }
 
+        initializeControls();
+
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024);
+        Network network = new BasicNetwork(new HurlStack());
+        mRequestQueue = new RequestQueue(cache, network);
+        mRequestQueue.start();
+
+        setListeners();
+
+        if (isNetworkStatusAvialable(ChatViewActivity.this)) {
+            fetchChatJson();
+        } else {
+            showCustomDialog(CustomDialogFragment.DialogFrom.NO_INTERNET);
+        }
+    }
+
+
+    public static boolean isNetworkStatusAvialable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager != null) {
+            NetworkInfo netInfos = connectivityManager.getActiveNetworkInfo();
+            if (netInfos != null)
+                if (netInfos.isConnected())
+                    return true;
+        }
+        return false;
+    }
+
+    private void initializeControls() {
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
@@ -247,9 +295,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         getWindow().setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.doodle_bg));
 
-        /*pg = new ProgressDialog(this);
-        pg.setMessage(getString(R.string.please_wait));
-        pg.setCancelable(false);*/
         displayMetrics = getResources().getDisplayMetrics();
         rvChatData = (RecyclerView) findViewById(R.id.rv_chat_data);
         rvButtonsContainer = (RecyclerView) findViewById(R.id.rv_reply_button_container);
@@ -261,25 +306,17 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         tvPrefix = (TextView) findViewById(R.id.tv_prefix);
         tvSkip = (TextView) findViewById(R.id.tv_skip);
         tvPostfix = (TextView) findViewById(R.id.tv_postfix);
-        ivAgentIcon = (ImageView) toolbar.findViewById(R.id.iv_agent_icon);
         tvRiaTyping = (TextView) findViewById(R.id.tv_ria_typing);
 
-        flConfirmationCard = (FrameLayout) findViewById(R.id.fl_cards);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
 
         progressBar.getIndeterminateDrawable()
                 .setColorFilter(getResources().getColor(R.color.white),
                         PorterDuff.Mode.SRC_IN);
 
-        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024);
-        Network network = new BasicNetwork(new HurlStack());
-        mRequestQueue = new RequestQueue(cache, network);
-        mRequestQueue.start();
+    }
 
-        /*Section headerSection = new Section();
-        headerSection.setSectionType(Constants.SectionType.TYPE_HEADER);
-        headerSection.setFromRia(false);
-        mSectionList.add(headerSection);*/
+    private void setListeners() {
 
         ivScrollDown.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -299,34 +336,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         tvSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                Intent intent = new Intent(Intent.ACTION_VIEW,
-//                        Uri.parse("nowfloats://com.riasdk.skip/riachat"));
-//                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-//                intent.setAction(Intent.ACTION_VIEW);
-//                if (intent.resolveActivity(getPackageManager()) != null) {
-//                    startActivity(intent);
-//                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-//                }
-
-//                Intent intent = new Intent(Intent.ACTION_VIEW,
-//                        Uri.parse("com.biz2.nowfloats://com.riasdk.skip/riachat"));
-//                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-//                intent.setAction(Intent.ACTION_VIEW);
-//
-//                String userKey = "USERNAME";
-//                String passwordKey = "PASSWORD";
-//
-//                intent.putExtra("Username", "madhureddy");
-//                intent.putExtra("Password", "madhu");
-//
-//                if (intent.resolveActivity(getPackageManager()) != null) {
-//                    startActivity(intent);
-//                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-//                }
-
-//                login();
-//                skip();
                 showCustomDialog(CustomDialogFragment.DialogFrom.SKIP_LOGIN);
             }
         });
@@ -432,39 +441,14 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         });
 
         mReceiver = new
-
                 FileUploadResultReceiver(new Handler());
 
-        if (isNetworkStatusAvialable(ChatViewActivity.this)) {
-            fetchChatJson();
-        } else {
-            showCustomDialog(CustomDialogFragment.DialogFrom.NO_INTERNET);
-        }
-    }
-
-
-    public static boolean isNetworkStatusAvialable(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivityManager != null) {
-            NetworkInfo netInfos = connectivityManager.getActiveNetworkInfo();
-            if (netInfos != null)
-                if (netInfos.isConnected())
-                    return true;
-        }
-        return false;
     }
 
     public static void showSnackBarNegative(Activity context, String msg) {
         android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(context.findViewById(android.R.id.content), msg, android.support.design.widget.Snackbar.LENGTH_LONG);
         snackBar.getView().setBackgroundColor(Color.parseColor("#E02200"));
         snackBar.show();
-        /*SnackbarManager.show(
-                Snackbar.with(context) // context
-                        .text(msg) // text to be displayed
-                        .textColor(Color.WHITE) // change the text color
-                        .color(Color.parseColor("#E02200")) // change the background color
-                ,context); // activity where it is displayed*/
     }
 
     private boolean isValidInput(String input) {
@@ -511,12 +495,10 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         if (requestCode == Picker.PICK_IMAGE_CAMERA && resultCode == RESULT_OK) {
             imagePicker.submit(data);
-        }else if(requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && (data==null || data.getData()==null)) {
+        } else if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && (data == null || data.getData() == null)) {
             showNextNode(mCurrNodeId);
-        }else if(requestCode == Picker.PICK_IMAGE_CAMERA  && (data==null || data.getData()==null)){
+        } else if (requestCode == Picker.PICK_IMAGE_CAMERA && (data == null || data.getData() == null)) {
             showNextNode(mCurrNodeId);
-        } else if (requestCode == Picker.PICK_IMAGE_DEVICE && resultCode == RESULT_OK) {
-            galleryImagePicker.submit(data);
         } else if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK) {
             List<String> mPaths = (List<String>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH);
             Intent i = new Intent(this, FileUploadService.class);
@@ -544,7 +526,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
         hideSoftKeyboard();
         if (FP_STATUS_CODE == FP_CREATED)
             showCustomDialog(CustomDialogFragment.DialogFrom.BACK_PRESS_LOGIN);
@@ -560,13 +541,21 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         if (mHandler != null)
             mHandler.removeCallbacksAndMessages(null);
         hideSoftKeyboard();
-        finish();
+
+        Intent intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("nowfloats://com.riasdk.presignup/riachat"));
+        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+        intent.setAction(Intent.ACTION_VIEW);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.slide_out_right);
+        finish();
 
     }
 
     private void replyToRia(String type, String... msg) {
-
 
         mHandler.removeCallbacks(mAutoCallRunnable);
         Section section = new Section();
@@ -589,7 +578,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 mSectionList.set(mSectionList.size() - 1, section);
                 mAdapter.notifyItemChanged(mSectionList.size() - 1);
                 rvChatData.smoothScrollToPosition(mSectionList.size() - 1);
-//                rvChatData.scrollToPosition(mSectionList.size() - 1);
                 break;
             case Constants.SectionType.TYPE_TEXT:
                 section.setFromRia(false);
@@ -639,18 +627,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         mHandler.removeCallbacks(mAutoCallRunnable);
         Section section = new Section();
         section.setDateTime(Utils.getFormattedDate(new Date()));
-
-        /*//riaCardModel.getSections().get(0).setText();
-        for(Section sect: riaCardModel.getSections()){
-            switch (sect.getSectionType()){
-                case Constants.SectionType.TYPE_TEXT:
-                    sect.setText(getParsedPrefixPostfixText(sect.getText()));
-                    break;
-                case Constants.SectionType.TYPE_IMAGE:
-                    sect.setUrl(getParsedPrefixPostfixText(sect.getUrl()));
-                    break;
-            }
-        }*/
 
         if (type.equalsIgnoreCase(Constants.SectionType.TYPE_CARD)
                 || type.equalsIgnoreCase(Constants.SectionType.TYPE_ADDRESS_CARD)) {
@@ -935,8 +911,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     }
 
     private CameraImagePicker imagePicker;
-    private com.kbeanie.multipicker.api.ImagePicker galleryImagePicker;
-    private static final int RC_CODE_PICKER = 2000;
     private static final int RC_CAMERA = 3000;
 
     private void getImage(Button btn) {
@@ -961,26 +935,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-//                        galleryImagePicker = new
-//                                com.kbeanie.multipicker.api.ImagePicker(ChatViewActivity.this);
-//                        galleryImagePicker.setImagePickerCallback(new ImagePickerCallback() {
-//                                                                      @Override
-//                                                                      public void onImagesChosen(List<ChosenImage> images) {
-//                                                                          Intent i = new Intent(ChatViewActivity.this, FileUploadService.class);
-//                                                                          i.putExtra(Constants.FILE_PATH, images.get(0).getOriginalPath());
-//                                                                          i.putExtra(Constants.RECEIVER, mReceiver);
-//                                                                          startService(i);
-//                                                                          replyToRia(Constants.SectionType.TYPE_IMAGE, images.get(0).getOriginalPath());
-//                                                                      }
-//
-//                                                                      @Override
-//                                                                      public void onError(String message) {
-//                                                                          // Do error handling
-//                                                                      }
-//                                                                  }
-//                        );
-//                        galleryImagePicker.pickImage();
-
                         new ImagePicker.Builder(ChatViewActivity.this)
                                 .mode(ImagePicker.Mode.GALLERY)
                                 .directory(ImagePicker.Directory.DEFAULT)
@@ -1004,7 +958,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    private void  captureImage(){
+    private void captureImage() {
         imagePicker = new CameraImagePicker(ChatViewActivity.this);
         imagePicker.setImagePickerCallback(new ImagePickerCallback() {
                                                @Override
@@ -1131,7 +1085,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         }
     }
 
-
     private void login() {
 
         if (mHandler != null)
@@ -1221,11 +1174,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 }
                 showKeyBoard();
             }
-            mIsPreviousTypeCard = true;
             return;
         }
         if (node.getNodeType() != null && node.getNodeType().equals(Constants.NodeType.TYPE_CARD) && node.getPlacement().equals("Outgoing")) {
-            mIsPreviousTypeCard = false;
             if (node.getSections().size() == 2 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_IMAGE)) {
                 replyToRia(Constants.SectionType.TYPE_ADDRESS_CARD, node, true);
             } else if (node.getSections().size() == 1 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_TEXT)) {
@@ -1247,7 +1198,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             }
             return;
         }
-        mIsPreviousTypeCard = false;
         final List<Section> sectionList = node.getSections();
         int time = 0;
         final Section typingSection = new Section();
@@ -1459,23 +1409,74 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     if (cvChatInput.getVisibility() == INVISIBLE) {
 
                         /*
-                         * hardcoded for fptag
+                         * setting input types to edit text based on
+                         * variable names
                          */
-                        if (node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_TAG)
-                                || node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_EXISTING_WEBSITE)
-                                || node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_NEW_PASSWORD)
-                                || node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_NEW_PASSWORD_REPEAT)) {
+
+                        if (!TextUtils.isEmpty(node.getVariableName())) {
+                            if (node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_TAG)
+                                    || node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_EXISTING_WEBSITE)
+                                    || node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_NEW_PASSWORD)
+                                    || node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_NEW_PASSWORD_REPEAT)) {
+                                etChatInput.setInputType(InputType.TYPE_CLASS_TEXT);
+
+                                /*
+                                 * hardcoded for password repeat
+                                 */
+                                if (node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_NEW_PASSWORD_REPEAT))
+                                    etChatInput.setText("");
+
+                            } else if (node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_MESSAGE_UPDATE)
+                                    || node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_BUSINESS_DESCRIPTION)) {
+                                etChatInput.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+                            }
+
+                             /*
+                         * setting input filters to edit text based on
+                         * variable name
+                         */
+
+                            if (node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_TAG)
+                                    || node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_EXISTING_WEBSITE)) {
+                                etChatInput.setFilters(new InputFilter[]
+                                        {
+                                                new InputFilter() {
+                                                    public CharSequence filter(CharSequence source, int start, int end, Spanned dst, int dstart, int dend) {
+                                                        StringBuilder builder = new StringBuilder();
+                                                        for (int i = start; i < end; i++) {
+                                                            char currentChar = source.charAt(i);
+                                                            if (Character.isLetterOrDigit(currentChar) || currentChar == '-' || currentChar == '.') {
+                                                                builder.append(currentChar);
+                                                            }
+                                                        }
+                                                        return builder.toString();
+                                                    }
+                                                }
+                                        });
+                            } else if (node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_NEW_PASSWORD)
+                                    || node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_NEW_PASSWORD_REPEAT)) {
+                                etChatInput.setFilters(new InputFilter[]
+                                        {
+                                                new InputFilter() {
+                                                    public CharSequence filter(CharSequence source, int start, int end, Spanned dst, int dstart, int dend) {
+                                                        StringBuilder builder = new StringBuilder();
+                                                        for (int i = start; i < end; i++) {
+                                                            char currentChar = source.charAt(i);
+                                                            if (!Character.isWhitespace(currentChar)) {
+                                                                builder.append(currentChar);
+                                                            }
+                                                        }
+                                                        return builder.toString();
+                                                    }
+                                                }
+                                        });
+                            } else {
+                                etChatInput.setFilters(new InputFilter[]{});
+                            }
+
+                        } else {
                             etChatInput.setInputType(InputType.TYPE_CLASS_TEXT);
-
-                            if(node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_NEW_PASSWORD_REPEAT))
-                                         etChatInput.setText("");
-
-                        } else if (node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_MESSAGE_UPDATE)
-                                || node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_BUSINESS_DESCRIPTION)) {
-                            /*
-                             * business updates,business description
-                             */
-                            etChatInput.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+                            etChatInput.setFilters(new InputFilter[]{});
                         }
 
                         if (TextUtils.isEmpty(tvPostfix.getText().toString())) {
@@ -1485,52 +1486,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         }
 
 
-                        if (node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_TAG)
-                                || node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_EXISTING_WEBSITE))
-                        {
-                                    etChatInput.setFilters(new InputFilter[]
-                                    {
-                                            new InputFilter()
-                                            {
-                                                public CharSequence filter(CharSequence source, int start, int end, Spanned dst, int dstart, int dend)
-                                                {
-                                                    StringBuilder builder = new StringBuilder();
-                                                    for (int i = start; i < end; i++) {
-                                                        char currentChar = source.charAt(i);
-                                                        if (Character.isLetterOrDigit(currentChar) || currentChar == '-' || currentChar == '.') {
-                                                            builder.append(currentChar);
-                                                        }
-                                                    }
-                                                    return builder.toString();
-                                                }
-                                            }
-                                    });
-                        }else if (node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_NEW_PASSWORD)
-                                || node.getVariableName().equalsIgnoreCase(Constants.VariableName.TYPE_NEW_PASSWORD_REPEAT))
-                        {
-                                    etChatInput.setFilters(new InputFilter[]
-                                    {
-                                            new InputFilter()
-                                            {
-                                                public CharSequence filter(CharSequence source, int start, int end, Spanned dst, int dstart, int dend)
-                                                {
-                                                    StringBuilder builder = new StringBuilder();
-                                                    for (int i = start; i < end; i++) {
-                                                        char currentChar = source.charAt(i);
-                                                        if (!Character.isWhitespace(currentChar)) {
-                                                            builder.append(currentChar);
-                                                        }
-                                                    }
-                                                    return builder.toString();
-                                                }
-                                            }
-                                    });
-                        }else{
-                            etChatInput.setFilters(new InputFilter[]{});
-                        }
-
-
-                            cvChatInput.setVisibility(View.VISIBLE);
+                        cvChatInput.setVisibility(View.VISIBLE);
                     }
                 }
 
@@ -1801,14 +1757,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         }
     }
 
-//    private static final String CREATE_FP_URL = "https://onboarding-boost.withfloats.com/plugin/api/Service/CreateFP";
-
     private void handleGetRequest(final RiaCardModel node) {
 
-//        if (node.getApiUrl().equalsIgnoreCase(CREATE_FP_URL)) {
-//            isFPCreated = true;
         progressBar.setVisibility(View.VISIBLE);
-//        }
 
         StringBuilder urlBuilder = new StringBuilder(node.getApiUrl());
         urlBuilder.append("?");
@@ -1852,7 +1803,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                                     continue;
                                 String keyPath = "$." + btn.getApiResponseMatchKey();
                                 String val = context.read(keyPath, String.class);
-                                if (val != null && val.equals(btn.getApiResponseMatchValue())) {
+                                if (val != null && val.equalsIgnoreCase(btn.getApiResponseMatchValue())) {
                                     nextNodeId = btn.getNextNodeId();
                                     break;
                                 }
@@ -1983,63 +1934,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         mRequestQueue.add(stringRequest);
     }
 
-    /*@Nullable
-    private HashMap<String, HashMap<String, String>> getKeyValueData(final RiaCardModel node){
-        HashMap<String, HashMap<String, String>> keyValContainer = new HashMap<>();
-        if(node.getButtons()!=null && node.getButtons().size()>0){
-            for(Button btn : node.getButtons()){
-                if(!TextUtils.isEmpty(btn.getApiResponseMatchKey()) && keyValContainer.containsKey(btn.getApiResponseMatchKey())){
-                    HashMap<String, String> internalKeyValPair = keyValContainer.get(btn.getApiResponseMatchKey());
-                    internalKeyValPair.put(btn.getApiResponseMatchValue(), btn.getNextNodeId());
-                }else if(!TextUtils.isEmpty(btn.getApiResponseMatchKey()) && !keyValContainer.containsKey(btn.getApiResponseMatchKey())){
-                    HashMap<String, String> internalKeyValPair = new HashMap<>();
-                    internalKeyValPair.put(btn.getApiResponseMatchValue(), btn.getNextNodeId());
-                    keyValContainer.put(btn.getApiResponseMatchKey(), internalKeyValPair);
-                }
-            }
-            return keyValContainer;
-        }
-        return null;
-    }*/
-
-   /* @Override
-    public void onPositiveResponse(final String confirmationType, final String... data) {
-        if (mCurrVarName != null && mCurrVarName.trim().length() > 0) {
-            if (mAutoComplDataHash == null || !TextUtils.isEmpty(mAutoComplDataHash.get(etChatInput.getText().toString().trim()))) {
-                mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
-            } else {
-                mDataMap.put("[~" + mCurrVarName + "]", mAutoComplDataHash.get(etChatInput.getText().toString().trim()));
-            }
-            mDataMap.put("[~" + mCurrVarName + "]", data[0]);
-        }
-        etChatInput.setText("");
-        hideSoftKeyboard();
-        cvChatInput.setVisibility(View.INVISIBLE);
-        switch (confirmationType) {
-            case Constants.ConfirmationType.BIZ_NAME:
-                showNextNode(data[1]);
-                break;
-            case Constants.ConfirmationType.ADDRESS_ENTRY:
-                showNextNode(data[1]);
-                break;
-        }
-
-    }
-
-    @Override
-    public void onNegativeResponse(String confirmationType, final String... data) {
-        mSectionList.remove(mSectionList.size() - 1);
-        mAdapter.notifyItemRemoved(mSectionList.size());
-        switch (confirmationType) {
-            case Constants.ConfirmationType.BIZ_NAME:
-                showNextNode(data[0]);
-                break;
-            case Constants.ConfirmationType.ADDRESS_ENTRY:
-                getUserAddress(mCurrButton);
-                break;
-        }
-    }*/
-
     @Override
     public void onCardResponse(String confirmationType, Button mButton, String... data) {
 
@@ -2159,6 +2053,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 showNextNode(mNextNodeId);
             }
         }
+
     }
 
     @Override
@@ -2176,7 +2071,12 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         } else {
 
-            customDialogFragment = CustomDialogFragment.newInstance(dialogFrom);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 &&
+                    isDestroyed()) {
+                return;
+            }
+
+            final CustomDialogFragment customDialogFragment = CustomDialogFragment.newInstance(dialogFrom);
             customDialogFragment.show(getFragmentManager(), "Test");
             customDialogFragment.setResultListener(new CustomDialogFragment.OnResultReceive() {
                 @Override
@@ -2192,6 +2092,11 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 }
 
                 @Override
+                public void navigateToSignup() {
+                    customDialogFragment.dismiss();
+                }
+
+                @Override
                 public void dismissPopup() {
                     customDialogFragment.dismiss();
                 }
@@ -2201,7 +2106,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
                     customDialogFragment.dismiss();
 
-                    if(mCurrButton!=null){
+                    if (mCurrButton != null) {
 
                         rvButtonsContainer.setVisibility(View.INVISIBLE);
                         cvChatInput.setVisibility(View.INVISIBLE);
@@ -2230,6 +2135,5 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 }
             });
         }
-
     }
 }

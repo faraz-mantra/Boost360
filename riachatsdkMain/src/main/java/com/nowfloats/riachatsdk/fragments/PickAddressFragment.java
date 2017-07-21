@@ -390,7 +390,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                                         @Override
                                         public void run() {
 
-                                            if (!getActivity().isFinishing()) {
+                                            if (getActivity()!=null &&
+                                                    !getActivity().isFinishing()) {
                                                 adapter = new ArrayAdapter<>(getActivity(),
                                                         android.R.layout.simple_dropdown_item_1line, citys);
                                                 etCity.setAdapter(adapter);

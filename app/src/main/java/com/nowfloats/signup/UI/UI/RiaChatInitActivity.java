@@ -1,5 +1,6 @@
 package com.nowfloats.signup.UI.UI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -38,6 +39,7 @@ public class RiaChatInitActivity extends AppCompatActivity
                 break;
             case "back":
                 signUpWithRiaFragment = null;
+                startActivity(new Intent(RiaChatInitActivity.this, PreSignUpActivity.class));
                 finish();
                 /*LoginAndSignUpFragment loginAndSignUpFragment = LoginAndSignUpFragment.newInstance();
                 getSupportFragmentManager()
@@ -60,8 +62,9 @@ public class RiaChatInitActivity extends AppCompatActivity
         if (signUpWithRiaFragment != null) {
             signUpWithRiaFragment.onBackPressed();
         } else {
-            super.onBackPressed();
+            startActivity(new Intent(RiaChatInitActivity.this, PreSignUpActivity.class));
             finish();
+            super.onBackPressed();
         }
     }
 }

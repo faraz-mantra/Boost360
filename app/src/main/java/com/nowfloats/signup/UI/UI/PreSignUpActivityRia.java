@@ -272,13 +272,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         /*LoadCountryData countryData = new LoadCountryData(activity);
         countryData.LoadCountryData_Listener(this);
         countryData.execute();*/
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                loadCountryCodeandCountryNameMap();
-            }
-        }).start();
-
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         verify_button.setOnClickListener(this);
 
@@ -363,9 +356,14 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 cityEditText.setText(city);
                 cityEditText.setTag(true);
 
-//                String country_code = Country_CodeMap.get(countryEditText.getText().toString());
-//                //Log.v("ggg",country_code);
-//                String phone_code = Code_PhoneMap.get(country_code);
+                String selectedCountry = countryEditText.getText().toString();
+
+                if (Country_CodeMap != null && Country_CodeMap.containsKey(selectedCountry)) {
+                    String country_code = Country_CodeMap.get(selectedCountry);
+                    if (Code_PhoneMap.containsKey(country_code))
+                        data_country_code = Code_PhoneMap.get(country_code);
+                }
+                //Log.v("ggg",country_code);
 //                countryPhoneCode.setText("+" + phone_code);
 //
 //                if (!data_country_code.equalsIgnoreCase(country_code)) {
@@ -456,7 +454,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 }
             }
         });
-        updateBasedOnMostRecentLocation(Constants.lastKnownAddress);
 
 
         phoneEditText.setFocusable(false);
@@ -686,14 +683,16 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             }
             if (!TextUtils.isEmpty(mBundle.getString(Save_Country))) {
                 countryEditText.setText(mBundle.getString(Save_Country, ""));
+            } else {
+                updateBasedOnMostRecentLocation(Constants.lastKnownAddress);
             }
+
             if (!TextUtils.isEmpty(mBundle.getString(Save_City))) {
                 cityEditText.setText(mBundle.getString(Save_City, ""));
 
             }
             if (!TextUtils.isEmpty(mBundle.getString(Save_Email))) {
                 emailEditText.setText(mBundle.getString(Save_Email, ""));
-
             }
 
             if (!TextUtils.isEmpty(mBundle.getString(Save_Phone)) &&
@@ -724,6 +723,14 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 ivPhoneStatus.setBackgroundResource(R.drawable.warning);
                 phoneEditText.setTextColor(getResources().getColor(R.color.black));
             }
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    showProgressbar();
+                    loadCountryCodeandCountryNameMap();
+                }
+            }).start();
 
             if (!TextUtils.isEmpty(mBundle.getString(Save_Street_Address))) {
                 etStreetAddress.setText(mBundle.getString(Save_Street_Address, ""));
@@ -796,13 +803,37 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             //Log.v("ggg",obj.getCountry());
         }
         Collections.sort(signUpCountryList);
-        if (isFinishing()) return;
+        if (isFinishing()){
+            hideProgressbar();
+            return;
+        }
+
         String[] string_array = getResources().getStringArray(R.array.CountryCodes);
         for (int i = 0; i < string_array.length; i++) {
             String phoneCode = string_array[i].split(",")[0];
             String countryCode = string_array[i].split(",")[1];
             Code_PhoneMap.put(countryCode, phoneCode);
         }
+
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                if (TextUtils.isEmpty(data_country_code)) {
+                    String selectedCountry = countryEditText.getText().toString();
+
+                    if (Country_CodeMap != null && Country_CodeMap.containsKey(selectedCountry)) {
+                        String country_code = Country_CodeMap.get(selectedCountry);
+                        if (Code_PhoneMap.containsKey(country_code))
+                            data_country_code = Code_PhoneMap.get(country_code);
+                    }
+                }
+                hideProgressbar();
+            }
+        });
+
+
     }
 
     @Override
@@ -1068,14 +1099,14 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                     pd = ProgressDialog.show(PreSignUpActivityRia.this, "", getString(R.string.creating_website));
                     pd.setCancelable(false);
 
-                    if(data_lat.equalsIgnoreCase("0")){
+                    if (data_lat.equalsIgnoreCase("0")) {
 
-                      LatLng latLng =   new NFGeoCoder(PreSignUpActivityRia.this).reverseGeoCode(
-                                etStreetAddress.getText().toString(),cityEditText.getText().toString(),countryEditText.getText().toString(),
+                        LatLng latLng = new NFGeoCoder(PreSignUpActivityRia.this).reverseGeoCode(
+                                etStreetAddress.getText().toString(), cityEditText.getText().toString(), countryEditText.getText().toString(),
                                 etPinCode.getText().toString());
 
-                        data_lat = latLng.latitude+"";
-                        data_lng = latLng.longitude+"";
+                        data_lat = latLng.latitude + "";
+                        data_lng = latLng.longitude + "";
                     }
                     hideKeyBoard();
                     MixPanelController.track("CreateMyWebsite", null);
@@ -1359,16 +1390,30 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     }
 
     private void showProgressbar() {
-        if (progressbar != null) {
-            progressbar.setCancelable(false);
-            progressbar.show();
-        }
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (progressbar != null) {
+                    progressbar.setCancelable(false);
+                    progressbar.show();
+                }
+            }
+        });
+
     }
 
     private void hideProgressbar() {
-        if (progressbar != null && progressbar.isShowing()) {
-            progressbar.dismiss();
-        }
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (progressbar != null && progressbar.isShowing()) {
+                    progressbar.dismiss();
+                }
+            }
+        });
+
     }
 
     private void otpDialogDismiss() {
