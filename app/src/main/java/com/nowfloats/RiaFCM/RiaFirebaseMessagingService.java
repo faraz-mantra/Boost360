@@ -19,6 +19,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 import java.util.Map;
@@ -59,6 +60,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         Log.d("Message", message.toString());
 
         if (message.containsKey("mp_message") && message.get("mp_message").equalsIgnoreCase(SAM_BUBBLE_MSG)) {
+            MixPanelController.track(MixPanelController.SAM_BUBBLE_NOTIFICATION,null);
             pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).apply();
         } else {
             deepLinkUrl = message.get("url");

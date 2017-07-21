@@ -100,7 +100,7 @@ public class DataAccessibilityServiceV8 extends AccessibilityService {
                     event.getClassName().toString().equalsIgnoreCase(SUGGESTIONS_CLASS_NAME)))
                     && pref.getBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED, false) &&
                     !TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null)))
-                   /* && pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)*/) {
+                    && pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
 
                 if (!isMyServiceRunning(BubblesService.class)) {
 

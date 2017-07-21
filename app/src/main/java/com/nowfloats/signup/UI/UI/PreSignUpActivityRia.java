@@ -22,7 +22,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
-import android.text.InputFilter;
 import android.text.InputType;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -672,7 +671,8 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
         Bundle mBundle = getIntent().getExtras();
 
-        if (mBundle.containsKey("mBundle")) {
+        if (mBundle!=null &&
+                mBundle.containsKey("mBundle")) {
 
             mBundle = mBundle.getBundle("mBundle");
 

@@ -42,6 +42,7 @@ public class MixPanelController {
     public static final String FACEBOOK_PAGE_ERROR_IN_CREATE = "FacebookPageErrorInCreate";
     public static final String FACEBOOK_PAGE_INVALID_NAME = "FacebookPageInvalidName";
 
+    public static final String SAM_BUBBLE_NOTIFICATION = "SAMBubbleNotification";
     public static final String SAM_BUBBLE_CLICKED = "SAMBubbleClicked";
     public static final String SAM_BUBBLE_CLICKED_DATA = "SAMBubbleClickedData";
     public static final String SAM_BUBBLE_CLICKED_NO_DATA = "SAMBubbleClickedNoData";

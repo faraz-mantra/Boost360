@@ -90,10 +90,15 @@ public class SuggestionsActivity extends AppCompatActivity {
         MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED, null);
         FirebaseLogger.getInstance().logSAMEvent("", 0, session.getFPID());
 
-        fragmentManager.beginTransaction().
-                replace(R.id.flTopView, new OnBoardingFragment())
-                .addToBackStack(null)
-                .commit();
+        if(!pref.getBoolean(Key_Preferences.HAS_SHOWN_SAM_COACH_MARK,false)){
+            fragmentManager.beginTransaction().
+                    replace(R.id.flTopView, new OnBoardingFragment())
+                    .addToBackStack(null)
+                    .commit();
+        }else{
+            switchView(SuggestionsActivity.SwitchView.CALL_TO_ACTION);
+        }
+
     }
 
     private void setDisplayMetrics(float width, float height, boolean isCenter) {
@@ -159,8 +164,7 @@ public class SuggestionsActivity extends AppCompatActivity {
         pbView.setVisibility(View.VISIBLE);
 
         HashMap<String, String> offersParam = new HashMap<>();
-//        offersParam.put("fpId", session.getFPID());
-        offersParam.put("fpId", "5935119c0e88a505a82d7e00");
+        offersParam.put("fpId", session.getFPID());
         suggestionsApi.getMessages(offersParam);
     }
 
@@ -181,7 +185,7 @@ public class SuggestionsActivity extends AppCompatActivity {
         if (smsSuggestions != null && smsSuggestions.getSuggestionList() != null &&
                 smsSuggestions.getSuggestionList().size() > 0) {
 
-            MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED_DATA,null);
+            MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED_DATA, null);
             FirebaseLogger.getInstance().logSAMEvent("", 1, session.getFPID());
 
             fragmentManager.beginTransaction()
@@ -191,7 +195,7 @@ public class SuggestionsActivity extends AppCompatActivity {
                     .commit();
         } else {
 
-            MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED_NO_DATA,null);
+            MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED_NO_DATA, null);
             FirebaseLogger.getInstance().logSAMEvent("", 2, session.getFPID());
 
             pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, false).apply();

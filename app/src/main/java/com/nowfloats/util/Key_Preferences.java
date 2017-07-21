@@ -18,7 +18,7 @@ public class Key_Preferences {
     public static final String SHOW_QUIKR_ANALYTICS = "show_quikr_analytics";
     public static final String SHOW_WHATSAPP_CLOSE_DIALOG = "whatsApp_close";
     public static final String HAS_SUGGESTIONS = "HAS_SUGGESTIONS";
-    public static final String IS_TO_SHOW_COACH_MARKS_SONE = "IS_TO_SHOW_COACH_MARKS_SONE";
+    public static final String HAS_SHOWN_SAM_COACH_MARK = "HAS_SHOWN_SAM_COACH_MARK";
     public static final String IS_TO_SHOW_COACH_MARKS_STWO = "IS_TO_SHOW_COACH_MARKS_STWO";
     public static final String SHOW_FACEBOOK_REVIEW = "facebook_review";
     public static final String GET_FP_DETAILS_WIDGET_BUSINESS_APP = "GET_FP_DETAILS_BUSINESS_APP";

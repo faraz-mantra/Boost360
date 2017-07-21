@@ -28,7 +28,7 @@
                 android:layout_marginRight="@dimen/margin_10"
                 android:layout_marginTop="@dimen/pre_screen_top_margin_text1"
                 android:gravity="center"
-                android:text="Do you find hard to keep track of all your leads &amp; action items? "
+                android:text="Manage all your business leads in one place"
                 android:textColor="@color/primaryColor"
                 android:textSize="@dimen/llarge_text_size" />
 
@@ -51,7 +51,7 @@
                 android:lineSpacingExtra="2dp"
                 android:paddingLeft="@dimen/pre_s2_description_paddingLeft"
                 android:paddingRight="@dimen/pre_s2_description_paddingRight"
-                android:text="Our software helps you focus on getting new business and increasing revenue."
+                android:text="We help you focus on getting new business. We analyze your sms and call history to help you convert the lead."
                 android:textColor="@color/black"
                 android:textSize="@dimen/ps_lbl3_size" />
         </LinearLayout>

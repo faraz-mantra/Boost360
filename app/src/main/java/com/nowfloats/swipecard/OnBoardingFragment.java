@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.nowfloats.util.Key_Preferences;
 import com.thinksity.R;
 import com.viewpagerindicator.CirclePageIndicator;
 
@@ -52,12 +53,14 @@ public class OnBoardingFragment extends Fragment {
         ps_pager.setAdapter(new BoardingPagerAdapter());
         ps_indicator.setViewPager(ps_pager);
 
+        ps_indicator.setVisibility(View.GONE);
         ((LinearLayout) view.findViewById(R.id.llGetStarted))
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        if (ps_pager.getCurrentItem() == 2) {
+                        if (ps_pager.getCurrentItem() == 0) {
+                            ((SuggestionsActivity) getActivity()).pref.edit().putBoolean(Key_Preferences.HAS_SHOWN_SAM_COACH_MARK,true).apply();
                             ((SuggestionsActivity) getActivity()).switchView(SuggestionsActivity.SwitchView.CALL_TO_ACTION);
                         } else {
                             ps_pager.setCurrentItem(ps_pager.getCurrentItem() + 1);
@@ -65,6 +68,7 @@ public class OnBoardingFragment extends Fragment {
                     }
                 });
 
+        tvGetStarted.setText("GET STARTED");
         ps_pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -73,7 +77,7 @@ public class OnBoardingFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 2) {
+                if (position == 0) {
                     tvGetStarted.setText("GET STARTED");
                 } else {
                     tvGetStarted.setText("NEXT");
@@ -92,7 +96,7 @@ public class OnBoardingFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return 3;
+            return 1;
         }
 
         @Override
