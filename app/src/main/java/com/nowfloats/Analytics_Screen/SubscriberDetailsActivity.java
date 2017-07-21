@@ -78,6 +78,7 @@ public class SubscriberDetailsActivity extends AppCompatActivity implements View
         if(!mSubscriberData.getUserMobile().toLowerCase().contains("@")) {
             subscriberEmailId.setText("+"+mSubscriberData.getUserCountryCode()+" -"+mSubscriberData.getUserMobile());
             subscriberCall.setVisibility(View.VISIBLE);
+            findViewById(R.id.divider1).setVisibility(View.VISIBLE);
         }else{
             subscriberEmailId.setText(mSubscriberData.getUserMobile());
             subscriberMessage.setText("Send Email");
@@ -163,7 +164,7 @@ public class SubscriberDetailsActivity extends AppCompatActivity implements View
     }
     private void addSubscriber(){
         if(!checkIsEmailOrNumber(mSubscriberData.getUserMobile())){
-            Toast.makeText(this, "You Can't subscriber mobile number", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "You can't subscriber mobile number", Toast.LENGTH_SHORT).show();
             return;
         }
         show();

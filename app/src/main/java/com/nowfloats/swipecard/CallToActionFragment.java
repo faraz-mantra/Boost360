@@ -18,7 +18,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -125,7 +124,8 @@ public class CallToActionFragment extends Fragment {
 
         ((SuggestionsActivity) getActivity()).setSupportActionBar(toolbar);
 
-        getActivity().setTitle(Html.fromHtml("Sam <i>says..</i>"));
+//        getActivity().setTitle(Html.fromHtml("Sam <i>says..</i>"));
+        getActivity().setTitle("Your Leads");
         ((SuggestionsActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         toolbar.setTitleTextColor(ContextCompat.getColor(getActivity(), R.color.white));
@@ -270,7 +270,8 @@ public class CallToActionFragment extends Fragment {
 
         this.suggestionsDO = suggestionsDO;
 
-        getActivity().setTitle(Html.fromHtml("Sam <i>suggests..</i>"));
+//        getActivity().setTitle(Html.fromHtml("Sam <i>suggests..</i>"));
+        getActivity().setTitle("Updates & Products");
         ((SuggestionsActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         llProductView.setVisibility(View.VISIBLE);
@@ -279,7 +280,7 @@ public class CallToActionFragment extends Fragment {
 
         if (suggestionsDO.getType().equalsIgnoreCase(ACTION_TYPE_NUMBER)) {
             btnCall.setVisibility(View.VISIBLE);
-            btnShare.setText("Message");
+            btnShare.setText("Share");
         } else {
             btnCall.setVisibility(View.GONE);
             btnShare.setText("Share");
@@ -303,7 +304,8 @@ public class CallToActionFragment extends Fragment {
         llProductView.setVisibility(View.GONE);
         rvActionItems.setVisibility(View.VISIBLE);
 
-        getActivity().setTitle(Html.fromHtml("Sam <i>says..</i>"));
+//        getActivity().setTitle(Html.fromHtml("Sam <i>says..</i>"));
+        getActivity().setTitle("Your Leads");
         ((SuggestionsActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 
