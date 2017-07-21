@@ -82,6 +82,7 @@ public class Constants {
     public final static String BASE_IMAGE_URL = "https://content.withfloats.com";
     public final static String RIA_MEMORY_API_URL = "http://riamemory.withfloats.com";
     public final static String PLUGIN_API_URL = "https://plugin.withfloats.com";
+    public final static String RIA_MEMORY_TEST_API_URL = "http://ria.nowfloatsdev.com";
     public final static String RIA_API_URL = "https://ria.withfloats.com";
     // public final static String NOW_FLOATS_API_URL		=	"https://nftestbed.azurewebsites.net";
     public final static String HTTP_PUT = "PUT";

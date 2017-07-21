@@ -1193,6 +1193,9 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
             } else if (websiteAddr.split("://")[0].equals("https") && websiteAddr.split("://").length==2) {
                 protocolSpinner.setSelection(1);
                 websiteAddress.setText(websiteAddr.split("://")[1]);
+            }else{
+                protocolSpinner.setSelection(0);
+                websiteAddress.setText(websiteAddr);
             }
         }
         facebookPage.setText(session.getFacebookPage());

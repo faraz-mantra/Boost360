@@ -124,5 +124,5 @@
     <dimen name="medium_text_size">15sp</dimen>
     <dimen name="large_text_size">18sp</dimen>
     <dimen name="xlarge_text_size">23sp</dimen>
-    <dimen name="xxlarge_text_size">28sp</dimen>
+    <dimen name="xxlarge_text_size">25sp</dimen>
 </resources>

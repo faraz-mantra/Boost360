@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:paddingLeft="24dp"
-    android:paddingRight="24dp"
-    android:layout_height="wrap_content">
+    android:paddingRight="24dp">
+
     <TextView
+        android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="To change your primary number, you would need to verify using a one time password (OTP)."/>
+        android:text="To change your primary number, you would need to verify using a one time password (OTP)." />
+
     <EditText
         android:id="@+id/editText"
-        android:inputType="phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:hint="Enter new number"/>
+        android:hint="Enter new number"
+        android:inputType="phone" />
 
 </LinearLayout>

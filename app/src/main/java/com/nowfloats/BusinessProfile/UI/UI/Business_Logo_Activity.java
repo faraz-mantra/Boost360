@@ -242,7 +242,7 @@ public class Business_Logo_Activity extends AppCompatActivity {
 //
 //            Upload_Logo upload = new Upload_Logo(Business_Logo_Activity.this,filepath);
 //            upload.execute();
-//            // Check if the specified image exists.
+//            // sent_check if the specified image exists.
 //        }
 //
 //

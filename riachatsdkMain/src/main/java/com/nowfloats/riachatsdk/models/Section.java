@@ -89,12 +89,76 @@ public class Section implements Serializable{
     @SerializedName("DurationInSec")
     @Expose
     private Integer durationInSec;
+    @SerializedName("Length")
+    @Expose
+    private Integer otpLength;
     @SerializedName("DisplayOpenInBrowserButton")
     @Expose
     private boolean displayOpenInBrowserButton;
     @SerializedName("IsLoading")
     @Expose
     private boolean isLoading;
+    @SerializedName("ShowDdate")
+    @Expose
+    private boolean showDate;
+    @SerializedName("DateTime")
+    @Expose
+    private String dateTime;
+
+    private int cardPos;
+
+
+    private RiaCardModel cardModel;
+
+    public Integer getOtpLength() {
+        return otpLength;
+    }
+
+    public void setOtpLength(Integer otpLength) {
+        this.otpLength = otpLength;
+    }
+
+    public RiaCardModel getCardModel() {
+        return cardModel;
+    }
+
+    public void setCardModel(RiaCardModel cardModel) {
+        this.cardModel = cardModel;
+    }
+
+    private boolean isAnimApplied = false;
+
+    public boolean isAnimApplied() {
+        return isAnimApplied;
+    }
+
+    public void setIsAnimApplied(boolean isAnimApplied) {
+        this.isAnimApplied = isAnimApplied;
+    }
+
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public boolean isShowDate() {
+        return showDate;
+    }
+
+    public int getCardPos() {
+        return cardPos;
+    }
+
+    public void setCardPos(int cardPos) {
+        this.cardPos = cardPos;
+    }
+
+    public void setShowDate(boolean showDate) {
+        this.showDate = showDate;
+    }
 
     public boolean isLoading() {
         return isLoading;

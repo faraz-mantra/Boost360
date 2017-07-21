@@ -35,7 +35,7 @@ allprojects {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.1'
+    buildToolsVersion '25.0.2'
 
     useLibrary 'org.apache.http.legacy'
 
@@ -47,8 +47,8 @@ android {
         applicationId 'com.thinksity'
         minSdkVersion 15
         targetSdkVersion 25
-        versionName "1.0.4"
-        versionCode 2017070013
+        versionName "4.7.3"
+        versionCode 2017070016
         multiDexEnabled true
     }
     buildTypes {
@@ -96,6 +96,10 @@ dependencies {
     compile files('libs/libraries/signpost-core-1.2.1.2.jar')
     compile files('libs/libraries/AF-Android-SDK-v2.3.1.17.jar')
     compile files('libs/libraries/signpost-commonshttp4-1.2.1.2.jar')
+
+
+    compile project(':messagelibrary')
+    compile project(':riachatsdkMain')
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.android.support:cardview-v7:25.3.0'
@@ -134,6 +138,8 @@ dependencies {
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
     compile 'com.romandanylyk:pageindicatorview:0.2.0'
     compile project(':messagelibrary')
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

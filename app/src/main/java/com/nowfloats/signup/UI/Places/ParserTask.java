@@ -61,7 +61,7 @@ public class ParserTask extends AsyncTask<String, Integer, ArrayList<String>> {
 //        SimpleAdapter adapter = new SimpleAdapter(activity, result, android.R.layout.simple_list_item_1, from, to);
 
         // Setting the adapter
-        PreSignUpActivity.cityEditText.setAdapter(autoCompleteAdapter);
-        PreSignUpActivity.cityProgress.setVisibility(View.GONE);
+        //PreSignUpActivity.cityEditText.setAdapter(autoCompleteAdapter);
+        //PreSignUpActivity.cityProgress.setVisibility(View.GONE);
     }
 }

@@ -39,7 +39,7 @@ public class Button implements Serializable{
     private String url;
     @SerializedName("BounceTimeout")
     @Expose
-    private Integer bounceTimeout;
+    private long bounceTimeout;
     @SerializedName("VariableValue")
     @Expose
     private String variableValue;
@@ -55,6 +55,62 @@ public class Button implements Serializable{
     @SerializedName("PostfixText")
     @Expose
     private String postfixText;
+
+    @SerializedName("ConfirmInput")
+    @Expose
+    private boolean confirmInput;
+
+    @SerializedName("PostToChat")
+    @Expose
+    private boolean postToChat;
+
+    @SerializedName("APIResponseMatchKey")
+    @Expose
+    private String apiResponseMatchKey;
+
+    @SerializedName("APIResponseMatchValue")
+    @Expose
+    private String apiResponseMatchValue;
+
+    public String getApiResponseMatchKey() {
+        return apiResponseMatchKey;
+    }
+
+    public void setApiResponseMatchKey(String apiResponseMatchKey) {
+        this.apiResponseMatchKey = apiResponseMatchKey;
+    }
+
+    public String getApiResponseMatchValue() {
+        return apiResponseMatchValue;
+    }
+
+    public void setApiResponseMatchValue(String apiResponseMatchValue) {
+        this.apiResponseMatchValue = apiResponseMatchValue;
+    }
+
+    public boolean isPostToChat() {
+        return postToChat;
+    }
+
+    public void setPostToChat(boolean postToChat) {
+        this.postToChat = postToChat;
+    }
+
+    public Boolean getDefaultButton() {
+        return defaultButton;
+    }
+
+    public Boolean getHidden() {
+        return hidden;
+    }
+
+    public boolean isConfirmInput() {
+        return confirmInput;
+    }
+
+    public void setConfirmInput(boolean confirmInput) {
+        this.confirmInput = confirmInput;
+    }
 
     public String getPrefixText() {
         return prefixText;
@@ -152,11 +208,11 @@ public class Button implements Serializable{
         this.url = url;
     }
 
-    public Integer getBounceTimeout() {
+    public long getBounceTimeout() {
         return bounceTimeout;
     }
 
-    public void setBounceTimeout(Integer bounceTimeout) {
+    public void setBounceTimeout(long bounceTimeout) {
         this.bounceTimeout = bounceTimeout;
     }
 

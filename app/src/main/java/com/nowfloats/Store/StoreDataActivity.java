@@ -539,7 +539,7 @@ public class StoreDataActivity extends AppCompatActivity {
                         materialProgress.dismiss();
                     }else {
                         MixPanelController.track(EventKeysWL.STORE_IN_APP_PURCHASE_INITIATION, null);
-                        //Check product
+                        //sent_check product
                         final ArrayList<String> additionalSkuList = new ArrayList<>();
                         additionalSkuList.add(SKU_PACKAGE);
                         mHelper.queryInventoryAsync(true, additionalSkuList, new IabHelper.QueryInventoryFinishedListener() {
