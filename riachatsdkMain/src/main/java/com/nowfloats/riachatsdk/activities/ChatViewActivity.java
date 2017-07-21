@@ -168,7 +168,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     private PickAddressFragment pickAddressFragment;
 
-    private CustomDialogFragment customDialogFragment;
 
     private FileUploadResultReceiver mReceiver;
 
@@ -333,10 +332,11 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             }
         });
 
+        tvSkip.setVisibility(View.VISIBLE);
         tvSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showCustomDialog(CustomDialogFragment.DialogFrom.SKIP_LOGIN);
+                showCustomDialog(CustomDialogFragment.DialogFrom.SKIP);
             }
         });
 
@@ -2023,6 +2023,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     private class FileUploadResultReceiver extends ResultReceiver {
 
         /**
+         *
          * Create a new ResultReceive to receive results.  Your
          * {@link #onReceiveResult} method will be called from the thread running
          * <var>handler</var> if given, or from an arbitrary thread if null.
@@ -2063,7 +2064,11 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         } else {
 
-            customDialogFragment = CustomDialogFragment.newInstance(dialogFrom);
+            if (isDestroyed()) {
+                return;
+            }
+
+            final CustomDialogFragment customDialogFragment = CustomDialogFragment.newInstance(dialogFrom);
             customDialogFragment.show(getFragmentManager(), "Test");
             customDialogFragment.setResultListener(new CustomDialogFragment.OnResultReceive() {
                 @Override
