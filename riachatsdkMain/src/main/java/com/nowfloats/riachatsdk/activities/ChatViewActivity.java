@@ -332,11 +332,11 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             }
         });
 
-        tvSkip.setVisibility(View.VISIBLE);
+//        tvSkip.setVisibility(View.VISIBLE);
         tvSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showCustomDialog(CustomDialogFragment.DialogFrom.SKIP);
+                showCustomDialog(CustomDialogFragment.DialogFrom.SKIP_LOGIN);
             }
         });
 
@@ -541,8 +541,17 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         if (mHandler != null)
             mHandler.removeCallbacksAndMessages(null);
         hideSoftKeyboard();
-        finish();
+
+        Intent intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("nowfloats://com.riasdk.presignup/riachat"));
+        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+        intent.setAction(Intent.ACTION_VIEW);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.slide_out_right);
+        finish();
 
     }
 
@@ -1075,7 +1084,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             finish();
         }
     }
-
 
     private void login() {
 
@@ -2023,7 +2031,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     private class FileUploadResultReceiver extends ResultReceiver {
 
         /**
-         *
          * Create a new ResultReceive to receive results.  Your
          * {@link #onReceiveResult} method will be called from the thread running
          * <var>handler</var> if given, or from an arbitrary thread if null.
@@ -2064,7 +2071,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         } else {
 
-            if (isDestroyed()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 &&
+                    isDestroyed()) {
                 return;
             }
 
