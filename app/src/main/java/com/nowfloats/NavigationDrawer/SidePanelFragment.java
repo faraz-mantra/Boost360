@@ -72,7 +72,7 @@ public class SidePanelFragment extends Fragment {
     private static int twitterWeight = 10;
     private static int shareWebsiteWeight = 5;
     private static int firstUpdatesWeight = 5;
-    private static int logoWeight=5;
+    private static int logoWeight = 5;
     private boolean mUserLearnedDrawer;
     private View containerView;
     public ActionBarDrawerToggle mDrawerToggle;
@@ -83,12 +83,12 @@ public class SidePanelFragment extends Fragment {
     TextView dashBoardTextView;
     TextView businessProfileTextView;
     TextView customerQueries;
-    TextView imageGalleryTextView,businessAppTextview;
+    TextView imageGalleryTextView, businessAppTextview;
     TextView productGalleryTextView;
     TextView StoreTextView;
     TextView cspTextView;
     //TextView enqCount;
-    TextView settingsText, chatText, callText, shareText,tvBoostBubble /*tvSiteAppearance*/;
+    TextView settingsText, chatText, callText, shareText, tvBoostBubble /*tvSiteAppearance*/;
     public static TextView fpNameTextView;
     UserSessionManager session;
     public static ImageView iconImage;
@@ -109,8 +109,9 @@ public class SidePanelFragment extends Fragment {
     private Switch bubbleSwitch;
 //    protected ImageLoader imageLoader = ImageLoader.getInstance();
 
-    LinearLayout homeLayout, profileLayout, businessAppsLayout, storeLayout, /*customerQueriesLayout,*/ imageGalleryLayout, cspLayout,
-            productGalleryLayout, Store_Layout, settingsLayout, chatLayout, callLayout, shareLayout, llGetInTouch,bubbleLayout /*llSiteAppearance*/;
+    LinearLayout homeLayout, profileLayout, businessAppsLayout, storeLayout, /*customerQueriesLayout,*/
+            imageGalleryLayout, cspLayout,
+            productGalleryLayout, Store_Layout, settingsLayout, chatLayout, callLayout, shareLayout, llGetInTouch, bubbleLayout /*llSiteAppearance*/;
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
     private ProgressBar progressbar;
@@ -119,14 +120,15 @@ public class SidePanelFragment extends Fragment {
     private int onUpdate = 4;
     private String originalSite1;
 
-    private final int media_req_id=5;
-    private final int gallery_req_id=6;
+    private final int media_req_id = 5;
+    private final int gallery_req_id = 6;
 
-    private ImageView lockWidgetImageView, lockWidget_ProductGallery, /*lockWidgetImageView_BusinessEnq,*/ lockWidgetImageView_CSP;
+    private ImageView lockWidgetImageView, lockWidget_ProductGallery, /*lockWidgetImageView_BusinessEnq,*/
+            lockWidgetImageView_CSP;
     private Button newButton;
     private static HashMap<String, Integer> backgroundImages = new HashMap<String, Integer>();
     private ImageView shareImageView, businessProfileImageView, dasbBoardImageView, callImageView, chatImageView, cspImageView,
-            settingsImageView, StoreImageView, productGalleryImageView,businessappImageView, imageGalleryImageView/*, customerQueriesImageView*/ /*ivSiteAppearance*/;
+            settingsImageView, StoreImageView, productGalleryImageView, businessappImageView, imageGalleryImageView/*, customerQueriesImageView*/ /*ivSiteAppearance*/;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
     private ImageView businessLockImage;
     SharedPreferences pref, mSharedPreferences;
@@ -169,7 +171,7 @@ public class SidePanelFragment extends Fragment {
 
         //Log.d("ILUD", "Hello");
         pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-        mSharedPreferences = getActivity().getSharedPreferences(TwitterConnection.PREF_NAME,Context.MODE_PRIVATE);
+        mSharedPreferences = getActivity().getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE);
 
         final String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
         final String paymentLevel = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL);
@@ -180,7 +182,7 @@ public class SidePanelFragment extends Fragment {
         siteMeterCalculation();
         try {
             String versionName = mainActivity.getPackageManager().getPackageInfo(mainActivity.getPackageName(), 0).versionName;
-            TextView versionCode= (TextView) view.findViewById(R.id.version_name_text);
+            TextView versionCode = (TextView) view.findViewById(R.id.version_name_text);
             versionCode.setText(versionName);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -229,7 +231,6 @@ public class SidePanelFragment extends Fragment {
         });
 
 
-
         if (session.getIsSignUpFromFacebook().contains("true") && !Util.isNullOrEmpty(session.getFacebookPageURL())) {
             Picasso.with(getActivity())
                     .load(session.getFacebookPageURL())
@@ -258,8 +259,7 @@ public class SidePanelFragment extends Fragment {
         String normalURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getActivity().getResources().getString(R.string.tag_for_partners);
         if (rootAlisasURI != null && !rootAlisasURI.equals("null") && rootAlisasURI.trim().length() > 0) {
             fpNameTextView.setText(Methods.fromHtml("<u>" + rootAlisasURI + "</u>"));
-        }
-        else {
+        } else {
             fpNameTextView.setText(Methods.fromHtml("<u>" + normalURI + "</u>"));
         }
         fpNameTextView.setTypeface(robotoMedium);
@@ -395,23 +395,29 @@ public class SidePanelFragment extends Fragment {
         tvBoostBubble = (TextView) bubbleLayout.findViewById(R.id.ninethRow_TextView);
         bubbleSwitch = (Switch) bubbleLayout.findViewById(R.id.ninethRow_Switch);
         //tvSiteAppearance = (TextView) llSiteAppearance.findViewById(R.id.tv_site_appearance);
-        if(!Methods.isAccessibilitySettingsOn(getActivity())) {
-           session.setBubbleStatus(false);
+        if (!Methods.isAccessibilitySettingsOn(getActivity())) {
+            session.setBubbleStatus(false);
         }
         bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
 
         bubbleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(!isChecked) {
+                if (!isChecked) {
                     session.setBubbleStatus(isChecked);
-                }else{
+                } else {
 
                     if ((android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity()))
                             || (!Methods.isAccessibilitySettingsOn(getActivity()))) {
+
+//                        if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1")) {
+//                            showAlertMaterialDialog();
+//                            bubbleSwitch.setChecked(false);
+//                        } else {
                         session.setBubbleTime(-1);
                         ((OnItemClickListener) mainActivity).onClick(getString(R.string.home));
-                    }else {
+//                        }
+                    } else {
                         session.setBubbleStatus(isChecked);
                     }
 
@@ -692,10 +698,10 @@ public class SidePanelFragment extends Fragment {
         boolean flag = false;
         String strExpiryTime = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EXPIRY_DATE);
         long expiryTime = -1;
-        if(strExpiryTime!=null){
+        if (strExpiryTime != null) {
             expiryTime = Long.parseLong(strExpiryTime.split("\\(")[1].split("\\)")[0]);
         }
-        if(expiryTime!=-1 && ((expiryTime - System.currentTimeMillis())/86400000<180) && !session.getWebTemplateType().equals("6")){
+        if (expiryTime != -1 && ((expiryTime - System.currentTimeMillis()) / 86400000 < 180) && !session.getWebTemplateType().equals("6")) {
             flag = true;
         }
         return flag;
@@ -722,8 +728,8 @@ public class SidePanelFragment extends Fragment {
                         super.onPositive(dialog);
 //                        Constants.showStoreScreen = true ;
 //                        getActivity().getSupportFragmentManager().popBackStack();
-                        if(!getString(R.string.goto_store).equalsIgnoreCase("ok"))//this condition added for flavor check
-                        ((OnItemClickListener) mainActivity).onClick("store");
+                        if (!getString(R.string.goto_store).equalsIgnoreCase("ok"))//this condition added for flavor check
+                            ((OnItemClickListener) mainActivity).onClick("store");
 
                         dialog.dismiss();
                     }
@@ -1028,19 +1034,16 @@ public class SidePanelFragment extends Fragment {
             }
         }).start();
     }
+
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
-    {
-        if(requestCode==media_req_id)
-        {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        if (requestCode == media_req_id) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 cameraIntent();
 
             }
-        }
-        else if(requestCode==gallery_req_id)
-        {
+        } else if (requestCode == gallery_req_id) {
             if (grantResults.length > 0
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 galleryIntent();
@@ -1054,13 +1057,12 @@ public class SidePanelFragment extends Fragment {
     public void cameraIntent() {
         try {
             // use standard intent to capture an image
-            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)!=
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) !=
                     PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
                         media_req_id);
-            }
-            else {
+            } else {
                 ContentValues values = new ContentValues();
                 values.put(MediaStore.Images.Media.TITLE, "New Picture");
                 values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
@@ -1078,150 +1080,150 @@ public class SidePanelFragment extends Fragment {
         }
     }
 
-        public void galleryIntent() {
-            try {
-                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                        PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)!=
-                        PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
-                            gallery_req_id);
-                }else {
-                    Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    i.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
-                    startActivityForResult(i, GALLERY_PHOTO);
-                }
-            } catch (ActivityNotFoundException anfe) {
-                // display an error message
-                String errorMessage = getString(R.string.device_does_not_support_capturing_image);
-                Toast toast = Toast.makeText(getActivity().getApplicationContext(), errorMessage, Toast.LENGTH_SHORT);
-                toast.show();
+    public void galleryIntent() {
+        try {
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) !=
+                    PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA},
+                        gallery_req_id);
+            } else {
+                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                i.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                startActivityForResult(i, GALLERY_PHOTO);
             }
+        } catch (ActivityNotFoundException anfe) {
+            // display an error message
+            String errorMessage = getString(R.string.device_does_not_support_capturing_image);
+            Toast toast = Toast.makeText(getActivity().getApplicationContext(), errorMessage, Toast.LENGTH_SHORT);
+            toast.show();
         }
+    }
 
-        @Override
-        public void onActivityResult(int requestCode, int resultCode, Intent data) {
-            try {
-                if (resultCode == getActivity().RESULT_OK && (CAMERA_PHOTO == requestCode)) {
-                    try {
-                        path = null;
-                        if (imageUri != null) {
-                            path = getRealPathFromURI(imageUri);
-                            CameraBitmap = Util.getBitmap(path, getActivity());
-                            imageUrl = getRealPathFromURI(imageUri);
-                            path = Util.saveBitmap(path, getActivity(), "ImageFloat" + System.currentTimeMillis());
-                        } else {
-                            if (data != null) {
-                                imageUri = data.getData();
-                                if (imageUri == null) {
-                                    CameraBitmap = (Bitmap) data.getExtras().get("data");
-                                    if (CameraBitmap != null) {
-                                        path = Util.saveCameraBitmap(CameraBitmap, getActivity(), "ImageFloat" + System.currentTimeMillis());
-                                        imageUri = Uri.parse(path);
-                                    }
-                                } else {
-                                    path = getRealPathFromURI(imageUri);
-                                    CameraBitmap = Util.getBitmap(path, getActivity());
-                                    imageUrl = getRealPathFromURI(imageUri);
-                                    path = Util.saveBitmap(path, getActivity(), "ImageFloat" + System.currentTimeMillis());
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        try {
+            if (resultCode == getActivity().RESULT_OK && (CAMERA_PHOTO == requestCode)) {
+                try {
+                    path = null;
+                    if (imageUri != null) {
+                        path = getRealPathFromURI(imageUri);
+                        CameraBitmap = Util.getBitmap(path, getActivity());
+                        imageUrl = getRealPathFromURI(imageUri);
+                        path = Util.saveBitmap(path, getActivity(), "ImageFloat" + System.currentTimeMillis());
+                    } else {
+                        if (data != null) {
+                            imageUri = data.getData();
+                            if (imageUri == null) {
+                                CameraBitmap = (Bitmap) data.getExtras().get("data");
+                                if (CameraBitmap != null) {
+                                    path = Util.saveCameraBitmap(CameraBitmap, getActivity(), "ImageFloat" + System.currentTimeMillis());
+                                    imageUri = Uri.parse(path);
                                 }
+                            } else {
+                                path = getRealPathFromURI(imageUri);
+                                CameraBitmap = Util.getBitmap(path, getActivity());
+                                imageUrl = getRealPathFromURI(imageUri);
+                                path = Util.saveBitmap(path, getActivity(), "ImageFloat" + System.currentTimeMillis());
                             }
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    } catch (OutOfMemoryError E) {
-                        E.printStackTrace();
-                        CameraBitmap.recycle();
-                        System.gc();
-                        Methods.showSnackBar(getActivity(), getString(R.string.try_again));
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } catch (OutOfMemoryError E) {
+                    E.printStackTrace();
+                    CameraBitmap.recycle();
+                    System.gc();
+                    Methods.showSnackBar(getActivity(), getString(R.string.try_again));
+                }
 
-                    if (!Util.isNullOrEmpty(path)) {
-                        uploadPrimaryPicture(path);
-                    } else Methods.showSnackBar(getActivity(), getString(R.string.select_image_upload));
-                } else if (resultCode == getActivity().RESULT_OK && (GALLERY_PHOTO == requestCode)) {
-                    {
-                        Uri picUri = data.getData();
-                        if (picUri != null) {
-                            path = getPath(picUri);
-                            path = Util.saveBitmap(path, getActivity(), "ImageFloat" + System.currentTimeMillis());
+                if (!Util.isNullOrEmpty(path)) {
+                    uploadPrimaryPicture(path);
+                } else Methods.showSnackBar(getActivity(), getString(R.string.select_image_upload));
+            } else if (resultCode == getActivity().RESULT_OK && (GALLERY_PHOTO == requestCode)) {
+                {
+                    Uri picUri = data.getData();
+                    if (picUri != null) {
+                        path = getPath(picUri);
+                        path = Util.saveBitmap(path, getActivity(), "ImageFloat" + System.currentTimeMillis());
 
-                            if (!Util.isNullOrEmpty(path)) {
-                                uploadPrimaryPicture(path);
-                            } else
-                                Toast.makeText(getActivity().getApplicationContext(), getString(R.string.select_image_upload), Toast.LENGTH_SHORT).show();
-                        }
+                        if (!Util.isNullOrEmpty(path)) {
+                            uploadPrimaryPicture(path);
+                        } else
+                            Toast.makeText(getActivity().getApplicationContext(), getString(R.string.select_image_upload), Toast.LENGTH_SHORT).show();
                     }
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
 
-        public String getRealPathFromURI(Uri contentUri) {
-            String[] proj = {MediaStore.Images.Media.DATA};
-            Cursor cursor = getActivity().managedQuery(contentUri, proj, null, null, null);
-            int column_index = cursor
-                    .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+    public String getRealPathFromURI(Uri contentUri) {
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getActivity().managedQuery(contentUri, proj, null, null, null);
+        int column_index = cursor
+                .getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+
+    public String getPath(Uri uri) {
+        try {
+            String[] projection = {MediaStore.Images.Media.DATA};
+            Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
             return cursor.getString(column_index);
+        } catch (Exception e) {
         }
+        return null;
+    }
 
-        public String getPath(Uri uri) {
-            try {
-                String[] projection = {MediaStore.Images.Media.DATA};
-                Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
-                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                cursor.moveToFirst();
-                return cursor.getString(column_index);
-            } catch (Exception e) {
-            }
-            return null;
-        }
-
-        public void uploadPrimaryPicture(String path) {
-            mDrawerLayout.openDrawer(Gravity.LEFT);
-            Constants.isImgUploaded = false;
-            UploadPictureAsyncTask upa = new UploadPictureAsyncTask(getActivity(), path, true, session.getFPID());
-            upa.execute();
-        }
+    public void uploadPrimaryPicture(String path) {
+        mDrawerLayout.openDrawer(Gravity.LEFT);
+        Constants.isImgUploaded = false;
+        UploadPictureAsyncTask upa = new UploadPictureAsyncTask(getActivity(), path, true, session.getFPID());
+        upa.execute();
+    }
 
 
-        @Override
-        public void onResume() {
-            super.onResume();
-            if (Constants.IMAGEURIUPLOADED == false) {
-                String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
-                //int size = (int) Math.ceil(Math.sqrt(100 * 100));
-                if (iconUrl.length() > 0 && !iconUrl.contains("http") && (iconUrl != "https://api.withfloats.com/FP/Actual/default.png")) {
-                    String baseNameProfileImage = Constants.BASE_IMAGE_URL + iconUrl;
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (Constants.IMAGEURIUPLOADED == false) {
+            String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
+            //int size = (int) Math.ceil(Math.sqrt(100 * 100));
+            if (iconUrl.length() > 0 && !iconUrl.contains("http") && (iconUrl != "https://api.withfloats.com/FP/Actual/default.png")) {
+                String baseNameProfileImage = Constants.BASE_IMAGE_URL + iconUrl;
+                Picasso.with(getActivity())
+                        .load(baseNameProfileImage)
+                        .resize(200, 0)
+                        .placeholder(R.drawable.business_edit_profile_icon)
+                        .into(iconImage);
+                //Picasso.with(getActivity()).load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(iconImage);
+            } else {
+                if (iconUrl != null && iconUrl.length() > 0) {
                     Picasso.with(getActivity())
-                            .load(baseNameProfileImage)
+                            .load(iconUrl)
                             .resize(200, 0)
                             .placeholder(R.drawable.business_edit_profile_icon)
                             .into(iconImage);
-                    //Picasso.with(getActivity()).load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(iconImage);
                 } else {
-                    if (iconUrl != null && iconUrl.length() > 0) {
-                        Picasso.with(getActivity())
-                                .load(iconUrl)
-                                .resize(200, 0)
-                                .placeholder(R.drawable.business_edit_profile_icon)
-                                .into(iconImage);
-                    } else {
-                        Picasso.with(getActivity()).load(R.drawable.business_edit_profile_icon).into(iconImage);
-                    }
+                    Picasso.with(getActivity()).load(R.drawable.business_edit_profile_icon).into(iconImage);
                 }
             }
-            if (session.getISEnterprise().equals("true")) {
-                profileLayout.setVisibility(View.GONE);
-                imageGalleryLayout.setVisibility(View.GONE);
-                chatLayout.setVisibility(View.GONE);
-                siteMeter.setVisibility(View.GONE);
-            }
-            bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
-
-            // mDrawerLayout.openDrawer(Gravity.LEFT);
         }
+        if (session.getISEnterprise().equals("true")) {
+            profileLayout.setVisibility(View.GONE);
+            imageGalleryLayout.setVisibility(View.GONE);
+            chatLayout.setVisibility(View.GONE);
+            siteMeter.setVisibility(View.GONE);
+        }
+        bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
+
+        // mDrawerLayout.openDrawer(Gravity.LEFT);
+    }
 
     /*public void siteMeterCalculation(){
 
@@ -1271,64 +1273,64 @@ public class SidePanelFragment extends Fragment {
         progressbar.setProgress(siteMeterTotalWeight);
         meterValue.setText(siteMeterTotalWeight+"%");
     }*/
-        public void siteMeterCalculation() {
-            Constants.fbShareEnabled = pref.getBoolean("fbShareEnabled", false);
-            Constants.fbPageShareEnabled = pref.getBoolean("fbPageShareEnabled", false);
-            Constants.twitterShareEnabled = mSharedPreferences.getBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false);
-            siteMeterTotalWeight = 0;
-            if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
-                siteMeterTotalWeight += 10;
-            }
-            if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER)) && !getResources().getString(R.string.phoneNumber_percentage).equals("0")) {
-                siteMeterTotalWeight += phoneWeight;
-            }
-
-            if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY)) && !getResources().getString(R.string.businessCategory_percentage).equals("0")) {
-                siteMeterTotalWeight += businessCategoryWeight;
-            }
-
-            if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)) && !getResources().getString(R.string.featuredImage_percentage).equals("0")) {
-                siteMeterTotalWeight += featuredImageWeight;
-            }
-
-            if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)) && !getResources().getString(R.string.businessName_percentage).equals("0")) {
-                siteMeterTotalWeight += businessNameWeight;
-            }
-
-            if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)) && !getResources().getString(R.string.businessdescription_percentage).equals("0")) {
-                siteMeterTotalWeight += businessDescriptionWeight;
-            }
-
-            if (Constants.twitterShareEnabled && pref.getBoolean("fbShareEnabled", false) && pref.getBoolean("fbPageShareEnabled", false)) {
-                siteMeterTotalWeight += twitterWeight;
-            }
-            if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)) &&
-                    !Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LATITUDE))&&
-                    !Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LONGITUDE))&&
-                    !getResources().getString(R.string.address_percentage).equals("0")) {
-                siteMeterTotalWeight += businessAddressWeight;
-            }
-
-            if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL)) && !getResources().getString(R.string.email_percentage).equals("0")) {
-                siteMeterTotalWeight += emailWeight;
-            }
-            if (HomeActivity.StorebizFloats.size() < 5 ) {
-                siteMeterTotalWeight += (HomeActivity.StorebizFloats.size()*onUpdate);
-
-            }else {
-                siteMeterTotalWeight += 20;
-            }
-            if (!(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl))) && !getResources().getString(R.string.Logo_percentage).equals("0")) {
-                siteMeterTotalWeight += logoWeight;
-            }
-
-            if (session.getBusinessHours()) {
-                siteMeterTotalWeight += businessTimingWeight;
-            }
-
-            progressbar.setProgress(siteMeterTotalWeight);
-            meterValue.setText(siteMeterTotalWeight + "%");
+    public void siteMeterCalculation() {
+        Constants.fbShareEnabled = pref.getBoolean("fbShareEnabled", false);
+        Constants.fbPageShareEnabled = pref.getBoolean("fbPageShareEnabled", false);
+        Constants.twitterShareEnabled = mSharedPreferences.getBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false);
+        siteMeterTotalWeight = 0;
+        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
+            siteMeterTotalWeight += 10;
         }
+        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER)) && !getResources().getString(R.string.phoneNumber_percentage).equals("0")) {
+            siteMeterTotalWeight += phoneWeight;
+        }
+
+        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY)) && !getResources().getString(R.string.businessCategory_percentage).equals("0")) {
+            siteMeterTotalWeight += businessCategoryWeight;
+        }
+
+        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI)) && !getResources().getString(R.string.featuredImage_percentage).equals("0")) {
+            siteMeterTotalWeight += featuredImageWeight;
+        }
+
+        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME)) && !getResources().getString(R.string.businessName_percentage).equals("0")) {
+            siteMeterTotalWeight += businessNameWeight;
+        }
+
+        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION)) && !getResources().getString(R.string.businessdescription_percentage).equals("0")) {
+            siteMeterTotalWeight += businessDescriptionWeight;
+        }
+
+        if (Constants.twitterShareEnabled && pref.getBoolean("fbShareEnabled", false) && pref.getBoolean("fbPageShareEnabled", false)) {
+            siteMeterTotalWeight += twitterWeight;
+        }
+        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS)) &&
+                !Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LATITUDE)) &&
+                !Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.LONGITUDE)) &&
+                !getResources().getString(R.string.address_percentage).equals("0")) {
+            siteMeterTotalWeight += businessAddressWeight;
+        }
+
+        if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL)) && !getResources().getString(R.string.email_percentage).equals("0")) {
+            siteMeterTotalWeight += emailWeight;
+        }
+        if (HomeActivity.StorebizFloats.size() < 5) {
+            siteMeterTotalWeight += (HomeActivity.StorebizFloats.size() * onUpdate);
+
+        } else {
+            siteMeterTotalWeight += 20;
+        }
+        if (!(Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_LogoUrl))) && !getResources().getString(R.string.Logo_percentage).equals("0")) {
+            siteMeterTotalWeight += logoWeight;
+        }
+
+        if (session.getBusinessHours()) {
+            siteMeterTotalWeight += businessTimingWeight;
+        }
+
+        progressbar.setProgress(siteMeterTotalWeight);
+        meterValue.setText(siteMeterTotalWeight + "%");
+    }
 
     private void onclickColorChange(ImageView img, TextView tv, LinearLayout llPaletes) {
         dashBoardTextView.setTextColor(getResources().getColor(R.color.cell_text_color));
@@ -1346,46 +1348,46 @@ public class SidePanelFragment extends Fragment {
         businessAppTextview.setTextColor(getResources().getColor(R.color.cell_text_color));
         //tvSiteAppearance.setTextColor(getResources().getColor(R.color.cell_text_color));
 
-            shareImageView.setColorFilter(defaultLabelFilter);
-            dasbBoardImageView.setColorFilter(defaultLabelFilter);
-            businessappImageView.setColorFilter(defaultLabelFilter);
-            businessProfileImageView.setColorFilter(defaultLabelFilter);
-            //customerQueriesImageView.setColorFilter(defaultLabelFilter);
-            imageGalleryImageView.setColorFilter(defaultLabelFilter);
-            productGalleryImageView.setColorFilter(defaultLabelFilter);
-            StoreImageView.setColorFilter(defaultLabelFilter);
-            cspImageView.setColorFilter(defaultLabelFilter);
-            settingsImageView.setColorFilter(defaultLabelFilter);
-            callImageView.setColorFilter(defaultLabelFilter);
-            //ivSiteAppearance.setColorFilter(defaultLabelFilter);
+        shareImageView.setColorFilter(defaultLabelFilter);
+        dasbBoardImageView.setColorFilter(defaultLabelFilter);
+        businessappImageView.setColorFilter(defaultLabelFilter);
+        businessProfileImageView.setColorFilter(defaultLabelFilter);
+        //customerQueriesImageView.setColorFilter(defaultLabelFilter);
+        imageGalleryImageView.setColorFilter(defaultLabelFilter);
+        productGalleryImageView.setColorFilter(defaultLabelFilter);
+        StoreImageView.setColorFilter(defaultLabelFilter);
+        cspImageView.setColorFilter(defaultLabelFilter);
+        settingsImageView.setColorFilter(defaultLabelFilter);
+        callImageView.setColorFilter(defaultLabelFilter);
+        //ivSiteAppearance.setColorFilter(defaultLabelFilter);
 
 
-            homeLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-            profileLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-            //analyticsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-            //storeLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-            //customerQueriesLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-            imageGalleryLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-            businessAppsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-            cspLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-            productGalleryLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-            Store_Layout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-            settingsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-            chatLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-            callLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-            shareLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
-            llGetInTouch.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        homeLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        profileLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        //analyticsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        //storeLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        //customerQueriesLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        imageGalleryLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        businessAppsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        cspLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        productGalleryLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        Store_Layout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        settingsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        chatLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        callLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        shareLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        llGetInTouch.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
 
 
-            if (tv != null){
-                tv.setTextColor(getResources().getColor(R.color.black));
-            }
-            if (img != null) {
-                img.setColorFilter(whiteLabelFilter);
-            }
-            if(llPaletes!=null){
-                llPaletes.setBackgroundColor(getResources().getColor(R.color.very_light_gray));
-            }
+        if (tv != null) {
+            tv.setTextColor(getResources().getColor(R.color.black));
         }
-
+        if (img != null) {
+            img.setColorFilter(whiteLabelFilter);
+        }
+        if (llPaletes != null) {
+            llPaletes.setBackgroundColor(getResources().getColor(R.color.very_light_gray));
+        }
     }
+
+}

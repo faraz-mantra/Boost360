@@ -34,7 +34,7 @@ import retrofit.client.OkClient;
 public class Constants {
     public static final boolean APK_MODE_RELEASE = true;
     public static final String APP_TAG = "Boost App";
-    public static final String RIA_NODE_DATA = "riaNodeDatas" ;
+    public static final String RIA_NODE_DATA = "riaNodeDatas";
     public static final int VISITS_TABLE = 0;
     public static final int VISITORS_TABLE = 1;
     public static final String PDF_LOADER_URL = "https://drive.google.com/viewerng/viewer?embedded=true&url=";
@@ -84,17 +84,18 @@ public class Constants {
     public final static String PLUGIN_API_URL = "https://plugin.withfloats.com";
     public final static String RIA_MEMORY_TEST_API_URL = "http://ria.nowfloatsdev.com";
     public final static String RIA_API_URL = "https://ria.withfloats.com";
+    public final static String SUGGESTIONS_API_URL = "http://boostapi.withfloats.com";
+
     // public final static String NOW_FLOATS_API_URL		=	"https://nftestbed.azurewebsites.net";
     public final static String HTTP_PUT = "PUT";
     public final static String HTTP_POST = "POST";
     public final static String HTTP_DEL = "DELETE";
 
 
-
     public static OkClient getClient() {
         OkHttpClient client = new OkHttpClient();
-        client.setReadTimeout(1,TimeUnit.MINUTES);
-        client.setConnectTimeout(1,TimeUnit.MINUTES);
+        client.setReadTimeout(1, TimeUnit.MINUTES);
+        client.setConnectTimeout(1, TimeUnit.MINUTES);
         return new OkClient(client);
     }
 
@@ -105,15 +106,18 @@ public class Constants {
     //    public static RestAdapter validEmailAdapter = null;
     public static final RestAdapter validEmailAdapter = new RestAdapter.Builder().setEndpoint("https://bpi.briteverify.com").build();
     //    public static RestAdapter restAdapter = null;
-    public static final RestAdapter testRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.TEST_API_URL)./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).*/build();
+    public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL)./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).*/build();
+
+    public static final RestAdapter pluginSuggestionsAdapter = new RestAdapter.Builder().setEndpoint(Constants.SUGGESTIONS_API_URL).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).build();
+    public static final RestAdapter testRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.TEST_API_URL).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).build();
     public static final RestAdapter pluginRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.PLUGIN_API_URL)./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).*/build();
     public static final RestAdapter riaRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
     public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL).setClient(getClient()).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     public static NotificationInterface alertInterface = Constants.restAdapter.create(NotificationInterface.class);
 
     //http://api.withfloats.com/Discover/v3/FloatingPoint/create
-    public static String NFX_DEV_NOWFLOATS="http://nfx.nowfloatsdev.com";
-    public static String NFX_WITH_NOWFLOATS="https://nfx.withfloats.com";
+    public static String NFX_DEV_NOWFLOATS = "http://nfx.nowfloatsdev.com";
+    public static String NFX_WITH_NOWFLOATS = "https://nfx.withfloats.com";
     //public static String NFX_WITH_NOWFLOATS="http://nfx.nowfloatsdev.com";
     public static String createStoreV3 = NOW_FLOATS_API_URL + "/Discover/v3/FloatingPoint/create";
     public static String createStoreV2 = NOW_FLOATS_API_URL + "/Discover/v2/FloatingPoint/create";
@@ -149,7 +153,7 @@ public class Constants {
     public static String nfxApi = NOW_FLOATS_API_URL + "/Discover/v2/floatingPoint/updateSocialAccessToken";
     public static String beCountUrl = NOW_FLOATS_API_URL + "/Discover/v1/businessenquiries/count";
     public static String nfxUpdateTokens = NFX_WITH_NOWFLOATS + "/dataexchange/v1/updateAccessTokens";
-    public static String nfxFBPageCreation = NFX_WITH_NOWFLOATS+"/dataexchange/v1/process";
+    public static String nfxFBPageCreation = NFX_WITH_NOWFLOATS + "/dataexchange/v1/process";
 
     public static final String TWITTER_URL = Specific.TWITTER_URL;
     public static final String TWITTER_ID_URL = Specific.TWITTER_ID_URL;
@@ -197,7 +201,6 @@ public class Constants {
     public static final String PREF_KEY_TWITTER_LOGIN = "is_twitter_loggedin";
     public static final String PREF_USER_NAME = "twitter_user_name";
     public static final String SYNCED = "synced";
-
 
 
     public static final String[] FACEBOOK_PERMISSIONS = new String[]{"email", "user_birthday", "user_interests", "publish_actions", "photo_upload", "publish_stream"};

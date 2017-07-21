@@ -12,6 +12,7 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
@@ -54,7 +55,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-import static com.nowfloats.accessbility.BubbleDialog.ACTION_KILL_DIALOG;
+import static com.nowfloats.bubble.BubblesService.ACTION_KILL_DIALOG;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -76,20 +77,24 @@ public class Home_Fragment_Tab extends Fragment {
     private IntentFilter clickIntentFilters = new IntentFilter(ACTION_KILL_DIALOG);
     private MaterialDialog overLayDialog;
     private Boolean isProductAvaiable = false;
-    public static enum DrawOverLay { FromHome,FromTab};
+
+    public static enum DrawOverLay {FromHome, FromTab}
+
+    ;
+
     @Override
     public void onResume() {
         super.onResume();
         bus.register(this);
 
-        if (viewPager!=null){
-            if(Constants.createMsg){
+        if (viewPager != null) {
+            if (Constants.createMsg) {
                 viewPager.setCurrentItem(0);
-                if(Home_Main_Fragment.progressBar!=null)
+                if (Home_Main_Fragment.progressBar != null)
                     Home_Main_Fragment.progressBar.setVisibility(View.VISIBLE);
                 Constants.createMsg = false;
-            }else{
-                if(Home_Main_Fragment.progressBar!=null)
+            } else {
+                if (Home_Main_Fragment.progressBar != null)
                     Home_Main_Fragment.progressBar.setVisibility(View.GONE);
             }
         }
@@ -120,57 +125,57 @@ public class Home_Fragment_Tab extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         activity = getActivity();
-        session = new UserSessionManager(activity.getApplicationContext(),activity);
+        session = new UserSessionManager(activity.getApplicationContext(), activity);
     }
 
     @Subscribe
-    public void getalertCountEvent(AlertCountEvent ev){
-        if (alertCountVal!=null && alertCountVal.trim().length()>0 && !alertCountVal.equals("0") && alertCountTv!=null){
+    public void getalertCountEvent(AlertCountEvent ev) {
+        if (alertCountVal != null && alertCountVal.trim().length() > 0 && !alertCountVal.equals("0") && alertCountTv != null) {
             alertCountTv.setText(alertCountVal);
             alertCountTv.setVisibility(View.VISIBLE);
-        }else if(alertCountTv!=null){
+        } else if (alertCountTv != null) {
             alertCountTv.setText("0");
             alertCountTv.setVisibility(View.GONE);
             alertCountVal = "0";
-        }else{
+        } else {
             alertCountVal = "0";
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View mainView = inflater.inflate(R.layout.fragment_home__fragment__tab, container, false);
         tabPagerAdapter = new TabPagerAdapter(getChildFragmentManager(), activity);
-        return mainView ;
+        return mainView;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if(!isAdded()) return;
+        if (!isAdded()) return;
         pref = getActivity().getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         NotificationFragment.getAlertCount(session, Constants.alertInterface, bus);
-        progressLayout = (LinearLayout)view.findViewById(R.id.progress_layout);
+        progressLayout = (LinearLayout) view.findViewById(R.id.progress_layout);
         progressLayout.setVisibility(View.VISIBLE);
         tabs = (SlidingTabLayout) view.findViewById(R.id.tabs);
         viewPager = (ViewPager) view.findViewById(R.id.homeTabViewpager);
-        alertCountTv = (TextView)view.findViewById(R.id.alert_count_textview);
+        alertCountTv = (TextView) view.findViewById(R.id.alert_count_textview);
         bubbleOverlay = (LinearLayout) view.findViewById(R.id.floating_bubble_overlay);
         alertCountTv.setVisibility(View.GONE);
         String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
 
-        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") && "1".equals(paymentState)) {
+        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") /*&& "1".equals(paymentState)*/) {
             getProducts();
         }
 
         viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(Constants.createMsg){
+                if (Constants.createMsg) {
                     v.getParent().requestDisallowInterceptTouchEvent(true);
 
-                    try{
-                        if (materialDialog!=null && materialDialog.isShowing()){
+                    try {
+                        if (materialDialog != null && materialDialog.isShowing()) {
                             materialDialog.dismiss();
                         }
                         materialDialog = new MaterialDialog.Builder(activity)
@@ -190,7 +195,9 @@ public class Home_Fragment_Tab extends Fragment {
                                             Home_Main_Fragment.retryLayout.setVisibility(View.GONE);
                                             Home_Main_Fragment.progressCrd.setVisibility(View.GONE);
                                             Constants.createMsg = false;
-                                        }catch(Exception e){e.printStackTrace();}
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
                                         dialog.dismiss();
                                     }
 
@@ -202,46 +209,49 @@ public class Home_Fragment_Tab extends Fragment {
                                 }).show();
                         materialDialog.setCancelable(false);
 
-                    }catch(Exception e){e.printStackTrace();}
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     return true;
-                }else {
+                } else {
                     return false;
                 }
             }
         });
 
         viewPager.setAdapter(tabPagerAdapter);
-        try{
+        try {
             activity.setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-        }catch(Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         tabs.setDistributeEvenly(true);
-        tabs.setCustomTabView(R.layout.tab_text,R.id.tab_textview);
+        tabs.setCustomTabView(R.layout.tab_text, R.id.tab_textview);
         //((ViewGroup)tabs.getChildAt(0)).getChildAt(1).setVisibility(View.VISIBLE);
 //                        tabs.setSelectedIndicatorColors(getResources().getColor(R.color.white));
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
-                return ContextCompat.getColor(getContext(),R.color.white);
+                return ContextCompat.getColor(getContext(), R.color.white);
             }
         });
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(viewPager);
 
-        if (alertCountVal!=null && alertCountVal.trim().length()>0 && !alertCountVal.equals("0")){
+        if (alertCountVal != null && alertCountVal.trim().length() > 0 && !alertCountVal.equals("0")) {
             alertCountTv.setText(alertCountVal);
             alertCountTv.setVisibility(View.VISIBLE);
         }
         progressLayout.setVisibility(View.GONE);
-        if (viewPager!=null){
-            if(Constants.createMsg){
+        if (viewPager != null) {
+            if (Constants.createMsg) {
                 viewPager.setCurrentItem(0);
-                if(Home_Main_Fragment.progressBar!=null)
+                if (Home_Main_Fragment.progressBar != null)
                     Home_Main_Fragment.progressBar.setVisibility(View.VISIBLE);
                 Constants.createMsg = false;
-            }else if(Constants.deepLinkAnalytics)
-            {
+            } else if (Constants.deepLinkAnalytics) {
                 viewPager.setCurrentItem(1);
-                Constants.deepLinkAnalytics = false ;
+                Constants.deepLinkAnalytics = false;
             }
         }
 
@@ -258,21 +268,21 @@ public class Home_Fragment_Tab extends Fragment {
             }
         }, 500);*/
     }
-    public void setFragmentTab(int i){
-        if(!isAdded()) return;
-        if(Constants.deepLinkAnalytics)
-        {
+
+    public void setFragmentTab(int i) {
+        if (!isAdded()) return;
+        if (Constants.deepLinkAnalytics) {
             viewPager.setCurrentItem(i);
-            Constants.deepLinkAnalytics = false ;
+            Constants.deepLinkAnalytics = false;
         }
     }
 
     @Subscribe
-    public void getRiaCardModels(ArrayList<RiaCardModel> model){
-        if(tabs.getTabView(1)!=null){
-            if(model!=null && model.size()>0) {
+    public void getRiaCardModels(ArrayList<RiaCardModel> model) {
+        if (tabs.getTabView(1) != null) {
+            if (model != null && model.size() > 0) {
                 tabs.getTabView(1).findViewById(R.id.ll_ria_alert).setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 tabs.getTabView(1).findViewById(R.id.ll_ria_alert).setVisibility(View.GONE);
             }
         }
@@ -282,25 +292,25 @@ public class Home_Fragment_Tab extends Fragment {
     public void onStop() {
         super.onStop();
 
-        if(getActivity()==null) return;
-        if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")){
-            getActivity().stopService(new Intent(getActivity(),BubblesService.class));
+        if (getActivity() == null) return;
+        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+            getActivity().stopService(new Intent(getActivity(), BubblesService.class));
             getActivity().unregisterReceiver(clickReceiver);
         }
 
     }
 
-    private void getProducts(){
-        HashMap<String,String> values = new HashMap<>();
+    private void getProducts() {
+        HashMap<String, String> values = new HashMap<>();
         values.put("clientId", Constants.clientId);
-        values.put("skipBy","0");
-        values.put("fpTag",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
+        values.put("skipBy", "0");
+        values.put("fpTag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
         //invoke getProduct api
         ProductGalleryInterface productInterface = Constants.restAdapter.create(ProductGalleryInterface.class);
         productInterface.getProducts(values, new Callback<ArrayList<ProductListModel>>() {
             @Override
             public void success(ArrayList<ProductListModel> productListModels, Response response) {
-                if(productListModels == null || productListModels.size() == 0 || response.getStatus() != 200){
+                if (productListModels == null || productListModels.size() == 0 || response.getStatus() != 200) {
                     return;
                 }
                 isProductAvaiable = true;
@@ -309,7 +319,7 @@ public class Home_Fragment_Tab extends Fragment {
                     public void run() {
                         checkOverlay(DrawOverLay.FromTab);
                     }
-                },5000);
+                }, 5000);
             }
 
             @Override
@@ -319,24 +329,26 @@ public class Home_Fragment_Tab extends Fragment {
         });
     }
 
-    private void showBubble(){
+    private void showBubble() {
 
-        if(!pref.getBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK,false)) {
+        if (!pref.getBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, false)) {
             addOverlay();
-            pref.edit().putBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK,true).apply();
+            pref.edit().putBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, true).apply();
         }
 
-        int px = Methods.dpToPx(80,getActivity());
+        int px = Methods.dpToPx(80, getActivity());
         Intent intent = new Intent(getActivity(), BubblesService.class);
-        intent.putExtra(Key_Preferences.BUBBLE_POS_Y,px);
+        intent.putExtra(Key_Preferences.BUBBLE_POS_Y, px);
         intent.putExtra(Key_Preferences.DIALOG_FROM, BubblesService.FROM.HOME_ACTIVITY);
         activity.startService(intent);
 
     }
-    public void checkOverlay(DrawOverLay from){
-        if(!isAdded() || getActivity() == null){
+
+    public void checkOverlay(DrawOverLay from) {
+        if (!isAdded() || getActivity() == null) {
             return;
-        }else if(!isProductAvaiable && from == DrawOverLay.FromHome && activity!= null){
+        }
+        else if (!isProductAvaiable && from == DrawOverLay.FromHome && activity != null) {
 
             Toast.makeText(activity, "you do not have products into ProductGallery", Toast.LENGTH_SHORT).show();
             return;
@@ -352,7 +364,7 @@ public class Home_Fragment_Tab extends Fragment {
         }
 
         boolean checkAccessibility = true;
-        pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME,Calendar.getInstance().getTimeInMillis()).apply();
+        pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, Calendar.getInstance().getTimeInMillis()).apply();
         if (android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity())) {
             checkAccessibility = false;
             dialogForOverlayPath(from);
@@ -386,6 +398,7 @@ public class Home_Fragment_Tab extends Fragment {
         }
 
     }
+
     /*private void checkOverlay() {
         Calendar calendar = Calendar.getInstance();
         long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME,-1);
@@ -403,76 +416,80 @@ public class Home_Fragment_Tab extends Fragment {
             checkForAccessibility();
         }
     }*/
-    private void dialogForOverlayPath(DrawOverLay from){
-        if(getActivity() == null) return;
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_bubble_overlay_permission,null);
+    private void dialogForOverlayPath(DrawOverLay from) {
+        if (getActivity() == null) return;
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_bubble_overlay_permission, null);
         ImageView image = (ImageView) view.findViewById(R.id.gif_image);
         try {
             GlideDrawableImageViewTarget target = new GlideDrawableImageViewTarget(image);
             Glide.with(getContext()).load(R.drawable.overlay_gif).into(target);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        if(overLayDialog == null){
-        overLayDialog = new MaterialDialog.Builder(getContext())
-                .customView(view,false)
-                .positiveColorRes(R.color.primary)
-                .positiveText(getString(R.string.open_setting))
-                .callback(new MaterialDialog.ButtonCallback() {
+        if (overLayDialog == null) {
+            overLayDialog = new MaterialDialog.Builder(getContext())
+                    .customView(view, false)
+                    .positiveColorRes(R.color.primary)
+                    .positiveText(getString(R.string.open_setting))
+                    .callback(new MaterialDialog.ButtonCallback() {
 
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        super.onPositive(dialog);
-                        try {
-                            requestOverlayPermission();
-                        }catch(Exception e){
-                            e.printStackTrace();
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+                            try {
+                                requestOverlayPermission();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            dialog.dismiss();
                         }
-                        dialog.dismiss();
-                    }
-                }).show();
-        }
-        else if(from == DrawOverLay.FromHome){
+                    }).show();
+        } else if (from == DrawOverLay.FromHome) {
             overLayDialog.show();
         }
     }
 
     private void requestOverlayPermission() {
 
-        if(getActivity() == null){
-             return;
+        if (getActivity() == null) {
+            return;
         }
         if (android.os.Build.VERSION.SDK_INT >= 23) {
 
             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getActivity().getPackageName()));
             startActivityForResult(intent, PERM_REQUEST_CODE_DRAW_OVERLAYS);
         } else {
-//            Intent intent = new Intent();
-//            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-//            Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
-//            intent.setData(uri);
-//            startActivity(intent);
             startActivity(new Intent(Settings.ACTION_SETTINGS));
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PERM_REQUEST_CODE_DRAW_OVERLAYS) {
-            if (android.os.Build.VERSION.SDK_INT >= 23) {
-                if (getActivity()!= null && Settings.canDrawOverlays(getActivity())) {
-                    checkForAccessibility();
+
+            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (android.os.Build.VERSION.SDK_INT >= 23) {
+
+                        if (getActivity() != null && Settings.canDrawOverlays(getActivity())) {
+                            checkForAccessibility();
+                        }
+                    }
                 }
-            }
+            }, 1000);
         }
     }
-    private void checkForAccessibility(){
-        if(getActivity() ==null) return;
-        if(!Methods.isAccessibilitySettingsOn(getActivity())) {
+
+    private void checkForAccessibility() {
+        if (getActivity() == null) return;
+        if (!Methods.isAccessibilitySettingsOn(getActivity())) {
             showBubble();
         }
     }
-    private void addOverlay(){
+
+    private void addOverlay() {
         bubbleOverlay.setVisibility(View.VISIBLE);
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.bubble_pointing_sign, bubbleOverlay);
         view.setOnClickListener(new View.OnClickListener() {
@@ -481,7 +498,7 @@ public class Home_Fragment_Tab extends Fragment {
                 bubbleOverlay.removeAllViews();
                 bubbleOverlay.setVisibility(View.GONE);
                 //layout.setOnClickListener(null);
-        }
+            }
         });
 
     }
@@ -489,7 +506,7 @@ public class Home_Fragment_Tab extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
             getActivity().registerReceiver(clickReceiver, clickIntentFilters);
         }
     }
@@ -497,7 +514,7 @@ public class Home_Fragment_Tab extends Fragment {
     BroadcastReceiver clickReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.v("ggg","clicked");
+            Log.v("ggg", "clicked");
             bubbleOverlay.removeAllViews();
             bubbleOverlay.setVisibility(View.GONE);
             //bubbleOverlay.setOnClickListener(null);

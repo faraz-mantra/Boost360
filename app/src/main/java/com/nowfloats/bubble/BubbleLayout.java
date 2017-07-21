@@ -40,7 +40,6 @@ import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.nowfloats.accessbility.BubbleDialog;
 import com.thinksity.R;
 
 
@@ -54,7 +53,7 @@ public class BubbleLayout extends BubbleBaseLayout {
     private static final int TOUCH_TIME_THRESHOLD = 150;
     private long lastTouchDown,lastRemoved;
     private MoveAnimator animator;
-    private int width,height,maxWidth;
+    private int width, height, maxWidth, height60;
     private WindowManager windowManager;
     private float initAlpha = 0;
     private boolean shouldStickToWall = true;
@@ -158,7 +157,7 @@ public class BubbleLayout extends BubbleBaseLayout {
 
             if(isToRemoveDialog && (System.currentTimeMillis() - lastTouchDown > TOUCH_TIME_THRESHOLD)){
                 lastRemoved = System.currentTimeMillis();
-                getContext().sendBroadcast(new Intent(BubbleDialog.ACTION_KILL_DIALOG));
+                getContext().sendBroadcast(new Intent(BubblesService.ACTION_KILL_DIALOG));
             }
         }
         return super.onTouchEvent(event);
@@ -181,7 +180,7 @@ public class BubbleLayout extends BubbleBaseLayout {
                     .loadAnimator(getContext(), R.animator.bubble_down_click_animator);
             animator.setTarget(this);
             animator.start();
-           restAlpha();
+           resetAlpha();
         }
     }
 
@@ -204,6 +203,7 @@ public class BubbleLayout extends BubbleBaseLayout {
         maxWidth = metrics.widthPixels;
         width = (size.x - this.getWidth());
         height = ((metrics.heightPixels*20)/100)-this.getHeight()-10;
+        height60 = ((metrics.heightPixels * 40) / 100) - this.getHeight() - 10;
     }
 
     public interface OnBubbleRemoveListener {
@@ -228,13 +228,19 @@ public class BubbleLayout extends BubbleBaseLayout {
         }
     }
 
+    public void goToRightWallForCards() {
+        if (shouldStickToWall) {
+            animator.start(maxWidth, height60);
+        }
+    }
+
     private void move(float deltaX, float deltaY) {
         getViewParams().x += deltaX;
         getViewParams().y += deltaY;
         windowManager.updateViewLayout(this, getViewParams());
     }
 
-    public void restAlpha(){
+    public void resetAlpha(){
         ivBubble.setAlpha(1.0f);
         ivBubble.invalidate();
     }
