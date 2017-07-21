@@ -24,7 +24,7 @@ bin/
 gen/
 
 # Local configuration file (sdk path, etc)
-local.properties
+
 
 # Eclipse project files
 .classpath
@@ -39,7 +39,7 @@ gradle
 /*/*/build
 build
 /*/*/production
-*.iml
+
 *.iws
 *.ipr
 *~
