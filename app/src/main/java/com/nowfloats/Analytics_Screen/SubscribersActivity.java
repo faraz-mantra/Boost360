@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.gson.Gson;
 import com.nowfloats.Analytics_Screen.API.SubscriberApis;
 import com.nowfloats.Analytics_Screen.Search_Query_Adapter.SubscribersAdapter;
 import com.nowfloats.Analytics_Screen.model.AddSubscriberModel;
@@ -34,6 +35,8 @@ import com.thinksity.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -42,6 +45,7 @@ import retrofit.client.Response;
 public class SubscribersActivity extends AppCompatActivity implements View.OnClickListener,SubscribersAdapter.SubscriberInterfaceMethods {
 
 
+    private static final int SUBSCRIBER_REQUEST_CODE = 221 ;
     private UserSessionManager mSessionManager;
     private ProgressBar mProgressBar;
     private RecyclerView mRecyclerView;
@@ -52,11 +56,10 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     private boolean stop;
     TextView titleTextView;
     AutoCompleteTextView searchEditText;
-    SpinnerAdapter autoCompleteAdapter;
     ImageView deleteImage,searchImage;
 
     LinearLayout emptyLayout;
-    private ArrayList<SubscriberModel> searchList = new ArrayList<>();
+    private int itemClicked = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +135,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
 
     private void searchSubcribers(final String key) {
         mProgressBar.setVisibility(View.VISIBLE);
-        Log.v("ggg",key);
+
         SubscriberApis mSubscriberApis = Constants.restAdapter.create(SubscriberApis.class);
         mSubscriberApis.search(key, Constants.clientId, mSessionManager.getFpTag(), new Callback<ArrayList<SubscriberModel>>() {
             @Override
@@ -212,7 +215,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
         model.setFpTag(mSessionManager.getFpTag());
         model.setUserContact(email);
         mProgressBar.setVisibility(View.VISIBLE);
-        final SubscriberApis mSubscriberApis = Constants.restAdapter.create(SubscriberApis.class);
+        SubscriberApis mSubscriberApis = Constants.restAdapter.create(SubscriberApis.class);
         mSubscriberApis.addSubscriber(model, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
@@ -255,6 +258,16 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSubscriberAdapter.notifyDataSetChanged();
+    }
+    private boolean checkIsEmailOrNumber(String email){
+        Pattern pattern = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        Matcher mat = pattern.matcher(email);
+        return mat.matches();
+    }
     private void subscriberDialog() {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_add_subscriber,null);
         final EditText email = (EditText) view.findViewById(R.id.edittext);
@@ -268,7 +281,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
-                        if(!email.getText().toString().trim().contains("@")){
+                        if(!checkIsEmailOrNumber(email.getText().toString().trim())){
                             Methods.showSnackBarNegative(SubscribersActivity.this,"Add only email Id");
                         }
                         else{
@@ -286,11 +299,25 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     //method call when view changed from adapter
 
     @Override
-    public void onitemSeleted(String data) {
+    public void onitemSeleted(int pos) {
+        itemClicked = pos;
         Intent i = new Intent(this, SubscriberDetailsActivity.class);
-        i.putExtra("data",data);
-        startActivity(i);
+        i.putExtra("data",new Gson().toJson(mSubscriberList.get(pos)));
+        i.putExtra("fpTag",mSessionManager.getFpTag());
+        startActivityForResult(i,SUBSCRIBER_REQUEST_CODE);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == SUBSCRIBER_REQUEST_CODE && resultCode == RESULT_OK){
+            if(itemClicked != -1 && data != null) {
+                mSubscriberList.get(itemClicked).setSubscriptionStatus(data.getStringExtra("STATUS"));
+                mSubscriberAdapter.notifyItemChanged(itemClicked);
+                itemClicked = -1;
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
