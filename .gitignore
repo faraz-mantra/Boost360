@@ -31,7 +31,7 @@ gen/
 .project
 
 # Android Studio
-.idea/
+
 .gradle
 gradle
 /*/local.properties
