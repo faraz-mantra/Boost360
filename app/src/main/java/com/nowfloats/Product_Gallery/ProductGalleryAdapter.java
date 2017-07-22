@@ -70,7 +70,7 @@ public class ProductGalleryAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        // Check if an existing view is being reused, otherwise inflate the view
+        // sent_check if an existing view is being reused, otherwise inflate the view
         // view lookup cache stored in tag
 
         View vi = convertView;

@@ -16,9 +16,10 @@ import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.Chat.ChatModel;
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.Twitter.TwitterConnection;
 import com.nowfloats.Volley.AppController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.DataMap;
-import com.nowfloats.twitter.TwitterConnection;
+import com.nowfloats.Twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
 import com.nowfloats.util.Key_Preferences;
@@ -688,12 +689,12 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     }
 
     /**
-     * Check login method will check user login status
+     * sent_check login method will check user login status
      * If false it will redirect user to login page
      * Else do anything
      * */
     public boolean checkLogin(){
-        // Check login status
+        // sent_check login status
         DataBase db =new DataBase(activity);
         Cursor cursor = db.getLoginStatus();
         boolean isLogin = false ;
@@ -938,7 +939,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     }
 
 
-    // Check for login
+    // sent_check for login
     public boolean isUserLoggedIn(){
         //Log.d("isUserLoggedIn", "isUserLoggedIn : "+IS_USER_LOGIN);
         return pref.getBoolean(IS_USER_LOGIN, false);

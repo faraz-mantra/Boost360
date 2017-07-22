@@ -16,6 +16,7 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+    <string name="to_communicate_with_nowfloats">To communicate with Digitalseoz</string>
     <string name="title_activity_business_profile__home">Business Profile</string>
     <string name="title_activity_business__address_">Business Address</string>
     <string name="title_activity_contact__info_">Contact Information</string>

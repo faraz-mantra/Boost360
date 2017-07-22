@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:drawable="@drawable/chat_bubble_shadow" />
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <corners
+                android:bottomLeftRadius="15dp"
+                android:bottomRightRadius="15dp"
+                android:topLeftRadius="15dp" />
+            <solid android:color="#ffb900" />
+        </shape>
+    </item>
+</layer-list>

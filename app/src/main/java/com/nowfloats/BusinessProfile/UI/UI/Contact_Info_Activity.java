@@ -86,6 +86,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
     private int mSelectionCounter = 0;
     EditText otpEditText;
     private MaterialDialog otpDialog,progressbar;
+    private TextView primaryTextView,alternateTextView1,alternateTextView2,alternateTextView3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +125,11 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        primaryTextView = (TextView) findViewById(R.id.tv_primary);
+        alternateTextView1 = (TextView) findViewById(R.id.tv_alternate1);
+        alternateTextView2 = (TextView) findViewById(R.id.tv_alternate2);
+        alternateTextView3 = (TextView) findViewById(R.id.tv_alternate3);
 
         primaryNumber = (EditText) findViewById(R.id.primaryNumber);
         primaryNumber.setInputType(InputType.TYPE_NULL);
@@ -376,12 +382,12 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                     if (len >= 0) {
                         if(len==0){
 
-                        saveTextView.setVisibility(View.GONE);
-
+                            saveTextView.setVisibility(View.GONE);
+                            alternateTextView1.setText(getString(R.string.alternate_number1));
                         }else{
 
                             saveTextView.setVisibility(View.VISIBLE);
-
+                            alternateTextView1.setText(getString(R.string.alternate_number1)+" ("+getString(R.string.to_be_displayed_on_website)+")");
                         }
 
                         flag4alternate1 = true;
@@ -418,9 +424,11 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                         if(len==0){
 
                             saveTextView.setVisibility(View.GONE);
-                        }else {
+                            alternateTextView2.setText(getString(R.string.alternate_number2));
+                        }else{
 
                             saveTextView.setVisibility(View.VISIBLE);
+                            alternateTextView2.setText(getString(R.string.alternate_number2)+" ("+getString(R.string.to_be_displayed_on_website)+")");
                         }
                          flag4alternate2 = true;
 
@@ -455,9 +463,11 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                         if(len==0){
 
                             saveTextView.setVisibility(View.GONE);
-                        }else {
+                            alternateTextView3.setText(getString(R.string.alternate_number1));
+                        }else{
 
                             saveTextView.setVisibility(View.VISIBLE);
+                            alternateTextView3.setText(getString(R.string.alternate_number1)+" ("+getString(R.string.to_be_displayed_on_website)+")");
                         }
                         flag4alternate3 = true;
 
@@ -1100,16 +1110,32 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
             alternateNumber_1.setOnTouchListener(this);
             alternateNumber_2.setOnTouchListener(this);
             alternateNumber_3.setOnTouchListener(this);
+            primaryNumber.setInputType(InputType.TYPE_NULL);
+            primaryNumber.setOnTouchListener(this);
             VMN_Dialog = true;
     }
-        if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1))){
-            alternateNumber_2.setEnabled(false);
+
+        if(alternateNumber_2.getText().toString().trim().length()==0){
+            alternateTextView2.setText(getString(R.string.alternate_number2));
+        }else{
+
+            alternateTextView2.setText(getString(R.string.alternate_number2)+" ("+getString(R.string.to_be_displayed_on_website)+")");
         }
-        if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3))){
-            alternateNumber_3.setEnabled(false);
+
+        if(alternateNumber_3.getText().toString().trim().length()==0){
+            alternateTextView3.setText(getString(R.string.alternate_number3));
+        }else{
+
+            alternateTextView3.setText(getString(R.string.alternate_number3)+" ("+getString(R.string.to_be_displayed_on_website)+")");
         }
-        if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME))){
-            alternateNumber_1.setEnabled(false);
+
+
+
+        if(alternateNumber_1.getText().toString().trim().length()==0){
+            alternateTextView1.setText(getString(R.string.alternate_number1));
+        }else{
+
+            alternateTextView1.setText(getString(R.string.alternate_number1)+" ("+getString(R.string.to_be_displayed_on_website)+")");
         }
 
        // initializeData();
@@ -1167,6 +1193,9 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
             } else if (websiteAddr.split("://")[0].equals("https") && websiteAddr.split("://").length==2) {
                 protocolSpinner.setSelection(1);
                 websiteAddress.setText(websiteAddr.split("://")[1]);
+            }else{
+                protocolSpinner.setSelection(0);
+                websiteAddress.setText(websiteAddr);
             }
         }
         facebookPage.setText(session.getFacebookPage());
@@ -1247,17 +1276,10 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
         int id = item.getItemId();
 
         if(id==android.R.id.home){
-
-
-
-
             finish();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             //  NavUtils.navigateUpFromSameTask(this);
         }
-
-
-
         return super.onOptionsItemSelected(item);
     }
 

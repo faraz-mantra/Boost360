@@ -49,7 +49,7 @@
     </style>
 
 
-    <style parent="ThemeOverlay.AppCompat.Dark" name="MyCustomThemeLight"> </style>
+    <style name="MyCustomThemeLight" parent="ThemeOverlay.AppCompat.Dark"></style>
 
     <style name="Theme.CustomTheme" parent="@android:style/Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/Theme.CustomTheme.ActionBar</item>
@@ -63,8 +63,7 @@
         <item name="android:background">#FFC90E</item>
     </style>
 
-    <style name="Theme.CustomTheme.TitleTextStyle"
-        parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+    <style name="Theme.CustomTheme.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">#FFFFFF</item>
     </style>
 
@@ -154,6 +153,7 @@
         <item name="colorAccent">@color/primary_color</item>
         <item name="colorButtonNormal">@color/primary_color</item>
     </style>
+
     <style name="imageDialog" parent="Theme.AppCompat.Light.Dialog">
         <item name="windowNoTitle">true</item>
         <item name="android:background">@android:color/transparent</item>
@@ -163,6 +163,7 @@
         <item name="colorAccent">@color/primary_color</item>
         <item name="colorButtonNormal">@color/primary_color</item>
     </style>
+
     <style name="Theme.bubbleInApp" parent="Theme.AppCompat.Light.Dialog">
         <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/primary_color</item>
@@ -227,4 +228,22 @@
         <item name="android:colorForeground">#42221f1f
         </item>
     </style>
+
+    <style name="CircularProgress" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/primary_color</item>
+    </style>
+
+    <style name="CoachMarkAnimation">
+        <item name="@android:windowEnterAnimation">@anim/coach_mark_show</item>
+        <item name="@android:windowExitAnimation">@anim/coach_mark_hide</item>
+    </style>
+
+
+    <declare-styleable name="EllipsizeEndTextView">
+        <attr name="maxLines" format="integer" />
+        <attr name="textColor" format="color" />
+        <attr name="textSize" format="dimension" />
+        <attr name="lineSpacing" format="dimension" />
+    </declare-styleable>
+
 </resources>

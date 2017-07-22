@@ -42,6 +42,14 @@ public class MixPanelController {
     public static final String FACEBOOK_PAGE_ERROR_IN_CREATE = "FacebookPageErrorInCreate";
     public static final String FACEBOOK_PAGE_INVALID_NAME = "FacebookPageInvalidName";
 
+    public static final String SAM_BUBBLE_NOTIFICATION = "SAMBubbleNotification";
+    public static final String SAM_BUBBLE_CLICKED = "SAMBubbleClicked";
+    public static final String SAM_BUBBLE_CLICKED_DATA = "SAMBubbleClickedData";
+    public static final String SAM_BUBBLE_CLICKED_NO_DATA = "SAMBubbleClickedNoData";
+    public static final String SAM_BUBBLE_SELECTED_MESSAGES = "SAMBubbleSelectedMessages";
+    public static final String SAM_BUBBLE_ACTION_CALL = "SAMBubbleActionCall";
+    public static final String SAM_BUBBLE_ACTION_SHARE = "SAMBubbleActionShare";
+
     private static MixpanelAPI mixPanel;
 	public static String Bhours = "bhours", Signup = "SignUpActivity",
 			landingPage = "LandingPage",

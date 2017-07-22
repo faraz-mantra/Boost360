@@ -186,7 +186,7 @@ public class Home_Main_Fragment extends Fragment implements
     @Subscribe
     public void ImageUploadCheck(PostImageSuccessEvent event){
         ImageResponseID = event.imageResponseId;
-        BoostLog.i("IMAGE---","Image UpLoAd Check Triggered");
+        BoostLog.i("IMAGE---","Image UpLoAd sent_check Triggered");
         mIsNewMsg = true;
         getNewAvailableUpdates();
         mPref.edit().putString("msg_post","").apply();
@@ -199,7 +199,7 @@ public class Home_Main_Fragment extends Fragment implements
         if (event.status){
             event.status = false;
             mIsNewMsg = true;
-            BoostLog.i("TEXT---","TeXt UpLoAd Check Triggered");
+            BoostLog.i("TEXT---","TeXt UpLoAd sent_check Triggered");
             getNewAvailableUpdates();
             Create_Message_Activity.path = "";
 

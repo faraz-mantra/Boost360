@@ -284,3 +284,16 @@
 
 # Apache HttpClient
 -dontwarn org.apache.http.**
+
+
+-dontskipnonpubliclibraryclassmembers
+
+-keepattributes *Annotation*,EnclosingMethod
+
+-keepnames class org.codehaus.jackson.** { *; }
+
+-dontwarn javax.xml.**
+-dontwarn org.slf4j.**
+-dontwarn com.jayway.jsonpath.**
+-dontwarn javax.xml.stream.events.**
+-dontwarn com.fasterxml.jackson.databind.**
