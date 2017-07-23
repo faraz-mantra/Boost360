@@ -75,6 +75,8 @@ public class DataAccessibilityServiceV8 extends AccessibilityService {
         startActivity(intent);
     }
 
+    private BubblesService.FROM bFrom;
+
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
 
@@ -89,11 +91,19 @@ public class DataAccessibilityServiceV8 extends AccessibilityService {
                             event.getClassName().toString().equalsIgnoreCase(BUBBLE_CLASS_NAME)))) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
                     showOverlayDialog();
-                } else if (!isMyServiceRunning(BubblesService.class) &&
-                        !TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null))
+                } else if (!TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null))
                         && pref.getBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED, false)) {
-                    Intent intent = new Intent(DataAccessibilityServiceV8.this, BubblesService.class);
-                    startService(intent);
+
+                    if(bFrom == BubblesService.FROM.LAUNCHER_HOME_ACTIVITY){
+                        stopService(new Intent(DataAccessibilityServiceV8.this, BubblesService.class));
+                    }
+
+                    if (!isMyServiceRunning(BubblesService.class)) {
+                        Intent intent = new Intent(DataAccessibilityServiceV8.this, BubblesService.class);
+                        bFrom = BubblesService.FROM.WHATSAPP;
+                        intent.putExtra(Key_Preferences.DIALOG_FROM, BubblesService.FROM.WHATSAPP);
+                        startService(intent);
+                    }
                 }
             } else if (((event.getPackageName().toString().equalsIgnoreCase(getLauncherPackage())
                     || (!TextUtils.isEmpty(event.getClassName()) &&
@@ -102,9 +112,13 @@ public class DataAccessibilityServiceV8 extends AccessibilityService {
                     !TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null)))
                     && pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
 
+                if(bFrom == BubblesService.FROM.WHATSAPP){
+                    stopService(new Intent(DataAccessibilityServiceV8.this, BubblesService.class));
+                }
                 if (!isMyServiceRunning(BubblesService.class)) {
 
                     Intent intent = new Intent(DataAccessibilityServiceV8.this, BubblesService.class);
+                    bFrom = BubblesService.FROM.LAUNCHER_HOME_ACTIVITY;
                     intent.putExtra(Key_Preferences.DIALOG_FROM, BubblesService.FROM.LAUNCHER_HOME_ACTIVITY);
                     startService(intent);
                 }

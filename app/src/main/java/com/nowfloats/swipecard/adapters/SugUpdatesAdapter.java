@@ -11,12 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nowfloats.swipecard.models.SugUpdates;
-import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
 import java.util.ArrayList;
-
-import static com.nowfloats.NavigationDrawer.HomeActivity.activity;
 
 /**
  * Created by guru
@@ -50,13 +47,13 @@ public class SugUpdatesAdapter extends RecyclerView.Adapter<SugUpdatesAdapter.Vi
         final ImageView imageView = viewHolder.ProductImageView;
         final TextView tvViewMore = viewHolder.tvViewMore;
 
-        Picasso picasso = Picasso.with(activity);
-        String image_url = mSugUpdate.getImage();
-        if (image_url != null && image_url.length() > 0 && !image_url.equals("null")) {
-            picasso.load(image_url).placeholder(R.drawable.default_product_image).into(imageView);
-        } else {
-            picasso.load(R.drawable.default_product_image).into(imageView);
-        }
+//        Picasso picasso = Picasso.with(activity);
+//        String image_url = mSugUpdate.getImage();
+//        if (image_url != null && image_url.length() > 0 && !image_url.equals("null")) {
+//            picasso.load(image_url).placeholder(R.drawable.default_product_image).into(imageView);
+//        } else {
+//            picasso.load(R.drawable.default_product_image).into(imageView);
+//        }
 
         if (mSugUpdate.isSelected()) {
             viewHolder.flOverlay.setVisibility(View.VISIBLE);
