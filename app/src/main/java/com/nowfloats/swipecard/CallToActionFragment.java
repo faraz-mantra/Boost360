@@ -44,6 +44,7 @@ import com.nowfloats.NavigationDrawer.SlidingTabLayout;
 import com.nowfloats.swipecard.adapters.CallToActionAdapter;
 import com.nowfloats.swipecard.adapters.SugProductsAdapter;
 import com.nowfloats.swipecard.adapters.SugUpdatesAdapter;
+import com.nowfloats.swipecard.models.SugProducts;
 import com.nowfloats.swipecard.models.SugUpdates;
 import com.nowfloats.swipecard.models.SuggestionsDO;
 import com.nowfloats.util.BoostLog;
@@ -163,7 +164,7 @@ public class CallToActionFragment extends Fragment {
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
                         ((SuggestionsActivity) getActivity()).pref.edit()
-                                .putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, -MAX_RESPONDED).apply();
+                                .putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, 0).apply();
                         ((SuggestionsActivity) getActivity()).updateRating(noOfStars);
                     }
                 })
@@ -220,7 +221,7 @@ public class CallToActionFragment extends Fragment {
             public void onClick(View v) {
 
                 FirebaseLogger.getInstance().logSAMEvent(suggestionsDO.getMessageId(), 4, suggestionsDO.getFpId());
-                MixPanelController.track(MixPanelController.SAM_BUBBLE_ACTION_CALL,null);
+                MixPanelController.track(MixPanelController.SAM_BUBBLE_ACTION_CALL, null);
 
                 ((SuggestionsActivity) getActivity()).pref.edit()
                         .putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, ++noOfTimesResponded).apply();
@@ -242,7 +243,7 @@ public class CallToActionFragment extends Fragment {
 
 
                 FirebaseLogger.getInstance().logSAMEvent(suggestionsDO.getMessageId(), 4, suggestionsDO.getFpId());
-                MixPanelController.track(MixPanelController.SAM_BUBBLE_ACTION_SHARE,null);
+                MixPanelController.track(MixPanelController.SAM_BUBBLE_ACTION_SHARE, null);
 
                 ((SuggestionsActivity) getActivity()).pref.edit().
                         putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, ++noOfTimesResponded).apply();
@@ -266,7 +267,7 @@ public class CallToActionFragment extends Fragment {
     public void performAction(SuggestionsDO suggestionsDO) {
 
         FirebaseLogger.getInstance().logSAMEvent(suggestionsDO.getMessageId(), 3, suggestionsDO.getFpId());
-        MixPanelController.track(MixPanelController.SAM_BUBBLE_SELECTED_MESSAGES,null);
+        MixPanelController.track(MixPanelController.SAM_BUBBLE_SELECTED_MESSAGES, null);
 
         this.suggestionsDO = suggestionsDO;
 
@@ -330,88 +331,110 @@ public class CallToActionFragment extends Fragment {
 
     private void prepareMessageForShare(SHARE_VIA share_via) {
 
-        shareIntent = null;
-        selectedProducts = "";
 
-        String imageUrl = "";
+        if (suggestionsDO != null) {
+            shareIntent = null;
+            selectedProducts = "";
 
-        for (final SugUpdates sugUpdates : suggestionsDO.getUpdates()) {
-            if (sugUpdates.isSelected()) {
+            String imageUrl = "";
 
-                try {
-                    selectedProducts = selectedProducts + sugUpdates.getName() + "\n" +"\n"+"View Details : " + sugUpdates.getUpdateUrl() + "\n";
-                    imageUrl = sugUpdates.getImage();
+            if (suggestionsDO.getUpdates() != null) {
+                for (final SugUpdates sugUpdates : suggestionsDO.getUpdates()) {
+                    if (sugUpdates.isSelected()) {
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                        try {
+                            selectedProducts = selectedProducts + sugUpdates.getName() + "\n" + "\n" + "View Details : " + sugUpdates.getUpdateUrl() + "\n"+ "\n";
+                            imageUrl = sugUpdates.getImage();
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             }
-        }
 
-        if (TextUtils.isEmpty(selectedProducts)) {
-            Methods.showSnackBarNegative(getActivity(), getString(R.string.select_update_or_product));
-        } else {
-            switch (share_via) {
-                case GMAIL:
-                    Picasso.with(getActivity())
-                            .load(imageUrl)
-                            .into(new Target() {
-                                @Override
-                                public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-                                    Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-                                    View view = new View(getActivity());
-                                    view.draw(new Canvas(mutableBitmap));
-                                    try {
-                                        String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), mutableBitmap, "Nur", null);
-                                        BoostLog.d("Path is:", path);
-                                        Uri uri = Uri.parse(path);
-                                        shareIntent =
-                                                new Intent(Intent.ACTION_SEND, Uri.parse("mailto:" +
-                                                        suggestionsDO.getValue()));
-                                        shareIntent.putExtra(Intent.EXTRA_TEXT, selectedProducts);
-                                        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-                                        shareIntent.setType("image/*");
+            if (suggestionsDO.getProducts() != null) {
+                for (final SugProducts sugProducts : suggestionsDO.getProducts()) {
+                    if (sugProducts.isSelected()) {
 
+                        try {
+                            selectedProducts = selectedProducts + sugProducts.getProductName() + "\n" + "\n" + "View Details : " +
+                                    sugProducts.getProductUrl() + "\n"+ "\n";
+                            imageUrl = sugProducts.getImage();
 
-                                        if (shareIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-                                            startActivity(shareIntent);
-                                        } else {
-                                            Methods.showSnackBarNegative(getActivity(),
-                                                    getString(R.string.no_app_available_for_action));
-                                        }
-
-                                    } catch (Exception e) {
-                                        ActivityCompat.requestPermissions(getActivity()
-                                                , new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                                        android.Manifest.permission.CAMERA}, 2);
-                                    }
-                                }
-
-                                @Override
-                                public void onBitmapFailed(Drawable errorDrawable) {
-                                    Methods.showSnackBarNegative(getActivity(), getString(R.string.failed_to_download_image));
-
-                                }
-
-                                @Override
-                                public void onPrepareLoad(Drawable placeHolderDrawable) {
-
-                                }
-                            });
-                    break;
-                case SMS:
-                    try {
-
-                        Uri uri = Uri.parse("smsto:" + suggestionsDO.getValue());
-                        Intent smsIntent = new Intent(Intent.ACTION_SENDTO, uri);
-                        smsIntent.putExtra("address", suggestionsDO.getValue());
-                        smsIntent.putExtra("sms_body", selectedProducts);
-                        startActivity(smsIntent);
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
-                    break;
+                }
+            }
+
+
+            if (TextUtils.isEmpty(selectedProducts)) {
+                Methods.showSnackBarNegative(getActivity(), getString(R.string.select_update_or_product));
+            } else {
+                switch (share_via) {
+                    case GMAIL:
+                        Picasso.with(getActivity())
+                                .load(imageUrl)
+                                .into(new Target() {
+                                    @Override
+                                    public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+                                        Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                                        View view = new View(getActivity());
+                                        view.draw(new Canvas(mutableBitmap));
+                                        try {
+                                            String path = MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), mutableBitmap, "Nur", null);
+                                            BoostLog.d("Path is:", path);
+                                            Uri uri = Uri.parse(path);
+                                            shareIntent =
+                                                    new Intent(Intent.ACTION_SEND, Uri.parse("mailto:" +
+                                                            suggestionsDO.getValue()));
+                                            shareIntent.putExtra(Intent.EXTRA_TEXT, selectedProducts);
+                                            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+                                            shareIntent.setType("image/*");
+
+
+                                            if (shareIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+                                                startActivity(shareIntent);
+                                            } else {
+                                                Methods.showSnackBarNegative(getActivity(),
+                                                        getString(R.string.no_app_available_for_action));
+                                            }
+
+                                        } catch (Exception e) {
+                                            ActivityCompat.requestPermissions(getActivity()
+                                                    , new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                                            android.Manifest.permission.CAMERA}, 2);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onBitmapFailed(Drawable errorDrawable) {
+                                        Methods.showSnackBarNegative(getActivity(), getString(R.string.failed_to_download_image));
+
+                                    }
+
+                                    @Override
+                                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                                    }
+                                });
+                        break;
+                    case SMS:
+                        try {
+
+                            Uri uri = Uri.parse("smsto:" + suggestionsDO.getValue());
+                            Intent smsIntent = new Intent(Intent.ACTION_SENDTO, uri);
+                            smsIntent.putExtra("address", suggestionsDO.getValue());
+                            smsIntent.putExtra("sms_body", selectedProducts);
+                            startActivity(smsIntent);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                }
             }
         }
 
@@ -499,22 +522,22 @@ public class CallToActionFragment extends Fragment {
                 if (suggestionsDO.getProducts() != null && suggestionsDO.getProducts().size() > 0) {
                     gvSuggestions.setAdapter(new SugProductsAdapter(getActivity(), suggestionsDO.getProducts()));
 
-                    gvSuggestions.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                    gvSuggestions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
-                        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                            final SugUpdates sugUpdates = (SugUpdates) view.getTag(R.string.key_details);
-                            sugUpdates.setSelected(!sugUpdates.isSelected());
+                            final SugProducts sugProducts = (SugProducts) view.getTag(R.string.key_details);
+                            sugProducts.setSelected(!sugProducts.isSelected());
                             FrameLayout flMain = (FrameLayout) view.findViewById(R.id.flMain);
                             FrameLayout flOverlay = (FrameLayout) view.findViewById(R.id.flOverlay);
                             View vwOverlay = view.findViewById(R.id.vwOverlay);
-                            if (sugUpdates.isSelected()) {
+                            if (sugProducts.isSelected()) {
                                 flOverlay.setVisibility(View.VISIBLE);
                                 setOverlay(vwOverlay, 200, flMain.getWidth(), flMain.getHeight());
                             } else {
                                 flOverlay.setVisibility(View.GONE);
                             }
-                            return true;
+
                         }
                     });
 
