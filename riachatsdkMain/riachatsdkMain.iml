@@ -110,10 +110,10 @@
     <orderEntry type="library" exported="" name="play-services-wallet-9.8.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-tagmanager-api-9.8.0" level="project" />
     <orderEntry type="library" exported="" name="firebase-auth-9.8.0" level="project" />
-    <orderEntry type="library" exported="" name="firebase-messaging-9.8.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="exposed-instrumentation-api-publish-0.5" level="project" />
-    <orderEntry type="library" exported="" name="play-services-ads-9.8.0" level="project" />
+    <orderEntry type="library" exported="" name="firebase-messaging-9.8.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="javax.annotation-api-1.2" level="project" />
+    <orderEntry type="library" exported="" name="play-services-ads-9.8.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-cast-9.8.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-gass-9.8.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-tasks-9.8.0" level="project" />
@@ -204,5 +204,6 @@
     <orderEntry type="library" exported="" name="firebase-crash-9.8.0" level="project" />
     <orderEntry type="module" module-name="ZoomImageLibrary" exported="" />
     <orderEntry type="library" exported="" name="android-android-25" level="project" />
+    <orderEntry type="library" exported="" name="ZoomImageLibrary-1.1.0-SNAPSHOT" level="project" />
   </component>
 </module>

