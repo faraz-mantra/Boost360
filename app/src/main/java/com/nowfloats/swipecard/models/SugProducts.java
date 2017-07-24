@@ -8,6 +8,17 @@ public class SugProducts {
     private String productName;
     private String Image;
     private String buyLink;
+    private String productUrl;
+
+    public String getProductUrl() {
+        return productUrl;
+    }
+
+    public void setProductUrl(String productUrl) {
+        this.productUrl = productUrl;
+    }
+
+    private boolean isSelected;
 
     public String getProductName() {
         return productName;
@@ -20,6 +31,16 @@ public class SugProducts {
     public String getImage() {
         return Image;
     }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+
 
     public void setImage(String image) {
         Image = image;

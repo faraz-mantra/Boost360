@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.nowfloats.swipecard.models.SugProducts;
-import com.nowfloats.swipecard.models.SugUpdates;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
@@ -95,9 +94,9 @@ public class SugProductsAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) vi.getTag();
 
 
-            final SugUpdates productItemModel = (SugUpdates) getItem(position);
+            final SugProducts productItemModel = (SugProducts) getItem(position);
             vi.setTag(R.string.key_details, productItemModel);
-            viewHolder.Product_Name.setText(productItemModel.getName());
+            viewHolder.Product_Name.setText(productItemModel.getProductName());
             final ImageView imageView = viewHolder.ProductImageView;
             Picasso picasso = Picasso.with(activity);
             String image_url = productItemModel.getImage();
