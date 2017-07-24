@@ -155,7 +155,7 @@ public class CallToActionFragment extends Fragment {
 
         noOfStars = 0;
         MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
-                .title(getString(R.string.enjoying_feature))
+//                .title(getString(R.string.enjoying_feature))
                 .customView(R.layout.csp_fragment_rating, false)
                 .positiveText(getString(R.string.submit))
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
@@ -339,7 +339,7 @@ public class CallToActionFragment extends Fragment {
             if (sugUpdates.isSelected()) {
 
                 try {
-                    selectedProducts = selectedProducts + sugUpdates.getName() + "\n" + " URL: " + sugUpdates.getUpdateUrl() + "\n";
+                    selectedProducts = selectedProducts + sugUpdates.getName() + "\n" +"\n"+"View Details : " + sugUpdates.getUpdateUrl() + "\n";
                     imageUrl = sugUpdates.getImage();
 
                 } catch (Exception e) {

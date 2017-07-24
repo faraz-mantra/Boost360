@@ -947,7 +947,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="product_detail_delete_btn_text">Delete product</string>
     <string name="book_a_new_domain">Book a new domain</string>
     <string name="have_an_existing_domain">Have an existing domain? </string>
-    <string name="enjoying_feature">Is t helpful in managing your business leads? </string>
+    <string name="enjoying_feature">Is this helpful in managing your leads? </string>
     <string name="tap_a_star_to_rate_it">Tap a star to rate it</string>
     <string name="link_a_domain_nf">Link a domain (included in your NowFloats Package)</string>
     <string name="already_have_a_domain">Already have a domain</string>

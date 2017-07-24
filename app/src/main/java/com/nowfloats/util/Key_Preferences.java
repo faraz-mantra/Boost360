@@ -17,6 +17,7 @@ public class Key_Preferences {
     public static final String QUIKR_DIALOG_DISABLED = "quikr_dialog_disabled";
     public static final String SHOW_QUIKR_ANALYTICS = "show_quikr_analytics";
     public static final String SHOW_WHATSAPP_CLOSE_DIALOG = "whatsApp_close";
+    public static final String SHOW_BUBBLE_DIALOG_ON_HOME = "bubble_dialog_on_home";
     public static final String HAS_SUGGESTIONS = "HAS_SUGGESTIONS";
     public static final String HAS_SHOWN_SAM_COACH_MARK = "HAS_SHOWN_SAM_COACH_MARK";
     public static final String IS_TO_SHOW_COACH_MARKS_STWO = "IS_TO_SHOW_COACH_MARKS_STWO";
@@ -108,6 +109,7 @@ public class Key_Preferences {
     public static final String FCM_TOKEN = "fcm_token";
 
     public static final String DIALOG_FROM = "dialogFrom";
+    public static final String M_CLASS_NAME = "";
     public static final String BUBBLE_POS = "bubble_pos";
     public static final String BUBBLE_POS_Y = "bubble_pos_y";
     public static final String BUBBLE_POS_X = "bubble_pos_x";

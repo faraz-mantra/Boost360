@@ -331,10 +331,12 @@ public class Home_Fragment_Tab extends Fragment {
 
     private void showBubble() {
 
-        if (!pref.getBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, false)) {
-            addOverlay();
-            pref.edit().putBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, true).apply();
-        }
+        pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, Calendar.getInstance().getTimeInMillis()).apply();
+
+//        if (!pref.getBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, false)) {
+        addOverlay();
+        pref.edit().putBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, true).apply();
+//        }
 
         int px = Methods.dpToPx(80, getActivity());
         Intent intent = new Intent(getActivity(), BubblesService.class);
@@ -364,7 +366,6 @@ public class Home_Fragment_Tab extends Fragment {
         }
 
         boolean checkAccessibility = true;
-        pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, Calendar.getInstance().getTimeInMillis()).apply();
         if (android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity())) {
             checkAccessibility = false;
             dialogForOverlayPath(from);

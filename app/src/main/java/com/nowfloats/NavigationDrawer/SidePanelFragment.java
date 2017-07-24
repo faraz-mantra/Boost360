@@ -395,9 +395,15 @@ public class SidePanelFragment extends Fragment {
         tvBoostBubble = (TextView) bubbleLayout.findViewById(R.id.ninethRow_TextView);
         bubbleSwitch = (Switch) bubbleLayout.findViewById(R.id.ninethRow_Switch);
         //tvSiteAppearance = (TextView) llSiteAppearance.findViewById(R.id.tv_site_appearance);
+
         if (!Methods.isAccessibilitySettingsOn(getActivity())) {
+//            if(session.isBoostBubbleEnabled()){
+//                session.setBubbleTime(-1);
+//                ((OnItemClickListener) mainActivity).onClick(getString(R.string.home));
+//            }
             session.setBubbleStatus(false);
         }
+
         bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
 
         bubbleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
