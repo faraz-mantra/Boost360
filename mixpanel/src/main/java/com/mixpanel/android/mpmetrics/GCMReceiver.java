@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,18 +23,18 @@ import com.mixpanel.android.mpmetrics.MixpanelAPI.InstanceProcessor;
 
 /**
  * BroadcastReciever for handling Google Cloud Messaging intents.
- *
+ * <p>
  * <p>You can use GCMReciever to report Google Cloud Messaging registration identifiers
  * to Mixpanel, and to display incoming notifications from Mixpanel to
  * the device status bar. Together with {@link MixpanelAPI.People#initPushHandling(String) }
  * this is the simplest way to get up and running with notifications from Mixpanel.
- *
+ * <p>
  * <p>To enable GCMReciever in your application, add a clause like the following
  * in your AndroidManifest.xml. (Be sure to replace "YOUR APPLICATION PACKAGE NAME"
  * in the snippet with the actual package name of your app.)
- *
- *<pre>
- *{@code
+ * <p>
+ * <pre>
+ * {@code
  *
  * <receiver android:name="com.mixpanel.android.mpmetrics.GCMReceiver"
  * android:permission="com.google.android.c2dm.permission.SEND" >
@@ -44,12 +45,12 @@ import com.mixpanel.android.mpmetrics.MixpanelAPI.InstanceProcessor;
  * </intent-filter>
  * </receiver>
  *
- *}
- *</pre>
- *
+ * }
+ * </pre>
+ * <p>
  * <p>In addition, GCMReciever will also need the following permissions configured
  * in your AndroidManifest.xml file:
- *
+ * <p>
  * <pre>
  * {@code
  *
@@ -64,7 +65,7 @@ import com.mixpanel.android.mpmetrics.MixpanelAPI.InstanceProcessor;
  *
  * }
  * </pre>
- *
+ * <p>
  * <p>Once the GCMReciever is configured, the only thing you have to do to
  * get set up Mixpanel messages is call {@link MixpanelAPI.People#identify(String) }
  * with a distinct id for your user, and call {@link MixpanelAPI.People#initPushHandling(String) }
@@ -78,7 +79,7 @@ import com.mixpanel.android.mpmetrics.MixpanelAPI.InstanceProcessor;
  *
  * }
  * </pre>
- *
+ * <p>
  * <p>If you would prefer to handle either sending a registration id to Mixpanel yourself
  * but allow GCMReciever to handle displaying Mixpanel messages, remove the
  * REGISTRATION intent from the GCMReciever {@code <reciever> } tag, and call
@@ -93,13 +94,26 @@ public class GCMReceiver extends BroadcastReceiver {
     String LOGTAG = "MPGCMReceiver";
     public static String deeplinkUrl;
     public static Bitmap notificationIconBitmap = null;
+
+
+    private String BUBBLE_MSG_KEY = "gcm.notification.body";
+    private String BUBBLE_MSG = "I have Got some data";
+    private SharedPreferences pref;
+    public static String PREF_NAME = "nowfloatsPrefs";
+    public static final String HAS_SUGGESTIONS = "HAS_SUGGESTIONS";
+
     @Override
     public void onReceive(Context context, Intent intent) {
+
         final String action = intent.getAction();
-        try{
-            if(notificationIconBitmap==null)
-                notificationIconBitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.app_launcher);
-        }catch(Exception e){e.printStackTrace(); notificationIconBitmap.recycle(); System.gc();}
+        try {
+            if (notificationIconBitmap == null)
+                notificationIconBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.app_launcher);
+        } catch (Exception e) {
+            e.printStackTrace();
+            notificationIconBitmap.recycle();
+            System.gc();
+        }
 
         if ("com.google.android.c2dm.intent.REGISTRATION".equals(action)) {
             handleRegistrationIntent(intent);
@@ -107,15 +121,25 @@ public class GCMReceiver extends BroadcastReceiver {
             String payload = null;
             String notificationClick = "notification clicked";
             Bundle bundle = intent.getExtras();
-            if (bundle != null) {
-                Object keys = bundle.get("C");
-                if(keys!=null){
-                    payload = keys.toString();
-                    deeplinkUrl = keys.toString();
-                    Log.d(LOGTAG, deeplinkUrl);
+
+            if (bundle != null
+                    && bundle.containsKey(BUBBLE_MSG_KEY)
+                    && bundle.getString(BUBBLE_MSG_KEY).equalsIgnoreCase(BUBBLE_MSG)) {
+                pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+                pref.edit().putBoolean(HAS_SUGGESTIONS, true).apply();
+
+            } else {
+                if (bundle != null) {
+                    Object keys = bundle.get("C");
+                    if (keys != null) {
+                        payload = keys.toString();
+                        deeplinkUrl = keys.toString();
+                        Log.d(LOGTAG, deeplinkUrl);
+                    }
                 }
+                handleNotificationIntent(context, intent, payload, notificationClick, deeplinkUrl);
             }
-            handleNotificationIntent(context, intent, payload, notificationClick, deeplinkUrl);
+
         }
     }
 
@@ -144,7 +168,7 @@ public class GCMReceiver extends BroadcastReceiver {
 
     private void handleNotificationIntent(Context context, Intent intent, String payload, String notificationClick, String deeplinkUrl) {
         String message = intent.getExtras().getString("mp_message");
-        if(message == null){
+        if (message == null) {
             message = intent.getExtras().getString("message");
         }
 
@@ -165,10 +189,10 @@ public class GCMReceiver extends BroadcastReceiver {
 //            notificationTitle = manager.getApplicationLabel(appInfo);
 //            notificationIcon = appInfo.icon;
 //        } catch (final NameNotFoundException e) {
-            //In this case, use a blank title and default icon
+        //In this case, use a blank title and default icon
 //        }
 
-        if(deeplinkUrl!=null) {
+        if (deeplinkUrl != null) {
             appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(deeplinkUrl));
         }
 
@@ -186,7 +210,7 @@ public class GCMReceiver extends BroadcastReceiver {
         }
     }
 
-//    @Override
+    //    @Override
 //    protected void onMessage(Context context, Intent intent)
 //    {
 //        Konotor instance = Konotor.getInstance(context);
@@ -201,10 +225,10 @@ public class GCMReceiver extends BroadcastReceiver {
     @SuppressWarnings("deprecation")
     @TargetApi(8)
     private void showNotificationSDKLessThan11(Context context, PendingIntent intent, int notificationIcon, CharSequence title, CharSequence message) {
-        if(title.equals("")){
+        if (title.equals("")) {
             title = "NowFloats Boost";
         }
-        final NotificationManager nm = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+        final NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         final Notification n = new Notification(notificationIcon, message, System.currentTimeMillis());
         n.flags |= Notification.FLAG_AUTO_CANCEL;
         n.setLatestEventInfo(context, title, message, intent);
@@ -223,10 +247,10 @@ public class GCMReceiver extends BroadcastReceiver {
 //                    setContentIntent(intent).
 //                    build();
 //        n.flags |= Notification.FLAG_AUTO_CANCEL;
-        if(title.equals("")){
+        if (title.equals("")) {
             title = "NowFloats Boost";
         }
-        Log.i("Notification triggered","...!!");
+        Log.i("Notification triggered", "...!!");
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         builder.setAutoCancel(true);
         builder.setContentTitle(title);
@@ -236,48 +260,38 @@ public class GCMReceiver extends BroadcastReceiver {
         builder.setColor(Color.parseColor("#ffb900"));
         try {
             builder.setSmallIcon(R.drawable.app_launcher2);
-        }catch(Exception e){e.printStackTrace();}
-        if(notificationIconBitmap!=null)
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (notificationIconBitmap != null)
             builder.setLargeIcon(notificationIconBitmap);
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(message));
-        if(payload!=null){
-            if(payload.contains("update")){
+        if (payload != null) {
+            if (payload.contains("update")) {
                 builder.addAction(com.mixpanel.android.R.drawable.notification_update, " Update Now", intent);
-            }
-            else if(payload.contains("featuredImage")){
+            } else if (payload.contains("featuredImage")) {
                 builder.addAction(com.mixpanel.android.R.drawable.notification_buy, " Buy", intent);
-            }
-            else if(payload.contains("store")){
+            } else if (payload.contains("store")) {
                 builder.addAction(com.mixpanel.android.R.drawable.notification_buy, " Purchase", intent);
-            }
-            else if(payload.contains("enquiries")){
+            } else if (payload.contains("enquiries")) {
                 builder.addAction(com.mixpanel.android.R.drawable.notification_buy, " Purchase", intent);
-            }
-            else if(payload.contains("hours")){
+            } else if (payload.contains("hours")) {
                 builder.addAction(com.mixpanel.android.R.drawable.notification_buy, " Purchase", intent);
-            }
-            else if(payload.contains("gallery")){
+            } else if (payload.contains("gallery")) {
                 builder.addAction(com.mixpanel.android.R.drawable.notification_buy, " Purchase", intent);
-            }
-            else if(payload.contains("contact")){
+            } else if (payload.contains("contact")) {
                 builder.addAction(com.mixpanel.android.R.drawable.notification_buy, " Purchase", intent);
-            }
-            else if(payload.contains("searchqueries")){
+            } else if (payload.contains("searchqueries")) {
                 builder.addAction(com.mixpanel.android.R.drawable.notification_buy, " Purchase", intent);
-            }
-            else if(payload.contains("nfstoreDomainTTBCombo")){
+            } else if (payload.contains("nfstoreDomainTTBCombo")) {
                 builder.addAction(com.mixpanel.android.R.drawable.notification_buy, " Purchase", intent);
-            }
-            else if(payload.contains("nfstoreNoAds")){
+            } else if (payload.contains("nfstoreNoAds")) {
                 builder.addAction(com.mixpanel.android.R.drawable.notification_buy, " Purchase", intent);
-            }
-            else if(payload.contains("social")){
+            } else if (payload.contains("social")) {
                 builder.addAction(com.mixpanel.android.R.drawable.notification_share, " Share", intent);
-            }
-            else if(payload.contains("featuredImage")){
+            } else if (payload.contains("featuredImage")) {
                 builder.addAction(com.mixpanel.android.R.drawable.notification_pic, " Update Now", intent);
-            }
-            else if(payload.contains("logo")){
+            } else if (payload.contains("logo")) {
                 builder.addAction(com.mixpanel.android.R.drawable.notification_pic, " Update Now", intent);
             }
         }
@@ -285,7 +299,7 @@ public class GCMReceiver extends BroadcastReceiver {
         builder.setContentIntent(intent);
 
         Notification notification = builder.build();
-        NotificationManager manager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(0, notification);
 
         notification.flags |= Notification.FLAG_AUTO_CANCEL;

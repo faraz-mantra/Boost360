@@ -92,7 +92,8 @@ public class DataAccessibilityServiceV8 extends AccessibilityService {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
                     showOverlayDialog();
                 } else if (!TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, null))
-                        && pref.getBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED, false)) {
+                        && pref.getBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED, false)
+                        && pref.getBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, false)) {
 
                     if (bFrom == BubblesService.FROM.LAUNCHER_HOME_ACTIVITY) {
                         stopService(new Intent(DataAccessibilityServiceV8.this, BubblesService.class));

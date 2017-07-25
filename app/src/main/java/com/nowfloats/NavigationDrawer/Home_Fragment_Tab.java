@@ -26,7 +26,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
@@ -76,7 +75,6 @@ public class Home_Fragment_Tab extends Fragment {
     SharedPreferences pref;
     private IntentFilter clickIntentFilters = new IntentFilter(ACTION_KILL_DIALOG);
     private MaterialDialog overLayDialog;
-    private Boolean isProductAvaiable = false;
 
     public static enum DrawOverLay {FromHome, FromTab}
 
@@ -166,6 +164,14 @@ public class Home_Fragment_Tab extends Fragment {
 
         if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") /*&& "1".equals(paymentState)*/) {
             getProducts();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    checkOverlay(DrawOverLay.FromTab);
+                }
+            }, 3000);
+
         }
 
         viewPager.setOnTouchListener(new View.OnTouchListener() {
@@ -310,16 +316,21 @@ public class Home_Fragment_Tab extends Fragment {
         productInterface.getProducts(values, new Callback<ArrayList<ProductListModel>>() {
             @Override
             public void success(ArrayList<ProductListModel> productListModels, Response response) {
+
+
                 if (productListModels == null || productListModels.size() == 0 || response.getStatus() != 200) {
+                    pref.edit().putBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, false).apply();
                     return;
                 }
-                isProductAvaiable = true;
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        checkOverlay(DrawOverLay.FromTab);
-                    }
-                }, 5000);
+
+                pref.edit().putBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, true).apply();
+//                isProductAvaiable = true;
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        checkOverlay(DrawOverLay.FromTab);
+//                    }
+//                }, 5000);
             }
 
             @Override
@@ -350,11 +361,11 @@ public class Home_Fragment_Tab extends Fragment {
         if (!isAdded() || getActivity() == null) {
             return;
         }
-        else if (!isProductAvaiable && from == DrawOverLay.FromHome && activity != null) {
-
-            Toast.makeText(activity, "you do not have products into ProductGallery", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        else if (!isProductAvaiable && from == DrawOverLay.FromHome && activity != null) {
+//
+//            Toast.makeText(activity, "you do not have products into ProductGallery", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
         Calendar calendar = Calendar.getInstance();
         long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, -1);
         long newTime = calendar.getTimeInMillis();
