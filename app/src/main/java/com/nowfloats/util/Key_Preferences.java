@@ -20,6 +20,7 @@ public class Key_Preferences {
     public static final String SHOW_BUBBLE_DIALOG_ON_HOME = "bubble_dialog_on_home";
     public static final String HAS_SUGGESTIONS = "HAS_SUGGESTIONS";
     public static final String HAS_SHOWN_SAM_COACH_MARK = "HAS_SHOWN_SAM_COACH_MARK";
+    public static final String HAS_BUBBLE_SHARE_PRODUCTS = "HAS_BUBBLE_SHARE_PRODUCTS";
     public static final String IS_TO_SHOW_COACH_MARKS_STWO = "IS_TO_SHOW_COACH_MARKS_STWO";
     public static final String SHOW_FACEBOOK_REVIEW = "facebook_review";
     public static final String GET_FP_DETAILS_WIDGET_BUSINESS_APP = "GET_FP_DETAILS_BUSINESS_APP";

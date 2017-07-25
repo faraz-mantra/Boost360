@@ -59,55 +59,60 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
 
         Log.d("Message", message.toString());
 
-        if (message.containsKey("mp_message") && message.get("mp_message").equalsIgnoreCase(SAM_BUBBLE_MSG)) {
-            MixPanelController.track(MixPanelController.SAM_BUBBLE_NOTIFICATION,null);
-            pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).apply();
+        if (message == null || message.size() == 0) {
+
         } else {
-            deepLinkUrl = message.get("url");
-            //Log.v("ggg","notif "+deepLinkUrl);
-            if (deepLinkUrl != null && !deepLinkUrl.contains(Constants.PACKAGE_NAME)) {
-                return;
-            }
-            String title = message.get("title");
-            Intent intent = null;
-            if (!Util.isNullOrEmpty(deepLinkUrl)) {
-                final PackageManager manager = getPackageManager();
-                intent = manager.getLaunchIntentForPackage(getPackageName());
-                intent.putExtra("from", "notification");
-                intent.putExtra("url", deepLinkUrl);
-            }
-            PendingIntent pendingIntent = null;
-            if (intent != null) {
-                pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-            }
+            if (message.containsKey("mp_message") && message.get("mp_message").equalsIgnoreCase(SAM_BUBBLE_MSG)) {
+                MixPanelController.track(MixPanelController.SAM_BUBBLE_NOTIFICATION, null);
+                pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).apply();
+            } else {
+                deepLinkUrl = message.get("url");
+                //Log.v("ggg","notif "+deepLinkUrl);
+                if (deepLinkUrl != null && !deepLinkUrl.contains(Constants.PACKAGE_NAME)) {
+                    return;
+                }
+                String title = message.get("title");
+                Intent intent = null;
+                if (!Util.isNullOrEmpty(deepLinkUrl)) {
+                    final PackageManager manager = getPackageManager();
+                    intent = manager.getLaunchIntentForPackage(getPackageName());
+                    intent.putExtra("from", "notification");
+                    intent.putExtra("url", deepLinkUrl);
+                }
+                PendingIntent pendingIntent = null;
+                if (intent != null) {
+                    pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+                }
 
         /*intent.putExtra("payload", payload);
         intent.putExtra("notification", notificationClick);*/
 
-            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                    .setSmallIcon(R.drawable.app_launcher2)
-                    .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.app_launcher))
-                    .setContentText(message.get("mp_message"))
-                    .setAutoCancel(true)
-                    .setSound(defaultSoundUri)
-                    .setColor(ContextCompat.getColor(this, R.color.primaryColor))
-                    .setStyle(new NotificationCompat.BigTextStyle().bigText(message.get("mp_message")))
-                    .setPriority(NotificationCompat.PRIORITY_HIGH);
-            if (!Util.isNullOrEmpty(title)) {
-                notificationBuilder.setContentTitle(title);
-            } else {
-                notificationBuilder.setContentTitle(getResources().getString(R.string.app_name));
-            }
-            if (pendingIntent != null) {
-                notificationBuilder.setContentIntent(pendingIntent);
-            }
+                Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.app_launcher2)
+                        .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.app_launcher))
+                        .setContentText(message.get("mp_message"))
+                        .setAutoCancel(true)
+                        .setSound(defaultSoundUri)
+                        .setColor(ContextCompat.getColor(this, R.color.primaryColor))
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(message.get("mp_message")))
+                        .setPriority(NotificationCompat.PRIORITY_HIGH);
+                if (!Util.isNullOrEmpty(title)) {
+                    notificationBuilder.setContentTitle(title);
+                } else {
+                    notificationBuilder.setContentTitle(getResources().getString(R.string.app_name));
+                }
+                if (pendingIntent != null) {
+                    notificationBuilder.setContentIntent(pendingIntent);
+                }
 
-            NotificationManager notificationManager =
-                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                NotificationManager notificationManager =
+                        (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-            notificationManager.notify(0, notificationBuilder.build());
+                notificationManager.notify(0, notificationBuilder.build());
+            }
         }
+
 
     }
 }
