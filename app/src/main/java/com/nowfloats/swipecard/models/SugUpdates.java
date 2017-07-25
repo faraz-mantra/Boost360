@@ -5,11 +5,11 @@ package com.nowfloats.swipecard.models;
  */
 
 public class SugUpdates {
-    private String Name;
-    private String Image;
-    private String updateUrl;
-    private boolean isSelected;
-    private boolean viewMore = true;
+    public String Name;
+    public String Image;
+    public String updateUrl;
+    public boolean isSelected;
+    public boolean viewMore = true;
 
     public String getUpdateUrl() {
         return updateUrl;

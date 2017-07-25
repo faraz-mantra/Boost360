@@ -722,6 +722,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="enter_domain_nmae_to_continue">Enter domain name to continue</string>
     <string name="domain_is_available">Domain is available..</string>
     <string name="domain_not_available">Domain not available. Please try another name.</string>
+    <string name="link_domain_not_available">Domain link failure. Please try again.</string>
     <string name="domain_booking_confirmation">Domain Booking Confirmation</string>
     <string name="domain_configuration">Domain Configuration</string>
     <string name="domain_booking_successful">Domain Booking Successful</string>
