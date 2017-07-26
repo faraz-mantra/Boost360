@@ -11,12 +11,17 @@ public class Key_Preferences {
     public static final String GET_EVENT_PACKAGE_NAME = "com.nowfloats.NavigationDrawer";
     public static final String SHOW_BUBBLE_TIME = "bubble_time";
     public static final String SHOW_BUBBLE_COACH_MARK = "bubble_coach_mark";
-    public static final String SHOW_WHATS_APP_DIALOG ="whatsapp_dialog" ;
-    public static final String QUIKR_GUIDELINES_ACTIVITY = "quikr_guidelines_activity" ;
+    public static final String SHOW_WHATS_APP_DIALOG = "whatsapp_dialog";
+    public static final String QUIKR_GUIDELINES_ACTIVITY = "quikr_guidelines_activity";
     public static final String POST_TO_QUIKR_SECOND_TIME = "quikr_post_second_time";
     public static final String QUIKR_DIALOG_DISABLED = "quikr_dialog_disabled";
     public static final String SHOW_QUIKR_ANALYTICS = "show_quikr_analytics";
     public static final String SHOW_WHATSAPP_CLOSE_DIALOG = "whatsApp_close";
+    public static final String SHOW_BUBBLE_DIALOG_ON_HOME = "bubble_dialog_on_home";
+    public static final String HAS_SUGGESTIONS = "HAS_SUGGESTIONS";
+    public static final String HAS_SHOWN_SAM_COACH_MARK = "HAS_SHOWN_SAM_COACH_MARK";
+    public static final String HAS_BUBBLE_SHARE_PRODUCTS = "HAS_BUBBLE_SHARE_PRODUCTS";
+    public static final String IS_TO_SHOW_COACH_MARKS_STWO = "IS_TO_SHOW_COACH_MARKS_STWO";
     public static final String SHOW_FACEBOOK_REVIEW = "facebook_review";
     public static final String GET_FP_DETAILS_WIDGET_BUSINESS_APP = "GET_FP_DETAILS_BUSINESS_APP";
     public static final String BUSINESS_APP_REQUESTED = "BUSINESS_APP_REQUESTED";
@@ -85,7 +90,7 @@ public class Key_Preferences {
 
     public static String GET_FP_DETAILS_WEBSITE = "GET_FP_DETAILS_WEBSITE";
 
-    public static String GET_FP_DETAILS_BG_IMAGE= "GET_FP_DETAILS_BG_IMG";
+    public static String GET_FP_DETAILS_BG_IMAGE = "GET_FP_DETAILS_BG_IMG";
     public static String GET_FP_DETAILS_APPLICATION_ID = "GET_FP_DETAILS_APPLICATION_ID";
 
     public static String GET_FP_DETAILS_PAYMENTSTATE = "GET_FP_DETAILS_PAYMENTSTATE";
@@ -105,7 +110,9 @@ public class Key_Preferences {
     public static final String FCM_TOKEN = "fcm_token";
 
     public static final String DIALOG_FROM = "dialogFrom";
+    public static final String M_CLASS_NAME = "";
     public static final String BUBBLE_POS = "bubble_pos";
     public static final String BUBBLE_POS_Y = "bubble_pos_y";
     public static final String BUBBLE_POS_X = "bubble_pos_x";
+    public static final String NO_OF_TIMES_RESPONDED = "NO_OF_TIMES_RESPONDED";
 }

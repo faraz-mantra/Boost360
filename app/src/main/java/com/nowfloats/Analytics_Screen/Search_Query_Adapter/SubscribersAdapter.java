@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.nowfloats.Analytics_Screen.model.SubscriberModel;
 import com.nowfloats.util.Constants;
 import com.thinksity.R;
@@ -51,7 +50,7 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
             } else if(Constants.SubscriberStatus.REQUESTED.value == status) {
                 holder.statusTextView.setText("Subscription initiated");
             }else if(Constants.SubscriberStatus.UNSUBSCRIBED.value == status){
-                holder.statusTextView.setText("UnSubscribed");
+                holder.statusTextView.setText("Unsubscribed");
 
             }
         }catch(Exception e){
@@ -84,14 +83,14 @@ public class SubscribersAdapter extends RecyclerView.Adapter<SubscribersAdapter.
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.item_layout:
-                    ((SubscriberInterfaceMethods)mContext).onitemSeleted(new Gson().toJson(mSubscriberList.get(getAdapterPosition())));
+                    ((SubscriberInterfaceMethods)mContext).onitemSeleted(getAdapterPosition());
                     break;
             }
         }
     }
 
     public interface SubscriberInterfaceMethods{
-        void onitemSeleted(String data);
+        void onitemSeleted(int data);
     }
 
 }

@@ -71,6 +71,7 @@
     <string name="title_activity_image__gallery__main">Image Gallery</string>
     <string name="title_activity_home__main">Home_MainActivity</string>
     <string name="home">Home</string>
+    <string name="customer_has_sent_an_enquiry">Customer has sent an enquiry</string>
     <string name="title_activity_create__message_">Post an Update</string>
     <string name="side_panel_row_one">Dashboard</string>
     <string name="side_panel_row_two">Profile</string>
@@ -493,6 +494,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="visits">Visits</string>
     <string name="unique_visitors">Unique Visitors</string>
     <string name="no_info_avail">No information available!</string>
+    <string name="no_products_avail">No products available.</string>
+    <string name="no_updates_avail">No updates available.</string>
     <string name="visit_this_week">visits this week</string>
     <string name="visit_this_month">visits this month</string>
     <string name="visit_this_year">visits this year</string>
@@ -503,6 +506,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="check_internet_connection">Check your Network Connection</string>
     <string name="email">EMAIL</string>
     <string name="call">CALL</string>
+    <string name="respond">Respond</string>
     <string name="send_email">Send email&#8230;</string>
     <string name="faqs">FAQs</string>
     <string name="answer">Answer</string>
@@ -513,6 +517,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="setting">Settings</string>
     <string name="device_does_not_support_capturing_image">Whoops - your device doesn\'t support capturing images!</string>
     <string name="select_image_upload">Please select an image to upload</string>
+    <string name="select_update_or_product">Please select at least one update or product </string>
     <string name="visit_to_new_website">Woohoo! We have a new website. Visit it at</string>
     <string name="features_not_available">Feature not available</string>
     <string name="check_store_for_upgrade_info">Check the store for more information on upgrade plans</string>
@@ -842,15 +847,18 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="version">Version&#160;</string>
     <string name="float_point_name">Float Point Name</string>
     <string name="your_site_health">Your site health</string>
-    <string name="primary_number">Primary Number</string>
+    <string name="primary_number">Primary Number (To communicate with NowFloats)</string>
+    <string name="to_communicate_with_nowfloats">To communicate with NowFloats</string>
+    <string name="to_be_displayed_on_website">To be displayed on your website</string>
     <string name="alternate_number1">Alternate Number 1</string>
     <string name="alternate_number2">Alternate Number 2</string>
+    <string name="alternate_number3">Alternate Number 3</string>
     <string name="facebook_page_name">Facebook Page Name</string>
     <string name="update_your_website_to_increase_discoverability">Update your website regularly to get more customers</string>
     <string name="update_logo">Update Logo</string>
     <string name="of">of</string>
     <string name="password">Password</string>
-    <string name="facebook_url_message">If your Facebook page URL is facebook.com/nowfloats; then your username is nowfloats</string>
+    <string name="facebook_url_message">If your Facebook page URL is facebook.com/nowfloats; then your user name is nowfloats</string>
     <string name="forgot_your_password">Forgot password?</string>
     <string name="open_in_browser">OPEN IN BROWSER</string>
     <string name="auto_share_to_social_networks">Auto Share\nTo Social Networks</string>
@@ -939,6 +947,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="product_detail_delete_btn_text">Delete product</string>
     <string name="book_a_new_domain">Book a new domain</string>
     <string name="have_an_existing_domain">Have an existing domain? </string>
+    <string name="enjoying_feature">Is this helpful in managing your leads? </string>
+    <string name="tap_a_star_to_rate_it">Tap a star to rate it</string>
     <string name="link_a_domain_nf">Link a domain (included in your NowFloats Package)</string>
     <string name="already_have_a_domain">Already have a domain</string>
     <string name="pop_up_create_msg_title">Are you sure?</string>
@@ -1236,7 +1246,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <array name="businesssmalltext">
         <item>Your way to a permanent place in your\ncustomer\'s phone.</item>
         <item>Beat your competition and be the first ones\nto get your own Mobile App.</item>
-        <item>Send personalized notifications to your\ncustomers about your products and offerings.</item>
+        <item>Send personalized notifications to your\ncustomers about your products and
+            offerings.
+        </item>
         <item>Now your customers can reach your store\neven without an internet connection.</item>
     </array>
 
@@ -1244,7 +1256,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="product_checkout">Product Checkout</string>
     <string name="dialog_to_be_activated_null_text">Please note that you will receive an Account Verification Call before your subscription gets activated. Are you sure you want to proceed?</string>
     <string name="search_rank">Search Ranking</string>
-    <string name="alternate_number3">Alternate Number 3</string>
     <string name="cap_login" translatable="false">&#160;<u><b>LOGIN</b></u></string>
     <string name="subscriber_second_text">Subscription is a great way to engage with your\nexisting customers and tell them about latest offers\nor new product launches</string>
     <string name="site_appearance_change_to_new_look">In case you didn\'t like the existing look of your website, you  can always choose to change it from here.</string>
@@ -1274,6 +1285,10 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="successfully_downloaded">Successfully Downloaded</string>
     <string name="downloading">File downloading&#8230;</string>
     <string name="play_with_underline" translatable="false"><u>PLAY</u></string>
+    <string name="cta" translatable="false"><u>CTA</u></string>
+    <string name="view_details" translatable="false"><u>Details</u></string>
+    <string name="view_more"><u>View More</u></string>
+    <string name="view_less"><u>View Less</u></string>
     <string name="vmn_message_text">This is displayed on your website and you can track all customer calls &amp; logs here.</string>
     <string name="website_domain_name">.nowfloats.com</string>
     <string name="faqs_url">https://nowfloats.com/faq</string>
@@ -1317,5 +1332,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="country_ria">COUNTRY</string>
     <string name="pin_code_ria">PIN/ZIP CODE</string>
     <string name="number_already_exists">This number already exists.Please enter another number</string>
+
+    <string name="later">Later</string>
+    <string name="coach_mark_msg_delete">Click on highlighted view to delete</string>
+    <string name="coach_mark_msg_remind">Click on highlighted view to remind</string>
+    <string name="coach_mark_msg_view_more">Click to see more details</string>
+    <string name="coach_mark_msg_view_call">Click on highlighted view to call lead</string>
+    <string name="coach_mark_msg_view_message">Click on highlighted view to message</string>
+    <string name="coach_mark_msg_view_share">We have suggestionList for you\n SMS/EMAIL/WHATSAPP Share</string>
 
 </resources>

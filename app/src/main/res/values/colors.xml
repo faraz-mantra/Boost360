@@ -158,4 +158,7 @@
     </integer-array>-->
     <color name="red">#F20A0A</color>
     <color name="primary">@color/primaryColor</color>
+
+    <color name="transluscent_background">#BF000000</color>
+
 </resources>

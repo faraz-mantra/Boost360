@@ -41,7 +41,7 @@ import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.nowfloats.twitter.TwitterConnection;
+import com.nowfloats.Twitter.TwitterConnection;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -421,7 +421,9 @@ public class Site_Meter_Fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        HomeActivity.headerText.setText("Site Health");
+        if(HomeActivity.headerText != null) {
+            HomeActivity.headerText.setText("Site Health");
+        }
         try {
             siteData = loadData();
             adapter = new SiteMeterAdapter(activity, Site_Meter_Fragment.this, siteData);

@@ -128,6 +128,7 @@
     <dimen name="small_text_size">12sp</dimen>
     <dimen name="medium_text_size">15sp</dimen>
     <dimen name="large_text_size">18sp</dimen>
+    <dimen name="llarge_text_size">20sp</dimen>
     <dimen name="xlarge_text_size">23sp</dimen>
     <dimen name="xxlarge_text_size">25sp</dimen>
     <dimen name="xxxlarge_text_size">35sp</dimen>
@@ -135,14 +136,18 @@
     <dimen name="xxxxxlarge_text_size">56sp</dimen>
     <dimen name="margin_5">5dp</dimen>
     <dimen name="margin_20">20dp</dimen>
-    <dimen name="margin_30">30dp</dimen>
     <dimen name="margin_25">25dp</dimen>
     <dimen name="margin_40">40dp</dimen>
     <dimen name="margin_50">50dp</dimen>
+    <dimen name="margin_30">30dp</dimen>
     <dimen name="margin_100">100dp</dimen>
     <dimen name="margin_3">3dp</dimen>
+    <dimen name="default_stack_spacing">5dp</dimen>
     <dimen name="margin_80">80dp</dimen>
     <dimen name="margin_90">90dp</dimen>
     <dimen name="margin_17">17dp</dimen>
 
+    <dimen name="punchhole_coach_mark_gap">2dp</dimen>
+    <dimen name="punchhole_coach_mark_horizontal_padding">24dp</dimen>
+    <dimen name="punchhole_coach_mark_vertical_padding">20dp</dimen>
 </resources>

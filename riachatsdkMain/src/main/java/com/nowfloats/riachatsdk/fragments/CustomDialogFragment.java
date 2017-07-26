@@ -346,6 +346,8 @@ public class CustomDialogFragment extends DialogFragment {
 
         void navigateToHome();
 
+        void navigateToSignup();
+
         void dismissPopup();
 
         void skipNode();

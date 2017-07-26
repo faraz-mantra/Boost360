@@ -30,11 +30,12 @@ import com.thinksity.R;
 
 import java.util.ArrayList;
 
-public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.Fetch_Home_Data_Interface{
+public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.Fetch_Home_Data_Interface {
     UserSessionManager session;
     Bus bus;
-    public static ProgressDialog pd ;
+    public static ProgressDialog pd;
     private String loginCheck = null, deepLink;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,44 +51,57 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
             e.printStackTrace();
         }*/
 
-        if(getIntent()!=null && getIntent().getStringExtra("from")!=null){
+        if (getIntent() != null && getIntent().getStringExtra("from") != null) {
             MixPanelController.track(EventKeysWL.NOTIFICATION_CLICKED, null);
 
         }
 
 
         Constants.deviceId = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
-        Log.d("Device ID","Device ID : "+Constants.deviceId);
+        Log.d("Device ID", "Device ID : " + Constants.deviceId);
 
         bus = BusProvider.getInstance().getBus();
-        session = new UserSessionManager(getApplicationContext(),SplashScreen_Activity.this);
+        session = new UserSessionManager(getApplicationContext(), SplashScreen_Activity.this);
+    }
+
+    private Thread mThread;
+
+    private class DataRunnable implements Runnable {
+
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        // This method will be executed once the timer is over Start your app main activity
+                        MixPanelController.setMixPanel(SplashScreen_Activity.this, MixPanelController.mainActivity);
+                        if (session.checkLogin()) {
+                            loginCheck = "true";
+                            displayHomeScreen();
+                        } else {
+                            loginCheck = "false";
+                            displayPreSignUpScreens();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
     }
 
     private void Start() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {Thread.sleep(1000);}catch(Exception e){e.printStackTrace();}
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            // This method will be executed once the timer is over Start your app main activity
-                            MixPanelController.setMixPanel(SplashScreen_Activity.this, MixPanelController.mainActivity);
-                            if (session.checkLogin()) {
-                                loginCheck = "true";
-                                displayHomeScreen();
-                            } else {
-                                loginCheck = "false";
-                                displayPreSignUpScreens();
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-        }).start();
+
+        if (mThread == null) {
+            mThread = new Thread(new DataRunnable());
+            mThread.start();
+        }
     }
 
     private void displayHomeScreen() {
@@ -97,37 +111,36 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     }
 
     private void fetchData() {
-        try{
-           new Thread(new Runnable() {
-               @Override
-               public void run() {
-                   Util.addBackgroundImages();
-               }
-           }).start();
-           getFPDetails_retrofit(SplashScreen_Activity.this, session.getFPID(), Constants.clientId, bus);
-        }catch (Exception e)
-        {
+        try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Util.addBackgroundImages();
+                }
+            }).start();
+            getFPDetails_retrofit(SplashScreen_Activity.this, session.getFPID(), Constants.clientId, bus);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void getFPDetails_retrofit(Activity activity, String fpId, String clientId, Bus bus) {
-        new Get_FP_Details_Service(activity,fpId,clientId,bus);
+        new Get_FP_Details_Service(activity, fpId, clientId, bus);
     }
 
     private void displayPreSignUpScreens() {
-        if (pd!=null)
+        if (pd != null)
             pd.dismiss();
         HomeActivity.StorebizFloats = new ArrayList<>();
         // user is not logged in redirect him to Login Activity
 
-        if(BuildConfig.APPLICATION_ID.equals("com.kitsune.biz")){
+        if (BuildConfig.APPLICATION_ID.equals("com.kitsune.biz")) {
             Intent i = new Intent(SplashScreen_Activity.this, KitsunePreSignUpActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             // Staring Login Activity
             startActivity(i);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-        }else {
+        } else {
             Intent i = new Intent(SplashScreen_Activity.this, PreSignUpActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             // Staring Login Activity
@@ -152,24 +165,23 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     }
 
     @Subscribe
-    public void post_getFPDetails(Get_FP_Details_Event response)
-    {
+    public void post_getFPDetails(Get_FP_Details_Event response) {
 
 //        API_Business_enquiries businessEnquiries = new API_Business_enquiries(null,session);
 //        businessEnquiries.getMessages();
 
         //VISITOR and SUBSCRIBER COUNT API
-        if(Methods.isOnline(this)) {
+        if (Methods.isOnline(this)) {
             GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(SplashScreen_Activity.this, session);
             visit_subcribersCountAsyncTask.execute();
         }
 
 
         Intent i = new Intent(SplashScreen_Activity.this, HomeActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         // Staring Login Activity
         startActivity(i);
-        if(pd != null)
+        if (pd != null)
             pd.dismiss();
         finish();
 
@@ -205,10 +217,10 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     public void dataFetched(int skip, boolean isNewMessage) {
 
         Intent i = new Intent(SplashScreen_Activity.this, HomeActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         // Staring Login Activity
         startActivity(i);
-        if(pd != null)
+        if (pd != null)
             pd.dismiss();
         finish();
 //        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);

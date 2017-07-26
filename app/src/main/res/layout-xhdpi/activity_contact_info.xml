@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:background="@color/screen_bg">
@@ -15,23 +16,32 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:focusable="false"
-        android:focusableInTouchMode="true"
-        android:layout_marginTop="5dp"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp">
+        android:background="@color/white"
+        android:focusableInTouchMode="true">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/screen_bg"
+            android:paddingTop="10dp"
+            android:paddingLeft="5dp"
+            android:paddingBottom="10dp"
+            android:text="Phone Numbers"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:orientation="vertical"
+            android:layout_marginTop="5dp"
             android:gravity="bottom">
 
             <TextView
+                android:id="@+id/tv_primary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/primary_number"
                 android:layout_marginLeft="5dp"
                 android:textSize="10sp"
-                android:textColor="#BDBDBD"/>
+                fontPath="Roboto-Regular.ttf"
+                tools:ignore="MissingPrefix" />
 
             <EditText
                 android:id="@+id/primaryNumber"
@@ -52,12 +62,15 @@
             android:gravity="bottom">
 
             <TextView
+                android:id="@+id/tv_alternate1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/alternate_number1"
-                android:textSize="10sp"
                 android:layout_marginLeft="5dp"
-                android:textColor="#BDBDBD"/>
+                android:text="@string/alternate_number1"
+
+                fontPath="Roboto-Regular.ttf"
+                tools:ignore="MissingPrefix"
+                android:textSize="10sp" />
 
             <EditText
                 android:id="@+id/alternateNumber_1"
@@ -78,13 +91,15 @@
             >
 
             <TextView
+                android:id="@+id/tv_alternate2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/alternate_number2"
-                android:textSize="10sp"
-                android:inputType="number"
                 android:layout_marginLeft="5dp"
-                android:textColor="#BDBDBD"/>
+                android:inputType="number"
+                android:text="@string/alternate_number2"
+                fontPath="Roboto-Regular.ttf"
+                tools:ignore="MissingPrefix"
+                android:textSize="10sp" />
 
             <EditText
                 android:id="@+id/alternateNumber_2"
@@ -105,13 +120,15 @@
             >
 
             <TextView
+                android:id="@+id/tv_alternate3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/alternate_number3"
                 android:textSize="10sp"
                 android:inputType="number"
-                android:layout_marginLeft="5dp"
-                android:textColor="#BDBDBD"/>
+                fontPath="Roboto-Regular.ttf"
+                tools:ignore="MissingPrefix"
+                android:layout_marginLeft="5dp"/>
 
             <EditText
                 android:id="@+id/alternateNumber_3"
@@ -123,21 +140,31 @@
                 android:textColor="#575757"/>
 
         </LinearLayout>
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingLeft="5dp"
+            android:paddingBottom="10dp"
+            android:background="@color/screen_bg"
+            android:text="Other Information"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:orientation="vertical"
+            android:layout_marginTop="5dp"
             android:gravity="bottom"
             >
 
             <TextView
+                android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/title_activity_web_site_address"
-                android:textSize="10sp"
                 android:layout_marginLeft="5dp"
-                android:textColor="#BDBDBD"/>
+                android:text="@string/title_activity_web_site_address"
+                fontPath="Roboto-Regular.ttf"
+                tools:ignore="MissingPrefix"
+                android:textSize="10sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -187,8 +214,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/email_address"
                 android:textSize="10sp"
-                android:layout_marginLeft="5dp"
-                android:textColor="#BDBDBD"/>
+                fontPath="Roboto-Regular.ttf"
+                tools:ignore="MissingPrefix"
+                android:layout_marginLeft="5dp"/>
 
             <EditText
                 android:id="@+id/contactInfo_emailId"
@@ -207,20 +235,22 @@
             android:gravity="bottom">
 
             <TextView
+                android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/facebook_page_name"
-                android:textSize="10sp"
                 android:layout_marginLeft="5dp"
-                android:textColor="#BDBDBD"/>
+                android:text="@string/facebook_page_name"
+                fontPath="Roboto-Regular.ttf"
+                tools:ignore="MissingPrefix"
+                android:textSize="10sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
                     android:text="https://facebook.com/"/>
                 <EditText
                     android:id="@+id/facebookPage"
@@ -231,15 +261,17 @@
                     android:inputType="text"
                     android:textColor="#575757"/>
             </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="10sp"
-                android:layout_marginBottom="10dp"
-                android:textColor="@color/gray_transparent"
-                android:text="@string/facebook_url_message"/>
         </LinearLayout>
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
+            fontPath="Roboto-Regular.ttf"
+            tools:ignore="MissingPrefix"
+            android:text="@string/facebook_url_message"/>
     </LinearLayout>
 </ScrollView>
 

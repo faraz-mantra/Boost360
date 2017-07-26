@@ -171,7 +171,7 @@ public class API_Business_enquiries {
         String dateString = null,dateTime = null;
         String formatted = "";
         String temp [] = new String[0];
-        if (response.size() >= 1)
+        if (response != null && response.size() >= 1)
         {
             for(int i = 0 ; i < response.size() ;i++)
             {
