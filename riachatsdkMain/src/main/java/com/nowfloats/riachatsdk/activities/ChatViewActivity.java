@@ -110,6 +110,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -152,7 +153,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     private List<Button> mButtonList = new ArrayList<>();
 
-    private String mCurrVarName = null, mNextNodeId = "-1", appVersion = "", mCurrNodeId, mCurrentDeepLink;
+    private String mCurrVarName = null, mNextNodeId = "-1", appVersion = "", mCurrNodeId, mCurrentDeepLink,mSessionId,mCurrFlowId;
 
     private final String KEY_NEXT_NODE_ID = "NextNodeId";
 
@@ -281,6 +282,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     private void initializeControls() {
 
+        mSessionId = UUID.randomUUID().toString();
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
@@ -362,11 +364,11 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                             mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
                             ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                                     mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), mCurrVarName.replace("[~", "").replace("]", ""),
-                                    etChatInput.getText().toString().trim(), mCurrButton.getButtonType(), appVersion);
+                                    etChatInput.getText().toString().trim(), mCurrButton.getButtonType(), appVersion,mCurrFlowId,mSessionId);
                         } else {
                             ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                                     mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), null,
-                                    null, mCurrButton.getButtonType(), appVersion);
+                                    null, mCurrButton.getButtonType(), appVersion,mCurrFlowId,mSessionId);
                         }
                         showNextNode(mCurrButton.getNextNodeId());
                         mAutoComplDataHash = null;
@@ -379,12 +381,13 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                                 mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
                                 ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                                         mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), mCurrVarName.replace("[~", "").replace("]", ""),
-                                        etChatInput.getText().toString().trim(), mCurrButton.getButtonType(), appVersion);
+                                        etChatInput.getText().toString().trim(), mCurrButton.getButtonType(), appVersion,mCurrFlowId,mSessionId);
                             } else {
                                 mDataMap.put("[~" + mCurrVarName + "]", mAutoComplDataHash.get(etChatInput.getText().toString().trim()));
                                 ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                                         mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), mCurrVarName.replace("[~", "").replace("]", ""),
-                                        mAutoComplDataHash.get(etChatInput.getText().toString().trim()), mCurrButton.getButtonType(), appVersion);
+                                        mAutoComplDataHash.get(etChatInput.getText().toString().trim()), mCurrButton.getButtonType(),
+                                        appVersion,mCurrFlowId,mSessionId);
                             }
                         }
                         mAutoComplDataHash = null;
@@ -649,7 +652,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     final Button button = btn;
                     ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                             mCurrNodeId, button.getId(), button.getButtonText(), null,
-                            null, button.getButtonType(), appVersion);
+                            null, button.getButtonType(), appVersion,mCurrFlowId,mSessionId);
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -698,24 +701,24 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     mDataMap.put("[~" + mCurrVarName + "]", str);
                     ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                             mCurrNodeId, button.getId(), button.getButtonText(), mCurrVarName.replace("[~", "").replace("]", ""),
-                            button.getVariableValue(), button.getButtonType(), appVersion);
+                            button.getVariableValue(), button.getButtonType(), appVersion,mCurrFlowId,mSessionId);
                 } else {
                     ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                             mCurrNodeId, button.getId(), button.getButtonText(), null,
-                            null, button.getButtonType(), appVersion);
+                            null, button.getButtonType(), appVersion,mCurrFlowId,mSessionId);
                 }
                 showNextNode(button.getNextNodeId());
                 break;
             case Constants.ButtonType.TYPE_GET_ADDR:
                 ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, button.getId(), button.getButtonText(), null,
-                        null, button.getButtonType(), appVersion);
+                        null, button.getButtonType(), appVersion,mCurrFlowId,mSessionId);
                 getUserAddress(button);
                 break;
             case Constants.ButtonType.TYPE_SHOW_CONFIRMATION:
                 ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, button.getId(), button.getButtonText(), null,
-                        null, button.getButtonType(), appVersion);
+                        null, button.getButtonType(), appVersion,mCurrFlowId,mSessionId);
 //                createmySite(button);
                 mNextNodeId = button.getNextNodeId();
                 mCurrButton = button;
@@ -743,19 +746,19 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             case Constants.ButtonType.TYPE_GET_ITEM_FROM_SOURCE:
                 ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, button.getId(), button.getButtonText(), null,
-                        null, button.getButtonType(), appVersion);
+                        null, button.getButtonType(), appVersion,mCurrFlowId,mSessionId);
                 handleAutoComplete(button);
                 break;
             case Constants.ButtonType.TYPE_DEEP_LINK:
                 handleDeepLink(button);
                 ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, button.getId(), button.getButtonText(), null,
-                        null, button.getButtonType(), appVersion);
+                        null, button.getButtonType(), appVersion,mCurrFlowId,mSessionId);
                 break;
             default:
                 ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, button.getId(), button.getButtonText(), null,
-                        null, button.getButtonType(), appVersion);
+                        null, button.getButtonType(), appVersion,mCurrFlowId,mSessionId);
                 break;
 
         }
@@ -860,7 +863,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
                 ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, btn.getId(), btn.getButtonText(), ChatLogger.EventStatus.COMPLETED.getValue(),
-                        btn.getButtonType(), userData, appVersion);
+                        btn.getButtonType(), userData, appVersion,mCurrFlowId,mSessionId);
 
                 showNextNode(mCurrButton.getNextNodeId());
                 //showConfirmation(Constants.ConfirmationType.ADDRESS_ENTRY, housePlotNum + ", " + address + ", " + city + ", " + country + ", " + pin + ", " + landmark, lat + "", lon + "");
@@ -1047,7 +1050,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
             ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                     mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), ChatLogger.EventStatus.DROPPED.getValue(),
-                    mCurrButton.getButtonType(), userData, appVersion);
+                    mCurrButton.getButtonType(), userData, appVersion,mCurrFlowId,mSessionId);
         }
 
 
@@ -1140,8 +1143,10 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         tvPrefix.setText("");
         tvPostfix.setText("");
         mCurrNodeId = node.getId();
+        mCurrFlowId = node.getFlowId();
+
         etChatInput.setHint("");
-        ChatLogger.getInstance().logViewEvent(DeviceDetails.getDeviceId(this), mCurrNodeId, appVersion);
+        ChatLogger.getInstance().logViewEvent(DeviceDetails.getDeviceId(this), mCurrNodeId, appVersion,mCurrFlowId,mSessionId);
         mCurrVarName = null;
         mHandler = new Handler(Looper.getMainLooper());
         if (node.getVariableName() != null) {
@@ -1619,7 +1624,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
                     ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                             mCurrNodeId, btn.getId(), btn.getButtonText(), ChatLogger.EventStatus.COMPLETED.getValue(),
-                            btn.getButtonType(), userData, appVersion);
+                            btn.getButtonType(), userData, appVersion,mCurrFlowId,mSessionId);
                 }
 
                 showNextNode(btn.getNextNodeId());
@@ -1943,12 +1948,12 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
                 ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, mButton.getId(), mButton.getButtonText(), mCurrVarName,
-                        data[0], mButton.getButtonType(), appVersion);
+                        data[0], mButton.getButtonType(), appVersion,mCurrFlowId,mSessionId);
             } else {
 
                 ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, mButton.getId(), mButton.getButtonText(), null,
-                        null, mButton.getButtonType(), appVersion);
+                        null, mButton.getButtonType(), appVersion,mCurrFlowId,mSessionId);
             }
         }
 
@@ -1968,7 +1973,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
                     ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                             mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), ChatLogger.EventStatus.COMPLETED.getValue(),
-                            mCurrButton.getButtonType(), userData, appVersion);
+                            mCurrButton.getButtonType(), userData, appVersion,mCurrFlowId,mSessionId);
 
                     showNextNode(mNextNodeId);
                     break;
@@ -2114,11 +2119,11 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                             mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
                             ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                                     mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), mCurrVarName.replace("[~", "").replace("]", ""),
-                                    etChatInput.getText().toString().trim(), mCurrButton.getButtonType(), appVersion);
+                                    etChatInput.getText().toString().trim(), mCurrButton.getButtonType(), appVersion,mCurrFlowId,mSessionId);
                         } else {
                             ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                                     mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), null,
-                                    null, mCurrButton.getButtonType(), appVersion);
+                                    null, mCurrButton.getButtonType(), appVersion,mCurrFlowId,mSessionId);
                         }
                         showNextNode(mCurrButton.getNextNodeId());
 

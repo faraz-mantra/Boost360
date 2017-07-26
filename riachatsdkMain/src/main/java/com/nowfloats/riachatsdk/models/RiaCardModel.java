@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-public class RiaCardModel implements Serializable{
+public class RiaCardModel implements Serializable {
 
     @SerializedName("Name")
     @Expose
@@ -22,7 +22,7 @@ public class RiaCardModel implements Serializable{
     private String emotion;
     @SerializedName("TimeoutInMs")
     @Expose
-    private Long timeoutInMs=-1L;
+    private Long timeoutInMs = -1L;
     @SerializedName("NodeType")
     @Expose
     private String nodeType;
@@ -59,6 +59,12 @@ public class RiaCardModel implements Serializable{
     @SerializedName("NextNodeId")
     @Expose
     private String nextNodeId;
+
+
+    @SerializedName("FlowId")
+    @Expose
+    private String flowId;
+
     @SerializedName("RequiredVariables")
     @Expose
     private List<String> requiredVariables = null;
@@ -111,6 +117,14 @@ public class RiaCardModel implements Serializable{
 
     public void setApiType(String apiType) {
         this.apiType = apiType;
+    }
+
+    public String getFlowId() {
+        return flowId;
+    }
+
+    public void setFlowId(String flowId) {
+        this.flowId = flowId;
     }
 
     public String getName() {
