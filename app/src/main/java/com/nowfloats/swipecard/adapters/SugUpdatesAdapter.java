@@ -52,14 +52,7 @@ public class SugUpdatesAdapter extends RecyclerView.Adapter<SugUpdatesAdapter.Vi
         }
 
         viewHolder.tvUpdate.setText(mSugUpdate.getName());
-//        updateMaxLines(mSugUpdate, viewHolder.tvViewMore, viewHolder.tvUpdate);
-
-        if (viewHolder.tvUpdate.getLineCount() > MAX_LINE_COUNT) {
-            viewHolder.tvViewMore.setVisibility(View.VISIBLE);
-        } else {
-            viewHolder.tvViewMore.setVisibility(View.GONE);
-        }
-
+        updateMaxLines(mSugUpdate, viewHolder.tvViewMore, viewHolder.tvUpdate);
 
         viewHolder.tvViewMore.setOnClickListener(new View.OnClickListener() {
             @Override

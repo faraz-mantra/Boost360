@@ -170,7 +170,7 @@ public class Home_Fragment_Tab extends Fragment {
                 public void run() {
                     checkOverlay(DrawOverLay.FromTab);
                 }
-            }, 3000);
+            }, 10000);
 
         }
 
