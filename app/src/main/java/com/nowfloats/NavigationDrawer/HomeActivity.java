@@ -189,7 +189,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     SharedPreferences.Editor prefsEditor;
     private boolean isShownExpireDialog = false;
     private RiaNodeDataModel mRiaNodeDataModel;
-
+    private String mDeepLinkUrl;
     private String TAG = HomeActivity.class.getSimpleName();
     private String[] permission = new String[]{Manifest.permission.READ_SMS,Manifest.permission.RECEIVE_SMS
     ,Manifest.permission.READ_PHONE_STATE, Settings.ACTION_ACCESSIBILITY_SETTINGS};
@@ -221,6 +221,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
 
 
         Bundle bundle = getIntent().getExtras();
+        if (bundle!=null && bundle.containsKey("url")){
+            mDeepLinkUrl = bundle.getString("url");
+        }
         if(bundle!=null && bundle.containsKey("Username")){
         }else{
             createView();
@@ -493,9 +496,9 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 ft.replace(R.id.mainFrame,chatFragment,"chatFragment").commit();
             }else if(url.contains(getResources().getString(R.string.deeplink_gplaces))){//TODO
              }
-        }deepLinkUrl = null; GCMReceiver.deeplinkUrl = null;
-    }
 
+            }deepLinkUrl = null;
+        }
     private void SetMixPanelProperties() {
 // TODO Auto-generated method stub
         try {
@@ -758,15 +761,13 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
             if(plusAddButton!=null)
                  plusAddButton.setVisibility(View.GONE);
-            if(Constants.GCM_Msg){
-                DeepLinkPage(RiaFirebaseMessagingService.deepLinkUrl, false);
-                Constants.GCM_Msg = false;
-            }
+
         }
 
         if(!isCalled){
             navigateView();
         }
+        DeepLinkPage(mDeepLinkUrl, false);
     }
     private void checkExpiry1(){
         if(Constants.PACKAGE_NAME.equals("com.kitsune.biz")){
