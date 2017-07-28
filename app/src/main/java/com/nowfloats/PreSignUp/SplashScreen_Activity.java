@@ -17,9 +17,11 @@ import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
 import com.nowfloats.signup.UI.UI.PreSignUpActivity;
+import com.nowfloats.sync.DbController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.DataBase;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
@@ -53,7 +55,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
 
         if (getIntent() != null && getIntent().getStringExtra("from") != null) {
             MixPanelController.track(EventKeysWL.NOTIFICATION_CLICKED, null);
-
+            deepLink = getIntent().getStringExtra("url");
         }
 
 
@@ -179,11 +181,28 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
 
         Intent i = new Intent(SplashScreen_Activity.this, HomeActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        if(deepLink!=null){
+            if(!deepLink.contains("logout")) {
+                i.putExtra("url", deepLink);
+                startActivity(i);
+                if (pd != null)
+                    pd.dismiss();
+                finish();
+            }else {
+                session.logoutUser();
+                DataBase db = new DataBase(this);
+                DbController.getDbController(getApplicationContext()).deleteDataBase();
+                db.deleteLoginStatus();
+            }
+        }else{
+            startActivity(i);
+            if (pd != null)
+                pd.dismiss();
+            finish();
+        }
         // Staring Login Activity
-        startActivity(i);
-        if (pd != null)
-            pd.dismiss();
-        finish();
+
 
         /*Fetch_Home_Data fetch_home_data  = new Fetch_Home_Data(this,0);
         fetch_home_data.setFetchDataListener(SplashScreen_Activity.this);
@@ -219,10 +238,25 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         Intent i = new Intent(SplashScreen_Activity.this, HomeActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         // Staring Login Activity
-        startActivity(i);
-        if (pd != null)
-            pd.dismiss();
-        finish();
+        if(deepLink!=null){
+            if(!deepLink.contains("logout")) {
+                i.putExtra("url", deepLink);
+                startActivity(i);
+                if (pd != null)
+                    pd.dismiss();
+                finish();
+            }else {
+                session.logoutUser();
+                DataBase db = new DataBase(this);
+                DbController.getDbController(getApplicationContext()).deleteDataBase();
+                db.deleteLoginStatus();
+            }
+        }else{
+            startActivity(i);
+            if (pd != null)
+                pd.dismiss();
+            finish();
+        }
 //        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 

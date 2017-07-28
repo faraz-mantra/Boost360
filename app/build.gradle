@@ -48,7 +48,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 25
         versionName "4.7.4"
-        versionCode 2017070021
+        versionCode 2017070028
         multiDexEnabled true
     }
     buildTypes {
@@ -89,7 +89,6 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     //compile project('libs:libraries:volley')
     compile project(':library')
-    compile project(':mixpanel')
     compile project(':cropper')
     compile project(':ZoomImageLibrary')
     compile project(':instamojoLib')
@@ -137,8 +136,11 @@ dependencies {
     compile 'com.github.freshdesk:hotline-android:1.2.0'
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
     compile 'com.romandanylyk:pageindicatorview:0.2.0'
+    compile "com.mixpanel.android:mixpanel-android:5.+"
     compile project(':messagelibrary')
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.github.wooplr:Spotlight:1.2.3'
+
 
 }
 

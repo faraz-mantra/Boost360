@@ -1275,6 +1275,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="open_setting">Open Settings</string>
     <string name="take_me_there">Take me there</string>
     <string name="accessibility_permission">Accessibility permission</string>
+    <string name="select_boost_from">Select Boost \n from the list</string>
     <string name="screen_overlay_permission">Screen overlay permission</string>
     <string name="required_overlay_permission">Give us this permission to see our new feature \"Boost Bubble\"</string>
     <string name="bubble_for_whatsapp">Bubble for WhatsApp</string>
@@ -1342,4 +1343,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="coach_mark_msg_view_message">Click on highlighted view to message</string>
     <string name="coach_mark_msg_view_share">We have suggestionList for you\n SMS/EMAIL/WHATSAPP Share</string>
 
+    <string name="speech_prompt">Say something&#8230;</string>
+    <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
 </resources>

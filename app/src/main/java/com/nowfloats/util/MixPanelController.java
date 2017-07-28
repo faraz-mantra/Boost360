@@ -19,6 +19,7 @@ public class MixPanelController {
 	public static final String BUBBLE_IN_APP_DIALOG = "BubbleInAppDialog";
 	public static final String BUBBLE_IN_APP_DIALOG_CLICKED = "BubbleInAppDialogClicked";
 	public static final String BUBBLE_DIALOG = "BubbleDialogOnWhatsApp";
+	public static final String BUBBLE_OVERLAY_PERM = "BubbleOverlayPerm";
 	public static final String BUBBLE_DIALOG_SHARE = "BubbleWhatsAppProductShareClicked";
 	public static final String BUBBLE_CLOSED = "BubbleClosedByUser";
 	public static final String WHATSAPP_TO_BOOST = "whatsapp_to_boost";

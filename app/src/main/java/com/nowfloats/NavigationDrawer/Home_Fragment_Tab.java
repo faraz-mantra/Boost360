@@ -41,6 +41,7 @@ import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -170,7 +171,7 @@ public class Home_Fragment_Tab extends Fragment {
                 public void run() {
                     checkOverlay(DrawOverLay.FromTab);
                 }
-            }, 10000);
+            }, 8000);
 
         }
 
@@ -366,15 +367,6 @@ public class Home_Fragment_Tab extends Fragment {
 //            Toast.makeText(activity, "you do not have products into ProductGallery", Toast.LENGTH_SHORT).show();
 //            return;
 //        }
-        Calendar calendar = Calendar.getInstance();
-        long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, -1);
-        long newTime = calendar.getTimeInMillis();
-        long diff = 3 * 24 * 60 * 60 * 1000;
-        //Log.v("ggg", oldTime + "");
-//Log.v("ggg",String.valueOf(diff)+" "+String.valueOf(newTime-oldTime));
-        if (oldTime != -1 && ((newTime - oldTime) < diff)) {
-            return;
-        }
 
         boolean checkAccessibility = true;
         if (android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity())) {
@@ -386,6 +378,16 @@ public class Home_Fragment_Tab extends Fragment {
             if (!checkAccessibility) {
                 dialogForOverlayPath(from);
             }
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, -1);
+        long newTime = calendar.getTimeInMillis();
+        long diff = 3 * 24 * 60 * 60 * 1000;
+        //Log.v("ggg", oldTime + "");
+//Log.v("ggg",String.valueOf(diff)+" "+String.valueOf(newTime-oldTime));
+        if (oldTime != -1 && ((newTime - oldTime) < diff)) {
+            return;
         }
 
         if (checkAccessibility)
@@ -466,6 +468,8 @@ public class Home_Fragment_Tab extends Fragment {
         if (getActivity() == null) {
             return;
         }
+
+        MixPanelController.track(MixPanelController.BUBBLE_OVERLAY_PERM, null);
         if (android.os.Build.VERSION.SDK_INT >= 23) {
 
             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getActivity().getPackageName()));
