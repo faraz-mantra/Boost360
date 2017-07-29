@@ -4,9 +4,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.nowfloats.swipecard.models.MessageDO;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.TimeZone;
+import java.util.Calendar;
 
 /**
  * Created by admin on 7/18/2017.
@@ -52,12 +50,14 @@ public class FirebaseLogger {
 
     public void logSAMEvent(String messageId, int status, String fpId) {
 
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        df.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Calendar calendar = Calendar.getInstance();
+        String currentTime = String.valueOf(calendar.getTimeInMillis());
+
 
         MessageDO messageDO = new MessageDO();
         messageDO.setMessageId(messageId);
         messageDO.setFpId(fpId);
+        messageDO.setDateTime(currentTime);
         messageDO.setStatus(status);
 
         mDatabase.child(DB_SAM_CHILD_NAME).push().setValue(messageDO);

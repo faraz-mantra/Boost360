@@ -101,6 +101,7 @@ public class GCMReceiver extends BroadcastReceiver {
     private SharedPreferences pref;
     public static String PREF_NAME = "nowfloatsPrefs";
     public static final String HAS_SUGGESTIONS = "HAS_SUGGESTIONS";
+    public static final String SAM_BUBBLE_NOTIFICATION = "SAMBubbleNotification";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -125,6 +126,8 @@ public class GCMReceiver extends BroadcastReceiver {
             if (bundle != null
                     && bundle.containsKey(BUBBLE_MSG_KEY)
                     && bundle.getString(BUBBLE_MSG_KEY).equalsIgnoreCase(BUBBLE_MSG)) {
+                MixpanelAPI.getInstance(context, "7d962760bccee86ab026331478d49bab").track(SAM_BUBBLE_NOTIFICATION, null);
+
                 pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
                 pref.edit().putBoolean(HAS_SUGGESTIONS, true).apply();
 

@@ -8,8 +8,16 @@ public class MessageDO {
 
     private String messageId;
     private String fpId;
+    private String dateTime;
     private int status;
 
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
 
     public String getMessageId() {
         return messageId;
