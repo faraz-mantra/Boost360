@@ -18,6 +18,7 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -41,6 +42,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -119,6 +121,7 @@ public class Create_Message_Activity extends AppCompatActivity {
     private boolean mIsImagePicking = false;
     private CardView image_card,title_card,message_card;
     private ImageView deleteButton,editButton, ivSpeakUpdate;
+    private boolean isMsgChanged = false,isImageChanged = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -438,6 +441,7 @@ public class Create_Message_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 imageIconButtonSelected =false;
+                isImageChanged = true;
                 path = null;
                 prefsEditor.putString("image_post",path).apply();
                 //Log.v("ggg"," delete"+ path);
@@ -477,6 +481,7 @@ public class Create_Message_Activity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 //Log.v("ggg",s.toString()+" after");
+                isMsgChanged = true;
                 prefsEditor.putString("msg_post",s.toString()).apply();
             }
         });
@@ -606,6 +611,7 @@ public class Create_Message_Activity extends AppCompatActivity {
 
     private void restoreData() {
         msg.setText(pref.getString("msg_post",""));
+        msg.setSelection(msg.getText().length());
         path = pref.getString("image_post",null);
         //Log.v("ggg","restore "+ msg.getText().toString()+" "+path);
         if (path != null && path.length() >0) {
@@ -804,6 +810,7 @@ public class Create_Message_Activity extends AppCompatActivity {
                 picUri = data.getData();
 
                 try {
+                    isImageChanged = true;
                     if (picUri == null) {
                         CameraBitmap = (Bitmap) data.getExtras().get("data");
                         path = Util.saveBitmap(CameraBitmap, activity, tagName + System.currentTimeMillis());
@@ -826,6 +833,7 @@ public class Create_Message_Activity extends AppCompatActivity {
             try {
                 if (picUri==null){
                     if (data != null) {
+                        isImageChanged = true;
                         picUri = data.getData();
                         if (picUri == null) {
                             CameraBitmap = (Bitmap) data.getExtras().get("data");
@@ -861,10 +869,12 @@ public class Create_Message_Activity extends AppCompatActivity {
             path = data.getStringExtra("edit_image");
             CameraBitmap = Util.getBitmap(path, activity);
             setPicture(CameraBitmap);
+            isImageChanged = true;
         }else if(REQ_CODE_SPEECH_INPUT==requestCode && resultCode == RESULT_OK){
             ArrayList<String> result = data
                     .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             msg.append(result.get(0)+". ");
+            isImageChanged = true;
         }
     }
 
@@ -985,11 +995,49 @@ public class Create_Message_Activity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        if(isMsgChanged || isImageChanged){
+            showSaveUpdateDialog();
+        }else {
+            super.onBackPressed();
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        }
     }
 
+    private void showSaveUpdateDialog(){
+        if(isFinishing()){
+            return;
+        }
+        new MaterialDialog.Builder(this)
+                .content("Do you want to save this update as draft?")
+                .cancelable(false)
+                .positiveColorRes(R.color.primaryColor)
+                .negativeColorRes(R.color.primaryColor)
+                .positiveText("Save")
+                .negativeText("Delete")
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
+                        isMsgChanged = false;
+                        isImageChanged = false;
+                        dialog.dismiss();
+                        onBackPressed();
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        pref.edit().putString("msg_post","").apply();
+                        pref.edit().putString("image_post","").apply();
+                        isMsgChanged = false;
+                        isImageChanged = false;
+                        dialog.dismiss();
+                        onBackPressed();
+                    }
+                })
+                .build()
+                .show();
+    }
     private boolean isExternalStorageAvailable() {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {

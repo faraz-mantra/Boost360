@@ -52,6 +52,9 @@ public class Get_FP_Details_Service {
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            if(activity == null || activity.isFinishing()){
+                                return;
+                            }
                             Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
                             if (WebSiteAddressActivity.pd != null) {
                                 WebSiteAddressActivity.pd.dismiss();
@@ -59,9 +62,10 @@ public class Get_FP_Details_Service {
                             if (SplashScreen_Activity.pd != null) {
                                 SplashScreen_Activity.pd.dismiss();
                             }
-                            bus.post(response);
+
                         }
                     });
+                    bus.post(response);
                 }
             }
 
@@ -82,9 +86,6 @@ public class Get_FP_Details_Service {
                                 e.printStackTrace();
                             }
                         }
-
-                        bus.post(new Get_FP_Details_Event(new Get_FP_Details_Model()));
-
                     }
                 });
 

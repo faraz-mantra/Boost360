@@ -160,6 +160,9 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
             facebookApis.nfxFetchFacebookData(session.getFPID(), mType, new Callback<GetFacebookAnalyticsData>() {
                 @Override
                 public void success(GetFacebookAnalyticsData facebookAnalyticsData, Response response) {
+                    if (isFinishing()){
+                        return;
+                    }
                     hideDialog();
                     if (facebookAnalyticsData == null) {
                         return;
@@ -176,6 +179,9 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
 
                 @Override
                 public void failure(RetrofitError error) {
+                    if (isFinishing()){
+                        return;
+                    }
                     hideDialog();
                     Toast.makeText(SocialAnalytics.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                     //Log.v("ggg", error + "");

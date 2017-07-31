@@ -2,7 +2,6 @@ include ':app', ':cropper', ':ZoomImageLibrary', ':instamojoLib', ':bubblebutton
 
 include ':messagelibrary'
 
-include ':mixpanel'
 
 include ':app:libs:libraries:volley'
 

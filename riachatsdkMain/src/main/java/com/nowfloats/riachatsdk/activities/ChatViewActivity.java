@@ -672,7 +672,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     @Override
     public void onItemClick(int position) {
-        onItemClick(mButtonList.get(position));
+        if(position<mButtonList.size()) {
+            onItemClick(mButtonList.get(position));
+        }
     }
 
     private void onItemClick(final Button button) {
@@ -782,6 +784,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        if (!isFinishing())
                         showNextNode(button.getNextNodeId());
                     }
                 });
@@ -799,6 +802,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            if (!isFinishing())
                             showNextNode(button.getNextNodeId());
                         }
                     });
@@ -806,6 +810,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            if (!isFinishing())
                             showNextNode(button.getNextNodeId());
                         }
                     });
@@ -1699,7 +1704,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 //pg.dismiss();
                 error.printStackTrace();
                 progressBar.setVisibility(View.GONE);
-
+                if(isFinishing()){
+                    return;
+                }
                 if (isNetworkStatusAvialable(ChatViewActivity.this)) {
                     showCustomDialog(CustomDialogFragment.DialogFrom.SKIP);
                 } else {

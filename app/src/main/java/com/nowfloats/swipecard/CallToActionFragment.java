@@ -279,7 +279,7 @@ public class CallToActionFragment extends Fragment {
         rvActionItems.setVisibility(View.GONE);
 
 
-        if (suggestionsDO.getType().equalsIgnoreCase(ACTION_TYPE_NUMBER)) {
+        if (suggestionsDO.getType()!= null && suggestionsDO.getType().equalsIgnoreCase(ACTION_TYPE_NUMBER)) {
             btnCall.setVisibility(View.VISIBLE);
             btnShare.setText("Share");
         } else {

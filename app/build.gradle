@@ -47,8 +47,8 @@ android {
         applicationId 'com.thinksity'
         minSdkVersion 15
         targetSdkVersion 25
-        versionName "4.7.4"
-        versionCode 2017070028
+        versionName "4.7.5"
+        versionCode 2017070031
         multiDexEnabled true
     }
     buildTypes {
@@ -137,10 +137,7 @@ dependencies {
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
     compile 'com.romandanylyk:pageindicatorview:0.2.0'
     compile "com.mixpanel.android:mixpanel-android:5.+"
-    compile project(':messagelibrary')
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.github.wooplr:Spotlight:1.2.3'
-
 
 }
 

@@ -52,6 +52,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private static final String SAM_BUBBLE_MSG = "I have Got some data";
+    private static final String SAM_BUBBLE_MSG_KEY = "100";
 
     //This method is only generating push notification
     //It is same as we did in earlier posts
@@ -62,7 +63,8 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         if (message == null || message.size() == 0) {
 
         } else {
-            if (message.containsKey("mp_message") && message.get("mp_message").equalsIgnoreCase(SAM_BUBBLE_MSG)) {
+            if ((message.containsKey("mp_message") && message.get("mp_message").equalsIgnoreCase(SAM_BUBBLE_MSG))
+                    || (message.containsKey("mp_message_key") && message.get("mp_message_key").equalsIgnoreCase(SAM_BUBBLE_MSG_KEY))) {
                 MixPanelController.track(MixPanelController.SAM_BUBBLE_NOTIFICATION, null);
                 pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).apply();
             } else {

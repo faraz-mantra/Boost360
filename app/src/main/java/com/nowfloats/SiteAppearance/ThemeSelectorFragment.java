@@ -158,7 +158,7 @@ public class ThemeSelectorFragment extends Fragment{
         });
     }
     public void setCurrentLook(String s){
-        hideDialog();
+        if(!isAdded()) return;
         if(TextUtils.isEmpty(s)){
             Toast.makeText(mContext, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
         }else if(s.equals("true")){
@@ -170,6 +170,7 @@ public class ThemeSelectorFragment extends Fragment{
         }else if(s.equals("false")){
             Toast.makeText(mContext, "Not able to change theme", Toast.LENGTH_SHORT).show();
         }
+        hideDialog();
     }
     
 }

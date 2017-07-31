@@ -54,7 +54,6 @@ import com.freshdesk.hotline.Hotline;
 import com.freshdesk.hotline.HotlineConfig;
 import com.freshdesk.hotline.HotlineUser;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.mixpanel.android.mpmetrics.GCMReceiver;
 import com.nfx.leadmessages.ReadMessages;
 import com.nineoldandroids.animation.Animator;
 import com.nowfloats.AccountDetails.AccountInfoActivity;
@@ -85,7 +84,6 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.App_Update_Async_Task;
 import com.nowfloats.NavigationDrawer.API.DeepLinkInterface;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
-import com.nowfloats.NavigationDrawer.API.KitsuneApi;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
 import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsActivity;
@@ -1802,7 +1800,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             progressDialog = null ;
         }
 
-
         createView();
 
     }
@@ -1815,7 +1812,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             progressDialog.dismiss();
             progressDialog = null ;
         }
-        finish();
+        createView();
     }
 
     @Subscribe
@@ -1826,7 +1823,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             progressDialog.dismiss();
             progressDialog = null ;
         }
-        finish();
+        createView();
     }
 
     private void createView(){
