@@ -32,6 +32,9 @@ import com.thinksity.R;
 
 import java.util.ArrayList;
 
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
 public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.Fetch_Home_Data_Interface {
     UserSessionManager session;
     Bus bus;
@@ -186,7 +189,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
             if(!deepLink.contains("logout")) {
                 i.putExtra("url", deepLink);
                 startActivity(i);
-                if (pd != null)
+                if (pd != null && pd.isShowing())
                     pd.dismiss();
                 finish();
             }else {
@@ -197,7 +200,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
             }
         }else{
             startActivity(i);
-            if (pd != null)
+            if (pd != null && pd.isShowing())
                 pd.dismiss();
             finish();
         }
@@ -209,7 +212,27 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         fetch_home_data.getMessages(session.getFPID(), "0");*/
     }
 
+    @Subscribe
+    public void getResponse(Response response)
+    {
+        Intent i = new Intent(SplashScreen_Activity.this, HomeActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (pd != null && pd.isShowing())
+            pd.dismiss();
+        startActivity(i);
+        finish();
+    }
 
+    @Subscribe
+    public void getError(RetrofitError retrofitError)
+    {
+        Intent i = new Intent(SplashScreen_Activity.this, HomeActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (pd != null && pd.isShowing())
+            pd.dismiss();
+        startActivity(i);
+        finish();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

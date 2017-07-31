@@ -17,7 +17,7 @@ import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.signup.UI.Model.ProcessFPDetails;
 import com.nowfloats.signup.UI.UI.WebSiteAddressActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.nowfloats.twitter.TwitterConnection;
+import com.nowfloats.Twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -52,6 +52,9 @@ public class Get_FP_Details_Service {
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            if(activity == null || activity.isFinishing()){
+                                return;
+                            }
                             Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
                             if (WebSiteAddressActivity.pd != null) {
                                 WebSiteAddressActivity.pd.dismiss();
@@ -59,9 +62,10 @@ public class Get_FP_Details_Service {
                             if (SplashScreen_Activity.pd != null) {
                                 SplashScreen_Activity.pd.dismiss();
                             }
-                            bus.post(response);
+
                         }
                     });
+                    bus.post(response);
                 }
             }
 
@@ -82,9 +86,6 @@ public class Get_FP_Details_Service {
                                 e.printStackTrace();
                             }
                         }
-
-                        bus.post(new Get_FP_Details_Event(new Get_FP_Details_Model()));
-
                     }
                 });
 

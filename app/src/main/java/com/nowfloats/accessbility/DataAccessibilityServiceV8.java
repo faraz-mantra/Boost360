@@ -106,7 +106,8 @@ public class DataAccessibilityServiceV8 extends AccessibilityService {
                         startService(intent);
                     }
                 }
-            } else if (((event.getPackageName().toString().equalsIgnoreCase(getLauncherPackage())
+            } else if (((!TextUtils.isEmpty(event.getPackageName()) &&
+                    event.getPackageName().toString().equalsIgnoreCase(getLauncherPackage())
                     || (!TextUtils.isEmpty(event.getClassName()) &&
                     event.getClassName().toString().equalsIgnoreCase(SUGGESTIONS_CLASS_NAME)))
                     && pref.getBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED, false) &&

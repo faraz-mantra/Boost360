@@ -136,7 +136,7 @@ public class Card_Full_View_MainActivity extends AppCompatActivity implements Ho
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if(id==android.R.id.home){
-            onBackPressed();
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
