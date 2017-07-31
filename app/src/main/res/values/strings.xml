@@ -1341,4 +1341,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="coach_mark_msg_view_message">Click on highlighted view to message</string>
     <string name="coach_mark_msg_view_share">We have suggestionList for you\n SMS/EMAIL/WHATSAPP Share</string>
 
+    <string name="speech_prompt">Say something&#8230;</string>
+    <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
 </resources>

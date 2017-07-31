@@ -61,45 +61,66 @@
                     android:padding="10dp"
                     android:background="@color/white"
                     android:layout_height="wrap_content" />
+
             </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
-                xmlns:card="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/image_card"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_marginTop="40dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                card:cardBackgroundColor="@color/gray"
-                android:layout_marginLeft="1dp"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="5dp">
+                android:orientation="horizontal">
+                <android.support.v7.widget.CardView
+                    xmlns:card="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/image_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    card:cardBackgroundColor="@color/gray"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginTop="5dp">
+                    <ImageView
+                        android:id="@+id/imageIcon"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:src="@drawable/ic_action_camera"
+                        android:layout_gravity="bottom"
+                        android:scaleType="fitXY">
+                    </ImageView>
+
+                    <ImageView
+                        android:id="@+id/edit_image"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:padding="2dp"
+                        android:layout_margin="2dp"
+                        android:background="@color/gray"
+                        android:src="@drawable/pencil_white" />
+
+                    <ImageView
+                        android:id="@+id/delete_image"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="end"
+                        android:src="@drawable/cancel1"
+                        android:background="@color/gray"/>
+
+
+                </android.support.v7.widget.CardView>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"/>
                 <ImageView
-                    android:id="@+id/imageIcon"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:src="@drawable/ic_action_camera"
-                    android:layout_gravity="bottom"
-                    android:scaleType="fitXY">
-                </ImageView>
+                    android:id="@+id/iv_speak_update"
+                    android:background="@drawable/round_btn_bg"
+                    android:padding="5dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:tint="@color/white"
+                    android:layout_gravity="right"
+                    android:src="@drawable/ic_keyboard_voice_black_24dp"/>
+            </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/edit_image"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:padding="2dp"
-                    android:layout_margin="2dp"
-                    android:background="@color/gray"
-                    android:src="@drawable/pencil_white" />
-
-                <ImageView
-                    android:id="@+id/delete_image"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="end"
-                    android:src="@drawable/cancel1"
-                    android:background="@color/gray"/>
-
-
-            </android.support.v7.widget.CardView>
 
 
         </LinearLayout>
