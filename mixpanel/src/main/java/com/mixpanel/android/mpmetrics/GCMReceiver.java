@@ -127,12 +127,11 @@ public class GCMReceiver extends BroadcastReceiver {
                     && bundle.containsKey(BUBBLE_MSG_KEY)
                     && bundle.getString(BUBBLE_MSG_KEY).equalsIgnoreCase(BUBBLE_MSG)) {
                 MixpanelAPI.getInstance(context, "7d962760bccee86ab026331478d49bab").track(SAM_BUBBLE_NOTIFICATION, null);
-                Log.e("MixpanelAPI.getInstance","has data");
+
                 pref = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
                 pref.edit().putBoolean(HAS_SUGGESTIONS, true).apply();
 
             } else {
-                Log.e("MixpanelAPI.getInstance","has no data");
                 if (bundle != null) {
                     Object keys = bundle.get("C");
                     if (keys != null) {
