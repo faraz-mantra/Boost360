@@ -68,7 +68,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
-import com.jakewharton.retrofit.Ok3Client;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import com.kbeanie.multipicker.api.CameraImagePicker;
@@ -83,7 +82,6 @@ import com.nowfloats.riachatsdk.fragments.CustomDialogFragment;
 import com.nowfloats.riachatsdk.fragments.PickAddressFragment;
 import com.nowfloats.riachatsdk.helpers.ChatLogger;
 import com.nowfloats.riachatsdk.helpers.DeviceDetails;
-import com.nowfloats.riachatsdk.interfaces.ChatJsonInterface;
 import com.nowfloats.riachatsdk.interfaces.IChatAnimCallback;
 import com.nowfloats.riachatsdk.interfaces.IConfirmationCallback;
 import com.nowfloats.riachatsdk.models.Button;
@@ -105,23 +103,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import it.sephiroth.android.library.imagezoom.ImageViewTouch;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static android.view.View.INVISIBLE;
@@ -504,14 +498,14 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         } else if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && resultCode == RESULT_OK
                 && data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH) != null) {
             List<String> mPaths = (List<String>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_PATH);
-            if(mPaths!=null && mPaths.size()>0){
+            if (mPaths != null && mPaths.size() > 0) {
 
                 Intent i = new Intent(this, FileUploadService.class);
                 i.putExtra(Constants.FILE_PATH, mPaths.get(0));
                 i.putExtra(Constants.RECEIVER, mReceiver);
                 startService(i);
                 replyToRia(Constants.SectionType.TYPE_IMAGE, mPaths.get(0));
-            }else{
+            } else {
                 showNextNode(mCurrNodeId);
             }
         } else if (requestCode == ImagePicker.IMAGE_PICKER_REQUEST_CODE && (data == null || data.getData() == null)) {
@@ -1182,6 +1176,14 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 } else {
                     replyToRia(Constants.SectionType.TYPE_UNCONFIRMED_CARD, node, false);
                 }
+            }
+            else if (node.getSections().size() == 1 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_CAROUSEL)) {
+                if (mSectionList.get(mSectionList.size() - 1).getCardModel() != null &&
+                        mSectionList.get(mSectionList.size() - 1).getCardModel().getPlacement().equals("Center")) {
+                    replyToRia(Constants.SectionType.TYPE_CAROUSEL, node, true);
+                } else {
+                    replyToRia(Constants.SectionType.TYPE_CAROUSEL, node, false);
+                }
             } else if (node.getSections().size() == 1 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_PRINT_OTP)) {
                 if (mSectionList.get(mSectionList.size() - 1).getCardModel() != null &&
                         mSectionList.get(mSectionList.size() - 1).getCardModel().getPlacement().equals("Center")) {
@@ -1681,53 +1683,53 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         /*if(null!=pg && !pg.isShowing())
             pg.show();*/
         progressBar.setVisibility(View.VISIBLE);
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        OkHttpClient client = builder.connectTimeout(60, TimeUnit.SECONDS).readTimeout(60, TimeUnit.SECONDS).build();
-        RestAdapter adapter = new RestAdapter.Builder().setClient(new Ok3Client(client)).setEndpoint(Constants.SERVER_URL).build();
-        ChatJsonInterface chatJsonInterface = adapter.create(ChatJsonInterface.class);
-        Map<String, String> query = new HashMap<>();
-        query.put("deviceId", DeviceDetails.getDeviceId(this));
-        query.put("libVersion", DeviceDetails.getLibVersionName());
-        query.put("osVersion", DeviceDetails.getAndroidVersion());
-        query.put("osTimeZone", DeviceDetails.getTimeZone());
-        query.put("osCountry", DeviceDetails.getCountry());
-        query.put("osLanguage", DeviceDetails.getLanguage());
-        query.put("deviceBrand", DeviceDetails.getBrand());
-        query.put("deviceModel", DeviceDetails.getDeviceModel());
-        query.put("screenWidth", DeviceDetails.getScreenWidth(this) + "");
-        query.put("screenHeight", DeviceDetails.getScreenHeight(this) + "");
-        chatJsonInterface.getChatJson(query, new Callback<List<RiaCardModel>>() {
-            @Override
-            public void success(List<RiaCardModel> riaCardModels, Response response) {
-                //pg.dismiss();
-                if (riaCardModels != null && riaCardModels.size() > 0) {
-                    initChat(riaCardModels);
-                }
-                progressBar.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                //pg.dismiss();
-                error.printStackTrace();
-                progressBar.setVisibility(View.GONE);
-                if (isFinishing()) {
-                    return;
-                }
-                if (isNetworkStatusAvialable(ChatViewActivity.this)) {
-                    showCustomDialog(CustomDialogFragment.DialogFrom.SKIP);
-                } else {
-                    showCustomDialog(CustomDialogFragment.DialogFrom.NO_INTERNET);
-                }
-                //(RiaOnBoardingActivity.this, getString(R.string.something_went_wrong));
-            }
-        });
+//        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+//        OkHttpClient client = builder.connectTimeout(60, TimeUnit.SECONDS).readTimeout(60, TimeUnit.SECONDS).build();
+//        RestAdapter adapter = new RestAdapter.Builder().setClient(new Ok3Client(client)).setEndpoint(Constants.SERVER_URL).build();
+//        ChatJsonInterface chatJsonInterface = adapter.create(ChatJsonInterface.class);
+//        Map<String, String> query = new HashMap<>();
+//        query.put("deviceId", DeviceDetails.getDeviceId(this));
+//        query.put("libVersion", DeviceDetails.getLibVersionName());
+//        query.put("osVersion", DeviceDetails.getAndroidVersion());
+//        query.put("osTimeZone", DeviceDetails.getTimeZone());
+//        query.put("osCountry", DeviceDetails.getCountry());
+//        query.put("osLanguage", DeviceDetails.getLanguage());
+//        query.put("deviceBrand", DeviceDetails.getBrand());
+//        query.put("deviceModel", DeviceDetails.getDeviceModel());
+//        query.put("screenWidth", DeviceDetails.getScreenWidth(this) + "");
+//        query.put("screenHeight", DeviceDetails.getScreenHeight(this) + "");
+//        chatJsonInterface.getChatJson(query, new Callback<List<RiaCardModel>>() {
+//            @Override
+//            public void success(List<RiaCardModel> riaCardModels, Response response) {
+//                //pg.dismiss();
+//                if (riaCardModels != null && riaCardModels.size() > 0) {
+//                    initChat(riaCardModels);
+//                }
+//                progressBar.setVisibility(View.GONE);
+//            }
 //
-//        List<RiaCardModel> posts = new ArrayList<RiaCardModel>();
-//        Gson mGson = new Gson();
-//        posts = Arrays.asList(mGson.fromJson(loadJSONFromAsset(), RiaCardModel[].class));
-//        initChat(posts);
-//        progressBar.setVisibility(View.GONE);
+//            @Override
+//            public void failure(RetrofitError error) {
+//                //pg.dismiss();
+//                error.printStackTrace();
+//                progressBar.setVisibility(View.GONE);
+//                if (isFinishing()) {
+//                    return;
+//                }
+//                if (isNetworkStatusAvialable(ChatViewActivity.this)) {
+//                    showCustomDialog(CustomDialogFragment.DialogFrom.SKIP);
+//                } else {
+//                    showCustomDialog(CustomDialogFragment.DialogFrom.NO_INTERNET);
+//                }
+//                //(RiaOnBoardingActivity.this, getString(R.string.something_went_wrong));
+//            }
+//        });
+//
+        List<RiaCardModel> posts = new ArrayList<RiaCardModel>();
+        Gson mGson = new Gson();
+        posts = Arrays.asList(mGson.fromJson(loadJSONFromAsset(), RiaCardModel[].class));
+        initChat(posts);
+        progressBar.setVisibility(View.GONE);
     }
 
     public String loadJSONFromAsset() {

@@ -111,6 +111,7 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingBottom="@dimen/margin_100"
+            android:nestedScrollingEnabled="true"
             android:paddingTop="@dimen/margin_30">
 
         </android.support.v7.widget.RecyclerView>

@@ -11,7 +11,10 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -19,8 +22,10 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.URLSpan;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -41,6 +46,7 @@ import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.nowfloats.riachatsdk.CustomWidget.AVLoadingIndicatorView;
+import com.nowfloats.riachatsdk.CustomWidget.FirstLastItemSpacesDecoration;
 import com.nowfloats.riachatsdk.CustomWidget.playpause.PlayPauseView;
 import com.nowfloats.riachatsdk.R;
 import com.nowfloats.riachatsdk.activities.ChatViewActivity;
@@ -51,6 +57,7 @@ import com.nowfloats.riachatsdk.models.RiaCardModel;
 import com.nowfloats.riachatsdk.models.Section;
 import com.nowfloats.riachatsdk.utils.Constants;
 import com.nowfloats.riachatsdk.utils.Utils;
+import com.rd.PageIndicatorView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -115,6 +122,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v;
         switch (viewType) {
+
             case -1:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_chat_head, parent, false);
                 return new HeaderViewHolder(v);
@@ -149,6 +157,19 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case 7:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_embedded_html_row_layout, parent, false);
                 return new EmbeddedHtmlViewHolder(v);
+            case 8:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_carousel_layout, parent, false);
+
+                CarouselViewHolder carouselViewHolder = new CarouselViewHolder(v);
+                int space = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40,
+                        mContext.getResources().getDisplayMetrics());
+                carouselViewHolder.rvCarousel.addItemDecoration(new FirstLastItemSpacesDecoration(space, false));
+                carouselViewHolder.pageIndicatorView.setCount(5);
+                carouselViewHolder.pageIndicatorView.setDynamicCount(true);
+                final LinearLayoutManager manager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
+                carouselViewHolder.rvCarousel.setLayoutManager(manager);
+
+                return carouselViewHolder;
             case 9:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_typing_row_layout, parent, false);
                 return new TypingViewHolder(v);
@@ -875,6 +896,45 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             });
 
 
+        } else if (holder instanceof CarouselViewHolder) {
+            final CarouselViewHolder carouselViewHolder = (CarouselViewHolder) holder;
+
+            CarouselAdapter adapter = new CarouselAdapter(mContext,section.getItems(),mDataMap);
+            carouselViewHolder.rvCarousel.setAdapter(adapter);
+
+            carouselViewHolder.rvCarousel.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+                @Override
+                public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                    int action = e.getAction();
+                    switch (action) {
+                        case MotionEvent.ACTION_MOVE:
+                            carouselViewHolder.rvCarousel.getParent().requestDisallowInterceptTouchEvent(true);
+                            break;
+                    }
+                    return false;
+                }
+
+                @Override
+                public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+                }
+
+                @Override
+                public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+                }
+            });
+            carouselViewHolder.rvCarousel.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                }
+
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                }
+            });
         }
     }
 
@@ -1207,4 +1267,18 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return text;
     }
 
+    private class CarouselViewHolder extends RecyclerView.ViewHolder {
+
+        RecyclerView rvCarousel;
+        PageIndicatorView pageIndicatorView;
+
+        public CarouselViewHolder(View v) {
+            super(v);
+            rvCarousel = (RecyclerView) v.findViewById(R.id.rv_carousel);
+            pageIndicatorView = (PageIndicatorView) v.findViewById(R.id.ps_indicator);
+
+            SnapHelper snapHelper = new PagerSnapHelper();
+            snapHelper.attachToRecyclerView(rvCarousel);
+        }
+    }
 }

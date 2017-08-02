@@ -75,7 +75,7 @@
             android:id="@+id/llConfirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <TextView
                 android:id="@+id/tv_edit"

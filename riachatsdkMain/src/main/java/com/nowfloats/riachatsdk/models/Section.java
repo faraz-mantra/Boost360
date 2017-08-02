@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-public class Section implements Serializable{
+public class Section implements Serializable {
 
     @SerializedName("Text")
     @Expose
@@ -104,9 +104,19 @@ public class Section implements Serializable{
     @SerializedName("DateTime")
     @Expose
     private String dateTime;
+    @SerializedName("Items")
+    @Expose
+    private List<Items> items = null;
 
     private int cardPos;
 
+    public List<Items> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Items> items) {
+        this.items = items;
+    }
 
     private RiaCardModel cardModel;
 
