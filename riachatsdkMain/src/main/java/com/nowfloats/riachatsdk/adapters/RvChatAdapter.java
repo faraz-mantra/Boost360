@@ -11,6 +11,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spannable;
@@ -21,6 +22,7 @@ import android.text.style.URLSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -51,6 +53,7 @@ import com.nowfloats.riachatsdk.models.RiaCardModel;
 import com.nowfloats.riachatsdk.models.Section;
 import com.nowfloats.riachatsdk.utils.Constants;
 import com.nowfloats.riachatsdk.utils.Utils;
+import com.rd.PageIndicatorView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -114,7 +117,9 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v;
+        viewType = 8;
         switch (viewType) {
+
             case -1:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_chat_head, parent, false);
                 return new HeaderViewHolder(v);
@@ -149,6 +154,9 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case 7:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_embedded_html_row_layout, parent, false);
                 return new EmbeddedHtmlViewHolder(v);
+            case 8:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_crousal_row_layout, parent, false);
+                return new CarousalViewHolder(v);
             case 9:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_typing_row_layout, parent, false);
                 return new TypingViewHolder(v);
@@ -876,6 +884,50 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             });
 
 
+        }else if(holder instanceof CarousalViewHolder){
+            final CarousalViewHolder crousalView = (CarousalViewHolder)holder;
+            CarousalAdapter adapter = new CarousalAdapter(mChatSections);
+            crousalView.pageIndicatorView.setCount(5);
+            crousalView.pageIndicatorView.setDynamicCount(true);
+            final LinearLayoutManager manager = new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false);
+            crousalView.recyclerViewCrousal.setLayoutManager(manager);
+            crousalView.recyclerViewCrousal.setHasFixedSize(true);
+            crousalView.recyclerViewCrousal.setAdapter(adapter);
+            crousalView.recyclerViewCrousal.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+                @Override
+                public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                    int action = e.getAction();
+                    switch (action) {
+                        case MotionEvent.ACTION_MOVE:
+                            crousalView.recyclerViewCrousal.getParent().requestDisallowInterceptTouchEvent(true);
+                            break;
+                    }
+                    return false;
+                }
+
+                @Override
+                public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+                }
+
+                @Override
+                public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+                }
+            });
+            crousalView.recyclerViewCrousal.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                }
+
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    int position = manager.findFirstCompletelyVisibleItemPosition();
+                    crousalView.pageIndicatorView.setSelection(position);
+                    Log.v("ggg",dx+" "+dy);
+                }
+            });
         }
     }
 
@@ -1208,4 +1260,14 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return text;
     }
 
+    private class CarousalViewHolder extends RecyclerView.ViewHolder {
+
+        RecyclerView recyclerViewCrousal;
+        PageIndicatorView pageIndicatorView;
+        public CarousalViewHolder(View v) {
+            super(v);
+            recyclerViewCrousal = (RecyclerView) v.findViewById(R.id.rv_crousal);
+            pageIndicatorView = (PageIndicatorView) v.findViewById(R.id.ps_indicator);
+        }
+    }
 }
