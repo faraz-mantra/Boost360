@@ -47,6 +47,7 @@ public class MixPanelController {
     public static final String SAM_BUBBLE_CLICKED = "SAMBubbleClicked";
     public static final String SAM_BUBBLE_CLICKED_DATA = "SAMBubbleClickedData";
     public static final String SAM_BUBBLE_CLICKED_NO_DATA = "SAMBubbleClickedNoData";
+    public static final String SAM_BUBBLE_CLICKED_SERVER_ERROR = "SAMBubbleClickedServerError";
     public static final String SAM_BUBBLE_SELECTED_MESSAGES = "SAMBubbleSelectedMessages";
     public static final String SAM_BUBBLE_ACTION_CALL = "SAMBubbleActionCall";
     public static final String SAM_BUBBLE_ACTION_SHARE = "SAMBubbleActionShare";

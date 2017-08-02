@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -22,9 +21,8 @@ import android.text.SpannableStringBuilder;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.URLSpan;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -48,6 +46,7 @@ import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.nowfloats.riachatsdk.CustomWidget.AVLoadingIndicatorView;
+import com.nowfloats.riachatsdk.CustomWidget.FirstLastItemSpacesDecoration;
 import com.nowfloats.riachatsdk.CustomWidget.playpause.PlayPauseView;
 import com.nowfloats.riachatsdk.R;
 import com.nowfloats.riachatsdk.activities.ChatViewActivity;
@@ -96,7 +95,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private Map<String, String> mDataMap;
     private Context mContext;
     private IConfirmationCallback mConfirmationCallback;
-    private float MAX_WIDTH,TARGET_WIDTH,TARGET_HEIGHT;
+    private float MAX_WIDTH, TARGET_WIDTH, TARGET_HEIGHT;
 
     public RvChatAdapter(List<Section> mChatSections, Map<String, String> dataMap, Context context) {
         this.mChatSections = mChatSections;
@@ -107,7 +106,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
         Resources r = context.getResources();
-        MAX_WIDTH =  r.getDisplayMetrics().widthPixels;
+        MAX_WIDTH = r.getDisplayMetrics().widthPixels;
         TARGET_WIDTH = (int) (300 * r.getDisplayMetrics().density);
         TARGET_HEIGHT = (int) (200 * r.getDisplayMetrics().density);
 
@@ -122,7 +121,6 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v;
-        viewType = 8;
         switch (viewType) {
 
             case -1:
@@ -160,8 +158,18 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_embedded_html_row_layout, parent, false);
                 return new EmbeddedHtmlViewHolder(v);
             case 8:
-                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_crousal_row_layout, parent, false);
-                return new CarousalViewHolder(v);
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_carousel_layout, parent, false);
+
+                CarouselViewHolder carouselViewHolder = new CarouselViewHolder(v);
+                int space = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40,
+                        mContext.getResources().getDisplayMetrics());
+                carouselViewHolder.rvCarousel.addItemDecoration(new FirstLastItemSpacesDecoration(space, false));
+                carouselViewHolder.pageIndicatorView.setCount(5);
+                carouselViewHolder.pageIndicatorView.setDynamicCount(true);
+                final LinearLayoutManager manager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
+                carouselViewHolder.rvCarousel.setLayoutManager(manager);
+
+                return carouselViewHolder;
             case 9:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_typing_row_layout, parent, false);
                 return new TypingViewHolder(v);
@@ -651,12 +659,12 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             if (!imageURL.contains("http")) {
 //                imageURL = "file://"+section.getUrl();
-                ((LinearLayout)imageViewHolder.itemView).setGravity(Gravity.LEFT);
+                ((LinearLayout) imageViewHolder.itemView).setGravity(Gravity.LEFT);
 
                 imageViewHolder.ivMainImage.setImageResource(R.drawable.site_sc_default);
 
                 final android.view.ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) imageViewHolder.ivMainImage.getLayoutParams();
-                layoutParams.height = (int) TARGET_WIDTH ;
+                layoutParams.height = (int) TARGET_WIDTH;
                 layoutParams.width = (int) TARGET_WIDTH;
                 imageViewHolder.ivMainImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
@@ -666,11 +674,11 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         .placeholder(R.drawable.site_sc_default)
                         .into(imageViewHolder.ivMainImage);
 
-            }else{
+            } else {
 
                 imageViewHolder.ivMainImage.setScaleType(ImageView.ScaleType.FIT_XY);
 
-                ((LinearLayout)imageViewHolder.itemView).setGravity(Gravity.RIGHT);
+                ((LinearLayout) imageViewHolder.itemView).setGravity(Gravity.RIGHT);
 
 
                 Picasso.with(mContext).load(imageURL).into(new Target() {
@@ -680,32 +688,32 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         //whatever algorithm here to compute size
                         final android.view.ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) imageViewHolder.ivMainImage.getLayoutParams();
 
-                        if(bitmap.getWidth()> MAX_WIDTH || bitmap.getHeight()>MAX_WIDTH){
+                        if (bitmap.getWidth() > MAX_WIDTH || bitmap.getHeight() > MAX_WIDTH) {
                             if (!getParsedPrefixPostfixText(section.getUrl()).contains("http")) {
 
-                                if(bitmap.getHeight()> bitmap.getWidth()){
+                                if (bitmap.getHeight() > bitmap.getWidth()) {
                                     float ratio = (float) bitmap.getWidth() / (float) bitmap.getHeight();
                                     float widthFloat = ((float) MAX_WIDTH) * ratio;
-                                    layoutParams.height = (int) MAX_WIDTH ;
+                                    layoutParams.height = (int) MAX_WIDTH;
                                     layoutParams.width = (int) widthFloat;
-                                }else{
+                                } else {
                                     float ratio = (float) bitmap.getHeight() / (float) bitmap.getWidth();
                                     float heightFloat = ((float) MAX_WIDTH) * ratio;
-                                    layoutParams.height = (int) heightFloat ;
+                                    layoutParams.height = (int) heightFloat;
                                     layoutParams.width = (int) MAX_WIDTH;
                                 }
 
-                            }else{
+                            } else {
 
                                 float ratio = (float) bitmap.getHeight() / (float) bitmap.getWidth();
                                 float heightFloat = ((float) MAX_WIDTH) * ratio;
-                                layoutParams.height = (int) heightFloat ;
+                                layoutParams.height = (int) heightFloat;
                                 layoutParams.width = (int) MAX_WIDTH;
 
                             }
-                        }else{
+                        } else {
 
-                            layoutParams.height = (int) bitmap.getHeight() ;
+                            layoutParams.height = (int) bitmap.getHeight();
                             layoutParams.width = (int) bitmap.getWidth();
                         }
 
@@ -713,27 +721,22 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         imageViewHolder.ivMainImage.setLayoutParams(layoutParams);
 //                    if(bitmap!=null && !bitmap.isRecycled())
 //                        bitmap.recycle();
-                    imageViewHolder.ivMainImage.setImageBitmap(bitmap);
+                        imageViewHolder.ivMainImage.setImageBitmap(bitmap);
 
                     }
 
                     @Override
                     public void onBitmapFailed(Drawable errorDrawable) {
-                    imageViewHolder.ivMainImage.setImageResource(R.drawable.site_sc_default);
+                        imageViewHolder.ivMainImage.setImageResource(R.drawable.site_sc_default);
                     }
 
                     @Override
                     public void onPrepareLoad(Drawable placeHolderDrawable) {
-                    imageViewHolder.ivMainImage.setImageResource(R.drawable.site_sc_default);
+                        imageViewHolder.ivMainImage.setImageResource(R.drawable.site_sc_default);
                     }
 
                 });
             }
-
-
-//
-
-
 
             if (section.getCaption() != null && !section.getCaption().trim().equals("")) {
                 imageViewHolder.tvImageCaption.setText(section.getCaption());
@@ -889,22 +892,19 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             });
 
 
-        }else if(holder instanceof CarousalViewHolder){
-            final CarousalViewHolder crousalView = (CarousalViewHolder)holder;
-            CarousalAdapter adapter = new CarousalAdapter(mChatSections);
-            crousalView.pageIndicatorView.setCount(5);
-            crousalView.pageIndicatorView.setDynamicCount(true);
-            final LinearLayoutManager manager = new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false);
-            crousalView.recyclerViewCrousal.setLayoutManager(manager);
-//            crousalView.recyclerViewCrousal.setHasFixedSize(true);
-            crousalView.recyclerViewCrousal.setAdapter(adapter);
-            crousalView.recyclerViewCrousal.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+        } else if (holder instanceof CarouselViewHolder) {
+            final CarouselViewHolder carouselViewHolder = (CarouselViewHolder) holder;
+
+            final CarouselAdapter adapter = new CarouselAdapter(mContext,section.getItems(),mDataMap);
+            carouselViewHolder.rvCarousel.setAdapter(adapter);
+
+            carouselViewHolder.rvCarousel.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
                 @Override
                 public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
                     int action = e.getAction();
                     switch (action) {
                         case MotionEvent.ACTION_MOVE:
-                            crousalView.recyclerViewCrousal.getParent().requestDisallowInterceptTouchEvent(true);
+                            carouselViewHolder.rvCarousel.getParent().requestDisallowInterceptTouchEvent(true);
                             break;
                     }
                     return false;
@@ -920,14 +920,15 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
                 }
             });
-            crousalView.recyclerViewCrousal.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            carouselViewHolder.rvCarousel.addOnScrollListener(new RecyclerView.OnScrollListener() {
                 @Override
                 public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                     super.onScrollStateChanged(recyclerView, newState);
                     if(newState == RecyclerView.SCROLL_STATE_IDLE){
-                        int position = manager.findFirstCompletelyVisibleItemPosition();
+                        int position = ((LinearLayoutManager)carouselViewHolder.rvCarousel.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
                         if(position>-1) {
-                            crousalView.pageIndicatorView.setSelection(position);
+                            carouselViewHolder.pageIndicatorView.setSelection(position);
+                            adapter.notifyVisibleItemChanged(position);
                         }
                     }
                 }
@@ -1264,59 +1265,18 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return text;
     }
 
-    private class CarousalViewHolder extends RecyclerView.ViewHolder {
+    private class CarouselViewHolder extends RecyclerView.ViewHolder {
 
-        RecyclerView recyclerViewCrousal;
+        RecyclerView rvCarousel;
         PageIndicatorView pageIndicatorView;
-        public CarousalViewHolder(View v) {
+
+        public CarouselViewHolder(View v) {
             super(v);
-            recyclerViewCrousal = (RecyclerView) v.findViewById(R.id.rv_crousal);
+            rvCarousel = (RecyclerView) v.findViewById(R.id.rv_carousel);
             pageIndicatorView = (PageIndicatorView) v.findViewById(R.id.ps_indicator);
+
             SnapHelper snapHelper = new PagerSnapHelper();
-            snapHelper.attachToRecyclerView(recyclerViewCrousal);
-            Display display = ((Activity)mContext).getWindowManager().getDefaultDisplay();
-            DisplayMetrics displayMetrics = new DisplayMetrics();
-            display.getMetrics(displayMetrics);
-            recyclerViewCrousal.addItemDecoration(new EdgeDecorator());
-        }
-    }
-
-    public class EdgeDecorator extends RecyclerView.ItemDecoration {
-
-        private int edgePadding = 100;
-
-        /**
-         * EdgeDecorator
-         *
-         */
-        public EdgeDecorator() {
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            super.getItemOffsets(outRect, view, parent, state);
-
-            int itemCount = state.getItemCount();
-
-            final int itemPosition = parent.getChildAdapterPosition(view);
-
-            // no position, leave it alone
-            if (itemPosition == RecyclerView.NO_POSITION) {
-                return;
-            }
-
-            // first item
-            if (itemPosition == 0) {
-                outRect.set(view.getPaddingLeft()+view.getMeasuredWidth()/2, view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
-            }
-            // last item
-            else if (itemCount > 0 && itemPosition == itemCount - 1) {
-                outRect.set(view.getPaddingLeft(), view.getPaddingTop(), view.getPaddingRight()+view.getMeasuredWidth()/3, view.getPaddingBottom());
-            }
-            // every other item
-            else {
-                outRect.set(view.getPaddingLeft(), view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
-            }
+            snapHelper.attachToRecyclerView(rvCarousel);
         }
     }
 }

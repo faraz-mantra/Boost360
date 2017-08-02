@@ -1009,7 +1009,6 @@ public class Create_Message_Activity extends AppCompatActivity {
         }
         new MaterialDialog.Builder(this)
                 .content("Do you want to save this update as draft?")
-                .cancelable(false)
                 .positiveColorRes(R.color.primaryColor)
                 .negativeColorRes(R.color.primaryColor)
                 .positiveText("Save")

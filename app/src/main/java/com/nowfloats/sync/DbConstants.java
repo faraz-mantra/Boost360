@@ -4,7 +4,7 @@ package com.nowfloats.sync;
  * Created by RAJA on 20-06-2016.
  */
 public class DbConstants {
-    public interface Iupdates{
+    public interface Iupdates {
         String tableName = "updates";
         String ID = "_ID";
         String serverId = "server_id";
@@ -20,8 +20,8 @@ public class DbConstants {
                 " TEXT, " + updateText + " TEXT, " + date + " TEXT , " + tileImageUrl + " TEXT, " + type + " TEXT, " + url + " TEXT, " + localImagePath + " TEXT, " + synced + " INTEGER)";
     }
 
-    public interface Ialerts{
-        String tableName="alerts";
+    public interface Ialerts {
+        String tableName = "alerts";
         String ID = "ID";
         String channel = "channel";
         String createdOn = "created_on";
@@ -34,10 +34,10 @@ public class DbConstants {
         String isRead = "is_read";
         String isTargetAchieved = "is_achieved";
         String CREATE_ALERT_TABLE = "CREATE TABLE " + tableName + " (" + ID + " TEXT PRIMARY KEY, " + channel +
-                " TEXT, " + createdOn + " TEXT, " + imageUrl + " TEXT, " + message  + " TEXT, " + notificationImageUrl + " TEXT, " + notificationStatus + " TEXT, " + notificationType +
-                " TEXT, " + sendOn + " TEXT, " + isRead + " TEXT, " + isTargetAchieved  + " TEXT)";
+                " TEXT, " + createdOn + " TEXT, " + imageUrl + " TEXT, " + message + " TEXT, " + notificationImageUrl + " TEXT, " + notificationStatus + " TEXT, " + notificationType +
+                " TEXT, " + sendOn + " TEXT, " + isRead + " TEXT, " + isTargetAchieved + " TEXT)";
 
-        public interface IalertData{
+        public interface IalertData {
             String tableDataName = "alert_data";
             String id = "_ID";
             String serverId = "server_id";
@@ -49,7 +49,7 @@ public class DbConstants {
     }
 
 
-    public interface IcustomPages{
+    public interface IcustomPages {
         String tableName = "custom_pages";
         String ID = "_ID";
         String pageName = "page_name";
@@ -63,12 +63,12 @@ public class DbConstants {
     /*
      * variable count excluding table_name is 7
      */
-    public interface IphotoGallery{
+    public interface IphotoGallery {
         String tableName = "photo_gallery";
         String ID = "_ID";
         String serverId = "server_id";
         String imageTag = "image_tag";
-        String imageName  = "image_name";
+        String imageName = "image_name";
         String imageUrl = "image_url";
         String localImageUrl = "local_image_url";
         String tileImageUrl = "tile_image_url";
@@ -77,10 +77,10 @@ public class DbConstants {
                 " TEXT, " + imageTag + " TEXT, " + imageUrl + " TEXT, " + localImageUrl + " TEXT, " + tileImageUrl + " TEXT, " + synced + " INTEGER)";
     }
 
-    public interface IproductGallery{
+    public interface IproductGallery {
         String tableName = "product_gallery";
         String ID = "_ID";
-        String buyOnlineLink  = "buy_online_link";
+        String buyOnlineLink = "buy_online_link";
         String currencyCode = "currency_code";
         String description = "descr";
         String discountAmount = "disc_amnt";
@@ -104,14 +104,14 @@ public class DbConstants {
         String updatedOn = "update_on";
         String price = "price";
         String CREATE_PRODUCT_GALLERY_TABLE = "CREATE TABLE " + tableName + " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + serverId +
-                " TEXT UNIQUE, "+ name +" TEXT, " + imageUrl + " TEXT, " + buyOnlineLink + " TEXT, " + price + " TEXT, " + currencyCode + " TEXT, " + description + " TEXT, " + discountAmount + " INTEGER, " +
+                " TEXT UNIQUE, " + name + " TEXT, " + imageUrl + " TEXT, " + buyOnlineLink + " TEXT, " + price + " TEXT, " + currencyCode + " TEXT, " + description + " TEXT, " + discountAmount + " INTEGER, " +
                 externalSourceId + " TEXT, " + isArchived + " TEXT, " + isAvailable + " TEXT, " + priority + " INTEGER, " + shipmentDuration + " INTEGER, " + applicationId + " TEXT, " +
                 customWidgets + " TEXT, " + fpTag + " TEXT, " + images + " TEXT, " + merchantName + " TEXT, " + tileImageUri + " TEXT, " + gpId + " TEXT, " + totalQueries + " INTEGER, " +
                 createdOn + " TEXT, " + updatedOn + " TEXT )";
 
     }
 
-    public interface Isearch_queries{
+    public interface Isearch_queries {
         String tableName = "search_queries";
         String ID = "_ID";
         String SearchQueries = "queries";
@@ -121,7 +121,7 @@ public class DbConstants {
                 " TEXT, " + date + " TEXT)";
     }
 
-    public interface IstoreActivePlans{
+    public interface IstoreActivePlans {
         String tableName = "active_plans";
         String ID = "_ID";
         String planName = "plan_name";
@@ -132,13 +132,21 @@ public class DbConstants {
                 " TEXT, " + planDescr + " TEXT, " + price + " REAL)";
     }
 
-    public interface IstoreImages{
+    public interface IstoreImages {
         String tableName = "store_images";
         String ID = "_ID";
         String foreignIdPlanName = "foreign_id";
         String imageUrl = "image_url";
         String CREATE_STORE_IMAGES_TABLE = "CREATE TABLE " + tableName + " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + foreignIdPlanName +
                 " TEXT, " + imageUrl + " TEXT)";
+    }
+
+    public interface IsamBubble {
+        String tableName = "sam_bubble";
+        String ID = "_ID";
+        String SUGGESTIONS = "suggestions";
+        String CREATE_SAM_BUBBLE_TABLE = "CREATE TABLE " + tableName + " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + SUGGESTIONS + " TEXT)";
     }
 
 }

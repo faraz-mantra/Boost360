@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import retrofit.Callback;
+import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.Headers;
 import retrofit.http.POST;

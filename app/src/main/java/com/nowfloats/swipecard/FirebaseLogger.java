@@ -31,24 +31,21 @@ public class FirebaseLogger {
     }
 
 
-    public enum EventStatus {
-        COMPLETED(0), DROPPED(1);
-        private final int value;
-
-        private EventStatus(int value) {
-            this.value = value;
-        }
-
-        public int getValue() {
-            return value;
-        }
+    public interface SAMSTATUS {
+        public int BUBBLE_CLIKED = 0;
+        public int HAS_DATA = 1;
+        public int HAS_NO_DATA = 2;
+        public int SERVER_ERROR = -100;
+        public int SELECTED_MESSAGES = 3;
+        public int ACTION_CALL = 4;
+        public int ACTION_SHARE = 5;
     }
 
     private FirebaseLogger() {
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
-    public void logSAMEvent(String messageId, int status, String fpId) {
+    public void logSAMEvent(String messageId, int status, String fpId, String appVersion) {
 
         Calendar calendar = Calendar.getInstance();
         String currentTime = String.valueOf(calendar.getTimeInMillis());
@@ -58,6 +55,7 @@ public class FirebaseLogger {
         messageDO.setMessageId(messageId);
         messageDO.setFpId(fpId);
         messageDO.setDateTime(currentTime);
+        messageDO.setAppVersion(appVersion);
         messageDO.setStatus(status);
 
         mDatabase.child(DB_SAM_CHILD_NAME).push().setValue(messageDO);
