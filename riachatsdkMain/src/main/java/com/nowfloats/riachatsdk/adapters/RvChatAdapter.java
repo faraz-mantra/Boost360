@@ -88,7 +88,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private Map<String, String> mDataMap;
     private Context mContext;
     private IConfirmationCallback mConfirmationCallback;
-    private float MAX_WIDTH,TARGET_WIDTH,TARGET_HEIGHT;
+    private float MAX_WIDTH, TARGET_WIDTH, TARGET_HEIGHT;
 
     public RvChatAdapter(List<Section> mChatSections, Map<String, String> dataMap, Context context) {
         this.mChatSections = mChatSections;
@@ -99,7 +99,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
         Resources r = context.getResources();
-        MAX_WIDTH =  r.getDisplayMetrics().widthPixels;
+        MAX_WIDTH = r.getDisplayMetrics().widthPixels;
         TARGET_WIDTH = (int) (300 * r.getDisplayMetrics().density);
         TARGET_HEIGHT = (int) (200 * r.getDisplayMetrics().density);
 
@@ -638,12 +638,12 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             if (!imageURL.contains("http")) {
 //                imageURL = "file://"+section.getUrl();
-                ((LinearLayout)imageViewHolder.itemView).setGravity(Gravity.LEFT);
+                ((LinearLayout) imageViewHolder.itemView).setGravity(Gravity.LEFT);
 
                 imageViewHolder.ivMainImage.setImageResource(R.drawable.site_sc_default);
 
                 final android.view.ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) imageViewHolder.ivMainImage.getLayoutParams();
-                layoutParams.height = (int) TARGET_WIDTH ;
+                layoutParams.height = (int) TARGET_WIDTH;
                 layoutParams.width = (int) TARGET_WIDTH;
                 imageViewHolder.ivMainImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
@@ -653,11 +653,11 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         .placeholder(R.drawable.site_sc_default)
                         .into(imageViewHolder.ivMainImage);
 
-            }else{
+            } else {
 
                 imageViewHolder.ivMainImage.setScaleType(ImageView.ScaleType.FIT_XY);
 
-                ((LinearLayout)imageViewHolder.itemView).setGravity(Gravity.RIGHT);
+                ((LinearLayout) imageViewHolder.itemView).setGravity(Gravity.RIGHT);
 
 
                 Picasso.with(mContext).load(imageURL).into(new Target() {
@@ -667,32 +667,32 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         //whatever algorithm here to compute size
                         final android.view.ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) imageViewHolder.ivMainImage.getLayoutParams();
 
-                        if(bitmap.getWidth()> MAX_WIDTH || bitmap.getHeight()>MAX_WIDTH){
+                        if (bitmap.getWidth() > MAX_WIDTH || bitmap.getHeight() > MAX_WIDTH) {
                             if (!getParsedPrefixPostfixText(section.getUrl()).contains("http")) {
 
-                                if(bitmap.getHeight()> bitmap.getWidth()){
+                                if (bitmap.getHeight() > bitmap.getWidth()) {
                                     float ratio = (float) bitmap.getWidth() / (float) bitmap.getHeight();
                                     float widthFloat = ((float) MAX_WIDTH) * ratio;
-                                    layoutParams.height = (int) MAX_WIDTH ;
+                                    layoutParams.height = (int) MAX_WIDTH;
                                     layoutParams.width = (int) widthFloat;
-                                }else{
+                                } else {
                                     float ratio = (float) bitmap.getHeight() / (float) bitmap.getWidth();
                                     float heightFloat = ((float) MAX_WIDTH) * ratio;
-                                    layoutParams.height = (int) heightFloat ;
+                                    layoutParams.height = (int) heightFloat;
                                     layoutParams.width = (int) MAX_WIDTH;
                                 }
 
-                            }else{
+                            } else {
 
                                 float ratio = (float) bitmap.getHeight() / (float) bitmap.getWidth();
                                 float heightFloat = ((float) MAX_WIDTH) * ratio;
-                                layoutParams.height = (int) heightFloat ;
+                                layoutParams.height = (int) heightFloat;
                                 layoutParams.width = (int) MAX_WIDTH;
 
                             }
-                        }else{
+                        } else {
 
-                            layoutParams.height = (int) bitmap.getHeight() ;
+                            layoutParams.height = (int) bitmap.getHeight();
                             layoutParams.width = (int) bitmap.getWidth();
                         }
 
@@ -700,18 +700,18 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         imageViewHolder.ivMainImage.setLayoutParams(layoutParams);
 //                    if(bitmap!=null && !bitmap.isRecycled())
 //                        bitmap.recycle();
-                    imageViewHolder.ivMainImage.setImageBitmap(bitmap);
+                        imageViewHolder.ivMainImage.setImageBitmap(bitmap);
 
                     }
 
                     @Override
                     public void onBitmapFailed(Drawable errorDrawable) {
-                    imageViewHolder.ivMainImage.setImageResource(R.drawable.site_sc_default);
+                        imageViewHolder.ivMainImage.setImageResource(R.drawable.site_sc_default);
                     }
 
                     @Override
                     public void onPrepareLoad(Drawable placeHolderDrawable) {
-                    imageViewHolder.ivMainImage.setImageResource(R.drawable.site_sc_default);
+                        imageViewHolder.ivMainImage.setImageResource(R.drawable.site_sc_default);
                     }
 
                 });
@@ -719,7 +719,6 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
 //
-
 
 
             if (section.getCaption() != null && !section.getCaption().trim().equals("")) {

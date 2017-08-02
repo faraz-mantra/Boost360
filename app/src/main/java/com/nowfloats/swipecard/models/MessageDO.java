@@ -9,7 +9,16 @@ public class MessageDO {
     private String messageId;
     private String fpId;
     private String dateTime;
+    private String appVersion;
     private int status;
+
+    public String getAppVersion() {
+        return appVersion;
+    }
+
+    public void setAppVersion(String appVersion) {
+        this.appVersion = appVersion;
+    }
 
     public String getDateTime() {
         return dateTime;

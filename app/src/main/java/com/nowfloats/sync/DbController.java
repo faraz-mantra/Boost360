@@ -29,13 +29,12 @@ public class DbController implements IdbController {
         this.mContext = context;
     }
 
-    public static  synchronized DbController getDbController(Context context){
-        if(sDbController==null){
+    public static synchronized DbController getDbController(Context context) {
+        if (sDbController == null) {
             sDbController = new DbController(context);
         }
         return sDbController;
     }
-
 
 
     /*
@@ -43,7 +42,7 @@ public class DbController implements IdbController {
      */
     @Override
     public List<Updates> getAllUpdates(int offset) {
-        Cursor c = mContext.getContentResolver().query(getUri(DbConstants.Iupdates.tableName), null, null, null, DbConstants.Iupdates.date+ " DESC LIMIT " + offset + ", 10");
+        Cursor c = mContext.getContentResolver().query(getUri(DbConstants.Iupdates.tableName), null, null, null, DbConstants.Iupdates.date + " DESC LIMIT " + offset + ", 10");
         List<Updates> updatesList = new ArrayList<>();
         if (c.moveToFirst()) {
             do {
@@ -64,8 +63,9 @@ public class DbController implements IdbController {
         c.close();
         return updatesList;
     }
-    public ArrayList<Updates> getAllUnSyncedUpdates(){
-        Cursor c = mContext.getContentResolver().query(getUri(DbConstants.Iupdates.tableName), null, DbConstants.Iupdates.synced + "='" + 0 + "'", null, DbConstants.Iupdates.date+ " DESC");
+
+    public ArrayList<Updates> getAllUnSyncedUpdates() {
+        Cursor c = mContext.getContentResolver().query(getUri(DbConstants.Iupdates.tableName), null, DbConstants.Iupdates.synced + "='" + 0 + "'", null, DbConstants.Iupdates.date + " DESC");
         ArrayList<Updates> updatesList = new ArrayList<>();
         if (c.moveToFirst()) {
             do {
@@ -168,19 +168,19 @@ public class DbController implements IdbController {
                         .setNotificationType(c.getInt(c.getColumnIndex(DbConstants.Ialerts.notificationType)))
                         .setSendOn(c.getString(c.getColumnIndex(DbConstants.Ialerts.sendOn)));
                 Cursor new_c = mContext.getContentResolver().query(getUri(DbConstants.Ialerts.IalertData.tableDataName), null, DbConstants.Ialerts.IalertData.serverId + "='" + id
-                 + "'", null, null);
+                        + "'", null, null);
                 ArrayList<Notification_data> notificationData = new ArrayList<>();
-                if(new_c.moveToFirst()){
-                    do{
+                if (new_c.moveToFirst()) {
+                    do {
                         Notification_data data = new Notification_data();
                         data.Key = new_c.getString(new_c.getColumnIndex(DbConstants.Ialerts.IalertData.key));
                         data.Value = new_c.getString(new_c.getColumnIndex(DbConstants.Ialerts.IalertData.value));
                         BoostLog.d("NotiFicationData:", data.Key + " " + data.Value);
                         notificationData.add(data);
-                    }while (new_c.moveToNext());
+                    } while (new_c.moveToNext());
                 }
 
-                if(notificationData.size()>0){
+                if (notificationData.size() > 0) {
                     alerts.setNotificationData(notificationData);
                 }
                 alertsList.add(alerts);
@@ -206,7 +206,7 @@ public class DbController implements IdbController {
         values.put(DbConstants.Ialerts.sendOn, alert.getSendOn());
 
         ArrayList<Notification_data> notification_datas = alert.getNotificationData();
-        for(Notification_data data: notification_datas){
+        for (Notification_data data : notification_datas) {
             ContentValues data_values = new ContentValues();
             data_values.put(DbConstants.Ialerts.IalertData.serverId, alert.getID());
             data_values.put(DbConstants.Ialerts.IalertData.key, data.Key);
@@ -410,6 +410,29 @@ public class DbController implements IdbController {
         return product;
     }
 
+    @Override
+    public String getSamData() {
+        Cursor c = mContext.getContentResolver().query(getUri(DbConstants.IsamBubble.tableName), null,
+                null, null, DbConstants.IsamBubble.ID + " DESC");
+
+        String samValue = "";
+        if (c.moveToFirst()) {
+            samValue = c.getString(c.getColumnIndex(DbConstants.IsamBubble.SUGGESTIONS));
+        } else {
+            return null;
+        }
+        c.close();
+        return samValue;
+    }
+
+    @Override
+    public Uri postSamData(String value) {
+        ContentValues values = new ContentValues();
+        values.put(DbConstants.IsamBubble.SUGGESTIONS, value);
+
+        return mContext.getContentResolver().insert(getUri(DbConstants.IsamBubble.tableName), values);
+    }
+
     /*
      * Product Gallery End
      */
@@ -422,28 +445,25 @@ public class DbController implements IdbController {
         return Uri.parse("content://" + Constants.AUTHORITY + "/" + tableName);
     }
 
-    public String getLatestMessageId(){
+    public String getLatestMessageId() {
         Cursor c = mContext.getContentResolver().query(getUri(DbConstants.Iupdates.tableName), new String[]{DbConstants.Iupdates.serverId}, null, null, DbConstants.Iupdates.date + " DESC LIMIT " + 0 + ", 1");
         String latestServerId = null;
-        if (c!=null && c.moveToFirst()) {
+        if (c != null && c.moveToFirst()) {
             latestServerId = c.getString(c.getColumnIndex(DbConstants.Iupdates.serverId));
         }
-        if(c!=null) {
+        if (c != null) {
             c.close();
         }
-        return  latestServerId;
+        return latestServerId;
     }
 
-    public void deleteDataBase(){
+    public void deleteDataBase() {
         try {
             mContext.deleteDatabase("BoostDefault.db");
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-
-
 
 
     //TODO: make a generic function for accessing Cursor and for reurning a List

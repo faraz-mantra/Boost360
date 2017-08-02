@@ -263,7 +263,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         if (isNetworkStatusAvialable(ChatViewActivity.this)) {
             fetchChatJson();
         } else {
-            showCustomDialog(CustomDialogFragment.DialogFrom.NO_INTERNET);
+            showCustomDialog(CustomDialogFragment.DialogFrom.SKIP);
         }
 
     }

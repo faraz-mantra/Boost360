@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,16 +17,20 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.bubble.BubblesService;
 import com.nowfloats.swipecard.models.MessageDO;
 import com.nowfloats.swipecard.models.SMSSuggestions;
 import com.nowfloats.swipecard.models.SuggestionsDO;
 import com.nowfloats.swipecard.service.SuggestionsApi;
+import com.nowfloats.sync.DbController;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -53,6 +58,11 @@ public class SuggestionsActivity extends AppCompatActivity {
 
     private ProgressBar pbView;
 
+    private String appVersion = "";
+
+    private DbController mDbController;
+
+
     private class KillListener extends BroadcastReceiver {
 
         @Override
@@ -73,12 +83,20 @@ public class SuggestionsActivity extends AppCompatActivity {
         mBus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(getApplicationContext(), SuggestionsActivity.this);
         suggestionsApi = new SuggestionsApi(mBus);
+        mDbController = DbController.getDbController(SuggestionsActivity.this);
 
         initializeControls();
 
     }
 
     private void initializeControls() {
+
+        try {
+            appVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
 
         setDisplayMetrics(1.0f, 0.80f, false);
 
@@ -88,14 +106,14 @@ public class SuggestionsActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
 
         MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED, null);
-        FirebaseLogger.getInstance().logSAMEvent("", 0, session.getFPID());
+        FirebaseLogger.getInstance().logSAMEvent("", FirebaseLogger.SAMSTATUS.BUBBLE_CLIKED, session.getFPID(), appVersion);
 
-        if(!pref.getBoolean(Key_Preferences.HAS_SHOWN_SAM_COACH_MARK,false)){
+        if (!pref.getBoolean(Key_Preferences.HAS_SHOWN_SAM_COACH_MARK, false)) {
             fragmentManager.beginTransaction().
                     replace(R.id.flTopView, new OnBoardingFragment())
                     .addToBackStack(null)
                     .commit();
-        }else{
+        } else {
             switchView(SuggestionsActivity.SwitchView.CALL_TO_ACTION);
         }
 
@@ -163,9 +181,13 @@ public class SuggestionsActivity extends AppCompatActivity {
 
         pbView.setVisibility(View.VISIBLE);
 
-        HashMap<String, String> offersParam = new HashMap<>();
-        offersParam.put("fpId", session.getFPID());
-        suggestionsApi.getMessages(offersParam);
+        if (Utils.isNetworkConnected(SuggestionsActivity.this)) {
+            HashMap<String, String> offersParam = new HashMap<>();
+            offersParam.put("fpId", session.getFPID());
+            suggestionsApi.getMessages(offersParam);
+        } else {
+            loadDataFromDb();
+        }
     }
 
     private void removeFragment() {
@@ -182,26 +204,55 @@ public class SuggestionsActivity extends AppCompatActivity {
 
         smsSuggestions = suggestions;
 
-        if (smsSuggestions != null && smsSuggestions.getSuggestionList() != null &&
-                smsSuggestions.getSuggestionList().size() > 0) {
+        if (smsSuggestions != null && smsSuggestions.getSuggestionList() != null) {
 
-            MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED_DATA, null);
-            FirebaseLogger.getInstance().logSAMEvent("", 1, session.getFPID());
+            if (smsSuggestions.getSuggestionList().size() > 0) {
+                viewMessages();
 
-            fragmentManager.beginTransaction()
-                    .replace(R.id.flTopView,
-                            callToActionFragment = new CallToActionFragment())
-                    .addToBackStack(null)
-                    .commit();
+                Gson gson = new GsonBuilder().create();
+                String payloadStr = gson.toJson(suggestions);
+                mDbController.postSamData(payloadStr);
+
+            } else {
+                MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED_NO_DATA, null);
+                FirebaseLogger.getInstance().logSAMEvent("", FirebaseLogger.SAMSTATUS.HAS_NO_DATA, session.getFPID(), appVersion);
+                pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, false).apply();
+                finish();
+            }
+
         } else {
 
-            MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED_NO_DATA, null);
-            FirebaseLogger.getInstance().logSAMEvent("", 2, session.getFPID());
-
-            pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, false).apply();
-            finish();
+            MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED_SERVER_ERROR, null);
+            FirebaseLogger.getInstance().logSAMEvent("", FirebaseLogger.SAMSTATUS.SERVER_ERROR, session.getFPID(), appVersion);
+            // problem with server need to show some dialog
         }
 
+    }
+
+
+    private void loadDataFromDb() {
+
+        String payloadStr = mDbController.getSamData();
+
+        if (payloadStr.isEmpty()) {
+            finish();
+        } else {
+            Gson gson = new GsonBuilder().create();
+            smsSuggestions = gson.fromJson(payloadStr, SMSSuggestions.class);
+            viewMessages();
+        }
+
+    }
+
+    private void viewMessages() {
+        MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED_DATA, null);
+        FirebaseLogger.getInstance().logSAMEvent("", FirebaseLogger.SAMSTATUS.HAS_DATA, session.getFPID(), appVersion);
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.flTopView,
+                        callToActionFragment = new CallToActionFragment())
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override

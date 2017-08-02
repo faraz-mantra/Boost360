@@ -355,14 +355,8 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 cityEditText.setTag(false);
                 cityEditText.setText(city);
                 cityEditText.setTag(true);
+                updateCountry();
 
-                String selectedCountry = countryEditText.getText().toString();
-
-                if (Country_CodeMap != null && Country_CodeMap.containsKey(selectedCountry)) {
-                    String country_code = Country_CodeMap.get(selectedCountry);
-                    if (Code_PhoneMap.containsKey(country_code))
-                        data_country_code = Code_PhoneMap.get(country_code);
-                }
                 //Log.v("ggg",country_code);
 //                countryPhoneCode.setText("+" + phone_code);
 //
@@ -411,14 +405,13 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             }
         });
 
-//        countryEditText.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                selectC();
-//                //Util.hideInput(getActivity());
-//            }
-//        });
+        countryEditText.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                showCountryDialog(signUpCountryList);
+            }
+        });
 
 
         businessCategoryEditText.setOnClickListener(new View.OnClickListener() {
@@ -459,8 +452,8 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         phoneEditText.setFocusable(false);
         phoneEditText.setFocusableInTouchMode(false);
 
-        countryEditText.setFocusable(false);
-        countryEditText.setFocusableInTouchMode(false);
+//        countryEditText.setFocusable(false);
+//        countryEditText.setFocusableInTouchMode(false);
 
         phoneEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -506,6 +499,16 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         });
 
         setDetails();
+    }
+
+    private void updateCountry() {
+        String selectedCountry = countryEditText.getText().toString();
+
+        if (Country_CodeMap != null && Country_CodeMap.containsKey(selectedCountry)) {
+            String country_code = Country_CodeMap.get(selectedCountry);
+            if (Code_PhoneMap.containsKey(country_code))
+                data_country_code = Code_PhoneMap.get(country_code);
+        }
     }
 
     private boolean isFirstCheck = true;
@@ -579,8 +582,21 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
                         businessCategoryEditText.setText(text);
+                        return false;
+                    }
+                })
+                .show();
+    }
 
-                        Util.changeDefaultBackgroundImage(text.toString());
+    private void showCountryDialog(ArrayList<String> countries) {
+        new MaterialDialog.Builder(activity)
+                .title("Select a Country")
+                .items(countries)
+                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        countryEditText.setText(text);
+                        updateCountry();
                         return false;
                     }
                 })
@@ -668,7 +684,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
         Bundle mBundle = getIntent().getExtras();
 
-        if (mBundle!=null &&
+        if (mBundle != null &&
                 mBundle.containsKey("mBundle")) {
 
             mBundle = mBundle.getBundle("mBundle");
@@ -803,7 +819,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             //Log.v("ggg",obj.getCountry());
         }
         Collections.sort(signUpCountryList);
-        if (isFinishing()){
+        if (isFinishing()) {
             hideProgressbar();
             return;
         }
