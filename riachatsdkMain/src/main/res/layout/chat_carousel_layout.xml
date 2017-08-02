@@ -12,7 +12,6 @@
     android:visibility="visible"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="7dp">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,20 +23,18 @@
             android:layout_height="160dp"
             android:layout_marginTop="@dimen/margin_20"
             android:clipToPadding="true"
-            android:gravity="center"
-            android:nestedScrollingEnabled="false" />
+            android:gravity="center" />
 
         <com.rd.PageIndicatorView
             android:id="@+id/ps_indicator"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             attrs:piv_animationType="slide"
-            attrs:piv_count="4"
-            attrs:piv_radius="4dp"
-            attrs:piv_selectedColor="@color/business_button_black"
-            attrs:piv_unselectedColor="@color/business_button_gray"
-            attrs:piv_viewPager="@id/viewPager" />
-
+            android:layout_gravity="center"
+            app:piv_unselectedColor="@color/light_gray"
+            android:padding="7dp"
+            app:piv_selectedColor="@color/gray"
+            app:piv_radius="4dp"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

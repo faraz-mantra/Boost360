@@ -13,9 +13,11 @@
     android:paddingTop="@dimen/margin_20">
 
     <LinearLayout
+        android:id="@+id/ll_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/chat_layout_bg"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/grey_carousel_bg"
         android:orientation="vertical">
 
         <ImageView
@@ -35,7 +37,6 @@
         android:layout_gravity="bottom"
         android:layout_margin="10dp"
         android:orientation="vertical">
-
 
         <TextView
             android:id="@+id/tv_title"

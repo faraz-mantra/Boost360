@@ -28,6 +28,7 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
     private List<Items> itemsList;
     private Map<String, String> mDataMap;
     private Context mContext;
+    private int visibleItemPos = 0;
     private DisplayMetrics metrics;
 
     public CarouselAdapter(Context mContext, List<Items> items, Map<String, String> dataMap) {
@@ -64,6 +65,7 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
                 .placeholder(R.drawable.site_sc_default)
                 .into(carouselItemHolder.ivLogo);
 
+        carouselItemHolder.imgParentLayout.setBackgroundResource(visibleItemPos == position?R.drawable.blue_carousel_bg : R.drawable.grey_carousel_bg);
     }
 
     private String getParsedPrefixPostfixText(String text) {
@@ -78,6 +80,10 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
         return text;
     }
 
+    public void notifyVisibleItemChanged(int pos){
+        visibleItemPos = pos;
+        notifyItemChanged(pos);
+    }
     @Override
     public int getItemCount() {
         if (itemsList != null && itemsList.size() > 0)
@@ -89,12 +95,13 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
 
         ImageView ivLogo;
         TextView tvTitle, tvCaption;
-
+        LinearLayout imgParentLayout;
         public CarouselItemHolder(View itemView) {
             super(itemView);
             ivLogo = (ImageView) itemView.findViewById(R.id.img_logo);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
             tvCaption = (TextView) itemView.findViewById(R.id.tv_caption);
+            imgParentLayout = (LinearLayout) itemView.findViewById(R.id.ll_img);
         }
     }
 }

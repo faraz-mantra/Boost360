@@ -895,7 +895,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         } else if (holder instanceof CarouselViewHolder) {
             final CarouselViewHolder carouselViewHolder = (CarouselViewHolder) holder;
 
-            CarouselAdapter adapter = new CarouselAdapter(mContext, section.getItems(), mDataMap);
+            final CarouselAdapter adapter = new CarouselAdapter(mContext, section.getItems(), mDataMap);
             carouselViewHolder.rvCarousel.setAdapter(adapter);
 
             carouselViewHolder.rvCarousel.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
@@ -924,11 +924,13 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 @Override
                 public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                     super.onScrollStateChanged(recyclerView, newState);
-                }
-
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-
+                    if(newState == RecyclerView.SCROLL_STATE_IDLE){
+                        int position = ((LinearLayoutManager)carouselViewHolder.rvCarousel.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+                        if(position>-1) {
+                            carouselViewHolder.pageIndicatorView.setSelection(position);
+                            adapter.notifyVisibleItemChanged(position);
+                        }
+                    }
                 }
             });
         }
