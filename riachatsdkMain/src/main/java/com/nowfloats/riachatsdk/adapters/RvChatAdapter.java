@@ -6,13 +6,16 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -891,8 +894,9 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             crousalView.pageIndicatorView.setDynamicCount(true);
             final LinearLayoutManager manager = new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false);
             crousalView.recyclerViewCrousal.setLayoutManager(manager);
-            crousalView.recyclerViewCrousal.setHasFixedSize(true);
+//            crousalView.recyclerViewCrousal.setHasFixedSize(true);
             crousalView.recyclerViewCrousal.setAdapter(adapter);
+
             crousalView.recyclerViewCrousal.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
                 @Override
                 public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
@@ -1268,6 +1272,49 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             super(v);
             recyclerViewCrousal = (RecyclerView) v.findViewById(R.id.rv_crousal);
             pageIndicatorView = (PageIndicatorView) v.findViewById(R.id.ps_indicator);
+            SnapHelper snapHelper = new PagerSnapHelper();
+            snapHelper.attachToRecyclerView(recyclerViewCrousal);
+            recyclerViewCrousal.addItemDecoration(new EdgeDecorator(Utils.dpToPx(mContext,20)));
+        }
+    }
+
+    public class EdgeDecorator extends RecyclerView.ItemDecoration {
+
+        private final int edgePadding;
+
+        /**
+         * EdgeDecorator
+         * @param edgePadding padding set on the left side of the first item and the right side of the last item
+         */
+        public EdgeDecorator(int edgePadding) {
+            this.edgePadding = edgePadding;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            super.getItemOffsets(outRect, view, parent, state);
+
+            int itemCount = state.getItemCount();
+
+            final int itemPosition = parent.getChildAdapterPosition(view);
+
+            // no position, leave it alone
+            if (itemPosition == RecyclerView.NO_POSITION) {
+                return;
+            }
+
+            // first item
+            if (itemPosition == 0) {
+                outRect.set(edgePadding, view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
+            }
+            // last item
+            else if (itemCount > 0 && itemPosition == itemCount - 1) {
+                outRect.set(view.getPaddingLeft(), view.getPaddingTop(), edgePadding, view.getPaddingBottom());
+            }
+            // every other item
+            else {
+                outRect.set(view.getPaddingLeft(), view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
+            }
         }
     }
 }

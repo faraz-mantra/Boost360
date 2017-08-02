@@ -20,7 +20,7 @@
             android:id="@+id/rv_crousal"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:nestedScrollingEnabled="true"
+            android:clipToPadding="true"
             android:layout_gravity="bottom"/>
         <com.rd.PageIndicatorView
             android:id="@+id/ps_indicator"
@@ -28,8 +28,6 @@
             android:layout_height="wrap_content"
             attrs:piv_viewPager="@id/viewPager"
             attrs:piv_animationType="slide"
-            attrs:piv_unselectedColor="@color/business_button_gray"
-            attrs:piv_selectedColor="@color/business_button_black"
             attrs:piv_radius="4dp"
             attrs:piv_count="4"/>
         <View
