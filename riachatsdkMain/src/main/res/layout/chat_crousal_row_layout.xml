@@ -19,17 +19,18 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_crousal"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:clipToPadding="true"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom"/>
         <com.rd.PageIndicatorView
             android:id="@+id/ps_indicator"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             attrs:piv_viewPager="@id/viewPager"
             attrs:piv_animationType="slide"
-            attrs:piv_radius="4dp"
-            attrs:piv_count="4"/>
+            android:layout_gravity="center"
+            app:piv_unselectedColor="@color/light_gray"
+            app:piv_selectedColor="@color/gray"
+            attrs:piv_radius="4dp"/>
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"

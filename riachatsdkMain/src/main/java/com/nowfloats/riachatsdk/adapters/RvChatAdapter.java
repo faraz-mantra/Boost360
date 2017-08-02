@@ -22,7 +22,9 @@ import android.text.SpannableStringBuilder;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.URLSpan;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -896,7 +898,6 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             crousalView.recyclerViewCrousal.setLayoutManager(manager);
 //            crousalView.recyclerViewCrousal.setHasFixedSize(true);
             crousalView.recyclerViewCrousal.setAdapter(adapter);
-
             crousalView.recyclerViewCrousal.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
                 @Override
                 public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
@@ -923,13 +924,12 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 @Override
                 public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                     super.onScrollStateChanged(recyclerView, newState);
-                }
-
-                @Override
-                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                    int position = manager.findFirstCompletelyVisibleItemPosition();
-                    crousalView.pageIndicatorView.setSelection(position);
-                    Log.v("ggg",dx+" "+dy);
+                    if(newState == RecyclerView.SCROLL_STATE_IDLE){
+                        int position = manager.findFirstCompletelyVisibleItemPosition();
+                        if(position>-1) {
+                            crousalView.pageIndicatorView.setSelection(position);
+                        }
+                    }
                 }
             });
         }
@@ -1274,20 +1274,22 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             pageIndicatorView = (PageIndicatorView) v.findViewById(R.id.ps_indicator);
             SnapHelper snapHelper = new PagerSnapHelper();
             snapHelper.attachToRecyclerView(recyclerViewCrousal);
-            recyclerViewCrousal.addItemDecoration(new EdgeDecorator(Utils.dpToPx(mContext,20)));
+            Display display = ((Activity)mContext).getWindowManager().getDefaultDisplay();
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            display.getMetrics(displayMetrics);
+            recyclerViewCrousal.addItemDecoration(new EdgeDecorator());
         }
     }
 
     public class EdgeDecorator extends RecyclerView.ItemDecoration {
 
-        private final int edgePadding;
+        private int edgePadding = 100;
 
         /**
          * EdgeDecorator
-         * @param edgePadding padding set on the left side of the first item and the right side of the last item
+         *
          */
-        public EdgeDecorator(int edgePadding) {
-            this.edgePadding = edgePadding;
+        public EdgeDecorator() {
         }
 
         @Override
@@ -1305,11 +1307,11 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             // first item
             if (itemPosition == 0) {
-                outRect.set(edgePadding, view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
+                outRect.set(view.getPaddingLeft()+view.getMeasuredWidth()/2, view.getPaddingTop(), view.getPaddingRight(), view.getPaddingBottom());
             }
             // last item
             else if (itemCount > 0 && itemPosition == itemCount - 1) {
-                outRect.set(view.getPaddingLeft(), view.getPaddingTop(), edgePadding, view.getPaddingBottom());
+                outRect.set(view.getPaddingLeft(), view.getPaddingTop(), view.getPaddingRight()+view.getMeasuredWidth()/3, view.getPaddingBottom());
             }
             // every other item
             else {
