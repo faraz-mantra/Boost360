@@ -2,10 +2,12 @@ package com.nowfloats.riachatsdk.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -26,17 +28,26 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
     private List<Items> itemsList;
     private Map<String, String> mDataMap;
     private Context mContext;
+    private DisplayMetrics metrics;
 
     public CarouselAdapter(Context mContext, List<Items> items, Map<String, String> dataMap) {
         this.mContext = mContext;
         itemsList = items;
+        metrics = mContext.getResources().getDisplayMetrics();
         this.mDataMap = dataMap;
     }
 
     @Override
     public CarouselItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_carousel_item_layout, parent, false);
-        return new CarouselItemHolder(view);
+        CarouselItemHolder carouselItemHolder = new CarouselItemHolder(view);
+        LinearLayout.LayoutParams linLayoutParams = new LinearLayout.LayoutParams(metrics.widthPixels * 70 / 100,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        linLayoutParams.setMargins(10, 10, 10, 10);
+        carouselItemHolder.itemView.setLayoutParams(linLayoutParams);
+        carouselItemHolder.itemView.setPadding(20, 50, 20, 50);
+
+        return carouselItemHolder;
     }
 
     @Override

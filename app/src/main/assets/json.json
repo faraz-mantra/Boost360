@@ -38,18 +38,27 @@
     "FlowId": "OnboardingTemplate_v1"
   },
   {
+    "Name": "Get Name",
     "Id": "5981ac83c7d8bf1ad0af4022",
     "Emotion": "Cool",
-    "TimeoutInMs": 0,
-    "NodeType": "Card",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
     "Sections": [
       {
         "Title": "Your Facebook Page",
         "Caption": "Select one",
+        "Text": "Awesome! Let's get the ssss out of the way quick…",
+        "DelayInMs": 1989,
+        "Hidden": false,
+        "_id": "58cfb8bfc782bb4ad0ab9a0d",
+        "SectionType": "Carousel",
+        "DelayInMs": 713,
+        "Hidden": false,
+        "_id": "5981ac94c7d8bf1ad0af4023",
         "Items": [
           {
-            "Title": "[~FACEBOOK_PAGE_1_NAME]",
-            "Caption": "[~FACEBOOK_PAGE_1_LIKES]",
+            "Title": "Hello Facebookfsjfksjkfjskjfkjsklfjlksjlkfjlksdjlfjsldjfljldsjflsdj",
+            "Caption": "1 like",
             "ImageUrl": "[~FACEBOOK_PAGE_1_LOGO]",
             "Buttons": [
               {
@@ -61,8 +70,8 @@
             "_id": "5981acb7c7d8bf1ad0af408a"
           },
           {
-            "Title": "[~FACEBOOK_PAGE_2_NAME]",
-            "Caption": "[~FACEBOOK_PAGE_2_LIKES]",
+            "Title": "Hello Facebook2",
+            "Caption": "1 like",
             "ImageUrl": "[~FACEBOOK_PAGE_2_LOGO]",
             "Buttons": [
               {
@@ -74,8 +83,8 @@
             "_id": "5981aceac7d8bf1ad0af4097"
           },
           {
-            "Title": "[~FACEBOOK_PAGE_3_NAME]",
-            "Caption": "[~FACEBOOK_PAGE_3_LIKES]",
+            "Title": "Hello Facebook23",
+            "Caption": "1 like",
             "ImageUrl": "[~FACEBOOK_PAGE_3_LOGO]",
             "Buttons": [
               {
@@ -86,35 +95,24 @@
             ],
             "_id": "5981ad22c7d8bf1ad0af409d"
           }
-        ],
-        "SectionType": "Carousel",
-        "DelayInMs": 713,
-        "Hidden": false,
-        "_id": "5981ac94c7d8bf1ad0af4023"
+        ]
       }
     ],
     "Buttons": [
       {
-        "ButtonText": "Confirm",
+        "ButtonText": "▶",
         "Emotion": "Cool",
-        "ButtonType": "NextNode",
+        "ButtonType": "GetText",
+        "NextNodeId": "58cfb992c782bb4ad0ab9a66",
         "DefaultButton": false,
         "Hidden": false,
+        "PlaceholderText": "Enter your name",
         "PostToChat": true,
-        "_id": "5981ad76c7d8bf1ad0af40ba"
-      },
-      {
-        "ButtonText": "None of these",
-        "Emotion": "Cool",
-        "ButtonType": "NextNode",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PostToChat": true,
-        "_id": "5981ad76c7d8bf1ad0af40b6"
+        "_id": "58cfb914c782bb4ad0ab9a5a"
       }
     ],
-    "VariableName": "FACEBOOK_PAGE_NAME",
-    "Placement": "Center"
+    "VariableName": "PERSON_NAME",
+    "FlowId": "OnboardingTemplate_v1"
   },
   {
     "Name": "Unable to Create FP",

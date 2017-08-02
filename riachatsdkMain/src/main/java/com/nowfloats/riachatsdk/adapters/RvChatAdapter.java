@@ -895,7 +895,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         } else if (holder instanceof CarouselViewHolder) {
             final CarouselViewHolder carouselViewHolder = (CarouselViewHolder) holder;
 
-            CarouselAdapter adapter = new CarouselAdapter(mContext,section.getItems(),mDataMap);
+            CarouselAdapter adapter = new CarouselAdapter(mContext, section.getItems(), mDataMap);
             carouselViewHolder.rvCarousel.setAdapter(adapter);
 
             carouselViewHolder.rvCarousel.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
