@@ -2,6 +2,7 @@ package com.nowfloats.riachatsdk.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,24 +29,34 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
     private Map<String, String> mDataMap;
     private Context mContext;
     private int visibleItemPos = 0;
+    private DisplayMetrics metrics;
 
     public CarouselAdapter(Context mContext, List<Items> items, Map<String, String> dataMap) {
         this.mContext = mContext;
         itemsList = items;
+        metrics = mContext.getResources().getDisplayMetrics();
         this.mDataMap = dataMap;
     }
 
     @Override
     public CarouselItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_carousel_item_layout, parent, false);
-        return new CarouselItemHolder(view);
+        CarouselItemHolder carouselItemHolder = new CarouselItemHolder(view);
+        return carouselItemHolder;
     }
 
     @Override
     public void onBindViewHolder(CarouselItemHolder carouselItemHolder, int position) {
+        LinearLayout.LayoutParams linLayoutParams = new LinearLayout.LayoutParams(metrics.widthPixels * 73 / 100,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        linLayoutParams.setMargins(15, 10, 15, 10);
+        carouselItemHolder.itemView.setLayoutParams(linLayoutParams);
+        carouselItemHolder.itemView.setPadding(70, 70, 70, 70);
+
         Items items = itemsList.get(position);
         carouselItemHolder.tvTitle.setText(getParsedPrefixPostfixText(items.getTitle()));
         carouselItemHolder.tvCaption.setText(getParsedPrefixPostfixText(items.getCaption()));
+
 
         String imageURL = getParsedPrefixPostfixText(items.getImageUrl());
         carouselItemHolder.ivLogo.setImageResource(R.drawable.site_sc_default);
@@ -55,7 +66,7 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
                 .placeholder(R.drawable.site_sc_default)
                 .into(carouselItemHolder.ivLogo);
 
-        carouselItemHolder.imgParentLayout.setBackgroundResource(visibleItemPos == position?R.drawable.blue_carousel_bg : R.drawable.grey_carousel_bg);
+        carouselItemHolder.imgParentLayout.setBackgroundResource(visibleItemPos == position ? R.drawable.blue_carousel_bg : R.drawable.grey_carousel_bg);
     }
 
     private String getParsedPrefixPostfixText(String text) {
@@ -70,10 +81,11 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
         return text;
     }
 
-    public void notifyVisibleItemChanged(int pos){
+    public void notifyVisibleItemChanged(int pos) {
         visibleItemPos = pos;
-        notifyItemChanged(pos);
+        notifyDataSetChanged();
     }
+
     @Override
     public int getItemCount() {
         if (itemsList != null && itemsList.size() > 0)
@@ -86,6 +98,7 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
         ImageView ivLogo;
         TextView tvTitle, tvCaption;
         LinearLayout imgParentLayout;
+
         public CarouselItemHolder(View itemView) {
             super(itemView);
             ivLogo = (ImageView) itemView.findViewById(R.id.img_logo);
