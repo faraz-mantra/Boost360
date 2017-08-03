@@ -1160,7 +1160,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         }
 
 
-        if (node.getNodeType() != null && node.getNodeType().equals(Constants.NodeType.TYPE_CARD) && node.getPlacement().equals("Center")) {
+        if (node.getNodeType() != null && node.getNodeType().equals(Constants.NodeType.TYPE_CARD)
+                && node.getPlacement() != null && node.getPlacement().equals("Center")) {
 
             if (node.getSections().size() == 2 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_IMAGE)) {
                 if (mSectionList.get(mSectionList.size() - 1).getCardModel() != null &&
@@ -1176,14 +1177,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 } else {
                     replyToRia(Constants.SectionType.TYPE_UNCONFIRMED_CARD, node, false);
                 }
-            }
-            else if (node.getSections().size() == 1 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_CAROUSEL)) {
-                if (mSectionList.get(mSectionList.size() - 1).getCardModel() != null &&
-                        mSectionList.get(mSectionList.size() - 1).getCardModel().getPlacement().equals("Center")) {
-                    replyToRia(Constants.SectionType.TYPE_CAROUSEL, node, true);
-                } else {
-                    replyToRia(Constants.SectionType.TYPE_CAROUSEL, node, false);
-                }
             } else if (node.getSections().size() == 1 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_PRINT_OTP)) {
                 if (mSectionList.get(mSectionList.size() - 1).getCardModel() != null &&
                         mSectionList.get(mSectionList.size() - 1).getCardModel().getPlacement().equals("Center")) {
@@ -1192,6 +1185,35 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     replyToRia(Constants.SectionType.TYPE_PRINT_OTP, node, false);
                 }
                 showKeyBoard();
+            } else if (node.getSections().size() == 1 && node.getSections().get(0).getSectionType().equals(Constants.SectionType.TYPE_CAROUSEL)) {
+
+                int time = 0;
+                time += 1000;
+
+//                final Section typingSection = new Section();
+//                typingSection.setSectionType(Constants.SectionType.TYPE_TYPING);
+
+//                mHandler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mSectionList.add(typingSection);
+//                        tvRiaTyping.setVisibility(View.VISIBLE);
+//                        mAdapter.notifyItemInserted(mSectionList.size() - 1);
+//                        rvChatData.scrollToPosition(mSectionList.size() - 1);
+//                    }
+//                }, time);
+
+                if (node.getSections() != null) {
+
+                    time += node.getSections().get(0).getDelayInMs();
+                    mHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            replyToRia(Constants.SectionType.TYPE_CAROUSEL, node, false);
+                        }
+                    }, time);
+
+                }
             }
             return;
         }
@@ -1960,7 +1982,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         if (mButton != null) {
 
-            if (confirmationType.equalsIgnoreCase(Constants.ConfirmationType.OTP)) {
+            if (confirmationType.equalsIgnoreCase(Constants.ConfirmationType.OTP)
+                    || confirmationType.equalsIgnoreCase(Constants.ConfirmationType.FB_PAGE)) {
 
                 ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, mButton.getId(), mButton.getButtonText(), mCurrVarName,
@@ -2033,6 +2056,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             switch (confirmationType) {
                 case Constants.ConfirmationType.BIZ_NAME:
                 case Constants.ConfirmationType.OTP:
+                case Constants.ConfirmationType.FB_PAGE:
                     showNextNode(data[1]);
                     break;
                 case Constants.ConfirmationType.ADDRESS_ENTRY:

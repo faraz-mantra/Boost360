@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_img"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@drawable/grey_carousel_bg"
-    android:gravity="center"
     android:orientation="horizontal"
-    android:paddingBottom="@dimen/margin_20"
+    android:paddingBottom="@dimen/margin_40"
     android:paddingLeft="@dimen/margin_30"
     android:paddingRight="@dimen/margin_30"
-    android:paddingTop="@dimen/margin_20">
+    android:paddingTop="@dimen/margin_40">
 
     <LinearLayout
-        android:id="@+id/ll_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -22,8 +21,8 @@
 
         <ImageView
             android:id="@+id/img_logo"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_gravity="bottom|center_horizontal"
             android:layout_margin="@dimen/margin_5"
             android:adjustViewBounds="true"
@@ -35,7 +34,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_margin="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="@dimen/margin_20"
         android:orientation="vertical">
 
         <TextView
@@ -44,9 +44,9 @@
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
-            android:maxLines="1"
+            android:maxLines="2"
             android:scrollHorizontally="true"
-            android:text="Thinking Ink"
+            android:text="Think Ink House"
             android:textColor="#496AB5"
             android:textSize="@dimen/large_text_size"
             android:textStyle="bold" />
@@ -55,7 +55,6 @@
             android:id="@+id/tv_caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:text="3.4K Likes"
             android:textColor="@color/gray"
             android:textSize="@dimen/medium_text_size" />

@@ -104,6 +104,7 @@ public class Constants {
         String OTP = "otp";
         String ADDRESS_ENTRY = "address_entry";
         String SUBMIT_FORM = "submit_form";
+        String FB_PAGE = "fb_page";
 
     }
 }

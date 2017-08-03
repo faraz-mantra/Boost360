@@ -9,14 +9,14 @@
       {
         "Text": "Awesome! Let's get the basics out of the way quick…",
         "SectionType": "Text",
-        "DelayInMs": 1989,
+        "DelayInMs": 1734,
         "Hidden": false,
         "_id": "58cfb8bfc782bb4ad0ab9a0d"
       },
       {
         "Text": " What's your first name?",
         "SectionType": "Text",
-        "DelayInMs": 912,
+        "DelayInMs": 864,
         "Hidden": false,
         "_id": "593f7f8eb02a290a904f05e6"
       }
@@ -38,81 +38,701 @@
     "FlowId": "OnboardingTemplate_v1"
   },
   {
-    "Name": "Get Name",
-    "Id": "5981ac83c7d8bf1ad0af4022",
+    "Name": "What is SEO",
+    "Id": "59661045b02a294080954744",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Search Engine Optimisation or SEO is the organisation of the website content in a particular manner which increases the traffic organically from popular search engines such as Google, etc.",
+        "SectionType": "Text",
+        "DelayInMs": 3000,
+        "Hidden": false,
+        "_id": "59661382b02a29408095475f"
+      },
+      {
+        "Text": "(Inorganic traffic is advertising - something you pay for.)",
+        "SectionType": "Text",
+        "DelayInMs": 1770,
+        "Hidden": false,
+        "_id": "596613e6b02a294080954764"
+      },
+      {
+        "Title": "",
+        "HeightInPixels": 0,
+        "WidthInPixels": 0,
+        "Url": "https://s3-ap-southeast-1.amazonaws.com/nfcontent-cdn/ria/onboarding-content/WhatIsSEO.jpg",
+        "SizeInKb": 0,
+        "SectionType": "Image",
+        "DelayInMs": 0,
+        "Hidden": false,
+        "_id": "59661489b02a294080954769"
+      },
+      {
+        "Text": "SEO is a constant activity and it has been automated for the NowFloats website.",
+        "SectionType": "Text",
+        "DelayInMs": 2528,
+        "Hidden": false,
+        "_id": "596614b8b02a29408095476d"
+      },
+      {
+        "Text": "So you just have to just update your business content, our tech takes care of increasing the traffic.",
+        "SectionType": "Text",
+        "DelayInMs": 3000,
+        "Hidden": false,
+        "_id": "59662722b02a294080954c04"
+      },
+      {
+        "Text": "Cool, eh?",
+        "SectionType": "Text",
+        "DelayInMs": 333,
+        "Hidden": false,
+        "_id": "596614fab02a294080954771"
+      },
+      {
+        "Text": "Alright then, let’s fill out your business address.",
+        "SectionType": "Text",
+        "DelayInMs": 1581,
+        "Hidden": false,
+        "_id": "5966151fb02a294080954775"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Enter Address",
+        "Emotion": "Cool",
+        "ButtonType": "GetAddress",
+        "NextNodeId": "593f125fb02a2920287c253f",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "596610a9b02a294080954750"
+      }
+    ],
+    "FlowId": "OnboardingTemplate_v1"
+  },
+  {
+    "Name": "Confirm your Business Name",
+    "Id": "593f5f29b02a2907a482f9fe",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Text": "[~BUSINESS_NAME]",
+        "SectionType": "Text",
+        "DelayInMs": 560,
+        "Hidden": false,
+        "_id": "593f5f29b02a2907a482fa04"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Confirm",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "593f5f37b02a2907a482fa0e",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": false,
+        "_id": "593f5f29b02a2907a482fa02"
+      },
+      {
+        "ButtonText": "Edit",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "593f5f30b02a2907a482fa07",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": false,
+        "_id": "593f5f29b02a2907a482fa03"
+      }
+    ],
+    "FlowId": "OnboardingTemplate_v1",
+    "CardHeader": "Confirm your business name",
+    "CardFooter": "",
+    "Placement": "Center"
+  },
+  {
+    "Name": "FP Tag available",
+    "Id": "58dafdbac7d8bf2c80901cc3",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Text": "[~TAG]<br>.nowfloats.com",
+        "SectionType": "Text",
+        "DelayInMs": 840,
+        "Hidden": false,
+        "_id": "58dafeecc7d8bf2c80901cd2"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Confirm",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "593f7222b02a2907a482fc32",
+        "DefaultButton": false,
+        "Hidden": false,
+        "VariableValue": "",
+        "PostToChat": true,
+        "_id": "58dafe27c7d8bf2c80901cc5"
+      },
+      {
+        "ButtonText": "Edit Website Address",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "5942a8d3c7d8bf95b0320b19",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": false,
+        "_id": "58dafe28c7d8bf2c80901cc7"
+      }
+    ],
+    "FlowId": "OnboardingTemplate_v1",
+    "CardHeader": "👍 Hallelujah! This website address is available.",
+    "Placement": "Center"
+  },
+  {
+    "Name": "Welcome Node",
+    "Id": "58cfaf0dc782bb3fec8db382",
     "Emotion": "Cool",
     "TimeoutInMs": 15000,
     "NodeType": "Combination",
     "Sections": [
       {
-        "Title": "Your Facebook Page",
-        "Caption": "Select one",
-        "Text": "Awesome! Let's get the ssss out of the way quick…",
-        "DelayInMs": 1989,
+        "Text": "Hi! My name is Ria, and I will help you set up your website within minutes.",
+        "SectionType": "Text",
+        "DelayInMs": 2475,
         "Hidden": false,
-        "_id": "58cfb8bfc782bb4ad0ab9a0d",
-        "SectionType": "Carousel",
-        "DelayInMs": 713,
+        "_id": "58cfaf21c782bb3fec8db386"
+      },
+      {
+        "Text": "It's really simple, so let's get started?",
+        "SectionType": "Text",
+        "DelayInMs": 1230,
         "Hidden": false,
-        "_id": "5981ac94c7d8bf1ad0af4023",
-        "Items": [
-          {
-            "Title": "Hello Facebookfsjfksjkfjskjfkjsklfjlksjlkfjlksdjlfjsldjfljldsjflsdj",
-            "Caption": "1 like",
-            "ImageUrl": "[~FACEBOOK_PAGE_1_LOGO]",
-            "Buttons": [
-              {
-                "Type": "NextNode",
-                "VariableValue": "[~FACEBOOK_PAGE1_ID]",
-                "_id": "5981acc8c7d8bf1ad0af408e"
-              }
-            ],
-            "_id": "5981acb7c7d8bf1ad0af408a"
-          },
-          {
-            "Title": "Hello Facebook2",
-            "Caption": "1 like",
-            "ImageUrl": "[~FACEBOOK_PAGE_2_LOGO]",
-            "Buttons": [
-              {
-                "Type": "NextNode",
-                "VariableValue": "[~FACEBOOK_PAGE2_ID]",
-                "_id": "5981ad4ac7d8bf1ad0af40ac"
-              }
-            ],
-            "_id": "5981aceac7d8bf1ad0af4097"
-          },
-          {
-            "Title": "Hello Facebook23",
-            "Caption": "1 like",
-            "ImageUrl": "[~FACEBOOK_PAGE_3_LOGO]",
-            "Buttons": [
-              {
-                "Type": "NextNode",
-                "VariableValue": "[~FACEBOOK_PAGE3_ID]",
-                "_id": "5981ad3ec7d8bf1ad0af40a5"
-              }
-            ],
-            "_id": "5981ad22c7d8bf1ad0af409d"
-          }
-        ]
+        "_id": "58cfb4aec782bb5a241de4aa"
+      },
+      {
+        "Url": "https://s3-ap-southeast-1.amazonaws.com/nfcontent-cdn/ria/onboarding-content/RIA1.gif",
+        "PreFetch": false,
+        "SectionType": "Gif",
+        "DelayInMs": 0,
+        "Hidden": false,
+        "_id": "58d256dac782bb594494b542"
       }
     ],
     "Buttons": [
       {
-        "ButtonText": "▶",
+        "ButtonText": "Let's get started",
         "Emotion": "Cool",
-        "ButtonType": "GetText",
-        "NextNodeId": "58cfb992c782bb4ad0ab9a66",
+        "ButtonType": "NextNode",
         "DefaultButton": false,
         "Hidden": false,
-        "PlaceholderText": "Enter your name",
         "PostToChat": true,
-        "_id": "58cfb914c782bb4ad0ab9a5a"
+        "_id": "58cfafc6c782bb3fec8db3d5"
       }
     ],
-    "VariableName": "PERSON_NAME",
+    "RequiredVariables": [],
     "FlowId": "OnboardingTemplate_v1"
+  },
+  {
+    "Name": "Ask Location Permission",
+    "Id": "58d44487443f863004e27bb4",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "I'll use your device location to pin-point the exact address of [~BUSINESS_NAME]",
+        "SectionType": "Text",
+        "DelayInMs": 2720,
+        "Hidden": false,
+        "_id": "58d447ce443f863004e27bc5"
+      },
+      {
+        "Text": "Click continue to give me access",
+        "SectionType": "Text",
+        "DelayInMs": 1248,
+        "Hidden": false,
+        "_id": "58d58566443f862eb0d8721c"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Continue",
+        "Emotion": "Cool",
+        "ButtonType": "DeepLink",
+        "DeepLinkUrl": "asklocationpermission",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58d44629443f863004e27bb8"
+      },
+      {
+        "ButtonText": "Tell me more",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58d447b1443f863004e27bc1"
+      }
+    ],
+    "FlowId": "OnboardingTemplate_v1"
+  },
+  {
+    "Name": "Pitch",
+    "Id": "58e2f301b02a2927fc4db9e6",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Congratulations! ",
+        "SectionType": "Text",
+        "DelayInMs": 544,
+        "Hidden": false,
+        "_id": "58e2f34db02a2927fc4db9e7"
+      },
+      {
+        "Text": "You've got an exclusive evaluation access for 30 days",
+        "SectionType": "Text",
+        "DelayInMs": 1696,
+        "Hidden": false,
+        "_id": "58e2f422b02a2927fc4db9eb"
+      },
+      {
+        "Text": "Enjoy unlimited updates, automatic search engine optimization, custom pages and business enquiries from the site.",
+        "SectionType": "Text",
+        "DelayInMs": 3000,
+        "Hidden": false,
+        "_id": "58e2f45bb02a2927fc4db9f1"
+      },
+      {
+        "Text": "After 30 days, you can purchase an yearly plan and get access to premium features like ",
+        "SectionType": "Text",
+        "DelayInMs": 2610,
+        "Hidden": false,
+        "_id": "58e363c8b02a2928400822f0"
+      },
+      {
+        "Text": "Dedicated account manager, lead tracking, weekly reports and regular product trainings.",
+        "SectionType": "Text",
+        "DelayInMs": 2784,
+        "Hidden": false,
+        "_id": "58e363f5b02a2928400822f7"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Cool!",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58e2f549b02a2927fc4db9f9"
+      }
+    ],
+    "FlowId": "OnboardingTemplate_v1"
+  },
+  {
+    "Name": "Tell Why Location Permission is Required",
+    "Id": "58d448a1443f863004e27beb",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Your exact location helps in optimizing local SEO for the site. Location access is critical to locate your business on the map",
+        "SectionType": "Text",
+        "DelayInMs": 3000,
+        "Hidden": false,
+        "_id": "58d448a8443f863004e27bee"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Okay",
+        "Emotion": "Cool",
+        "ButtonType": "DeepLink",
+        "DeepLinkUrl": "asklocationpermission",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "58d448f6443f863004e27bfb"
+      },
+      {
+        "ButtonText": "Enter Manually",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "593e5331b02a2913bce7a118"
+      }
+    ],
+    "RequiredVariables": [],
+    "FlowId": "OnboardingTemplate_v1"
+  },
+  {
+    "Name": "Your mobile number",
+    "Id": "593f19bfb02a2920287c2589",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Text": "[~COUNTRYCODE] [~PHONE]",
+        "SectionType": "Text",
+        "DelayInMs": 851,
+        "Hidden": false,
+        "_id": "593f19f0b02a2920287c258c"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Submit",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58d45c20443f863004e27c2f",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": false,
+        "_id": "593f1a56b02a2920287c2592"
+      },
+      {
+        "ButtonText": "Edit",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "593f1a83b02a2920287c25a2",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": false,
+        "_id": "593f1a70b02a2920287c2596"
+      }
+    ],
+    "FlowId": "OnboardingTemplate_v1",
+    "CardHeader": "Your mobile number",
+    "Placement": "Center"
+  },
+  {
+    "Name": "Invalid OTP Reenter card",
+    "Id": "591d9326c7d8bf4310a042c0",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Length": 4,
+        "SectionType": "PrintOTP",
+        "DelayInMs": 0,
+        "Hidden": false,
+        "_id": "593f5392460b50525490ae73"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Submit",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58d4746a443f861008cb20a2",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "",
+        "PostToChat": false,
+        "_id": "591d93d9c7d8bf4310a042ca"
+      },
+      {
+        "ButtonText": "Resend OTP",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58d476d9443f861008cb20a5",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "593f54be460b50525490ae83"
+      }
+    ],
+    "VariableName": "OTP",
+    "FlowId": "OnboardingTemplate_v1",
+    "CardHeader": "⚠ Please enter correct OTP",
+    "CardFooter": "",
+    "Placement": "Center"
+  },
+  {
+    "Name": "Website Ready with Screenshot",
+    "Id": "595ce517c7d8bf5ad0ace312",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Aaaand it's done! Your business website is up and running.",
+        "SectionType": "Text",
+        "DelayInMs": 4500,
+        "Hidden": false,
+        "_id": "5966019fc7d8bf4b0872dc23"
+      },
+      {
+        "Text": "Here's what your website looks like ",
+        "SectionType": "Text",
+        "DelayInMs": 1152,
+        "Hidden": false,
+        "_id": "595ce8b9c7d8bf5ad0ace313"
+      },
+      {
+        "Title": "",
+        "HeightInPixels": 0,
+        "WidthInPixels": 0,
+        "Url": "[~SITE_SCREENSHOT_URL]",
+        "SizeInKb": 0,
+        "SectionType": "Image",
+        "DelayInMs": 0,
+        "Hidden": false,
+        "_id": "595ce8c7c7d8bf5ad0ace451"
+      },
+      {
+        "Text": "It may seem a bit bare right now, but I can help you make it much better. ",
+        "SectionType": "Text",
+        "DelayInMs": 2664,
+        "Hidden": false,
+        "_id": "596601aec7d8bf4b0872dc2b"
+      },
+      {
+        "Text": "So do you have a little time? ",
+        "SectionType": "Text",
+        "DelayInMs": 960,
+        "Hidden": false,
+        "_id": "59671f10b02a290bac836ef1"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "No",
+        "Emotion": "Cool",
+        "ButtonType": "DeepLink",
+        "DeepLinkUrl": "login",
+        "NextNodeId": "59675de6b02a290bac836f0e",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "595e10afc7d8bf6fe0699139"
+      },
+      {
+        "ButtonText": "Yes",
+        "Emotion": "Cool",
+        "ButtonType": "FetchChatFlow",
+        "Url": "https://onboarding-boost.withfloats.com/chatflowpostsignup/api/conversation/chat",
+        "NextNodeId": "59675e80b02a290bac83707e",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "595f5b3cc7d8bf4e3c7ae5e1"
+      }
+    ],
+    "NextNodeId": "58e235d614216c1a74cb2831",
+    "FlowId": "OnboardingTemplate_v1"
+  },
+  {
+    "Name": "Enter OTP-without resend",
+    "Id": "58d478f2443f861008cb20aa",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Length": 4,
+        "SectionType": "PrintOTP",
+        "DelayInMs": 0,
+        "Hidden": false,
+        "_id": "593f53f1460b50525490ae79"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Submit",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "58d4746a443f861008cb20a2",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "",
+        "PostToChat": false,
+        "_id": "58d479f9443f861008cb20cf"
+      },
+      {
+        "ButtonText": "Edit Phone Number",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "593f1a83b02a2920287c25a2",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "595f97a5c7d8bf4c74f26311"
+      }
+    ],
+    "VariableName": "OTP",
+    "RequiredVariables": [],
+    "FlowId": "OnboardingTemplate_v1",
+    "CardHeader": "Please enter the OTP sent on [~COUNTRYCODE] [~PHONE]",
+    "Placement": "Center"
+  },
+  {
+    "Name": "Address",
+    "Id": "58cfc03fc782bb4ad0ab9b00",
+    "Emotion": "Cool",
+    "TimeoutInMs": 5000,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Alright, next is your business address.",
+        "SectionType": "Text",
+        "DelayInMs": 1521,
+        "Hidden": false,
+        "_id": "58cfc068c782bb4ad0ab9b04"
+      },
+      {
+        "Text": "Be precise, for both your customers and SEO.",
+        "SectionType": "Text",
+        "DelayInMs": 1452,
+        "Hidden": false,
+        "_id": "58d57e3b443f862eb0d871e9"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "What is SEO?",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "59661045b02a294080954744",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "59661031b02a29408095473c"
+      },
+      {
+        "ButtonText": "Enter Address",
+        "Emotion": "Cool",
+        "ButtonType": "GetAddress",
+        "NextNodeId": "593f125fb02a2920287c253f",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PlaceholderText": "",
+        "PostToChat": false,
+        "_id": "58cfc0b0c782bb4ad0ab9b1a"
+      }
+    ],
+    "RequiredVariables": [],
+    "FlowId": "OnboardingTemplate_v1"
+  },
+  {
+    "Name": "Bye",
+    "Id": "59675de6b02a290bac836f0e",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Combination",
+    "Sections": [
+      {
+        "Text": "Alright then, you can login to the app and update whenever you like. ",
+        "SectionType": "Text",
+        "DelayInMs": 2139,
+        "Hidden": false,
+        "_id": "59675e03b02a290bac836f0f"
+      },
+      {
+        "Text": "You can also track your visitors (only after you have updated the site a few times ; )",
+        "SectionType": "Text",
+        "DelayInMs": 2666,
+        "Hidden": false,
+        "_id": "59675e10b02a290bac837065"
+      },
+      {
+        "Text": "Remember – regular and relevant updates about your business. ",
+        "SectionType": "Text",
+        "DelayInMs": 2135,
+        "Hidden": false,
+        "_id": "59675e1ab02a290bac837069"
+      },
+      {
+        "Text": "Have a lovely day. Bye.",
+        "SectionType": "Text",
+        "DelayInMs": 874,
+        "Hidden": false,
+        "_id": "59675e21b02a290bac83706d"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Login",
+        "Emotion": "Cool",
+        "ButtonType": "DeepLink",
+        "DeepLinkUrl": "Login",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": true,
+        "_id": "59675e36b02a290bac837071"
+      }
+    ],
+    "FlowId": "OnboardingTemplate_v1"
+  },
+  {
+    "Name": "Confirm your Address",
+    "Id": "593f125fb02a2920287c253f",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Title": "Address Map Image",
+        "HeightInPixels": 0,
+        "WidthInPixels": 0,
+        "Url": "[~ADDRESSMAP_IMAGE]",
+        "SizeInKb": 0,
+        "SectionType": "Image",
+        "DelayInMs": 0,
+        "Hidden": false,
+        "_id": "593f8423b02a290a904f05fb"
+      },
+      {
+        "Text": "[~STREET_ADDRESS], [~CITY], [~COUNTRY], [~PINCODE]",
+        "SectionType": "Text",
+        "DelayInMs": 1850,
+        "Hidden": false,
+        "_id": "593f125fb02a2920287c2545"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Confirm",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "593f12ffb02a2920287c255c",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": false,
+        "_id": "593f125fb02a2920287c2543"
+      },
+      {
+        "ButtonText": "Edit",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "593f1269b02a2920287c2548",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": false,
+        "_id": "593f125fb02a2920287c2544"
+      }
+    ],
+    "FlowId": "OnboardingTemplate_v1",
+    "CardHeader": "Confirm your business address",
+    "CardFooter": "",
+    "Placement": "Center"
   },
   {
     "Name": "Unable to Create FP",
@@ -124,7 +744,7 @@
       {
         "Text": "Sorry, we could not create your website, because [~ERROR_MESSAGE]",
         "SectionType": "Text",
-        "DelayInMs": 2145,
+        "DelayInMs": 1950,
         "Hidden": false,
         "_id": "58ed5882c7d8bf58fc976612"
       }
@@ -153,7 +773,7 @@
       {
         "Text": "Please enter the website address you want…",
         "SectionType": "Text",
-        "DelayInMs": 1302,
+        "DelayInMs": 1638,
         "Hidden": false,
         "_id": "58db0a9ac7d8bf2c80901ce8"
       }
@@ -250,7 +870,7 @@
       {
         "Text": "[~STREET_ADDRESS], [~CITY], [~COUNTRY], [~PINCODE]",
         "SectionType": "Text",
-        "DelayInMs": 1800,
+        "DelayInMs": 1850,
         "Hidden": false,
         "_id": "593f12ffb02a2920287c2561"
       }
@@ -365,7 +985,7 @@
       {
         "Text": "[~EMAIL]",
         "SectionType": "Text",
-        "DelayInMs": 272,
+        "DelayInMs": 248,
         "Hidden": false,
         "_id": "593f7703b02a2907a482fc83"
       }
@@ -397,7 +1017,7 @@
       {
         "Text": "[~TAG]<br>.nowfloats.com",
         "SectionType": "Text",
-        "DelayInMs": 816,
+        "DelayInMs": 888,
         "Hidden": false,
         "_id": "58db0de3c7d8bf2c80901cf8"
       }
@@ -429,7 +1049,7 @@
       {
         "Text": "[~BUSINESS_NAME]",
         "SectionType": "Text",
-        "DelayInMs": 544,
+        "DelayInMs": 560,
         "Hidden": false,
         "_id": "593f5f37b02a2907a482fa13"
       }
@@ -461,7 +1081,7 @@
       {
         "Text": "[~COUNTRYCODE] [~PHONE]",
         "SectionType": "Text",
-        "DelayInMs": 690,
+        "DelayInMs": 897,
         "Hidden": false,
         "_id": "58dafcb7c7d8bf2c80901cac"
       }
@@ -577,7 +1197,7 @@
       {
         "Text": "[~COUNTRYCODE] [~PHONE]",
         "SectionType": "Text",
-        "DelayInMs": 828,
+        "DelayInMs": 713,
         "Hidden": false,
         "_id": "58db151dc7d8bf2c80901d20"
       }
@@ -610,14 +1230,14 @@
       {
         "Text": "Hello [~PERSON_NAME] ",
         "SectionType": "Text",
-        "DelayInMs": 672,
+        "DelayInMs": 693,
         "Hidden": false,
         "_id": "58cfb9a3c782bb4ad0ab9a6a"
       },
       {
         "Text": "What is your business called?",
         "SectionType": "Text",
-        "DelayInMs": 1044,
+        "DelayInMs": 957,
         "Hidden": false,
         "_id": "58d58885443f862eb0d87251"
       }
@@ -681,7 +1301,7 @@
       {
         "Text": "Hold on... I'm creating your website...",
         "SectionType": "Text",
-        "DelayInMs": 1248,
+        "DelayInMs": 1404,
         "Hidden": false,
         "_id": "58e4d24cc7d8bf4a08b44a3e"
       }
@@ -856,703 +1476,6 @@
     "FlowId": "OnboardingTemplate_v1"
   },
   {
-    "Name": "What is SEO",
-    "Id": "59661045b02a294080954744",
-    "Emotion": "Cool",
-    "TimeoutInMs": 0,
-    "NodeType": "Combination",
-    "Sections": [
-      {
-        "Text": "Search Engine Optimisation or SEO is the organisation of the website content in a particular manner which increases the traffic organically from popular search engines such as Google, etc.",
-        "SectionType": "Text",
-        "DelayInMs": 3000,
-        "Hidden": false,
-        "_id": "59661382b02a29408095475f"
-      },
-      {
-        "Text": "(Inorganic traffic is advertising - something you pay for.)",
-        "SectionType": "Text",
-        "DelayInMs": 2242,
-        "Hidden": false,
-        "_id": "596613e6b02a294080954764"
-      },
-      {
-        "Title": "",
-        "HeightInPixels": 0,
-        "WidthInPixels": 0,
-        "Url": "https://s3-ap-southeast-1.amazonaws.com/nfcontent-cdn/ria/onboarding-content/WhatIsSEO.jpg",
-        "SizeInKb": 0,
-        "SectionType": "Image",
-        "DelayInMs": 0,
-        "Hidden": false,
-        "_id": "59661489b02a294080954769"
-      },
-      {
-        "Text": "SEO is a constant activity and it has been automated for the NowFloats website.",
-        "SectionType": "Text",
-        "DelayInMs": 2528,
-        "Hidden": false,
-        "_id": "596614b8b02a29408095476d"
-      },
-      {
-        "Text": "So you just have to just update your business content, our tech takes care of increasing the traffic.",
-        "SectionType": "Text",
-        "DelayInMs": 3000,
-        "Hidden": false,
-        "_id": "59662722b02a294080954c04"
-      },
-      {
-        "Text": "Cool, eh?",
-        "SectionType": "Text",
-        "DelayInMs": 315,
-        "Hidden": false,
-        "_id": "596614fab02a294080954771"
-      },
-      {
-        "Text": "Alright then, let’s fill out your business address.",
-        "SectionType": "Text",
-        "DelayInMs": 1836,
-        "Hidden": false,
-        "_id": "5966151fb02a294080954775"
-      }
-    ],
-    "Buttons": [
-      {
-        "ButtonText": "Enter Address",
-        "Emotion": "Cool",
-        "ButtonType": "GetAddress",
-        "NextNodeId": "593f125fb02a2920287c253f",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PostToChat": true,
-        "_id": "596610a9b02a294080954750"
-      }
-    ],
-    "FlowId": "OnboardingTemplate_v1"
-  },
-  {
-    "Name": "Confirm your Business Name",
-    "Id": "593f5f29b02a2907a482f9fe",
-    "Emotion": "Cool",
-    "TimeoutInMs": 0,
-    "NodeType": "Card",
-    "Sections": [
-      {
-        "Text": "[~BUSINESS_NAME]",
-        "SectionType": "Text",
-        "DelayInMs": 544,
-        "Hidden": false,
-        "_id": "593f5f29b02a2907a482fa04"
-      }
-    ],
-    "Buttons": [
-      {
-        "ButtonText": "Confirm",
-        "Emotion": "Cool",
-        "ButtonType": "NextNode",
-        "NextNodeId": "593f5f37b02a2907a482fa0e",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PostToChat": false,
-        "_id": "593f5f29b02a2907a482fa02"
-      },
-      {
-        "ButtonText": "Edit",
-        "Emotion": "Cool",
-        "ButtonType": "NextNode",
-        "NextNodeId": "593f5f30b02a2907a482fa07",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PostToChat": false,
-        "_id": "593f5f29b02a2907a482fa03"
-      }
-    ],
-    "FlowId": "OnboardingTemplate_v1",
-    "CardHeader": "Confirm your business name",
-    "CardFooter": "",
-    "Placement": "Center"
-  },
-  {
-    "Name": "FP Tag available",
-    "Id": "58dafdbac7d8bf2c80901cc3",
-    "Emotion": "Cool",
-    "TimeoutInMs": 15000,
-    "NodeType": "Card",
-    "Sections": [
-      {
-        "Text": "[~TAG]<br>.nowfloats.com",
-        "SectionType": "Text",
-        "DelayInMs": 840,
-        "Hidden": false,
-        "_id": "58dafeecc7d8bf2c80901cd2"
-      }
-    ],
-    "Buttons": [
-      {
-        "ButtonText": "Confirm",
-        "Emotion": "Cool",
-        "ButtonType": "NextNode",
-        "NextNodeId": "593f7222b02a2907a482fc32",
-        "DefaultButton": false,
-        "Hidden": false,
-        "VariableValue": "",
-        "PostToChat": true,
-        "_id": "58dafe27c7d8bf2c80901cc5"
-      },
-      {
-        "ButtonText": "Edit Website Address",
-        "Emotion": "Cool",
-        "ButtonType": "NextNode",
-        "NextNodeId": "5942a8d3c7d8bf95b0320b19",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PostToChat": false,
-        "_id": "58dafe28c7d8bf2c80901cc7"
-      }
-    ],
-    "FlowId": "OnboardingTemplate_v1",
-    "CardHeader": "👍 Hallelujah! This website address is available.",
-    "Placement": "Center"
-  },
-  {
-    "Name": "Welcome Node",
-    "Id": "58cfaf0dc782bb3fec8db382",
-    "Emotion": "Cool",
-    "TimeoutInMs": 15000,
-    "NodeType": "Combination",
-    "Sections": [
-      {
-        "Text": "Hi! My name is Ria, and I will help you set up your website within minutes.",
-        "SectionType": "Text",
-        "DelayInMs": 2250,
-        "Hidden": false,
-        "_id": "58cfaf21c782bb3fec8db386"
-      },
-      {
-        "Text": "It's really simple, so let's get started?",
-        "SectionType": "Text",
-        "DelayInMs": 1435,
-        "Hidden": false,
-        "_id": "58cfb4aec782bb5a241de4aa"
-      },
-      {
-        "Url": "https://s3-ap-southeast-1.amazonaws.com/nfcontent-cdn/ria/onboarding-content/RIA1.gif",
-        "PreFetch": false,
-        "SectionType": "Gif",
-        "DelayInMs": 0,
-        "Hidden": false,
-        "_id": "58d256dac782bb594494b542"
-      }
-    ],
-    "Buttons": [
-      {
-        "ButtonText": "Let's get started",
-        "Emotion": "Cool",
-        "ButtonType": "NextNode",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PostToChat": true,
-        "_id": "58cfafc6c782bb3fec8db3d5"
-      }
-    ],
-    "RequiredVariables": [],
-    "FlowId": "OnboardingTemplate_v1"
-  },
-  {
-    "Name": "Ask Location Permission",
-    "Id": "58d44487443f863004e27bb4",
-    "Emotion": "Cool",
-    "TimeoutInMs": 15000,
-    "NodeType": "Combination",
-    "Sections": [
-      {
-        "Text": "I'll use your device location to pin-point the exact address of [~BUSINESS_NAME]",
-        "SectionType": "Text",
-        "DelayInMs": 2560,
-        "Hidden": false,
-        "_id": "58d447ce443f863004e27bc5"
-      },
-      {
-        "Text": "Click continue to give me access",
-        "SectionType": "Text",
-        "DelayInMs": 1056,
-        "Hidden": false,
-        "_id": "58d58566443f862eb0d8721c"
-      }
-    ],
-    "Buttons": [
-      {
-        "ButtonText": "Continue",
-        "Emotion": "Cool",
-        "ButtonType": "DeepLink",
-        "DeepLinkUrl": "asklocationpermission",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PostToChat": true,
-        "_id": "58d44629443f863004e27bb8"
-      },
-      {
-        "ButtonText": "Tell me more",
-        "Emotion": "Cool",
-        "ButtonType": "NextNode",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PostToChat": true,
-        "_id": "58d447b1443f863004e27bc1"
-      }
-    ],
-    "FlowId": "OnboardingTemplate_v1"
-  },
-  {
-    "Name": "Pitch",
-    "Id": "58e2f301b02a2927fc4db9e6",
-    "Emotion": "Cool",
-    "TimeoutInMs": 15000,
-    "NodeType": "Combination",
-    "Sections": [
-      {
-        "Text": "Congratulations! ",
-        "SectionType": "Text",
-        "DelayInMs": 612,
-        "Hidden": false,
-        "_id": "58e2f34db02a2927fc4db9e7"
-      },
-      {
-        "Text": "You've got an exclusive evaluation access for 30 days",
-        "SectionType": "Text",
-        "DelayInMs": 1643,
-        "Hidden": false,
-        "_id": "58e2f422b02a2927fc4db9eb"
-      },
-      {
-        "Text": "Enjoy unlimited updates, automatic search engine optimization, custom pages and business enquiries from the site.",
-        "SectionType": "Text",
-        "DelayInMs": 3000,
-        "Hidden": false,
-        "_id": "58e2f45bb02a2927fc4db9f1"
-      },
-      {
-        "Text": "After 30 days, you can purchase an yearly plan and get access to premium features like ",
-        "SectionType": "Text",
-        "DelayInMs": 2958,
-        "Hidden": false,
-        "_id": "58e363c8b02a2928400822f0"
-      },
-      {
-        "Text": "Dedicated account manager, lead tracking, weekly reports and regular product trainings.",
-        "SectionType": "Text",
-        "DelayInMs": 2871,
-        "Hidden": false,
-        "_id": "58e363f5b02a2928400822f7"
-      }
-    ],
-    "Buttons": [
-      {
-        "ButtonText": "Cool!",
-        "Emotion": "Cool",
-        "ButtonType": "NextNode",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PostToChat": true,
-        "_id": "58e2f549b02a2927fc4db9f9"
-      }
-    ],
-    "FlowId": "OnboardingTemplate_v1"
-  },
-  {
-    "Name": "Tell Why Location Permission is Required",
-    "Id": "58d448a1443f863004e27beb",
-    "Emotion": "Cool",
-    "TimeoutInMs": 15000,
-    "NodeType": "Combination",
-    "Sections": [
-      {
-        "Text": "Your exact location helps in optimizing local SEO for the site. Location access is critical to locate your business on the map",
-        "SectionType": "Text",
-        "DelayInMs": 3000,
-        "Hidden": false,
-        "_id": "58d448a8443f863004e27bee"
-      }
-    ],
-    "Buttons": [
-      {
-        "ButtonText": "Okay",
-        "Emotion": "Cool",
-        "ButtonType": "DeepLink",
-        "DeepLinkUrl": "asklocationpermission",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PostToChat": true,
-        "_id": "58d448f6443f863004e27bfb"
-      },
-      {
-        "ButtonText": "Enter Manually",
-        "Emotion": "Cool",
-        "ButtonType": "NextNode",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PostToChat": true,
-        "_id": "593e5331b02a2913bce7a118"
-      }
-    ],
-    "RequiredVariables": [],
-    "FlowId": "OnboardingTemplate_v1"
-  },
-  {
-    "Name": "Your mobile number",
-    "Id": "593f19bfb02a2920287c2589",
-    "Emotion": "Cool",
-    "TimeoutInMs": 0,
-    "NodeType": "Card",
-    "Sections": [
-      {
-        "Text": "[~COUNTRYCODE] [~PHONE]",
-        "SectionType": "Text",
-        "DelayInMs": 690,
-        "Hidden": false,
-        "_id": "593f19f0b02a2920287c258c"
-      }
-    ],
-    "Buttons": [
-      {
-        "ButtonText": "Submit",
-        "Emotion": "Cool",
-        "ButtonType": "NextNode",
-        "NextNodeId": "58d45c20443f863004e27c2f",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PostToChat": false,
-        "_id": "593f1a56b02a2920287c2592"
-      },
-      {
-        "ButtonText": "Edit",
-        "Emotion": "Cool",
-        "ButtonType": "NextNode",
-        "NextNodeId": "593f1a83b02a2920287c25a2",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PostToChat": false,
-        "_id": "593f1a70b02a2920287c2596"
-      }
-    ],
-    "FlowId": "OnboardingTemplate_v1",
-    "CardHeader": "Your mobile number",
-    "Placement": "Center"
-  },
-  {
-    "Name": "Invalid OTP Reenter card",
-    "Id": "591d9326c7d8bf4310a042c0",
-    "Emotion": "Cool",
-    "TimeoutInMs": 0,
-    "NodeType": "Card",
-    "Sections": [
-      {
-        "Length": 4,
-        "SectionType": "PrintOTP",
-        "DelayInMs": 0,
-        "Hidden": false,
-        "_id": "593f5392460b50525490ae73"
-      }
-    ],
-    "Buttons": [
-      {
-        "ButtonText": "Submit",
-        "Emotion": "Cool",
-        "ButtonType": "NextNode",
-        "NextNodeId": "58d4746a443f861008cb20a2",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PlaceholderText": "",
-        "PostToChat": false,
-        "_id": "591d93d9c7d8bf4310a042ca"
-      },
-      {
-        "ButtonText": "Resend OTP",
-        "Emotion": "Cool",
-        "ButtonType": "NextNode",
-        "NextNodeId": "58d476d9443f861008cb20a5",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PostToChat": true,
-        "_id": "593f54be460b50525490ae83"
-      }
-    ],
-    "VariableName": "OTP",
-    "FlowId": "OnboardingTemplate_v1",
-    "CardHeader": "⚠ Please enter correct OTP",
-    "CardFooter": "",
-    "Placement": "Center"
-  },
-  {
-    "Name": "Website Ready with Screenshot",
-    "Id": "595ce517c7d8bf5ad0ace312",
-    "Emotion": "Cool",
-    "TimeoutInMs": 0,
-    "NodeType": "Combination",
-    "Sections": [
-      {
-        "Text": "Aaaand it's done! Your business website is up and running.",
-        "SectionType": "Text",
-        "DelayInMs": 4500,
-        "Hidden": false,
-        "_id": "5966019fc7d8bf4b0872dc23"
-      },
-      {
-        "Text": "Here's what your website looks like ",
-        "SectionType": "Text",
-        "DelayInMs": 1260,
-        "Hidden": false,
-        "_id": "595ce8b9c7d8bf5ad0ace313"
-      },
-      {
-        "Title": "",
-        "HeightInPixels": 0,
-        "WidthInPixels": 0,
-        "Url": "[~SITE_SCREENSHOT_URL]",
-        "SizeInKb": 0,
-        "SectionType": "Image",
-        "DelayInMs": 0,
-        "Hidden": false,
-        "_id": "595ce8c7c7d8bf5ad0ace451"
-      },
-      {
-        "Text": "It may seem a bit bare right now, but I can help you make it much better. ",
-        "SectionType": "Text",
-        "DelayInMs": 2664,
-        "Hidden": false,
-        "_id": "596601aec7d8bf4b0872dc2b"
-      },
-      {
-        "Text": "So do you have a little time? ",
-        "SectionType": "Text",
-        "DelayInMs": 960,
-        "Hidden": false,
-        "_id": "59671f10b02a290bac836ef1"
-      }
-    ],
-    "Buttons": [
-      {
-        "ButtonText": "No",
-        "Emotion": "Cool",
-        "ButtonType": "DeepLink",
-        "DeepLinkUrl": "login",
-        "NextNodeId": "59675de6b02a290bac836f0e",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PostToChat": true,
-        "_id": "595e10afc7d8bf6fe0699139"
-      },
-      {
-        "ButtonText": "Yes",
-        "Emotion": "Cool",
-        "ButtonType": "FetchChatFlow",
-        "Url": "https://onboarding-boost.withfloats.com/chatflowpostsignup/api/conversation/chat",
-        "NextNodeId": "59675e80b02a290bac83707e",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PostToChat": true,
-        "_id": "595f5b3cc7d8bf4e3c7ae5e1"
-      }
-    ],
-    "NextNodeId": "58e235d614216c1a74cb2831",
-    "FlowId": "OnboardingTemplate_v1"
-  },
-  {
-    "Name": "Enter OTP-without resend",
-    "Id": "58d478f2443f861008cb20aa",
-    "Emotion": "Cool",
-    "TimeoutInMs": 15000,
-    "NodeType": "Card",
-    "Sections": [
-      {
-        "Length": 4,
-        "SectionType": "PrintOTP",
-        "DelayInMs": 0,
-        "Hidden": false,
-        "_id": "593f53f1460b50525490ae79"
-      }
-    ],
-    "Buttons": [
-      {
-        "ButtonText": "Submit",
-        "Emotion": "Cool",
-        "ButtonType": "NextNode",
-        "NextNodeId": "58d4746a443f861008cb20a2",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PlaceholderText": "",
-        "PostToChat": false,
-        "_id": "58d479f9443f861008cb20cf"
-      },
-      {
-        "ButtonText": "Edit Phone Number",
-        "Emotion": "Cool",
-        "ButtonType": "NextNode",
-        "NextNodeId": "593f1a83b02a2920287c25a2",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PostToChat": true,
-        "_id": "595f97a5c7d8bf4c74f26311"
-      }
-    ],
-    "VariableName": "OTP",
-    "RequiredVariables": [],
-    "FlowId": "OnboardingTemplate_v1",
-    "CardHeader": "Please enter the OTP sent on [~COUNTRYCODE] [~PHONE]",
-    "Placement": "Center"
-  },
-  {
-    "Name": "Address",
-    "Id": "58cfc03fc782bb4ad0ab9b00",
-    "Emotion": "Cool",
-    "TimeoutInMs": 5000,
-    "NodeType": "Combination",
-    "Sections": [
-      {
-        "Text": "Alright, next is your business address.",
-        "SectionType": "Text",
-        "DelayInMs": 1287,
-        "Hidden": false,
-        "_id": "58cfc068c782bb4ad0ab9b04"
-      },
-      {
-        "Text": "Be precise, for both your customers and SEO.",
-        "SectionType": "Text",
-        "DelayInMs": 1672,
-        "Hidden": false,
-        "_id": "58d57e3b443f862eb0d871e9"
-      }
-    ],
-    "Buttons": [
-      {
-        "ButtonText": "What is SEO?",
-        "Emotion": "Cool",
-        "ButtonType": "NextNode",
-        "NextNodeId": "59661045b02a294080954744",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PostToChat": true,
-        "_id": "59661031b02a29408095473c"
-      },
-      {
-        "ButtonText": "Enter Address",
-        "Emotion": "Cool",
-        "ButtonType": "GetAddress",
-        "NextNodeId": "593f125fb02a2920287c253f",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PlaceholderText": "",
-        "PostToChat": false,
-        "_id": "58cfc0b0c782bb4ad0ab9b1a"
-      }
-    ],
-    "RequiredVariables": [],
-    "FlowId": "OnboardingTemplate_v1"
-  },
-  {
-    "Name": "Bye",
-    "Id": "59675de6b02a290bac836f0e",
-    "Emotion": "Cool",
-    "TimeoutInMs": 0,
-    "NodeType": "Combination",
-    "Sections": [
-      {
-        "Text": "Alright then, you can login to the app and update whenever you like. ",
-        "SectionType": "Text",
-        "DelayInMs": 2553,
-        "Hidden": false,
-        "_id": "59675e03b02a290bac836f0f"
-      },
-      {
-        "Text": "You can also track your visitors (only after you have updated the site a few times ; )",
-        "SectionType": "Text",
-        "DelayInMs": 2924,
-        "Hidden": false,
-        "_id": "59675e10b02a290bac837065"
-      },
-      {
-        "Text": "Remember – regular and relevant updates about your business. ",
-        "SectionType": "Text",
-        "DelayInMs": 1891,
-        "Hidden": false,
-        "_id": "59675e1ab02a290bac837069"
-      },
-      {
-        "Text": "Have a lovely day. Bye.",
-        "SectionType": "Text",
-        "DelayInMs": 805,
-        "Hidden": false,
-        "_id": "59675e21b02a290bac83706d"
-      }
-    ],
-    "Buttons": [
-      {
-        "ButtonText": "Login",
-        "Emotion": "Cool",
-        "ButtonType": "DeepLink",
-        "DeepLinkUrl": "Login",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PostToChat": true,
-        "_id": "59675e36b02a290bac837071"
-      }
-    ],
-    "FlowId": "OnboardingTemplate_v1"
-  },
-  {
-    "Name": "Confirm your Address",
-    "Id": "593f125fb02a2920287c253f",
-    "Emotion": "Cool",
-    "TimeoutInMs": 0,
-    "NodeType": "Card",
-    "Sections": [
-      {
-        "Title": "Address Map Image",
-        "HeightInPixels": 0,
-        "WidthInPixels": 0,
-        "Url": "[~ADDRESSMAP_IMAGE]",
-        "SizeInKb": 0,
-        "SectionType": "Image",
-        "DelayInMs": 0,
-        "Hidden": false,
-        "_id": "593f8423b02a290a904f05fb"
-      },
-      {
-        "Text": "[~STREET_ADDRESS], [~CITY], [~COUNTRY], [~PINCODE]",
-        "SectionType": "Text",
-        "DelayInMs": 1550,
-        "Hidden": false,
-        "_id": "593f125fb02a2920287c2545"
-      }
-    ],
-    "Buttons": [
-      {
-        "ButtonText": "Confirm",
-        "Emotion": "Cool",
-        "ButtonType": "NextNode",
-        "NextNodeId": "593f12ffb02a2920287c255c",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PostToChat": false,
-        "_id": "593f125fb02a2920287c2543"
-      },
-      {
-        "ButtonText": "Edit",
-        "Emotion": "Cool",
-        "ButtonType": "NextNode",
-        "NextNodeId": "593f1269b02a2920287c2548",
-        "DefaultButton": false,
-        "Hidden": false,
-        "PostToChat": false,
-        "_id": "593f125fb02a2920287c2544"
-      }
-    ],
-    "FlowId": "OnboardingTemplate_v1",
-    "CardHeader": "Confirm your business address",
-    "CardFooter": "",
-    "Placement": "Center"
-  },
-  {
     "Name": "Confirm your Category",
     "Id": "593f0568b02a2920287c24d9",
     "Emotion": "Cool",
@@ -1562,7 +1485,7 @@
       {
         "Text": "[~BUSINESS_CATEGORY]",
         "SectionType": "Text",
-        "DelayInMs": 700,
+        "DelayInMs": 740,
         "Hidden": false,
         "_id": "593f058db02a2920287c24da"
       }
@@ -1692,7 +1615,7 @@
       {
         "Text": "[~EMAIL]",
         "SectionType": "Text",
-        "DelayInMs": 272,
+        "DelayInMs": 264,
         "Hidden": false,
         "_id": "593f76f0b02a2907a482fc74"
       }
@@ -1759,7 +1682,7 @@
       {
         "Text": "Please enter OTP",
         "SectionType": "Text",
-        "DelayInMs": 608,
+        "DelayInMs": 512,
         "Hidden": false,
         "_id": "591d8df1c7d8bf4310a0429e"
       }
@@ -1800,7 +1723,7 @@
       {
         "Text": "Great!",
         "SectionType": "Text",
-        "DelayInMs": 234,
+        "DelayInMs": 186,
         "Hidden": false,
         "_id": "5947ba4cb02a2911c8c2e5ca"
       },
@@ -1846,7 +1769,7 @@
       {
         "Text": "I will send you an OTP on this number, so please make sure your phone number is valid.",
         "SectionType": "Text",
-        "DelayInMs": 2838,
+        "DelayInMs": 3000,
         "Hidden": false,
         "_id": "591d88d6c7d8bf4310a04250"
       }
@@ -1881,7 +1804,7 @@
       {
         "Text": "[~COUNTRYCODE] [~PHONE]",
         "SectionType": "Text",
-        "DelayInMs": 759,
+        "DelayInMs": 874,
         "Hidden": false,
         "_id": "58d465a6443f863004e27c4f"
       }
@@ -1915,14 +1838,14 @@
       {
         "Text": "Almost done...",
         "SectionType": "Text",
-        "DelayInMs": 476,
+        "DelayInMs": 504,
         "Hidden": false,
         "_id": "593fa29eb02a290a904f062b"
       },
       {
         "Text": "We think this should be your business' web address…",
         "SectionType": "Text",
-        "DelayInMs": 1530,
+        "DelayInMs": 1581,
         "Hidden": false,
         "_id": "593fa2b1b02a290a904f062f"
       },
@@ -1959,7 +1882,7 @@
       {
         "Text": "You must have received a little SMS from us. Fill in the 4-digit code below.",
         "SectionType": "Text",
-        "DelayInMs": 2356,
+        "DelayInMs": 2888,
         "Hidden": false,
         "_id": "58cfc430c782bb4ad0ab9b85"
       }
@@ -1999,14 +1922,14 @@
       {
         "Text": "Hi! My name is Ria, and I will help you set up your website within minutes.",
         "SectionType": "Text",
-        "DelayInMs": 2700,
+        "DelayInMs": 2925,
         "Hidden": false,
         "_id": "591ee310c7d8bf39905afb85"
       },
       {
         "Text": "It's really simple, so let's get started?",
         "SectionType": "Text",
-        "DelayInMs": 1312,
+        "DelayInMs": 1435,
         "Hidden": false,
         "_id": "591ee310c7d8bf39905afb86"
       }
@@ -2060,7 +1983,7 @@
       {
         "Text": "Just to confirm, here are the details:",
         "SectionType": "Text",
-        "DelayInMs": 1368,
+        "DelayInMs": 1140,
         "Hidden": false,
         "_id": "58ed60c5c7d8bf58fc97661e"
       },
@@ -2096,7 +2019,7 @@
       {
         "Text": "What category of business does [~BUSINESS_NAME] belong to? ",
         "SectionType": "Text",
-        "DelayInMs": 1888,
+        "DelayInMs": 2242,
         "Hidden": false,
         "_id": "58cfbb12c782bb4ad0ab9aa7"
       }
@@ -2118,5 +2041,126 @@
     "VariableName": "BUSINESS_CATEGORY",
     "RequiredVariables": [],
     "FlowId": "OnboardingTemplate_v1"
+  },
+  {
+    "Name": "Get Name",
+    "Id": "5981ac83c7d8bf1ad0af4022",
+    "Emotion": "Cool",
+    "TimeoutInMs": 15000,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Title": "Your Facebook Page",
+        "Caption": "Select one",
+        "Text": "Awesome! Let's get the ssss out of the way quick…",
+        "DelayInMs": 1989,
+        "Hidden": false,
+        "_id": "58cfb8bfc782bb4ad0ab9a0d",
+        "SectionType": "Carousel",
+        "DelayInMs": 713,
+        "Hidden": false,
+        "_id": "5981ac94c7d8bf1ad0af4023",
+        "Items": [
+          {
+            "Title": "Think Ink House",
+            "Caption": "1 like",
+            "ImageUrl": "[~FACEBOOK_PAGE_1_LOGO]",
+            "Buttons": [
+              {
+                "Type": "NextNode",
+                "VariableValue": "[~FACEBOOK_PAGE1_ID]",
+                "_id": "5981acc8c7d8bf1ad0af408e"
+              }
+            ],
+            "_id": "5981acb7c7d8bf1ad0af408a"
+          },
+          {
+            "Title": "Hello Facebook2",
+            "Caption": "1 like",
+            "ImageUrl": "[~FACEBOOK_PAGE_2_LOGO]",
+            "Buttons": [
+              {
+                "Type": "NextNode",
+                "VariableValue": "[~FACEBOOK_PAGE2_ID]",
+                "_id": "5981ad4ac7d8bf1ad0af40ac"
+              }
+            ],
+            "_id": "5981aceac7d8bf1ad0af4097"
+          },
+          {
+            "Title": "Hello Facebook23",
+            "Caption": "1 like",
+            "ImageUrl": "[~FACEBOOK_PAGE_3_LOGO]",
+            "Buttons": [
+              {
+                "Type": "NextNode",
+                "VariableValue": "[~FACEBOOK_PAGE3_ID]",
+                "_id": "5981ad3ec7d8bf1ad0af40a5"
+              }
+            ],
+            "_id": "5981ad22c7d8bf1ad0af409d"
+          }
+        ]
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "Confirm",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "593f5f37b02a2907a482fa0d",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": false,
+        "_id": "593f5f29b02a2907a482fa02"
+      },
+      {
+        "ButtonText": "None of these",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "NextNodeId": "593f5f37b02a2907a482fa0d",
+        "DefaultButton": false,
+        "Hidden": false,
+        "PostToChat": false,
+        "_id": "593f5f29b02a2907a482fa03"
+      }
+    ],
+    "FlowId": "OnboardingTemplate_v1",
+    "CardHeader": "Confirm your business name",
+    "CardFooter": "",
+    "Placement": "Center",
+    "VariableName": "FACEBOOK_PAGE_NAME"
+  },
+  {
+    "Name": "Confirmed Facebook Page Name",
+    "Id": "593f5f37b02a2907a482fa0d",
+    "Emotion": "Cool",
+    "TimeoutInMs": 0,
+    "NodeType": "Card",
+    "Sections": [
+      {
+        "Text": "[~FACEBOOK_PAGE_NAME]",
+        "SectionType": "Text",
+        "DelayInMs": 544,
+        "Hidden": false,
+        "_id": "593f5f37b02a2907a482fa13"
+      }
+    ],
+    "Buttons": [
+      {
+        "ButtonText": "goto",
+        "Emotion": "Cool",
+        "ButtonType": "NextNode",
+        "BounceTimeout": 1,
+        "NextNodeId": "58cfc03fc782bb4ad0ab9b00",
+        "DefaultButton": true,
+        "Hidden": true,
+        "PostToChat": false,
+        "_id": "593f5f37b02a2907a482fa12"
+      }
+    ],
+    "FlowId": "OnboardingTemplate_v1",
+    "CardFooter": "CONFIRMED FACEBOOK PAGE NAME",
+    "Placement": "Outgoing"
   }
 ]

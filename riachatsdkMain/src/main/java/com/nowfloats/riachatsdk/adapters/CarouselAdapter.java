@@ -42,20 +42,21 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
     public CarouselItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_carousel_item_layout, parent, false);
         CarouselItemHolder carouselItemHolder = new CarouselItemHolder(view);
-        LinearLayout.LayoutParams linLayoutParams = new LinearLayout.LayoutParams(metrics.widthPixels * 70 / 100,
-                LinearLayout.LayoutParams.WRAP_CONTENT);
-        linLayoutParams.setMargins(10, 10, 10, 10);
-        carouselItemHolder.itemView.setLayoutParams(linLayoutParams);
-        carouselItemHolder.itemView.setPadding(20, 50, 20, 50);
-
         return carouselItemHolder;
     }
 
     @Override
     public void onBindViewHolder(CarouselItemHolder carouselItemHolder, int position) {
+        LinearLayout.LayoutParams linLayoutParams = new LinearLayout.LayoutParams(metrics.widthPixels * 73 / 100,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        linLayoutParams.setMargins(15, 10, 15, 10);
+        carouselItemHolder.itemView.setLayoutParams(linLayoutParams);
+        carouselItemHolder.itemView.setPadding(70, 70, 70, 70);
+
         Items items = itemsList.get(position);
         carouselItemHolder.tvTitle.setText(getParsedPrefixPostfixText(items.getTitle()));
         carouselItemHolder.tvCaption.setText(getParsedPrefixPostfixText(items.getCaption()));
+
 
         String imageURL = getParsedPrefixPostfixText(items.getImageUrl());
         carouselItemHolder.ivLogo.setImageResource(R.drawable.site_sc_default);
@@ -65,7 +66,7 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
                 .placeholder(R.drawable.site_sc_default)
                 .into(carouselItemHolder.ivLogo);
 
-        carouselItemHolder.imgParentLayout.setBackgroundResource(visibleItemPos == position?R.drawable.blue_carousel_bg : R.drawable.grey_carousel_bg);
+        carouselItemHolder.imgParentLayout.setBackgroundResource(visibleItemPos == position ? R.drawable.blue_carousel_bg : R.drawable.grey_carousel_bg);
     }
 
     private String getParsedPrefixPostfixText(String text) {
@@ -80,10 +81,11 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
         return text;
     }
 
-    public void notifyVisibleItemChanged(int pos){
+    public void notifyVisibleItemChanged(int pos) {
         visibleItemPos = pos;
-        notifyItemChanged(pos);
+        notifyDataSetChanged();
     }
+
     @Override
     public int getItemCount() {
         if (itemsList != null && itemsList.size() > 0)
@@ -96,6 +98,7 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
         ImageView ivLogo;
         TextView tvTitle, tvCaption;
         LinearLayout imgParentLayout;
+
         public CarouselItemHolder(View itemView) {
             super(itemView);
             ivLogo = (ImageView) itemView.findViewById(R.id.img_logo);

@@ -53,6 +53,7 @@ import com.nowfloats.riachatsdk.activities.ChatViewActivity;
 import com.nowfloats.riachatsdk.activities.ChatWebViewActivity;
 import com.nowfloats.riachatsdk.fragments.CustomDialogFragment;
 import com.nowfloats.riachatsdk.interfaces.IConfirmationCallback;
+import com.nowfloats.riachatsdk.models.Items;
 import com.nowfloats.riachatsdk.models.RiaCardModel;
 import com.nowfloats.riachatsdk.models.Section;
 import com.nowfloats.riachatsdk.utils.Constants;
@@ -161,10 +162,9 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_carousel_layout, parent, false);
 
                 CarouselViewHolder carouselViewHolder = new CarouselViewHolder(v);
-                int space = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40,
+                int space = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30,
                         mContext.getResources().getDisplayMetrics());
                 carouselViewHolder.rvCarousel.addItemDecoration(new FirstLastItemSpacesDecoration(space, false));
-                carouselViewHolder.pageIndicatorView.setCount(5);
                 carouselViewHolder.pageIndicatorView.setDynamicCount(true);
                 final LinearLayoutManager manager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
                 carouselViewHolder.rvCarousel.setLayoutManager(manager);
@@ -334,52 +334,6 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     }
                 });
             }
-
-
-
-            /*if (mChatSections.get(position).getCardModel().getButtons() != null && mChatSections.get(position).getCardModel().getButtons().size() == 1) {
-                cardViewHolder.tvConfirm.setVisibility(View.GONE);
-                cardViewHolder.tvConfirm.setText(mChatSections.get(position).getCardModel().getButtons().get(0).getButtonText());
-                cardViewHolder.tvConfirm.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        cardViewHolder.llConfirm.setVisibility(View.INVISIBLE);
-                        cardViewHolder.tvSubmit.setVisibility(View.VISIBLE);
-
-                        mConfirmationCallback.onPositiveResponse(Constants.ConfirmationType.BIZ_NAME,
-                                cardViewHolder.tvConfirmationText.getText().toString(),
-                                mChatSections.get(position).getCardModel().getButtons().get(0).getNextNodeId());
-                    }
-                });
-            } else {
-
-                cardViewHolder.tvEdit.setVisibility(View.VISIBLE);
-
-                cardViewHolder.tvConfirm.setText(mChatSections.get(position).getCardModel().getButtons().get(0).getButtonText());
-                cardViewHolder.tvEdit.setText(mChatSections.get(position).getCardModel().getButtons().get(1).getButtonText());
-
-                cardViewHolder.tvConfirm.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        cardViewHolder.llConfirm.setVisibility(View.GONE);
-                        cardViewHolder.tvSubmit.setVisibility(View.VISIBLE);
-
-                        mConfirmationCallback.onPositiveResponse(Constants.ConfirmationType.BIZ_NAME,
-                                cardViewHolder.tvConfirmationText.getText().toString(),
-                                mChatSections.get(position).getCardModel().getButtons().get(0).getNextNodeId());
-                    }
-                });
-
-                cardViewHolder.tvEdit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mConfirmationCallback.onNegativeResponse(Constants.ConfirmationType.BIZ_NAME,
-                                mChatSections.get(position).getCardModel().getButtons().get(1).getNextNodeId());
-                    }
-                });
-            }*/
 
         } else if (holder instanceof OTPViewHolder) {
             final RiaCardModel model = section.getCardModel();
@@ -894,9 +848,76 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         } else if (holder instanceof CarouselViewHolder) {
             final CarouselViewHolder carouselViewHolder = (CarouselViewHolder) holder;
-
-            final CarouselAdapter adapter = new CarouselAdapter(mContext, section.getItems(), mDataMap);
+            final RiaCardModel riaCardModel = section.getCardModel();
+            final CarouselAdapter adapter = new CarouselAdapter(mContext, riaCardModel.getSections().get(0).getItems(), mDataMap);
             carouselViewHolder.rvCarousel.setAdapter(adapter);
+            carouselViewHolder.pageIndicatorView.setCount(riaCardModel.getSections().get(0).getItems().size());
+
+
+            if (mChatSections.get(position).getCardModel().getButtons() != null && mChatSections.get(position).getCardModel().getButtons().size() == 1) {
+                carouselViewHolder.tvEdit.setText("");
+                carouselViewHolder.tvEdit.setVisibility(View.GONE);
+                carouselViewHolder.tvConfirm.setText(mChatSections.get(position).getCardModel().getButtons().get(0).getButtonText());
+                carouselViewHolder.tvConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        carouselViewHolder.tvConfirm.setClickable(false);
+                        carouselViewHolder.tvConfirm.setEnabled(false);
+
+                        carouselViewHolder.llConfirm.setVisibility(View.GONE);
+                        carouselViewHolder.tvSubmit.setVisibility(View.VISIBLE);
+
+                        int position = ((LinearLayoutManager) carouselViewHolder.rvCarousel.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+                        Items items = riaCardModel.getSections().get(0).getItems().get(position);
+
+                        mConfirmationCallback.onCardResponse(Constants.ConfirmationType.FB_PAGE, riaCardModel.getButtons().get(0),
+                                items.getTitle(),
+                                riaCardModel.getButtons().get(0).getNextNodeId());
+                    }
+                });
+            } else {
+                carouselViewHolder.tvEdit.setVisibility(View.VISIBLE);
+                carouselViewHolder.tvConfirm.setText(mChatSections.get(position).getCardModel().getButtons().get(0).getButtonText());
+                carouselViewHolder.tvEdit.setText(mChatSections.get(position).getCardModel().getButtons().get(1).getButtonText());
+                carouselViewHolder.tvConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        carouselViewHolder.tvConfirm.setClickable(false);
+                        carouselViewHolder.tvConfirm.setEnabled(false);
+
+                        carouselViewHolder.llConfirm.setVisibility(View.GONE);
+                        carouselViewHolder.tvSubmit.setVisibility(View.VISIBLE);
+
+                        int position = ((LinearLayoutManager) carouselViewHolder.rvCarousel.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+                        Items items = riaCardModel.getSections().get(0).getItems().get(position);
+
+
+                        mConfirmationCallback.onCardResponse(Constants.ConfirmationType.FB_PAGE, riaCardModel.getButtons().get(0),
+                                items.getTitle(),
+                                riaCardModel.getButtons().get(0).getNextNodeId());
+                    }
+                });
+
+                carouselViewHolder.tvEdit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        carouselViewHolder.tvEdit.setClickable(false);
+                        carouselViewHolder.tvEdit.setEnabled(false);
+
+                        carouselViewHolder.llConfirm.setVisibility(View.GONE);
+                        carouselViewHolder.tvSubmit.setVisibility(View.VISIBLE);
+
+                        int position = ((LinearLayoutManager) carouselViewHolder.rvCarousel.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+                        Items items = riaCardModel.getSections().get(0).getItems().get(position);
+
+                        mConfirmationCallback.onCardResponse(Constants.ConfirmationType.FB_PAGE, riaCardModel.getButtons().get(1),
+                                items.getTitle(),
+                                riaCardModel.getButtons().get(1).getNextNodeId());
+                    }
+                });
+            }
 
             carouselViewHolder.rvCarousel.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
                 @Override
@@ -924,9 +945,9 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 @Override
                 public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                     super.onScrollStateChanged(recyclerView, newState);
-                    if(newState == RecyclerView.SCROLL_STATE_IDLE){
-                        int position = ((LinearLayoutManager)carouselViewHolder.rvCarousel.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
-                        if(position>-1) {
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        int position = ((LinearLayoutManager) carouselViewHolder.rvCarousel.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+                        if (position > -1) {
                             carouselViewHolder.pageIndicatorView.setSelection(position);
                             adapter.notifyVisibleItemChanged(position);
                         }
@@ -1269,12 +1290,17 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         RecyclerView rvCarousel;
         PageIndicatorView pageIndicatorView;
+        LinearLayout llConfirm;
+        TextView tvEdit, tvConfirm, tvSubmit;
 
         public CarouselViewHolder(View v) {
             super(v);
             rvCarousel = (RecyclerView) v.findViewById(R.id.rv_carousel);
             pageIndicatorView = (PageIndicatorView) v.findViewById(R.id.ps_indicator);
-
+            this.tvEdit = (TextView) itemView.findViewById(R.id.tv_edit);
+            this.tvConfirm = (TextView) itemView.findViewById(R.id.tv_confirm);
+            this.tvSubmit = (TextView) itemView.findViewById(R.id.tvSubmit);
+            this.llConfirm = (LinearLayout) itemView.findViewById(R.id.llConfirm);
             SnapHelper snapHelper = new PagerSnapHelper();
             snapHelper.attachToRecyclerView(rvCarousel);
         }
