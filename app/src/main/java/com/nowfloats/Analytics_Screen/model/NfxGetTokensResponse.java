@@ -18,12 +18,24 @@ public class NfxGetTokensResponse  {
         @SerializedName("nowfloats_id")
         @Expose
         private String nowfloatsId;
+        @SerializedName("smsRegex")
+        @Expose
+        private List<String> smsRegex;
         @SerializedName("NFXAccessTokens")
         @Expose
         private List<NFXAccessToken> nFXAccessTokens = new ArrayList<NFXAccessToken>();
 
+        public List<String> getSmsRegex() {
+            return smsRegex;
+        }
+
+        public void setSmsRegex(List<String> smsRegex) {
+            this.smsRegex = smsRegex;
+        }
+
         /**
          *
+
          * @return
          * The message
          */

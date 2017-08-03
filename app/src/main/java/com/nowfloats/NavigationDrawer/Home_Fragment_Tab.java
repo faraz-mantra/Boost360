@@ -431,7 +431,7 @@ public class Home_Fragment_Tab extends Fragment {
         }
     }*/
     private void dialogForOverlayPath(DrawOverLay from) {
-        if (getActivity() == null) return;
+        if (getActivity() == null || !isAdded()) return;
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_bubble_overlay_permission, null);
         ImageView image = (ImageView) view.findViewById(R.id.gif_image);
         try {
