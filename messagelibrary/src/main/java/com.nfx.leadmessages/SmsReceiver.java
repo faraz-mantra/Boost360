@@ -120,7 +120,7 @@ public class SmsReceiver extends BroadcastReceiver {
                                 .setSubject(ms.getOriginatingAddress())
                                 .setDate(System.currentTimeMillis())
                                 .setSeen("0");
-
+                        //Log.v("ggg1",model.toString());
                         mDatabase.push().setValue(model);
                         break;
                     }

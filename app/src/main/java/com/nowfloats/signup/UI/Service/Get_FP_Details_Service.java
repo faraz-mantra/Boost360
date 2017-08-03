@@ -32,6 +32,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.nfx.leadmessages.Constants.CALL_LOG_TIME_INTERVAL;
 import static com.nfx.leadmessages.Constants.SHARED_PREF;
 import static com.nfx.leadmessages.Constants.SMS_REGEX;
 
@@ -142,6 +143,7 @@ public class Get_FP_Details_Service {
                 if(regexList != null && regexList.size()>0){
                     String s = TextUtils.join(",", regexList);
                     pref.edit().putString(SMS_REGEX, s).apply();
+                    pref.edit().putString(CALL_LOG_TIME_INTERVAL, nfxGetTokensResponse.getCallLogTimeInterval()).apply();
                 }
                 String message = nfxGetTokensResponse.getMessage();
                 if (message != null && message.equalsIgnoreCase("success")) {

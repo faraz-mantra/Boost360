@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
+import static com.nfx.leadmessages.Constants.CALL_LOG_TIME_INTERVAL;
 import static com.nfx.leadmessages.Constants.SMS_REGEX;
 
 /**
@@ -41,13 +42,14 @@ public class ReadMessages extends Service {
     private String selection="";
     private String order="date DESC";
     private String CALL_order=CallLog.Calls.DATE+" DESC";
-    final private int DAYS_BEFORE =7;
+    private int DAYS_BEFORE =7;
 
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         SharedPreferences pref =getSharedPreferences(Constants.SHARED_PREF, Context.MODE_PRIVATE);
         fpId =pref.getString(Constants.FP_ID,null);
+        DAYS_BEFORE = Integer.parseInt(pref.getString(CALL_LOG_TIME_INTERVAL, DAYS_BEFORE+""));
         TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         mobileId = tm.getDeviceId();
         String smsAddresses =  pref.getString(SMS_REGEX,null);
@@ -159,7 +161,7 @@ public class ReadMessages extends Service {
         }
     }
 
-    /*private void addCallBack(DatabaseReference messageIdRef) {
+   /* private void addCallBack(DatabaseReference messageIdRef) {
         messageIdRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
