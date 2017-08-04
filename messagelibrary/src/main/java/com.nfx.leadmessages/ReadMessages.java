@@ -11,6 +11,7 @@ import android.os.IBinder;
 import android.provider.CallLog;
 import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -18,6 +19,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
+
+import static com.nfx.leadmessages.Constants.CALL_LOG_TIME_INTERVAL;
+import static com.nfx.leadmessages.Constants.SMS_REGEX;
 
 /**
  * Created by Admin on 01-02-2017.
@@ -38,33 +42,34 @@ public class ReadMessages extends Service {
     private String selection="";
     private String order="date DESC";
     private String CALL_order=CallLog.Calls.DATE+" DESC";
-    private int selectionLength=Constants.selections.length;
-    final private int DAYS_BEFORE =7;
+    private int DAYS_BEFORE =7;
 
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         SharedPreferences pref =getSharedPreferences(Constants.SHARED_PREF, Context.MODE_PRIVATE);
         fpId =pref.getString(Constants.FP_ID,null);
+        DAYS_BEFORE = Integer.parseInt(pref.getString(CALL_LOG_TIME_INTERVAL, DAYS_BEFORE+""));
         TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         mobileId = tm.getDeviceId();
-
-        if(mobileId == null || fpId == null){
+        String smsAddresses =  pref.getString(SMS_REGEX,null);
+        if(mobileId == null || fpId == null || smsAddresses == null){
             return Service.START_NOT_STICKY;
         }
+        String[] selectionList  = TextUtils.split(smsAddresses,",");
         StringBuilder builder = new StringBuilder();
+        int listSize = selectionList.length;
+        for(int i=0;i<listSize;i++){
 
-        for(int i=0;i<selectionLength;i++){
-
-            if(i == selectionLength-1){
-                builder.append(" address Like \"%"+Constants.selections[i]+"%\"");
+            if(i == listSize-1){
+                builder.append(" address Like \""+selectionList[i]+"\"");
             }
             else{
-                builder.append(" address Like \"%"+Constants.selections[i]+"%\" or");
+                builder.append(" address Like \""+selectionList[i]+"\" or");
             }
         }
         selection =builder.toString();
-
+        //Log.v("ggg",smsAddresses.replaceAll("%",""));
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -156,7 +161,7 @@ public class ReadMessages extends Service {
         }
     }
 
-    /*private void addCallBack(DatabaseReference messageIdRef) {
+   /* private void addCallBack(DatabaseReference messageIdRef) {
         messageIdRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -177,7 +182,7 @@ public class ReadMessages extends Service {
         Calendar calendar = Calendar.getInstance();
         String currentTime = String.valueOf(calendar.getTimeInMillis());
 
-        calendar.add(Calendar.DATE,-DAYS_BEFORE);
+       /* calendar.add(Calendar.DATE,-DAYS_BEFORE);*/
 
         //String selection1 = /*selection+" AND*/ "date"+">="+calendar.getTimeInMillis();
         //Log.v("ggg",selection1);
@@ -191,7 +196,7 @@ public class ReadMessages extends Service {
                 phoneIdRef.child(mobileId).setValue(phoneIds);
 
                 SmsMessage message;
-                DatabaseReference MessageIdRef = mDatabase.child(fpId+Constants.MESSAGES);
+                DatabaseReference MessageIdRef = mDatabase.child(fpId+Constants.MESSAGES).child(mobileId);
                 MessageIdRef.removeValue();
                 //addCallBack(MessageIdRef);
                 do{

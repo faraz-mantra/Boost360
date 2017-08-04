@@ -125,6 +125,7 @@ import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -280,6 +281,21 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
         Hotline.getInstance(this).updateUser(hlUser);
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == READ_MESSAGES_ID){
+            if (!Arrays.asList(grantResults).contains(0)) {
+                Intent intent = new Intent(this, ReadMessages.class);
+                startService(intent);
+                // start the service to send data to firebase
+            }
+        }
+        else
+        {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     public static void setGCMId(String id){
@@ -1837,7 +1853,6 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
             smsPref.edit().putString(com.nfx.leadmessages.Constants.FP_ID, FPID).apply();
             getPermissions();
         }
-
         MixPanelController.sendMixPanelProperties(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME),
                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG),
