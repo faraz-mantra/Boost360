@@ -6,17 +6,16 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@drawable/grey_carousel_bg"
-    android:orientation="horizontal"
-    android:paddingBottom="@dimen/margin_40"
-    android:paddingLeft="@dimen/margin_30"
-    android:paddingRight="@dimen/margin_30"
-    android:paddingTop="@dimen/margin_40">
+    android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_2"
         android:layout_marginLeft="10dp"
-        android:background="@drawable/grey_carousel_bg"
+        android:layout_marginTop="@dimen/margin_5"
+        android:background="@drawable/chat_layout_bg"
+        android:elevation="@dimen/margin_3"
         android:orientation="vertical">
 
         <ImageView
@@ -34,7 +33,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="10dp"
         android:layout_marginLeft="@dimen/margin_20"
         android:orientation="vertical">
 
@@ -44,11 +42,11 @@
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
-            android:maxLines="2"
+            android:maxLines="3"
             android:scrollHorizontally="true"
             android:text="Think Ink House"
             android:textColor="#496AB5"
-            android:textSize="@dimen/large_text_size"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <TextView
@@ -57,7 +55,7 @@
             android:layout_height="wrap_content"
             android:text="3.4K Likes"
             android:textColor="@color/gray"
-            android:textSize="@dimen/medium_text_size" />
+            android:textSize="@dimen/small_text_size" />
     </LinearLayout>
 
 </LinearLayout>

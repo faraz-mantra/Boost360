@@ -182,7 +182,7 @@ public class BoostContentProvider extends ContentProvider {
             case SAM_BUBBLE:
                 id = db.insert(DbConstants.IsamBubble.tableName, null, values);
                 break;
-            //builder.setTables(DbConstants.Ialerts.IalertData.tableName);
+            //builder.setTables(ChatDbConstants.Ialerts.IalertData.tableName);
 
         }
 

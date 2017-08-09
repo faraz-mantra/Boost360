@@ -27,6 +27,7 @@ public class MixPanelController {
     public static final String BOOK_DOMAIN = "BookDomain";
     public static final String DOMAIN_SEARCH = "DomainSearch";
     public static final String VMN_CALL_TRACKER = "VmnCallTracker";
+    public static final String MANAGE_INVENTORY = "ManageInventory";
     public static final String FACEBOOK_REVIEW = "FacebookReview";
     public static final String PRIMARY_NUMBER_CHANGE = "PrimaryNumberChanged";
     public static final String BUSINESS_APP_REQUEST = "BusinessAppRequest";

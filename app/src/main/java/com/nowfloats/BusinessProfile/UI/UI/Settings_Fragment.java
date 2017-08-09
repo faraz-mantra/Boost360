@@ -26,6 +26,7 @@ import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
+import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.sync.DbController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
@@ -43,7 +44,7 @@ import org.json.JSONObject;
  */
 public class Settings_Fragment extends Fragment {
     FrameLayout signOutLayout, changePaswordLayout, feedbackLayout, likeusFacebookLayout, aboutUsLayout,
-            rateUsLayout, faqLayout, accountLayout, flSiteAppearance, flFollowTwitter, flTermsOfUse, flPrivacyPolicy;
+            rateUsLayout, faqLayout, accountLayout, flSiteAppearance, flFollowTwitter, flTermsOfUse, flPrivacyPolicy,flPricingPlans;
     private EditText old_pwd, new_pwd, confirm_pwd;
     Boolean confirmCheckerActive = false;
     private ImageView confirmChecker;
@@ -114,6 +115,7 @@ public class Settings_Fragment extends Fragment {
         flFollowTwitter = (FrameLayout) view.findViewById(R.id.follow_us_twitter_Layout);
         flTermsOfUse = (FrameLayout) view.findViewById(R.id.terms_of_use_Layout);
         flPrivacyPolicy = (FrameLayout) view.findViewById(R.id.privacy_policy_Layout);
+        flPricingPlans = (FrameLayout) view.findViewById(R.id.flPricingPlans);
         String Sdate = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON);
         if(Sdate.contains("/Date")){
             Sdate = Sdate.replace("/Date(", "").replace(")/", "");
@@ -152,6 +154,14 @@ public class Settings_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(activity, SiteAppearanceActivity.class);
+                activity.startActivity(intent);
+                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+        flPricingPlans.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, PricingPlansActivity.class);
                 activity.startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }

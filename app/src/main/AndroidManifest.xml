@@ -273,7 +273,7 @@
         <activity
             android:name="com.nowfloats.NavigationDrawer.businessApps.BusinessAppTipsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="com.nowfloats.Image_Gallery.FullScreen_Gallery_Image"
             android:label="Gallery Image"
@@ -396,7 +396,7 @@
             android:name="com.nowfloats.CustomPage.CreateCustomPageActivity"
             android:screenOrientation="portrait" />
         <!--
-            <activity android:name="com.nowfloats.CustomPage.CustomPageActivity"
+            <activity android:name="com.nowfloats.CustomPage.CustomPageFragment"
             android:screenOrientation="portrait" ></activity>
         -->
         <activity
@@ -449,10 +449,30 @@
         <provider
             android:name="com.nowfloats.sync.ContentProvider.BoostContentProvider"
             android:authorities="${applicationId}.provider" />
+        <provider
+            android:name="com.nowfloats.riachatsdk.database.ChatContentProvider"
+            android:authorities="com.nowfloats.riachatsdk.provider" />
 
         <service android:name="com.nowfloats.Product_Gallery.Service.MultipleImageUploadService" />
 
-        <activity android:name="com.nowfloats.SiteAppearance.SiteAppearanceActivity" />
+        <activity
+            android:name="com.nowfloats.SiteAppearance.SiteAppearanceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.Product_Gallery.ProductGalleryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.manageinventory.ManageInventoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.CustomPage.CustomPageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.Store.PricingPlansActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.Image_Gallery.ImageGalleryActivity"
+            android:screenOrientation="portrait" />
         <activity android:name="com.nowfloats.NavigationDrawer.CreateOffersActivity" />
         <activity android:name="com.nowfloats.NavigationDrawer.OffersFullScreenActivity" />
         <activity
@@ -536,7 +556,6 @@
         <activity
             android:name="com.nowfloats.signup.UI.UI.RiaChatInitActivity"
             android:screenOrientation="portrait"></activity>
-        android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
     </application>
 
 </manifest>

@@ -68,6 +68,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
+import com.jakewharton.retrofit.Ok3Client;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import com.kbeanie.multipicker.api.CameraImagePicker;
@@ -82,6 +83,7 @@ import com.nowfloats.riachatsdk.fragments.CustomDialogFragment;
 import com.nowfloats.riachatsdk.fragments.PickAddressFragment;
 import com.nowfloats.riachatsdk.helpers.ChatLogger;
 import com.nowfloats.riachatsdk.helpers.DeviceDetails;
+import com.nowfloats.riachatsdk.interfaces.ChatJsonInterface;
 import com.nowfloats.riachatsdk.interfaces.IChatAnimCallback;
 import com.nowfloats.riachatsdk.interfaces.IConfirmationCallback;
 import com.nowfloats.riachatsdk.models.Button;
@@ -103,19 +105,23 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import it.sephiroth.android.library.imagezoom.ImageViewTouch;
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static android.view.View.INVISIBLE;
@@ -134,6 +140,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     private ImageView ivSendMessage, ivScrollDown, ivBack;
 
     private TextView tvPrefix, tvPostfix, tvSkip;
+
+//    private StringBuilder mStringBuilder;
 
     private Handler mHandler;
 
@@ -179,6 +187,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     private static final int FP_NOT_CREATED = -100;
 
     private static final int AUDIO_REQUEST_CODE = 56;
+
+    private Gson gson;
+
 
     /*
      **************************** CONSTANTS *******************************
@@ -239,6 +250,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_view);
 
+//        mStringBuilder = new StringBuilder();
+        gson = new Gson();
         try {
             appVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException e) {
@@ -254,11 +267,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         setListeners();
 
-        if (isNetworkStatusAvialable(ChatViewActivity.this)) {
-            fetchChatJson();
-        } else {
-            showCustomDialog(CustomDialogFragment.DialogFrom.SKIP);
-        }
+//        syncChatHistory();
+        syncChat();
 
     }
 
@@ -1150,6 +1160,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         tvPostfix.setText("");
         mCurrNodeId = node.getId();
         mCurrFlowId = node.getFlowId();
+//        mStringBuilder = new StringBuilder();
+//        mStringBuilder.append(gson.toJson(mSectionList));
 
         etChatInput.setHint("");
         ChatLogger.getInstance().logViewEvent(DeviceDetails.getDeviceId(this), mCurrNodeId, appVersion, mCurrFlowId, mSessionId);
@@ -1705,53 +1717,53 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         /*if(null!=pg && !pg.isShowing())
             pg.show();*/
         progressBar.setVisibility(View.VISIBLE);
-//        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-//        OkHttpClient client = builder.connectTimeout(60, TimeUnit.SECONDS).readTimeout(60, TimeUnit.SECONDS).build();
-//        RestAdapter adapter = new RestAdapter.Builder().setClient(new Ok3Client(client)).setEndpoint(Constants.SERVER_URL).build();
-//        ChatJsonInterface chatJsonInterface = adapter.create(ChatJsonInterface.class);
-//        Map<String, String> query = new HashMap<>();
-//        query.put("deviceId", DeviceDetails.getDeviceId(this));
-//        query.put("libVersion", DeviceDetails.getLibVersionName());
-//        query.put("osVersion", DeviceDetails.getAndroidVersion());
-//        query.put("osTimeZone", DeviceDetails.getTimeZone());
-//        query.put("osCountry", DeviceDetails.getCountry());
-//        query.put("osLanguage", DeviceDetails.getLanguage());
-//        query.put("deviceBrand", DeviceDetails.getBrand());
-//        query.put("deviceModel", DeviceDetails.getDeviceModel());
-//        query.put("screenWidth", DeviceDetails.getScreenWidth(this) + "");
-//        query.put("screenHeight", DeviceDetails.getScreenHeight(this) + "");
-//        chatJsonInterface.getChatJson(query, new Callback<List<RiaCardModel>>() {
-//            @Override
-//            public void success(List<RiaCardModel> riaCardModels, Response response) {
-//                //pg.dismiss();
-//                if (riaCardModels != null && riaCardModels.size() > 0) {
-//                    initChat(riaCardModels);
-//                }
-//                progressBar.setVisibility(View.GONE);
-//            }
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        OkHttpClient client = builder.connectTimeout(60, TimeUnit.SECONDS).readTimeout(60, TimeUnit.SECONDS).build();
+        RestAdapter adapter = new RestAdapter.Builder().setClient(new Ok3Client(client)).setEndpoint(Constants.SERVER_URL).build();
+        ChatJsonInterface chatJsonInterface = adapter.create(ChatJsonInterface.class);
+        Map<String, String> query = new HashMap<>();
+        query.put("deviceId", DeviceDetails.getDeviceId(this));
+        query.put("libVersion", DeviceDetails.getLibVersionName());
+        query.put("osVersion", DeviceDetails.getAndroidVersion());
+        query.put("osTimeZone", DeviceDetails.getTimeZone());
+        query.put("osCountry", DeviceDetails.getCountry());
+        query.put("osLanguage", DeviceDetails.getLanguage());
+        query.put("deviceBrand", DeviceDetails.getBrand());
+        query.put("deviceModel", DeviceDetails.getDeviceModel());
+        query.put("screenWidth", DeviceDetails.getScreenWidth(this) + "");
+        query.put("screenHeight", DeviceDetails.getScreenHeight(this) + "");
+        chatJsonInterface.getChatJson(query, new Callback<List<RiaCardModel>>() {
+            @Override
+            public void success(List<RiaCardModel> riaCardModels, Response response) {
+                //pg.dismiss();
+                if (riaCardModels != null && riaCardModels.size() > 0) {
+                    initChat(riaCardModels);
+                }
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                //pg.dismiss();
+                error.printStackTrace();
+                progressBar.setVisibility(View.GONE);
+                if (isFinishing()) {
+                    return;
+                }
+                if (isNetworkStatusAvialable(ChatViewActivity.this)) {
+                    showCustomDialog(CustomDialogFragment.DialogFrom.SKIP);
+                } else {
+                    showCustomDialog(CustomDialogFragment.DialogFrom.NO_INTERNET);
+                }
+                //(RiaOnBoardingActivity.this, getString(R.string.something_went_wrong));
+            }
+        });
 //
-//            @Override
-//            public void failure(RetrofitError error) {
-//                //pg.dismiss();
-//                error.printStackTrace();
-//                progressBar.setVisibility(View.GONE);
-//                if (isFinishing()) {
-//                    return;
-//                }
-//                if (isNetworkStatusAvialable(ChatViewActivity.this)) {
-//                    showCustomDialog(CustomDialogFragment.DialogFrom.SKIP);
-//                } else {
-//                    showCustomDialog(CustomDialogFragment.DialogFrom.NO_INTERNET);
-//                }
-//                //(RiaOnBoardingActivity.this, getString(R.string.something_went_wrong));
-//            }
-//        });
-//
-        List<RiaCardModel> posts = new ArrayList<RiaCardModel>();
-        Gson mGson = new Gson();
-        posts = Arrays.asList(mGson.fromJson(loadJSONFromAsset(), RiaCardModel[].class));
-        initChat(posts);
-        progressBar.setVisibility(View.GONE);
+//        List<RiaCardModel> posts = new ArrayList<RiaCardModel>();
+//        Gson mGson = new Gson();
+//        posts = Arrays.asList(mGson.fromJson(loadJSONFromAsset(), RiaCardModel[].class));
+//        initChat(posts);
+//        progressBar.setVisibility(View.GONE);
     }
 
     public String loadJSONFromAsset() {
@@ -1790,7 +1802,11 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         rvButtonsContainer.setLayoutManager(buttonsLayoutManager);
         rvButtonsContainer.setAdapter(mButtonsAdapter);
 
+//        if (!TextUtils.isEmpty(mNextNodeId) && !mNextNodeId.equalsIgnoreCase("-1")) {
+//            showNextNode(mNextNodeId);
+//        } else {
         startChat(mAllNodes.get(0));
+//        }
     }
 
     public void hideSoftKeyboard() {
@@ -2181,4 +2197,64 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             });
         }
     }
+
+//    private void syncChatHistory() {
+//
+//        Type listType = new TypeToken<ArrayList<Section>>() {
+//        }.getType();
+//        Gson gson = new Gson();
+//        try {
+//
+//            mSectionList.addAll(
+//                    (Collection<? extends Section>) gson.fromJson(
+//                            ChatDbController.getDbController(ChatViewActivity.this).getChatHistory(),
+//                            listType));
+//            mDataMap = ChatDbController.getDbController(ChatViewActivity.this).getChatValues();
+//            mNextNodeId = ChatDbController.getDbController(ChatViewActivity.this).getChatNextNode();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            syncChat();
+//        }
+//    }
+
+    private void syncChat() {
+        if (isNetworkStatusAvialable(ChatViewActivity.this)) {
+            fetchChatJson();
+        } else {
+            showCustomDialog(CustomDialogFragment.DialogFrom.SKIP);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+//    private void updateChatHistory() {
+//
+//        ChatDbController.getDbController(ChatViewActivity.this).postChatHistory(mStringBuilder.toString(), mCurrNodeId);
+//
+//        Set<String> keySet = mDataMap.keySet();
+//        if (keySet != null) {
+//
+//            JSONObject jsonObject = new JSONObject();
+//            for (String key : keySet) {
+//                try {
+//                    jsonObject.put(key, mDataMap.get(key));
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            ChatDbController.getDbController(ChatViewActivity.this).postChatData(jsonObject.toString());
+//        }
+//
+//    }
+
 }

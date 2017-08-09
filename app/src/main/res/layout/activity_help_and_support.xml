@@ -1,31 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:card="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_help_and_support"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/activity_help_and_support"
     tools:context="com.nowfloats.NavigationDrawer.HelpAndSupportActivity">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
+
         <include
             android:id="@+id/help_and_support_toolbar"
             layout="@layout/new_app_bar" />
 
         <LinearLayout
-            android:layout_below="@id/help_and_support_toolbar"
             android:layout_width="match_parent"
-            android:background="@color/primaryColor"
-            android:layout_height="100dp">
+            android:layout_height="100dp"
+            android:layout_below="@id/help_and_support_toolbar"
+            android:background="@color/primaryColor">
 
         </LinearLayout>
+
         <LinearLayout
-            android:layout_below="@id/help_and_support_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/help_and_support_toolbar"
             android:orientation="vertical">
+
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
@@ -33,218 +36,269 @@
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="50dp"
                 card:cardElevation="3dp">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:orientation="vertical">
+
                     <ImageView
                         android:id="@+id/iv_help_avatar"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:src="@drawable/help_female_avatar"
-                        android:layout_gravity="center_horizontal"/>
+                        android:layout_gravity="center_horizontal"
+                        android:src="@drawable/help_female_avatar" />
+
                     <TextView
                         android:id="@+id/tv_consultant_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="23sp"
+                        android:layout_gravity="center_horizontal"
                         android:layout_marginTop="10dp"
+                        android:text="Ms. Ria"
                         android:textColor="@color/primaryColor"
-                        android:text="Ms. Aditi"
-                        android:layout_gravity="center_horizontal"/>
+                        android:textSize="23sp" />
+
                     <TextView
-                        android:textSize="12sp"
-                        android:layout_marginTop="5dp"
-                        android:textColor="#a2a2a2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="(Your dedicated web consultant)"/>
+                        android:layout_marginTop="5dp"
+                        android:text="(Your dedicated web consultant)"
+                        android:textColor="#a2a2a2"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
 
-                <LinearLayout
-                    android:layout_marginTop="15dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginRight="50dp"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:tint="#808080"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_mail_white_48dp"/>
-                        <TextView
-                            android:id="@+id/tv_consultant_email"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:maxLines="2"
-                            android:linksClickable="true"
-                            android:marqueeRepeatLimit="0"
-                            android:ellipsize="marquee"
-                            android:layout_height="wrap_content"
-                            android:textSize="12sp"
-                            android:autoLink="email"
-                            android:layout_marginLeft="5dp"
-                            android:textColorLink="#808080"
-                            android:layout_gravity="center_vertical"
-                            android:text="aditi.rao.haidari@nowfloats.com"/>
-                        <Button
-                            android:id="@+id/btn_send_mail"
-                            android:layout_width="80dp"
-                            android:layout_height="35dp"
-                            android:text="SEND EMAIL"
-                            android:background="@drawable/help_n_support_btn_bg"
-                            android:textColor="#808080"
-                            android:textSize="10sp"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_marginTop="10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:tint="#808080"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_call_white_48dp"/>
-                        <TextView
-                            android:id="@+id/tv_contact_number"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:textSize="12sp"
-                            android:layout_weight="1"
-                            android:layout_marginLeft="5dp"
-                            android:textColorLink="#808080"
-                            android:layout_gravity="center_vertical"
-                            android:text="040 655 346 57"/>
-
-                        <Button
-                            android:id="@+id/btn_call"
-                            android:layout_width="80dp"
-                            android:layout_height="35dp"
-                            android:text="CALL HER"
-                            android:background="@drawable/help_n_support_btn_bg"
-                            android:textColor="#808080"
-                            android:textSize="10sp"/>
-                    </LinearLayout>
-
-                </LinearLayout>
             <LinearLayout
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="#EDEDED">
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_mail_white_48dp"
+                        android:tint="#808080" />
+
+                    <TextView
+                        android:id="@+id/tv_consultant_email"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"
+                        android:autoLink="email"
+                        android:ellipsize="marquee"
+                        android:linksClickable="true"
+                        android:marqueeRepeatLimit="0"
+                        android:maxLines="2"
+                        android:text="ria@nowfloats.com"
+                        android:textColorLink="#808080"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/btn_send_mail"
+                        android:layout_width="80dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/help_n_support_btn_bg"
+                        android:text="SEND EMAIL"
+                        android:textColor="#808080"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ic_call_white_48dp"
+                        android:tint="#808080" />
+
+                    <TextView
+                        android:id="@+id/tv_contact_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"
+                        android:text="040 655 346 57"
+                        android:textColorLink="#808080"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/btn_call"
+                        android:layout_width="80dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/help_n_support_btn_bg"
+                        android:text="CALL HER"
+                        android:textColor="#808080"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/sidepanel_chat" />
+
+                    <TextView
+                        android:id="@+id/tvRia"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"
+                        android:text="@string/side_panel_row_six"
+                        android:textColorLink="#808080"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/btnChat"
+                        android:layout_width="80dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/help_n_support_btn_bg"
+                        android:text="Chat"
+                        android:textColor="#808080"
+                        android:textSize="10sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="#EDEDED"
+                android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/tv_text_help"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="20dp"
+                    fontPath="Roboto-Thin.ttf"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
                     android:layout_marginLeft="50dp"
                     android:layout_marginRight="50dp"
-                    android:textSize="12sp"
-                    fontPath="Roboto-Thin.ttf"
+                    android:layout_marginTop="15dp"
                     android:gravity="center"
-                    android:textColor="#a2a2a2"
-                    android:textStyle="italic"
                     android:text="Aditi is your dedicated web consultant who will be assisting you with all your queries related to your NowFloats website. You can call her anytime from 9 am to 6 pm on all working days."
-                    android:layout_height="wrap_content"
+                    android:textColor="#a2a2a2"
+                    android:textSize="12sp"
+                    android:textStyle="italic"
                     tools:ignore="MissingPrefix" />
 
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="gone"
+                android:paddingBottom="10dp"
                 android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                android:visibility="gone">
+
                 <ImageView
                     android:layout_width="20dp"
-                    android:adjustViewBounds="true"
-                    android:tint="#808080"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="50dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_callback"/>
-                <TextView
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/ic_callback"
+                    android:tint="#808080" />
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
+
+                    android:layout_weight="1"
                     android:text="Not Free Right Now?\nSchedule a callback"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp" />
+
                 <Button
                     android:id="@+id/btn_schedule"
                     android:layout_width="80dp"
                     android:layout_height="35dp"
-                    android:text="SCHEDULE"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="50dp"
                     android:background="@drawable/help_n_support_btn_bg"
+                    android:text="SCHEDULE"
                     android:textColor="#808080"
-                    android:textSize="10sp"/>
+                    android:textSize="10sp" />
 
 
             </LinearLayout>
 
             <LinearLayout
-                android:background="#EDEDED"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="#EDEDED"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tv_ria_text"
-                    android:layout_marginTop="15dp"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="50dp"
                     android:layout_marginRight="50dp"
-                    android:textSize="12sp"
-                    android:gravity="center"
-                    android:textColor="#a2a2a2"
+                    android:layout_marginTop="15dp"
                     android:autoLink="email"
+                    android:gravity="center"
                     android:linksClickable="true"
-                    android:textColorLink="#808080"
-                    android:textStyle="italic"
                     android:text="Still having queries? Please write to us at "
-                    android:layout_height="wrap_content" />
+                    android:textColor="#a2a2a2"
+                    android:textColorLink="#808080"
+                    android:textSize="13sp"
+                    android:textStyle="italic" />
+
                 <TextView
                     android:id="@+id/tv_text_faq1"
+                    fontPath="Roboto-Thin.ttf"
                     android:layout_width="wrap_content"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginRight="50dp"
-                    android:gravity="center"
-                    android:autoLink="all"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:textStyle="bold|italic"
-                    android:textSize="12sp"
-                    fontPath="Roboto-Thin.ttf"
-                    android:text="ria@nowfloats.com. Product related queries, please refer to our FAQs"/>
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    android:autoLink="all"
+                    android:gravity="center"
+                    android:text="ria@nowfloats.com. Product related queries, please refer to our FAQs"
+                    android:textSize="13sp"
+                    android:textStyle="bold|italic" />
+
                 <TextView
                     android:id="@+id/tv_text_faq2"
+                    fontPath="Roboto-Thin.ttf"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="15dp"
                     android:layout_marginLeft="50dp"
                     android:layout_marginRight="50dp"
                     android:gravity="center"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:textStyle="bold|italic"
-                    android:textSize="12sp"
-                    fontPath="Roboto-Thin.ttf"
-                    android:layout_marginBottom="15dp"
-                    android:text="Product related queries, please refer to our FAQs"/>
+                    android:text="Product related queries, please refer to our FAQs"
+                    android:textSize="13sp"
+                    android:textStyle="bold|italic" />
             </LinearLayout>
 
         </LinearLayout>

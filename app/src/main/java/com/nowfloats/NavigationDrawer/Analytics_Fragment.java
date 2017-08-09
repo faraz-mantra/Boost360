@@ -85,9 +85,9 @@ import retrofit.client.Response;
  */
 public class Analytics_Fragment extends Fragment {
     View rootView = null;
-    public static TextView visitCount,visitorsCount, subscriberCount,vmnTotalCallCount,searchQueriesCount, businessEnqCount,facebokImpressions;
+    public static TextView visitCount, visitorsCount, subscriberCount, vmnTotalCallCount, searchQueriesCount, businessEnqCount, facebokImpressions;
     private int noOfSearchQueries = 0;
-    public static ProgressBar visits_progressBar,visitors_progressBar,vmnProgressBar,subscriber_progress, search_query_progress, businessEnqProgress;
+    public static ProgressBar visits_progressBar, visitors_progressBar, vmnProgressBar, subscriber_progress, search_query_progress, businessEnqProgress;
     UserSessionManager session;
     private Context context;
     private Bus bus;
@@ -98,19 +98,20 @@ public class Analytics_Fragment extends Fragment {
     private static final String BUTTON_TYPE_DEEP_LINK = "DeepLink";
     private static final String BUTTON_TYPE_NEXT_NODE = "NextNode";
     private static final String BUTTON_TYPE_EXIT = "None";
-    private static final String BUTTON_TYPE_OPEN_URL="OpenUrl";
+    private static final String BUTTON_TYPE_OPEN_URL = "OpenUrl";
     LinearLayout llRiaCardSections;
 
-    private enum SectionType{
+    private enum SectionType {
         Text, Graph, Image
     }
+
     private static final String BAR = "Bar";
     private static final String LINE = "Line";
     RiaCardResponseListener mListener = null;
     private String mButtonId;
     private String mNextNodeId;
     LinearLayout llTwoButtons, llSingleButtonLayout;
-    private String vmnMissedCalls,vmnTotalCalls,vmnReceivedCalls;
+    private String vmnMissedCalls, vmnTotalCalls, vmnReceivedCalls;
 
 
     @Override
@@ -119,40 +120,36 @@ public class Analytics_Fragment extends Fragment {
         //Log.d("FCM Token", FirebaseInstanceId.getInstance().getToken());
 //        getFPDetails(getActivity(), session.getFPID(), Constants.clientId, bus);
 
-        MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT,null);
-        if(!Util.isNullOrEmpty(session.getVisitorsCount()))
-        {
+        MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT, null);
+        if (!Util.isNullOrEmpty(session.getVisitorsCount())) {
             visitorsCount.setText(session.getVisitorsCount());
         }
-        if(!Util.isNullOrEmpty(session.getVisitsCount()))
-        {
+        if (!Util.isNullOrEmpty(session.getVisitsCount())) {
             visitCount.setText(session.getVisitsCount());
         }
-        if(!Util.isNullOrEmpty(session.getSubcribersCount()))
-        {
+        if (!Util.isNullOrEmpty(session.getSubcribersCount())) {
             subscriberCount.setText(session.getSubcribersCount());
         }
-        if(!Util.isNullOrEmpty(session.getEnquiryCount())){
+        if (!Util.isNullOrEmpty(session.getEnquiryCount())) {
             businessEnqCount.setText(session.getEnquiryCount());
         }
-        if(!Util.isNullOrEmpty(session.getFacebookImpressions())){
+        if (!Util.isNullOrEmpty(session.getFacebookImpressions())) {
             facebokImpressions.setText(session.getFacebookImpressions());
-        }
-        else {
+        } else {
             facebokImpressions.setText("0");
         }
 
-        if(mListener!=null){
+        if (mListener != null) {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if(getActivity()!=null && mButtonId!=null && mNextNodeId!=null){
-                        if(RiaEventLogger.isLastEventCompleted){
+                    if (getActivity() != null && mButtonId != null && mNextNodeId != null) {
+                        if (RiaEventLogger.isLastEventCompleted) {
                             mListener.onResponse(mButtonId, mNextNodeId);
                         }
 
-                    }else if(mNextNodeId== null){
-                        if(RiaEventLogger.isLastEventCompleted) {
+                    } else if (mNextNodeId == null) {
+                        if (RiaEventLogger.isLastEventCompleted) {
                             cvRiaCard.setVisibility(View.GONE);
                             bus.post(new ArrayList<RiaCardModel>());
                             RiaEventLogger.lastEventStatus = false;
@@ -169,29 +166,32 @@ public class Analytics_Fragment extends Fragment {
         super.onAttach(context);
         try {
             mRiaCardDeepLinkListener = (RiaCardDeepLinkListener) context;
-        }catch (ClassCastException e){
+        } catch (ClassCastException e) {
             e.printStackTrace();
         }
-        this.context=context;
+        this.context = context;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        session = new UserSessionManager(getActivity(),getActivity());
+        session = new UserSessionManager(getActivity(), getActivity());
         bus = BusProvider.getInstance().getBus();
 //        if(Util.isNullOrEmpty(session.getVisitorsCount()) || Util.isNullOrEmpty(session.getSubcribersCount())){
         try {
             //GetVisitorsAndSubscribersCountAsyncTask visit_subcribersCountAsyncTask = new GetVisitorsAndSubscribersCountAsyncTask(getActivity(), session);
             //visit_subcribersCountAsyncTask.execute();
-        }catch(Exception e){e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 //        }
     }
-//    private void getFPDetails(Activity activity, String fpId, String clientId, Bus bus) {
+
+    //    private void getFPDetails(Activity activity, String fpId, String clientId, Bus bus) {
 //        new Get_FP_Details_Service(activity,fpId,clientId,bus);
 //    }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_analytics, container, false);
         LinearLayout queryLayout = (LinearLayout) rootView.findViewById(R.id.analytics_screen_search_queries);
         llTwoButtons = (LinearLayout) rootView.findViewById(R.id.ll_twobuttons);
@@ -200,18 +200,18 @@ public class Analytics_Fragment extends Fragment {
         queryLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MixPanelController.track("SearchQueriesDetailedView",null);
+                MixPanelController.track("SearchQueriesDetailedView", null);
                 Intent q = new Intent(getActivity(), SearchQueries.class);
                 startActivity(q);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
-        LinearLayout enqLayOut =(LinearLayout) rootView.findViewById(R.id.analytics_screen_business_enq);
+        LinearLayout enqLayOut = (LinearLayout) rootView.findViewById(R.id.analytics_screen_business_enq);
         enqLayOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Intent i = new Intent(context, BusinessEnquiryActivity.class);
+                Intent i = new Intent(context, BusinessEnquiryActivity.class);
                 startActivity(i);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
@@ -221,9 +221,9 @@ public class Analytics_Fragment extends Fragment {
         visitsLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MixPanelController.track("OverallVisitsDetailedView",null);
+                MixPanelController.track("OverallVisitsDetailedView", null);
                 Intent q = new Intent(getActivity(), AnalyticsActivity.class);
-                q.putExtra("table_name",Constants.VISITS_TABLE);
+                q.putExtra("table_name", Constants.VISITS_TABLE);
                 startActivity(q);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
@@ -232,9 +232,9 @@ public class Analytics_Fragment extends Fragment {
         visitorsLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MixPanelController.track("UniqueVisitsDetailedView",null);
+                MixPanelController.track("UniqueVisitsDetailedView", null);
                 Intent q = new Intent(getActivity(), AnalyticsActivity.class);
-                q.putExtra("table_name",Constants.VISITORS_TABLE);
+                q.putExtra("table_name", Constants.VISITORS_TABLE);
                 startActivity(q);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
@@ -255,18 +255,18 @@ public class Analytics_Fragment extends Fragment {
                /* if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
                     Toast.makeText(context, "This feature is coming soon", Toast.LENGTH_LONG).show();
                 } else {*/
-                    SharedPreferences pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
-                    int status = pref.getInt("fbPageStatus", 0);
+                SharedPreferences pref = context.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+                int status = pref.getInt("fbPageStatus", 0);
 
-                    Intent i = new Intent(getActivity(), SocialAnalytics.class);
-                    i.putExtra("GetStatus", status);
-                    startActivity(i);
+                Intent i = new Intent(getActivity(), SocialAnalytics.class);
+                i.putExtra("GetStatus", status);
+                startActivity(i);
 
-                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-               // }
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                // }
             }
         });
-        if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
+        if ("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
                 "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)) ||
                 "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME))) {
             CardView vmnCallCard = (CardView) rootView.findViewById(R.id.card_view_vmn_call);
@@ -274,14 +274,14 @@ public class Analytics_Fragment extends Fragment {
             vmnCallCard.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(vmnTotalCallCount.getVisibility() == View.VISIBLE) {
+                    if (vmnTotalCallCount.getVisibility() == View.VISIBLE) {
                         Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
-                        i.putExtra("TotalCalls",vmnTotalCalls);
-                        i.putExtra("ReceivedCalls",vmnReceivedCalls);
-                        i.putExtra("MissedCalls",vmnMissedCalls);
+                        i.putExtra("TotalCalls", vmnTotalCalls);
+                        i.putExtra("ReceivedCalls", vmnReceivedCalls);
+                        i.putExtra("MissedCalls", vmnMissedCalls);
                         startActivity(i);
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    }else{
+                    } else {
                         Toast.makeText(context, getString(R.string.please_wait), Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -304,7 +304,7 @@ public class Analytics_Fragment extends Fragment {
         tvRiaCardHeader = (TextView) rootView.findViewById(R.id.tvRiaCardHeader);
         llRiaCardSections = (LinearLayout) rootView.findViewById(R.id.llRiaCardSections);
 
-        PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(context,R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+        PorterDuffColorFilter porterDuffColorFilter = new PorterDuffColorFilter(ContextCompat.getColor(context, R.color.primaryColor), PorterDuff.Mode.SRC_IN);
         ImageView galleryBack = (ImageView) rootView.findViewById(R.id.pop_up_gallery_img);
         ImageView subsBack = (ImageView) rootView.findViewById(R.id.pop_up_subscribers_img);
         ImageView searchBack = (ImageView) rootView.findViewById(R.id.pop_up_search_img);
@@ -345,63 +345,63 @@ public class Analytics_Fragment extends Fragment {
         businessEnqProgress.setVisibility(View.VISIBLE);
 
 
-        String visittotal  = session.getVisitsCount();
-        String visitortotal  = session.getVisitorsCount();
-        String subscribetotal  = session.getSubcribersCount();
+        String visittotal = session.getVisitsCount();
+        String visitortotal = session.getVisitorsCount();
+        String subscribetotal = session.getSubcribersCount();
         String searchQueryCount = session.getSearchCount();
         String enquiryCount = session.getEnquiryCount();
 //        String Str_noOfSearchQueries = "";
 
         try {
-            if (visittotal!=null && visittotal.length()>0 && !visittotal.contains(",")){
+            if (visittotal != null && visittotal.length() > 0 && !visittotal.contains(",")) {
                 visittotal = NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(visittotal));
             }
-            if (subscribetotal!=null && subscribetotal.length()>0 && !subscribetotal.contains(",")){
+            if (subscribetotal != null && subscribetotal.length() > 0 && !subscribetotal.contains(",")) {
                 subscribetotal = NumberFormat.getNumberInstance(Locale.US).format(Integer.parseInt(subscribetotal));
             }
 //            Str_noOfSearchQueries = NumberFormat.getNumberInstance(Locale.US).format(noOfSearchQueries);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if (visittotal!=null && visittotal.trim().length()>0){
+        if (visittotal != null && visittotal.trim().length() > 0) {
             visits_progressBar.setVisibility(View.GONE);
             visitCount.setVisibility(View.VISIBLE);
             visitCount.setText(visittotal);
-        }else{
+        } else {
             visits_progressBar.setVisibility(View.VISIBLE);
             visitCount.setVisibility(View.GONE);
         }
-        if (visitortotal!=null && visitortotal.trim().length()>0){
+        if (visitortotal != null && visitortotal.trim().length() > 0) {
             visitors_progressBar.setVisibility(View.GONE);
             visitorsCount.setVisibility(View.VISIBLE);
             visitorsCount.setText(visitortotal);
-        }else{
+        } else {
             visitors_progressBar.setVisibility(View.VISIBLE);
             visitorsCount.setVisibility(View.GONE);
         }
 
-        if (subscribetotal!=null && subscribetotal.trim().length()>0){
+        if (subscribetotal != null && subscribetotal.trim().length() > 0) {
             subscriber_progress.setVisibility(View.GONE);
             subscriberCount.setVisibility(View.VISIBLE);
             subscriberCount.setText(subscribetotal);
-        }else{
+        } else {
             subscriber_progress.setVisibility(View.VISIBLE);
             subscriberCount.setVisibility(View.GONE);
         }
-        if (searchQueryCount!=null && searchQueryCount.trim().length()>0){
+        if (searchQueryCount != null && searchQueryCount.trim().length() > 0) {
             search_query_progress.setVisibility(View.GONE);
             searchQueriesCount.setVisibility(View.VISIBLE);
             searchQueriesCount.setText(searchQueryCount);
-        }else{
+        } else {
             search_query_progress.setVisibility(View.VISIBLE);
             searchQueriesCount.setVisibility(View.GONE);
         }
-        if(enquiryCount!=null && enquiryCount.trim().length() > 0){
+        if (enquiryCount != null && enquiryCount.trim().length() > 0) {
             businessEnqProgress.setVisibility(View.GONE);
             businessEnqCount.setVisibility(View.VISIBLE);
             businessEnqCount.setText(enquiryCount);
-        }else {
+        } else {
             businessEnqProgress.setVisibility(View.VISIBLE);
             businessEnqCount.setVisibility(View.GONE);
         }
@@ -421,7 +421,7 @@ public class Analytics_Fragment extends Fragment {
         networkInterface.getRiaCards(session.getFpTag(), new Callback<ArrayList<RiaCardModel>>() {
             @Override
             public void success(ArrayList<RiaCardModel> riaCardModels, Response response) {
-                if(riaCardModels!=null && getActivity()!=null && riaCardModels.size()>0){
+                if (riaCardModels != null && getActivity() != null && riaCardModels.size() > 0) {
                     cvRiaCard.setVisibility(View.VISIBLE);
                     drawRiaCards(riaCardModels);
                     bus.post(riaCardModels);
@@ -442,8 +442,8 @@ public class Analytics_Fragment extends Fragment {
             @Override
             public void onResponse(String buttonId, String NextNodeId) {
 
-                for(RiaCardModel riaCard: riaCardModels){
-                    if(riaCard.getId().equals(NextNodeId)){
+                for (RiaCardModel riaCard : riaCardModels) {
+                    if (riaCard.getId().equals(NextNodeId)) {
                         drawSingleRiaCard(riaCard, this);
                         break;
                     }
@@ -459,9 +459,9 @@ public class Analytics_Fragment extends Fragment {
         llSingleButtonLayout.setVisibility(View.GONE);
         tvRiaCardHeader.setText(rootCard.getHeaderText());
         RiaEventLogger.isLastEventCompleted = false;
-        if(rootCard.getButtons()==null || rootCard.getButtons().size()==0){
+        if (rootCard.getButtons() == null || rootCard.getButtons().size() == 0) {
 
-        }else if(rootCard.getButtons()!=null && rootCard.getButtons().size()==1){
+        } else if (rootCard.getButtons() != null && rootCard.getButtons().size() == 1) {
             llSingleButtonLayout.setVisibility(View.VISIBLE);
             final com.nowfloats.NavigationDrawer.model.Button btnSingle = rootCard.getButtons().get(0);
             btnSingleResponse.setText(btnSingle.getButtonText());
@@ -495,7 +495,7 @@ public class Analytics_Fragment extends Fragment {
                             btnSingle.getId(), btnSingle.getButtonText());
                 }
             });
-        }else {
+        } else {
             llTwoButtons.setVisibility(View.VISIBLE);
             final com.nowfloats.NavigationDrawer.model.Button btnLeft = rootCard.getButtons().get(0);
             final com.nowfloats.NavigationDrawer.model.Button btnRight = rootCard.getButtons().get(1);
@@ -571,13 +571,13 @@ public class Analytics_Fragment extends Fragment {
     }
 
     private void drawSectionsForCard(List<Section> sections, LinearLayout llRiaCardSections) {
-        if(llRiaCardSections==null){
+        if (llRiaCardSections == null) {
             return;
         }
         llRiaCardSections.removeAllViews();
-        for(int i=0; i<sections.size(); i++){
+        for (int i = 0; i < sections.size(); i++) {
             Section widget = sections.get(i);
-            switch (SectionType.valueOf(widget.getSectionType())){
+            switch (SectionType.valueOf(widget.getSectionType())) {
                 case Text:
                     attachText(widget, llRiaCardSections);
                     break;
@@ -592,7 +592,7 @@ public class Analytics_Fragment extends Fragment {
     }
 
     private void attachText(Section widget, LinearLayout llRiaCardSections) {
-        if(getActivity()== null) return;
+        if (getActivity() == null) return;
         TextView tv = new TextView(getActivity());
         tv.setText(Methods.fromHtml(widget.getText()));
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
@@ -603,7 +603,7 @@ public class Analytics_Fragment extends Fragment {
     }
 
     private void attachGraph(Section widget, LinearLayout llRiaCardSections) {
-        if(getActivity()== null) return;
+        if (getActivity() == null) return;
         LinearLayout graph = new LinearLayout(getActivity());
         graph.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         graph.setGravity(Gravity.CENTER_VERTICAL);
@@ -612,12 +612,12 @@ public class Analytics_Fragment extends Fragment {
         yAxisName.setTextSize(dpToPx(4));
         yAxisName.setRotation(180);
         graph.addView(yAxisName);
-        if(!(widget.getY().getAxisType().equals("Integer") || widget.getY().getAxisType().equals("Double"))){
+        if (!(widget.getY().getAxisType().equals("Integer") || widget.getY().getAxisType().equals("Double"))) {
             cvRiaCard.setVisibility(View.GONE);
             bus.post(new ArrayList<RiaCardModel>());
             return;
         }
-        if(widget.getGraphType().equals(BAR)){
+        if (widget.getGraphType().equals(BAR)) {
             BarChart barChart = new BarChart(getActivity());
             barChart.getAxisLeft().setDrawGridLines(false);
             barChart.getAxisRight().setDrawGridLines(false);
@@ -629,22 +629,22 @@ public class Analytics_Fragment extends Fragment {
             barChart.getAxisLeft().setSpaceBottom(0);
             ArrayList<IBarDataSet> dataSets = new ArrayList<>();
             ArrayList<String> xVals = new ArrayList<>();
-            for(CoordinatesSet coordinateSet : widget.getCoordinatesSet()){
+            for (CoordinatesSet coordinateSet : widget.getCoordinatesSet()) {
                 List<BarEntry> dataEntry = new ArrayList<>();
                 int i = 0;
-                for(CoordinateList coordinate: coordinateSet.getCoordinateList()){
+                for (CoordinateList coordinate : coordinateSet.getCoordinateList()) {
                     dataEntry.add(new BarEntry(Float.parseFloat(coordinate.getY()), i));
                     xVals.add(coordinate.getX());
                     i++;
                 }
                 BarDataSet dataSet = new BarDataSet(dataEntry, null);
                 //dataSet.setDrawFilled(true);
-                dataSet.setColor(ContextCompat.getColor(getActivity(),R.color.primary));
+                dataSet.setColor(ContextCompat.getColor(getActivity(), R.color.primary));
                 dataSet.setValueTextSize(10);
                 dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
                 dataSets.add(dataSet);
             }
-            if(widget.getCoordinatesSet().size()<=1){
+            if (widget.getCoordinatesSet().size() <= 1) {
                 barChart.getAxisRight().setEnabled(false);
             }
             barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -662,7 +662,7 @@ public class Analytics_Fragment extends Fragment {
             xAxisNames.setGravity(Gravity.CENTER_HORIZONTAL);
             llRiaCardSections.addView(xAxisNames);
 
-        }else if(widget.getGraphType().equals(LINE)){
+        } else if (widget.getGraphType().equals(LINE)) {
             LineChart lineChart = new LineChart(getActivity());
             lineChart.getAxisLeft().setDrawGridLines(false);
             lineChart.getAxisRight().setDrawGridLines(false);
@@ -674,10 +674,10 @@ public class Analytics_Fragment extends Fragment {
             lineChart.getAxisLeft().setSpaceBottom(0);
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             ArrayList<String> xVals = new ArrayList<>();
-            for(CoordinatesSet coordinateSet : widget.getCoordinatesSet()){
+            for (CoordinatesSet coordinateSet : widget.getCoordinatesSet()) {
                 List<Entry> dataEntry = new ArrayList<>();
                 int i = 0;
-                for(CoordinateList coordinate: coordinateSet.getCoordinateList()){
+                for (CoordinateList coordinate : coordinateSet.getCoordinateList()) {
                     dataEntry.add(new Entry(Float.parseFloat(coordinate.getY()), i));
                     xVals.add(coordinate.getX());
                     i++;
@@ -692,7 +692,7 @@ public class Analytics_Fragment extends Fragment {
                 dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
                 dataSets.add(dataSet);
             }
-            if(widget.getCoordinatesSet().size()<=1){
+            if (widget.getCoordinatesSet().size() <= 1) {
                 lineChart.getAxisRight().setEnabled(false);
             }
             lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -742,7 +742,7 @@ public class Analytics_Fragment extends Fragment {
     }
 
     private void attachImage(Section widget, LinearLayout llRiaCardSections) {
-        if(getActivity()== null) return;
+        if (getActivity() == null) return;
         ImageView iv = new ImageView(getActivity());
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, dpToPx(150));
         lp.setMargins(0, 0, 0, dpToPx(15));
@@ -757,38 +757,38 @@ public class Analytics_Fragment extends Fragment {
         llRiaCardSections.addView(iv);
     }
 
-    public interface RiaCardResponseListener{
+    public interface RiaCardResponseListener {
         void onResponse(String buttonId, String NextNodeId);
     }
 
-    public interface RiaCardDeepLinkListener{
+    public interface RiaCardDeepLinkListener {
         void onDeepLink(String deepLinkUrl, boolean isFromRia, RiaNodeDataModel riaNodeData);
     }
 
     public class GraphValueFormatter implements ValueFormatter {
         @Override
         public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-            return Math.round(value)+"";
+            return Math.round(value) + "";
         }
     }
 
-    private void setVmnTotalCallCount(){
+    private void setVmnTotalCallCount() {
         vmnProgressBar.setVisibility(View.VISIBLE);
         vmnTotalCallCount.setVisibility(View.GONE);
         CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
-        String type =session.getISEnterprise().equals("true")?"MULTI":"SINGLE";
+        String type = session.getISEnterprise().equals("true") ? "MULTI" : "SINGLE";
 
-        trackerApis.getVmnSummary(Constants.clientId, session.getFPID(),type, new Callback<JsonObject>() {
+        trackerApis.getVmnSummary(Constants.clientId, session.getFPID(), type, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jsonObject, Response response) {
                 vmnProgressBar.setVisibility(View.GONE);
                 vmnTotalCallCount.setVisibility(View.VISIBLE);
-                if(jsonObject == null || jsonObject.equals("null") || response.getStatus() != 200){
+                if (jsonObject == null || jsonObject.equals("null") || response.getStatus() != 200) {
                     return;
                 }
-                vmnTotalCalls =  jsonObject.get("TotalCalls").getAsString();
-                vmnMissedCalls =  jsonObject.get("MissedCalls").getAsString();
-                vmnReceivedCalls =  jsonObject.get("ReceivedCalls").getAsString();
+                vmnTotalCalls = jsonObject.get("TotalCalls").getAsString();
+                vmnMissedCalls = jsonObject.get("MissedCalls").getAsString();
+                vmnReceivedCalls = jsonObject.get("ReceivedCalls").getAsString();
                 vmnTotalCallCount.setText(vmnTotalCalls);
             }
 
