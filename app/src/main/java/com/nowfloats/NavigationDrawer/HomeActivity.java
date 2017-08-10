@@ -100,7 +100,7 @@ import com.nowfloats.Store.Model.StoreModel;
 import com.nowfloats.Store.StoreFragmentTab;
 import com.nowfloats.bubble.SAMBubblesService;
 import com.nowfloats.managecustomers.ManageCustomerFragment;
-import com.nowfloats.manageinventory.ManageInventoryActivity;
+import com.nowfloats.manageinventory.ManageInventoryFragment;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -160,7 +160,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     Home_Fragment_Tab homeFragment;
     Business_Profile_Fragment_V2 businessFragment;
     ManageCustomerFragment manageCustomerFragment;
-    //    ManageInventoryFragment manageInventoryFragment;
+    ManageInventoryFragment manageInventoryFragment;
     Site_Meter_Fragment siteMeterFragment;
     Settings_Fragment settingsFragment;
     Business_Enquiries_Fragment businessEnquiriesFragment;
@@ -1343,16 +1343,16 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     Hotline.showConversations(HomeActivity.this);
                     //Konotor.getInstance(getApplicationContext()).launchFeedbackScreen(HomeActivity.this);
                 } else if (nextScreen.equals(getString(R.string.call))) {
-                    String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-                    if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || paymentState == null || paymentState.equals("-1") || paymentState.equals("0")) {
-                        Intent call = new Intent(Intent.ACTION_DIAL);
-                        String callString = "tel:" + getString(R.string.contact_us_number);
-                        call.setData(Uri.parse(callString));
-                        startActivity(call);
-                    } else {
-                        Intent supportIntent = new Intent(HomeActivity.this, HelpAndSupportActivity.class);
-                        startActivity(supportIntent);
-                    }
+//                    String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
+//                    if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || paymentState == null || paymentState.equals("-1") || paymentState.equals("0")) {
+//                        Intent call = new Intent(Intent.ACTION_DIAL);
+//                        String callString = "tel:" + getString(R.string.contact_us_number);
+//                        call.setData(Uri.parse(callString));
+//                        startActivity(call);
+//                    } else {
+                    Intent supportIntent = new Intent(HomeActivity.this, HelpAndSupportActivity.class);
+                    startActivity(supportIntent);
+//                    }
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 } else if (nextScreen.equals(getString(R.string.share))) {
                     shareWebsite();
@@ -1383,12 +1383,12 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     Intent socialSharingIntent = new Intent(HomeActivity.this, Social_Sharing_Activity.class);
                     startActivity(socialSharingIntent);
                 } else if (nextScreen.equals(getString(R.string.manage_inventory))) {
-//                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageCustomers")
-//                            .addToBackStack(null)
-//                            .commit();
                     MixPanelController.track(EventKeysWL.MANAGE_INVENTORY, null);
-                    Intent socialSharingIntent = new Intent(HomeActivity.this, ManageInventoryActivity.class);
-                    startActivity(socialSharingIntent);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageCustomers")
+                            .addToBackStack(null)
+                            .commit();
+//                    Intent socialSharingIntent = new Intent(HomeActivity.this, ManageInventoryActivity.class);
+//                    startActivity(socialSharingIntent);
                 }
             }
         }, 200);
@@ -1870,7 +1870,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         homeFragment = new Home_Fragment_Tab();
         businessFragment = new Business_Profile_Fragment_V2();
         manageCustomerFragment = new ManageCustomerFragment();
-//        manageInventoryFragment = new ManageInventoryFragment();
+        manageInventoryFragment = new ManageInventoryFragment();
         settingsFragment = new Settings_Fragment();
         businessEnquiriesFragment = new Business_Enquiries_Fragment();
         imageGalleryFragment = new Image_Gallery_Fragment();

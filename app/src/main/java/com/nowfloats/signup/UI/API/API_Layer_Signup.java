@@ -134,7 +134,7 @@ public class API_Layer_Signup {
 
                 }else{
                     checkUniqueNumberInterface.CheckUniqueNumber_postExecute("Failure");
-                    checkUniqueNumberInterface.CheckUniqueNumber_postExecute("Failure",mobileNumber);
+                    checkUniqueNumberInterface.CheckUniqueNumber_postExecute("Error",mobileNumber);
                 }
             }
 

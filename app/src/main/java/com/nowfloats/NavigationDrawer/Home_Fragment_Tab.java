@@ -386,6 +386,10 @@ public class Home_Fragment_Tab extends Fragment {
 //Log.v("ggg",String.valueOf(diff)+" "+String.valueOf(newTime-oldTime));
         if (oldTime != -1 && ((newTime - oldTime) < diff)) {
             return;
+        }else{
+
+            dialogForOverlayPath(from);
+
         }
 
         if (checkAccessibility)
@@ -514,7 +518,6 @@ public class Home_Fragment_Tab extends Fragment {
                 //layout.setOnClickListener(null);
             }
         });
-
     }
 
     @Override

@@ -283,6 +283,10 @@
             android:label="Gallery Image"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.nowfloats.Image_Gallery.FullScreenImage"
+            android:label="Gallery Image"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.nowfloats.NavigationDrawer.Card_Full_View_MainActivity"
             android:label="@string/title_activity_card__full__view__main"
             android:screenOrientation="portrait"

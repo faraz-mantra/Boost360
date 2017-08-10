@@ -297,6 +297,27 @@ public class BoostContentProvider extends ContentProvider {
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+            db.execSQL(DbConstants.Iupdates.DROP_UPDATES_TABLE);
+            db.execSQL(DbConstants.Ialerts.DROP_ALERT_TABLE);
+            db.execSQL(DbConstants.Ialerts.IalertData.DROP_ALERT_DATA_TABLE);
+            db.execSQL(DbConstants.IproductGallery.DROP_PRODUCT_GALLERY_TABLE);
+            db.execSQL(DbConstants.IphotoGallery.DROP_PHOTO_GALLERY_TABLE);
+            db.execSQL(DbConstants.IcustomPages.DROP_CUSTOM_PAGES_TABLE);
+            db.execSQL(DbConstants.Isearch_queries.DROP_SEARCH_QUERIES_TABLE);
+            db.execSQL(DbConstants.IstoreActivePlans.DROP_ACTIVE_PLANS_TABLE);
+            db.execSQL(DbConstants.IstoreImages.DROP_STORE_IMAGES_TABLE);
+
+            db.execSQL(DbConstants.Iupdates.CREATE_UPDATES_TABLE);
+            db.execSQL(DbConstants.Ialerts.CREATE_ALERT_TABLE);
+            db.execSQL(DbConstants.Ialerts.IalertData.CREATE_ALERT_DATA_TABLE);
+            db.execSQL(DbConstants.IproductGallery.CREATE_PRODUCT_GALLERY_TABLE);
+            db.execSQL(DbConstants.IphotoGallery.CREATE_PHOTO_GALLERY_TABLE);
+            db.execSQL(DbConstants.IcustomPages.CREATE_CUSTOM_PAGES_TABLE);
+            db.execSQL(DbConstants.Isearch_queries.CREATE_SEARCH_QUERIES_TABLE);
+            db.execSQL(DbConstants.IstoreActivePlans.CREATE_ACTIVE_PLANS_TABLE);
+            db.execSQL(DbConstants.IstoreImages.CREATE_STORE_IMAGES_TABLE);
+            db.execSQL(DbConstants.IsamBubble.CREATE_SAM_BUBBLE_TABLE);
+
 
         }
     }

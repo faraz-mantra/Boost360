@@ -126,6 +126,10 @@ public class HelpAndSupportActivity extends AppCompatActivity {
 //                    String callString = "tel:" + getString(R.string.contact_us_number);
 //                    call.setData(Uri.parse(callString));
 //                    startActivity(call);
+                    tvTextRia.setVisibility(View.GONE);
+                    tvTextFaq1.setVisibility(View.GONE);
+                    tvTextFaq2.setText(Methods.fromHtml("For Product related queries, please refer to our <a href=\"" + getString(R.string.faqs_url) + "\">FAQs</a>"));
+
                 }
             }
 
@@ -145,12 +149,15 @@ public class HelpAndSupportActivity extends AppCompatActivity {
         btnCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Intent i = new Intent();
+                i.setAction(Intent.ACTION_DIAL);
                 if (mRiaSupportModel != null) {
-                    Intent i = new Intent();
-                    i.setAction(Intent.ACTION_DIAL);
                     i.setData(Uri.parse("tel:" + mRiaSupportModel.getPhoneNumber()));
-                    startActivity(i);
+                } else {
+                    i.setData(Uri.parse("tel:" + tvConsultantNumber.getText().toString()));
                 }
+                startActivity(i);
             }
         });
 
@@ -164,14 +171,17 @@ public class HelpAndSupportActivity extends AppCompatActivity {
         btnSendEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                emailIntent.setData(Uri.parse("mailto:"));
+                emailIntent.setType("text/plain");
                 if (mRiaSupportModel != null) {
-                    Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                    emailIntent.setData(Uri.parse("mailto:"));
-                    emailIntent.setType("text/plain");
                     emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{mRiaSupportModel.getEmail()});
-                    if (emailIntent.resolveActivity(getPackageManager()) != null) {
-                        startActivity(emailIntent);
-                    }
+                } else {
+                    emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{tvEmail.getText().toString()});
+                }
+
+                if (emailIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(emailIntent);
                 }
             }
         });
