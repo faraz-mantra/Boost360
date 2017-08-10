@@ -1350,4 +1350,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
     <string name="speech_prompt">Say something&#8230;</string>
     <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
+
+    <string name="pull_to_open">Pull the 4 dots to open</string>
+    <string name="long_press_to_move">Long press to move</string>
+
 </resources>

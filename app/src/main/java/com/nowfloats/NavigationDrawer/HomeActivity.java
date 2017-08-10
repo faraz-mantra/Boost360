@@ -2,6 +2,7 @@ package com.nowfloats.NavigationDrawer;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -97,6 +98,7 @@ import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.Model.StoreEvent;
 import com.nowfloats.Store.Model.StoreModel;
 import com.nowfloats.Store.StoreFragmentTab;
+import com.nowfloats.bubble.SAMBubblesService;
 import com.nowfloats.managecustomers.ManageCustomerFragment;
 import com.nowfloats.manageinventory.ManageInventoryActivity;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
@@ -131,6 +133,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -157,7 +160,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     Home_Fragment_Tab homeFragment;
     Business_Profile_Fragment_V2 businessFragment;
     ManageCustomerFragment manageCustomerFragment;
-//    ManageInventoryFragment manageInventoryFragment;
+    //    ManageInventoryFragment manageInventoryFragment;
     Site_Meter_Fragment siteMeterFragment;
     Settings_Fragment settingsFragment;
     Business_Enquiries_Fragment businessEnquiriesFragment;
@@ -525,6 +528,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
     @Override
     protected void onStop() {
+//        sendBroadcast(new Intent(SAMBubblesService.ACTION_ADD_BUBBLE));
         super.onStop();
         Constants.fromLogin = false;
         isExpiredCheck = false;
@@ -774,6 +778,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             navigateView();
         }
         DeepLinkPage(mDeepLinkUrl, false);
+
+//        isMyServiceRunning(SAMBubblesService.class);
+//        sendBroadcast(new Intent(SAMBubblesService.ACTION_REMOVE_BUBBLE));
     }
 
     private void checkExpiry1() {
@@ -2010,5 +2017,25 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 finish();
             }
         }
+    }
+
+    private void isMyServiceRunning(Class<?> serviceClass) {
+        boolean isMyServiceRunning = false;
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> list = manager.getRunningServices(Integer.MAX_VALUE);
+        if (list != null) {
+            for (ActivityManager.RunningServiceInfo service : list) {
+                if (serviceClass.getName().equals(service.service.getClassName())) {
+                    isMyServiceRunning = true;
+                }
+            }
+        }
+        if (!isMyServiceRunning)
+            startService(serviceClass);
+    }
+
+    private void startService(Class<?> serviceClass) {
+        Intent intent = new Intent(HomeActivity.this, SAMBubblesService.class);
+        startService(intent);
     }
 }

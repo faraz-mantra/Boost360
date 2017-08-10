@@ -189,7 +189,7 @@ public class HelpAndSupportActivity extends AppCompatActivity {
 
         CharSequence charSequence = Methods.fromHtml("<a href=\"mailto:" + getString(R.string.settings_feedback_link) + "\">" + getString(R.string.settings_feedback_link) + "</a> " +
                 "or call at " + getString(R.string.contact_us_number) +
-                " or <a href=\"" + CHAT_INTENT_URI + "\"><u>chat</u></a>.");
+                " or <a href=\"" + CHAT_INTENT_URI + "\"><u>CHAT</u></a>.");
 
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(charSequence);
         makeLinkClickable(spannableStringBuilder, charSequence);

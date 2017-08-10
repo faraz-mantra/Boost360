@@ -110,7 +110,7 @@
                             android:linksClickable="true"
                             android:maxLines="4"
                             android:padding="20dp"
-                            android:text="Enable SAM (Shopping Assistant Module)"
+                            android:text="Enable Customer Assistant"
                             android:textColor="#3B3B3B"
                             android:textSize="13sp" />
 

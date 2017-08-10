@@ -454,7 +454,7 @@ public class SidePanelFragment extends Fragment {
         } else {
             lockWidgetImageView.setVisibility(View.GONE);
         }
-        newButton.setVisibility(View.VISIBLE);
+//        newButton.setVisibility(View.VISIBLE);
 
         if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_PRODUCT_GALLERY).contains("PRODUCTCATALOGUE")) {
             lockWidget_ProductGallery.setVisibility(View.VISIBLE);
