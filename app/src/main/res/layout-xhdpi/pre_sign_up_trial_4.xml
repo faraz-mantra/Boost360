@@ -219,13 +219,13 @@
                     android:layout_weight="1"
                     android:hint="@string/country_ria">
 
-                    <android.support.design.widget.TextInputEditText
+                    <EditText
                         android:id="@+id/editText_Country"
                         style="@style/SignUp_EditText_Style_Ria"
-                        fontPath="Roboto-Regular.ttf"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
+                        android:drawableRight="@drawable/dropselect"
                         android:scrollHorizontally="true"
                         android:singleLine="true"
                         android:textCursorDrawable="@drawable/custom_edit_text_cursor" />

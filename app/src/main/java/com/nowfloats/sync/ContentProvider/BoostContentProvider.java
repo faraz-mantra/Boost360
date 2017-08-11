@@ -87,7 +87,7 @@ public class BoostContentProvider extends ContentProvider {
         }else{
             dbName = "BoostDefault.db";
         }*/
-        boostDatabaseHelper = new BoostDatabaseOpenHelper(context, dbName, null, 1);
+        boostDatabaseHelper = new BoostDatabaseOpenHelper(context, dbName, null, 2);
         return true;
     }
 
@@ -297,9 +297,19 @@ public class BoostContentProvider extends ContentProvider {
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+            switch (oldVersion) {
+                case 1:
+                    db.execSQL(DbConstants.IsamBubble.CREATE_SAM_BUBBLE_TABLE);
+                    break;
+                case 2:
+                case 3:
+                    break;
+                default:
+                    throw new IllegalStateException(
+                            "onUpgrade() with unknown oldVersion " + oldVersion);
+            }
 
         }
     }
-
 
 }

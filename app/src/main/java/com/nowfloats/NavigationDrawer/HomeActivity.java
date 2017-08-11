@@ -286,7 +286,7 @@ public class HomeActivity extends AppCompatActivity implements  SidePanelFragmen
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if(requestCode == READ_MESSAGES_ID){
-            if (!Arrays.asList(grantResults).contains(0)) {
+            if (Arrays.asList(grantResults).contains(0)) {
                 Intent intent = new Intent(this, ReadMessages.class);
                 startService(intent);
                 // start the service to send data to firebase

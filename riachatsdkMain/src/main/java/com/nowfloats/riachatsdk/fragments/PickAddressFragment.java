@@ -19,6 +19,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -34,8 +35,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -69,11 +72,11 @@ import java.util.Map;
 public class PickAddressFragment extends DialogFragment implements LocationListener,
         GoogleApiClient.OnConnectionFailedListener {
 
-    private TextInputEditText etStreetAddr, etPin, etLocality, etHousePlotNum, etLandmark;
+    private TextInputEditText etStreetAddr, etPin, etLocality, etHousePlotNum, etLandmark, etCountry;
 
     private Button btnSave;
 
-    private AutoCompleteTextView etCity, etCountry;
+    private AutoCompleteTextView etCity;
 
     private TextView tvAddress;
 
@@ -203,7 +206,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
         etCity = (AutoCompleteTextView) v.findViewById(R.id.et_city);
         etStreetAddr = (TextInputEditText) v.findViewById(R.id.et_street_address);
-        etCountry = (AutoCompleteTextView) v.findViewById(R.id.et_country);
+        etCountry = (TextInputEditText) v.findViewById(R.id.et_country);
         etPin = (TextInputEditText) v.findViewById(R.id.et_pincode);
         etLocality = (TextInputEditText) v.findViewById(R.id.et_locality);
         etHousePlotNum = (TextInputEditText) v.findViewById(R.id.et_house_plot_num);
@@ -445,7 +448,114 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
     private void initializeCountryControls() {
 
-        etCountry.addTextChangedListener(new TextWatcher() {
+//        etCountry.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                updateErrorList();
+//            }
+//
+//            @Override
+//            public void afterTextChanged(final Editable editable) {
+//                if (etCountry.getTag() != null && !(boolean) etCountry.getTag()) {
+//
+//                } else {
+//                    try {
+//                        new Thread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                final List<String> countrys = new ArrayList<>();
+//                                if (signUpCountryList != null) {
+//
+//                                    if (!TextUtils.isEmpty(editable)) {
+//
+//                                        for (int i = 0; i < signUpCountryList.size(); i++) {
+//                                            String country = signUpCountryList.get(i);
+//                                            if (country.contains(editable.toString()))
+//                                                countrys.add(signUpCountryList.get(i));
+//                                        }
+//                                    }
+//                                }
+//
+//                                getActivity().runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//
+//                                        if (getActivity() != null &&
+//                                                !getActivity().isFinishing()) {
+//                                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+//                                                    android.R.layout.simple_dropdown_item_1line, countrys);
+//                                            etCountry.setAdapter(adapter);
+//                                            adapter.notifyDataSetChanged();
+//                                        }
+//                                    }
+//                                });
+//                            }
+//                        }).start();
+//                    } catch (Exception e) {
+//
+//                    }
+//                }
+//
+//            }
+//        });
+//
+//        etCountry.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String country = ((TextView) view).getText().toString();
+//                etCountry.setTag(false);
+//                etCountry.setText(country);
+//                etCountry.setTag(true);
+//
+//            }
+//        });
+
+        etCountry.setFocusable(false);
+        etCountry.setFocusableInTouchMode(false);
+        etCountry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCountryDialog(signUpCountryList);
+            }
+        });
+
+    }
+
+    private void showCountryDialog(ArrayList<String> countries) {
+
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                R.layout.search_list_item_layout, countries);
+
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(getActivity());
+        builderSingle.setTitle("Select a Country");
+
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.search_list_layout, null);
+        builderSingle.setView(view);
+
+        EditText edtSearch = (EditText) view.findViewById(R.id.edtSearch);
+        ListView lvItems = (ListView) view.findViewById(R.id.lvItems);
+
+        lvItems.setAdapter(adapter);
+
+
+        final Dialog dialog = builderSingle.show();
+
+        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String strVal = adapter.getItem(position);
+                dialog.dismiss();
+                etCountry.setText(strVal);
+                etPin.requestFocus();
+            }
+        });
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -453,65 +563,16 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                updateErrorList();
+
             }
 
             @Override
-            public void afterTextChanged(final Editable editable) {
-                if (etCountry.getTag() != null && !(boolean) etCountry.getTag()) {
-
-                } else {
-                    try {
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                final List<String> countrys = new ArrayList<>();
-                                if (signUpCountryList != null) {
-
-                                    if (!TextUtils.isEmpty(editable)) {
-
-                                        for (int i = 0; i < signUpCountryList.size(); i++) {
-                                            String country = signUpCountryList.get(i);
-                                            if (country.contains(editable.toString()))
-                                                countrys.add(signUpCountryList.get(i));
-                                        }
-                                    }
-                                }
-
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-
-                                        if (getActivity() != null &&
-                                                !getActivity().isFinishing()) {
-                                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                                                    android.R.layout.simple_dropdown_item_1line, countrys);
-                                            etCountry.setAdapter(adapter);
-                                            adapter.notifyDataSetChanged();
-                                        }
-                                    }
-                                });
-                            }
-                        }).start();
-                    } catch (Exception e) {
-
-                    }
-                }
-
+            public void afterTextChanged(Editable s) {
+                adapter.getFilter().filter(s.toString().toLowerCase());
             }
         });
 
-        etCountry.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String country = ((TextView) view).getText().toString();
-                etCountry.setTag(false);
-                etCountry.setText(country);
-                etCountry.setTag(true);
-
-            }
-        });
-
+        dialog.setCancelable(false);
     }
 
     private void loadCountryCodeandCountryNameMap() {

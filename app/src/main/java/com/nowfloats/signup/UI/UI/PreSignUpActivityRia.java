@@ -2,6 +2,7 @@ package com.nowfloats.signup.UI.UI;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,6 +19,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -89,6 +91,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.SmsVerifyModel;
+import com.nowfloats.util.Utils;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -235,6 +238,9 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
         businessCategoryEditText.setFocusable(false);
         businessCategoryEditText.setFocusableInTouchMode(false);
+
+        countryEditText.setFocusable(false);
+        countryEditText.setFocusableInTouchMode(false);
 
 
         CharSequence charSequence = Html.fromHtml("By clicking on 'Create my site' you agree to our " +
@@ -519,14 +525,15 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
         TextView tvTitle = (TextView) view.findViewById(R.id.tvTitle);
         tvTitle.setText("Please verify your mobile number using a one time password (OTP)");
-
+        tvTitle.setVisibility(View.GONE);
         final EditText number = (EditText) view.findViewById(R.id.editText);
         numberDialog = new MaterialDialog.Builder(this)
                 .customView(view, false)
                 .titleColorRes(R.color.primary_color)
                 .title("Enter Mobile Number")
                 .negativeText("Cancel")
-                .positiveText("Verify & Send OTP")
+//                .positiveText("Verify & Send OTP")
+                .positiveText("Confirm")
                 .autoDismiss(false)
                 .canceledOnTouchOutside(false)
                 .negativeColorRes(R.color.gray_transparent)
@@ -535,10 +542,14 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         hideKeyBoard();
-                        if (number.length() > 0) {
-                            API_Layer_Signup.checkUniqueNumber(activity, number.getText().toString().trim());
+                        if (Utils.isNetworkConnected(PreSignUpActivityRia.this)) {
+                            if (number.length() > 0) {
+                                API_Layer_Signup.checkUniqueNumber(activity, number.getText().toString().trim());
+                            } else {
+                                Toast.makeText(PreSignUpActivityRia.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
+                            }
                         } else {
-                            Toast.makeText(PreSignUpActivityRia.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PreSignUpActivityRia.this, getString(R.string.noInternet), Toast.LENGTH_SHORT).show();
                         }
                     }
                 })
@@ -589,18 +600,52 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     }
 
     private void showCountryDialog(ArrayList<String> countries) {
-        new MaterialDialog.Builder(activity)
-                .title("Select a Country")
-                .items(countries)
-                .itemsCallbackSingleChoice(-1, new MaterialDialog.ListCallbackSingleChoice() {
-                    @Override
-                    public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        countryEditText.setText(text);
-                        updateCountry();
-                        return false;
-                    }
-                })
-                .show();
+
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(PreSignUpActivityRia.this,
+                R.layout.search_list_item_layout, countries);
+
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(PreSignUpActivityRia.this);
+        builderSingle.setTitle("Select a Country");
+
+        View view = LayoutInflater.from(PreSignUpActivityRia.this).inflate(R.layout.search_list_layout, null);
+        builderSingle.setView(view);
+
+        EditText edtSearch = (EditText) view.findViewById(R.id.edtSearch);
+        ListView lvItems = (ListView) view.findViewById(R.id.lvItems);
+
+        lvItems.setAdapter(adapter);
+
+
+        final Dialog dialog = builderSingle.show();
+
+        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String strVal = adapter.getItem(position);
+                dialog.dismiss();
+                countryEditText.setText(strVal);
+                updateCountry();
+            }
+        });
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                adapter.getFilter().filter(s.toString().toLowerCase());
+            }
+        });
+
+        dialog.setCancelable(false);
     }
 
     protected void makeLinkClickable(SpannableStringBuilder sp, CharSequence charSequence) {
@@ -651,11 +696,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         boolean isNumberUnique = response.model;
 
         if (!isNumberUnique) {
-
-
             suggestTag(PreSignUpActivityRia.this, data_businessName, data_country, data_city, data_businessCategory, bus);
-
-
         } else {
             boolean wrapInScrollView = true;
             new MaterialDialog.Builder(this)
@@ -899,6 +940,10 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(emailEditText);
                 Methods.showSnackBarNegative(activity, getString(R.string.enter_valid_email));
+            } else if (etWebsiteAddress.getText().toString().trim().length() == 0) {
+                allFieldsValid = false;
+                YoYo.with(Techniques.Shake).playOn(etWebsiteAddress);
+                Methods.showSnackBarNegative(activity, getString(R.string.enter_valid_website_name));
             } else if (TextUtils.isEmpty(fpTag)) {
                 allFieldsValid = false;
                 YoYo.with(Techniques.Shake).playOn(etWebsiteAddress);
@@ -972,9 +1017,13 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         pd.dismiss();
         if (value.equals("Success")) {
 
-            otpVerifyDialog(phoneNumber);
             numberDialog.dismiss();
-
+            phoneEditText.setText("+" + data_country_code + " - " + phoneNumber);
+            ivPhoneStatus.setBackgroundResource(R.drawable.green_check);
+            data_phone = phoneNumber;
+        } else if (value.equalsIgnoreCase("Error")) {
+            Methods.showSnackBarNegative(numberDialog.getView(), getString(R.string.something_went_wrong_try_again));
+            goToNextScreen = false;
         } else {
             Methods.showSnackBarNegative(numberDialog.getView(), getString(R.string.number_already_exists));
             goToNextScreen = false;
@@ -1567,4 +1616,3 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     }
 
 }
-
