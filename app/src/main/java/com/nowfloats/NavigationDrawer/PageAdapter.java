@@ -57,9 +57,9 @@ public class PageAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         Bundle bundle = new Bundle();
         bundle.putString(Card_Full_View_Fragment.MainTextKey,mainText.get(position));
-        bundle.putString(Card_Full_View_Fragment.DateTextKey,dateText.get(position));
-        bundle.putString(Card_Full_View_Fragment.ImageKey,images.get(position));
-        bundle.putString(Card_Full_View_Fragment.MessageIdKey,messageIds.get(position));
+        bundle.putString(Card_Full_View_Fragment.DateTextKey,dateText.size()>position ? dateText.get(position):"");
+        bundle.putString(Card_Full_View_Fragment.ImageKey,images.size()> position?images.get(position):"");
+        bundle.putString(Card_Full_View_Fragment.MessageIdKey,messageIds.size()>position? messageIds.get(position):"");
 
         Card_Full_View_Fragment cardFragment = new Card_Full_View_Fragment();
         cardFragment.setArguments(bundle);

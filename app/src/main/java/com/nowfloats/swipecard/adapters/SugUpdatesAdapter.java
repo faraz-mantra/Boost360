@@ -2,6 +2,7 @@ package com.nowfloats.swipecard.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,17 +45,6 @@ public class SugUpdatesAdapter extends RecyclerView.Adapter<SugUpdatesAdapter.Vi
 
         final SugUpdates mSugUpdate = (SugUpdates) arrUpdates.get(position);
 
-        final ImageView imageView = viewHolder.ProductImageView;
-        final TextView tvViewMore = viewHolder.tvViewMore;
-
-//        Picasso picasso = Picasso.with(activity);
-//        String image_url = mSugUpdate.getImage();
-//        if (image_url != null && image_url.length() > 0 && !image_url.equals("null")) {
-//            picasso.load(image_url).placeholder(R.drawable.default_product_image).into(imageView);
-//        } else {
-//            picasso.load(R.drawable.default_product_image).into(imageView);
-//        }
-
         if (mSugUpdate.isSelected()) {
             viewHolder.flOverlay.setVisibility(View.VISIBLE);
         } else {
@@ -62,13 +52,6 @@ public class SugUpdatesAdapter extends RecyclerView.Adapter<SugUpdatesAdapter.Vi
         }
 
         viewHolder.tvUpdate.setText(mSugUpdate.getName());
-
-        if (viewHolder.tvUpdate.getLineCount() > MAX_LINE_COUNT) {
-            tvViewMore.setVisibility(View.VISIBLE);
-        } else {
-            tvViewMore.setVisibility(View.GONE);
-        }
-
         updateMaxLines(mSugUpdate, viewHolder.tvViewMore, viewHolder.tvUpdate);
 
         viewHolder.tvViewMore.setOnClickListener(new View.OnClickListener() {
@@ -99,36 +82,17 @@ public class SugUpdatesAdapter extends RecyclerView.Adapter<SugUpdatesAdapter.Vi
             }
         });
 
-//        viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View view) {
-//                final SugUpdates sugUpdates = (SugUpdates) view.getTag(R.string.key_details);
-//                sugUpdates.setSelected(!sugUpdates.isSelected());
-//                FrameLayout flMain = (FrameLayout) view.findViewById(R.id.flMain);
-//                FrameLayout flOverlay = (FrameLayout) view.findViewById(R.id.flOverlay);
-//                View vwOverlay = view.findViewById(R.id.vwOverlay);
-//                if (sugUpdates.isSelected()) {
-//                    flOverlay.setVisibility(View.VISIBLE);
-//                    setOverlay(vwOverlay, 200, flMain.getWidth(), flMain.getHeight());
-//                } else {
-//                    flOverlay.setVisibility(View.GONE);
-//                }
-//                return true;
-//            }
-//        });
-
-
         setOverlay(viewHolder.vwOverlay, 200, viewHolder.flMain.getWidth(), viewHolder.itemView.getHeight());
     }
 
     private void updateMaxLines(SugUpdates mSugUpdate, TextView tvViewMore, TextView tvUpdate) {
 
         if (mSugUpdate.isViewMore()) {
-            tvViewMore.setText(mContext.getString(R.string.view_more));
+            tvViewMore.setText(Html.fromHtml(mContext.getString(R.string.view_more)));
             tvUpdate.setMaxLines(MAX_LINE_COUNT);
 
         } else {
-            tvViewMore.setText(mContext.getString(R.string.view_less));
+            tvViewMore.setText(Html.fromHtml(mContext.getString(R.string.view_less)));
             tvUpdate.setMaxLines(100);
 
         }

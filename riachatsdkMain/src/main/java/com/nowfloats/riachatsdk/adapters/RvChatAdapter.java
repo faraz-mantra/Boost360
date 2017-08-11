@@ -11,7 +11,10 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -19,8 +22,10 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.URLSpan;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -41,16 +46,19 @@ import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.nowfloats.riachatsdk.CustomWidget.AVLoadingIndicatorView;
+import com.nowfloats.riachatsdk.CustomWidget.FirstLastItemSpacesDecoration;
 import com.nowfloats.riachatsdk.CustomWidget.playpause.PlayPauseView;
 import com.nowfloats.riachatsdk.R;
 import com.nowfloats.riachatsdk.activities.ChatViewActivity;
 import com.nowfloats.riachatsdk.activities.ChatWebViewActivity;
 import com.nowfloats.riachatsdk.fragments.CustomDialogFragment;
 import com.nowfloats.riachatsdk.interfaces.IConfirmationCallback;
+import com.nowfloats.riachatsdk.models.Items;
 import com.nowfloats.riachatsdk.models.RiaCardModel;
 import com.nowfloats.riachatsdk.models.Section;
 import com.nowfloats.riachatsdk.utils.Constants;
 import com.nowfloats.riachatsdk.utils.Utils;
+import com.rd.PageIndicatorView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -88,7 +96,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private Map<String, String> mDataMap;
     private Context mContext;
     private IConfirmationCallback mConfirmationCallback;
-    private float MAX_WIDTH,TARGET_WIDTH,TARGET_HEIGHT;
+    private float MAX_WIDTH, TARGET_WIDTH, TARGET_HEIGHT;
 
     public RvChatAdapter(List<Section> mChatSections, Map<String, String> dataMap, Context context) {
         this.mChatSections = mChatSections;
@@ -99,7 +107,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
 
         Resources r = context.getResources();
-        MAX_WIDTH =  r.getDisplayMetrics().widthPixels;
+        MAX_WIDTH = r.getDisplayMetrics().widthPixels;
         TARGET_WIDTH = (int) (300 * r.getDisplayMetrics().density);
         TARGET_HEIGHT = (int) (200 * r.getDisplayMetrics().density);
 
@@ -115,6 +123,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v;
         switch (viewType) {
+
             case -1:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_chat_head, parent, false);
                 return new HeaderViewHolder(v);
@@ -149,6 +158,18 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             case 7:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_embedded_html_row_layout, parent, false);
                 return new EmbeddedHtmlViewHolder(v);
+            case 8:
+                v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_carousel_layout, parent, false);
+
+                CarouselViewHolder carouselViewHolder = new CarouselViewHolder(v);
+                int space = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30,
+                        mContext.getResources().getDisplayMetrics());
+                carouselViewHolder.rvCarousel.addItemDecoration(new FirstLastItemSpacesDecoration(space, false));
+                carouselViewHolder.pageIndicatorView.setDynamicCount(true);
+                final LinearLayoutManager manager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
+                carouselViewHolder.rvCarousel.setLayoutManager(manager);
+
+                return carouselViewHolder;
             case 9:
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_typing_row_layout, parent, false);
                 return new TypingViewHolder(v);
@@ -313,52 +334,6 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     }
                 });
             }
-
-
-
-            /*if (mChatSections.get(position).getCardModel().getButtons() != null && mChatSections.get(position).getCardModel().getButtons().size() == 1) {
-                cardViewHolder.tvConfirm.setVisibility(View.GONE);
-                cardViewHolder.tvConfirm.setText(mChatSections.get(position).getCardModel().getButtons().get(0).getButtonText());
-                cardViewHolder.tvConfirm.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        cardViewHolder.llConfirm.setVisibility(View.INVISIBLE);
-                        cardViewHolder.tvSubmit.setVisibility(View.VISIBLE);
-
-                        mConfirmationCallback.onPositiveResponse(Constants.ConfirmationType.BIZ_NAME,
-                                cardViewHolder.tvConfirmationText.getText().toString(),
-                                mChatSections.get(position).getCardModel().getButtons().get(0).getNextNodeId());
-                    }
-                });
-            } else {
-
-                cardViewHolder.tvEdit.setVisibility(View.VISIBLE);
-
-                cardViewHolder.tvConfirm.setText(mChatSections.get(position).getCardModel().getButtons().get(0).getButtonText());
-                cardViewHolder.tvEdit.setText(mChatSections.get(position).getCardModel().getButtons().get(1).getButtonText());
-
-                cardViewHolder.tvConfirm.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        cardViewHolder.llConfirm.setVisibility(View.GONE);
-                        cardViewHolder.tvSubmit.setVisibility(View.VISIBLE);
-
-                        mConfirmationCallback.onPositiveResponse(Constants.ConfirmationType.BIZ_NAME,
-                                cardViewHolder.tvConfirmationText.getText().toString(),
-                                mChatSections.get(position).getCardModel().getButtons().get(0).getNextNodeId());
-                    }
-                });
-
-                cardViewHolder.tvEdit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mConfirmationCallback.onNegativeResponse(Constants.ConfirmationType.BIZ_NAME,
-                                mChatSections.get(position).getCardModel().getButtons().get(1).getNextNodeId());
-                    }
-                });
-            }*/
 
         } else if (holder instanceof OTPViewHolder) {
             final RiaCardModel model = section.getCardModel();
@@ -638,12 +613,12 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
             if (!imageURL.contains("http")) {
 //                imageURL = "file://"+section.getUrl();
-                ((LinearLayout)imageViewHolder.itemView).setGravity(Gravity.LEFT);
+                ((LinearLayout) imageViewHolder.itemView).setGravity(Gravity.LEFT);
 
                 imageViewHolder.ivMainImage.setImageResource(R.drawable.site_sc_default);
 
                 final android.view.ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) imageViewHolder.ivMainImage.getLayoutParams();
-                layoutParams.height = (int) TARGET_WIDTH ;
+                layoutParams.height = (int) TARGET_WIDTH;
                 layoutParams.width = (int) TARGET_WIDTH;
                 imageViewHolder.ivMainImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
@@ -653,11 +628,11 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         .placeholder(R.drawable.site_sc_default)
                         .into(imageViewHolder.ivMainImage);
 
-            }else{
+            } else {
 
                 imageViewHolder.ivMainImage.setScaleType(ImageView.ScaleType.FIT_XY);
 
-                ((LinearLayout)imageViewHolder.itemView).setGravity(Gravity.RIGHT);
+                ((LinearLayout) imageViewHolder.itemView).setGravity(Gravity.RIGHT);
 
 
                 Picasso.with(mContext).load(imageURL).into(new Target() {
@@ -667,32 +642,32 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         //whatever algorithm here to compute size
                         final android.view.ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) imageViewHolder.ivMainImage.getLayoutParams();
 
-                        if(bitmap.getWidth()> MAX_WIDTH || bitmap.getHeight()>MAX_WIDTH){
+                        if (bitmap.getWidth() > MAX_WIDTH || bitmap.getHeight() > MAX_WIDTH) {
                             if (!getParsedPrefixPostfixText(section.getUrl()).contains("http")) {
 
-                                if(bitmap.getHeight()> bitmap.getWidth()){
+                                if (bitmap.getHeight() > bitmap.getWidth()) {
                                     float ratio = (float) bitmap.getWidth() / (float) bitmap.getHeight();
                                     float widthFloat = ((float) MAX_WIDTH) * ratio;
-                                    layoutParams.height = (int) MAX_WIDTH ;
+                                    layoutParams.height = (int) MAX_WIDTH;
                                     layoutParams.width = (int) widthFloat;
-                                }else{
+                                } else {
                                     float ratio = (float) bitmap.getHeight() / (float) bitmap.getWidth();
                                     float heightFloat = ((float) MAX_WIDTH) * ratio;
-                                    layoutParams.height = (int) heightFloat ;
+                                    layoutParams.height = (int) heightFloat;
                                     layoutParams.width = (int) MAX_WIDTH;
                                 }
 
-                            }else{
+                            } else {
 
                                 float ratio = (float) bitmap.getHeight() / (float) bitmap.getWidth();
                                 float heightFloat = ((float) MAX_WIDTH) * ratio;
-                                layoutParams.height = (int) heightFloat ;
+                                layoutParams.height = (int) heightFloat;
                                 layoutParams.width = (int) MAX_WIDTH;
 
                             }
-                        }else{
+                        } else {
 
-                            layoutParams.height = (int) bitmap.getHeight() ;
+                            layoutParams.height = (int) bitmap.getHeight();
                             layoutParams.width = (int) bitmap.getWidth();
                         }
 
@@ -700,27 +675,22 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         imageViewHolder.ivMainImage.setLayoutParams(layoutParams);
 //                    if(bitmap!=null && !bitmap.isRecycled())
 //                        bitmap.recycle();
-                    imageViewHolder.ivMainImage.setImageBitmap(bitmap);
+                        imageViewHolder.ivMainImage.setImageBitmap(bitmap);
 
                     }
 
                     @Override
                     public void onBitmapFailed(Drawable errorDrawable) {
-                    imageViewHolder.ivMainImage.setImageResource(R.drawable.site_sc_default);
+                        imageViewHolder.ivMainImage.setImageResource(R.drawable.site_sc_default);
                     }
 
                     @Override
                     public void onPrepareLoad(Drawable placeHolderDrawable) {
-                    imageViewHolder.ivMainImage.setImageResource(R.drawable.site_sc_default);
+                        imageViewHolder.ivMainImage.setImageResource(R.drawable.site_sc_default);
                     }
 
                 });
             }
-
-
-//
-
-
 
             if (section.getCaption() != null && !section.getCaption().trim().equals("")) {
                 imageViewHolder.tvImageCaption.setText(section.getCaption());
@@ -876,6 +846,114 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             });
 
 
+        } else if (holder instanceof CarouselViewHolder) {
+            final CarouselViewHolder carouselViewHolder = (CarouselViewHolder) holder;
+            final RiaCardModel riaCardModel = section.getCardModel();
+            final CarouselAdapter adapter = new CarouselAdapter(mContext, riaCardModel.getSections().get(0).getItems(), mDataMap);
+            carouselViewHolder.rvCarousel.setAdapter(adapter);
+            carouselViewHolder.pageIndicatorView.setCount(riaCardModel.getSections().get(0).getItems().size());
+
+
+            if (mChatSections.get(position).getCardModel().getButtons() != null && mChatSections.get(position).getCardModel().getButtons().size() == 1) {
+                carouselViewHolder.tvEdit.setText("");
+                carouselViewHolder.tvEdit.setVisibility(View.GONE);
+                carouselViewHolder.tvConfirm.setText(mChatSections.get(position).getCardModel().getButtons().get(0).getButtonText());
+                carouselViewHolder.tvConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        carouselViewHolder.tvConfirm.setClickable(false);
+                        carouselViewHolder.tvConfirm.setEnabled(false);
+
+                        carouselViewHolder.llConfirm.setVisibility(View.GONE);
+                        carouselViewHolder.tvSubmit.setVisibility(View.VISIBLE);
+
+                        int position = ((LinearLayoutManager) carouselViewHolder.rvCarousel.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+                        Items items = riaCardModel.getSections().get(0).getItems().get(position);
+
+                        mConfirmationCallback.onCardResponse(Constants.ConfirmationType.FB_PAGE, riaCardModel.getButtons().get(0),
+                                items.getTitle(),
+                                riaCardModel.getButtons().get(0).getNextNodeId());
+                    }
+                });
+            } else {
+                carouselViewHolder.tvEdit.setVisibility(View.VISIBLE);
+                carouselViewHolder.tvConfirm.setText(mChatSections.get(position).getCardModel().getButtons().get(0).getButtonText());
+                carouselViewHolder.tvEdit.setText(mChatSections.get(position).getCardModel().getButtons().get(1).getButtonText());
+                carouselViewHolder.tvConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        carouselViewHolder.tvConfirm.setClickable(false);
+                        carouselViewHolder.tvConfirm.setEnabled(false);
+
+                        carouselViewHolder.llConfirm.setVisibility(View.GONE);
+                        carouselViewHolder.tvSubmit.setVisibility(View.VISIBLE);
+
+                        int position = ((LinearLayoutManager) carouselViewHolder.rvCarousel.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+                        Items items = riaCardModel.getSections().get(0).getItems().get(position);
+
+
+                        mConfirmationCallback.onCardResponse(Constants.ConfirmationType.FB_PAGE, riaCardModel.getButtons().get(0),
+                                items.getTitle(),
+                                riaCardModel.getButtons().get(0).getNextNodeId());
+                    }
+                });
+
+                carouselViewHolder.tvEdit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        carouselViewHolder.tvEdit.setClickable(false);
+                        carouselViewHolder.tvEdit.setEnabled(false);
+
+                        carouselViewHolder.llConfirm.setVisibility(View.GONE);
+                        carouselViewHolder.tvSubmit.setVisibility(View.VISIBLE);
+
+                        int position = ((LinearLayoutManager) carouselViewHolder.rvCarousel.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+                        Items items = riaCardModel.getSections().get(0).getItems().get(position);
+
+                        mConfirmationCallback.onCardResponse(Constants.ConfirmationType.FB_PAGE, riaCardModel.getButtons().get(1),
+                                items.getTitle(),
+                                riaCardModel.getButtons().get(1).getNextNodeId());
+                    }
+                });
+            }
+
+            carouselViewHolder.rvCarousel.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+                @Override
+                public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                    int action = e.getAction();
+                    switch (action) {
+                        case MotionEvent.ACTION_MOVE:
+                            carouselViewHolder.rvCarousel.getParent().requestDisallowInterceptTouchEvent(true);
+                            break;
+                    }
+                    return false;
+                }
+
+                @Override
+                public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+                }
+
+                @Override
+                public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+                }
+            });
+            carouselViewHolder.rvCarousel.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        int position = ((LinearLayoutManager) carouselViewHolder.rvCarousel.getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+                        if (position > -1) {
+                            carouselViewHolder.pageIndicatorView.setSelection(position);
+                            adapter.notifyVisibleItemChanged(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -1208,4 +1286,23 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         return text;
     }
 
+    private class CarouselViewHolder extends RecyclerView.ViewHolder {
+
+        RecyclerView rvCarousel;
+        PageIndicatorView pageIndicatorView;
+        LinearLayout llConfirm;
+        TextView tvEdit, tvConfirm, tvSubmit;
+
+        public CarouselViewHolder(View v) {
+            super(v);
+            rvCarousel = (RecyclerView) v.findViewById(R.id.rv_carousel);
+            pageIndicatorView = (PageIndicatorView) v.findViewById(R.id.ps_indicator);
+            this.tvEdit = (TextView) itemView.findViewById(R.id.tv_edit);
+            this.tvConfirm = (TextView) itemView.findViewById(R.id.tv_confirm);
+            this.tvSubmit = (TextView) itemView.findViewById(R.id.tvSubmit);
+            this.llConfirm = (LinearLayout) itemView.findViewById(R.id.llConfirm);
+            SnapHelper snapHelper = new PagerSnapHelper();
+            snapHelper.attachToRecyclerView(rvCarousel);
+        }
+    }
 }

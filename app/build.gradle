@@ -47,8 +47,8 @@ android {
         applicationId 'com.thinksity'
         minSdkVersion 15
         targetSdkVersion 25
-        versionName "4.7.4"
-        versionCode 2017070021
+        versionName "4.7.6"
+        versionCode 2017080011
         multiDexEnabled true
     }
     buildTypes {
@@ -89,7 +89,6 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     //compile project('libs:libraries:volley')
     compile project(':library')
-    compile project(':mixpanel')
     compile project(':cropper')
     compile project(':ZoomImageLibrary')
     compile project(':instamojoLib')
@@ -137,7 +136,7 @@ dependencies {
     compile 'com.github.freshdesk:hotline-android:1.2.0'
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
     compile 'com.romandanylyk:pageindicatorview:0.2.0'
-    compile project(':messagelibrary')
+    compile "com.mixpanel.android:mixpanel-android:5.+"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
 }

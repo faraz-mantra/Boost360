@@ -5,10 +5,10 @@ package com.nowfloats.swipecard.models;
  */
 
 public class SugProducts {
-    private String productName;
-    private String Image;
-    private String buyLink;
-    private String productUrl;
+    public String productName;
+    public String Image;
+    public String buyLink;
+    public String productUrl;
 
     public String getProductUrl() {
         return productUrl;

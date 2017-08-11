@@ -12,7 +12,6 @@
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/libs/libs.iml" filepath="$PROJECT_DIR$/app/libs/libs.iml" />
       <module fileurl="file://$PROJECT_DIR$/messagelibrary/messagelibrary.iml" filepath="$PROJECT_DIR$/messagelibrary/messagelibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mixpanel/mixpanel.iml" filepath="$PROJECT_DIR$/mixpanel/mixpanel.iml" />
       <module fileurl="file://$PROJECT_DIR$/riachatsdkMain/riachatsdkMain.iml" filepath="$PROJECT_DIR$/riachatsdkMain/riachatsdkMain.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/libs/libraries/volley/volley.iml" filepath="$PROJECT_DIR$/app/libs/libraries/volley/volley.iml" />
     </modules>

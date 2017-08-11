@@ -46,6 +46,13 @@ public interface IdbController {
     int deleteProduct(String[] id);
     ProductGallery getProductById(String id);
 
+    /*
+     * methods for SAM Data
+    */
+    String getSamData();
+    Uri postSamData(String value);
+
+
     void deleteDataBase();
 
 

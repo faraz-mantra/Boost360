@@ -17,7 +17,9 @@ public class ChatLogger {
     private static ChatLogger sRiaEventLogger;
     private DatabaseReference mDatabase;
     private static final String DB_CHILD_NAME = "RiaChatSDK";
-//    private static final String DB_CHILD_NAME = "ChatSDKTestAndroid";
+//    private static final String DB_CHILD_NAME = "RiaChatTestSDK";
+    //    private static final String DB_CHILD_NAME = "RiaChatTestSDK";
+    //    private static final String DB_CHILD_NAME = "ChatSDKTestAndroid";
     //private static Bus mBus;
     public static boolean lastEventStatus;
 
@@ -47,7 +49,7 @@ public class ChatLogger {
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
-    public void logViewEvent(String deviceId, String NodeId, String appVersion) {
+    public void logViewEvent(String deviceId, String NodeId, String appVersion, String flowId, String sessionId) {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         df.setTimeZone(TimeZone.getTimeZone("UTC"));
         ChatEventModel Event = new ChatEventModel()
@@ -57,14 +59,17 @@ public class ChatLogger {
                 .setAppVersion(appVersion)
                 .setEventDateTime(System.currentTimeMillis() / 1000)
                 .setDeviceId(deviceId)
-                .setNodeId(NodeId);
+                .setNodeId(NodeId)
+                .setFlowId(flowId)
+                .setSessionId(sessionId);
 
         mDatabase.child(DB_CHILD_NAME).push().setValue(Event);
 
     }
 
     public void logClickEvent(String deviceId, String NodeId, String buttonId,
-                              String buttonLabel, String varName, String varValue, String buttonType,String appVersion) {
+                              String buttonLabel, String varName, String varValue, String buttonType, String appVersion
+            , String flowId, String sessionId) {
 
         DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
         df.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -81,6 +86,8 @@ public class ChatLogger {
                     .setEventDateTime(System.currentTimeMillis() / 1000)
                     .setDeviceId(deviceId)
                     .setNodeId(NodeId)
+                    .setFlowId(flowId)
+                    .setSessionId(sessionId)
                     .setAppVersion(appVersion)
                     .setEventData(EventData);
         } else {
@@ -93,6 +100,8 @@ public class ChatLogger {
                     .setEventDateTime(System.currentTimeMillis() / 1000)
                     .setDeviceId(deviceId)
                     .setNodeId(NodeId)
+                    .setFlowId(flowId)
+                    .setSessionId(sessionId)
                     .setAppVersion(appVersion)
                     .setEventData(EventData)
                     .setUserData(UserData);
@@ -103,7 +112,7 @@ public class ChatLogger {
     }
 
     public void logPostEvent(String deviceId, String NodeId, String buttonId, String buttonLabel,
-                             int status, String buttonType, HashMap<String, String> UserData,String appVersion) {
+                             int status, String buttonType, HashMap<String, String> UserData, String appVersion, String flowId, String sessionId) {
         if (status == EventStatus.COMPLETED.getValue()) {
             lastEventStatus = true;
         } else {
@@ -127,6 +136,8 @@ public class ChatLogger {
                     .setEventDateTime(System.currentTimeMillis() / 1000)
                     .setDeviceId(deviceId)
                     .setNodeId(NodeId)
+                    .setFlowId(flowId)
+                    .setSessionId(sessionId)
                     .setAppVersion(appVersion)
                     .setEventData(EventData)
                     .setUserData(UserData);
@@ -139,6 +150,8 @@ public class ChatLogger {
                     .setEventDateTime(System.currentTimeMillis() / 1000)
                     .setDeviceId(deviceId)
                     .setNodeId(NodeId)
+                    .setFlowId(flowId)
+                    .setSessionId(sessionId)
                     .setAppVersion(appVersion)
                     .setEventData(EventData);
         }

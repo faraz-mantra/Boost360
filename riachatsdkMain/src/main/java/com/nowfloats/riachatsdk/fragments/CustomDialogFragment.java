@@ -214,6 +214,7 @@ public class CustomDialogFragment extends DialogFragment {
                 llPos.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if(mResultListener == null ) return;
                         mResultListener.navigateToHome();
                     }
                 });
@@ -221,6 +222,7 @@ public class CustomDialogFragment extends DialogFragment {
                 llNeg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if(mResultListener == null ) return;
                         mResultListener.finishActivity();
 
                     }
@@ -245,6 +247,7 @@ public class CustomDialogFragment extends DialogFragment {
                 llPos.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if(mResultListener == null ) return;
                         mResultListener.dismissPopup();
                     }
                 });
@@ -252,6 +255,7 @@ public class CustomDialogFragment extends DialogFragment {
                 llNeg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if(mResultListener == null ) return;
                         mResultListener.navigateToHome();
 
                     }
@@ -280,6 +284,7 @@ public class CustomDialogFragment extends DialogFragment {
                 llPos.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if(mResultListener == null ) return;
                         mResultListener.dismissPopup();
                     }
                 });
@@ -287,6 +292,7 @@ public class CustomDialogFragment extends DialogFragment {
                 llNeg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if(mResultListener == null ) return;
                         mResultListener.dismissPopup();
 
                     }
@@ -311,6 +317,7 @@ public class CustomDialogFragment extends DialogFragment {
                 llPos.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if(mResultListener == null ) return;
                         mResultListener.dismissPopup();
                     }
                 });
@@ -318,6 +325,7 @@ public class CustomDialogFragment extends DialogFragment {
                 llNeg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if(mResultListener == null ) return;
                         mResultListener.skipNode();
 
                     }
@@ -328,7 +336,9 @@ public class CustomDialogFragment extends DialogFragment {
         }
 
         try {
-            getDialog().getWindow().setBackgroundDrawableResource(R.drawable.place_pick_dialog_bg);
+            if(getDialog().getWindow() != null) {
+                getDialog().getWindow().setBackgroundDrawableResource(R.drawable.place_pick_dialog_bg);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -117,7 +117,7 @@ public class Site_Meter_Fragment extends Fragment {
 
     private void showLoader(final String message) {
 
-        if(!isAdded()) return;
+        if (!isAdded()) return;
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -161,7 +161,7 @@ public class Site_Meter_Fragment extends Fragment {
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if(getActivity()==null || !isAdded()) return;
+        if (getActivity() == null || !isAdded()) return;
         progressBar = (ProgressBar) view.findViewById(R.id.ProgressBar);
         meterReading = (TextView) view.findViewById(R.id.site_meter_reading);
         recyclerView = (RecyclerView) view.findViewById(R.id.sitemeter_recycler_view);
@@ -228,7 +228,7 @@ public class Site_Meter_Fragment extends Fragment {
     private ArrayList<SiteMeterModel> loadData() {
 
         //Set percentage according to the partners
-        if(!isAdded()) return siteData;
+        if (!isAdded()) return siteData;
         //0
         siteData.clear();
         if (!(getResources().getString(R.string.buydomain_percentage).equals("0")))
@@ -276,7 +276,7 @@ public class Site_Meter_Fragment extends Fragment {
 
     public void siteMeterCalculation() {
         siteMeterTotalWeight = 0;
-        if(siteData == null || !isAdded()) return;
+        if (siteData == null || !isAdded()) return;
         for (int i = 0; i < siteData.size(); i++) {
             if (siteData.get(i).position == domain) {
                 if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
@@ -421,7 +421,7 @@ public class Site_Meter_Fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(HomeActivity.headerText != null) {
+        if (HomeActivity.headerText != null) {
             HomeActivity.headerText.setText("Site Health");
         }
         try {
@@ -487,7 +487,7 @@ public class Site_Meter_Fragment extends Fragment {
                 break;
             case domain:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_GET_YOUR_OWN_IDENTITY, null);
-                if(!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+                if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
                     MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
                             .title("Get A Domain")
                             .customView(R.layout.dialog_link_layout, false)
@@ -503,8 +503,7 @@ public class Site_Meter_Fragment extends Fragment {
                     if (!activity.isFinishing()) {
                         builder.show();
                     }
-                }
-                else if (Utils.isNetworkConnected(getActivity())) {
+                } else if (Utils.isNetworkConnected(getActivity())) {
                     showLoader(getString(R.string.please_wait));
                     domainApiService.getDomainDetails(session.getFpTag(), getDomainDetailsParam());
                 } else {
@@ -695,7 +694,7 @@ public class Site_Meter_Fragment extends Fragment {
                             Methods.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
                             getString(R.string.ok), null, DialogFrom.CONTACTS_AND_EMAIL_REQUIRED);
 
-                } else if (get_fp_details_model.getCategory() == null || get_fp_details_model.getCategory().size() == 0 ) {
+                } else if (get_fp_details_model.getCategory() == null || get_fp_details_model.getCategory().size() == 0) {
                     showCustomDialog(getString(R.string.domain_detail_required),
                             Methods.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
                             getString(R.string.ok), null, DialogFrom.CATEGORY_REQUIRED);
@@ -774,10 +773,10 @@ public class Site_Meter_Fragment extends Fragment {
             */
             this.arrDomainExtensions = arrExtensions;
 
-            if(arrDomainExtensions.contains(".IN")){
+            if (arrDomainExtensions.contains(".IN")) {
                 arrDomainExtensions.remove(".IN");
                 //String firstIndexValue = arrDomainExtensions.get(0);
-                arrDomainExtensions.add(0,".IN");
+                arrDomainExtensions.add(0, ".IN");
             }
 
 
@@ -826,7 +825,7 @@ public class Site_Meter_Fragment extends Fragment {
                     android.R.layout.simple_spinner_item, arrDomainExtensions);
             spDomainTypes.setAdapter(arrayAdapter);
             spDomainTypes.setSelection(0);
-            if(get_fp_details_model == null) {
+            if (get_fp_details_model == null) {
                 get_fp_details_model = new Get_FP_Details_Model();
             }
 
@@ -910,7 +909,12 @@ public class Site_Meter_Fragment extends Fragment {
            /* showCustomDialog(getString(R.string.domain_not_available),
                     null,
                     getString(R.string.ok), null, DialogFrom.DEFAULT);*/
-            Methods.showSnackBar(domainBookDialog.getView(), getString(R.string.domain_not_available), Color.RED);
+            if (domainBookDialog != null)
+                Methods.showSnackBar(domainBookDialog.getView(), getString(R.string.domain_not_available), Color.RED);
+            else {
+                Methods.showSnackBarNegative(getActivity(), getString(R.string.link_domain_not_available));
+            }
+
         }
     }
 
@@ -948,7 +952,7 @@ public class Site_Meter_Fragment extends Fragment {
                                 getString(R.string.please_enter_message));
                     } else {
 
-                        MixPanelController.track(MixPanelController.LINK_DOMAIN,null);
+                        MixPanelController.track(MixPanelController.LINK_DOMAIN, null);
                         materialDialog.dismiss();
                         HashMap<String, String> hashMap = new HashMap<String, String>();
                         hashMap.put("Subject", subject);
@@ -1024,7 +1028,7 @@ public class Site_Meter_Fragment extends Fragment {
                         switch (dialogFrom) {
 
                             case DOMAIN_AVAILABLE:
-                                MixPanelController.track(MixPanelController.DOMAIN_SEARCH,null);
+                                MixPanelController.track(MixPanelController.DOMAIN_SEARCH, null);
                                 break;
                             case DEFAULT:
 
@@ -1041,7 +1045,7 @@ public class Site_Meter_Fragment extends Fragment {
     }
 
     private void prepareAndPublishDomain() {
-        MixPanelController.track(MixPanelController.BOOK_DOMAIN,null);
+        MixPanelController.track(MixPanelController.BOOK_DOMAIN, null);
         HashMap<String, String> hashMap = new HashMap<String, String>();
         hashMap.put("clientId", Constants.clientId);
         hashMap.put("domainName", get_fp_details_model.getDomainName());
@@ -1083,7 +1087,7 @@ public class Site_Meter_Fragment extends Fragment {
 
         } else {
 
-            if(TextUtils.isEmpty(response)){
+            if (TextUtils.isEmpty(response)) {
                 response = getString(R.string.domain_booking_failed);
             }
             showCustomDialog(getString(R.string.book_a_new_domain),

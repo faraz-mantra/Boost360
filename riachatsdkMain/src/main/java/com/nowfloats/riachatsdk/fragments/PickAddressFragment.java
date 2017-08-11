@@ -19,6 +19,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -34,8 +35,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,8 +59,10 @@ import com.nowfloats.riachatsdk.R;
 import com.nowfloats.riachatsdk.utils.NFGeoCoder;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -67,7 +72,7 @@ import java.util.Map;
 public class PickAddressFragment extends DialogFragment implements LocationListener,
         GoogleApiClient.OnConnectionFailedListener {
 
-    private TextInputEditText etStreetAddr, etCountry, etPin, etLocality, etHousePlotNum, etLandmark;
+    private TextInputEditText etStreetAddr, etPin, etLocality, etHousePlotNum, etLandmark, etCountry;
 
     private Button btnSave;
 
@@ -346,7 +351,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                         .build();
             }
 
-            etCountry.setFocusable(false);
+//            etCountry.setFocusable(false);
 
             etCity.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -365,11 +370,11 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
                     } else {
                         try {
-                            String country_code = null;
-                            if (Country_CodeMap != null) {
-                                country_code = Country_CodeMap.get(etCity.getText().toString());
-                            }
-                            makeAutoCompleteFilter(country_code);
+//                            String country_code = null;
+//                            if (Country_CodeMap != null) {
+//                                country_code = Country_CodeMap.get(etCity.getText().toString());
+//                            }
+//                            makeAutoCompleteFilter(country_code);
 
                             final PendingResult<AutocompletePredictionBuffer> result =
                                     Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, etCity.getText().toString().trim(),
@@ -390,7 +395,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                                         @Override
                                         public void run() {
 
-                                            if (getActivity()!=null &&
+                                            if (getActivity() != null &&
                                                     !getActivity().isFinishing()) {
                                                 adapter = new ArrayAdapter<>(getActivity(),
                                                         android.R.layout.simple_dropdown_item_1line, citys);
@@ -430,25 +435,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                 }
             });
 
-//            etPin.addTextChangedListener(new TextWatcher() {
-//                @Override
-//                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//                }
-//
-//                @Override
-//                public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//                }
-//
-//                @Override
-//                public void afterTextChanged(Editable s) {
-//
-//                    if (etPin.getText().toString().trim().length()>6) {
-//                        Toast.makeText(getActivity(), getString(R.string.pin_code_length_error), Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//            });
+            loadCountryCodeandCountryNameMap();
         } else {
             btnSave.setVisibility(View.GONE);
         }
@@ -457,6 +444,146 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         addTextChangeListners();
 
         return v;
+    }
+
+    private void initializeCountryControls() {
+
+//        etCountry.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                updateErrorList();
+//            }
+//
+//            @Override
+//            public void afterTextChanged(final Editable editable) {
+//                if (etCountry.getTag() != null && !(boolean) etCountry.getTag()) {
+//
+//                } else {
+//                    try {
+//                        new Thread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                final List<String> countrys = new ArrayList<>();
+//                                if (signUpCountryList != null) {
+//
+//                                    if (!TextUtils.isEmpty(editable)) {
+//
+//                                        for (int i = 0; i < signUpCountryList.size(); i++) {
+//                                            String country = signUpCountryList.get(i);
+//                                            if (country.contains(editable.toString()))
+//                                                countrys.add(signUpCountryList.get(i));
+//                                        }
+//                                    }
+//                                }
+//
+//                                getActivity().runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//
+//                                        if (getActivity() != null &&
+//                                                !getActivity().isFinishing()) {
+//                                            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+//                                                    android.R.layout.simple_dropdown_item_1line, countrys);
+//                                            etCountry.setAdapter(adapter);
+//                                            adapter.notifyDataSetChanged();
+//                                        }
+//                                    }
+//                                });
+//                            }
+//                        }).start();
+//                    } catch (Exception e) {
+//
+//                    }
+//                }
+//
+//            }
+//        });
+//
+//        etCountry.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String country = ((TextView) view).getText().toString();
+//                etCountry.setTag(false);
+//                etCountry.setText(country);
+//                etCountry.setTag(true);
+//
+//            }
+//        });
+
+        etCountry.setFocusable(false);
+        etCountry.setFocusableInTouchMode(false);
+        etCountry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCountryDialog(signUpCountryList);
+            }
+        });
+
+    }
+
+    private void showCountryDialog(ArrayList<String> countries) {
+
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                R.layout.search_list_item_layout, countries);
+
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(getActivity());
+        builderSingle.setTitle("Select a Country");
+
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.search_list_layout, null);
+        builderSingle.setView(view);
+
+        EditText edtSearch = (EditText) view.findViewById(R.id.edtSearch);
+        ListView lvItems = (ListView) view.findViewById(R.id.lvItems);
+
+        lvItems.setAdapter(adapter);
+
+
+        final Dialog dialog = builderSingle.show();
+
+        lvItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String strVal = adapter.getItem(position);
+                dialog.dismiss();
+                etCountry.setText(strVal);
+                etPin.requestFocus();
+            }
+        });
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                adapter.getFilter().filter(s.toString().toLowerCase());
+            }
+        });
+
+        dialog.setCancelable(false);
+    }
+
+    private void loadCountryCodeandCountryNameMap() {
+        String[] locales = Locale.getISOCountries();
+        for (String countryCode : locales) {
+            Locale obj = new Locale("", countryCode);
+            signUpCountryList.add(obj.getDisplayCountry());
+        }
+        Collections.sort(signUpCountryList);
+        initializeCountryControls();
+
     }
 
     private void populateData() {
@@ -535,7 +662,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         }
         if (etCountry.getText().toString().trim().equals("")) {
             isAllFieldsValid = false;
-            etCountry.setSupportBackgroundTintList(errorColorStateList);
+            etCountry.getBackground().mutate().setColorFilter(getResources().getColor(R.color.red), PorterDuff.Mode.SRC_ATOP);
         }
         if (etPin.getText().toString().trim().equals("")) {
             isAllFieldsValid = false;
@@ -617,7 +744,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         etLocality.setSupportBackgroundTintList(initialColorStateList);
         etLandmark.setSupportBackgroundTintList(initialColorStateList);
         etPin.setSupportBackgroundTintList(initialColorStateList);
-        etCountry.setSupportBackgroundTintList(initialColorStateList);
+        etCity.getBackground().mutate().setColorFilter(getResources().getColor(R.color.lt_gray), PorterDuff.Mode.SRC_ATOP);
         etHousePlotNum.setSupportBackgroundTintList(initialColorStateList);
         etCity.getBackground().mutate().setColorFilter(getResources().getColor(R.color.lt_gray), PorterDuff.Mode.SRC_ATOP);
 

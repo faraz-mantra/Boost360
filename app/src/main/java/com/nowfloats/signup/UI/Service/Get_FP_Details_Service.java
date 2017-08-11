@@ -3,6 +3,7 @@ package com.nowfloats.signup.UI.Service;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.nowfloats.Analytics_Screen.API.NfxFacebbokAnalytics;
@@ -11,13 +12,13 @@ import com.nowfloats.BusinessProfile.UI.API.Facebook_Auto_Publish_API;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.GetAutoPull;
 import com.nowfloats.PreSignUp.SplashScreen_Activity;
+import com.nowfloats.Twitter.TwitterConnection;
 import com.nowfloats.signup.UI.API.Retro_Signup_Interface;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.signup.UI.Model.ProcessFPDetails;
 import com.nowfloats.signup.UI.UI.WebSiteAddressActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.nowfloats.Twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
@@ -31,13 +32,17 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.nfx.leadmessages.Constants.CALL_LOG_TIME_INTERVAL;
+import static com.nfx.leadmessages.Constants.SHARED_PREF;
+import static com.nfx.leadmessages.Constants.SMS_REGEX;
+
 /**
  * Created by NowFloatsDev on 25/05/2015.
  */
 public class Get_FP_Details_Service {
 
     public Get_FP_Details_Service(final Activity activity, String fpID, String clientID, final Bus bus) {
-        newNfxtokenDetails(activity, fpID, bus);
+        newNfxTokenDetails(activity, fpID, bus);
         autoPull(activity, fpID);
         HashMap<String, String> map = new HashMap<>();
         map.put("clientId", clientID);
@@ -52,6 +57,9 @@ public class Get_FP_Details_Service {
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            if(activity == null || activity.isFinishing()){
+                                return;
+                            }
                             Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
                             if (WebSiteAddressActivity.pd != null) {
                                 WebSiteAddressActivity.pd.dismiss();
@@ -59,9 +67,10 @@ public class Get_FP_Details_Service {
                             if (SplashScreen_Activity.pd != null) {
                                 SplashScreen_Activity.pd.dismiss();
                             }
-                            bus.post(response);
+
                         }
                     });
+                    bus.post(response);
                 }
             }
 
@@ -82,9 +91,6 @@ public class Get_FP_Details_Service {
                                 e.printStackTrace();
                             }
                         }
-
-                        bus.post(new Get_FP_Details_Event(new Get_FP_Details_Model()));
-
                     }
                 });
 
@@ -126,12 +132,19 @@ public class Get_FP_Details_Service {
         });
     }
 
-    private void newNfxtokenDetails(final Activity activity, String fpID, final Bus bus) {
+    private void newNfxTokenDetails(final Activity activity, String fpID, final Bus bus) {
         NfxFacebbokAnalytics.nfxFacebookApis facebookApis = NfxFacebbokAnalytics.getAdapter();
         facebookApis.nfxGetSocialTokens(fpID, new Callback<NfxGetTokensResponse>() {
             @Override
             public void success(NfxGetTokensResponse nfxGetTokensResponse, Response response) {
-                if (nfxGetTokensResponse == null) return;
+                if (nfxGetTokensResponse == null || activity == null || activity.isFinishing()) return;
+                SharedPreferences pref = activity.getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
+                List<String> regexList = nfxGetTokensResponse.getSmsRegex();
+                if(regexList != null && regexList.size()>0){
+                    String s = TextUtils.join(",", regexList);
+                    pref.edit().putString(SMS_REGEX, s).apply();
+                    pref.edit().putString(CALL_LOG_TIME_INTERVAL, nfxGetTokensResponse.getCallLogTimeInterval()).apply();
+                }
                 String message = nfxGetTokensResponse.getMessage();
                 if (message != null && message.equalsIgnoreCase("success")) {
                     Storedata(activity, nfxGetTokensResponse.getNFXAccessTokens());

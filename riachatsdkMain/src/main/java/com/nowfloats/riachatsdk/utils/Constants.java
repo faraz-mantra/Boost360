@@ -7,7 +7,7 @@ package com.nowfloats.riachatsdk.utils;
 public class Constants {
     public static final String PARCEL_NAME = "config_parcel";
     public static final String SERVER_URL = "https://onboarding-boost.withfloats.com";
-//    public static final String SERVER_URL = "http://ria.nowfloatsdev.com";
+    //    public static final String SERVER_URL = "http://ria.nowfloatsdev.com";
     public static final String FILE_PATH = "file_path";
     public static final String RECEIVER = "receiver";
     public static final String KEY_FILE_URL = "file_url";
@@ -26,6 +26,7 @@ public class Constants {
         String TYPE_CARD = "Card";
         String TYPE_ADDRESS_CARD = "AddressCard";
         String TYPE_UNCONFIRMED_CARD = "UnConfirmedCard";
+        String TYPE_CAROUSEL = "Carousel";
         String TYPE_UNCONFIRMED_ADDR_CARD = "UnConfirmedAddressCard";
         String TYPE_PRINT_OTP = "PrintOTP";
         String TYPE_SUBMIT_FORM = "SubmitForm";
@@ -103,6 +104,7 @@ public class Constants {
         String OTP = "otp";
         String ADDRESS_ENTRY = "address_entry";
         String SUBMIT_FORM = "submit_form";
+        String FB_PAGE = "fb_page";
 
     }
 }

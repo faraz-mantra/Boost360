@@ -19,6 +19,7 @@ public class MixPanelController {
 	public static final String BUBBLE_IN_APP_DIALOG = "BubbleInAppDialog";
 	public static final String BUBBLE_IN_APP_DIALOG_CLICKED = "BubbleInAppDialogClicked";
 	public static final String BUBBLE_DIALOG = "BubbleDialogOnWhatsApp";
+	public static final String BUBBLE_OVERLAY_PERM = "BubbleOverlayPerm";
 	public static final String BUBBLE_DIALOG_SHARE = "BubbleWhatsAppProductShareClicked";
 	public static final String BUBBLE_CLOSED = "BubbleClosedByUser";
 	public static final String WHATSAPP_TO_BOOST = "whatsapp_to_boost";
@@ -46,6 +47,7 @@ public class MixPanelController {
     public static final String SAM_BUBBLE_CLICKED = "SAMBubbleClicked";
     public static final String SAM_BUBBLE_CLICKED_DATA = "SAMBubbleClickedData";
     public static final String SAM_BUBBLE_CLICKED_NO_DATA = "SAMBubbleClickedNoData";
+    public static final String SAM_BUBBLE_CLICKED_SERVER_ERROR = "SAMBubbleClickedServerError";
     public static final String SAM_BUBBLE_SELECTED_MESSAGES = "SAMBubbleSelectedMessages";
     public static final String SAM_BUBBLE_ACTION_CALL = "SAMBubbleActionCall";
     public static final String SAM_BUBBLE_ACTION_SHARE = "SAMBubbleActionShare";

@@ -2,6 +2,7 @@ package com.nowfloats.swipecard;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -87,6 +88,8 @@ public class CallToActionFragment extends Fragment {
 
     private int noOfTimesResponded = 0;
 
+    private String appVersion = "";
+
     public CallToActionFragment() {
 
     }
@@ -110,6 +113,12 @@ public class CallToActionFragment extends Fragment {
     }
 
     private void initializeControls(View view) {
+
+        try {
+            appVersion = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
 
         rvActionItems = (RecyclerView) view.findViewById(R.id.rvActionItems);
         pbView = (ProgressBar) view.findViewById(R.id.pbView);
@@ -220,7 +229,7 @@ public class CallToActionFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                FirebaseLogger.getInstance().logSAMEvent(suggestionsDO.getMessageId(), 4, suggestionsDO.getFpId());
+                FirebaseLogger.getInstance().logSAMEvent(suggestionsDO.getMessageId(), FirebaseLogger.SAMSTATUS.ACTION_CALL, suggestionsDO.getFpId(), appVersion);
                 MixPanelController.track(MixPanelController.SAM_BUBBLE_ACTION_CALL, null);
 
                 ((SuggestionsActivity) getActivity()).pref.edit()
@@ -242,7 +251,7 @@ public class CallToActionFragment extends Fragment {
             public void onClick(View v) {
 
 
-                FirebaseLogger.getInstance().logSAMEvent(suggestionsDO.getMessageId(), 4, suggestionsDO.getFpId());
+                FirebaseLogger.getInstance().logSAMEvent(suggestionsDO.getMessageId(), FirebaseLogger.SAMSTATUS.ACTION_SHARE, suggestionsDO.getFpId(), appVersion);
                 MixPanelController.track(MixPanelController.SAM_BUBBLE_ACTION_SHARE, null);
 
                 ((SuggestionsActivity) getActivity()).pref.edit().
@@ -266,7 +275,7 @@ public class CallToActionFragment extends Fragment {
 
     public void performAction(SuggestionsDO suggestionsDO) {
 
-        FirebaseLogger.getInstance().logSAMEvent(suggestionsDO.getMessageId(), 3, suggestionsDO.getFpId());
+        FirebaseLogger.getInstance().logSAMEvent(suggestionsDO.getMessageId(), FirebaseLogger.SAMSTATUS.SELECTED_MESSAGES, suggestionsDO.getFpId(), appVersion);
         MixPanelController.track(MixPanelController.SAM_BUBBLE_SELECTED_MESSAGES, null);
 
         this.suggestionsDO = suggestionsDO;
@@ -279,7 +288,7 @@ public class CallToActionFragment extends Fragment {
         rvActionItems.setVisibility(View.GONE);
 
 
-        if (suggestionsDO.getType().equalsIgnoreCase(ACTION_TYPE_NUMBER)) {
+        if (suggestionsDO.getType() != null && suggestionsDO.getType().equalsIgnoreCase(ACTION_TYPE_NUMBER)) {
             btnCall.setVisibility(View.VISIBLE);
             btnShare.setText("Share");
         } else {
@@ -343,7 +352,7 @@ public class CallToActionFragment extends Fragment {
                     if (sugUpdates.isSelected()) {
 
                         try {
-                            selectedProducts = selectedProducts + sugUpdates.getName() + "\n" + "\n" + "View Details : " + sugUpdates.getUpdateUrl() + "\n"+ "\n";
+                            selectedProducts = selectedProducts + sugUpdates.getName() + "\n" + "\n" + "View Details : " + sugUpdates.getUpdateUrl() + "\n" + "\n";
                             imageUrl = sugUpdates.getImage();
 
                         } catch (Exception e) {
@@ -359,7 +368,7 @@ public class CallToActionFragment extends Fragment {
 
                         try {
                             selectedProducts = selectedProducts + sugProducts.getProductName() + "\n" + "\n" + "View Details : " +
-                                    sugProducts.getProductUrl() + "\n"+ "\n";
+                                    sugProducts.getProductUrl() + "\n" + "\n";
                             imageUrl = sugProducts.getImage();
 
                         } catch (Exception e) {

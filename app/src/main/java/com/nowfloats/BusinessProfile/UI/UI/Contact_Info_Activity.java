@@ -74,19 +74,19 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
     MaterialDialog progressDialog;
     private String[] mProtoCols = {"http://", "https://"};
 
-    public static EditText primaryNumber, alternateNumber_1,alternateNumber_2, alternateNumber_3, emailAddress,websiteAddress,facebookPage ;
-    Boolean flag4emailaddress = false, flag4websiteaddress = false, flag4fbagename = false,flag4alternate1 = false, flag4alternate3=false, flag4primaryno = false,flag4alternate2 = false,flag4digitlimit0=false,flag4digitlimit1=false,flag4digitlimit=false,flag4digitlimit2=false;
-    public static String msgtxt4_email = null, msgtxt4website = null,msgtxt4fbpage = null,msgtxt4primaryno = null, msgtxt4alternateno1 = null,msgtxtalternate2 = null, msgtxtalternate3=null;
-    String[] profilesattr =new String[20];
+    public static EditText primaryNumber, alternateNumber_1, alternateNumber_2, alternateNumber_3, emailAddress, websiteAddress, facebookPage;
+    Boolean flag4emailaddress = false, flag4websiteaddress = false, flag4fbagename = false, flag4alternate1 = false, flag4alternate3 = false, flag4primaryno = false, flag4alternate2 = false, flag4digitlimit0 = false, flag4digitlimit1 = false, flag4digitlimit = false, flag4digitlimit2 = false;
+    public static String msgtxt4_email = null, msgtxt4website = null, msgtxt4fbpage = null, msgtxt4primaryno = null, msgtxt4alternateno1 = null, msgtxtalternate2 = null, msgtxtalternate3 = null;
+    String[] profilesattr = new String[20];
     private TextView titleTextView;
-    public static String primary="",alternate1="",alternate2="", alternate3="";
+    public static String primary = "", alternate1 = "", alternate2 = "", alternate3 = "";
     private boolean allBoundaryCondtn = true;
     Spinner protocolSpinner;
     private boolean VMN_Dialog;
     private int mSelectionCounter = 0;
     EditText otpEditText;
-    private MaterialDialog otpDialog,progressbar;
-    private TextView primaryTextView,alternateTextView1,alternateTextView2,alternateTextView3;
+    private MaterialDialog otpDialog, progressbar;
+    private TextView primaryTextView, alternateTextView1, alternateTextView2, alternateTextView3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +102,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 .progress(true, 0)
                 .build();
         bus = BusProvider.getInstance().getBus();
-        session = new UserSessionManager(getApplicationContext(),Contact_Info_Activity.this);
+        session = new UserSessionManager(getApplicationContext(), Contact_Info_Activity.this);
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
         titleTextView.setText(getResources().getString(R.string.contact__info));
         progressDialog = new MaterialDialog.Builder(this)
@@ -115,13 +115,13 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
         saveTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MixPanelController.track(EventKeysWL.SAVE_CONTACT_INFO,null);
+                MixPanelController.track(EventKeysWL.SAVE_CONTACT_INFO, null);
                 uploadContactInfo();
             }
         });
 
         setSupportActionBar(toolbar);
-        if(getSupportActionBar()!=null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
@@ -157,13 +157,13 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 try {
-                    mSelectionCounter+=1;
+                    mSelectionCounter += 1;
                     msgtxt4website = websiteAddress.getText().toString().trim();
 
                     int len = msgtxt4website.length();
-                    if (len > 0 && mSelectionCounter>1) {
+                    if (len > 0 && mSelectionCounter > 1) {
 
-                        flag4websiteaddress= true;
+                        flag4websiteaddress = true;
                         saveTextView.setVisibility(View.VISIBLE);
 
                     } else {
@@ -239,7 +239,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                     int len = msgtxt4website.length();
                     if (len > 0) {
 
-                        flag4websiteaddress= true;
+                        flag4websiteaddress = true;
                         saveTextView.setVisibility(View.VISIBLE);
 
                     } else {
@@ -264,7 +264,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                     websiteAddress.setSelection(result.length());
                     // alert the user
                 }
-                if(s.length()==0){
+                if (s.length() == 0) {
                     saveTextView.setVisibility(View.VISIBLE);
                 }
 
@@ -310,12 +310,12 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
         primaryNumber.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_UP) {
-                    if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")||Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
                         showOtpDialog();
-                    }else{
+                    } else {
                         MaterialDialog dialog = dialog();
-                        if(!isFinishing()){
+                        if (!isFinishing()) {
                             dialog.show();
                         }
                     }
@@ -380,14 +380,14 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                             .toString().trim();
                     int len = msgtxt4alternateno1.length();
                     if (len >= 0) {
-                        if(len==0){
+                        if (len == 0) {
 
                             saveTextView.setVisibility(View.GONE);
                             alternateTextView1.setText(getString(R.string.alternate_number1));
-                        }else{
+                        } else {
 
                             saveTextView.setVisibility(View.VISIBLE);
-                            alternateTextView1.setText(getString(R.string.alternate_number1)+" ("+getString(R.string.to_be_displayed_on_website)+")");
+                            alternateTextView1.setText(getString(R.string.alternate_number1) + " (" + getString(R.string.to_be_displayed_on_website) + ")");
                         }
 
                         flag4alternate1 = true;
@@ -421,16 +421,16 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                             .toString().trim();
                     int len = msgtxtalternate2.length();
                     if (len >= 0) {
-                        if(len==0){
+                        if (len == 0) {
 
                             saveTextView.setVisibility(View.GONE);
                             alternateTextView2.setText(getString(R.string.alternate_number2));
-                        }else{
+                        } else {
 
                             saveTextView.setVisibility(View.VISIBLE);
-                            alternateTextView2.setText(getString(R.string.alternate_number2)+" ("+getString(R.string.to_be_displayed_on_website)+")");
+                            alternateTextView2.setText(getString(R.string.alternate_number2) + " (" + getString(R.string.to_be_displayed_on_website) + ")");
                         }
-                         flag4alternate2 = true;
+                        flag4alternate2 = true;
 
                     }
                 } catch (Exception e) {
@@ -460,14 +460,14 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                             .toString().trim();
                     int len = msgtxtalternate3.length();
                     if (len >= 0) {
-                        if(len==0){
+                        if (len == 0) {
 
                             saveTextView.setVisibility(View.GONE);
                             alternateTextView3.setText(getString(R.string.alternate_number1));
-                        }else{
+                        } else {
 
                             saveTextView.setVisibility(View.VISIBLE);
-                            alternateTextView3.setText(getString(R.string.alternate_number1)+" ("+getString(R.string.to_be_displayed_on_website)+")");
+                            alternateTextView3.setText(getString(R.string.alternate_number1) + " (" + getString(R.string.to_be_displayed_on_website) + ")");
                         }
                         flag4alternate3 = true;
 
@@ -488,10 +488,10 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
     }
 
     private void showOtpDialog() {
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_otp,null);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_otp, null);
         final EditText number = (EditText) view.findViewById(R.id.editText);
         MaterialDialog dialog = new MaterialDialog.Builder(this)
-                .customView(view,false)
+                .customView(view, false)
                 .titleColorRes(R.color.primary_color)
                 .title("Change Primary Number")
                 .negativeText("Cancel")
@@ -504,10 +504,10 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         String numText = number.getText().toString().trim();
-                        if(numText.length()>0) {
+                        if (numText.length() > 0) {
                             otpVerifyDialog(numText);
                             dialog.dismiss();
-                        }else{
+                        } else {
                             Toast.makeText(Contact_Info_Activity.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -520,7 +520,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 }).show();
 
         final TextView positive = dialog.getActionButton(DialogAction.POSITIVE);
-        positive.setTextColor(ContextCompat.getColor(Contact_Info_Activity.this,R.color.gray_transparent));
+        positive.setTextColor(ContextCompat.getColor(Contact_Info_Activity.this, R.color.gray_transparent));
         number.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -534,71 +534,65 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(number.getText().toString().trim().length()>0){
-                    positive.setTextColor(ContextCompat.getColor(Contact_Info_Activity.this,R.color.primary));
-                }else{
-                    positive.setTextColor(ContextCompat.getColor(Contact_Info_Activity.this,R.color.gray_transparent));
+                if (number.getText().toString().trim().length() > 0) {
+                    positive.setTextColor(ContextCompat.getColor(Contact_Info_Activity.this, R.color.primary));
+                } else {
+                    positive.setTextColor(ContextCompat.getColor(Contact_Info_Activity.this, R.color.gray_transparent));
                 }
             }
         });
     }
 
 
-    public void uploadContactDetails_retrofit(Contact_Info_Activity activity, JSONObject jsonObject, Bus bus)
-    {
-        new Business_Info_Upload_Service(activity,jsonObject,bus);
+    public void uploadContactDetails_retrofit(Contact_Info_Activity activity, JSONObject jsonObject, Bus bus) {
+        new Business_Info_Upload_Service(activity, jsonObject, bus);
     }
 
     @Subscribe
-    public void post_updateBusinessDetails(ArrayList<String> response)
-    {
-        ArrayList<String> value = response ;
+    public void post_updateBusinessDetails(ArrayList<String> response) {
+        ArrayList<String> value = response;
     }
 
-    public HashMap<String,String> getUploadDetails_PartOne()
-    {
+    public HashMap<String, String> getUploadDetails_PartOne() {
         HashMap<String, String> uploadInfo = new HashMap<String, String>();
 
-        uploadInfo.put("clientId",Constants.clientId);
-        uploadInfo.put("fpTag",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
+        uploadInfo.put("clientId", Constants.clientId);
+        uploadInfo.put("fpTag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
 
         return uploadInfo;
     }
 
-    public HashMap<String,ArrayList> getUploadDetails_PartTwo()
-    {
+    public HashMap<String, ArrayList> getUploadDetails_PartTwo() {
         HashMap<String, ArrayList> uploadInfo = new HashMap<String, ArrayList>();
 
-        HashMap<String,String> details = new HashMap<String,String>();
+        HashMap<String, String> details = new HashMap<String, String>();
 
-        ArrayList<HashMap<String,String>> list = new ArrayList<>();
+        ArrayList<HashMap<String, String>> list = new ArrayList<>();
 
         if (flag4websiteaddress) {
-                details.put("URL",msgtxt4website);
+            details.put("URL", msgtxt4website);
         }
         if (flag4fbagename) {
-            details.put("FB",msgtxt4fbpage);
+            details.put("FB", msgtxt4fbpage);
         }
         if (flag4emailaddress) {
-           details.put("EMAIL",msgtxt4_email);
+            details.put("EMAIL", msgtxt4_email);
         }
-        if(flag4primaryno)
-        {
-            details.put("CONTACTS",primary+"#"+alternate1+"#"+alternate2);
+        if (flag4primaryno) {
+            details.put("CONTACTS", primary + "#" + alternate1 + "#" + alternate2);
         }
 
         list.add(details);
 
-        uploadInfo.put("updates",list);
+        uploadInfo.put("updates", list);
 
         return uploadInfo;
     }
 
-    public JSONObject dataToUpload()
-    {
+    public JSONObject dataToUpload() {
         JSONObject offerObj = new JSONObject();
         JSONArray ja = new JSONArray();
-        JSONObject  obj1 = new JSONObject();
+        JSONObject obj1 = new JSONObject();
         JSONObject obj2 = new JSONObject();
         JSONObject obj3 = new JSONObject();
         JSONObject obj4 = new JSONObject();
@@ -608,7 +602,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
             InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(websiteAddress.getWindowToken(), 0);
 
-            if(isValidWebsite(msgtxt4website)){
+            if (isValidWebsite(msgtxt4website)) {
                 try {
                     obj1.put("key", "URL");
                     obj1.put("value", msgtxt4website + protocolSpinner.getSelectedItem());
@@ -616,12 +610,10 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                     System.out.println();
                 }
                 ja.put(obj1);
-               }
-            else
-            {
-                Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_valid_website));
+            } else {
+                Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_valid_website));
                 // Util.("Enter Valid Website", this);
-                allBoundaryCondtn=false;
+                allBoundaryCondtn = false;
             }
         }
 
@@ -634,28 +626,27 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 obj2.put("value", msgtxt4fbpage);
 
                 String webWidgets = null;
-                for(int i = 0 ; i < Constants.StoreWidgets.size();i++)
-                {
+                for (int i = 0; i < Constants.StoreWidgets.size(); i++) {
                     webWidgets = Constants.StoreWidgets.get(i).toString();
                     webWidgets += "#";
                 }
                 webWidgets += "#FBLIKEBOX";
 
-                obj5.put("key","WEBWIDGETS");
-                obj5.put("value",webWidgets);
+                obj5.put("key", "WEBWIDGETS");
+                obj5.put("value", webWidgets);
             } catch (Exception ex) {
                 System.out.println();
             }
             ja.put(obj2);
             ja.put(obj5);
-         }
+        }
 
         if (flag4emailaddress) {
             InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(emailAddress.getWindowToken(), 0);
 
-            boolean emailValid=isValidEmail(msgtxt4_email);
-            if(emailValid){
+            boolean emailValid = isValidEmail(msgtxt4_email);
+            if (emailValid) {
                 try {
                     obj3.put("key", "EMAIL");
                     obj3.put("value", msgtxt4_email);
@@ -665,41 +656,38 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 ja.put(obj3);
 
 
-            }
-            else{
-                Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_valid_email));
-                allBoundaryCondtn=false;
+            } else {
+                Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_valid_email));
+                allBoundaryCondtn = false;
             }
         }
 
-        if(flag4primaryno || flag4alternate2 || flag4alternate1 || flag4alternate3){
+        if (flag4primaryno || flag4alternate2 || flag4alternate1 || flag4alternate3) {
             try {
 
                 if (flag4primaryno) {
                     primary = msgtxt4primaryno;
-                    if(primary.length()==0 )
-                    {
-                        Methods.showSnackBarNegative(this,getResources().getString(R.string.primary_num_can_not_empty));
+                    if (primary.length() == 0) {
+                        Methods.showSnackBarNegative(this, getResources().getString(R.string.primary_num_can_not_empty));
 
-                        flag4primaryno=false;
-                        flag4alternate1=false;
-                        flag4alternate2=false;
+                        flag4primaryno = false;
+                        flag4alternate1 = false;
+                        flag4alternate2 = false;
                         flag4alternate3 = false;
-                        allBoundaryCondtn=false;
+                        allBoundaryCondtn = false;
 //                        floatSubmit.setVisibility(View.GONE);
 //                        findViewById(
 //                                R.id.business_contactInfo_save_text)
 //                                .setVisibility(View.GONE);
                         saveTextView.setVisibility(View.GONE);
                     }
-                    if(msgtxt4primaryno.length()>0 && msgtxt4primaryno.length()<=6)
-                    {
-                        Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_password_6to12_char));
-                        flag4primaryno=false;
-                        flag4alternate1=false;
-                        flag4alternate2=false;
+                    if (msgtxt4primaryno.length() > 0 && msgtxt4primaryno.length() <= 6) {
+                        Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_password_6to12_char));
+                        flag4primaryno = false;
+                        flag4alternate1 = false;
+                        flag4alternate2 = false;
                         flag4alternate3 = false;
-                        allBoundaryCondtn=false;
+                        allBoundaryCondtn = false;
 //                        floatSubmit.setVisibility(View.GONE);
 //                        findViewById(
 //                                R.id.business_contactInfo_save_text)
@@ -720,15 +708,14 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 if (flag4alternate1) {
                     alternate1 = (msgtxt4alternateno1.length() == 0) ? ""
                             : msgtxt4alternateno1;
-                    if(msgtxt4alternateno1.length()>0 && msgtxt4alternateno1.length()<6)
-                    {
-                        Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_password_6to12_char));
+                    if (msgtxt4alternateno1.length() > 0 && msgtxt4alternateno1.length() < 6) {
+                        Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_password_6to12_char));
 
-                        flag4primaryno=false;
-                        flag4alternate1=false;
-                        flag4alternate2=false;
+                        flag4primaryno = false;
+                        flag4alternate1 = false;
+                        flag4alternate2 = false;
                         flag4alternate3 = false;
-                        allBoundaryCondtn=false;
+                        allBoundaryCondtn = false;
 //                        floatSubmit.setVisibility(View.GONE);
 //                        findViewById(
 //                                R.id.business_contactInfo_save_text)
@@ -750,14 +737,13 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 if (flag4alternate2) {
                     alternate2 = (msgtxtalternate2.length() == 0) ? ""
                             : msgtxtalternate2;
-                    if(msgtxtalternate2.length()>0 && msgtxtalternate2.length()<6)
-                    {
-                        Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_password_6to12_char));
-                        flag4primaryno=false;
-                        flag4alternate1=false;
-                        flag4alternate2=false;
+                    if (msgtxtalternate2.length() > 0 && msgtxtalternate2.length() < 6) {
+                        Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_password_6to12_char));
+                        flag4primaryno = false;
+                        flag4alternate1 = false;
+                        flag4alternate2 = false;
                         flag4alternate3 = false;
-                        allBoundaryCondtn=false;
+                        allBoundaryCondtn = false;
 //                        floatSubmit.setVisibility(View.GONE);
 //                        findViewById(
 //                                R.id.business_contactInfo_save_text)
@@ -778,13 +764,12 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 if (flag4alternate3) {
                     alternate3 = (msgtxtalternate2.length() == 0) ? ""
                             : msgtxtalternate3;
-                    if(msgtxtalternate3.length()>0 && msgtxtalternate3.length()<6)
-                    {
-                        Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_password_6to12_char));
-                        flag4primaryno=false;
-                        flag4alternate1=false;
-                        flag4alternate2=false;
-                        allBoundaryCondtn=false;
+                    if (msgtxtalternate3.length() > 0 && msgtxtalternate3.length() < 6) {
+                        Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_password_6to12_char));
+                        flag4primaryno = false;
+                        flag4alternate1 = false;
+                        flag4alternate2 = false;
+                        allBoundaryCondtn = false;
                         flag4alternate3 = false;
 //                        floatSubmit.setVisibility(View.GONE);
 //                        findViewById(
@@ -804,7 +789,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 }
 
                 obj4.put("key", "CONTACTS");
-                obj4.put("value", alternate1+"#"+alternate2+"#"+alternate3);
+                obj4.put("value", alternate1 + "#" + alternate2 + "#" + alternate3);
 
             } catch (Exception ex) {
                 System.out.println();
@@ -827,16 +812,16 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
     }
 
 
-    public void uploadContactInfo_version2(){
+    public void uploadContactInfo_version2() {
 
     }
 
     public void uploadContactInfo() {
-        Constants.StoreFbPage = msgtxt4fbpage ;
-        int i=0;
+        Constants.StoreFbPage = msgtxt4fbpage;
+        int i = 0;
         JSONObject offerObj = new JSONObject();
         JSONArray ja = new JSONArray();
-        JSONObject  obj1 = new JSONObject();
+        JSONObject obj1 = new JSONObject();
         JSONObject obj2 = new JSONObject();
         JSONObject obj3 = new JSONObject();
         JSONObject obj4 = new JSONObject();
@@ -846,24 +831,23 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
             InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(websiteAddress.getWindowToken(), 0);
 
-            if(isValidWebsite(msgtxt4website)){
+            if (isValidWebsite(msgtxt4website)) {
                 try {
                     obj1.put("key", "URL");
                     obj1.put("value", protocolSpinner.getSelectedItem() + msgtxt4website);
-                      session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE,protocolSpinner.getSelectedItem() + msgtxt4website);
+                    session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE, protocolSpinner.getSelectedItem() + msgtxt4website);
 
                 } catch (Exception ex) {
                     System.out.println();
                 }
                 ja.put(obj1);
                 profilesattr[i] = "URL";
-                i++;}
-            else
-            {
+                i++;
+            } else {
                 YoYo.with(Techniques.Shake).playOn(websiteAddress);
-                Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_valid_website));
+                Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_valid_website));
                 // Util.("Enter Valid Website", this);
-                allBoundaryCondtn=false;
+                allBoundaryCondtn = false;
             }
         }
 
@@ -876,15 +860,14 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 obj2.put("value", session.getFacebookPageID());
 
                 String webWidgets = "";
-                for(int j = 0 ; j < Constants.StoreWidgets.size();j++)
-                {
-                    webWidgets += Constants.StoreWidgets.get(j).toString()+"#";
+                for (int j = 0; j < Constants.StoreWidgets.size(); j++) {
+                    webWidgets += Constants.StoreWidgets.get(j).toString() + "#";
 
                 }
                 webWidgets += "FBLIKEBOX";
 
-                obj5.put("key","WEBWIDGETS");
-                obj5.put("value",webWidgets);
+                obj5.put("key", "WEBWIDGETS");
+                obj5.put("value", webWidgets);
                 //                    primaryNumber.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
 //                    alternateNumber_1.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1));
 //                    alternateNumber_2.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_2));
@@ -892,7 +875,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
 //                    websiteAddress.setText(session.getFPDetails(""));
 //                    facebookPage.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FACEBOOK_PAGE));
 
-         session.storeFacebookPage(msgtxt4fbpage);
+                session.storeFacebookPage(msgtxt4fbpage);
             } catch (Exception ex) {
                 System.out.println();
             }
@@ -907,12 +890,12 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
             InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(emailAddress.getWindowToken(), 0);
 
-            boolean emailValid=isValidEmail(msgtxt4_email);
-            if(emailValid){
+            boolean emailValid = isValidEmail(msgtxt4_email);
+            if (emailValid) {
                 try {
                     obj3.put("key", "EMAIL");
                     obj3.put("value", msgtxt4_email);
-                    session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL,msgtxt4_email);
+                    session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL, msgtxt4_email);
 
                 } catch (Exception ex) {
                     System.out.println();
@@ -921,42 +904,39 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 profilesattr[i] = "EMAIL";
                 i++;
 
-            }
-            else{
+            } else {
                 YoYo.with(Techniques.Shake).playOn(emailAddress);
-                Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_valid_email));
-                allBoundaryCondtn=false;
+                Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_valid_email));
+                allBoundaryCondtn = false;
             }
         }
 
-        if(flag4primaryno || flag4alternate2 || flag4alternate1 || flag4alternate3){
+        if (flag4primaryno || flag4alternate2 || flag4alternate1 || flag4alternate3) {
             try {
 
                 if (flag4primaryno) {
                     primary = msgtxt4primaryno;
-                    if(primary.length()==0 )
-                    {
-                        Methods.showSnackBarNegative(this,getResources().getString(R.string.primary_num_can_not_empty));
+                    if (primary.length() == 0) {
+                        Methods.showSnackBarNegative(this, getResources().getString(R.string.primary_num_can_not_empty));
 
-                        flag4primaryno=false;
-                        flag4alternate1=false;
+                        flag4primaryno = false;
+                        flag4alternate1 = false;
                         flag4alternate3 = false;
-                        flag4alternate2=false;
-                        allBoundaryCondtn=false;
+                        flag4alternate2 = false;
+                        allBoundaryCondtn = false;
 //                        floatSubmit.setVisibility(View.GONE);
 //                        findViewById(
 //                                R.id.business_contactInfo_save_text)
 //                                .setVisibility(View.GONE);
                         saveTextView.setVisibility(View.GONE);
                     }
-                    if(msgtxt4primaryno.length()>0 && msgtxt4primaryno.length()<=6)
-                    {
-                        Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_password_6to12_char));
-                        flag4primaryno=false;
-                        flag4alternate1=false;
-                        flag4alternate2=false;
+                    if (msgtxt4primaryno.length() > 0 && msgtxt4primaryno.length() <= 6) {
+                        Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_password_6to12_char));
+                        flag4primaryno = false;
+                        flag4alternate1 = false;
+                        flag4alternate2 = false;
                         flag4alternate3 = false;
-                        allBoundaryCondtn=false;
+                        allBoundaryCondtn = false;
 //                        floatSubmit.setVisibility(View.GONE);
 //                        findViewById(
 //                                R.id.business_contactInfo_save_text)
@@ -977,15 +957,14 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 if (flag4alternate1) {
                     alternate1 = (msgtxt4alternateno1.length() == 0) ? ""
                             : msgtxt4alternateno1;
-                    if(msgtxt4alternateno1.length()>0 && msgtxt4alternateno1.length()<6)
-                    {
-                        Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_password_6to12_char));
+                    if (msgtxt4alternateno1.length() > 0 && msgtxt4alternateno1.length() < 6) {
+                        Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_password_6to12_char));
 
-                        flag4primaryno=false;
-                        flag4alternate1=false;
-                        flag4alternate2=false;
-                        flag4alternate3=false;
-                        allBoundaryCondtn=false;
+                        flag4primaryno = false;
+                        flag4alternate1 = false;
+                        flag4alternate2 = false;
+                        flag4alternate3 = false;
+                        allBoundaryCondtn = false;
 //                        floatSubmit.setVisibility(View.GONE);
 //                        findViewById(
 //                                R.id.business_contactInfo_save_text)
@@ -1007,14 +986,13 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 if (flag4alternate2) {
                     alternate2 = (msgtxtalternate2.length() == 0) ? ""
                             : msgtxtalternate2;
-                    if(msgtxtalternate2.length()>0 && msgtxtalternate2.length()<6)
-                    {
-                        Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_password_6to12_char));
-                        flag4primaryno=false;
-                        flag4alternate1=false;
-                        flag4alternate2=false;
-                        flag4alternate3=false;
-                        allBoundaryCondtn=false;
+                    if (msgtxtalternate2.length() > 0 && msgtxtalternate2.length() < 6) {
+                        Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_password_6to12_char));
+                        flag4primaryno = false;
+                        flag4alternate1 = false;
+                        flag4alternate2 = false;
+                        flag4alternate3 = false;
+                        allBoundaryCondtn = false;
 //                        floatSubmit.setVisibility(View.GONE);
 //                        findViewById(
 //                                R.id.business_contactInfo_save_text)
@@ -1035,13 +1013,12 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 if (flag4alternate3) {
                     alternate3 = (msgtxtalternate3.length() == 0) ? ""
                             : msgtxtalternate3;
-                    if(msgtxtalternate3.length()>0 && msgtxtalternate3.length()<6)
-                    {
-                        Methods.showSnackBarNegative(this,getResources().getString(R.string.enter_password_6to12_char));
-                        flag4primaryno=false;
-                        flag4alternate1=false;
-                        flag4alternate2=false;
-                        allBoundaryCondtn=false;
+                    if (msgtxtalternate3.length() > 0 && msgtxtalternate3.length() < 6) {
+                        Methods.showSnackBarNegative(this, getResources().getString(R.string.enter_password_6to12_char));
+                        flag4primaryno = false;
+                        flag4alternate1 = false;
+                        flag4alternate2 = false;
+                        allBoundaryCondtn = false;
                         flag4alternate3 = false;
 //                        floatSubmit.setVisibility(View.GONE);
 //                        findViewById(
@@ -1061,7 +1038,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 }
 
                 obj4.put("key", "CONTACTS");
-                obj4.put("value", alternate1+"#"+alternate2+"#"+alternate3);
+                obj4.put("value", alternate1 + "#" + alternate2 + "#" + alternate3);
 
             } catch (Exception ex) {
                 System.out.println();
@@ -1081,13 +1058,10 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
 
         }
 
-        if(allBoundaryCondtn)
-        {
-            UploadProfileAsyncTask upa = new UploadProfileAsyncTask(Contact_Info_Activity.this,offerObj,profilesattr);
+        if (allBoundaryCondtn) {
+            UploadProfileAsyncTask upa = new UploadProfileAsyncTask(Contact_Info_Activity.this, offerObj, profilesattr);
             upa.execute();
-        }
-        else
-        {
+        } else {
             allBoundaryCondtn = true;
         }
 
@@ -1101,69 +1075,68 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
     @Override
     protected void onResume() {
         super.onResume();
-        if("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
+        if ("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
                 "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)) ||
-                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME))){
+                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME))) {
             alternateNumber_2.setInputType(InputType.TYPE_NULL);
             alternateNumber_3.setInputType(InputType.TYPE_NULL);
             alternateNumber_1.setInputType(InputType.TYPE_NULL);
             alternateNumber_1.setOnTouchListener(this);
             alternateNumber_2.setOnTouchListener(this);
             alternateNumber_3.setOnTouchListener(this);
-            primaryNumber.setInputType(InputType.TYPE_NULL);
-            primaryNumber.setOnTouchListener(this);
             VMN_Dialog = true;
-    }
+        }
 
-        if(alternateNumber_2.getText().toString().trim().length()==0){
+        if (alternateNumber_2.getText().toString().trim().length() == 0) {
             alternateTextView2.setText(getString(R.string.alternate_number2));
-        }else{
+        } else {
 
-            alternateTextView2.setText(getString(R.string.alternate_number2)+" ("+getString(R.string.to_be_displayed_on_website)+")");
+            alternateTextView2.setText(getString(R.string.alternate_number2) + " (" + getString(R.string.to_be_displayed_on_website) + ")");
         }
 
-        if(alternateNumber_3.getText().toString().trim().length()==0){
+        if (alternateNumber_3.getText().toString().trim().length() == 0) {
             alternateTextView3.setText(getString(R.string.alternate_number3));
-        }else{
+        } else {
 
-            alternateTextView3.setText(getString(R.string.alternate_number3)+" ("+getString(R.string.to_be_displayed_on_website)+")");
+            alternateTextView3.setText(getString(R.string.alternate_number3) + " (" + getString(R.string.to_be_displayed_on_website) + ")");
         }
 
 
-
-        if(alternateNumber_1.getText().toString().trim().length()==0){
+        if (alternateNumber_1.getText().toString().trim().length() == 0) {
             alternateTextView1.setText(getString(R.string.alternate_number1));
-        }else{
+        } else {
 
-            alternateTextView1.setText(getString(R.string.alternate_number1)+" ("+getString(R.string.to_be_displayed_on_website)+")");
+            alternateTextView1.setText(getString(R.string.alternate_number1) + " (" + getString(R.string.to_be_displayed_on_website) + ")");
         }
 
-       // initializeData();
+        // initializeData();
         bus.register(this);
         this.setTitle("Contact Information");
     }
+
     private MaterialDialog dialog() {
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_link_layout,null,false);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_link_layout, null, false);
         TextView message = (TextView) dialogView.findViewById(R.id.toast_message_to_contact);
-        if(VMN_Dialog) {
-            message.setText("Call tracker is enabled. You will receive the call on your primary number."+getString(R.string.primary_contact_number_message));
-        }else{
+        if (VMN_Dialog) {
+            message.setText("Call tracker is enabled. You will receive the call on your primary number." + getString(R.string.primary_contact_number_message));
+        } else {
             message.setText(getString(R.string.primary_contact_number_message));
         }
-            return new MaterialDialog.Builder(Contact_Info_Activity.this)
-                    .title("Change number")
-                    .customView(dialogView,false)
-                    .positiveText(getString(R.string.ok))
-                    .positiveColorRes(R.color.primaryColor)
-                    .callback(new MaterialDialog.ButtonCallback() {
-                        @Override
-                        public void onPositive(MaterialDialog dialog) {
-                            super.onPositive(dialog);
-                        }
+        return new MaterialDialog.Builder(Contact_Info_Activity.this)
+                .title("Change number")
+                .customView(dialogView, false)
+                .positiveText(getString(R.string.ok))
+                .positiveColorRes(R.color.primaryColor)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        super.onPositive(dialog);
+                    }
 
-                    })
-                    .build();
+                })
+                .build();
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -1185,15 +1158,15 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
         alternateNumber_2.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_1));
         alternateNumber_3.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NUMBER_3));
         emailAddress.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
-        String websiteAddr= session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE);
-        if(websiteAddr!=null && !websiteAddr.equals("")) {
-            if (websiteAddr.split("://")[0].equals("http") && websiteAddr.split("://").length==2) {
+        String websiteAddr = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WEBSITE);
+        if (websiteAddr != null && !websiteAddr.equals("")) {
+            if (websiteAddr.split("://")[0].equals("http") && websiteAddr.split("://").length == 2) {
                 protocolSpinner.setSelection(0);
                 websiteAddress.setText(websiteAddr.split("://")[1]);
-            } else if (websiteAddr.split("://")[0].equals("https") && websiteAddr.split("://").length==2) {
+            } else if (websiteAddr.split("://")[0].equals("https") && websiteAddr.split("://").length == 2) {
                 protocolSpinner.setSelection(1);
                 websiteAddress.setText(websiteAddr.split("://")[1]);
-            }else{
+            } else {
                 protocolSpinner.setSelection(0);
                 websiteAddress.setText(websiteAddr);
             }
@@ -1275,7 +1248,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if(id==android.R.id.home){
+        if (id == android.R.id.home) {
             finish();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             //  NavUtils.navigateUpFromSameTask(this);
@@ -1303,32 +1276,33 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if(event.getAction()== MotionEvent.ACTION_DOWN){
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
             MaterialDialog dialog = dialog();
-            if(!isFinishing()){
+            if (!isFinishing()) {
                 dialog.show();
                 return true;
             }
         }
         return false;
     }
-    private void otpVerifyDialog(final String number){
+
+    private void otpVerifyDialog(final String number) {
         //call send otp api
-        View view = LayoutInflater.from(this).inflate(R.layout.dialog_otp_verify,null);
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_otp_verify, null);
         final EditText otp = (EditText) view.findViewById(R.id.editText);
-        otpEditText =otp;
+        otpEditText = otp;
         TextView resend = (TextView) view.findViewById(R.id.resend_tv);
         resend.setPaintFlags(resend.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         resend.setText(Methods.fromHtml(getString(R.string.resend)));
         resend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((TextView)v).setTextColor(ContextCompat.getColor(Contact_Info_Activity.this,R.color.gray_transparent));
+                ((TextView) v).setTextColor(ContextCompat.getColor(Contact_Info_Activity.this, R.color.gray_transparent));
                 sendSms(number);
             }
         });
-        otpDialog  = new MaterialDialog.Builder(this)
-                .customView(view,false)
+        otpDialog = new MaterialDialog.Builder(this)
+                .customView(view, false)
                 .negativeText("Cancel")
                 .autoDismiss(false)
                 .titleColorRes(R.color.primary_color)
@@ -1341,9 +1315,9 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                         String numText = otp.getText().toString().trim();
-                        if(numText.length()>0) {
-                            verifySms(number,numText);
-                        }else{
+                        if (numText.length() > 0) {
+                            verifySms(number, numText);
+                        } else {
                             Toast.makeText(Contact_Info_Activity.this, "Enter OTP", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -1356,7 +1330,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 }).show();
 
         final TextView positive = otpDialog.getActionButton(DialogAction.POSITIVE);
-        positive.setTextColor(ContextCompat.getColor(Contact_Info_Activity.this,R.color.gray_transparent));
+        positive.setTextColor(ContextCompat.getColor(Contact_Info_Activity.this, R.color.gray_transparent));
         otp.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -1370,36 +1344,37 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(otp.getText().toString().trim().length()>0){
-                    positive.setTextColor(ContextCompat.getColor(Contact_Info_Activity.this,R.color.primary));
-                }else{
-                    positive.setTextColor(ContextCompat.getColor(Contact_Info_Activity.this,R.color.gray_transparent));
+                if (otp.getText().toString().trim().length() > 0) {
+                    positive.setTextColor(ContextCompat.getColor(Contact_Info_Activity.this, R.color.primary));
+                } else {
+                    positive.setTextColor(ContextCompat.getColor(Contact_Info_Activity.this, R.color.gray_transparent));
                 }
             }
         });
         sendSms(number);
     }
-    private void sendSms(String number){
+
+    private void sendSms(String number) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
             startProgressDialog();
         }
         Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("via","sms");
-        hashMap.put("locale",session.getFPDetails(Key_Preferences.LANGUAGE_CODE));
-        hashMap.put("phone_number",number);
-        hashMap.put("country_code",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
+        hashMap.put("via", "sms");
+        hashMap.put("locale", session.getFPDetails(Key_Preferences.LANGUAGE_CODE));
+        hashMap.put("phone_number", number);
+        hashMap.put("country_code", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
         smsApi.sendSms(hashMap, new Callback<SmsVerifyModel>() {
             @Override
             public void success(SmsVerifyModel model, Response response) {
-                if(model == null){
+                if (model == null) {
                     stopProgressDialog();
                     Toast.makeText(Contact_Info_Activity.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(model.getSuccess()){
+                if (model.getSuccess()) {
 
-                }else{
+                } else {
                     stopProgressDialog();
                     Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -1414,24 +1389,24 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
         });
     }
 
-    private void verifySms(final String number, String otpCode){
+    private void verifySms(final String number, String otpCode) {
         showProgressbar();
         Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
         Map<String, String> hashMap = new HashMap<>();
-        hashMap.put("verification_code",otpCode);
-        hashMap.put("phone_number",number);
-        hashMap.put("country_code",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
+        hashMap.put("verification_code", otpCode);
+        hashMap.put("phone_number", number);
+        hashMap.put("country_code", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE));
         smsApi.verifySmsCode(hashMap, new Callback<SmsVerifyModel>() {
             @Override
             public void success(SmsVerifyModel model, Response response) {
-                if(model == null){
+                if (model == null) {
                     hideProgressbar();
                     Toast.makeText(Contact_Info_Activity.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(model.getSuccess()){
+                if (model.getSuccess()) {
                     changePrimary(number);
-                }else{
+                } else {
                     hideProgressbar();
                     Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -1448,43 +1423,44 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
     }
 
     private void showProgressbar() {
-        if(progressbar != null){
+        if (progressbar != null) {
             progressbar.show();
         }
     }
-    private void hideProgressbar(){
-        if(progressbar != null && progressbar.isShowing()){
+
+    private void hideProgressbar() {
+        if (progressbar != null && progressbar.isShowing()) {
             progressbar.dismiss();
         }
     }
 
-    private void changePrimary(final String number){
+    private void changePrimary(final String number) {
         UpdatePrimaryNumApi updateApi = Constants.restAdapter.create(UpdatePrimaryNumApi.class);
         updateApi.changeNumber(Constants.PrimaryNumberClientId, session.getFPID(), number, new Callback<String>() {
             @Override
             public void success(String s, Response response) {
                 hideProgressbar();
                 otpDialogDismiss();
-                if(s == null || response.getStatus()!=200){
-                    Methods.showSnackBarNegative(Contact_Info_Activity.this,getString(R.string.something_went_wrong_try_again));
+                if (s == null || response.getStatus() != 200) {
+                    Methods.showSnackBarNegative(Contact_Info_Activity.this, getString(R.string.something_went_wrong_try_again));
                 }
-                MixPanelController.track(MixPanelController.PRIMARY_NUMBER_CHANGE,null);
-                session.storeFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM,number);
+                MixPanelController.track(MixPanelController.PRIMARY_NUMBER_CHANGE, null);
+                session.storeFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM, number);
                 primaryNumber.setText(number);
-                Methods.showSnackBarPositive(Contact_Info_Activity.this,"Primary number changed successfully");
+                Methods.showSnackBarPositive(Contact_Info_Activity.this, "Primary number changed successfully");
             }
 
             @Override
             public void failure(RetrofitError error) {
                 hideProgressbar();
                 otpDialogDismiss();
-                Methods.showSnackBarNegative(Contact_Info_Activity.this,getString(R.string.something_went_wrong_try_again));
+                Methods.showSnackBarNegative(Contact_Info_Activity.this, getString(R.string.something_went_wrong_try_again));
             }
         });
     }
 
     private void otpDialogDismiss() {
-        if(otpDialog!=null && otpDialog.isShowing()){
+        if (otpDialog != null && otpDialog.isShowing()) {
             otpDialog.dismiss();
         }
     }
@@ -1492,7 +1468,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
     @Override
     protected void onStart() {
         super.onStart();
-        LocalBroadcastManager.getInstance(this).registerReceiver(mSmsReceiver,new IntentFilter(Constants.SMS_OTP_RECEIVER));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mSmsReceiver, new IntentFilter(Constants.SMS_OTP_RECEIVER));
     }
 
     @Override
@@ -1500,27 +1476,29 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
         super.onStop();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mSmsReceiver);
     }
+
     private BroadcastReceiver mSmsReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent == null){
+            if (intent == null) {
                 return;
             }
             String otp = intent.getStringExtra("OTP_CODE");
             otp = otp.replaceAll("[^0-9]", "");
-            if(otpEditText !=null) {
+            if (otpEditText != null) {
                 otpEditText.setText(otp);
             }
             stopProgressDialog();
         }
     };
 
-    private void startProgressDialog(){
-        if(progressDialog!=null)
+    private void startProgressDialog() {
+        if (progressDialog != null)
             progressDialog.show();
     }
-    private  void stopProgressDialog(){
-        if(progressDialog != null && progressDialog.isShowing()) {
+
+    private void stopProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
     }

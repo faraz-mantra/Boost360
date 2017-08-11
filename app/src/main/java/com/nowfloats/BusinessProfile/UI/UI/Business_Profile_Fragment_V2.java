@@ -64,14 +64,17 @@ public class Business_Profile_Fragment_V2 extends Fragment {
     @Override
     public void onViewCreated(final View mainView, Bundle savedInstanceState) {
         super.onViewCreated(mainView, savedInstanceState);
+        if (!isAdded()) return;
         final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources()
                 .getColor(R.color.white), PorterDuff.Mode.SRC_IN);
         final LinearLayout progressLayout = (LinearLayout)mainView.findViewById(R.id.progress_layout);
         final LinearLayout profileLayout =(LinearLayout)mainView.findViewById(R.id.business_profile_layout);
         profileLayout.setVisibility(View.INVISIBLE);
         progressLayout.setVisibility(View.VISIBLE);
-        HomeActivity.shareButton.setImageResource(R.drawable.share_with_apps);
-        HomeActivity.shareButton.setColorFilter(whiteLabelFilter_pop_ip);
+        if(HomeActivity.shareButton != null) {
+            HomeActivity.shareButton.setImageResource(R.drawable.share_with_apps);
+            HomeActivity.shareButton.setColorFilter(whiteLabelFilter_pop_ip);
+        }
 
         new Thread(new Runnable() {
             @Override

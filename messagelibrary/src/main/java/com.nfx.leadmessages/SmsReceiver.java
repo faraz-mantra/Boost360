@@ -11,6 +11,7 @@ import android.os.PowerManager;
 import android.provider.Telephony;
 import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -21,7 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static android.content.Context.POWER_SERVICE;
-import static android.content.Context.POWER_SERVICE;
+import static com.nfx.leadmessages.Constants.SMS_REGEX;
 
 /**
  * Created by Admin on 01-02-2017.
@@ -38,7 +39,7 @@ public class SmsReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, final Intent intent) {
 
-        SharedPreferences pref =context.getSharedPreferences(Constants.SHARED_PREF, Context.MODE_PRIVATE);
+        final SharedPreferences pref =context.getSharedPreferences(Constants.SHARED_PREF, Context.MODE_PRIVATE);
 
         if(pref == null) return;
 
@@ -48,7 +49,8 @@ public class SmsReceiver extends BroadcastReceiver {
             mobileId = tm.getDeviceId();
         }
 
-        if(mobileId == null || fpId == null){
+        final String smsAddresses =  pref.getString(SMS_REGEX,null);
+        if(mobileId == null || fpId == null || smsAddresses == null){
             return;
         }
 
@@ -108,15 +110,17 @@ public class SmsReceiver extends BroadcastReceiver {
                     }
                 }
                 SmsMessage model;
-                List<String> list = Arrays.asList(Constants.selections);
+
+                List<String> selectionList  = Arrays.asList(TextUtils.split(smsAddresses.replaceAll("%",""),","));
+
                 for (android.telephony.SmsMessage ms:sms) {
-                    if (list.contains(ms.getOriginatingAddress())){
+                    if (selectionList.contains(ms.getOriginatingAddress())){
                         model =  new SmsMessage()
                                 .setBody(ms.getMessageBody())
                                 .setSubject(ms.getOriginatingAddress())
                                 .setDate(System.currentTimeMillis())
                                 .setSeen("0");
-
+                        //Log.v("ggg1",model.toString());
                         mDatabase.push().setValue(model);
                         break;
                     }

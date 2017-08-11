@@ -19,7 +19,6 @@ import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.Twitter.TwitterConnection;
 import com.nowfloats.Volley.AppController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.DataMap;
-import com.nowfloats.Twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
 import com.nowfloats.util.Key_Preferences;
@@ -907,7 +906,9 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 //Analytics_Fragment.visitCount.setText("0");
                 _context.deleteDatabase(SaveDataCounts.DATABASE_NAME);
                 //Mobihelp.clearUserData(activity.getApplicationContext());
-                Hotline.clearUserData(activity);
+                if(Hotline.getInstance(activity)!=null) {
+                    Hotline.clearUserData(activity);
+                }
                 MixPanelController.track("LogoutSuccess", null);
                 //activity.finish();
                 /*Intent i = new Intent(activity, Login_MainActivity.class);

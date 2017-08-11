@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
@@ -29,7 +30,7 @@ public class BubbleInAppDialog extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_in_app_bubble);
-        MixPanelController.track(MixPanelController.BUBBLE_IN_APP_DIALOG,null);
+        MixPanelController.track(MixPanelController.BUBBLE_IN_APP_DIALOG, null);
         initialize();
     }
 
@@ -40,6 +41,7 @@ public class BubbleInAppDialog extends AppCompatActivity {
             finish();
         }
     }
+
     private void initialize() {
 
         killListener = new KillListener();
@@ -51,14 +53,26 @@ public class BubbleInAppDialog extends AppCompatActivity {
         permissionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MixPanelController.track(MixPanelController.BUBBLE_IN_APP_DIALOG_CLICKED,null);
+                MixPanelController.track(MixPanelController.BUBBLE_IN_APP_DIALOG_CLICKED, null);
+                showCustomToastView();
                 Intent i = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(i);
                 finish();
             }
         });
     }
+
+    private void showCustomToastView() {
+
+        Toast mToast = new Toast(BubbleInAppDialog.this);
+        mToast.setView(getLayoutInflater().inflate(R.layout.accessbility_toast, null));
+        mToast.setDuration(Toast.LENGTH_LONG);
+        mToast.setGravity(Gravity.CENTER_VERTICAL, getResources().getDisplayMetrics().widthPixels, 0);
+        mToast.show();
+
+    }
+
     @Override
     protected void onStart() {
         super.onStart();

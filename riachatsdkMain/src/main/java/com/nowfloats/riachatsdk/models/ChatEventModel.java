@@ -14,6 +14,8 @@ public class ChatEventModel {
     public String EventName;
     public String AppVersion;
     public String NodeId;
+    public String FlowId;
+    public String SessionId;
     public HashMap<String, String> EventData;
     public HashMap<String, String> UserData;
 
@@ -49,6 +51,16 @@ public class ChatEventModel {
 
     public ChatEventModel setNodeId(String nodeId) {
         NodeId = nodeId;
+        return this;
+    }
+
+    public ChatEventModel setFlowId(String flowId) {
+        FlowId = flowId;
+        return this;
+    }
+
+    public ChatEventModel setSessionId(String sessionId) {
+        SessionId = sessionId;
         return this;
     }
 

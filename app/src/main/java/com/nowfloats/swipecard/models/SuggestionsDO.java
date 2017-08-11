@@ -8,19 +8,19 @@ import java.util.List;
 
 public class SuggestionsDO {
 
-    private String Action;
-    private long date;
-    private String fpId;
-    private String messageId;
-    private String type;
-    private String source;
-    private String value;
-    private String actualMessage;
-    private int status = -1;
-    private boolean isShareEnabled = false;
-    private boolean isExpandGroup = false;
-    private List<SugProducts> products = null;
-    private List<SugUpdates> updates = null;
+    public String Action;
+    public long date;
+    public String fpId;
+    public String messageId;
+    public String type;
+    public String source;
+    public String value;
+    public String actualMessage;
+    public int status = -1;
+    public boolean isShareEnabled = false;
+    public boolean isExpandGroup = false;
+    public List<SugProducts> products = null;
+    public List<SugUpdates> updates = null;
 
     public boolean isExpandGroup() {
         return isExpandGroup;
