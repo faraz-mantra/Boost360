@@ -1,19 +1,28 @@
 package com.nowfloats.managecustomers;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.managecustomers.adapters.FacebookChatAdapter;
-import com.nowfloats.managecustomers.models.FacebookChatDataModel;
+import com.nowfloats.managecustomers.apis.FacebookChatApis;
+import com.nowfloats.managecustomers.models.FacebookChatUsersModel;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by Admin on 17-08-2017.
@@ -22,8 +31,10 @@ import java.util.List;
 public class FacebookChatActivity extends AppCompatActivity {
 
     RecyclerView chatUserRecycerView;
-    List<FacebookChatDataModel> chatModelList = new ArrayList<>();
+    List<FacebookChatUsersModel.Datum> chatModelList = new ArrayList<>();
     FacebookChatAdapter adapter;
+    UserSessionManager sessionManager;
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,17 +48,63 @@ public class FacebookChatActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setMessage(getString(R.string.please_wait));
+        progressDialog.setCanceledOnTouchOutside(false);
+
+        sessionManager = new UserSessionManager(this,this);
+
         chatUserRecycerView = (RecyclerView) findViewById(R.id.rv_facebook_chat);
         chatUserRecycerView.setHasFixedSize(true);
         chatUserRecycerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new FacebookChatAdapter(this,chatModelList);
+        chatUserRecycerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         chatUserRecycerView.setAdapter(adapter);
+        getChatData();
     }
 
     private void getChatData(){
+        showProgress();
+        FacebookChatApis.FacebookApis apis = FacebookChatApis.getFacebookChatApis();
+        apis.getAllUsers("facebook", sessionManager.getFPID(), new Callback<FacebookChatUsersModel>() {
+            @Override
+            public void success(FacebookChatUsersModel facebookChatUsersModel, Response response) {
+                hideProgress();
+                if(facebookChatUsersModel == null || !"success".equals(facebookChatUsersModel.getMessage())||response.getStatus() != 200){
+                    Methods.showSnackBarNegative(FacebookChatActivity.this,getString(R.string.something_went_wrong_try_again));
+                    return;
+                }
+                List<FacebookChatUsersModel.Datum> data = facebookChatUsersModel.getData();
+                int size = data.size();
+                for (int i = 0; i<size;i++){
+                    chatModelList.add(data.get(i));
+                }
+                adapter.notifyDataSetChanged();
+            }
 
+            @Override
+            public void failure(RetrofitError error) {
+                hideProgress();
+                Methods.showSnackBarNegative(FacebookChatActivity.this,getString(R.string.something_went_wrong_try_again));
+            }
+        });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    private void showProgress(){
+        if(!isFinishing() && !progressDialog.isShowing())
+            progressDialog.show();
+    }
+    private void hideProgress(){
+        if(!isFinishing() && progressDialog.isShowing()){
+            progressDialog.dismiss();
+        }
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){

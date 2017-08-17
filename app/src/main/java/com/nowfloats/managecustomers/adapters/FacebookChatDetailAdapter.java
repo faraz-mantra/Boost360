@@ -10,7 +10,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.nowfloats.managecustomers.models.FacebookChatDataModel;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
+
+import java.util.List;
 
 /**
  * Created by Admin on 17-08-2017.
@@ -21,8 +25,10 @@ public class FacebookChatDetailAdapter extends RecyclerView.Adapter<RecyclerView
     private Context mContext;
     final int TEXT = 0, IMAGE = 1;
     final int merchant = 0, customer = 1;
-    public FacebookChatDetailAdapter(Context context){
+    List<FacebookChatDataModel.Datum> chatList;
+    public FacebookChatDetailAdapter(Context context, List<FacebookChatDataModel.Datum> list){
         mContext = context;
+        chatList = list;
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -42,15 +48,24 @@ public class FacebookChatDetailAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        FacebookChatDataModel.Datum data = chatList.get(position);
+        boolean showDate = false;
+        if(position == chatList.size()-1 || !data.getSender().equals(chatList.get(position+1).getSender())){
+            showDate = true;
+        }
         if(holder instanceof MyTextChatDetailViewHolder)
         {
             MyTextChatDetailViewHolder textHolder = (MyTextChatDetailViewHolder) holder;
-            setAlignment(merchant,textHolder.parentLayout);
+            textHolder.tvDate.setText(Methods.getFormattedDate(data.getTimestamp()));
+            textHolder.tvDate.setVisibility(showDate? View.VISIBLE:View.GONE);
+            textHolder.tvMessage.setText(data.getMessage().getData());
+            setAlignment(data.getSender().equals("merchant")?merchant:customer,textHolder.parentLayout);
 
         }else if(holder instanceof MyImageChatDetailViewHolder)
         {
             MyImageChatDetailViewHolder imageHolder = (MyImageChatDetailViewHolder) holder;
-            setAlignment(customer,imageHolder.parentLayout);
+            setAlignment(data.getSender().equals("merchant")?merchant:customer,imageHolder.parentLayout);
+            imageHolder.tvDate.setVisibility(showDate? View.VISIBLE:View.GONE);
 
         }
 
@@ -68,12 +83,12 @@ public class FacebookChatDetailAdapter extends RecyclerView.Adapter<RecyclerView
     }
     @Override
     public int getItemViewType(int position) {
-        return position%2;
+        return chatList.get(position).getMessage().getType().equals("text")?TEXT:IMAGE;
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return chatList.size();
     }
 
     class MyTextChatDetailViewHolder extends RecyclerView.ViewHolder{

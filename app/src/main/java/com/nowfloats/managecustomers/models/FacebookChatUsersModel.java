@@ -9,7 +9,8 @@ import java.util.List;
  * Created by Admin on 17-08-2017.
  */
 
-public class FacebookChatDataModel {
+
+public class FacebookChatUsersModel {
 
     @SerializedName("message")
     @Expose
@@ -17,9 +18,6 @@ public class FacebookChatDataModel {
     @SerializedName("nowfloats_id")
     @Expose
     private String nowfloatsId;
-    @SerializedName("user_data")
-    @Expose
-    private UserData userData;
     @SerializedName("data")
     @Expose
     private List<Datum> data = null;
@@ -40,14 +38,6 @@ public class FacebookChatDataModel {
         this.nowfloatsId = nowfloatsId;
     }
 
-    public UserData getUserData() {
-        return userData;
-    }
-
-    public void setUserData(UserData userData) {
-        this.userData = userData;
-    }
-
     public List<Datum> getData() {
         return data;
     }
@@ -58,22 +48,36 @@ public class FacebookChatDataModel {
 
     public class Datum {
 
-        @SerializedName("message")
+        @SerializedName("user_id")
         @Expose
-        private Message message;
+        private String userId;
+        @SerializedName("latest_message")
+        @Expose
+        private LatestMessage latestMessage;
         @SerializedName("sender")
         @Expose
         private String sender;
         @SerializedName("timestamp")
         @Expose
-        private Long timestamp;
+        private Integer timestamp;
+        @SerializedName("user_data")
+        @Expose
+        private UserData userData;
 
-        public Message getMessage() {
-            return message;
+        public String getUserId() {
+            return userId;
         }
 
-        public void setMessage(Message message) {
-            this.message = message;
+        public void setUserId(String userId) {
+            this.userId = userId;
+        }
+
+        public LatestMessage getLatestMessage() {
+            return latestMessage;
+        }
+
+        public void setLatestMessage(LatestMessage latestMessage) {
+            this.latestMessage = latestMessage;
         }
 
         public String getSender() {
@@ -84,17 +88,24 @@ public class FacebookChatDataModel {
             this.sender = sender;
         }
 
-        public Long getTimestamp() {
+        public Integer getTimestamp() {
             return timestamp;
         }
 
-        public void setTimestamp(Long timestamp) {
+        public void setTimestamp(Integer timestamp) {
             this.timestamp = timestamp;
         }
 
+        public UserData getUserData() {
+            return userData;
+        }
+
+        public void setUserData(UserData userData) {
+            this.userData = userData;
+        }
     }
 
-    public class Message {
+    public class LatestMessage {
 
         @SerializedName("type")
         @Expose
@@ -120,7 +131,6 @@ public class FacebookChatDataModel {
         }
 
     }
-
 
     public class UserData {
 
@@ -170,5 +180,6 @@ public class FacebookChatDataModel {
         }
 
     }
-
 }
+
+
