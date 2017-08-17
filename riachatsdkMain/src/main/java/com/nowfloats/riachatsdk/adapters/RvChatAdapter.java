@@ -162,7 +162,7 @@ public class RvChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 v = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_carousel_layout, parent, false);
 
                 CarouselViewHolder carouselViewHolder = new CarouselViewHolder(v);
-                int space = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30,
+                int space = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 27,
                         mContext.getResources().getDisplayMetrics());
                 carouselViewHolder.rvCarousel.addItemDecoration(new FirstLastItemSpacesDecoration(space, false));
                 carouselViewHolder.pageIndicatorView.setDynamicCount(true);

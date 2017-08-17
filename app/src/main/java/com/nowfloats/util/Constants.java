@@ -394,6 +394,7 @@ public class Constants {
     public static boolean gotoStore = false;
     public static boolean GCM_Msg = false;
     public static ArrayList<String> storeActualSecondaryImages = new ArrayList<>();
+    public static ArrayList<String> storeActualGif = new ArrayList<>();
 
     public static void clearStore() {
         StoreAddress = null;

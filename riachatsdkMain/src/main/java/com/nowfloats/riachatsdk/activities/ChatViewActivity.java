@@ -141,6 +141,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     private TextView tvPrefix, tvPostfix, tvSkip;
 
+//    private StringBuilder mStringBuilder;
+
     private Handler mHandler;
 
     private Button mCurrButton, mDefaultButton;
@@ -185,6 +187,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     private static final int FP_NOT_CREATED = -100;
 
     private static final int AUDIO_REQUEST_CODE = 56;
+
+    private Gson gson;
+
 
     /*
      **************************** CONSTANTS *******************************
@@ -245,6 +250,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_view);
 
+//        mStringBuilder = new StringBuilder();
+        gson = new Gson();
         try {
             appVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException e) {
@@ -260,11 +267,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
         setListeners();
 
-        if (isNetworkStatusAvialable(ChatViewActivity.this)) {
-            fetchChatJson();
-        } else {
-            showCustomDialog(CustomDialogFragment.DialogFrom.SKIP);
-        }
+//        syncChatHistory();
+        syncChat();
 
     }
 
@@ -1156,6 +1160,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         tvPostfix.setText("");
         mCurrNodeId = node.getId();
         mCurrFlowId = node.getFlowId();
+//        mStringBuilder = new StringBuilder();
+//        mStringBuilder.append(gson.toJson(mSectionList));
 
         etChatInput.setHint("");
         ChatLogger.getInstance().logViewEvent(DeviceDetails.getDeviceId(this), mCurrNodeId, appVersion, mCurrFlowId, mSessionId);
@@ -1796,7 +1802,11 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         rvButtonsContainer.setLayoutManager(buttonsLayoutManager);
         rvButtonsContainer.setAdapter(mButtonsAdapter);
 
+//        if (!TextUtils.isEmpty(mNextNodeId) && !mNextNodeId.equalsIgnoreCase("-1")) {
+//            showNextNode(mNextNodeId);
+//        } else {
         startChat(mAllNodes.get(0));
+//        }
     }
 
     public void hideSoftKeyboard() {
@@ -2187,4 +2197,64 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             });
         }
     }
+
+//    private void syncChatHistory() {
+//
+//        Type listType = new TypeToken<ArrayList<Section>>() {
+//        }.getType();
+//        Gson gson = new Gson();
+//        try {
+//
+//            mSectionList.addAll(
+//                    (Collection<? extends Section>) gson.fromJson(
+//                            ChatDbController.getDbController(ChatViewActivity.this).getChatHistory(),
+//                            listType));
+//            mDataMap = ChatDbController.getDbController(ChatViewActivity.this).getChatValues();
+//            mNextNodeId = ChatDbController.getDbController(ChatViewActivity.this).getChatNextNode();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            syncChat();
+//        }
+//    }
+
+    private void syncChat() {
+        if (isNetworkStatusAvialable(ChatViewActivity.this)) {
+            fetchChatJson();
+        } else {
+            showCustomDialog(CustomDialogFragment.DialogFrom.NO_INTERNET);
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+//    private void updateChatHistory() {
+//
+//        ChatDbController.getDbController(ChatViewActivity.this).postChatHistory(mStringBuilder.toString(), mCurrNodeId);
+//
+//        Set<String> keySet = mDataMap.keySet();
+//        if (keySet != null) {
+//
+//            JSONObject jsonObject = new JSONObject();
+//            for (String key : keySet) {
+//                try {
+//                    jsonObject.put(key, mDataMap.get(key));
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            ChatDbController.getDbController(ChatViewActivity.this).postChatData(jsonObject.toString());
+//        }
+//
+//    }
+
 }

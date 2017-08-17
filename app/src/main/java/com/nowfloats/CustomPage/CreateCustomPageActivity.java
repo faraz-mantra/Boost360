@@ -165,7 +165,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
             public void onClick(View v) {
                 String url = Constants.NOW_FLOATS_API_URL + "/Discover/v1/floatingpoint/custompage/delete";
                 new SinglePageDeleteAsyncTask(url,CreateCustomPageActivity.this,session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG),
-                        CustomPageActivity.dataModel.get(curPos).PageId,curPos).execute();
+                        CustomPageFragment.dataModel.get(curPos).PageId,curPos).execute();
             }
         });
 
@@ -208,7 +208,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                                         //Log.d("Create page success", "");
                                         MixPanelController.track("CreateCustomPage", null);
                                         long time = System.currentTimeMillis();
-                                        CustomPageActivity.dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
+                                        CustomPageFragment.dataModel.add(new CustomPageModel("Date(" + time + ")", name, s));
                                         Methods.showSnackBarPositive(activity, getString(R.string.page_successfully_created));
                                         finish();
                                     }else{
@@ -237,7 +237,7 @@ public class CreateCustomPageActivity extends AppCompatActivity{
                                     materialProgress.dismiss();
                                     MixPanelController.track("UpdateCustomPage", null);
                                     //Log.d("Update page success", "");
-                                    CustomPageActivity.dataModel.get(curPos).DisplayName = name;
+                                    CustomPageFragment.dataModel.get(curPos).DisplayName = name;
                                     Methods.showSnackBarPositive(activity, getString(R.string.page_updated));
                                     finish();
                                 }

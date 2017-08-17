@@ -21,7 +21,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_carousel"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_30"
             android:gravity="center" />
 
@@ -32,14 +32,14 @@
             android:layout_gravity="center"
             android:padding="7dp"
             app:piv_radius="4dp"
-            app:piv_selectedColor="@color/gray"
-            app:piv_unselectedColor="@color/light_gray"
+            app:piv_selectedColor="#80616161"
+            app:piv_unselectedColor="#40616161"
             attrs:piv_animationType="slide" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginTop="@dimen/margin_10"
             android:background="#e3e3e3" />
 
 

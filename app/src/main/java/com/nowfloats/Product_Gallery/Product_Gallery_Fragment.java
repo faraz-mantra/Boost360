@@ -27,7 +27,6 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.melnykov.fab.FloatingActionButton;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
 import com.nowfloats.Product_Gallery.Service.ProductAPIService;
 import com.nowfloats.util.BusProvider;
@@ -432,10 +431,10 @@ public class Product_Gallery_Fragment extends Fragment {
             adapter.notifyDataSetChanged();
         }
         if (gridView != null) gridView.invalidateViews();
-        if (HomeActivity.plusAddButton != null)
-            HomeActivity.plusAddButton.setVisibility(View.GONE);
-        if (HomeActivity.headerText != null)
-            HomeActivity.headerText.setText(getString(R.string.product_gallery));
+//        if (HomeActivity.plusAddButton != null)
+//            HomeActivity.plusAddButton.setVisibility(View.GONE);
+//        if (HomeActivity.headerText != null)
+//            HomeActivity.headerText.setText(getString(R.string.product_gallery));
     }
 
     @Override

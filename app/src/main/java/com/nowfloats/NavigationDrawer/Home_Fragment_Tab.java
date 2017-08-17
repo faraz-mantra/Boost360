@@ -362,16 +362,14 @@ public class Home_Fragment_Tab extends Fragment {
         if (!isAdded() || getActivity() == null) {
             return;
         }
-//        else if (!isProductAvaiable && from == DrawOverLay.FromHome && activity != null) {
-//
-//            Toast.makeText(activity, "you do not have products into ProductGallery", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
 
         boolean checkAccessibility = true;
-        if (android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity())) {
-            checkAccessibility = false;
-            dialogForOverlayPath(from);
+        if (android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null) {
+
+            if (!Settings.canDrawOverlays(getActivity())) {
+                checkAccessibility = false;
+                dialogForOverlayPath(from);
+            }
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
             checkAccessibility = canDrawOverlaysUsingReflection(getActivity());
@@ -388,6 +386,10 @@ public class Home_Fragment_Tab extends Fragment {
 //Log.v("ggg",String.valueOf(diff)+" "+String.valueOf(newTime-oldTime));
         if (oldTime != -1 && ((newTime - oldTime) < diff)) {
             return;
+        }else{
+
+            dialogForOverlayPath(from);
+
         }
 
         if (checkAccessibility)
@@ -516,7 +518,6 @@ public class Home_Fragment_Tab extends Fragment {
                 //layout.setOnClickListener(null);
             }
         });
-
     }
 
     @Override

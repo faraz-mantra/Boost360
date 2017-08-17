@@ -21,10 +21,12 @@
     <string name="title_activity_business__hours_">Business Hours</string>
     <string name="title_activity_business__logo_">Business Logo</string>
     <string name="title_activity_social__sharing_">Social Sharing</string>
+    <string name="third_party_integration">Third Party Integrations</string>
     <string name="title_activity_login__main">Welcome Back</string>
     <string name="title_activity_pre_sign_up__main">PreSignUp_MainActivity</string>
     <string name="ps_create_lbl">CREATE</string>
     <string name="ps_login_lbl">LOG IN</string>
+    <string name="manage_inventory">Manage Inventory</string>
     <string name="ps_create_lbl_tag">a website with NowFloats</string>
     <string name="ps_login_lbl_tag">to manage NowFloats website</string>
     <string name="ps_sc2_lbl1">Instant Website</string>
@@ -74,7 +76,7 @@
     <string name="customer_has_sent_an_enquiry">Customer has sent an enquiry</string>
     <string name="title_activity_create__message_">Post an Update</string>
     <string name="side_panel_row_one">Dashboard</string>
-    <string name="side_panel_row_two">Profile</string>
+    <string name="side_panel_row_two">My Business Profile</string>
     <string name="side_panel_site_appearance">Site Appearance</string>
     <string name="side_panel_row_csp">Custom Pages</string>
     <string name="side_panel_row_three">Enquiries</string>
@@ -410,6 +412,7 @@
         <item>Quikr</item>
     </string-array>
     <string name="business_enquiries_title">Business Enquiries</string>
+    <string name="payment_setting">Payment Setting</string>
     <string name="double_quotes"> &quot; </string>
     <string name="business_profile_title">Profile</string>
     <string name="tag_for_partners">.nowfloats.com</string>
@@ -502,6 +505,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="total_visits">total visits</string>
     <string name="search_queries">Search Queries</string>
     <string name="subscribers">Subscribers</string>
+    <string name="product_gallery">Product Gallery</string>
     <string name="could_not_find_fb_tag">Couldn\'t find FP Tag</string>
     <string name="check_internet_connection">Check your Network Connection</string>
     <string name="email">EMAIL</string>
@@ -654,8 +658,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="share_with">Share with:</string>
     <string name="chat">Chat</string>
     <string name="site__meter">Site Meter</string>
-    <string name="product_gallery">Product Gallery</string>
     <string name="image_gallery">Image Gallery</string>
+    <string name="photo_gallery">Photo Gallery</string>
+    <string name="manage_customers">Manage Customers</string>
     <string name="business_profile">Business Profile</string>
     <string name="upload_background_image">Upload Background Image</string>
     <string name="image_uploading_failed_try_again">Image uploading failed. Please try again</string>
@@ -1345,4 +1350,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
     <string name="speech_prompt">Say something&#8230;</string>
     <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
+
+    <string name="pull_to_open">Pull the 4 dots to open</string>
+    <string name="long_press_to_move">Long press to move</string>
+    <string name="facebook_chat">facebookchat</string>
+
 </resources>

@@ -80,6 +80,11 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                     intent = manager.getLaunchIntentForPackage(getPackageName());
                     intent.putExtra("from", "notification");
                     intent.putExtra("url", deepLinkUrl);
+                    if(deepLinkUrl.contains(getString(R.string.facebook_chat)))
+                    {
+                        intent.putExtra("user_id",message.get("user_id"));
+                    }
+
                 }
                 PendingIntent pendingIntent = null;
                 if (intent != null) {

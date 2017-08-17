@@ -44,6 +44,8 @@ public interface EventKeysWL
     String SIDE_PANEL_BUSINESS_PROFILE = "BusinessProfile";
     String SIDE_PANEL_BUSINESS_ENQUIRIES = "BusinessEnquiries";
     String SIDE_PANEL_IMAGE_GALLERY = "ImageGallery";
+    String SIDE_PANEL_MANAGE_CUSTOMERS = "ManageCustomers";
+    String SIDE_PANEL_MANAGE_INVENTORY = "ManageInventory";
     String SIDE_PANEL_PRODUCT_GALLERY = "ProductGallery";
     String SIDE_PANEL_SETTINGS = "ic_settings";
     String SIDE_PANEL_CHANGE_BACKGROUND_GALLERY = "ChangeBackgroundGallery";
@@ -53,9 +55,11 @@ public interface EventKeysWL
     String IMAGE_GALLERY_IMAGE_CAMERA = "ImageGalleryFromCamera";
     //String FULL_SCREEN_IMAGE = "FullScreenImage";
     String BUSINESS_ADDRESS = "BusinessAddress";
+    String PRODUCT_GALLERY = "ProductGallery";
     String CONTACT_INFO = "ContactInformation";
     String LOGO = "BusinessLogo";
     String SOCIAL_SHARING = "SocialSharing";
+    String MANAGE_INVENTORY = "ManageInventory";
     String SAVE_BUSINESS_ADDRESS = "SaveBusinessAddress";
     String SAVE_CONTACT_INFO = "SaveContactInfo";
     String UPDATE_LOGO_CAMERA = "UpdateLogoFromCamera";

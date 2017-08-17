@@ -72,7 +72,7 @@ public class BubblesService extends Service {
     public static final String ACTION_RESET_BUBBLE = "nowfloats.bubblebutton.bubble.ACTION_RESET_BUBBLE";
     public static final String ACTION_GO_TO_RIGHT_WALL = "nowfloats.bubblebutton.bubble.ACTION_GO_TO_RIGHT_WALL";
     public static final String ACTION_GO_TO_RIGHT_WALL_CARDS = "nowfloats.bubblebutton.bubble.ACTION_GO_TO_RIGHT_WALL_CARDS";
-
+//test
     public enum FROM {
         HOME_ACTIVITY,
         WHATSAPP,

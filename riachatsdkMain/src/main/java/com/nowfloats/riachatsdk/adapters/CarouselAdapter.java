@@ -3,6 +3,7 @@ package com.nowfloats.riachatsdk.adapters;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,12 +31,21 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
     private Context mContext;
     private int visibleItemPos = 0;
     private DisplayMetrics metrics;
-
+    private int leftSpace,topSpace,padding,paddingTop;
     public CarouselAdapter(Context mContext, List<Items> items, Map<String, String> dataMap) {
         this.mContext = mContext;
         itemsList = items;
         metrics = mContext.getResources().getDisplayMetrics();
         this.mDataMap = dataMap;
+
+        leftSpace = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10,
+                mContext.getResources().getDisplayMetrics());
+        topSpace = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10,
+                mContext.getResources().getDisplayMetrics());
+        padding = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25,
+                mContext.getResources().getDisplayMetrics());
+        paddingTop = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 23,
+                mContext.getResources().getDisplayMetrics());
     }
 
     @Override
@@ -47,11 +57,11 @@ public class CarouselAdapter extends RecyclerView.Adapter<CarouselAdapter.Carous
 
     @Override
     public void onBindViewHolder(CarouselItemHolder carouselItemHolder, int position) {
-        LinearLayout.LayoutParams linLayoutParams = new LinearLayout.LayoutParams(metrics.widthPixels * 73 / 100,
+        LinearLayout.LayoutParams linLayoutParams = new LinearLayout.LayoutParams(metrics.widthPixels * 70 / 100,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
-        linLayoutParams.setMargins(15, 10, 15, 10);
+        linLayoutParams.setMargins(leftSpace, topSpace, leftSpace, topSpace);
         carouselItemHolder.itemView.setLayoutParams(linLayoutParams);
-        carouselItemHolder.itemView.setPadding(70, 70, 70, 70);
+        carouselItemHolder.itemView.setPadding(padding, paddingTop, padding, padding);
 
         Items items = itemsList.get(position);
         carouselItemHolder.tvTitle.setText(getParsedPrefixPostfixText(items.getTitle()));

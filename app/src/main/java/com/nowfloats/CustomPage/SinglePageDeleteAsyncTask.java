@@ -105,18 +105,18 @@ public class SinglePageDeleteAsyncTask extends AsyncTask<String,String,String>{
                         materialProgress.dismiss();
                     if (flag){
                         activity.finish();
-                        CustomPageActivity.dataModel.remove(position);
+                        CustomPageFragment.dataModel.remove(position);
                         Methods.showSnackBarPositive(activity, activity.getString(R.string.page_removed));
-                        if (CustomPageActivity.custompageAdapter!=null)
-                            CustomPageActivity.custompageAdapter.notifyDataSetChanged();
-                        if (CustomPageActivity.recyclerView!=null)
-                            CustomPageActivity.recyclerView.invalidate();
+                        if (CustomPageFragment.custompageAdapter!=null)
+                            CustomPageFragment.custompageAdapter.notifyDataSetChanged();
+                        if (CustomPageFragment.recyclerView!=null)
+                            CustomPageFragment.recyclerView.invalidate();
                     }else{
                         Methods.showSnackBarNegative(activity,activity.getString(R.string.something_went_wrong_try_again));
-                        if (CustomPageActivity.custompageAdapter!=null)
-                            CustomPageActivity.custompageAdapter.notifyDataSetChanged();
-                        if (CustomPageActivity.recyclerView!=null)
-                            CustomPageActivity.recyclerView.invalidate();
+                        if (CustomPageFragment.custompageAdapter!=null)
+                            CustomPageFragment.custompageAdapter.notifyDataSetChanged();
+                        if (CustomPageFragment.recyclerView!=null)
+                            CustomPageFragment.recyclerView.invalidate();
                     }
                 }
             });

@@ -51,7 +51,7 @@ public class BubbleLayout extends BubbleBaseLayout {
     private OnBubbleRemoveListener onBubbleRemoveListener;
     private OnBubbleClickListener onBubbleClickListener;
     private static final int TOUCH_TIME_THRESHOLD = 150;
-    private long lastTouchDown,lastRemoved;
+    private long lastTouchDown, lastRemoved;
     private MoveAnimator animator;
     private int width, height, maxWidth, height60;
     private WindowManager windowManager;
@@ -112,7 +112,8 @@ public class BubbleLayout extends BubbleBaseLayout {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        playAnimation();
+        if(isAnimRequired)
+             playAnimation();
     }
 
     @Override
@@ -125,14 +126,15 @@ public class BubbleLayout extends BubbleBaseLayout {
                     initialY = getViewParams().y;
                     initialTouchX = event.getRawX();
                     initialTouchY = event.getRawY();
-                    playAnimationClickDown();
+                    if (isAnimRequired)
+                        playAnimationClickDown();
                     lastTouchDown = System.currentTimeMillis();
                     updateSize();
                     animator.stop();
                     break;
                 case MotionEvent.ACTION_MOVE:
-                    int x = initialX + (int)(event.getRawX() - initialTouchX);
-                    int y = initialY + (int)(event.getRawY() - initialTouchY);
+                    int x = initialX + (int) (event.getRawX() - initialTouchX);
+                    int y = initialY + (int) (event.getRawY() - initialTouchY);
                     getViewParams().x = x;
                     getViewParams().y = y;
                     getWindowManager().updateViewLayout(this, getViewParams());
@@ -144,7 +146,8 @@ public class BubbleLayout extends BubbleBaseLayout {
                     goToWall();
                     if (getLayoutCoordinator() != null) {
                         getLayoutCoordinator().notifyBubbleRelease(this);
-                        playAnimationClickUp();
+                        if (isAnimRequired)
+                            playAnimationClickUp();
                     }
                     if (System.currentTimeMillis() - lastTouchDown < TOUCH_TIME_THRESHOLD) {
                         if (onBubbleClickListener != null) {
@@ -155,7 +158,7 @@ public class BubbleLayout extends BubbleBaseLayout {
                     break;
             }
 
-            if(isToRemoveDialog && (System.currentTimeMillis() - lastTouchDown > TOUCH_TIME_THRESHOLD)){
+            if (isToRemoveDialog && (System.currentTimeMillis() - lastTouchDown > TOUCH_TIME_THRESHOLD)) {
                 lastRemoved = System.currentTimeMillis();
                 getContext().sendBroadcast(new Intent(BubblesService.ACTION_KILL_DIALOG));
             }
@@ -180,7 +183,7 @@ public class BubbleLayout extends BubbleBaseLayout {
                     .loadAnimator(getContext(), R.animator.bubble_down_click_animator);
             animator.setTarget(this);
             animator.start();
-           resetAlpha();
+            resetAlpha();
         }
     }
 
@@ -190,7 +193,7 @@ public class BubbleLayout extends BubbleBaseLayout {
                     .loadAnimator(getContext(), R.animator.bubble_up_click_animator);
             animator.setTarget(this);
             animator.start();
-          applyAlpha();
+            applyAlpha();
         }
     }
 
@@ -202,7 +205,7 @@ public class BubbleLayout extends BubbleBaseLayout {
         display.getSize(size);
         maxWidth = metrics.widthPixels;
         width = (size.x - this.getWidth());
-        height = ((metrics.heightPixels*20)/100)-this.getHeight()-10;
+        height = ((metrics.heightPixels * 20) / 100) - this.getHeight() - 10;
         height60 = ((metrics.heightPixels * 40) / 100) - this.getHeight() - 10;
     }
 
@@ -215,7 +218,7 @@ public class BubbleLayout extends BubbleBaseLayout {
     }
 
     public void goToWall() {
-        if(shouldStickToWall){
+        if (shouldStickToWall) {
             int middle = width / 2;
             float nearestXWall = getViewParams().x >= middle ? width : 0;
             animator.start(nearestXWall, getViewParams().y);
@@ -223,7 +226,7 @@ public class BubbleLayout extends BubbleBaseLayout {
     }
 
     public void goToRightWall() {
-        if(shouldStickToWall){
+        if (shouldStickToWall) {
             animator.start(maxWidth, height);
         }
     }
@@ -240,12 +243,12 @@ public class BubbleLayout extends BubbleBaseLayout {
         windowManager.updateViewLayout(this, getViewParams());
     }
 
-    public void resetAlpha(){
+    public void resetAlpha() {
         ivBubble.setAlpha(1.0f);
         ivBubble.invalidate();
     }
 
-    public void applyAlpha(){
+    public void applyAlpha() {
         ivBubble.setAlpha(initAlpha);
         ivBubble.invalidate();
 
@@ -268,8 +271,8 @@ public class BubbleLayout extends BubbleBaseLayout {
         public void run() {
             if (getRootView() != null && getRootView().getParent() != null) {
                 float progress = Math.min(1, (System.currentTimeMillis() - startingTime) / 400f);
-                float deltaX = (destinationX -  getViewParams().x) * progress;
-                float deltaY = (destinationY -  getViewParams().y) * progress;
+                float deltaX = (destinationX - getViewParams().x) * progress;
+                float deltaY = (destinationY - getViewParams().y) * progress;
                 move(deltaX, deltaY);
                 if (progress < 1) {
                     handler.post(this);
