@@ -1,6 +1,5 @@
 package com.nowfloats.managecustomers.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -11,12 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.nowfloats.managecustomers.FacebookChatActivity;
 import com.nowfloats.managecustomers.FacebookChatDetailActivity;
 import com.nowfloats.managecustomers.models.FacebookChatUsersModel;
-import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Admin on 17-08-2017.
@@ -42,10 +45,14 @@ public class FacebookChatAdapter extends RecyclerView.Adapter<FacebookChatAdapte
         FacebookChatUsersModel.Datum data = chatList.get(position);
         holder.userName.setText(data.getUserData().getFirstName()+" "+data.getUserData().getLastName());
         holder.message.setText(data.getLatestMessage().getData());
-        holder.date.setText(Methods.getFormattedDate(data.getTimestamp()));
+        holder.date.setText(getFormattedTime(data.getTimestamp()));
         Glide.with(mContext).load(data.getUserData().getProfilePic()).placeholder(R.drawable.ic_user).into(holder.userPic);
     }
 
+    private String getFormattedTime(Long milliSecond){
+
+        return new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(new Date(milliSecond));
+    }
     @Override
     public int getItemCount() {
         return chatList.size();
@@ -65,11 +72,13 @@ public class FacebookChatAdapter extends RecyclerView.Adapter<FacebookChatAdapte
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(mContext,FacebookChatDetailActivity.class);
-                    i.putExtra("user_id",chatList.get(getAdapterPosition()).getUserId());
+                    i.putExtra("user_data",new Gson().toJson(chatList.get(getAdapterPosition()).getUserData()));
+                   /* i.putExtra("user_id",chatList.get(getAdapterPosition()).getUserId());
+                    i.putExtra("profile_pic",chatList.get(getAdapterPosition()).getUserData().getProfilePic());
                     i.putExtra("user_name",chatList.get(getAdapterPosition()).getUserData().getFirstName()+" "+
-                            chatList.get(getAdapterPosition()).getUserData().getLastName());
-                    ((Activity)mContext).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    mContext.startActivity(i);
+                            chatList.get(getAdapterPosition()).getUserData().getLastName());*/
+                    ((FacebookChatActivity)mContext).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    ((FacebookChatActivity) mContext).startActivityForResult(i,221);
                 }
             });
         }

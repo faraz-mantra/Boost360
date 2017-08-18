@@ -376,10 +376,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         if (!Util.isNullOrEmpty(url)) {
             if(url.contains(getString(R.string.facebook_chat))){
                 Intent intent = new Intent(this, FacebookChatDetailActivity.class);
-                Bundle bundle = getIntent().getExtras();
-                if(bundle != null){
-                    intent.putExtra("user_id",bundle.getString("user_id"));
-                }
+                intent.putExtras(getIntent());
                 startActivity(intent);
             } else if (url.contains("facebookpage")) {
                 Methods.likeUsFacebook(this, "/reviews/");

@@ -187,7 +187,8 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
 
         if(deepLink!=null){
             if(!deepLink.contains("logout")) {
-                i.putExtra("url", deepLink);
+                //i.putExtra("url", deepLink);
+                i.putExtras(getIntent());
                 startActivity(i);
                 if (pd != null && pd.isShowing())
                     pd.dismiss();
@@ -263,7 +264,8 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
         // Staring Login Activity
         if(deepLink!=null){
             if(!deepLink.contains("logout")) {
-                i.putExtra("url", deepLink);
+                //i.putExtra("url", deepLink);
+                i.putExtras(getIntent());
                 startActivity(i);
                 if (pd != null)
                     pd.dismiss();

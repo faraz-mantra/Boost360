@@ -59,7 +59,7 @@ public class FacebookChatUsersModel {
         private String sender;
         @SerializedName("timestamp")
         @Expose
-        private Integer timestamp;
+        private Long timestamp;
         @SerializedName("user_data")
         @Expose
         private UserData userData;
@@ -88,11 +88,11 @@ public class FacebookChatUsersModel {
             this.sender = sender;
         }
 
-        public Integer getTimestamp() {
+        public Long getTimestamp() {
             return timestamp;
         }
 
-        public void setTimestamp(Integer timestamp) {
+        public void setTimestamp(Long timestamp) {
             this.timestamp = timestamp;
         }
 

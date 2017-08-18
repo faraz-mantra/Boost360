@@ -78,6 +78,7 @@ public class ManageCustomerFragment extends Fragment {
             tvLearnMore = (TextView) mainView.findViewById(R.id.tvLearnMore);
             tvSubscribers.setTypeface(robotoMedium);
             tvLearnMore.setTypeface(robotoMedium);
+            tvFacebookChat.setTypeface(robotoMedium);
 
             tvLearnMore.setVisibility(View.GONE);
             CharSequence charSequence = Html.fromHtml("<u><i>Learn More</i></u>");

@@ -56,7 +56,7 @@ public class FacebookChatDataModel {
         this.data = data;
     }
 
-    public class Datum {
+    public static class Datum {
 
         @SerializedName("message")
         @Expose
@@ -94,7 +94,7 @@ public class FacebookChatDataModel {
 
     }
 
-    public class Message {
+    public static class Message {
 
         @SerializedName("type")
         @Expose
@@ -122,7 +122,7 @@ public class FacebookChatDataModel {
     }
 
 
-    public class UserData {
+    public static class UserData {
 
         @SerializedName("id")
         @Expose

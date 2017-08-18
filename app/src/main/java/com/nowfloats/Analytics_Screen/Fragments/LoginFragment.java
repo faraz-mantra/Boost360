@@ -132,7 +132,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
     public void fbData(final int from) {
         //AccessToken.getCurrentAccessToken()
         List<String> readPermissions=Arrays.asList("email", "public_profile", "user_friends", "read_insights", "business_management");
-        final List<String> publishPermissions = Arrays.asList("publish_actions", "publish_pages", "manage_pages");
+        final List<String> publishPermissions = Arrays.asList("publish_actions", "publish_pages", "manage_pages","pages_messaging");
         final LoginManager loginManager = LoginManager.getInstance();
 
         loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
