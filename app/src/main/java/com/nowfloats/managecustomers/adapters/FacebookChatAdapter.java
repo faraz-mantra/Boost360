@@ -9,11 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.nowfloats.managecustomers.FacebookChatActivity;
 import com.nowfloats.managecustomers.FacebookChatDetailActivity;
 import com.nowfloats.managecustomers.models.FacebookChatUsersModel;
+import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
 import java.text.SimpleDateFormat;
@@ -29,6 +29,7 @@ public class FacebookChatAdapter extends RecyclerView.Adapter<FacebookChatAdapte
 
     List<FacebookChatUsersModel.Datum> chatList;
     Context mContext;
+    final String TEXT = "text", IMAGE = "image";
     public FacebookChatAdapter(Context context, List<FacebookChatUsersModel.Datum> list){
         chatList = list;
         mContext = context;
@@ -44,9 +45,24 @@ public class FacebookChatAdapter extends RecyclerView.Adapter<FacebookChatAdapte
         if(holder == null) return;
         FacebookChatUsersModel.Datum data = chatList.get(position);
         holder.userName.setText(data.getUserData().getFirstName()+" "+data.getUserData().getLastName());
-        holder.message.setText(data.getLatestMessage().getData());
+        switch (data.getLatestMessage().getType()){
+            case TEXT:
+                holder.message.setText(data.getLatestMessage().getData().getText());
+                break;
+            case IMAGE:
+                holder.message.setText("User sent a photo");
+                break;
+            default:
+                break;
+        }
+
         holder.date.setText(getFormattedTime(data.getTimestamp()));
-        Glide.with(mContext).load(data.getUserData().getProfilePic()).placeholder(R.drawable.ic_user).into(holder.userPic);
+        //Glide.with(mContext).load(data.getUserData().getProfilePic()).placeholder(R.drawable.ic_user).into(holder.userPic);
+        Picasso.with(mContext)
+                .load(data.getUserData().getProfilePic())
+                .resize(200, 0)
+                .placeholder(R.drawable.ic_user)
+                .into(holder.userPic);
     }
 
     private String getFormattedTime(Long milliSecond){
@@ -77,8 +93,8 @@ public class FacebookChatAdapter extends RecyclerView.Adapter<FacebookChatAdapte
                     i.putExtra("profile_pic",chatList.get(getAdapterPosition()).getUserData().getProfilePic());
                     i.putExtra("user_name",chatList.get(getAdapterPosition()).getUserData().getFirstName()+" "+
                             chatList.get(getAdapterPosition()).getUserData().getLastName());*/
-                    ((FacebookChatActivity)mContext).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     ((FacebookChatActivity) mContext).startActivityForResult(i,221);
+                    ((FacebookChatActivity)mContext).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             });
         }

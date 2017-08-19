@@ -132,7 +132,7 @@ public class Get_FP_Details_Service {
         });
     }
 
-    private void newNfxTokenDetails(final Activity activity, String fpID, final Bus bus) {
+    public static void newNfxTokenDetails(final Activity activity, String fpID, final Bus bus) {
         NfxFacebbokAnalytics.nfxFacebookApis facebookApis = NfxFacebbokAnalytics.getAdapter();
         facebookApis.nfxGetSocialTokens(fpID, new Callback<NfxGetTokensResponse>() {
             @Override
@@ -147,8 +147,9 @@ public class Get_FP_Details_Service {
                 }
                 String message = nfxGetTokensResponse.getMessage();
                 if (message != null && message.equalsIgnoreCase("success")) {
-                    Storedata(activity, nfxGetTokensResponse.getNFXAccessTokens());
+                    StoreData(activity, nfxGetTokensResponse.getNFXAccessTokens());
                 }
+                bus.post(new NfxGetTokensResponse());
             }
 
             @Override
@@ -162,7 +163,7 @@ public class Get_FP_Details_Service {
                             WebSiteAddressActivity.pd.dismiss();
                         }
                         if (SplashScreen_Activity.pd != null) {
-                            bus.post(new Get_FP_Details_Event(new Get_FP_Details_Model()));
+                            bus.post(new NfxGetTokensResponse());
                             try {
                                 SplashScreen_Activity.pd.dismiss();
                             } catch (Exception e) {
@@ -176,7 +177,7 @@ public class Get_FP_Details_Service {
         });
     }
 
-    private void Storedata(Activity activity, List<NfxGetTokensResponse.NFXAccessToken> nfxGetTokensList) {
+    private static void StoreData(Activity activity, List<NfxGetTokensResponse.NFXAccessToken> nfxGetTokensList) {
         UserSessionManager session = new UserSessionManager(activity.getApplicationContext(), activity);
         SharedPreferences pref = activity.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences twitterPref = activity.getSharedPreferences(TwitterConnection.PREF_NAME, Context.MODE_PRIVATE);

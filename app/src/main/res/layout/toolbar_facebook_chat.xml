@@ -25,15 +25,14 @@
             <com.makeramen.RoundedImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/img_chat_user"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:scaleType="center"
-                android:src="@drawable/business_edit_profile_icon"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_user"
                 app:riv_border_color="#ffffff"
                 app:riv_border_width="2dip"
                 app:riv_corner_radius="30dip"
-                app:riv_mutate_background="true"
-                app:riv_oval="true" />
+                app:riv_mutate_background="true"/>
         </LinearLayout>
         <TextView
             android:id="@+id/tv_chat_user"

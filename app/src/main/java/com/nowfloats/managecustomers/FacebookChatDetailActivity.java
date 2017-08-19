@@ -1,10 +1,12 @@
 package com.nowfloats.managecustomers;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -19,13 +21,11 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.nowfloats.Login.UserSessionManager;
@@ -34,7 +34,9 @@ import com.nowfloats.managecustomers.apis.FacebookChatApis;
 import com.nowfloats.managecustomers.models.FacebookChatDataModel;
 import com.nowfloats.managecustomers.models.FacebookMessageModel;
 import com.nowfloats.riachatsdk.utils.Utils;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -61,7 +63,6 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
     private UserSessionManager sessionManager;
     private String userId;
     public static final String INTENT_FILTER = "nfx.facebook.messages";
-    private boolean isAddedToTop = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,11 +86,19 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         if(userData == null){
             return;
         }
+        SharedPreferences pref = getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
+        pref.edit().putString("facebookChatUser",userId).apply();
         imgUser.setOnClickListener(this);
         imgBack.setOnClickListener(this);
         sendButton.setOnClickListener(this);
         scrollButton.setOnClickListener(this);
-        Glide.with(this).load(userData.getProfilePic()).into(imgUser);
+        //Glide.with(this).load(userData.getProfilePic()).into(imgUser);
+        Picasso.with(this)
+                .load(userData.getProfilePic())
+                .resize(200, 0)
+                .placeholder(R.drawable.ic_user)
+                .into(imgUser);
+
         userId = userData.getId();
         String userName = userData.getFirstName()+" "+userData.getLastName();
         title.setText(userName);
@@ -130,6 +139,14 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         chatUserRecycerView.addItemDecoration(decorator);
         adapter = new FacebookChatDetailAdapter(this,chatModelList);
         chatUserRecycerView.setAdapter(adapter);
+        chatUserRecycerView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                if ( bottom < oldBottom) {
+                    chatUserRecycerView.smoothScrollToPosition(manager.getItemCount());
+                }
+            }
+        });
         chatUserRecycerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -189,8 +206,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
                     return;
                 }
                 totalDataList = facebookChatUsersModel.getData();
-                /*chatModelList.add(0,totalDataList.get(0));
-                adapter.notifyItemInserted(0);*/
+                decideCornersForChatItems();
                 int size = totalDataList.size();
                 for (int i = 0; i<size && i<10;i++){
                     chatModelList.add(0,totalDataList.get(i));
@@ -198,7 +214,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
                     //chatUserRecycerView.smoothScrollToPosition(chatModelList.size()-1);
                 }
                 adapter.notifyDataSetChanged();
-                //chatUserRecycerView.smoothScrollToPosition(chatModelList.size()-1);
+                chatUserRecycerView.smoothScrollToPosition(chatModelList.size()-1);
             }
 
             @Override
@@ -209,6 +225,17 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         });
     }
 
+    private void decideCornersForChatItems() {
+        int size = totalDataList.size();
+        for (int i =0 ;i<size;i++){
+            if(!totalDataList.get(i).getSender().equals(FacebookChatDetailAdapter.USER)) {
+                totalDataList.get(i).setShowCornerBackground(size-1 == i || totalDataList.get(i+1).getSender().equals(FacebookChatDetailAdapter.USER));
+            }else{
+                totalDataList.get(i).setShowCornerBackground(size-1 == i || !totalDataList.get(i+1).getSender().equals(FacebookChatDetailAdapter.USER));
+            }
+
+        }
+    }
     @Override
     protected void onStart() {
         super.onStart();
@@ -249,15 +276,6 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
             progressDialog.dismiss();
         }
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onBackPressed() {
@@ -289,19 +307,28 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
     }
 
     private int addMessageToList(String message,String status){
-        FacebookChatDataModel.Datum data = new FacebookChatDataModel.Datum();
+        String type="text";
+        FacebookChatDataModel.Datum chatData = new FacebookChatDataModel.Datum();
         FacebookChatDataModel.Message mess = new FacebookChatDataModel.Message();
-        mess.setType("text");
-        mess.setData(message);
-        data.setMessage(mess);
-        data.setSender(status);
-        data.setTimestamp(Calendar.getInstance(TimeZone.getDefault()).getTimeInMillis());
-        totalDataList.add(data);
-        chatModelList.add(data);
-        int currPos = chatModelList.size()-1;
+        mess.setType(type);
+        FacebookChatDataModel.Data data = new FacebookChatDataModel.Data();
+        data.setText(message);
+        data.setUrl("");
+        mess.setData(data);
+        chatData.setMessage(mess);
+        chatData.setSender(status);
+        int currPos = chatModelList.size();
+        if(!status.equals(FacebookChatDetailAdapter.USER)) {
+            chatData.setShowCornerBackground(currPos == 0 || chatModelList.get(currPos-1).getSender().equals(FacebookChatDetailAdapter.USER));
+        }else{
+            chatData.setShowCornerBackground(currPos == 0  || !chatModelList.get(currPos-1).getSender().equals(FacebookChatDetailAdapter.USER));
+        }
+        chatData.setTimestamp(Calendar.getInstance(TimeZone.getDefault()).getTimeInMillis());
+        totalDataList.add(0,chatData);
+        chatModelList.add(chatData);
         adapter.notifyItemInserted(currPos);
         etReply.setText("");
-        chatUserRecycerView.scrollToPosition(currPos);
+        chatUserRecycerView.smoothScrollToPosition(currPos);
         return currPos;
     }
     private void sendData() {

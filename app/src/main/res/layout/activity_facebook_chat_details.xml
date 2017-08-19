@@ -8,19 +8,16 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         layout="@layout/toolbar_facebook_chat"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="10dp"
+            android:layout_marginBottom="5dp"
             android:layout_above="@+id/input_layout"
             android:id="@+id/rv_facebook_chat"/>
-        <!-- <View
-             android:layout_width="match_parent"
-             android:layout_height="1dp"
-             android:background="@color/divider"/>-->
         <LinearLayout
             android:id="@+id/input_layout"
             android:layout_alignParentBottom="true"

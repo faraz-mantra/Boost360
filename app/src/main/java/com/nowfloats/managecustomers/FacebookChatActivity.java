@@ -9,18 +9,23 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
 import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.managecustomers.adapters.FacebookChatAdapter;
 import com.nowfloats.managecustomers.apis.FacebookChatApis;
 import com.nowfloats.managecustomers.models.FacebookChatUsersModel;
+import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
+import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Methods;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -42,7 +47,9 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
     FacebookChatAdapter adapter;
     UserSessionManager sessionManager;
     ProgressDialog progressDialog;
-    LinearLayout layout;
+    LinearLayout layout,chatlayout;
+    TextView facebookPageName;
+    Bus bus;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,11 +57,13 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
         init();
     }
     private void init(){
+        bus = BusProvider.getInstance().getBus();
         Toolbar toolbar  = (Toolbar) findViewById(R.id.facebook_toolbar);
         findViewById(R.id.img_chat_user).setVisibility(View.GONE);
         findViewById(R.id.img_back).setOnClickListener(this);
-
+        facebookPageName = (TextView) findViewById(R.id.tv_facebook_page);
         layout  = (LinearLayout) findViewById(R.id.fragment_layout);
+        chatlayout  = (LinearLayout) findViewById(R.id.chat_user_layout);
         TextView title = (TextView) findViewById(R.id.tv_chat_user);
         title.setText("Facebook Chat");
         setSupportActionBar(toolbar);
@@ -72,13 +81,35 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
         adapter = new FacebookChatAdapter(this,chatModelList);
         chatUserRecycerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         chatUserRecycerView.setAdapter(adapter);
+        checkNfxConnection();
         getChatData();
+    }
+
+    private void checkNfxConnection() {
+        Get_FP_Details_Service.newNfxTokenDetails(this,sessionManager.getFPID(),bus);
+    }
+    @Subscribe
+    public void nfxCallback(NfxGetTokensResponse response){
+        if(response != null) {
+            Log.v("ggg", response.getMessage());
+        }
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        bus.register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        bus.unregister(this);
     }
 
     private void showEmptyMessages(int i){
         if(layout.getVisibility() != View.VISIBLE) {
             layout.setVisibility(View.VISIBLE);
-            chatUserRecycerView.setVisibility(View.GONE);
+            chatlayout.setVisibility(View.GONE);
         }
         TextView mainMessage = (TextView) findViewById(R.id.tv_main_message);
         TextView noteMessage = (TextView) findViewById(R.id.tv_note_message);
@@ -87,6 +118,7 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
             case NO_MESSAGES:
                 connect.setVisibility(View.GONE);
                 noteMessage.setVisibility(View.VISIBLE);
+                noteMessage.setText(getString(R.string.facebook_chat_note));
                 mainMessage.setText(getString(R.string.customer_have_not_messaged));
                 break;
             case CONNECT_TO_PAGE:
@@ -125,6 +157,7 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
                     chatModelList.add(data.get(i));
                 }
                 //showEmptyMessages(1);
+                //logic for showing screens
                 adapter.notifyDataSetChanged();
             }
 
@@ -144,7 +177,8 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
                 getChatData();
                 break;
             case 333:
-                showEmptyMessages(NO_MESSAGES);
+                getChatData();
+                //showEmptyMessages(NO_MESSAGES);
                 //refresh
                 break;
             default:
@@ -153,10 +187,6 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
     private void showProgress(){
         if(!isFinishing() && !progressDialog.isShowing())
@@ -166,15 +196,6 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
         if(!isFinishing() && progressDialog.isShowing()){
             progressDialog.dismiss();
         }
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -786,7 +786,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         if (!isCalled) {
             navigateView();
         }
-        DeepLinkPage(mDeepLinkUrl, false);
+        //DeepLinkPage(mDeepLinkUrl, false);
 
 //        isMyServiceRunning(SAMBubblesService.class);
 //        sendBroadcast(new Intent(SAMBubblesService.ACTION_REMOVE_BUBBLE));

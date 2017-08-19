@@ -68,6 +68,16 @@ public class FacebookChatDataModel {
         @Expose
         private Long timestamp;
 
+        private boolean showCornerBackground;
+
+        public boolean isShowCornerBackground() {
+            return showCornerBackground;
+        }
+
+        public void setShowCornerBackground(boolean showCornerBackground) {
+            this.showCornerBackground = showCornerBackground;
+        }
+
         public Message getMessage() {
             return message;
         }
@@ -101,7 +111,7 @@ public class FacebookChatDataModel {
         private String type;
         @SerializedName("data")
         @Expose
-        private String data;
+        private Data data;
 
         public String getType() {
             return type;
@@ -111,17 +121,42 @@ public class FacebookChatDataModel {
             this.type = type;
         }
 
-        public String getData() {
+        public Data getData() {
             return data;
         }
 
-        public void setData(String data) {
+        public void setData(Data data) {
             this.data = data;
         }
 
     }
 
+    public static class Data {
 
+        @SerializedName("text")
+        @Expose
+        private String text;
+        @SerializedName("url")
+        @Expose
+        private String url;
+
+        public String getText() {
+            return text;
+        }
+
+        public void setText(String text) {
+            this.text = text;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+    }
     public static class UserData {
 
         @SerializedName("id")
