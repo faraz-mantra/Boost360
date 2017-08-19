@@ -45,7 +45,8 @@ import com.nowfloats.CustomWidget.roboto_md_60_212121;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NFXApi.NfxRequestClient;
 import com.nowfloats.NavigationDrawer.API.twitter.FacebookFeedPullRegistrationAsyncTask;
-import com.nowfloats.Twitter.TwitterConnection;
+import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
@@ -74,7 +75,6 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class SocialSharingFragment extends Fragment implements NfxRequestClient.NfxCallBackListener, TwitterConnection.TwitterResult {
     private static final int PAGE_NO_FOUND = 404;
     private static final int FB_PAGE_CREATION = 101;
-    private Toolbar toolbar;
     int size = 0;
     boolean[] checkedPages;
     UserSessionManager session;
@@ -154,7 +154,6 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         super.onViewCreated(view, savedInstanceState);
         if (!isAdded()) return;
 
-        toolbar = (Toolbar) view.findViewById(R.id.app_bar_social);
 
         Typeface myCustomFont = Typeface.createFromAsset(activity.getAssets(), "Roboto-Light.ttf");
         Typeface myCustomFont_Medium = Typeface.createFromAsset(activity.getAssets(), "Roboto-Regular.ttf");
@@ -232,7 +231,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                     //createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
 
                 } else {
-                    NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) activity)
+                    NfxRequestClient requestClient = new NfxRequestClient(SocialSharingFragment.this)
                             .setmFpId(session.getFPID())
                             .setmType("facebookpage")
                             .setmUserAccessTokenKey("")
@@ -263,7 +262,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                     }, 200);
                 } else {
 
-                    NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) activity)
+                    NfxRequestClient requestClient = new NfxRequestClient(SocialSharingFragment.this)
                             .setmFpId(session.getFPID())
                             .setmType("facebookusertimeline")
                             .setmUserAccessTokenKey("")
@@ -275,7 +274,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                             .setmName("");
                     requestClient.connectNfx();
 
-                    NfxRequestClient pageRequestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) activity)
+                    NfxRequestClient pageRequestClient = new NfxRequestClient(SocialSharingFragment.this)
                             .setmFpId(session.getFPID())
                             .setmType("facebookpage")
                             .setmUserAccessTokenKey("")
@@ -345,7 +344,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                     }
                     //Rahul twitter
                 } else {
-                    NfxRequestClient requestClient1 = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) activity)
+                    NfxRequestClient requestClient1 = new NfxRequestClient(SocialSharingFragment.this)
                             .setmFpId(session.getFPID())
                             .setmType("twitter")
                             .setmUserAccessTokenKey("")
@@ -577,6 +576,13 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         request.executeAsync();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (HomeActivity.headerText != null)
+            HomeActivity.headerText.setText("Third Party Integrations");
+    }
+
     private void processGraphResponse(final GraphResponse response, final int from) {
 
         new Thread(new Runnable() {
@@ -690,7 +696,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                                 if (from == FROM_AUTOPOST) {
                                     Methods.materialDialog(activity, "Alert", getString(R.string.look_like_no_facebook_page));
                                 } else {
-                                    NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) activity)
+                                    NfxRequestClient requestClient = new NfxRequestClient(SocialSharingFragment.this)
                                             .setmFpId(session.getFPID())
                                             .setmType("facebookpage")
                                             .setmCallType(PAGE_NO_FOUND)
@@ -713,7 +719,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         session.storeFacebookPage(pageName);
         JSONArray data = new JSONArray();
 
-        NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) activity)
+        NfxRequestClient requestClient = new NfxRequestClient(this)
                 .setmFpId(session.getFPID())
                 .setmType("facebookpage")
                 .setmUserAccessTokenKey(pageAccessToken)
@@ -1021,7 +1027,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
                 String username = twitterSession.getUserName();
 
-                NfxRequestClient requestClient = new NfxRequestClient((NfxRequestClient.NfxCallBackListener) activity)
+                NfxRequestClient requestClient = new NfxRequestClient(this)
                         .setmFpId(session.getFPID())
                         .setmType("twitter")
                         .setmUserAccessTokenKey(twitterSession.getAuthToken().token)
@@ -1271,7 +1277,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
         pd = ProgressDialog.show(activity, "", getString(R.string.please_wait));
 
         NfxRequestClient requestClient = new
-                NfxRequestClient((NfxRequestClient.NfxCallBackListener) activity)
+                NfxRequestClient(this)
                 .setmFpId(session.getFPID())
                 .setmCallType(FB_PAGE_CREATION);
 

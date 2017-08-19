@@ -1353,5 +1353,36 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
     <string name="pull_to_open">Pull the 4 dots to open</string>
     <string name="long_press_to_move">Long press to move</string>
+    <string name="seller_analytics">Seller Analytics</string>
+    <string name="total_orders">Total Orders</string>
+    <string name="total_revenue">Total Revenue</string>
+    <string name="assured_purchase">Assured Purchase</string>
+    <string name="select_payment_method">Select yout payment method</string>
+    <string name="use_own_payment_link">Use own payment link</string>
+    <string name="delivery_mode">Mode  of Delivery</string>
+    <string name="nowfloats_deliv">NowFloats Delivery</string>
+    <string name="self_deliv">Self Delivery</string>
+    <string name="address_pincode">ADDRESS PINCODE</string>
+    <string name="subscription_status">SUBSCRIPTION STATUS</string>
+    <string name="custom_domain">CUSTOM DOMAIN</string>
+    <string name="site_appearance">SITE APPEARANCE</string>
+    <string name="shipping_metrics">SHIPPING METRICS</string>
+    <string name="bank_details">BANK DETAILS</string>
+    <string name="payment_details">Payment Details</string>
+    <string name="product_shipping_charges">Shipping Charges(In INR)</string>
+    <string name="product_transaction_charges">Transaction Charges (In INR)</string>
+    <string name="product_net_amount">Net Amount (In INR)</string>
+    <string name="assured_purchase_note">Note: Following fields are applicable only in case if assured purchase is enabled otherwise please ignore.</string>
+    <string name="product_name_hint">Enter the most suitable name of your product, so that customers can identify the product easily.</string>
+    <string name="product_desc_hint">Please enter details of the product you want to sell. Please make sure the information is accurate. Your customers will make their buying decision based on the information you provide about the product. This contributes to your website SEO.</string>
+    <string name="product_price_hint">Enter the price at which this product will be sold on your website. This is what the buyer will pay (provided discount Amount is INR 0)</string>
+    <string name="product_discount_hint">Amount of discount that you wish to give. Your buyers will pay Product Price less Discount Amount while purchasing the product</string>
+    <string name="product_currency_hint">For Assured Purchase Online Payments only INR is supported. For any other case you can choose any currency</string>
+    <string name="product_priority_hint">You should use this to showcase products on your website based on popularity and selling point</string>
+    <string name="product_net_amount_hint">This is amount you will earn once you deliver an order successfully through Assured Purchase online payment. It is calculated as = Product Price - Discount Amount - Shipping Charges - Transaction Charges</string>
+    <string name="product_shipping_charge_hint">Calculate shipping charges which Assured Purchase will charge you when a buyer pays online to purchase your product.</string>
+    <string name="product_shipping_days_hint">Days you require to deliver the product to your customer</string>
+    <string name="product_transaction_charge_hint">This is charge for using Assured Purchase only. This will be calculated on Product Price less Discount Amount</string>
+    <string name="product_buy_online_hint">If you don\'t want to collect payments online through Assured Purchase, you can select this option to re-direct buyer to your own URL, once they click \'Buy Now\' on your website. This disabled when Assured Purchase is enabled.</string>
 
 </resources>

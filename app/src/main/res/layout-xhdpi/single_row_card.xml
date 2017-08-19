@@ -143,6 +143,7 @@
                 android:layout_height="@dimen/icon_size"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
+                android:tint="#808080"
                 android:padding="5dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/manage_customers" />
@@ -171,6 +172,7 @@
                 android:layout_height="@dimen/icon_size"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
+                android:tint="#808080"
                 android:padding="5dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/manage_inventory" />
@@ -199,6 +201,7 @@
                 android:layout_height="@dimen/icon_size"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
+                android:tint="#808080"
                 android:padding="5dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/manage_third_party" />

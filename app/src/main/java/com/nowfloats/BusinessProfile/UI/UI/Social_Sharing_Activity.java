@@ -48,7 +48,7 @@ import com.nowfloats.NFXApi.NfxRequestClient;
 import com.nowfloats.NavigationDrawer.API.twitter.FacebookFeedPullRegistrationAsyncTask;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.nowfloats.Twitter.TwitterConnection;
+import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
@@ -148,14 +148,14 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         mSharedPreferences = this.getSharedPreferences(TwitterConnection.PREF_NAME, MODE_PRIVATE);
         activity = Social_Sharing_Activity.this;
 
-        toolbar = (Toolbar) findViewById(R.id.app_bar_social);
+        //toolbar = (Toolbar) findViewById(R.id.app_bar_social);
 
         Typeface myCustomFont = Typeface.createFromAsset(this.getAssets(), "Roboto-Light.ttf");
         Typeface myCustomFont_Medium = Typeface.createFromAsset(this.getAssets(), "Roboto-Regular.ttf");
 
-        setSupportActionBar(toolbar);
-        headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
-        headerText.setText(getResources().getString(R.string.third_party_integration));
+        //setSupportActionBar(toolbar);
+        //headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
+        //headerText.setText(getResources().getString(R.string.third_party_integration));
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(true);

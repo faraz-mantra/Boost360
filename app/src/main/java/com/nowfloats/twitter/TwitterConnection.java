@@ -1,4 +1,4 @@
-package com.nowfloats.Twitter;
+package com.nowfloats.twitter;
 
 import android.app.Activity;
 import android.content.Context;

@@ -68,6 +68,7 @@ import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
 import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Settings_Fragment;
+import com.nowfloats.BusinessProfile.UI.UI.SocialSharingFragment;
 import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.Business_Enquiries.Business_Enquiries_Fragment;
 import com.nowfloats.CustomPage.CreateCustomPageActivity;
@@ -169,6 +170,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     Product_Gallery_Fragment productGalleryFragment;
     ChatFragment chatFragment;
     StoreFragmentTab storeFragment;
+    SocialSharingFragment socialSharingFragment;
+    HelpAndSupportFragment helpAndSupportFragment;
     UserSessionManager session;
     Typeface robotoMedium;
     Typeface robotoLight;
@@ -1350,10 +1353,12 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 //                        call.setData(Uri.parse(callString));
 //                        startActivity(call);
 //                    } else {
-                    Intent supportIntent = new Intent(HomeActivity.this, HelpAndSupportActivity.class);
+                    /*Intent supportIntent = new Intent(HomeActivity.this, HelpAndSupportActivity.class);
                     startActivity(supportIntent);
 //                    }
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
                 } else if (nextScreen.equals(getString(R.string.share))) {
                     shareWebsite();
                 } else if (nextScreen.equals("Settings")) {
@@ -1380,8 +1385,11 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     startActivity(businessAddressIntent);
                 } else if (nextScreen.equals(getString(R.string.title_activity_social__sharing_))) {
                     MixPanelController.track(EventKeysWL.SOCIAL_SHARING, null);
-                    Intent socialSharingIntent = new Intent(HomeActivity.this, Social_Sharing_Activity.class);
-                    startActivity(socialSharingIntent);
+                    /*Intent socialSharingIntent = new Intent(HomeActivity.this, Social_Sharing_Activity.class);
+                    startActivity(socialSharingIntent);*/
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, socialSharingFragment).commit();
+
+
                 } else if (nextScreen.equals(getString(R.string.manage_inventory))) {
                     MixPanelController.track(EventKeysWL.MANAGE_INVENTORY, null);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageCustomers")
@@ -1878,8 +1886,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         productGalleryFragment = new Product_Gallery_Fragment();
         chatFragment = new ChatFragment();
         storeFragment = new StoreFragmentTab();
+        socialSharingFragment = new SocialSharingFragment();
         siteMeterFragment = new Site_Meter_Fragment();
         customPageActivity = new CustomPageFragment();
+        helpAndSupportFragment = new HelpAndSupportFragment();
 
         new Thread(new Runnable() {
             @Override
