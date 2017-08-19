@@ -551,6 +551,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                 String strVal = adapter.getItem(position);
                 dialog.dismiss();
                 etCountry.setText(strVal);
+                etPin.requestFocus();
             }
         });
 

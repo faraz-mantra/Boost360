@@ -586,6 +586,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 .negativeText(getString(R.string.remind_me_later))
                 .positiveColorRes(R.color.primaryColor)
                 .negativeColorRes(R.color.primaryColor)
+                .cancelable(false)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
