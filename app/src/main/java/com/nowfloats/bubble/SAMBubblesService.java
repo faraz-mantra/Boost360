@@ -41,7 +41,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.nowfloats.accessbility.SAMDialog;
+import com.nowfloats.sam.SAMCustomerListActivity;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
@@ -145,7 +145,7 @@ public class SAMBubblesService extends Service {
 
                 @Override
                 public void onBubbleClick(BubbleLayout bubble) {
-                    Intent intent = new Intent(SAMBubblesService.this, SAMDialog.class);
+                    Intent intent = new Intent(SAMBubblesService.this, SAMCustomerListActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
                     startActivity(intent);
                 }

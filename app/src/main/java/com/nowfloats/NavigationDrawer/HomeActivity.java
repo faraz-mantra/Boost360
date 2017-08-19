@@ -528,7 +528,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
     @Override
     protected void onStop() {
-//        sendBroadcast(new Intent(SAMBubblesService.ACTION_ADD_BUBBLE));
+        sendBroadcast(new Intent(SAMBubblesService.ACTION_ADD_BUBBLE));
         super.onStop();
         Constants.fromLogin = false;
         isExpiredCheck = false;
@@ -779,8 +779,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
         DeepLinkPage(mDeepLinkUrl, false);
 
-//        isMyServiceRunning(SAMBubblesService.class);
-//        sendBroadcast(new Intent(SAMBubblesService.ACTION_REMOVE_BUBBLE));
+        isMyServiceRunning(SAMBubblesService.class);
+        sendBroadcast(new Intent(SAMBubblesService.ACTION_REMOVE_BUBBLE));
     }
 
     private void checkExpiry1() {

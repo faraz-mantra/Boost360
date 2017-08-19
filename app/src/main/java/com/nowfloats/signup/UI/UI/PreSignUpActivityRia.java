@@ -1616,4 +1616,3 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     }
 
 }
-

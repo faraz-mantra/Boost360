@@ -25,7 +25,7 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <com.nowfloats.swipecard.SwipeStack
+        <com.nowfloats.sam.SwipeStack
             android:id="@+id/swipeStack"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
