@@ -783,8 +783,12 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
+        setCallback();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
+
+    private void setCallback() {
+        setResult(Constants.fbPageShareEnabled ? RESULT_OK : RESULT_CANCELED);
     }
 
     @Override
@@ -802,8 +806,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
 
     public void fbData(final int from) {
         //AccessToken.getCurrentAccessToken()
-        List<String> readPermissions = Arrays.asList("email", "public_profile", "user_friends", "read_insights", "business_management");
-        final List<String> publishPermissions = Arrays.asList("publish_actions", "publish_pages", "manage_pages","pages_messaging");
+        List<String> readPermissions = Arrays.asList("email", "public_profile", "user_friends", "read_insights", "business_management","pages_messaging");
+        final List<String> publishPermissions = Arrays.asList("publish_actions", "publish_pages", "manage_pages");
         final LoginManager loginManager = LoginManager.getInstance();
 
         loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {

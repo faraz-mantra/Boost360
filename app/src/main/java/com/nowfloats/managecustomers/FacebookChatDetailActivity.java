@@ -33,6 +33,7 @@ import com.nowfloats.managecustomers.adapters.FacebookChatDetailAdapter;
 import com.nowfloats.managecustomers.apis.FacebookChatApis;
 import com.nowfloats.managecustomers.models.FacebookChatDataModel;
 import com.nowfloats.managecustomers.models.FacebookMessageModel;
+import com.nowfloats.riachatsdk.utils.Utils;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
@@ -52,6 +53,7 @@ import retrofit.client.Response;
 public class FacebookChatDetailActivity extends AppCompatActivity implements View.OnClickListener {
     RecyclerView chatUserRecycerView;
     List<FacebookChatDataModel.Datum> chatModelList = new ArrayList<>();
+    List<FacebookChatDataModel.Datum> totalDataList = new ArrayList<>();
     FacebookChatDetailAdapter adapter;
     ImageView sendButton, scrollButton;
     EditText etReply;
@@ -59,6 +61,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
     private UserSessionManager sessionManager;
     private String userId;
     public static final String INTENT_FILTER = "nfx.facebook.messages";
+    private boolean isAddedToTop = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -122,28 +125,58 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         chatUserRecycerView.setHasFixedSize(true);
         final LinearLayoutManager manager = new LinearLayoutManager(this);
         chatUserRecycerView.setLayoutManager(manager);
+        FacebookChatItemDecorator decorator = new FacebookChatItemDecorator(Utils.dpToPx(this,30),
+                true, getSectionCallback());
+        chatUserRecycerView.addItemDecoration(decorator);
         adapter = new FacebookChatDetailAdapter(this,chatModelList);
         chatUserRecycerView.setAdapter(adapter);
         chatUserRecycerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
 
-                if(manager.findLastCompletelyVisibleItemPosition() < manager.getItemCount()-3){
+                /*if(manager.findLastCompletelyVisibleItemPosition() < manager.getItemCount()-5){
+                    scrollButton.setVisibility(View.VISIBLE);
+                }else{
+                    scrollButton.setVisibility(View.GONE);
+                }*/
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if(manager.findLastCompletelyVisibleItemPosition() < manager.getItemCount()-5){
                     scrollButton.setVisibility(View.VISIBLE);
                 }else{
                     scrollButton.setVisibility(View.GONE);
                 }
+
+                if(manager.findFirstCompletelyVisibleItemPosition()<4 && chatModelList.size() != totalDataList.size()){
+                    //isAddedToTop = false;
+                    addChatItemToListTop();
+                }
+
             }
         });
 
     }
 
+    private void addChatItemToListTop(){
+        int size  = totalDataList.size();
+        int chatSize = chatModelList.size();
+        for (int i = chatSize; i< size && i<chatSize+10;i++){
+            chatModelList.add(0,totalDataList.get(i));
+            adapter.notifyItemInserted(0);
+        }
+        //adapter.notifyDataSetChanged();
+
+       /* chatModelList.add(0, totalDataList.get(chatModelList.size()));
+        adapter.notifyItemInserted(0);*/
+    }
     private void getChatData(){
         if(TextUtils.isEmpty(userId)){
             Methods.showSnackBarNegative(this,"Unable to find chat user");
             return;
         }
-        chatModelList.clear();
+
         showProgress();
         FacebookChatApis.FacebookApis apis = FacebookChatApis.getFacebookChatApis();
         apis.getAllMessages(userId,"facebook", sessionManager.getFPID(), new Callback<FacebookChatDataModel>() {
@@ -152,15 +185,19 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
                 hideProgress();
                 if(facebookChatUsersModel == null || !"success".equals(facebookChatUsersModel.getMessage())||response.getStatus() != 200){
                     Methods.showSnackBarNegative(FacebookChatDetailActivity.this,getString(R.string.something_went_wrong_try_again));
+
                     return;
                 }
-                List<FacebookChatDataModel.Datum> data = facebookChatUsersModel.getData();
-                int size = data.size();
-                for (int i = 0; i<size;i++){
-                    chatModelList.add(0,data.get(i));
-                    adapter.notifyItemInserted(0);
-                    chatUserRecycerView.smoothScrollToPosition(chatModelList.size()-1);
+                totalDataList = facebookChatUsersModel.getData();
+                /*chatModelList.add(0,totalDataList.get(0));
+                adapter.notifyItemInserted(0);*/
+                int size = totalDataList.size();
+                for (int i = 0; i<size && i<10;i++){
+                    chatModelList.add(0,totalDataList.get(i));
+                    //adapter.notifyItemInserted(0);
+                    //chatUserRecycerView.smoothScrollToPosition(chatModelList.size()-1);
                 }
+                adapter.notifyDataSetChanged();
                 //chatUserRecycerView.smoothScrollToPosition(chatModelList.size()-1);
             }
 
@@ -259,6 +296,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         data.setMessage(mess);
         data.setSender(status);
         data.setTimestamp(Calendar.getInstance(TimeZone.getDefault()).getTimeInMillis());
+        totalDataList.add(data);
         chatModelList.add(data);
         int currPos = chatModelList.size()-1;
         adapter.notifyItemInserted(currPos);
@@ -306,5 +344,26 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
                 adapter.notifyItemChanged(currPos);
             }
         });
+    }
+
+    private String getHeader(Long millisecond){
+        String date = Methods.getFormattedDate(String.valueOf(millisecond));
+        return date.substring(0,date.indexOf("at"));
+    }
+
+    private FacebookChatItemDecorator.SectionCallback getSectionCallback() {
+        return new FacebookChatItemDecorator.SectionCallback() {
+            @Override
+            public boolean isSection(int position) {
+                return position == 0
+                        || !getHeader(chatModelList.get(position).getTimestamp())
+                        .equals(getHeader(chatModelList.get(position - 1).getTimestamp()));
+            }
+
+            @Override
+            public CharSequence getSectionHeader(int position) {
+                return getHeader(chatModelList.get(position).getTimestamp());
+            }
+        };
     }
 }

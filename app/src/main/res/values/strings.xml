@@ -163,7 +163,9 @@
     <string name="email_text2">Add email</string>
     <string name="postUpdate_text2">Message regularly and relevantly</string>
     <string name="share_text2">Promote your website</string>
-
+    <string name="to_manage_facebook_page_message">To manage your facebook page\nmessages from Boost, please\nclick to enable.</string>
+    <string name="customer_have_not_messaged">You did not get any query\non your facebook page</string>
+    <string name="facebook_chat_note"><b>Note: </b> Messages sent and received from facebook via nf will only be visible.</string>
 
     <string-array name="CountryCodes">
         <item>93,AF</item>
