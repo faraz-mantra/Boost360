@@ -50,7 +50,7 @@
         android:id="@+id/chat_user_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
         android:orientation="vertical">
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"

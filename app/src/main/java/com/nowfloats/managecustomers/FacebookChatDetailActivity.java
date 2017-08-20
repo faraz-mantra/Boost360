@@ -208,7 +208,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
                 totalDataList = facebookChatUsersModel.getData();
                 decideCornersForChatItems();
                 int size = totalDataList.size();
-                for (int i = 0; i<size && i<10;i++){
+                for (int i = 0; i<size && i<15;i++){
                     chatModelList.add(0,totalDataList.get(i));
                     //adapter.notifyItemInserted(0);
                     //chatUserRecycerView.smoothScrollToPosition(chatModelList.size()-1);

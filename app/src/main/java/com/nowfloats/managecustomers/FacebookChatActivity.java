@@ -9,7 +9,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -82,16 +82,26 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
         chatUserRecycerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         chatUserRecycerView.setAdapter(adapter);
         checkNfxConnection();
-        getChatData();
+        //getChatData();
     }
 
     private void checkNfxConnection() {
+        showProgress();
         Get_FP_Details_Service.newNfxTokenDetails(this,sessionManager.getFPID(),bus);
     }
     @Subscribe
     public void nfxCallback(NfxGetTokensResponse response){
-        if(response != null) {
-            Log.v("ggg", response.getMessage());
+        if(response.getNFXAccessTokens() != null ) {
+            if(TextUtils.isEmpty(sessionManager.getFacebookPage())){
+                showEmptyMessages(CONNECT_TO_PAGE);
+                hideProgress();
+            }else{
+
+                getChatData();
+            }
+
+        }else{
+            hideProgress();
         }
     }
     @Override
@@ -136,11 +146,12 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
         }
     }
     private void getChatData(){
+
         if(chatModelList.size()>0) {
             chatModelList.clear();
             adapter.notifyDataSetChanged();
         }
-        showProgress();
+
         FacebookChatApis.FacebookApis apis = FacebookChatApis.getFacebookChatApis();
         apis.getAllUsers("facebook", sessionManager.getFPID(), new Callback<FacebookChatUsersModel>() {
             @Override
@@ -151,14 +162,25 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
                     showEmptyMessages(NO_MESSAGES);
                     return;
                 }
+
                 List<FacebookChatUsersModel.Datum> data = facebookChatUsersModel.getData();
                 int size = data.size();
-                for (int i = 0; i<size;i++){
-                    chatModelList.add(data.get(i));
+                if(size>0) {
+                    if(chatlayout.getVisibility() != View.VISIBLE) {
+                        layout.setVisibility(View.GONE);
+                        chatlayout.setVisibility(View.VISIBLE);
+                    }
+                    facebookPageName.setText(sessionManager.getFacebookPage());
+                    for (int i = 0; i<size;i++){
+                        chatModelList.add(data.get(i));
+                    }
+                    //showEmptyMessages(1);
+                    //logic for showing screens
+                    adapter.notifyDataSetChanged();
+                }else{
+                    showEmptyMessages(NO_MESSAGES);
                 }
-                //showEmptyMessages(1);
-                //logic for showing screens
-                adapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -177,8 +199,8 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
                 getChatData();
                 break;
             case 333:
-                getChatData();
-                //showEmptyMessages(NO_MESSAGES);
+
+                checkNfxConnection();
                 //refresh
                 break;
             default:

@@ -137,7 +137,11 @@ public class Get_FP_Details_Service {
         facebookApis.nfxGetSocialTokens(fpID, new Callback<NfxGetTokensResponse>() {
             @Override
             public void success(NfxGetTokensResponse nfxGetTokensResponse, Response response) {
-                if (nfxGetTokensResponse == null || activity == null || activity.isFinishing()) return;
+
+                if (nfxGetTokensResponse == null || activity == null || activity.isFinishing()){
+                    bus.post(new NfxGetTokensResponse());
+                    return;
+                }
                 SharedPreferences pref = activity.getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
                 List<String> regexList = nfxGetTokensResponse.getSmsRegex();
                 if(regexList != null && regexList.size()>0){
@@ -145,16 +149,16 @@ public class Get_FP_Details_Service {
                     pref.edit().putString(SMS_REGEX, s).apply();
                     pref.edit().putString(CALL_LOG_TIME_INTERVAL, nfxGetTokensResponse.getCallLogTimeInterval()).apply();
                 }
-                String message = nfxGetTokensResponse.getMessage();
-                if (message != null && message.equalsIgnoreCase("success")) {
-                    StoreData(activity, nfxGetTokensResponse.getNFXAccessTokens());
-                }
-                bus.post(new NfxGetTokensResponse());
+                /*String message = nfxGetTokensResponse.getMessage();
+                if (message != null && message.equalsIgnoreCase("success")) {*/
+                StoreData(activity, nfxGetTokensResponse.getNFXAccessTokens());
+                bus.post(nfxGetTokensResponse);
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Log.d("", "" + error.getMessage());
+                bus.post(new NfxGetTokensResponse());
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
