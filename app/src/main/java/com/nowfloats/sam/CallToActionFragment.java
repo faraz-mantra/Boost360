@@ -300,8 +300,6 @@ public class CallToActionFragment extends Fragment {
                 .duration(500)
                 .playOn(llProductView);
 
-        vwSAM.setAdapter(new SAMPagerAdapter(getActivity()));
-        tabs.setViewPager(vwSAM);
     }
 
 

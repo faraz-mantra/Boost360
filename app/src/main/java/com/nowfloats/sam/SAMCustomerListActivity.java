@@ -1,6 +1,7 @@
 package com.nowfloats.sam;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +16,8 @@ import com.thinksity.R;
  * Created by admin on 8/17/2017.
  */
 
-public class SAMCustomerListActivity extends Activity implements RecyclerSectionItemDecoration.SectionCallback {
+public class SAMCustomerListActivity extends Activity
+        implements RecyclerSectionItemDecoration.SectionCallback {
 
 
     public ProgressBar pbView;
@@ -36,9 +38,9 @@ public class SAMCustomerListActivity extends Activity implements RecyclerSection
     private void initializeControls() {
 
         pbView = (ProgressBar) findViewById(R.id.pbView);
+        rvSAMCustomerList = (RecyclerView) findViewById(R.id.rvSAMCustomerList);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rvSAMCustomerList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this,
+        rvSAMCustomerList.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL,
                 false));
 
@@ -47,10 +49,16 @@ public class SAMCustomerListActivity extends Activity implements RecyclerSection
                 new RecyclerSectionItemDecoration(120,
                         true,
                         SAMCustomerListActivity.this);
-        recyclerView.addItemDecoration(sectionItemDecoration);
+        rvSAMCustomerList.addItemDecoration(sectionItemDecoration);
 
-        recyclerView.setAdapter(new SAMCustomersAdapter(SAMCustomerListActivity.this, null));
+        rvSAMCustomerList.setAdapter(new SAMCustomersAdapter(SAMCustomerListActivity.this, null));
 
+    }
+
+    public void onCustomerSelection() {
+
+        Intent mIntent = new Intent(SAMCustomerListActivity.this, SAMCustomerDetailActivity.class);
+        startActivity(mIntent);
     }
 
     @Override

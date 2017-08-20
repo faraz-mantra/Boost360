@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.nowfloats.sam.SAMCustomerListActivity;
 import com.nowfloats.sam.models.SugUpdates;
 import com.thinksity.R;
 
@@ -46,6 +47,13 @@ public class SAMCustomersAdapter extends RecyclerView.Adapter<SAMCustomersAdapte
         } else {
             viewHolder.tvSource.setText("I");
         }
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((SAMCustomerListActivity) mContext).onCustomerSelection();
+            }
+        });
     }
 
     @Override
