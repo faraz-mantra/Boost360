@@ -25,44 +25,65 @@ import java.util.Locale;
  * Created by Admin on 17-08-2017.
  */
 
-public class FacebookChatAdapter extends RecyclerView.Adapter<FacebookChatAdapter.MyUserViewHolder>{
+public class FacebookChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     List<FacebookChatUsersModel.Datum> chatList;
     Context mContext;
     final String TEXT = "text", IMAGE = "image";
+    final int EMPTY_LAYOUT = -1, MESSAGE_LAYOUT = -2;
     public FacebookChatAdapter(Context context, List<FacebookChatUsersModel.Datum> list){
         chatList = list;
         mContext = context;
     }
     @Override
-    public MyUserViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_facebook_chat_item, parent, false);
-        return new MyUserViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view;
+        switch(viewType) {
+            case MESSAGE_LAYOUT:
+            view = LayoutInflater.from(mContext).inflate(R.layout.adapter_facebook_chat_item, parent, false);
+            return new MyUserViewHolder(view);
+            case EMPTY_LAYOUT:
+                view = LayoutInflater.from(mContext).inflate(R.layout.facebook_no_messages, parent, false);
+                return new MyEmptyViewHolder(view);
+            default:
+                return null;
+
+        }
     }
 
     @Override
-    public void onBindViewHolder(MyUserViewHolder holder, int position) {
-        if(holder == null) return;
-        FacebookChatUsersModel.Datum data = chatList.get(position);
-        holder.userName.setText(data.getUserData().getFirstName()+" "+data.getUserData().getLastName());
-        switch (data.getLatestMessage().getType()){
-            case TEXT:
-                holder.message.setText(data.getLatestMessage().getData().getText());
-                break;
-            case IMAGE:
-                holder.message.setText("User sent a photo");
-                break;
-            default:
-                break;
-        }
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+        if(viewHolder == null) return;
+        if(viewHolder instanceof MyUserViewHolder) {
+            MyUserViewHolder userViewHolder = (MyUserViewHolder) viewHolder;
+            FacebookChatUsersModel.Datum data = chatList.get(position);
+            userViewHolder.userName.setText(data.getUserData().getFirstName() + " " + data.getUserData().getLastName());
+            switch (data.getLatestMessage().getType()) {
+                case TEXT:
+                    userViewHolder.message.setText(data.getLatestMessage().getData().getText());
+                    break;
+                case IMAGE:
+                    userViewHolder.message.setText("Sent a photo");
+                    break;
+                default:
+                    break;
+            }
 
-        holder.date.setText(getFormattedTime(data.getTimestamp()));
-        //Glide.with(mContext).load(data.getUserData().getProfilePic()).placeholder(R.drawable.ic_user).into(holder.userPic);
-        Picasso.with(mContext)
-                .load(data.getUserData().getProfilePic())
-                .resize(200, 0)
-                .placeholder(R.drawable.ic_user)
-                .into(holder.userPic);
+            userViewHolder.date.setText(getFormattedTime(data.getTimestamp()));
+            //Glide.with(mContext).load(data.getUserData().getProfilePic()).placeholder(R.drawable.ic_user).into(holder.userPic);
+            Picasso.with(mContext)
+                    .load(data.getUserData().getProfilePic())
+                    .resize(200, 0)
+                    .placeholder(R.drawable.ic_user)
+                    .into(userViewHolder.userPic);
+        }else if(viewHolder instanceof MyEmptyViewHolder){
+
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return chatList.get(position).getSender().equals("no_messages")?EMPTY_LAYOUT:MESSAGE_LAYOUT;
     }
 
     private String getFormattedTime(Long milliSecond){
@@ -74,6 +95,17 @@ public class FacebookChatAdapter extends RecyclerView.Adapter<FacebookChatAdapte
         return chatList.size();
     }
 
+    public class MyEmptyViewHolder extends RecyclerView.ViewHolder {
+
+        TextView userName, message;
+
+        public MyEmptyViewHolder(View itemView) {
+            super(itemView);
+            userName = (TextView) itemView.findViewById(R.id.tv_main_message);
+            message = (TextView) itemView.findViewById(R.id.tv_note_message);
+
+        }
+    }
     public class MyUserViewHolder extends RecyclerView.ViewHolder{
 
         TextView userName,message,date;

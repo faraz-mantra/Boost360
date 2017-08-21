@@ -1984,7 +1984,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.mainFrame, homeFragment, "homeFragment");
         ft.commit();
-        //DeepLinkPage(deepLinkUrl);
+        deepLink(deepLinkUrl);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

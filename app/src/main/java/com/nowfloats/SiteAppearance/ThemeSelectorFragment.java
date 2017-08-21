@@ -138,14 +138,13 @@ public class ThemeSelectorFragment extends Fragment{
         }
     }
     private void hideDialog(){
-        if(dialog != null && dialog.isShowing() &&getActivity()!=null&& !getActivity().isFinishing()){
+        if(dialog != null && dialog.isShowing()){
             dialog.hide();
         }
     }
     private void setDynamicTheme(){
-        UserSessionManager sessionManager = new UserSessionManager(getActivity(),getActivity());
         ThemeApis api = Constants.restAdapter.create(ThemeApis.class);
-        api.setDynamicTheme(Constants.clientId, sessionManager.getFpTag(), new Callback<String>() {
+        api.setDynamicTheme(Constants.clientId, manager.getFpTag(), new Callback<String>() {
             @Override
             public void success(String s, Response response) {
                 setCurrentLook(response.getStatus() == 200? s:null);

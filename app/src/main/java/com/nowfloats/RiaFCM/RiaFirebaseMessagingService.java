@@ -92,9 +92,10 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                         intent.putExtra("user_data",message.get("user_data"));
                         Intent messageIntent = new Intent(FacebookChatDetailActivity.INTENT_FILTER);
                         messageIntent.putExtra("user_data",message.get("user_data"));
-                        messageIntent.putExtra("mp_message",message.get("mp_message"));
+                        messageIntent.putExtra("message",message.get("message"));
                         LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent);
                         SharedPreferences pref = getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
+                        pref.edit().putBoolean("IsNewFacebookMessage",true).apply();
                         ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
                         List<ActivityManager.RunningTaskInfo> allTasks = am.getRunningTasks(1);
                         for (ActivityManager.RunningTaskInfo task : allTasks){

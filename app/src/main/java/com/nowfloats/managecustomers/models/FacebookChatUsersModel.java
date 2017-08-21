@@ -46,7 +46,7 @@ public class FacebookChatUsersModel {
         this.data = data;
     }
 
-    public class Datum {
+    public static class Datum {
 
         @SerializedName("user_id")
         @Expose
