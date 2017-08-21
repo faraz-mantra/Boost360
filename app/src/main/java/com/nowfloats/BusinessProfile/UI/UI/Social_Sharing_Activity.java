@@ -341,7 +341,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                         showAlertBox();
                     } else {
                         if (twitterConnection == null) {
-                            twitterConnection = new TwitterConnection(Social_Sharing_Activity.this);
+                            twitterConnection = new TwitterConnection(Social_Sharing_Activity.this, Social_Sharing_Activity.this);
                         }
                         twitterConnection.authorize();
                     }

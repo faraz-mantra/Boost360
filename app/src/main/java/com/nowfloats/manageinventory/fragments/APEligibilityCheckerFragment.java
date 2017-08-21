@@ -158,8 +158,8 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
             @Override
             public void run() {
                 pbSubscriptionStatus.setVisibility(View.GONE);
-                mShouldEnableAP &= !TextUtils.isEmpty(mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE)) ||
-                        !mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1");
+                mShouldEnableAP &= !TextUtils.isEmpty(mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE)) &&
+                        mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1");
                 if(TextUtils.isEmpty(mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE)) ||
                         !mSession.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1")){
                     setNegativeStatusColor(ivSubscriptionStatus);
@@ -192,8 +192,8 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
             @Override
             public void run() {
                 pbSiteAppearance.setVisibility(View.GONE);
-                mShouldEnableAP &= !TextUtils.isEmpty(mSession.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID)) ||
-                        !mSession.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID).equals("57c3c1a65d64370d7cf4eb17");
+                mShouldEnableAP &= !TextUtils.isEmpty(mSession.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID)) &&
+                        mSession.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID).equals("57c3c1a65d64370d7cf4eb17");
                 if(TextUtils.isEmpty(mSession.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID)) ||
                         !mSession.getFPDetails(Key_Preferences.GET_FP_WEBTEMPLATE_ID).equals("57c3c1a65d64370d7cf4eb17")){
                     setNegativeStatusColor(ivSiteAppearance);
@@ -260,7 +260,7 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
                                 checkBankDetails();
                             }else {
 
-                                Toast.makeText(getActivity(), resp.Error.ErrorCode, Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(getActivity(), resp.Error.ErrorCode, Toast.LENGTH_SHORT).show();
                                 throw new NullPointerException("Response is Null");
                             }
                         }catch (Exception e)

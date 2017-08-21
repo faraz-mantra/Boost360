@@ -60,7 +60,7 @@
                         android:layout_gravity="center_horizontal"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:text="Interact with your online customers here"
+                        android:text="Manage your order fulfillment process"
                         android:textColor="@color/primaryColor"
                         android:textSize="19sp" />
 

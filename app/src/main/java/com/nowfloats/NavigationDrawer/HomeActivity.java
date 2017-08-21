@@ -297,10 +297,15 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == READ_MESSAGES_ID) {
-            if (Arrays.asList(grantResults).contains(PackageManager.PERMISSION_GRANTED)) {
+
+            List<Integer> intList = new ArrayList<Integer>();
+            for (int i : grantResults)
+            {
+                intList.add(i);
+            }
+            if (!intList.contains(PackageManager.PERMISSION_DENIED)) {
                 Intent intent = new Intent(this, ReadMessages.class);
                 startService(intent);
-                // start the service to send data to firebase
             }
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -782,6 +787,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             navigateView();
         }
         DeepLinkPage(mDeepLinkUrl, false);
+        mDeepLinkUrl = null;
 
 //        isMyServiceRunning(SAMBubblesService.class);
 //        sendBroadcast(new Intent(SAMBubblesService.ACTION_REMOVE_BUBBLE));
@@ -1248,6 +1254,11 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         if (CardAdapter_V3.pd != null)
             CardAdapter_V3.pd.dismiss();
         BoostLog.d("", "");
+
+        Fragment sociaSharingFragment = getSupportFragmentManager().findFragmentByTag("socialSharingFragment");
+        if(sociaSharingFragment!=null){
+            ((SocialSharingFragment)sociaSharingFragment).onSocialSharingResult(requestCode,resultCode,data);
+        }
     }
 
     public void getStoredImage(String imagePath) {
@@ -1388,7 +1399,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     MixPanelController.track(EventKeysWL.SOCIAL_SHARING, null);
                     /*Intent socialSharingIntent = new Intent(HomeActivity.this, Social_Sharing_Activity.class);
                     startActivity(socialSharingIntent);*/
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, socialSharingFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, socialSharingFragment,"socialSharingFragment").commit();
 
 
                 } else if (nextScreen.equals(getString(R.string.manage_inventory))) {

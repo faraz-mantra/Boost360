@@ -338,7 +338,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                         showAlertBox();
                     } else {
                         if (twitterConnection == null) {
-                            twitterConnection = new TwitterConnection(activity);
+                            twitterConnection = new TwitterConnection(activity, SocialSharingFragment.this);
                         }
                         twitterConnection.authorize();
                     }
@@ -548,17 +548,23 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     }
 
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);//added
+    public void onSocialSharingResult(int requestCode, int resultCode, Intent data) {
+
+        //added
 
         if (twitterConnection != null) {
             twitterConnection.onActivityResult(requestCode, resultCode, data);
         }
         //facebook.authorizeCallback(requestCode, resultCode, data);//removed
     }
-//added
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    //added
 
 
     public void getFacebookPages(AccessToken accessToken, final int from) {

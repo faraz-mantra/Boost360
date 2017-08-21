@@ -138,7 +138,7 @@ public class ThemeSelectorFragment extends Fragment{
         }
     }
     private void hideDialog(){
-        if(dialog != null && dialog.isShowing() &&getActivity()!=null&& !getActivity().isFinishing()){
+        if(dialog != null && dialog.isShowing()){
             dialog.hide();
         }
     }

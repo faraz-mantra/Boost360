@@ -119,7 +119,7 @@ public class SellerAnalyticsActivity extends AppCompatActivity {
                         pgOrdersCount.setVisibility(View.INVISIBLE);
                         tvTotalOrders.setVisibility(View.VISIBLE);
                         tvTotalOrders.setText("-");
-                        Toast.makeText(SellerAnalyticsActivity.this, "Unable to retrieve number of orders", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(SellerAnalyticsActivity.this, "Unable to retrieve number of orders", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -151,7 +151,7 @@ public class SellerAnalyticsActivity extends AppCompatActivity {
                         }catch (Exception e)
                         {
                             tvTotalOrders.setText("-");
-                            Toast.makeText(SellerAnalyticsActivity.this, "Unable to retrieve number of orders", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(SellerAnalyticsActivity.this, "Unable to retrieve number of orders", Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
                         }
                     }
@@ -174,7 +174,7 @@ public class SellerAnalyticsActivity extends AppCompatActivity {
                         pgTotalRevenue.setVisibility(View.INVISIBLE);
                         tvTotalRevenue.setVisibility(View.VISIBLE);
                         tvTotalRevenue.setText("-");
-                        Toast.makeText(SellerAnalyticsActivity.this, "Unable to retrieve total Revenue", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(SellerAnalyticsActivity.this, "Unable to retrieve total Revenue", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -201,7 +201,7 @@ public class SellerAnalyticsActivity extends AppCompatActivity {
                         }catch (Exception e)
                         {
                             tvTotalRevenue.setText("-");
-                            Toast.makeText(SellerAnalyticsActivity.this, "Unable to retrieve total revenue", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(SellerAnalyticsActivity.this, "Unable to retrieve total revenue", Toast.LENGTH_SHORT).show();
                             e.printStackTrace();
                         }
                     }

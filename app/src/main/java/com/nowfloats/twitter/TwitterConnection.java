@@ -27,10 +27,12 @@ public class TwitterConnection {
     public static final String PREF_USER_NAME = "twitter_user_name";
     private Context mContext;
 
+    private TwitterResult mTwitterResult;
+
 
     private TwitterAuthClient client;
 
-    public TwitterConnection(Context context){
+    public TwitterConnection(Context context, TwitterResult twitterResult){
         TwitterConfig config;
         config = new TwitterConfig.Builder(context)
                 .twitterAuthConfig(new TwitterAuthConfig(Constants.CONSUMER_KEY, Constants.CONSUMER_SECRET))
@@ -38,6 +40,8 @@ public class TwitterConnection {
                 .build();
         Twitter.initialize(config);
         mContext = context;
+        mTwitterResult = twitterResult;
+
     }
     
     public void authorize(){
@@ -45,12 +49,13 @@ public class TwitterConnection {
         client.authorize((Activity)mContext, new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
-                ((TwitterResult)mContext).onTwitterConnected(result);
+                mTwitterResult.onTwitterConnected(result);
             }
 
             @Override
             public void failure(TwitterException e) {
-                ((TwitterResult)mContext).onTwitterConnected(null);
+                mTwitterResult.onTwitterConnected(null);
+                e.printStackTrace();
             }
         });
 
