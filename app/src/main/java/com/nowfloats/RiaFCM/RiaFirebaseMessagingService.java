@@ -1,7 +1,6 @@
 package com.nowfloats.RiaFCM;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -28,7 +27,6 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -89,14 +87,19 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                     intent.putExtra("url", deepLinkUrl);
                     if(deepLinkUrl.contains(getString(R.string.facebook_chat)))
                     {
+                        SharedPreferences pref = getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
+                        pref.edit().putBoolean("IsNewFacebookMessage",true).apply();
                         intent.putExtra("user_data",message.get("user_data"));
                         Intent messageIntent = new Intent(FacebookChatDetailActivity.INTENT_FILTER);
                         messageIntent.putExtra("user_data",message.get("user_data"));
                         messageIntent.putExtra("message",message.get("message"));
-                        LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent);
-                        SharedPreferences pref = getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
-                        pref.edit().putBoolean("IsNewFacebookMessage",true).apply();
-                        ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+                        if(LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent)){
+                            if(message.get("user_data").contains(pref.getString("facebookChatUser",""))){
+                                return;
+                            }
+                        }
+
+                       /* ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
                         List<ActivityManager.RunningTaskInfo> allTasks = am.getRunningTasks(1);
                         for (ActivityManager.RunningTaskInfo task : allTasks){
                             if(task.topActivity.getClassName().equals(FacebookChatDetailActivity.class.getName())){
@@ -104,7 +107,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                                     return;
                                 }
                             }
-                        }
+                        }*/
 
                     }
 

@@ -225,6 +225,9 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void failure(RetrofitError error) {
                 hideProgress();
+                if(listSwipeLayout.isRefreshing()) {
+                    listSwipeLayout.setRefreshing(false);
+                }
                 Methods.showSnackBarNegative(FacebookChatActivity.this,getString(R.string.something_went_wrong_try_again));
                 showEmptyMessages(NO_MESSAGES);
             }

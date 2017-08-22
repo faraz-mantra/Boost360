@@ -90,7 +90,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         }
         pref = getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
         pref.edit().putString("facebookChatUser",userId).apply();
-
+        pref.edit().putBoolean("IsNewFacebookMessage",false).apply();
         sendButton.setOnClickListener(this);
         scrollButton.setOnClickListener(this);
         //Glide.with(this).load(userData.getProfilePic()).into(imgUser);
@@ -251,7 +251,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
     @Override
     protected void onResume() {
         super.onResume();
-        if(pref.getBoolean("IsNewFacebookMessage",false)){
+        if(pref!= null &&pref.getBoolean("IsNewFacebookMessage",false)){
             pref.edit().putBoolean("IsNewFacebookMessage",false).apply();
             getChatData();
         }
@@ -385,6 +385,8 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
                     adapter.notifyItemChanged(currPos);
 
                 }else if ("session_expired".equals(jsonObject.get("message").getAsString())){
+                    chatModelList.get(currPos).setSender(FacebookChatDetailAdapter.ERROR);
+                    adapter.notifyItemChanged(currPos);
                     Methods.showSnackBarNegative(FacebookChatDetailActivity.this,"You can only reply to user when he send message to you");
                 }
 

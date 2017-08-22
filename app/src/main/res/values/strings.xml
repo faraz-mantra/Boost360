@@ -165,7 +165,7 @@
     <string name="share_text2">Promote your website</string>
     <string name="to_manage_facebook_page_message">To manage your Facebook page\nmessages, click here</string>
     <string name="customer_have_not_messaged">You did not receive any messages\n on your Facebook page</string>
-    <string name="facebook_chat_note"><b>Note: </b> Messages sent and received from Facebook via Boost will only be visible.</string>
+    <string name="facebook_chat_note"><b>Note:</b> Messages sent and received\nfrom Facebook via Boost will only\nbe visible.</string>
 
     <string-array name="CountryCodes">
         <item>93,AF</item>
