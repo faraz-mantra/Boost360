@@ -18,7 +18,6 @@ public class RecyclerSectionItemDecoration extends RecyclerView.ItemDecoration {
     private final SectionCallback sectionCallback;
 
     private View headerView;
-//    private TextView header;
 
     public RecyclerSectionItemDecoration(int headerHeight, boolean sticky, @NonNull SectionCallback sectionCallback) {
         headerOffset = headerHeight;
@@ -48,7 +47,6 @@ public class RecyclerSectionItemDecoration extends RecyclerView.ItemDecoration {
 
         if (headerView == null) {
             headerView = inflateHeaderView(parent);
-//            header = (TextView) headerView.findViewById(R.id.list_item_section_text);
             fixLayoutSize(headerView,
                     parent);
         }
@@ -59,7 +57,6 @@ public class RecyclerSectionItemDecoration extends RecyclerView.ItemDecoration {
             final int position = parent.getChildAdapterPosition(child);
 
             CharSequence title = sectionCallback.getSectionHeader(position);
-//            header.setText(title);
             if (!previousHeader.equals(title) || sectionCallback.isSection(position)) {
                 drawHeader(c,
                         child,

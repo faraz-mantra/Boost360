@@ -6,6 +6,12 @@
     android:focusable="false"
     android:gravity="center">
 
+    <com.nowfloats.CustomWidget.SAMMenuWidget
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </com.nowfloats.CustomWidget.SAMMenuWidget>
+
     <include
         android:id="@+id/swoosh_dots"
         layout="@layout/trigger"

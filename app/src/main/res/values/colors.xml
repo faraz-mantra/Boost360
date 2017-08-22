@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="color_trans">#20000000</color>
+
     <color name="whiteLable">#ffb900</color>
     <color name="expire_dialog_img_bg">#ff0010</color>
 
@@ -161,5 +163,10 @@
 
     <color name="transluscent_background">#BF000000</color>
     <color name="transparent_th">#80000000</color>
+
+    <color name="sam_title_color">#fffc6a62</color>
+    <color name="sam_title_color_1">#5a6b7d</color>
+    <color name="sam_title_color_2">#84888C</color>
+    <color name="sam_title_color_3">#3B4954</color>
 
 </resources>

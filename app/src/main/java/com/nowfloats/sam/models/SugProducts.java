@@ -1,10 +1,12 @@
 package com.nowfloats.sam.models;
 
+import java.io.Serializable;
+
 /**
  * Created by NowFloats on 4/28/2017.
  */
 
-public class SugProducts {
+public class SugProducts implements Serializable{
     public String productName;
     public String Image;
     public String buyLink;

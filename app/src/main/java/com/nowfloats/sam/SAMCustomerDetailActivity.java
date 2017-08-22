@@ -29,6 +29,7 @@ import com.nowfloats.sam.adapters.SugUpdatesAdapter;
 import com.nowfloats.sam.models.SugProducts;
 import com.nowfloats.sam.models.SugUpdates;
 import com.nowfloats.sam.models.SuggestionsDO;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -44,11 +45,15 @@ public class SAMCustomerDetailActivity extends Activity {
 
     private ViewPager vwSAM;
 
+    private TextView tvDate, tvSource, tvMessage;
+
     private Button btnCall, btnShare;
 
     private SlidingTabLayout tabs;
 
-    private SuggestionsDO suggestionsDO;
+    public static final String KEY_MSG = "KEY_MSG";
+
+    private SuggestionsDO mSuggestionsDO;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,17 +63,25 @@ public class SAMCustomerDetailActivity extends Activity {
 
         initializeControls();
 
+        tvDate.setText(Methods.getFormattedDate(mSuggestionsDO.getDate()));
+        tvSource.setText(mSuggestionsDO.getSource());
+        tvMessage.setText(mSuggestionsDO.getActualMessage());
+
+        setOnClickListeners();
 
     }
 
     private void initializeControls() {
 
-        suggestionsDO = new SuggestionsDO();
+        mSuggestionsDO = (SuggestionsDO) getIntent().getExtras().get(KEY_MSG);
 
         pbView = (ProgressBar) findViewById(R.id.pbView);
         vwSAM = (ViewPager) findViewById(R.id.vwSAM);
         btnCall = (Button) findViewById(R.id.btnCall);
         btnShare = (Button) findViewById(R.id.btnShare);
+        tvDate = (TextView) findViewById(R.id.tvDate);
+        tvSource = (TextView) findViewById(R.id.tvSource);
+        tvMessage = (TextView) findViewById(R.id.tvMessage);
         tabs = (SlidingTabLayout) findViewById(R.id.tabs);
 
         tabs.setDistributeEvenly(true);
@@ -84,6 +97,23 @@ public class SAMCustomerDetailActivity extends Activity {
         tabs.setViewPager(vwSAM);
 
     }
+
+    private void setOnClickListeners() {
+        btnCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
 
     public class SAMPagerAdapter extends PagerAdapter {
 
@@ -117,15 +147,15 @@ public class SAMCustomerDetailActivity extends Activity {
                 tvNoItems.setVisibility(View.GONE);
 
 
-                if (suggestionsDO.getUpdates() != null && suggestionsDO.getUpdates().size() > 0) {
+                if (mSuggestionsDO.getUpdates() != null && mSuggestionsDO.getUpdates().size() > 0) {
                     rvSuggestions.setLayoutManager(new LinearLayoutManager(SAMCustomerDetailActivity.this));
                     rvSuggestions.setAdapter(new SugUpdatesAdapter(SAMCustomerDetailActivity.this,
-                            (ArrayList<SugUpdates>) suggestionsDO.getUpdates()));
+                            (ArrayList<SugUpdates>) mSuggestionsDO.getUpdates()));
 
                     ivScrollDown.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            rvSuggestions.smoothScrollToPosition(suggestionsDO.getUpdates().size() - 1);
+                            rvSuggestions.smoothScrollToPosition(mSuggestionsDO.getUpdates().size() - 1);
                         }
                     });
 
@@ -140,7 +170,7 @@ public class SAMCustomerDetailActivity extends Activity {
                             super.onScrolled(recyclerView, dx, dy);
                             int position = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
 
-                            if (position < (suggestionsDO.getUpdates().size() - 2)) {
+                            if (position < (mSuggestionsDO.getUpdates().size() - 2)) {
                                 ivScrollDown.setVisibility(View.VISIBLE);
                             } else {
                                 ivScrollDown.setVisibility(View.INVISIBLE);
@@ -164,8 +194,8 @@ public class SAMCustomerDetailActivity extends Activity {
                 gvSuggestions.setVisibility(View.VISIBLE);
                 tvNoItems.setVisibility(View.GONE);
 
-                if (suggestionsDO.getProducts() != null && suggestionsDO.getProducts().size() > 0) {
-                    gvSuggestions.setAdapter(new SugProductsAdapter(SAMCustomerDetailActivity.this, suggestionsDO.getProducts()));
+                if (mSuggestionsDO.getProducts() != null && mSuggestionsDO.getProducts().size() > 0) {
+                    gvSuggestions.setAdapter(new SugProductsAdapter(SAMCustomerDetailActivity.this, mSuggestionsDO.getProducts()));
 
                     gvSuggestions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
@@ -189,7 +219,7 @@ public class SAMCustomerDetailActivity extends Activity {
                     ivScrollDown.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            gvSuggestions.smoothScrollToPosition(suggestionsDO.getProducts().size() - 1);
+                            gvSuggestions.smoothScrollToPosition(mSuggestionsDO.getProducts().size() - 1);
                         }
                     });
 
@@ -202,7 +232,7 @@ public class SAMCustomerDetailActivity extends Activity {
                         @Override
                         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
-                            if (visibleItemCount < (suggestionsDO.getUpdates().size() - 2)) {
+                            if (visibleItemCount < (mSuggestionsDO.getUpdates().size() - 2)) {
                                 ivScrollDown.setVisibility(View.VISIBLE);
                             } else {
                                 ivScrollDown.setVisibility(View.INVISIBLE);

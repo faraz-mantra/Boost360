@@ -1,12 +1,13 @@
 package com.nowfloats.sam.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by NowFloats on 4/28/2017.
  */
 
-public class SuggestionsDO {
+public class SuggestionsDO implements Serializable{
 
     public String Action;
     public long date;
@@ -16,7 +17,17 @@ public class SuggestionsDO {
     public String source;
     public String value;
     public String actualMessage;
+    public String expiryTimeOfMessage;
     public int status = -1;
+
+    public String getExpiryTimeOfMessage() {
+        return expiryTimeOfMessage;
+    }
+
+    public void setExpiryTimeOfMessage(String expiryTimeOfMessage) {
+        this.expiryTimeOfMessage = expiryTimeOfMessage;
+    }
+
     public boolean isShareEnabled = false;
     public boolean isExpandGroup = false;
     public List<SugProducts> products = null;
