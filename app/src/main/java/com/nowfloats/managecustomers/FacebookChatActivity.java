@@ -54,6 +54,7 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
     TextView facebookPageName;
     SwipeRefreshLayout listSwipeLayout;
     Bus bus;
+    TextView description;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,31 +65,30 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
         bus = BusProvider.getInstance().getBus();
         Toolbar toolbar  = (Toolbar) findViewById(R.id.facebook_toolbar);
         findViewById(R.id.img_chat_user).setVisibility(View.GONE);
-        findViewById(R.id.back_layout).setOnClickListener(this);
+        findViewById(R.id.img_back).setOnClickListener(this);
         listSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.sfl_list);
-       // noMessageSwipeLayout = (SwipeRefreshLayout) findViewById(R.id.sfl_no_messages);
         listSwipeLayout.setColorSchemeResources(R.color.primary_color);
-       // noMessageSwipeLayout.setColorSchemeResources(R.color.primary_color);
         listSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 getChatData();
             }
         });
-
+        sessionManager = new UserSessionManager(this,this);
         facebookPageName = (TextView) findViewById(R.id.tv_facebook_page);
         layout  = (LinearLayout) findViewById(R.id.fragment_layout);
         chatlayout  = (LinearLayout) findViewById(R.id.chat_user_layout);
         TextView title = (TextView) findViewById(R.id.tv_chat_user);
-        title.setText("Facebook Chat");
+        findViewById(R.id.facebook_icon).setVisibility(View.VISIBLE);
+        description = (TextView) findViewById(R.id.tv_chat_user_description);
+
+        title.setText("Facebook Chats");
         setSupportActionBar(toolbar);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage(getString(R.string.please_wait));
         progressDialog.setCanceledOnTouchOutside(false);
-
-        sessionManager = new UserSessionManager(this,this);
 
         chatUserRecycerView = (RecyclerView) findViewById(R.id.rv_facebook_chat);
         chatUserRecycerView.setHasFixedSize(true);
@@ -97,7 +97,6 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
         chatUserRecycerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         chatUserRecycerView.setAdapter(adapter);
         checkNfxConnection();
-        //getChatData();
     }
 
     private void checkNfxConnection() {
@@ -107,15 +106,10 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
     @Subscribe
     public void nfxCallback(NfxGetTokensResponse response){
         if(response.getNFXAccessTokens() != null ) {
-            if(TextUtils.isEmpty(sessionManager.getFacebookPage())){
-                showEmptyMessages(CONNECT_TO_PAGE);
-                hideProgress();
-            }else{
 
-                getChatData();
-            }
-
+            getChatData();
         }else{
+            showEmptyMessages(CONNECT_TO_PAGE);
             hideProgress();
         }
     }
@@ -137,25 +131,16 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
             case NO_MESSAGES:
                 chatlayout.setVisibility(View.VISIBLE);
                 FacebookChatUsersModel.Datum data = new FacebookChatUsersModel.Datum();
-                data.setSender("no_messages");
+                data.setSender(FacebookChatAdapter.NO_MESSAGES);
                 chatModelList.add(data);
                 adapter.notifyItemInserted(0);
-                //chatUserRecycerView.setVisibility(View.GONE);
-               /* findViewById(R.id.no_messages_layout).setVisibility(View.VISIBLE);
-                TextView mainMessage = (TextView) findViewById(R.id.tv_main_message);
-
-                TextView noteMessage = (TextView) findViewById(R.id.tv_note_message);
-                //connect.setVisibility(View.GONE);
-                //noteMessage.setVisibility(View.VISIBLE);
-                noteMessage.setText(Methods.fromHtml(getString(R.string.facebook_chat_note)));
-                mainMessage.setText(getString(R.string.customer_have_not_messaged));*/
                 break;
             case CONNECT_TO_PAGE:
+                description.setVisibility(View.GONE);
                 Button connect = (Button) findViewById(R.id.facebook_login);
                 layout.setVisibility(View.VISIBLE);
                 chatlayout.setVisibility(View.GONE);
-                //noteMessage.setVisibility(View.GONE);
-                //connect.setVisibility(View.VISIBLE);
+
                 TextView connectText = (TextView) findViewById(R.id.facebook_analytics_connect_text1);
                 connectText.setText(getString(R.string.to_manage_facebook_page_message));
                 connect.setOnClickListener(new View.OnClickListener() {
@@ -170,7 +155,15 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
         }
     }
     private void getChatData(){
-        facebookPageName.setText(sessionManager.getFacebookPage());
+        if(TextUtils.isEmpty(sessionManager.getFacebookPage())){
+            showEmptyMessages(CONNECT_TO_PAGE);
+            hideProgress();
+            return;
+        }else{
+            description.setVisibility(View.VISIBLE);
+            description.setText(Methods.fromHtml("On page: <b>"+sessionManager.getFacebookPage()+"</b>"));
+        }
+
         if(chatModelList.size()>0) {
             chatModelList.clear();
             adapter.notifyDataSetChanged();
@@ -199,7 +192,6 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
                     int size = data.size();
                     if (size > 0) {
 
-                        //chatUserRecycerView.setVisibility(View.VISIBLE);
                         for (int i = 0; i < size; i++) {
                             chatModelList.add(data.get(i));
                         }
@@ -209,8 +201,7 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
                                 return object2.getTimestamp().compareTo(object1.getTimestamp());
                             }
                         });
-                        //showEmptyMessages(1);
-                        //logic for showing screens
+
                         adapter.notifyDataSetChanged();
                     } else {
                         showEmptyMessages(NO_MESSAGES);
@@ -271,7 +262,7 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.back_layout:
+            case R.id.img_back:
                 onBackPressed();
                 break;
             default:

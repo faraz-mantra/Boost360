@@ -38,6 +38,7 @@ public class Constants {
     public static final int VISITS_TABLE = 0;
     public static final int VISITORS_TABLE = 1;
     public static final String PDF_LOADER_URL = "https://drive.google.com/viewerng/viewer?embedded=true&url=";
+    public static final String WA_KEY = "58ede4d4ee786c1604f6c535";
     public static boolean LOGOUPLOADED = false;
     public static boolean IS_SUNDAY_CHECKED = false;
     public static boolean IS_MONDAY_CHECKED = false;
@@ -85,6 +86,7 @@ public class Constants {
     public final static String RIA_MEMORY_TEST_API_URL = "http://ria.nowfloatsdev.com";
     public final static String RIA_API_URL = "https://ria.withfloats.com";
     public final static String SUGGESTIONS_API_URL = "http://boostapi.withfloats.com";
+    public final static String WA_BASE_URL = "https://api.kitsune.tools/WebAction/v1/";
 
     // public final static String NOW_FLOATS_API_URL		=	"https://nftestbed.azurewebsites.net";
     public final static String HTTP_PUT = "PUT";
@@ -112,6 +114,7 @@ public class Constants {
     public static final RestAdapter testRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.TEST_API_URL).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).build();
     public static final RestAdapter pluginRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.PLUGIN_API_URL)./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).*/build();
     public static final RestAdapter riaRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
+    public static final RestAdapter webActionAdapter = new RestAdapter.Builder().setEndpoint(WA_BASE_URL).build();
     //public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL).setClient(getClient()).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     public static NotificationInterface alertInterface = Constants.restAdapter.create(NotificationInterface.class);
 

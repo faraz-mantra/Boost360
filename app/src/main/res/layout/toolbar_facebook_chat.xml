@@ -20,35 +20,62 @@
             android:gravity="center_vertical">
             <ImageView
                 android:id="@+id/img_back"
-                android:layout_width="42dp"
-                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:padding="14dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_nav_back"
+                android:src="@drawable/ic_go_back_left_arrow"
                 android:background="?android:selectableItemBackground" />
+            <ImageView
+                android:id="@+id/facebook_icon"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:visibility="gone"
+                android:src="@drawable/facebook_round"
+                />
             <com.makeramen.RoundedImageView
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/img_chat_user"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
+                android:visibility="gone"
                 android:scaleType="centerCrop"
-                android:layout_marginRight="5dp"
                 android:src="@drawable/ic_user"
                 app:riv_border_color="#ffffff"
                 app:riv_border_width="2dip"
                 app:riv_corner_radius="30dip"
                 app:riv_mutate_background="true"/>
         </LinearLayout>
-        <TextView
-            android:id="@+id/tv_chat_user"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:ellipsize="marquee"
-            android:maxLines="1"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:text="Abhishek" />
+            android:gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_chat_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:ellipsize="marquee"
+                android:maxLines="1"
+                android:gravity="end"
+                android:textStyle="bold"
+                android:text="" />
+            <TextView
+                android:id="@+id/tv_chat_user_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:ellipsize="marquee"
+                android:maxLines="1"
+                android:gravity="top"
+                android:textStyle="italic"
+                android:text="" />
+        </LinearLayout>
+
+
     </LinearLayout>
 
 

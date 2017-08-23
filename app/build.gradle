@@ -39,7 +39,7 @@ android {
 
     useLibrary 'org.apache.http.legacy'
 
-    lintOptions{
+    lintOptions {
         abortOnError false
     }
 
@@ -47,8 +47,8 @@ android {
         applicationId 'com.thinksity'
         minSdkVersion 15
         targetSdkVersion 25
-        versionName "4.7.6"
-        versionCode 2017080011
+        versionName "4.7.7"
+        versionCode 2017080021
         multiDexEnabled true
     }
     buildTypes {
@@ -68,7 +68,7 @@ android {
         partthree {
             applicationId "com.kitsune.biz"
         }
-        partfour{
+        partfour {
             applicationId "com.digitalseoz"
         }
     }
@@ -99,6 +99,7 @@ dependencies {
 
     compile project(':messagelibrary')
     compile project(':riachatsdkMain')
+
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.android.support:cardview-v7:25.3.0'
@@ -136,9 +137,8 @@ dependencies {
     compile 'com.github.freshdesk:hotline-android:1.2.0'
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
     compile 'com.romandanylyk:pageindicatorview:0.2.0'
-    compile "com.mixpanel.android:mixpanel-android:5.+"
+    compile 'com.mixpanel.android:mixpanel-android:5.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-
 }
 
 apply plugin: 'com.google.gms.google-services'

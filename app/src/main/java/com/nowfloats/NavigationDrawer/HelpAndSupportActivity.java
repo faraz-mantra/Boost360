@@ -55,13 +55,13 @@ public class HelpAndSupportActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help_and_support);
 
-        toolbar = (Toolbar) findViewById(R.id.help_and_support_toolbar);
+        /*toolbar = (Toolbar) findViewById(R.id.help_and_support_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
-        headerText.setText(getResources().getString(R.string.help_and_support));
+        headerText.setText(getResources().getString(R.string.help_and_support));*/
 
         tvConsultantName = (TextView) findViewById(R.id.tv_consultant_name);
         tvConsultantNumber = (TextView) findViewById(R.id.tv_contact_number);

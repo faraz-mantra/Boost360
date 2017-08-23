@@ -141,9 +141,9 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
 
                 NotificationManager notificationManager =
                         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                if(deepLinkUrl.contains(getString(R.string.facebook_chat))) {
+                if(!Util.isNullOrEmpty(deepLinkUrl) && deepLinkUrl.contains(getString(R.string.facebook_chat))) {
                     FacebookChatDataModel.UserData data = new Gson().fromJson(message.get("user_data"), FacebookChatDataModel.UserData.class);
-                    notificationManager.notify(Integer.valueOf(data.getId().substring(data.getId().length()-5)), notificationBuilder.build());
+                    notificationManager.notify(data.getId().hashCode(), notificationBuilder.build());
                 }else{
                     notificationManager.notify(0, notificationBuilder.build());
                 }

@@ -11,7 +11,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,7 +33,6 @@ import com.nowfloats.managecustomers.adapters.FacebookChatDetailAdapter;
 import com.nowfloats.managecustomers.apis.FacebookChatApis;
 import com.nowfloats.managecustomers.models.FacebookChatDataModel;
 import com.nowfloats.managecustomers.models.FacebookMessageModel;
-import com.nowfloats.riachatsdk.utils.Utils;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
 import com.squareup.picasso.Picasso;
@@ -41,6 +40,8 @@ import com.thinksity.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -48,21 +49,23 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.nowfloats.managecustomers.adapters.FacebookChatDetailAdapter.USER;
+
 /**
  * Created by Admin on 17-08-2017.
  */
 
 public class FacebookChatDetailActivity extends AppCompatActivity implements View.OnClickListener {
-    RecyclerView chatUserRecycerView;
-    List<FacebookChatDataModel.Datum> chatModelList = new ArrayList<>();
-    List<FacebookChatDataModel.Datum> totalDataList = new ArrayList<>();
-    FacebookChatDetailAdapter adapter;
-    ImageView sendButton, scrollButton;
-    EditText etReply;
+    private RecyclerView chatUserRecycerView;
+    private List<FacebookChatDataModel.Datum> chatModelList = new ArrayList<>();
+    private List<FacebookChatDataModel.Datum> totalDataList = new ArrayList<>();
+    private FacebookChatDetailAdapter adapter;
+    private ImageView sendButton, scrollButton;
+    private EditText etReply;
     private ProgressDialog progressDialog;
     private UserSessionManager sessionManager;
     private String userId;
-    SharedPreferences pref;
+    private SharedPreferences pref;
     public static final String INTENT_FILTER = "nfx.facebook.messages";
 
     @Override
@@ -72,14 +75,16 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         init();
     }
     private void init(){
-        getWindow().setBackgroundDrawable(ContextCompat.getDrawable(this, com.nowfloats.riachatsdk.R.drawable.doodle_bg));
+        //getWindow().setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.facebook_chat_bg));
         Toolbar toolbar  = (Toolbar) findViewById(R.id.facebook_toolbar);
         setSupportActionBar(toolbar);
         ImageView imgUser = (ImageView) findViewById(R.id.img_chat_user);
-        ImageView imgBack = (ImageView) findViewById(R.id.img_back);
+        imgUser.setVisibility(View.VISIBLE);
         TextView title = (TextView) findViewById(R.id.tv_chat_user);
+        TextView description = (TextView) findViewById(R.id.tv_chat_user_description);
+        description.setText(Methods.fromHtml("<b>facebook user</b>"));
         scrollButton = (ImageView) findViewById(R.id.iv_scroll_down);
-        findViewById(R.id.back_layout).setOnClickListener(this);
+        findViewById(R.id.img_back).setOnClickListener(this);
         chatUserRecycerView = (RecyclerView) findViewById(R.id.rv_facebook_chat);
         sendButton = (ImageView) findViewById(R.id.iv_send_msg);
         etReply = (EditText) findViewById(R.id.et_facebook_chat);
@@ -124,7 +129,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.toString().length()>0){
+                if(s.toString().trim().length()>0){
                     sendButton.getBackground().setColorFilter(Color.parseColor("#157EFB"), PorterDuff.Mode.DARKEN);
                 } else {
                     sendButton.getBackground().setColorFilter(Color.parseColor("#40157EFB"), PorterDuff.Mode.DARKEN);
@@ -135,7 +140,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         chatUserRecycerView.setHasFixedSize(true);
         final LinearLayoutManager manager = new LinearLayoutManager(this);
         chatUserRecycerView.setLayoutManager(manager);
-        FacebookChatItemDecorator decorator = new FacebookChatItemDecorator(Utils.dpToPx(this,30),
+        FacebookChatItemDecorator decorator = new FacebookChatItemDecorator(Methods.dpToPx(43,this),
                 true, getSectionCallback());
         chatUserRecycerView.addItemDecoration(decorator);
         adapter = new FacebookChatDetailAdapter(this,chatModelList);
@@ -149,19 +154,10 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
             }
         });
         chatUserRecycerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-
-                /*if(manager.findLastCompletelyVisibleItemPosition() < manager.getItemCount()-5){
-                    scrollButton.setVisibility(View.VISIBLE);
-                }else{
-                    scrollButton.setVisibility(View.GONE);
-                }*/
-            }
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if(manager.findLastCompletelyVisibleItemPosition() < manager.getItemCount()-5){
+                if(manager.findLastCompletelyVisibleItemPosition()>0 &&manager.findLastCompletelyVisibleItemPosition() < manager.getItemCount()-5){
                     scrollButton.setVisibility(View.VISIBLE);
                 }else{
                     scrollButton.setVisibility(View.GONE);
@@ -184,10 +180,6 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
             chatModelList.add(0,totalDataList.get(i));
             adapter.notifyItemInserted(0);
         }
-        //adapter.notifyDataSetChanged();
-
-       /* chatModelList.add(0, totalDataList.get(chatModelList.size()));
-        adapter.notifyItemInserted(0);*/
     }
     private void getChatData(){
         if(TextUtils.isEmpty(userId)){
@@ -204,10 +196,9 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         apis.getAllMessages(userId,"facebook", sessionManager.getFPID(), new Callback<FacebookChatDataModel>() {
             @Override
             public void success(FacebookChatDataModel facebookChatUsersModel, Response response) {
-                hideProgress();
                 if(facebookChatUsersModel == null || !"success".equals(facebookChatUsersModel.getMessage())||response.getStatus() != 200){
                     Methods.showSnackBarNegative(FacebookChatDetailActivity.this,getString(R.string.something_went_wrong_try_again));
-
+                    hideProgress();
                     return;
                 }
                 totalDataList = facebookChatUsersModel.getData();
@@ -215,11 +206,10 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
                 int size = totalDataList.size();
                 for (int i = 0; i<size && i<15;i++){
                     chatModelList.add(0,totalDataList.get(i));
-                    //adapter.notifyItemInserted(0);
-                    //chatUserRecycerView.smoothScrollToPosition(chatModelList.size()-1);
                 }
                 adapter.notifyDataSetChanged();
                 chatUserRecycerView.smoothScrollToPosition(chatModelList.size()-1);
+                hideProgress();
             }
 
             @Override
@@ -231,12 +221,18 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
     }
 
     private void decideCornersForChatItems() {
+        Collections.sort(chatModelList, new Comparator<FacebookChatDataModel.Datum>() {
+            @Override
+            public int compare(FacebookChatDataModel.Datum object1, FacebookChatDataModel.Datum object2) {
+                return object2.getTimestamp().compareTo(object1.getTimestamp());
+            }
+        });
         int size = totalDataList.size();
         for (int i =0 ;i<size;i++){
-            if(!totalDataList.get(i).getSender().equals(FacebookChatDetailAdapter.USER)) {
-                totalDataList.get(i).setShowCornerBackground(size-1 == i || totalDataList.get(i+1).getSender().equals(FacebookChatDetailAdapter.USER));
+            if(!totalDataList.get(i).getSender().equals(USER)) {
+                totalDataList.get(i).setShowCornerBackground(size-1 == i || totalDataList.get(i+1).getSender().equals(USER));
             }else{
-                totalDataList.get(i).setShowCornerBackground(size-1 == i || !totalDataList.get(i+1).getSender().equals(FacebookChatDetailAdapter.USER));
+                totalDataList.get(i).setShowCornerBackground(size-1 == i || !totalDataList.get(i+1).getSender().equals(USER));
             }
 
         }
@@ -274,7 +270,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
 
             FacebookChatDataModel.Message messageData = new Gson().fromJson(message,FacebookChatDataModel.Message.class);
             if(messageData!= null){
-                addMessageToList(messageData,FacebookChatDetailAdapter.USER);
+                addMessageToList(messageData, USER);
             }
             Log.v("ggg", "clicked");
         }
@@ -304,7 +300,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case R.id.back_layout:
+            case R.id.img_back:
                 onBackPressed();
                 break;
             case R.id.iv_scroll_down:
@@ -312,10 +308,11 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
                 chatUserRecycerView.smoothScrollToPosition(chatModelList.size()-1);
                 break;
             case R.id.iv_send_msg:
-                String message = etReply.getText().toString();
+                String message = etReply.getText().toString().trim();
                 if(message.length() > 0){
-                    sendData();
+                    sendData(message);
                 }
+                etReply.setText("");
                 break;
             default:
                 break;
@@ -323,32 +320,25 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
     }
 
     private int addMessageToList(FacebookChatDataModel.Message message, String status){
-        String type="text";
+
         FacebookChatDataModel.Datum chatData = new FacebookChatDataModel.Datum();
-        /*FacebookChatDataModel.Message mess = new FacebookChatDataModel.Message();
-        mess.setType(type);
-        FacebookChatDataModel.Data data = new FacebookChatDataModel.Data();
-        data.setText(message);
-        data.setUrl("");
-        mess.setData(data);*/
         chatData.setMessage(message);
         chatData.setSender(status);
         int currPos = chatModelList.size();
-        if(!status.equals(FacebookChatDetailAdapter.USER)) {
-            chatData.setShowCornerBackground(currPos == 0 || chatModelList.get(currPos-1).getSender().equals(FacebookChatDetailAdapter.USER));
+        if(!status.equals(USER)) {
+            chatData.setShowCornerBackground(currPos == 0 || chatModelList.get(currPos-1).getSender().equals(USER));
         }else{
-            chatData.setShowCornerBackground(currPos == 0  || !chatModelList.get(currPos-1).getSender().equals(FacebookChatDetailAdapter.USER));
+            chatData.setShowCornerBackground(currPos == 0  || !chatModelList.get(currPos-1).getSender().equals(USER));
         }
         chatData.setTimestamp(Calendar.getInstance(TimeZone.getDefault()).getTimeInMillis());
         totalDataList.add(0,chatData);
         chatModelList.add(chatData);
         adapter.notifyItemInserted(currPos);
-        etReply.setText("");
         chatUserRecycerView.smoothScrollToPosition(currPos);
         return currPos;
     }
-    private void sendData() {
-        String message = etReply.getText().toString().trim();
+    private void sendData(String message) {
+
         if(message.length() == 0){
            return;
         }
@@ -379,15 +369,19 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
                     chatModelList.get(currPos).setSender(FacebookChatDetailAdapter.ERROR);
                     adapter.notifyItemChanged(currPos);
                     return;
-                }else if("success".equals(jsonObject.get("message").getAsString())){
+                }else if("success".equalsIgnoreCase(jsonObject.get("message").getAsString())){
 
                     chatModelList.get(currPos).setSender(FacebookChatDetailAdapter.MERCHANT);
                     adapter.notifyItemChanged(currPos);
 
-                }else if ("session_expired".equals(jsonObject.get("message").getAsString())){
+                }else if ("session_expired".equalsIgnoreCase(jsonObject.get("message").getAsString())){
                     chatModelList.get(currPos).setSender(FacebookChatDetailAdapter.ERROR);
                     adapter.notifyItemChanged(currPos);
-                    Methods.showSnackBarNegative(FacebookChatDetailActivity.this,"You can only reply to user when he send message to you");
+                    Snackbar bar = Snackbar.make(FacebookChatDetailActivity.this.findViewById(android.R.id.content),
+                            "It's been more than 24 hours since you last received a message you can no longer reply.",
+                            Snackbar.LENGTH_INDEFINITE);
+                    bar.getView().setBackgroundColor(Color.parseColor("#E02200"));
+                    bar.show();
                 }
 
             }

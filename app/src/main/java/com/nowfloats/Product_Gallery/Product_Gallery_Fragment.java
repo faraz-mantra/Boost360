@@ -29,6 +29,9 @@ import com.melnykov.fab.FloatingActionButton;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
 import com.nowfloats.Product_Gallery.Service.ProductAPIService;
+import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
+import com.nowfloats.manageinventory.models.MerchantProfileModel;
+import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -45,6 +48,10 @@ import java.util.Collection;
 import java.util.Currency;
 import java.util.HashMap;
 import java.util.Locale;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by guru on 08-06-2015.
@@ -64,7 +71,7 @@ public class Product_Gallery_Fragment extends Fragment {
     private FROM from = FROM.DEFAULT;
     ;
     public static final String KEY_FROM = "KEY_FROM";
-    private boolean isAnyProductSelected = false;
+    private boolean isAnyProductSelected = false, mIsApEnabled = false;
 
     public enum FROM {
         BUBBLE,
@@ -119,6 +126,24 @@ public class Product_Gallery_Fragment extends Fragment {
         Log.d("Product_Gallery", "onCreate");
     }
 
+    private void checkIfAPEnabled() {
+        Constants.webActionAdapter.create(ProductGalleryInterface.class)
+                .getMerchantProfileData(String.format("{merchant_id:'%s'}", session.getFPID()), new Callback<WebActionModel<MerchantProfileModel>>() {
+                    @Override
+                    public void success(WebActionModel<MerchantProfileModel> merchantProfileModelWebActionModel, Response response) {
+                        progressLayout.setVisibility(View.GONE);
+                        if(merchantProfileModelWebActionModel.getData().size()>0 && merchantProfileModelWebActionModel.getData().get(0).getPaymentType()==0){
+                            mIsApEnabled = true;
+                        }
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        progressLayout.setVisibility(View.GONE);
+                    }
+                });
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d("Product_Gallery", "onCreateView");
@@ -145,6 +170,7 @@ public class Product_Gallery_Fragment extends Fragment {
 
                 intent = new Intent(activity, Product_Detail_Activity_V45.class);
                 intent.putExtra("new", "");
+                intent.putExtra("isApEnabled", mIsApEnabled);
 
                 startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -162,6 +188,7 @@ public class Product_Gallery_Fragment extends Fragment {
 //                Bundle bundle = new Bundle();
 //                bundle.putParcelable("product", productItemModelList.get(position));
                     intent.putExtra("product", position + "");
+                    intent.putExtra("isApEnabled", mIsApEnabled);
 
                     Methods.launchFromFragment(activity, view, intent);
                 } else {
@@ -354,11 +381,11 @@ public class Product_Gallery_Fragment extends Fragment {
 
     @Subscribe
     public void getProductList(ArrayList<ProductListModel> data) {
-        progressLayout.setVisibility(View.GONE);
+
         if (data != null) {
             //Log.i("","PRoduct List Size--"+data.size());
             //Log.d("Product Id", data.get(0)._id);
-
+            checkIfAPEnabled();
             productItemModelList = data;
             adapter = new ProductGalleryAdapter(activity, currencyValue, from);
             gridView.setAdapter(adapter);
@@ -371,6 +398,7 @@ public class Product_Gallery_Fragment extends Fragment {
                 empty_layout.setVisibility(View.GONE);
             }
         } else {
+            progressLayout.setVisibility(View.GONE);
             if (productItemModelList == null || productItemModelList.size() == 0) {
                 Product_Gallery_Fragment.empty_layout.setVisibility(View.VISIBLE);
             } else {

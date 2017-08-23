@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2017080011"
-    android:versionName="4.7.6">
+    android:versionCode="2017080021"
+    android:versionName="4.7.7">
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
@@ -250,9 +250,7 @@
         <activity
             android:name="com.nowfloats.PreSignUp.PreSignUp_MainActivity"
             android:label="@string/title_activity_pre_sign_up__main"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.signup.UI.UI.PreSignUpActivity"
             android:screenOrientation="portrait">
@@ -343,7 +341,7 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
-        <receiver
+        <!--<receiver
             android:name="com.mixpanel.android.mpmetrics.GCMReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
@@ -352,7 +350,7 @@
 
                 <category android:name="com.biz2.nowfloats" />
             </intent-filter>
-        </receiver>
+        </receiver>-->
 
         <meta-data
             android:name="com.mixpanel.android.MPConfig.ResourcePackageName"
@@ -575,7 +573,9 @@
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
         <activity
             android:name="com.nowfloats.signup.UI.UI.RiaChatInitActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name="com.nowfloats.manageinventory.SellerAnalyticsActivity" />
+        <activity android:name="com.nowfloats.manageinventory.PaymentSettingsActivity"></activity>
     </application>
 
 </manifest>

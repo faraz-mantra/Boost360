@@ -27,6 +27,7 @@ import java.util.Locale;
 
 public class FacebookChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
+    public static final String NO_MESSAGES = "no_messages";
     List<FacebookChatUsersModel.Datum> chatList;
     Context mContext;
     final String TEXT = "text", IMAGE = "image";
@@ -83,7 +84,7 @@ public class FacebookChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-        return chatList.get(position).getSender().equals("no_messages")?EMPTY_LAYOUT:MESSAGE_LAYOUT;
+        return chatList.get(position).getSender().equals(NO_MESSAGES)?EMPTY_LAYOUT:MESSAGE_LAYOUT;
     }
 
     private String getFormattedTime(Long milliSecond){

@@ -68,6 +68,7 @@ import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
 import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Settings_Fragment;
+import com.nowfloats.BusinessProfile.UI.UI.SocialSharingFragment;
 import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.Business_Enquiries.Business_Enquiries_Fragment;
 import com.nowfloats.CustomPage.CreateCustomPageActivity;
@@ -169,6 +170,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     Product_Gallery_Fragment productGalleryFragment;
     ChatFragment chatFragment;
     StoreFragmentTab storeFragment;
+    SocialSharingFragment socialSharingFragment;
+    HelpAndSupportFragment helpAndSupportFragment;
     UserSessionManager session;
     Typeface robotoMedium;
     Typeface robotoLight;
@@ -303,7 +306,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             if (!intList.contains(PackageManager.PERMISSION_DENIED)) {
                 Intent intent = new Intent(this, ReadMessages.class);
                 startService(intent);
-                // start the service to send data to firebase
             }
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -592,6 +594,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 .negativeText(getString(R.string.remind_me_later))
                 .positiveColorRes(R.color.primaryColor)
                 .negativeColorRes(R.color.primaryColor)
+                .cancelable(false)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
@@ -787,6 +790,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             navigateView();
         }
         //DeepLinkPage(mDeepLinkUrl, false);
+        //mDeepLinkUrl = null;
 
 //        isMyServiceRunning(SAMBubblesService.class);
 //        sendBroadcast(new Intent(SAMBubblesService.ACTION_REMOVE_BUBBLE));
@@ -1253,6 +1257,11 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         if (CardAdapter_V3.pd != null)
             CardAdapter_V3.pd.dismiss();
         BoostLog.d("", "");
+
+        Fragment sociaSharingFragment = getSupportFragmentManager().findFragmentByTag("socialSharingFragment");
+        if(sociaSharingFragment!=null){
+            ((SocialSharingFragment)sociaSharingFragment).onSocialSharingResult(requestCode,resultCode,data);
+        }
     }
 
     public void getStoredImage(String imagePath) {
@@ -1359,10 +1368,12 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 //                        call.setData(Uri.parse(callString));
 //                        startActivity(call);
 //                    } else {
-                    Intent supportIntent = new Intent(HomeActivity.this, HelpAndSupportActivity.class);
+                    /*Intent supportIntent = new Intent(HomeActivity.this, HelpAndSupportActivity.class);
                     startActivity(supportIntent);
 //                    }
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
                 } else if (nextScreen.equals(getString(R.string.share))) {
                     shareWebsite();
                 } else if (nextScreen.equals("Settings")) {
@@ -1389,8 +1400,11 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     startActivity(businessAddressIntent);
                 } else if (nextScreen.equals(getString(R.string.title_activity_social__sharing_))) {
                     MixPanelController.track(EventKeysWL.SOCIAL_SHARING, null);
-                    Intent socialSharingIntent = new Intent(HomeActivity.this, Social_Sharing_Activity.class);
-                    startActivity(socialSharingIntent);
+                    /*Intent socialSharingIntent = new Intent(HomeActivity.this, Social_Sharing_Activity.class);
+                    startActivity(socialSharingIntent);*/
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, socialSharingFragment,"socialSharingFragment").commit();
+
+
                 } else if (nextScreen.equals(getString(R.string.manage_inventory))) {
                     MixPanelController.track(EventKeysWL.MANAGE_INVENTORY, null);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageCustomers")
@@ -1887,8 +1901,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         productGalleryFragment = new Product_Gallery_Fragment();
         chatFragment = new ChatFragment();
         storeFragment = new StoreFragmentTab();
+        socialSharingFragment = new SocialSharingFragment();
         siteMeterFragment = new Site_Meter_Fragment();
         customPageActivity = new CustomPageFragment();
+        helpAndSupportFragment = new HelpAndSupportFragment();
 
         new Thread(new Runnable() {
             @Override

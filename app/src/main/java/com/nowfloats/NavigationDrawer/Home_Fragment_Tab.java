@@ -364,6 +364,8 @@ public class Home_Fragment_Tab extends Fragment {
         }
 
         boolean checkAccessibility = true;
+
+
         Calendar calendar = Calendar.getInstance();
         long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, -1);
         long newTime = calendar.getTimeInMillis();
