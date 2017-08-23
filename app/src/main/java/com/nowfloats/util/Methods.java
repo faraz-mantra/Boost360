@@ -601,6 +601,6 @@ public class Methods {
             }
 //            formatted += " at " + hrsTemp + " " + amMarker;
         }
-        return "THURSDAY, " + formatted;
+        return formatted;
     }
 }

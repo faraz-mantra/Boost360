@@ -112,8 +112,8 @@ public class BubbleLayout extends BubbleBaseLayout {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if(isAnimRequired)
-             playAnimation();
+        if (isAnimRequired)
+            playAnimation();
     }
 
     @Override

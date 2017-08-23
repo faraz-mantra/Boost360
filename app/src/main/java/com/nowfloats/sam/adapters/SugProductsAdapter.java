@@ -2,16 +2,16 @@ package com.nowfloats.sam.adapters;
 
 import android.app.Activity;
 import android.content.res.Resources;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
+import com.nowfloats.sam.SuggestionSelectionListner;
 import com.nowfloats.sam.models.SugProducts;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
@@ -31,9 +31,7 @@ public class SugProductsAdapter extends BaseAdapter {
         public TextView Product_Name;
         public TextView Currency_Type;
         public TextView OriginalPrice;
-        public FrameLayout flMain;
-        public FrameLayout flOverlay;
-        public View vwOverlay;
+        public CheckBox cbUpdate;
     }
 
     ViewHolder viewHolder;
@@ -42,10 +40,22 @@ public class SugProductsAdapter extends BaseAdapter {
     private Resources mResources;
     private Product_Gallery_Fragment.FROM from;
     private ArrayList<SugProducts> productItemModelList;
+    private SuggestionSelectionListner mSuggestionSelectionListner;
 
     public SugProductsAdapter(Activity activity, List<SugProducts> productItemModelList) {
         this.activity = activity;
         this.productItemModelList = (ArrayList<SugProducts>) productItemModelList;
+        mResources = activity.getResources();
+        this.from = from;
+        //this.currencyType = currency;
+    }
+
+    public SugProductsAdapter(Activity activity,
+                              List<SugProducts> productItemModelList,
+                              SuggestionSelectionListner mSuggestionSelectionListner) {
+        this.activity = activity;
+        this.productItemModelList = (ArrayList<SugProducts>) productItemModelList;
+        this.mSuggestionSelectionListner = mSuggestionSelectionListner;
         mResources = activity.getResources();
         this.from = from;
         //this.currencyType = currency;
@@ -70,24 +80,19 @@ public class SugProductsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // Get the data item for this position
-        // Check if an existing view is being reused, otherwise inflate the view
-        // view lookup cache stored in tag
 
         View vi = convertView;
         try {
             if (convertView == null) {
                 LayoutInflater inflater = LayoutInflater.from(activity);
-                vi = inflater.inflate(R.layout.product_grid_view_design, null);
+                vi = inflater.inflate(R.layout.ca_product_grid_view_design, null);
 
                 viewHolder = new ViewHolder();
                 viewHolder.ProductImageView = (ImageView) vi.findViewById(R.id.proudct_image_view);
                 viewHolder.Product_Name = (TextView) vi.findViewById(R.id.product_name);
                 viewHolder.OriginalPrice = (TextView) vi.findViewById(R.id.product_price);
                 viewHolder.Currency_Type = (TextView) vi.findViewById(R.id.product_currency);
-                viewHolder.flMain = (FrameLayout) vi.findViewById(R.id.flMain);
-                viewHolder.flOverlay = (FrameLayout) vi.findViewById(R.id.flOverlay);
-                viewHolder.vwOverlay = (View) vi.findViewById(R.id.vwOverlay);
+                viewHolder.cbUpdate = (CheckBox) vi.findViewById(R.id.cbUpdate);
 
                 vi.setTag(viewHolder);
             }
@@ -96,6 +101,7 @@ public class SugProductsAdapter extends BaseAdapter {
 
             final SugProducts productItemModel = (SugProducts) getItem(position);
             vi.setTag(R.string.key_details, productItemModel);
+            viewHolder.cbUpdate.setTag(R.string.key_details, productItemModel);
             viewHolder.Product_Name.setText(productItemModel.getProductName());
             final ImageView imageView = viewHolder.ProductImageView;
             Picasso picasso = Picasso.with(activity);
@@ -108,38 +114,37 @@ public class SugProductsAdapter extends BaseAdapter {
             } else {
                 picasso.load(R.drawable.default_product_image).into(imageView);
             }
-//            String originalPrice = productItemModel.Price;
-//            String disc = productItemModel.DiscountAmount;
-//            if (disc != null && disc.trim().length() > 0
-//                    && !disc.equals("0")) {
-//                double discAmt = Double.parseDouble(disc);
-//                if (originalPrice != null && originalPrice.trim().length() > 0
-//                        && !originalPrice.equals("0")) {
-//                    double actual = Double.parseDouble(originalPrice);
-//                    double result = actual - discAmt;
-//                    originalPrice = result + "";
-//                }
-//            }
-//            if (originalPrice != null) {
-//                viewHolder.Currency_Type.setText(productItemModel.CurrencyCode);
-//                DecimalFormat formatter = new DecimalFormat("#,##,##,##,##,##,##,###");
-//                String yourFormattedString = formatter.format(Float.parseFloat(originalPrice));
-//                viewHolder.OriginalPrice.setText(yourFormattedString);
-//            }
 
 
-            if (productItemModel.isSelected()) {
-                viewHolder.flOverlay.setVisibility(View.VISIBLE);
-            } else {
-                viewHolder.flOverlay.setVisibility(View.GONE);
-            }
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    updateView(view);
 
-            setOverlay(viewHolder.vwOverlay, 200, viewHolder.flMain.getWidth(), viewHolder.flMain.getHeight());
+                }
+            });
+
+            viewHolder.cbUpdate.setChecked(productItemModel.isSelected());
+            viewHolder.cbUpdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    updateView(view);
+                }
+            });
+
 
         } catch (Exception exp) {
             exp.printStackTrace();
         }
         return vi;
+    }
+
+    private void updateView(View view) {
+        final SugProducts sugProducts = (SugProducts) view.getTag(R.string.key_details);
+        sugProducts.setSelected(!sugProducts.isSelected());
+        CheckBox cbUpdate = (CheckBox) view.findViewById(R.id.cbUpdate);
+        cbUpdate.setChecked(sugProducts.isSelected());
+        mSuggestionSelectionListner.onSelection(sugProducts.isSelected());
     }
 
     public void refreshDetails(ArrayList<SugProducts> productItemModelList) {
@@ -151,13 +156,5 @@ public class SugProductsAdapter extends BaseAdapter {
         return productItemModelList;
     }
 
-    public void setOverlay(View v, int opac, int width, int height) {
-        int opacity = opac; // from 0 to 255
-        v.setBackgroundColor(opacity * 0x1000000); // black with a variable alpha
-        FrameLayout.LayoutParams params =
-                new FrameLayout.LayoutParams(width, height);
-        params.gravity = Gravity.NO_GRAVITY;
-        v.setLayoutParams(params);
-        v.invalidate();
-    }
+
 }

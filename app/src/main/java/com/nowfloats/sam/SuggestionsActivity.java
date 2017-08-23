@@ -109,10 +109,10 @@ public class SuggestionsActivity extends AppCompatActivity {
         FirebaseLogger.getInstance().logSAMEvent("", FirebaseLogger.SAMSTATUS.BUBBLE_CLIKED, session.getFPID(), appVersion);
 
         if (!pref.getBoolean(Key_Preferences.HAS_SHOWN_SAM_COACH_MARK, false)) {
-            fragmentManager.beginTransaction().
-                    replace(R.id.flTopView, new OnBoardingFragment())
-                    .addToBackStack(null)
-                    .commit();
+//            fragmentManager.beginTransaction().
+//                    replace(R.id.flTopView, new OnBoardingFragment())
+//                    .addToBackStack(null)
+//                    .commit();
         } else {
             switchView(SuggestionsActivity.SwitchView.CALL_TO_ACTION);
         }

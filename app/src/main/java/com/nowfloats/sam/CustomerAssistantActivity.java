@@ -4,20 +4,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.sam.adapters.SAMCustomersAdapter;
-import com.nowfloats.sam.decorators.RecyclerSectionItemDecoration;
+import com.nowfloats.bubble.SAMBubblesService;
+import com.nowfloats.sam.models.MessageDO;
 import com.nowfloats.sam.models.SMSSuggestions;
 import com.nowfloats.sam.models.SuggestionsDO;
 import com.nowfloats.sam.service.SuggestionsApi;
@@ -31,22 +30,18 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import static com.nowfloats.sam.SAMCustomerDetailActivity.KEY_MSG;
 
 /**
  * Created by admin on 8/17/2017.
  */
 
-public class SAMCustomerListActivity extends Activity
-        implements RecyclerSectionItemDecoration.SectionCallback {
+public class CustomerAssistantActivity extends Activity {
 
 
     public ProgressBar pbView;
-
-    private RecyclerView rvSAMCustomerList;
 
     private SuggestionsApi suggestionsApi;
 
@@ -60,54 +55,70 @@ public class SAMCustomerListActivity extends Activity
 
     public SharedPreferences pref;
 
-    private SAMCustomersAdapter samCustomersAdapter;
-
     private String appVersion = "";
+
+    private OnBoardingFragment onBoardingFragment;
+
+    private CustomerAssistantListFragment mCustomerAssitantListFragment;
+
+    private CustomerAssistantDetailFragment mCustomerAssistantDetailFragment;
+
+    public static final String KEY_DATA = "mData";
+
+    public static final String TAG_FRAGMENT = "customer_assistant";
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        sendBroadcast(new Intent(SAMBubblesService.ACTION_REMOVE_BUBBLE));
         overridePendingTransition(R.anim.bubble_scale_up, R.anim.bubble_scale_down);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sam_customer_list);
+        setContentView(R.layout.activity_customer_assistant);
+
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(ContextCompat.getColor(CustomerAssistantActivity.this, R.color.transparent_blk));
+        }
+
 
         initializeControls();
 
-        loadCallToActionItems();
+        if (!pref.getBoolean(Key_Preferences.HAS_SHOWN_SAM_COACH_MARK, false)) {
+            getFragmentManager().beginTransaction().
+                    replace(R.id.fmCustomerAssistant, onBoardingFragment = new OnBoardingFragment(), "on_boarding").commit();
+        } else {
+            loadCallToActionItems();
+        }
+
+
     }
 
     private void initializeControls() {
 
+        mCustomerAssitantListFragment = new CustomerAssistantListFragment();
+        mCustomerAssistantDetailFragment = new CustomerAssistantDetailFragment();
+
         pbView = (ProgressBar) findViewById(R.id.pbView);
-        rvSAMCustomerList = (RecyclerView) findViewById(R.id.rvSAMCustomerList);
-
-        rvSAMCustomerList.setLayoutManager(new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL,
-                false));
-
-
-        RecyclerSectionItemDecoration sectionItemDecoration =
-                new RecyclerSectionItemDecoration(120,
-                        true,
-                        SAMCustomerListActivity.this);
-        rvSAMCustomerList.addItemDecoration(sectionItemDecoration);
-
-        rvSAMCustomerList.setAdapter(samCustomersAdapter = new SAMCustomersAdapter(SAMCustomerListActivity.this, null));
 
         pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         mBus = BusProvider.getInstance().getBus();
-        session = new UserSessionManager(getApplicationContext(), SAMCustomerListActivity.this);
+        session = new UserSessionManager(getApplicationContext(), CustomerAssistantActivity.this);
         suggestionsApi = new SuggestionsApi(mBus);
-        mDbController = DbController.getDbController(SAMCustomerListActivity.this);
-
-        final Typeface hebrewFont  = Typeface.createFromAsset(getAssets(),"OpenSansHebrew-Regular.ttf");
-        ((TextView)findViewById(R.id.tvTitle)).setTypeface(hebrewFont);
+        mDbController = DbController.getDbController(CustomerAssistantActivity.this);
     }
 
-    private void loadCallToActionItems() {
+    public void loadCallToActionItems() {
+
+        if (onBoardingFragment != null) {
+            pref.edit().putBoolean(Key_Preferences.HAS_SHOWN_SAM_COACH_MARK, true).apply();
+            getFragmentManager().beginTransaction().remove(onBoardingFragment).commit();
+        }
 
         pbView.setVisibility(View.VISIBLE);
 
-        if (Utils.isNetworkConnected(SAMCustomerListActivity.this)) {
+        if (Utils.isNetworkConnected(CustomerAssistantActivity.this)) {
             HashMap<String, String> offersParam = new HashMap<>();
 //            offersParam.put("fpId", session.getFPID());
             offersParam.put("fpId", "5928106e13c54e0b50251f21");
@@ -117,6 +128,7 @@ public class SAMCustomerListActivity extends Activity
         }
     }
 
+
     @Override
     public void onStart() {
         super.onStart();
@@ -125,6 +137,7 @@ public class SAMCustomerListActivity extends Activity
 
     @Override
     public void onStop() {
+        sendBroadcast(new Intent(SAMBubblesService.ACTION_ADD_BUBBLE));
         mBus.unregister(this);
         super.onStop();
     }
@@ -178,26 +191,54 @@ public class SAMCustomerListActivity extends Activity
     private void viewMessages() {
         MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED_DATA, null);
         FirebaseLogger.getInstance().logSAMEvent("", FirebaseLogger.SAMSTATUS.HAS_DATA, session.getFPID(), appVersion);
-        samCustomersAdapter.refreshDetails((ArrayList<SuggestionsDO>) smsSuggestions.getSuggestionList());
+        showCustomerList();
+    }
+
+    private void showCustomerList() {
+        pbView.setVisibility(View.GONE);
+
+        Bundle mBundle = new Bundle();
+        mBundle.putSerializable(KEY_DATA, (Serializable) smsSuggestions.getSuggestionList());
+
+        mCustomerAssitantListFragment.setArguments(mBundle);
+
+        getFragmentManager().beginTransaction().replace(R.id.fmCustomerAssistant, mCustomerAssitantListFragment).
+                commit();
     }
 
     public void onCustomerSelection(SuggestionsDO mSuggestionsDO) {
 
-        Intent mIntent = new Intent(SAMCustomerListActivity.this, SAMCustomerDetailActivity.class);
-        mIntent.putExtra(KEY_MSG, mSuggestionsDO);
-        startActivity(mIntent);
+        Bundle mBundle = new Bundle();
+        mBundle.putSerializable(KEY_DATA, (Serializable) mSuggestionsDO);
+
+        mCustomerAssistantDetailFragment.setArguments(mBundle);
+
+        getFragmentManager().beginTransaction().replace(R.id.fmCustomerAssistant,
+                mCustomerAssistantDetailFragment, TAG_FRAGMENT)
+                .commit();
+    }
+
+    public void updateActionsToServer(SuggestionsDO mSuggestionsDO) {
+
+        ArrayList<MessageDO> arrMessageDO = new ArrayList<>();
+
+        MessageDO messageDO = new MessageDO();
+        messageDO.setMessageId(mSuggestionsDO.getMessageId());
+        messageDO.setFpId(mSuggestionsDO.getFpId());
+        messageDO.setStatus(mSuggestionsDO.getStatus());
+        arrMessageDO.add(messageDO);
+
+        suggestionsApi.updateMessage(arrMessageDO);
     }
 
     @Override
-    public boolean isSection(int position) {
-        if (position % 2 == 0)
-            return false;
-        return true;
-    }
-
-    @Override
-    public CharSequence getSectionHeader(int position) {
-//        return smsSuggestions.getSuggestionList().get(position).getExpiryTimeOfMessage();
-        return "27-jan-2017";
+    public void onBackPressed() {
+        final CustomerAssistantDetailFragment fragment =
+                (CustomerAssistantDetailFragment) getFragmentManager().findFragmentByTag(TAG_FRAGMENT);
+        if (fragment != null) {
+            showCustomerList();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

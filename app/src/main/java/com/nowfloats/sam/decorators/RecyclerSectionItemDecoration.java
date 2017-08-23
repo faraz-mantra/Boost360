@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.thinksity.R;
 
@@ -18,6 +19,7 @@ public class RecyclerSectionItemDecoration extends RecyclerView.ItemDecoration {
     private final SectionCallback sectionCallback;
 
     private View headerView;
+    private TextView tvHeader;
 
     public RecyclerSectionItemDecoration(int headerHeight, boolean sticky, @NonNull SectionCallback sectionCallback) {
         headerOffset = headerHeight;
@@ -47,6 +49,7 @@ public class RecyclerSectionItemDecoration extends RecyclerView.ItemDecoration {
 
         if (headerView == null) {
             headerView = inflateHeaderView(parent);
+            tvHeader = (TextView) headerView.findViewById(R.id.tvHeader);
             fixLayoutSize(headerView,
                     parent);
         }
@@ -57,6 +60,10 @@ public class RecyclerSectionItemDecoration extends RecyclerView.ItemDecoration {
             final int position = parent.getChildAdapterPosition(child);
 
             CharSequence title = sectionCallback.getSectionHeader(position);
+
+            tvHeader.setText(title);
+            fixLayoutSize(headerView,
+                    parent);
             if (!previousHeader.equals(title) || sectionCallback.isSection(position)) {
                 drawHeader(c,
                         child,

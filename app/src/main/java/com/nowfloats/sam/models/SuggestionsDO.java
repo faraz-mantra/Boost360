@@ -18,6 +18,8 @@ public class SuggestionsDO implements Serializable{
     public String value;
     public String actualMessage;
     public String expiryTimeOfMessage;
+    public String shortText;
+    public long expiryDate;
     public int status = -1;
 
     public String getExpiryTimeOfMessage() {
@@ -32,6 +34,14 @@ public class SuggestionsDO implements Serializable{
     public boolean isExpandGroup = false;
     public List<SugProducts> products = null;
     public List<SugUpdates> updates = null;
+
+    public long getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(long expiryDate) {
+        this.expiryDate = expiryDate;
+    }
 
     public boolean isExpandGroup() {
         return isExpandGroup;
@@ -79,6 +89,14 @@ public class SuggestionsDO implements Serializable{
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getShortText() {
+        return shortText;
+    }
+
+    public void setShortText(String shortText) {
+        this.shortText = shortText;
     }
 
     public int getStatus() {

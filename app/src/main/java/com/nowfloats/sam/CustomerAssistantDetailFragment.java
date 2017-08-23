@@ -2,30 +2,27 @@ package com.nowfloats.sam;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -33,213 +30,126 @@ import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.DialogAction;
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.nowfloats.NavigationDrawer.SlidingTabLayout;
-import com.nowfloats.sam.adapters.CallToActionAdapter;
 import com.nowfloats.sam.adapters.SugProductsAdapter;
+import com.nowfloats.sam.adapters.SugUpdatesAdapter;
 import com.nowfloats.sam.models.SugProducts;
 import com.nowfloats.sam.models.SugUpdates;
 import com.nowfloats.sam.models.SuggestionsDO;
 import com.nowfloats.util.BoostLog;
-import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
-import com.nowfloats.util.MixPanelController;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.thinksity.R;
 
 import java.util.ArrayList;
 
+import static com.nowfloats.sam.CustomerAssistantActivity.KEY_DATA;
 
 /**
- * Created by admin on 5/31/2017.
+ * Created by admin on 8/17/2017.
  */
 
-public class CallToActionFragment extends Fragment {
+public class CustomerAssistantDetailFragment extends android.app.Fragment implements SuggestionSelectionListner {
 
-
-    private RecyclerView rvActionItems;
 
     private ViewPager vwSAM;
 
-    private CallToActionAdapter actionItemsAdapter;
-
-    public ProgressBar pbView;
-
-    private LinearLayout llProductView;
+    private TextView tvDate, tvSource, tvMessage, tvViewMore, tvExpiryDate;
 
     private Button btnCall, btnShare;
 
     private SlidingTabLayout tabs;
 
+    private SuggestionsDO mSuggestionsDO;
+
+    private boolean isViewMore = true;
+
+    private LinearLayout llMessage, llRelevant;
+
+    private int selectedCount = 0;
+
+    private int noOfTimesResponded = 0;
+
     private final String ACTION_TYPE_NUMBER = "contactNumber";
 
     private final String ACTION_TYPE_EMAIL = "email";
 
-    private static final int MAX_RESPONDED = 3;
 
-    private int noOfTimesResponded = 0;
-
-    private String appVersion = "";
-
-    public CallToActionFragment() {
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mSuggestionsDO = (SuggestionsDO) getArguments().get(KEY_DATA);
+        }
 
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.csp_fragment_action_items, null);
-        return view;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View mainView = inflater.inflate(R.layout.activity_sam_customer_detail, container, false);
+        return mainView;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         initializeControls(view);
 
-        prepareActionItemList();
-
+        tvDate.setText(Methods.getFormattedDate(mSuggestionsDO.getDate()));
+        tvSource.setText(mSuggestionsDO.getShortText());
+        tvMessage.setText(mSuggestionsDO.getActualMessage());
+        tvExpiryDate.setText("(expires on " + Methods.getFormattedDate(mSuggestionsDO.getExpiryDate()) + ")");
         setOnClickListeners();
+        updateMaxLines();
+        applyAnimation();
     }
 
     private void initializeControls(View view) {
-
-        try {
-            appVersion = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        rvActionItems = (RecyclerView) view.findViewById(R.id.rvActionItems);
-        pbView = (ProgressBar) view.findViewById(R.id.pbView);
+        isViewMore = true;
         vwSAM = (ViewPager) view.findViewById(R.id.vwSAM);
-        llProductView = (LinearLayout) view.findViewById(R.id.llProductView);
-
         btnCall = (Button) view.findViewById(R.id.btnCall);
         btnShare = (Button) view.findViewById(R.id.btnShare);
-
-        pbView.setVisibility(View.GONE);
-
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-
-        ((SuggestionsActivity) getActivity()).setSupportActionBar(toolbar);
-
-//        getActivity().setTitle(Html.fromHtml("Sam <i>says..</i>"));
-        getActivity().setTitle("Your Leads");
-        ((SuggestionsActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
-        toolbar.setTitleTextColor(ContextCompat.getColor(getActivity(), R.color.white));
-
+        tvDate = (TextView) view.findViewById(R.id.tvHeader);
+        tvSource = (TextView) view.findViewById(R.id.tvSource);
+        tvMessage = (TextView) view.findViewById(R.id.tvMessage);
+        tvViewMore = (TextView) view.findViewById(R.id.tvViewMore);
+        tvExpiryDate = (TextView) view.findViewById(R.id.tvExpiryDate);
+        llMessage = (LinearLayout) view.findViewById(R.id.llMessage);
+        llRelevant = (LinearLayout) view.findViewById(R.id.llRelevant);
         tabs = (SlidingTabLayout) view.findViewById(R.id.tabs);
+
         tabs.setDistributeEvenly(true);
-        tabs.setCustomTabView(R.layout.tab_text, R.id.tab_textview);
+        tabs.setCustomTabView(R.layout.ca_tab_text, R.id.tab_textview);
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
-                return ContextCompat.getColor(getContext(), R.color.white);
+                return ContextCompat.getColor(getActivity(), R.color.white);
             }
         });
 
-        noOfTimesResponded = ((SuggestionsActivity) getActivity()).
-                pref.getInt(Key_Preferences.NO_OF_TIMES_RESPONDED, 0);
-
-        if (noOfTimesResponded >= MAX_RESPONDED) {
-            showRating();
-        }
-
-    }
-
-    private int noOfStars = 0;
-
-    private void showRating() {
-
-        noOfStars = 0;
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
-//                .title(getString(R.string.enjoying_feature))
-                .customView(R.layout.csp_fragment_rating, false)
-                .positiveText(getString(R.string.submit))
-                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                    @Override
-                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
-                        ((SuggestionsActivity) getActivity()).pref.edit()
-                                .putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, 0).apply();
-                        ((SuggestionsActivity) getActivity()).updateRating(noOfStars);
-                    }
-                })
-                .positiveColorRes(R.color.primaryColor);
-
-        if (!getActivity().isFinishing()) {
-
-            final MaterialDialog materialDialog = builder.show();
-            materialDialog.setCancelable(false);
-
-            View mView = materialDialog.getCustomView();
-            final RatingBar mRatingBar = (RatingBar) mView.findViewById(R.id.ratingbar);
-            mRatingBar.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        float touchPositionX = event.getX();
-                        float width = mRatingBar.getWidth();
-                        float starsf = (touchPositionX / width) * 5.0f;
-                        int stars = (int) starsf + 1;
-                        mRatingBar.setRating(stars);
-                        noOfStars = stars;
-                        v.setPressed(false);
-                    }
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        v.setPressed(true);
-                    }
-
-                    if (event.getAction() == MotionEvent.ACTION_CANCEL) {
-                        v.setPressed(false);
-                    }
-
-                    return true;
-                }
-            });
-        }
-    }
-
-    private void prepareActionItemList() {
-
-        actionItemsAdapter = new CallToActionAdapter(this);
-        rvActionItems.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rvActionItems.setAdapter(actionItemsAdapter);
-
-        actionItemsAdapter.refreshList(((SuggestionsActivity) getActivity()).smsSuggestions.getSuggestionList());
+        vwSAM.setAdapter(new SAMPagerAdapter(getActivity()));
+        tabs.setViewPager(vwSAM);
 
     }
 
     private void setOnClickListeners() {
-
-
         btnCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                FirebaseLogger.getInstance().logSAMEvent(suggestionsDO.getMessageId(), FirebaseLogger.SAMSTATUS.ACTION_CALL, suggestionsDO.getFpId(), appVersion);
-                MixPanelController.track(MixPanelController.SAM_BUBBLE_ACTION_CALL, null);
 
-                ((SuggestionsActivity) getActivity()).pref.edit()
-                        .putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, ++noOfTimesResponded).apply();
-
-                suggestionsDO.setStatus(1);
-                ((SuggestionsActivity) getActivity()).updateActionsToServer(suggestionsDO);
+//                ((CustomerAssistantActivity) getActivity()).pref.edit()
+//                        .putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, ++noOfTimesResponded).apply();
+//
+//                mSuggestionsDO.setStatus(1);
+//                ((CustomerAssistantActivity) getActivity()).updateActionsToServer(mSuggestionsDO);
 
                 Intent i = new Intent();
                 i.setAction(Intent.ACTION_DIAL);
-                i.setData(Uri.parse("tel:" + suggestionsDO.getValue()));
+                i.setData(Uri.parse("tel:" + mSuggestionsDO.getValue()));
                 startActivity(i);
 
             }
@@ -250,102 +160,46 @@ public class CallToActionFragment extends Fragment {
             public void onClick(View v) {
 
 
-                FirebaseLogger.getInstance().logSAMEvent(suggestionsDO.getMessageId(), FirebaseLogger.SAMSTATUS.ACTION_SHARE, suggestionsDO.getFpId(), appVersion);
-                MixPanelController.track(MixPanelController.SAM_BUBBLE_ACTION_SHARE, null);
-
-                ((SuggestionsActivity) getActivity()).pref.edit().
-                        putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, ++noOfTimesResponded).apply();
-
-                suggestionsDO.setStatus(1);
-                ((SuggestionsActivity) getActivity()).updateActionsToServer(suggestionsDO);
+//                ((CustomerAssistantActivity) getActivity()).pref.edit().
+//                        putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, ++noOfTimesResponded).apply();
+//
+//                mSuggestionsDO.setStatus(1);
+//                ((CustomerAssistantActivity) getActivity()).updateActionsToServer(mSuggestionsDO);
 
 
-                if (suggestionsDO.getType().equalsIgnoreCase(ACTION_TYPE_NUMBER)) {
+                if (mSuggestionsDO.getType().equalsIgnoreCase(ACTION_TYPE_NUMBER)) {
                     prepareMessageForShare(SHARE_VIA.SMS);
-                } else if (suggestionsDO.getType().equalsIgnoreCase(ACTION_TYPE_EMAIL)) {
+                } else if (mSuggestionsDO.getType().equalsIgnoreCase(ACTION_TYPE_EMAIL)) {
                     prepareMessageForShare(SHARE_VIA.GMAIL);
                 }
 
             }
         });
-    }
 
-    private SuggestionsDO suggestionsDO;
+        tvViewMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-    public void performAction(SuggestionsDO suggestionsDO) {
-
-        FirebaseLogger.getInstance().logSAMEvent(suggestionsDO.getMessageId(), FirebaseLogger.SAMSTATUS.SELECTED_MESSAGES, suggestionsDO.getFpId(), appVersion);
-        MixPanelController.track(MixPanelController.SAM_BUBBLE_SELECTED_MESSAGES, null);
-
-        this.suggestionsDO = suggestionsDO;
-
-//        getActivity().setTitle(Html.fromHtml("Sam <i>suggests..</i>"));
-        getActivity().setTitle("Updates & Products");
-        ((SuggestionsActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        llProductView.setVisibility(View.VISIBLE);
-        rvActionItems.setVisibility(View.GONE);
-
-
-        if (suggestionsDO.getType() != null && suggestionsDO.getType().equalsIgnoreCase(ACTION_TYPE_NUMBER)) {
-            btnCall.setVisibility(View.VISIBLE);
-            btnShare.setText("Share");
-        } else {
-            btnCall.setVisibility(View.GONE);
-            btnShare.setText("Share");
-        }
-
-        YoYo.with(Techniques.SlideInUp)
-                .duration(500)
-                .playOn(llProductView);
-
-    }
-
-
-    public boolean isProductsVisible() {
-        return llProductView.getVisibility() == View.VISIBLE;
-    }
-
-    public void displayCTA() {
-
-        llProductView.setVisibility(View.GONE);
-        rvActionItems.setVisibility(View.VISIBLE);
-
-//        getActivity().setTitle(Html.fromHtml("Sam <i>says..</i>"));
-        getActivity().setTitle("Your Leads");
-        ((SuggestionsActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-    }
-
-    public void setOverlay(View v, int opac, int width, int height) {
-        int opacity = opac; // from 0 to 255
-        v.setBackgroundColor(opacity * 0x1000000); // black with a variable alpha
-        FrameLayout.LayoutParams params =
-                new FrameLayout.LayoutParams(width, height);
-        params.gravity = Gravity.NO_GRAVITY;
-        v.setLayoutParams(params);
-        v.invalidate();
-    }
-
-    enum SHARE_VIA {
-        GMAIL,
-        SMS
+                isViewMore = !isViewMore;
+                updateMaxLines();
+            }
+        });
     }
 
     private Intent shareIntent = null;
     private String selectedProducts = "";
 
-
     private void prepareMessageForShare(SHARE_VIA share_via) {
 
 
-        if (suggestionsDO != null) {
+        if (mSuggestionsDO != null) {
             shareIntent = null;
             selectedProducts = "";
 
             String imageUrl = "";
 
-            if (suggestionsDO.getUpdates() != null) {
-                for (final SugUpdates sugUpdates : suggestionsDO.getUpdates()) {
+            if (mSuggestionsDO.getUpdates() != null) {
+                for (final SugUpdates sugUpdates : mSuggestionsDO.getUpdates()) {
                     if (sugUpdates.isSelected()) {
 
                         try {
@@ -359,8 +213,8 @@ public class CallToActionFragment extends Fragment {
                 }
             }
 
-            if (suggestionsDO.getProducts() != null) {
-                for (final SugProducts sugProducts : suggestionsDO.getProducts()) {
+            if (mSuggestionsDO.getProducts() != null) {
+                for (final SugProducts sugProducts : mSuggestionsDO.getProducts()) {
                     if (sugProducts.isSelected()) {
 
                         try {
@@ -395,7 +249,7 @@ public class CallToActionFragment extends Fragment {
                                             Uri uri = Uri.parse(path);
                                             shareIntent =
                                                     new Intent(Intent.ACTION_SEND, Uri.parse("mailto:" +
-                                                            suggestionsDO.getValue()));
+                                                            mSuggestionsDO.getValue()));
                                             shareIntent.putExtra(Intent.EXTRA_TEXT, selectedProducts);
                                             shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
                                             shareIntent.setType("image/*");
@@ -430,9 +284,9 @@ public class CallToActionFragment extends Fragment {
                     case SMS:
                         try {
 
-                            Uri uri = Uri.parse("smsto:" + suggestionsDO.getValue());
+                            Uri uri = Uri.parse("smsto:" + mSuggestionsDO.getValue());
                             Intent smsIntent = new Intent(Intent.ACTION_SENDTO, uri);
-                            smsIntent.putExtra("address", suggestionsDO.getValue());
+                            smsIntent.putExtra("address", mSuggestionsDO.getValue());
                             smsIntent.putExtra("sms_body", selectedProducts);
                             startActivity(smsIntent);
 
@@ -446,12 +300,61 @@ public class CallToActionFragment extends Fragment {
 
     }
 
-    public class SAMPagerAdapter extends PagerAdapter {
+
+    enum SHARE_VIA {
+        GMAIL,
+        SMS
+    }
+
+    private void applyAnimation() {
+
+//        YoYo.with(Techniques.SlideInDown)
+//                .duration(500)
+//                .playOn(llMessage);
+//        YoYo.with(Techniques.SlideInUp)
+//                .duration(500)
+//                .playOn(llRelevant);
+
+        llMessage.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.slide_down));
+        llRelevant.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.juspay_slide_from_below));
+
+    }
+
+    private void updateMaxLines() {
+
+        if (!isViewMore) {
+            tvViewMore.setText(Html.fromHtml(getString(R.string.view_more)));
+            tvMessage.setMaxLines(2);
+
+        } else {
+            tvViewMore.setText(Html.fromHtml(getString(R.string.view_less)));
+            tvMessage.setMaxLines(100);
+
+        }
+    }
+
+    @Override
+    public void onSelection(boolean isSelected) {
+
+        if (isSelected)
+            selectedCount++;
+        else
+            selectedCount--;
+
+        if (selectedCount > 0) {
+            btnShare.setText(getString(R.string.share) + " (" + selectedCount + ")");
+        } else {
+            btnShare.setText(getString(R.string.share));
+        }
+    }
+
+
+    private class SAMPagerAdapter extends PagerAdapter {
 
         private LayoutInflater inflater;
         private ArrayList<String> arrPageTitle;
 
-        public SAMPagerAdapter(Context mcContext) {
+        private SAMPagerAdapter(Context mcContext) {
             inflater = LayoutInflater.from(mcContext);
             arrPageTitle = new ArrayList<>();
 
@@ -478,15 +381,15 @@ public class CallToActionFragment extends Fragment {
                 tvNoItems.setVisibility(View.GONE);
 
 
-                if (suggestionsDO.getUpdates() != null && suggestionsDO.getUpdates().size() > 0) {
+                if (mSuggestionsDO.getUpdates() != null && mSuggestionsDO.getUpdates().size() > 0) {
                     rvSuggestions.setLayoutManager(new LinearLayoutManager(getActivity()));
-//                    rvSuggestions.setAdapter(new SugUpdatesAdapter(getActivity(),
-//                            (ArrayList<SugUpdates>) suggestionsDO.getUpdates()),null);
+                    rvSuggestions.setAdapter(new SugUpdatesAdapter(getActivity(),
+                            (ArrayList<SugUpdates>) mSuggestionsDO.getUpdates(), CustomerAssistantDetailFragment.this));
 
                     ivScrollDown.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            rvSuggestions.smoothScrollToPosition(suggestionsDO.getUpdates().size() - 1);
+                            rvSuggestions.smoothScrollToPosition(mSuggestionsDO.getUpdates().size() - 1);
                         }
                     });
 
@@ -501,7 +404,7 @@ public class CallToActionFragment extends Fragment {
                             super.onScrolled(recyclerView, dx, dy);
                             int position = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
 
-                            if (position < (suggestionsDO.getUpdates().size() - 2)) {
+                            if (position < (mSuggestionsDO.getUpdates().size() - 2)) {
                                 ivScrollDown.setVisibility(View.VISIBLE);
                             } else {
                                 ivScrollDown.setVisibility(View.INVISIBLE);
@@ -525,8 +428,9 @@ public class CallToActionFragment extends Fragment {
                 gvSuggestions.setVisibility(View.VISIBLE);
                 tvNoItems.setVisibility(View.GONE);
 
-                if (suggestionsDO.getProducts() != null && suggestionsDO.getProducts().size() > 0) {
-                    gvSuggestions.setAdapter(new SugProductsAdapter(getActivity(), suggestionsDO.getProducts()));
+                if (mSuggestionsDO.getProducts() != null && mSuggestionsDO.getProducts().size() > 0) {
+                    gvSuggestions.setAdapter(new SugProductsAdapter(getActivity(),
+                            mSuggestionsDO.getProducts(), CustomerAssistantDetailFragment.this));
 
                     gvSuggestions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
@@ -550,7 +454,7 @@ public class CallToActionFragment extends Fragment {
                     ivScrollDown.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            gvSuggestions.smoothScrollToPosition(suggestionsDO.getProducts().size() - 1);
+                            gvSuggestions.smoothScrollToPosition(mSuggestionsDO.getProducts().size() - 1);
                         }
                     });
 
@@ -563,7 +467,7 @@ public class CallToActionFragment extends Fragment {
                         @Override
                         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
-                            if (visibleItemCount < (suggestionsDO.getUpdates().size() - 2)) {
+                            if (visibleItemCount < (mSuggestionsDO.getUpdates().size() - 2)) {
                                 ivScrollDown.setVisibility(View.VISIBLE);
                             } else {
                                 ivScrollDown.setVisibility(View.INVISIBLE);
@@ -598,5 +502,15 @@ public class CallToActionFragment extends Fragment {
         public CharSequence getPageTitle(int position) {
             return arrPageTitle.get(position);
         }
+    }
+
+    public void setOverlay(View v, int opac, int width, int height) {
+        int opacity = opac; // from 0 to 255
+        v.setBackgroundColor(opacity * 0x1000000); // black with a variable alpha
+        FrameLayout.LayoutParams params =
+                new FrameLayout.LayoutParams(width, height);
+        params.gravity = Gravity.NO_GRAVITY;
+        v.setLayoutParams(params);
+        v.invalidate();
     }
 }

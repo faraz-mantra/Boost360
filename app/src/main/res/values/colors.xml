@@ -160,6 +160,7 @@
       </integer-array>-->
     <color name="red">#F20A0A</color>
     <color name="primary">@color/primaryColor</color>
+    <color name="transparent_blk">#90000000</color>
 
     <color name="transluscent_background">#BF000000</color>
     <color name="transparent_th">#80000000</color>

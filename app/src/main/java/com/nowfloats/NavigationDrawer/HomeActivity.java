@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -528,7 +529,13 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
     @Override
     protected void onStop() {
-        sendBroadcast(new Intent(SAMBubblesService.ACTION_ADD_BUBBLE));
+
+        ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        ComponentName componentName = am.getRunningTasks(1).get(0).topActivity;
+        if (!componentName.getPackageName().equalsIgnoreCase(getApplicationContext().getPackageName())) {
+            sendBroadcast(new Intent(SAMBubblesService.ACTION_ADD_BUBBLE));
+        }
+
         super.onStop();
         Constants.fromLogin = false;
         isExpiredCheck = false;

@@ -6,15 +6,19 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:layout_gravity="center"
-        android:background="#b6b6b6" />
+        android:background="#9E9E9E" />
 
     <TextView
-        android:id="@+id/header_text"
+        android:id="@+id/tvHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="left"
+        android:layout_marginLeft="@dimen/margin_20"
         android:background="@drawable/date_header"
-        android:text="24 jan, 2017" />
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="Expiry in 3 days"
+        android:textColor="#565656" />
 </FrameLayout>

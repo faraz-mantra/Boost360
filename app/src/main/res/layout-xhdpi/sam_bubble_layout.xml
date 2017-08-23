@@ -6,16 +6,23 @@
     android:focusable="false"
     android:gravity="center">
 
-    <com.nowfloats.CustomWidget.SAMMenuWidget
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <!-- <com.nowfloats.CustomWidget.SAMMenuWidget
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content">
 
-    </com.nowfloats.CustomWidget.SAMMenuWidget>
+     </com.nowfloats.CustomWidget.SAMMenuWidget>-->
 
-    <include
-        android:id="@+id/swoosh_dots"
-        layout="@layout/trigger"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="visible" />
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="-15dp"
+        android:alpha="0.5"
+        android:src="@drawable/ic_ca_icon" />
+
+    <!--  <include
+          android:id="@+id/swoosh_dots"
+          layout="@layout/trigger"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:visibility="visible" />-->
 </LinearLayout>

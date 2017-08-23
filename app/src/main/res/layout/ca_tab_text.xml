@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:text="@string/alerts_text"
             android:textColor="@color/text_color_brown"
-            android:textSize="20sp"
+            android:textSize="18sp"
             tools:ignore="MissingPrefix" />
     </LinearLayout>
 

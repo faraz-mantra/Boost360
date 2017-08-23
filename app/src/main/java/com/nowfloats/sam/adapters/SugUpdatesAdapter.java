@@ -7,10 +7,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nowfloats.sam.SuggestionSelectionListner;
 import com.nowfloats.sam.models.SugUpdates;
 import com.thinksity.R;
 
@@ -26,9 +27,14 @@ public class SugUpdatesAdapter extends RecyclerView.Adapter<SugUpdatesAdapter.Vi
 
     private Context mContext;
 
-    public SugUpdatesAdapter(Context mContext, ArrayList<SugUpdates> arrUpdates) {
+    private SuggestionSelectionListner mSuggestionSelectionListner;
+
+    public SugUpdatesAdapter(Context mContext,
+                             ArrayList<SugUpdates> arrUpdates,
+                             SuggestionSelectionListner mSuggestionSelectionListner) {
         this.mContext = mContext;
         this.arrUpdates = arrUpdates;
+        this.mSuggestionSelectionListner = mSuggestionSelectionListner;
     }
 
     private int MAX_LINE_COUNT = 3;
@@ -45,12 +51,6 @@ public class SugUpdatesAdapter extends RecyclerView.Adapter<SugUpdatesAdapter.Vi
 
         final SugUpdates mSugUpdate = (SugUpdates) arrUpdates.get(position);
 
-        if (mSugUpdate.isSelected()) {
-            viewHolder.flOverlay.setVisibility(View.VISIBLE);
-        } else {
-            viewHolder.flOverlay.setVisibility(View.GONE);
-        }
-
         viewHolder.tvUpdate.setText(mSugUpdate.getName());
         updateMaxLines(mSugUpdate, viewHolder.tvViewMore, viewHolder.tvUpdate);
 
@@ -64,25 +64,31 @@ public class SugUpdatesAdapter extends RecyclerView.Adapter<SugUpdatesAdapter.Vi
         });
 
         viewHolder.itemView.setTag(R.string.key_details, mSugUpdate);
+        viewHolder.cbUpdate.setTag(R.string.key_details, mSugUpdate);
 
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final SugUpdates sugUpdates = (SugUpdates) view.getTag(R.string.key_details);
-                sugUpdates.setSelected(!sugUpdates.isSelected());
-                FrameLayout flMain = (FrameLayout) view.findViewById(R.id.flMain);
-                FrameLayout flOverlay = (FrameLayout) view.findViewById(R.id.flOverlay);
-                View vwOverlay = view.findViewById(R.id.vwOverlay);
-                if (sugUpdates.isSelected()) {
-                    flOverlay.setVisibility(View.VISIBLE);
-                    setOverlay(vwOverlay, 200, flMain.getWidth(), flMain.getHeight());
-                } else {
-                    flOverlay.setVisibility(View.GONE);
-                }
+                updateView(view);
             }
         });
 
-        setOverlay(viewHolder.vwOverlay, 200, viewHolder.flMain.getWidth(), viewHolder.itemView.getHeight());
+        viewHolder.cbUpdate.setChecked(mSugUpdate.isSelected());
+        viewHolder.cbUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateView(view);
+            }
+        });
+
+    }
+
+    private void updateView(View view) {
+        final SugUpdates sugUpdates = (SugUpdates) view.getTag(R.string.key_details);
+        sugUpdates.setSelected(!sugUpdates.isSelected());
+        CheckBox cbUpdate = (CheckBox) view.findViewById(R.id.cbUpdate);
+        cbUpdate.setChecked(sugUpdates.isSelected());
+        mSuggestionSelectionListner.onSelection(sugUpdates.isSelected);
     }
 
     private void updateMaxLines(SugUpdates mSugUpdate, TextView tvViewMore, TextView tvUpdate) {
@@ -121,25 +127,18 @@ public class SugUpdatesAdapter extends RecyclerView.Adapter<SugUpdatesAdapter.Vi
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView ProductImageView;
         TextView tvUpdate, tvViewMore;
-        FrameLayout flMain;
-        FrameLayout flOverlay;
-        View vwOverlay;
         View itemView;
-
+        CheckBox cbUpdate;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             this.itemView = itemView;
 
-            ProductImageView = (ImageView) itemView.findViewById(R.id.proudct_image_view);
             tvUpdate = (TextView) itemView.findViewById(R.id.tvUpdate);
             tvViewMore = (TextView) itemView.findViewById(R.id.tvViewMore);
-            flMain = (FrameLayout) itemView.findViewById(R.id.flMain);
-            flOverlay = (FrameLayout) itemView.findViewById(R.id.flOverlay);
-            vwOverlay = (View) itemView.findViewById(R.id.vwOverlay);
+            cbUpdate = (CheckBox) itemView.findViewById(R.id.cbUpdate);
         }
     }
 }

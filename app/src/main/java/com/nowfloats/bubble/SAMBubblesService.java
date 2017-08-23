@@ -24,8 +24,12 @@
  */
 package com.nowfloats.bubble;
 
+import android.app.ActivityManager;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -34,14 +38,15 @@ import android.graphics.PixelFormat;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.SystemClock;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
 
-import com.nowfloats.sam.SAMCustomerListActivity;
+import com.nowfloats.sam.CustomerAssistantActivity;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
@@ -78,15 +83,7 @@ public class SAMBubblesService extends Service {
 
 
             if (intent.getAction().equalsIgnoreCase(ACTION_ADD_BUBBLE)) {
-                WindowManager window = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-                Display display = window.getDefaultDisplay();
-                int x_pos = 0;
-                int y_Pos = (display.getHeight() * 20) / 100;
-
-                if (bubbles == null || bubbles.size() == 0) {
-                    addTrash(R.layout.bubble_trash_layout);
-                    addBubble(x_pos, y_Pos);
-                }
+                repostionBubble();
             } else if (intent.getAction().equalsIgnoreCase(ACTION_REMOVE_BUBBLE)) {
                 if (bubbleView != null)
                     recycleBubble(bubbleView);
@@ -95,12 +92,29 @@ public class SAMBubblesService extends Service {
 
     };
 
+    private void repostionBubble() {
+
+        WindowManager window = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+        Display display = window.getDefaultDisplay();
+        int x_pos = 0;
+        int y_Pos = (display.getHeight() * 20) / 100;
+
+        if (bubbles == null || bubbles.size() == 0) {
+            addTrash(R.layout.bubble_trash_layout);
+            addBubble(x_pos, y_Pos);
+        }
+    }
+
     @Override
     public void onDestroy() {
-        for (BubbleLayout bubble : bubbles) {
-            recycleBubble(bubble);
+        if (bubbles != null && bubbles.size() > 0) {
+            for (BubbleLayout bubble : bubbles) {
+                recycleBubble(bubble);
+            }
         }
+        bubblesTrash = null;
         unregisterReceiver(resetReceiver);
+        Log.e("onDestroy", "onDestroy sam");
         super.onDestroy();
     }
 
@@ -109,6 +123,7 @@ public class SAMBubblesService extends Service {
             @Override
             public void run() {
                 getWindowManager().removeView(bubble);
+                bubbleView = null;
                 for (BubbleLayout cachedBubble : bubbles) {
                     if (cachedBubble == bubble) {
 
@@ -145,7 +160,7 @@ public class SAMBubblesService extends Service {
 
                 @Override
                 public void onBubbleClick(BubbleLayout bubble) {
-                    Intent intent = new Intent(SAMBubblesService.this, SAMCustomerListActivity.class);
+                    Intent intent = new Intent(SAMBubblesService.this, CustomerAssistantActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
                     startActivity(intent);
                 }
@@ -168,12 +183,26 @@ public class SAMBubblesService extends Service {
 
     }
 
+    @Override
+    public void onTaskRemoved(final Intent rootIntent) {
+        Log.e("onTaskRemoved", "onTaskRemoved tes");
+        Intent restartServiceIntent = new Intent(getApplicationContext(), this.getClass());
+
+        PendingIntent restartServicePendingIntent = PendingIntent.getService(
+                getApplicationContext(), 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);
+        AlarmManager alarmService = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmService.set(AlarmManager.ELAPSED_REALTIME,
+                SystemClock.elapsedRealtime() + 1000,
+                restartServicePendingIntent);
+
+        super.onTaskRemoved(rootIntent);
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         if (intent == null) {
-            return Service.START_NOT_STICKY;
+            return Service.START_STICKY;
         } else {
 
             return Service.START_REDELIVER_INTENT;
@@ -185,11 +214,27 @@ public class SAMBubblesService extends Service {
         super.onCreate();
         registerReceiver(resetReceiver, addIntentFilter);
         registerReceiver(resetReceiver, removeIntentFilter);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    Log.e("onCreate", "onCreate - 1");
+                }
+            }
+        }).start();
+
+        ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        ComponentName componentName = am.getRunningTasks(1).get(0).topActivity;
+        if (!componentName.getPackageName().equalsIgnoreCase(getApplicationContext().getPackageName())) {
+            repostionBubble();
+        }
+
     }
 
 
     void addTrash(int trashLayoutResourceId) {
-        if (trashLayoutResourceId != 0) {
+        if (trashLayoutResourceId != 0 && bubblesTrash != null) {
             bubblesTrash = new BubbleTrashLayout(this);
             bubblesTrash.setWindowManager(windowManager);
             bubblesTrash.setViewParams(buildLayoutParamsForTrash());
@@ -233,11 +278,11 @@ public class SAMBubblesService extends Service {
 
     private void showCustomToastView() {
 
-        Toast mToast = new Toast(SAMBubblesService.this);
-        mToast.setView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.sam_toast, null));
-        mToast.setDuration(Toast.LENGTH_LONG);
-        mToast.setGravity(Gravity.TOP, -20, (getResources().getDisplayMetrics().heightPixels * 5) / 100);
-        mToast.show();
+//        Toast mToast = new Toast(SAMBubblesService.this);
+//        mToast.setView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.sam_toast, null));
+//        mToast.setDuration(Toast.LENGTH_LONG);
+//        mToast.setGravity(Gravity.TOP, -20, (getResources().getDisplayMetrics().heightPixels * 5) / 100);
+//        mToast.show();
 
     }
 

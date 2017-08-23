@@ -18,7 +18,7 @@ public class FirebaseLogger {
 
     private static FirebaseLogger mFirebaseLogger;
     private DatabaseReference mDatabase;
-    private static final String DB_SAM_CHILD_NAME = "SAM";
+    private static final String DB_SAM_CHILD_NAME = "SAMTest";
 
     public static boolean lastEventStatus;
 

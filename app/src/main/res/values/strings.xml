@@ -1353,5 +1353,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
     <string name="pull_to_open">Pull the 4 dots to open</string>
     <string name="long_press_to_move">Long press to move</string>
+    <string name="action_sort_date">Date</string>
+    <string name="action_sort_expiry">Expiry</string>
+    <string name="action_sort_source">Channel</string>
 
 </resources>
