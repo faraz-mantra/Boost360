@@ -2,6 +2,13 @@ package com.nowfloats.Product_Gallery.Service;
 
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
 import com.nowfloats.Product_Gallery.Model.Product_Gallery_Update_Model;
+import com.nowfloats.Product_Gallery.Model.ShippingMetricsModel;
+import com.nowfloats.manageinventory.models.APIResponseModel;
+import com.nowfloats.manageinventory.models.MerchantProfileModel;
+import com.nowfloats.manageinventory.models.WAAddDataModel;
+import com.nowfloats.manageinventory.models.WaUpdateDataModel;
+import com.nowfloats.manageinventory.models.WebActionModel;
+import com.nowfloats.util.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +22,7 @@ import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.PUT;
+import retrofit.http.Query;
 import retrofit.http.QueryMap;
 
 /**
@@ -44,4 +52,23 @@ public interface ProductGalleryInterface {
     @Headers({"Content-Type: application/json"})
     @DELETE("/Product/v2/DeleteImage")
     void deleteProductImage(@Body HashMap<String, String> map, Callback<String> callback);
+
+    @GET("/ProductCatalogue/v1/floatingpoints/getDeliveryPriceForMerchant")
+    public void getShippingCharge(@QueryMap Map<String, String> query, Callback<APIResponseModel<Integer>> callback);
+
+    @GET("/product_details3/get-data")
+    @Headers({"Authorization: " + Constants.WA_KEY})
+    void getShippingMetric(@Query("query") String query, Callback<WebActionModel<ShippingMetricsModel>> callback);
+
+    @POST("/product_details3/update-data")
+    @Headers({"Authorization: " + Constants.WA_KEY})
+    void updateProductMetrics(@Body WaUpdateDataModel updateDataModel, Callback<String> callback);
+
+    @POST("/product_details3/add-data")
+    @Headers({"Authorization: " + Constants.WA_KEY})
+    void addProductMetrics(@Body WAAddDataModel<ShippingMetricsModel> updateDataModel, Callback<String> callback);
+
+    @GET("/merchant_profile3/get-data")
+    @Headers({"Authorization: " + Constants.WA_KEY})
+    void getMerchantProfileData(@Query("query") String query, Callback<WebActionModel<MerchantProfileModel>> callback);
 }

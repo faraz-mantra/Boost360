@@ -289,6 +289,7 @@ public class Login_MainActivity extends AppCompatActivity implements
 
     protected void sendPasswordToEmail(String enteredText) {
         // TODO Auto-generated method stub
+        final ProgressDialog dialog = ProgressDialog.show(this,"",getString(R.string.processing_request),true);
         JSONObject obj = new JSONObject();
         try {
             obj.put("clientId", Constants.clientId);
@@ -309,6 +310,9 @@ public class Login_MainActivity extends AppCompatActivity implements
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                if(!isFinishing() && dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 if (!isUpdatedOnServer) {
                     runOnUiThread(new Runnable() {
                         @Override
@@ -326,6 +330,9 @@ public class Login_MainActivity extends AppCompatActivity implements
             @Override
             protected com.android.volley.Response<String> parseNetworkResponse(
                     NetworkResponse response) {
+                if(!isFinishing() && dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 if (response.statusCode == 200) {
                     isUpdatedOnServer = true;
                     try {

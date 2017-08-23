@@ -25,9 +25,10 @@
                 android:layout_height="@dimen/textview_height_business_profile"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
-                android:padding="5dp"
+                android:tint="#808080"
+                android:padding="10dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/payment_setting" />
+                android:src="@drawable/seller_analytics" />
 
 
             <ImageView
@@ -36,9 +37,20 @@
                 android:layout_height="@dimen/textview_height_business_profile"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
+                android:tint="#808080"
                 android:padding="5dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/catalog" />
+
+            <ImageView
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/textview_height_business_profile"
+                android:layout_marginLeft="@dimen/icon_left_margin"
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:padding="2dp"
+                android:tint="#808080"
+                android:scaleType="fitCenter"
+                android:src="@drawable/payment_setting" />
 
 
         </LinearLayout>
@@ -48,17 +60,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/screen_bg"
-            android:orientation="vertical"
-
-            >
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvPaymentSetting"
+                android:id="@+id/tvSellerAnalytics"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/textview_height_business_profile"
                 android:background="?android:selectableItemBackground"
                 android:gravity="center_vertical"
-                android:text="@string/payment_setting"
+                android:text="@string/seller_analytics"
                 android:textColor="@color/cell_text_color"
                 android:textSize="@dimen/cell_text_size" />
 
@@ -77,6 +87,21 @@
                 android:text="@string/product_gallery"
                 android:textColor="@color/cell_text_color"
                 android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#d3d3d3" />
+
+            <TextView
+                android:id="@+id/tvPaymentSetting"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/textview_height_business_profile"
+                android:background="?android:selectableItemBackground"
+                android:gravity="center_vertical"
+                android:text="@string/payment_setting"
+                android:textColor="@color/cell_text_color"
+                android:textSize="@dimen/cell_text_size" />
 
 
         </LinearLayout>

@@ -55,13 +55,13 @@ public class HelpAndSupportActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help_and_support);
 
-        toolbar = (Toolbar) findViewById(R.id.help_and_support_toolbar);
+        /*toolbar = (Toolbar) findViewById(R.id.help_and_support_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
-        headerText.setText(getResources().getString(R.string.help_and_support));
+        headerText.setText(getResources().getString(R.string.help_and_support));*/
 
         tvConsultantName = (TextView) findViewById(R.id.tv_consultant_name);
         tvConsultantNumber = (TextView) findViewById(R.id.tv_contact_number);
@@ -238,7 +238,7 @@ public class HelpAndSupportActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            super.onBackPressed();
+           onBackPressed();
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             return true;
         }
@@ -247,8 +247,6 @@ public class HelpAndSupportActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-
+        finish();
     }
 }

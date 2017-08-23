@@ -23,7 +23,7 @@ import com.thinksity.R;
  * A simple {@link Fragment} subclass.
  */
 public class ManageInventoryFragment extends Fragment {
-    TextView tvPaymentSetting, tvProductGallery,tvTotalNoOfOrders,tvTotalRevenue;
+    TextView tvPaymentSetting, tvProductGallery,tvTotalNoOfOrders,tvTotalRevenue, tvSellerAnalytics;
     Typeface robotoLight;
     private SharedPreferences pref = null;
     UserSessionManager session;
@@ -66,18 +66,29 @@ public class ManageInventoryFragment extends Fragment {
             tvProductGallery = (TextView) mainView.findViewById(R.id.tvProductGallery);
             tvProductGallery.setTypeface(robotoMedium);
 
+            tvSellerAnalytics = (TextView) mainView.findViewById(R.id.tvSellerAnalytics);
+            tvSellerAnalytics.setTypeface(robotoMedium);
+
             tvPaymentSetting.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Intent i = new Intent(getActivity(), BusinessEnquiryActivity.class);
-//                    startActivity(i);
-//                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    Intent i = new Intent(getActivity(), PaymentSettingsActivity.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             });
             tvProductGallery.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(getActivity(), ProductGalleryActivity.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+            });
+            tvSellerAnalytics.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getActivity(), SellerAnalyticsActivity.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }

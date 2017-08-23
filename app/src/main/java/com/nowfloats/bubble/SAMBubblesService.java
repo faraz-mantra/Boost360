@@ -46,7 +46,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.nowfloats.sam.CustomerAssistantActivity;
+import com.nowfloats.customerassistant.CustomerAssistantActivity;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
@@ -149,7 +149,7 @@ public class SAMBubblesService extends Service {
 
         try {
             bubbleView = new BubbleLayout(this);
-            bubbleView.addView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.sam_bubble_layout, null));
+            bubbleView.addView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.ca_bubble_layout, null));
             bubbleView.initalizeBubbleView(initAplha);
             bubbleView.setOnBubbleRemoveListener(new BubbleLayout.OnBubbleRemoveListener() {
                 @Override
@@ -279,7 +279,7 @@ public class SAMBubblesService extends Service {
     private void showCustomToastView() {
 
 //        Toast mToast = new Toast(SAMBubblesService.this);
-//        mToast.setView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.sam_toast, null));
+//        mToast.setView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.ca_toast, null));
 //        mToast.setDuration(Toast.LENGTH_LONG);
 //        mToast.setGravity(Gravity.TOP, -20, (getResources().getDisplayMetrics().heightPixels * 5) / 100);
 //        mToast.show();

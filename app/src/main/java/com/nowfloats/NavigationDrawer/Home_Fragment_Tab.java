@@ -364,19 +364,7 @@ public class Home_Fragment_Tab extends Fragment {
         }
 
         boolean checkAccessibility = true;
-        if (android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null) {
 
-            if (!Settings.canDrawOverlays(getActivity())) {
-                checkAccessibility = false;
-                dialogForOverlayPath(from);
-            }
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
-            checkAccessibility = canDrawOverlaysUsingReflection(getActivity());
-            if (!checkAccessibility) {
-                dialogForOverlayPath(from);
-            }
-        }
 
         Calendar calendar = Calendar.getInstance();
         long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, -1);
@@ -388,7 +376,20 @@ public class Home_Fragment_Tab extends Fragment {
             return;
         }else{
 
-            dialogForOverlayPath(from);
+            if (android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null) {
+
+                if (!Settings.canDrawOverlays(getActivity())) {
+                    checkAccessibility = false;
+                    dialogForOverlayPath(from);
+                }
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+                checkAccessibility = canDrawOverlaysUsingReflection(getActivity());
+                if (!checkAccessibility) {
+                    dialogForOverlayPath(from);
+                }
+            }
+            //dialogForOverlayPath(from);
 
         }
 

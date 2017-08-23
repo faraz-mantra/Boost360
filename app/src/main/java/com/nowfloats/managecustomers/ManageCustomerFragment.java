@@ -30,7 +30,7 @@ import com.thinksity.R;
  * A simple {@link Fragment} subclass.
  */
 public class ManageCustomerFragment extends Fragment {
-    TextView tvBusinessEnquires, tvSubscribers;
+    TextView tvBusinessEnquires, tvSubscribers, tvFacebookChat;
     Typeface robotoLight;
     private SharedPreferences pref = null;
     UserSessionManager session;
@@ -74,9 +74,11 @@ public class ManageCustomerFragment extends Fragment {
             tvBusinessEnquires.setTypeface(robotoMedium);
 
             tvSubscribers = (TextView) mainView.findViewById(R.id.tvSubscribers);
+            tvFacebookChat = (TextView) mainView.findViewById(R.id.tvFacebookChat);
             tvLearnMore = (TextView) mainView.findViewById(R.id.tvLearnMore);
             tvSubscribers.setTypeface(robotoMedium);
             tvLearnMore.setTypeface(robotoMedium);
+            tvFacebookChat.setTypeface(robotoMedium);
 
             tvLearnMore.setVisibility(View.GONE);
             CharSequence charSequence = Html.fromHtml("<u><i>Learn More</i></u>");
@@ -105,7 +107,14 @@ public class ManageCustomerFragment extends Fragment {
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             });
-
+            tvFacebookChat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(getActivity(), FacebookChatActivity.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+            });
             bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
 
             bubbleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

@@ -148,14 +148,14 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         mSharedPreferences = this.getSharedPreferences(TwitterConnection.PREF_NAME, MODE_PRIVATE);
         activity = Social_Sharing_Activity.this;
 
-        toolbar = (Toolbar) findViewById(R.id.app_bar_social);
+        //toolbar = (Toolbar) findViewById(R.id.app_bar_social);
 
         Typeface myCustomFont = Typeface.createFromAsset(this.getAssets(), "Roboto-Light.ttf");
         Typeface myCustomFont_Medium = Typeface.createFromAsset(this.getAssets(), "Roboto-Regular.ttf");
 
-        setSupportActionBar(toolbar);
-        headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
-        headerText.setText(getResources().getString(R.string.third_party_integration));
+        //setSupportActionBar(toolbar);
+        //headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
+        //headerText.setText(getResources().getString(R.string.third_party_integration));
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -341,7 +341,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                         showAlertBox();
                     } else {
                         if (twitterConnection == null) {
-                            twitterConnection = new TwitterConnection(Social_Sharing_Activity.this);
+                            twitterConnection = new TwitterConnection(Social_Sharing_Activity.this, Social_Sharing_Activity.this);
                         }
                         twitterConnection.authorize();
                     }
@@ -783,8 +783,12 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
+        setCallback();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
+
+    private void setCallback() {
+        setResult(Constants.fbPageShareEnabled ? RESULT_OK : RESULT_CANCELED);
     }
 
     @Override
@@ -802,7 +806,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
 
     public void fbData(final int from) {
         //AccessToken.getCurrentAccessToken()
-        List<String> readPermissions = Arrays.asList("email", "public_profile", "user_friends", "read_insights", "business_management");
+        List<String> readPermissions = Arrays.asList("email", "public_profile", "user_friends", "read_insights", "business_management","pages_messaging");
         final List<String> publishPermissions = Arrays.asList("publish_actions", "publish_pages", "manage_pages");
         final LoginManager loginManager = LoginManager.getInstance();
 
