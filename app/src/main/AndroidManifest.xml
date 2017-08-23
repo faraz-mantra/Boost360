@@ -159,7 +159,7 @@
 
         <service android:name="com.nowfloats.bubble.BubblesService" />
         <service
-            android:name="com.nowfloats.bubble.SAMBubblesService"
+            android:name="com.nowfloats.bubble.CustomerAssistantService"
             android:enabled="true"
             android:exported="true"
             android:stopWithTask="false" />

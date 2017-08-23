@@ -32,7 +32,7 @@ final class BubblesLayoutCoordinator {
     private BubbleTrashLayout trashView;
     private WindowManager windowManager;
     private BubblesService bubblesService;
-    private SAMBubblesService samBubblesService;
+    private CustomerAssistantService samBubblesService;
 
     private static BubblesLayoutCoordinator getInstance() {
         if (INSTANCE == null) {
@@ -113,7 +113,7 @@ final class BubblesLayoutCoordinator {
             layoutCoordinator.bubblesService = service;
         }
 
-        public Builder(SAMBubblesService service) {
+        public Builder(CustomerAssistantService service) {
             layoutCoordinator = getInstance();
             layoutCoordinator.samBubblesService = service;
         }

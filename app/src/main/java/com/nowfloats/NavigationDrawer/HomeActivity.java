@@ -100,7 +100,7 @@ import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.Model.StoreEvent;
 import com.nowfloats.Store.Model.StoreModel;
 import com.nowfloats.Store.StoreFragmentTab;
-import com.nowfloats.bubble.SAMBubblesService;
+import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.managecustomers.FacebookChatDetailActivity;
 import com.nowfloats.managecustomers.ManageCustomerFragment;
 import com.nowfloats.manageinventory.ManageInventoryFragment;
@@ -544,7 +544,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         ComponentName componentName = am.getRunningTasks(1).get(0).topActivity;
         if (!componentName.getPackageName().equalsIgnoreCase(getApplicationContext().getPackageName())) {
-            sendBroadcast(new Intent(SAMBubblesService.ACTION_ADD_BUBBLE));
+            sendBroadcast(new Intent(CustomerAssistantService.ACTION_ADD_BUBBLE));
         }
 
         super.onStop();
@@ -799,8 +799,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         //DeepLinkPage(mDeepLinkUrl, false);
         //mDeepLinkUrl = null;
 
-        isMyServiceRunning(SAMBubblesService.class);
-        sendBroadcast(new Intent(SAMBubblesService.ACTION_REMOVE_BUBBLE));
+        isMyServiceRunning(CustomerAssistantService.class);
+        sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
     }
 
     private void checkExpiry1() {
@@ -2067,7 +2067,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     }
 
     private void startService(Class<?> serviceClass) {
-        Intent intent = new Intent(HomeActivity.this, SAMBubblesService.class);
+        Intent intent = new Intent(HomeActivity.this, CustomerAssistantService.class);
         startService(intent);
     }
 }

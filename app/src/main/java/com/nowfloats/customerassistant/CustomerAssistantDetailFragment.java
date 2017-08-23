@@ -81,6 +81,9 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isViewMore = true;
+        selectedCount = 0;
+        noOfTimesResponded = 0;
         if (getArguments() != null) {
             mSuggestionsDO = (SuggestionsDO) getArguments().get(KEY_DATA);
         }
@@ -108,7 +111,6 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
     }
 
     private void initializeControls(View view) {
-        isViewMore = true;
         vwSAM = (ViewPager) view.findViewById(R.id.vwSAM);
         btnCall = (Button) view.findViewById(R.id.btnCall);
         btnShare = (Button) view.findViewById(R.id.btnShare);
@@ -132,7 +134,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
 
         vwSAM.setAdapter(new SAMPagerAdapter(getActivity()));
         tabs.setViewPager(vwSAM);
-
+        btnShare.setText(getString(R.string.share));
     }
 
     private void setOnClickListeners() {

@@ -55,7 +55,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SAMBubblesService extends Service {
+public class CustomerAssistantService extends Service {
     private List<BubbleLayout> bubbles = new ArrayList<BubbleLayout>();
     private BubbleTrashLayout bubblesTrash;
     private WindowManager windowManager;
@@ -160,7 +160,7 @@ public class SAMBubblesService extends Service {
 
                 @Override
                 public void onBubbleClick(BubbleLayout bubble) {
-                    Intent intent = new Intent(SAMBubblesService.this, CustomerAssistantActivity.class);
+                    Intent intent = new Intent(CustomerAssistantService.this, CustomerAssistantActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
                     startActivity(intent);
                 }
@@ -214,15 +214,6 @@ public class SAMBubblesService extends Service {
         super.onCreate();
         registerReceiver(resetReceiver, addIntentFilter);
         registerReceiver(resetReceiver, removeIntentFilter);
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    Log.e("onCreate", "onCreate - 1");
-                }
-            }
-        }).start();
 
         ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         ComponentName componentName = am.getRunningTasks(1).get(0).topActivity;
@@ -278,7 +269,7 @@ public class SAMBubblesService extends Service {
 
     private void showCustomToastView() {
 
-//        Toast mToast = new Toast(SAMBubblesService.this);
+//        Toast mToast = new Toast(CustomerAssistantService.this);
 //        mToast.setView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.ca_toast, null));
 //        mToast.setDuration(Toast.LENGTH_LONG);
 //        mToast.setGravity(Gravity.TOP, -20, (getResources().getDisplayMetrics().heightPixels * 5) / 100);

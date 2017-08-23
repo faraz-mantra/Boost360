@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.bubble.SAMBubblesService;
+import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.customerassistant.models.MessageDO;
 import com.nowfloats.customerassistant.models.SMSSuggestions;
 import com.nowfloats.customerassistant.models.SuggestionsDO;
@@ -70,7 +70,7 @@ public class CustomerAssistantActivity extends Activity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        sendBroadcast(new Intent(SAMBubblesService.ACTION_REMOVE_BUBBLE));
+        sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
         overridePendingTransition(R.anim.bubble_scale_up, R.anim.bubble_scale_down);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_assistant);
@@ -137,7 +137,7 @@ public class CustomerAssistantActivity extends Activity {
 
     @Override
     public void onStop() {
-        sendBroadcast(new Intent(SAMBubblesService.ACTION_ADD_BUBBLE));
+        sendBroadcast(new Intent(CustomerAssistantService.ACTION_ADD_BUBBLE));
         mBus.unregister(this);
         super.onStop();
     }
