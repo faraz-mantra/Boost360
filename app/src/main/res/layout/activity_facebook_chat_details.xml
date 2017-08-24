@@ -33,6 +33,7 @@
                 android:paddingBottom="10dp"
                 android:fadeScrollbars="false"
                 android:maxLines="5"
+                android:inputType="textCapSentences"
                 android:minHeight="40dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="10dp"

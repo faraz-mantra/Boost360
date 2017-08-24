@@ -585,9 +585,10 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
             public void afterTextChanged(Editable s) {
                 if(mShippingMetrix!=null){
                     String price = TextUtils.isEmpty(productPrice.getText().toString().trim())?"0":productPrice.getText().toString().trim();
+                    String discount = TextUtils.isEmpty(productDiscount.getText().toString().trim())?"0":productDiscount.getText().toString().trim();
                     etShippingCharge.setText(mShippingMetrix.getShippingCharge()+"");
-                    double transactionCharge = (Double.parseDouble(price)*NF_ASSURANCE_CHARGE)/100.0;
-                    double netAmount = ((Double.parseDouble(price) - (transactionCharge+mShippingMetrix.getShippingCharge()))*100.0)/100.0;
+                    double transactionCharge = ((Double.parseDouble(price)-Double.parseDouble(discount))*NF_ASSURANCE_CHARGE)/100.0;
+                    double netAmount = ((Double.parseDouble(price) - (Double.parseDouble(discount) + transactionCharge+mShippingMetrix.getShippingCharge()))*100.0)/100.0;
                     etTransactionCharge.setText(transactionCharge+"");
                     etNetAmount.setText(netAmount+"");
                 }
@@ -604,9 +605,10 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
                         pd.dismiss();
                         if(shippingMetricsModelWebActionModel.getData().size()>0){
                             mShippingMetrix = shippingMetricsModelWebActionModel.getData().get(0);
+                            String discount = TextUtils.isEmpty(product_data.DiscountAmount)?"0":product_data.DiscountAmount;
                             etShippingCharge.setText(mShippingMetrix.getShippingCharge()+"");
-                            double transactionCharge = (Double.parseDouble(product_data.Price)*NF_ASSURANCE_CHARGE)/100.0;
-                            double netAmount = ((Double.parseDouble(product_data.Price) - (transactionCharge+mShippingMetrix.getShippingCharge()))*100.0)/100.0;
+                            double transactionCharge = ((Double.parseDouble(product_data.Price) - Double.parseDouble(discount))*NF_ASSURANCE_CHARGE)/100.0;
+                            double netAmount = ((Double.parseDouble(product_data.Price) - (Double.parseDouble(discount)+transactionCharge+mShippingMetrix.getShippingCharge()))*100.0)/100.0;
                             etTransactionCharge.setText(transactionCharge+"");
                             etNetAmount.setText(netAmount+"");
                         }
@@ -1083,8 +1085,9 @@ public class Product_Detail_Activity_V45 extends AppCompatActivity implements Sh
     @Override
     public void onProductMetricCalculated(ShippingMetricsModel shippingMetricsModel, ShippingCalculatorFragment.ShippingAddOrUpdate val) {
         String price = TextUtils.isEmpty(productPrice.getText().toString().trim())?"0":productPrice.getText().toString().trim();
-        double transactionCharge = (Double.parseDouble(price)*NF_ASSURANCE_CHARGE)/100.0;
-        double netAmount = ((Double.parseDouble(price) - (transactionCharge+shippingMetricsModel.getShippingCharge()))*100.0)/100.0;
+        String discount = TextUtils.isEmpty(productDiscount.getText().toString().trim())?"0":productPrice.getText().toString().trim();
+        double transactionCharge = ((Double.parseDouble(price) - Double.parseDouble(price))*NF_ASSURANCE_CHARGE)/100.0;
+        double netAmount = ((Double.parseDouble(price) - (Double.parseDouble(discount) + transactionCharge+shippingMetricsModel.getShippingCharge()))*100.0)/100.0;
         if(netAmount < shippingMetricsModel.getShippingCharge()){
             Methods.showSnackBarNegative(this, "NetAmount can't be less than Shipping Charge");
             return;

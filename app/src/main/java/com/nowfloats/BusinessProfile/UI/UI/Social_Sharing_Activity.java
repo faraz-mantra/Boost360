@@ -17,6 +17,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -1235,7 +1236,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 break;
             case PAGE_NO_FOUND:
                 MixPanelController.track(MixPanelController.FACEBOOK_PAGE_NOT_FOUND, null);
-                if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+                String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
+                if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || (!TextUtils.isEmpty(paymentState)&&"1".equalsIgnoreCase(paymentState))) {
                     Methods.materialDialog(activity, "Alert", getString(R.string.look_like_no_facebook_page));
                 } else {
                     final MaterialDialog builder = new MaterialDialog.Builder(this)
