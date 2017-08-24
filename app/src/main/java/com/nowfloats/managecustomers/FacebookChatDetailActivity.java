@@ -141,7 +141,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         chatUserRecycerView.setHasFixedSize(true);
         final LinearLayoutManager manager = new LinearLayoutManager(this);
         chatUserRecycerView.setLayoutManager(manager);
-        FacebookChatItemDecorator decorator = new FacebookChatItemDecorator(Methods.dpToPx(43,this),
+        FacebookChatItemDecorator decorator = new FacebookChatItemDecorator(Methods.dpToPx(41,this),
                 true, getSectionCallback());
         chatUserRecycerView.addItemDecoration(decorator);
         adapter = new FacebookChatDetailAdapter(this,chatModelList);

@@ -546,14 +546,14 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
     @Override
     protected void onStop() {
+        super.onStop();
         bus.unregister(this);
         ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         ComponentName componentName = am.getRunningTasks(1).get(0).topActivity;
         if (!componentName.getPackageName().equalsIgnoreCase(getApplicationContext().getPackageName())) {
             sendBroadcast(new Intent(CustomerAssistantService.ACTION_ADD_BUBBLE));
         }
-        bus.unregister(this);
-        super.onStop();
+
         Constants.fromLogin = false;
         isExpiredCheck = false;
     }

@@ -16,13 +16,16 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.Image_Gallery.FullScreenImage;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
@@ -36,7 +39,7 @@ public class ManageCustomerFragment extends Fragment {
     UserSessionManager session;
     SharedPreferences.Editor prefsEditor;
     private Activity activity;
-    private Switch bubbleSwitch;
+    private Switch bubbleSwitch, customerAssistantSwitch;
     private TextView tvLearnMore;
 
     @Override
@@ -70,6 +73,7 @@ public class ManageCustomerFragment extends Fragment {
             Typeface robotoMedium = Typeface.createFromAsset(activity.getAssets(), "Roboto-Medium.ttf");
             robotoLight = Typeface.createFromAsset(activity.getAssets(), "Roboto-Light.ttf");
             bubbleSwitch = (Switch) mainView.findViewById(R.id.ninethRow_Switch);
+            customerAssistantSwitch = (Switch) mainView.findViewById(R.id.swCustomerAssistant);
             tvBusinessEnquires = (TextView) mainView.findViewById(R.id.tvBusinessEnquires);
             tvBusinessEnquires.setTypeface(robotoMedium);
 
@@ -116,6 +120,25 @@ public class ManageCustomerFragment extends Fragment {
                 }
             });
             bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
+            customerAssistantSwitch.setChecked(pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS,false));
+
+            customerAssistantSwitch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(!pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS,false)){
+                        customerAssistantSwitch.setChecked(false);
+                        Toast.makeText(activity, "This feature is not available.", Toast.LENGTH_SHORT).show();
+                    }else{
+                        if(customerAssistantSwitch.isChecked()){
+                            if(!Methods.isMyServiceRunning(activity, CustomerAssistantService.class)){
+                                activity.startService(new Intent(activity,CustomerAssistantService.class));
+                            }
+                        }else{
+                            activity.stopService(new Intent(activity,CustomerAssistantService.class));
+                        }
+                    }
+                }
+            });
 
             bubbleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
