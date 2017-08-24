@@ -129,8 +129,7 @@ public class CustomerAssistantActivity extends Activity {
 
         if (Utils.isNetworkConnected(CustomerAssistantActivity.this)) {
             HashMap<String, String> offersParam = new HashMap<>();
-//            offersParam.put("fpId", session.getFPID());
-            offersParam.put("fpId", "5928106e13c54e0b50251f21");
+            offersParam.put("fpId", session.getFPID());
             suggestionsApi.getMessages(offersParam);
         } else {
             loadDataFromDb();
