@@ -74,9 +74,11 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                     || (message.containsKey("mp_message_key") && message.get("mp_message_key").equalsIgnoreCase(SAM_BUBBLE_MSG_KEY))) {
                 MixPanelController.track(MixPanelController.SAM_BUBBLE_NOTIFICATION, null);
                 pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).apply();
-                if(!Methods.isMyServiceRunning(this,CustomerAssistantService.class)){
-                    Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
-                    startService(bubbleIntent);
+                if (Methods.hasOverlayPerm(this)) {
+                    if (!Methods.isMyServiceRunning(this, CustomerAssistantService.class)) {
+                        Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
+                        startService(bubbleIntent);
+                    }
                 }
             } else {
                 deepLinkUrl = message.get("url");
@@ -91,16 +93,15 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                     intent = manager.getLaunchIntentForPackage(getPackageName());
                     intent.putExtra("from", "notification");
                     intent.putExtra("url", deepLinkUrl);
-                    if(deepLinkUrl.contains(getString(R.string.facebook_chat)))
-                    {
+                    if (deepLinkUrl.contains(getString(R.string.facebook_chat))) {
                         SharedPreferences pref = getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
-                        pref.edit().putBoolean("IsNewFacebookMessage",true).apply();
-                        intent.putExtra("user_data",message.get("user_data"));
+                        pref.edit().putBoolean("IsNewFacebookMessage", true).apply();
+                        intent.putExtra("user_data", message.get("user_data"));
                         Intent messageIntent = new Intent(FacebookChatDetailActivity.INTENT_FILTER);
-                        messageIntent.putExtra("user_data",message.get("user_data"));
-                        messageIntent.putExtra("message",message.get("message"));
-                        if(LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent)){
-                            if(message.get("user_data").contains(pref.getString("facebookChatUser",""))){
+                        messageIntent.putExtra("user_data", message.get("user_data"));
+                        messageIntent.putExtra("message", message.get("message"));
+                        if (LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent)) {
+                            if (message.get("user_data").contains(pref.getString("facebookChatUser", ""))) {
                                 return;
                             }
                         }
@@ -147,10 +148,10 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
 
                 NotificationManager notificationManager =
                         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                if(!Util.isNullOrEmpty(deepLinkUrl) && deepLinkUrl.contains(getString(R.string.facebook_chat))) {
+                if (!Util.isNullOrEmpty(deepLinkUrl) && deepLinkUrl.contains(getString(R.string.facebook_chat))) {
                     FacebookChatDataModel.UserData data = new Gson().fromJson(message.get("user_data"), FacebookChatDataModel.UserData.class);
                     notificationManager.notify(data.getId().hashCode(), notificationBuilder.build());
-                }else{
+                } else {
                     notificationManager.notify(0, notificationBuilder.build());
                 }
             }

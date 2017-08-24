@@ -36,8 +36,6 @@ public class CustomerAssistantListFragment extends android.app.Fragment
 
     public List<SuggestionsDO> lsSuggestionsDOs;
 
-    private CustomerAssistantAdapter samCustomersAdapter;
-
     private ImageView ivSort;
 
     private SectionType sectionType;
@@ -92,7 +90,7 @@ public class CustomerAssistantListFragment extends android.app.Fragment
 
         rvSAMCustomerList.setAdapter(null);
 
-        rvSAMCustomerList.setAdapter(samCustomersAdapter = new CustomerAssistantAdapter(getActivity(),
+        rvSAMCustomerList.setAdapter(new CustomerAssistantAdapter (getActivity(),
                 (ArrayList<SuggestionsDO>) lsSuggestionsDOs));
     }
 

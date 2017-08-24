@@ -3,6 +3,7 @@ package com.nowfloats.NavigationDrawer;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.AppOpsManager;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
@@ -19,12 +20,14 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -132,6 +135,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -303,8 +307,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         if (requestCode == READ_MESSAGES_ID) {
 
             List<Integer> intList = new ArrayList<Integer>();
-            for (int i : grantResults)
-            {
+            for (int i : grantResults) {
                 intList.add(i);
             }
             if (!intList.contains(PackageManager.PERMISSION_DENIED)) {
@@ -380,7 +383,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
         Constants.GCM_Msg = false;
         if (!Util.isNullOrEmpty(url)) {
-            if(url.contains(getString(R.string.facebook_chat))){
+            if (url.contains(getString(R.string.facebook_chat))) {
                 Intent intent = new Intent(this, FacebookChatDetailActivity.class);
                 intent.putExtras(getIntent());
                 startActivity(intent);
@@ -549,7 +552,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         if (!componentName.getPackageName().equalsIgnoreCase(getApplicationContext().getPackageName())) {
             sendBroadcast(new Intent(CustomerAssistantService.ACTION_ADD_BUBBLE));
         }
-
+        bus.unregister(this);
         super.onStop();
         Constants.fromLogin = false;
         isExpiredCheck = false;
@@ -805,38 +808,35 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 //            Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
 //            startService(bubbleIntent);
 //        }else{
-            sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
+        sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
 //        }
 
     }
 
-    private void getCustomerAssistantSuggestions(){
+    private void getCustomerAssistantSuggestions() {
         CustomerAssistantApi suggestionsApi = new CustomerAssistantApi(bus);
         if (Utils.isNetworkConnected(this)) {
             HashMap<String, String> offersParam = new HashMap<>();
-//            offersParam.put("fpId", session.getFPID());
-            offersParam.put("fpId", "5928106e13c54e0b50251f21");
+            offersParam.put("fpId", session.getFPID());
             suggestionsApi.getMessages(offersParam);
         }
     }
+
     @Subscribe
-    public void processSmsData(SMSSuggestions smsSuggestions){
+    public void processSmsData(SMSSuggestions smsSuggestions) {
 
         if (smsSuggestions != null && smsSuggestions.getSuggestionList() != null
-            && smsSuggestions.getSuggestionList().size() > 0)
-        {
-            if(!Methods.isMyServiceRunning(this,CustomerAssistantService.class))
-            {
+                && smsSuggestions.getSuggestionList().size() > 0) {
+            if (!Methods.isMyServiceRunning(this, CustomerAssistantService.class)) {
                 Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
                 startService(bubbleIntent);
             }
-            prefsEditor.putBoolean(Key_Preferences.HAS_SUGGESTIONS,true).apply();
-        }
-        else
-        {
+            pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).apply();
+        } else {
             stopService(new Intent(this, CustomerAssistantService.class));
         }
     }
+
     private void checkExpiry1() {
         if (Constants.PACKAGE_NAME.equals("com.kitsune.biz")) {
             return;
@@ -1301,8 +1301,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         BoostLog.d("", "");
 
         Fragment sociaSharingFragment = getSupportFragmentManager().findFragmentByTag("socialSharingFragment");
-        if(sociaSharingFragment!=null){
-            ((SocialSharingFragment)sociaSharingFragment).onSocialSharingResult(requestCode,resultCode,data);
+        if (sociaSharingFragment != null) {
+            ((SocialSharingFragment) sociaSharingFragment).onSocialSharingResult(requestCode, resultCode, data);
         }
     }
 
@@ -1444,7 +1444,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     MixPanelController.track(EventKeysWL.SOCIAL_SHARING, null);
                     /*Intent socialSharingIntent = new Intent(HomeActivity.this, Social_Sharing_Activity.class);
                     startActivity(socialSharingIntent);*/
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, socialSharingFragment,"socialSharingFragment").commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, socialSharingFragment, "socialSharingFragment").commit();
 
 
                 } else if (nextScreen.equals(getString(R.string.manage_inventory))) {
@@ -2072,7 +2072,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         });
         //registerChat();
         //checkExpire();
-        if(!pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS,false)){
+        if (!pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)
+                && Methods.hasOverlayPerm(HomeActivity.this)) {
             getCustomerAssistantSuggestions();
         }
 
@@ -2090,4 +2091,22 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private boolean canDrawOverlaysUsingReflection(Context context) {
+
+        try {
+
+            AppOpsManager manager = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
+            Class clazz = AppOpsManager.class;
+            Method dispatchMethod = clazz.getMethod("checkOp", new Class[]{int.class, int.class, String.class});
+//AppOpsManager.OP_SYSTEM_ALERT_WINDOW = 24
+            int mode = (Integer) dispatchMethod.invoke(manager, new Object[]{24, Binder.getCallingUid(), context.getApplicationContext().getPackageName()});
+
+            return AppOpsManager.MODE_ALLOWED == mode;
+
+        } catch (Exception e) {
+            return false;
+        }
+
+    }
 }
