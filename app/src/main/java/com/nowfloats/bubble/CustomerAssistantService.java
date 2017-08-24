@@ -38,6 +38,7 @@ import android.graphics.PixelFormat;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.PowerManager;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.Display;
@@ -62,6 +63,7 @@ public class CustomerAssistantService extends Service {
     private BubblesLayoutCoordinator layoutCoordinator;
     private SharedPreferences pref;
 
+    private PowerManager.WakeLock cpuWakeLock = null;
 
     private IntentFilter addIntentFilter = new IntentFilter(ACTION_ADD_BUBBLE);
     private IntentFilter removeIntentFilter = new IntentFilter(ACTION_REMOVE_BUBBLE);
@@ -113,6 +115,7 @@ public class CustomerAssistantService extends Service {
             }
         }
         bubblesTrash = null;
+        cpuWakeLock.release();
         unregisterReceiver(resetReceiver);
         Log.e("onDestroy", "onDestroy sam");
         super.onDestroy();
@@ -214,6 +217,12 @@ public class CustomerAssistantService extends Service {
         super.onCreate();
         registerReceiver(resetReceiver, addIntentFilter);
         registerReceiver(resetReceiver, removeIntentFilter);
+
+        if ((cpuWakeLock != null) && (cpuWakeLock.isHeld() == false)) {
+            PowerManager pm = (PowerManager) getApplicationContext().getSystemService(Context.POWER_SERVICE);
+            PowerManager.WakeLock cpuWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "ShakeEventService onCreate Tag");
+            cpuWakeLock.acquire();
+        }
 
         ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         ComponentName componentName = am.getRunningTasks(1).get(0).topActivity;

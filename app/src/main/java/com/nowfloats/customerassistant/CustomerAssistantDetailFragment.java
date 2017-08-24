@@ -2,6 +2,7 @@ package com.nowfloats.customerassistant;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -31,6 +32,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nowfloats.NavigationDrawer.SlidingTabLayout;
 import com.nowfloats.customerassistant.adapters.CAProductsAdapter;
@@ -39,7 +41,9 @@ import com.nowfloats.customerassistant.models.SugProducts;
 import com.nowfloats.customerassistant.models.SugUpdates;
 import com.nowfloats.customerassistant.models.SuggestionsDO;
 import com.nowfloats.util.BoostLog;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.thinksity.R;
@@ -77,6 +81,8 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
 
     private final String ACTION_TYPE_EMAIL = "email";
 
+    private String appVersion = "";
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,6 +117,14 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
     }
 
     private void initializeControls(View view) {
+
+        try {
+            appVersion = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
         vwSAM = (ViewPager) view.findViewById(R.id.vwSAM);
         btnCall = (Button) view.findViewById(R.id.btnCall);
         btnShare = (Button) view.findViewById(R.id.btnShare);
@@ -143,11 +157,15 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
             public void onClick(View v) {
 
 
-//                ((CustomerAssistantActivity) getActivity()).pref.edit()
-//                        .putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, ++noOfTimesResponded).apply();
-//
-//                mSuggestionsDO.setStatus(1);
-//                ((CustomerAssistantActivity) getActivity()).updateActionsToServer(mSuggestionsDO);
+                ((CustomerAssistantActivity) getActivity()).pref.edit()
+                        .putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, ++noOfTimesResponded).apply();
+
+                mSuggestionsDO.setStatus(1);
+                ((CustomerAssistantActivity) getActivity()).updateActionsToServer(mSuggestionsDO);
+
+
+                FirebaseLogger.getInstance().logSAMEvent(mSuggestionsDO.getMessageId(), FirebaseLogger.SAMSTATUS.ACTION_CALL, mSuggestionsDO.getFpId(), appVersion);
+                MixPanelController.track(MixPanelController.SAM_BUBBLE_ACTION_CALL, null);
 
                 Intent i = new Intent();
                 i.setAction(Intent.ACTION_DIAL);
@@ -162,11 +180,15 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
             public void onClick(View v) {
 
 
-//                ((CustomerAssistantActivity) getActivity()).pref.edit().
-//                        putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, ++noOfTimesResponded).apply();
-//
-//                mSuggestionsDO.setStatus(1);
-//                ((CustomerAssistantActivity) getActivity()).updateActionsToServer(mSuggestionsDO);
+                ((CustomerAssistantActivity) getActivity()).pref.edit().
+                        putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, ++noOfTimesResponded).apply();
+
+                mSuggestionsDO.setStatus(1);
+                ((CustomerAssistantActivity) getActivity()).updateActionsToServer(mSuggestionsDO);
+
+                FirebaseLogger.getInstance().logSAMEvent(mSuggestionsDO.getMessageId(), FirebaseLogger.SAMSTATUS.ACTION_SHARE,
+                        mSuggestionsDO.getFpId(), appVersion);
+                MixPanelController.track(MixPanelController.SAM_BUBBLE_ACTION_SHARE, null);
 
 
                 if (mSuggestionsDO.getType().equalsIgnoreCase(ACTION_TYPE_NUMBER)) {
@@ -233,7 +255,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
 
 
             if (TextUtils.isEmpty(selectedProducts)) {
-                Methods.showSnackBarNegative(getActivity(), getString(R.string.select_update_or_product));
+                Toast.makeText(getActivity(), getString(R.string.select_update_or_product), Toast.LENGTH_SHORT).show();
             } else {
                 switch (share_via) {
                     case GMAIL:
@@ -260,8 +282,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
                                             if (shareIntent.resolveActivity(getActivity().getPackageManager()) != null) {
                                                 startActivity(shareIntent);
                                             } else {
-                                                Methods.showSnackBarNegative(getActivity(),
-                                                        getString(R.string.no_app_available_for_action));
+                                                Toast.makeText(getActivity(), getString(R.string.no_app_available_for_action), Toast.LENGTH_SHORT).show();
                                             }
 
                                         } catch (Exception e) {
@@ -273,8 +294,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
 
                                     @Override
                                     public void onBitmapFailed(Drawable errorDrawable) {
-                                        Methods.showSnackBarNegative(getActivity(), getString(R.string.failed_to_download_image));
-
+                                        Toast.makeText(getActivity(), getString(R.string.failed_to_download_image), Toast.LENGTH_SHORT).show();
                                     }
 
                                     @Override

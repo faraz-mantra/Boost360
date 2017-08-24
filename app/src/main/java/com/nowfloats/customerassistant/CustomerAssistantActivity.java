@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -55,8 +56,6 @@ public class CustomerAssistantActivity extends Activity {
 
     public SharedPreferences pref;
 
-    private String appVersion = "";
-
     private OnBoardingFragment onBoardingFragment;
 
     private CustomerAssistantListFragment mCustomerAssitantListFragment;
@@ -67,6 +66,7 @@ public class CustomerAssistantActivity extends Activity {
 
     public static final String TAG_FRAGMENT = "customer_assistant";
 
+    private String appVersion = "";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,8 +82,11 @@ public class CustomerAssistantActivity extends Activity {
             window.setStatusBarColor(ContextCompat.getColor(CustomerAssistantActivity.this, R.color.transparent_blk));
         }
 
-
         initializeControls();
+
+        MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED, null);
+        FirebaseLogger.getInstance().logSAMEvent("", FirebaseLogger.SAMSTATUS.BUBBLE_CLIKED, session.getFPID(), appVersion);
+
 
         if (!pref.getBoolean(Key_Preferences.HAS_SHOWN_SAM_COACH_MARK, false)) {
             getFragmentManager().beginTransaction().
@@ -96,6 +99,12 @@ public class CustomerAssistantActivity extends Activity {
     }
 
     private void initializeControls() {
+
+        try {
+            appVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
 
         mCustomerAssitantListFragment = new CustomerAssistantListFragment();
         mCustomerAssistantDetailFragment = new CustomerAssistantDetailFragment();
@@ -176,6 +185,7 @@ public class CustomerAssistantActivity extends Activity {
                 MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED_NO_DATA, null);
                 FirebaseLogger.getInstance().logSAMEvent("", FirebaseLogger.SAMSTATUS.HAS_NO_DATA, session.getFPID(), appVersion);
                 pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, false).apply();
+                stopService(new Intent(CustomerAssistantActivity.this,CustomerAssistantService.class));
                 finish();
             }
 
@@ -207,6 +217,10 @@ public class CustomerAssistantActivity extends Activity {
     }
 
     public void onCustomerSelection(SuggestionsDO mSuggestionsDO) {
+
+        FirebaseLogger.getInstance().logSAMEvent(mSuggestionsDO.getMessageId(), FirebaseLogger.SAMSTATUS.SELECTED_MESSAGES,
+                mSuggestionsDO.getFpId(), appVersion);
+        MixPanelController.track(MixPanelController.SAM_BUBBLE_SELECTED_MESSAGES, null);
 
         Bundle mBundle = new Bundle();
         mBundle.putSerializable(KEY_DATA, (Serializable) mSuggestionsDO);
