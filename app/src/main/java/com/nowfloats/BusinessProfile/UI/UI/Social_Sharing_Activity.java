@@ -138,7 +138,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
 
         callbackManager = CallbackManager.Factory.create();
 
-        setContentView(R.layout.activity_social_sharing);
+        setContentView(R.layout.activity_social_sharing2);
 
         session = new UserSessionManager(getApplicationContext(), Social_Sharing_Activity.this);
         // Facebook_Auto_Publish_API.autoPublish(Social_Sharing_Activity.this,session.getFPID());
@@ -148,16 +148,17 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
         mSharedPreferences = this.getSharedPreferences(TwitterConnection.PREF_NAME, MODE_PRIVATE);
         activity = Social_Sharing_Activity.this;
 
-        //toolbar = (Toolbar) findViewById(R.id.app_bar_social);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         Typeface myCustomFont = Typeface.createFromAsset(this.getAssets(), "Roboto-Light.ttf");
         Typeface myCustomFont_Medium = Typeface.createFromAsset(this.getAssets(), "Roboto-Regular.ttf");
 
-        //setSupportActionBar(toolbar);
-        //headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
-        //headerText.setText(getResources().getString(R.string.third_party_integration));
+        setSupportActionBar(toolbar);
+       /* headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
+        headerText.setText(getResources().getString(R.string.third_party_integration));*/
 
         if (getSupportActionBar() != null) {
+            setTitle("Social Sharing");
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
