@@ -803,12 +803,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         //DeepLinkPage(mDeepLinkUrl, false);
         //mDeepLinkUrl = null;
 
-//        if(!Methods.isMyServiceRunning(this,CustomerAssistantService.class)){
-//            Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
-//            startService(bubbleIntent);
-//        }else{
         sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
-//        }
 
     }
 
@@ -826,13 +821,17 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
         if (smsSuggestions != null && smsSuggestions.getSuggestionList() != null
                 && smsSuggestions.getSuggestionList().size() > 0) {
-            if (!Methods.isMyServiceRunning(this, CustomerAssistantService.class)) {
-                Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
-                startService(bubbleIntent);
-            }
+            checkCustomerAssistantService();
             pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).apply();
         } else {
             stopService(new Intent(this, CustomerAssistantService.class));
+        }
+    }
+
+    private void checkCustomerAssistantService() {
+        if (!Methods.isMyServiceRunning(this, CustomerAssistantService.class)) {
+            Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
+            startService(bubbleIntent);
         }
     }
 
@@ -2069,16 +2068,20 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 }
             }
         });
-        //registerChat();
-        //checkExpire();
-        if (!pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)
-                && Methods.hasOverlayPerm(HomeActivity.this)) {
+
+        if (pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
+            checkCustomerAssistantService();
+        } else if (Methods.hasOverlayPerm(HomeActivity.this)) {
             getCustomerAssistantSuggestions();
         }
 
+
         checkExpiry1();
+
         Intent intent = getIntent();
-        if (intent != null && intent.getData() != null) {
+        if (intent != null && intent.getData() != null)
+
+        {
             String action = intent.getAction();
             String data = intent.getDataString();
             BoostLog.d("Data: ", data.toString() + "  " + action);
@@ -2088,6 +2091,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 finish();
             }
         }
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
