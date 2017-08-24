@@ -109,7 +109,7 @@
 
                         <Switch
                             android:layout_marginRight="@dimen/margin_10"
-                            android:id="@+id/ninethRow_Switch"
+                            android:id="@+id/swCustomerAssistant"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right|center"

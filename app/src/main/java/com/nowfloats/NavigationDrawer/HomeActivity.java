@@ -543,7 +543,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
     @Override
     protected void onStop() {
-
+        bus.unregister(this);
         ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         ComponentName componentName = am.getRunningTasks(1).get(0).topActivity;
         if (!componentName.getPackageName().equalsIgnoreCase(getApplicationContext().getPackageName())) {
@@ -770,10 +770,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     @Override
     protected void onPause() {
         super.onPause();
-        bus.unregister(this);
         if (CardAdapter_V3.pd != null)
             CardAdapter_V3.pd.dismiss();
     }
+
 
     private Bus bus;
 
