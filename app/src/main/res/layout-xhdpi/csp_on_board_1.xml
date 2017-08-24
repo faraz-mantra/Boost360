@@ -11,10 +11,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/margin_50"
-        android:layout_marginLeft="@dimen/margin_50"
-        android:layout_marginRight="@dimen/margin_50"
+        android:layout_marginLeft="@dimen/margin_30"
+        android:layout_marginRight="@dimen/margin_30"
+        android:background="@color/white"
         android:elevation="@dimen/margin_5"
         android:orientation="vertical"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/margin_5">
 
         <LinearLayout
@@ -42,7 +44,7 @@
 
                 <ImageView
                     android:id="@+id/ivCA"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="@dimen/margin_10"

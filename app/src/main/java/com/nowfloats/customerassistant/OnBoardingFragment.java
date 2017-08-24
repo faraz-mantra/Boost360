@@ -3,6 +3,7 @@ package com.nowfloats.customerassistant;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,11 +46,11 @@ public class OnBoardingFragment extends android.app.Fragment {
         DisplayMetrics mDisplayMetrics = getActivity().getResources().getDisplayMetrics();
 
         int width = (int) (mDisplayMetrics.widthPixels * 0.5);
-        int height = (int) (mDisplayMetrics.heightPixels * 0.3);
-        int leftMargin = (int) (mDisplayMetrics.widthPixels * 0.1);
+        int height = (int) (width * 0.925);
 
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(width, height);
-        layoutParams.setMargins(leftMargin, 50, 0, 0);
+        layoutParams.gravity = Gravity.CENTER;
+        layoutParams.setMargins(0, 50, 0, 0);
         ivCA.setLayoutParams(layoutParams);
 
         llGetStarted.setOnClickListener(new View.OnClickListener() {

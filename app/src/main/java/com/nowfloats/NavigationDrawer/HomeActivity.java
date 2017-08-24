@@ -834,6 +834,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
             startService(bubbleIntent);
         }
+        sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
     }
 
     private void checkExpiry1() {

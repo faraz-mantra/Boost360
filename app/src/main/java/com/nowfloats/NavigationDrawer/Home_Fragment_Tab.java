@@ -33,6 +33,7 @@ import com.nowfloats.NotificationCenter.NotificationFragment;
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
 import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
 import com.nowfloats.bubble.BubblesService;
+import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
@@ -442,11 +443,24 @@ public class Home_Fragment_Tab extends Fragment {
 
                         if (getActivity() != null && Settings.canDrawOverlays(getActivity())) {
                             checkForAccessibility();
+
+                            if (pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)
+                                    && Methods.hasOverlayPerm(getActivity())) {
+                                checkCustomerAssistantService();
+                            }
                         }
                     }
                 }
             }, 1000);
         }
+    }
+
+    private void checkCustomerAssistantService() {
+        if (!Methods.isMyServiceRunning(getActivity(), CustomerAssistantService.class)) {
+            Intent bubbleIntent = new Intent(getActivity(), CustomerAssistantService.class);
+            getActivity().startService(bubbleIntent);
+        }
+        getActivity().sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
     }
 
     private void checkForAccessibility() {
