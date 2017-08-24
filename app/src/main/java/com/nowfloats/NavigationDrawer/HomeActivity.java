@@ -101,6 +101,8 @@ import com.nowfloats.Store.Model.StoreEvent;
 import com.nowfloats.Store.Model.StoreModel;
 import com.nowfloats.Store.StoreFragmentTab;
 import com.nowfloats.bubble.CustomerAssistantService;
+import com.nowfloats.customerassistant.models.SMSSuggestions;
+import com.nowfloats.customerassistant.service.CustomerAssistantApi;
 import com.nowfloats.managecustomers.FacebookChatDetailActivity;
 import com.nowfloats.managecustomers.ManageCustomerFragment;
 import com.nowfloats.manageinventory.ManageInventoryFragment;
@@ -115,6 +117,7 @@ import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
@@ -780,7 +783,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         BoostLog.d("HomeActivity", "onResume");
         Methods.isOnline(HomeActivity.this);
         //com.facebook.AppEventsLogger.activateApp(HomeActivity.this, getResources().getString(R.string.facebook_app_id));
-        bus.register(this);
 
         if (session != null) {
 
@@ -799,10 +801,42 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         //DeepLinkPage(mDeepLinkUrl, false);
         //mDeepLinkUrl = null;
 
-        isMyServiceRunning(CustomerAssistantService.class);
-        sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
+//        if(!Methods.isMyServiceRunning(this,CustomerAssistantService.class)){
+//            Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
+//            startService(bubbleIntent);
+//        }else{
+            sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
+//        }
+
     }
 
+    private void getCustomerAssistantSuggestions(){
+        CustomerAssistantApi suggestionsApi = new CustomerAssistantApi(bus);
+        if (Utils.isNetworkConnected(this)) {
+            HashMap<String, String> offersParam = new HashMap<>();
+//            offersParam.put("fpId", session.getFPID());
+            offersParam.put("fpId", "5928106e13c54e0b50251f21");
+            suggestionsApi.getMessages(offersParam);
+        }
+    }
+    @Subscribe
+    public void processSmsData(SMSSuggestions smsSuggestions){
+
+        if (smsSuggestions != null && smsSuggestions.getSuggestionList() != null
+            && smsSuggestions.getSuggestionList().size() > 0)
+        {
+            if(!Methods.isMyServiceRunning(this,CustomerAssistantService.class))
+            {
+                Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
+                startService(bubbleIntent);
+            }
+            prefsEditor.putBoolean(Key_Preferences.HAS_SUGGESTIONS,true).apply();
+        }
+        else
+        {
+            stopService(new Intent(this, CustomerAssistantService.class));
+        }
+    }
     private void checkExpiry1() {
         if (Constants.PACKAGE_NAME.equals("com.kitsune.biz")) {
             return;
@@ -1238,6 +1272,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     @Override
     protected void onStart() {
         super.onStart();
+        bus.register(this);
         BoostLog.d("HomeActivity", "onStart");
         isExpiredCheck = true;
     }
@@ -2037,6 +2072,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         });
         //registerChat();
         //checkExpire();
+        if(!pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS,false)){
+            getCustomerAssistantSuggestions();
+        }
+
         checkExpiry1();
         Intent intent = getIntent();
         if (intent != null && intent.getData() != null) {
@@ -2051,23 +2090,4 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
     }
 
-    private void isMyServiceRunning(Class<?> serviceClass) {
-        boolean isMyServiceRunning = false;
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningServiceInfo> list = manager.getRunningServices(Integer.MAX_VALUE);
-        if (list != null) {
-            for (ActivityManager.RunningServiceInfo service : list) {
-                if (serviceClass.getName().equals(service.service.getClassName())) {
-                    isMyServiceRunning = true;
-                }
-            }
-        }
-        if (!isMyServiceRunning)
-            startService(serviceClass);
-    }
-
-    private void startService(Class<?> serviceClass) {
-        Intent intent = new Intent(HomeActivity.this, CustomerAssistantService.class);
-        startService(intent);
-    }
 }

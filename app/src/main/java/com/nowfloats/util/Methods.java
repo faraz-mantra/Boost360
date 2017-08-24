@@ -2,6 +2,7 @@ package com.nowfloats.util;
 
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -466,6 +467,19 @@ public class Methods {
             e.printStackTrace();
         }
         return result;
+    }
+    public static boolean isMyServiceRunning(Context context,Class<?> serviceClass) {
+        boolean isMyServiceRunning = false;
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> list = manager.getRunningServices(Integer.MAX_VALUE);
+        if (list != null) {
+            for (ActivityManager.RunningServiceInfo service : list) {
+                if (serviceClass.getName().equals(service.service.getClassName())) {
+                    isMyServiceRunning = true;
+                }
+            }
+        }
+        return isMyServiceRunning;
     }
 
     public static RestAdapter createAdapter(Context context, String url) throws IOException {

@@ -19,11 +19,13 @@ import com.freshdesk.hotline.Hotline;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
+import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.managecustomers.FacebookChatDetailActivity;
 import com.nowfloats.managecustomers.models.FacebookChatDataModel;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
@@ -72,6 +74,10 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                     || (message.containsKey("mp_message_key") && message.get("mp_message_key").equalsIgnoreCase(SAM_BUBBLE_MSG_KEY))) {
                 MixPanelController.track(MixPanelController.SAM_BUBBLE_NOTIFICATION, null);
                 pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).apply();
+                if(!Methods.isMyServiceRunning(this,CustomerAssistantService.class)){
+                    Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
+                    startService(bubbleIntent);
+                }
             } else {
                 deepLinkUrl = message.get("url");
                 //Log.v("ggg","notif "+deepLinkUrl);
