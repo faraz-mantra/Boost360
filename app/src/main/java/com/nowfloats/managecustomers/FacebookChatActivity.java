@@ -2,6 +2,7 @@ package com.nowfloats.managecustomers;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -81,7 +82,8 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
         title = (TextView) findViewById(R.id.tv_chat_user);
         findViewById(R.id.facebook_icon).setVisibility(View.VISIBLE);
         description = (TextView) findViewById(R.id.tv_chat_user_description);
-
+        Typeface face= Typeface.createFromAsset(getAssets(), "Roboto-LightItalic.ttf");
+        description.setTypeface(face);
         setSupportActionBar(toolbar);
 
         progressDialog = new ProgressDialog(this);
