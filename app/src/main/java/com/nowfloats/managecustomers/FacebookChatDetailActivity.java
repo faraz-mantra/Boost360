@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -83,7 +84,9 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         imgUser.setVisibility(View.VISIBLE);
         TextView title = (TextView) findViewById(R.id.tv_chat_user);
         TextView description = (TextView) findViewById(R.id.tv_chat_user_description);
-        description.setText(Methods.fromHtml("<b>facebook user</b>"));
+        Typeface face= Typeface.createFromAsset(getAssets(), "Roboto-MediumItalic.ttf");
+        description.setTypeface(face);
+        description.setText("facebook user");
         scrollButton = (ImageView) findViewById(R.id.iv_scroll_down);
         findViewById(R.id.img_back).setOnClickListener(this);
         chatUserRecycerView = (RecyclerView) findViewById(R.id.rv_facebook_chat);
@@ -141,7 +144,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         chatUserRecycerView.setHasFixedSize(true);
         final LinearLayoutManager manager = new LinearLayoutManager(this);
         chatUserRecycerView.setLayoutManager(manager);
-        FacebookChatItemDecorator decorator = new FacebookChatItemDecorator(Methods.dpToPx(41,this),
+        FacebookChatItemDecorator decorator = new FacebookChatItemDecorator(Methods.dpToPx(40,this),
                 true, getSectionCallback());
         chatUserRecycerView.addItemDecoration(decorator);
         adapter = new FacebookChatDetailAdapter(this,chatModelList);
