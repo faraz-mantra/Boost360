@@ -141,7 +141,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         chatUserRecycerView.setHasFixedSize(true);
         final LinearLayoutManager manager = new LinearLayoutManager(this);
         chatUserRecycerView.setLayoutManager(manager);
-        FacebookChatItemDecorator decorator = new FacebookChatItemDecorator(Methods.dpToPx(43,this),
+        FacebookChatItemDecorator decorator = new FacebookChatItemDecorator(Methods.dpToPx(42,this),
                 true, getSectionCallback());
         chatUserRecycerView.addItemDecoration(decorator);
         adapter = new FacebookChatDetailAdapter(this,chatModelList);
@@ -209,7 +209,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
                     chatModelList.add(0,totalDataList.get(i));
                 }
                 adapter.notifyDataSetChanged();
-                chatUserRecycerView.smoothScrollToPosition(chatModelList.size()-1);
+                chatUserRecycerView.scrollToPosition(chatModelList.size()-1);
                 hideProgress();
             }
 
@@ -279,7 +279,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
     };
 
     private void setCallback(){
-        setResult(-221);
+        setResult(221);
     }
     private void showProgress(){
         if(!isFinishing() && !progressDialog.isShowing())
@@ -306,7 +306,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
                 break;
             case R.id.iv_scroll_down:
                 if(chatModelList.size()>0)
-                chatUserRecycerView.smoothScrollToPosition(chatModelList.size()-1);
+                chatUserRecycerView.scrollToPosition(chatModelList.size()-1);
                 break;
             case R.id.iv_send_msg:
                 String message = etReply.getText().toString().trim();
@@ -335,7 +335,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         totalDataList.add(0,chatData);
         chatModelList.add(chatData);
         adapter.notifyItemInserted(currPos);
-        chatUserRecycerView.smoothScrollToPosition(currPos);
+        chatUserRecycerView.scrollToPosition(currPos);
         return currPos;
     }
     private void sendData(String message) {

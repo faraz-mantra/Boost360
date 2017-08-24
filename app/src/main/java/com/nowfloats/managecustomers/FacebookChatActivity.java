@@ -54,7 +54,7 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
     TextView facebookPageName;
     SwipeRefreshLayout listSwipeLayout;
     Bus bus;
-    TextView description;
+    TextView title, description;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,11 +78,10 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
         facebookPageName = (TextView) findViewById(R.id.tv_facebook_page);
         layout  = (LinearLayout) findViewById(R.id.fragment_layout);
         chatlayout  = (LinearLayout) findViewById(R.id.chat_user_layout);
-        TextView title = (TextView) findViewById(R.id.tv_chat_user);
+        title = (TextView) findViewById(R.id.tv_chat_user);
         findViewById(R.id.facebook_icon).setVisibility(View.VISIBLE);
         description = (TextView) findViewById(R.id.tv_chat_user_description);
 
-        title.setText("Facebook Chats");
         setSupportActionBar(toolbar);
 
         progressDialog = new ProgressDialog(this);
@@ -101,7 +100,7 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
 
     private void checkNfxConnection() {
         showProgress();
-        Get_FP_Details_Service.newNfxTokenDetails(this,sessionManager.getFPID(),bus);
+        Get_FP_Details_Service.newNfxTokenDetails(this, sessionManager.getFPID(), bus);
     }
     @Subscribe
     public void nfxCallback(NfxGetTokensResponse response){
@@ -126,7 +125,7 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void showEmptyMessages(int i){
-
+        title.setText("Facebook Chats");
         switch(i){
             case NO_MESSAGES:
                 chatlayout.setVisibility(View.VISIBLE);
@@ -173,7 +172,6 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
         apis.getAllUsers("facebook", sessionManager.getFPID(), new Callback<FacebookChatUsersModel>() {
             @Override
             public void success(FacebookChatUsersModel facebookChatUsersModel, Response response) {
-                hideProgress();
 
                 layout.setVisibility(View.GONE);
                 chatlayout.setVisibility(View.VISIBLE);
@@ -185,32 +183,33 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
                     Methods.showSnackBarNegative(FacebookChatActivity.this,getString(R.string.something_went_wrong_try_again));
                     showEmptyMessages(NO_MESSAGES);
                     return;
-                }
+                }else
+                {
 
-                List<FacebookChatUsersModel.Datum> data = facebookChatUsersModel.getData();
-                if(data != null) {
-                    int size = data.size();
-                    if (size > 0) {
+                    List<FacebookChatUsersModel.Datum> data = facebookChatUsersModel.getData();
+                    if (data != null) {
+                        int size = data.size();
+                        if (size > 0) {
 
-                        for (int i = 0; i < size; i++) {
-                            chatModelList.add(data.get(i));
-                        }
-                        Collections.sort(chatModelList, new Comparator<FacebookChatUsersModel.Datum>() {
-                            @Override
-                            public int compare(final FacebookChatUsersModel.Datum object1, final FacebookChatUsersModel.Datum object2) {
-                                return object2.getTimestamp().compareTo(object1.getTimestamp());
+                            for (int i = 0; i < size; i++) {
+                                chatModelList.add(data.get(i));
                             }
-                        });
-
-                        adapter.notifyDataSetChanged();
+                            Collections.sort(chatModelList, new Comparator<FacebookChatUsersModel.Datum>() {
+                                @Override
+                                public int compare(final FacebookChatUsersModel.Datum object1, final FacebookChatUsersModel.Datum object2) {
+                                    return object2.getTimestamp().compareTo(object1.getTimestamp());
+                                }
+                            });
+                            title.setText("Facebook Chats ("+chatModelList.size()+")");
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            showEmptyMessages(NO_MESSAGES);
+                        }
                     } else {
                         showEmptyMessages(NO_MESSAGES);
                     }
-                }else{
-                    showEmptyMessages(NO_MESSAGES);
                 }
-
-
+                hideProgress();
             }
 
             @Override
