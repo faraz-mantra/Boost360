@@ -56,6 +56,7 @@ public class FacebookChatItemDecorator extends RecyclerView.ItemDecoration {
 
             CharSequence title = sectionCallback.getSectionHeader(position);
             header.setText(title);
+            fixLayoutSize(headerView, parent);
             if (!previousHeader.equals(title) || sectionCallback.isSection(position)) {
                 drawHeader(c, child, headerView);
                 previousHeader = title;
