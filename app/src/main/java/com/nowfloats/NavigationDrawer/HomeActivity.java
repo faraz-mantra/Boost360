@@ -25,7 +25,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
@@ -208,7 +207,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     private String mDeepLinkUrl;
     private String TAG = HomeActivity.class.getSimpleName();
     private String[] permission = new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS
-            , Manifest.permission.READ_PHONE_STATE, Settings.ACTION_ACCESSIBILITY_SETTINGS};
+            , Manifest.permission.READ_PHONE_STATE};
     private final static int READ_MESSAGES_ID = 221;
     //private ArrayList<AccountDetailModel> accountDetailsModel = new ArrayList<>();
 
