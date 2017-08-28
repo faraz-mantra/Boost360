@@ -255,7 +255,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                                 @Override
                                 public void onClick(View v) {
 
-//                                    MixPanelController.track(EventKeysWL.BUSINESS_ADDRESS, null);
+                                    MixPanelController.track(EventKeysWL.SITE_APPEARANCE, null);
                                     Intent businessAddress = new Intent(activity, SiteAppearanceActivity.class);
                                     startActivity(businessAddress);
                                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -276,6 +276,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                             businessHoursLinearLayout.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+                                    MixPanelController.track(MixPanelController.Bhours, null);
                                     if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS).equals("TIMINGS")) {
                                         Intent businessHoursIntent = new Intent(activity, Business_Hours_Activity.class);
                                         startActivity(businessHoursIntent);

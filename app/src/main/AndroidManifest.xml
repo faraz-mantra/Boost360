@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2017080021"
-    android:versionName="4.7.7">
+    android:versionCode="2017080027"
+    android:versionName="4.7.8">
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"

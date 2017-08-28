@@ -1284,7 +1284,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="accessibility_permission">Accessibility permission</string>
     <string name="select_boost_from">Select Boost \n from the list</string>
     <string name="screen_overlay_permission">Screen overlay permission</string>
-    <string name="required_overlay_permission">Give us this permission to see our new feature \"Boost Bubble\"</string>
+    <string name="required_overlay_permission">Give us this permission to see our new features</string>
     <string name="bubble_for_whatsapp">Bubble for WhatsApp</string>
     <string name="whatsapp_bubble_close">You can disable this feature from your Boost app</string>
     <string name="missed_calls">MISSED CALLS</string>
@@ -1355,8 +1355,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
     <string name="pull_to_open">Pull the 4 dots to open</string>
     <string name="long_press_to_move">Long press to move</string>
-    <string name="action_sort_date">Date</string>
-    <string name="action_sort_expiry">Expiry</string>
+    <string name="filter_by">Filter by</string>
+    <string name="action_sort_date">Recent</string>
+    <string name="action_sort_expiry">Expiring</string>
     <string name="action_sort_source">Channel</string>
     <string name="seller_analytics">Seller Analytics</string>
     <string name="total_orders">Total Orders</string>

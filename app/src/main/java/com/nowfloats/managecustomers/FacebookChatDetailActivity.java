@@ -36,7 +36,9 @@ import com.nowfloats.managecustomers.apis.FacebookChatApis;
 import com.nowfloats.managecustomers.models.FacebookChatDataModel;
 import com.nowfloats.managecustomers.models.FacebookMessageModel;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
@@ -73,6 +75,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MixPanelController.track(EventKeysWL.FACEBOOK_PAGE_CHATS_DETAILS, null);
         setContentView(R.layout.activity_facebook_chat_details);
         init();
     }

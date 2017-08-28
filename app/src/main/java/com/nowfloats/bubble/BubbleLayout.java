@@ -57,6 +57,12 @@ public class BubbleLayout extends BubbleBaseLayout {
     private WindowManager windowManager;
     private float initAlpha = 0;
     private boolean shouldStickToWall = true;
+    private BUBBLE_TYPE bubble_type;
+
+    public enum BUBBLE_TYPE {
+        WHATSAPP_BUBBLE,
+        CUSTOMER_ASSISTANT
+    }
 
     public void setOnBubbleRemoveListener(OnBubbleRemoveListener listener) {
         onBubbleRemoveListener = listener;
@@ -66,10 +72,11 @@ public class BubbleLayout extends BubbleBaseLayout {
         onBubbleClickListener = listener;
     }
 
-    public BubbleLayout(Context context) {
+    public BubbleLayout(Context context, BUBBLE_TYPE bubble_type) {
         super(context);
         animator = new MoveAnimator();
         windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        this.bubble_type = bubble_type;
         initializeView();
     }
 
@@ -149,12 +156,25 @@ public class BubbleLayout extends BubbleBaseLayout {
                         if (isAnimRequired)
                             playAnimationClickUp();
                     }
-                    if (System.currentTimeMillis() - lastTouchDown < TOUCH_TIME_THRESHOLD) {
-                        if (onBubbleClickListener != null) {
-                            isToRemoveDialog = false;
-                            onBubbleClickListener.onBubbleClick(this);
-                        }
+
+                    switch (bubble_type) {
+
+                        case CUSTOMER_ASSISTANT:
+                            if (onBubbleClickListener != null) {
+                                isToRemoveDialog = false;
+                                onBubbleClickListener.onBubbleClick(this);
+                            }
+                            break;
+                        case WHATSAPP_BUBBLE:
+                            if (System.currentTimeMillis() - lastTouchDown < TOUCH_TIME_THRESHOLD) {
+                                if (onBubbleClickListener != null) {
+                                    isToRemoveDialog = false;
+                                    onBubbleClickListener.onBubbleClick(this);
+                                }
+                            }
+                            break;
                     }
+
                     break;
             }
 

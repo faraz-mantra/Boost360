@@ -140,7 +140,7 @@ public class BubblesService extends Service {
     public void addBubble(final int x, final int y) {
 
         try {
-            bubbleView = new BubbleLayout(this);
+            bubbleView = new BubbleLayout(this,BubbleLayout.BUBBLE_TYPE.WHATSAPP_BUBBLE);
             bubbleView.addView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.bubble_layout, null));
             bubbleView.initalizeBubbleView(initAplha);
             bubbleView.setOnBubbleRemoveListener(new BubbleLayout.OnBubbleRemoveListener() {

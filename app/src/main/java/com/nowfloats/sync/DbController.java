@@ -427,6 +427,9 @@ public class DbController implements IdbController {
 
     @Override
     public Uri postSamData(String value) {
+
+        mContext.getContentResolver().delete(getUri(DbConstants.IsamBubble.tableName), null, null);
+
         ContentValues values = new ContentValues();
         values.put(DbConstants.IsamBubble.SUGGESTIONS, value);
 
