@@ -18,6 +18,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.Image_Gallery.FullScreenImage;
@@ -25,15 +26,17 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ManageCustomerFragment extends Fragment {
-    TextView tvBusinessEnquires, tvSubscribers, tvFacebookChat;
+    TextView tvBusinessEnquires, tvSubscribers, tvFacebookChat, tvBubbleInfo;
     Typeface robotoLight;
     private SharedPreferences pref = null;
     UserSessionManager session;
@@ -75,6 +78,7 @@ public class ManageCustomerFragment extends Fragment {
             bubbleSwitch = (Switch) mainView.findViewById(R.id.ninethRow_Switch);
             customerAssistantSwitch = (Switch) mainView.findViewById(R.id.swCustomerAssistant);
             tvBusinessEnquires = (TextView) mainView.findViewById(R.id.tvBusinessEnquires);
+            tvBubbleInfo = (TextView) mainView.findViewById(R.id.tvBubbleInfo);
             tvBusinessEnquires.setTypeface(robotoMedium);
 
             tvSubscribers = (TextView) mainView.findViewById(R.id.tvSubscribers);
@@ -98,6 +102,7 @@ public class ManageCustomerFragment extends Fragment {
             tvBusinessEnquires.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_ENQUIRIES, null);
                     Intent i = new Intent(getActivity(), BusinessEnquiryActivity.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -106,6 +111,7 @@ public class ManageCustomerFragment extends Fragment {
             tvSubscribers.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_SUBSCRIBERS, null);
                     Intent i = new Intent(getActivity(), SubscribersActivity.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -120,22 +126,46 @@ public class ManageCustomerFragment extends Fragment {
                 }
             });
             bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
-            customerAssistantSwitch.setChecked(pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS,false));
+            customerAssistantSwitch.setChecked(pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false));
 
             customerAssistantSwitch.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(!pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS,false)){
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_CUSTOMER_ASSISTANT, null);
+                    if (!pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
                         customerAssistantSwitch.setChecked(false);
-                        Toast.makeText(activity, "This feature is not available.", Toast.LENGTH_SHORT).show();
-                    }else{
-                        if(customerAssistantSwitch.isChecked()){
-                            if(!Methods.isMyServiceRunning(activity, CustomerAssistantService.class)){
-                                activity.startService(new Intent(activity,CustomerAssistantService.class));
+                        Toast.makeText(activity, "This feature is not available for you.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (customerAssistantSwitch.isChecked()) {
+                            if (!Methods.isMyServiceRunning(activity, CustomerAssistantService.class)) {
+                                activity.startService(new Intent(activity, CustomerAssistantService.class));
                             }
-                        }else{
-                            activity.stopService(new Intent(activity,CustomerAssistantService.class));
+                        } else {
+                            MixPanelController.track(EventKeysWL.SIDE_PANEL_CUSTOMER_ASSISTANT_OFF, null);
+                            activity.stopService(new Intent(activity, CustomerAssistantService.class));
                         }
+                    }
+                }
+            });
+
+            tvBubbleInfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
+                            .title("Bubble For WhatsApp")
+                            .content("Share updates & products to your customers directly on WhatsApp. \n" +
+                                    "Just grant Boost app, Accessibility Permission from your phone settings.")
+                            .positiveText(getString(R.string.ok))
+                            .positiveColorRes(R.color.primaryColor)
+                            .callback(new MaterialDialog.ButtonCallback() {
+                                @Override
+                                public void onPositive(MaterialDialog dialog) {
+                                    super.onPositive(dialog);
+                                }
+
+                            });
+                    if (!activity.isFinishing()) {
+                        builder.show();
                     }
                 }
             });
@@ -143,19 +173,16 @@ public class ManageCustomerFragment extends Fragment {
             bubbleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_WHATSAPP_BUBBLE, null);
+
                     if (!isChecked) {
                         session.setBubbleStatus(isChecked);
                     } else {
 
                         if ((android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity()))
                                 || (!Methods.isAccessibilitySettingsOn(getActivity()))) {
-
-//                        if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1")) {
-//                            showAlertMaterialDialog();
-//                            bubbleSwitch.setChecked(false);
-//                        } else {
                             session.setBubbleTime(-1);
-//                        }
                         } else {
                             session.setBubbleStatus(isChecked);
                         }

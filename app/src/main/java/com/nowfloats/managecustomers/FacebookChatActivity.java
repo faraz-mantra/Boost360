@@ -25,7 +25,9 @@ import com.nowfloats.managecustomers.apis.FacebookChatApis;
 import com.nowfloats.managecustomers.models.FacebookChatUsersModel;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
 import com.nowfloats.util.BusProvider;
+import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -59,6 +61,7 @@ public class FacebookChatActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MixPanelController.track(EventKeysWL.SIDE_PANEL_FACEBOOK_PAGE_CHATS, null);
         setContentView(R.layout.activity_facebook_chat);
         init();
     }

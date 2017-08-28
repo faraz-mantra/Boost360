@@ -20,6 +20,8 @@ import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.nowfloats.customerassistant.CustomerAssistantActivity.KEY_DATA;
@@ -90,7 +92,7 @@ public class CustomerAssistantListFragment extends android.app.Fragment
 
         rvSAMCustomerList.setAdapter(null);
 
-        rvSAMCustomerList.setAdapter(new CustomerAssistantAdapter (getActivity(),
+        rvSAMCustomerList.setAdapter(new CustomerAssistantAdapter(getActivity(),
                 (ArrayList<SuggestionsDO>) lsSuggestionsDOs));
     }
 
@@ -146,6 +148,22 @@ public class CustomerAssistantListFragment extends android.app.Fragment
         return "";
     }
 
+    public class AssistantComparator implements Comparator<SuggestionsDO> {
+        public int compare(SuggestionsDO left, SuggestionsDO right) {
+            switch (sectionType) {
+                case DATE:
+                    return Methods.getFormattedDate(right.
+                            getDate()).compareTo(Methods.getFormattedDate(left.
+                            getDate()));
+                case EXPIRY:
+                    return Methods.getFormattedDate(left.getExpiryDate())
+                            .compareTo(Methods.getFormattedDate(right.getExpiryDate()));
+            }
+            return 0;
+        }
+    }
+
+
     public void showSortPopup() {
         Context wrapper = new ContextThemeWrapper(getActivity(), R.style.MyPopupMenuStyle);
         PopupMenu popup = new PopupMenu(wrapper, ivSort);
@@ -171,9 +189,11 @@ public class CustomerAssistantListFragment extends android.app.Fragment
                 switch (item.getItemId()) {
                     case R.id.sort_date:
                         sectionType = SectionType.DATE;
+                        Collections.sort(lsSuggestionsDOs, new AssistantComparator());
                         break;
                     case R.id.sort_expiry:
                         sectionType = SectionType.EXPIRY;
+                        Collections.sort(lsSuggestionsDOs, new AssistantComparator());
                         break;
                     case R.id.sort_source:
                         sectionType = SectionType.SOURCE;

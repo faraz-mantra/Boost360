@@ -48,8 +48,8 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NFXApi.NfxRequestClient;
 import com.nowfloats.NavigationDrawer.API.twitter.FacebookFeedPullRegistrationAsyncTask;
 import com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment;
-import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.Twitter.TwitterConnection;
+import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
@@ -808,7 +808,7 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
 
     public void fbData(final int from) {
         //AccessToken.getCurrentAccessToken()
-        List<String> readPermissions = Arrays.asList("email", "public_profile", "user_friends", "read_insights", "business_management","pages_messaging");
+        List<String> readPermissions = Arrays.asList("email", "public_profile", "user_friends", "read_insights", "business_management", "pages_messaging");
         final List<String> publishPermissions = Arrays.asList("publish_actions", "publish_pages", "manage_pages");
         final LoginManager loginManager = LoginManager.getInstance();
 
@@ -1236,8 +1236,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                 break;
             case PAGE_NO_FOUND:
                 MixPanelController.track(MixPanelController.FACEBOOK_PAGE_NOT_FOUND, null);
-                String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-                if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || (!TextUtils.isEmpty(paymentState)&&"1".equalsIgnoreCase(paymentState))) {
+                final String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
+                if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
                     Methods.materialDialog(activity, "Alert", getString(R.string.look_like_no_facebook_page));
                 } else {
                     final MaterialDialog builder = new MaterialDialog.Builder(this)
@@ -1247,7 +1247,9 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                                 @Override
                                 public void onClick(View v) {
                                     builder.dismiss();
-                                    createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+                                    if ((!TextUtils.isEmpty(paymentState) && "1".equalsIgnoreCase(paymentState))) {
+                                        createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+                                    }
                                 }
                             });
                     if (!isFinishing())

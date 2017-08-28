@@ -17,6 +17,8 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.Product_Gallery.ProductGalleryActivity;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.EventKeysWL;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
 /**
@@ -72,6 +74,7 @@ public class ManageInventoryFragment extends Fragment {
             tvPaymentSetting.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_PAYMENT_SETTING, null);
                     Intent i = new Intent(getActivity(), PaymentSettingsActivity.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -80,6 +83,7 @@ public class ManageInventoryFragment extends Fragment {
             tvProductGallery.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_PRODUCT_GALLERY, null);
                     Intent i = new Intent(getActivity(), ProductGalleryActivity.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -88,6 +92,7 @@ public class ManageInventoryFragment extends Fragment {
             tvSellerAnalytics.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_SELLER_ANALYTICS, null);
                     Intent i = new Intent(getActivity(), SellerAnalyticsActivity.class);
                     startActivity(i);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

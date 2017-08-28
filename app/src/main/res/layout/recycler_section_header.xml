@@ -3,7 +3,7 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:gravity="center_horizontal"
-    android:padding="20dp">
+    android:padding="10dp">
     <TextView
         android:id="@+id/list_item_section_text"
         android:layout_width="wrap_content"

@@ -576,7 +576,7 @@ public class SidePanelFragment extends Fragment {
                 onclickColorChange(socialImageView, tvSocialSharing, socialLayout);
 //                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_GALLERY).contains("IMAGEGALLERY")) {
                     ((OnItemClickListener) mainActivity).onClick(getString(R.string.title_activity_social__sharing_));
-//                    MixPanelController.track(EventKeysWL.SIDE_PANEL_MANAGE_CUSTOMERS, null);
+                    MixPanelController.track(EventKeysWL.SIDE_PANEL_THIRD_PARTY_INTEGRATIONS, null);
 //                } else {
 //                    showAlertMaterialDialog();
 //                }

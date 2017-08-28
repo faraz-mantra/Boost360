@@ -42,7 +42,16 @@ public interface EventKeysWL
     String MESSAGE_FULL_VIEW_DELETE = "DeleteMessage";
     String SIDE_PANEL_DASHBOARD = "Dashboard";
     String SIDE_PANEL_BUSINESS_PROFILE = "BusinessProfile";
+    String SIDE_PANEL_THIRD_PARTY_INTEGRATIONS = "ThirdPartyIntegrations";
     String SIDE_PANEL_BUSINESS_ENQUIRIES = "BusinessEnquiries";
+    String SIDE_PANEL_SUBSCRIBERS = "Subscribers";
+    String SIDE_PANEL_PAYMENT_SETTING = "PaymentSetting";
+    String SIDE_PANEL_SELLER_ANALYTICS = "SellerAnalytics";
+    String SIDE_PANEL_FACEBOOK_PAGE_CHATS = "FacebookPageChats";
+    String FACEBOOK_PAGE_CHATS_DETAILS = "FacebookPageChatsDetails";
+    String SIDE_PANEL_WHATSAPP_BUBBLE = "WhatsAppBubble";
+    String SIDE_PANEL_CUSTOMER_ASSISTANT = "CustomerAssistant";
+    String SIDE_PANEL_CUSTOMER_ASSISTANT_OFF = "CustomerAssistantOff";
     String SIDE_PANEL_IMAGE_GALLERY = "ImageGallery";
     String SIDE_PANEL_MANAGE_CUSTOMERS = "ManageCustomers";
     String SIDE_PANEL_MANAGE_INVENTORY = "ManageInventory";
@@ -55,6 +64,7 @@ public interface EventKeysWL
     String IMAGE_GALLERY_IMAGE_CAMERA = "ImageGalleryFromCamera";
     //String FULL_SCREEN_IMAGE = "FullScreenImage";
     String BUSINESS_ADDRESS = "BusinessAddress";
+    String SITE_APPEARANCE = "SiteAppearance";
     String PRODUCT_GALLERY = "ProductGallery";
     String CONTACT_INFO = "ContactInformation";
     String LOGO = "BusinessLogo";

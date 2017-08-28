@@ -61,7 +61,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
 
     private ViewPager vwSAM;
 
-    private TextView tvDate, tvSource, tvMessage, tvViewMore, tvExpiryDate;
+    private TextView tvDate, tvSource, tvMessage, tvViewMore, tvExpiryDate, tvTitle;
 
     private Button btnCall, btnShare;
 
@@ -133,6 +133,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
         tvMessage = (TextView) view.findViewById(R.id.tvMessage);
         tvViewMore = (TextView) view.findViewById(R.id.tvViewMore);
         tvExpiryDate = (TextView) view.findViewById(R.id.tvExpiryDate);
+        tvTitle = (TextView) view.findViewById(R.id.tvTitle);
         llMessage = (LinearLayout) view.findViewById(R.id.llMessage);
         llRelevant = (LinearLayout) view.findViewById(R.id.llRelevant);
         tabs = (SlidingTabLayout) view.findViewById(R.id.tabs);
@@ -206,6 +207,13 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
 
                 isViewMore = !isViewMore;
                 updateMaxLines();
+            }
+        });
+
+        tvTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
             }
         });
     }

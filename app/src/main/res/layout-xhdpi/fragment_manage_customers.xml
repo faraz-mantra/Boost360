@@ -85,10 +85,10 @@
 
 
                     <LinearLayout
-                        android:layout_marginBottom="@dimen/margin_10"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
+                        android:layout_marginBottom="@dimen/margin_10"
                         android:layout_marginLeft="35dp"
                         android:layout_marginTop="@dimen/margin_10"
                         android:orientation="horizontal">
@@ -97,10 +97,10 @@
                             android:id="@+id/businessInfoTextView_ProfileV2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:autoLink="web"
                             android:ellipsize="end"
-                            android:layout_gravity="center_vertical"
                             android:linksClickable="true"
                             android:maxLines="4"
                             android:text="Enable Customer Assistant"
@@ -108,11 +108,11 @@
                             android:textSize="14sp" />
 
                         <Switch
-                            android:layout_marginRight="@dimen/margin_10"
                             android:id="@+id/swCustomerAssistant"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right|center"
+                            android:layout_marginRight="@dimen/margin_10"
                             android:checked="false"
                             android:textColorHighlight="@color/product_price" />
                     </LinearLayout>
@@ -136,19 +136,12 @@
                 android:layout_marginTop="5dp"
                 android:fillViewport="true">
 
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/screen_bg"
 
-                    >
-
-                    <include
-                        android:id="@+id/businessProfile_List_ProfileV2"
-                        layout="@layout/manage_customer_list"
-                        android:layout_width="fill_parent"
-                        android:layout_height="match_parent" />
-                </android.support.v7.widget.CardView>
+                <include
+                    android:id="@+id/businessProfile_List_ProfileV2"
+                    layout="@layout/manage_customer_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent" />
             </ScrollView>
         </LinearLayout>
     </ScrollView>

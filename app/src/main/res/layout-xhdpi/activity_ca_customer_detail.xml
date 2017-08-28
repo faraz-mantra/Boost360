@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_20"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/margin_25"
+        android:paddingLeft="@dimen/margin_15"
         android:paddingTop="@dimen/margin_10">
 
         <TextView
@@ -20,7 +20,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:drawableLeft="@drawable/ic_arrow_back"
             android:fontFamily="sans-serif"
+            android:drawablePadding="@dimen/margin_10"
             android:text="Potential Customers"
             android:textColor="@color/white"
             android:textSize="@dimen/large_text_size" />
@@ -148,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_5"
                 android:gravity="left"
-                android:text="Relevant updates and products Suggestions: "
+                android:text="Relevant update and product suggestions: "
                 android:textColor="@color/white"
                 android:textSize="16sp" />
         </LinearLayout>

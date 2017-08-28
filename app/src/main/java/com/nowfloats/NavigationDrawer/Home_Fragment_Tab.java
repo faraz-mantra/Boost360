@@ -442,12 +442,12 @@ public class Home_Fragment_Tab extends Fragment {
                     if (android.os.Build.VERSION.SDK_INT >= 23) {
 
                         if (getActivity() != null && Settings.canDrawOverlays(getActivity())) {
-                            checkForAccessibility();
 
-                            if (pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)
-                                    && Methods.hasOverlayPerm(getActivity())) {
+                            if (pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
                                 checkCustomerAssistantService();
                             }
+
+                            checkForAccessibility();
                         }
                     }
                 }
@@ -456,6 +456,7 @@ public class Home_Fragment_Tab extends Fragment {
     }
 
     private void checkCustomerAssistantService() {
+
         if (!Methods.isMyServiceRunning(getActivity(), CustomerAssistantService.class)) {
             Intent bubbleIntent = new Intent(getActivity(), CustomerAssistantService.class);
             getActivity().startService(bubbleIntent);

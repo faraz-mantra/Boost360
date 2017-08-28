@@ -25,7 +25,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
@@ -208,7 +207,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     private String mDeepLinkUrl;
     private String TAG = HomeActivity.class.getSimpleName();
     private String[] permission = new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS
-            , Manifest.permission.READ_PHONE_STATE, Settings.ACTION_ACCESSIBILITY_SETTINGS};
+            , Manifest.permission.READ_PHONE_STATE};
     private final static int READ_MESSAGES_ID = 221;
     //private ArrayList<AccountDetailModel> accountDetailsModel = new ArrayList<>();
 
@@ -804,8 +803,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         //DeepLinkPage(mDeepLinkUrl, false);
         //mDeepLinkUrl = null;
 
-        sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
-
+        if (pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
+            checkCustomerAssistantService();
+        }
     }
 
     private void getCustomerAssistantSuggestions() {
@@ -822,17 +822,20 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
         if (smsSuggestions != null && smsSuggestions.getSuggestionList() != null
                 && smsSuggestions.getSuggestionList().size() > 0) {
-            checkCustomerAssistantService();
             pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).apply();
+            checkCustomerAssistantService();
         } else {
             stopService(new Intent(this, CustomerAssistantService.class));
         }
     }
 
     private void checkCustomerAssistantService() {
-        if (!Methods.isMyServiceRunning(this, CustomerAssistantService.class)) {
-            Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
-            startService(bubbleIntent);
+        if (Methods.hasOverlayPerm(HomeActivity.this)) {
+
+            if (!Methods.isMyServiceRunning(this, CustomerAssistantService.class)) {
+                Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
+                startService(bubbleIntent);
+            }
         }
         sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
     }
@@ -2073,7 +2076,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
         if (pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
             checkCustomerAssistantService();
-        } else if (Methods.hasOverlayPerm(HomeActivity.this)) {
+        } else {
             getCustomerAssistantSuggestions();
         }
 

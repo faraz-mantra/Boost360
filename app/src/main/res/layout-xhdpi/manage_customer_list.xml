@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/screen_bg">
 
     <LinearLayout
@@ -50,6 +50,7 @@
                 android:padding="9dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/facebook" />
+
             <ImageView
                 android:id="@+id/fourth_ImageView_ProfileV2"
                 android:layout_width="38dp"
@@ -58,7 +59,7 @@
                 android:layout_marginRight="@dimen/icon_right_margin"
                 android:padding="9dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_facebook_messanger" />
+                android:src="@drawable/ic_boost_bubble" />
         </LinearLayout>
 
         <LinearLayout
@@ -111,49 +112,42 @@
                 android:text="My Facebook Page Chats"
                 android:textColor="@color/cell_text_color"
                 android:textSize="14sp" />
+
             <View
                 android:layout_width="288dp"
                 android:layout_height="1dp"
                 android:background="#d3d3d3" />
 
 
-            <android.support.v7.widget.CardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:contentPadding="5dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <Switch
-                        android:layout_marginRight="@dimen/margin_10"
-                        android:id="@+id/ninethRow_Switch"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right|center"
-                        android:checked="false"
-                        android:textStyle="bold"
-                        android:text="Bubble For WhatApp"
-                        android:textColor="@color/gray"
-                        android:textColorHighlight="@color/product_price" />
-                    <TextView
-                        android:id="@+id/tvBubbleForWhatsApp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
-                        android:visibility="gone"
-                        android:background="?android:selectableItemBackground"
-                        android:gravity="center_vertical"
-                        android:text="Bubble For WhatApp"
-                        android:textColor="@color/gray"
-                        android:textSize="14sp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="share updates and products to your customers directly on whatsApp. You just need to grant Boost"/>
+                android:layout_marginRight="@dimen/margin_30"
+                android:orientation="horizontal">
 
-                </LinearLayout>
-                </android.support.v7.widget.CardView>
+                <TextView
+                    android:id="@+id/tvBubbleInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/textview_height_business_profile"
+                    android:layout_marginTop="1dp"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:drawableRight="@drawable/info"
+                    android:gravity="center_vertical"
+                    android:paddingRight="@dimen/margin_30"
+                    android:text="Bubble For WhatsApp"
+                    android:textColor="@color/cell_text_color"
+                    android:textSize="14sp" />
+
+                <Switch
+                    android:id="@+id/ninethRow_Switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/textview_height_business_profile"
+                    android:layout_gravity="right|center"
+                    android:layout_marginTop="1dp"
+                    android:checked="false" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

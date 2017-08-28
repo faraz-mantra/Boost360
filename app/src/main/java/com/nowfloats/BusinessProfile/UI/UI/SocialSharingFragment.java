@@ -16,6 +16,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -1216,6 +1217,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                 if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
                     Methods.materialDialog(activity, "Alert", getString(R.string.look_like_no_facebook_page));
                 } else {
+                    final String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
                     final MaterialDialog builder = new MaterialDialog.Builder(activity)
                             .customView(R.layout.dialog_no_facebook_page, false).build();
                     ((Button) builder.getCustomView().findViewById(R.id.create_page))
@@ -1223,7 +1225,9 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                                 @Override
                                 public void onClick(View v) {
                                     builder.dismiss();
-                                    createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+                                    if ((!TextUtils.isEmpty(paymentState) && "1".equalsIgnoreCase(paymentState))) {
+                                        createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+                                    }
                                 }
                             });
                     if (!activity.isFinishing())

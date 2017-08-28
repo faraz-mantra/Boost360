@@ -40,6 +40,7 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.os.PowerManager;
 import android.os.SystemClock;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -47,8 +48,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.customerassistant.CustomerAssistantActivity;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
@@ -115,7 +118,8 @@ public class CustomerAssistantService extends Service {
             }
         }
         bubblesTrash = null;
-        cpuWakeLock.release();
+        if (cpuWakeLock != null)
+            cpuWakeLock.release();
         unregisterReceiver(resetReceiver);
         Log.e("onDestroy", "onDestroy sam");
         super.onDestroy();
@@ -150,38 +154,45 @@ public class CustomerAssistantService extends Service {
 
     public void addBubble(final int x, final int y) {
 
-        try {
-            bubbleView = new BubbleLayout(this);
-            bubbleView.addView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.ca_bubble_layout, null));
-            bubbleView.initalizeBubbleView(initAplha);
-            bubbleView.setOnBubbleRemoveListener(new BubbleLayout.OnBubbleRemoveListener() {
-                @Override
-                public void onBubbleRemoved(BubbleLayout bubble) {
-                }
-            });
-            bubbleView.setOnBubbleClickListener(new BubbleLayout.OnBubbleClickListener() {
+        pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        if (TextUtils.isEmpty(pref.getString(UserSessionManager.KEY_FP_ID, null))
+                || !pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
+            stopSelf();
+        } else {
 
-                @Override
-                public void onBubbleClick(BubbleLayout bubble) {
-                    Intent intent = new Intent(CustomerAssistantService.this, CustomerAssistantActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
-                    startActivity(intent);
-                }
-            });
+            try {
+                bubbleView = new BubbleLayout(this, BubbleLayout.BUBBLE_TYPE.CUSTOMER_ASSISTANT);
+                bubbleView.addView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.ca_bubble_layout, null));
+                bubbleView.initalizeBubbleView(initAplha);
+                bubbleView.setOnBubbleRemoveListener(new BubbleLayout.OnBubbleRemoveListener() {
+                    @Override
+                    public void onBubbleRemoved(BubbleLayout bubble) {
+                    }
+                });
+                bubbleView.setOnBubbleClickListener(new BubbleLayout.OnBubbleClickListener() {
 
-            bubbleView.setShouldStickToWall(true);
+                    @Override
+                    public void onBubbleClick(BubbleLayout bubble) {
+                        Intent intent = new Intent(CustomerAssistantService.this, CustomerAssistantActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        startActivity(intent);
+                    }
+                });
 
-            WindowManager.LayoutParams layoutParams = buildLayoutParamsForBubble(x, y);
-            bubbleView.setWindowManager(getWindowManager());
-            bubbleView.setViewParams(layoutParams);
-            bubbleView.setLayoutCoordinator(layoutCoordinator);
-            bubbleView.setAnimationListener(false);
-            bubbles.add(bubbleView);
-            new ShakeAnimation(bubbleView).animate();
-            addViewToWindow(bubbleView);
-            showCustomToastView();
-        } catch (Exception e) {
-            e.printStackTrace();
+                bubbleView.setShouldStickToWall(true);
+
+                WindowManager.LayoutParams layoutParams = buildLayoutParamsForBubble(x, y);
+                bubbleView.setWindowManager(getWindowManager());
+                bubbleView.setViewParams(layoutParams);
+                bubbleView.setLayoutCoordinator(layoutCoordinator);
+                bubbleView.setAnimationListener(false);
+                bubbles.add(bubbleView);
+                new ShakeAnimation(bubbleView).animate();
+                addViewToWindow(bubbleView);
+                showCustomToastView();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -189,21 +200,27 @@ public class CustomerAssistantService extends Service {
     @Override
     public void onTaskRemoved(final Intent rootIntent) {
         Log.e("onTaskRemoved", "onTaskRemoved tes");
-        Intent restartServiceIntent = new Intent(getApplicationContext(), this.getClass());
 
-        PendingIntent restartServicePendingIntent = PendingIntent.getService(
-                getApplicationContext(), 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);
-        AlarmManager alarmService = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmService.set(AlarmManager.ELAPSED_REALTIME,
-                SystemClock.elapsedRealtime() + 1000,
-                restartServicePendingIntent);
+        if (TextUtils.isEmpty(pref.getString(UserSessionManager.KEY_FP_ID, null))
+                || !pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
+
+        } else {
+
+            Intent restartServiceIntent = new Intent(getApplicationContext(), this.getClass());
+
+            PendingIntent restartServicePendingIntent = PendingIntent.getService(
+                    getApplicationContext(), 1, restartServiceIntent, PendingIntent.FLAG_ONE_SHOT);
+            AlarmManager alarmService = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            alarmService.set(AlarmManager.ELAPSED_REALTIME,
+                    SystemClock.elapsedRealtime() + 1000,
+                    restartServicePendingIntent);
+        }
 
         super.onTaskRemoved(rootIntent);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         if (intent == null) {
             return Service.START_STICKY;
         } else {
@@ -217,10 +234,10 @@ public class CustomerAssistantService extends Service {
         super.onCreate();
         registerReceiver(resetReceiver, addIntentFilter);
         registerReceiver(resetReceiver, removeIntentFilter);
-
+        pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         if ((cpuWakeLock != null) && (cpuWakeLock.isHeld() == false)) {
             PowerManager pm = (PowerManager) getApplicationContext().getSystemService(Context.POWER_SERVICE);
-            PowerManager.WakeLock cpuWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "ShakeEventService onCreate Tag");
+            cpuWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "ShakeEventService onCreate Tag");
             cpuWakeLock.acquire();
         }
 
