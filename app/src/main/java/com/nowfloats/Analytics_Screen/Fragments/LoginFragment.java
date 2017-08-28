@@ -463,7 +463,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
 
     @Override
     public void nfxCallBack(String response, int callType, String name) {
-        if (pd != null) {
+        if (pd != null && pd.isShowing()) {
             pd.dismiss();
         }
         if (response.equals("error")) {

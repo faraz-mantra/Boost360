@@ -11,11 +11,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/toolbar"
             layout="@layout/app_bar"/>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_list"
-            android:layout_width="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_height="match_parent"/>
+
         <Button
             android:id="@+id/btn_load"
             android:layout_width="wrap_content"
@@ -29,6 +25,12 @@
             android:textAllCaps="false"
             android:background="@drawable/rounded_corner_button"
             android:text="Load more calls"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
