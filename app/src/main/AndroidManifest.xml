@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2017080011"
-    android:versionName="4.7.6">
+    android:versionCode="2017080027"
+    android:versionName="4.7.8">
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
@@ -75,7 +75,12 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name" />
         -->
-
+        <activity
+            android:name="com.nowfloats.managecustomers.FacebookChatActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.managecustomers.FacebookChatDetailActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -153,6 +158,11 @@
         </activity>
 
         <service android:name="com.nowfloats.bubble.BubblesService" />
+        <service
+            android:name="com.nowfloats.bubble.CustomerAssistantService"
+            android:enabled="true"
+            android:exported="true"
+            android:stopWithTask="false" />
 
         <activity
             android:name="com.nowfloats.NavigationDrawer.HomeActivity"
@@ -243,9 +253,7 @@
         <activity
             android:name="com.nowfloats.PreSignUp.PreSignUp_MainActivity"
             android:label="@string/title_activity_pre_sign_up__main"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.nowfloats.signup.UI.UI.PreSignUpActivity"
             android:screenOrientation="portrait">
@@ -273,9 +281,13 @@
         <activity
             android:name="com.nowfloats.NavigationDrawer.businessApps.BusinessAppTipsActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name="com.nowfloats.Image_Gallery.FullScreen_Gallery_Image"
+            android:label="Gallery Image"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.Image_Gallery.FullScreenImage"
             android:label="Gallery Image"
             android:screenOrientation="portrait" />
         <activity
@@ -332,7 +344,7 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
-        <receiver
+        <!--<receiver
             android:name="com.mixpanel.android.mpmetrics.GCMReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
@@ -341,7 +353,7 @@
 
                 <category android:name="com.biz2.nowfloats" />
             </intent-filter>
-        </receiver>
+        </receiver>-->
 
         <meta-data
             android:name="com.mixpanel.android.MPConfig.ResourcePackageName"
@@ -396,7 +408,7 @@
             android:name="com.nowfloats.CustomPage.CreateCustomPageActivity"
             android:screenOrientation="portrait" />
         <!--
-            <activity android:name="com.nowfloats.CustomPage.CustomPageActivity"
+            <activity android:name="com.nowfloats.CustomPage.CustomPageFragment"
             android:screenOrientation="portrait" ></activity>
         -->
         <activity
@@ -449,10 +461,30 @@
         <provider
             android:name="com.nowfloats.sync.ContentProvider.BoostContentProvider"
             android:authorities="${applicationId}.provider" />
+        <provider
+            android:name="com.nowfloats.riachatsdk.database.ChatContentProvider"
+            android:authorities="com.nowfloats.riachatsdk.provider" />
 
         <service android:name="com.nowfloats.Product_Gallery.Service.MultipleImageUploadService" />
 
-        <activity android:name="com.nowfloats.SiteAppearance.SiteAppearanceActivity" />
+        <activity
+            android:name="com.nowfloats.SiteAppearance.SiteAppearanceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.Product_Gallery.ProductGalleryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.manageinventory.ManageInventoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.CustomPage.CustomPageActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.Store.PricingPlansActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.nowfloats.Image_Gallery.ImageGalleryActivity"
+            android:screenOrientation="portrait" />
         <activity android:name="com.nowfloats.NavigationDrawer.CreateOffersActivity" />
         <activity android:name="com.nowfloats.NavigationDrawer.OffersFullScreenActivity" />
         <activity
@@ -508,6 +540,16 @@
             android:theme="@style/Theme.custom"
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
         <activity
+            android:name="com.nowfloats.customerassistant.CustomerAssistantActivity"
+            android:autoRemoveFromRecents="true"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/Transparent"
+            android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
+
+        <activity
             android:name="com.nowfloats.accessbility.OverlayDialog"
             android:autoRemoveFromRecents="true"
             android:label="@string/app_name"
@@ -525,7 +567,7 @@
             android:theme="@style/Theme.custom"
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
         <activity
-            android:name="com.nowfloats.swipecard.SuggestionsActivity"
+            android:name="com.nowfloats.customerassistant.SuggestionsActivity"
             android:autoRemoveFromRecents="true"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
@@ -535,8 +577,9 @@
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
         <activity
             android:name="com.nowfloats.signup.UI.UI.RiaChatInitActivity"
-            android:screenOrientation="portrait"></activity>
-        android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
+            android:screenOrientation="portrait" />
+        <activity android:name="com.nowfloats.manageinventory.SellerAnalyticsActivity" />
+        <activity android:name="com.nowfloats.manageinventory.PaymentSettingsActivity"></activity>
     </application>
 
 </manifest>

@@ -6,7 +6,7 @@
     android:layout_height="fill_parent"
     android:background="@color/screen_bg"
     android:orientation="vertical"
-    tools:context="com.nowfloats.CustomPage.CustomPageActivity">
+    tools:context="com.nowfloats.CustomPage.CustomPageFragment">
 
     <FrameLayout
         android:layout_width="match_parent"

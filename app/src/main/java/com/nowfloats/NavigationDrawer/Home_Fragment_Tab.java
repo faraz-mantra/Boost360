@@ -1,20 +1,16 @@
 package com.nowfloats.NavigationDrawer;
 
 import android.app.Activity;
-import android.app.AppOpsManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Binder;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -37,6 +33,7 @@ import com.nowfloats.NotificationCenter.NotificationFragment;
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
 import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
 import com.nowfloats.bubble.BubblesService;
+import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
@@ -46,7 +43,6 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -362,23 +358,9 @@ public class Home_Fragment_Tab extends Fragment {
         if (!isAdded() || getActivity() == null) {
             return;
         }
-//        else if (!isProductAvaiable && from == DrawOverLay.FromHome && activity != null) {
-//
-//            Toast.makeText(activity, "you do not have products into ProductGallery", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
 
         boolean checkAccessibility = true;
-        if (android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity())) {
-            checkAccessibility = false;
-            dialogForOverlayPath(from);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
-            checkAccessibility = canDrawOverlaysUsingReflection(getActivity());
-            if (!checkAccessibility) {
-                dialogForOverlayPath(from);
-            }
-        }
 
         Calendar calendar = Calendar.getInstance();
         long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, -1);
@@ -388,48 +370,18 @@ public class Home_Fragment_Tab extends Fragment {
 //Log.v("ggg",String.valueOf(diff)+" "+String.valueOf(newTime-oldTime));
         if (oldTime != -1 && ((newTime - oldTime) < diff)) {
             return;
+        } else {
+
+            if (!Methods.hasOverlayPerm(getActivity())) {
+                checkAccessibility = false;
+                dialogForOverlayPath(from);
+            }
         }
 
         if (checkAccessibility)
             checkForAccessibility();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private boolean canDrawOverlaysUsingReflection(Context context) {
-
-        try {
-
-            AppOpsManager manager = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
-            Class clazz = AppOpsManager.class;
-            Method dispatchMethod = clazz.getMethod("checkOp", new Class[]{int.class, int.class, String.class});
-//AppOpsManager.OP_SYSTEM_ALERT_WINDOW = 24
-            int mode = (Integer) dispatchMethod.invoke(manager, new Object[]{24, Binder.getCallingUid(), context.getApplicationContext().getPackageName()});
-
-            return AppOpsManager.MODE_ALLOWED == mode;
-
-        } catch (Exception e) {
-            return false;
-        }
-
-    }
-
-    /*private void checkOverlay() {
-        Calendar calendar = Calendar.getInstance();
-        long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME,-1);
-        long newTime = calendar.getTimeInMillis();
-        long diff = 3*24*60*60*1000;
-        Log.v("ggg",oldTime+"");
-        //Log.v("ggg",String.valueOf(diff)+" "+String.valueOf(newTime-oldTime));
-        if(oldTime != -1 && ((newTime-oldTime) < diff)){
-            return;
-        }
-
-        if (android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity())) {
-            dialogForOverlayPath();
-        } else {
-            checkForAccessibility();
-        }
-    }*/
     private void dialogForOverlayPath(DrawOverLay from) {
         if (getActivity() == null || !isAdded()) return;
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_bubble_overlay_permission, null);
@@ -490,12 +442,26 @@ public class Home_Fragment_Tab extends Fragment {
                     if (android.os.Build.VERSION.SDK_INT >= 23) {
 
                         if (getActivity() != null && Settings.canDrawOverlays(getActivity())) {
+
+                            if (pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
+                                checkCustomerAssistantService();
+                            }
+
                             checkForAccessibility();
                         }
                     }
                 }
             }, 1000);
         }
+    }
+
+    private void checkCustomerAssistantService() {
+
+        if (!Methods.isMyServiceRunning(getActivity(), CustomerAssistantService.class)) {
+            Intent bubbleIntent = new Intent(getActivity(), CustomerAssistantService.class);
+            getActivity().startService(bubbleIntent);
+        }
+        getActivity().sendBroadcast(new Intent(CustomerAssistantService.ACTION_REMOVE_BUBBLE));
     }
 
     private void checkForAccessibility() {
@@ -516,7 +482,6 @@ public class Home_Fragment_Tab extends Fragment {
                 //layout.setOnClickListener(null);
             }
         });
-
     }
 
     @Override

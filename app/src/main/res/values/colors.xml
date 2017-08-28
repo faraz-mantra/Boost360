@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="color_trans">#20000000</color>
+
     <color name="whiteLable">#ffb900</color>
     <color name="expire_dialog_img_bg">#ff0010</color>
 
@@ -132,33 +134,40 @@
     <color name="product_price">#6A6A6A</color>
     <color name="very_light_gray">#ededed</color>
 
-  <!--  <color name="first_circle">#A25484</color>
-    <color name="second_circle">#24DFE8</color>
-    <color name="third_circle">#9DA0FF</color>
-    <color name="fourth_circle">#01C6B5</color>
-    <color name="first_background">#cc3399</color>
-    <color name="second_background">#18FFFF</color>
-    <color name="third_background">#9966ff</color>
-    <color name="fourth_background">#009999</color>-->
+    <!--  <color name="first_circle">#A25484</color>
+      <color name="second_circle">#24DFE8</color>
+      <color name="third_circle">#9DA0FF</color>
+      <color name="fourth_circle">#01C6B5</color>
+      <color name="first_background">#cc3399</color>
+      <color name="second_background">#18FFFF</color>
+      <color name="third_background">#9966ff</color>
+      <color name="fourth_background">#009999</color>-->
 
 
- <!--   <integer-array name="business_circle_colors">
-        <item>@color/first_circle</item>
-        <item>@color/second_circle</item>
-        <item>@color/third_circle</item>
-        <item>@color/fourth_circle</item>
-    </integer-array>-->
+    <!--   <integer-array name="business_circle_colors">
+           <item>@color/first_circle</item>
+           <item>@color/second_circle</item>
+           <item>@color/third_circle</item>
+           <item>@color/fourth_circle</item>
+       </integer-array>-->
 
 
-  <!--  <integer-array name="business_colors">
-        <item>@color/first_background</item>
-        <item>@color/second_background</item>
-        <item>@color/third_background</item>
-        <item>@color/fourth_background</item>
-    </integer-array>-->
+    <!--  <integer-array name="business_colors">
+          <item>@color/first_background</item>
+          <item>@color/second_background</item>
+          <item>@color/third_background</item>
+          <item>@color/fourth_background</item>
+      </integer-array>-->
     <color name="red">#F20A0A</color>
     <color name="primary">@color/primaryColor</color>
+    <color name="transparent_blk">#90000000</color>
 
     <color name="transluscent_background">#BF000000</color>
+    <color name="transparent_th">#80000000</color>
+
+    <color name="sam_title_color">#fffc6a62</color>
+    <color name="sam_title_color_1">#5a6b7d</color>
+    <color name="sam_title_color_2">#84888C</color>
+    <color name="sam_title_color_3">#3B4954</color>
 
 </resources>

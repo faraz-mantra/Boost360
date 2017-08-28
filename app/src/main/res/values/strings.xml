@@ -21,10 +21,12 @@
     <string name="title_activity_business__hours_">Business Hours</string>
     <string name="title_activity_business__logo_">Business Logo</string>
     <string name="title_activity_social__sharing_">Social Sharing</string>
+    <string name="third_party_integration">Third Party Integrations</string>
     <string name="title_activity_login__main">Welcome Back</string>
     <string name="title_activity_pre_sign_up__main">PreSignUp_MainActivity</string>
     <string name="ps_create_lbl">CREATE</string>
     <string name="ps_login_lbl">LOG IN</string>
+    <string name="manage_inventory">Manage Inventory</string>
     <string name="ps_create_lbl_tag">a website with NowFloats</string>
     <string name="ps_login_lbl_tag">to manage NowFloats website</string>
     <string name="ps_sc2_lbl1">Instant Website</string>
@@ -74,7 +76,7 @@
     <string name="customer_has_sent_an_enquiry">Customer has sent an enquiry</string>
     <string name="title_activity_create__message_">Post an Update</string>
     <string name="side_panel_row_one">Dashboard</string>
-    <string name="side_panel_row_two">Profile</string>
+    <string name="side_panel_row_two">My Business Profile</string>
     <string name="side_panel_site_appearance">Site Appearance</string>
     <string name="side_panel_row_csp">Custom Pages</string>
     <string name="side_panel_row_three">Enquiries</string>
@@ -161,7 +163,9 @@
     <string name="email_text2">Add email</string>
     <string name="postUpdate_text2">Message regularly and relevantly</string>
     <string name="share_text2">Promote your website</string>
-
+    <string name="to_manage_facebook_page_message">To manage your Facebook page\nmessages, click here</string>
+    <string name="customer_have_not_messaged">You did not receive any messages\n on your Facebook page</string>
+    <string name="facebook_chat_note"><b>Note:</b> Messages sent and received from\nFacebook via Boost will only be visible.</string>
 
     <string-array name="CountryCodes">
         <item>93,AF</item>
@@ -410,6 +414,7 @@
         <item>Quikr</item>
     </string-array>
     <string name="business_enquiries_title">Business Enquiries</string>
+    <string name="payment_setting">Payment Setting</string>
     <string name="double_quotes"> &quot; </string>
     <string name="business_profile_title">Profile</string>
     <string name="tag_for_partners">.nowfloats.com</string>
@@ -502,6 +507,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="total_visits">total visits</string>
     <string name="search_queries">Search Queries</string>
     <string name="subscribers">Subscribers</string>
+    <string name="product_gallery">Product Gallery</string>
     <string name="could_not_find_fb_tag">Couldn\'t find FP Tag</string>
     <string name="check_internet_connection">Check your Network Connection</string>
     <string name="email">EMAIL</string>
@@ -654,8 +660,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="share_with">Share with:</string>
     <string name="chat">Chat</string>
     <string name="site__meter">Site Meter</string>
-    <string name="product_gallery">Product Gallery</string>
     <string name="image_gallery">Image Gallery</string>
+    <string name="photo_gallery">Photo Gallery</string>
+    <string name="manage_customers">Manage Customers</string>
     <string name="business_profile">Business Profile</string>
     <string name="upload_background_image">Upload Background Image</string>
     <string name="image_uploading_failed_try_again">Image uploading failed. Please try again</string>
@@ -1277,7 +1284,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="accessibility_permission">Accessibility permission</string>
     <string name="select_boost_from">Select Boost \n from the list</string>
     <string name="screen_overlay_permission">Screen overlay permission</string>
-    <string name="required_overlay_permission">Give us this permission to see our new feature \"Boost Bubble\"</string>
+    <string name="required_overlay_permission">Give us this permission to see our new features</string>
     <string name="bubble_for_whatsapp">Bubble for WhatsApp</string>
     <string name="whatsapp_bubble_close">You can disable this feature from your Boost app</string>
     <string name="missed_calls">MISSED CALLS</string>
@@ -1345,4 +1352,44 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
     <string name="speech_prompt">Say something&#8230;</string>
     <string name="speech_not_supported">Sorry! Your device doesn\'t support speech input</string>
+
+    <string name="pull_to_open">Pull the 4 dots to open</string>
+    <string name="long_press_to_move">Long press to move</string>
+    <string name="filter_by">Filter by</string>
+    <string name="action_sort_date">Recent</string>
+    <string name="action_sort_expiry">Expiring</string>
+    <string name="action_sort_source">Channel</string>
+    <string name="seller_analytics">Seller Analytics</string>
+    <string name="total_orders">Total Orders</string>
+    <string name="total_revenue">Total Revenue</string>
+    <string name="assured_purchase">Assured Purchase</string>
+    <string name="select_payment_method">Select yout payment method</string>
+    <string name="use_own_payment_link">Use own payment link</string>
+    <string name="delivery_mode">Mode  of Delivery</string>
+    <string name="nowfloats_deliv">NowFloats Delivery</string>
+    <string name="self_deliv">Self Delivery</string>
+    <string name="address_pincode">ADDRESS PINCODE</string>
+    <string name="subscription_status">SUBSCRIPTION STATUS</string>
+    <string name="custom_domain">CUSTOM DOMAIN</string>
+    <string name="site_appearance">SITE APPEARANCE</string>
+    <string name="shipping_metrics">SHIPPING METRICS</string>
+    <string name="bank_details">BANK DETAILS</string>
+    <string name="payment_details">Payment Details</string>
+    <string name="product_shipping_charges">Shipping Charges(In INR)</string>
+    <string name="product_transaction_charges">Transaction Charges (In INR)</string>
+    <string name="product_net_amount">Net Amount (In INR)</string>
+    <string name="assured_purchase_note">Note: Following fields are applicable only in case if assured purchase is enabled otherwise please ignore.</string>
+    <string name="product_name_hint">Enter the most suitable name of your product, so that customers can identify the product easily.</string>
+    <string name="product_desc_hint">Please enter details of the product you want to sell. Please make sure the information is accurate. Your customers will make their buying decision based on the information you provide about the product. This contributes to your website SEO.</string>
+    <string name="product_price_hint">Enter the price at which this product will be sold on your website. This is what the buyer will pay (provided discount Amount is INR 0)</string>
+    <string name="product_discount_hint">Amount of discount that you wish to give. Your buyers will pay Product Price less Discount Amount while purchasing the product</string>
+    <string name="product_currency_hint">For Assured Purchase Online Payments only INR is supported. For any other case you can choose any currency</string>
+    <string name="product_priority_hint">You should use this to showcase products on your website based on popularity and selling point</string>
+    <string name="product_net_amount_hint">This is amount you will earn once you deliver an order successfully through Assured Purchase online payment. It is calculated as = Product Price - Discount Amount - Shipping Charges - Transaction Charges</string>
+    <string name="product_shipping_charge_hint">Calculate shipping charges which Assured Purchase will charge you when a buyer pays online to purchase your product.</string>
+    <string name="product_shipping_days_hint">Days you require to deliver the product to your customer</string>
+    <string name="product_transaction_charge_hint">This is charge for using Assured Purchase only. This will be calculated on Product Price less Discount Amount</string>
+    <string name="product_buy_online_hint">If you don\'t want to collect payments online through Assured Purchase, you can select this option to re-direct buyer to your own URL, once they click \'Buy Now\' on your website. This disabled when Assured Purchase is enabled.</string>
+    <string name="facebook_chat">facebookchat</string>
+
 </resources>

@@ -2,6 +2,8 @@ package com.nowfloats.util;
 
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.AppOpsManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +12,10 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Binder;
+import android.os.Build;
+import android.provider.Settings;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -38,6 +44,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -327,6 +334,37 @@ public class Methods {
         }
     }
 
+    public static boolean hasOverlayPerm(Context mContext) {
+
+        boolean isOverlayApplicable = false;
+        if (android.os.Build.VERSION.SDK_INT >= 23) {
+            isOverlayApplicable = Settings.canDrawOverlays(mContext);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            isOverlayApplicable = canDrawOverlaysUsingReflection(mContext);
+        }
+
+        return isOverlayApplicable;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    private static boolean canDrawOverlaysUsingReflection(Context context) {
+
+        try {
+
+            AppOpsManager manager = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
+            Class clazz = AppOpsManager.class;
+            Method dispatchMethod = clazz.getMethod("checkOp", new Class[]{int.class, int.class, String.class});
+//AppOpsManager.OP_SYSTEM_ALERT_WINDOW = 24
+            int mode = (Integer) dispatchMethod.invoke(manager, new Object[]{24, Binder.getCallingUid(), context.getApplicationContext().getPackageName()});
+
+            return AppOpsManager.MODE_ALLOWED == mode;
+
+        } catch (Exception e) {
+            return false;
+        }
+
+    }
+
     public static String setDateFormat(String value, String formatType) {
         try {
             Log.i("formatValue--", value);
@@ -468,6 +506,20 @@ public class Methods {
         return result;
     }
 
+    public static boolean isMyServiceRunning(Context context, Class<?> serviceClass) {
+        boolean isMyServiceRunning = false;
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> list = manager.getRunningServices(Integer.MAX_VALUE);
+        if (list != null) {
+            for (ActivityManager.RunningServiceInfo service : list) {
+                if (serviceClass.getName().equals(service.service.getClassName())) {
+                    isMyServiceRunning = true;
+                }
+            }
+        }
+        return isMyServiceRunning;
+    }
+
     public static RestAdapter createAdapter(Context context, String url) throws IOException {
         try {
             OkHttpClient okHttpClient = new OkHttpClient();
@@ -601,6 +653,6 @@ public class Methods {
             }
 //            formatted += " at " + hrsTemp + " " + amMarker;
         }
-        return "THURSDAY, " + formatted;
+        return formatted;
     }
 }

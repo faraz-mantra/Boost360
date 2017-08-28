@@ -32,6 +32,7 @@ final class BubblesLayoutCoordinator {
     private BubbleTrashLayout trashView;
     private WindowManager windowManager;
     private BubblesService bubblesService;
+    private CustomerAssistantService samBubblesService;
 
     private static BubblesLayoutCoordinator getInstance() {
         if (INSTANCE == null) {
@@ -40,7 +41,8 @@ final class BubblesLayoutCoordinator {
         return INSTANCE;
     }
 
-    private BubblesLayoutCoordinator() { }
+    private BubblesLayoutCoordinator() {
+    }
 
     public void notifyBubblePositionChanged(BubbleLayout bubble, int x, int y) {
         if (trashView != null) {
@@ -94,7 +96,10 @@ final class BubblesLayoutCoordinator {
     public void notifyBubbleRelease(BubbleLayout bubble) {
         if (trashView != null) {
             if (checkIfBubbleIsOverTrash(bubble)) {
-                bubblesService.removeBubble(bubble);
+                if (bubblesService != null)
+                    bubblesService.removeBubble(bubble);
+                if (samBubblesService != null)
+                    samBubblesService.removeBubble(bubble);
             }
             trashView.setVisibility(View.GONE);
         }
@@ -106,6 +111,11 @@ final class BubblesLayoutCoordinator {
         public Builder(BubblesService service) {
             layoutCoordinator = getInstance();
             layoutCoordinator.bubblesService = service;
+        }
+
+        public Builder(CustomerAssistantService service) {
+            layoutCoordinator = getInstance();
+            layoutCoordinator.samBubblesService = service;
         }
 
         public Builder setTrashView(BubbleTrashLayout trashView) {

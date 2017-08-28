@@ -33,9 +33,12 @@ class BubbleBaseLayout extends FrameLayout {
     private WindowManager windowManager;
     private WindowManager.LayoutParams params;
     private BubblesLayoutCoordinator layoutCoordinator;
-
+    public boolean isAnimRequired = true;
     void setLayoutCoordinator(BubblesLayoutCoordinator layoutCoordinator) {
         this.layoutCoordinator = layoutCoordinator;
+    }
+    void setAnimationListener(boolean isAnimRequired) {
+        this.isAnimRequired = isAnimRequired;
     }
 
     BubblesLayoutCoordinator getLayoutCoordinator() {

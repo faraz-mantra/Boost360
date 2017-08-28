@@ -134,12 +134,12 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
                         int POs = Integer.parseInt(v.getTag().toString());
                         //Log.v("ggg",POs+"");
                         if (deleteCheck){
-                            if (CustomPageActivity.posList.contains(POs+"")){
-                                if(CustomPageActivity.posList.size()==1){
+                            if (CustomPageFragment.posList.contains(POs+"")){
+                                if(CustomPageFragment.posList.size()==1){
                                     deleteCheck = false;
                                 }
 //                                v.setBackgroundColor(android.R.attr.selectableItemBackground);
-                                CustomPageActivity.posList.remove(POs+"");
+                                CustomPageFragment.posList.remove(POs+"");
                                 bus.post(new DeletePageTriggerEvent(POs,false,v));
 //                                pageDeleteInterface.DeletePageTrigger(POs,false,v);
 //                                holder.imageView.setVisibility(View.INVISIBLE);
@@ -147,17 +147,17 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
                             }else{
 //                                v.setBackgroundColor(appContext.getResources().getColor(R.color.gray_transparent));
                                 deleteCheck =true;
-                                if (!(CustomPageActivity.posList.contains(POs+"")))
-                                    CustomPageActivity.posList.add(POs+"");
+                                if (!(CustomPageFragment.posList.contains(POs+"")))
+                                    CustomPageFragment.posList.add(POs+"");
 //                                pageDeleteInterface.DeletePageTrigger(POs,true,v);
                                 bus.post(new DeletePageTriggerEvent(POs,true,v));
 //                                holder.imageView.setVisibility(View.VISIBLE);
                                 storeData.get(POs).setSel(1);
                             }
-                            if (CustomPageActivity.custompageAdapter!=null)
-                                CustomPageActivity.custompageAdapter.notifyDataSetChanged();
-                            if (CustomPageActivity.recyclerView!=null)
-                                CustomPageActivity.recyclerView.invalidate();
+                            if (CustomPageFragment.custompageAdapter!=null)
+                                CustomPageFragment.custompageAdapter.notifyDataSetChanged();
+                            if (CustomPageFragment.recyclerView!=null)
+                                CustomPageFragment.recyclerView.invalidate();
                         }else {
                             editPage(storeData.get(POs).PageId, POs);
                         }
@@ -174,12 +174,12 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
 //                        int c = v.get;
                         int POs = Integer.parseInt(v.getTag().toString());
                         //Log.v("ggg",POs+"");
-                        if (CustomPageActivity.posList.contains(POs+"")){
-                            if(CustomPageActivity.posList.size()==1){
+                        if (CustomPageFragment.posList.contains(POs+"")){
+                            if(CustomPageFragment.posList.size()==1){
                                 deleteCheck = false;
                             }
 //                            v.setBackgroundColor(android.R.attr.selectableItemBackground);
-                            CustomPageActivity.posList.remove(POs+"");
+                            CustomPageFragment.posList.remove(POs+"");
 //                            pageDeleteInterface.DeletePageTrigger(POs,false,v);
                             bus.post(new DeletePageTriggerEvent(POs,false,v));
 //                            holder.imageView.setVisibility(View.INVISIBLE);
@@ -187,17 +187,17 @@ public class CustomPageAdapter extends RecyclerView.Adapter<CustomPageAdapter.Vi
                         }else{
 //                            v.setBackgroundColor(appContext.getResources().getColor(R.color.gray_transparent));
                             deleteCheck =true;
-                            if (!(CustomPageActivity.posList.contains(POs+"")))
-                                CustomPageActivity.posList.add(POs+"");
+                            if (!(CustomPageFragment.posList.contains(POs+"")))
+                                CustomPageFragment.posList.add(POs+"");
 //                            pageDeleteInterface.DeletePageTrigger(POs,true,v);
                             bus.post(new DeletePageTriggerEvent(POs,true,v));
 //                            holder.imageView.setVisibility(View.VISIBLE);
                             storeData.get(POs).setSel(1);
                         }
-                        if (CustomPageActivity.custompageAdapter!=null)
-                            CustomPageActivity.custompageAdapter.notifyDataSetChanged();
-                        if (CustomPageActivity.recyclerView!=null)
-                            CustomPageActivity.recyclerView.invalidate();
+                        if (CustomPageFragment.custompageAdapter!=null)
+                            CustomPageFragment.custompageAdapter.notifyDataSetChanged();
+                        if (CustomPageFragment.recyclerView!=null)
+                            CustomPageFragment.recyclerView.invalidate();
 //                        Methods.showSnackBarPositive(appContext, "Long press...." + POs);
                         return true;
                     }

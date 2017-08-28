@@ -16,10 +16,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.nowfloats.CustomPage.CustomPageActivity;
+import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
+import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
@@ -33,7 +36,8 @@ import com.thinksity.R;
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
 public class Business_Profile_Fragment_V2 extends Fragment {
-    TextView businessAddressLayout, contactInformationLayout,businessHoursLayout,businessLogoLayout,socialSharingLayout ;
+    TextView businessAddressLayout, contactInformationLayout, businessHoursLayout, businessLogoLayout, socialSharingLayout,
+            tvCustomPages, tvPhotoGallery, tvSiteAppearance;
     public static ImageView businessProfileImageView;
     public static TextView websiteTextView;
     public static TextView businessInfoTextView;
@@ -47,7 +51,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity =getActivity();
+        activity = getActivity();
     }
 
     @Override
@@ -57,7 +61,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
         View mainView = inflater.inflate(R.layout.fragment_business_profile_v3, container, false);
         pref = activity.getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
         prefsEditor = pref.edit();
-        session = new UserSessionManager(activity.getApplicationContext(),activity);
+        session = new UserSessionManager(activity.getApplicationContext(), activity);
         return mainView;
     }
 
@@ -67,11 +71,11 @@ public class Business_Profile_Fragment_V2 extends Fragment {
         if (!isAdded()) return;
         final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(getResources()
                 .getColor(R.color.white), PorterDuff.Mode.SRC_IN);
-        final LinearLayout progressLayout = (LinearLayout)mainView.findViewById(R.id.progress_layout);
-        final LinearLayout profileLayout =(LinearLayout)mainView.findViewById(R.id.business_profile_layout);
+        final LinearLayout progressLayout = (LinearLayout) mainView.findViewById(R.id.progress_layout);
+        final LinearLayout profileLayout = (LinearLayout) mainView.findViewById(R.id.business_profile_layout);
         profileLayout.setVisibility(View.INVISIBLE);
         progressLayout.setVisibility(View.VISIBLE);
-        if(HomeActivity.shareButton != null) {
+        if (HomeActivity.shareButton != null) {
             HomeActivity.shareButton.setImageResource(R.drawable.share_with_apps);
             HomeActivity.shareButton.setColorFilter(whiteLabelFilter_pop_ip);
         }
@@ -118,20 +122,20 @@ public class Business_Profile_Fragment_V2 extends Fragment {
 
                             businessProfileImageView = (ImageView) mainView.findViewById(R.id.businessProfileIcon_ProfileV2);
                             //if (Constants.IMAGEURIUPLOADED == false) {
-                                String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
-                                BoostLog.d("TAG", iconUrl);
-                                if(iconUrl.length()>0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
-                                    String baseNameProfileImage = Constants.BASE_IMAGE_URL+"" + iconUrl;
+                            String iconUrl = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_IMAGE_URI);
+                            BoostLog.d("TAG", iconUrl);
+                            if (iconUrl.length() > 0 && iconUrl.contains("BizImages") && !iconUrl.contains("http")) {
+                                String baseNameProfileImage = Constants.BASE_IMAGE_URL + "" + iconUrl;
+                                Picasso.with(activity)
+                                        .load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
+                            } else {
+                                if (iconUrl != null && iconUrl.length() > 0) {
                                     Picasso.with(activity)
-                                            .load(baseNameProfileImage).placeholder(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
-                                }else {
-                                    if(iconUrl!=null && iconUrl.length()>0) {
-                                        Picasso.with(activity)
-                                                .load(iconUrl).placeholder(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
-                                    }else{
-                                        Picasso.with(activity).load(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
-                                    }
+                                            .load(iconUrl).placeholder(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
+                                } else {
+                                    Picasso.with(activity).load(R.drawable.business_edit_profile_icon).into(businessProfileImageView);
                                 }
+                            }
                             //}
 
                             //session.getIsSignUpFromFacebook().contains("true")
@@ -198,6 +202,15 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                             //TextView socialSharingTextView = (TextView) socialSharingLayout.findViewById(R.id.fifth_TextView_ProfileV2);
                             socialSharingLayout.setTypeface(robotoMedium);
 
+                            tvCustomPages = (TextView) businessProfileList.findViewById(R.id.tvCustomPages);
+                            tvCustomPages.setTypeface(robotoMedium);
+
+                            tvPhotoGallery = (TextView) businessProfileList.findViewById(R.id.tvPhotoGallery);
+                            tvPhotoGallery.setTypeface(robotoMedium);
+
+                            tvSiteAppearance = (TextView) businessProfileList.findViewById(R.id.tvSiteAppearance);
+                            tvSiteAppearance.setTypeface(robotoMedium);
+
 
                             businessAddressLayout.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -208,11 +221,45 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                                     startActivity(businessAddress);
                                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
-//                activity.getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.mainFrame, businessAddressFragment)
-//                                // Add this transaction to the back stack
-//
-//                        .commit();
+                                }
+                            });
+
+
+                            tvPhotoGallery.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    MixPanelController.track(EventKeysWL.SIDE_PANEL_IMAGE_GALLERY, null);
+                                    Intent businessAddress = new Intent(activity, ImageGalleryActivity.class);
+                                    startActivity(businessAddress);
+                                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                                }
+                            });
+
+
+                            tvCustomPages.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+//                                    MixPanelController.track(EventKeysWL.PRODUCT_GALLERY, null);
+                                    Intent businessAddress = new Intent(activity, CustomPageActivity.class);
+                                    startActivity(businessAddress);
+                                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                                }
+                            });
+
+
+                            tvSiteAppearance.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    MixPanelController.track(EventKeysWL.SITE_APPEARANCE, null);
+                                    Intent businessAddress = new Intent(activity, SiteAppearanceActivity.class);
+                                    startActivity(businessAddress);
+                                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
                                 }
                             });
 
@@ -229,6 +276,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                             businessHoursLinearLayout.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+                                    MixPanelController.track(MixPanelController.Bhours, null);
                                     if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS).equals("TIMINGS")) {
                                         Intent businessHoursIntent = new Intent(activity, Business_Hours_Activity.class);
                                         startActivity(businessHoursIntent);
@@ -278,17 +326,19 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                                     /*if (Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
                                         Toast.makeText(activity, "This feature is coming soon", Toast.LENGTH_LONG).show();
                                     }else {*/
-                                        MixPanelController.track(EventKeysWL.SOCIAL_SHARING, null);
-                                        Intent socialSharingIntent = new Intent(activity, Social_Sharing_Activity.class);
-                                        startActivity(socialSharingIntent);
-                                        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                    MixPanelController.track(EventKeysWL.SOCIAL_SHARING, null);
+                                    Intent socialSharingIntent = new Intent(activity, Social_Sharing_Activity.class);
+                                    startActivity(socialSharingIntent);
+                                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                     //}
-                                    }
-                               // }
+                                }
+                                // }
                             });
                             progressLayout.setVisibility(View.GONE);
                             profileLayout.setVisibility(View.VISIBLE);
-                        }catch(Exception e){e.printStackTrace();}
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
             }
@@ -485,16 +535,15 @@ public class Business_Profile_Fragment_V2 extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (HomeActivity.headerText!=null)
+        if (HomeActivity.headerText != null)
             HomeActivity.headerText.setText(getResources().getString(R.string.business_profile_title));
-        if (websiteTextView!=null)
+        if (websiteTextView != null)
             websiteTextView.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
-        if (businessInfoTextView!=null)
+        if (businessInfoTextView != null)
             businessInfoTextView.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION));
 
-        if(session.getIsSignUpFromFacebook().contains("true"))
-        {
-            if (businessInfoTextView!=null)
+        if (session.getIsSignUpFromFacebook().contains("true")) {
+            if (businessInfoTextView != null)
                 businessInfoTextView.setText(session.getFacebookProfileDescription());
         }
     }
@@ -504,7 +553,6 @@ public class Business_Profile_Fragment_V2 extends Fragment {
         super.onDetach();
         HomeActivity.headerText.setText(Constants.StoreName);
     }
-
 
 
     public void shareWebsite(String text) {

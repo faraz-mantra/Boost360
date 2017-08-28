@@ -309,6 +309,8 @@ public class BoostContentProvider extends ContentProvider {
                             "onUpgrade() with unknown oldVersion " + oldVersion);
             }
 
+
+
         }
     }
 

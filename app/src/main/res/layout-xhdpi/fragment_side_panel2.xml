@@ -1,228 +1,224 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:fillViewport="true"
-    android:background="@color/cell_background_color">
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:background="@color/cell_background_color"
-    tools:context="test.com.vinay.NavigationDrawer.SidePanelFragment">
+    android:fillViewport="true">
 
-    <RelativeLayout
-        android:id="@+id/containerDrawerImage"
-        android:layout_width="fill_parent"
-        android:layout_height="200dp"
-        >
-
-        <FrameLayout
-            android:id="@+id/backgroundImageLay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/backgroundImage"
-                style="@style/white_label_style"
-                android:layout_width="fill_parent"
-                android:layout_height="154dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/general_services_background_img" />
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="154dp"
-                android:background="@drawable/cover_gradient"
-                ></LinearLayout>
-
-        </FrameLayout>
-
-
-        <ImageView
-            android:id="@+id/side_panel_fragment_change_backgroud_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="right"
-            android:padding="8dp"
-            android:background="@drawable/transparent_background_circle"
-            android:src="@drawable/background_change_camera_button" />
-
-
-        <com.makeramen.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/iconImage"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:layout_alignTop="@id/backgroundImageLay"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="7dp"
-            android:layout_marginTop="33dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/business_edit_profile_icon"
-            app:riv_border_color="#ffffff"
-            app:riv_border_width="2dip"
-            app:riv_corner_radius="30dip"
-            app:riv_mutate_background="true"
-            app:riv_oval="true" />
-
-
-        <TextView
-            android:id="@+id/fpNameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-           android:layout_below="@id/iconImage"
-            android:text="@string/float_point_name"
-            android:singleLine="true"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/fpEmailTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="fpwebsitename.com"
-            android:singleLine="true"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:layout_below="@+id/fpNameTextView"
-            android:gravity="center_horizontal"
-
-            android:textColor="#FFFFFF"
-
-            android:textSize="12sp" />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/cell_background_color"
+        tools:context="test.com.vinay.NavigationDrawer.SidePanelFragment">
 
         <RelativeLayout
-            android:id="@+id/fragment_side_panel_site_meter"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_gravity="bottom"
-            android:layout_marginTop="2dp"
-            android:background="@color/cell_background_color"
-            android:orientation="horizontal"
-            android:layout_below="@+id/backgroundImageLay">
+            android:id="@+id/containerDrawerImage"
+            android:layout_width="fill_parent"
+            android:layout_height="200dp">
+
+            <FrameLayout
+                android:id="@+id/backgroundImageLay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/backgroundImage"
+                    style="@style/white_label_style"
+                    android:layout_width="fill_parent"
+                    android:layout_height="154dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/general_services_background_img" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="154dp"
+                    android:background="@drawable/cover_gradient"
+                    android:orientation="horizontal"></LinearLayout>
+
+            </FrameLayout>
 
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/side_panel_fragment_change_backgroud_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/transparent_background_circle"
+                android:padding="8dp"
+                android:src="@drawable/background_change_camera_button" />
+
+
+            <com.makeramen.RoundedImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/iconImage"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_alignTop="@id/backgroundImageLay"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="7dp"
+                android:layout_marginTop="33dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/business_edit_profile_icon"
+                app:riv_border_color="#ffffff"
+                app:riv_border_width="2dip"
+                app:riv_corner_radius="30dip"
+                app:riv_mutate_background="true"
+                app:riv_oval="true" />
+
+
+            <TextView
+                android:id="@+id/fpNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iconImage"
+                android:layout_centerInParent="true"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:singleLine="true"
+                android:text="@string/float_point_name"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/fpEmailTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                android:layout_below="@+id/fpNameTextView"
+                android:gravity="center_horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:singleLine="true"
+                android:text="fpwebsitename.com"
 
-                <com.nowfloats.CustomWidget.roboto_md_46_616161
-                    android:id="@+id/fragment_side_panel_progress_meter_value"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:layout_marginLeft="20dp"
-                    >
-                </com.nowfloats.CustomWidget.roboto_md_46_616161>
+                android:textColor="#FFFFFF"
 
-                <com.nowfloats.CustomWidget.roboto_md_36_bcbcbc
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/percent_site_completed"
-                    android:layout_marginLeft="3dp">
+                android:textSize="12sp" />
 
-                </com.nowfloats.CustomWidget.roboto_md_36_bcbcbc>
+            <RelativeLayout
+                android:id="@+id/fragment_side_panel_site_meter"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_below="@+id/backgroundImageLay"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="2dp"
+                android:background="@color/cell_background_color"
+                android:orientation="horizontal">
 
 
-                <com.nowfloats.CustomWidget.roboto_md_36_289dd9
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/your_site_health"
-                    android:layout_gravity="right|bottom"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <com.nowfloats.CustomWidget.roboto_md_46_616161
+                        android:id="@+id/fragment_side_panel_progress_meter_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text=""></com.nowfloats.CustomWidget.roboto_md_46_616161>
+
+                    <com.nowfloats.CustomWidget.roboto_md_36_bcbcbc
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:text="@string/percent_site_completed">
+
+                    </com.nowfloats.CustomWidget.roboto_md_36_bcbcbc>
+
+
+                    <com.nowfloats.CustomWidget.roboto_md_36_289dd9
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right|bottom"
+                        android:layout_marginRight="20dp"
+                        android:gravity="right"
+
+                        android:text="@string/your_site_health" />
+                </LinearLayout>
+
+
+                <ProgressBar
+                    android:id="@+id/ProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="17dp"
                     android:layout_marginRight="20dp"
+                    android:layout_marginTop="40dp"
+                    android:indeterminate="false"
+                    android:maxHeight="10dip"
+                    android:minHeight="10dip"
+                    android:progress="50"
 
-                    android:gravity="right"/>
-            </LinearLayout>
+                    android:progressDrawable="@drawable/progress_color" />
 
+            </RelativeLayout>
 
-            <ProgressBar
-                android:id="@+id/ProgressBar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="20dp"
-                android:layout_marginLeft="17dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="40dp"
-                android:indeterminate="false"
-                android:maxHeight="10dip"
-                android:minHeight="10dip"
-                android:progress="50"
-
-                android:progressDrawable="@drawable/progress_color" />
 
         </RelativeLayout>
 
+        <include
+            android:id="@+id/navigationDrawer_main_leftPane"
+            layout="@layout/single_row_card"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/containerDrawerImage" />
+
+
+        <LinearLayout
+            android:id="@+id/versionCodeName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/navigationDrawer_main_leftPane"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <com.nowfloats.CustomWidget.roboto_lt_36_565656
+
+                android:id="@+id/version_text"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:text="@string/version" />
+
+            <com.nowfloats.CustomWidget.roboto_lt_36_565656
+                android:id="@+id/version_name_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/versionCodeName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="24dp">
+
+            <com.nowfloats.CustomWidget.roboto_lt_36_565656
+                android:id="@+id/poweredBy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/versionCodeName"
+                android:text="@string/powered_by" />
+
+            <com.nowfloats.CustomWidget.roboto_md_36__565656
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/versionCodeName"
+                android:layout_toRightOf="@id/poweredBy"
+                android:text="@string/nowfloats" />
+        </LinearLayout>
+
 
     </RelativeLayout>
-
-    <include
-        android:id="@+id/navigationDrawer_main_leftPane"
-        layout="@layout/single_row_card"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/containerDrawerImage" />
-
-
-
-
-    <LinearLayout
-        android:id="@+id/versionCodeName"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/navigationDrawer_main_leftPane"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="2dp"
-        android:layout_marginTop="20dp">
-
-        <com.nowfloats.CustomWidget.roboto_lt_36_565656
-
-            android:id="@+id/version_text"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:text="@string/version"/>
-
-        <com.nowfloats.CustomWidget.roboto_lt_36_565656
-            android:id="@+id/version_name_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""/>
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:layout_below="@id/versionCodeName"
-        android:layout_centerHorizontal="true">
-        <com.nowfloats.CustomWidget.roboto_lt_36_565656
-            android:id="@+id/poweredBy"
-            android:layout_below="@+id/versionCodeName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/powered_by"/>
-
-        <com.nowfloats.CustomWidget.roboto_md_36__565656
-            android:layout_width="wrap_content"
-            android:layout_below="@+id/versionCodeName"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/poweredBy"
-            android:text="@string/nowfloats"/>
-    </LinearLayout>
-
-
-
-</RelativeLayout>
-    </ScrollView>
+</ScrollView>

@@ -22,11 +22,13 @@ public class MixPanelController {
 	public static final String BUBBLE_OVERLAY_PERM = "BubbleOverlayPerm";
 	public static final String BUBBLE_DIALOG_SHARE = "BubbleWhatsAppProductShareClicked";
 	public static final String BUBBLE_CLOSED = "BubbleClosedByUser";
+	public static final String SAM_BUBBLE_CLOSED = "SAMBubbleClosedByUser";
 	public static final String WHATSAPP_TO_BOOST = "whatsapp_to_boost";
     public static final String LINK_DOMAIN = "LinkDomain";
     public static final String BOOK_DOMAIN = "BookDomain";
     public static final String DOMAIN_SEARCH = "DomainSearch";
     public static final String VMN_CALL_TRACKER = "VmnCallTracker";
+    public static final String MANAGE_INVENTORY = "ManageInventory";
     public static final String FACEBOOK_REVIEW = "FacebookReview";
     public static final String PRIMARY_NUMBER_CHANGE = "PrimaryNumberChanged";
     public static final String BUSINESS_APP_REQUEST = "BusinessAppRequest";

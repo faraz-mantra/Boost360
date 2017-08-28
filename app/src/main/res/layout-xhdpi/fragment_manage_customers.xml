@@ -1,0 +1,162 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/screen_bg"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/business_profile_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/white"
+                app:cardElevation="3dp"
+                card_view:cardCornerRadius="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="24dp"
+                        android:layout_marginTop="24dp"
+                        android:orientation="horizontal">
+
+                        <com.makeramen.RoundedImageView
+                            android:id="@+id/businessProfileIcon_ProfileV2"
+                            android:layout_width="65dp"
+                            android:layout_height="65dp"
+                            android:layout_gravity="left"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/sam_icon"
+                            app:riv_border_color="#333333"
+                            app:riv_border_width="0dip"
+                            app:riv_corner_radius="30dip"
+                            app:riv_mutate_background="true"
+                            app:riv_oval="true" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="@dimen/margin_10"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/websiteTitleTextView_ProfileV2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:ellipsize="end"
+                                android:maxLines="2"
+                                android:text="Interact with your online customers here"
+                                android:textColor="@color/primaryColor"
+                                android:textSize="19sp" />
+
+                            <TextView
+                                android:id="@+id/categoryTextView_ProfileV2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/websiteTitleTextView_ProfileV2"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@id/businessProfileIcon_ProfileV2"
+                                android:ellipsize="end"
+                                android:singleLine="true"
+                                android:textColor="#949494"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginBottom="@dimen/margin_10"
+                        android:layout_marginLeft="35dp"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/businessInfoTextView_ProfileV2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:autoLink="web"
+                            android:ellipsize="end"
+                            android:linksClickable="true"
+                            android:maxLines="4"
+                            android:text="Enable Customer Assistant"
+                            android:textColor="#3B3B3B"
+                            android:textSize="14sp" />
+
+                        <Switch
+                            android:id="@+id/swCustomerAssistant"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right|center"
+                            android:layout_marginRight="@dimen/margin_10"
+                            android:checked="false"
+                            android:textColorHighlight="@color/product_price" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvLearnMore"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/margin_10"
+                        android:layout_marginLeft="35dp"
+                        android:ellipsize="end"
+                        android:text="Learn More"
+                        android:textColor="@color/primaryColor"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fillViewport="true">
+
+
+                <include
+                    android:id="@+id/businessProfile_List_ProfileV2"
+                    layout="@layout/manage_customer_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent" />
+            </ScrollView>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/progress_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/visits_progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</FrameLayout><!-- From: file:/C:/Users/Kamal/Documents/NowFloatsUI/app/src/main/res/layout-xhdpi/fragment_business_profile_v3.xml -->
