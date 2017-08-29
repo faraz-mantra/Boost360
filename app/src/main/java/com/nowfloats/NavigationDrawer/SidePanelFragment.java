@@ -206,7 +206,7 @@ public class SidePanelFragment extends Fragment {
             if (!baseNameProfileImage.contains("http")) {
                 baseNameProfileImage = Constants.BASE_IMAGE_URL + "" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
             }
-            if (baseNameProfileImage != null && baseNameProfileImage.length() > 0) {
+            if (baseNameProfileImage.length() > 0) {
                 Picasso.with(getActivity())
                         .load(baseNameProfileImage)
                         .resize(540, 0)

@@ -10,17 +10,84 @@
         android:layout_height="wrap_content"
         android:background="@color/screen_bg"
         android:orientation="vertical" >
+        <FrameLayout
+            android:id="@+id/flPricingPlans"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/settings_screen_cell_height"
+                android:background="@color/cell_background_color"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <ImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/textview_height_business_profile"
+                    android:layout_marginLeft="@dimen/icon_left_margin"
+                    android:layout_marginRight="@dimen/icon_right_margin"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/sidepanel_store" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/store"
+                    android:textColor="@color/cell_text_color"
+                    android:textSize="@dimen/cell_text_size" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="right">
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginRight="10dp"
+                        app:cardBackgroundColor="@color/primaryColor"
+                        app:cardCornerRadius="2dp"
+                        app:contentPaddingBottom="2dp"
+                        app:contentPaddingLeft="10dp"
+                        app:contentPaddingRight="10dp"
+                        app:contentPaddingTop="2dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/single_row_card_upgrade_text"
+                            android:textColor="#ffffff"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+                    </android.support.v7.widget.CardView>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?android:selectableItemBackground"
+                android:orientation="horizontal">
+
+            </LinearLayout>
+        </FrameLayout>
         <FrameLayout
             android:id="@+id/account_info_Layout"
             android:layout_width="match_parent"
-            android:visibility="gone"
             android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/settings_screen_cell_height"
                 android:background="@color/cell_background_color"
                 android:orientation="horizontal"
+                android:visibility="visible"
+                android:layout_marginTop="1dp"
                 android:gravity="center_vertical">
 
                 <ImageView
@@ -54,8 +121,8 @@
             android:id="@+id/fl_site_appearance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:visibility="gone">
+            android:visibility="gone"
+            android:layout_marginTop="1dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/settings_screen_cell_height"
@@ -150,6 +217,7 @@
                     android:text="@string/setting_about_us" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -159,8 +227,8 @@
         <FrameLayout
             android:id="@+id/faq_Layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone">
+            android:visibility="visible"
+            android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/settings_screen_cell_height"
@@ -277,6 +345,7 @@
 
         </LinearLayout>
             <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="?android:selectableItemBackground"
@@ -549,9 +618,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text=""
-
                 />
-
 
         </LinearLayout>
 
@@ -559,6 +626,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:visibility="visible"
             android:layout_marginBottom="40dp"
             android:orientation="horizontal">
             <com.nowfloats.CustomWidget.roboto_lt_36_565656

@@ -79,13 +79,13 @@
 
     <string name="facebook_app_id">849017471893722</string>
 
-
     <string name="title_activity_image__gallery__main">Image Gallery</string>
     <string name="title_activity_home__main">Home_MainActivity</string>
     <string name="title_activity_card__full__view__main">Home</string>
     <string name="title_activity_create__message_">Post an Update</string>
     <string name="side_panel_row_one">Dashboard</string>
     <string name="side_panel_row_two">Business Profile</string>
+    <string name="side_panel_row_tenth">Manage Customers</string>
     <string name="side_panel_row_csp">Custom Pages</string>
     <string name="side_panel_row_three">Business Enquiries</string>
     <string name="side_panel_row_four">Photo Gallery</string>

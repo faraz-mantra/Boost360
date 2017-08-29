@@ -22,7 +22,6 @@ public class Specific {
     public static String client_ID_14 = "A91B82DE3E93446A8141A52F288F69EFA1B09B1D13BB4E55BE743AB547B3489E";
 
     public static String access_level = "20";
-
     public static final String FACEBOOK_API_KEY 	= "613958438805430";  // Boost
 
 //    public static String TWITTER_TOK 				= "h5lB3rvjU66qOXHgrZK41Q";
@@ -38,6 +37,6 @@ public class Specific {
     public static final String TWITTER_URL = "https://twitter.com/getkitsune";
     public static final String TWITTER_ID_URL = "twitter://user?screen_name=getkitsune";
 
-    public static final String TWILIO_AUTHY_API_KEY = "gXYHhTa0gJb6VlJxw0aEqWxHHrw5AEi5";
+    public static final String TWILIO_AUTHY_API_KEY = "";
 
 }

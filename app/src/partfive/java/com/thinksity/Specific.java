@@ -1,13 +1,12 @@
 package com.thinksity;
 
 /**
- *
- * Created by NowFloatsDev on 03/04/2015.
+ * Created by Admin on 05-04-2017.
  */
+
 public class Specific {
 
-    public static String clientId2 	= "5C6D42B51BB94A8F84B4F5FE81DA1312BFBDAA2EFB084531A8DBC19E847F47C7";
-
+    public static String clientId2 	= "14E842988A6A65514D39A6CF92B9CC989CF088156156CAF44900F28B320D8D07";
     public static String client_ID_1 = "39EB5FD120DC4394A10301B108030CB70FA553E91F984C829AB6ADE23B6767B7";
     public static String client_ID_2_webcreatorservice = "DA92AD580F614449B2B7B8B62DFC7AE72D201733A6D74E73B8050C541579A26C";
     public static String client_ID_3_imagechunkprocessor = "BFFEB94156C24961BBF4D4B4CC3663BB883E2EFA875148CE9C08BAB702663FAE";
@@ -23,23 +22,23 @@ public class Specific {
     public static String client_ID_13_enterprizeonboardingservice = "BFB1A9D329204D25AF5423A58E21EB8349FAFE9752DD49F780F7680521DC33E1";
     public static String client_ID_14 = "A91B82DE3E93446A8141A52F288F69EFA1B09B1D13BB4E55BE743AB547B3489E";
 
-    public static String access_level = "30";
 
-    public static final String FACEBOOK_API_KEY = "849017471893722"; // Thinksity
-    public static String TWITTER_TOK 	= "5HNCg1Sx1dJMmUt1NuFXMiSST";
-    public static String TWITTER_SEC 	= "MfMT1qgmmCQ22irEXmUGzHL9aE1bgCo3hlrAekZ1rX5kMKr6WD";
+    public static String access_level = "20";
+    public static final String CONTACT_EMAIL_ID = "support@capture.com";
+    public static final String FACEBOOK_API_KEY 	= "";  // Boost
 
-    ////Below are my(Romeo) keys whick work fine.
-//    public static String TWITTER_TOK 	= "oaFiZusQM3YiMzdqNEAByxiKA";
-//    public static String TWITTER_SEC 	= "deOu5p3YyLLa9rHn5PwerBB5aixnMay8RQ2jITTpB6ZwzsNipt";
+//    public static String TWITTER_TOK 				= "h5lB3rvjU66qOXHgrZK41Q";
+//    public static String TWITTER_SEC 				= "L0Bo08aevt2U1fLjuuYAMtANSAzWWi8voGuvbrdtcY4";
 
-//    public static String TWITTER_TOK 	= "WDywxgL8XzrjTRLbIk8pu5KXB";
-//    public static String TWITTER_SEC 	= "KwKxeHM0ZYqXxcmBIcRlVM1keJW8ZmBdIjC5gufc3ErmJWQpTo";
-    public static String FACEBOOK_URL = "https://www.facebook.com/sibername";
-    public static String PACKAGE_NAME = "com.sibername";
-    public static  String CONTACT_EMAIL_ID="";
-    public static String FACEBOOK_PAGEID = "fb://page/35829503050";
-    public static final String TWITTER_URL = "https://twitter.com/sibername";
-    public static final String TWITTER_ID_URL = "twitter://user?screen_name=sibername";
-    public static final String TWILIO_AUTHY_API_KEY = "gXYHhTa0gJb6VlJxw0aEqWxHHrw5AEi5";
+
+    public static final String TWITTER_TOK 		= "";
+    public static final String TWITTER_SEC 		= "";
+    public static final String FACEBOOK_URL = "";
+    public static final String PACKAGE_NAME = "com.capture";
+    public static final String FACEBOOK_PAGEID = "";
+    public static final String TWITTER_URL = "";
+    public static final String TWITTER_ID_URL = "";
+    public static final String TWILIO_AUTHY_API_KEY = "";
+
 }
+

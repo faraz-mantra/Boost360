@@ -463,7 +463,7 @@
             android:authorities="${applicationId}.provider" />
         <provider
             android:name="com.nowfloats.riachatsdk.database.ChatContentProvider"
-            android:authorities="com.nowfloats.riachatsdk.provider" />
+            android:authorities="${applicationId}.riachatsdk.provider" />
 
         <service android:name="com.nowfloats.Product_Gallery.Service.MultipleImageUploadService" />
 

@@ -1406,19 +1406,15 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     Hotline.showConversations(HomeActivity.this);
                     //Konotor.getInstance(getApplicationContext()).launchFeedbackScreen(HomeActivity.this);
                 } else if (nextScreen.equals(getString(R.string.call))) {
-//                    String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-//                    if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || paymentState == null || paymentState.equals("-1") || paymentState.equals("0")) {
-//                        Intent call = new Intent(Intent.ACTION_DIAL);
-//                        String callString = "tel:" + getString(R.string.contact_us_number);
-//                        call.setData(Uri.parse(callString));
-//                        startActivity(call);
-//                    } else {
-                    /*Intent supportIntent = new Intent(HomeActivity.this, HelpAndSupportActivity.class);
-                    startActivity(supportIntent);
-//                    }
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
-
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
+                    String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
+                    if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || paymentState == null || !paymentState.equals("1")) {
+                        Intent call = new Intent(Intent.ACTION_DIAL);
+                        String callString = "tel:" + getString(R.string.contact_us_number);
+                        call.setData(Uri.parse(callString));
+                        startActivity(call);
+                    } else {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
+                    }
                 } else if (nextScreen.equals(getString(R.string.share))) {
                     shareWebsite();
                 } else if (nextScreen.equals("Settings")) {
