@@ -195,6 +195,7 @@ public class Get_FP_Details_Service {
         editor.putInt("fbStatus", 0);
         editor.putInt("fbPageStatus", 0);
         editor.putInt("quikrStatus", -1);
+        editor.putInt("facebookChatStatus", 0);
         editor.apply();
         SharedPreferences.Editor tPrefEditor = twitterPref.edit();
         tPrefEditor.putBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false);
@@ -208,7 +209,7 @@ public class Get_FP_Details_Service {
                 if (!Util.isNullOrEmpty(session.getFacebookName())) {
                     editorFb.putBoolean("fbShareEnabled", true);
                 }
-                editorFb.putString("fbAccessId", model.getUserAccessTokenKey());
+                editorFb.putString("fbAccessId", model.getUserAccountId());
                 editorFb.apply();
             } else if (model.getType().equalsIgnoreCase("facebookpage")) {
                 SharedPreferences.Editor editorFbPage = pref.edit();
@@ -218,7 +219,7 @@ public class Get_FP_Details_Service {
                 if (!Util.isNullOrEmpty(session.getFacebookPage())) {
                     editorFbPage.putBoolean("fbPageShareEnabled", true);
                 }
-                editorFbPage.putString("fbPageAccessId", model.getUserAccessTokenKey());
+                editorFbPage.putString("fbPageAccessId", model.getUserAccountId());
                 editorFbPage.apply();
             } else if (model.getType().equalsIgnoreCase("twitter")) {
                 SharedPreferences.Editor twitterPrefEditor = twitterPref.edit();
@@ -230,6 +231,8 @@ public class Get_FP_Details_Service {
                 twitterPrefEditor.apply();
             } else if (model.getType().equalsIgnoreCase("quikr")) {
                 pref.edit().putInt("quikrStatus", Integer.parseInt(model.getStatus())).apply();
+            }else if(model.getType().equalsIgnoreCase("facebookchat")){
+                pref.edit().putInt("facebookChatStatus", Integer.parseInt(model.getStatus())).apply();
             }
         }
     }

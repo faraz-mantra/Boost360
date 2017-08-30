@@ -19,6 +19,8 @@ import com.facebook.login.LoginResult;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -31,14 +33,14 @@ public class FacebookHandler{
     private CallbackManager callbackManager;
     private FacebookCallbacks facebookCallbacks;
 
-    public FacebookHandler(Context context){
-        facebookCallbacks = (FacebookCallbacks) context;
+    public FacebookHandler(FacebookCallbacks callbacks,Context context){
+        facebookCallbacks = callbacks;
         FacebookSdk.sdkInitialize(context.getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
     }
 
 
-    public void getFacebookPermissions(final Object viewReference, List<String> readPermissions, final List<String> publishPermissions) {
+    public void getFacebookPermissions(final Object viewReference, final List<String> readPermissions, final List<String> publishPermissions) {
 
         final LoginManager loginManager = LoginManager.getInstance();
 
@@ -46,11 +48,12 @@ public class FacebookHandler{
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Set<String> permissions = loginResult.getAccessToken().getPermissions();
-                boolean contain = permissions.containsAll(publishPermissions);
+                boolean readContain = permissions.containsAll(publishPermissions);
+                boolean publishContain = permissions.containsAll(publishPermissions);
                 // Log.v("ggg",contain+"permission"+loginResult.getAccessToken().getPermissions());
-                if(!contain){
+                if(!publishContain){
                     logInWithPublishPermissions(loginManager,viewReference, publishPermissions);
-                }else {
+                }else{
                     facebookCallbacks.onLoginSuccess(loginResult);
                 }
             }
@@ -84,6 +87,7 @@ public class FacebookHandler{
                 if(contain){
                     facebookCallbacks.onLoginSuccess(loginResult);
                 }else{
+                    facebookCallbacks.onAllPermissionNotGiven(permissions);
                     // all permission not given
                 }
 
@@ -120,7 +124,7 @@ public class FacebookHandler{
                 if(contain){
                     facebookCallbacks.onLoginSuccess(loginResult);
                 }else{
-                    // all permission not given
+                   facebookCallbacks.onAllPermissionNotGiven(permissions);
                 }
 
 
@@ -146,7 +150,7 @@ public class FacebookHandler{
     public void onActivityResult(int requestCode, int resultCode, Intent intent){
         callbackManager.onActivityResult(requestCode,resultCode,intent);
     }
-    private void getFacebookProfile(final AccessToken accessToken) {
+    public void getFacebookProfile(final AccessToken accessToken) {
         Bundle parameters = new Bundle();
         parameters.putString("fields", "id,name,email");
         GraphRequest meRequest = GraphRequest.newMeRequest(accessToken,
@@ -155,7 +159,7 @@ public class FacebookHandler{
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         try
                         {
-                            facebookCallbacks.onProfileConnected(response.getJSONObject());
+                            facebookCallbacks.onProfileConnected(response.getJSONObject(), accessToken);
                             getFacebookPages(accessToken);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -166,7 +170,7 @@ public class FacebookHandler{
         meRequest.executeAsync();
     }
 
-    private void getFacebookPages(AccessToken accessToken) {
+    public void getFacebookPages(AccessToken accessToken) {
         GraphRequest request = GraphRequest.newGraphPathRequest(
                 accessToken,
                 "/me/accounts",
@@ -175,14 +179,25 @@ public class FacebookHandler{
                     public void onCompleted(GraphResponse response) {
                         // Insert your code here
                         JSONArray pages = null;
+                        ArrayList<String> pagesNameList = null;
                         try {
                             JSONObject pageMe = response.getJSONObject();
                             pages = pageMe.getJSONArray("data");
+                            if (pages != null)
+                            {
+                                int size = pages.length();
+                                pagesNameList = new ArrayList<String>(size);
+                                for (int i = 0; i < size; i++) {
+                                    pagesNameList.add(i, (String) ((JSONObject) pages.get(i)).get("name"));
+                                }
+                            }
 
                         } catch (Exception e1) {
                             e1.printStackTrace();
+                        }finally {
+                            facebookCallbacks.onProfilePages(pages,pagesNameList);
                         }
-                        facebookCallbacks.onPageConnected(pages);
+
                     }
                 });
 
@@ -218,8 +233,9 @@ public class FacebookHandler{
     public interface FacebookCallbacks{
         void onError();
         void onCancel();
+        void onAllPermissionNotGiven(Collection<String> givenPermissions);
         void onLoginSuccess(LoginResult result);
-        void onPageConnected(JSONArray pages);
-        void onProfileConnected(JSONObject profile);
+        void onProfilePages(JSONArray pages, ArrayList<String> pagesName);
+        void onProfileConnected(JSONObject profile,AccessToken token);
     }
 }
