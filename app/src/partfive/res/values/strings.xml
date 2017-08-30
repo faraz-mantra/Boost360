@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="twitter_consumer_key">VSfjudvcrSvfOesMgaHzlq8eG</string>
-    <string name="twitter_consumer_secret">jM656pIF5dSjyNI09I8OrAl1hdZ20oaPbAaYtMqHAarA025Xy9</string>
+    <string name="twitter_consumer_key">4CiUg5gcIbvYre8XjGd8GsElV</string>
+    <string name="twitter_consumer_secret">4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9</string>
     <string name="website_domain_name">.capture.com</string>
     <string name="package_name_aviary">com.thinksity.AviaryCdsProvider</string>
     <string name="app_name">Capture</string>
@@ -16,7 +16,6 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
-    <string name="to_communicate_with_nowfloats">To communicate with Capture</string>
     <string name="title_activity_business_profile__home">Business Profile</string>
     <string name="title_activity_business__address_">Business Address</string>
     <string name="title_activity_contact__info_">Contact Information</string>
@@ -27,14 +26,14 @@
     <string name="title_activity_pre_sign_up__main">PreSignUp_MainActivity</string>
     <string name="ps_create_lbl">CREATE</string>
     <string name="ps_login_lbl">LOG IN</string>
-    <string name="ps_create_lbl_tag">a website with capture</string>
-    <string name="ps_login_lbl_tag">to manage capture website</string>
+    <string name="ps_create_lbl_tag">a website with Capture</string>
+    <string name="ps_login_lbl_tag">to manage Capture website</string>
     <string name="ps_sc2_lbl1">Instant Website</string>
     <string name="ps_sc2_lbl2">Creation</string>
+    <string name="update_website_twice_week"><![CDATA[<font>Update your website </font>\" + \"<font color=\'#1F80AD\'>twice a week. </font>\"+\"<font>Just press the plus button at the bottom and simply tell your customers about your products, services or offers </font>]]></string>
+    <string name="people_are_searching_keep_your_updates"><![CDATA[<font>People around your business are searching for stuff you sell, so keep your updates </font>\" + \"<font color=\'#1F80AD\'>relevant and fresh.</font>\" + \"<font>This will you lead to attract more customers and generate more revenue.</font>]]></string>
     <string name="ps_sc2_lbl3">Get a business website \nthat is instantly created and \neasily managed using this app.</string>
     <string name="ps_sc3_lbl1">Connect to</string>
-    <string name="update_website_twice_week"><![CDATA[<font>Update your website </font>\" + \"<font color=\'#009EDF\'>twice a week. </font>\"+\"<font>Just press the plus button at the bottom and simply tell your customers about your products, services or offers </font>]]></string>
-    <string name="people_are_searching_keep_your_updates"><![CDATA[<font>People around your business are searching for stuff you sell, so keep your updates </font>\" + \"<font color=\'#009EDF\'>relevant and fresh.</font>\" + \"<font>This will you lead to attract more customers and generate more revenue.</font>]]></string>
     <string name="ps_sc3_lbl2">Facebook</string>
     <string name="ps_sc3_lbl3">Sign in with your Facebook page to \ncreate and update your website instantly. \nHighly recommended!</string>
     <string name="ps_sc4_lbl1">Discoverable</string>
@@ -47,7 +46,7 @@
     <string name="ps_sc6_lbl2">Leads</string>
     <string name="ps_sc6_lbl3">Let customers contact you directly \nand reply to them instantly!</string>
     <string name="ps_sc8_lbl1">Premium features in</string>
-    <string name="ps_sc8_lbl2">Capture</string>
+    <string name="ps_sc8_lbl2">CAPTURE</string>
     <string name="ps_sc8_lbl3">Get additional features \nfor your business website \nfrom the in-app Store.</string>
     <string name="ps_sc8_lbl4">Store</string>
     <string name="ps_sc1_lbl1_tf">HN53exd.ttf</string>
@@ -77,15 +76,15 @@
         <item>Week 6</item>
     </string-array>
 
-    <string name="facebook_app_id">298916947224187</string>
-
+    <string name="facebook_app_id">539836972828386</string>
     <string name="title_activity_image__gallery__main">Image Gallery</string>
     <string name="title_activity_home__main">Home_MainActivity</string>
     <string name="title_activity_card__full__view__main">Home</string>
-    <string name="title_activity_create__message_">Post an Update</string>
+    <string name="title_activity_create__message_">Post an update</string>
     <string name="side_panel_row_one">Dashboard</string>
     <string name="side_panel_row_two">My Business Profile</string>
     <string name="side_panel_row_tenth">Manage Customers</string>
+    <string name="manage_inventory">Manage Inventory</string>
     <string name="side_panel_site_appearance">Site Appearance</string>
     <string name="side_panel_row_csp">Custom Pages</string>
     <string name="side_panel_row_three">Business Enquiries</string>
@@ -130,7 +129,6 @@
     <!-- Deep Linking URLs  -->
 
 
-
     <!-- SITE-Meter Percentage  -->
 
     <string name="buydomain_percentage">10</string>
@@ -146,7 +144,6 @@
     <string name="postUpdate_percentage">20</string>
     <string name="share_percentage">5</string>
 
-    <string name="facebook_url_message">If your Facebook page URL is facebook.com/capture; then your username is capture</string>
     <string name="buydomain_text1">Get your own identity</string>
     <string name="phoneNumber_text1">Phone number</string>
     <string name="featuredImage_text1">Featured Image</string>
@@ -394,7 +391,7 @@
     <string name="pre_signup_screen_eight_text">String belongs to Screen Eight</string>
     <string name="title_activity_mobile__site_">Mobile_Site_Activity</string>
     <string name="title_activity_site__meter__nf">Site_Meter_NF</string>
-    <string name="presignup_login_text">Already have a Capture account?</string>
+    <string name="presignup_login_text">Already have a Capture site?</string>
 
     <string name="onboarding_screen_1_title">Congratulations!</string>
     <string name="onboarding_screen_1_desc">We\'re here to help you through the way. Here are two most basic yet important things you should know.</string>
@@ -402,28 +399,28 @@
     <string name="onboarding_screen_3_desc">People around your business are searching for stuff you sell, so keep your updates relevant and fresh. This will you lead to attract more customers and generate more revenue.</string>
     <string name="onboarding_screen_2_title">Content is King</string>
     <string name="onboarding_screen_2_desc">Update your website twice a week. Just press the plus button at the bottom and simply tell your customers about your products, services or offers.</string>
-    <string name="drop_us_on_email_or_call">Please drop us a line at support@capture.com or call us at 9320690003 if you\'d like to enable this feature.</string>
-    <string name="primary_contact_number_message">Please drop us a line at support@capture.com or call us at 9320690003 if you\'d like to change this number.</string>
+    <string name="drop_us_on_email_or_call">Please drop us a line at pss@aecasiainc.com or call us at +918079441974 if you\'d like to enable this feature.</string>
+    <string name="primary_contact_number_message">Please drop us a line at pss@aecasiainc.com or call us at +918079441974 if you\'d like to change this number.</string>
 
     <string name="your_site_health">Your site health</string>
-    <string name="contact_us_number">9320690003</string>
-    <string name="settings_feedback_link">support@capture.com</string>
-    <string name="settings_facebook_like_link">https://www.facebook.com/129528697583648/</string>
-    <string name="settings_about_us_link">http://capture.com/</string>
-    <string name="faqs_url"></string>
-    <string name="settings_tou_url">http://capture.com/Tnc.html</string>
-    <string name="settings_privacy_url">http://capture.com/Privacy.html</string>
-    <string name="settings_rate_us_link"></string>
+
+    <string name="settings_feedback_link">pss@aecasiainc.com</string>
+    <string name="settings_facebook_like_link">https://www.facebook.com/nowfloats</string>
+    <string name="settings_about_us_link">http://aecasiainc.com/pages/aboutus/59783d70d7154e0b907207e4</string>
+
+    <string name="settings_tou_url">http://aecasiainc.com/pages/termsofuse/59a6b21961288a0b2cd5e254</string>
+    <string name="settings_privacy_url">http://aecasiainc.com/pages/privacypolicy/59a6b28b499d35080c624bc3</string>
+    <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.capture</string>
 
     <!--this part is for FAQ harcoded strings -->
     <string-array name="faqmain">
         <item>WELCOME TO THE ONLINE WORLD</item>
-        <item>WHAT\'S capture</item>
+        <item>WHAT\'S CAPTURE</item>
         <item>UPDATING CONTENT</item>
         <item>ENGAGING CUSTOMERS</item>
-        <item>capture APPS, WEB, SMS</item>
-        <item>capture DISCOVERY METHOD</item>
-        <item>GROWING YOUR BUSINESS WITH capture</item>
+        <item>CAPTURE APPS, WEB, SMS</item>
+        <item>CAPTURE DISCOVERY METHOD</item>
+        <item>GROWING YOUR BUSINESS WITH CAPTURE</item>
         <item>NOT A FIRST TIME WEBSITE CREATOR?</item>
     </string-array>
     <string-array name="questions_0">
@@ -515,23 +512,26 @@
         <item>What if I already have a website? Can Capture still help me get more customers?</item>
     </string-array>
     <string-array name="answer_7">
-        <item><![CDATA[Yes indeed. In fact, you can build the Capture website (almost instantly) and then contact our customer care at <a href="support@capture.com">support@capture.com</a> and they can ensure that your purchased domain name/URL begins to point to the website.<br/> If you\'ve been waiting for the right opportunity, this is the time to build it.]]></item>
+        <item><![CDATA[Yes indeed. In fact, you can build the Capture website (almost instantly) and then contact our customer care at <a href="pss@aecasiainc.com ">pss@aecasiainc.com </a> and they can ensure that your purchased domain name/URL begins to point to the website.<br/> If you\'ve been waiting for the right opportunity, this is the time to build it.]]></item>
         <item><![CDATA[Absolutely! If you already have a website for your business, but it isn\'t updated often enough, chances are it won\'t be doing much for your business. The Capture website can plug-in to your existing website as a sub-domain page where you can update your deals, offers, launches or messages. With regular updates, your page rank begins to rise and the SEO gets added on to your main site too.]]></item>
     </string-array>
 
 
+
+    <string name="email_id_to_request_plans">pss@aecasiainc.com</string>
+
     <string name="buy_in_capital">BUY</string>
     <string name="later_in_capital">LATER</string>
-    <string name="renew_light_house_plan">Renew SeoMagnet plan to get all the features</string>
-    <string name="light_house_plan_expired_some_features_visible">Your SeoMagnet plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others</string>
+    <string name="renew_light_house_plan">Renew Lighthouse plan to get all the features</string>
+    <string name="light_house_plan_expired_some_features_visible">Your Lighthouse plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others</string>
     <string name="renew_wildfire_plan">Renew Wildfire plan</string>
     <string name="continue_auto_promoting_on_google">Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.</string>
     <string name="renew_in_capital">RENEW</string>
     <string name="ignore_in_capital">IGNORE</string>
-    <string name="buy_light_house_plan">Buy SeoMagnet plan to get all the features</string>
+    <string name="buy_light_house_plan">Buy Lighthouse plan to get all the features</string>
     <string name="demo_plan_expired">Your demo plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
     <string name="demo_plan_will_expire"><Data><![CDATA[Your Demo plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
-    <string name="light_house_pla_will_expire"><Data><![CDATA[Your SeoMagnet plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
+    <string name="light_house_pla_will_expire"><Data><![CDATA[Your Lighthouse plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
 
 
     <!--FAQ hardcoded string end-->
@@ -540,8 +540,5 @@
 
 
     <string name="fb_login_protocol_scheme">fb1641508162754092</string>
-
-
-    <string name="email_id_to_request_plans">support@capture.com</string>
 
 </resources>

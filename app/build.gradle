@@ -47,7 +47,7 @@ android {
         applicationId 'com.thinksity'
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 2017080027
+        versionCode 2017080030
         multiDexEnabled true
     }
     buildTypes {
@@ -63,15 +63,15 @@ android {
             applicationId "com.biz2.nowfloats"
         }
         parttwo {
-            versionName "4.4.8"
+            versionName "4.4.9"
             applicationId "com.sibername"
         }
         partthree {
-            versionName "1.0.0"
+            versionName "1.0.1"
             applicationId "com.kitsune.biz"
         }
         partfour {
-            versionName "1.0.4"
+            versionName "1.0.5"
             applicationId "com.digitalseoz"
         }
         partfive{

@@ -38,6 +38,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:tint="@color/primary"
                         android:src="@drawable/retry_post"/>
                     <TextView
                         android:layout_width="match_parent"
@@ -59,6 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:layout_height="0dp"
+                    android:tint="@color/primary"
                     android:src="@drawable/cancel_post" />
                 <TextView
                     fontPath="Roboto-Medium.ttf"

@@ -1373,7 +1373,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, imageGalleryFragment).
                             commit();
                 } else if (nextScreen.equals(getString(R.string.product_gallery))) {
+
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, productGalleryFragment).commit();
+
                 } else if (nextScreen.equals(getString(R.string.site__meter))) {
                     // Intent imageGalleryIntent = new Intent(HomeActivity.this, Image_Gallery_MainActivity.class);
                     // startActivity(imageGalleryIntent);

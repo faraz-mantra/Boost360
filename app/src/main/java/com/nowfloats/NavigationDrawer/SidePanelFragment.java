@@ -589,8 +589,10 @@ public class SidePanelFragment extends Fragment {
             public void onClick(View v) {
                 onclickColorChange(manageInventoryImageView, tvManageInventory, manageInventoryLayout);
 //                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_GALLERY).contains("IMAGEGALLERY")) {
-                    ((OnItemClickListener) mainActivity).onClick(getString(R.string.manage_inventory));
-                    MixPanelController.track(EventKeysWL.SIDE_PANEL_MANAGE_INVENTORY, null);
+
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.product_gallery));
+                MixPanelController.track(EventKeysWL.SIDE_PANEL_PRODUCT_GALLERY, null);
+
 //                } else {
 //                    showAlertMaterialDialog();
 //                }
