@@ -2,7 +2,7 @@
 <resources>
     <string name="twitter_consumer_key">4CiUg5gcIbvYre8XjGd8GsElV</string>
     <string name="twitter_consumer_secret">4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9</string>
-    <string name="website_domain_name">.capture.com</string>
+    <string name="website_domain_name">.aecasiainc.in</string>
     <string name="package_name_aviary">com.thinksity.AviaryCdsProvider</string>
     <string name="app_name">Capture</string>
     <string name="hello_world">Hello world!</string>
@@ -378,7 +378,7 @@
     </string-array>
     <string name="business_enquiries_title">Business Enquiries</string>
     <string name="business_profile_title">Business Profile</string>
-    <string name="tag_for_partners">.capture.com</string>
+    <string name="tag_for_partners">.aecasiainc.in</string>
     <string name="title_activity_splash_screen_">Capture</string>
     <string name="title_activity_edit__profile_">Edit_Profile_Activity</string>
     <string name="pre_signup_screen_one_text">Now Create, Manage and Update A Business website that draws more Customers</string>
