@@ -17,28 +17,28 @@
         android:layout_width="fill_parent"
         android:layout_height="200dp"
         >
-
         <FrameLayout
             android:id="@+id/backgroundImageLay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/backgroundImage"
-                style="@style/white_label_style"
-                android:layout_width="fill_parent"
-                android:layout_height="154dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/general_services_background_img" />
+        <ImageView
+            android:id="@+id/backgroundImage"
+            style="@style/white_label_style"
+            android:layout_width="fill_parent"
+            android:layout_height="154dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/general_services_background_img" />
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="154dp"
-                android:background="@drawable/cover_gradient"
-                ></LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="154dp"
+        android:background="@drawable/cover_gradient"
+        >
 
-        </FrameLayout>
+    </LinearLayout>
 
+</FrameLayout>
 
         <ImageView
             android:id="@+id/side_panel_fragment_change_backgroud_button"
@@ -70,7 +70,6 @@
             app:riv_mutate_background="true"
             app:riv_oval="true" />
 
-
         <TextView
             android:id="@+id/fpNameTextView"
             android:layout_width="wrap_content"
@@ -78,9 +77,8 @@
             android:layout_centerInParent="true"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-           android:layout_below="@id/iconImage"
+            android:layout_below="@id/iconImage"
             android:text="@string/float_point_name"
-            android:singleLine="true"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
             android:textStyle="bold" />
@@ -90,14 +88,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="fpwebsitename.com"
-            android:singleLine="true"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
             android:layout_below="@+id/fpNameTextView"
             android:gravity="center_horizontal"
-
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:textColor="#FFFFFF"
-
             android:textSize="12sp" />
 
         <RelativeLayout
@@ -106,11 +101,9 @@
             android:layout_height="70dp"
             android:layout_gravity="bottom"
             android:layout_marginTop="2dp"
-            android:background="@color/cell_background_color"
+            android:background="@color/white"
             android:orientation="horizontal"
             android:layout_below="@+id/backgroundImageLay">
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -122,8 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:layout_marginLeft="20dp"
-                    >
+                    android:layout_marginLeft="20dp" >
                 </com.nowfloats.CustomWidget.roboto_md_46_616161>
 
                 <com.nowfloats.CustomWidget.roboto_md_36_bcbcbc
@@ -141,7 +133,6 @@
                     android:text="@string/your_site_health"
                     android:layout_gravity="right|bottom"
                     android:layout_marginRight="20dp"
-
                     android:gravity="right"/>
             </LinearLayout>
 
@@ -158,22 +149,11 @@
                 android:maxHeight="10dip"
                 android:minHeight="10dip"
                 android:progress="50"
-
                 android:progressDrawable="@drawable/progress_color" />
-
         </RelativeLayout>
 
 
     </RelativeLayout>
-
-
-
-    <include
-        android:id="@+id/navigationDrawer_main_leftPane"
-        layout="@layout/single_row_card"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/containerDrawerImage" />
 
 
     <LinearLayout
@@ -184,7 +164,7 @@
         android:layout_below="@+id/navigationDrawer_main_leftPane"
         android:gravity="center_horizontal"
         android:layout_marginBottom="2dp"
-        android:layout_marginTop="40dp">
+        android:layout_marginTop="20dp">
 
         <com.nowfloats.CustomWidget.roboto_lt_36_565656
 
@@ -192,29 +172,38 @@
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
             android:text="Version "/>
+
         <com.nowfloats.CustomWidget.roboto_lt_36_565656
             android:id="@+id/version_name_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="444"/>
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/versionCodeName"
-        android:layout_marginBottom="15dp"
-        android:layout_centerHorizontal="true">
-        <com.nowfloats.CustomWidget.roboto_lt_36_565656
-            android:id="@+id/poweredBy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/powered_by"/>
 
-        <com.nowfloats.CustomWidget.roboto_md_36__565656
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/nowfloats"/>
     </LinearLayout>
-</RelativeLayout>
+    <com.nowfloats.CustomWidget.roboto_lt_36_565656
+        android:id="@+id/poweredBy"
+        android:layout_below="@+id/versionCodeName"
+        android:layout_width="wrap_content"
+        android:layout_marginLeft="90dp"
+        android:visibility="visible"
+        android:layout_height="wrap_content"
+        android:text="@string/powered_by"/>
+
+    <com.nowfloats.CustomWidget.roboto_md_36__565656
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/versionCodeName"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:layout_toRightOf="@id/poweredBy"
+        android:text="@string/nowfloats"/>
+    <include
+        android:id="@+id/navigationDrawer_main_leftPane"
+        layout="@layout/single_row_card"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/containerDrawerImage"/>
+
+
+</RelativeLayout><!-- From: file:/C:/Vinay/prashant772-boostcode-d282cb67240e/app/src/main/res/layout-xhdpi/fragment_side_panel2.xml -->
 </ScrollView>

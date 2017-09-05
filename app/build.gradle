@@ -47,8 +47,7 @@ android {
         applicationId 'com.thinksity'
         minSdkVersion 15
         targetSdkVersion 25
-        versionName "4.7.8"
-        versionCode 2017080027
+        versionCode 2017080030
         multiDexEnabled true
     }
     buildTypes {
@@ -60,16 +59,24 @@ android {
     }
     productFlavors {
         partone {
+            versionName "4.7.8"
             applicationId "com.biz2.nowfloats"
         }
         parttwo {
+            versionName "4.4.9"
             applicationId "com.sibername"
         }
         partthree {
+            versionName "1.0.1"
             applicationId "com.kitsune.biz"
         }
         partfour {
+            versionName "1.0.5"
             applicationId "com.digitalseoz"
+        }
+        partfive{
+            versionName "1.0.0"
+            applicationId "com.capture"
         }
     }
     packagingOptions {

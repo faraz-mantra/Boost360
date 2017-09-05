@@ -1249,6 +1249,8 @@ public class Social_Sharing_Activity extends AppCompatActivity implements NfxReq
                                     builder.dismiss();
                                     if ((!TextUtils.isEmpty(paymentState) && "1".equalsIgnoreCase(paymentState))) {
                                         createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+                                    }else{
+                                        Methods.materialDialog(activity, "Alert","Your account is expired, please renew it");
                                     }
                                 }
                             });
