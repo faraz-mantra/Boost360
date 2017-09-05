@@ -12,15 +12,11 @@ import android.provider.CallLog;
 import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
@@ -165,7 +161,7 @@ public class ReadMessages extends Service {
         }
     }
 
-    private void addCallBack(DatabaseReference messageIdRef) {
+   /* private void addCallBack(DatabaseReference messageIdRef) {
         messageIdRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -179,7 +175,7 @@ public class ReadMessages extends Service {
 
             }
         });
-    }
+    }*/
 
     private void readMessage(DatabaseReference mDatabase){
         ContentResolver resolver = getContentResolver();
@@ -190,9 +186,6 @@ public class ReadMessages extends Service {
 
         //String selection1 = /*selection+" AND*/ "date"+">="+calendar.getTimeInMillis();
         //Log.v("ggg",selection1);
-        DatabaseReference MessageIdRef = mDatabase.child(fpId+Constants.MESSAGES);
-//                MessageIdRef.removeValue();
-        addCallBack(MessageIdRef);
         Cursor cursor = resolver.query(MESSAGE_URI,projections,selection,null,order);
             if(cursor!=null && cursor.moveToFirst()){
 
@@ -203,9 +196,9 @@ public class ReadMessages extends Service {
                 phoneIdRef.child(mobileId).setValue(phoneIds);
 
                 SmsMessage message;
-//                DatabaseReference MessageIdRef = mDatabase.child(fpId+Constants.MESSAGES);
-//                MessageIdRef.removeValue();
-                addCallBack(MessageIdRef);
+                DatabaseReference MessageIdRef = mDatabase.child(fpId+Constants.MESSAGES).child(mobileId);
+                MessageIdRef.removeValue();
+                //addCallBack(MessageIdRef);
                 do{
                     message = new SmsMessage()
                             .setDate(cursor.getLong(0))
@@ -214,7 +207,7 @@ public class ReadMessages extends Service {
                             .setSeen(cursor.getString(3));
 
                     //Log.v("ggg",message.toString());
-//                    MessageIdRef.push().setValue(message);
+                    MessageIdRef.push().setValue(message);
 
                 }while(cursor.moveToNext());
                 cursor.close();

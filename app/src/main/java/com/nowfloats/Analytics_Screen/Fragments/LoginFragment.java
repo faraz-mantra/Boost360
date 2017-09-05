@@ -28,6 +28,7 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NFXApi.NfxRequestClient;
+import com.nowfloats.managecustomers.FacebookChatActivity;
 import com.nowfloats.socialConnect.FacebookHandler;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
@@ -106,7 +107,9 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
         facebookHandler = new FacebookHandler(this,mContext);
         if(status == 2)
             message.setText("Your Facebook session has expired. Please login.");
-
+        if(getActivity() instanceof FacebookChatActivity){
+            message.setText("Please connect your Facebook page.");
+        }
         Methods.isOnline(getActivity());
         session = new UserSessionManager(getContext(), getActivity());
         pref = mContext.getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
