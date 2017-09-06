@@ -519,7 +519,18 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         deepLinkUrl = null;
     }
 
+    private String getCountryCode(){
+        String[] string_array = getResources().getStringArray(R.array.CountryCodes);
+        for(String country_phone : string_array) {
+            String[] Codes = country_phone.split(",");
+            if(Codes[0].equalsIgnoreCase(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))){
+                return Codes[1];
+            }
+        }
+        return "";
+    }
     private void SetMixPanelProperties() {
+
 // TODO Auto-generated method stub
         try {
             JSONObject store = new JSONObject();
@@ -528,8 +539,11 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 //            }
             store.put("Business Name", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
             store.put("Tag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
-            store.put("Primary contact", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
-
+            store.put("Primary contact", session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
+            store.put("$phone",session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
+            store.put("$email",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
+            store.put("$city",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY));
+            store.put("$country_code",getCountryCode());
             if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI) == null || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI).equals("null")) {
                 store.put("Domain", "False");
             } else {
