@@ -189,7 +189,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textColor="@color/primaryColor"
-                            android:text="28"
+                            android:text="0"
                             android:visibility="visible"
                             android:textSize="25sp"
                             tools:ignore="MissingPrefix" />
@@ -279,7 +279,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textColor="@color/primaryColor"
-                            android:text="25"
+                            android:text="0"
                             android:visibility="visible"
                             android:textSize="28sp"
                             tools:ignore="MissingPrefix" />
@@ -365,7 +365,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:visibility="visible"
-                            android:text="25"
+                            android:text="0"
                             android:textSize="28sp"
                             android:textColor="@color/primaryColor"
                             tools:ignore="MissingPrefix" />
@@ -445,7 +445,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:visibility="visible"
-                            android:text="25"
+                            android:text="0"
                             android:textSize="28sp"
                             android:textColor="@color/primaryColor"
                             tools:ignore="MissingPrefix" />
@@ -530,7 +530,7 @@
                             fontPath="Roboto-Medium.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="25"
+                            android:text="0"
                             android:textColor="@color/primaryColor"
                             android:textSize="28sp"
                             android:visibility="visible"

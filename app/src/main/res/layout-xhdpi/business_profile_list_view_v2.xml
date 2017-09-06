@@ -240,21 +240,27 @@
                 android:text="@string/side_panel_row_csp"
                 android:textColor="@color/cell_text_color"
                 android:textSize="@dimen/cell_text_size" />
-
-            <View
-                android:layout_width="288dp"
-                android:layout_height="1dp"
-                android:background="#d3d3d3" />
-
-            <TextView
-                android:id="@+id/tvSiteAppearance"
+            <LinearLayout
+                android:id="@+id/layout_site_appearance"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/textview_height_business_profile"
-                android:background="?android:selectableItemBackground"
-                android:gravity="center_vertical"
-                android:text="@string/side_panel_site_appearance"
-                android:textColor="@color/cell_text_color"
-                android:textSize="@dimen/cell_text_size" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <View
+                    android:layout_width="288dp"
+                    android:layout_height="1dp"
+                    android:background="#d3d3d3" />
+
+                <TextView
+                    android:id="@+id/tvSiteAppearance"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/textview_height_business_profile"
+                    android:background="?android:selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:text="@string/side_panel_site_appearance"
+                    android:textColor="@color/cell_text_color"
+                    android:textSize="@dimen/cell_text_size" />
+            </LinearLayout>
+
 
 
             <TextView

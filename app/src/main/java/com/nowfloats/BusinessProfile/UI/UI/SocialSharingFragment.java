@@ -46,7 +46,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NFXApi.NfxRequestClient;
 import com.nowfloats.NavigationDrawer.API.twitter.FacebookFeedPullRegistrationAsyncTask;
 import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.Twitter.TwitterConnection;
+import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
@@ -1227,6 +1227,8 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                                     builder.dismiss();
                                     if ((!TextUtils.isEmpty(paymentState) && "1".equalsIgnoreCase(paymentState))) {
                                         createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+                                    }else{
+                                        Methods.materialDialog(activity, "Alert","Your account is expired, please renew it");
                                     }
                                 }
                             });

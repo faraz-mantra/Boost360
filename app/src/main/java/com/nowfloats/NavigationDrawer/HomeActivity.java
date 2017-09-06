@@ -529,6 +529,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             store.put("Business Name", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
             store.put("Tag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
             store.put("Primary contact", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
+
             if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI) == null || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI).equals("null")) {
                 store.put("Domain", "False");
             } else {
@@ -1373,7 +1374,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, imageGalleryFragment).
                             commit();
                 } else if (nextScreen.equals(getString(R.string.product_gallery))) {
+
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, productGalleryFragment).commit();
+
                 } else if (nextScreen.equals(getString(R.string.site__meter))) {
                     // Intent imageGalleryIntent = new Intent(HomeActivity.this, Image_Gallery_MainActivity.class);
                     // startActivity(imageGalleryIntent);
@@ -1406,19 +1409,15 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     Hotline.showConversations(HomeActivity.this);
                     //Konotor.getInstance(getApplicationContext()).launchFeedbackScreen(HomeActivity.this);
                 } else if (nextScreen.equals(getString(R.string.call))) {
-//                    String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-//                    if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || paymentState == null || paymentState.equals("-1") || paymentState.equals("0")) {
-//                        Intent call = new Intent(Intent.ACTION_DIAL);
-//                        String callString = "tel:" + getString(R.string.contact_us_number);
-//                        call.setData(Uri.parse(callString));
-//                        startActivity(call);
-//                    } else {
-                    /*Intent supportIntent = new Intent(HomeActivity.this, HelpAndSupportActivity.class);
-                    startActivity(supportIntent);
-//                    }
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
-
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
+                    String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
+                    if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || paymentState == null || !paymentState.equals("1")) {
+                        Intent call = new Intent(Intent.ACTION_DIAL);
+                        String callString = "tel:" + getString(R.string.contact_us_number);
+                        call.setData(Uri.parse(callString));
+                        startActivity(call);
+                    } else {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
+                    }
                 } else if (nextScreen.equals(getString(R.string.share))) {
                     shareWebsite();
                 } else if (nextScreen.equals("Settings")) {
@@ -1857,7 +1856,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             getFPDetails(HomeActivity.this, session.getFPID(), Constants.clientId, bus);
             HomeActivity.registerChat(session.getFPID());
         } else {
-            if (progressDialog != null) {
+            if (progressDialog != null && progressDialog.isShowing()) {
                 progressDialog.dismiss();
                 progressDialog = null;
             }
@@ -1867,7 +1866,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
     @Override
     public void authenticationFailure(String value) {
-        if (progressDialog != null) {
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
             progressDialog = null;
         }
@@ -1901,7 +1900,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     @Subscribe
     public void getResponse(Response response) {
 
-        if (progressDialog != null) {
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
             progressDialog = null;
         }
@@ -1911,7 +1910,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     @Subscribe
     public void getError(RetrofitError retrofitError) {
 
-        if (progressDialog != null) {
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
             progressDialog = null;
         }
@@ -2096,9 +2095,13 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 finish();
             }
         }
-
+        getNfxTokenData();
     }
 
+    private void getNfxTokenData(){
+        Get_FP_Details_Service.newNfxTokenDetails(this,session.getFPID(),bus);
+        Get_FP_Details_Service.autoPull(this,session.getFPID());
+    }
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private boolean canDrawOverlaysUsingReflection(Context context) {
 

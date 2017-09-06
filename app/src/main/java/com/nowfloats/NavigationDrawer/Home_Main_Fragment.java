@@ -588,7 +588,7 @@ public class Home_Main_Fragment extends Fragment implements
                     merchantId, parentId, Create_Message_Activity.tosubscribers);
         }
 
-        if (facebookPostCount==0) {
+      /*  if (facebookPostCount==0) {
             if (Constants.fbShareEnabled) {
                 Create_Message_Activity.postUser = new com.nowfloats.NavigationDrawer.API.PostModel(msg);
             }
@@ -600,7 +600,7 @@ public class Home_Main_Fragment extends Fragment implements
             }
 
             
-        }
+        }*/
         UploadMessageTask upa =new UploadMessageTask(act, path, task,session);
         upa.UploadPostService();
     }

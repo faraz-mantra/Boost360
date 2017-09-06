@@ -10,10 +10,10 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -79,8 +79,9 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         setContentView(R.layout.activity_facebook_chat_details);
         init();
     }
+
     private void init(){
-        getWindow().setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.facebook_chat_bg1));
+        getWindow().setBackgroundDrawable(new BitmapDrawable(getResources(),Methods.decodeSampledBitmap(getResources(),R.drawable.facebook_chat_bg1,720,720)));//ContextCompat.getDrawable(this, R.drawable.facebook_chat_bg2));
         Toolbar toolbar  = (Toolbar) findViewById(R.id.facebook_toolbar);
         setSupportActionBar(toolbar);
         ImageView imgUser = (ImageView) findViewById(R.id.img_chat_user);

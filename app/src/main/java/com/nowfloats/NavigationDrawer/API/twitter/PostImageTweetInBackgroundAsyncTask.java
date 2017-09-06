@@ -7,7 +7,7 @@ import android.os.AsyncTask;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.nowfloats.Twitter.TwitterConnection;
+import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 

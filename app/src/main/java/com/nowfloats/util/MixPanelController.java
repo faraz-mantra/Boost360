@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class MixPanelController {
@@ -134,15 +135,14 @@ public class MixPanelController {
             dateString = dateString.replace("/Date(", "").replace(")/", "");
             Long epochTime = Long.parseLong(dateString);
             Date date = new Date(epochTime);
-            DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+            DateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
             format.setTimeZone(TimeZone.getDefault());
-            if (date != null)
-                dateTime = format.format(date);
+            dateTime = format.format(date);
             store.put("$Created On", dateTime);
-            MixPanelController.createUser(fpTAG.toUpperCase(), store);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        MixPanelController.createUser(fpTAG.toUpperCase(), store);
     }
 
 

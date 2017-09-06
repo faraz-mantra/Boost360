@@ -23,7 +23,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.text.Html;
 import android.text.InputType;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -35,6 +34,7 @@ import android.text.style.StyleSpan;
 import android.text.style.URLSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -138,7 +138,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     private static EditText businessNameEditText, businessCategoryEditText, countryEditText, emailEditText,
             phoneEditText, etStreetAddress, edtLocality, etWebsiteAddress, etPinCode, etOTP;
 
-    private Toolbar toolbar;
     public static AutoCompleteTextView cityEditText;
     private static TextView countryPhoneCode, tvtermAndPolicy;
     String data_businessName, data_businessCategory, data_city, data_country, data_email, data_phone, data_country_code,
@@ -199,6 +198,16 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pre_sign_up_trial_4);
+        if(!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+            findViewById(R.id.layout_ria).setVisibility(View.GONE);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            if(getSupportActionBar() != null){
+                setTitle(getString(R.string.create_my_website));
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                getSupportActionBar().setDisplayShowHomeEnabled(true);
+            }
+        }
         dataBase = new DataBase(PreSignUpActivityRia.this);
         activity = PreSignUpActivityRia.this;
         Methods.isOnline(activity);
@@ -243,7 +252,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         countryEditText.setFocusableInTouchMode(false);
 
 
-        CharSequence charSequence = Html.fromHtml("By clicking on 'Create my site' you agree to our " +
+        CharSequence charSequence = Methods.fromHtml("By clicking on 'CREATE MY SITE' you agree to our " +
                 "<a href=\"" + getString(R.string.settings_tou_url) + "\"><u>Terms</u></a> and <a href=\"" + getString(R.string.settings_privacy_url) + "\"><u>Privacy Policy</u></a>.");
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(charSequence);
         makeLinkClickable(spannableStringBuilder, charSequence);
@@ -316,6 +325,13 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                                 AutocompletePredictionBuffer a = result.await();
                                 //Log.v("ggg","ok");
                                 citys.clear();
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                });
+
                                 for (int i = 0; i < a.getCount(); i++) {
                                     //Log.v("ggg",a.get(i).getFullText(new StyleSpan(Typeface.NORMAL)).toString()+" length "+citys.size());
 //                                citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString());
@@ -468,7 +484,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
 
                     if (TextUtils.isEmpty(countryEditText.getText().toString())) {
                         Methods.showSnackBarNegative(PreSignUpActivityRia.this, "Please select country");
-                    } else if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || Constants.PACKAGE_NAME.equals("com.digitalseoz")) {
+                    } else{
                         showOtpDialog();
                     }
                 }
@@ -524,7 +540,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_otp, null);
 
         TextView tvTitle = (TextView) view.findViewById(R.id.tvTitle);
-        tvTitle.setText("Please verify your mobile number using a one time password (OTP)");
+        tvTitle.setText("Please verify your mobile number");
         tvTitle.setVisibility(View.GONE);
         final EditText number = (EditText) view.findViewById(R.id.editText);
         numberDialog = new MaterialDialog.Builder(this)
@@ -645,7 +661,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             }
         });
 
-        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
     }
 
     protected void makeLinkClickable(SpannableStringBuilder sp, CharSequence charSequence) {
@@ -722,7 +738,13 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
     }
 
     private void setDetails() {
-
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                showProgressbar();
+                loadCountryCodeandCountryNameMap();
+            }
+        }).start();
         Bundle mBundle = getIntent().getExtras();
 
         if (mBundle != null &&
@@ -780,14 +802,6 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                 ivPhoneStatus.setBackgroundResource(R.drawable.warning);
                 phoneEditText.setTextColor(getResources().getColor(R.color.black));
             }
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    showProgressbar();
-                    loadCountryCodeandCountryNameMap();
-                }
-            }).start();
 
             if (!TextUtils.isEmpty(mBundle.getString(Save_Street_Address))) {
                 etStreetAddress.setText(mBundle.getString(Save_Street_Address, ""));
@@ -857,14 +871,13 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             Locale obj = new Locale("", countryCode);
             signUpCountryList.add(obj.getDisplayCountry());
             Country_CodeMap.put(obj.getDisplayCountry(), obj.getCountry());
-            //Log.v("ggg",obj.getCountry());
+            Log.v("ggg",obj.getCountry());
         }
         Collections.sort(signUpCountryList);
         if (isFinishing()) {
-            hideProgressbar();
             return;
         }
-
+        hideProgressbar();
         String[] string_array = getResources().getStringArray(R.array.CountryCodes);
         for (int i = 0; i < string_array.length; i++) {
             String phoneCode = string_array[i].split(",")[0];
@@ -1169,9 +1182,10 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
                         LatLng latLng = new NFGeoCoder(PreSignUpActivityRia.this).reverseGeoCode(
                                 etStreetAddress.getText().toString(), cityEditText.getText().toString(), countryEditText.getText().toString(),
                                 etPinCode.getText().toString());
-
-                        data_lat = latLng.latitude + "";
-                        data_lng = latLng.longitude + "";
+                        if(latLng != null) {
+                            data_lat = latLng.latitude + "";
+                            data_lng = latLng.longitude + "";
+                        }
                     }
                     hideKeyBoard();
                     MixPanelController.track("CreateMyWebsite", null);
@@ -1499,6 +1513,18 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mSmsReceiver);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
     private BroadcastReceiver mSmsReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -1581,7 +1607,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (pd != null) {
+                if (pd != null &&pd.isShowing()) {
                     pd.dismiss();
                 }
             }

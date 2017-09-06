@@ -45,7 +45,7 @@ import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DeleteBackgroundImageAsyncTask;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.nowfloats.Twitter.TwitterConnection;
+import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
@@ -206,7 +206,7 @@ public class SidePanelFragment extends Fragment {
             if (!baseNameProfileImage.contains("http")) {
                 baseNameProfileImage = Constants.BASE_IMAGE_URL + "" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
             }
-            if (baseNameProfileImage != null && baseNameProfileImage.length() > 0) {
+            if (baseNameProfileImage.length() > 0) {
                 Picasso.with(getActivity())
                         .load(baseNameProfileImage)
                         .resize(540, 0)
@@ -589,8 +589,10 @@ public class SidePanelFragment extends Fragment {
             public void onClick(View v) {
                 onclickColorChange(manageInventoryImageView, tvManageInventory, manageInventoryLayout);
 //                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_GALLERY).contains("IMAGEGALLERY")) {
-                    ((OnItemClickListener) mainActivity).onClick(getString(R.string.manage_inventory));
-                    MixPanelController.track(EventKeysWL.SIDE_PANEL_MANAGE_INVENTORY, null);
+
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.manage_inventory));
+                MixPanelController.track(EventKeysWL.SIDE_PANEL_PRODUCT_GALLERY, null);
+
 //                } else {
 //                    showAlertMaterialDialog();
 //                }

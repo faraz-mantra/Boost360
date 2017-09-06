@@ -1,17 +1,10 @@
 package com.nowfloats.BusinessProfile.UI.UI;
 
-import android.Manifest;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -71,7 +64,6 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
     UserSessionManager session;
     Bus bus;
     ImageView ivProtoColSpinner;
-    MaterialDialog progressDialog;
     private String[] mProtoCols = {"http://", "https://"};
 
     public static EditText primaryNumber, alternateNumber_1, alternateNumber_2, alternateNumber_3, emailAddress, websiteAddress, facebookPage;
@@ -105,12 +97,12 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
         session = new UserSessionManager(getApplicationContext(), Contact_Info_Activity.this);
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
         titleTextView.setText(getResources().getString(R.string.contact__info));
-        progressDialog = new MaterialDialog.Builder(this)
+       /* progressDialog = new MaterialDialog.Builder(this)
                 .autoDismiss(false)
-                /*.backgroundColorRes(R.color.transparent)*/
+                *//*.backgroundColorRes(R.color.transparent)*//*
                 .content("Fetching OTP from SMS inbox")
                 .progress(true, 0)
-                .build();
+                .build();*/
 
         saveTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1355,9 +1347,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
     }
 
     private void sendSms(String number) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
-            startProgressDialog();
-        }
+
         Methods.SmsApi smsApi = Constants.smsVerifyAdapter.create(Methods.SmsApi.class);
         Map<String, String> hashMap = new HashMap<>();
         hashMap.put("via", "sms");
@@ -1368,14 +1358,14 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
             @Override
             public void success(SmsVerifyModel model, Response response) {
                 if (model == null) {
-                    stopProgressDialog();
+
                     Toast.makeText(Contact_Info_Activity.this, getString(R.string.enter_mobile_number), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (model.getSuccess()) {
 
                 } else {
-                    stopProgressDialog();
+
                     Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
@@ -1383,8 +1373,13 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
 
             @Override
             public void failure(RetrofitError error) {
-                stopProgressDialog();
-                Toast.makeText(Contact_Info_Activity.this, getString(R.string.something_went_wrong_try_again), Toast.LENGTH_SHORT).show();
+                SmsVerifyModel model = (SmsVerifyModel) error.getBodyAs(SmsVerifyModel.class);
+                if(model != null){
+                    Toast.makeText(Contact_Info_Activity.this, model.getMessage(), Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(Contact_Info_Activity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                }
+
             }
         });
     }
@@ -1468,16 +1463,16 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
     @Override
     protected void onStart() {
         super.onStart();
-        LocalBroadcastManager.getInstance(this).registerReceiver(mSmsReceiver, new IntentFilter(Constants.SMS_OTP_RECEIVER));
+        //LocalBroadcastManager.getInstance(this).registerReceiver(mSmsReceiver, new IntentFilter(Constants.SMS_OTP_RECEIVER));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mSmsReceiver);
+        //LocalBroadcastManager.getInstance(this).unregisterReceiver(mSmsReceiver);
     }
 
-    private BroadcastReceiver mSmsReceiver = new BroadcastReceiver() {
+ /*   private BroadcastReceiver mSmsReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent == null) {
@@ -1490,9 +1485,9 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
             }
             stopProgressDialog();
         }
-    };
+    };*/
 
-    private void startProgressDialog() {
+   /* private void startProgressDialog() {
         if (progressDialog != null)
             progressDialog.show();
     }
@@ -1501,5 +1496,5 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
-    }
+    }*/
 }

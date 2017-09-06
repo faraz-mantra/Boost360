@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2017080027"
-    android:versionName="4.7.8">
+    android:versionCode="2017090006"
+    android:versionName="4.7.9">
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
@@ -464,7 +464,7 @@
             android:authorities="${applicationId}.provider" />
         <provider
             android:name="com.nowfloats.riachatsdk.database.ChatContentProvider"
-            android:authorities="com.nowfloats.riachatsdk.provider" />
+            android:authorities="${applicationId}.riachatsdk.provider" />
 
         <service android:name="com.nowfloats.Product_Gallery.Service.MultipleImageUploadService" />
 
