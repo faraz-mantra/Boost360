@@ -113,6 +113,7 @@
                     android:pathPrefix="/"
                     android:scheme="nowfloats" />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nowfloats.PreSignUp.PreSignUp_MainActivity" />
@@ -148,7 +149,6 @@
             android:name="com.nowfloats.signup.UI.UI.BusinessProfileActivity"
             android:label="@string/title_activity_business_profile"
             android:screenOrientation="portrait" />
-
         <activity
             android:name="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity"
             android:screenOrientation="portrait">
@@ -268,6 +268,7 @@
                     android:pathPrefix="/"
                     android:scheme="nowfloats" />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nowfloats.PreSignUp.PreSignUp_MainActivity" />
@@ -322,7 +323,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity"
@@ -344,7 +344,8 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
-        <!--<receiver
+        <!--
+        <receiver
             android:name="com.mixpanel.android.mpmetrics.GCMReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
@@ -353,7 +354,8 @@
 
                 <category android:name="com.biz2.nowfloats" />
             </intent-filter>
-        </receiver>-->
+        </receiver>
+        -->
 
         <meta-data
             android:name="com.mixpanel.android.MPConfig.ResourcePackageName"
@@ -440,7 +442,6 @@
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-
         </service>
         <service android:name="com.nowfloats.RiaFCM.RiaFirebaseInstanceIDService">
             <intent-filter>
@@ -501,6 +502,7 @@
             <intent-filter android:priority="2147483647">
                 <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>
+
             <meta-data
                 android:name="android.accessibilityservice"
                 android:resource="@xml/accessibility_service" />
@@ -548,7 +550,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/Transparent"
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
-
         <activity
             android:name="com.nowfloats.accessbility.OverlayDialog"
             android:autoRemoveFromRecents="true"
@@ -579,7 +580,9 @@
             android:name="com.nowfloats.signup.UI.UI.RiaChatInitActivity"
             android:screenOrientation="portrait" />
         <activity android:name="com.nowfloats.manageinventory.SellerAnalyticsActivity" />
-        <activity android:name="com.nowfloats.manageinventory.PaymentSettingsActivity"></activity>
+        <activity android:name="com.nowfloats.manageinventory.PaymentSettingsActivity" />
+        <activity android:name="com.nowfloats.manageinventory.OrderListActivity" />
+        <activity android:name="com.nowfloats.manageinventory.OrderDetailsActivity"></activity>
     </application>
 
 </manifest>
