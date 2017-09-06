@@ -1856,7 +1856,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             getFPDetails(HomeActivity.this, session.getFPID(), Constants.clientId, bus);
             HomeActivity.registerChat(session.getFPID());
         } else {
-            if (progressDialog != null) {
+            if (progressDialog != null && progressDialog.isShowing()) {
                 progressDialog.dismiss();
                 progressDialog = null;
             }
@@ -1866,7 +1866,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
     @Override
     public void authenticationFailure(String value) {
-        if (progressDialog != null) {
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
             progressDialog = null;
         }
@@ -1900,7 +1900,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     @Subscribe
     public void getResponse(Response response) {
 
-        if (progressDialog != null) {
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
             progressDialog = null;
         }
@@ -1910,7 +1910,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     @Subscribe
     public void getError(RetrofitError retrofitError) {
 
-        if (progressDialog != null) {
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
             progressDialog = null;
         }
@@ -2095,9 +2095,13 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 finish();
             }
         }
-
+        getNfxTokenData();
     }
 
+    private void getNfxTokenData(){
+        Get_FP_Details_Service.newNfxTokenDetails(this,session.getFPID(),bus);
+        Get_FP_Details_Service.autoPull(this,session.getFPID());
+    }
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private boolean canDrawOverlaysUsingReflection(Context context) {
 

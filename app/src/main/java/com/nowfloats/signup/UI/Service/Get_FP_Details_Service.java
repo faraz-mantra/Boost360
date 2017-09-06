@@ -42,8 +42,6 @@ import static com.nfx.leadmessages.Constants.SMS_REGEX;
 public class Get_FP_Details_Service {
 
     public Get_FP_Details_Service(final Activity activity, String fpID, String clientID, final Bus bus) {
-        newNfxTokenDetails(activity, fpID, bus);
-        autoPull(activity, fpID);
         HashMap<String, String> map = new HashMap<>();
         map.put("clientId", clientID);
         Retro_Signup_Interface getFPDetails = Constants.restAdapter.create(Retro_Signup_Interface.class);
@@ -100,7 +98,7 @@ public class Get_FP_Details_Service {
         });
     }
 
-    private void autoPull(Activity activity, String fpID) {
+    public static void autoPull(Activity activity, String fpID) {
 
         final UserSessionManager session = new UserSessionManager(activity.getApplicationContext(), activity);
         final SharedPreferences pref = activity.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
