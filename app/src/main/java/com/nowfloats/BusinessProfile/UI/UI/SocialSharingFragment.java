@@ -1129,15 +1129,11 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     }
 
     private void addSiteHealth() {
-//        FragmentManager manager = activity.getSupportFragmentManager();
-//        Site_Meter_Fragment frag = (Site_Meter_Fragment) manager.findFragmentByTag("siteHealth");
-//        if (frag == null) {
-//            frag = new Site_Meter_Fragment();
-//        }
-//        manager.beginTransaction().replace(R.id.parent_layout, frag, "siteHealth")
-//                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
-//                .addToBackStack(null)
-//                .commit();
+        if(activity instanceof HomeActivity)
+            ((HomeActivity) activity).onClick(getString(R.string.title_activity_social__sharing_));
+        else{
+            Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
