@@ -52,6 +52,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.customerassistant.CustomerAssistantActivity;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
@@ -104,14 +105,20 @@ public class CustomerAssistantService extends Service {
         int x_pos = 0;
         int y_Pos = (display.getHeight() * 20) / 100;
 
-        if (bubbles == null || bubbles.size() == 0) {
-            addTrash(R.layout.bubble_trash_layout);
-            addBubble(x_pos, y_Pos);
+        if (Methods.hasOverlayPerm(CustomerAssistantService.this)) {
+            if (bubbles == null || bubbles.size() == 0) {
+                addTrash(R.layout.bubble_trash_layout);
+                addBubble(x_pos, y_Pos);
+            }
         }
     }
 
     @Override
     public void onDestroy() {
+        if(pref == null)
+            pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+
+        pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, false).apply();
         if (bubbles != null && bubbles.size() > 0) {
             for (BubbleLayout bubble : bubbles) {
                 recycleBubble(bubble);
@@ -203,7 +210,7 @@ public class CustomerAssistantService extends Service {
 
         if (TextUtils.isEmpty(pref.getString(UserSessionManager.KEY_FP_ID, null))
                 || !pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
-
+               // stopSelf();
         } else {
 
             Intent restartServiceIntent = new Intent(getApplicationContext(), this.getClass());
@@ -242,9 +249,11 @@ public class CustomerAssistantService extends Service {
         }
 
         ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        ComponentName componentName = am.getRunningTasks(1).get(0).topActivity;
-        if (!componentName.getPackageName().equalsIgnoreCase(getApplicationContext().getPackageName())) {
-            repostionBubble();
+        if (am.getRunningTasks(1) != null && am.getRunningTasks(1).size() > 0) {
+            ComponentName componentName = am.getRunningTasks(1).get(0).topActivity;
+            if (!componentName.getPackageName().equalsIgnoreCase(getApplicationContext().getPackageName())) {
+                repostionBubble();
+            }
         }
 
     }

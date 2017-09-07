@@ -78,7 +78,7 @@ public class ChatLogger {
         EventData.put("ButtonLabel", buttonLabel);
         EventData.put("ButtonType", buttonType);
         ChatEventModel Event = new ChatEventModel();
-        if (null == varName && null == varValue) {
+        if (null == varName || null == varValue) {
             Event
                     .setEventCategory("RIA_ONBOARDING_CHAT")
                     .setEventChannel("APP_ANDR")

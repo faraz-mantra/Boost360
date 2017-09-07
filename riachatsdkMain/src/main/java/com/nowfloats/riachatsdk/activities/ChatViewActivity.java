@@ -2002,7 +2002,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     || confirmationType.equalsIgnoreCase(Constants.ConfirmationType.FB_PAGE)) {
 
                 ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
-                        mCurrNodeId, mButton.getId(), mButton.getButtonText(), mCurrVarName,
+                        mCurrNodeId, mButton.getId(), mButton.getButtonText(), null,
                         data[0], mButton.getButtonType(), appVersion, mCurrFlowId, mSessionId);
             } else {
 
@@ -2122,6 +2122,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
+    private CustomDialogFragment customDialogFragment;
 
     public void showCustomDialog(
             final CustomDialogFragment.DialogFrom dialogFrom) {
@@ -2137,35 +2138,36 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 return;
             }
 
-            final CustomDialogFragment customDialogFragment = CustomDialogFragment.newInstance(dialogFrom);
+            customDialogFragment = CustomDialogFragment.newInstance(dialogFrom);
             customDialogFragment.show(getFragmentManager(), "Test");
             customDialogFragment.setResultListener(new CustomDialogFragment.OnResultReceive() {
                 @Override
                 public void createmysite() {
-                    customDialogFragment.dismiss();
+
+                    closeDialog();
                     skip();
                 }
 
                 @Override
                 public void navigateToHome() {
-                    customDialogFragment.dismiss();
+                    closeDialog();
                     login();
                 }
 
                 @Override
                 public void navigateToSignup() {
-                    customDialogFragment.dismiss();
+                    closeDialog();
                 }
 
                 @Override
                 public void dismissPopup() {
-                    customDialogFragment.dismiss();
+                    closeDialog();
                 }
 
                 @Override
                 public void skipNode() {
 
-                    customDialogFragment.dismiss();
+                    closeDialog();
 
                     if (mCurrButton != null) {
 
@@ -2191,13 +2193,19 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
                 @Override
                 public void finishActivity() {
-                    customDialogFragment.dismiss();
+                    closeDialog();
                     goBack();
                 }
             });
         }
     }
 
+    private void closeDialog(){
+        if (customDialogFragment != null && customDialogFragment.isVisible()) {
+            customDialogFragment.dismiss();
+            customDialogFragment = null;
+        }
+    }
 //    private void syncChatHistory() {
 //
 //        Type listType = new TypeToken<ArrayList<Section>>() {

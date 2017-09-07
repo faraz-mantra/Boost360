@@ -27,6 +27,7 @@ import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
 import com.nowfloats.Store.PricingPlansActivity;
+import com.nowfloats.customerassistant.CustomerAssistantActivity;
 import com.nowfloats.sync.DbController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
@@ -300,6 +301,7 @@ public class Settings_Fragment extends Fragment {
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
+                        getActivity().stopService(new Intent(getActivity(), CustomerAssistantActivity.class));
                         session.logoutUser();
                         DataBase db = new DataBase(activity);
                         DbController.getDbController(activity.getApplicationContext()).deleteDataBase();

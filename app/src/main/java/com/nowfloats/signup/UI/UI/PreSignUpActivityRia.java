@@ -524,7 +524,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_otp, null);
 
         TextView tvTitle = (TextView) view.findViewById(R.id.tvTitle);
-        tvTitle.setText("Please verify your mobile number using a one time password (OTP)");
+        tvTitle.setText("Please verify your mobile number");
         tvTitle.setVisibility(View.GONE);
         final EditText number = (EditText) view.findViewById(R.id.editText);
         numberDialog = new MaterialDialog.Builder(this)

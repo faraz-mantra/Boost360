@@ -87,7 +87,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    //compile project('libs:libraries:volley')
     compile project(':library')
     compile project(':cropper')
     compile project(':ZoomImageLibrary')

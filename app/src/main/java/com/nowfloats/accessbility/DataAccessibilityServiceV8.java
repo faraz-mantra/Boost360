@@ -170,8 +170,13 @@ public class DataAccessibilityServiceV8 extends AccessibilityService {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
+
+        if (pref == null) {
+            pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        }
+        
         pref.edit().putBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG, true).apply();
         pref.edit().putBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED, false).apply();
+        super.onDestroy();
     }
 }

@@ -184,7 +184,7 @@ public class SuggestionsActivity extends AppCompatActivity {
         if (Utils.isNetworkConnected(SuggestionsActivity.this)) {
             HashMap<String, String> offersParam = new HashMap<>();
             offersParam.put("fpId", session.getFPID());
-            suggestionsApi.getMessages(offersParam);
+//            suggestionsApi.getMessages(offersParam);
         } else {
             loadDataFromDb();
         }
