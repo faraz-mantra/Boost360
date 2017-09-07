@@ -272,15 +272,17 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
     BroadcastReceiver messageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            pref.edit().putBoolean("IsNewFacebookMessage",false).apply();
+            if(pref != null) {
+                pref.edit().putBoolean("IsNewFacebookMessage", false).apply();
 
-            String message = intent.getStringExtra("message");
+                String message = intent.getStringExtra("message");
 
-            FacebookChatDataModel.Message messageData = new Gson().fromJson(message,FacebookChatDataModel.Message.class);
-            if(messageData!= null){
-                addMessageToList(messageData, USER);
+                FacebookChatDataModel.Message messageData = new Gson().fromJson(message, FacebookChatDataModel.Message.class);
+                if (messageData != null) {
+                    addMessageToList(messageData, USER);
+                }
+                Log.v("ggg", "clicked");
             }
-            Log.v("ggg", "clicked");
         }
 
     };
