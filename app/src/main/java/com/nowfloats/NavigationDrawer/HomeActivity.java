@@ -64,6 +64,7 @@ import com.nowfloats.AccountDetails.AccountInfoActivity;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueries;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
+import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Hours_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
@@ -1937,11 +1938,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         BoostLog.d(TAG, "In on CreateView");
         deepLinkUrl = RiaFirebaseMessagingService.deepLinkUrl;
         FPID = session.getFPID();
-        if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
-            SharedPreferences smsPref = getSharedPreferences(com.nfx.leadmessages.Constants.SHARED_PREF, Context.MODE_PRIVATE);
-            smsPref.edit().putString(com.nfx.leadmessages.Constants.FP_ID, FPID).apply();
-            getPermissions();
-        }
         MixPanelController.sendMixPanelProperties(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME),
                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG),
@@ -2111,7 +2107,15 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
         getNfxTokenData();
     }
+    @Subscribe
+    public void nfxCallback(NfxGetTokensResponse response){
+        if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
+            SharedPreferences smsPref = getSharedPreferences(com.nfx.leadmessages.Constants.SHARED_PREF, Context.MODE_PRIVATE);
+            smsPref.edit().putString(com.nfx.leadmessages.Constants.FP_ID, FPID).apply();
+            getPermissions();
+        }
 
+    }
     private void getNfxTokenData(){
         Get_FP_Details_Service.newNfxTokenDetails(this,session.getFPID(),bus);
         Get_FP_Details_Service.autoPull(this,session.getFPID());
