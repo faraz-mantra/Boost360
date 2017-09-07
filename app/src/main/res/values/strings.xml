@@ -414,6 +414,7 @@
         <item>Quikr</item>
     </string-array>
     <string name="business_enquiries_title">Business Enquiries</string>
+    <string name="enquiries_title">Enquiries</string>
     <string name="payment_setting">Payment Setting</string>
     <string name="double_quotes"> &quot; </string>
     <string name="business_profile_title">Profile</string>

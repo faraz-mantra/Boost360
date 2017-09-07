@@ -198,7 +198,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
                 manageCustomerHolder.tvTwo.setGravity(Gravity.CENTER);
                 manageCustomerHolder.tvThree.setGravity(Gravity.CENTER);
 
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT);
                 params.setMargins(Methods.dpToPx(30,getActivity()),0,0,0);
 
@@ -207,11 +207,11 @@ public class ManageCustomerFragmentV1 extends Fragment {
 
                         manageCustomerHolder.tvThree.setVisibility(View.VISIBLE);
                         manageCustomerHolder.tvTitle.setText("Website\nInteractions");
-                        manageCustomerHolder.tvOne.setText(getActivity().getString(R.string.business_enquiries_title));
-                        manageCustomerHolder.tvTwo.setText(getActivity().getString(R.string.subscribers));
+                        manageCustomerHolder.tvTwo.setText(getActivity().getString(R.string.enquiries_title));
+                        manageCustomerHolder.tvOne.setText(getActivity().getString(R.string.subscribers));
                         manageCustomerHolder.tvThree.setText("Call");
 
-                        manageCustomerHolder.tvOne.setOnClickListener(new View.OnClickListener() {
+                        manageCustomerHolder.tvTwo.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_ENQUIRIES, null);
@@ -221,7 +221,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
                             }
                         });
 
-                        manageCustomerHolder.tvTwo.setOnClickListener(new View.OnClickListener() {
+                        manageCustomerHolder.tvOne.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 MixPanelController.track(EventKeysWL.SIDE_PANEL_SUBSCRIBERS, null);
