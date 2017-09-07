@@ -259,7 +259,7 @@ public class SidePanelFragment extends Fragment {
         fpNameTextView.setVisibility(View.VISIBLE);
 
         String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-        String normalURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getActivity().getResources().getString(R.string.tag_for_partners);
+        String normalURI = "http://"+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getActivity().getResources().getString(R.string.tag_for_partners);
         if (rootAlisasURI != null && !rootAlisasURI.equals("null") && rootAlisasURI.trim().length() > 0) {
             fpNameTextView.setText(Methods.fromHtml("<u>" + rootAlisasURI + "</u>"));
         } else {
@@ -269,13 +269,14 @@ public class SidePanelFragment extends Fragment {
         fpNameTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "";
-                if (!Util.isNullOrEmpty(url)) {
+                String url = fpNameTextView.getText().toString().trim();
+               /* if (!Util.isNullOrEmpty(url)) {
                     url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
                 } else {
                     url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
                             + getActivity().getResources().getString(R.string.tag_for_partners);
-                }
+                }*/
+
                 Intent showWebSiteIntent = new Intent(getContext(), Mobile_Site_Activity.class);
                 // showWebSiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 showWebSiteIntent.putExtra("WEBSITE_NAME", url);

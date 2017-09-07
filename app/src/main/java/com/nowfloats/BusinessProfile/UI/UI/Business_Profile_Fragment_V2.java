@@ -155,8 +155,8 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                             businessInfoTextView.setTypeface(robotoLight);
                             businessInfoTextView.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION));
 
-                            LinearLayout editProfileImageView = (LinearLayout) mainView.findViewById(R.id.editProfile);
-                            editProfileImageView.setOnClickListener(new View.OnClickListener() {
+                            TextView editTextView = (TextView) mainView.findViewById(R.id.tv_edit_profile);
+                            editTextView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     Intent businessAddress = new Intent(activity, Edit_Profile_Activity.class);
