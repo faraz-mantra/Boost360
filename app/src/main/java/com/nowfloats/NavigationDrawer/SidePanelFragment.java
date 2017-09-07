@@ -88,7 +88,7 @@ public class SidePanelFragment extends Fragment {
     TextView StoreTextView;
     TextView cspTextView;
     //TextView enqCount;
-    TextView settingsText, chatText, callText, shareText, tvBoostBubble /*tvSiteAppearance*/;
+    TextView settingsText, chatText, callText, shareText, tvBoostBubble, analyticsText /*tvSiteAppearance*/;
     public static TextView fpNameTextView;
     UserSessionManager session;
     public static ImageView iconImage;
@@ -112,7 +112,7 @@ public class SidePanelFragment extends Fragment {
     LinearLayout homeLayout, profileLayout, businessAppsLayout, storeLayout, /*customerQueriesLayout,*/
             imageGalleryLayout, cspLayout,
             productGalleryLayout, Store_Layout, settingsLayout, chatLayout, callLayout, shareLayout,
-            llGetInTouch, bubbleLayout /*llSiteAppearance*/, manageCustomersLayout,socialLayout,manageInventoryLayout;
+            llGetInTouch, bubbleLayout /*llSiteAppearance*/, manageCustomersLayout,socialLayout,manageInventoryLayout, analyticsLayout;
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
     private ProgressBar progressbar;
@@ -131,7 +131,7 @@ public class SidePanelFragment extends Fragment {
     private ImageView shareImageView, businessProfileImageView, dasbBoardImageView, callImageView, chatImageView, cspImageView,
             settingsImageView, StoreImageView, productGalleryImageView, businessappImageView,
             imageGalleryImageView/*, customerQueriesImageView*/ /*ivSiteAppearance*/, manageCustomerImageView,
-            socialImageView,manageInventoryImageView;
+            socialImageView,manageInventoryImageView, analyticsImageView;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
     private ImageView businessLockImage;
     SharedPreferences pref, mSharedPreferences;
@@ -365,6 +365,7 @@ public class SidePanelFragment extends Fragment {
         shareLayout = (LinearLayout) card.findViewById(R.id.eigthRow_Layout);
         llGetInTouch = (LinearLayout) card.findViewById(R.id.ll_get_in_touch);
         bubbleLayout = (LinearLayout) card.findViewById(R.id.ninethRow_Layout);
+        analyticsLayout = (LinearLayout) card.findViewById(R.id.analytics_row_Layout);
         //llSiteAppearance = (LinearLayout) card.findViewById(R.id.ll_site_appearance);
 
         if (session.getIsThinksity().equals("true")) {
@@ -395,6 +396,7 @@ public class SidePanelFragment extends Fragment {
         tvSocialSharing = (TextView) socialLayout.findViewById(R.id.tvSocialSharing);
         tvManageInventory = (TextView) manageInventoryLayout.findViewById(R.id.tvManageInventory);
         settingsText = (TextView) settingsLayout.findViewById(R.id.fifthRow_TextView);
+        analyticsText = (TextView) analyticsLayout.findViewById(R.id.analytics_row_TextView);
         businessProfileTextView = (TextView) profileLayout.findViewById(R.id.secondRow_TextView);
         cspTextView = (TextView) cspLayout.findViewById(R.id.csp_TextView);
         businessAppTextview = (TextView) businessAppsLayout.findViewById(R.id.customer_app_TextView);
@@ -490,6 +492,7 @@ public class SidePanelFragment extends Fragment {
         chatImageView = (ImageView) chatLayout.findViewById(R.id.sixthRow_ImageView);
         callImageView = (ImageView) callLayout.findViewById(R.id.seventhRow_ImageView);
         shareImageView = (ImageView) shareLayout.findViewById(R.id.eigthRow_ImageView);
+        analyticsImageView = (ImageView) analyticsLayout.findViewById(R.id.analytics_row_ImageView);
         //ivSiteAppearance = (ImageView) llSiteAppearance.findViewById(R.id.iv_site_appearance);
 
         dashBoardTextView.setTypeface(robotoMedium);
@@ -510,6 +513,16 @@ public class SidePanelFragment extends Fragment {
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.business_profile));
                 onclickColorChange(businessProfileImageView, businessProfileTextView, profileLayout);
                 MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_PROFILE, null);
+            }
+        });
+
+        analyticsText.setTypeface(robotoMedium);
+        analyticsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.deeplink_analytics));
+                onclickColorChange(analyticsImageView, analyticsText, analyticsLayout);
+                MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT, null);
             }
         });
 
@@ -1411,6 +1424,7 @@ public class SidePanelFragment extends Fragment {
         tvManageCustomers.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvSocialSharing.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvManageInventory.setTextColor(getResources().getColor(R.color.cell_text_color));
+        analyticsText.setTextColor(getResources().getColor(R.color.cell_text_color));
         //tvSiteAppearance.setTextColor(getResources().getColor(R.color.cell_text_color));
 
         shareImageView.setColorFilter(defaultLabelFilter);
@@ -1427,6 +1441,7 @@ public class SidePanelFragment extends Fragment {
         manageCustomerImageView.setColorFilter(defaultLabelFilter);
         socialImageView.setColorFilter(defaultLabelFilter);
         manageInventoryImageView.setColorFilter(defaultLabelFilter);
+        analyticsImageView.setColorFilter(defaultLabelFilter);
         //ivSiteAppearance.setColorFilter(defaultLabelFilter);
 
 
@@ -1448,6 +1463,7 @@ public class SidePanelFragment extends Fragment {
         callLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         shareLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         llGetInTouch.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        analyticsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
 
 
         if (tv != null) {

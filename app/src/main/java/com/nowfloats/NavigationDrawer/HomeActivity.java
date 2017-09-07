@@ -424,6 +424,11 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     HomeActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                 }
             } else if (url.contains(getResources().getString(R.string.deeplink_analytics))) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.mainFrame, homeFragment)
+                        .addToBackStack(null)
+                        .commit();
+                getSupportFragmentManager().executePendingTransactions();
                 Constants.deepLinkAnalytics = true;
                 homeFragment.setFragmentTab(1);
             } else if (url.contains(getResources().getString(R.string.deeplink_bizenquiry)) || url.contains("enquiries")) {
@@ -1395,6 +1400,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     // Intent imageGalleryIntent = new Intent(HomeActivity.this, Image_Gallery_MainActivity.class);
                     // startActivity(imageGalleryIntent);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, siteMeterFragment).addToBackStack(null).commit();
+                } else if(nextScreen.equals(getString(R.string.deeplink_analytics))){
+                    DeepLinkPage(getString(R.string.deeplink_analytics), false);
                 } else if (nextScreen.equals(getString(R.string.home))) {
                     headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
                     setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
@@ -1410,7 +1417,12 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                         callMethod = true;
                     }
 
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, homeFragment, "homeFragment").commit();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.mainFrame, homeFragment, "homeFragment")
+                            .addToBackStack(null)
+                            .commit();
+                    getSupportFragmentManager().executePendingTransactions();
+                    homeFragment.setFragmentTab(0);
                     if (callMethod && Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
 
                         homeFragment.checkOverlay(Home_Fragment_Tab.DrawOverLay.FromHome);

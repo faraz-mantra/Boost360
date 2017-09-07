@@ -274,10 +274,7 @@ public class Home_Fragment_Tab extends Fragment {
 
     public void setFragmentTab(int i) {
         if (!isAdded()) return;
-        if (Constants.deepLinkAnalytics) {
-            viewPager.setCurrentItem(i);
-            Constants.deepLinkAnalytics = false;
-        }
+        viewPager.setCurrentItem(i);
     }
 
     @Subscribe

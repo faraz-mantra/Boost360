@@ -30,11 +30,11 @@
                 app:cardCornerRadius="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <LinearLayout
-                    android:orientation="vertical"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <LinearLayout
+                        android:id="@+id/ll_card_head"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#808080">
@@ -47,6 +47,7 @@
                             android:text="@string/select_payment_method"/>
                     </LinearLayout>
                     <RadioGroup
+                        android:layout_below="@id/ll_card_head"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
                         android:layout_marginBottom="15dp"
@@ -69,7 +70,29 @@
                             android:text="@string/use_own_payment_link"
                             android:textColor="@color/gray"/>
                     </RadioGroup>
-                </LinearLayout>
+                    <TextView
+                        android:id="@+id/tv_ap_learn_more"
+                        android:layout_below="@id/ll_card_head"
+                        android:onClick="showLearnMoreDialog"
+                        android:layout_marginTop="23dp"
+                        android:textColor="@color/primary"
+                        android:layout_marginRight="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/learn_more"/>
+                    <TextView
+                        android:id="@+id/tv_deliv_learn_more"
+                        android:layout_below="@id/tv_ap_learn_more"
+                        android:onClick="showLearnMoreDialog"
+                        android:layout_marginTop="10dp"
+                        android:textColor="@color/primary"
+                        android:layout_marginRight="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/learn_more"/>
+                </RelativeLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -80,11 +103,11 @@
                 app:cardCornerRadius="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <LinearLayout
-                    android:orientation="vertical"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <LinearLayout
+                        android:id="@+id/ll_deliv_card_head"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#808080">
@@ -97,6 +120,7 @@
                             android:text="@string/delivery_mode"/>
                     </LinearLayout>
                     <RadioGroup
+                        android:layout_below="@id/ll_deliv_card_head"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="15dp"
                         android:layout_marginBottom="15dp"
@@ -123,7 +147,7 @@
                             android:text="@string/self_deliv"
                             android:textColor="@color/gray"/>
                     </RadioGroup>
-                </LinearLayout>
+                </RelativeLayout>
             </android.support.v7.widget.CardView>
             <android.support.v7.widget.CardView
                 android:id="@+id/cv_payment_details"
