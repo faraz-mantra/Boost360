@@ -11,7 +11,7 @@
     android:layout_marginTop="@dimen/margin_10"
     android:elevation="3dp"
     android:visibility="visible"
-    app:cardCornerRadius="7dp">
+    app:cardCornerRadius="5dp">
 
 
     <RelativeLayout

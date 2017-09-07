@@ -256,7 +256,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
                         manageCustomerHolder.llBackground.setBackgroundResource(R.drawable.mci_bg);
                         params.gravity = Gravity.BOTTOM;
                         manageCustomerHolder.iconImage.setLayoutParams(params);
-                        manageCustomerHolder.iconImage.setImageResource(R.drawable.ic_manage_social);
+                        manageCustomerHolder.iconImage.setImageResource(R.drawable.ic_social);
                         break;
 
                     case MULTI_CHANNEL_CUSTOMERS:
