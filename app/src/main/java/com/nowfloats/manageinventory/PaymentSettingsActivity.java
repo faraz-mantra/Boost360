@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -179,6 +180,29 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
                 });
             }
         });
+    }
+
+    public void showLearnMoreDialog(View v){
+        String msg = "";
+        switch (v.getId()){
+
+            case R.id.tv_ap_learn_more:
+                msg = getString(R.string.assured_purchase_learn_more);
+                break;
+            case R.id.tv_deliv_learn_more:
+                msg = getString(R.string.deliv_learn_more);
+                break;
+        }
+
+        new AlertDialog.Builder(this)
+                .setMessage(Html.fromHtml(msg))
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
     private void processProfileData(MerchantProfileModel profile){

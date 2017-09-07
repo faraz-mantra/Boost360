@@ -74,6 +74,7 @@
     <string name="title_activity_create__message_">Post an Update</string>
     <string name="side_panel_row_one">Dashboard</string>
     <string name="side_panel_row_two">Business Profile</string>
+    <string name="side_panel_row_tenth">Manage Customers</string>
     <string name="side_panel_site_appearance">Site Appearance</string>
     <string name="side_panel_row_csp">Custom Pages</string>
     <string name="side_panel_row_three">Business Enquiries</string>

@@ -64,6 +64,7 @@ import com.nowfloats.AccountDetails.AccountInfoActivity;
 import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueries;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
+import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Hours_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
@@ -424,6 +425,11 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     HomeActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                 }
             } else if (url.contains(getResources().getString(R.string.deeplink_analytics))) {
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.mainFrame, homeFragment)
+                        .addToBackStack(null)
+                        .commit();
+                getSupportFragmentManager().executePendingTransactions();
                 Constants.deepLinkAnalytics = true;
                 homeFragment.setFragmentTab(1);
             } else if (url.contains(getResources().getString(R.string.deeplink_bizenquiry)) || url.contains("enquiries")) {
@@ -519,7 +525,18 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         deepLinkUrl = null;
     }
 
-    private void SetMixPanelProperties() {
+    private String getCountryCode(){
+        String[] string_array = getResources().getStringArray(R.array.CountryCodes);
+        for(String country_phone : string_array) {
+            String[] Codes = country_phone.split(",");
+            if(Codes[0].equalsIgnoreCase(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))){
+                return Codes[1];
+            }
+        }
+        return "";
+    }
+    private void setMixPanelProperties() {
+
 // TODO Auto-generated method stub
         try {
             JSONObject store = new JSONObject();
@@ -528,7 +545,11 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 //            }
             store.put("Business Name", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
             store.put("Tag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
-            store.put("Primary contact", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
+            store.put("Primary contact", session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
+            store.put("$phone",session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
+            store.put("$email",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
+            store.put("$city",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY));
+            store.put("$country_code",getCountryCode());
             if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI) == null || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI).equals("null")) {
                 store.put("Domain", "False");
             } else {
@@ -1384,11 +1405,15 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, imageGalleryFragment).
                             commit();
                 } else if (nextScreen.equals(getString(R.string.product_gallery))) {
+
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, productGalleryFragment).commit();
+
                 } else if (nextScreen.equals(getString(R.string.site__meter))) {
                     // Intent imageGalleryIntent = new Intent(HomeActivity.this, Image_Gallery_MainActivity.class);
                     // startActivity(imageGalleryIntent);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, siteMeterFragment).addToBackStack(null).commit();
+                } else if(nextScreen.equals(getString(R.string.deeplink_analytics))){
+                    DeepLinkPage(getString(R.string.deeplink_analytics), false);
                 } else if (nextScreen.equals(getString(R.string.home))) {
                     headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
                     setTitle(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
@@ -1404,7 +1429,12 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                         callMethod = true;
                     }
 
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, homeFragment, "homeFragment").commit();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.mainFrame, homeFragment, "homeFragment")
+                            .addToBackStack(null)
+                            .commit();
+                    getSupportFragmentManager().executePendingTransactions();
+                    homeFragment.setFragmentTab(0);
                     if (callMethod && Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
 
                         homeFragment.checkOverlay(Home_Fragment_Tab.DrawOverLay.FromHome);
@@ -1417,19 +1447,15 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     Hotline.showConversations(HomeActivity.this);
                     //Konotor.getInstance(getApplicationContext()).launchFeedbackScreen(HomeActivity.this);
                 } else if (nextScreen.equals(getString(R.string.call))) {
-//                    String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-//                    if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || paymentState == null || paymentState.equals("-1") || paymentState.equals("0")) {
-//                        Intent call = new Intent(Intent.ACTION_DIAL);
-//                        String callString = "tel:" + getString(R.string.contact_us_number);
-//                        call.setData(Uri.parse(callString));
-//                        startActivity(call);
-//                    } else {
-                    /*Intent supportIntent = new Intent(HomeActivity.this, HelpAndSupportActivity.class);
-                    startActivity(supportIntent);
-//                    }
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
-
-                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
+                    String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
+                    if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || paymentState == null || !paymentState.equals("1")) {
+                        Intent call = new Intent(Intent.ACTION_DIAL);
+                        String callString = "tel:" + getString(R.string.contact_us_number);
+                        call.setData(Uri.parse(callString));
+                        startActivity(call);
+                    } else {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, helpAndSupportFragment).commit();
+                    }
                 } else if (nextScreen.equals(getString(R.string.share))) {
                     shareWebsite();
                 } else if (nextScreen.equals("Settings")) {
@@ -1868,7 +1894,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             getFPDetails(HomeActivity.this, session.getFPID(), Constants.clientId, bus);
             HomeActivity.registerChat(session.getFPID());
         } else {
-            if (progressDialog != null) {
+            if (progressDialog != null && progressDialog.isShowing()) {
                 progressDialog.dismiss();
                 progressDialog = null;
             }
@@ -1878,7 +1904,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
     @Override
     public void authenticationFailure(String value) {
-        if (progressDialog != null) {
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
             progressDialog = null;
         }
@@ -1912,7 +1938,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     @Subscribe
     public void getResponse(Response response) {
 
-        if (progressDialog != null) {
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
             progressDialog = null;
         }
@@ -1922,7 +1948,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     @Subscribe
     public void getError(RetrofitError retrofitError) {
 
-        if (progressDialog != null) {
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
             progressDialog = null;
         }
@@ -1935,11 +1961,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         BoostLog.d(TAG, "In on CreateView");
         deepLinkUrl = RiaFirebaseMessagingService.deepLinkUrl;
         FPID = session.getFPID();
-        if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
-            SharedPreferences smsPref = getSharedPreferences(com.nfx.leadmessages.Constants.SHARED_PREF, Context.MODE_PRIVATE);
-            smsPref.edit().putString(com.nfx.leadmessages.Constants.FP_ID, FPID).apply();
-            getPermissions();
-        }
         MixPanelController.sendMixPanelProperties(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME),
                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG),
@@ -1986,7 +2007,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         new Thread(new Runnable() {
             @Override
             public void run() {
-                SetMixPanelProperties();
+                setMixPanelProperties();
             }
         }).start();
 
@@ -2107,9 +2128,21 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 finish();
             }
         }
+        getNfxTokenData();
+    }
+    @Subscribe
+    public void nfxCallback(NfxGetTokensResponse response){
+        if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
+            SharedPreferences smsPref = getSharedPreferences(com.nfx.leadmessages.Constants.SHARED_PREF, Context.MODE_PRIVATE);
+            smsPref.edit().putString(com.nfx.leadmessages.Constants.FP_ID, FPID).apply();
+            getPermissions();
+        }
 
     }
-
+    private void getNfxTokenData(){
+        Get_FP_Details_Service.newNfxTokenDetails(this,session.getFPID(),bus);
+        Get_FP_Details_Service.autoPull(this,session.getFPID());
+    }
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private boolean canDrawOverlaysUsingReflection(Context context) {
 

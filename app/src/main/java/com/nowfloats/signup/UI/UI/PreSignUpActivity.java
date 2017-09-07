@@ -20,7 +20,7 @@ import com.nowfloats.Login.Login_MainActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.PreSignUp.ReverseGeoCoderAsyncTask;
 import com.nowfloats.signup.UI.Model.LocationProvider;
-import com.nowfloats.signup.UI.UI.RiaChatInitActivity;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
@@ -45,13 +45,15 @@ public class PreSignUpActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
 
 
-
-        setContentView(R.layout.activity_pre_sign_up__main_v3);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.WHITE);
+        if(Constants.PACKAGE_NAME.equalsIgnoreCase("com.biz2.nowfloats")){
+            setContentView(R.layout.activity_pre_sign_up__main_v3);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Window window = getWindow();
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(Color.WHITE);
+            }
+        }else{
+            setContentView(R.layout.activity_pre_sign_up_white_labels);
         }
 
         initializeViews();
@@ -74,8 +76,19 @@ public class PreSignUpActivity extends FragmentActivity {
             public void onClick(View v) {
 
                 MixPanelController.track(EventKeysWL.CREATE_WEBSITE_BUTTON, null);
-                Intent signUpIntent = new Intent(PreSignUpActivity.this, RiaChatInitActivity.class);
-                startActivity(signUpIntent);
+                Intent signUpIntent = null;
+                if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+                    signUpIntent = new Intent(PreSignUpActivity.this, RiaChatInitActivity.class);
+                    startActivity(signUpIntent);
+                }else{
+                    signUpIntent = new Intent(PreSignUpActivity.this,PreSignUpActivityRia.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putBundle("mBundle",new Bundle());
+                    signUpIntent.putExtras(bundle);
+                    startActivity(signUpIntent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+
                 finish();
             }
         });
@@ -142,4 +155,5 @@ public class PreSignUpActivity extends FragmentActivity {
             }
         }
     }
+
 }

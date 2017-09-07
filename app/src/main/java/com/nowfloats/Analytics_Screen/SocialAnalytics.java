@@ -45,7 +45,7 @@ import retrofit.client.Response;
  * Created by Abhi on 12/1/2016.
  */
 
-public class SocialAnalytics extends AppCompatActivity implements LoginFragment.OpenOtherFacebookScreen, View.OnClickListener {
+public class SocialAnalytics extends AppCompatActivity implements LoginFragment.OpenNextScreen, View.OnClickListener {
 
     private int facebookStatus = 0;
     private final static int FETCH_DATA = 20,POST_UPDATE = 10,LOGIN_FACEBOOK = 30;
@@ -217,7 +217,7 @@ public class SocialAnalytics extends AppCompatActivity implements LoginFragment.
 
 
     @Override
-    public void showFragment() {
+    public void onNextScreen() {
         checkForMessage(FACEBOOK);
     }
 

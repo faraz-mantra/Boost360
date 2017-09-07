@@ -109,7 +109,7 @@
                 android:layout_marginTop="1dp"
                 android:background="?android:selectableItemBackground"
                 android:gravity="center_vertical"
-                android:text="My Facebook Page Chats"
+                android:text="My Facebook Chats"
                 android:textColor="@color/cell_text_color"
                 android:textSize="14sp" />
 

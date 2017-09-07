@@ -48,13 +48,12 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.Login.UserSessionManager;
-import com.nowfloats.NavigationDrawer.API.PostModel;
 import com.nowfloats.NavigationDrawer.Adapter.QuikrAdapter;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NavigationDrawer.model.UploadPostEvent;
 import com.nowfloats.NotificationCenter.AlertArchive;
-import com.nowfloats.Twitter.TwitterConnection;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
+import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
@@ -80,12 +79,8 @@ public class Create_Message_Activity extends AppCompatActivity {
     public static String path = null;
     public static String[] keywords = null;
     ImageView facebookShare ;
-    ArrayList<String> items;
-    boolean[] checkedPages;
     UserSessionManager session;
     String tagName = "";
-    public static PostModel postUser = null;
-    public static PostModel postPage = null;
     int size = 0;
     EditText msg;
     Bitmap bmp;
@@ -108,7 +103,6 @@ public class Create_Message_Activity extends AppCompatActivity {
     public static final int ACTION_REQUEST_IMAGE_EDIT = 110;
     private final int REQ_CODE_SPEECH_INPUT = 122;
 
-    String mOutputFilePath;
     Uri picUri;
     private Activity activity;
     DataBase dataBase;

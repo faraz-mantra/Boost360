@@ -3,7 +3,6 @@ package com.nowfloats.util;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
@@ -43,7 +42,7 @@ public class UploadLargeImage {
         @Override
         protected Bitmap doInBackground(Void... params) {
 
-            return decodeSampledBitmap(uri,reqWidth,reqHeight);
+            return Methods.decodeSampledBitmap(uri,reqWidth,reqHeight);
         }
 
         @Override
@@ -56,31 +55,6 @@ public class UploadLargeImage {
     }
     public interface ImageCompressed{
         void onImageCompressed(Bitmap bitmap);
-    }
-    private Bitmap decodeSampledBitmap(String uri, int reqWidth, int reqHeight) {
-
-        final BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(uri, options);
-        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
-        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-        options.inDither = true;
-        options.inJustDecodeBounds = false;
-        return BitmapFactory.decodeFile(uri, options);
-    }
-
-    private int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-            final int heightRatio = Math.round((float) height / (float) reqHeight);
-            final int widthRatio = Math.round((float) width / (float) reqWidth);
-
-            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
-        }
-        return inSampleSize;
     }
     public String getRealPathFromURI(Context context, Uri contentUri) {
         if (contentUri == null) return null;

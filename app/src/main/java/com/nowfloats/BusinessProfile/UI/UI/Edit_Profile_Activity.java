@@ -355,7 +355,6 @@ public class Edit_Profile_Activity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        Initdata();
     }
 
     @Override
@@ -621,7 +620,7 @@ public class Edit_Profile_Activity extends AppCompatActivity {
             // display an error message
             String errorMessage = getString(R.string.device_does_not_support_capturing_image);
             // Util.toast(errorMessage, FloatAnImage.this);
-
+            Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
         }
     }
 
