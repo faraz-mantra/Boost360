@@ -24,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
@@ -31,7 +32,6 @@ import com.nowfloats.BusinessProfile.UI.UI.Business_Hours_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
-import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DomainApiService;
 import com.nowfloats.NavigationDrawer.Create_Message_Activity;
@@ -464,9 +464,14 @@ public class Site_Meter_Fragment extends Fragment {
             case social:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_GET_SOCIAL, null);
                 if (!(Constants.twitterShareEnabled && pref.getBoolean("fbShareEnabled", false) && pref.getBoolean("fbPageShareEnabled", false))) {
-                    Intent in = new Intent(activity, Social_Sharing_Activity.class);
+                    if(activity instanceof HomeActivity)
+                        ((HomeActivity) activity).onClick(getString(R.string.title_activity_social__sharing_));
+                    else{
+                        Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show();
+                    }
+                    /*Intent in = new Intent(activity, Social_Sharing_Activity.class);
                     startActivity(in);
-                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);*/
                 }
                 break;
             case email:

@@ -73,7 +73,6 @@ import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Settings_Fragment;
 import com.nowfloats.BusinessProfile.UI.UI.SocialSharingFragment;
-import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.Business_Enquiries.Business_Enquiries_Fragment;
 import com.nowfloats.CustomPage.CreateCustomPageActivity;
 import com.nowfloats.CustomPage.CustomPageAdapter;
@@ -479,8 +478,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             } else if (url.contains(getResources().getString(R.string.deeplink_business_app))) {
                 startBusinessApp();
             } else if (url.contains(getResources().getString(R.string.deeplink_socailsharing))) {
-                Intent queries = new Intent(HomeActivity.this, Social_Sharing_Activity.class);
-                startActivity(queries);
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.mainFrame, socialSharingFragment, "socialSharingFragment").commit();
             } else if (url.contains("notification")) {
                 homeFragment.setFragmentTab(2);
             } else if (url.contains(getResources().getString(R.string.deeplink_profile))) {
