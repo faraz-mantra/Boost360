@@ -56,7 +56,7 @@ public class DataBase extends SQLiteOpenHelper {
 
     public DataBase(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
-        this.context = context;
+        this.context = context.getApplicationContext();
     }
 
     @Override
