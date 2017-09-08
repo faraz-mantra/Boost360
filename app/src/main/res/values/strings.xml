@@ -1393,6 +1393,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="product_transaction_charge_hint">This is charge for using Assured Purchase only. This will be calculated on Product Price less Discount Amount</string>
     <string name="product_buy_online_hint">If you don\'t want to collect payments online through Assured Purchase, you can select this option to re-direct buyer to your own URL, once they click \'Buy Now\' on your website. This disabled when Assured Purchase is enabled.</string>
     <string name="facebook_chat">facebookchat</string>
+    <string name="feedback_chat">feedbackchat</string>
     <string name="order_id">Order Id</string>
     <string name="order_date">Order Date</string>
     <string name="order_amount">Order Amount</string>

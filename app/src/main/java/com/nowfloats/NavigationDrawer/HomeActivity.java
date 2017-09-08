@@ -108,6 +108,7 @@ import com.nowfloats.customerassistant.service.CustomerAssistantApi;
 import com.nowfloats.managecustomers.FacebookChatDetailActivity;
 import com.nowfloats.managecustomers.ManageCustomerFragmentV1;
 import com.nowfloats.manageinventory.ManageInventoryFragment;
+import com.nowfloats.riachatsdk.ChatManager;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -386,6 +387,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 Intent intent = new Intent(this, FacebookChatDetailActivity.class);
                 intent.putExtras(getIntent());
                 startActivity(intent);
+            } else if (url.contains(getString(R.string.feedback_chat))) {
+                MixPanelController.track("ChatFeedback", null);
+                ChatManager.getInstance(HomeActivity.this).startChat(ChatManager.ChatType.FEEDBACK);
             } else if (url.contains("facebookpage")) {
                 Methods.likeUsFacebook(this, "/reviews/");
             } else if (url.contains(getResources().getString(R.string.deeplink_update))) {
@@ -524,16 +528,17 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         deepLinkUrl = null;
     }
 
-    private String getCountryCode(){
+    private String getCountryCode() {
         String[] string_array = getResources().getStringArray(R.array.CountryCodes);
-        for(String country_phone : string_array) {
+        for (String country_phone : string_array) {
             String[] Codes = country_phone.split(",");
-            if(Codes[0].equalsIgnoreCase(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))){
+            if (Codes[0].equalsIgnoreCase(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRYPHONECODE))) {
                 return Codes[1];
             }
         }
         return "";
     }
+
     private void setMixPanelProperties() {
 
 // TODO Auto-generated method stub
@@ -545,10 +550,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             store.put("Business Name", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
             store.put("Tag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
             store.put("Primary contact", session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
-            store.put("$phone",session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
-            store.put("$email",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
-            store.put("$city",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY));
-            store.put("$country_code",getCountryCode());
+            store.put("$phone", session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
+            store.put("$email", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
+            store.put("$city", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY));
+            store.put("$country_code", getCountryCode());
             if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI) == null || session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI).equals("null")) {
                 store.put("Domain", "False");
             } else {
@@ -1411,7 +1416,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     // Intent imageGalleryIntent = new Intent(HomeActivity.this, Image_Gallery_MainActivity.class);
                     // startActivity(imageGalleryIntent);
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, siteMeterFragment).addToBackStack(null).commit();
-                } else if(nextScreen.equals(getString(R.string.deeplink_analytics))){
+                } else if (nextScreen.equals(getString(R.string.deeplink_analytics))) {
                     DeepLinkPage(getString(R.string.deeplink_analytics), false);
                 } else if (nextScreen.equals(getString(R.string.home))) {
                     headerText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
@@ -2129,8 +2134,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
         getNfxTokenData();
     }
+
     @Subscribe
-    public void nfxCallback(NfxGetTokensResponse response){
+    public void nfxCallback(NfxGetTokensResponse response) {
         if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
             SharedPreferences smsPref = getSharedPreferences(com.nfx.leadmessages.Constants.SHARED_PREF, Context.MODE_PRIVATE);
             smsPref.edit().putString(com.nfx.leadmessages.Constants.FP_ID, FPID).apply();
@@ -2138,10 +2144,12 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
 
     }
-    private void getNfxTokenData(){
-        Get_FP_Details_Service.newNfxTokenDetails(this,session.getFPID(),bus);
-        Get_FP_Details_Service.autoPull(this,session.getFPID());
+
+    private void getNfxTokenData() {
+        Get_FP_Details_Service.newNfxTokenDetails(this, session.getFPID(), bus);
+        Get_FP_Details_Service.autoPull(this, session.getFPID());
     }
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private boolean canDrawOverlaysUsingReflection(Context context) {
 

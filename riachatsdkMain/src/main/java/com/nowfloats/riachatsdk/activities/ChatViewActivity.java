@@ -48,6 +48,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -138,7 +139,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     private AutoCompleteTextView etChatInput;
 
-    private ImageView ivSendMessage, ivScrollDown, ivBack;
+    private ImageView ivSendMessage, ivScrollDown, ivBack, ivScrollUp, ivScrollDownBtn;
 
     private TextView tvPrefix, tvPostfix, tvSkip;
 
@@ -193,6 +194,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     private ChatManager.ChatType chatType;
 
+    private RelativeLayout rlButtons;
 
     /*
      **************************** CONSTANTS *******************************
@@ -253,7 +255,19 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat_view);
+
+        if (getIntent().getExtras() != null) {
+            chatType = (ChatManager.ChatType) getIntent().getExtras().get(Constants.CHAT_TYPE);
+        }
+
+        switch (chatType) {
+            case CREATE_WEBSITE:
+                setContentView(R.layout.activity_chat_view);
+                break;
+            case FEEDBACK:
+                setContentView(R.layout.activity_chat_view_feedback);
+                break;
+        }
 
 //        mStringBuilder = new StringBuilder();
         gson = new Gson();
@@ -263,9 +277,6 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             e.printStackTrace();
         }
 
-        if (getIntent().getExtras() != null) {
-            chatType = (ChatManager.ChatType) getIntent().getExtras().get(Constants.CHAT_TYPE);
-        }
 
         initializeControls();
 
@@ -314,11 +325,14 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         displayMetrics = getResources().getDisplayMetrics();
         rvChatData = (RecyclerView) findViewById(R.id.rv_chat_data);
         rvButtonsContainer = (RecyclerView) findViewById(R.id.rv_reply_button_container);
+        rlButtons = (RelativeLayout) findViewById(R.id.rlButtons);
         cvChatInput = (LinearLayout) findViewById(R.id.cv_chat_input);
         etChatInput = (AutoCompleteTextView) findViewById(R.id.et_chat_input);
         ivSendMessage = (ImageView) findViewById(R.id.iv_send_msg);
         ivScrollDown = (ImageView) findViewById(R.id.iv_scroll_down);
         ivBack = (ImageView) findViewById(R.id.ivBack);
+        ivScrollUp = (ImageView) findViewById(R.id.iv_scroll_up);
+        ivScrollDownBtn = (ImageView) findViewById(R.id.iv_scroll_btn_down);
         tvPrefix = (TextView) findViewById(R.id.tv_prefix);
         tvSkip = (TextView) findViewById(R.id.tv_skip);
         tvPostfix = (TextView) findViewById(R.id.tv_postfix);
@@ -340,6 +354,22 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 rvChatData.smoothScrollToPosition(mSectionList.size() - 1);
             }
         });
+
+        if (ivScrollUp != null) {
+
+            ivScrollUp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    rvChatData.smoothScrollToPosition(0);
+                }
+            });
+            ivScrollDownBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    rvButtonsContainer.smoothScrollToPosition(mButtonList.size() - 1);
+                }
+            });
+        }
 
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -372,6 +402,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     }
 
                     if (!mCurrButton.isPostToChat()) {
+                        if (rlButtons != null)
+                            rlButtons.setVisibility(View.GONE);
                         rvButtonsContainer.setVisibility(View.INVISIBLE);
                         cvChatInput.setVisibility(View.INVISIBLE);
                         if (mCurrVarName != null) {
@@ -387,7 +419,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         showNextNode(mCurrButton.getNextNodeId());
                         mAutoComplDataHash = null;
                         mButtonList.clear();
-                        mButtonsAdapter.notifyDataSetChanged();
+                        mButtonsAdapter.notifyDataSetChangedRequest();
                     } else {
                         replyToRia(Constants.SectionType.TYPE_TEXT, chatText.toString());
                         if (mCurrVarName != null) {
@@ -408,7 +440,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         //TODO:sent_check ButtonType and do the action accordingly
                         etChatInput.setText("");
                         mButtonList.clear();
-                        mButtonsAdapter.notifyDataSetChanged();
+                        mButtonsAdapter.notifyDataSetChangedRequest();
+                        if (rlButtons != null)
+                            rlButtons.setVisibility(View.GONE);
                         rvButtonsContainer.setVisibility(View.INVISIBLE);
                         cvChatInput.setVisibility(View.INVISIBLE);
                         showNextNode(mNextNodeId);
@@ -447,15 +481,51 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+
                 int position = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+                int firstposition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+
+                if (ivScrollUp != null) {
+
+                    if (firstposition > 1) {
+                        ivScrollUp.setVisibility(View.VISIBLE);
+                    } else {
+                        ivScrollUp.setVisibility(View.INVISIBLE);
+                    }
+                }
+
 
                 if (position < (mSectionList.size() - 2)) {
                     ivScrollDown.setVisibility(View.VISIBLE);
+                    if (ivScrollUp != null)
+                        ivScrollUp.setVisibility(View.INVISIBLE);
                 } else {
                     ivScrollDown.setVisibility(View.INVISIBLE);
                 }
             }
         });
+
+        if (ivScrollDownBtn != null) {
+
+            rvButtonsContainer.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                }
+
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    int position = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+
+                    if (position < (mButtonList.size() - 1)) {
+                        ivScrollDownBtn.setVisibility(View.VISIBLE);
+                    } else {
+                        ivScrollDownBtn.setVisibility(View.INVISIBLE);
+                    }
+                }
+            });
+        }
 
         mReceiver = new
                 FileUploadResultReceiver(new Handler());
@@ -552,7 +622,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         hideSoftKeyboard();
         if (FP_STATUS_CODE == FP_CREATED)
             showCustomDialog(CustomDialogFragment.DialogFrom.BACK_PRESS_LOGIN);
-        else if (FP_STATUS_CODE == FP_NOT_CREATED)
+        else if (FP_STATUS_CODE == FP_NOT_CREATED && chatType == ChatManager.ChatType.CREATE_WEBSITE)
             showCustomDialog(CustomDialogFragment.DialogFrom.BACK_PRESS);
         else {
             goBack();
@@ -712,7 +782,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         //TODO:sent_check ButtonType and do the action accordingly
         hideSoftKeyboard();
         mButtonList.clear();
-        mButtonsAdapter.notifyDataSetChanged();
+        mButtonsAdapter.notifyDataSetChangedRequest();
+        if (rlButtons != null)
+            rlButtons.setVisibility(View.GONE);
         rvButtonsContainer.setVisibility(View.INVISIBLE);
         cvChatInput.setVisibility(View.INVISIBLE);
         switch (button.getButtonType()) {
@@ -1443,7 +1515,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 //                    tvPrefix.setOnClickListener(null);
 //                }
 
-                mButtonsAdapter.notifyDataSetChanged();
+                mButtonsAdapter.notifyDataSetChangedRequest();
+                if (rlButtons != null)
+                    rlButtons.setVisibility(View.GONE);
                 rvButtonsContainer.setVisibility(View.INVISIBLE);
 
                 mSectionList.get(mSectionList.size() - 1).setShowDate(true);
@@ -1471,6 +1545,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             public void run() {
 
                 if (mButtonList.size() > 0) {
+                    if (rlButtons.getVisibility() == View.GONE) {
+                        rlButtons.setVisibility(View.VISIBLE);
+                    }
                     if (rvButtonsContainer.getVisibility() == INVISIBLE) {
                         rvButtonsContainer.setVisibility(View.VISIBLE);
                     }
@@ -1847,7 +1924,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         rvChatData.setLayoutManager(layoutManager);
         rvChatData.setAdapter(mAdapter);
 
-        mButtonsAdapter = new RvButtonsAdapter(ChatViewActivity.this, mButtonList, chatType);
+        mButtonsAdapter = new RvButtonsAdapter(ChatViewActivity.this, mButtonList, chatType, rlButtons, rvButtonsContainer);
         mButtonsAdapter.setOnCItemClickListener(this);
 
         switch (chatType) {
@@ -2232,6 +2309,9 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
                     if (mCurrButton != null) {
 
+                        if (rlButtons != null) {
+                            rlButtons.setVisibility(View.GONE);
+                        }
                         rvButtonsContainer.setVisibility(View.INVISIBLE);
                         cvChatInput.setVisibility(View.INVISIBLE);
                         if (mCurrVarName != null) {
@@ -2248,7 +2328,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
                         mAutoComplDataHash = null;
                         mButtonList.clear();
-                        mButtonsAdapter.notifyDataSetChangedRequest(chatType, rvButtonsContainer, mButtonsAdapter, buttonsLayoutManager);
+                        mButtonsAdapter.notifyDataSetChangedRequest();
                     }
                 }
 

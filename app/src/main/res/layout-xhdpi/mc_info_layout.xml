@@ -15,27 +15,29 @@
         android:paddingRight="@dimen/margin_10"
         android:paddingTop="@dimen/margin_10"
         android:src="@drawable/com_facebook_close" />
+
     <TextView
         android:id="@+id/tvInfoTitle"
-        android:lineSpacingExtra="2dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:layout_margin="@dimen/margin_15"
         android:fontFamily="sans-serif"
         android:gravity="left"
+        android:lineSpacingExtra="2dp"
         android:text="Website Customers"
         android:textColor="@color/white"
         android:textSize="@dimen/large_text_size" />
+
     <TextView
         android:id="@+id/tvInfo"
-        android:lineSpacingExtra="2dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:layout_margin="@dimen/margin_15"
         android:fontFamily="sans-serif"
-        android:gravity="center|left"
+        android:gravity="bottom|left"
+        android:lineSpacingExtra="2dp"
         android:text="Track how many customers you have received from your website. This is your organic traffic coming from search engines, and repeat visitors. These are your most important customers, and will grow over time."
         android:textColor="@color/white"
         android:textSize="@dimen/medium_text_size" />

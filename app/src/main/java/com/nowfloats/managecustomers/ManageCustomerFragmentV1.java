@@ -287,7 +287,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
                         manageCustomerHolder.iconImage.setLayoutParams(params);
                         manageCustomerHolder.iconImage.setImageResource(R.drawable.ic_cross_platform);
 
-                        if (session.isBoostBubbleEnabled() && pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
+                        if (session.isBoostBubbleEnabled() || pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
                             manageCustomerHolder.tvOne.setText(getString(R.string.disable_customer_assistant));
                             manageCustomerHolder.tvOne.setOnClickListener(new View.OnClickListener() {
                                 @Override
