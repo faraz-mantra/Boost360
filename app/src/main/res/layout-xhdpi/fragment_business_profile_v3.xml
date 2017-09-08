@@ -114,6 +114,7 @@
                         android:text="Edit basic info"
                         android:textAllCaps="true"
                         android:padding="10dp"
+                        android:background="?android:selectableItemBackground"
                         android:textSize="13sp"
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="10dp"

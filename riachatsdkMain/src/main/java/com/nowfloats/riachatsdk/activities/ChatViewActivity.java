@@ -75,6 +75,7 @@ import com.kbeanie.multipicker.api.CameraImagePicker;
 import com.kbeanie.multipicker.api.Picker;
 import com.kbeanie.multipicker.api.callbacks.ImagePickerCallback;
 import com.kbeanie.multipicker.api.entity.ChosenImage;
+import com.nowfloats.riachatsdk.ChatManager;
 import com.nowfloats.riachatsdk.R;
 import com.nowfloats.riachatsdk.adapters.RvButtonsAdapter;
 import com.nowfloats.riachatsdk.adapters.RvChatAdapter;
@@ -190,6 +191,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     private Gson gson;
 
+    private ChatManager.ChatType chatType;
+
 
     /*
      **************************** CONSTANTS *******************************
@@ -222,6 +225,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             onItemClick(mDefaultButton);
         }
     };
+
+    private LinearLayoutManager buttonsLayoutManager;
 
     private PermissionListener mPermissionListener = new PermissionListener() {
         @Override
@@ -256,6 +261,10 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             appVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
+        }
+
+        if (getIntent().getExtras() != null) {
+            chatType = (ChatManager.ChatType) getIntent().getExtras().get(Constants.CHAT_TYPE);
         }
 
         initializeControls();
@@ -367,11 +376,11 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         cvChatInput.setVisibility(View.INVISIBLE);
                         if (mCurrVarName != null) {
                             mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
-                            ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                            ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                                     mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), mCurrVarName.replace("[~", "").replace("]", ""),
                                     etChatInput.getText().toString().trim(), mCurrButton.getButtonType(), appVersion, mCurrFlowId, mSessionId);
                         } else {
-                            ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                            ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                                     mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), null,
                                     null, mCurrButton.getButtonType(), appVersion, mCurrFlowId, mSessionId);
                         }
@@ -384,12 +393,12 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         if (mCurrVarName != null) {
                             if (mAutoComplDataHash == null || mAutoComplDataHash.get(etChatInput.getText().toString().trim()) == null) {
                                 mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
-                                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                                ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                                         mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), mCurrVarName.replace("[~", "").replace("]", ""),
                                         etChatInput.getText().toString().trim(), mCurrButton.getButtonType(), appVersion, mCurrFlowId, mSessionId);
                             } else {
                                 mDataMap.put("[~" + mCurrVarName + "]", mAutoComplDataHash.get(etChatInput.getText().toString().trim()));
-                                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                                ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                                         mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), mCurrVarName.replace("[~", "").replace("]", ""),
                                         mAutoComplDataHash.get(etChatInput.getText().toString().trim()), mCurrButton.getButtonType(),
                                         appVersion, mCurrFlowId, mSessionId);
@@ -556,16 +565,25 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             mHandler.removeCallbacksAndMessages(null);
         hideSoftKeyboard();
 
-        Intent intent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("nowfloats://com.riasdk.presignup/riachat"));
-        intent.addCategory(Intent.CATEGORY_BROWSABLE);
-        intent.setAction(Intent.ACTION_VIEW);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
+        switch (chatType) {
+            case CREATE_WEBSITE:
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("nowfloats://com.riasdk.presignup/riachat"));
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setAction(Intent.ACTION_VIEW);
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.slide_out_right);
+                finish();
+                break;
+
+            case FEEDBACK:
+                finish();
+
         }
 
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.slide_out_right);
-        finish();
 
     }
 
@@ -661,7 +679,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             for (Button btn : riaCardModel.getButtons()) {
                 if (btn.getButtonType().equals(Constants.ButtonType.TYPE_NEXT_NODE) && btn.isDefaultButton()) {
                     final Button button = btn;
-                    ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                    ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                             mCurrNodeId, button.getId(), button.getButtonText(), null,
                             null, button.getButtonType(), appVersion, mCurrFlowId, mSessionId);
                     mHandler.postDelayed(new Runnable() {
@@ -712,24 +730,24 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         }
                     }
                     mDataMap.put("[~" + mCurrVarName + "]", str);
-                    ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                    ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                             mCurrNodeId, button.getId(), button.getButtonText(), mCurrVarName.replace("[~", "").replace("]", ""),
                             button.getVariableValue(), button.getButtonType(), appVersion, mCurrFlowId, mSessionId);
                 } else {
-                    ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                    ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                             mCurrNodeId, button.getId(), button.getButtonText(), null,
                             null, button.getButtonType(), appVersion, mCurrFlowId, mSessionId);
                 }
                 showNextNode(button.getNextNodeId());
                 break;
             case Constants.ButtonType.TYPE_GET_ADDR:
-                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, button.getId(), button.getButtonText(), null,
                         null, button.getButtonType(), appVersion, mCurrFlowId, mSessionId);
                 getUserAddress(button);
                 break;
             case Constants.ButtonType.TYPE_SHOW_CONFIRMATION:
-                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, button.getId(), button.getButtonText(), null,
                         null, button.getButtonType(), appVersion, mCurrFlowId, mSessionId);
 //                createmySite(button);
@@ -757,19 +775,19 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 getVideo(button);
                 break;
             case Constants.ButtonType.TYPE_GET_ITEM_FROM_SOURCE:
-                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, button.getId(), button.getButtonText(), null,
                         null, button.getButtonType(), appVersion, mCurrFlowId, mSessionId);
                 handleAutoComplete(button);
                 break;
             case Constants.ButtonType.TYPE_DEEP_LINK:
                 handleDeepLink(button);
-                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, button.getId(), button.getButtonText(), null,
                         null, button.getButtonType(), appVersion, mCurrFlowId, mSessionId);
                 break;
             default:
-                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, button.getId(), button.getButtonText(), null,
                         null, button.getButtonType(), appVersion, mCurrFlowId, mSessionId);
                 break;
@@ -877,7 +895,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 mNextNodeId = btn.getNextNodeId();
                 mCurrButton = btn;
 
-                ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                ChatLogger.getInstance(chatType).logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, btn.getId(), btn.getButtonText(), ChatLogger.EventStatus.COMPLETED.getValue(),
                         btn.getButtonType(), userData, appVersion, mCurrFlowId, mSessionId);
 
@@ -1064,7 +1082,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             userData.put("EMAIL", mDataMap.get("[~EMAIL]") + "");
             userData.put("TAG", mDataMap.get("[~TAG]") + "");
 
-            ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+            ChatLogger.getInstance(chatType).logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                     mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), ChatLogger.EventStatus.DROPPED.getValue(),
                     mCurrButton.getButtonType(), userData, appVersion, mCurrFlowId, mSessionId);
         }
@@ -1164,7 +1182,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 //        mStringBuilder.append(gson.toJson(mSectionList));
 
         etChatInput.setHint("");
-        ChatLogger.getInstance().logViewEvent(DeviceDetails.getDeviceId(this), mCurrNodeId, appVersion, mCurrFlowId, mSessionId);
+        ChatLogger.getInstance(chatType).logViewEvent(DeviceDetails.getDeviceId(this), mCurrNodeId, appVersion, mCurrFlowId, mSessionId);
         mCurrVarName = null;
         mHandler = new Handler(Looper.getMainLooper());
         if (node.getVariableName() != null) {
@@ -1434,7 +1452,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
                 if (mDefaultButton != null && node.getTimeoutInMs() != -1L) {
 
-//                    ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+//                    ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
 //                            mCurrNodeId, mDefaultButton.getId(), mDefaultButton.getButtonText(), null,
 //                            null, mDefaultButton.getButtonType());
 
@@ -1670,7 +1688,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     HashMap<String, String> userData = new HashMap<String, String>();
                     userData.put(mCurrVarName, strVal);
 
-                    ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                    ChatLogger.getInstance(chatType).logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                             mCurrNodeId, btn.getId(), btn.getButtonText(), ChatLogger.EventStatus.COMPLETED.getValue(),
                             btn.getButtonType(), userData, appVersion, mCurrFlowId, mSessionId);
                 }
@@ -1719,45 +1737,79 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         progressBar.setVisibility(View.VISIBLE);
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         OkHttpClient client = builder.connectTimeout(60, TimeUnit.SECONDS).readTimeout(60, TimeUnit.SECONDS).build();
-        RestAdapter adapter = new RestAdapter.Builder().setClient(new Ok3Client(client)).setEndpoint(Constants.SERVER_URL).build();
-        ChatJsonInterface chatJsonInterface = adapter.create(ChatJsonInterface.class);
-        Map<String, String> query = new HashMap<>();
-        query.put("deviceId", DeviceDetails.getDeviceId(this));
-        query.put("libVersion", DeviceDetails.getLibVersionName());
-        query.put("osVersion", DeviceDetails.getAndroidVersion());
-        query.put("osTimeZone", DeviceDetails.getTimeZone());
-        query.put("osCountry", DeviceDetails.getCountry());
-        query.put("osLanguage", DeviceDetails.getLanguage());
-        query.put("deviceBrand", DeviceDetails.getBrand());
-        query.put("deviceModel", DeviceDetails.getDeviceModel());
-        query.put("screenWidth", DeviceDetails.getScreenWidth(this) + "");
-        query.put("screenHeight", DeviceDetails.getScreenHeight(this) + "");
-        chatJsonInterface.getChatJson(query, new Callback<List<RiaCardModel>>() {
-            @Override
-            public void success(List<RiaCardModel> riaCardModels, Response response) {
-                //pg.dismiss();
-                if (riaCardModels != null && riaCardModels.size() > 0) {
-                    initChat(riaCardModels);
-                }
-                progressBar.setVisibility(View.GONE);
-            }
+        RestAdapter adapter;
+        ChatJsonInterface chatJsonInterface;
 
-            @Override
-            public void failure(RetrofitError error) {
-                //pg.dismiss();
-                error.printStackTrace();
-                progressBar.setVisibility(View.GONE);
-                if (isFinishing()) {
-                    return;
-                }
-                if (isNetworkStatusAvialable(ChatViewActivity.this)) {
-                    showCustomDialog(CustomDialogFragment.DialogFrom.SKIP);
-                } else {
-                    showCustomDialog(CustomDialogFragment.DialogFrom.NO_INTERNET);
-                }
-                //(RiaOnBoardingActivity.this, getString(R.string.something_went_wrong));
-            }
-        });
+        switch (chatType) {
+            case CREATE_WEBSITE:
+                adapter = new RestAdapter.Builder().setClient(new Ok3Client(client)).setEndpoint(Constants.SERVER_URL).build();
+                chatJsonInterface = adapter.create(ChatJsonInterface.class);
+                Map<String, String> query = new HashMap<>();
+                query.put("deviceId", DeviceDetails.getDeviceId(this));
+                query.put("libVersion", DeviceDetails.getLibVersionName());
+                query.put("osVersion", DeviceDetails.getAndroidVersion());
+                query.put("osTimeZone", DeviceDetails.getTimeZone());
+                query.put("osCountry", DeviceDetails.getCountry());
+                query.put("osLanguage", DeviceDetails.getLanguage());
+                query.put("deviceBrand", DeviceDetails.getBrand());
+                query.put("deviceModel", DeviceDetails.getDeviceModel());
+                query.put("screenWidth", DeviceDetails.getScreenWidth(this) + "");
+                query.put("screenHeight", DeviceDetails.getScreenHeight(this) + "");
+                chatJsonInterface.getChatJson(query, new Callback<List<RiaCardModel>>() {
+                    @Override
+                    public void success(List<RiaCardModel> riaCardModels, Response response) {
+                        //pg.dismiss();
+                        if (riaCardModels != null && riaCardModels.size() > 0) {
+                            initChat(riaCardModels);
+                        }
+                        progressBar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        //pg.dismiss();
+                        error.printStackTrace();
+                        progressBar.setVisibility(View.GONE);
+                        if (isFinishing()) {
+                            return;
+                        }
+                        if (isNetworkStatusAvialable(ChatViewActivity.this)) {
+                            showCustomDialog(CustomDialogFragment.DialogFrom.SKIP);
+                        } else {
+                            showCustomDialog(CustomDialogFragment.DialogFrom.NO_INTERNET);
+                        }
+                        //(RiaOnBoardingActivity.this, getString(R.string.something_went_wrong));
+                    }
+                });
+                break;
+            case FEEDBACK:
+
+                adapter = new RestAdapter.Builder().setClient(new Ok3Client(client)).setEndpoint(Constants.FEEDBACK_SERVER_URL).build();
+                chatJsonInterface = adapter.create(ChatJsonInterface.class);
+
+
+                chatJsonInterface.getChatFeedbackJson(new Callback<List<RiaCardModel>>() {
+                    @Override
+                    public void success(List<RiaCardModel> riaCardModels, Response response) {
+                        if (riaCardModels != null && riaCardModels.size() > 0) {
+                            initChat(riaCardModels);
+                        }
+                        progressBar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        error.printStackTrace();
+                        progressBar.setVisibility(View.GONE);
+                        if (isFinishing()) {
+                            return;
+                        }
+                        showCustomDialog(CustomDialogFragment.DialogFrom.NO_INTERNET);
+                    }
+                });
+                break;
+        }
+
 //
 //        List<RiaCardModel> posts = new ArrayList<RiaCardModel>();
 //        Gson mGson = new Gson();
@@ -1795,18 +1847,27 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         rvChatData.setLayoutManager(layoutManager);
         rvChatData.setAdapter(mAdapter);
 
-        mButtonsAdapter = new RvButtonsAdapter(mButtonList);
+        mButtonsAdapter = new RvButtonsAdapter(ChatViewActivity.this, mButtonList, chatType);
         mButtonsAdapter.setOnCItemClickListener(this);
-        LinearLayoutManager buttonsLayoutManager = new LinearLayoutManager(ChatViewActivity.this,
-                LinearLayoutManager.HORIZONTAL, false);
+
+        switch (chatType) {
+            case CREATE_WEBSITE:
+                buttonsLayoutManager = new LinearLayoutManager(ChatViewActivity.this,
+                        LinearLayoutManager.HORIZONTAL, false);
+                break;
+            case FEEDBACK:
+                buttonsLayoutManager = new LinearLayoutManager(ChatViewActivity.this,
+                        LinearLayoutManager.VERTICAL, false);
+                buttonsLayoutManager.setStackFromEnd(true);
+                buttonsLayoutManager.setReverseLayout(false);
+
+                break;
+        }
+
         rvButtonsContainer.setLayoutManager(buttonsLayoutManager);
         rvButtonsContainer.setAdapter(mButtonsAdapter);
 
-//        if (!TextUtils.isEmpty(mNextNodeId) && !mNextNodeId.equalsIgnoreCase("-1")) {
-//            showNextNode(mNextNodeId);
-//        } else {
         startChat(mAllNodes.get(0));
-//        }
     }
 
     public void hideSoftKeyboard() {
@@ -2001,12 +2062,12 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             if (confirmationType.equalsIgnoreCase(Constants.ConfirmationType.OTP)
                     || confirmationType.equalsIgnoreCase(Constants.ConfirmationType.FB_PAGE)) {
 
-                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
-                        mCurrNodeId, mButton.getId(), mButton.getButtonText(), mCurrVarName,
+                ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                        mCurrNodeId, mButton.getId(), mButton.getButtonText(), null,
                         data[0], mButton.getButtonType(), appVersion, mCurrFlowId, mSessionId);
             } else {
 
-                ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                         mCurrNodeId, mButton.getId(), mButton.getButtonText(), null,
                         null, mButton.getButtonType(), appVersion, mCurrFlowId, mSessionId);
             }
@@ -2026,7 +2087,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     userData.put("TAG", mDataMap.get("[~TAG]") + "");
 
 
-                    ChatLogger.getInstance().logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                    ChatLogger.getInstance(chatType).logPostEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                             mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), ChatLogger.EventStatus.COMPLETED.getValue(),
                             mCurrButton.getButtonType(), userData, appVersion, mCurrFlowId, mSessionId);
 
@@ -2122,6 +2183,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
+    private CustomDialogFragment customDialogFragment;
 
     public void showCustomDialog(
             final CustomDialogFragment.DialogFrom dialogFrom) {
@@ -2137,35 +2199,36 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 return;
             }
 
-            final CustomDialogFragment customDialogFragment = CustomDialogFragment.newInstance(dialogFrom);
+            customDialogFragment = CustomDialogFragment.newInstance(dialogFrom);
             customDialogFragment.show(getFragmentManager(), "Test");
             customDialogFragment.setResultListener(new CustomDialogFragment.OnResultReceive() {
                 @Override
                 public void createmysite() {
-                    customDialogFragment.dismiss();
+
+                    closeDialog();
                     skip();
                 }
 
                 @Override
                 public void navigateToHome() {
-                    customDialogFragment.dismiss();
+                    closeDialog();
                     login();
                 }
 
                 @Override
                 public void navigateToSignup() {
-                    customDialogFragment.dismiss();
+                    closeDialog();
                 }
 
                 @Override
                 public void dismissPopup() {
-                    customDialogFragment.dismiss();
+                    closeDialog();
                 }
 
                 @Override
                 public void skipNode() {
 
-                    customDialogFragment.dismiss();
+                    closeDialog();
 
                     if (mCurrButton != null) {
 
@@ -2173,11 +2236,11 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                         cvChatInput.setVisibility(View.INVISIBLE);
                         if (mCurrVarName != null) {
                             mDataMap.put("[~" + mCurrVarName + "]", etChatInput.getText().toString().trim());
-                            ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                            ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                                     mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), mCurrVarName.replace("[~", "").replace("]", ""),
                                     etChatInput.getText().toString().trim(), mCurrButton.getButtonType(), appVersion, mCurrFlowId, mSessionId);
                         } else {
-                            ChatLogger.getInstance().logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
+                            ChatLogger.getInstance(chatType).logClickEvent(DeviceDetails.getDeviceId(ChatViewActivity.this),
                                     mCurrNodeId, mCurrButton.getId(), mCurrButton.getButtonText(), null,
                                     null, mCurrButton.getButtonType(), appVersion, mCurrFlowId, mSessionId);
                         }
@@ -2185,19 +2248,25 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
                         mAutoComplDataHash = null;
                         mButtonList.clear();
-                        mButtonsAdapter.notifyDataSetChanged();
+                        mButtonsAdapter.notifyDataSetChangedRequest(chatType, rvButtonsContainer, mButtonsAdapter, buttonsLayoutManager);
                     }
                 }
 
                 @Override
                 public void finishActivity() {
-                    customDialogFragment.dismiss();
+                    closeDialog();
                     goBack();
                 }
             });
         }
     }
 
+    private void closeDialog() {
+        if (customDialogFragment != null && customDialogFragment.isVisible()) {
+            customDialogFragment.dismiss();
+            customDialogFragment = null;
+        }
+    }
 //    private void syncChatHistory() {
 //
 //        Type listType = new TypeToken<ArrayList<Section>>() {

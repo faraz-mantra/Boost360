@@ -52,7 +52,7 @@ public class RiaChatInitActivity extends AppCompatActivity
                 finish();
 //                overridePendingTransition(R.anim.ria_fade_in, R.anim.slide_out_up);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                ChatManager.getInstance(this).startChat();
+                ChatManager.getInstance(this).startChat(ChatManager.ChatType.CREATE_WEBSITE);
                 break;
         }
     }

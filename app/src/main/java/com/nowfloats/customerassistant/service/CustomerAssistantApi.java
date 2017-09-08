@@ -2,9 +2,11 @@ package com.nowfloats.customerassistant.service;
 
 import android.util.Log;
 
+import com.nowfloats.customerassistant.FirebaseLogger;
 import com.nowfloats.customerassistant.models.MessageDO;
 import com.nowfloats.customerassistant.models.SMSSuggestions;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 
 import java.util.HashMap;
@@ -25,7 +27,7 @@ public class CustomerAssistantApi {
         this.mBus = bus;
     }
 
-    public void getMessages(HashMap<String, String> data) {
+    public void getMessages(HashMap<String, String> data, final String fpId, final String appVersion) {
         CustomerAssistantInterface suggestionsInterface = Constants.pluginSuggestionsAdapter.create(CustomerAssistantInterface.class);
         suggestionsInterface.processSMSData(data, new Callback<SMSSuggestions>() {
             @Override
@@ -35,7 +37,9 @@ public class CustomerAssistantApi {
 
             @Override
             public void failure(RetrofitError error) {
-                mBus.post(new SMSSuggestions());
+                MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED_SERVER_ERROR, null);
+                FirebaseLogger.getInstance().logSAMEvent("", FirebaseLogger.SAMSTATUS.SERVER_ERROR,
+                        fpId, appVersion);
             }
         });
 

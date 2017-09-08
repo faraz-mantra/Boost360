@@ -27,6 +27,8 @@ import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
 import com.nowfloats.Store.PricingPlansActivity;
+import com.nowfloats.customerassistant.CustomerAssistantActivity;
+import com.nowfloats.riachatsdk.ChatManager;
 import com.nowfloats.sync.DbController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
@@ -43,8 +45,8 @@ import org.json.JSONObject;
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
 public class Settings_Fragment extends Fragment {
-    FrameLayout signOutLayout, changePaswordLayout, feedbackLayout, likeusFacebookLayout, aboutUsLayout,
-            rateUsLayout, faqLayout, accountLayout, flSiteAppearance, flFollowTwitter, flTermsOfUse, flPrivacyPolicy,flPricingPlans;
+    FrameLayout signOutLayout, changePaswordLayout, feedbackLayout, chatfeedback_Layout, likeusFacebookLayout, aboutUsLayout,
+            rateUsLayout, faqLayout, accountLayout, flSiteAppearance, flFollowTwitter, flTermsOfUse, flPrivacyPolicy, flPricingPlans;
     private EditText old_pwd, new_pwd, confirm_pwd;
     Boolean confirmCheckerActive = false;
     private ImageView confirmChecker;
@@ -117,7 +119,7 @@ public class Settings_Fragment extends Fragment {
         flPrivacyPolicy = (FrameLayout) view.findViewById(R.id.privacy_policy_Layout);
         flPricingPlans = (FrameLayout) view.findViewById(R.id.flPricingPlans);
         String Sdate = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CREATED_ON);
-        if(Sdate.contains("/Date")){
+        if (Sdate.contains("/Date")) {
             Sdate = Sdate.replace("/Date(", "").replace(")/", "");
         }
 
@@ -196,12 +198,22 @@ public class Settings_Fragment extends Fragment {
                 activity.startActivity(Intent.createChooser(emailIntent, getString(R.string.send_email)));
             }
         });
+        chatfeedback_Layout = (FrameLayout) view.findViewById(R.id.chatfeedback_Layout);
+        chatfeedback_Layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MixPanelController.track("ChatFeedback", null);
+
+                ChatManager.getInstance(getActivity()).startChat(ChatManager.ChatType.FEEDBACK);
+
+            }
+        });
 
         likeusFacebookLayout = (FrameLayout) view.findViewById(R.id.like_us_Layout);
         likeusFacebookLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Methods.likeUsFacebook(mContext,"");
+                Methods.likeUsFacebook(mContext, "");
             }
         });
 
@@ -211,13 +223,13 @@ public class Settings_Fragment extends Fragment {
                 Intent twitterIntent = new Intent(Intent.ACTION_VIEW);
                 //String facebookUrl = getFacebookPageURL(getActivity().getApplicationContext());
                 try {
-                        getActivity().getPackageManager().getPackageInfo("com.twitter.android", 0);
-                        twitterIntent.setData(Uri.parse(Constants.TWITTER_ID_URL));
-                    } catch (PackageManager.NameNotFoundException e1) {
-                        twitterIntent.setData(Uri.parse(Constants.TWITTER_URL));
-                        e1.printStackTrace();
+                    getActivity().getPackageManager().getPackageInfo("com.twitter.android", 0);
+                    twitterIntent.setData(Uri.parse(Constants.TWITTER_ID_URL));
+                } catch (PackageManager.NameNotFoundException e1) {
+                    twitterIntent.setData(Uri.parse(Constants.TWITTER_URL));
+                    e1.printStackTrace();
                 }
-                twitterIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_NO_HISTORY);
+                twitterIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(twitterIntent);
             }
         });
@@ -282,7 +294,7 @@ public class Settings_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), FAQMainAcivity.class);
-                i.putExtra("array",getResources().getStringArray(R.array.faqmain));
+                i.putExtra("array", getResources().getStringArray(R.array.faqmain));
                 activity.startActivity(i);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
@@ -300,6 +312,7 @@ public class Settings_Fragment extends Fragment {
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
+                        getActivity().stopService(new Intent(getActivity(), CustomerAssistantActivity.class));
                         session.logoutUser();
                         DataBase db = new DataBase(activity);
                         DbController.getDbController(activity.getApplicationContext()).deleteDataBase();
@@ -330,7 +343,7 @@ public class Settings_Fragment extends Fragment {
     }
 
     public void changePassword() {
-        MaterialDialog dialog =new MaterialDialog.Builder(activity)
+        MaterialDialog dialog = new MaterialDialog.Builder(activity)
                 .customView(R.layout.change_password, true)
                 .positiveText(getString(R.string.ok))
                 .negativeText(getString(R.string.cancel))
@@ -442,7 +455,8 @@ public class Settings_Fragment extends Fragment {
             }
         });
     }
-    private void rateUsPlayStore(Context context){
+
+    private void rateUsPlayStore(Context context) {
         Uri uri = Uri.parse("market://details?id=" + Constants.PACKAGE_NAME);
         Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
         // To count with Play market backstack, After pressing back button,

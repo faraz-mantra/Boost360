@@ -73,7 +73,6 @@ import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Settings_Fragment;
 import com.nowfloats.BusinessProfile.UI.UI.SocialSharingFragment;
-import com.nowfloats.BusinessProfile.UI.UI.Social_Sharing_Activity;
 import com.nowfloats.Business_Enquiries.Business_Enquiries_Fragment;
 import com.nowfloats.CustomPage.CreateCustomPageActivity;
 import com.nowfloats.CustomPage.CustomPageAdapter;
@@ -107,7 +106,7 @@ import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.customerassistant.models.SMSSuggestions;
 import com.nowfloats.customerassistant.service.CustomerAssistantApi;
 import com.nowfloats.managecustomers.FacebookChatDetailActivity;
-import com.nowfloats.managecustomers.ManageCustomerFragment;
+import com.nowfloats.managecustomers.ManageCustomerFragmentV1;
 import com.nowfloats.manageinventory.ManageInventoryFragment;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Service.Get_FP_Details_Service;
@@ -168,7 +167,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     private LinearLayout leftPanelLayout;
     Home_Fragment_Tab homeFragment;
     Business_Profile_Fragment_V2 businessFragment;
-    ManageCustomerFragment manageCustomerFragment;
+    ManageCustomerFragmentV1 manageCustomerFragment;
     ManageInventoryFragment manageInventoryFragment;
     Site_Meter_Fragment siteMeterFragment;
     Settings_Fragment settingsFragment;
@@ -479,8 +478,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             } else if (url.contains(getResources().getString(R.string.deeplink_business_app))) {
                 startBusinessApp();
             } else if (url.contains(getResources().getString(R.string.deeplink_socailsharing))) {
-                Intent queries = new Intent(HomeActivity.this, Social_Sharing_Activity.class);
-                startActivity(queries);
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.mainFrame, socialSharingFragment, "socialSharingFragment").commit();
             } else if (url.contains("notification")) {
                 homeFragment.setFragmentTab(2);
             } else if (url.contains(getResources().getString(R.string.deeplink_profile))) {
@@ -573,10 +572,13 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     protected void onStop() {
         super.onStop();
         bus.unregister(this);
+
         ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        ComponentName componentName = am.getRunningTasks(1).get(0).topActivity;
-        if (!componentName.getPackageName().equalsIgnoreCase(getApplicationContext().getPackageName())) {
-            sendBroadcast(new Intent(CustomerAssistantService.ACTION_ADD_BUBBLE));
+        if (am.getRunningTasks(1) != null && am.getRunningTasks(1).size() > 0) {
+            ComponentName componentName = am.getRunningTasks(1).get(0).topActivity;
+            if (!componentName.getPackageName().equalsIgnoreCase(getApplicationContext().getPackageName())) {
+                sendBroadcast(new Intent(CustomerAssistantService.ACTION_ADD_BUBBLE));
+            }
         }
 
         Constants.fromLogin = false;
@@ -837,9 +839,17 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     private void getCustomerAssistantSuggestions() {
         CustomerAssistantApi suggestionsApi = new CustomerAssistantApi(bus);
         if (Utils.isNetworkConnected(this)) {
+            String appVersion = "";
+
+            try {
+                appVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             HashMap<String, String> offersParam = new HashMap<>();
             offersParam.put("fpId", session.getFPID());
-            suggestionsApi.getMessages(offersParam);
+            suggestionsApi.getMessages(offersParam, session.getFPID(), appVersion);
         }
     }
 
@@ -1963,7 +1973,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         homeFragment = new Home_Fragment_Tab();
         businessFragment = new Business_Profile_Fragment_V2();
-        manageCustomerFragment = new ManageCustomerFragment();
+        manageCustomerFragment = new ManageCustomerFragmentV1();
         manageInventoryFragment = new ManageInventoryFragment();
         settingsFragment = new Settings_Fragment();
         businessEnquiriesFragment = new Business_Enquiries_Fragment();

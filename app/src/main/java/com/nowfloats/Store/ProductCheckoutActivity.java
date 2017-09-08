@@ -347,42 +347,47 @@ public class ProductCheckoutActivity extends AppCompatActivity {
         params.put("invoiceId", invoiceId);
 
         SupportedPaymentMethods method = null;
-        for (SupportedPaymentMethods paymentMethod : StoreDataActivity.product.SupportedPaymentMethods){
-            if(paymentMethod.Type==1){
-                method = paymentMethod;
+        if(StoreDataActivity.product!=null &&
+                StoreDataActivity.product.SupportedPaymentMethods!=null
+                && StoreDataActivity.product.SupportedPaymentMethods.size()>0){
+            for (SupportedPaymentMethods paymentMethod : StoreDataActivity.product.SupportedPaymentMethods){
+                if(paymentMethod.Type==1){
+                    method = paymentMethod;
+                }
             }
-        }
-        if (materialProgress!=null){
-            materialProgress.show();
-        }
-        storeInterface.initiatePaymentProcess(params, method, new Callback<PaymentTokenResult>() {
-            @Override
-            public void success(PaymentTokenResult paymentTokenResult, Response response) {
-                if(paymentTokenResult!=null && paymentTokenResult.getResult()!=null) {
-                    i.putExtra(com.romeo.mylibrary.Constants.PAYMENT_REQUEST_IDENTIFIER, paymentTokenResult.getResult().getPaymentRequestId());
-                    i.putExtra(com.romeo.mylibrary.Constants.ACCESS_TOKEN_IDENTIFIER, paymentTokenResult.getResult().getAccessToken());
-                    i.putExtra(com.romeo.mylibrary.Constants.WEB_HOOK_IDENTIFIER, "https://api.withfloats.com/Payment/v1/floatingpoint/instaMojoWebHook?clientId="+Constants.clientId);//change this later
-                    if (materialProgress!=null){
-                        materialProgress.dismiss();
+            if (materialProgress!=null){
+                materialProgress.show();
+            }
+            storeInterface.initiatePaymentProcess(params, method, new Callback<PaymentTokenResult>() {
+                @Override
+                public void success(PaymentTokenResult paymentTokenResult, Response response) {
+                    if(paymentTokenResult!=null && paymentTokenResult.getResult()!=null) {
+                        i.putExtra(com.romeo.mylibrary.Constants.PAYMENT_REQUEST_IDENTIFIER, paymentTokenResult.getResult().getPaymentRequestId());
+                        i.putExtra(com.romeo.mylibrary.Constants.ACCESS_TOKEN_IDENTIFIER, paymentTokenResult.getResult().getAccessToken());
+                        i.putExtra(com.romeo.mylibrary.Constants.WEB_HOOK_IDENTIFIER, "https://api.withfloats.com/Payment/v1/floatingpoint/instaMojoWebHook?clientId="+Constants.clientId);//change this later
+                        if (materialProgress!=null){
+                            materialProgress.dismiss();
+                        }
+                        startActivityForResult(i, OPC_REQUEST_CODE);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    }else {
+                        if (materialProgress!=null){
+                            materialProgress.dismiss();
+                        }
+                        Methods.showSnackBarNegative(ProductCheckoutActivity.this, "Error while processing payment");
                     }
-                    startActivityForResult(i, OPC_REQUEST_CODE);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }else {
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
                     if (materialProgress!=null){
                         materialProgress.dismiss();
                     }
                     Methods.showSnackBarNegative(ProductCheckoutActivity.this, "Error while processing payment");
                 }
-            }
+            });
+        }
 
-            @Override
-            public void failure(RetrofitError error) {
-                if (materialProgress!=null){
-                    materialProgress.dismiss();
-                }
-                Methods.showSnackBarNegative(ProductCheckoutActivity.this, "Error while processing payment");
-            }
-        });
     }
 
     private void createDraftInvoice() {
