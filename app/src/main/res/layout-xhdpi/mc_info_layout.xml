@@ -36,7 +36,7 @@
         android:layout_centerInParent="true"
         android:layout_margin="@dimen/margin_15"
         android:fontFamily="sans-serif"
-        android:gravity="bottom|left"
+        android:gravity="center|left"
         android:lineSpacingExtra="2dp"
         android:text="Track how many customers you have received from your website. This is your organic traffic coming from search engines, and repeat visitors. These are your most important customers, and will grow over time."
         android:textColor="@color/white"

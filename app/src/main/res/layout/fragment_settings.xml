@@ -294,7 +294,7 @@
                     android:layout_marginRight="@dimen/icon_right_margin"
                     android:padding="5dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/icon_feedback" />
+                    android:src="@drawable/ic_feedback_chat" />
 
 
                 <TextView

@@ -1438,7 +1438,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="manage_website_customers">Track how many customers you have received from your website. This is your organic traffic coming from search engines, and repeat visitors. These are your most important customers, and will grow over time. </string>
     <string name="manage_social_customers">Your social media pages are an easy way for customers on those platforms to interact with you. Currently, you can chat with customers who are reaching out to you on your Facebook Page.
 </string>
-    <string name="manage_multichannel_customers">You can enable tracking for all your online customers from a single interface. By enabling this, you can interact with your customers on platforms like WhatsApp and SMS. We read through your SMS data to fetch you relevant enquiries.</string>
+    <string name="manage_multichannel_customers">You can track all your online customers from a single interface. You can interact with your customers on platforms like WhatsApp and SMS. We read through your SMS data to fetch relevant enquiries.</string>
 
 
 </resources>

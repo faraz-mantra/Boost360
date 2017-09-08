@@ -1354,7 +1354,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 @Override
                 public void run() {
                     mSectionList.add(typingSection);
-                    tvRiaTyping.setVisibility(View.VISIBLE);
+                    if (chatType == ChatManager.ChatType.CREATE_WEBSITE)
+                        tvRiaTyping.setVisibility(View.VISIBLE);
                     mAdapter.notifyItemInserted(mSectionList.size() - 1);
                     rvChatData.scrollToPosition(mSectionList.size() - 1);
                 }
@@ -1367,7 +1368,8 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                     @Override
                     public void run() {
                         mSectionList.add(typingSection);
-                        tvRiaTyping.setVisibility(View.VISIBLE);
+                        if (chatType == ChatManager.ChatType.CREATE_WEBSITE)
+                            tvRiaTyping.setVisibility(View.VISIBLE);
                         mAdapter.notifyItemInserted(mSectionList.size() - 1);
                         rvChatData.scrollToPosition(mSectionList.size() - 1);
                     }
@@ -1545,7 +1547,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             public void run() {
 
                 if (mButtonList.size() > 0) {
-                    if (rlButtons.getVisibility() == View.GONE) {
+                    if (rlButtons != null && rlButtons.getVisibility() == View.GONE) {
                         rlButtons.setVisibility(View.VISIBLE);
                     }
                     if (rvButtonsContainer.getVisibility() == INVISIBLE) {

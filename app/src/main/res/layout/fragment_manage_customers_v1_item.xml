@@ -90,7 +90,7 @@
                     android:paddingTop="@dimen/margin_15"
                     android:text="Subscribers"
                     android:textAllCaps="true"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/primary"
                     android:textSize="@dimen/small_text_size"
                     android:textStyle="bold" />
 
@@ -107,7 +107,7 @@
                     android:paddingTop="@dimen/margin_15"
                     android:text="Enquiries"
                     android:textAllCaps="true"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/primary"
                     android:textSize="@dimen/small_text_size"
                     android:textStyle="bold" />
 
@@ -124,7 +124,7 @@
                     android:paddingTop="@dimen/margin_15"
                     android:text="CALLS"
                     android:textAllCaps="true"
-                    android:textColor="@color/gray"
+                    android:textColor="@color/primary"
                     android:textSize="@dimen/small_text_size"
                     android:textStyle="bold" />
 
@@ -143,7 +143,7 @@
             android:elevation="5dp"
             android:paddingRight="@dimen/margin_10"
             android:paddingTop="@dimen/margin_10"
-            android:src="@drawable/info" />
+            android:src="@drawable/icon_info" />
 
     </RelativeLayout>
 

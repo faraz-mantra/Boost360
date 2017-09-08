@@ -35,7 +35,7 @@
                     android:layout_height="35dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/margin_10"
-                    android:src="@drawable/ria_circle_image"
+                    android:src="@drawable/ic_ria_feedback"
                     android:visibility="visible" />
 
                 <LinearLayout
@@ -50,7 +50,7 @@
                         android:layout_gravity="bottom"
                         android:layout_marginLeft="15dp"
                         android:gravity="center"
-                        android:text="Ria"
+                        android:text="Feedback"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
 

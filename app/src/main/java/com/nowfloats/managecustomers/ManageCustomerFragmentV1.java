@@ -317,6 +317,13 @@ public class ManageCustomerFragmentV1 extends Fragment {
                         showOverlay(manageCustomerHolder);
                     }
                 });
+                manageCustomerHolder.llBackground.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        showOverlay(manageCustomerHolder);
+                    }
+                });
                 manageCustomerHolder.ivClose.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -468,7 +475,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
     }
 
     private void disableCustomerAssistant() {
-        MixPanelController.track(EventKeysWL.SIDE_PANEL_WHATSAPP_BUBBLE, null);
+        MixPanelController.track(EventKeysWL.SIDE_PANEL_WHATSAPP_BUBBLE_OFF, null);
         MixPanelController.track(EventKeysWL.SIDE_PANEL_CUSTOMER_ASSISTANT_OFF, null);
 
         session.setBubbleStatus(false);
