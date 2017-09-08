@@ -5,9 +5,11 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AppOpsManager;
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -186,7 +188,13 @@ public class Methods {
         }
         return accessibilityServiceEnabled;
     }
-
+    public static boolean isMyAppOpen(Context mContext){
+        ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+        Log.d("topActivity", "CURRENT Activity ::" + taskInfo.get(0).topActivity.getClassName());
+        ComponentName componentInfo = taskInfo.get(0).topActivity;
+        return mContext.getPackageName().equalsIgnoreCase(componentInfo.getPackageName());
+    }
     public static void showSnackBar(View view, String message, int color) {
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
         snackbar.getView().setBackgroundColor(color);
@@ -522,6 +530,17 @@ public class Methods {
         return isMyServiceRunning;
     }
 
+    public static boolean isUserLoggedIn(Context context){
+        DataBase db =new DataBase(context);
+        Cursor cursor = db.getLoginStatus();
+        if (cursor!=null && cursor.getCount()>0){
+            if (cursor.moveToNext()){
+                String LoginStatus = cursor.getString(0);
+                return LoginStatus != null && LoginStatus.equals("true");
+            }
+        }
+        return false;
+    }
     public static RestAdapter createAdapter(Context context, String url) throws IOException {
         try {
             OkHttpClient okHttpClient = new OkHttpClient();

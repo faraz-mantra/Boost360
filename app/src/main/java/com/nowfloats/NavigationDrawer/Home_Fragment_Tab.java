@@ -336,8 +336,6 @@ public class Home_Fragment_Tab extends Fragment {
 
     private void showBubble() {
 
-        pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, Calendar.getInstance().getTimeInMillis()).apply();
-
 //        if (!pref.getBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, false)) {
         addOverlay();
         pref.edit().putBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, true).apply();
@@ -374,7 +372,7 @@ public class Home_Fragment_Tab extends Fragment {
                 dialogForOverlayPath(from);
             }
         }
-
+        pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, Calendar.getInstance().getTimeInMillis()).apply();
         if (checkAccessibility)
             checkForAccessibility();
     }

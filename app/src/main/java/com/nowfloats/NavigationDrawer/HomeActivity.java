@@ -382,6 +382,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
         Constants.GCM_Msg = false;
         if (!Util.isNullOrEmpty(url)) {
+            MixPanelController.track("$app_open",null);
             if (url.contains(getString(R.string.facebook_chat))) {
                 Intent intent = new Intent(this, FacebookChatDetailActivity.class);
                 intent.putExtras(getIntent());
@@ -1962,6 +1963,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     private void createView() {
 
         setContentView(R.layout.activity_home_v3);
+        getNfxTokenData();
         BoostLog.d(TAG, "In on CreateView");
         deepLinkUrl = RiaFirebaseMessagingService.deepLinkUrl;
         FPID = session.getFPID();
@@ -2132,7 +2134,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 finish();
             }
         }
-        getNfxTokenData();
     }
     @Subscribe
     public void nfxCallback(NfxGetTokensResponse response){
