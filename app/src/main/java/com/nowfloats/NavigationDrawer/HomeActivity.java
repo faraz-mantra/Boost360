@@ -518,7 +518,12 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             } else if (url.contains("chatWindow")) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame, chatFragment, "chatFragment").commit();
-            } else if (url.contains(getResources().getString(R.string.deeplink_gplaces))) {//TODO
+            } else if(url.contains("assuredPurchase")){
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageCustomers")
+                        .addToBackStack(null)
+                        .commit();
+            }
+            else if (url.contains(getResources().getString(R.string.deeplink_gplaces))) {//TODO
             }
 
         }
