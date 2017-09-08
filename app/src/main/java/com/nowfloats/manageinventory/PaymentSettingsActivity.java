@@ -70,6 +70,8 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
 
     private UserSessionManager mSession;
 
+    private String mApplicableTxnCharge = "9%";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -169,6 +171,7 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
                             if (profile != null && profile.getData().size()>0) {
                                 mProfile = profile.getData().get(0);
                                 processProfileData(mProfile);
+                                mApplicableTxnCharge = mProfile.getApplicableTxnCharge()+"%";
                             }else {
                                 throw new NullPointerException("Orders Count is Null");
                             }
@@ -187,7 +190,7 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
         switch (v.getId()){
 
             case R.id.tv_ap_learn_more:
-                msg = getString(R.string.assured_purchase_learn_more);
+                msg = String.format(getString(R.string.assured_purchase_learn_more), mApplicableTxnCharge);
                 break;
             case R.id.tv_deliv_learn_more:
                 msg = getString(R.string.deliv_learn_more);

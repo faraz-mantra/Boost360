@@ -383,6 +383,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
         Constants.GCM_Msg = false;
         if (!Util.isNullOrEmpty(url)) {
+            MixPanelController.track("$app_open",null);
             if (url.contains(getString(R.string.facebook_chat))) {
                 Intent intent = new Intent(this, FacebookChatDetailActivity.class);
                 intent.putExtras(getIntent());
@@ -521,7 +522,12 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             } else if (url.contains("chatWindow")) {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame, chatFragment, "chatFragment").commit();
-            } else if (url.contains(getResources().getString(R.string.deeplink_gplaces))) {//TODO
+            } else if(url.contains("assuredPurchase")){
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageCustomers")
+                        .addToBackStack(null)
+                        .commit();
+            }
+            else if (url.contains(getResources().getString(R.string.deeplink_gplaces))) {//TODO
             }
 
         }
@@ -1962,6 +1968,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     private void createView() {
 
         setContentView(R.layout.activity_home_v3);
+        getNfxTokenData();
         BoostLog.d(TAG, "In on CreateView");
         deepLinkUrl = RiaFirebaseMessagingService.deepLinkUrl;
         FPID = session.getFPID();
@@ -2132,7 +2139,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 finish();
             }
         }
-        getNfxTokenData();
     }
 
     @Subscribe

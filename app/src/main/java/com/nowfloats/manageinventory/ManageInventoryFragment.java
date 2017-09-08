@@ -51,6 +51,7 @@ public class ManageInventoryFragment extends Fragment {
     SharedPreferences.Editor prefsEditor;
     private Activity activity;
     private boolean mIsAPEnabled = false;
+    private String mTransactionCharge = "9%";
 
 
     @Override
@@ -111,6 +112,7 @@ public class ManageInventoryFragment extends Fragment {
                                     mIsAPEnabled = true;
                                     ivLockWidget.setVisibility(View.GONE);
                                 }
+                                mTransactionCharge = profile.getData().get(0).getApplicableTxnCharge()+"%";
                             }else {
                                 throw new NullPointerException("Orders Count is Null");
                             }
@@ -175,7 +177,17 @@ public class ManageInventoryFragment extends Fragment {
                     }else {
                         new AlertDialog.Builder(getActivity())
                                 .setMessage("Enable Assured Purchase to view Seller Analytics")
-                                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                .setPositiveButton("Payment Settings", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        MixPanelController.track(EventKeysWL.SIDE_PANEL_PAYMENT_SETTING, null);
+                                        Intent i = new Intent(getActivity(), PaymentSettingsActivity.class);
+                                        startActivity(i);
+                                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                    }
+                                })
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.dismiss();

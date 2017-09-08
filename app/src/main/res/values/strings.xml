@@ -855,7 +855,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="nowfloats"> NowFloats</string>
     <string name="version">Version&#160;</string>
     <string name="float_point_name">Float Point Name</string>
-    <string name="your_site_health">Your site health</string>
+    <string name="your_site_health">Your Site Health</string>
     <string name="primary_number">Primary Number (To communicate with NowFloats)</string>
     <string name="to_communicate_with_nowfloats">To communicate with NowFloats</string>
     <string name="to_be_displayed_on_website">To be displayed on your website</string>
@@ -1414,6 +1414,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <li>Your money is safe with NowFloats and will be duly transferred with each payment cycle (Delivery + 15 working days) *.</li>
         <li>By enabling Assured Purchase you agree to all terms and policies listed on AssuredPurchase.com.</li>
         </ul>
+
+        <i>Transaction charges will be at rate of %s per transaction. Transaction charges can change without prior notice but we always strive to make it reasonable</i>
     ]]></string>
     <string name="deliv_learn_more"><![CDATA[
         <ul>
