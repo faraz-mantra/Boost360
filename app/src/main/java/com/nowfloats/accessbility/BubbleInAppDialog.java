@@ -1,9 +1,11 @@
 package com.nowfloats.accessbility;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
@@ -14,6 +16,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.nowfloats.bubble.BubblesService;
+import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
 
@@ -24,12 +29,19 @@ import com.thinksity.R;
 public class BubbleInAppDialog extends AppCompatActivity {
     public static final String ACTION_KILL_DIALOG = "nowfloats.bubblebutton.bubble.ACTION_KILL_DIALOG";
     private KillListener killListener;
-    Button permissionBtn;
+    private Button permissionBtn;
+    private SharedPreferences pref = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_in_app_bubble);
+        pref = getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
+
+        if (pref.getBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, false)) {
+            setContentView(R.layout.dialog_in_app_bubble);
+        } else {
+            setContentView(R.layout.dialog_in_app_add_products);
+        }
         MixPanelController.track(MixPanelController.BUBBLE_IN_APP_DIALOG, null);
         initialize();
     }
@@ -53,12 +65,17 @@ public class BubbleInAppDialog extends AppCompatActivity {
         permissionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MixPanelController.track(MixPanelController.BUBBLE_IN_APP_DIALOG_CLICKED, null);
-                showCustomToastView();
-                Intent i = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
-                startActivity(i);
-                finish();
+                if (pref.getBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, false)) {
+                    MixPanelController.track(MixPanelController.BUBBLE_IN_APP_DIALOG_CLICKED, null);
+                    showCustomToastView();
+                    Intent i = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    startActivity(i);
+                    finish();
+                } else {
+                    stopService(new Intent(BubbleInAppDialog.this, BubblesService.class));
+                    finish();
+                }
             }
         });
     }

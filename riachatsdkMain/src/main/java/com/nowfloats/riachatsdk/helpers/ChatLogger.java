@@ -17,8 +17,8 @@ import java.util.TimeZone;
 public class ChatLogger {
     private static ChatLogger sRiaEventLogger;
     private DatabaseReference mDatabase;
-    //    private static final String DB_CHILD_NAME = "RiaChatSDK";
-    private static final String DB_CHILD_NAME = "RiaChatTestSDK";
+    private static final String DB_CHILD_NAME = "RiaChatSDK";
+    //    private static final String DB_CHILD_NAME = "RiaChatTestSDK";
     private static final String DB_FEEDBACK_CHILD_NAME = "NpsSDK";
     //    private static final String DB_CHILD_NAME = "RiaChatTestSDK";
     //    private static final String DB_CHILD_NAME = "ChatSDKTestAndroid";

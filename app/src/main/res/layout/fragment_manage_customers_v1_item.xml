@@ -30,7 +30,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/mcw_bg"
                 android:orientation="horizontal"
                 android:paddingTop="@dimen/margin_10">
 
@@ -61,10 +60,15 @@
                     android:gravity="center_vertical"
                     android:maxLines="4"
                     android:text="Website\nInteractions"
-                    android:textColor="@color/white"
+                    android:textColor="@color/gray"
                     android:textSize="23sp" />
 
             </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:background="#cccccc" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -139,7 +143,7 @@
             android:elevation="5dp"
             android:paddingRight="@dimen/margin_10"
             android:paddingTop="@dimen/margin_10"
-            android:src="@drawable/ic_info_white_24dp" />
+            android:src="@drawable/info" />
 
     </RelativeLayout>
 

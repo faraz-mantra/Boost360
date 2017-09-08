@@ -15,7 +15,18 @@
         android:paddingRight="@dimen/margin_10"
         android:paddingTop="@dimen/margin_10"
         android:src="@drawable/com_facebook_close" />
-
+    <TextView
+        android:id="@+id/tvInfoTitle"
+        android:lineSpacingExtra="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/margin_15"
+        android:fontFamily="sans-serif"
+        android:gravity="left"
+        android:text="Website Customers"
+        android:textColor="@color/white"
+        android:textSize="@dimen/large_text_size" />
     <TextView
         android:id="@+id/tvInfo"
         android:lineSpacingExtra="2dp"
