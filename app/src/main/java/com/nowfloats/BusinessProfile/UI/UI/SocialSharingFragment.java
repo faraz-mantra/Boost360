@@ -1224,7 +1224,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                                     if ((!TextUtils.isEmpty(paymentState) && "1".equalsIgnoreCase(paymentState))) {
                                         createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
                                     }else{
-                                        Methods.materialDialog(activity, "Alert","Your account is expired, please renew it");
+                                        Methods.materialDialog(activity, "Alert","This feature is available to paid customers only.");
                                     }
                                 }
                             });

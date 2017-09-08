@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nowfloats.riachatsdk.ChatManager;
@@ -26,11 +27,16 @@ public class RvButtonsAdapter extends RecyclerView.Adapter<RvButtonsAdapter.Butt
     private OnItemClickListener mOnItemClickListener;
     private Context mContext;
     private ChatManager.ChatType chatType;
+    private RelativeLayout rlButtons;
+    private RecyclerView recyclerView;
 
-    public RvButtonsAdapter(Context mContext, List<Button> mButtonList, ChatManager.ChatType chatType) {
+    public RvButtonsAdapter(Context mContext, List<Button> mButtonList,
+                            ChatManager.ChatType chatType, RelativeLayout rlButtons, RecyclerView recyclerView) {
         this.mContext = mContext;
         this.mButtonList = mButtonList;
+        this.rlButtons = rlButtons;
         this.chatType = chatType;
+        this.recyclerView = recyclerView;
     }
 
     @Override
@@ -86,19 +92,18 @@ public class RvButtonsAdapter extends RecyclerView.Adapter<RvButtonsAdapter.Butt
         void onItemClick(int position);
     }
 
-    public void notifyDataSetChangedRequest(ChatManager.ChatType chatType,
-                                            RecyclerView recyclerview,
-                                            RvButtonsAdapter myAdapter,
-                                            RecyclerView.LayoutManager myLayoutManager) {
+    public void notifyDataSetChangedRequest() {
 
         switch (chatType) {
             case CREATE_WEBSITE:
-                myAdapter.notifyDataSetChanged();
+                this.notifyDataSetChanged();
                 break;
             case FEEDBACK:
-                recyclerview.setAdapter(null);
-                recyclerview.setLayoutManager(null);
-                recyclerview.setAdapter(myAdapter);
+
+                RecyclerView.LayoutManager myLayoutManager = recyclerView.getLayoutManager();
+                recyclerView.setAdapter(null);
+                recyclerView.setLayoutManager(null);
+                recyclerView.setAdapter(this);
 
                 int maxHeight = Utils.dpToPx(mContext, (45 * 4 + 50));
 
@@ -112,11 +117,11 @@ public class RvButtonsAdapter extends RecyclerView.Adapter<RvButtonsAdapter.Butt
                 }
 
                 LinearLayout.LayoutParams relLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, maxHeight);
-                recyclerview.setLayoutParams(relLayoutParams);
+                rlButtons.setLayoutParams(relLayoutParams);
 
-                recyclerview.setLayoutManager(myLayoutManager);
-                myAdapter.notifyDataSetChanged();
-                recyclerview.scrollToPosition(0);
+                recyclerView.setLayoutManager(myLayoutManager);
+                this.notifyDataSetChanged();
+                recyclerView.scrollToPosition(0);
                 break;
         }
 

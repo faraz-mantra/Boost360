@@ -195,20 +195,22 @@ public class ManageCustomerFragmentV1 extends Fragment {
                 manageCustomerHolder.tvTwo.setGravity(Gravity.CENTER);
                 manageCustomerHolder.tvThree.setGravity(Gravity.CENTER);
 
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
-                params.setMargins(Methods.dpToPx(30, getActivity()), 0, 0, 0);
-
+                LinearLayout.LayoutParams params = null;
 
                 switch (customerList[position]) {
                     case CI_WEBSITE:
 
+                        params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT);
+                        params.setMargins(Methods.dpToPx(30, getActivity()), 0, 0, 0);
+
 //                        manageCustomerHolder.tvThree.setVisibility(View.VISIBLE);
-                        manageCustomerHolder.tvTitle.setText("Website\nInteractions");
+                        manageCustomerHolder.tvTitle.setText("Website\nCustomers");
                         manageCustomerHolder.tvTwo.setText(getActivity().getString(R.string.enquiries_title));
                         manageCustomerHolder.tvOne.setText(getActivity().getString(R.string.subscribers));
                         manageCustomerHolder.tvThree.setText("Call");
 
+                        manageCustomerHolder.tvInfoTitle.setText(getString(R.string.website_customers));
                         manageCustomerHolder.tvInfo.setText(getString(R.string.manage_website_customers));
                         manageCustomerHolder.tvTwo.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -229,7 +231,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
                                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             }
                         });
-                        manageCustomerHolder.llBackground.setBackgroundResource(R.drawable.mcw_bg);
+//                        manageCustomerHolder.llBackground.setBackgroundResource(R.drawable.mcw_bg);
 
 
                         params.gravity = Gravity.BOTTOM;
@@ -241,10 +243,14 @@ public class ManageCustomerFragmentV1 extends Fragment {
 
                     case FB_CHATS:
 
+                        params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT);
+                        params.setMargins(Methods.dpToPx(30, getActivity()), 0, 0, 0);
                         manageCustomerHolder.tvTitle.setText("Social\nInteractions");
-                        manageCustomerHolder.tvOne.setText("My Facebook Chats");
+                        manageCustomerHolder.tvOne.setText(getString(R.string.my_facebook_chats));
                         manageCustomerHolder.tvTwo.setVisibility(View.GONE);
                         manageCustomerHolder.tvInfo.setText(getString(R.string.manage_social_customers));
+                        manageCustomerHolder.tvInfoTitle.setText(getString(R.string.social_interactions));
 
                         manageCustomerHolder.tvOne.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -255,7 +261,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
                             }
                         });
 
-                        manageCustomerHolder.llBackground.setBackgroundResource(R.drawable.mci_bg);
+//                        manageCustomerHolder.llBackground.setBackgroundResource(R.drawable.mci_bg);
                         params.gravity = Gravity.BOTTOM;
                         manageCustomerHolder.iconImage.setLayoutParams(params);
                         manageCustomerHolder.iconImage.setImageResource(R.drawable.ic_social);
@@ -264,13 +270,18 @@ public class ManageCustomerFragmentV1 extends Fragment {
                     case MULTI_CHANNEL_CUSTOMERS:
 
 
+                        params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT);
+                        params.setMargins(Methods.dpToPx(30, getActivity()), 0, 0, 0);
+
                         manageCustomerHolder.tvTitle.setText("Cross\nPlatform");
-                        manageCustomerHolder.tvOne.setText("Enable Customer Assistant");
+                        manageCustomerHolder.tvOne.setText(getString(R.string.enable_customer_assistant));
+                        manageCustomerHolder.tvInfoTitle.setText(getString(R.string.cross_platform));
                         manageCustomerHolder.tvOne.setGravity(Gravity.LEFT);
                         manageCustomerHolder.tvTwo.setVisibility(View.GONE);
                         manageCustomerHolder.tvInfo.setText(getString(R.string.manage_multichannel_customers));
 
-                        manageCustomerHolder.llBackground.setBackgroundResource(R.drawable.mcp_bg);
+//                        manageCustomerHolder.llBackground.setBackgroundResource(R.drawable.mcp_bg);
 
                         params.gravity = Gravity.CENTER;
                         manageCustomerHolder.iconImage.setLayoutParams(params);
@@ -306,6 +317,13 @@ public class ManageCustomerFragmentV1 extends Fragment {
                         showOverlay(manageCustomerHolder);
                     }
                 });
+                manageCustomerHolder.llBackground.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        showOverlay(manageCustomerHolder);
+                    }
+                });
                 manageCustomerHolder.ivClose.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -323,7 +341,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
 
         private class ManageCustomerHolder extends RecyclerView.ViewHolder {
 
-            TextView tvOne, tvTwo, tvThree, tvTitle, tvInfo;
+            TextView tvOne, tvTwo, tvThree, tvTitle, tvInfo,tvInfoTitle;
             CardView cvManageCustomer;
             RecyclerView rv_carousel;
             LinearLayout llUpdates, llBackground;
@@ -341,6 +359,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
                 ivInfo = (ImageView) itemView.findViewById(R.id.ivInfo);
                 ivClose = (ImageView) itemView.findViewById(R.id.ivClose);
                 tvInfo = (TextView) itemView.findViewById(R.id.tvInfo);
+                tvInfoTitle = (TextView) itemView.findViewById(R.id.tvInfoTitle);
                 tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
                 tvOne = (TextView) itemView.findViewById(R.id.tvOne);
                 tvTwo = (TextView) itemView.findViewById(R.id.tvTwo);
@@ -456,7 +475,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
     }
 
     private void disableCustomerAssistant() {
-        MixPanelController.track(EventKeysWL.SIDE_PANEL_WHATSAPP_BUBBLE, null);
+        MixPanelController.track(EventKeysWL.SIDE_PANEL_WHATSAPP_BUBBLE_OFF, null);
         MixPanelController.track(EventKeysWL.SIDE_PANEL_CUSTOMER_ASSISTANT_OFF, null);
 
         session.setBubbleStatus(false);
@@ -497,19 +516,19 @@ public class ManageCustomerFragmentV1 extends Fragment {
 
         boolean checkAccessibility = true;
 
-        Calendar calendar = Calendar.getInstance();
-        long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, -1);
-        long newTime = calendar.getTimeInMillis();
-        long diff = 3 * 24 * 60 * 60 * 1000;
-
-        if (oldTime != -1 && ((newTime - oldTime) < diff)) {
-            return;
-        } else {
+//        Calendar calendar = Calendar.getInstance();
+//        long oldTime = pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, -1);
+//        long newTime = calendar.getTimeInMillis();
+//        long diff = 3 * 24 * 60 * 60 * 1000;
+//
+//        if (oldTime != -1 && ((newTime - oldTime) < diff)) {
+//            return;
+//        } else {
             if (!Methods.hasOverlayPerm(getActivity())) {
                 checkAccessibility = false;
                 dialogForOverlayPath(from);
             }
-        }
+//        }
 
         if (checkAccessibility)
             checkForAccessibility();

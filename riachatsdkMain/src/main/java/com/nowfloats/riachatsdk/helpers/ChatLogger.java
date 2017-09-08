@@ -17,9 +17,13 @@ import java.util.TimeZone;
 public class ChatLogger {
     private static ChatLogger sRiaEventLogger;
     private DatabaseReference mDatabase;
-    //    private static final String DB_CHILD_NAME = "RiaChatSDK";
-    private static final String DB_CHILD_NAME = "RiaChatTestSDK";
+    private static final String DB_CHILD_NAME = "RiaChatSDK";
+    //        private static final String DB_CHILD_NAME = "RiaChatTestSDK";
     private static final String DB_FEEDBACK_CHILD_NAME = "NpsSDK";
+
+    private static final String EVENT_CATEGORY_ONBOARDING = "RIA_ONBOARDING_CHAT";
+    private static final String EVENT_CATEGORY_NPS = "NF_FEEDBACK_CHAT";
+
     //    private static final String DB_CHILD_NAME = "RiaChatTestSDK";
     //    private static final String DB_CHILD_NAME = "ChatSDKTestAndroid";
     //private static Bus mBus;
@@ -57,7 +61,6 @@ public class ChatLogger {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         df.setTimeZone(TimeZone.getTimeZone("UTC"));
         ChatEventModel Event = new ChatEventModel()
-                .setEventCategory("RIA_ONBOARDING_CHAT")
                 .setEventChannel("APP_ANDR")
                 .setEventName("VIEW")
                 .setAppVersion(appVersion)
@@ -69,9 +72,11 @@ public class ChatLogger {
 
         switch (chatType) {
             case CREATE_WEBSITE:
+                Event.setEventCategory(EVENT_CATEGORY_ONBOARDING);
                 mDatabase.child(DB_CHILD_NAME).push().setValue(Event);
                 break;
             case FEEDBACK:
+                Event.setEventCategory(EVENT_CATEGORY_NPS);
                 mDatabase.child(DB_FEEDBACK_CHILD_NAME).push().setValue(Event);
                 break;
         }
@@ -120,9 +125,11 @@ public class ChatLogger {
         }
         switch (chatType) {
             case CREATE_WEBSITE:
+                Event.setEventCategory(EVENT_CATEGORY_ONBOARDING);
                 mDatabase.child(DB_CHILD_NAME).push().setValue(Event);
                 break;
             case FEEDBACK:
+                Event.setEventCategory(EVENT_CATEGORY_NPS);
                 mDatabase.child(DB_FEEDBACK_CHILD_NAME).push().setValue(Event);
                 break;
         }
@@ -176,9 +183,11 @@ public class ChatLogger {
 
         switch (chatType) {
             case CREATE_WEBSITE:
+                Event.setEventCategory(EVENT_CATEGORY_ONBOARDING);
                 mDatabase.child(DB_CHILD_NAME).push().setValue(Event);
                 break;
             case FEEDBACK:
+                Event.setEventCategory(EVENT_CATEGORY_NPS);
                 mDatabase.child(DB_FEEDBACK_CHILD_NAME).push().setValue(Event);
                 break;
         }

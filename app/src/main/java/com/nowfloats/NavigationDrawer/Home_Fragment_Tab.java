@@ -279,13 +279,13 @@ public class Home_Fragment_Tab extends Fragment {
 
     @Subscribe
     public void getRiaCardModels(ArrayList<RiaCardModel> model) {
-        if (tabs.getTabView(1) != null) {
-            if (model != null && model.size() > 0) {
-                tabs.getTabView(1).findViewById(R.id.ll_ria_alert).setVisibility(View.VISIBLE);
-            } else {
-                tabs.getTabView(1).findViewById(R.id.ll_ria_alert).setVisibility(View.GONE);
-            }
-        }
+//        if (tabs.getTabView(1) != null) {
+//            if (model != null && model.size() > 0) {
+//                tabs.getTabView(1).findViewById(R.id.ll_ria_alert).setVisibility(View.VISIBLE);
+//            } else {
+//                tabs.getTabView(1).findViewById(R.id.ll_ria_alert).setVisibility(View.GONE);
+//            }
+//        }
     }
 
     @Override
