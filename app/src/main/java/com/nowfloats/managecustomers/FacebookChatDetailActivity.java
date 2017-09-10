@@ -265,8 +265,10 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
     @Override
     protected void onPause() {
         super.onPause();
-        pref.edit().putString("facebookChatUser","").apply();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReceiver);
+        if(pref != null) {
+            pref.edit().putString("facebookChatUser", "").apply();
+        }
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReceiver);
     }
 
     BroadcastReceiver messageReceiver = new BroadcastReceiver() {

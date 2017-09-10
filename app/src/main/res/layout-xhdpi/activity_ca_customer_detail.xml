@@ -21,8 +21,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableLeft="@drawable/ic_arrow_back"
-            android:fontFamily="sans-serif"
             android:drawablePadding="@dimen/margin_10"
+            android:fontFamily="sans-serif"
             android:text="Potential Customers"
             android:textColor="@color/white"
             android:textSize="@dimen/large_text_size" />
@@ -185,7 +185,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_5"
                 android:orientation="horizontal">
-
 
                 <Button
                     android:id="@+id/btnShare"

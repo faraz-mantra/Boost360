@@ -26,7 +26,7 @@
     <string name="title_activity_pre_sign_up__main">PreSignUp_MainActivity</string>
     <string name="ps_create_lbl">CREATE</string>
     <string name="ps_login_lbl">LOG IN</string>
-    <string name="manage_inventory">Manage Inventory</string>
+    <string name="manage_inventory">Manage Catalog</string>
     <string name="ps_create_lbl_tag">a website with NowFloats</string>
     <string name="ps_login_lbl_tag">to manage NowFloats website</string>
     <string name="ps_sc2_lbl1">Instant Website</string>
@@ -76,7 +76,7 @@
     <string name="customer_has_sent_an_enquiry">Customer has sent an enquiry</string>
     <string name="title_activity_create__message_">Post an Update</string>
     <string name="side_panel_row_one">Dashboard</string>
-    <string name="side_panel_row_two">My Business Profile</string>
+    <string name="side_panel_row_two">Manage Website</string>
     <string name="side_panel_site_appearance">Site Appearance</string>
     <string name="side_panel_row_csp">Custom Pages</string>
     <string name="side_panel_row_three">Enquiries</string>
@@ -89,7 +89,7 @@
     <string name="setting_feedback">Feedback</string>
     <string name="setting_rate_us_on_play_store">Rate us on Play Store</string>
     <string name="Setting_like_us_on_facebook">Like us on Facebook</string>
-    <string name="setting_about_us">About us</string>
+    <string name="setting_about_us">About Us</string>
     <string name="setting_logout">Logout</string>
     <string name="signup_subd">^[a&#8211;zA&#8211;Z0&#8211;9][a&#8211;zA&#8211;Z0&#8211;9&#8211;]{1,61}[a&#8211;zA&#8211;Z0&#8211;9]$</string>
 
@@ -414,6 +414,7 @@
         <item>Quikr</item>
     </string-array>
     <string name="business_enquiries_title">Business Enquiries</string>
+    <string name="enquiries_title">Enquiries</string>
     <string name="payment_setting">Payment Setting</string>
     <string name="double_quotes"> &quot; </string>
     <string name="business_profile_title">Profile</string>
@@ -854,7 +855,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="nowfloats"> NowFloats</string>
     <string name="version">Version&#160;</string>
     <string name="float_point_name">Float Point Name</string>
-    <string name="your_site_health">Your site health</string>
+    <string name="your_site_health">Your Site Health</string>
     <string name="primary_number">Primary Number (To communicate with NowFloats)</string>
     <string name="to_communicate_with_nowfloats">To communicate with NowFloats</string>
     <string name="to_be_displayed_on_website">To be displayed on your website</string>
@@ -977,8 +978,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="sign_up_email">Email Address</string>
     <string name="sign_up_phone_number">Phone Number</string>
     <string name="Setting_follow_us_on_twitter">Follow us on Twitter</string>
-    <string name="Setting_terms_of_use">Terms of use</string>
-    <string name="Setting_privacy_policy">Privacy policy</string>
+    <string name="Setting_terms_of_use">Terms of Use</string>
+    <string name="Setting_privacy_policy">Privacy Policy</string>
     <string name="onboarding_next_btn_next">Got it,Next</string>
     <string name="on_boarding_next2_text">Great, Thanks</string>
     <string name="onboarding_popup_one_btn_text">Show me!</string>
@@ -1274,6 +1275,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="search_ranking">Search Ranking</string>
     <string name="spinner_title">Filter</string>
     <string name="bubble_in_app_message">We have made it easier for you to now share your products on WhatsApp through this bubble.</string>
+    <string name="bubble_in_app_add_products">Add products to your catalog to share it with potential customers on WhatsApp.</string>
     <string name="boost_bubble">Boost Bubble</string>
     <string name="disable_boost_bubble">Disable Boost Bubble</string>
     <string name="accessibility_message">Go ahead &amp; start sharing on WhatsApp</string>
@@ -1391,6 +1393,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="product_transaction_charge_hint">This is charge for using Assured Purchase only. This will be calculated on Product Price less Discount Amount</string>
     <string name="product_buy_online_hint">If you don\'t want to collect payments online through Assured Purchase, you can select this option to re-direct buyer to your own URL, once they click \'Buy Now\' on your website. This disabled when Assured Purchase is enabled.</string>
     <string name="facebook_chat">facebookchat</string>
+    <string name="feedback_chat">feedbackchat</string>
     <string name="order_id">Order Id</string>
     <string name="order_date">Order Date</string>
     <string name="order_amount">Order Amount</string>
@@ -1402,5 +1405,40 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="returned_orders">Returned Orders</string>
     <string name="abandoned_orders">Abandoned Orders</string>
     <string name="filter_orders">Filter Orders</string>
+    <string name="learn_more">Learn More</string>
+    <string name="assured_purchase_learn_more"><![CDATA[
+        Assured Purchase is a service guarantee by NowFloats that is the new benchmark for online selling businesses in India. By earning this badge:
+        <ul>
+        <li>You become a verified seller on NowFloats platform. Your potential buyers will see Assured Purchase badge on your website as a mark of trust and a guarantee from NowFloats.</li>
+        <li>You can assure reliable and speedy delivery of your products to your buyers.</li>
+        <li>Your money is safe with NowFloats and will be duly transferred with each payment cycle (Delivery + 15 working days) *.</li>
+        <li>By enabling Assured Purchase you agree to all terms and policies listed on AssuredPurchase.com.</li>
+        </ul>
+
+        <i>Transaction charges will be at rate of %s per transaction. Transaction charges can change without prior notice but we always strive to make it reasonable</i>
+    ]]></string>
+    <string name="deliv_learn_more"><![CDATA[
+        <ul>
+        <li>If you have an existing website with an integrated payment gateway you can choose to integrate that with your product catalog. To accept payments via your NowFloats Boost website, please add the relevant links to each one of your products via the Buy Online option in your NowFloats Boost product catalog.</li>
+        <li>If you are listed on an e-commerce marketplace like Amazon, Paytm, Flipkart etc, you can use the URL of the relevant product on the NowFloats Product catalogue.
+        </li>
+        </ul>
+    ]]></string>
+    <string name="analylitcs">Analytics</string>
+    <string name="website_customers">Website Customers</string>
+    <string name="social_interactions">Social Interactions</string>
+    <string name="cross_platform">Cross Platform</string>
+
+    <string name="manage_website">Manage Website</string>
+    <string name="my_facebook_chats">My Facebook Chats</string>
+
+    <string name="disable_customer_assistant">Disable Customer Assistant</string>
+    <string name="enable_customer_assistant">Enable Customer Assistant</string>
+
+    <string name="manage_website_customers">Track how many customers you have received from your website. This is your organic traffic coming from search engines, and repeat visitors. These are your most important customers, and will grow over time. </string>
+    <string name="manage_social_customers">Your social media pages are an easy way for customers on those platforms to interact with you. Currently, you can chat with customers who are reaching out to you on your Facebook Page.
+</string>
+    <string name="manage_multichannel_customers">You can track all your online customers from a single interface. You can interact with your customers on platforms like WhatsApp and SMS. We read through your SMS data to fetch relevant enquiries.</string>
+
 
 </resources>

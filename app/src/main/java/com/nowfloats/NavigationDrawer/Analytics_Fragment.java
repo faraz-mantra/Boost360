@@ -4,6 +4,7 @@ package com.nowfloats.NavigationDrawer;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Bundle;
@@ -59,6 +60,7 @@ import com.nowfloats.NavigationDrawer.model.CoordinatesSet;
 import com.nowfloats.NavigationDrawer.model.RiaCardModel;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.NavigationDrawer.model.Section;
+import com.nowfloats.riachatsdk.helpers.DeviceDetails;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
@@ -72,8 +74,10 @@ import com.thinksity.R;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -419,8 +423,27 @@ public class Analytics_Fragment extends Fragment {
                 .setLog(new AndroidLog("Retrofit Response"))*/
                 .build();
 
+        Map<String, String> query = new HashMap<>();
+        query.put("fpTag", session.getFpTag());
+        try {
+            query.put("appVersion", getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        query.put("deviceId", DeviceDetails.getDeviceId(getActivity()));
+        query.put("libVersion", DeviceDetails.getLibVersionName());
+        query.put("osVersion", DeviceDetails.getAndroidVersion());
+        query.put("osTimeZone", DeviceDetails.getTimeZone());
+        query.put("osCountry", DeviceDetails.getCountry());
+        query.put("osLanguage", DeviceDetails.getLanguage());
+        query.put("deviceBrand", DeviceDetails.getBrand());
+        query.put("deviceModel", DeviceDetails.getDeviceModel());
+        query.put("screenWidth", DeviceDetails.getScreenWidth(getActivity()) + "");
+        query.put("screenHeight", DeviceDetails.getScreenHeight(getActivity()) + "");
+
+
         RiaNetworkInterface networkInterface = riaCardAdapter.create(RiaNetworkInterface.class);
-        networkInterface.getRiaCards(session.getFpTag(), new Callback<ArrayList<RiaCardModel>>() {
+        networkInterface.getRiaCards(query, new Callback<ArrayList<RiaCardModel>>() {
             @Override
             public void success(ArrayList<RiaCardModel> riaCardModels, Response response) {
                 if (riaCardModels != null && getActivity() != null && riaCardModels.size() > 0) {

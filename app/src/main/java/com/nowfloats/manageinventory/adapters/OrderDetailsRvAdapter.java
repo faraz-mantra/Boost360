@@ -116,7 +116,7 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             if(mOrder.getOrderStatus() == OrderListActivity.OrderStatus.DELIVERED.ordinal()) {
                 orderDetailsHolder.tvDeliveryDate.setText(getParsedDate(mOrder.getActualDeliveryDate()));
             }else {
-                orderDetailsHolder.tvOrderDate.setText(getParsedDate(mOrder.getExpectedDeliveryDate()));
+                orderDetailsHolder.tvDeliveryDate.setText(getParsedDate(mOrder.getExpectedDeliveryDate()));
             }
             orderDetailsHolder.tvOrderDate.setText(getParsedDate(mOrder.getCreatedOn()));
         }

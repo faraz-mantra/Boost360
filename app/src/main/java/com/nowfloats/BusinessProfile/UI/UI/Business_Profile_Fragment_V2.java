@@ -540,7 +540,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
     public void onResume() {
         super.onResume();
         if (HomeActivity.headerText != null)
-            HomeActivity.headerText.setText(getResources().getString(R.string.business_profile_title));
+            HomeActivity.headerText.setText(getResources().getString(R.string.manage_website));
         if (websiteTextView != null)
             websiteTextView.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
         if (businessInfoTextView != null)

@@ -71,6 +71,9 @@ public class MerchantProfileModel implements Parcelable{
     @SerializedName("IsArchived")
     @Expose
     private Boolean isArchived;
+    @SerializedName("applicable_txn_charge")
+    @Expose
+    private Double applicableTxnCharge;
 
     public MerchantProfileModel(){
 
@@ -94,6 +97,7 @@ public class MerchantProfileModel implements Parcelable{
         websiteId = in.readString();
         createdOn = in.readString();
         updatedOn = in.readString();
+        applicableTxnCharge = in.readDouble();
     }
 
     public static final Creator<MerchantProfileModel> CREATOR = new Creator<MerchantProfileModel>() {
@@ -107,6 +111,22 @@ public class MerchantProfileModel implements Parcelable{
             return new MerchantProfileModel[size];
         }
     };
+
+    public Boolean getArchived() {
+        return isArchived;
+    }
+
+    public void setArchived(Boolean archived) {
+        isArchived = archived;
+    }
+
+    public Double getApplicableTxnCharge() {
+        return applicableTxnCharge;
+    }
+
+    public void setApplicableTxnCharge(Double applicableTxnCharge) {
+        this.applicableTxnCharge = applicableTxnCharge;
+    }
 
     public String getId() {
         return id;
@@ -292,5 +312,6 @@ public class MerchantProfileModel implements Parcelable{
         dest.writeString(websiteId);
         dest.writeString(createdOn);
         dest.writeString(updatedOn);
+        dest.writeDouble(applicableTxnCharge);
     }
 }
