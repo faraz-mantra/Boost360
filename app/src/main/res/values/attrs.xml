@@ -71,7 +71,6 @@
         <attr name="android:layoutDirection" />
         <attr name="android:textDirection" />
         <attr name="android:textAlignment" />
-
         <!-- Imported from Android -->
         <attr name="android:orientation" />
 

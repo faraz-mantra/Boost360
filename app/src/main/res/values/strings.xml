@@ -1376,7 +1376,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="site_appearance">SITE APPEARANCE</string>
     <string name="shipping_metrics">SHIPPING METRICS</string>
     <string name="bank_details">BANK DETAILS</string>
-    <string name="payment_details">Payment Details</string>
+    <string name="payment_details">Bank Account Details</string>
     <string name="product_shipping_charges">Shipping Charges(In INR)</string>
     <string name="product_transaction_charges">Transaction Charges (In INR)</string>
     <string name="product_net_amount">Net Amount (In INR)</string>
@@ -1412,7 +1412,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <li>You become a verified seller on NowFloats platform. Your potential buyers will see Assured Purchase badge on your website as a mark of trust and a guarantee from NowFloats.</li>
         <li>You can assure reliable and speedy delivery of your products to your buyers.</li>
         <li>Your money is safe with NowFloats and will be duly transferred with each payment cycle (Delivery + 15 working days) *.</li>
-        <li>By enabling Assured Purchase you agree to all terms and policies listed on AssuredPurchase.com.</li>
+        <li>By enabling Assured Purchase you agree to all terms and policies listed on <a href ="http://assuredpurchase.com/">AssuredPurchase.com</a>.</li>
         </ul>
 
         <i>Transaction charges will be at rate of %s per transaction. Transaction charges can change without prior notice but we always strive to make it reasonable</i>
