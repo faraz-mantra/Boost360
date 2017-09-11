@@ -36,7 +36,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/margin_10"
                     android:src="@drawable/ic_ria_feedback"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="0dp"
