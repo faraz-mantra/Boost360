@@ -159,7 +159,7 @@ public class Home_Fragment_Tab extends Fragment {
         alertCountTv.setVisibility(View.GONE);
         String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
 
-        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") /*&& "1".equals(paymentState)*/) {
+       /* if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") *//*&& "1".equals(paymentState)*//*) {
             getProducts();
 
             new Handler().postDelayed(new Runnable() {
@@ -169,7 +169,7 @@ public class Home_Fragment_Tab extends Fragment {
                 }
             }, 8000);
 
-        }
+        }*/
 
         viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -482,6 +482,16 @@ public class Home_Fragment_Tab extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        if (alertCountVal != null && alertCountVal.trim().length() > 0 && !alertCountVal.equals("0") && alertCountTv != null) {
+            alertCountTv.setText(alertCountVal);
+            alertCountTv.setVisibility(View.VISIBLE);
+        } else if (alertCountTv != null) {
+            alertCountTv.setText("0");
+            alertCountTv.setVisibility(View.GONE);
+            alertCountVal = "0";
+        } else {
+            alertCountVal = "0";
+        }
         if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
             getActivity().registerReceiver(clickReceiver, clickIntentFilters);
         }

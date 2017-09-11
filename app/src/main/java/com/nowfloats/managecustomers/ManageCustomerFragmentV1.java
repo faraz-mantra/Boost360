@@ -496,10 +496,11 @@ public class ManageCustomerFragmentV1 extends Fragment {
 
                 if (productListModels == null || productListModels.size() == 0 || response.getStatus() != 200) {
                     pref.edit().putBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, false).apply();
+
                     return;
                 }
-
                 pref.edit().putBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, true).apply();
+
             }
 
             @Override

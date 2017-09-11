@@ -2,6 +2,7 @@ package com.nowfloats.manageinventory;
 
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,16 +13,22 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.GravityEnum;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -190,20 +197,37 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
 
     public void showLearnMoreDialog(final View v, final boolean showAssureDialog){
 
-        String msg = "";
+        int arrayId;
+        String title,content = null;
         switch (v.getId()){
 
             case R.id.tv_ap_learn_more:
-                msg = String.format(getString(R.string.assured_purchase_learn_more), mApplicableTxnCharge);
+                arrayId = R.array.assured_purchase_points;
+                title ="Assured Purchase";
+                content = "Assured Purchase is a service guarantee by NowFloats that is the new benchmark for online selling businesses in India. By earning this badge:";
                 break;
             case R.id.tv_deliv_learn_more:
-                msg = getString(R.string.deliv_learn_more);
+                arrayId = R.array.delivery_points;
+                title = "Use own payment link";
+                //msg = getString(R.string.deliv_learn_more);
                 break;
+            default:
+                return;
         }
 
         MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
                 .canceledOnTouchOutside(false)
-                .content(Methods.fromHtml(msg));
+                .itemsGravity(GravityEnum.CENTER)
+                .adapter(new MyArrayAdapter(PaymentSettingsActivity.this,arrayId,mApplicableTxnCharge),
+                        new LinearLayoutManager(PaymentSettingsActivity.this,LinearLayoutManager.VERTICAL,false))
+                .dividerColorRes(R.color.gray);
+
+        if(!TextUtils.isEmpty(content)){
+            builder.content(content);
+        }
+        if(!TextUtils.isEmpty(title)){
+            builder.title(title);
+        }
 
         if(showAssureDialog){
 
@@ -241,9 +265,46 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
                 }
             });
         }
+
         builder.show();
     }
 
+    public class MyArrayAdapter extends RecyclerView.Adapter<MyArrayAdapter.MyHolder>{
+        String[] bulletPoints = null;
+        Context mContext;
+        String textCharge;
+        public MyArrayAdapter(Context context,int id,String textCharge){
+            mContext = context;
+            this.textCharge = textCharge;
+            bulletPoints = getResources().getStringArray(id);
+        }
+        @Override
+        public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_bullet_point_item, parent, false);
+            return new MyHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(MyHolder holder, int position) {
+            if(holder != null){
+                holder.text.setText(String.format(bulletPoints[position],textCharge));
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return bulletPoints.length;
+        }
+
+        class MyHolder extends RecyclerView.ViewHolder{
+
+            public TextView text;
+            MyHolder(View itemView) {
+                super(itemView);
+                text = (TextView) itemView.findViewById(R.id.text1);
+            }
+        }
+    }
     private void processProfileData(MerchantProfileModel profile){
         rgPaymentMethod.setOnCheckedChangeListener(null);
         if(profile.getPaymentType() == 0){

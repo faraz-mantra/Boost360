@@ -1445,10 +1445,10 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                             .commit();
                     getSupportFragmentManager().executePendingTransactions();
                     homeFragment.setFragmentTab(0);
-                    if (callMethod && Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+                    /*if (callMethod && Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
 
                         homeFragment.checkOverlay(Home_Fragment_Tab.DrawOverLay.FromHome);
-                    }
+                    }*/
                     //   getSupportFragmentManager().beginTransaction().
                     //           replace(R.id.mainFrame, homeFragment).addToBackStack("Home").commit();
                 } else if (nextScreen.equals(getString(R.string.chat))) {
