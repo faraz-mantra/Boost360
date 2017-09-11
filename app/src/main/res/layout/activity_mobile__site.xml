@@ -28,11 +28,12 @@
 
         <ImageView
             android:id="@+id/back_web"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="left|center"
-            android:padding="7dp"
-            android:src="@drawable/ic_action_back" />
+            android:padding="12dp"
+            android:src="@drawable/icon_action_back"
+            android:background="?android:selectableItemBackground" />
 
         <TextView
             android:id="@+id/close_web"

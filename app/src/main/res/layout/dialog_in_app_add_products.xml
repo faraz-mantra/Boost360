@@ -2,45 +2,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:gravity="center"
-    android:layout_height="match_parent">
+    android:padding="15dp"
+    android:layout_gravity="center"
+    android:layout_height="wrap_content">
 
-    <com.makeramen.RoundedImageView
+    <ImageView
         android:id="@+id/businessProfileIcon_ProfileV2"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="25dp"
+        android:layout_marginTop="@dimen/margin_25"
         android:scaleType="fitXY"
-        android:layout_marginTop="@dimen/margin_15"
-        android:src="@drawable/manage_inventory"
-        android:tint="@color/primary"
-        app:riv_border_color="#333333"
-        app:riv_border_width="0dip"
-        app:riv_corner_radius="30dip"
-        app:riv_mutate_background="true"
-        app:riv_oval="true" />
+        android:src="@drawable/catalog_zeroth_icon"
+        android:tint="@color/primary" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
+        android:text="Uh oh! Your product catalog is empty"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:textSize="15sp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:text="@string/bubble_in_app_add_products"
-        android:layout_marginLeft="24dp" />
+        android:gravity="center"
+        android:layout_margin="5dp"
+        android:text="@string/bubble_in_app_add_products" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:background="@color/primaryColor"
-        android:textSize="15sp"
-        android:padding="8dp"
-        android:layout_margin="24dp"
-        android:layout_gravity="end"
+        android:background="@drawable/rounded_corner_button"
+        android:textSize="18sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:textAllCaps="false"
+        android:layout_gravity="center_horizontal"
         android:id="@+id/permission_btn"
-        android:text="@string/ok"/>
+        android:text="@string/add_product"/>
 
 </LinearLayout>

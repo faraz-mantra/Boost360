@@ -26,7 +26,7 @@
             android:id="@+id/home_view_delete_card"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:padding="13dp"
+            android:padding="15dp"
             android:background="@drawable/button_click_effect"
             android:src="@drawable/delete_dustbin_button"/>
         <ImageView
