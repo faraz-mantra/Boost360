@@ -105,6 +105,7 @@ import com.nowfloats.Store.StoreFragmentTab;
 import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.customerassistant.models.SMSSuggestions;
 import com.nowfloats.customerassistant.service.CustomerAssistantApi;
+import com.nowfloats.managecustomers.FacebookChatActivity;
 import com.nowfloats.managecustomers.FacebookChatDetailActivity;
 import com.nowfloats.managecustomers.ManageCustomerFragmentV1;
 import com.nowfloats.manageinventory.ManageInventoryFragment;
@@ -383,11 +384,22 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
         Constants.GCM_Msg = false;
         if (!Util.isNullOrEmpty(url)) {
-            MixPanelController.track("$app_open",null);
+            if(!isFromRia)
+            {
+                MixPanelController.track("$app_open",null);
+            }
             if (url.contains(getString(R.string.facebook_chat))) {
                 Intent intent = new Intent(this, FacebookChatDetailActivity.class);
                 intent.putExtras(getIntent());
                 startActivity(intent);
+            }
+            if (url.contains(getString(R.string.facebook_chat_main))) {
+                Intent intent = new Intent(this, FacebookChatActivity.class);
+                startActivity(intent);
+            }else if (url.contains(getString(R.string.deeplink_manage_customer))) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageCustomerFragment, "ManageCustomers")
+                        .addToBackStack(null)
+                        .commit();
             } else if (url.contains(getString(R.string.feedback_chat))) {
                 MixPanelController.track("ChatFeedback", null);
                 ChatManager.getInstance(HomeActivity.this).startChat(ChatManager.ChatType.FEEDBACK);
@@ -523,7 +535,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame, chatFragment, "chatFragment").commit();
             } else if(url.contains("assuredPurchase")){
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageCustomers")
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageInventory")
                         .addToBackStack(null)
                         .commit();
             }
@@ -637,20 +649,18 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 .title(getString(R.string.app_update_available))
                 .content(getString(R.string.update_nowfloats_app))
                 .positiveText(getString(R.string.update))
-                .negativeText(getString(R.string.remind_me_later))
                 .positiveColorRes(R.color.primaryColor)
-                .negativeColorRes(R.color.primaryColor)
                 .cancelable(false)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
+                        dialog.dismiss();
                         final String appPackageName = mContext.getPackageName(); // getPackageName() from Context or Activity object
                         try {
-                            dialog.dismiss();
+
                             mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
                         } catch (android.content.ActivityNotFoundException anfe) {
-                            dialog.dismiss();
                             mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                         }
                     }
