@@ -458,7 +458,8 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
 
                 gvSuggestions.setVisibility(View.VISIBLE);
                 tvNoItems.setVisibility(View.GONE);
-
+                gvSuggestions.setHorizontalSpacing(Methods.dpToPx(20, getActivity()));
+                gvSuggestions.setVerticalSpacing(Methods.dpToPx(20, getActivity()));
                 if (mSuggestionsDO.getProducts() != null && mSuggestionsDO.getProducts().size() > 0) {
                     gvSuggestions.setAdapter(new CAProductsAdapter(getActivity(),
                             mSuggestionsDO.getProducts(), CustomerAssistantDetailFragment.this));
@@ -498,7 +499,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
                         @Override
                         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
-                            if (visibleItemCount < (mSuggestionsDO.getUpdates().size() - 2)) {
+                            if (visibleItemCount < (mSuggestionsDO.getProducts().size() - 2)) {
                                 ivScrollDown.setVisibility(View.VISIBLE);
                             } else {
                                 ivScrollDown.setVisibility(View.INVISIBLE);

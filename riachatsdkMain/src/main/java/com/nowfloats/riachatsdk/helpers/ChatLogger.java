@@ -76,7 +76,7 @@ public class ChatLogger {
                 mDatabase.child(DB_CHILD_NAME).push().setValue(Event);
                 break;
             case FEEDBACK:
-                Event.setExternalSourceId(fpTag);
+                Event.setFpTag(fpTag);
                 Event.setEventCategory(EVENT_CATEGORY_NPS);
                 mDatabase.child(DB_FEEDBACK_CHILD_NAME).push().setValue(Event);
                 break;
@@ -130,7 +130,7 @@ public class ChatLogger {
                 mDatabase.child(DB_CHILD_NAME).push().setValue(Event);
                 break;
             case FEEDBACK:
-                Event.setExternalSourceId(fpTag);
+                Event.setFpTag(fpTag);
                 Event.setEventCategory(EVENT_CATEGORY_NPS);
                 mDatabase.child(DB_FEEDBACK_CHILD_NAME).push().setValue(Event);
                 break;
@@ -190,7 +190,7 @@ public class ChatLogger {
                 mDatabase.child(DB_CHILD_NAME).push().setValue(Event);
                 break;
             case FEEDBACK:
-                Event.setExternalSourceId(fpTag);
+                Event.setFpTag(fpTag);
                 Event.setEventCategory(EVENT_CATEGORY_NPS);
                 mDatabase.child(DB_FEEDBACK_CHILD_NAME).push().setValue(Event);
                 break;
