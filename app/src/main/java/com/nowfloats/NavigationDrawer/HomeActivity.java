@@ -127,6 +127,8 @@ import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
 import com.thinksity.Specific;
+import com.webengage.sdk.android.User;
+import com.webengage.sdk.android.WebEngage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -235,8 +237,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
         session = new UserSessionManager(getApplicationContext(), HomeActivity.this);
         setHotlineUser();
-
-
+        WebEngage.get().setRegistrationID(FirebaseInstanceId.getInstance().getToken());
         Bundle bundle = getIntent().getExtras();
         if (bundle != null && bundle.containsKey("url")) {
             mDeepLinkUrl = bundle.getString("url");
@@ -565,6 +566,13 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 //            if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME))){
             //store.put("name", Constants.ContactName);
 //            }
+            User weUser = WebEngage.get().user();
+            weUser.login(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
+            weUser.setAttribute("sales_executive_email","reach@nowfloats.com");
+            weUser.setEmail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
+            weUser.setFirstName(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME));
+            weUser.setPhoneNumber(session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
+            weUser.setCompany(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
             store.put("Business Name", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
             store.put("Tag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
             store.put("Primary contact", session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));

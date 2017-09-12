@@ -150,6 +150,8 @@ dependencies {
     compile 'com.android.support:gridlayout-v7:25.3.0'
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.webengage:android-sdk:2.+'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

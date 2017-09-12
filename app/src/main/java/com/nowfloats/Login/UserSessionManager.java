@@ -25,6 +25,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
+import com.webengage.sdk.android.WebEngage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -866,16 +867,16 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
             @Override
             public void success(String s, Response response) {
                 Log.d("Valid Email", "Valid Email Response: " + response);
-                if(pd != null)
+                if(pd.isShowing())
                 pd.dismiss();
 
                 SharedPreferences.Editor editor = pref.edit();
                 editor.clear();
-                editor.commit();
+                editor.apply();
 
-                SharedPreferences.Editor twitterEditor = _context.getSharedPreferences(TwitterConnection.PREF_NAME,_context.MODE_PRIVATE).edit();
+                SharedPreferences.Editor twitterEditor = _context.getSharedPreferences(TwitterConnection.PREF_NAME,Context.MODE_PRIVATE).edit();
                 twitterEditor.clear();
-                twitterEditor.commit();
+                twitterEditor.apply();
 
                 AppController.getInstance().clearApplicationData();
 
@@ -885,7 +886,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 MixPanelController.setProperties("LastLogoutDate", dateString);
 
                 // After logout redirect user to Login Activity
-
+                WebEngage.get().user().logout();
                 Constants.clearStore();
                 Constants.StorebizQueries 		= new ArrayList<>();
                 Constants.storeSecondaryImages = null ;
