@@ -2,34 +2,40 @@ package com.nowfloats.manageinventory;
 
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.edmodo.cropper.cropwindow.handle.Handle;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.GravityEnum;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.manageinventory.fragments.APEligibilityCheckerFragment;
 import com.nowfloats.manageinventory.fragments.PaymentInfoEntryFragment;
-import com.nowfloats.manageinventory.models.CountModel;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
-import com.nowfloats.manageinventory.models.TransactionModel;
 import com.nowfloats.manageinventory.models.WaUpdateDataModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.util.Constants;
@@ -51,11 +57,11 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
         RadioGroup.OnCheckedChangeListener,
         APEligibilityCheckerFragment.EligibilityCheckCallBack,
         PaymentInfoEntryFragment.ProfileUpdateCallBack,
-        View.OnTouchListener{
+        View.OnTouchListener, View.OnClickListener {
 
     RadioGroup rgPaymentMethod, rgDeliveryType;
 
-    TextView tvName, tvBankName, tvAccNum, tvIfsc, tvAccountType, tvPan, tvGstn;
+    TextView tvName, tvBankName, tvAccNum, tvIfsc, tvAccountType, tvPan, tvGstn, tvAssuredPurchase, tvPaymentLink;
 
     ProgressDialog progressDialog;
 
@@ -95,6 +101,10 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
         tvAccountType = (TextView) findViewById(R.id.tv_acc_type);
         tvPan = (TextView) findViewById(R.id.tv_pan_card);
         tvGstn = (TextView) findViewById(R.id.tv_gstin);
+        tvAssuredPurchase = (TextView) findViewById(R.id.tv_ap_learn_more);
+        tvPaymentLink = (TextView) findViewById(R.id.tv_deliv_learn_more);
+        tvAssuredPurchase.setOnClickListener(this);
+        tvPaymentLink.setOnClickListener(this);
 
         cvPaymentDetails = (CardView) findViewById(R.id.cv_payment_details);
 
@@ -185,29 +195,116 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
         });
     }
 
-    public void showLearnMoreDialog(View v){
-        String msg = "";
+    public void showLearnMoreDialog(final View v, final boolean showAssureDialog){
+
+        int arrayId;
+        String title,content = null;
         switch (v.getId()){
 
             case R.id.tv_ap_learn_more:
-                msg = String.format(getString(R.string.assured_purchase_learn_more), mApplicableTxnCharge);
+                arrayId = R.array.assured_purchase_points;
+                title ="Assured Purchase";
+                content = "Assured Purchase is a service guarantee by NowFloats that is the new benchmark for online selling businesses in India. By earning this badge:";
                 break;
             case R.id.tv_deliv_learn_more:
-                msg = getString(R.string.deliv_learn_more);
+                arrayId = R.array.delivery_points;
+                title = "Use own payment link";
+                //msg = getString(R.string.deliv_learn_more);
                 break;
+            default:
+                return;
         }
 
-        new AlertDialog.Builder(this)
-                .setMessage(Html.fromHtml(msg))
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
+                .canceledOnTouchOutside(false)
+                .itemsGravity(GravityEnum.CENTER)
+                .adapter(new MyArrayAdapter(PaymentSettingsActivity.this,arrayId,mApplicableTxnCharge),
+                        new LinearLayoutManager(PaymentSettingsActivity.this,LinearLayoutManager.VERTICAL,false))
+                .dividerColorRes(R.color.gray);
+
+        if(!TextUtils.isEmpty(content)){
+            builder.content(content);
+        }
+        if(!TextUtils.isEmpty(title)){
+            builder.title(title);
+        }
+
+        if(showAssureDialog){
+
+            builder.negativeText("Cancel");
+            builder.positiveText("I, Agree");
+            builder.onNegative(new MaterialDialog.SingleButtonCallback() {
+                @Override
+                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    rgPaymentMethod.setOnCheckedChangeListener(null);
+                    View view = rgPaymentMethod.getChildAt(1);
+                    if(view instanceof RadioButton){
+                        ((RadioButton) view).setChecked(true);
                     }
-                })
-                .show();
+                    rgPaymentMethod.setOnCheckedChangeListener(PaymentSettingsActivity.this);
+                    dialog.dismiss();
+                }
+            })
+            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                @Override
+                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    switch (v.getId()) {
+                        case R.id.tv_ap_learn_more:
+                            checkAssuredPurchase();
+                            break;
+                    }
+                    dialog.dismiss();
+                }
+            });
+        }else {
+            builder.positiveText("Ok");
+            builder.onPositive(new MaterialDialog.SingleButtonCallback() {
+                @Override
+                public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                    dialog.dismiss();
+                }
+            });
+        }
+
+        builder.show();
     }
 
+    public class MyArrayAdapter extends RecyclerView.Adapter<MyArrayAdapter.MyHolder>{
+        String[] bulletPoints = null;
+        Context mContext;
+        String textCharge;
+        public MyArrayAdapter(Context context,int id,String textCharge){
+            mContext = context;
+            this.textCharge = textCharge;
+            bulletPoints = getResources().getStringArray(id);
+        }
+        @Override
+        public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_bullet_point_item, parent, false);
+            return new MyHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(MyHolder holder, int position) {
+            if(holder != null){
+                holder.text.setText(String.format(bulletPoints[position],textCharge));
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return bulletPoints.length;
+        }
+
+        class MyHolder extends RecyclerView.ViewHolder{
+
+            public TextView text;
+            MyHolder(View itemView) {
+                super(itemView);
+                text = (TextView) itemView.findViewById(R.id.text1);
+            }
+        }
+    }
     private void processProfileData(MerchantProfileModel profile){
         rgPaymentMethod.setOnCheckedChangeListener(null);
         if(profile.getPaymentType() == 0){
@@ -249,7 +346,7 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
         switch (rgPaymentMethod.getCheckedRadioButtonId()){
             case R.id.rb_assured_purchase:
-                checkAssuredPurchase();
+                showLearnMoreDialog(tvAssuredPurchase,true);
                 break;
             case R.id.rb_use_payment_link:
                 showDialog();
@@ -411,5 +508,18 @@ public class PaymentSettingsActivity extends AppCompatActivity implements
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+
+            case R.id.tv_ap_learn_more:
+                showLearnMoreDialog(v,false);
+                break;
+            case R.id.tv_deliv_learn_more:
+                showLearnMoreDialog(v,false);
+                break;
+        }
     }
 }

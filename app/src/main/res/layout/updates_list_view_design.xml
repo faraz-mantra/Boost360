@@ -34,7 +34,7 @@
                 android:fontFamily="sans-serif-light"
                 android:maxLines="3"
                 android:text="kjfdfjkgbjkdfjkgbjdfgbjdhfgbjdf ngkjndkjfngkjdfnjknkjdnfk njkgnkjdfnkgjndf nkjnkjgnkjdf nkjngkjdnfkjg nkjnjkgnd nkjnkjngkjdkn nkjnkjgdf"
-                android:textColor="#d2d2d2"
+                android:textColor="#80000000"
                 android:textSize="12sp"
                 tools:ignore="MissingPrefix" />
 
@@ -47,7 +47,7 @@
                 android:gravity="bottom|right"
                 android:lineSpacingExtra="5dp"
                 android:text="@string/view_more"
-                android:textColor="@color/primary"
+                android:textColor="#80000000"
                 android:textSize="12sp"
                 android:textStyle="italic"
                 tools:ignore="MissingPrefix" />

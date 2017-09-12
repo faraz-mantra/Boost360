@@ -12,7 +12,8 @@
         android:id="@+id/toolbar"
         android:background="@color/primary"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="?attr/actionBarSize"
+        app:theme="@style/CustomToolbarTheme">
 
     </android.support.v7.widget.Toolbar>
 
@@ -72,13 +73,15 @@
                     </RadioGroup>
                     <TextView
                         android:id="@+id/tv_ap_learn_more"
-                        android:layout_below="@id/ll_card_head"
-                        android:onClick="showLearnMoreDialog"
-                        android:layout_marginTop="23dp"
+                        android:layout_alignRight="@id/rg_payment_method"
+                        android:layout_below="@+id/ll_card_head"
+                        android:layout_marginTop="15dp"
                         android:textColor="@color/primary"
                         android:layout_marginRight="15dp"
                         android:textSize="12sp"
+                        android:background="?android:selectableItemBackground"
                         android:textStyle="italic"
+                        android:padding="5dp"
                         android:layout_alignParentRight="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -86,11 +89,13 @@
                     <TextView
                         android:id="@+id/tv_deliv_learn_more"
                         android:layout_below="@id/tv_ap_learn_more"
-                        android:onClick="showLearnMoreDialog"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="10dp"
+                        android:background="?android:selectableItemBackground"
+                        android:layout_alignRight="@id/rg_payment_method"
                         android:textColor="@color/primary"
                         android:layout_marginRight="15dp"
                         android:textSize="12sp"
+                        android:padding="5dp"
                         android:textStyle="italic"
                         android:layout_alignParentRight="true"
                         android:layout_width="wrap_content"
@@ -185,9 +190,10 @@
                         <ImageView
                             android:id="@+id/iv_edit_payment_details"
                             android:layout_width="35dp"
-                            android:layout_height="35dp"
-                            android:padding="5dp"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp"
                             android:tint="@color/white"
+                            android:background="?android:selectableItemBackground"
                             android:layout_marginRight="15dp"
                             android:layout_gravity="center_vertical"
                             android:src="@drawable/ic_create_black_24dp"/>

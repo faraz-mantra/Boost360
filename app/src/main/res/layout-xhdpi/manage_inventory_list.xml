@@ -78,7 +78,7 @@
                     android:layout_height="@dimen/icon_size"
                     android:layout_marginLeft="@dimen/icon_left_margin"
                     android:layout_marginRight="@dimen/icon_right_margin"
-                    android:padding="5dp"
+                    android:padding="6dp"
                     android:layout_gravity="center_vertical"
                     android:scaleType="fitXY"
                     android:src="@drawable/lock_widget"

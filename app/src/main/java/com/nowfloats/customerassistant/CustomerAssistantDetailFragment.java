@@ -139,13 +139,14 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
         tabs = (SlidingTabLayout) view.findViewById(R.id.tabs);
 
         tabs.setDistributeEvenly(true);
-        tabs.setCustomTabView(R.layout.ca_tab_text, R.id.tab_textview);
+        tabs.setCustomTabView(R.layout.ca_detail_tab_text, R.id.tab_textview);
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
                 return ContextCompat.getColor(getActivity(), R.color.white);
             }
         });
+        tabs.setSelectedIndicatorColors(getResources().getColor(R.color.lt_black));
 
         vwSAM.setAdapter(new SAMPagerAdapter(getActivity()));
         tabs.setViewPager(vwSAM);

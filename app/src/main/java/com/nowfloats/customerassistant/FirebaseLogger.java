@@ -32,7 +32,7 @@ public class FirebaseLogger {
 
 
     public interface SAMSTATUS {
-        public int BUBBLE_CLIKED = 0;
+        public int BUBBLE_CLICKED = 0;
         public int HAS_DATA = 1;
         public int HAS_NO_DATA = 2;
         public int SERVER_ERROR = -100;

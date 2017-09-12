@@ -85,7 +85,7 @@ public class CustomerAssistantActivity extends Activity {
         initializeControls();
 
         MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED, null);
-        FirebaseLogger.getInstance().logSAMEvent("", FirebaseLogger.SAMSTATUS.BUBBLE_CLIKED, session.getFPID(), appVersion);
+        FirebaseLogger.getInstance().logSAMEvent("", FirebaseLogger.SAMSTATUS.BUBBLE_CLICKED, session.getFPID(), appVersion);
 
 
         if (!pref.getBoolean(Key_Preferences.HAS_SHOWN_SAM_COACH_MARK, false)) {

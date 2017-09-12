@@ -57,14 +57,14 @@ public class NotificationFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         bus.register(this);
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onStop() {
+        super.onStop();
         bus.unregister(this);
     }
 
@@ -76,6 +76,14 @@ public class NotificationFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if(mIsAlertShown){
+            alertModelsList.clear();
+            adapter.notifyDataSetChanged();
+            mIsAlertShown = false;
+            readAlertsCount = 0;
+            stop = false;
+        }
+
         getAlertCount(session, alertInterface, bus);
         MixPanelController.track("Alerts", null);
         recyclerView = (RecyclerView) view.findViewById(R.id.alert_recycler_view);
@@ -151,6 +159,9 @@ public class NotificationFragment extends Fragment {
                 @Override
                 public void failure(RetrofitError error) {
                     stop = false;
+                    if (alertModelsList.size() == 0) {
+                        emptylayout.setVisibility(View.VISIBLE);
+                    }
                     Log.i("ggg", "" + error.getMessage());
                     if (isAdded()) {
                         Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
@@ -206,7 +217,9 @@ public class NotificationFragment extends Fragment {
                 @Override
                 public void failure(RetrofitError error) {
                     stop = false;
-
+                    if (alertModelsList.size() == 0) {
+                        emptylayout.setVisibility(View.VISIBLE);
+                    }
                     if (getActivity() != null) {
                         Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong_try_again));
                     }

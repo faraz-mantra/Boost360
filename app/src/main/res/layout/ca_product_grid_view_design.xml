@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@color/gray"
         android:orientation="vertical"
-        app:cardBackgroundColor="@color/gray"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="0dp"
         app:cardElevation="3dp">
 
@@ -49,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:cardBackgroundColor="#60000000"
+        app:cardBackgroundColor="@color/lt_gray"
         app:cardCornerRadius="0dp"
         app:cardElevation="3dp">
 
@@ -90,8 +90,9 @@
                     android:layout_marginRight="2dp"
                     android:fontFamily="sans-serif"
                     android:text="@string/inr"
-                    android:textColor="@color/primary"
+                    android:textColor="#80000000"
                     android:textSize="14sp"
+                    android:textStyle="bold"
                     tools:ignore="MissingPrefix" />
 
                 <TextView
@@ -101,8 +102,9 @@
                     android:fontFamily="sans-serif"
                     android:paddingLeft="0dp"
                     android:text="900"
-                    android:textColor="@color/primary"
+                    android:textColor="#80000000"
                     android:textSize="14sp"
+                    android:textStyle="bold"
                     tools:ignore="MissingPrefix" />
 
             </LinearLayout>

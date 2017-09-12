@@ -5,12 +5,11 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,6 +29,7 @@ import com.nowfloats.manageinventory.models.OrderModel;
 import com.nowfloats.manageinventory.models.ProductModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -165,6 +165,7 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
     LinearLayout llEmptyView;
     TextView tvEmptyText;
     MaterialSearchView searchView;
+    //View dropDownView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -277,11 +278,13 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
         MenuItem item = menu.findItem(R.id.action_search);
         searchView.setMenuItem(item);
 
+        //dropDownView = MenuItemCompat.getActionView(menu.findItem(R.id.action_orders_filter));
+
         return super.onCreateOptionsMenu(menu);
     }
 
     private void showRevealView(){
-        int cx = (llRevealLayout.getLeft() + llRevealLayout.getRight());
+        int cx = (llRevealLayout.getLeft() + llRevealLayout.getRight() - Methods.dpToPx(80, this));
         int cy = llRevealLayout.getTop();
         int radius = Math.max(llRevealLayout.getWidth(), llRevealLayout.getHeight());
 
@@ -356,7 +359,6 @@ public class OrderListActivity extends AppCompatActivity implements OrdersRvAdap
             showRevealView();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

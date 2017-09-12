@@ -290,6 +290,8 @@ public class Analytics_Fragment extends Fragment {
                     }
                 }
             });
+        }else if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")){
+            //request for it
         }
         LinearLayout llSearchRanking = (LinearLayout) rootView.findViewById(R.id.analytics_screen_search_ranking);
         llSearchRanking.setOnClickListener(new View.OnClickListener() {

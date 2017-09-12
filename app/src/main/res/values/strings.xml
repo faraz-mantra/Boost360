@@ -415,7 +415,7 @@
     </string-array>
     <string name="business_enquiries_title">Business Enquiries</string>
     <string name="enquiries_title">Enquiries</string>
-    <string name="payment_setting">Payment Setting</string>
+    <string name="payment_setting">Payment Settings</string>
     <string name="double_quotes"> &quot; </string>
     <string name="business_profile_title">Profile</string>
     <string name="tag_for_partners">.nowfloats.com</string>
@@ -1376,7 +1376,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="site_appearance">SITE APPEARANCE</string>
     <string name="shipping_metrics">SHIPPING METRICS</string>
     <string name="bank_details">BANK DETAILS</string>
-    <string name="payment_details">Payment Details</string>
+    <string name="payment_details">Bank Account Details</string>
     <string name="product_shipping_charges">Shipping Charges(In INR)</string>
     <string name="product_transaction_charges">Transaction Charges (In INR)</string>
     <string name="product_net_amount">Net Amount (In INR)</string>
@@ -1406,13 +1406,24 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="abandoned_orders">Abandoned Orders</string>
     <string name="filter_orders">Filter Orders</string>
     <string name="learn_more">Learn More</string>
+    <string-array name="assured_purchase_points">
+        <item>You become a verified seller on NowFloats platform. Your potential buyers will see Assured Purchase badge on your website as a mark of trust and a guarantee from NowFloats.</item>
+        <item>You can assure reliable and speedy delivery of your products to your buyers.</item>
+        <item>Your money is safe with NowFloats and will be duly transferred with each payment cycle (Delivery + 15 working days) *.</item>
+        <item>By enabling Assured Purchase you agree to all terms and policies listed on <a href ="http://assuredpurchase.com/">AssuredPurchase.com</a>.</item>
+        <item>Transaction charges will be at rate of %s per transaction. Transaction charges can change without prior notice but we always strive to make it reasonable.</item>
+    </string-array>
+    <string-array name="delivery_points">
+        <item>If you have an existing website with an integrated payment gateway you can choose to integrate that with your product catalog. To accept payments via your NowFloats Boost website, please add the relevant links to each one of your products via the Buy Online option in your NowFloats Boost product catalog.</item>
+        <item>If you are listed on an e-commerce marketplace like Amazon, Paytm, Flipkart etc, you can use the URL of the relevant product on the NowFloats Product catalogue.</item>
+    </string-array>
     <string name="assured_purchase_learn_more"><![CDATA[
         Assured Purchase is a service guarantee by NowFloats that is the new benchmark for online selling businesses in India. By earning this badge:
         <ul>
         <li>You become a verified seller on NowFloats platform. Your potential buyers will see Assured Purchase badge on your website as a mark of trust and a guarantee from NowFloats.</li>
         <li>You can assure reliable and speedy delivery of your products to your buyers.</li>
         <li>Your money is safe with NowFloats and will be duly transferred with each payment cycle (Delivery + 15 working days) *.</li>
-        <li>By enabling Assured Purchase you agree to all terms and policies listed on AssuredPurchase.com.</li>
+        <li>By enabling Assured Purchase you agree to all terms and policies listed on <a href ="http://assuredpurchase.com/">AssuredPurchase.com</a>.</li>
         </ul>
 
         <i>Transaction charges will be at rate of %s per transaction. Transaction charges can change without prior notice but we always strive to make it reasonable</i>
@@ -1420,8 +1431,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="deliv_learn_more"><![CDATA[
         <ul>
         <li>If you have an existing website with an integrated payment gateway you can choose to integrate that with your product catalog. To accept payments via your NowFloats Boost website, please add the relevant links to each one of your products via the Buy Online option in your NowFloats Boost product catalog.</li>
-        <li>If you are listed on an e-commerce marketplace like Amazon, Paytm, Flipkart etc, you can use the URL of the relevant product on the NowFloats Product catalogue.
-        </li>
+        <li>If you are listed on an e-commerce marketplace like Amazon, Paytm, Flipkart etc, you can use the URL of the relevant product on the NowFloats Product catalogue.</li>
         </ul>
     ]]></string>
     <string name="analylitcs">Analytics</string>

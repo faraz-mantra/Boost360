@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.nowfloats.Product_Gallery.ProductGalleryActivity;
 import com.nowfloats.bubble.BubblesService;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
@@ -73,6 +74,7 @@ public class BubbleInAppDialog extends AppCompatActivity {
                     startActivity(i);
                     finish();
                 } else {
+                    startActivity(new Intent(BubbleInAppDialog.this,ProductGalleryActivity.class));
                     stopService(new Intent(BubbleInAppDialog.this, BubblesService.class));
                     finish();
                 }

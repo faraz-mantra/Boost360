@@ -2,6 +2,7 @@
 <resources>
 
     <color name="color_trans">#20000000</color>
+    <color name="lt_black">#80000000</color>
 
     <color name="whiteLable">#ffb900</color>
     <color name="expire_dialog_img_bg">#ff0010</color>
@@ -39,6 +40,7 @@
     <color name="businessapp_card_background">#e8e8e8</color>
     <color name="gray_transparent">#78636466</color>
     <color name="light_gray">#a1a1a1</color>
+    <color name="ca_gray">#e6e7e8</color>
     <color name="list_background">#a4a4a4</color>
     <color name="top_bar_color">#ffb900</color>
     <color name="top_bar_color_transparent">#99ffffff</color>

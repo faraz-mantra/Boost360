@@ -167,8 +167,6 @@ public class ManageCustomerFragmentV1 extends Fragment {
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_manage_customers_v1_item, parent, false);
             final ManageCustomerHolder manageCustomerHolder = new ManageCustomerHolder(v);
             manageCustomerHolder.llUpdates.setVisibility(View.GONE);
@@ -287,7 +285,9 @@ public class ManageCustomerFragmentV1 extends Fragment {
                         manageCustomerHolder.iconImage.setLayoutParams(params);
                         manageCustomerHolder.iconImage.setImageResource(R.drawable.ic_cross_platform);
 
-                        if (session.isBoostBubbleEnabled() || pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
+                        if (session.isBoostBubbleEnabled() || (
+                                pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)
+                                        && Methods.hasOverlayPerm(getActivity()))) {
                             manageCustomerHolder.tvOne.setText(getString(R.string.disable_customer_assistant));
                             manageCustomerHolder.tvOne.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -341,7 +341,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
 
         private class ManageCustomerHolder extends RecyclerView.ViewHolder {
 
-            TextView tvOne, tvTwo, tvThree, tvTitle, tvInfo,tvInfoTitle;
+            TextView tvOne, tvTwo, tvThree, tvTitle, tvInfo, tvInfoTitle;
             CardView cvManageCustomer;
             RecyclerView rv_carousel;
             LinearLayout llUpdates, llBackground;
@@ -496,10 +496,11 @@ public class ManageCustomerFragmentV1 extends Fragment {
 
                 if (productListModels == null || productListModels.size() == 0 || response.getStatus() != 200) {
                     pref.edit().putBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, false).apply();
+
                     return;
                 }
-
                 pref.edit().putBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, true).apply();
+
             }
 
             @Override
@@ -524,10 +525,10 @@ public class ManageCustomerFragmentV1 extends Fragment {
 //        if (oldTime != -1 && ((newTime - oldTime) < diff)) {
 //            return;
 //        } else {
-            if (!Methods.hasOverlayPerm(getActivity())) {
-                checkAccessibility = false;
-                dialogForOverlayPath(from);
-            }
+        if (!Methods.hasOverlayPerm(getActivity())) {
+            checkAccessibility = false;
+            dialogForOverlayPath(from);
+        }
 //        }
 
         if (checkAccessibility)

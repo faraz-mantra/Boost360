@@ -648,8 +648,15 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return pref.getBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED, false);
     }
 
+    public boolean isCustomerAssistantEnabled() {
+        return pref.getBoolean(Key_Preferences.IS_CUSTOMER_ASSISTANT_ENABLED, false);
+    }
+
     public void setBubbleStatus(boolean flag) {
         pref.edit().putBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED, flag).apply();
+    }
+    public void setCustomerAssistantStatus(boolean flag) {
+        pref.edit().putBoolean(Key_Preferences.IS_CUSTOMER_ASSISTANT_ENABLED, flag).apply();
     }
 
     public void setBubbleTime(long time) {
