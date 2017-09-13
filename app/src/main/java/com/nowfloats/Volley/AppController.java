@@ -15,6 +15,7 @@ import com.android.volley.toolbox.Volley;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.nowfloats.util.Constants;
+import com.webengage.sdk.android.WebEngageActivityLifeCycleCallbacks;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -53,6 +54,8 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
                 .setFontAttrId(R.attr.fontPath)
                 .build());*/
         FacebookSdk.sdkInitialize(getApplicationContext());
+        registerActivityLifecycleCallbacks(new WebEngageActivityLifeCycleCallbacks(this));
+        //WebEngage.registerPushNotificationCallback(new PushNotificationCallbacksImpl());
         AppEventsLogger.activateApp(this);
 
         mInstance = this;
@@ -112,6 +115,39 @@ public class AppController extends MultiDexApplication/* implements IAviaryClien
             }
         }
     }
+
+    /*public class PushNotificationCallbacksImpl implements PushNotificationCallbacks {
+
+        private static final String TAG = "PushNotificationCallbacksImpl";
+
+        @Override
+        public PushNotificationData onPushNotificationReceived(Context context, PushNotificationData pushNotificationData) {
+            //Log.d(TAG, "Received Push Notification , Experiment Id : " + pushNotificationData.getExperimentId());
+            return pushNotificationData;
+        }
+
+        @Override
+        public void onPushNotificationShown(Context context, PushNotificationData pushNotificationData) {
+            //Log.d(TAG, "Push Notification Shown , Experiment Id : " + pushNotificationData.getExperimentId());
+        }
+
+        @Override
+        public boolean onPushNotificationClicked(Context context, PushNotificationData pushNotificationData) {
+            //Log.d(TAG, "User clicked Push Notification , Experiment Id : " + pushNotificationData.getExperimentId());
+            return false;
+        }
+
+        @Override
+        public void onPushNotificationDismissed(Context context, PushNotificationData pushNotificationData) {
+            //Log.d(TAG, "Push notification dismissed , Experiment Id : " + pushNotificationData.getExperimentId());
+        }
+
+        @Override
+        public boolean onPushNotificationActionClicked(Context context, PushNotificationData pushNotificationData, String buttonId) {
+            //Log.d(TAG, "User clicked push notification action button , Experiment Id : " + pushNotificationData.getExperimentId() + " button Id : " + buttonId);
+            return false;
+        }
+    }*/
     public static boolean deleteDir(File dir) {
         if (dir != null && dir.isDirectory()) {
             String[] children = dir.list();

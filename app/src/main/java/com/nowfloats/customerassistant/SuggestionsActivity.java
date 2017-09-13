@@ -106,7 +106,7 @@ public class SuggestionsActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
 
         MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED, null);
-        FirebaseLogger.getInstance().logSAMEvent("", FirebaseLogger.SAMSTATUS.BUBBLE_CLIKED, session.getFPID(), appVersion);
+        FirebaseLogger.getInstance().logSAMEvent("", FirebaseLogger.SAMSTATUS.BUBBLE_CLICKED, session.getFPID(), appVersion);
 
         if (!pref.getBoolean(Key_Preferences.HAS_SHOWN_SAM_COACH_MARK, false)) {
 //            fragmentManager.beginTransaction().
@@ -184,7 +184,7 @@ public class SuggestionsActivity extends AppCompatActivity {
         if (Utils.isNetworkConnected(SuggestionsActivity.this)) {
             HashMap<String, String> offersParam = new HashMap<>();
             offersParam.put("fpId", session.getFPID());
-            suggestionsApi.getMessages(offersParam);
+//            suggestionsApi.getMessages(offersParam);
         } else {
             loadDataFromDb();
         }

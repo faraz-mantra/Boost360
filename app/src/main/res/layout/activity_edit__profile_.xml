@@ -233,7 +233,7 @@
             android:layout_marginRight="10dp"
             android:scaleType="centerCrop"
             fab:fab_colorNormal="@color/primaryColor"
-            fab:fab_colorPressed="#fddc80"
+            fab:fab_colorPressed="@color/tabOnclickColor"
             fab:fab_colorRipple="@color/primaryColor" />
         </RelativeLayout>
 </FrameLayout>

@@ -79,13 +79,13 @@ public class CustomerAssistantActivity extends Activity {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(ContextCompat.getColor(CustomerAssistantActivity.this, R.color.transparent_blk));
+            window.setStatusBarColor(ContextCompat.getColor(CustomerAssistantActivity.this, R.color.primary));
         }
 
         initializeControls();
 
         MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED, null);
-        FirebaseLogger.getInstance().logSAMEvent("", FirebaseLogger.SAMSTATUS.BUBBLE_CLIKED, session.getFPID(), appVersion);
+        FirebaseLogger.getInstance().logSAMEvent("", FirebaseLogger.SAMSTATUS.BUBBLE_CLICKED, session.getFPID(), appVersion);
 
 
         if (!pref.getBoolean(Key_Preferences.HAS_SHOWN_SAM_COACH_MARK, false)) {
@@ -130,7 +130,7 @@ public class CustomerAssistantActivity extends Activity {
         if (Utils.isNetworkConnected(CustomerAssistantActivity.this)) {
             HashMap<String, String> offersParam = new HashMap<>();
             offersParam.put("fpId", session.getFPID());
-            suggestionsApi.getMessages(offersParam);
+            suggestionsApi.getMessages(offersParam, session.getFPID(), appVersion);
         } else {
             loadDataFromDb();
         }
@@ -154,7 +154,7 @@ public class CustomerAssistantActivity extends Activity {
 
         String payloadStr = mDbController.getSamData();
 
-        if (payloadStr.isEmpty()) {
+        if (payloadStr == null || payloadStr.isEmpty()) {
             finish();
         } else {
             Gson gson = new GsonBuilder().create();
@@ -171,9 +171,10 @@ public class CustomerAssistantActivity extends Activity {
 
         smsSuggestions = suggestions;
 
-        if (smsSuggestions != null && smsSuggestions.getSuggestionList() != null) {
+        if (smsSuggestions != null) {
 
-            if (smsSuggestions.getSuggestionList().size() > 0) {
+            if (smsSuggestions.getSuggestionList() != null &&
+                    smsSuggestions.getSuggestionList().size() > 0) {
                 viewMessages();
 
                 Gson gson = new GsonBuilder().create();
@@ -184,7 +185,7 @@ public class CustomerAssistantActivity extends Activity {
                 MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED_NO_DATA, null);
                 FirebaseLogger.getInstance().logSAMEvent("", FirebaseLogger.SAMSTATUS.HAS_NO_DATA, session.getFPID(), appVersion);
                 pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, false).apply();
-                stopService(new Intent(CustomerAssistantActivity.this,CustomerAssistantService.class));
+                stopService(new Intent(CustomerAssistantActivity.this, CustomerAssistantService.class));
                 finish();
             }
 

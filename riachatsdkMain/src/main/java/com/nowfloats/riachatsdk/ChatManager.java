@@ -57,11 +57,17 @@ public class ChatManager {
         mChatConfig.chatTextColor = color;
     }
 
-    public void startChat() {
+    public enum ChatType {
+        CREATE_WEBSITE,
+        FEEDBACK
+    }
+
+    public void startChat(ChatType chatType) {
         Intent i = new Intent(mContext, ChatViewActivity.class);
 //        mContext.overridePendingTransition(R.anim.ria_fade_in, R.anim.slide_out_up);
         mContext.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         i.putExtra(Constants.PARCEL_NAME, mChatConfig);
+        i.putExtra(Constants.CHAT_TYPE, chatType);
         mContext.startActivity(i);
     }
 

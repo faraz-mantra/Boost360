@@ -65,7 +65,9 @@
     @com.squareup.otto.Subscribe public *;
     @com.squareup.otto.Produce public *;
 }
+-keep class com.webengage.sdk.android.**{*;}
 
+-dontwarn com.webengage.sdk.android.**
 -dontwarn rx.*
 -keep class com.nowfloats.Store.Model.** { *; }
 -keep class com.nowfloats.NavigationDrawer.model.** { *; }

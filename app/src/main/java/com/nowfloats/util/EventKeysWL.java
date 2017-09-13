@@ -50,6 +50,7 @@ public interface EventKeysWL
     String SIDE_PANEL_FACEBOOK_PAGE_CHATS = "FacebookPageChats";
     String FACEBOOK_PAGE_CHATS_DETAILS = "FacebookPageChatsDetails";
     String SIDE_PANEL_WHATSAPP_BUBBLE = "WhatsAppBubble";
+    String SIDE_PANEL_WHATSAPP_BUBBLE_OFF = "WhatsAppBubbleOff";
     String SIDE_PANEL_CUSTOMER_ASSISTANT = "CustomerAssistant";
     String SIDE_PANEL_CUSTOMER_ASSISTANT_OFF = "CustomerAssistantOff";
     String SIDE_PANEL_IMAGE_GALLERY = "ImageGallery";

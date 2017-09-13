@@ -81,10 +81,14 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                     }
                 }
             } else {
+
                 deepLinkUrl = message.get("url");
                 //Log.v("ggg","notif "+deepLinkUrl);
                 if (deepLinkUrl != null && !deepLinkUrl.contains(Constants.PACKAGE_NAME)) {
                     return;
+                }
+                if(Methods.isUserLoggedIn(this) && Methods.isMyAppOpen(this)) {
+                    MixPanelController.track("$campaign_received", null);
                 }
                 String title = message.get("title");
                 Intent intent = null;

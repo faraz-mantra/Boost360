@@ -23,6 +23,7 @@ import com.squareup.otto.Bus;
 import com.thinksity.R;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,13 +34,13 @@ import retrofit.client.Response;
 /**
  * Created by guru on 19-06-2015.
  */
-public class NotificationFragment extends Fragment{
+public class NotificationFragment extends Fragment {
     Activity activity;
     UserSessionManager session;
     public static RecyclerView recyclerView;
     private NotificationAdapter adapter;
     Bus bus;
-    private LinearLayout emptylayout,progress_layout;
+    private LinearLayout emptylayout, progress_layout;
     NotificationInterface alertInterface;
     private boolean mIsAlertShown = false;
     private int readAlertsCount;
@@ -51,19 +52,19 @@ public class NotificationFragment extends Fragment{
         super.onCreate(savedInstanceState);
         activity = getActivity();
         bus = BusProvider.getInstance().getBus();
-        session = new UserSessionManager(activity.getApplicationContext(),activity);
+        session = new UserSessionManager(activity.getApplicationContext(), activity);
         alertInterface = Constants.restAdapter.create(NotificationInterface.class);
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
         bus.register(this);
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onStop() {
+        super.onStop();
         bus.unregister(this);
     }
 
@@ -75,7 +76,15 @@ public class NotificationFragment extends Fragment{
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getAlertCount(session,alertInterface,bus);
+        if(mIsAlertShown){
+            alertModelsList.clear();
+            adapter.notifyDataSetChanged();
+            mIsAlertShown = false;
+            readAlertsCount = 0;
+            stop = false;
+        }
+
+        getAlertCount(session, alertInterface, bus);
         MixPanelController.track("Alerts", null);
         recyclerView = (RecyclerView) view.findViewById(R.id.alert_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -84,12 +93,12 @@ public class NotificationFragment extends Fragment{
         progress_layout = (LinearLayout) view.findViewById(R.id.progress_layout);
         final LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLinearLayoutManager);
-        adapter = new NotificationAdapter(getActivity(),alertModelsList,alertInterface,session,bus);
+        adapter = new NotificationAdapter(getActivity(), alertModelsList, alertInterface, session, bus);
         recyclerView.setAdapter(adapter);
         //get alert Values
-        if(!mIsAlertShown){
+        if (!mIsAlertShown) {
             loadAlerts();
-        }else if(alertModelsList.size()==0){
+        } else if (alertModelsList.size() == 0) {
             emptylayout.setVisibility(View.VISIBLE);
         }
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -98,7 +107,7 @@ public class NotificationFragment extends Fragment{
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 int totalItemCount = mLinearLayoutManager.getItemCount();
                 int lastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
-                if(lastVisibleItem>=totalItemCount-2 && !stop){
+                if (lastVisibleItem >= totalItemCount - 2 && !stop) {
                     moreAlerts();
                 }
             }
@@ -109,7 +118,7 @@ public class NotificationFragment extends Fragment{
         stop = true;
 
         String offset = String.valueOf(readAlertsCount);
-        readAlertsCount+=10;
+        readAlertsCount += 10;
 
         progress_layout.setVisibility(View.VISIBLE);
         try {
@@ -120,55 +129,69 @@ public class NotificationFragment extends Fragment{
             params.put("offset", offset);
             params.put("limit", "10");
 
-            alertInterface.getAlerts(params,new Callback<ArrayList<AlertModel>>() {
+            alertInterface.getAlerts(params, new Callback<ArrayList<AlertModel>>() {
                 @Override
                 public void success(ArrayList<AlertModel> alertModels, Response response) {
 
                     progress_layout.setVisibility(View.GONE);
-                    if (alertModels==null || alertModels.size() == 0){
-                        if(alertModelsList.size() == 0){
+                    if (alertModels == null || alertModels.size() == 0) {
+                        if (alertModelsList.size() == 0) {
                             emptylayout.setVisibility(View.VISIBLE);
                         }
-                    }else
-                    {
+                    } else {
                         int count = alertModelsList.size();
-                        for ( int i = 0; i<alertModels.size() ;i++){
+                        for (int i = 0; i < alertModels.size(); i++) {
 
                             alertModelsList.add(alertModels.get(i));
-                            adapter.notifyItemChanged(count+i);
+                            adapter.notifyItemChanged(count + i);
                         }
                         adapter.notifyDataSetChanged();
-                        if(alertModels.size()>=10){
+                        if (alertModels.size() >= 10) {
                             stop = false;
                         }
                     }
+
+//                    Collections.sort(alertModelsList, new AlterDateComparator());
+//                    adapter.notifyDataSetChanged();
 
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-                    stop =false;
-                    Log.i("ggg",""+error.getMessage());
-                    if(isAdded()) {
+                    stop = false;
+                    if (alertModelsList.size() == 0) {
+                        emptylayout.setVisibility(View.VISIBLE);
+                    }
+                    Log.i("ggg", "" + error.getMessage());
+                    if (isAdded()) {
                         Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
                     }
                     progress_layout.setVisibility(View.GONE);
                 }
             });
         } catch (Exception e) {
-            Log.i("ggg","API Exception:"+e);
-            Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong_try_again));
+            Log.i("ggg", "API Exception:" + e);
+            Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
             e.printStackTrace();
             progress_layout.setVisibility(View.GONE);
         }
     }
 
 
+    public class AlterDateComparator implements Comparator<AlertModel> {
+        public int compare(AlertModel left, AlertModel right) {
+            return Methods.getFormattedDate(right.
+                    CreatedOn).compareTo(Methods.getFormattedDate(left.
+                    CreatedOn));
+
+        }
+
+    }
 
     public void loadAlerts() {
-        stop =true;
+        stop = true;
         progress_layout.setVisibility(View.VISIBLE);
-        mIsAlertShown =true;
+        mIsAlertShown = true;
         try {
             Map<String, String> params = new HashMap<String, String>();
             params.put("clientId", Constants.clientId);
@@ -177,12 +200,12 @@ public class NotificationFragment extends Fragment{
             params.put("offset", "0");
             params.put("limit", Home_Fragment_Tab.alertCountVal);
 
-            alertInterface.getAlerts(params,new Callback<ArrayList<AlertModel>>() {
+            alertInterface.getAlerts(params, new Callback<ArrayList<AlertModel>>() {
                 @Override
                 public void success(ArrayList<AlertModel> alertModels, Response response) {
 
-                    if(alertModels != null ){
-                        for(int i = 0; i<alertModels.size();i++){
+                    if (alertModels != null) {
+                        for (int i = 0; i < alertModels.size(); i++) {
                             alertModelsList.add(alertModels.get(i));
                             adapter.notifyItemChanged(i);
                         }
@@ -194,8 +217,10 @@ public class NotificationFragment extends Fragment{
                 @Override
                 public void failure(RetrofitError error) {
                     stop = false;
-
-                    if(getActivity()!=null) {
+                    if (alertModelsList.size() == 0) {
+                        emptylayout.setVisibility(View.VISIBLE);
+                    }
+                    if (getActivity() != null) {
                         Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong_try_again));
                     }
                     progress_layout.setVisibility(View.GONE);
@@ -203,33 +228,35 @@ public class NotificationFragment extends Fragment{
             });
         } catch (Exception e) {
 
-            Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong_try_again));
+            Methods.showSnackBarNegative(activity, getString(R.string.something_went_wrong_try_again));
             e.printStackTrace();
             progress_layout.setVisibility(View.GONE);
         }
     }
 
-    public static void getAlertCount(final UserSessionManager session, NotificationInterface notificationInterface, final Bus bus){
+    public static void getAlertCount(final UserSessionManager session, NotificationInterface notificationInterface, final Bus bus) {
 
-        try{
-        HashMap<String,String> map = new HashMap<>();
-        map.put("fpId",session.getFPID());
-        map.put("clientId", Constants.clientId);
-        map.put("isRead","false");
-        notificationInterface.getAlertCount(map,new Callback<String>() {
-            @Override
-            public void success(String s, Response response) {
-                Home_Fragment_Tab.alertCountVal = s;
-                bus.post(new AlertCountEvent(s));
-                MixPanelController.setProperties("AlertCount",s);
-            }
+        try {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("fpId", session.getFPID());
+            map.put("clientId", Constants.clientId);
+            map.put("isRead", "false");
+            notificationInterface.getAlertCount(map, new Callback<String>() {
+                @Override
+                public void success(String s, Response response) {
+                    Home_Fragment_Tab.alertCountVal = s;
+                    bus.post(new AlertCountEvent(s));
+                    MixPanelController.setProperties("AlertCount", s);
+                }
 
-            @Override
-            public void failure(RetrofitError error) {
-                Home_Fragment_Tab.alertCountVal = "0";
-            }
-        });
-        }catch(Exception e){e.printStackTrace();
-            bus.post(new AlertCountEvent("0"));}
+                @Override
+                public void failure(RetrofitError error) {
+                    Home_Fragment_Tab.alertCountVal = "0";
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            bus.post(new AlertCountEvent("0"));
+        }
     }
 }

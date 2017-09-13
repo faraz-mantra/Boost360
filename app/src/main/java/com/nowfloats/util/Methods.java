@@ -5,9 +5,13 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AppOpsManager;
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -184,7 +188,13 @@ public class Methods {
         }
         return accessibilityServiceEnabled;
     }
-
+    public static boolean isMyAppOpen(Context mContext){
+        ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+        Log.d("topActivity", "CURRENT Activity ::" + taskInfo.get(0).topActivity.getClassName());
+        ComponentName componentInfo = taskInfo.get(0).topActivity;
+        return mContext.getPackageName().equalsIgnoreCase(componentInfo.getPackageName());
+    }
     public static void showSnackBar(View view, String message, int color) {
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
         snackbar.getView().setBackgroundColor(color);
@@ -520,6 +530,17 @@ public class Methods {
         return isMyServiceRunning;
     }
 
+    public static boolean isUserLoggedIn(Context context){
+        DataBase db =new DataBase(context);
+        Cursor cursor = db.getLoginStatus();
+        if (cursor!=null && cursor.getCount()>0){
+            if (cursor.moveToNext()){
+                String LoginStatus = cursor.getString(0);
+                return LoginStatus != null && LoginStatus.equals("true");
+            }
+        }
+        return false;
+    }
     public static RestAdapter createAdapter(Context context, String url) throws IOException {
         try {
             OkHttpClient okHttpClient = new OkHttpClient();
@@ -654,5 +675,41 @@ public class Methods {
 //            formatted += " at " + hrsTemp + " " + amMarker;
         }
         return formatted;
+    }
+
+    public static Bitmap decodeSampledBitmap(String uri, int reqWidth, int reqHeight) {
+
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(uri, options);
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        options.inDither = true;
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFile(uri, options);
+    }
+    public static Bitmap decodeSampledBitmap(Resources res,int resId, int reqWidth, int reqHeight) {
+
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(res,resId,options);
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+        options.inDither = true;
+        options.inJustDecodeBounds = false;
+        return  BitmapFactory.decodeResource(res,resId,options);
+    }
+    private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+            final int heightRatio = Math.round((float) height / (float) reqHeight);
+            final int widthRatio = Math.round((float) width / (float) reqWidth);
+
+            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+        }
+        return inSampleSize;
     }
 }

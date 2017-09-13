@@ -18,6 +18,9 @@ public interface ChatJsonInterface {
     @GET("/chatflowsignup/api/conversation/chat")
     void getChatJson(@QueryMap Map<String, String> query, Callback<List<RiaCardModel>> nodeList);
 
+    @GET("/api/Conversation/chat?projectId=59ad634a2a6c6a5ecc4f9e6a")
+    void getChatFeedbackJson(Callback<List<RiaCardModel>> nodeList);
+
 //    @GET("/chat/api/conversation/chat")
 //    void getChatJson(@QueryMap Map<String, String> query, Callback<List<RiaCardModel>> nodeList);
 

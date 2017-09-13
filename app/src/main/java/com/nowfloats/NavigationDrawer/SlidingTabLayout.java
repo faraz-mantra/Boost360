@@ -1,6 +1,7 @@
 package com.nowfloats.NavigationDrawer;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
@@ -145,13 +146,13 @@ public class SlidingTabLayout extends HorizontalScrollView {
      * Sets the associated view pager. Note that the assumption here is that the pager content
      * (number of tabs and tab titles) does not change after this call has been made.
      */
-    public void setViewPager(ViewPager viewPager) {
+    public void setViewPager(ViewPager viewPager, ColorStateList colorSelector) {
         mTabStrip.removeAllViews();
 
         mViewPager = viewPager;
         if (viewPager != null) {
             viewPager.setOnPageChangeListener(new InternalViewPagerListener());
-            populateTabStrip();
+            populateTabStrip(colorSelector);
         }
     }
 
@@ -188,7 +189,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
         }
     }
 
-    private void populateTabStrip() {
+    private void populateTabStrip(ColorStateList colorSelector) {
         final PagerAdapter adapter = mViewPager.getAdapter();
         final View.OnClickListener tabClickListener = new TabClickListener();
 
@@ -229,7 +230,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
             if (i == mViewPager.getCurrentItem()) {
                 tabView.setSelected(true);
             }
-            tabTitleView.setTextColor(ContextCompat.getColorStateList(getContext(),R.color.selector));
+            tabTitleView.setTextColor(colorSelector);
             tabTitleView.setTextSize(14);
         }
     }

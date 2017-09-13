@@ -46,7 +46,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NFXApi.NfxRequestClient;
 import com.nowfloats.NavigationDrawer.API.twitter.FacebookFeedPullRegistrationAsyncTask;
 import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.Twitter.TwitterConnection;
+import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
@@ -1129,15 +1129,11 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
     }
 
     private void addSiteHealth() {
-//        FragmentManager manager = activity.getSupportFragmentManager();
-//        Site_Meter_Fragment frag = (Site_Meter_Fragment) manager.findFragmentByTag("siteHealth");
-//        if (frag == null) {
-//            frag = new Site_Meter_Fragment();
-//        }
-//        manager.beginTransaction().replace(R.id.parent_layout, frag, "siteHealth")
-//                .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
-//                .addToBackStack(null)
-//                .commit();
+        if(activity instanceof HomeActivity)
+            ((HomeActivity) activity).onClick(getString(R.string.title_activity_social__sharing_));
+        else{
+            Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -1227,6 +1223,8 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                                     builder.dismiss();
                                     if ((!TextUtils.isEmpty(paymentState) && "1".equalsIgnoreCase(paymentState))) {
                                         createFBPage(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+                                    }else{
+                                        Methods.materialDialog(activity, "Alert","This feature is available to paid customers only.");
                                     }
                                 }
                             });

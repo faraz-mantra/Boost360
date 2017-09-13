@@ -159,7 +159,7 @@ public class Home_Fragment_Tab extends Fragment {
         alertCountTv.setVisibility(View.GONE);
         String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
 
-        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") /*&& "1".equals(paymentState)*/) {
+       /* if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") *//*&& "1".equals(paymentState)*//*) {
             getProducts();
 
             new Handler().postDelayed(new Runnable() {
@@ -169,7 +169,7 @@ public class Home_Fragment_Tab extends Fragment {
                 }
             }, 8000);
 
-        }
+        }*/
 
         viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -239,7 +239,7 @@ public class Home_Fragment_Tab extends Fragment {
             }
         });
         // Setting the ViewPager For the SlidingTabsLayout
-        tabs.setViewPager(viewPager);
+        tabs.setViewPager(viewPager,ContextCompat.getColorStateList(getActivity(),R.color.selector));
 
         if (alertCountVal != null && alertCountVal.trim().length() > 0 && !alertCountVal.equals("0")) {
             alertCountTv.setText(alertCountVal);
@@ -274,21 +274,18 @@ public class Home_Fragment_Tab extends Fragment {
 
     public void setFragmentTab(int i) {
         if (!isAdded()) return;
-        if (Constants.deepLinkAnalytics) {
-            viewPager.setCurrentItem(i);
-            Constants.deepLinkAnalytics = false;
-        }
+        viewPager.setCurrentItem(i);
     }
 
     @Subscribe
     public void getRiaCardModels(ArrayList<RiaCardModel> model) {
-        if (tabs.getTabView(1) != null) {
-            if (model != null && model.size() > 0) {
-                tabs.getTabView(1).findViewById(R.id.ll_ria_alert).setVisibility(View.VISIBLE);
-            } else {
-                tabs.getTabView(1).findViewById(R.id.ll_ria_alert).setVisibility(View.GONE);
-            }
-        }
+//        if (tabs.getTabView(1) != null) {
+//            if (model != null && model.size() > 0) {
+//                tabs.getTabView(1).findViewById(R.id.ll_ria_alert).setVisibility(View.VISIBLE);
+//            } else {
+//                tabs.getTabView(1).findViewById(R.id.ll_ria_alert).setVisibility(View.GONE);
+//            }
+//        }
     }
 
     @Override
@@ -339,8 +336,6 @@ public class Home_Fragment_Tab extends Fragment {
 
     private void showBubble() {
 
-        pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, Calendar.getInstance().getTimeInMillis()).apply();
-
 //        if (!pref.getBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, false)) {
         addOverlay();
         pref.edit().putBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, true).apply();
@@ -377,7 +372,7 @@ public class Home_Fragment_Tab extends Fragment {
                 dialogForOverlayPath(from);
             }
         }
-
+        pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, Calendar.getInstance().getTimeInMillis()).apply();
         if (checkAccessibility)
             checkForAccessibility();
     }
@@ -487,6 +482,16 @@ public class Home_Fragment_Tab extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        if (alertCountVal != null && alertCountVal.trim().length() > 0 && !alertCountVal.equals("0") && alertCountTv != null) {
+            alertCountTv.setText(alertCountVal);
+            alertCountTv.setVisibility(View.VISIBLE);
+        } else if (alertCountTv != null) {
+            alertCountTv.setText("0");
+            alertCountTv.setVisibility(View.GONE);
+            alertCountVal = "0";
+        } else {
+            alertCountVal = "0";
+        }
         if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
             getActivity().registerReceiver(clickReceiver, clickIntentFilters);
         }

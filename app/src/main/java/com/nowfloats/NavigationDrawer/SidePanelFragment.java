@@ -45,7 +45,7 @@ import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DeleteBackgroundImageAsyncTask;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
-import com.nowfloats.Twitter.TwitterConnection;
+import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
@@ -88,7 +88,7 @@ public class SidePanelFragment extends Fragment {
     TextView StoreTextView;
     TextView cspTextView;
     //TextView enqCount;
-    TextView settingsText, chatText, callText, shareText, tvBoostBubble /*tvSiteAppearance*/;
+    TextView settingsText, chatText, callText, shareText, tvBoostBubble, analyticsText /*tvSiteAppearance*/;
     public static TextView fpNameTextView;
     UserSessionManager session;
     public static ImageView iconImage;
@@ -112,7 +112,7 @@ public class SidePanelFragment extends Fragment {
     LinearLayout homeLayout, profileLayout, businessAppsLayout, storeLayout, /*customerQueriesLayout,*/
             imageGalleryLayout, cspLayout,
             productGalleryLayout, Store_Layout, settingsLayout, chatLayout, callLayout, shareLayout,
-            llGetInTouch, bubbleLayout /*llSiteAppearance*/, manageCustomersLayout,socialLayout,manageInventoryLayout;
+            llGetInTouch, bubbleLayout /*llSiteAppearance*/, manageCustomersLayout,socialLayout,manageInventoryLayout, analyticsLayout;
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
     private ProgressBar progressbar;
@@ -131,7 +131,7 @@ public class SidePanelFragment extends Fragment {
     private ImageView shareImageView, businessProfileImageView, dasbBoardImageView, callImageView, chatImageView, cspImageView,
             settingsImageView, StoreImageView, productGalleryImageView, businessappImageView,
             imageGalleryImageView/*, customerQueriesImageView*/ /*ivSiteAppearance*/, manageCustomerImageView,
-            socialImageView,manageInventoryImageView;
+            socialImageView,manageInventoryImageView, analyticsImageView;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
     private ImageView businessLockImage;
     SharedPreferences pref, mSharedPreferences;
@@ -206,7 +206,7 @@ public class SidePanelFragment extends Fragment {
             if (!baseNameProfileImage.contains("http")) {
                 baseNameProfileImage = Constants.BASE_IMAGE_URL + "" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BG_IMAGE);
             }
-            if (baseNameProfileImage != null && baseNameProfileImage.length() > 0) {
+            if (baseNameProfileImage.length() > 0) {
                 Picasso.with(getActivity())
                         .load(baseNameProfileImage)
                         .resize(540, 0)
@@ -259,7 +259,7 @@ public class SidePanelFragment extends Fragment {
         fpNameTextView.setVisibility(View.VISIBLE);
 
         String rootAlisasURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
-        String normalURI = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getActivity().getResources().getString(R.string.tag_for_partners);
+        String normalURI = "http://"+session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase() + getActivity().getResources().getString(R.string.tag_for_partners);
         if (rootAlisasURI != null && !rootAlisasURI.equals("null") && rootAlisasURI.trim().length() > 0) {
             fpNameTextView.setText(Methods.fromHtml("<u>" + rootAlisasURI + "</u>"));
         } else {
@@ -269,13 +269,14 @@ public class SidePanelFragment extends Fragment {
         fpNameTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "";
-                if (!Util.isNullOrEmpty(url)) {
+                String url = fpNameTextView.getText().toString().trim();
+               /* if (!Util.isNullOrEmpty(url)) {
                     url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI);
                 } else {
                     url = "http://" + session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG).toLowerCase()
                             + getActivity().getResources().getString(R.string.tag_for_partners);
-                }
+                }*/
+
                 Intent showWebSiteIntent = new Intent(getContext(), Mobile_Site_Activity.class);
                 // showWebSiteIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 showWebSiteIntent.putExtra("WEBSITE_NAME", url);
@@ -365,6 +366,7 @@ public class SidePanelFragment extends Fragment {
         shareLayout = (LinearLayout) card.findViewById(R.id.eigthRow_Layout);
         llGetInTouch = (LinearLayout) card.findViewById(R.id.ll_get_in_touch);
         bubbleLayout = (LinearLayout) card.findViewById(R.id.ninethRow_Layout);
+        analyticsLayout = (LinearLayout) card.findViewById(R.id.analytics_row_Layout);
         //llSiteAppearance = (LinearLayout) card.findViewById(R.id.ll_site_appearance);
 
         if (session.getIsThinksity().equals("true")) {
@@ -395,6 +397,7 @@ public class SidePanelFragment extends Fragment {
         tvSocialSharing = (TextView) socialLayout.findViewById(R.id.tvSocialSharing);
         tvManageInventory = (TextView) manageInventoryLayout.findViewById(R.id.tvManageInventory);
         settingsText = (TextView) settingsLayout.findViewById(R.id.fifthRow_TextView);
+        analyticsText = (TextView) analyticsLayout.findViewById(R.id.analytics_row_TextView);
         businessProfileTextView = (TextView) profileLayout.findViewById(R.id.secondRow_TextView);
         cspTextView = (TextView) cspLayout.findViewById(R.id.csp_TextView);
         businessAppTextview = (TextView) businessAppsLayout.findViewById(R.id.customer_app_TextView);
@@ -490,6 +493,7 @@ public class SidePanelFragment extends Fragment {
         chatImageView = (ImageView) chatLayout.findViewById(R.id.sixthRow_ImageView);
         callImageView = (ImageView) callLayout.findViewById(R.id.seventhRow_ImageView);
         shareImageView = (ImageView) shareLayout.findViewById(R.id.eigthRow_ImageView);
+        analyticsImageView = (ImageView) analyticsLayout.findViewById(R.id.analytics_row_ImageView);
         //ivSiteAppearance = (ImageView) llSiteAppearance.findViewById(R.id.iv_site_appearance);
 
         dashBoardTextView.setTypeface(robotoMedium);
@@ -510,6 +514,16 @@ public class SidePanelFragment extends Fragment {
                 ((OnItemClickListener) mainActivity).onClick(getString(R.string.business_profile));
                 onclickColorChange(businessProfileImageView, businessProfileTextView, profileLayout);
                 MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_PROFILE, null);
+            }
+        });
+
+        analyticsText.setTypeface(robotoMedium);
+        analyticsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.deeplink_analytics));
+                onclickColorChange(analyticsImageView, analyticsText, analyticsLayout);
+                MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT, null);
             }
         });
 
@@ -589,8 +603,10 @@ public class SidePanelFragment extends Fragment {
             public void onClick(View v) {
                 onclickColorChange(manageInventoryImageView, tvManageInventory, manageInventoryLayout);
 //                if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_GALLERY).contains("IMAGEGALLERY")) {
-                    ((OnItemClickListener) mainActivity).onClick(getString(R.string.manage_inventory));
-                    MixPanelController.track(EventKeysWL.SIDE_PANEL_MANAGE_INVENTORY, null);
+
+                ((OnItemClickListener) mainActivity).onClick(getString(R.string.manage_inventory));
+                MixPanelController.track(EventKeysWL.SIDE_PANEL_PRODUCT_GALLERY, null);
+
 //                } else {
 //                    showAlertMaterialDialog();
 //                }
@@ -1409,6 +1425,7 @@ public class SidePanelFragment extends Fragment {
         tvManageCustomers.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvSocialSharing.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvManageInventory.setTextColor(getResources().getColor(R.color.cell_text_color));
+        analyticsText.setTextColor(getResources().getColor(R.color.cell_text_color));
         //tvSiteAppearance.setTextColor(getResources().getColor(R.color.cell_text_color));
 
         shareImageView.setColorFilter(defaultLabelFilter);
@@ -1425,6 +1442,7 @@ public class SidePanelFragment extends Fragment {
         manageCustomerImageView.setColorFilter(defaultLabelFilter);
         socialImageView.setColorFilter(defaultLabelFilter);
         manageInventoryImageView.setColorFilter(defaultLabelFilter);
+        analyticsImageView.setColorFilter(defaultLabelFilter);
         //ivSiteAppearance.setColorFilter(defaultLabelFilter);
 
 
@@ -1446,6 +1464,7 @@ public class SidePanelFragment extends Fragment {
         callLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         shareLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         llGetInTouch.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        analyticsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
 
 
         if (tv != null) {

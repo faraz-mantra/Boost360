@@ -12,7 +12,7 @@ import com.nowfloats.BusinessProfile.UI.API.Facebook_Auto_Publish_API;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.GetAutoPull;
 import com.nowfloats.PreSignUp.SplashScreen_Activity;
-import com.nowfloats.Twitter.TwitterConnection;
+import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.signup.UI.API.Retro_Signup_Interface;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Event;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
@@ -42,8 +42,6 @@ import static com.nfx.leadmessages.Constants.SMS_REGEX;
 public class Get_FP_Details_Service {
 
     public Get_FP_Details_Service(final Activity activity, String fpID, String clientID, final Bus bus) {
-        newNfxTokenDetails(activity, fpID, bus);
-        autoPull(activity, fpID);
         HashMap<String, String> map = new HashMap<>();
         map.put("clientId", clientID);
         Retro_Signup_Interface getFPDetails = Constants.restAdapter.create(Retro_Signup_Interface.class);
@@ -100,7 +98,7 @@ public class Get_FP_Details_Service {
         });
     }
 
-    private void autoPull(Activity activity, String fpID) {
+    public static void autoPull(Activity activity, String fpID) {
 
         final UserSessionManager session = new UserSessionManager(activity.getApplicationContext(), activity);
         final SharedPreferences pref = activity.getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
@@ -195,6 +193,7 @@ public class Get_FP_Details_Service {
         editor.putInt("fbStatus", 0);
         editor.putInt("fbPageStatus", 0);
         editor.putInt("quikrStatus", -1);
+        editor.putInt("facebookChatStatus", 0);
         editor.apply();
         SharedPreferences.Editor tPrefEditor = twitterPref.edit();
         tPrefEditor.putBoolean(TwitterConnection.PREF_KEY_TWITTER_LOGIN, false);
@@ -208,7 +207,7 @@ public class Get_FP_Details_Service {
                 if (!Util.isNullOrEmpty(session.getFacebookName())) {
                     editorFb.putBoolean("fbShareEnabled", true);
                 }
-                editorFb.putString("fbAccessId", model.getUserAccessTokenKey());
+                editorFb.putString("fbAccessId", model.getUserAccountId());
                 editorFb.apply();
             } else if (model.getType().equalsIgnoreCase("facebookpage")) {
                 SharedPreferences.Editor editorFbPage = pref.edit();
@@ -218,7 +217,7 @@ public class Get_FP_Details_Service {
                 if (!Util.isNullOrEmpty(session.getFacebookPage())) {
                     editorFbPage.putBoolean("fbPageShareEnabled", true);
                 }
-                editorFbPage.putString("fbPageAccessId", model.getUserAccessTokenKey());
+                editorFbPage.putString("fbPageAccessId", model.getUserAccountId());
                 editorFbPage.apply();
             } else if (model.getType().equalsIgnoreCase("twitter")) {
                 SharedPreferences.Editor twitterPrefEditor = twitterPref.edit();
@@ -230,6 +229,8 @@ public class Get_FP_Details_Service {
                 twitterPrefEditor.apply();
             } else if (model.getType().equalsIgnoreCase("quikr")) {
                 pref.edit().putInt("quikrStatus", Integer.parseInt(model.getStatus())).apply();
+            }else if(model.getType().equalsIgnoreCase("facebookchat")){
+                pref.edit().putInt("facebookChatStatus", Integer.parseInt(model.getStatus())).apply();
             }
         }
     }

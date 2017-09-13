@@ -8,6 +8,7 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,6 +96,9 @@ public class Business_Profile_Fragment_V2 extends Fragment {
 
                             Typeface robotoMedium = Typeface.createFromAsset(activity.getAssets(), "Roboto-Medium.ttf");
                             robotoLight = Typeface.createFromAsset(activity.getAssets(), "Roboto-Light.ttf");
+                            websiteTextView = (TextView) mainView.findViewById(R.id.websiteTitleTextView_ProfileV2);
+                            websiteTextView.setTypeface(robotoMedium);
+                            websiteTextView.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
                             HomeActivity.shareButton.setVisibility(View.VISIBLE);
                             HomeActivity.shareButton.setOnClickListener(new View.OnClickListener() {
 
@@ -115,10 +119,6 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                                     shareWebsite(url);
                                 }
                             });
-
-                            websiteTextView = (TextView) mainView.findViewById(R.id.websiteTitleTextView_ProfileV2);
-                            websiteTextView.setTypeface(robotoMedium);
-                            websiteTextView.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
 
                             businessProfileImageView = (ImageView) mainView.findViewById(R.id.businessProfileIcon_ProfileV2);
                             //if (Constants.IMAGEURIUPLOADED == false) {
@@ -155,8 +155,8 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                             businessInfoTextView.setTypeface(robotoLight);
                             businessInfoTextView.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_DESCRIPTION));
 
-                            LinearLayout editProfileImageView = (LinearLayout) mainView.findViewById(R.id.editProfile);
-                            editProfileImageView.setOnClickListener(new View.OnClickListener() {
+                            TextView editTextView = (TextView) mainView.findViewById(R.id.tv_edit_profile);
+                            editTextView.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     Intent businessAddress = new Intent(activity, Edit_Profile_Activity.class);
@@ -210,7 +210,10 @@ public class Business_Profile_Fragment_V2 extends Fragment {
 
                             tvSiteAppearance = (TextView) businessProfileList.findViewById(R.id.tvSiteAppearance);
                             tvSiteAppearance.setTypeface(robotoMedium);
-
+                            if(TextUtils.isDigitsOnly(session.getWebTemplateType()) &&Integer.parseInt(session.getWebTemplateType())>6){
+                                businessProfileList.findViewById(R.id.layout_site_appearance).setVisibility(View.GONE);
+                                businessProfileList.findViewById(R.id.sixth_ImageView_ProfileV2).setVisibility(View.GONE);
+                            }
 
                             businessAddressLayout.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -334,10 +337,11 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                                 }
                                 // }
                             });
-                            progressLayout.setVisibility(View.GONE);
-                            profileLayout.setVisibility(View.VISIBLE);
                         } catch (Exception e) {
                             e.printStackTrace();
+                        }finally {
+                            progressLayout.setVisibility(View.GONE);
+                            profileLayout.setVisibility(View.VISIBLE);
                         }
                     }
                 });
@@ -536,7 +540,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
     public void onResume() {
         super.onResume();
         if (HomeActivity.headerText != null)
-            HomeActivity.headerText.setText(getResources().getString(R.string.business_profile_title));
+            HomeActivity.headerText.setText(getResources().getString(R.string.manage_website));
         if (websiteTextView != null)
             websiteTextView.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
         if (businessInfoTextView != null)

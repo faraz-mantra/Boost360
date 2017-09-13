@@ -134,7 +134,7 @@ public class SplashScreen_Activity extends Activity implements Fetch_Home_Data.F
     }
 
     private void displayPreSignUpScreens() {
-        if (pd != null)
+        if (pd != null && pd.isShowing())
             pd.dismiss();
         HomeActivity.StorebizFloats = new ArrayList<>();
         // user is not logged in redirect him to Login Activity

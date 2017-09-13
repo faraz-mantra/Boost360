@@ -20,5 +20,5 @@
         android:fontFamily="sans-serif"
         android:gravity="center"
         android:text="Expiry in 3 days"
-        android:textColor="#565656" />
+        android:textColor="#fff" />
 </FrameLayout>

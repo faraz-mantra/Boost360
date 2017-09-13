@@ -9,7 +9,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,6 +77,9 @@ public class ManageCustomerFragment extends Fragment {
             bubbleSwitch = (Switch) mainView.findViewById(R.id.ninethRow_Switch);
             customerAssistantSwitch = (Switch) mainView.findViewById(R.id.swCustomerAssistant);
             tvBusinessEnquires = (TextView) mainView.findViewById(R.id.tvBusinessEnquires);
+            if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")){
+                mainView.findViewById(R.id.layout_customer_assistance).setVisibility(View.VISIBLE);
+            }
             tvBubbleInfo = (TextView) mainView.findViewById(R.id.tvBubbleInfo);
             tvBusinessEnquires.setTypeface(robotoMedium);
 
@@ -89,7 +91,7 @@ public class ManageCustomerFragment extends Fragment {
             tvFacebookChat.setTypeface(robotoMedium);
 
             tvLearnMore.setVisibility(View.GONE);
-            CharSequence charSequence = Html.fromHtml("<u><i>Learn More</i></u>");
+            CharSequence charSequence = Methods.fromHtml("<u><i>Learn More</i></u>");
             tvLearnMore.setText(charSequence);
 
             tvLearnMore.setOnClickListener(new View.OnClickListener() {

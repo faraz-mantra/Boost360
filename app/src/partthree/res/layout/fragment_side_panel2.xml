@@ -186,6 +186,7 @@
         android:layout_below="@+id/versionCodeName"
         android:layout_width="wrap_content"
         android:layout_marginLeft="90dp"
+        android:visibility="visible"
         android:layout_height="wrap_content"
         android:text="@string/powered_by"/>
 
@@ -193,6 +194,7 @@
         android:layout_width="wrap_content"
         android:layout_below="@+id/versionCodeName"
         android:layout_height="wrap_content"
+        android:visibility="visible"
         android:layout_toRightOf="@id/poweredBy"
         android:text="@string/nowfloats"/>
     <include

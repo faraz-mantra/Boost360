@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2017080027"
-    android:versionName="4.7.8">
+    android:versionCode="2017090013"
+    android:versionName="4.7.9">
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
@@ -50,6 +50,51 @@
 
         <receiver
             android:name="com.appsflyer.MultipleInstallBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+        <meta-data
+            android:name="com.webengage.sdk.android.debug"
+            android:value="false" /> <!-- only for debugging -->
+
+        <meta-data
+            android:name="com.webengage.sdk.android.key"
+            android:value="~7167db19" /> <!-- Replace with your WebEngage's license code -->
+
+        <meta-data
+            android:name="com.webengage.sdk.android.location_tracking"
+            android:value="true" /> <!-- Set false if location tracking is not required -->
+
+        <service android:name="com.webengage.sdk.android.ExecutorService" />
+        <service android:name="com.webengage.sdk.android.EventLogService" />
+
+        <activity
+            android:name="com.webengage.sdk.android.actions.render.WebEngageActivity"
+            android:theme="@android:style/Theme.Translucent"
+            android:configChanges="orientation|screenSize" />
+        <meta-data
+            android:name="com.webengage.sdk.android.small_icon"
+            android:resource="@drawable/app_launcher2"/>
+
+        <meta-data
+            android:name="com.webengage.sdk.android.large_icon"
+            android:resource="@drawable/app_launcher"/>
+
+        <meta-data
+            android:name="com.webengage.sdk.android.accent_color"
+            android:value="@color/primary"/>
+        <receiver
+            android:name="com.webengage.sdk.android.WebEngageReceiver">
+            <intent-filter>
+                <action android:name="com.webengage.sdk.android.intent.ACTION" />
+                <category android:name="${applicationId}" /> <!-- Replace with your package name -->
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.webengage.sdk.android.InstallTracker"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
@@ -113,6 +158,7 @@
                     android:pathPrefix="/"
                     android:scheme="nowfloats" />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nowfloats.PreSignUp.PreSignUp_MainActivity" />
@@ -148,7 +194,6 @@
             android:name="com.nowfloats.signup.UI.UI.BusinessProfileActivity"
             android:label="@string/title_activity_business_profile"
             android:screenOrientation="portrait" />
-
         <activity
             android:name="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity"
             android:screenOrientation="portrait">
@@ -268,6 +313,7 @@
                     android:pathPrefix="/"
                     android:scheme="nowfloats" />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.nowfloats.PreSignUp.PreSignUp_MainActivity" />
@@ -322,7 +368,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity"
@@ -344,7 +389,8 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
-        <!--<receiver
+        <!--
+        <receiver
             android:name="com.mixpanel.android.mpmetrics.GCMReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
@@ -353,7 +399,8 @@
 
                 <category android:name="com.biz2.nowfloats" />
             </intent-filter>
-        </receiver>-->
+        </receiver>
+        -->
 
         <meta-data
             android:name="com.mixpanel.android.MPConfig.ResourcePackageName"
@@ -440,7 +487,6 @@
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-
         </service>
         <service android:name="com.nowfloats.RiaFCM.RiaFirebaseInstanceIDService">
             <intent-filter>
@@ -463,7 +509,7 @@
             android:authorities="${applicationId}.provider" />
         <provider
             android:name="com.nowfloats.riachatsdk.database.ChatContentProvider"
-            android:authorities="com.nowfloats.riachatsdk.provider" />
+            android:authorities="${applicationId}.riachatsdk.provider" />
 
         <service android:name="com.nowfloats.Product_Gallery.Service.MultipleImageUploadService" />
 
@@ -501,6 +547,7 @@
             <intent-filter android:priority="2147483647">
                 <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>
+
             <meta-data
                 android:name="android.accessibilityservice"
                 android:resource="@xml/accessibility_service" />
@@ -548,7 +595,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/Transparent"
             android:windowSoftInputMode="adjustNothing|stateAlwaysHidden" />
-
         <activity
             android:name="com.nowfloats.accessbility.OverlayDialog"
             android:autoRemoveFromRecents="true"
@@ -579,7 +625,9 @@
             android:name="com.nowfloats.signup.UI.UI.RiaChatInitActivity"
             android:screenOrientation="portrait" />
         <activity android:name="com.nowfloats.manageinventory.SellerAnalyticsActivity" />
-        <activity android:name="com.nowfloats.manageinventory.PaymentSettingsActivity"></activity>
+        <activity android:name="com.nowfloats.manageinventory.PaymentSettingsActivity" />
+        <activity android:name="com.nowfloats.manageinventory.OrderListActivity" />
+        <activity android:name="com.nowfloats.manageinventory.OrderDetailsActivity"></activity>
     </application>
 
 </manifest>

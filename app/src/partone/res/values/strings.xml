@@ -80,9 +80,9 @@
     <string name="title_activity_card__full__view__main">Home</string>
     <string name="title_activity_create__message_">Post an update</string>
     <string name="side_panel_row_one">Dashboard</string>
-    <string name="side_panel_row_two">My Business Profile</string>
+    <string name="side_panel_row_two">Manage Website</string>
     <string name="side_panel_row_tenth">Manage Customers</string>
-    <string name="manage_inventory">Manage Inventory</string>
+    <string name="manage_inventory">Manage Catalog</string>
     <string name="side_panel_site_appearance">Site Appearance</string>
     <string name="side_panel_row_csp">Custom Pages</string>
     <string name="side_panel_row_three">Business Enquiries</string>
@@ -92,7 +92,7 @@
     <string name="setting_feedback">Feedback</string>
     <string name="setting_rate_us_on_play_store">Rate us on Play Store</string>
     <string name="Setting_like_us_on_facebook">Like us on Facebook</string>
-    <string name="setting_about_us">About us</string>
+    <string name="setting_about_us">About Us</string>
     <string name="setting_logout">Logout</string>
     <string name="signup_subd">^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]$</string>
 
@@ -400,7 +400,7 @@
     <string name="drop_us_on_email_or_call">Please drop us a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to enable this feature.</string>
     <string name="primary_contact_number_message">Please drop us a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233 if you\'d like to change this number.</string>
 
-    <string name="your_site_health">Your site health</string>
+    <string name="your_site_health">Your Site Health</string>
 
     <string name="settings_feedback_link">ria@nowfloats.com</string>
     <string name="settings_facebook_like_link">https://www.facebook.com/nowfloats</string>

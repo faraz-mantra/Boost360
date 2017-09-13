@@ -116,7 +116,7 @@ public class CAProductsAdapter extends BaseAdapter {
             }
 
 
-            convertView.setOnClickListener(new View.OnClickListener() {
+            vi.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     updateView(view);
