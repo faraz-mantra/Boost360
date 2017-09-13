@@ -8,6 +8,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nowfloats.Login.UserSessionManager;
@@ -52,8 +53,20 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         totalCount.setText(intent.getStringExtra("TotalCalls"));
         receivedCount.setText(intent.getStringExtra("ReceivedCalls"));
         missedCount.setText(intent.getStringExtra("MissedCalls"));
+        if(totalCount.getText().toString().equals("0")){
+            findViewById(R.id.empty_layout).setVisibility(View.VISIBLE);
+            ImageView imageView = (ImageView) findViewById(R.id.image_item);
+            TextView mMainText  = (TextView) findViewById(R.id.main_text);
+            TextView mDescriptionText  = (TextView) findViewById(R.id.description_text);
 
-        viewCallLogCard.setOnClickListener(this);
+            imageView.setImageResource(R.drawable.icon_no_calls);
+            mMainText.setText("You have no call records yet.");
+            mDescriptionText.setText("Your website customers haven't contacted you on your call tracking number yet.");
+        }else {
+            findViewById(R.id.calls_details_layout).setVisibility(View.VISIBLE);
+            viewCallLogCard.setVisibility(View.VISIBLE);
+            viewCallLogCard.setOnClickListener(this);
+        }
     }
 
     @Override

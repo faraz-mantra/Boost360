@@ -47,7 +47,8 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity android:name="com.mixpanel.android.surveys.SurveyActivity" />
-
+        <activity android:name="com.nowfloats.Analytics_Screen.VmnNumberRequestActivity"
+            android:screenOrientation="portrait"/>
         <receiver
             android:name="com.appsflyer.MultipleInstallBroadcastReceiver"
             android:exported="true">

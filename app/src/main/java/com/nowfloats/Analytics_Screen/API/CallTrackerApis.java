@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import retrofit.Callback;
+import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.POST;
 import retrofit.http.Query;
 import retrofit.http.QueryMap;
 
@@ -24,4 +26,7 @@ public interface CallTrackerApis {
 
     @GET("/WildFire/v1/calls/summary")
     void getVmnSummary(@Query("clientId") String clientId, @Query("fpid") String fpId, @Query("identifierType") String type, Callback<JsonObject> response);
+
+    @POST("/api/Service/EmailRIASupportTeamV2")
+    void requestVmn(@Body Map<String,String> bodyMap, @Query("authClientId") String clientId, @Query("fpTag") String fpTag, Callback<Boolean> response);
 }
