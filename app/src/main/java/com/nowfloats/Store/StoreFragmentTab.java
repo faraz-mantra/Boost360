@@ -3,6 +3,7 @@ package com.nowfloats.Store;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,6 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.SlidingTabLayout;
 import com.nowfloats.Store.Adapters.StorePagerAdapter;
-import com.nowfloats.Store.Model.ActiveWidget;
 import com.nowfloats.Store.Model.StoreEvent;
 import com.nowfloats.Store.Model.StoreModel;
 import com.nowfloats.Store.Service.API_Service;
@@ -222,7 +222,7 @@ public class StoreFragmentTab extends Fragment {
                         }
                     });
                     // Setting the ViewPager For the SlidingTabsLayout
-                    tabs.setViewPager(viewPager);
+                    tabs.setViewPager(viewPager, ContextCompat.getColorStateList(getActivity(),R.color.selector));
                     progressLayout.setVisibility(View.GONE);
                 }
             });

@@ -566,13 +566,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 //            if (!Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME))){
             //store.put("name", Constants.ContactName);
 //            }
-            User weUser = WebEngage.get().user();
-            weUser.login(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
-            weUser.setAttribute("sales_executive_email","reach@nowfloats.com");
-            weUser.setEmail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
-            weUser.setFirstName(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME));
-            weUser.setPhoneNumber(session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
-            weUser.setCompany(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
             store.put("Business Name", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
             store.put("Tag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
             store.put("Primary contact", session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
@@ -1909,6 +1902,17 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
     }
 
+    private void setWebEngageProperties(){
+
+        User weUser = WebEngage.get().user();
+        weUser.login(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
+        weUser.setAttribute("sales_executive_email","reach@nowfloats.com");
+        weUser.setEmail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
+        weUser.setFirstName(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME));
+        weUser.setPhoneNumber(session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
+        weUser.setCompany(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+        weUser.logout();
+    }
     @Override
     public void authenticationStatus(String value) {
         if (value.equals("Success")) {
@@ -1984,6 +1988,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     }
 
     private void createView() {
+
 
         setContentView(R.layout.activity_home_v3);
         getNfxTokenData();
@@ -2065,6 +2070,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }).start();
 
         if (Constants.fromLogin) {
+            setWebEngageProperties();
             showOnBoardingScreens();
             // Constants.fromLogin = false ;
         }

@@ -16,16 +16,15 @@ import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.Chat.ChatModel;
 import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.Volley.AppController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.DataMap;
+import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
-import com.webengage.sdk.android.WebEngage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -649,8 +648,15 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return pref.getBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED, false);
     }
 
+    public boolean isCustomerAssistantEnabled() {
+        return pref.getBoolean(Key_Preferences.IS_CUSTOMER_ASSISTANT_ENABLED, false);
+    }
+
     public void setBubbleStatus(boolean flag) {
         pref.edit().putBoolean(Key_Preferences.IS_BOOST_BUBBLE_ENABLED, flag).apply();
+    }
+    public void setCustomerAssistantStatus(boolean flag) {
+        pref.edit().putBoolean(Key_Preferences.IS_CUSTOMER_ASSISTANT_ENABLED, flag).apply();
     }
 
     public void setBubbleTime(long time) {
@@ -886,7 +892,6 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 MixPanelController.setProperties("LastLogoutDate", dateString);
 
                 // After logout redirect user to Login Activity
-                WebEngage.get().user().logout();
                 Constants.clearStore();
                 Constants.StorebizQueries 		= new ArrayList<>();
                 Constants.storeSecondaryImages = null ;

@@ -239,7 +239,7 @@ public class Home_Fragment_Tab extends Fragment {
             }
         });
         // Setting the ViewPager For the SlidingTabsLayout
-        tabs.setViewPager(viewPager);
+        tabs.setViewPager(viewPager,ContextCompat.getColorStateList(getActivity(),R.color.selector));
 
         if (alertCountVal != null && alertCountVal.trim().length() > 0 && !alertCountVal.equals("0")) {
             alertCountTv.setText(alertCountVal);

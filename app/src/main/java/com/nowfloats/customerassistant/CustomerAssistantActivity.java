@@ -79,13 +79,13 @@ public class CustomerAssistantActivity extends Activity {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(ContextCompat.getColor(CustomerAssistantActivity.this, R.color.transparent_blk));
+            window.setStatusBarColor(ContextCompat.getColor(CustomerAssistantActivity.this, R.color.primary));
         }
 
         initializeControls();
 
         MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED, null);
-        FirebaseLogger.getInstance().logSAMEvent("", FirebaseLogger.SAMSTATUS.BUBBLE_CLIKED, session.getFPID(), appVersion);
+        FirebaseLogger.getInstance().logSAMEvent("", FirebaseLogger.SAMSTATUS.BUBBLE_CLICKED, session.getFPID(), appVersion);
 
 
         if (!pref.getBoolean(Key_Preferences.HAS_SHOWN_SAM_COACH_MARK, false)) {
