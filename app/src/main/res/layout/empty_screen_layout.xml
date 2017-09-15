@@ -22,13 +22,13 @@
 
     <TextView
         android:id="@+id/description_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
         android:layout_marginTop="5dp"
         android:gravity="center"
         android:textSize="16sp"
-        android:text="looks_like_you_have_not_posted_any_updates"/>
+        android:text="Your website customers haven't contacted\nyou on your call tracking number yet."/>
 
 </LinearLayout>

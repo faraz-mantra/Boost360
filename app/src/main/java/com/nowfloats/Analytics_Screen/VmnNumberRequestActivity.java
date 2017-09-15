@@ -1,8 +1,12 @@
 package com.nowfloats.Analytics_Screen;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,31 +31,65 @@ import retrofit.client.Response;
 
 public class VmnNumberRequestActivity extends AppCompatActivity {
 
+    SharedPreferences pref;
+    Button mButton;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_facebook_create_update);
+        setContentView(R.layout.activity_request_vmn);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+
+        setTitle("Call Tracker");
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
+        UserSessionManager manager = new UserSessionManager(this,this);
+        final String fpTag = manager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG);
         ImageView imageView = (ImageView) findViewById(R.id.create_update_img);
         TextView mMainText  = (TextView) findViewById(R.id.create_update_text_bold);
         TextView mDescriptionText  = (TextView) findViewById(R.id.message);
-        Button mButton = (Button) findViewById(R.id.create_update_button);
-
+        mButton = (Button) findViewById(R.id.create_update_button);
+        if(pref.getBoolean("Call_tracker_requested",false)){
+            mButton.setText("Requested");
+            mButton.setBackgroundResource(R.drawable.gray_round_corner);
+        }else{
+            mButton.setText("Enable");
+            mButton.setBackgroundResource(R.drawable.rounded_corner_button);
+            mButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    requestVmn(fpTag);
+                }
+            });
+        }
         imageView.setImageResource(R.drawable.icon_no_vmn_number);
         mMainText.setText("Call Tracking is not Enabled");
         mDescriptionText.setText("With call tracking you have a list of all your customer calls, " +
                 "including any missed ones. You can also listen to call recordings to ensure that" +
                 " you have not missed out on any details.");
-        mButton.setText("Enable");
-        UserSessionManager manager = new UserSessionManager(this,this);
-        final String fpTag = manager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG);
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            requestVmn(fpTag);
-            }
-        });
+
+
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public void requestVmn(String fpTag){
         HashMap<String, String> hashMap = new HashMap<String, String>();
@@ -62,6 +100,9 @@ public class VmnNumberRequestActivity extends AppCompatActivity {
             @Override
             public void success(Boolean aBoolean, Response response) {
                 if(aBoolean){
+                    pref.edit().putBoolean("Call_tracker_requested",true).apply();
+                    mButton.setText("Requested");
+                    mButton.setBackgroundResource(R.drawable.gray_round_corner);
                     Methods.showSnackBarPositive(VmnNumberRequestActivity.this,"Your request has been submitted successfully");
                 }else{
                     Methods.showSnackBarNegative(VmnNumberRequestActivity.this,"Your request is not submitted");
