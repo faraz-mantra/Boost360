@@ -15,7 +15,10 @@ import retrofit.http.QueryMap;
 
 public interface ChatJsonInterface {
 
-    @GET("/chatflowsignup/api/conversation/chat")
+//    @GET("/chatflowsignup/api/conversation/chat")
+//    void getChatJson(@QueryMap Map<String, String> query, Callback<List<RiaCardModel>> nodeList);
+
+    @GET("/api/Conversation/chat?projectId=59bb92a0c7d8bf2f84fba8d6")
     void getChatJson(@QueryMap Map<String, String> query, Callback<List<RiaCardModel>> nodeList);
 
     @GET("/api/Conversation/chat?projectId=59ad634a2a6c6a5ecc4f9e6a")

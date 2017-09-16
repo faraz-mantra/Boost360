@@ -57,11 +57,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+//    signingConfigs {
+//        debug {
+//            storeFile file(System.properties['user.home']+"/.android/custom_debug.keystore")
+//            storePassword 'NowFloatsManage2013'
+//            keyAlias 'nfmanage'
+//            keyPassword 'NowFloatsManage2013'
+//        }
+//    }
     productFlavors {
-        partone {
-            versionName "4.7.9"
-            applicationId "com.biz2.nowfloats"
-        }
+
         parttwo {
             versionName "4.4.9"
             applicationId "com.sibername"
@@ -77,6 +82,10 @@ android {
         partfive{
             versionName "1.0.0"
             applicationId "com.capture"
+        }
+        partone {
+            versionName "4.7.9"
+            applicationId "com.biz2.nowfloats"
         }
     }
     packagingOptions {

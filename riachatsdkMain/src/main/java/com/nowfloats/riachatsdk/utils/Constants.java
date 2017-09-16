@@ -7,9 +7,9 @@ package com.nowfloats.riachatsdk.utils;
 public class Constants {
     public static final String PARCEL_NAME = "config_parcel";
     public static final String CHAT_TYPE = "chat_type";
-    public static final String SERVER_URL = "https://onboarding-boost.withfloats.com";
+//    public static final String SERVER_URL = "https://onboarding-boost.withfloats.com";
+    public static final String SERVER_URL = "http://ria.nowfloatsdev.com/nf-ana-bots";
     public static final String FEEDBACK_SERVER_URL = "https://nfanabots.withfloats.com/nps";
-    //    public static final String SERVER_URL = "http://ria.nowfloatsdev.com";
     public static final String FILE_PATH = "file_path";
     public static final String RECEIVER = "receiver";
     public static final String KEY_FILE_URL = "file_url";
@@ -74,6 +74,7 @@ public class Constants {
 
     public interface DeepLinkUrl {
         String ASK_LOC_PERM = "asklocationpermission";
+        String FACEBOOK_AUTH = "facebookauth";
         String LOGIN = "login";
     }
 

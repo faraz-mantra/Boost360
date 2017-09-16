@@ -17,8 +17,8 @@ import java.util.TimeZone;
 public class ChatLogger {
     private static ChatLogger sRiaEventLogger;
     private DatabaseReference mDatabase;
-    private static final String DB_CHILD_NAME = "RiaChatSDK";
-    //        private static final String DB_CHILD_NAME = "RiaChatTestSDK";
+    //    private static final String DB_CHILD_NAME = "RiaChatSDK";
+    private static final String DB_CHILD_NAME = "RiaChatTestSDK";
     private static final String DB_FEEDBACK_CHILD_NAME = "NpsSDK";
 
     private static final String EVENT_CATEGORY_ONBOARDING = "RIA_ONBOARDING_CHAT";
@@ -57,7 +57,7 @@ public class ChatLogger {
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
-    public void logViewEvent(String deviceId, String NodeId, String appVersion, String flowId, String sessionId,String fpTag) {
+    public void logViewEvent(String deviceId, String NodeId, String appVersion, String flowId, String sessionId, String fpTag) {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         df.setTimeZone(TimeZone.getTimeZone("UTC"));
         ChatEventModel Event = new ChatEventModel()
@@ -86,7 +86,7 @@ public class ChatLogger {
 
     public void logClickEvent(String deviceId, String NodeId, String buttonId,
                               String buttonLabel, String varName, String varValue, String buttonType, String appVersion
-            , String flowId, String sessionId,String fpTag) {
+            , String flowId, String sessionId, String fpTag) {
 
         DateFormat df = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
         df.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -140,7 +140,7 @@ public class ChatLogger {
 
     public void logPostEvent(String deviceId, String NodeId, String buttonId, String buttonLabel,
                              int status, String buttonType, HashMap<String, String> UserData, String appVersion,
-                             String flowId, String sessionId,String fpTag) {
+                             String flowId, String sessionId, String fpTag) {
         if (status == EventStatus.COMPLETED.getValue()) {
             lastEventStatus = true;
         } else {
