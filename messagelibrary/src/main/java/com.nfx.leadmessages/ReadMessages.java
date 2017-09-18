@@ -5,11 +5,13 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.IBinder;
 import android.provider.CallLog;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
@@ -50,8 +52,10 @@ public class ReadMessages extends Service {
         SharedPreferences pref =getSharedPreferences(Constants.SHARED_PREF, Context.MODE_PRIVATE);
         fpId =pref.getString(Constants.FP_ID,null);
         DAYS_BEFORE = Integer.parseInt(pref.getString(CALL_LOG_TIME_INTERVAL, DAYS_BEFORE+""));
-        TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        mobileId = tm.getDeviceId();
+        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED){
+            TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+            mobileId = tm.getDeviceId();
+        }
         String smsAddresses =  pref.getString(SMS_REGEX,null);
         if(mobileId == null || fpId == null || smsAddresses == null){
             return Service.START_NOT_STICKY;

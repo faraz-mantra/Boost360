@@ -44,10 +44,10 @@ android {
     }
 
     defaultConfig {
-        applicationId 'com.thinksity'
+        applicationId 'com.biz2.nowfloats'
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 2017090013
+        versionCode 2017090015
         multiDexEnabled true
     }
     buildTypes {
@@ -58,10 +58,7 @@ android {
         }
     }
     productFlavors {
-        partone {
-            versionName "4.8.0"
-            applicationId "com.biz2.nowfloats"
-        }
+
         parttwo {
             versionName "4.4.9"
             applicationId "com.sibername"
@@ -77,6 +74,11 @@ android {
         partfive{
             versionName "1.0.0"
             applicationId "com.capture"
+        }
+
+        partone {
+            versionName "4.8.0"
+            applicationId "com.biz2.nowfloats"
         }
     }
     packagingOptions {

@@ -40,6 +40,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.squareup.okhttp.OkHttpClient;
 import com.thinksity.R;
@@ -237,6 +238,28 @@ public class Methods {
                 ,context); // activity where it is displayed*/
     }
 
+    public static void showFeatureNotAvailDialog(final Context context){
+        new MaterialDialog.Builder(context)
+                .title(context.getString(R.string.features_not_available))
+                .content(context.getString(R.string.buy_light_house_plan))
+                .positiveText(context.getString(R.string.buy))
+                .negativeText(context.getString(R.string.later))
+                .positiveColorRes(R.color.primaryColor)
+                .negativeColorRes(R.color.light_gray)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        super.onNegative(dialog);
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        super.onPositive(dialog);
+                        context.startActivity(new Intent(context, PricingPlansActivity.class));
+                    }
+                }).show();
+    }
     public static void showSnackBarNegative(View mView, String msg) {
         android.support.design.widget.Snackbar snackBar = android.support.design.widget.Snackbar.make(mView, msg, android.support.design.widget.Snackbar.LENGTH_LONG);
         snackBar.getView().setBackgroundColor(Color.parseColor("#E02200"));

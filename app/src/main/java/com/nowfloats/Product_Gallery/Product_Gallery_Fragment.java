@@ -27,6 +27,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.melnykov.fab.FloatingActionButton;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
 import com.nowfloats.Product_Gallery.Service.ProductAPIService;
 import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
@@ -448,8 +449,11 @@ public class Product_Gallery_Fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        if(HomeActivity.headerText != null){
+            HomeActivity.headerText.setText("Product Gallery");
+        }
         bus.register(this);
-        if (productItemModelList != null && productItemModelList.size() == 0 && empty_layout != null) {
+        if (productItemModelList != null && productItemModelList.size() == 0 ) {
             empty_layout.setVisibility(View.VISIBLE);
         } else {
             empty_layout.setVisibility(View.GONE);
