@@ -786,8 +786,8 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
 
     public void fbData(final int from) {
         //AccessToken.getCurrentAccessToken()
-        List<String> readPermissions = Arrays.asList("email", "public_profile", "user_friends", "read_insights", "business_management");
-        final List<String> publishPermissions = Arrays.asList("publish_actions", "publish_pages", "manage_pages");
+        List<String> readPermissions = Arrays.asList(Constants.FACEBOOK_READ_PERMISSIONS);
+        final List<String> publishPermissions = Arrays.asList(Constants.FACEBOOK_PUBLISH_PERMISSIONS);
         final LoginManager loginManager = LoginManager.getInstance();
 
         loginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {

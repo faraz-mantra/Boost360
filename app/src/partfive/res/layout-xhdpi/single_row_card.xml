@@ -162,6 +162,7 @@
             android:id="@+id/tenth_Layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/sidepanel_cell_height"
+            android:visibility="gone"
             android:background="@color/cell_background_color"
             android:gravity="center_vertical"
             android:orientation="horizontal">

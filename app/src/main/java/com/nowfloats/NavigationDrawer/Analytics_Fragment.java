@@ -412,9 +412,6 @@ public class Analytics_Fragment extends Fragment {
                 if(isVmnEnable){
                     if(vmnTotalCallCount.getVisibility() == View.VISIBLE){
                         Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
-                        i.putExtra("TotalCalls", vmnTotalCalls);
-                        i.putExtra("ReceivedCalls", vmnReceivedCalls);
-                        i.putExtra("MissedCalls", vmnMissedCalls);
                         startActivity(i);
                         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     } else {

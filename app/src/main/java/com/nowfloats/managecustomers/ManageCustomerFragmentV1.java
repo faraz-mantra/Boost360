@@ -20,6 +20,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -35,6 +36,8 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
+import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
+import com.nowfloats.Analytics_Screen.VmnNumberRequestActivity;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
@@ -202,12 +205,34 @@ public class ManageCustomerFragmentV1 extends Fragment {
                                 LinearLayout.LayoutParams.WRAP_CONTENT);
                         params.setMargins(Methods.dpToPx(30, getActivity()), 0, 0, 0);
 
-//                        manageCustomerHolder.tvThree.setVisibility(View.VISIBLE);
+                        manageCustomerHolder.tvThree.setVisibility(View.VISIBLE);
                         manageCustomerHolder.tvTitle.setText("Website\nCustomers");
                         manageCustomerHolder.tvTwo.setText(getActivity().getString(R.string.enquiries_title));
                         manageCustomerHolder.tvOne.setText(getActivity().getString(R.string.subscribers));
-                        manageCustomerHolder.tvThree.setText("Call");
+                        manageCustomerHolder.tvThree.setText("Calls");
+                        final boolean isVmnEnable = "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
+                                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)) ||
+                                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME));
+                        final String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
 
+                        manageCustomerHolder.tvThree.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if(isVmnEnable){
+                                    Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
+                                    startActivity(i);
+                                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                }else if ((TextUtils.isDigitsOnly(paymentState) && "1".equalsIgnoreCase(paymentState))){
+                                    Intent i = new Intent(getActivity(), VmnNumberRequestActivity.class);
+                                    startActivity(i);
+                                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                }else{
+                                    Methods.showFeatureNotAvailDialog(getActivity());
+                                    // show first buy lighthouse
+                                }
+
+                            }
+                        });
                         manageCustomerHolder.tvInfoTitle.setText(getString(R.string.website_customers));
                         manageCustomerHolder.tvInfo.setText(getString(R.string.manage_website_customers));
                         manageCustomerHolder.tvTwo.setOnClickListener(new View.OnClickListener() {

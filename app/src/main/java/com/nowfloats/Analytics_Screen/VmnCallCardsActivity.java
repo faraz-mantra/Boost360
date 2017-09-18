@@ -1,5 +1,6 @@
 package com.nowfloats.Analytics_Screen;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,11 +12,18 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.JsonObject;
+import com.nowfloats.Analytics_Screen.API.CallTrackerApis;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by Admin on 27-04-2017.
@@ -27,6 +35,7 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
     CardView viewCallLogCard;
     TextView missedCount, receivedCount,totalCount, virtualNumber;
     Toolbar toolbar;
+    ProgressDialog vmnProgressBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +49,10 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
             getSupportActionBar().setDisplayShowHomeEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
+        vmnProgressBar = new ProgressDialog(this);
+        vmnProgressBar.setIndeterminate(true);
+        vmnProgressBar.setMessage(getString(R.string.please_wait));
+        vmnProgressBar.setCancelable(false);
         sessionManager = new UserSessionManager(this,this);
         missedCount = (TextView) findViewById(R.id.missed_count);
         receivedCount = (TextView) findViewById(R.id.received_count);
@@ -48,11 +60,10 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
         virtualNumber = (TextView) findViewById(R.id.tv_virtual_number);
         viewCallLogCard = (CardView) findViewById(R.id.card_view_view_calllog);
         virtualNumber.setText(sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NUMBER));
+        setVmnTotalCallCount();
+    }
 
-        Intent intent = getIntent();
-        totalCount.setText(intent.getStringExtra("TotalCalls"));
-        receivedCount.setText(intent.getStringExtra("ReceivedCalls"));
-        missedCount.setText(intent.getStringExtra("MissedCalls"));
+    private void showEmptyScreen(){
         if(totalCount.getText().toString().equals("0")){
             findViewById(R.id.empty_layout).setVisibility(View.VISIBLE);
             ImageView imageView = (ImageView) findViewById(R.id.image_item);
@@ -68,6 +79,56 @@ public class VmnCallCardsActivity extends AppCompatActivity implements View.OnCl
             viewCallLogCard.setOnClickListener(this);
         }
     }
+    private void showProgress(){
+        if(!vmnProgressBar.isShowing() && !isFinishing()){
+            vmnProgressBar.show();
+        }
+    }
+    private void hideProgress(){
+        if(vmnProgressBar.isShowing() && !isFinishing()){
+            vmnProgressBar.dismiss();
+        }
+    }
+    private void setVmnTotalCallCount() {
+        showProgress();
+        CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
+        String type = sessionManager.getISEnterprise().equals("true") ? "MULTI" : "SINGLE";
+
+        trackerApis.getVmnSummary(Constants.clientId, sessionManager.getFPID(), type, new Callback<JsonObject>() {
+            @Override
+            public void success(JsonObject jsonObject, Response response) {
+                hideProgress();
+
+                if (jsonObject == null || response.getStatus() != 200) {
+                    Methods.showSnackBarNegative(VmnCallCardsActivity.this,getString(R.string.something_went_wrong));
+
+                }else
+                {
+                    if (jsonObject.has("TotalCalls")) {
+                        String vmnTotalCalls = jsonObject.get("TotalCalls").getAsString();
+                        totalCount.setText(vmnTotalCalls != null && !"null".equalsIgnoreCase(vmnTotalCalls) ? vmnTotalCalls : "0");
+                    }
+                    if (jsonObject.has("MissedCalls")) {
+                        String vmnMissedCalls = jsonObject.get("MissedCalls").getAsString();
+                        missedCount.setText(vmnMissedCalls != null && !"null".equalsIgnoreCase(vmnMissedCalls) ? vmnMissedCalls : "0");
+                    }
+                    if (jsonObject.has("ReceivedCalls")) {
+                        String vmnReceivedCalls = jsonObject.get("ReceivedCalls").getAsString();
+                        receivedCount.setText(vmnReceivedCalls != null && !"null".equalsIgnoreCase(vmnReceivedCalls) ? vmnReceivedCalls : "0");
+                    }
+                }
+                showEmptyScreen();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                hideProgress();
+                showEmptyScreen();
+                Methods.showSnackBarNegative(VmnCallCardsActivity.this,getString(R.string.something_went_wrong));
+            }
+        });
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

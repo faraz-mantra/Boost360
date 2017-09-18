@@ -52,6 +52,7 @@ import com.nowfloats.util.ProgressBarAnimation;
 import com.nowfloats.util.Utils;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import java.util.ArrayList;
@@ -492,7 +493,7 @@ public class Site_Meter_Fragment extends Fragment {
                 break;
             case domain:
                 MixPanelController.track(EventKeysWL.SITE_SCORE_GET_YOUR_OWN_IDENTITY, null);
-                if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+                if (!BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
                     MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
                             .title("Get A Domain")
                             .customView(R.layout.dialog_link_layout, false)
