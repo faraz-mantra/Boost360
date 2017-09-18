@@ -74,6 +74,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                     || (message.containsKey("mp_message_key") && message.get("mp_message_key").equalsIgnoreCase(SAM_BUBBLE_MSG_KEY))) {
                 MixPanelController.track(MixPanelController.SAM_BUBBLE_NOTIFICATION, null);
                 pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).apply();
+                pref.edit().putBoolean(Key_Preferences.IS_CUSTOMER_ASSISTANT_ENABLED, true).apply();
                 if (Methods.hasOverlayPerm(this)) {
                     if (!Methods.isMyServiceRunning(this, CustomerAssistantService.class)) {
                         Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);

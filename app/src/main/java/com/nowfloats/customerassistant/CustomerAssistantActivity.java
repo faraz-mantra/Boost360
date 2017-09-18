@@ -185,6 +185,7 @@ public class CustomerAssistantActivity extends Activity {
                 MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED_NO_DATA, null);
                 FirebaseLogger.getInstance().logSAMEvent("", FirebaseLogger.SAMSTATUS.HAS_NO_DATA, session.getFPID(), appVersion);
                 pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, false).apply();
+                pref.edit().putBoolean(Key_Preferences.IS_CUSTOMER_ASSISTANT_ENABLED, false).apply();
                 stopService(new Intent(CustomerAssistantActivity.this, CustomerAssistantService.class));
                 finish();
             }

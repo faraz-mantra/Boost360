@@ -31,6 +31,7 @@ import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
 import com.nowfloats.Product_Gallery.Service.ProductAPIService;
 import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
+import com.nowfloats.accessbility.BubbleInAppDialog;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.util.BusProvider;
@@ -133,7 +134,7 @@ public class Product_Gallery_Fragment extends Fragment {
                     @Override
                     public void success(WebActionModel<MerchantProfileModel> merchantProfileModelWebActionModel, Response response) {
                         progressLayout.setVisibility(View.GONE);
-                        if(merchantProfileModelWebActionModel.getData().size()>0 && merchantProfileModelWebActionModel.getData().get(0).getPaymentType()==0){
+                        if (merchantProfileModelWebActionModel.getData().size() > 0 && merchantProfileModelWebActionModel.getData().get(0).getPaymentType() == 0) {
                             mIsApEnabled = true;
                         }
                     }
@@ -195,7 +196,7 @@ public class Product_Gallery_Fragment extends Fragment {
                 } else {
 
                     ProductListModel productItemModel = (ProductListModel) view.getTag(R.string.key_details);
-                    if(productItemModel == null){
+                    if (productItemModel == null) {
                         return;
                     }
                     if (isAnyProductSelected && !productItemModel.isProductSelected) {
@@ -395,6 +396,11 @@ public class Product_Gallery_Fragment extends Fragment {
 
             if (productItemModelList.size() == 0) {
                 empty_layout.setVisibility(View.VISIBLE);
+                session.setBubbleShareProducts(false);
+                if (from == FROM.BUBBLE) {
+                    getActivity().finish();
+                    startActivity(new Intent(getActivity(), BubbleInAppDialog.class));
+                }
             } else {
                 empty_layout.setVisibility(View.GONE);
             }
@@ -423,19 +429,19 @@ public class Product_Gallery_Fragment extends Fragment {
     public String getSelectedProducts() {
 
         String selectedProducts = "";
-        if(productItemModelList == null) return null;
+        if (productItemModelList == null) return null;
         for (ProductListModel productListModel : productItemModelList) {
             if (productListModel.isProductSelected) {
 
                 try {
 
                     if (!TextUtils.isEmpty(session.getRootAliasURI())) {
-                        selectedProducts = selectedProducts + session.getRootAliasURI()+"/";
+                        selectedProducts = selectedProducts + session.getRootAliasURI() + "/";
                     } else {
                         selectedProducts = selectedProducts + "https://" + session.getFpTag() + ".nowfloats.com/";
                     }
 //                    selectedProducts = selectedProducts + URLEncoder.encode(productListModel.Name, "UTF-8").replace("+","") + "/p" + productListModel.ProductIndex;
-                    selectedProducts = selectedProducts + productListModel.Name.replaceAll("[^a-zA-Z0-9]+","-") + "/p" + productListModel.ProductIndex;
+                    selectedProducts = selectedProducts + productListModel.Name.replaceAll("[^a-zA-Z0-9]+", "-") + "/p" + productListModel.ProductIndex;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -449,11 +455,11 @@ public class Product_Gallery_Fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(HomeActivity.headerText != null){
+        if (HomeActivity.headerText != null) {
             HomeActivity.headerText.setText("Product Gallery");
         }
         bus.register(this);
-        if (productItemModelList != null && productItemModelList.size() == 0 ) {
+        if (productItemModelList != null && productItemModelList.size() == 0) {
             empty_layout.setVisibility(View.VISIBLE);
         } else {
             empty_layout.setVisibility(View.GONE);
