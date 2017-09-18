@@ -25,6 +25,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
+import com.webengage.sdk.android.WebEngage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -870,7 +871,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("clientId", Constants.clientId);
         params.put("fpId",fpID);
-
+        WebEngage.get().user().logout();
         Login_Interface api_login_request = Constants.restAdapter.create(Login_Interface.class);
         api_login_request.logoutUnsubcribeRIA(params,new Callback<String>() {
             @Override
