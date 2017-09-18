@@ -908,9 +908,11 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="using_camera">Using camera</string>
     <string name="from_gallery">From gallery</string>
     <string name="category_blog">Category Blog</string>
+    <string name="to_buy_pricing_plans_please_contact">If you are interested in buying a plan, please drop a line at support@aecasiainc.com or call us at +917034427427.</string>
     <string name="this_page_contain_info_about_business_contact_social">This space contains information about the Business Profile, Contact information, Business Logo and Social Sharing.</string>
     <string name="values">Values</string>
     <string name="date">date</string>
+    <string name="webengage_license_code">14507d748</string>
     <string name="add_logo">Add Logo</string>
     <string name="choose_your_location">Choose your location</string>
     <string name="drag_to_map_your_location">Drag the map to the location of your Store.</string>

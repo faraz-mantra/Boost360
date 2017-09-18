@@ -62,7 +62,7 @@
 
         <meta-data
             android:name="com.webengage.sdk.android.key"
-            android:value="~7167db19" /> <!-- Replace with your WebEngage's license code -->
+            android:value="@string/webengage_license_code" /> <!-- Replace with your WebEngage's license code -->
 
         <meta-data
             android:name="com.webengage.sdk.android.location_tracking"
