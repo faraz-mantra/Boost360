@@ -10,7 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_20"
+        android:layout_marginBottom="@dimen/margin_50"
+        android:layout_marginTop="@dimen/margin_10"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/margin_15"
         android:paddingTop="@dimen/margin_10">
@@ -20,12 +21,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:drawableLeft="@drawable/ic_arrow_back"
+            android:drawableLeft="@drawable/ic_ca_arrow_back_black_24dp"
             android:drawablePadding="@dimen/margin_10"
             android:fontFamily="sans-serif"
             android:text="Potential Customers"
-            android:textColor="@color/white"
-            android:textSize="@dimen/large_text_size" />
+            android:textColor="#80000000"
+            android:textSize="@dimen/large_text_size"
+            android:textStyle="bold" />
 
 
     </LinearLayout>
@@ -74,7 +76,7 @@
                             android:fontFamily="sans-serif"
                             android:gravity="center"
                             android:text="J"
-                            android:textColor="@color/white"
+                            android:textColor="#80000000"
                             android:textSize="@dimen/medium_text_size" />
                     </LinearLayout>
                 </LinearLayout>
@@ -96,7 +98,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif"
                             android:text="+91 84932987498"
-                            android:textColor="#ccffffff"
+                            android:textColor="#80000000"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -107,7 +109,7 @@
                             android:layout_marginLeft="@dimen/margin_2"
                             android:fontFamily="sans-serif-light"
                             android:text="fjilsdjkfgjfidjgkfjdkgjkdfjkgjdfkjgkdjfg"
-                            android:textColor="#ccffffff"
+                            android:textColor="#80000000"
                             android:textSize="12sp"
                             android:textStyle="italic" />
                     </LinearLayout>
@@ -119,7 +121,7 @@
                         android:layout_marginTop="@dimen/margin_10"
                         android:ellipsize="end"
                         android:fontFamily="sans-serif-light"
-                        android:textColor="#d2d2d2"
+                        android:textColor="#80000000"
                         android:textSize="14sp" />
 
                 </LinearLayout>
@@ -136,7 +138,8 @@
                 android:text="@string/view_less"
                 android:textAllCaps="true"
                 android:textColor="@color/primary"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <View
                 android:layout_width="match_parent"
@@ -149,9 +152,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_5"
+                android:fontFamily="sans-serif"
                 android:gravity="left"
                 android:text="Relevant update and product suggestions: "
-                android:textColor="@color/white"
+                android:textColor="#80000000"
                 android:textSize="16sp" />
         </LinearLayout>
 
@@ -168,7 +172,7 @@
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/gray" />
+                android:background="@color/lt_gray" />
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/vwSAM"
@@ -189,7 +193,7 @@
                 <Button
                     android:id="@+id/btnShare"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="35dp"
                     android:layout_marginRight="@dimen/margin_5"
                     android:layout_weight="1"
                     android:background="@color/primaryColor"
@@ -203,7 +207,7 @@
                 <Button
                     android:id="@+id/btnCall"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="35dp"
                     android:layout_weight="1"
                     android:background="@drawable/ca_btn_call"
                     android:fontFamily="sans-serif"

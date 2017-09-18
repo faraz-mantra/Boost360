@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="twitter_consumer_key">4CiUg5gcIbvYre8XjGd8GsElV</string>
-    <string name="twitter_consumer_secret">4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9</string>
+    <string name="twitter_consumer_key">CSFV2FjjKBxrQ3MJFXLqhKgMV</string>
+    <string name="twitter_consumer_secret">o6jyVudLU6DjyfQ9vfrIijm8SHkJOGoY5Hbv0IJKbswliAJY8E</string>
     <string name="website_domain_name">.aecasiainc.com</string>
     <string name="package_name_aviary">com.thinksity.AviaryCdsProvider</string>
     <string name="app_name">Capture</string>
@@ -76,7 +76,7 @@
         <item>Week 6</item>
     </string-array>
 
-    <string name="facebook_app_id">539836972828386</string>
+    <string name="facebook_app_id">768028443377125</string>
     <string name="title_activity_image__gallery__main">Image Gallery</string>
     <string name="title_activity_home__main">Home_MainActivity</string>
     <string name="title_activity_card__full__view__main">Home</string>
@@ -143,7 +143,7 @@
     <string name="email_percentage">5</string>
     <string name="postUpdate_percentage">20</string>
     <string name="share_percentage">5</string>
-
+    <string name="contact_us_number">+917034427427</string>
     <string name="buydomain_text1">Get your own identity</string>
     <string name="phoneNumber_text1">Phone number</string>
     <string name="featuredImage_text1">Featured Image</string>
@@ -378,7 +378,7 @@
     </string-array>
     <string name="business_enquiries_title">Business Enquiries</string>
     <string name="business_profile_title">Business Profile</string>
-    <string name="tag_for_partners">.aecasiainc.in</string>
+    <string name="tag_for_partners">.aecasiainc.com</string>
     <string name="title_activity_splash_screen_">Capture</string>
     <string name="title_activity_edit__profile_">Edit_Profile_Activity</string>
     <string name="pre_signup_screen_one_text">Now Create, Manage and Update A Business website that draws more Customers</string>
@@ -392,24 +392,24 @@
     <string name="title_activity_mobile__site_">Mobile_Site_Activity</string>
     <string name="title_activity_site__meter__nf">Site_Meter_NF</string>
     <string name="presignup_login_text">Already have a Capture site?</string>
-
+    <string name="to_buy_pricing_plans_please_contact">If you are interested in buying a plan, please drop a line at support@aecasiainc.com or call us at +917034427427.</string>
     <string name="onboarding_screen_1_title">Congratulations!</string>
     <string name="onboarding_screen_1_desc">We\'re here to help you through the way. Here are two most basic yet important things you should know.</string>
     <string name="onboarding_screen_3_title">Discovery is Revenue</string>
     <string name="onboarding_screen_3_desc">People around your business are searching for stuff you sell, so keep your updates relevant and fresh. This will you lead to attract more customers and generate more revenue.</string>
     <string name="onboarding_screen_2_title">Content is King</string>
     <string name="onboarding_screen_2_desc">Update your website twice a week. Just press the plus button at the bottom and simply tell your customers about your products, services or offers.</string>
-    <string name="drop_us_on_email_or_call">Please drop us a line at pss@aecasiainc.com or call us at +918079441974 if you\'d like to enable this feature.</string>
-    <string name="primary_contact_number_message">Please drop us a line at pss@aecasiainc.com or call us at +918079441974 if you\'d like to change this number.</string>
+    <string name="drop_us_on_email_or_call">Please drop us a line at support@aecasiainc.com or call us at +917034427427 if you\'d like to enable this feature.</string>
+    <string name="primary_contact_number_message">Please drop us a line at support@aecasiainc.com or call us at +917034427427 if you\'d like to change this number.</string>
 
     <string name="your_site_health">Your site health</string>
 
-    <string name="settings_feedback_link">pss@aecasiainc.com</string>
+    <string name="settings_feedback_link">support@aecasiainc.com</string>
     <string name="settings_facebook_like_link">https://www.facebook.com/nowfloats</string>
-    <string name="settings_about_us_link">http://aecasiainc.com/pages/aboutus/59783d70d7154e0b907207e4</string>
+    <string name="settings_about_us_link">http://aecasiainc.com/more-about-us/about-us/59783d70d7154e0b907207e4</string>
 
-    <string name="settings_tou_url">http://aecasiainc.com/pages/termsofuse/59a6b21961288a0b2cd5e254</string>
-    <string name="settings_privacy_url">http://aecasiainc.com/pages/privacypolicy/59a6b28b499d35080c624bc3</string>
+    <string name="settings_tou_url">http://aecasiainc.com/more-about-us/terms-of-use/59a6b21961288a0b2cd5e254</string>
+    <string name="settings_privacy_url">http://aecasiainc.com/more-about-us/privacy-policy/59a6b28b499d35080c624bc3</string>
     <string name="settings_rate_us_link">https://play.google.com/store/apps/details?id=com.capture</string>
 
     <!--this part is for FAQ harcoded strings -->
@@ -512,13 +512,13 @@
         <item>What if I already have a website? Can Capture still help me get more customers?</item>
     </string-array>
     <string-array name="answer_7">
-        <item><![CDATA[Yes indeed. In fact, you can build the Capture website (almost instantly) and then contact our customer care at <a href="pss@aecasiainc.com ">pss@aecasiainc.com </a> and they can ensure that your purchased domain name/URL begins to point to the website.<br/> If you\'ve been waiting for the right opportunity, this is the time to build it.]]></item>
+        <item><![CDATA[Yes indeed. In fact, you can build the Capture website (almost instantly) and then contact our customer care at <a href="support@aecasiainc.com ">support@aecasiainc.com </a> and they can ensure that your purchased domain name/URL begins to point to the website.<br/> If you\'ve been waiting for the right opportunity, this is the time to build it.]]></item>
         <item><![CDATA[Absolutely! If you already have a website for your business, but it isn\'t updated often enough, chances are it won\'t be doing much for your business. The Capture website can plug-in to your existing website as a sub-domain page where you can update your deals, offers, launches or messages. With regular updates, your page rank begins to rise and the SEO gets added on to your main site too.]]></item>
     </string-array>
 
 
 
-    <string name="email_id_to_request_plans">pss@aecasiainc.com</string>
+    <string name="email_id_to_request_plans">support@aecasiainc.com</string>
 
     <string name="buy_in_capital">BUY</string>
     <string name="later_in_capital">LATER</string>

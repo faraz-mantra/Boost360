@@ -3,8 +3,8 @@
     android:id="@+id/flTopView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:alpha="0.97"
-    android:background="@drawable/bg_customer_assistant"
+    android:alpha="0.96"
+    android:background="#fff"
     android:orientation="vertical">
 
 

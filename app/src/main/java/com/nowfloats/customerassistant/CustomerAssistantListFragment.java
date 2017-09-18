@@ -156,8 +156,8 @@ public class CustomerAssistantListFragment extends android.app.Fragment
                             getDate()).compareTo(Methods.getFormattedDate(left.
                             getDate()));
                 case EXPIRY:
-                    return Methods.getFormattedDate(left.getExpiryDate())
-                            .compareTo(Methods.getFormattedDate(right.getExpiryDate()));
+                    return (left.getExpiryDate()+"")
+                            .compareTo(right.getExpiryDate()+"");
             }
             return 0;
         }

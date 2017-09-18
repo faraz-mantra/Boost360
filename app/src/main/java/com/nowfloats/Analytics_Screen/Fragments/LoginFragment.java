@@ -69,8 +69,8 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
     private int mNewPosition = -1,status;
     private Context mContext;
     FacebookHandler facebookHandler;
-    final List<String> readPermissions=Arrays.asList("email", "public_profile", "user_friends", "read_insights", "business_management", "pages_messaging");
-    final List<String> publishPermissions = Arrays.asList("publish_actions", "publish_pages", "manage_pages");
+    final List<String> readPermissions = Arrays.asList(Constants.FACEBOOK_READ_PERMISSIONS);
+    final List<String> publishPermissions = Arrays.asList(Constants.FACEBOOK_PUBLISH_PERMISSIONS);
 
     public static Fragment getInstance(int i){
         LoginFragment frag=new LoginFragment();

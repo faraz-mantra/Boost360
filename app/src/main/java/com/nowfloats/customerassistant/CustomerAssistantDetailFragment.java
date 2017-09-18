@@ -16,7 +16,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -139,16 +138,17 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
         tabs = (SlidingTabLayout) view.findViewById(R.id.tabs);
 
         tabs.setDistributeEvenly(true);
-        tabs.setCustomTabView(R.layout.ca_tab_text, R.id.tab_textview);
+        tabs.setCustomTabView(R.layout.ca_detail_tab_text, R.id.tab_textview);
         tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
             @Override
             public int getIndicatorColor(int position) {
                 return ContextCompat.getColor(getActivity(), R.color.white);
             }
         });
+        tabs.setSelectedIndicatorColors(getResources().getColor(R.color.lt_black));
 
         vwSAM.setAdapter(new SAMPagerAdapter(getActivity()));
-        tabs.setViewPager(vwSAM);
+        tabs.setViewPager(vwSAM,ContextCompat.getColorStateList(getActivity(),R.color.lt_black));
         btnShare.setText(getString(R.string.share));
     }
 
@@ -353,11 +353,11 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
     private void updateMaxLines() {
 
         if (!isViewMore) {
-            tvViewMore.setText(Html.fromHtml(getString(R.string.view_more)));
+            tvViewMore.setText(Methods.fromHtml(getString(R.string.view_more)));
             tvMessage.setMaxLines(2);
 
         } else {
-            tvViewMore.setText(Html.fromHtml(getString(R.string.view_less)));
+            tvViewMore.setText(Methods.fromHtml(getString(R.string.view_less)));
             tvMessage.setMaxLines(100);
 
         }
@@ -457,7 +457,8 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
 
                 gvSuggestions.setVisibility(View.VISIBLE);
                 tvNoItems.setVisibility(View.GONE);
-
+                gvSuggestions.setHorizontalSpacing(Methods.dpToPx(20, getActivity()));
+                gvSuggestions.setVerticalSpacing(Methods.dpToPx(20, getActivity()));
                 if (mSuggestionsDO.getProducts() != null && mSuggestionsDO.getProducts().size() > 0) {
                     gvSuggestions.setAdapter(new CAProductsAdapter(getActivity(),
                             mSuggestionsDO.getProducts(), CustomerAssistantDetailFragment.this));
@@ -497,7 +498,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
                         @Override
                         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
-                            if (visibleItemCount < (mSuggestionsDO.getUpdates().size() - 2)) {
+                            if (visibleItemCount < (mSuggestionsDO.getProducts().size() - 2)) {
                                 ivScrollDown.setVisibility(View.VISIBLE);
                             } else {
                                 ivScrollDown.setVisibility(View.INVISIBLE);

@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 public class ChatEventModel {
     public String EventCategory;
+    public String fpTag;
     public long EventDateTime;
     public String DeviceId;
     public String EventChannel = "APP_ANDR";
@@ -18,6 +19,11 @@ public class ChatEventModel {
     public String SessionId;
     public HashMap<String, String> EventData;
     public HashMap<String, String> UserData;
+
+    public ChatEventModel setFpTag(String fpTag) {
+        this.fpTag = fpTag;
+        return this;
+    }
 
     public ChatEventModel setEventCategory(String eventCategory) {
         EventCategory = eventCategory;

@@ -8,6 +8,7 @@ import com.freshdesk.hotline.Hotline;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.webengage.sdk.android.WebEngage;
 
 /**
  * Created by NowFloats on 05-10-2016.
@@ -27,6 +28,7 @@ public class RiaFirebaseInstanceIDService extends FirebaseInstanceIdService{
         saveTokenToPreferenceAndUpload(refreshedToken);
         if(refreshedToken != null) {
             Hotline.getInstance(this).updateGcmRegistrationToken(refreshedToken);
+            WebEngage.get().setRegistrationID(FirebaseInstanceId.getInstance().getToken());
         }
     }
 

@@ -62,7 +62,7 @@ public class Create_Tag_Service {
                     @Override
                     public void run() {
                         Methods.showSnackBarNegative(activity, activity.getString(R.string.something_went_wrong_try_again));
-                        if (activity.pd != null) {
+                        if (activity.pd != null && activity.pd.isShowing()) {
                             activity.pd.dismiss();
                         }
                     }

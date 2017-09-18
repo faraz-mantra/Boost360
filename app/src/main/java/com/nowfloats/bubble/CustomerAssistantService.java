@@ -115,10 +115,10 @@ public class CustomerAssistantService extends Service {
 
     @Override
     public void onDestroy() {
-        if(pref == null)
+        if (pref == null)
             pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
 
-        pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, false).apply();
+//        pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, false).apply();
         if (bubbles != null && bubbles.size() > 0) {
             for (BubbleLayout bubble : bubbles) {
                 recycleBubble(bubble);
@@ -163,10 +163,11 @@ public class CustomerAssistantService extends Service {
 
         pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         if (TextUtils.isEmpty(pref.getString(UserSessionManager.KEY_FP_ID, null))
-                || !pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
+                || !pref.getBoolean(Key_Preferences.IS_CUSTOMER_ASSISTANT_ENABLED, false)) {
             stopSelf();
         } else {
 
+//            if (pref.getBoolean(Key_Preferences.IS_CUSTOMER_ASSISTANT_ENABLED, false)) {
             try {
                 bubbleView = new BubbleLayout(this, BubbleLayout.BUBBLE_TYPE.CUSTOMER_ASSISTANT);
                 bubbleView.addView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.ca_bubble_layout, null));
@@ -201,6 +202,7 @@ public class CustomerAssistantService extends Service {
                 e.printStackTrace();
             }
         }
+//        }
 
     }
 
@@ -209,8 +211,9 @@ public class CustomerAssistantService extends Service {
         Log.e("onTaskRemoved", "onTaskRemoved tes");
 
         if (TextUtils.isEmpty(pref.getString(UserSessionManager.KEY_FP_ID, null))
+                || !pref.getBoolean(Key_Preferences.IS_CUSTOMER_ASSISTANT_ENABLED, false)
                 || !pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
-               // stopSelf();
+            // stopSelf();
         } else {
 
             Intent restartServiceIntent = new Intent(getApplicationContext(), this.getClass());

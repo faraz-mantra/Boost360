@@ -580,6 +580,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="page_selected">PAGE SELECTED</string>
     <string name="are_you_sure_want_to_delete">Are you sure?</string>
     <string name="are_you_sure_do_you_want_to_book_domain">Are you sure do you want to book this domain?</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="ca_disable_msg">You will not be able to share products &amp; updates with your customers</string>
     <string name="page_will_deleted">Page will be deleted</string>
     <string name="deleted_in_capital">DELETE</string>
     <string name="cancel_in_capital">@android:string/cancel</string>
@@ -908,9 +910,11 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="using_camera">Using camera</string>
     <string name="from_gallery">From gallery</string>
     <string name="category_blog">Category Blog</string>
+    <string name="to_buy_pricing_plans_please_contact">If you are interested in buying a plan, please drop a line at support@aecasiainc.com or call us at +917034427427.</string>
     <string name="this_page_contain_info_about_business_contact_social">This space contains information about the Business Profile, Contact information, Business Logo and Social Sharing.</string>
     <string name="values">Values</string>
     <string name="date">date</string>
+    <string name="webengage_license_code">14507d748</string>
     <string name="add_logo">Add Logo</string>
     <string name="choose_your_location">Choose your location</string>
     <string name="drag_to_map_your_location">Drag the map to the location of your Store.</string>
@@ -1038,6 +1042,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="submit_request">Submit Request</string>
     <string name="submiting_request">Submitting your request</string>
     <string name="book_your_domain">Book your Domain</string>
+    <string name="enable_bubble_msg">Open WhatsApp to share products with your potential customers.</string>
+    <string name="enable_customer_assistant_msg">Open Customer Assistant to view your potential customers.</string>
     <string name="already_included_in_your_package">*Already included in your package</string>
     <string name="link_comments">I would like to map my existing domain to my Nowfloats site %s.nowfloats.com\nplease reach out to me to discuss this in detail.</string>
     <string name="content_link_domain">
@@ -1393,6 +1399,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="product_transaction_charge_hint">This is charge for using Assured Purchase only. This will be calculated on Product Price less Discount Amount</string>
     <string name="product_buy_online_hint">If you don\'t want to collect payments online through Assured Purchase, you can select this option to re-direct buyer to your own URL, once they click \'Buy Now\' on your website. This disabled when Assured Purchase is enabled.</string>
     <string name="facebook_chat">facebookchat</string>
+    <string name="facebook_chat_main">facebookchatMain</string>
     <string name="feedback_chat">feedbackchat</string>
     <string name="order_id">Order Id</string>
     <string name="order_date">Order Date</string>
@@ -1410,7 +1417,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>You become a verified seller on NowFloats platform. Your potential buyers will see Assured Purchase badge on your website as a mark of trust and a guarantee from NowFloats.</item>
         <item>You can assure reliable and speedy delivery of your products to your buyers.</item>
         <item>Your money is safe with NowFloats and will be duly transferred with each payment cycle (Delivery + 15 working days) *.</item>
-        <item>By enabling Assured Purchase you agree to all terms and policies listed on <a href ="http://assuredpurchase.com/">AssuredPurchase.com</a>.</item>
+        <item>By enabling Assured Purchase you agree to all terms and policies listed on <a href="http://assuredpurchase.com/">AssuredPurchase.com</a>.</item>
         <item>Transaction charges will be at rate of %s per transaction. Transaction charges can change without prior notice but we always strive to make it reasonable.</item>
     </string-array>
     <string-array name="delivery_points">
@@ -1449,6 +1456,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="manage_social_customers">Your social media pages are an easy way for customers on those platforms to interact with you. Currently, you can chat with customers who are reaching out to you on your Facebook Page.
 </string>
     <string name="manage_multichannel_customers">You can track all your online customers from a single interface. You can interact with your customers on platforms like WhatsApp and SMS. We read through your SMS data to fetch relevant enquiries.</string>
+    <string name="deeplink_manage_customer">managecustomer</string>
 
 
 </resources>

@@ -612,10 +612,10 @@
                             fontPath="Roboto-Medium.ttf"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0"
+                            android:text=""
                             android:textColor="@color/primaryColor"
                             android:textSize="28sp"
-                            android:visibility="visible"
+                            android:visibility="gone"
                             tools:ignore="MissingPrefix" />
                     </FrameLayout>
                     <ImageView

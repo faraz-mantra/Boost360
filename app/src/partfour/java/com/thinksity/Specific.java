@@ -35,7 +35,9 @@ public class Specific {
     public static final String TWITTER_SEC 		= "jM656pIF5dSjyNI09I8OrAl1hdZ20oaPbAaYtMqHAarA025Xy9";
     public static final String FACEBOOK_URL = "https://www.facebook.com/253526008455749";
     public static final String PACKAGE_NAME = "com.digitalseoz";
-    public static final String FACEBOOK_PAGEID = "fb://page/253526008455749";
+    public static final String[] FACEBOOK_READ_PERMISSIONS = {"email", "public_profile", "user_friends", "read_insights", "business_management"};
+    public static final String[] FACEBOOK_PUBLISH_PERMISSIONS = {"publish_actions", "publish_pages", "manage_pages"};
+    public static final String FACEBOOK_PAGE_ID = "fb://page/253526008455749";
     public static final String TWITTER_URL = "https://twitter.com/digitalseoz3";
     public static final String TWITTER_ID_URL = "twitter://user?screen_name=digitalseoz3";
     public static final String TWILIO_AUTHY_API_KEY = "7HDSlFz99w3OGPVz8WAEeht41lb039Vv";
