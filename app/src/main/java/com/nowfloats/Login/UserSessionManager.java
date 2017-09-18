@@ -16,9 +16,9 @@ import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.Chat.ChatModel;
 import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.Volley.AppController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.DataMap;
+import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.DataBase;
 import com.nowfloats.util.Key_Preferences;
@@ -873,16 +873,16 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
             @Override
             public void success(String s, Response response) {
                 Log.d("Valid Email", "Valid Email Response: " + response);
-                if(pd != null)
+                if(pd.isShowing())
                 pd.dismiss();
 
                 SharedPreferences.Editor editor = pref.edit();
                 editor.clear();
-                editor.commit();
+                editor.apply();
 
-                SharedPreferences.Editor twitterEditor = _context.getSharedPreferences(TwitterConnection.PREF_NAME,_context.MODE_PRIVATE).edit();
+                SharedPreferences.Editor twitterEditor = _context.getSharedPreferences(TwitterConnection.PREF_NAME,Context.MODE_PRIVATE).edit();
                 twitterEditor.clear();
-                twitterEditor.commit();
+                twitterEditor.apply();
 
                 AppController.getInstance().clearApplicationData();
 
@@ -892,7 +892,6 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 MixPanelController.setProperties("LastLogoutDate", dateString);
 
                 // After logout redirect user to Login Activity
-
                 Constants.clearStore();
                 Constants.StorebizQueries 		= new ArrayList<>();
                 Constants.storeSecondaryImages = null ;

@@ -235,8 +235,15 @@ public class ManageCustomerFragmentV1 extends Fragment {
                         params.gravity = Gravity.BOTTOM;
                         manageCustomerHolder.iconImage.setLayoutParams(params);
                         manageCustomerHolder.iconImage.setImageResource(R.drawable.ic_manage_website);
-
-
+                        manageCustomerHolder.llBackground.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_ENQUIRIES, null);
+                                Intent i = new Intent(getActivity(), BusinessEnquiryActivity.class);
+                                startActivity(i);
+                                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            }
+                        });
                         break;
 
                     case FB_CHATS:
@@ -259,10 +266,18 @@ public class ManageCustomerFragmentV1 extends Fragment {
                             }
                         });
 
-//                        manageCustomerHolder.llBackground.setBackgroundResource(R.drawable.mci_bg);
                         params.gravity = Gravity.BOTTOM;
                         manageCustomerHolder.iconImage.setLayoutParams(params);
                         manageCustomerHolder.iconImage.setImageResource(R.drawable.ic_social);
+                        manageCustomerHolder.llBackground.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent i = new Intent(getActivity(), FacebookChatActivity.class);
+                                startActivity(i);
+                                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                            }
+                        });
                         break;
 
                     case MULTI_CHANNEL_CUSTOMERS:
@@ -317,13 +332,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
                         showOverlay(manageCustomerHolder);
                     }
                 });
-                manageCustomerHolder.llBackground.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
 
-                        showOverlay(manageCustomerHolder);
-                    }
-                });
                 manageCustomerHolder.ivClose.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

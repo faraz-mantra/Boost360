@@ -47,7 +47,7 @@ android {
         applicationId 'com.thinksity'
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 2017090011
+        versionCode 2017090013
         multiDexEnabled true
     }
     buildTypes {
@@ -66,7 +66,10 @@ android {
 //        }
 //    }
     productFlavors {
-
+        partone {
+            versionName "4.8.0"
+            applicationId "com.biz2.nowfloats"
+        }
         parttwo {
             versionName "4.4.9"
             applicationId "com.sibername"
@@ -82,10 +85,6 @@ android {
         partfive{
             versionName "1.0.0"
             applicationId "com.capture"
-        }
-        partone {
-            versionName "4.7.9"
-            applicationId "com.biz2.nowfloats"
         }
     }
     packagingOptions {
@@ -159,6 +158,8 @@ dependencies {
     compile 'com.android.support:gridlayout-v7:25.3.0'
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.webengage:android-sdk:2.+'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

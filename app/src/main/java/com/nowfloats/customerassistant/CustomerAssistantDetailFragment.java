@@ -16,7 +16,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -149,7 +148,7 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
         tabs.setSelectedIndicatorColors(getResources().getColor(R.color.lt_black));
 
         vwSAM.setAdapter(new SAMPagerAdapter(getActivity()));
-        tabs.setViewPager(vwSAM);
+        tabs.setViewPager(vwSAM,ContextCompat.getColorStateList(getActivity(),R.color.lt_black));
         btnShare.setText(getString(R.string.share));
     }
 
@@ -354,11 +353,11 @@ public class CustomerAssistantDetailFragment extends android.app.Fragment implem
     private void updateMaxLines() {
 
         if (!isViewMore) {
-            tvViewMore.setText(Html.fromHtml(getString(R.string.view_more)));
+            tvViewMore.setText(Methods.fromHtml(getString(R.string.view_more)));
             tvMessage.setMaxLines(2);
 
         } else {
-            tvViewMore.setText(Html.fromHtml(getString(R.string.view_less)));
+            tvViewMore.setText(Methods.fromHtml(getString(R.string.view_less)));
             tvMessage.setMaxLines(100);
 
         }

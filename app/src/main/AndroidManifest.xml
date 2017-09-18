@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2017090006"
+    android:versionCode="2017090013"
     android:versionName="4.7.9">
 
     <permission
@@ -47,9 +47,55 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity android:name="com.mixpanel.android.surveys.SurveyActivity" />
-
+        <activity android:name="com.nowfloats.Analytics_Screen.VmnNumberRequestActivity"
+            android:screenOrientation="portrait"/>
         <receiver
             android:name="com.appsflyer.MultipleInstallBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+        <meta-data
+            android:name="com.webengage.sdk.android.debug"
+            android:value="false" /> <!-- only for debugging -->
+
+        <meta-data
+            android:name="com.webengage.sdk.android.key"
+            android:value="~7167db19" /> <!-- Replace with your WebEngage's license code -->
+
+        <meta-data
+            android:name="com.webengage.sdk.android.location_tracking"
+            android:value="true" /> <!-- Set false if location tracking is not required -->
+
+        <service android:name="com.webengage.sdk.android.ExecutorService" />
+        <service android:name="com.webengage.sdk.android.EventLogService" />
+
+        <activity
+            android:name="com.webengage.sdk.android.actions.render.WebEngageActivity"
+            android:theme="@android:style/Theme.Translucent"
+            android:configChanges="orientation|screenSize" />
+        <meta-data
+            android:name="com.webengage.sdk.android.small_icon"
+            android:resource="@drawable/app_launcher2"/>
+
+        <meta-data
+            android:name="com.webengage.sdk.android.large_icon"
+            android:resource="@drawable/app_launcher"/>
+
+        <meta-data
+            android:name="com.webengage.sdk.android.accent_color"
+            android:value="@color/primary"/>
+        <receiver
+            android:name="com.webengage.sdk.android.WebEngageReceiver">
+            <intent-filter>
+                <action android:name="com.webengage.sdk.android.intent.ACTION" />
+                <category android:name="${applicationId}" /> <!-- Replace with your package name -->
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.webengage.sdk.android.InstallTracker"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />

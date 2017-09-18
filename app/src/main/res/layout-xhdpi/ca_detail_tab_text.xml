@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/alerts_text"
-        android:textColor="#80000000"
+        android:textColor="@color/lt_black"
         android:textSize="18sp"
         android:textStyle="bold"
         tools:ignore="MissingPrefix" />
