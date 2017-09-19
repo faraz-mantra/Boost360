@@ -402,6 +402,7 @@ public class Product_Gallery_Fragment extends Fragment {
                     startActivity(new Intent(getActivity(), BubbleInAppDialog.class));
                 }
             } else {
+                session.setBubbleShareProducts(true);
                 empty_layout.setVisibility(View.GONE);
             }
         } else {

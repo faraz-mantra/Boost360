@@ -538,12 +538,13 @@ public class ManageCustomerFragmentV1 extends Fragment {
             session.setCustomerAssistantStatus(true);
         }
 
+        getProducts();
+
         if ((android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity()))
                 || (!Methods.isAccessibilitySettingsOn(getActivity()))) {
             session.setBubbleTime(-1);
 
             if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") /*&& "1".equals(paymentState)*/) {
-                getProducts();
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -555,7 +556,6 @@ public class ManageCustomerFragmentV1 extends Fragment {
             }
 
         } else {
-
 
             session.setBubbleStatus(true);
             if (Methods.hasOverlayPerm(getActivity())) {
