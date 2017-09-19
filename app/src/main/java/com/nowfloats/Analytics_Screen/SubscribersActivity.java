@@ -149,7 +149,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
                 //searchEditText.setAdapter(autoCompleteAdapter);
 
                 for(SubscriberModel model:mSubscriberList){
-                    if(model.getUserMobile().toLowerCase().contains(key.toLowerCase())){
+                    if(!subscriberModels.contains(model)&&model.getUserMobile().toLowerCase().contains(key.toLowerCase())){
                         subscriberModels.add(model);
                     }
                 }
