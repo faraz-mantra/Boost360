@@ -118,7 +118,7 @@ public class CustomerAssistantService extends Service {
         if (pref == null)
             pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
 
-        pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, false).apply();
+//        pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, false).apply();
         if (bubbles != null && bubbles.size() > 0) {
             for (BubbleLayout bubble : bubbles) {
                 recycleBubble(bubble);
@@ -163,7 +163,7 @@ public class CustomerAssistantService extends Service {
 
         pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         if (TextUtils.isEmpty(pref.getString(UserSessionManager.KEY_FP_ID, null))
-                || !pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
+                || !pref.getBoolean(Key_Preferences.IS_CUSTOMER_ASSISTANT_ENABLED, false)) {
             stopSelf();
         } else {
 
@@ -211,6 +211,7 @@ public class CustomerAssistantService extends Service {
         Log.e("onTaskRemoved", "onTaskRemoved tes");
 
         if (TextUtils.isEmpty(pref.getString(UserSessionManager.KEY_FP_ID, null))
+                || !pref.getBoolean(Key_Preferences.IS_CUSTOMER_ASSISTANT_ENABLED, false)
                 || !pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
             // stopSelf();
         } else {

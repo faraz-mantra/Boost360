@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
@@ -44,8 +45,11 @@ import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
 import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
+import com.nowfloats.accessbility.BubbleInAppDialog;
+import com.nowfloats.accessbility.DataAccessibilityServiceV8;
 import com.nowfloats.bubble.BubblesService;
 import com.nowfloats.bubble.CustomerAssistantService;
+import com.nowfloats.customerassistant.CustomerAssistantActivity;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -218,15 +222,15 @@ public class ManageCustomerFragmentV1 extends Fragment {
                         manageCustomerHolder.tvThree.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if(isVmnEnable){
+                                if (isVmnEnable) {
                                     Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
                                     startActivity(i);
                                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                }else if ((TextUtils.isDigitsOnly(paymentState) && "1".equalsIgnoreCase(paymentState))){
+                                } else if ((TextUtils.isDigitsOnly(paymentState) && "1".equalsIgnoreCase(paymentState))) {
                                     Intent i = new Intent(getActivity(), VmnNumberRequestActivity.class);
                                     startActivity(i);
                                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                }else{
+                                } else {
                                     Methods.showFeatureNotAvailDialog(getActivity());
                                     // show first buy lighthouse
                                 }
@@ -260,8 +264,15 @@ public class ManageCustomerFragmentV1 extends Fragment {
                         params.gravity = Gravity.BOTTOM;
                         manageCustomerHolder.iconImage.setLayoutParams(params);
                         manageCustomerHolder.iconImage.setImageResource(R.drawable.ic_manage_website);
-
-
+                        manageCustomerHolder.llBackground.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_ENQUIRIES, null);
+                                Intent i = new Intent(getActivity(), BusinessEnquiryActivity.class);
+                                startActivity(i);
+                                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                            }
+                        });
                         break;
 
                     case FB_CHATS:
@@ -284,10 +295,18 @@ public class ManageCustomerFragmentV1 extends Fragment {
                             }
                         });
 
-//                        manageCustomerHolder.llBackground.setBackgroundResource(R.drawable.mci_bg);
                         params.gravity = Gravity.BOTTOM;
                         manageCustomerHolder.iconImage.setLayoutParams(params);
                         manageCustomerHolder.iconImage.setImageResource(R.drawable.ic_social);
+                        manageCustomerHolder.llBackground.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent i = new Intent(getActivity(), FacebookChatActivity.class);
+                                startActivity(i);
+                                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                            }
+                        });
                         break;
 
                     case MULTI_CHANNEL_CUSTOMERS:
@@ -311,14 +330,39 @@ public class ManageCustomerFragmentV1 extends Fragment {
                         manageCustomerHolder.iconImage.setImageResource(R.drawable.ic_cross_platform);
 
                         if (session.isBoostBubbleEnabled() || (
-                                pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)
+                                pref.getBoolean(Key_Preferences.IS_CUSTOMER_ASSISTANT_ENABLED, false)
                                         && Methods.hasOverlayPerm(getActivity()))) {
                             manageCustomerHolder.tvOne.setText(getString(R.string.disable_customer_assistant));
                             manageCustomerHolder.tvOne.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    disableCustomerAssistant();
-                                    notifyDataSetChanged();
+                                    MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
+                                            .title(getString(R.string.are_you_sure))
+                                            .content(getString(R.string.ca_disable_msg))
+                                            .positiveText(getString(R.string.ok))
+                                            .negativeText(getString(R.string.cancel))
+                                            .positiveColorRes(R.color.primaryColor)
+                                            .negativeColorRes(R.color.primaryColor)
+                                            .callback(new MaterialDialog.ButtonCallback() {
+                                                @Override
+                                                public void onPositive(MaterialDialog dialog) {
+                                                    super.onPositive(dialog);
+                                                    disableCustomerAssistant();
+                                                    notifyDataSetChanged();
+                                                }
+
+                                                @Override
+                                                public void onNegative(MaterialDialog dialog) {
+                                                    super.onNegative(dialog);
+
+                                                }
+                                            });
+
+                                    if (!activity.isFinishing()) {
+                                        final MaterialDialog materialDialog = builder.show();
+                                        materialDialog.setCancelable(false);
+                                    }
+
                                 }
                             });
                         } else {
@@ -342,13 +386,14 @@ public class ManageCustomerFragmentV1 extends Fragment {
                         showOverlay(manageCustomerHolder);
                     }
                 });
-                manageCustomerHolder.llBackground.setOnClickListener(new View.OnClickListener() {
+
+                manageCustomerHolder.rlRevealLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        showOverlay(manageCustomerHolder);
+                        closeOverlay(manageCustomerHolder);
                     }
                 });
+
                 manageCustomerHolder.ivClose.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -473,6 +518,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
             if (!Methods.isMyServiceRunning(activity, CustomerAssistantService.class)) {
                 activity.startService(new Intent(activity, CustomerAssistantService.class));
             }
+            session.setCustomerAssistantStatus(true);
         }
 
         if ((android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity()))
@@ -492,8 +538,69 @@ public class ManageCustomerFragmentV1 extends Fragment {
             }
 
         } else {
+
+
             session.setBubbleStatus(true);
+            if (Methods.hasOverlayPerm(getActivity())) {
+
+                if (!Methods.isMyServiceRunning(getActivity(), CustomerAssistantService.class)) {
+                    Intent bubbleIntent = new Intent(getActivity(), CustomerAssistantService.class);
+                    getActivity().startService(bubbleIntent);
+                }
+            }
+
             manageCustomerAdapter.notifyDataSetChanged();
+
+            MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
+                    //.title(getString(R.string.book_a_new_domain))
+                    .customView(R.layout.dialog_ca_enable, false)
+//                    .positiveText(getString(R.string.ok))
+                    .positiveColorRes(R.color.primaryColor);
+            if (!activity.isFinishing()) {
+                final MaterialDialog materialDialog = builder.show();
+                materialDialog.setCancelable(false);
+                View caView = materialDialog.getCustomView();
+
+                LinearLayout tvBubble = (LinearLayout) caView.findViewById(R.id.llBubble);
+                LinearLayout tvCustomerAssistant = (LinearLayout) caView.findViewById(R.id.llCustomerAssistant);
+                View vwSeperator = (View) caView.findViewById(R.id.vwSeperator);
+
+                if (!pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
+                    tvCustomerAssistant.setVisibility(View.GONE);
+                    vwSeperator.setVisibility(View.GONE);
+                }
+
+                tvBubble.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        materialDialog.dismiss();
+                        if (!pref.getBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, false)) {
+                            startActivity(new Intent(getActivity(), BubbleInAppDialog.class));
+                        } else {
+                            MixPanelController.track(MixPanelController.WHATS_APP_DIALOG_CLICKED, null);
+                            try {
+                                Intent launchIntent = getActivity().getPackageManager().
+                                        getLaunchIntentForPackage(DataAccessibilityServiceV8.PK_NAME_WHATSAPP);
+                                startActivity(launchIntent);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Toast.makeText(getActivity(), "Problem to open whatsApp", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
+
+                tvCustomerAssistant.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        materialDialog.dismiss();
+                        Intent intent = new Intent(getActivity(), CustomerAssistantActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        startActivity(intent);
+                    }
+                });
+
+            }
         }
 
 
@@ -504,6 +611,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
         MixPanelController.track(EventKeysWL.SIDE_PANEL_CUSTOMER_ASSISTANT_OFF, null);
 
         session.setBubbleStatus(false);
+        session.setCustomerAssistantStatus(false);
         activity.stopService(new Intent(activity, CustomerAssistantService.class));
     }
 

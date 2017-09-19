@@ -663,6 +663,9 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     public void setBubbleTime(long time) {
         pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, time).apply();
     }
+    public void setBubbleShareProducts(boolean flag) {
+        pref.edit().putBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, flag).apply();
+    }
     public Long getBubbleTime() {
         return pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, 0);
     }

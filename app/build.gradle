@@ -57,6 +57,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+//    signingConfigs {
+//        debug {
+//            storeFile file(System.properties['user.home']+"/.android/custom_debug.keystore")
+//            storePassword 'NowFloatsManage2013'
+//            keyAlias 'nfmanage'
+//            keyPassword 'NowFloatsManage2013'
+//        }
+//    }
     productFlavors {
 
         parttwo {

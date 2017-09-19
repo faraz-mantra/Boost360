@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvDomainConfig"
+        fontPath="Roboto-Medium.ttf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_color"
+        android:gravity="left"
+        android:padding="@dimen/margin_15"
+        android:text="@string/cross_platform"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/llarge_text_size"
+        tools:ignore="MissingPrefix" />
+
+    <LinearLayout
+        android:id="@+id/llBubble"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_5"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_10">
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_whatsapp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif"
+            android:text="@string/enable_bubble_msg"
+            android:textSize="16sp"
+            tools:ignore="MissingPrefix" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:alpha="0.5"
+            android:src="@drawable/forward" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vwSeperator"
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:id="@+id/llCustomerAssistant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_15"
+        android:layout_marginTop="@dimen/margin_5"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_10">
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:src="@drawable/csp_on_board_1" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif"
+            android:text="@string/enable_customer_assistant_msg"
+            android:textSize="16sp"
+            tools:ignore="MissingPrefix" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:alpha="0.5"
+            android:src="@drawable/forward" />
+    </LinearLayout>
+
+
+</LinearLayout>

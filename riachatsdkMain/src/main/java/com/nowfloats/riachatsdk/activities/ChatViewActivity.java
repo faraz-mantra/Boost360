@@ -66,6 +66,9 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
+import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.gun0912.tedpermission.PermissionListener;
@@ -86,6 +89,7 @@ import com.nowfloats.riachatsdk.fragments.CustomDialogFragment;
 import com.nowfloats.riachatsdk.fragments.PickAddressFragment;
 import com.nowfloats.riachatsdk.helpers.ChatLogger;
 import com.nowfloats.riachatsdk.helpers.DeviceDetails;
+import com.nowfloats.riachatsdk.helpers.FacebookHandler;
 import com.nowfloats.riachatsdk.interfaces.ChatJsonInterface;
 import com.nowfloats.riachatsdk.interfaces.IChatAnimCallback;
 import com.nowfloats.riachatsdk.interfaces.IConfirmationCallback;
@@ -100,6 +104,7 @@ import com.squareup.picasso.Picasso;
 import net.alhazmy13.mediapicker.Image.ImagePicker;
 import net.alhazmy13.mediapicker.Video.VideoPicker;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -108,6 +113,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -130,7 +137,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import static android.view.View.INVISIBLE;
 
 public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdapter.OnItemClickListener,
-        IConfirmationCallback, IChatAnimCallback {
+        IConfirmationCallback, IChatAnimCallback, FacebookHandler.FacebookCallbacks {
 
     private Toolbar toolbar;
 
@@ -237,6 +244,11 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     public static String NF_PREF_NAME = "nowfloatsPrefs";
 
+    private FacebookHandler facebookHandler;
+
+    private final List<String> readPermissions=Arrays.asList("email", "public_profile", "user_friends", "read_insights", "business_management", "pages_messaging");
+    private final List<String> publishPermissions = Arrays.asList("publish_actions", "publish_pages", "manage_pages");
+
     private PermissionListener mPermissionListener = new PermissionListener() {
         @Override
         public void onPermissionGranted() {
@@ -315,6 +327,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     private void initializeControls() {
 
+        facebookHandler = new FacebookHandler(this, ChatViewActivity.this);
         mSessionId = UUID.randomUUID().toString();
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -587,6 +600,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        facebookHandler.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == Picker.PICK_IMAGE_CAMERA && resultCode == RESULT_OK) {
             imagePicker.submit(data);
@@ -1139,11 +1153,15 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
                 askLocationPermission();
                 mNextNodeId = btn.getNextNodeId();
                 break;
+            case Constants.DeepLinkUrl.FACEBOOK_AUTH:
+                mCurrentDeepLink = btn.getDeepLinkUrl();
+                facebookAuth();
+                mNextNodeId = btn.getNextNodeId();
+                break;
             case Constants.DeepLinkUrl.LOGIN:
                 login();
                 break;
         }
-
     }
 
     private void skip() {
@@ -1225,6 +1243,11 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         }
 
         finish();
+    }
+
+
+    private void facebookAuth() {
+        facebookHandler.getFacebookPermissions(ChatViewActivity.this, readPermissions, publishPermissions);
     }
 
     private void askLocationPermission() {
@@ -2236,6 +2259,45 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     }
 
+    /*
+     * **************************************Facebook  Callbacks **************************
+     */
+
+    @Override
+    public void onError() {
+        LoginManager.getInstance().logOut();
+        AccessToken.refreshCurrentAccessTokenAsync();
+    }
+
+    @Override
+    public void onCancel() {
+        LoginManager.getInstance().logOut();
+        AccessToken.refreshCurrentAccessTokenAsync();
+    }
+
+    @Override
+    public void onAllPermissionNotGiven(Collection<String> givenPermissions) {
+        LoginManager.getInstance().logInWithPublishPermissions(ChatViewActivity.this, givenPermissions);
+    }
+
+    @Override
+    public void onLoginSuccess(LoginResult loginResult) {
+        mDataMap.put("[~FBACCESSTOKEN]",loginResult.getAccessToken().getToken());
+        showNextNode(mNextNodeId);
+    }
+
+    @Override
+    public void onProfilePages(JSONArray pages, ArrayList<String> pagesName) {
+
+    }
+
+    @Override
+    public void onProfileConnected(JSONObject profile, AccessToken token) {
+
+    }
+    /*
+     * **************************************Facebook  Callbacks **************************
+     */
 
     private class FileUploadResultReceiver extends ResultReceiver {
 
@@ -2382,7 +2444,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         if (isNetworkStatusAvialable(ChatViewActivity.this)) {
             fetchChatJson();
         } else {
-            showCustomDialog(CustomDialogFragment.DialogFrom.SKIP);
+            showCustomDialog(CustomDialogFragment.DialogFrom.NO_INTERNET);
         }
     }
 

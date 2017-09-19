@@ -51,6 +51,8 @@
     <string name="ps_sc1_lbl2_tf">HN53exd.ttf</string>
     <string name="ps_create_lbl_tf">HN75Bold.ttf</string>
     <string name="ps_create_tag_tf">HN56IT.ttf</string>
+    <string name="to_buy_pricing_plans_please_contact">If you are interested in buying a plan,
+        please drop a line at support@aecasiainc.com or call us at +917034427427.</string>
 
     <string-array name="time_arrays">
         <item>01:00</item>

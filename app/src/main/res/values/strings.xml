@@ -580,6 +580,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="page_selected">PAGE SELECTED</string>
     <string name="are_you_sure_want_to_delete">Are you sure?</string>
     <string name="are_you_sure_do_you_want_to_book_domain">Are you sure do you want to book this domain?</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="ca_disable_msg">You will not be able to share products &amp; updates with your customers</string>
     <string name="page_will_deleted">Page will be deleted</string>
     <string name="deleted_in_capital">DELETE</string>
     <string name="cancel_in_capital">@android:string/cancel</string>
@@ -1040,6 +1042,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="submit_request">Submit Request</string>
     <string name="submiting_request">Submitting your request</string>
     <string name="book_your_domain">Book your Domain</string>
+    <string name="enable_bubble_msg">Open WhatsApp to share products with your potential customers.</string>
+    <string name="enable_customer_assistant_msg">Open Customer Assistant to view your potential customers.</string>
     <string name="already_included_in_your_package">*Already included in your package</string>
     <string name="link_comments">I would like to map my existing domain to my Nowfloats site %s.nowfloats.com\nplease reach out to me to discuss this in detail.</string>
     <string name="content_link_domain">
@@ -1413,7 +1417,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>You become a verified seller on NowFloats platform. Your potential buyers will see Assured Purchase badge on your website as a mark of trust and a guarantee from NowFloats.</item>
         <item>You can assure reliable and speedy delivery of your products to your buyers.</item>
         <item>Your money is safe with NowFloats and will be duly transferred with each payment cycle (Delivery + 15 working days) *.</item>
-        <item>By enabling Assured Purchase you agree to all terms and policies listed on <a href ="http://assuredpurchase.com/">AssuredPurchase.com</a>.</item>
+        <item>By enabling Assured Purchase you agree to all terms and policies listed on <a href="http://assuredpurchase.com/">AssuredPurchase.com</a>.</item>
         <item>Transaction charges will be at rate of %s per transaction. Transaction charges can change without prior notice but we always strive to make it reasonable.</item>
     </string-array>
     <string-array name="delivery_points">
