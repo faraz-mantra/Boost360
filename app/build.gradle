@@ -47,7 +47,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 2017090015
+        versionCode 2017090018
         multiDexEnabled true
     }
     buildTypes {
@@ -85,7 +85,7 @@ android {
         }
 
         partone {
-            versionName "4.8.0"
+            versionName "4.8.1"
             applicationId "com.biz2.nowfloats"
         }
     }

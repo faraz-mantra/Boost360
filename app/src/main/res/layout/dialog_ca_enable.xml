@@ -6,11 +6,12 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tvDomainConfig"
+        android:id="@+id/tvCrossPlatform"
         fontPath="Roboto-Medium.ttf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primary_color"
+        android:drawableRight="@drawable/ic_close_dark"
         android:gravity="left"
         android:padding="@dimen/margin_15"
         android:text="@string/cross_platform"
