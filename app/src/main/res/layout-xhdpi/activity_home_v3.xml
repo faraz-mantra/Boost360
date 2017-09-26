@@ -31,8 +31,7 @@
         android:layout_width="@dimen/sidepanel_cell_width"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-
-        android:name="com.nowfloats.NavigationDrawer.SidePanelFragment"
+        class="com.nowfloats.NavigationDrawer.SidePanelFragment"
         tools:layout="@layout/fragment_side_panel2"
         tools:ignore="MissingPrefix" />
 

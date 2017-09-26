@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.freshdesk.hotline.Hotline;
@@ -106,7 +107,8 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                         messageIntent.putExtra("user_data", message.get("user_data"));
                         messageIntent.putExtra("message", message.get("message"));
                         if (LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent)) {
-                            if (message.get("user_data").contains(pref.getString("facebookChatUser", ""))) {
+                            if (!TextUtils.isEmpty(pref.getString("facebookChatUser", "")) &&
+                                    message.get("user_data").contains(pref.getString("facebookChatUser", ""))) {
                                 return;
                             }
                         }
@@ -155,7 +157,9 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 if (!Util.isNullOrEmpty(deepLinkUrl) && deepLinkUrl.contains(getString(R.string.facebook_chat))) {
                     FacebookChatDataModel.UserData data = new Gson().fromJson(message.get("user_data"), FacebookChatDataModel.UserData.class);
-                    notificationManager.notify(data.getId().hashCode(), notificationBuilder.build());
+                    if(data.getId() != null) {
+                        notificationManager.notify(data.getId().hashCode(), notificationBuilder.build());
+                    }
                 } else {
                     notificationManager.notify(0, notificationBuilder.build());
                 }

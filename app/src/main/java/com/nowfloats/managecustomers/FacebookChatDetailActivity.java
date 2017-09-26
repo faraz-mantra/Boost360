@@ -245,12 +245,6 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
 
         }
     }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, new IntentFilter(INTENT_FILTER));
-
-    }
 
     @Override
     protected void onResume() {
@@ -259,7 +253,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
             pref.edit().putBoolean("IsNewFacebookMessage",false).apply();
             getChatData();
         }
-
+        LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, new IntentFilter(INTENT_FILTER));
     }
 
     @Override
@@ -268,7 +262,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         if(pref != null) {
             pref.edit().putString("facebookChatUser", "").apply();
         }
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReceiver);
     }
 
     BroadcastReceiver messageReceiver = new BroadcastReceiver() {

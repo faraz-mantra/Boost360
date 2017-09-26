@@ -192,9 +192,12 @@ public class Methods {
     public static boolean isMyAppOpen(Context mContext){
         ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
-        Log.d("topActivity", "CURRENT Activity ::" + taskInfo.get(0).topActivity.getClassName());
-        ComponentName componentInfo = taskInfo.get(0).topActivity;
-        return mContext.getPackageName().equalsIgnoreCase(componentInfo.getPackageName());
+        if(taskInfo != null && taskInfo.size()>0) {
+            Log.d("topActivity", "CURRENT Activity ::" + taskInfo.get(0).topActivity.getClassName());
+            ComponentName componentInfo = taskInfo.get(0).topActivity;
+            return mContext.getPackageName().equalsIgnoreCase(componentInfo.getPackageName());
+        }
+        return false;
     }
     public static void showSnackBar(View view, String message, int color) {
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
