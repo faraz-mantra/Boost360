@@ -99,6 +99,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         String user_data = getIntent().getStringExtra("user_data");
         FacebookChatDataModel.UserData userData = new Gson().fromJson(user_data,FacebookChatDataModel.UserData.class);
         if(userData == null){
+            title.setText("Unknown");
             return;
         }
         pref = getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
@@ -114,7 +115,13 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
                 .into(imgUser);
 
         userId = userData.getId();
-        String userName = userData.getFirstName()+" "+userData.getLastName();
+        String userName = "Unknown";
+        userName = TextUtils.isEmpty(userData.getFirstName())?
+                userName : userData.getFirstName();
+        if(!userName.equals("Unknown")){
+            userName = TextUtils.isEmpty(userData.getLastName())?
+                    userName : userName +" "+userData.getLastName();
+        }
         title.setText(userName);
 
         progressDialog = new ProgressDialog(this);
