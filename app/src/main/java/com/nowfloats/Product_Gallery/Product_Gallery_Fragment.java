@@ -30,6 +30,7 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.Product_Gallery.Model.ProductListModel;
 import com.nowfloats.Product_Gallery.Service.ProductAPIService;
+import com.nowfloats.Product_Gallery.Service.ProductDelete;
 import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
 import com.nowfloats.accessbility.BubbleInAppDialog;
 import com.nowfloats.manageinventory.models.MerchantProfileModel;
@@ -58,21 +59,34 @@ import retrofit.client.Response;
 /**
  * Created by guru on 08-06-2015.
  */
-public class Product_Gallery_Fragment extends Fragment {
+public class Product_Gallery_Fragment extends Fragment implements ProductDelete.DeleteProductGalleryInterface {
+
     public static Bus bus;
+
     public static LinearLayout empty_layout, progressLayout;
-    GridView gridView;
-    public ProductGalleryAdapter adapter;
+
+    private GridView gridView;
+
+    public ProductGalleryAdapter productGalleryAdapter;
+
     public static ArrayList<ProductListModel> productItemModelList;
+
     private Activity activity;
-    UserSessionManager session;
+
+    private UserSessionManager session;
+
     int visibilityFlag = 1;
+
     private boolean userScrolled = false;
+
     private ProductAPIService apiService;
+
     private String currencyValue;
+
     private FROM from = FROM.DEFAULT;
-    ;
+
     public static final String KEY_FROM = "KEY_FROM";
+
     private boolean isAnyProductSelected = false, mIsApEnabled = false;
 
     public enum FROM {
@@ -80,13 +94,15 @@ public class Product_Gallery_Fragment extends Fragment {
         DEFAULT
     }
 
+    private ArrayList<Integer> arrSelectedProducts;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = getActivity();
+        arrSelectedProducts = new ArrayList<>();
         if (getArguments() != null)
             from = (FROM) getArguments().get(KEY_FROM);
-
         bus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(activity.getApplicationContext(), activity);
         apiService = new ProductAPIService();
@@ -184,64 +200,35 @@ public class Product_Gallery_Fragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 if (from == FROM.DEFAULT) {
-                    Intent intent;
 
-                    intent = new Intent(activity, Product_Detail_Activity_V45.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putParcelable("product", productItemModelList.get(position));
-                    intent.putExtra("product", position + "");
-                    intent.putExtra("isApEnabled", mIsApEnabled);
-
-                    Methods.launchFromFragment(activity, view, intent);
-                } else {
-
-                    ProductListModel productItemModel = (ProductListModel) view.getTag(R.string.key_details);
-                    if (productItemModel == null) {
-                        return;
-                    }
-                    if (isAnyProductSelected && !productItemModel.isProductSelected) {
-                        Toast.makeText(activity, "You can select only one product", Toast.LENGTH_LONG).show();
+                    if (arrSelectedProducts.size() > 0) {
+                        showOverlay(view);
                     } else {
-                        productItemModel.isProductSelected = !productItemModel.isProductSelected;
-                        FrameLayout flMain = (FrameLayout) view.findViewById(R.id.flMain);
-                        FrameLayout flOverlay = (FrameLayout) view.findViewById(R.id.flOverlay);
-                        View vwOverlay = view.findViewById(R.id.vwOverlay);
-                        if (productItemModel.isProductSelected) {
-                            flOverlay.setVisibility(View.VISIBLE);
-                            setOverlay(vwOverlay, 200, flMain.getWidth(), flMain.getHeight());
-                            isAnyProductSelected = true;
-                        } else {
-                            isAnyProductSelected = false;
-                            flOverlay.setVisibility(View.GONE);
-                        }
-                    }
 
-//                    if (productItemModel.picimageURI == null) {
-//                        Picasso.with(activity).load(productItemModel.TileImageUri).placeholder(R.drawable.default_product_image).into(new Target() {
-//                            @Override
-//                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-//                                Bitmap mutableBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
-//                                if (productItemModel.picimageURI == null)
-//                                    productItemModel.picimageURI = getImageUri(mutableBitmap, productItemModel);
-//                            }
-//
-//                            @Override
-//                            public void onBitmapFailed(Drawable errorDrawable) {
-//
-//                            }
-//
-//                            @Override
-//                            public void onPrepareLoad(Drawable placeHolderDrawable) {
-//
-//                            }
-//                        });
-//                    }
+                        Intent intent;
+
+                        intent = new Intent(activity, Product_Detail_Activity_V45.class);
+                        intent.putExtra("product", position + "");
+                        intent.putExtra("isApEnabled", mIsApEnabled);
+
+                        Methods.launchFromFragment(activity, view, intent);
+                    }
+                } else {
+                    showOverlay(view);
                 }
 
             }
         });
 
-
+        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (from == FROM.DEFAULT) {
+                    showOverlay(view);
+                }
+                return true;
+            }
+        });
         gridView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView absListView, int scrollState) {
@@ -273,7 +260,6 @@ public class Product_Gallery_Fragment extends Fragment {
                 int lastInScreen = firstVisibleItem + visibleItemCount;
                 if ((userScrolled) && (lastInScreen == totalItemCount) && (totalItemCount % 10 == 0)) {
                     userScrolled = false;
-                    //TODO load more
                     getProducts("" + totalItemCount);
                 }
             }
@@ -281,6 +267,41 @@ public class Product_Gallery_Fragment extends Fragment {
 
         if (from == FROM.BUBBLE) {
             addProduct.setVisibility(View.GONE);
+        }
+    }
+
+    private void showOverlay(View view) {
+        ProductListModel productItemModel = (ProductListModel) view.getTag(R.string.key_details);
+        if (productItemModel == null) {
+            return;
+        }
+        if (isAnyProductSelected && !productItemModel.isProductSelected
+                && from != FROM.DEFAULT) {
+            Toast.makeText(activity, "You can select only one product", Toast.LENGTH_LONG).show();
+        } else {
+            productItemModel.isProductSelected = !productItemModel.isProductSelected;
+            FrameLayout flMain = (FrameLayout) view.findViewById(R.id.flMain);
+            FrameLayout flOverlay = (FrameLayout) view.findViewById(R.id.flOverlay);
+            View vwOverlay = view.findViewById(R.id.vwOverlay);
+            if (productItemModel.isProductSelected) {
+                flOverlay.setVisibility(View.VISIBLE);
+                setOverlay(vwOverlay, 200, flMain.getWidth(), flMain.getHeight());
+                isAnyProductSelected = true;
+                arrSelectedProducts.add((Integer) view.getTag(R.string.key_selected));
+            } else {
+                arrSelectedProducts.remove((Integer) view.getTag(R.string.key_selected));
+                isAnyProductSelected = false;
+                flOverlay.setVisibility(View.GONE);
+            }
+
+            if (from == FROM.DEFAULT) {
+                if (arrSelectedProducts.size() > 0) {
+                    ((ProductGalleryActivity) getActivity()).showActionDelete(
+                            arrSelectedProducts.size());
+                } else {
+                    ((ProductGalleryActivity) getActivity()).hideActionDelete();
+                }
+            }
         }
     }
 
@@ -321,7 +342,7 @@ public class Product_Gallery_Fragment extends Fragment {
                     productItemModelList.add(event.data.get(i));
                     //addPos++;
                 }
-                adapter.refreshDetails(productItemModelList);
+                productGalleryAdapter.refreshDetails(productItemModelList);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -353,7 +374,7 @@ public class Product_Gallery_Fragment extends Fragment {
                         arrModelTemp = (ArrayList<ProductListModel>)
                                 filter(productItemModelList, searchItem);
                     }
-                    adapter.refreshDetails(arrModelTemp);
+                    productGalleryAdapter.refreshDetails(arrModelTemp);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -389,10 +410,10 @@ public class Product_Gallery_Fragment extends Fragment {
             //Log.d("Product Id", data.get(0)._id);
             checkIfAPEnabled();
             productItemModelList = data;
-            adapter = new ProductGalleryAdapter(activity, currencyValue, from);
-            gridView.setAdapter(adapter);
+            productGalleryAdapter = new ProductGalleryAdapter(activity, currencyValue, from);
+            gridView.setAdapter(productGalleryAdapter);
             gridView.invalidateViews();
-            adapter.refreshDetails(productItemModelList);
+            productGalleryAdapter.refreshDetails(productItemModelList);
 
             if (productItemModelList.size() == 0) {
                 empty_layout.setVisibility(View.VISIBLE);
@@ -466,8 +487,8 @@ public class Product_Gallery_Fragment extends Fragment {
             empty_layout.setVisibility(View.GONE);
         }
 
-        if (adapter != null) {
-            adapter.notifyDataSetChanged();
+        if (productGalleryAdapter != null) {
+            productGalleryAdapter.notifyDataSetChanged();
         }
         if (gridView != null) gridView.invalidateViews();
 //        if (HomeActivity.plusAddButton != null)
@@ -480,5 +501,26 @@ public class Product_Gallery_Fragment extends Fragment {
     public void onPause() {
         super.onPause();
         bus.unregister(this);
+    }
+
+    public void clearSelectedImages() {
+        if (productGalleryAdapter != null) {
+            for (ProductListModel productListModel : productItemModelList)
+                productListModel.isProductSelected = false;
+            arrSelectedProducts.clear();
+            productGalleryAdapter.refreshDetails(productItemModelList);
+        }
+    }
+
+    public void deleteSelectedProducts() {
+        String url = Constants.NOW_FLOATS_API_URL + "/Product/v1/Delete";
+        new ProductDelete(url, getActivity(), arrSelectedProducts,Product_Gallery_Fragment.this).execute();
+    }
+
+    @Override
+    public void galleryProductDeleted() {
+        gridView.invalidate();
+        arrSelectedProducts.clear();
+        productGalleryAdapter.notifyDataSetChanged();
     }
 }
