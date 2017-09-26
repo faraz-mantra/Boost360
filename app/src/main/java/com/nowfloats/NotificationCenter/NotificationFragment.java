@@ -43,7 +43,7 @@ public class NotificationFragment extends Fragment {
     private LinearLayout emptylayout, progress_layout;
     NotificationInterface alertInterface;
     private boolean mIsAlertShown = false;
-    private int readAlertsCount;
+    private int readAlertsCount,unReadAlertCount;
     private boolean stop;
     private ArrayList<AlertModel> alertModelsList = new ArrayList<>();
 
@@ -81,6 +81,7 @@ public class NotificationFragment extends Fragment {
             adapter.notifyDataSetChanged();
             mIsAlertShown = false;
             readAlertsCount = 0;
+            unReadAlertCount = 0;
             stop = false;
         }
 
@@ -108,7 +109,12 @@ public class NotificationFragment extends Fragment {
                 int totalItemCount = mLinearLayoutManager.getItemCount();
                 int lastVisibleItem = mLinearLayoutManager.findLastVisibleItemPosition();
                 if (lastVisibleItem >= totalItemCount - 2 && !stop) {
-                    moreAlerts();
+                    if(Integer.parseInt(Home_Fragment_Tab.alertCountVal)>totalItemCount){
+                        loadAlerts();
+                    }else{
+                        moreAlerts();
+                    }
+
                 }
             }
         });
@@ -139,11 +145,9 @@ public class NotificationFragment extends Fragment {
                             emptylayout.setVisibility(View.VISIBLE);
                         }
                     } else {
-                        int count = alertModelsList.size();
                         for (int i = 0; i < alertModels.size(); i++) {
 
                             alertModelsList.add(alertModels.get(i));
-                            adapter.notifyItemChanged(count + i);
                         }
                         adapter.notifyDataSetChanged();
                         if (alertModels.size() >= 10) {
@@ -189,6 +193,9 @@ public class NotificationFragment extends Fragment {
     }
 
     public void loadAlerts() {
+        String offset = String.valueOf(unReadAlertCount);
+        unReadAlertCount += 10;
+
         stop = true;
         progress_layout.setVisibility(View.VISIBLE);
         mIsAlertShown = true;
@@ -197,21 +204,28 @@ public class NotificationFragment extends Fragment {
             params.put("clientId", Constants.clientId);
             params.put("fpId", session.getFPID());
             params.put("isRead", "false");
-            params.put("offset", "0");
-            params.put("limit", Home_Fragment_Tab.alertCountVal);
+            params.put("offset", offset);
+            params.put("limit", "10");
 
             alertInterface.getAlerts(params, new Callback<ArrayList<AlertModel>>() {
                 @Override
                 public void success(ArrayList<AlertModel> alertModels, Response response) {
-
-                    if (alertModels != null) {
-                        for (int i = 0; i < alertModels.size(); i++) {
+                    progress_layout.setVisibility(View.GONE);
+                    if(alertModels == null){
+                        emptylayout.setVisibility(View.VISIBLE);
+                        return;
+                    }else if (alertModels.size()>0) {
+                        alertModelsList.addAll(alertModels);
+                        /*for (int i = 0; i < alertModels.size(); i++) {
                             alertModelsList.add(alertModels.get(i));
-                            adapter.notifyItemChanged(i);
-                        }
+                        }*/
+                        adapter.notifyDataSetChanged();
                     }
                     stop = false;
-                    moreAlerts();
+                    if(alertModels.size()<10){
+                        moreAlerts();
+                    }
+
                 }
 
                 @Override

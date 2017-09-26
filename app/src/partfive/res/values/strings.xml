@@ -376,6 +376,8 @@
         <item>260,ZM</item>
         <item>263,ZW</item>
     </string-array>
+    <string name="update_nowfloats_app">You are using an old version of Capture. Update the app to get new features and enhancements</string>
+    <string name="facebook_url_message">If your Facebook page URL is facebook.com/capture; then your user name is capture</string>
     <string name="business_enquiries_title">Business Enquiries</string>
     <string name="business_profile_title">Business Profile</string>
     <string name="tag_for_partners">.aecasiainc.com</string>

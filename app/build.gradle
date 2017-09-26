@@ -47,7 +47,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 2017090018
+        versionCode 2017090019
         multiDexEnabled true
     }
     buildTypes {
@@ -80,12 +80,12 @@ android {
             applicationId "com.digitalseoz"
         }
         partfive{
-            versionName "1.0.0"
+            versionName "1.0.1"
             applicationId "com.capture"
         }
 
         partone {
-            versionName "4.8.1"
+            versionName "4.8.0"
             applicationId "com.biz2.nowfloats"
         }
     }
