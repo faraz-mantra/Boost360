@@ -1908,7 +1908,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
         User weUser = WebEngage.get().user();
         weUser.login(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
-        weUser.setAttribute("sales_executive_email","reach@nowfloats.com");
+        weUser.setAttribute("SALES_EXECUTIVE_EMAIL","reach@nowfloats.com");
         weUser.setAttribute("fpTag",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
         weUser.setAttribute("Status","MEETING_REQUESTED");
         weUser.setEmail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));

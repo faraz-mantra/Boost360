@@ -1,6 +1,7 @@
 package com.nowfloats.Image_Gallery;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
@@ -9,14 +10,12 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.os.Handler;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
@@ -27,82 +26,63 @@ import com.thinksity.R;
 import java.util.ArrayList;
 
 public class OtherImagesAdapter extends BaseAdapter {
-    private static final String TAG = "Other Images" ;
-    boolean[] checkedItems ;
-    ArrayList<Integer> mList;
-    LayoutInflater mInflater;
-    Activity mContext;
-    SparseBooleanArray mSparseBooleanArray;
-    ArrayList<String>	imagesList = null;
-    int size = 0;
-    int count = 0;
-    View right = null;
+
+    private static final String TAG = "Other Images";
+
+    private ArrayList<Integer> arrSelectedImages;
+
+    private LayoutInflater mInflater;
+
+    private Activity mContext;
+
+    private ArrayList<String> imagesList = null;
+
+    private int size = 0, count = 0;
 
     public Handler handler = null;
+
     public Runnable runnable = null;
-    UserSessionManager session;
 
-//    protected ImageLoader imageLoader = ImageLoader.getInstance();
-//    DisplayImageOptions options;
+    private UserSessionManager session;
 
-    public void resetCheckers(View v)
-    {
+    public void resetCheckers() {
         showChecker = false;
+        arrSelectedImages.clear();
         notifyDataSetChanged();
-        if(v!=null)
-        {
-            v.setVisibility(View.GONE);
-        }
     }
 
     public boolean showChecker = false;
+
     public OtherImagesAdapter(Activity c) {
         mContext = c;
         mInflater = LayoutInflater.from(mContext);
-        session = new UserSessionManager(c.getApplicationContext(),c);
+        session = new UserSessionManager(c.getApplicationContext(), c);
 
-        mSparseBooleanArray = new SparseBooleanArray();
-        mList = new ArrayList<Integer>();
-        //this.mList = mThumbIds;
-        //  Log.d("OtherImagesAdapter","Constants.storeSecondaryImages : "+Constants.storeSecondaryImages);
-        // Constants.storeSecondaryImages = session.getStoredGalleryImages();
+        arrSelectedImages = new ArrayList<Integer>();
+
         if (Constants.storeSecondaryImages != null) {
-            //  for (int i = 0 ; i < Constants.storeSecondaryImages.size();i++) {
-            //      Constants.storeSecondaryImages.get(i).replace(" ","");
-            //  }
             imagesList = Constants.storeSecondaryImages;
             size = imagesList.size();
-
-            //  Log.d(TAG, "imagesList : " + imagesList + " Size : " + size);
-
-            checkedItems = new boolean[size];
-            for (int i = 0; i < size; i++) {
-                checkedItems[i] = false;
-            }
         }
+        showChecker = false;
     }
 
-    public int getCheckedCount(){
-        int size = 0;
-        for(int i = 0; i< getCount() ; i++){
-            if(checkedItems[i])
-                size = size + 1;
-        }
-        return size;
+    public int getCheckedCount() {
+        return arrSelectedImages.size();
+    }
+    public ArrayList<Integer> getSelectedImages() {
+        return arrSelectedImages;
     }
 
-    public void setList(ArrayList<String> List){
+    public void setList(ArrayList<String> List) {
         imagesList = List;
-        if(imagesList != null)
+        if (imagesList != null)
             count = imagesList.size();
-        checkedItems = new boolean[count];
-        for (int i = 0; i < count; i++) {
-            checkedItems[i] = false;
-        }
+        arrSelectedImages.clear();
     }
 
     public int getCount() {
-        if(Constants.storeSecondaryImages != null)
+        if (Constants.storeSecondaryImages != null)
             count = Constants.storeSecondaryImages.size();
         Log.d(TAG, "Count : " + count);
         return count;
@@ -116,33 +96,32 @@ public class OtherImagesAdapter extends BaseAdapter {
         return 0;
     }
 
-    // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        //  Log.d("OtherImagesAdapter","getView");
-        if(convertView == null) {
+        if (convertView == null) {
             convertView = mInflater.inflate(R.layout.grid_view_list_item, null);
         }
 
-
         final ImageView imageView = (ImageView) convertView.findViewById(R.id.grid_Image);
+        final LinearLayout llSelect = (LinearLayout) convertView.findViewById(R.id.llSelect);
+        llSelect.setTag(position);
+
+        if (arrSelectedImages.contains(position)) {
+            llSelect.setVisibility(View.VISIBLE);
+        } else {
+            llSelect.setVisibility(View.GONE);
+        }
+
         String serverImage = null;
-        if(Constants.storeSecondaryImages != null) {
+        if (Constants.storeSecondaryImages != null) {
             serverImage = Constants.storeSecondaryImages.get(position);
         }
-        //  Log.d(TAG,"server position : "+serverImage);
-        //Log.d(TAG, "Server Image : "+serverImage);
         String baseName = serverImage;
-        if(serverImage!=null && serverImage.length()>0 && !serverImage.equals("null")) {
+        if (serverImage != null && serverImage.length() > 0 && !serverImage.equals("null")) {
             if (!serverImage.contains("http")) {
                 if (!serverImage.contains("Android")) {
-                    baseName = Constants.BASE_IMAGE_URL+""+ serverImage;
-
-                    // Log.d(TAG,"Base Name : "+baseName);
+                    baseName = Constants.BASE_IMAGE_URL + "" + serverImage;
                 } else {
-                    String fileName = imagesList.get(position).substring(imagesList.get(position).lastIndexOf('/') + 1).trim();
-                    //baseName = OtherImagesFragment.imageUrl;
-//            imageLoader.displayImage("file://"+	baseName, imageView, options);
                     final int radius = 50;
                     final int margin = 0;
                     Transformation t = new Transformation() {
@@ -176,31 +155,63 @@ public class OtherImagesAdapter extends BaseAdapter {
             } else {
                 baseName = serverImage;
             }
-//        imageLoader.displayImage(baseName, imageView, options);
             Picasso.with(mContext).load(baseName).placeholder(R.drawable.gal).resize(200, 0).into(imageView);
-        }else{
+        } else {
             Picasso.with(mContext).load(R.drawable.gal).into(imageView);
         }
+
+        convertView.setTag(position);
+        convertView.setTag(R.string.key_selected, llSelect);
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!showChecker) {
+                    Intent fullImage = new Intent(mContext, FullScreen_Gallery_Image.class);
+                    fullImage.putExtra("currentPositon", (int) v.getTag());
+                    mContext.startActivity(fullImage);
+                    mContext.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                } else {
+                    LinearLayout llSelect = (LinearLayout) v.getTag(R.string.key_selected);
+                    llSelect.setVisibility(View.VISIBLE);
+                    arrSelectedImages.add((Integer) v.getTag());
+                    ((ImageGalleryActivity) mContext).showActionDelete(arrSelectedImages.size());
+//                    if(llSelect.getVisibility() == View.VISIBLE){
+//                        llSelect.setVisibility(View.GONE);
+//                    }
+                }
+            }
+        });
+
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                if (!showChecker) {
+                    showChecker = true;
+                    arrSelectedImages.add((Integer) v.getTag());
+                    notifyDataSetChanged();
+                    ((ImageGalleryActivity) mContext).showActionDelete(arrSelectedImages.size());
+                }
+                return false;
+            }
+        });
+
+        llSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                arrSelectedImages.remove((Integer) v.getTag());
+                v.setVisibility(View.GONE);
+                if (arrSelectedImages.size() == 0) {
+                    showChecker = false;
+                    ((ImageGalleryActivity) mContext).hideActionDelete();
+                    notifyDataSetChanged();
+                } else {
+                    ((ImageGalleryActivity) mContext).showActionDelete(arrSelectedImages.size());
+                }
+            }
+        });
         return convertView;
-    }
-    OnCheckedChangeListener mCheckedChangeListener = new OnCheckedChangeListener() {
-
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            //mSparseBooleanArray.put((Integer) buttonView.getTag(), isChecked);
-
-            checkedItems[(Integer) buttonView.getTag()] = isChecked;
-        }
-    };
-    // references to our images
-
-
-    public void delete()
-    {
-
-//			DeleteGalleryImages task = new DeleteGalleryImages(mContext,checkedItems,this);
-//			task.execute();
-
     }
 
 }
