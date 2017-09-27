@@ -135,7 +135,6 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
         protocolSpinner = (Spinner) findViewById(R.id.sp_web_address);
         protocolSpinner.setAdapter(new ArrayAdapter<>(this, R.layout.protocol_spinner_bg, mProtoCols));
         initializeData();
-        facebookPage.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FBPAGENAME));
 
         ivProtoColSpinner = (ImageView) findViewById(R.id.iv_protocol_spinner);
         ivProtoColSpinner.setOnClickListener(new View.OnClickListener() {
@@ -849,7 +848,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
 
             try {
                 obj2.put("key", "FB");
-                obj2.put("value", session.getFacebookPageID());
+                obj2.put("value", facebookPage.getText().toString().trim());
 
                 String webWidgets = "";
                 for (int j = 0; j < Constants.StoreWidgets.size(); j++) {
@@ -867,7 +866,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
 //                    websiteAddress.setText(session.getFPDetails(""));
 //                    facebookPage.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FACEBOOK_PAGE));
 
-                session.storeFacebookPage(msgtxt4fbpage);
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FBPAGENAME,msgtxt4fbpage);
             } catch (Exception ex) {
                 System.out.println();
             }
@@ -1163,7 +1162,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 websiteAddress.setText(websiteAddr);
             }
         }
-        facebookPage.setText(session.getFacebookPage());
+        facebookPage.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FBPAGENAME));
 
 
 //      try {

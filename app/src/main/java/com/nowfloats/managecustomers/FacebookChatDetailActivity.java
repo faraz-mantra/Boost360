@@ -381,7 +381,6 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
                         response.getStatus() != 200){
                     chatModelList.get(currPos).setSender(FacebookChatDetailAdapter.ERROR);
                     adapter.notifyItemChanged(currPos);
-                    return;
                 }else if("success".equalsIgnoreCase(jsonObject.get("message").getAsString())){
 
                     chatModelList.get(currPos).setSender(FacebookChatDetailAdapter.MERCHANT);

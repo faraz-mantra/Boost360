@@ -106,8 +106,8 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
 
         if(etMonClose.getText().toString().equalsIgnoreCase("closed")||etMonOpen.getText().toString().equalsIgnoreCase("closed")) {
             mondayTime = etMonOpen.getText().toString().trim()+","+etMonClose.getText().toString().trim();
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME,session.getStartTime());
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_END_TIME,session.getEndTime());
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME, etMonOpen.getText().toString().trim());
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_END_TIME,etMonClose.getText().toString().trim());
         }else{
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME,"00");
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_END_TIME,"00");
@@ -115,8 +115,8 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
 
         if(etTueClose.getText().toString().equalsIgnoreCase("closed")||etTueOpen.getText().toString().equalsIgnoreCase("closed")) {
             tuesdayTime = etTueOpen.getText().toString().trim()+","+etTueClose.getText().toString().trim();
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME,session.getStartTime());
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_END_TIME,session.getEndTime());
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME,etTueOpen.getText().toString().trim());
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_END_TIME,etTueClose.getText().toString().trim());
         }else{
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME,"00");
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_END_TIME,"00");
@@ -124,8 +124,8 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
 
         if(etWedClose.getText().toString().equalsIgnoreCase("closed")||etWedOpen.getText().toString().equalsIgnoreCase("closed")) {
             wednesdayTime =  etWedOpen.getText().toString().trim()+","+etWedClose.getText().toString().trim();
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME,session.getStartTime());
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_END_TIME,session.getEndTime());
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME,etWedOpen.getText().toString().trim());
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_END_TIME,etWedClose.getText().toString().trim());
         }else{
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME,"00");
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_END_TIME,"00");
@@ -133,8 +133,8 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
 
         if(etThuClose.getText().toString().equalsIgnoreCase("closed")||etThuOpen.getText().toString().equalsIgnoreCase("closed")) {
             thursdayTime = etThuOpen.getText().toString().trim()+","+etThuClose.getText().toString().trim();
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME,session.getStartTime());
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_END_TIME,session.getEndTime());
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME,etThuOpen.getText().toString().trim());
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_END_TIME,etThuClose.getText().toString().trim());
         }else{
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME,"00");
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_END_TIME,"00");
@@ -142,24 +142,24 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
 
         if(etFriClose.getText().toString().equalsIgnoreCase("closed")||etFriOpen.getText().toString().equalsIgnoreCase("closed")) {
             fridayTime = etFriOpen.getText().toString().trim()+","+etFriClose.getText().toString().trim();
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME,session.getStartTime());
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_END_TIME,session.getEndTime());
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME,etFriOpen.getText().toString().trim());
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_END_TIME,etFriClose.getText().toString().trim());
         }else{
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME,"00");
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_END_TIME,"00");
         }
         if(etSatClose.getText().toString().equalsIgnoreCase("closed")||etSatOpen.getText().toString().equalsIgnoreCase("closed")) {
             saturdayTime =  etSatOpen.getText().toString().trim()+","+etSatClose.getText().toString().trim();
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME,session.getStartTime());
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_END_TIME,session.getEndTime());
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME,etSatOpen.getText().toString().trim());
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_END_TIME,etSatClose.getText().toString().trim());
         }else{
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME,"00");
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_END_TIME,"00");
         }
         if(etSunClose.getText().toString().equalsIgnoreCase("closed")||etSunOpen.getText().toString().equalsIgnoreCase("closed")) {
             sundayTime =  etSunOpen.getText().toString().trim()+","+etSunClose.getText().toString().trim();
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME,session.getStartTime());
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME,session.getEndTime());
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME,etSunOpen.getText().toString().trim());
+            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME,etSunClose.getText().toString().trim());
         }else{
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME,"00");
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME,"00");
@@ -273,7 +273,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
         }
 
     }
-    private void timePicker(View v){
+    private void timePicker(){
         TimePickerDialog dialog = TimePickerDialog.newInstance(this,0,0,false);
         dialog.setThemeDark(false);
         dialog.show(getFragmentManager(), "Timepickerdialog");
@@ -318,7 +318,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
                 case R.id.et_sat_open:
                 case R.id.et_sat_close:
                     currentId = v.getId();
-                    timePicker(v);
+                    timePicker();
                     break;
             }
             return true;
