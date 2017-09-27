@@ -160,24 +160,9 @@ public class UploadProfileAsyncTask extends AsyncTask<Void, String, String> {
 		String response = "",content = ""; 	
 		if(obj != null)
 			content= obj.toString();
-		
-		//setLatLong(FpAddress);
-		String location = lat+","+lng;
-		JSONObject myObj2 = new JSONObject();
-		try{
-			myObj2.put("key", "GEOLOCATION");
-			myObj2.put("value", location);	
-			
-			//obj.put(myObj2)
-		}
-		catch (Exception e) {
-		}
-		
 
 		response  = getDataFromServer(content,Constants.HTTP_POST,
                 Constants.FpsUpdate,Constants.BG_SERVICE_CONTENT_TYPE_JSON);
-		
-		  
 		
 		// TODO Auto-generated method stub
 		return response;

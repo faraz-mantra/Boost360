@@ -42,6 +42,41 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:text="Days"
+                            android:textStyle="italic|bold"
+                            android:gravity="center_vertical"
+                            android:textSize="16sp"
+                            android:layout_weight=".4"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight=".3"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textStyle="italic|bold"
+                            android:layout_marginRight="15dp"
+                            android:text="Open" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight=".3"
+                            android:layout_height="wrap_content"
+                            android:text="Close"
+                            android:textStyle="italic|bold"
+                            android:layout_marginRight="15dp"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="5dp"
+                        android:gravity="bottom">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
                             android:text="@string/sunday"
                             android:gravity="center_vertical"
                             android:textSize="16sp"
@@ -53,6 +88,8 @@
                             android:layout_weight=".3"
                             android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:inputType="none"
+                            android:focusable="false"
                             android:layout_marginRight="15dp"
                             android:text="select" />
 
@@ -62,6 +99,9 @@
                             android:layout_weight=".3"
                             android:layout_height="wrap_content"
                             android:text="select"
+                            android:focusable="false"
+                            android:inputType="none"
+                            android:layout_marginRight="15dp"
                             android:gravity="center" />
 
                     </LinearLayout>
@@ -78,21 +118,27 @@
                             android:text="@string/monday"
                             android:gravity="center_vertical"
                             android:textSize="16sp"
-                            android:layout_weight="1"
+                            android:layout_weight=".4"
                             android:textColor="#575757"/>
 
                         <EditText
                             android:id="@+id/et_mon_open"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight=".3"
+                            android:inputType="none"
+                            android:focusable="false"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"
                             android:gravity="center"
-                            android:text="12:00 AM" />
+                            android:layout_marginRight="15dp"
+                            android:text="12:00 AM"/>
 
                         <EditText
                             android:id="@+id/et_mon_close"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight=".3"
+                            android:focusableInTouchMode="true"
+                            android:inputType="none"
+                            android:focusable="false"
                             android:layout_height="wrap_content"
                             android:text="12:00 AM"
                             android:layout_marginRight="15dp"
@@ -112,25 +158,30 @@
                             android:text="@string/tuesday"
                             android:gravity="center_vertical"
                             android:textSize="16sp"
-                            android:layout_weight="1"
+                            android:layout_weight=".4"
                             android:textColor="#575757"/>
 
                         <EditText
                             android:id="@+id/et_tue_open"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight=".3"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"
                             android:gravity="center"
+                            android:inputType="none"
+                            android:focusable="false"
+                            android:layout_marginRight="15dp"
                             android:text="12:00 AM" />
 
                         <EditText
                             android:id="@+id/et_tue_close"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight=".3"
                             android:layout_height="wrap_content"
-                            android:text="12:00 AM"
+                            android:gravity="center"
+                            android:inputType="none"
+                            android:focusable="false"
                             android:layout_marginRight="15dp"
-                            android:gravity="center" />
+                            android:text="12:00 AM" />
 
                     </LinearLayout>
                     <LinearLayout
@@ -146,25 +197,30 @@
                             android:text="@string/wednesday"
                             android:gravity="center_vertical"
                             android:textSize="16sp"
-                            android:layout_weight="1"
+                            android:layout_weight=".4"
                             android:textColor="#575757"/>
 
                         <EditText
                             android:id="@+id/et_wed_open"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight=".3"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"
                             android:gravity="center"
+                            android:inputType="none"
+                            android:focusable="false"
+                            android:layout_marginRight="15dp"
                             android:text="12:00 AM" />
 
                         <EditText
                             android:id="@+id/et_wed_close"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight=".3"
                             android:layout_height="wrap_content"
-                            android:text="12:00 AM"
+                            android:gravity="center"
+                            android:inputType="none"
+                            android:focusable="false"
                             android:layout_marginRight="15dp"
-                            android:gravity="center" />
+                            android:text="12:00 AM"/>
 
                     </LinearLayout>
                     <LinearLayout
@@ -180,25 +236,30 @@
                             android:text="@string/thursday"
                             android:gravity="center_vertical"
                             android:textSize="16sp"
-                            android:layout_weight="1"
+                            android:layout_weight=".4"
                             android:textColor="#575757"/>
 
                         <EditText
                             android:id="@+id/et_thu_open"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight=".3"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"
                             android:gravity="center"
+                            android:inputType="none"
+                            android:focusable="false"
+                            android:layout_marginRight="15dp"
                             android:text="12:00 AM" />
 
                         <EditText
                             android:id="@+id/et_thu_close"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight=".3"
                             android:layout_height="wrap_content"
-                            android:text="12:00 AM"
+                            android:gravity="center"
+                            android:inputType="none"
+                            android:focusable="false"
                             android:layout_marginRight="15dp"
-                            android:gravity="center" />
+                            android:text="12:00 AM" />
 
                     </LinearLayout>
                     <LinearLayout
@@ -214,25 +275,30 @@
                             android:text="@string/friday"
                             android:gravity="center_vertical"
                             android:textSize="16sp"
-                            android:layout_weight="1"
+                            android:layout_weight=".4"
                             android:textColor="#575757"/>
 
                         <EditText
                             android:id="@+id/et_fri_open"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight=".3"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"
                             android:gravity="center"
+                            android:inputType="none"
+                            android:focusable="false"
+                            android:layout_marginRight="15dp"
                             android:text="12:00 AM" />
 
                         <EditText
                             android:id="@+id/et_fri_close"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight=".3"
                             android:layout_height="wrap_content"
-                            android:text="12:00 AM"
+                            android:gravity="center"
+                            android:inputType="none"
+                            android:focusable="false"
                             android:layout_marginRight="15dp"
-                            android:gravity="center" />
+                            android:text="12:00 AM" />
 
                     </LinearLayout>
                     <LinearLayout
@@ -248,25 +314,30 @@
                             android:text="@string/saturday"
                             android:gravity="center_vertical"
                             android:textSize="16sp"
-                            android:layout_weight="1"
+                            android:layout_weight=".4"
                             android:textColor="#575757"/>
 
                         <EditText
                             android:id="@+id/et_sat_open"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight=".3"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"
                             android:gravity="center"
+                            android:inputType="none"
+                            android:focusable="false"
+                            android:layout_marginRight="15dp"
                             android:text="12:00 AM" />
 
                         <EditText
                             android:id="@+id/et_sat_close"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight=".3"
                             android:layout_height="wrap_content"
-                            android:text="12:00 AM"
+                            android:gravity="center"
+                            android:inputType="none"
+                            android:focusable="false"
                             android:layout_marginRight="15dp"
-                            android:gravity="center" />
+                            android:text="12:00 AM"/>
 
                     </LinearLayout>
                 </LinearLayout>
