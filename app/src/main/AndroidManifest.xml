@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.thinksity"
-    android:versionCode="2017090013"
-    android:versionName="4.7.9">
+    android:versionCode="2017090018"
+    android:versionName="4.8.1">
 
     <permission
         android:name="${applicationId}.permission.C2D_MESSAGE"
@@ -47,8 +47,10 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity android:name="com.mixpanel.android.surveys.SurveyActivity" />
-        <activity android:name="com.nowfloats.Analytics_Screen.VmnNumberRequestActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.nowfloats.Analytics_Screen.VmnNumberRequestActivity"
+            android:screenOrientation="portrait" />
+
         <receiver
             android:name="com.appsflyer.MultipleInstallBroadcastReceiver"
             android:exported="true">
@@ -56,6 +58,7 @@
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
+
         <meta-data
             android:name="com.webengage.sdk.android.debug"
             android:value="false" /> <!-- only for debugging -->
@@ -73,27 +76,26 @@
 
         <activity
             android:name="com.webengage.sdk.android.actions.render.WebEngageActivity"
-            android:theme="@android:style/Theme.Translucent"
-            android:configChanges="orientation|screenSize" />
+            android:configChanges="orientation|screenSize"
+            android:theme="@android:style/Theme.Translucent" />
+
         <meta-data
             android:name="com.webengage.sdk.android.small_icon"
-            android:resource="@drawable/app_launcher2"/>
-
+            android:resource="@drawable/app_launcher2" />
         <meta-data
             android:name="com.webengage.sdk.android.large_icon"
-            android:resource="@drawable/app_launcher"/>
-
+            android:resource="@drawable/app_launcher" />
         <meta-data
             android:name="com.webengage.sdk.android.accent_color"
-            android:value="@color/primary"/>
-        <receiver
-            android:name="com.webengage.sdk.android.WebEngageReceiver">
+            android:value="@color/primary" />
+
+        <receiver android:name="com.webengage.sdk.android.WebEngageReceiver">
             <intent-filter>
                 <action android:name="com.webengage.sdk.android.intent.ACTION" />
+
                 <category android:name="${applicationId}" /> <!-- Replace with your package name -->
             </intent-filter>
         </receiver>
-
         <receiver
             android:name="com.webengage.sdk.android.InstallTracker"
             android:exported="true">
@@ -628,10 +630,21 @@
         <activity
             android:name="com.nowfloats.signup.UI.UI.RiaChatInitActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.nowfloats.manageinventory.SellerAnalyticsActivity" />
-        <activity android:name="com.nowfloats.manageinventory.PaymentSettingsActivity" />
-        <activity android:name="com.nowfloats.manageinventory.OrderListActivity" />
-        <activity android:name="com.nowfloats.manageinventory.OrderDetailsActivity"></activity>
+        <activity
+            android:name="com.nowfloats.manageinventory.SellerAnalyticsActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.nowfloats.manageinventory.PaymentSettingsActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.nowfloats.manageinventory.OrderListActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.nowfloats.manageinventory.OrderDetailsActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.nowfloats.Store.NewPricingPlansActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

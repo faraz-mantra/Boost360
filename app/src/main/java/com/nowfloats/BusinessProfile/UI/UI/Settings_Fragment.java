@@ -27,6 +27,7 @@ import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
 import com.nowfloats.Store.FlavourFivePlansActivity;
+import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.customerassistant.CustomerAssistantActivity;
 import com.nowfloats.riachatsdk.ChatManager;
@@ -168,7 +169,7 @@ public class Settings_Fragment extends Fragment {
                 if(Constants.PACKAGE_NAME.equalsIgnoreCase("com.capture")) {
                     intent = new Intent(activity, FlavourFivePlansActivity.class);
                 }else {
-                    intent = new Intent(activity, PricingPlansActivity.class);
+                    intent = new Intent(activity, NewPricingPlansActivity.class);
                 }
                 activity.startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

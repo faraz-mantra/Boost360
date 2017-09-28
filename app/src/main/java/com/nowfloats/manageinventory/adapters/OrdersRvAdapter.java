@@ -162,7 +162,7 @@ public class OrdersRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         String parsedDate;
         try {
             Date date = format.parse(createdOn);
-            parsedDate = new SimpleDateFormat("HH.mm a dd/MM/yyyy").format(date);
+            parsedDate = new SimpleDateFormat("HH:mm a dd/MM/yyyy").format(date);
         }catch (ParseException e){
             parsedDate = createdOn;
         }

@@ -163,7 +163,7 @@ public class OrderDetailsRvAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         String parsedDate;
         try {
             Date date = format.parse(strDate);
-            parsedDate = new SimpleDateFormat("HH.mm a dd/MM/yyyy",Locale.ENGLISH).format(date);
+            parsedDate = new SimpleDateFormat("HH:mm a dd/MM/yyyy",Locale.ENGLISH).format(date);
         }catch (ParseException e){
             parsedDate = strDate;
         }

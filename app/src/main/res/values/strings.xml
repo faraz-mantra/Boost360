@@ -1457,6 +1457,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 </string>
     <string name="manage_multichannel_customers">You can track all your online customers from a single interface. You can interact with your customers on platforms like WhatsApp and SMS. We read through your SMS data to fetch relevant enquiries.</string>
     <string name="deeplink_manage_customer">managecustomer</string>
+    <string name="pp_business_category">Business Category:</string>
 
 
 </resources>
