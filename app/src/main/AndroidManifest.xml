@@ -221,10 +221,6 @@
             android:name="com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.nowfloats.BusinessProfile.UI.UI.Business_Hours_Activity"
-            android:label="@string/title_activity_business__hours_"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="com.nowfloats.BusinessProfile.UI.UI.LinkedinWebView"
             android:label="Linkedin Login"
             android:screenOrientation="portrait" />

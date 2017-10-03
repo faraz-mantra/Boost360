@@ -65,7 +65,7 @@
             android:textColor="@color/white"
             android:textSize="9sp"
             android:maxLines="1"
-            android:visibility="visible"
+            android:visibility="gone"
             tools:ignore="MissingPrefix" />
     </LinearLayout>
 

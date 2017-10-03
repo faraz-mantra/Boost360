@@ -65,8 +65,8 @@ import com.nowfloats.Analytics_Screen.Graph.AnalyticsActivity;
 import com.nowfloats.Analytics_Screen.SearchQueries;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
+import com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
-import com.nowfloats.BusinessProfile.UI.UI.Business_Hours_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
 import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
@@ -510,7 +510,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 Intent queries = new Intent(HomeActivity.this, Business_Address_Activity.class);
                 startActivity(queries);
             } else if (url.contains(getResources().getString(R.string.deeplink_bizhours)) || url.contains("hours")) {
-                Intent queries = new Intent(HomeActivity.this, Business_Hours_Activity.class);
+                Intent queries = new Intent(HomeActivity.this, BusinessHoursActivity.class);
                 startActivity(queries);
             } else if (url.contains(getResources().getString(R.string.deeplink_bizlogo)) || url.contains("logo")) {
                 Intent queries = new Intent(HomeActivity.this, Business_Logo_Activity.class);

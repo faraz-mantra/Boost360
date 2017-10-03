@@ -207,33 +207,55 @@ public class ProcessFPDetails {
 
         try {
             if (get_fp_details_model.Timings != null) {
+                session.storeBooleanDetails(Key_Preferences.IS_BUSINESS_TIME_AVAILABLE,true);
+
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME, "00");
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME, "00");
+
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME, "00");
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_END_TIME, "00");
+
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME, "00");
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_END_TIME, "00");
+
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME, "00");
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_END_TIME, "00");
+
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME, "00");
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_END_TIME, "00");
+
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME, "00");
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_END_TIME, "00");
+
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME, "00");
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_END_TIME, "00");
                 for (int i = 0; i < get_fp_details_model.Timings.size(); i++) {
                     if (i==0) {
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_START_TIME, get_fp_details_model.Timings.get(0).From);
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SUNDAY_END_TIME, get_fp_details_model.Timings.get(0).To);
                         session.setBusinessHours(true);
                     }
-                    if (i==1) {
+                    else if (i==1) {
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_START_TIME, get_fp_details_model.Timings.get(1).From);
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_MONDAY_END_TIME, get_fp_details_model.Timings.get(1).To);
                     }
-                    if (i==2) {
+                    else if (i==2) {
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_START_TIME, get_fp_details_model.Timings.get(2).From);
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_TUESDAY_END_TIME, get_fp_details_model.Timings.get(2).To);
                     }
-                    if (i==3) {
+                    else if (i==3) {
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_START_TIME, get_fp_details_model.Timings.get(3).From);
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_WEDNESDAY_END_TIME, get_fp_details_model.Timings.get(3).To);
                     }
-                    if (i==4) {
+                    else if (i==4) {
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_START_TIME, get_fp_details_model.Timings.get(4).From);
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_THURSDAY_END_TIME, get_fp_details_model.Timings.get(4).To);
                     }
-                    if (i==5) {
+                    else if (i==5) {
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_START_TIME, get_fp_details_model.Timings.get(5).From);
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FRIDAY_END_TIME, get_fp_details_model.Timings.get(5).To);
                     }
-                    if (i==6) {
+                   else if (i==6) {
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_START_TIME, get_fp_details_model.Timings.get(6).From);
                         session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_SATURDAY_END_TIME, get_fp_details_model.Timings.get(6).To);
                     }

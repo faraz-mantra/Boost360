@@ -91,7 +91,6 @@ public class UploadProfileAsyncTask extends AsyncTask<Void, String, String> {
                 }
 
                 if (arr[i] == "TIMINGS") {
-                    Constants.mondayStartTime = session.getStartTime();
 //                    Constants.StoreDescription = Edit_Profile_Activity.msgtxt4buzzdescriptn;
                     //Edit_Profile_Activity.buzzdescription.setText(Constants.StoreDescription);
                 }

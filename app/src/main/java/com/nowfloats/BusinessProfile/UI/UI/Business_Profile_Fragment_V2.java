@@ -281,7 +281,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                                 public void onClick(View v) {
                                     MixPanelController.track(MixPanelController.Bhours, null);
                                     if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS).equals("TIMINGS")) {
-                                        Intent businessHoursIntent = new Intent(activity, Business_Hours_Activity.class);
+                                        Intent businessHoursIntent = new Intent(activity, BusinessHoursActivity.class);
                                         startActivity(businessHoursIntent);
                                         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                     } else {
