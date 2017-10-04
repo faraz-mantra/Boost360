@@ -1910,7 +1910,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         weUser.login(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
         weUser.setAttribute("SALES_EXECUTIVE_EMAIL","reach@nowfloats.com");
         weUser.setAttribute("fpTag",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
-        weUser.setAttribute("Status","MEETING_REQUESTED");
+        weUser.setAttribute("Status","");
         weUser.setEmail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
         weUser.setFirstName(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME));
         weUser.setPhoneNumber(session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));

@@ -135,6 +135,39 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
         protocolSpinner = (Spinner) findViewById(R.id.sp_web_address);
         protocolSpinner.setAdapter(new ArrayAdapter<>(this, R.layout.protocol_spinner_bg, mProtoCols));
         initializeData();
+        if ("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
+                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)) ||
+                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME))) {
+            alternateNumber_2.setInputType(InputType.TYPE_NULL);
+            alternateNumber_3.setInputType(InputType.TYPE_NULL);
+            alternateNumber_1.setInputType(InputType.TYPE_NULL);
+            alternateNumber_1.setOnTouchListener(this);
+            alternateNumber_2.setOnTouchListener(this);
+            alternateNumber_3.setOnTouchListener(this);
+            VMN_Dialog = true;
+        }
+
+        if (alternateNumber_2.getText().toString().trim().length() == 0) {
+            alternateTextView2.setText(getString(R.string.alternate_number2));
+        } else {
+
+            alternateTextView2.setText(getString(R.string.alternate_number2) + " (" + getString(R.string.to_be_displayed_on_website) + ")");
+        }
+
+        if (alternateNumber_3.getText().toString().trim().length() == 0) {
+            alternateTextView3.setText(getString(R.string.alternate_number3));
+        } else {
+
+            alternateTextView3.setText(getString(R.string.alternate_number3) + " (" + getString(R.string.to_be_displayed_on_website) + ")");
+        }
+
+
+        if (alternateNumber_1.getText().toString().trim().length() == 0) {
+            alternateTextView1.setText(getString(R.string.alternate_number1));
+        } else {
+
+            alternateTextView1.setText(getString(R.string.alternate_number1) + " (" + getString(R.string.to_be_displayed_on_website) + ")");
+        }
 
         ivProtoColSpinner = (ImageView) findViewById(R.id.iv_protocol_spinner);
         ivProtoColSpinner.setOnClickListener(new View.OnClickListener() {
@@ -1066,39 +1099,6 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
     @Override
     protected void onResume() {
         super.onResume();
-        if ("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
-                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)) ||
-                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME))) {
-            alternateNumber_2.setInputType(InputType.TYPE_NULL);
-            alternateNumber_3.setInputType(InputType.TYPE_NULL);
-            alternateNumber_1.setInputType(InputType.TYPE_NULL);
-            alternateNumber_1.setOnTouchListener(this);
-            alternateNumber_2.setOnTouchListener(this);
-            alternateNumber_3.setOnTouchListener(this);
-            VMN_Dialog = true;
-        }
-
-        if (alternateNumber_2.getText().toString().trim().length() == 0) {
-            alternateTextView2.setText(getString(R.string.alternate_number2));
-        } else {
-
-            alternateTextView2.setText(getString(R.string.alternate_number2) + " (" + getString(R.string.to_be_displayed_on_website) + ")");
-        }
-
-        if (alternateNumber_3.getText().toString().trim().length() == 0) {
-            alternateTextView3.setText(getString(R.string.alternate_number3));
-        } else {
-
-            alternateTextView3.setText(getString(R.string.alternate_number3) + " (" + getString(R.string.to_be_displayed_on_website) + ")");
-        }
-
-
-        if (alternateNumber_1.getText().toString().trim().length() == 0) {
-            alternateTextView1.setText(getString(R.string.alternate_number1));
-        } else {
-
-            alternateTextView1.setText(getString(R.string.alternate_number1) + " (" + getString(R.string.to_be_displayed_on_website) + ")");
-        }
 
         // initializeData();
         bus.register(this);
