@@ -1458,6 +1458,9 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="manage_multichannel_customers">You can track all your online customers from a single interface. You can interact with your customers on platforms like WhatsApp and SMS. We read through your SMS data to fetch relevant enquiries.</string>
     <string name="deeplink_manage_customer">managecustomer</string>
     <string name="pp_business_category">Business Category:</string>
+    <string name="text_dictate"><![CDATA[<b>DICTATE</b> - WEBSITE CONTENT SERVICE]]></string>
+    <string name="text_wildfire"><![CDATA[<b>WILDFIRE</b> - Rs. 60000 OF ADWORDS AND FACEBOOK MARKETING]]></string>
+    <string name="text_app"><![CDATA[<b>YOUR APP</b> - YOUR OWN BUSINESS APP FOR APPLE APP STORE AND GOOGLE PLAY STORE]]></string>
 
 
 </resources>

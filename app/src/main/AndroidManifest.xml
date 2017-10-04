@@ -73,7 +73,6 @@
 
         <service android:name="com.webengage.sdk.android.ExecutorService" />
         <service android:name="com.webengage.sdk.android.EventLogService" />
-
         <activity
             android:name="com.webengage.sdk.android.actions.render.WebEngageActivity"
             android:configChanges="orientation|screenSize"

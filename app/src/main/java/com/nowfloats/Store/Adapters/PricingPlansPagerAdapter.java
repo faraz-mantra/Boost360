@@ -18,12 +18,23 @@ public class PricingPlansPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return PricingDetailsFragment.newInstance();
+        switch (position){
+            case 0:
+                return PricingDetailsFragment.newInstance(PricingDetailsFragment.PricingType.BOOST_LITE);
+            case 1:
+                return PricingDetailsFragment.newInstance(PricingDetailsFragment.PricingType.BOOST_PRO);
+            case 2:
+                return PricingDetailsFragment.newInstance(PricingDetailsFragment.PricingType.BOOST_CUSTOM);
+            default:
+                return PricingDetailsFragment.newInstance(PricingDetailsFragment.PricingType.BOOST_PRO);
+
+        }
+
     }
 
     @Override
     public int getCount() {
-        return 4;
+        return 3;
     }
 
 }

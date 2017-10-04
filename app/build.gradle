@@ -47,7 +47,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 2017090018
+        versionCode 2017090019
         multiDexEnabled true
     }
     buildTypes {
@@ -79,8 +79,8 @@ android {
             versionName "1.0.5"
             applicationId "com.digitalseoz"
         }
-        partfive {
-            versionName "1.0.0"
+        partfive{
+            versionName "1.0.1"
             applicationId "com.capture"
         }
 
@@ -120,7 +120,6 @@ dependencies {
         transitive = true;
     }
 
-    compile 'com.miguelcatalan:materialsearchview:1.4.0'
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.android.volley:volley:1.0.0'
@@ -162,6 +161,7 @@ dependencies {
     compile 'com.android.support:gridlayout-v7:25.3.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.webengage:android-sdk:2.+'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

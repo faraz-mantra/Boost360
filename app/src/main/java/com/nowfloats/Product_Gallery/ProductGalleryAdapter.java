@@ -25,7 +25,6 @@ import java.util.ArrayList;
 
 public class ProductGalleryAdapter extends BaseAdapter {
 
-    // View lookup cache
     public static class ViewHolder {
         public ImageView ProductImageView;
         public TextView Product_Name;
@@ -36,12 +35,17 @@ public class ProductGalleryAdapter extends BaseAdapter {
         public View vwOverlay;
     }
 
-    ViewHolder viewHolder;
-    Activity activity;
-    public String currencyType = "";
+    private ViewHolder viewHolder;
+
+    private Activity activity;
+
     private Resources mResources;
+
     private Product_Gallery_Fragment.FROM from;
+
     private ArrayList<ProductListModel> productItemModelList;
+
+    public boolean showChecker = false;
 
     public ProductGalleryAdapter(Activity activity, String currency, Product_Gallery_Fragment.FROM from) {
         this.activity = activity;
@@ -56,6 +60,7 @@ public class ProductGalleryAdapter extends BaseAdapter {
             return productItemModelList.size();
         return 0;
     }
+
 
     @Override
     public Object getItem(int position) {
@@ -95,6 +100,7 @@ public class ProductGalleryAdapter extends BaseAdapter {
 
             final ProductListModel productItemModel = (ProductListModel) getItem(position);
             vi.setTag(R.string.key_details, productItemModel);
+            vi.setTag(R.string.key_selected, position);
             viewHolder.Product_Name.setText(productItemModel.Name);
             final ImageView imageView = viewHolder.ProductImageView;
             Picasso picasso = Picasso.with(activity);

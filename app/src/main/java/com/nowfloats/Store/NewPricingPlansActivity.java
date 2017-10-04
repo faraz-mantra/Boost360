@@ -18,6 +18,7 @@ public class NewPricingPlansActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_pricing_plans);
 
         vpPricingPlans = (ViewPager) findViewById(R.id.vp_pricing_plans);
+        vpPricingPlans.setClipToPadding(false);
         pricingPagerAdapter = new PricingPlansPagerAdapter(getSupportFragmentManager());
         vpPricingPlans.setAdapter(pricingPagerAdapter);
     }

@@ -1468,7 +1468,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     Hotline.showConversations(HomeActivity.this);
                     //Konotor.getInstance(getApplicationContext()).launchFeedbackScreen(HomeActivity.this);
                 } else if (nextScreen.equals(getString(R.string.call))) {
-                    String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
                     if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
                         Intent call = new Intent(Intent.ACTION_DIAL);
                         String callString = "tel:" + getString(R.string.contact_us_number);
@@ -1594,6 +1593,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     }
 
     private boolean get_VersionUpdate() {
+        if(BuildConfig.DEBUG){
+            return false;
+        }
         try {
             String new_version = Jsoup.connect("https://play.google.com/store/apps/details?id=" + getPackageName() + "&hl=it")
                     .timeout(30000)
@@ -1906,7 +1908,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
         User weUser = WebEngage.get().user();
         weUser.login(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
-        weUser.setAttribute("sales_executive_email","reach@nowfloats.com");
+        weUser.setAttribute("SALES_EXECUTIVE_EMAIL","reach@nowfloats.com");
         weUser.setAttribute("fpTag",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
         weUser.setAttribute("Status","MEETING_REQUESTED");
         weUser.setEmail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));

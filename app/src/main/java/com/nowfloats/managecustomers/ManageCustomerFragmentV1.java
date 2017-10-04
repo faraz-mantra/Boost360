@@ -214,26 +214,11 @@ public class ManageCustomerFragmentV1 extends Fragment {
                         manageCustomerHolder.tvTwo.setText(getActivity().getString(R.string.enquiries_title));
                         manageCustomerHolder.tvOne.setText(getActivity().getString(R.string.subscribers));
                         manageCustomerHolder.tvThree.setText("Calls");
-                        final boolean isVmnEnable = "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
-                                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)) ||
-                                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME));
-                        final String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
 
                         manageCustomerHolder.tvThree.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if (isVmnEnable) {
-                                    Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
-                                    startActivity(i);
-                                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                } else if ((TextUtils.isDigitsOnly(paymentState) && "1".equalsIgnoreCase(paymentState))) {
-                                    Intent i = new Intent(getActivity(), VmnNumberRequestActivity.class);
-                                    startActivity(i);
-                                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                                } else {
-                                    Methods.showFeatureNotAvailDialog(getActivity());
-                                    // show first buy lighthouse
-                                }
+                                openCallLog();
 
                             }
                         });
@@ -258,7 +243,6 @@ public class ManageCustomerFragmentV1 extends Fragment {
                                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             }
                         });
-//                        manageCustomerHolder.llBackground.setBackgroundResource(R.drawable.mcw_bg);
 
 
                         params.gravity = Gravity.BOTTOM;
@@ -267,10 +251,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
                         manageCustomerHolder.llBackground.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                MixPanelController.track(EventKeysWL.SIDE_PANEL_BUSINESS_ENQUIRIES, null);
-                                Intent i = new Intent(getActivity(), BusinessEnquiryActivity.class);
-                                startActivity(i);
-                                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                                openCallLog();
                             }
                         });
                         break;
@@ -336,38 +317,24 @@ public class ManageCustomerFragmentV1 extends Fragment {
                             manageCustomerHolder.tvOne.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
-                                            .title(getString(R.string.are_you_sure))
-                                            .content(getString(R.string.ca_disable_msg))
-                                            .positiveText(getString(R.string.ok))
-                                            .negativeText(getString(R.string.cancel))
-                                            .positiveColorRes(R.color.primaryColor)
-                                            .negativeColorRes(R.color.primaryColor)
-                                            .callback(new MaterialDialog.ButtonCallback() {
-                                                @Override
-                                                public void onPositive(MaterialDialog dialog) {
-                                                    super.onPositive(dialog);
-                                                    disableCustomerAssistant();
-                                                    notifyDataSetChanged();
-                                                }
-
-                                                @Override
-                                                public void onNegative(MaterialDialog dialog) {
-                                                    super.onNegative(dialog);
-
-                                                }
-                                            });
-
-                                    if (!activity.isFinishing()) {
-                                        final MaterialDialog materialDialog = builder.show();
-                                        materialDialog.setCancelable(false);
-                                    }
-
+                                    openCrossPlatform();
+                                }
+                            });
+                            manageCustomerHolder.llBackground.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    openCrossPlatform();
                                 }
                             });
                         } else {
                             manageCustomerHolder.tvOne.setText(getString(R.string.enable_customer_assistant));
                             manageCustomerHolder.tvOne.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    enableCustomerAssistant();
+                                }
+                            });
+                            manageCustomerHolder.llBackground.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     enableCustomerAssistant();
@@ -401,6 +368,56 @@ public class ManageCustomerFragmentV1 extends Fragment {
                     }
                 });
 
+            }
+        }
+
+        private void openCallLog() {
+
+            final boolean isVmnEnable = "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
+                    "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)) ||
+                    "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME));
+            final String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
+
+            if (isVmnEnable) {
+                Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            } else if ((TextUtils.isDigitsOnly(paymentState) && "1".equalsIgnoreCase(paymentState))) {
+                Intent i = new Intent(getActivity(), VmnNumberRequestActivity.class);
+                startActivity(i);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            } else {
+                Methods.showFeatureNotAvailDialog(getActivity());
+                // show first buy lighthouse
+            }
+        }
+
+        private void openCrossPlatform() {
+            MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
+                    .title(getString(R.string.are_you_sure))
+                    .content(getString(R.string.ca_disable_msg))
+                    .positiveText(getString(R.string.ok))
+                    .negativeText(getString(R.string.cancel))
+                    .positiveColorRes(R.color.primaryColor)
+                    .negativeColorRes(R.color.primaryColor)
+                    .callback(new MaterialDialog.ButtonCallback() {
+                        @Override
+                        public void onPositive(MaterialDialog dialog) {
+                            super.onPositive(dialog);
+                            disableCustomerAssistant();
+                            notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onNegative(MaterialDialog dialog) {
+                            super.onNegative(dialog);
+
+                        }
+                    });
+
+            if (!activity.isFinishing()) {
+                final MaterialDialog materialDialog = builder.show();
+                materialDialog.setCancelable(false);
             }
         }
 
@@ -521,24 +538,24 @@ public class ManageCustomerFragmentV1 extends Fragment {
             session.setCustomerAssistantStatus(true);
         }
 
+        getProducts();
+
         if ((android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity()))
                 || (!Methods.isAccessibilitySettingsOn(getActivity()))) {
             session.setBubbleTime(-1);
 
             if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") /*&& "1".equals(paymentState)*/) {
-                getProducts();
 
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        checkOverlay(Home_Fragment_Tab.DrawOverLay.FromTab);
+                        checkOverlay(Home_Fragment_Tab.DrawOverLay.FromHome);
                     }
                 }, 1000);
 
             }
 
         } else {
-
 
             session.setBubbleStatus(true);
             if (Methods.hasOverlayPerm(getActivity())) {
@@ -558,9 +575,10 @@ public class ManageCustomerFragmentV1 extends Fragment {
                     .positiveColorRes(R.color.primaryColor);
             if (!activity.isFinishing()) {
                 final MaterialDialog materialDialog = builder.show();
-                materialDialog.setCancelable(false);
-                View caView = materialDialog.getCustomView();
+                materialDialog.setCanceledOnTouchOutside(false);
 
+                View caView = materialDialog.getCustomView();
+                TextView tvCrossPlatform = (TextView) caView.findViewById(R.id.tvCrossPlatform);
                 LinearLayout tvBubble = (LinearLayout) caView.findViewById(R.id.llBubble);
                 LinearLayout tvCustomerAssistant = (LinearLayout) caView.findViewById(R.id.llCustomerAssistant);
                 View vwSeperator = (View) caView.findViewById(R.id.vwSeperator);
@@ -570,6 +588,12 @@ public class ManageCustomerFragmentV1 extends Fragment {
                     vwSeperator.setVisibility(View.GONE);
                 }
 
+                tvCrossPlatform.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        materialDialog.dismiss();
+                    }
+                });
                 tvBubble.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

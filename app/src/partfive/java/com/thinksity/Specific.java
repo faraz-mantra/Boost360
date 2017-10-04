@@ -25,7 +25,7 @@ public class Specific {
 
     public static String access_level = "20";
     public static final String CONTACT_EMAIL_ID = "support@aecasiainc.com";
-    public static final String FACEBOOK_API_KEY 	= "768028443377125";  // Boost
+    public static final String FACEBOOK_API_KEY 	= "768028443377125";
 
 //    public static String TWITTER_TOK 				= "h5lB3rvjU66qOXHgrZK41Q";
 //    public static String TWITTER_SEC 				= "L0Bo08aevt2U1fLjuuYAMtANSAzWWi8voGuvbrdtcY4";

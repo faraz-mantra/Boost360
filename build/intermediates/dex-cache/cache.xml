@@ -12,15 +12,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\NowFloats\.android\build-cache\65b154f1d0786985b992ea75841a0c14aaf2b8cd\output\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.2"
-        sha1="398680763d331b3f31a5a82d76532793f7461c3a">
-        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\classes_7bbca461e4c47a52161f412cdcb169e80971d1dc\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\libs\libraries\AF-Android-SDK-v2.3.1.17.jar"
         jumboMode="true"
         optimize="true"
@@ -57,12 +48,12 @@
     </item>
     <item
         is-multidex="true"
-        jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\libs\libraries\signpost-core-1.2.1.2.jar"
+        jar="C:\Users\NowFloats\.android\build-cache\15dd0867d7774d01c8f31c9c5826f7a082e0013a\output\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="bf95955dcf3d5a78c201e49b0c336787ea73f161">
-        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\2\signpost-core-1.2.1.2_f2e2496261a74b815eaf93cc8ecd006950445f78\classes.dex" />
+        sha1="66a97c8c2648e715a3368ccbcc89823ad11f1ce7">
+        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\classes_39208382bea8d47b98d96fb438501e9828b11b88\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -70,17 +61,26 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="5bd36e19fd80b82b248e1d4119ba29a6a96f3af0">
+        sha1="497668627918f1390d3c3746c23c6254c0d61bf3">
         <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10000\instant-run-bootstrap_dbaf4d8d8798a2af32d7d472c9f6ee7807211edd\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\NowFloats\.android\build-cache\8e217df47febb258cd9f9aa57c4b23a548b0bd2d\output\jars\classes.jar"
+        jar="C:\Users\NowFloats\.android\build-cache\a8c0b9321b65fb00daad2bd0ca750eb7224d8977\output\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="329cce289f2ae7ebb327e1c3b7d2b84a2496e1b2">
-        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\classes_84fc15c67153cabeb30c5a2b437e65129f6acc83\classes.dex" />
+        sha1="7675632fcac60596b733424f02bcb9b101078ed5">
+        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10\classes_6f0485212587958b78b605687f93a0dd8f5f1257\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\libs\libraries\signpost-core-1.2.1.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bf95955dcf3d5a78c201e49b0c336787ea73f161">
+        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\2\signpost-core-1.2.1.2_f2e2496261a74b815eaf93cc8ecd006950445f78\classes.dex" />
     </item>
 
 </items>

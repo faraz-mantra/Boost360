@@ -3,9 +3,7 @@ package com.nowfloats.signup.UI.Places;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
 
-import com.nowfloats.signup.UI.UI.PreSignUpActivity;
 import com.thinksity.R;
 
 import org.json.JSONObject;
