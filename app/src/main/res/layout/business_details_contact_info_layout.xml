@@ -55,7 +55,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_main_number"
+                android:drawablePadding="8dp"
                 android:gravity="center"
+                android:padding="7dp"
                 android:text=""
                 android:textColor="@color/gray_light"
                 android:textSize="12sp" />
@@ -64,9 +66,11 @@
                 android:id="@+id/tv_other_numbers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_main_number"
+                android:drawableLeft="@drawable/ic_call"
+                android:drawablePadding="7dp"
                 android:gravity="center"
                 android:text=""
+                android:padding="5dp"
                 android:textColor="@color/gray_light"
                 android:textSize="12sp" />
 
@@ -75,7 +79,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_web_url"
+                android:drawablePadding="8dp"
                 android:gravity="center"
+                android:padding="7dp"
                 android:text=""
                 android:textColor="@color/gray_light"
                 android:textSize="12sp" />
@@ -84,10 +90,11 @@
                 android:id="@+id/tv_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_markunread_black_24dp"
+                android:drawableLeft="@drawable/ic_email"
+                android:drawablePadding="8dp"
                 android:gravity="center"
+                android:padding="7dp"
                 android:text=""
-                android:drawablePadding="10dp"
                 android:textColor="@color/gray_light"
                 android:textSize="12sp" />
 
@@ -95,9 +102,10 @@
                 android:id="@+id/tv_facebook_page"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/facebook"
+                android:drawableLeft="@drawable/ic_facebook_logo"
+                android:drawablePadding="7dp"
                 android:gravity="center"
-                android:text=""
+                android:padding="7dp"
                 android:textColor="@color/gray_light"
                 android:textSize="12sp" />
 

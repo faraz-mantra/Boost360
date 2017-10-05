@@ -105,6 +105,9 @@
             android:name="com.nowfloats.managecustomers.FacebookChatActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name="com.nowfloats.BusinessProfile.UI.UI.BusinessDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name="com.nowfloats.managecustomers.FacebookChatDetailActivity"
             android:screenOrientation="portrait" />
         <activity

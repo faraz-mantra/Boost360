@@ -372,7 +372,6 @@
                     android:layout_marginRight="15dp"
                     android:layout_weight=".3"
                     android:focusable="false"
-                    android:visibility="g"
                     android:gravity="center"
                     android:inputType="none"
                     android:text="00:00"

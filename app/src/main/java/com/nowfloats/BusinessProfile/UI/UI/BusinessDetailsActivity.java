@@ -4,15 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
-import com.squareup.picasso.Picasso;
 import com.thinksity.R;
 
 /**
@@ -25,7 +27,12 @@ public class BusinessDetailsActivity extends AppCompatActivity implements View.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.business_details_layout);
         UserSessionManager session = new UserSessionManager(this,this);
-
+        Toolbar toolbar  = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
         findViewById(R.id.tv_address_edit).setOnClickListener(this);
         findViewById(R.id.tv_contact_edit).setOnClickListener(this);
         findViewById(R.id.tv_hours_edit).setOnClickListener(this);
@@ -43,9 +50,10 @@ public class BusinessDetailsActivity extends AppCompatActivity implements View.O
 
         String url = "http://maps.google.com/maps/api/staticmap?center=" + Constants.latitude + "," + Constants.longitude + "&zoom=14&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + Constants.latitude + "," + Constants.longitude + "&key=" +getString(R.string.google_map_key); //AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg
         try {
-            Picasso.with(this)
+            Glide.with(this)
                     .load(url)
                     .placeholder(R.drawable.default_product_image)
+                    .centerCrop()
                     .error(R.drawable.default_product_image)
                     .into((ImageView) findViewById(R.id.img_address));
         } catch (Exception e) {
@@ -167,6 +175,24 @@ public class BusinessDetailsActivity extends AppCompatActivity implements View.O
         }
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
+
     @Override
     public void onClick(View v) {
         Intent intent = null;

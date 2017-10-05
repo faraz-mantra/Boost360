@@ -2103,6 +2103,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         /*This button is used in the image gallery*/
         plusAddButton = (ImageView) toolbar.findViewById(R.id.image_gallery_add_image_button);
         shareButton = (ImageView) toolbar.findViewById(R.id.business_profile_share_button);
+        HomeActivity.shareButton.setImageResource(R.drawable.share_with_apps);
+        PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(ContextCompat.getColor(this,R.color.white), PorterDuff.Mode.SRC_IN);
+        HomeActivity.shareButton.setColorFilter(whiteLabelFilter_pop_ip);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         drawerFragment = (SidePanelFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);

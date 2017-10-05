@@ -27,6 +27,7 @@
                 android:id="@+id/tv_address_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:background="@drawable/black_round_corner"
                 android:text="Edit"
                 android:textSize="12sp"
@@ -44,6 +45,9 @@
                 android:id="@+id/tv_address"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:padding="10dp"
+                android:drawablePadding="5dp"
+                android:drawableLeft="@drawable/ic_map_marker"
                 android:layout_gravity="center"
                 android:layout_height="wrap_content" />
             <ImageView
@@ -51,6 +55,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="5dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/default_product_image"/>
         </LinearLayout>
     </LinearLayout>
