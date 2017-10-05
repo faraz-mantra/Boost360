@@ -1,6 +1,7 @@
 package com.nowfloats.BusinessProfile.UI.UI;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
@@ -20,25 +21,37 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.CustomPage.CustomPageActivity;
 import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.NavigationDrawer.API.DomainApiService;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
+import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
+import com.nowfloats.domain.DomainDetailsActivity;
+import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
+import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.nowfloats.util.Utils;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
+
+import java.util.HashMap;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
 public class Business_Profile_Fragment_V2 extends Fragment {
     TextView businessAddressLayout, contactInformationLayout, businessHoursLayout, businessLogoLayout, socialSharingLayout,
-            tvCustomPages, tvPhotoGallery, tvSiteAppearance;
+            tvCustomPages, tvPhotoGallery, tvSiteAppearance, tvDomainDetails;
     public static ImageView businessProfileImageView;
     public static TextView websiteTextView;
     public static TextView businessInfoTextView;
@@ -49,10 +62,17 @@ public class Business_Profile_Fragment_V2 extends Fragment {
     SharedPreferences.Editor prefsEditor;
     private Activity activity;
 
+    private DomainApiService domainApiService;
+
+    private Bus mBus;
+
+    private ProgressDialog progressDialog;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = getActivity();
+        mBus = BusProvider.getInstance().getBus();
     }
 
     @Override
@@ -63,6 +83,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
         pref = activity.getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
         prefsEditor = pref.edit();
         session = new UserSessionManager(activity.getApplicationContext(), activity);
+        domainApiService = new DomainApiService(mBus);
         return mainView;
     }
 
@@ -209,8 +230,10 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                             tvPhotoGallery.setTypeface(robotoMedium);
 
                             tvSiteAppearance = (TextView) businessProfileList.findViewById(R.id.tvSiteAppearance);
+                            tvDomainDetails = (TextView) businessProfileList.findViewById(R.id.tvDomainDetails);
                             tvSiteAppearance.setTypeface(robotoMedium);
-                            if(TextUtils.isDigitsOnly(session.getWebTemplateType()) &&Integer.parseInt(session.getWebTemplateType())>6){
+                            tvDomainDetails.setTypeface(robotoMedium);
+                            if (TextUtils.isDigitsOnly(session.getWebTemplateType()) && Integer.parseInt(session.getWebTemplateType()) > 6) {
                                 businessProfileList.findViewById(R.id.layout_site_appearance).setVisibility(View.GONE);
                                 businessProfileList.findViewById(R.id.sixth_ImageView_ProfileV2).setVisibility(View.GONE);
                             }
@@ -263,6 +286,36 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                                     startActivity(businessAddress);
                                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
+                                }
+                            });
+                            tvDomainDetails.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    isAlreadyCalled = false;
+                                    MixPanelController.track(EventKeysWL.SITE_SCORE_GET_YOUR_OWN_IDENTITY, null);
+                                    if (!BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
+                                        MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
+                                                .title("Get A Domain")
+                                                .customView(R.layout.dialog_link_layout, false)
+                                                .positiveText(getString(R.string.ok))
+                                                .positiveColorRes(R.color.primaryColor)
+                                                .callback(new MaterialDialog.ButtonCallback() {
+                                                    @Override
+                                                    public void onPositive(MaterialDialog dialog) {
+                                                        super.onPositive(dialog);
+                                                    }
+
+                                                });
+                                        if (!activity.isFinishing()) {
+                                            builder.show();
+                                        }
+                                    } else if (Utils.isNetworkConnected(getActivity())) {
+                                        showLoader(getString(R.string.please_wait));
+                                        domainApiService.getDomainDetails(session.getFpTag(), getDomainDetailsParam());
+                                    } else {
+                                        Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
+                                    }
                                 }
                             });
 
@@ -339,7 +392,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                             });
                         } catch (Exception e) {
                             e.printStackTrace();
-                        }finally {
+                        } finally {
                             progressLayout.setVisibility(View.GONE);
                             profileLayout.setVisibility(View.VISIBLE);
                         }
@@ -349,6 +402,220 @@ public class Business_Profile_Fragment_V2 extends Fragment {
         }).start();
 
         BoostLog.d("Test", "OnCeate View is called");
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mBus.register(this);
+    }
+
+    @Override
+    public void onStop() {
+        mBus.unregister(this);
+        super.onStop();
+    }
+
+
+    /*
+     * Domain Details Param
+     */
+    private HashMap<String, String> getDomainDetailsParam() {
+        HashMap<String, String> offersParam = new HashMap<>();
+        offersParam.put("clientId", Constants.clientId);
+        return offersParam;
+    }
+
+    private void showLoader(final String message) {
+
+        if (!isAdded()) return;
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (progressDialog == null) {
+                    progressDialog = new ProgressDialog(getActivity());
+                    progressDialog.setCanceledOnTouchOutside(false);
+                }
+                progressDialog.setMessage(message);
+                progressDialog.show();
+            }
+        });
+    }
+
+    private void hideLoader() {
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+            }
+        });
+    }
+
+
+    private static final String DOMAIN_SUCCESS_STATUS = "17";
+
+    @Subscribe
+    public void getDomainDetails(DomainDetails domainDetails) {
+//        domainDetails = null;
+        hideLoader();
+
+        if (!isAlreadyCalled) {
+            if (domainDetails != null && domainDetails.response) {
+
+                if (domainDetails.getProcessingStatus().equalsIgnoreCase(DOMAIN_SUCCESS_STATUS) &&
+                        domainDetails.getIsProcessingFailed().equalsIgnoreCase("true")) {
+                    showCustomDialog(getString(R.string.domain_booking_successful),
+                            String.format(getString(R.string.domain_booking_successful_message), domainDetails.getDomainName()),
+                            getString(R.string.ok), null, DialogFrom.DEFAULT);
+
+                } else if (!domainDetails.getProcessingStatus().equalsIgnoreCase(DOMAIN_SUCCESS_STATUS) &&
+                        domainDetails.getIsProcessingFailed().equalsIgnoreCase("true")) {
+
+                    showCustomDialog(getString(R.string.domain_booking_process),
+                            getString(R.string.domain_booking_process_message),
+                            getString(R.string.ok), null, DialogFrom.DEFAULT);
+                } else {
+                    showDomainDetails();
+                }
+            } else {
+                showLoader(getString(R.string.please_wait));
+                domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
+            }
+
+        }
+
+    }
+
+    private static final String PAYMENT_STATE_SUCCESS = "1";
+    private static final String ROOT_ALIAS_URI = "nowfloats";
+    private static final String FP_WEB_WIDGET_DOMAIN = "DOMAINPURCHASE";
+    private Get_FP_Details_Model get_fp_details_model;
+    private boolean isAlreadyCalled = false;
+
+    @Subscribe
+    public void setFpDetails(Get_FP_Details_Model get_fp_details_model) {
+        hideLoader();
+        this.get_fp_details_model = get_fp_details_model;
+        if (TextUtils.isEmpty(get_fp_details_model.response)) {
+
+            if (get_fp_details_model.getPaymentState().equalsIgnoreCase(PAYMENT_STATE_SUCCESS)
+                    && (TextUtils.isEmpty(get_fp_details_model.getRootAliasUri())
+                    || get_fp_details_model.getRootAliasUri().equalsIgnoreCase("null")
+                    || get_fp_details_model.getRootAliasUri().contains(ROOT_ALIAS_URI))
+                    && get_fp_details_model.getFPWebWidgets() != null
+                    && get_fp_details_model.getFPWebWidgets().contains(FP_WEB_WIDGET_DOMAIN)) {
+
+                if (TextUtils.isEmpty(get_fp_details_model.getEmail())
+                        || get_fp_details_model.getContacts() == null) {
+                    showCustomDialog(getString(R.string.domain_detail_required),
+                            Methods.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
+                            getString(R.string.ok), null, DialogFrom.CONTACTS_AND_EMAIL_REQUIRED);
+
+                } else if (get_fp_details_model.getCategory() == null || get_fp_details_model.getCategory().size() == 0) {
+                    showCustomDialog(getString(R.string.domain_detail_required),
+                            Methods.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
+                            getString(R.string.ok), null, DialogFrom.CATEGORY_REQUIRED);
+                } else if (TextUtils.isEmpty(get_fp_details_model.getAddress())
+                        || TextUtils.isEmpty(get_fp_details_model.getLat())
+                        || TextUtils.isEmpty(get_fp_details_model.getLng())
+                        || get_fp_details_model.getLat().equalsIgnoreCase("0")
+                        || get_fp_details_model.getLng().equalsIgnoreCase("0")) {
+                    showCustomDialog(getString(R.string.domain_detail_required),
+                            Methods.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
+                            getString(R.string.ok), null, DialogFrom.ADDRESS_REQUIRED);
+                } else {
+                    showDomainDetails();
+                }
+            } else {
+                showCustomDialog(getString(R.string.buy_a_domain),
+                        Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
+                        getString(R.string.ok), null, DialogFrom.DEFAULT);
+            }
+
+        } else {
+            Methods.showSnackBarNegative(getActivity(), get_fp_details_model.response);
+        }
+    }
+
+    private void showDomainDetails() {
+        isAlreadyCalled = true;
+        Intent domainIntent = new Intent(activity, DomainDetailsActivity.class);
+        domainIntent.putExtra("get_fp_details_model",get_fp_details_model);
+        startActivity(domainIntent);
+        activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    private enum DialogFrom {
+        DOMAIN_AVAILABLE,
+        CONTACTS_AND_EMAIL_REQUIRED,
+        CATEGORY_REQUIRED,
+        ADDRESS_REQUIRED,
+        DEFAULT
+    }
+
+    private void showCustomDialog(String title, String message, String postiveBtn, String negativeBtn,
+                                  final DialogFrom dialogFrom) {
+
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
+                .title(title)
+                .customView(R.layout.dialog_link_layout, false)
+                .positiveText(postiveBtn)
+                .negativeText(negativeBtn)
+                .positiveColorRes(R.color.primaryColor)
+                .negativeColorRes(R.color.primaryColor)
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        super.onPositive(dialog);
+                        switch (dialogFrom) {
+
+                            case CONTACTS_AND_EMAIL_REQUIRED:
+                                ((SidePanelFragment.OnItemClickListener) activity).
+                                        onClick(getResources().getString(R.string.contact__info));
+                                break;
+                            case CATEGORY_REQUIRED:
+                                ((SidePanelFragment.OnItemClickListener) activity).
+                                        onClick(getResources().getString(R.string.basic_info));
+                                break;
+                            case ADDRESS_REQUIRED:
+                                ((SidePanelFragment.OnItemClickListener) activity).
+                                        onClick(getResources().getString(R.string.business__address));
+                            case DEFAULT:
+
+                                break;
+                        }
+                    }
+                    /*
+                    ((SidePanelFragment.OnItemClickListener) activity).
+                onClick(getResources().getString(R.string.business_profile));
+                     */
+
+                    @Override
+                    public void onNegative(MaterialDialog dialog) {
+                        super.onNegative(dialog);
+
+                        switch (dialogFrom) {
+
+                            case DOMAIN_AVAILABLE:
+                                MixPanelController.track(MixPanelController.DOMAIN_SEARCH, null);
+                                break;
+                            case DEFAULT:
+
+                                break;
+                        }
+                    }
+                });
+
+        final MaterialDialog materialDialog = builder.show();
+        View maView = materialDialog.getCustomView();
+
+        TextView tvMessage = (TextView) maView.findViewById(R.id.toast_message_to_contact);
+        tvMessage.setText(message);
     }
 
 

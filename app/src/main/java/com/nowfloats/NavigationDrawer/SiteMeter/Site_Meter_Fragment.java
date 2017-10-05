@@ -145,11 +145,13 @@ public class Site_Meter_Fragment extends Fragment {
         });
     }
 
+
     private void initializePrices() {
         hmPrices.put(".COM", "680");
         hmPrices.put(".NET", "865");
         hmPrices.put(".CO.IN", "375");
         hmPrices.put(".IN", "490");
+        hmPrices.put(".ORG", "500");
     }
 
     @Override

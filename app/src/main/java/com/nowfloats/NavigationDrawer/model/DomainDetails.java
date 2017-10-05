@@ -19,8 +19,6 @@ public class DomainDetails {
 
     private String DomainContactId;
 
-    private String ExternalNameServers;
-
     private String lat;
 
     private String fpTag;
@@ -54,6 +52,26 @@ public class DomainDetails {
     private String email;
 
     private String DomainRegService;
+
+    private String ActivatedOn;
+
+    private String validityInYears;
+
+    public String getActivatedOn() {
+        return ActivatedOn;
+    }
+
+    public void setActivatedOn(String activatedOn) {
+        ActivatedOn = activatedOn;
+    }
+
+    public String getValidityInYears() {
+        return validityInYears;
+    }
+
+    public void setValidityInYears(String validityInYears) {
+        this.validityInYears = validityInYears;
+    }
 
     private String DomainRegistrationOrderId;
 
@@ -121,14 +139,6 @@ public class DomainDetails {
 
     public void setDomainContactId(String DomainContactId) {
         this.DomainContactId = DomainContactId;
-    }
-
-    public String getExternalNameServers() {
-        return ExternalNameServers;
-    }
-
-    public void setExternalNameServers(String ExternalNameServers) {
-        this.ExternalNameServers = ExternalNameServers;
     }
 
     public String getLat() {
@@ -317,6 +327,6 @@ public class DomainDetails {
 
     @Override
     public String toString() {
-        return "ClassPojo [primaryNumber = " + primaryNumber + ", DomainOwnerId = " + DomainOwnerId + ", state = " + state + ", lng = " + lng + ", city = " + city + ", _id = " + _id + ", DomainContactId = " + DomainContactId + ", ExternalNameServers = " + ExternalNameServers + ", lat = " + lat + ", fpTag = " + fpTag + ", zip = " + zip + ", regService = " + regService + ", primaryCategory = " + primaryCategory + ", ExternalHostedZoneId = " + ExternalHostedZoneId + ", countryCode = " + countryCode + ", domainName = " + domainName + ", existingFPTag = " + existingFPTag + ", companyName = " + companyName + ", addressLine1 = " + addressLine1 + ", clientId = " + clientId + ", country = " + country + ", domainType = " + domainType + ", ErrorMessage = " + ErrorMessage + ", email = " + email + ", DomainRegService = " + DomainRegService + ", DomainRegistrationOrderId = " + DomainRegistrationOrderId + ", contactName = " + contactName + ", CreatedOn = " + CreatedOn + ", ProcessingStatus = " + ProcessingStatus + ", phoneISDCode = " + phoneISDCode + ", isProcessingFailed = " + isProcessingFailed + "]";
+        return "ClassPojo [primaryNumber = " + primaryNumber + ", DomainOwnerId = " + DomainOwnerId + ", state = " + state + ", lng = " + lng + ", city = " + city + ", _id = " + _id + ", DomainContactId = " + DomainContactId + ", lat = " + lat + ", fpTag = " + fpTag + ", zip = " + zip + ", regService = " + regService + ", primaryCategory = " + primaryCategory + ", ExternalHostedZoneId = " + ExternalHostedZoneId + ", countryCode = " + countryCode + ", domainName = " + domainName + ", existingFPTag = " + existingFPTag + ", companyName = " + companyName + ", addressLine1 = " + addressLine1 + ", clientId = " + clientId + ", country = " + country + ", domainType = " + domainType + ", ErrorMessage = " + ErrorMessage + ", email = " + email + ", DomainRegService = " + DomainRegService + ", DomainRegistrationOrderId = " + DomainRegistrationOrderId + ", contactName = " + contactName + ", CreatedOn = " + CreatedOn + ", ProcessingStatus = " + ProcessingStatus + ", phoneISDCode = " + phoneISDCode + ", isProcessingFailed = " + isProcessingFailed + "]";
     }
 }

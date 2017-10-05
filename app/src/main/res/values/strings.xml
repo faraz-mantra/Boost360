@@ -79,6 +79,7 @@
     <string name="side_panel_row_two">Manage Website</string>
     <string name="side_panel_site_appearance">Site Appearance</string>
     <string name="side_panel_row_csp">Custom Pages</string>
+    <string name="side_panel_row_domain_details">Domain Details</string>
     <string name="side_panel_row_three">Enquiries</string>
     <string name="side_panel_row_four">Photo Gallery</string>
     <string name="side_panel_row_five">Settings</string>
@@ -959,6 +960,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="product_detail_free_shipping">Free Shipping</string>
     <string name="product_detail_delete_btn_text">Delete product</string>
     <string name="book_a_new_domain">Book a new domain</string>
+    <string name="renew_domain">Renew domain</string>
     <string name="have_an_existing_domain">Have an existing domain? </string>
     <string name="enjoying_feature">Is this helpful in managing your leads? </string>
     <string name="tap_a_star_to_rate_it">Tap a star to rate it</string>
@@ -1318,6 +1320,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="terms_n_cond_toast">You must agree with the terms and conditions to proceed</string>
     <string name="deeplink_business_app">businessapp</string>
     <string name="about_app">About app</string>
+    <string name="domain_details_title">One of the most important steps to establish your brand online is to get a great website address. A custom domain ensures that your business has its own identity and also a positive impact on SEO.</string>
     <string name="fb_page_creation_message">Gather more leads and drive more\ntraffic to your website through a\nFacebook Page</string>
     <string name="get_facebook_page">Get a Facebook page</string>
     <string name="fb_page_creation_title">Looks like you don’t have a\nFacebook page</string>
