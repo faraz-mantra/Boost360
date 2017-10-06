@@ -1,11 +1,12 @@
 package com.nowfloats.signup.UI.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by NowFloatsDev on 25/05/2015.
  */
-public class Get_FP_Details_Model {
+public class Get_FP_Details_Model implements Serializable{
 
     public String AliasTag;
     public String City;

@@ -27,7 +27,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
@@ -145,11 +144,13 @@ public class Site_Meter_Fragment extends Fragment {
         });
     }
 
+
     private void initializePrices() {
         hmPrices.put(".COM", "680");
         hmPrices.put(".NET", "865");
         hmPrices.put(".CO.IN", "375");
         hmPrices.put(".IN", "490");
+        hmPrices.put(".ORG", "500");
     }
 
     @Override
@@ -551,7 +552,7 @@ public class Site_Meter_Fragment extends Fragment {
                 break;
             case businessHours:
                 if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS).equals("TIMINGS")) {
-                    Intent businessHoursIntent = new Intent(activity, BusinessHoursActivity.class);
+                    Intent businessHoursIntent = new Intent(activity, Business_Address_Activity.class);
                     startActivity(businessHoursIntent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 } else {
@@ -650,20 +651,21 @@ public class Site_Meter_Fragment extends Fragment {
 
 
         if (domainDetails != null && domainDetails.response) {
+            if(TextUtils.isDigitsOnly(domainDetails.getProcessingStatus()))
+            {
+                if (Integer.parseInt(domainDetails.getProcessingStatus())>16) {
+                    showCustomDialog(getString(R.string.domain_booking_successful),
+                            String.format(getString(R.string.domain_booking_successful_message), domainDetails.getDomainName()),
+                            getString(R.string.ok), null, DialogFrom.DEFAULT);
 
-            if (domainDetails.getProcessingStatus().equalsIgnoreCase(DOMAIN_SUCCESS_STATUS) &&
-                    domainDetails.getIsProcessingFailed().equalsIgnoreCase("true")) {
-                showCustomDialog(getString(R.string.domain_booking_successful),
-                        String.format(getString(R.string.domain_booking_successful_message), domainDetails.getDomainName()),
-                        getString(R.string.ok), null, DialogFrom.DEFAULT);
-
-            } else if (!domainDetails.getProcessingStatus().equalsIgnoreCase(DOMAIN_SUCCESS_STATUS) &&
-                    domainDetails.getIsProcessingFailed().equalsIgnoreCase("true")) {
-
-                showCustomDialog(getString(R.string.domain_booking_process),
-                        getString(R.string.domain_booking_process_message),
-                        getString(R.string.ok), null, DialogFrom.DEFAULT);
-            } else {
+                }else{
+                    showCustomDialog(getString(R.string.domain_booking_process),
+                            getString(R.string.domain_booking_process_message),
+                            getString(R.string.ok), null,DialogFrom.DEFAULT);
+                }
+            }
+            else
+            {
                 showCustomDialog(getString(R.string.buy_a_domain),
                         Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
