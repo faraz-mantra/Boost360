@@ -553,7 +553,7 @@ public class DomainDetailsActivity extends AppCompatActivity {
                         switch (dialogFrom) {
 
                             case DOMAIN_AVAILABLE:
-//                                prepareAndPublishDomain();
+                                prepareAndPublishDomain();
                                 break;
                             case CONTACTS_AND_EMAIL_REQUIRED:
                                 ((SidePanelFragment.OnItemClickListener) activity).
@@ -603,8 +603,8 @@ public class DomainDetailsActivity extends AppCompatActivity {
         MixPanelController.track(MixPanelController.BOOK_DOMAIN, null);
         HashMap<String, String> hashMap = new HashMap<String, String>();
         hashMap.put("clientId", Constants.clientId);
-        hashMap.put("domainName", get_fp_details_model.getDomainName());
-        hashMap.put("domainType", get_fp_details_model.getDomainType());
+        hashMap.put("domainName", edtDomainName.getText().toString().trim());
+        hashMap.put("domainType", (String) spDomainTypes.getSelectedItem());
         hashMap.put("existingFPTag", session.getFpTag());
         hashMap.put("addressLine1", get_fp_details_model.getAddress());
         hashMap.put("city", get_fp_details_model.getCity());

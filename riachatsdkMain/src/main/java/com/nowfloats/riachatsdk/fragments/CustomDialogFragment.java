@@ -82,6 +82,7 @@ public class CustomDialogFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+
         View mView = inflater.inflate(R.layout.dialog_error, container, false);
         FrameLayout llRia = (FrameLayout) mView.findViewById(R.id.ivRia);
         llRia.bringToFront();

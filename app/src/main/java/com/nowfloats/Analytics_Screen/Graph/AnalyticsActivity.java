@@ -34,7 +34,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 import retrofit.Callback;
@@ -55,7 +54,6 @@ public class AnalyticsActivity extends AppCompatActivity implements MonthFragmen
     int[] days;
     String pattern = "MM-dd-yyyy";
     int curYear,curWeek,curMonth,curDay,curDate;
-    List<DashboardResponse.Entity> entityList;
     ViewPager pager;
     public boolean rowExist=true;
     AnalyticsAdapter analyticsAdapter;

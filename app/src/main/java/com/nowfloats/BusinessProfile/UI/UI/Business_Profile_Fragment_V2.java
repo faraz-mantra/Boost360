@@ -334,7 +334,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                                 public void onClick(View v) {
                                     MixPanelController.track(MixPanelController.Bhours, null);
                                     if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS).equals("TIMINGS")) {
-                                        Intent businessHoursIntent = new Intent(activity, Business_Hours_Activity.class);
+                                        Intent businessHoursIntent = new Intent(activity, BusinessHoursActivity.class);
                                         startActivity(businessHoursIntent);
                                         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                     } else {
@@ -480,7 +480,14 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                             getString(R.string.domain_booking_process_message),
                             getString(R.string.ok), null, DialogFrom.DEFAULT);
                 } else {
-                    showDomainDetails();
+
+                    if (TextUtils.isEmpty(domainDetails.getActivatedOn())) {
+                        showCustomDialog(getString(R.string.buy_a_domain),
+                                Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
+                                getString(R.string.ok), null, DialogFrom.DEFAULT);
+                    } else {
+                        showDomainDetails();
+                    }
                 }
             } else {
                 showLoader(getString(R.string.please_wait));
@@ -545,7 +552,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
     private void showDomainDetails() {
         isAlreadyCalled = true;
         Intent domainIntent = new Intent(activity, DomainDetailsActivity.class);
-        domainIntent.putExtra("get_fp_details_model",get_fp_details_model);
+        domainIntent.putExtra("get_fp_details_model", get_fp_details_model);
         startActivity(domainIntent);
         activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }

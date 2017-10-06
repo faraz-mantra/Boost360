@@ -28,7 +28,6 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
-import com.nowfloats.BusinessProfile.UI.UI.Business_Hours_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
@@ -553,7 +552,7 @@ public class Site_Meter_Fragment extends Fragment {
                 break;
             case businessHours:
                 if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS).equals("TIMINGS")) {
-                    Intent businessHoursIntent = new Intent(activity, Business_Hours_Activity.class);
+                    Intent businessHoursIntent = new Intent(activity, Business_Address_Activity.class);
                     startActivity(businessHoursIntent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 } else {

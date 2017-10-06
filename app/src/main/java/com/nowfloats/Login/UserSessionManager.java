@@ -633,16 +633,22 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return pref.getBoolean(packageId, false);
     }
 
+    public void storeBooleanDetails(String key,boolean value){
+        editor.putBoolean(key.trim(), value).apply();
+    }
+    public boolean getBooleanDetails(String key){
+        return pref.getBoolean(key,false);
+    }
     public void storeFPDetails(String key,String value)
     {   try{
-            editor.putString(key,value);
+            editor.putString(key.trim(),value.trim());
             editor.commit();
         }catch(Exception e){e.printStackTrace();}
     }
 
     public String getFPDetails(String key)
     {
-        return pref.getString(key,"");
+        return pref.getString(key.trim(),"");
     }
 
     public boolean isBoostBubbleEnabled() {

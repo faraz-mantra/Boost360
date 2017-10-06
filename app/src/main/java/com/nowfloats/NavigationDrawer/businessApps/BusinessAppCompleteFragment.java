@@ -117,14 +117,18 @@ public class BusinessAppCompleteFragment extends Fragment implements View.OnClic
         if(logo==null || logo.isEmpty()){
             firstCharText.setText(String.valueOf(name.charAt(0)));
             firstCharText.setVisibility(View.VISIBLE);
+            Picasso.with(context)
+                    .load(R.drawable.studio_architecture)
+                    .placeholder(ContextCompat.getDrawable(context,R.drawable.studio_architecture))
+                    .into(logoImage);
         }
         else if(!logo.contains("http")){
             logo = "https://"+logo;
+            Picasso.with(context)
+                    .load(logo)
+                    .placeholder(ContextCompat.getDrawable(context,R.drawable.studio_architecture))
+                    .into(logoImage);
         }
-        Picasso.with(context)
-                .load(logo)
-                .placeholder(ContextCompat.getDrawable(context,R.drawable.studio_architecture))
-                .into(logoImage);
 
         if(type.equals("android")){
             appTextView.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(context,R.drawable.android_green), null, null, null );

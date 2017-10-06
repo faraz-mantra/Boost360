@@ -96,7 +96,7 @@ public class AccountInfoActivity extends AppCompatActivity {
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                     progressLayout.setVisibility(View.GONE);
-                    if (accountDetailModels.size()==0){
+                    if (accountDetailModels == null ||accountDetailModels.size()==0){
                         zerothLayout.setVisibility(View.VISIBLE);
                     }
                 }

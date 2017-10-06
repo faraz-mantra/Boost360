@@ -86,6 +86,7 @@ public class CustomPageFragment extends Fragment {
 //        getSupportActionBar().setBackgroundDrawable(defaultColor);
         if (titleTextView != null)
             titleTextView.setText(getString(R.string.custom_pages));
+        if(delete !=null)
         delete.setVisibility(View.GONE);
         customPageDeleteCheck = false;
     }

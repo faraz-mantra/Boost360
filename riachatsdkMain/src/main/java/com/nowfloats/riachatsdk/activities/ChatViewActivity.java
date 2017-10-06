@@ -2334,8 +2334,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
 
     private CustomDialogFragment customDialogFragment;
 
-    public void showCustomDialog(
-            final CustomDialogFragment.DialogFrom dialogFrom) {
+    public void showCustomDialog(final CustomDialogFragment.DialogFrom dialogFrom) {
 
         if ((dialogFrom == CustomDialogFragment.DialogFrom.SKIP ||
                 dialogFrom == CustomDialogFragment.DialogFrom.CREATE_MY_SITE)
