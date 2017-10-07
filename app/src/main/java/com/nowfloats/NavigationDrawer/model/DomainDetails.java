@@ -55,7 +55,7 @@ public class DomainDetails {
 
     private String ActivatedOn;
 
-    private String validityInYears;
+    private Integer validityInYears;
 
     public String getActivatedOn() {
         return ActivatedOn;
@@ -65,11 +65,11 @@ public class DomainDetails {
         ActivatedOn = activatedOn;
     }
 
-    public String getValidityInYears() {
+    public int getValidityInYears() {
         return validityInYears;
     }
 
-    public void setValidityInYears(String validityInYears) {
+    public void setValidityInYears(int validityInYears) {
         this.validityInYears = validityInYears;
     }
 

@@ -46,6 +46,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 import static com.nowfloats.NavigationDrawer.HomeActivity.activity;
 
@@ -80,9 +81,9 @@ public class DomainDetailsActivity extends AppCompatActivity {
 
     private long currentTime, totalNoOfDays = 0;
 
-    private Spinner spDomainTypes;
+    private Spinner spDomainTypes, spDomainYears;
 
-    private HashMap<String, String> hmPrices = new HashMap<String, String>();
+    private HashMap<String, Integer> hmPrices = new HashMap<>();
 
     private ArrayList<String> arrDomainExtensions;
 
@@ -91,6 +92,7 @@ public class DomainDetailsActivity extends AppCompatActivity {
     private Get_FP_Details_Model get_fp_details_model;
     int processingStatus = -1;
     SharedPreferences pref;
+    private int domainYears = 0, bookedYears = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,13 +117,12 @@ public class DomainDetailsActivity extends AppCompatActivity {
         tvDomainStatus = (TextView) findViewById(R.id.tvDomainStatus);
         btnBookDomain = (Button) findViewById(R.id.btnBookDomain);
         btnRenewDomain = (Button) findViewById(R.id.btnRenewDomain);
-        llBookDomain = (LinearLayout) findViewById(R.id.llBookDomain);
         edtDomainName = (EditText) findViewById(R.id.edtDomainName);
         spDomainTypes = (Spinner) findViewById(R.id.spDomainTypes);
+        spDomainYears = (Spinner) findViewById(R.id.spDomainYears);
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
         tvPriceDef = (TextView) findViewById(R.id.tvPriceDef);
         tvPrice = (TextView) findViewById(R.id.tvPrice);
-
         setSupportActionBar(toolbar);
         headerText.setText(getResources().getString(R.string.side_panel_row_domain_details));
 
@@ -137,20 +138,33 @@ public class DomainDetailsActivity extends AppCompatActivity {
     }
 
     private void initializePrices() {
-        hmPrices.put(".COM", "680");
-        hmPrices.put(".NET", "865");
-        hmPrices.put(".CO.IN", "375");
-        hmPrices.put(".IN", "490");
+        hmPrices.put(".COM", 680);
+        hmPrices.put(".NET", 865);
+        hmPrices.put(".CO.IN", 375);
+        hmPrices.put(".IN", 490);
+        hmPrices.put(".ORG", 500);
     }
 
     private void bindListeners() {
+
+        spDomainYears.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                tvPrice.setText(String.valueOf(hmPrices.get(arrDomainExtensions.get(spDomainTypes.getSelectedItemPosition()))*(position+1)) + "*");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         spDomainTypes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 tvPriceDef.setText(String.format(getString(R.string.price_of_domain), arrDomainExtensions.get(position)));
                 if (hmPrices.containsKey(arrDomainExtensions.get(position))) {
-                    tvPrice.setText(hmPrices.get(arrDomainExtensions.get(position)) + "*");
+                    tvPrice.setText(String.valueOf(hmPrices.get(arrDomainExtensions.get(position))*(spDomainYears.getSelectedItemPosition()+1)) + "*");
                 } else {
                     tvPrice.setText("");
                 }
@@ -161,8 +175,6 @@ public class DomainDetailsActivity extends AppCompatActivity {
 
             }
         });
-
-
         btnBookDomain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -258,9 +270,15 @@ public class DomainDetailsActivity extends AppCompatActivity {
                     android.R.layout.simple_spinner_item, arrDomainExtensions);
             spDomainTypes.setAdapter(arrayAdapter);
 
+            if(btnBookDomain.getVisibility() == View.VISIBLE || btnRenewDomain.getVisibility() == View.VISIBLE){
+                setDomainYearsAdapter(domainYears);
+            }else{
+                setBookedDomainYears(bookedYears);
+            }
             if (!TextUtils.isEmpty(domainType)) {
                 if (arrDomainExtensions.contains(domainType)) {
                     spDomainTypes.setSelection(arrDomainExtensions.indexOf(domainType));
+
                 }
                 spDomainTypes.setEnabled(false);
                 spDomainTypes.setClickable(false);
@@ -274,6 +292,12 @@ public class DomainDetailsActivity extends AppCompatActivity {
 
     }
 
+    private void setBookedDomainYears(int years){
+        Integer[] array = new Integer[1];
+        array[0] =years;
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(DomainDetailsActivity.this,android.R.layout.simple_spinner_item,array);
+        spDomainYears.setAdapter(adapter);
+    }
     @Subscribe
     public void getDomainDetails(DomainDetails domainDetails) {
 
@@ -286,8 +310,8 @@ public class DomainDetailsActivity extends AppCompatActivity {
             long activatedDate = Long.parseLong(domainDetails.getActivatedOn().replace("/Date(", "").replace(")/", ""));
             Calendar dbCalender = Calendar.getInstance();
             dbCalender.setTimeInMillis(activatedDate);
-            dbCalender.add(Calendar.YEAR, 1);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd yyyy");
+            dbCalender.add(Calendar.YEAR, domainDetails.getValidityInYears());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd yyyy", Locale.ENGLISH);
             dateFormat.setCalendar(dbCalender);
             dateFormat.format(dbCalender.getTime());
 
@@ -298,18 +322,27 @@ public class DomainDetailsActivity extends AppCompatActivity {
             edtDomainName.setText(domainDetails.getDomainName());
 
             domainType = domainDetails.getDomainType();
-
-            new API_Service(DomainDetailsActivity.this, session.getSourceClientId(), session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY),
-                    session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session.getFPID(), mBus);
-
+            bookedYears = domainDetails.getValidityInYears();
 
         } else {
 
             btnBookDomain.setVisibility(View.VISIBLE);
             btnRenewDomain.setVisibility(View.GONE);
-            domainApiService.getDomainSupportedTypes(getDomainDetailsParam());
         }
+        new API_Service(DomainDetailsActivity.this, session.getSourceClientId(), session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY),
+                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session.getFPID(), mBus);
+    }
 
+    private void setDomainYearsAdapter(int length){
+        if(length == 0){
+            return;
+        }
+        Integer[] array = new Integer[length];
+        for (int i=1;i<=length;i++){
+            array[i-1] = i;
+        }
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(DomainDetailsActivity.this,android.R.layout.simple_spinner_item,array);
+        spDomainYears.setAdapter(adapter);
     }
 
     @Subscribe
@@ -322,18 +355,32 @@ public class DomainDetailsActivity extends AppCompatActivity {
             for (StoreModel storeModel : activeIdArray) {
                 float validity = storeModel.TotalMonthsValidity;
                 Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
                 cal.setTimeInMillis(Long.parseLong(storeModel.ToBeActivatedOn.replace("/Date(", "").replace(")/", "")));
                 cal.add(Calendar.MONTH, (int) validity);
                 cal.add(Calendar.DATE, (int) ((validity - Math.floor((double) validity)) * 30));
 
                 long tempExpiryDays = cal.getTimeInMillis();
-                if (tempExpiryDays > storeExpiryDays)
+                if (tempExpiryDays > storeExpiryDays) {
                     storeExpiryDays = tempExpiryDays;
+                    domainYears = 0;
+                    if(cal.get(Calendar.YEAR)>= year){
+                        domainYears = cal.get(Calendar.YEAR)-year;
+                        if(cal.get(Calendar.MONTH)>month){
+                            domainYears+=1;
+                        }else if(cal.get(Calendar.MONTH) == month){
+                            if(cal.get(Calendar.DAY_OF_MONTH)>day){
+                                domainYears+=1;
+                            }
+                        }
+                    }
+                }
             }
 
             planExpiryDays = (int) ((storeExpiryDays - currentTime) / totalNoOfDays);
             applyDomainLogic();
-
             domainApiService.getDomainSupportedTypes(getDomainDetailsParam());
         } else {
             hideLoader();
@@ -388,6 +435,8 @@ public class DomainDetailsActivity extends AppCompatActivity {
             tvDomainStatus.setText("Status: Your domain request is pending. ");
             edtDomainName.setEnabled(false);
             edtDomainName.setFocusable(false);
+            spDomainYears.setEnabled(false);
+            spDomainYears.setClickable(false);
             btnBookDomain.setVisibility(View.GONE);
             btnRenewDomain.setVisibility(View.GONE);
         }
@@ -635,6 +684,7 @@ public class DomainDetailsActivity extends AppCompatActivity {
         hashMap.put("email", get_fp_details_model.getEmail());
         hashMap.put("lat", get_fp_details_model.getLat());
         hashMap.put("lng", get_fp_details_model.getLng());
+        hashMap.put("validityInYears",String.valueOf(spDomainYears.getSelectedItemPosition()+1));
         hashMap.put("phoneISDCode", get_fp_details_model.getCountryPhoneCode());
         if (get_fp_details_model.getCategory() != null && get_fp_details_model.getCategory().size() > 0)
             hashMap.put("primaryCategory", get_fp_details_model.getCategory().get(0).getKey());

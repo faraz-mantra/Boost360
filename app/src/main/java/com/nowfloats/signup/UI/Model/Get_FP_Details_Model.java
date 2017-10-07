@@ -77,6 +77,15 @@ public class Get_FP_Details_Model implements Serializable{
     public String response;
     public String domainName;
     public String domainType;
+    public String DomainValidityInYears;
+
+    public String getDomainValidityInYears() {
+        return DomainValidityInYears;
+    }
+
+    public void setDomainValidityInYears(String domainValidityInYears) {
+        DomainValidityInYears = domainValidityInYears;
+    }
 
     public String getAliasTag() {
         return AliasTag;
