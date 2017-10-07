@@ -482,18 +482,27 @@ public class Business_Profile_Fragment_V2 extends Fragment {
             }
             else
             {*/
-                if (TextUtils.isEmpty(domainDetails.getActivatedOn())) {
+              /*  if (TextUtils.isEmpty(domainDetails.getActivatedOn())) {
                     showCustomDialog(getString(R.string.buy_a_domain),
                             Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
                             getString(R.string.ok), null, DialogFrom.DEFAULT);
-                } else {
-                    showDomainDetails();
+                } else {*/
+                //showDomainDetails();
+                //}
+                if( !TextUtils.isEmpty(domainDetails.getErrorMessage()) || domainDetails.getIsProcessingFailed()){
+                    showCustomDialog(getString(R.string.buy_a_domain),
+                            Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
+                            getString(R.string.ok), null, DialogFrom.DEFAULT);
+                }else {
+                    showLoader(getString(R.string.please_wait));
+                    domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
                 }
-            } else if (!TextUtils.isEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
+
+            }else if (!TextUtils.isEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
                 showCustomDialog("Domain Details", "You have linked your domain to " +
                                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI) + " successfully.",
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
-            } else {
+            }  else {
                 showLoader(getString(R.string.please_wait));
                 domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
             }

@@ -108,9 +108,10 @@
                 android:layout_height="@dimen/textview_height_business_profile"
                 android:layout_marginLeft="@dimen/icon_left_margin"
                 android:layout_marginRight="@dimen/icon_right_margin"
-                android:padding="5dp"
+                android:padding="10dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/custom_page_icon" />
+                android:tint="@color/gray"
+                android:src="@drawable/insert_link" />
 
             <ImageView
                 android:id="@+id/fifth_ImageView_ProfileV2"
