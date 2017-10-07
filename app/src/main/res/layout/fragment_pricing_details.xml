@@ -9,8 +9,8 @@
     <android.support.v7.widget.CardView
         android:layout_marginTop="1dp"
         android:layout_marginBottom="5dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         app:cardCornerRadius="7dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -187,6 +187,7 @@
                             <CheckBox
                                 android:visibility="invisible"
                                 android:id="@+id/cb_dictate"
+                                android:buttonTint="#808080"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"/>
@@ -222,6 +223,7 @@
                             <CheckBox
                                 android:visibility="invisible"
                                 android:id="@+id/cb_wild_fire"
+                                android:buttonTint="#808080"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"/>
@@ -258,6 +260,7 @@
                             <CheckBox
                                 android:visibility="invisible"
                                 android:id="@+id/cb_app"
+                                android:buttonTint="#808080"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"/>

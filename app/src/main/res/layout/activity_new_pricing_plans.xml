@@ -20,20 +20,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/pp_business_category"/>
-
-        <android.support.v7.widget.AppCompatSpinner
-            android:layout_marginTop="10dp"
-            android:id="@+id/sp_business_category"
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:id="@+id/ll_select_category"
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-
-        </android.support.v7.widget.AppCompatSpinner>
+            <TextView
+                android:id="@+id/tv_category"
+                android:layout_marginLeft="20dp"
+                android:text="SELECT CATEGORY"
+                android:textColor="#525252"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/drop_down"
+                android:tint="#525252"/>
+        </LinearLayout>
         <android.support.v4.view.ViewPager
             android:id="@+id/vp_pricing_plans"
             android:layout_width="match_parent"

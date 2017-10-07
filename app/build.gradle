@@ -156,7 +156,6 @@ dependencies {
     compile 'com.github.clans:fab:1.6.4'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.github.freshdesk:hotline-android:1.2.0'
-    compile 'com.romandanylyk:pageindicatorview:0.2.0'
     compile 'com.mixpanel.android:mixpanel-android:5.+'
     compile 'com.android.support:gridlayout-v7:25.3.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'

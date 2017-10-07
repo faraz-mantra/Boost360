@@ -131,9 +131,6 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                     pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
                 }
 
-        /*intent.putExtra("payload", payload);
-        intent.putExtra("notification", notificationClick);*/
-
                 Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                 NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.app_launcher2)
