@@ -502,7 +502,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                 showCustomDialog("Domain Details", "You have linked your domain to " +
                                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI) + " successfully.",
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
-            }  else {
+            } else {
                 showLoader(getString(R.string.please_wait));
                 domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
             }
