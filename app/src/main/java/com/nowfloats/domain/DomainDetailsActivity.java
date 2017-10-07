@@ -93,6 +93,7 @@ public class DomainDetailsActivity extends AppCompatActivity {
     int processingStatus = -1;
     SharedPreferences pref;
     private int domainYears = 0, bookedYears = 0;
+    private boolean isDomainBookFailed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,7 +151,8 @@ public class DomainDetailsActivity extends AppCompatActivity {
         spDomainYears.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                tvPrice.setText(String.valueOf(hmPrices.get(arrDomainExtensions.get(spDomainTypes.getSelectedItemPosition()))*(position+1)) + "*");
+                tvPrice.setText(String.valueOf(hmPrices.get(arrDomainExtensions.get(spDomainTypes.getSelectedItemPosition()))*
+                        ((Integer)spDomainYears.getSelectedItem())) + "*");
             }
 
             @Override
@@ -164,7 +166,7 @@ public class DomainDetailsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 tvPriceDef.setText(String.format(getString(R.string.price_of_domain), arrDomainExtensions.get(position)));
                 if (hmPrices.containsKey(arrDomainExtensions.get(position))) {
-                    tvPrice.setText(String.valueOf(hmPrices.get(arrDomainExtensions.get(position))*(spDomainYears.getSelectedItemPosition()+1)) + "*");
+                    tvPrice.setText(String.valueOf(hmPrices.get(arrDomainExtensions.get(position))*((Integer)spDomainYears.getSelectedItem())) + "*");
                 } else {
                     tvPrice.setText("");
                 }
@@ -274,6 +276,7 @@ public class DomainDetailsActivity extends AppCompatActivity {
                 setDomainYearsAdapter(domainYears);
             }else{
                 setBookedDomainYears(bookedYears);
+                spDomainYears.setSelection(0);
             }
             if (!TextUtils.isEmpty(domainType)) {
                 if (arrDomainExtensions.contains(domainType)) {
@@ -306,28 +309,28 @@ public class DomainDetailsActivity extends AppCompatActivity {
             if(TextUtils.isDigitsOnly(domainDetails.getProcessingStatus())){
                 processingStatus = Integer.parseInt(domainDetails.getProcessingStatus());
             }
+            if(!TextUtils.isEmpty(domainDetails.getActivatedOn())){
+                long activatedDate = Long.parseLong(domainDetails.getActivatedOn().replace("/Date(", "").replace(")/", ""));
+                Calendar dbCalender = Calendar.getInstance();
+                dbCalender.setTimeInMillis(activatedDate);
+                dbCalender.add(Calendar.YEAR, domainDetails.getValidityInYears());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd yyyy", Locale.ENGLISH);
+                dateFormat.setCalendar(dbCalender);
+                dateFormat.format(dbCalender.getTime());
 
-            long activatedDate = Long.parseLong(domainDetails.getActivatedOn().replace("/Date(", "").replace(")/", ""));
-            Calendar dbCalender = Calendar.getInstance();
-            dbCalender.setTimeInMillis(activatedDate);
-            dbCalender.add(Calendar.YEAR, domainDetails.getValidityInYears());
-            SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd yyyy", Locale.ENGLISH);
-            dateFormat.setCalendar(dbCalender);
-            dateFormat.format(dbCalender.getTime());
-
-            domainExpiryDays = (int) ((dbCalender.getTimeInMillis() - currentTime) / totalNoOfDays);
-            domainExpiryDate = dateFormat.format(dbCalender.getTime());
-
+                domainExpiryDays = (int) ((dbCalender.getTimeInMillis() - currentTime) / totalNoOfDays);
+                domainExpiryDate = dateFormat.format(dbCalender.getTime());
+            }
             tvDomainStatus.setVisibility(View.VISIBLE);
             edtDomainName.setText(domainDetails.getDomainName());
-
             domainType = domainDetails.getDomainType();
+            if( !TextUtils.isEmpty(domainDetails.getErrorMessage()) || domainDetails.getIsProcessingFailed()){
+                //error domain failed
+                isDomainBookFailed = true;
+            }
+
             bookedYears = domainDetails.getValidityInYears();
 
-        } else {
-
-            btnBookDomain.setVisibility(View.VISIBLE);
-            btnRenewDomain.setVisibility(View.GONE);
         }
         new API_Service(DomainDetailsActivity.this, session.getSourceClientId(), session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY),
                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session.getFPID(), mBus);
@@ -401,7 +404,17 @@ public class DomainDetailsActivity extends AppCompatActivity {
 
     private void applyDomainLogic() {
 
-        if (planExpiryDays <= 0) {
+        if(TextUtils.isEmpty(domainType)){
+            tvDomainStatus.setText("Status: You have not booked any domain.");
+            btnBookDomain.setVisibility(View.VISIBLE);
+            btnRenewDomain.setVisibility(View.GONE);
+        }else if(isDomainBookFailed){
+            tvDomainStatus.setText("Status: Your Domain request is failed. Please try again");
+            btnRenewDomain.setVisibility(View.VISIBLE);
+            btnBookDomain.setVisibility(View.GONE);
+            tvDomainStatus.setTextColor(Color.RED);
+        }
+        else if (planExpiryDays <= 0) {
             showExpiryDialog(LIGHT_HOUSE_EXPIRE, planExpiryDays);
         } else if (domainExpiryDays <= 0 && planExpiryDays < PLAN_EXPIRY_GRACE_PERIOD) {
             tvDomainStatus.setText("Status: Your domain expired on " + domainExpiryDate);
@@ -430,7 +443,7 @@ public class DomainDetailsActivity extends AppCompatActivity {
             edtDomainName.setFocusable(false);
         }
 
-        if(processingStatus >0 && processingStatus<=16)
+        if(processingStatus >=0 && processingStatus<=16)
         {
             tvDomainStatus.setText("Status: Your domain request is pending. ");
             edtDomainName.setEnabled(false);

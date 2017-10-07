@@ -465,7 +465,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
         hideLoader();
 
         if(!isAlreadyCalled) {
-            if (domainDetails != null && domainDetails.response) {
+            //if (domainDetails != null && domainDetails.response) {
             /*if(TextUtils.isDigitsOnly(domainDetails.getProcessingStatus()))
             {
                 if (Integer.parseInt(domainDetails.getProcessingStatus())>16) {
@@ -482,14 +482,14 @@ public class Business_Profile_Fragment_V2 extends Fragment {
             }
             else
             {*/
-                if (TextUtils.isEmpty(domainDetails.getActivatedOn())) {
+              /*  if (TextUtils.isEmpty(domainDetails.getActivatedOn())) {
                     showCustomDialog(getString(R.string.buy_a_domain),
                             Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
                             getString(R.string.ok), null, DialogFrom.DEFAULT);
-                } else {
-                    showDomainDetails();
-                }
-            } else if (!TextUtils.isEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
+                } else {*/
+                    //showDomainDetails();
+                //}
+           if (domainDetails != null && !domainDetails.response &&!TextUtils.isEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
                 showCustomDialog("Domain Details", "You have linked your domain to " +
                                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI) + " successfully.",
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
