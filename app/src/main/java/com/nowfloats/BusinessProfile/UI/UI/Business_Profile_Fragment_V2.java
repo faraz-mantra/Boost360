@@ -524,9 +524,6 @@ public class Business_Profile_Fragment_V2 extends Fragment {
         if (TextUtils.isEmpty(get_fp_details_model.response)) {
 
             if (get_fp_details_model.getPaymentState().equalsIgnoreCase(PAYMENT_STATE_SUCCESS)
-                    && (TextUtils.isEmpty(get_fp_details_model.getRootAliasUri())
-                    || get_fp_details_model.getRootAliasUri().equalsIgnoreCase("null")
-                    || get_fp_details_model.getRootAliasUri().contains(ROOT_ALIAS_URI))
                     && get_fp_details_model.getFPWebWidgets() != null
                     && get_fp_details_model.getFPWebWidgets().contains(FP_WEB_WIDGET_DOMAIN)) {
 

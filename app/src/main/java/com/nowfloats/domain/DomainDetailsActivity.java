@@ -2,6 +2,7 @@ package com.nowfloats.domain;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.Store.Model.StoreEvent;
 import com.nowfloats.Store.Model.StoreModel;
+import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.Store.Service.API_Service;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.util.BusProvider;
@@ -535,6 +537,9 @@ public class DomainDetailsActivity extends AppCompatActivity {
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        Intent intent = new Intent(activity, PricingPlansActivity.class);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         dialog.dismiss();
                     }
                 })
