@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -28,7 +30,6 @@ import com.nowfloats.CustomWidget.roboto_lt_24_212121;
 import com.nowfloats.CustomWidget.roboto_md_60_212121;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DomainApiService;
-import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.Store.Model.StoreEvent;
 import com.nowfloats.Store.Model.StoreModel;
@@ -50,8 +51,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 
-import static com.nowfloats.NavigationDrawer.HomeActivity.activity;
-
 
 public class DomainDetailsActivity extends AppCompatActivity {
 
@@ -67,7 +66,7 @@ public class DomainDetailsActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
-    private TextView tvDomainStatus;
+    private TextView tvDomainStatus, btnLinkDomain;
 
     private LinearLayout llBookDomain;
 
@@ -123,6 +122,7 @@ public class DomainDetailsActivity extends AppCompatActivity {
         edtDomainName = (EditText) findViewById(R.id.edtDomainName);
         spDomainTypes = (Spinner) findViewById(R.id.spDomainTypes);
         spDomainYears = (Spinner) findViewById(R.id.spDomainYears);
+        btnLinkDomain = (TextView) findViewById(R.id.btnLinkDomain);
         headerText = (TextView) toolbar.findViewById(R.id.titleTextView);
         tvPriceDef = (TextView) findViewById(R.id.tvPriceDef);
         tvPrice = (TextView) findViewById(R.id.tvPrice);
@@ -192,9 +192,73 @@ public class DomainDetailsActivity extends AppCompatActivity {
                 bookDomain();
             }
         });
+        btnLinkDomain.setText(Methods.fromHtml(getString(R.string.already_have_a_domain2)));
+        btnLinkDomain.setPaintFlags(btnLinkDomain.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+        btnLinkDomain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                linkDomain();
+            }
+        });
 
     }
+    private void linkDomain() {
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(DomainDetailsActivity.this)
+                //.title(getString(R.string.have_an_existing_domain))
+                .customView(R.layout.dialog_link_domain, false)
+                .positiveColorRes(R.color.primaryColor);
 
+            final MaterialDialog materialDialog = builder.show();
+            View maView = materialDialog.getCustomView();
+            final RadioButton rbPointExisting = (RadioButton) maView.findViewById(R.id.rbPointExisting);
+            final RadioButton rbPointNFWeb = (RadioButton) maView.findViewById(R.id.rbPointNFWeb);
+            final EditText edtComments = (EditText) maView.findViewById(R.id.edtComments);
+            Button btnBack = (Button) maView.findViewById(R.id.btnBack);
+            Button btnSubmitRequest = (Button) maView.findViewById(R.id.btnSubmitRequest);
+            edtComments.setText(String.format(getString(R.string.link_comments), session.getFpTag()));
+            edtComments.setSelection(edtComments.getText().toString().length());
+            btnSubmitRequest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    String subject = "";
+                    if (rbPointNFWeb.isChecked()) {
+                        subject = rbPointNFWeb.getText().toString();
+                    } else if (rbPointExisting.isChecked()) {
+                        subject = rbPointExisting.getText().toString();
+                    }
+
+                    if (TextUtils.isEmpty(subject)) {
+                        Methods.showSnackBarNegative(DomainDetailsActivity.this,
+                                getString(R.string.please_select_subject));
+                    } else if (TextUtils.isEmpty(edtComments.getText().toString())) {
+                        Methods.showSnackBarNegative(DomainDetailsActivity.this,
+                                getString(R.string.please_enter_message));
+                    } else {
+
+                        MixPanelController.track(MixPanelController.LINK_DOMAIN, null);
+                        materialDialog.dismiss();
+                        HashMap<String, String> hashMap = new HashMap<String, String>();
+                        hashMap.put("Subject", subject);
+                        hashMap.put("Mesg", edtComments.getText().toString());
+                        domainApiService.linkDomain(hashMap, getLinkDomainParam());
+                    }
+                }
+            });
+            btnBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    materialDialog.dismiss();
+                }
+            });
+
+    }
+    private HashMap<String, String> getLinkDomainParam() {
+        HashMap<String, String> offersParam = new HashMap<>();
+        offersParam.put("authClientId", Constants.clientId);
+        offersParam.put("fpTag", session.getFpTag());
+        return offersParam;
+    }
     private void bookDomain() {
 
         Methods.hideKeyboard(DomainDetailsActivity.this);
@@ -227,7 +291,8 @@ public class DomainDetailsActivity extends AppCompatActivity {
                     getString(R.string.are_you_sure_do_you_want_to_book_domain),
                     getString(R.string.yes), getString(R.string.no), DialogFrom.DOMAIN_AVAILABLE);
         } else if (domainAPI == DomainApiService.DomainAPI.LINK_DOMAIN) {
-            Methods.showSnackBarPositive(DomainDetailsActivity.this, "domain link available");
+            showCustomDialog(getString(R.string.domain_booking_process),"You have successfully requested to link a domain, Our team will contact you with in 48 hours." ,
+                    getString(R.string.ok), null, DialogFrom.DEFAULT);
         } else {
             Methods.showSnackBarNegative(DomainDetailsActivity.this, getString(R.string.domain_not_available));
         }
@@ -276,9 +341,12 @@ public class DomainDetailsActivity extends AppCompatActivity {
 
             if(btnBookDomain.getVisibility() == View.VISIBLE || btnRenewDomain.getVisibility() == View.VISIBLE){
                 setDomainYearsAdapter(domainYears);
+                btnLinkDomain.setVisibility(View.VISIBLE);
             }else{
                 setBookedDomainYears(bookedYears);
                 spDomainYears.setSelection(0);
+                spDomainYears.setEnabled(false);
+                spDomainYears.setClickable(false);
             }
             if (!TextUtils.isEmpty(domainType)) {
                 if (arrDomainExtensions.contains(domainType)) {
@@ -326,7 +394,7 @@ public class DomainDetailsActivity extends AppCompatActivity {
             tvDomainStatus.setVisibility(View.VISIBLE);
             edtDomainName.setText(domainDetails.getDomainName());
             domainType = domainDetails.getDomainType();
-            if( !TextUtils.isEmpty(domainDetails.getErrorMessage()) || domainDetails.getIsProcessingFailed()){
+            if( !TextUtils.isEmpty(domainDetails.getErrorMessage()) && domainDetails.getIsProcessingFailed()){
                 //error domain failed
                 isDomainBookFailed = true;
             }
@@ -407,35 +475,58 @@ public class DomainDetailsActivity extends AppCompatActivity {
     private void applyDomainLogic() {
 
         if(TextUtils.isEmpty(domainType)){
-            tvDomainStatus.setText("Status: You have not booked any domain.");
+            tvDomainStatus.setText("Status: You have not booked any domain yet.");
             btnBookDomain.setVisibility(View.VISIBLE);
             btnRenewDomain.setVisibility(View.GONE);
+            spDomainTypes.setEnabled(true);
+            spDomainTypes.setClickable(true);
+            edtDomainName.setEnabled(true);
+            edtDomainName.setFocusable(true);
         }else if(isDomainBookFailed){
             tvDomainStatus.setText("Status: Your Domain request is failed. Please try again");
+            spDomainTypes.setEnabled(true);
+            spDomainTypes.setClickable(true);
+            edtDomainName.setEnabled(true);
+            edtDomainName.setFocusable(true);
             btnRenewDomain.setVisibility(View.VISIBLE);
             btnBookDomain.setVisibility(View.GONE);
             tvDomainStatus.setTextColor(Color.RED);
         }
         else if (planExpiryDays <= 0) {
+
+            edtDomainName.setEnabled(false);
+            edtDomainName.setFocusable(false);
             showExpiryDialog(LIGHT_HOUSE_EXPIRE, planExpiryDays);
-        } else if (domainExpiryDays <= 0 && planExpiryDays < PLAN_EXPIRY_GRACE_PERIOD) {
+        }  else if (domainExpiryDays <= 0 && planExpiryDays >= PLAN_EXPIRY_GRACE_PERIOD) {
             tvDomainStatus.setText("Status: Your domain expired on " + domainExpiryDate);
             tvDomainStatus.setTextColor(Color.RED);
             renewDomain();
-        } else if (domainExpiryDays <= 0 && planExpiryDays >= PLAN_EXPIRY_GRACE_PERIOD) {
+        }else if (domainExpiryDays <= 0 && planExpiryDays < PLAN_EXPIRY_GRACE_PERIOD) {
+
             tvDomainStatus.setText("Status: Your domain expired on " + domainExpiryDate);
             tvDomainStatus.setTextColor(Color.RED);
-            renewDomain();
+            if(planExpiryDays < 60){
+                edtDomainName.setEnabled(false);
+                edtDomainName.setFocusable(false);
+                showExpiryDialog(LIGHT_HOUSE_EXPIRE, planExpiryDays);
+            }else{
+                buyDomain();
+            }
+
         } else if (domainExpiryDays < DOMAIN_EXPIRY_GRACE_PERIOD &&
                 planExpiryDays <= domainExpiryDays && planExpiryDays < PLAN_EXPIRY_GRACE_PERIOD) {
             tvDomainStatus.setText("Status: Your domain will expire on " + domainExpiryDate);
             edtDomainName.setEnabled(false);
             edtDomainName.setFocusable(false);
             showExpiryDialog(LIGHT_HOUSE_DAYS_LEFT, planExpiryDays);
-        } else if (domainExpiryDays < DOMAIN_EXPIRY_GRACE_PERIOD &&
-                planExpiryDays > domainExpiryDays && planExpiryDays < PLAN_EXPIRY_GRACE_PERIOD) {
+        } else if (domainExpiryDays < DOMAIN_EXPIRY_GRACE_PERIOD && planExpiryDays < PLAN_EXPIRY_GRACE_PERIOD) {
             tvDomainStatus.setText("Status: Your domain will expire on " + domainExpiryDate);
-            renewDomain();
+            if( planExpiryDays - domainExpiryDays < 60){
+                showExpiryDialog(LIGHT_HOUSE_EXPIRE, planExpiryDays);
+            }else{
+                renewDomain();
+            }
+
         } else if (domainExpiryDays < DOMAIN_EXPIRY_GRACE_PERIOD && planExpiryDays >= PLAN_EXPIRY_GRACE_PERIOD) {
             tvDomainStatus.setText("Status: Your domain will expire on " + domainExpiryDate);
             renewDomain();
@@ -447,7 +538,7 @@ public class DomainDetailsActivity extends AppCompatActivity {
 
         if(processingStatus >=0 && processingStatus<=16)
         {
-            tvDomainStatus.setText("Status: Your domain request is pending. ");
+            tvDomainStatus.setText("Status: Your domain request is pending.");
             edtDomainName.setEnabled(false);
             edtDomainName.setFocusable(false);
             spDomainYears.setEnabled(false);
@@ -537,7 +628,7 @@ public class DomainDetailsActivity extends AppCompatActivity {
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent(activity, PricingPlansActivity.class);
+                        Intent intent = new Intent(DomainDetailsActivity.this, PricingPlansActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         dialog.dismiss();
@@ -564,7 +655,14 @@ public class DomainDetailsActivity extends AppCompatActivity {
         btnBookDomain.setVisibility(View.GONE);
         btnRenewDomain.setVisibility(View.VISIBLE);
     }
-
+    private void buyDomain(){
+        spDomainTypes.setEnabled(true);
+        spDomainTypes.setClickable(true);
+        edtDomainName.setEnabled(true);
+        edtDomainName.setFocusable(true);
+        btnBookDomain.setVisibility(View.VISIBLE);
+        btnRenewDomain.setVisibility(View.GONE);
+    }
     @Override
     public void onStart() {
         super.onStart();
@@ -641,17 +739,6 @@ public class DomainDetailsActivity extends AppCompatActivity {
                             case DOMAIN_AVAILABLE:
                                 prepareAndPublishDomain();
                                 break;
-                            case CONTACTS_AND_EMAIL_REQUIRED:
-                                ((SidePanelFragment.OnItemClickListener) activity).
-                                        onClick(getResources().getString(R.string.contact__info));
-                                break;
-                            case CATEGORY_REQUIRED:
-                                ((SidePanelFragment.OnItemClickListener) activity).
-                                        onClick(getResources().getString(R.string.basic_info));
-                                break;
-                            case ADDRESS_REQUIRED:
-                                ((SidePanelFragment.OnItemClickListener) activity).
-                                        onClick(getResources().getString(R.string.business__address));
                             case DEFAULT:
                                 finish();
                                 break;

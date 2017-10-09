@@ -698,6 +698,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="buy_in_capital">BUY</string>
     <string name="later_in_capital">LATER</string>
     <string name="renew_light_house_plan">Renew Lighthouse plan to get all the features</string>
+    <string name="buy_light_house">Your current plan is demo which does not have all features, to get all features buy Lighthouse plan.</string>
     <string name="light_house_plan_expired_some_features_visible">Your Lighthouse plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others</string>
     <string name="renew_wildfire_plan">Renew Wildfire plan</string>
     <string name="continue_auto_promoting_on_google">Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.</string>
@@ -1015,6 +1016,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="tap_a_star_to_rate_it">Tap a star to rate it</string>
     <string name="link_a_domain_nf">Link a domain (included in your NowFloats Package)</string>
     <string name="already_have_a_domain">Already have a domain</string>
+    <string name="already_have_a_domain2"><u>Already have a domain?</u></string>
     <string name="pop_up_create_msg_title">Are you sure?</string>
     <string name="graph_fragment2_title">Visits</string>
     <string name="graph_custom_visit_page_title">VISITS</string>

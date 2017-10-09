@@ -4,21 +4,30 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.CustomPage.CustomPageActivity;
+import com.nowfloats.CustomWidget.roboto_lt_24_212121;
+import com.nowfloats.CustomWidget.roboto_md_60_212121;
 import com.nowfloats.Image_Gallery.ImageGalleryActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DomainApiService;
@@ -27,6 +36,7 @@ import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
+import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.domain.DomainDetailsActivity;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -61,9 +71,8 @@ public class Business_Profile_Fragment_V2 extends Fragment {
     UserSessionManager session;
     SharedPreferences.Editor prefsEditor;
     private Activity activity;
-
     private DomainApiService domainApiService;
-
+    private final static int LIGHT_HOUSE_EXPIRED =-1,DEMO =0,DEMO_EXPIRED=-2;
     private Bus mBus;
 
     private ProgressDialog progressDialog;
@@ -310,6 +319,13 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                                         if (!activity.isFinishing()) {
                                             builder.show();
                                         }
+                                    } else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("0")){
+                                        showExpiryDialog(DEMO);
+                                    }else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1") &&
+                                            session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL).equalsIgnoreCase("0")){
+                                        showExpiryDialog(DEMO_EXPIRED);
+                                    } else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1")){
+                                        showExpiryDialog(LIGHT_HOUSE_EXPIRED);
                                     } else if (Utils.isNetworkConnected(getActivity())) {
                                         showLoader(getString(R.string.please_wait));
                                         domainApiService.getDomainDetails(session.getFpTag(), getDomainDetailsParam());
@@ -489,7 +505,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                 } else {*/
                 //showDomainDetails();
                 //}
-                if( !TextUtils.isEmpty(domainDetails.getErrorMessage()) || domainDetails.getIsProcessingFailed()){
+                if( !TextUtils.isEmpty(domainDetails.getErrorMessage()) && domainDetails.getIsProcessingFailed()){
                     showCustomDialog(getString(R.string.buy_a_domain),
                             Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
                             getString(R.string.ok), null, DialogFrom.DEFAULT);
@@ -498,13 +514,15 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                     domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
                 }
 
-            }else if (!TextUtils.isEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
+            }
+            else if (!TextUtils.isEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))) {
                 showCustomDialog("Domain Details", "You have linked your domain to " +
                                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI) + " successfully.",
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
             } else {
-                showLoader(getString(R.string.please_wait));
-                domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
+                chooseDomain();
+               /* showLoader(getString(R.string.please_wait));
+                domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());*/
             }
         }
 
@@ -541,14 +559,17 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                         || TextUtils.isEmpty(get_fp_details_model.getLat())
                         || TextUtils.isEmpty(get_fp_details_model.getLng())
                         || get_fp_details_model.getLat().equalsIgnoreCase("0")
-                        || get_fp_details_model.getLng().equalsIgnoreCase("0")) {
+                        || get_fp_details_model.getLng().equalsIgnoreCase("0")
+                        ||TextUtils.isEmpty(get_fp_details_model.getPinCode())) {
                     showCustomDialog(getString(R.string.domain_detail_required),
                             Methods.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
                             getString(R.string.ok), null, DialogFrom.ADDRESS_REQUIRED);
                 } else {
                     showDomainDetails();
                 }
-            } else {
+            }
+            else
+            {
                 showCustomDialog(getString(R.string.buy_a_domain),
                         Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
@@ -575,6 +596,170 @@ public class Business_Profile_Fragment_V2 extends Fragment {
         DEFAULT
     }
 
+    private void chooseDomain() {
+
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
+//                .title(getString(R.string.link_a_domain_nf))
+                .customView(R.layout.dialog_choose_domain, false)
+                .positiveColorRes(R.color.primaryColor);
+
+        if (getActivity() != null && !getActivity().isFinishing()) {
+            final MaterialDialog materialDialog = builder.show();
+
+            materialDialog.getCustomView().findViewById(R.id.btnBookDomain)
+                    .setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            materialDialog.dismiss();
+                            showLoader(getString(R.string.please_wait));
+                            domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
+                        }
+                    });
+            materialDialog.getCustomView().findViewById(R.id.btnLinkDomain)
+                    .setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            materialDialog.dismiss();
+                            linkDomain();
+                        }
+                    });
+
+            View maView = materialDialog.getCustomView();
+            TextView tvDomainConfig = (TextView) maView.findViewById(R.id.tvDomainConfig);
+            tvDomainConfig.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Methods.showSnackBarPositive(getActivity(), getString(R.string.domain_book_nowfloats_package));
+                }
+            });
+        }
+
+
+    }
+    private void linkDomain() {
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(getActivity())
+                //.title(getString(R.string.have_an_existing_domain))
+                .customView(R.layout.dialog_link_domain, false)
+                .positiveColorRes(R.color.primaryColor);
+
+        final MaterialDialog materialDialog = builder.show();
+        View maView = materialDialog.getCustomView();
+        final RadioButton rbPointExisting = (RadioButton) maView.findViewById(R.id.rbPointExisting);
+        final RadioButton rbPointNFWeb = (RadioButton) maView.findViewById(R.id.rbPointNFWeb);
+        final EditText edtComments = (EditText) maView.findViewById(R.id.edtComments);
+        Button btnBack = (Button) maView.findViewById(R.id.btnBack);
+        Button btnSubmitRequest = (Button) maView.findViewById(R.id.btnSubmitRequest);
+        edtComments.setText(String.format(getString(R.string.link_comments), session.getFpTag()));
+        edtComments.setSelection(edtComments.getText().toString().length());
+        btnSubmitRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String subject = "";
+                if (rbPointNFWeb.isChecked()) {
+                    subject = rbPointNFWeb.getText().toString();
+                } else if (rbPointExisting.isChecked()) {
+                    subject = rbPointExisting.getText().toString();
+                }
+
+                if (TextUtils.isEmpty(subject)) {
+                    Methods.showSnackBarNegative(getActivity(),
+                            getString(R.string.please_select_subject));
+                } else if (TextUtils.isEmpty(edtComments.getText().toString())) {
+                    Methods.showSnackBarNegative(getActivity(),
+                            getString(R.string.please_enter_message));
+                } else {
+
+                    MixPanelController.track(MixPanelController.LINK_DOMAIN, null);
+                    materialDialog.dismiss();
+                    HashMap<String, String> hashMap = new HashMap<String, String>();
+                    hashMap.put("Subject", subject);
+                    hashMap.put("Mesg", edtComments.getText().toString());
+                    domainApiService.linkDomain(hashMap, getLinkDomainParam());
+                }
+            }
+        });
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                materialDialog.dismiss();
+            }
+        });
+
+    }
+    private HashMap<String, String> getLinkDomainParam() {
+        HashMap<String, String> offersParam = new HashMap<>();
+        offersParam.put("authClientId", Constants.clientId);
+        offersParam.put("fpTag", session.getFpTag());
+        return offersParam;
+    }
+    private void showExpiryDialog(int showDialog) {
+
+        String callUsButtonText, cancelButtonText, dialogTitle, dialogMessage;
+        int dialogImage, dialogImageBgColor;
+
+        switch (showDialog) {
+            case LIGHT_HOUSE_EXPIRED:
+                callUsButtonText = getString(R.string.buy_in_capital);
+                cancelButtonText = getString(R.string.later_in_capital);
+                dialogTitle = getString(R.string.renew_light_house_plan);
+                dialogMessage = getString(R.string.light_house_plan_expired_some_features_visible);
+                dialogImage = R.drawable.androidexpiryxxxhdpi;
+                dialogImageBgColor = Color.parseColor("#ff0010");
+                break;
+            case DEMO:
+                dialogImage = R.drawable.androidexpiryxxxhdpi;
+                dialogImageBgColor = Color.parseColor("#ff0010");
+                callUsButtonText = getString(R.string.buy_in_capital);
+                cancelButtonText = getString(R.string.later_in_capital);
+                dialogTitle = getString(R.string.buy_light_house_plan);
+                dialogMessage = getString(R.string.buy_light_house);
+                break;
+            case DEMO_EXPIRED:
+                dialogImage = R.drawable.androidexpiryxxxhdpi;
+                dialogImageBgColor = Color.parseColor("#ff0010");
+                callUsButtonText = getString(R.string.buy_in_capital);
+                cancelButtonText = getString(R.string.later_in_capital);
+                dialogTitle = getString(R.string.buy_light_house_plan);
+                dialogMessage = getString(R.string.demo_plan_expired);
+                break;
+            default:
+                return;
+        }
+
+        MaterialDialog mExpireDailog = new MaterialDialog.Builder(getActivity())
+                .customView(R.layout.pop_up_restrict_post_message, false)
+                .backgroundColorRes(R.color.white)
+                .positiveText(callUsButtonText)
+                .negativeText(cancelButtonText)
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                })
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        Intent intent = new Intent(activity, PricingPlansActivity.class);
+                        startActivity(intent);
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+
+        View view = mExpireDailog.getCustomView();
+
+        roboto_md_60_212121 title = (roboto_md_60_212121) view.findViewById(R.id.textView1);
+        title.setText(dialogTitle);
+
+        ImageView expireImage = (ImageView) view.findViewById(R.id.img_warning);
+        expireImage.setBackgroundColor(dialogImageBgColor);
+        expireImage.setImageDrawable(ContextCompat.getDrawable(activity, dialogImage));
+
+        roboto_lt_24_212121 message = (roboto_lt_24_212121) view.findViewById(R.id.pop_up_create_message_body);
+        message.setText(Methods.fromHtml(dialogMessage));
+    }
     private void showCustomDialog(String title, String message, String postiveBtn, String negativeBtn,
                                   final DialogFrom dialogFrom) {
 
