@@ -799,7 +799,7 @@ public class DomainDetailsActivity extends AppCompatActivity {
         hashMap.put("regService", "");
         hashMap.put("state", get_fp_details_model.getPaymentState());
         hashMap.put("zip", get_fp_details_model.getPinCode());
-        domainApiService.buyDomain(hashMap);
+       domainApiService.buyDomain(hashMap);
     }
 
     @Subscribe

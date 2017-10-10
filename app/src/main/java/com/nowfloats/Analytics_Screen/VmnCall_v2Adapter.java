@@ -2,14 +2,12 @@ package com.nowfloats.Analytics_Screen;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
@@ -175,7 +173,7 @@ public class VmnCall_v2Adapter extends RecyclerView.Adapter<VmnCall_v2Adapter.My
                         public void onNegative(MaterialDialog dialog) {
                             super.onNegative(dialog);
                             pause();
-                            startCall(mediaData.getCallerNumber());
+                            Methods.makeCall(mContext,mediaData.getCallerNumber());
                         }
                     })
                     .build();
@@ -476,15 +474,10 @@ public class VmnCall_v2Adapter extends RecyclerView.Adapter<VmnCall_v2Adapter.My
             switch (v.getId()){
                 case R.id.llayout_number:
                 case R.id.call_icon:
-                    startCall(mList.get(getAdapterPosition()).getCallerNumber());
+                    Methods.makeCall(mContext, mList.get(getAdapterPosition()).getCallerNumber());
                     break;
             }
         }
-    }
-    private void startCall(String number) {
-        Intent callIntent = new Intent(Intent.ACTION_DIAL);
-        callIntent.setData(Uri.parse("tel:" + number));
-        mContext.startActivity(Intent.createChooser(callIntent, "Call by:"));
     }
 
 }
