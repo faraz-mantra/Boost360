@@ -8,8 +8,8 @@
         android:layout_height="wrap_content"
         android:background="@color/primary"
         android:orientation="vertical"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:paddingBottom="25dp">
         <TextView
             android:id="@+id/tv_address"
@@ -20,7 +20,7 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="5dp"
             android:textColor="@color/white"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:textStyle="bold"
             android:layout_marginBottom="5dp"
             />
@@ -35,7 +35,7 @@
                 android:fontFamily="sans-serif"
                 android:layout_marginRight="15dp"
                 android:layout_marginLeft="15dp"
-                android:textSize="13sp"
+                android:textSize="11sp"
                 android:textColor="@color/white"
                 android:layout_weight="1"/>
 
@@ -45,11 +45,12 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_corner_transparent"
                 android:gravity="center"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="call"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 android:textAllCaps="true"
                 android:textColor="@color/white" />
@@ -59,8 +60,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
+        android:paddingLeft="35dp"
+        android:paddingRight="35dp"
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
@@ -75,10 +76,11 @@
             android:text="Dear Shahjad, Thanks for getting in touch with us. Regarding your query, below are few options which you might like."
             android:fontFamily="sans-serif"
             android:textColor="#676767"
+            android:background="@null"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="15dp"/>
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_products"
+            android:id="@+id/rv_suggestions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <LinearLayout
@@ -93,9 +95,10 @@
                 android:drawableLeft="@drawable/ic_plus"
                 android:background="@drawable/black_round_corner"
                 android:textColor="@color/white"
-                android:padding="10dp"
+                android:padding="8dp"
                 android:drawablePadding="10dp"
                 android:textStyle="bold"
+                android:textSize="12sp"
                 android:gravity="center"
                 android:text="PRODUCTS"/>
             <TextView
@@ -105,11 +108,11 @@
                 android:drawableLeft="@drawable/ic_plus"
                 android:background="@drawable/black_round_corner"
                 android:textColor="@color/white"
-                android:padding="10dp"
+                android:padding="8dp"
                 android:drawablePadding="10dp"
                 android:textStyle="bold"
                 android:layout_marginLeft="20dp"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 android:gravity="center"
                 android:text="UPDATES"/>
         </LinearLayout>
@@ -121,7 +124,8 @@
         android:background="@drawable/rounded_yellow_selector_bg"
         android:textColor="@color/primary"
         android:gravity="center"
-        android:padding="15dp"
+        android:padding="12dp"
+        android:textAllCaps="true"
         android:layout_margin="20dp"
         android:text="SEND TO MAN"/>
 </LinearLayout>

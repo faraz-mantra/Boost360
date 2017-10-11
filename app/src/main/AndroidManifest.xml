@@ -624,7 +624,9 @@
         <activity android:name="com.nowfloats.manageinventory.SellerAnalyticsActivity" />
         <activity android:name="com.nowfloats.manageinventory.PaymentSettingsActivity" />
         <activity android:name="com.nowfloats.manageinventory.OrderListActivity" />
-        <activity android:name="com.nowfloats.manageinventory.OrderDetailsActivity"></activity>
+        <activity android:name="com.nowfloats.manageinventory.OrderDetailsActivity"/>
+        <activity android:name="com.nowfloats.customerassistant.ThirdPartySuggestionDetailActivity" />
+        <activity android:name="com.nowfloats.customerassistant.ThirdPartyQueriesActivity" />
     </application>
 
 </manifest>

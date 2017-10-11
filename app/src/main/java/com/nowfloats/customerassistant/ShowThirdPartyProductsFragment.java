@@ -4,25 +4,26 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+import com.nowfloats.customerassistant.adapters.ThirdPartySuggestionAdapter;
 import com.nowfloats.customerassistant.models.SuggestionsDO;
-import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 /**
  * Created by Admin on 10-10-2017.
  */
 
-public class ShowSuggestionsFragment extends Fragment implements View.OnClickListener {
+public class ShowThirdPartyProductsFragment extends Fragment implements View.OnClickListener {
 
     private Context mContext;
     private SuggestionsDO mSuggestionDO;
     public static Fragment getInstance(Bundle b){
-        Fragment frag = new ShowSuggestionsFragment();
+        Fragment frag = new ShowThirdPartyProductsFragment();
         frag.setArguments(b);
         return frag;
     }
@@ -45,18 +46,19 @@ public class ShowSuggestionsFragment extends Fragment implements View.OnClickLis
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_third_party_response,container,false);
+        return inflater.inflate(R.layout.fragment_third_party_products,container,false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if(!isAdded()) return;
-        TextView addressText = (TextView) view.findViewById(R.id.tv_address);
-        TextView timeText = (TextView) view.findViewById(R.id.tv_time);
-        timeText.setText(Methods.getFormattedDate(mSuggestionDO.getDate()));
-        view.findViewById(R.id.btn_add_updates).setOnClickListener(this);
-        view.findViewById(R.id.btn_add_products).setOnClickListener(this);
+
+        RecyclerView suggestionsRecyclerView = (RecyclerView) view.findViewById(R.id.rv_suggestions);
+        suggestionsRecyclerView.setHasFixedSize(true);
+        suggestionsRecyclerView.setLayoutManager(new GridLayoutManager(mContext,2));
+        suggestionsRecyclerView.setAdapter(new ThirdPartySuggestionAdapter(mContext));
+        view.findViewById(R.id.btn_cancel).setOnClickListener(this);
         view.findViewById(R.id.btn_send).setOnClickListener(this);
     }
 
@@ -65,16 +67,12 @@ public class ShowSuggestionsFragment extends Fragment implements View.OnClickLis
 
         switch (v.getId()){
             case R.id.btn_send:
+                //((ThirdPartySuggestionDetailActivity.Callback)mContext).sendAddedSuggestions();
                 break;
-            case R.id.btn_add_products:
-                break;
-            case R.id.btn_add_updates:
-                //((ThirdPartySuggestionDetailActivity)mContext).
-                break;
-            case R.id.btn_call:
-                //Methods.makeCall(mContext,mSuggestionDO.get);
+            default:
                 break;
         }
     }
+
 
 }

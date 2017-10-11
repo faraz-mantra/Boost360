@@ -1,9 +1,11 @@
 package com.nowfloats.customerassistant;
 
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +24,7 @@ import com.thinksity.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by admin on 10/4/2017.
@@ -34,8 +37,9 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
     ThirdPartyAdapter adapter;
     Bus mBus;
     UserSessionManager sessionManager;
-    private ArrayList<SuggestionsDO> queriesList = new ArrayList<>();
+    private List<SuggestionsDO> queriesList = new ArrayList<>();
     private String appVersion = "";
+    ProgressDialog progressBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,12 +54,20 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
     private void init(){
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         rvList = (RecyclerView) findViewById(R.id.rv_list);
+        setSupportActionBar(toolbar);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
         sessionManager = new UserSessionManager(this,this);
         mBus = BusProvider.getInstance().getBus();
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvList.setHasFixedSize(true);
+        progressBar = new ProgressDialog(this);
+        progressBar.setIndeterminate(true);
         adapter= new ThirdPartyAdapter(this,queriesList);
         rvList.setLayoutManager(manager);
+        rvList.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         rvList.setAdapter(adapter);
 
         try {
@@ -66,19 +78,34 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
 
     }
     private void getMessages(CustomerAssistantApi api){
+        showProgress();
         HashMap<String, String> offersParam = new HashMap<>();
         offersParam.put("fpId", sessionManager.getFPID());
         api.getMessages(offersParam,sessionManager.getFPID(),appVersion);
     }
 
+    private void showProgress() {
+        if(!progressBar.isShowing() && !isFinishing()){
+            progressBar.show();
+        }
+    }
+
+    private void hideProgress(){
+        if(progressBar.isShowing()){
+            progressBar.dismiss();
+        }
+    }
     @Subscribe
     public void onMessagesReceived(SMSSuggestions smsSuggestions){
-        queriesList.addAll(smsSuggestions.getSuggestionList());
-        adapter.notifyDataSetChanged();
+        adapter.refreshListData(smsSuggestions.getSuggestionList());
+        hideProgress();
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.action_search:
                 return true;
             case R.id.action_filter:
@@ -109,4 +136,5 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_third_party_query,menu);
         return true;
     }
+
 }

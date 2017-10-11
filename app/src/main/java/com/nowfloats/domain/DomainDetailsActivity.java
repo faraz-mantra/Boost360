@@ -463,12 +463,12 @@ public class DomainDetailsActivity extends AppCompatActivity {
 
 
     //------------------|--------- PlanExpiry<=0 ---------------PlanExpiry<90 --------|----- PlanExpiry>=90--------|
+    //                  |                                |    p<60     plan renew     |                            |
+    //-DomainExpiry<0-- |          Plan Expired          |    p>= 60  Renew Domain    |      Expired Renew Domain  |
     //                  |                                |                            |                            |
-    //-DomainExpiry<0-- |          Plan Expired          |    Expired Renew Domain    |      Expired Renew Domain  |
-    //                  |                                |                            |                            |
-    //-DomainExpiry<30--|          Plan Expired          |       P<=D- Do Nothing     |      TBE-Renew Domain      |
-    //                  |                                |      P>D-TBE Renew Domain  |                            |
-    //                  |                                |                            |                            |
+    //-DomainExpiry<30--|          Plan Expired          |       P<=D  renew plan     |      TBE-Renew Domain      |
+    //                  |                                |     P-D>=60  renew domain  |                            |
+    //                  |                                |     P-D<60  renew plan                        |                            |
     //-DomainExpiry>=30-|          Plan Expired          |    Do nothing(show domain) |    Do nothing(show domain) |
     //------------------|--------------------------------|----------------------------|----------------------------|
 

@@ -8,8 +8,14 @@
         layout="@layout/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    <include
+        android:id="@+id/layout_message"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        layout="@layout/fragment_third_party_response"/>
     <FrameLayout
         android:id="@+id/layout_fragment"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
