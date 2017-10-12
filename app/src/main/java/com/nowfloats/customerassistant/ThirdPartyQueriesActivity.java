@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +24,8 @@ import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,20 +43,25 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
     private List<SuggestionsDO> queriesList = new ArrayList<>();
     private String appVersion = "";
     ProgressDialog progressBar;
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
+    private enum SortType{
+        DATE,CHANNEL,EXPIRE
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_third_party_queries);
         init();
-        CustomerAssistantApi customerApis = new CustomerAssistantApi(mBus);
-        getMessages(customerApis);
 
     }
 
     private void init(){
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         rvList = (RecyclerView) findViewById(R.id.rv_list);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_layout);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_color);
         setSupportActionBar(toolbar);
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -62,6 +70,7 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
         sessionManager = new UserSessionManager(this,this);
         mBus = BusProvider.getInstance().getBus();
         LinearLayoutManager manager = new LinearLayoutManager(this);
+        final CustomerAssistantApi customerApis = new CustomerAssistantApi(mBus);
         rvList.setHasFixedSize(true);
         progressBar = new ProgressDialog(this);
         progressBar.setIndeterminate(true);
@@ -76,6 +85,15 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mSwipeRefreshLayout.setRefreshing(true);
+                getMessages(customerApis);
+            }
+        });
+
+        getMessages(customerApis);
     }
     private void getMessages(CustomerAssistantApi api){
         showProgress();
@@ -85,7 +103,7 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
     }
 
     private void showProgress() {
-        if(!progressBar.isShowing() && !isFinishing()){
+        if(!mSwipeRefreshLayout.isRefreshing()&&!progressBar.isShowing() && !isFinishing()){
             progressBar.show();
         }
     }
@@ -94,11 +112,45 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
         if(progressBar.isShowing()){
             progressBar.dismiss();
         }
+        if(mSwipeRefreshLayout.isRefreshing()){
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
     }
     @Subscribe
     public void onMessagesReceived(SMSSuggestions smsSuggestions){
+        sort(smsSuggestions.getSuggestionList(),SortType.EXPIRE);
         adapter.refreshListData(smsSuggestions.getSuggestionList());
         hideProgress();
+    }
+
+    private void sort(List<SuggestionsDO> smsSuggestionsList, final SortType sortType){
+        Collections.sort(smsSuggestionsList, new Comparator<SuggestionsDO>() {
+            @Override
+            public int compare(SuggestionsDO o1, SuggestionsDO o2) {
+                switch(sortType){
+                    case CHANNEL:
+                        return o1.getSource().compareToIgnoreCase(o2.getSource());
+                    case DATE:
+                        if(o1.getDate()<o2.getDate()){
+                            return -1;
+                        }else if (o1.getDate() == o2.getDate()){
+                            return 0;
+                        }else{
+                            return 1;
+                        }
+                    case EXPIRE:
+                    default:
+                        if(o1.getExpiryDate()<o2.getExpiryDate()){
+                            return -1;
+                        }else if (o1.getExpiryDate() == o2.getExpiryDate()){
+                            return 0;
+                        }else{
+                            return 1;
+                        }
+
+                }
+            }
+        });
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

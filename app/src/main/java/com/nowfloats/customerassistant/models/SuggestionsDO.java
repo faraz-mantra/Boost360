@@ -7,7 +7,7 @@ import java.util.List;
  * Created by NowFloats on 4/28/2017.
  */
 
-public class SuggestionsDO implements Serializable{
+public class SuggestionsDO implements Serializable,Cloneable{
 
     public String Action;
     public long date;
@@ -153,5 +153,10 @@ public class SuggestionsDO implements Serializable{
 
     public void setUpdates(List<SugUpdates> updates) {
         this.updates = updates;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

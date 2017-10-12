@@ -127,7 +127,7 @@ public class ShowVmnCallActivity extends AppCompatActivity implements VmnCall_v2
         });
     }
 
-    // making key for each item from date and store that for headers only
+    // making key for each item from DATE and store that for headers only
     private void saveWithViewType(ArrayList<VmnCallModel> list){
         String oldKey ="";
         int headerSize=0;

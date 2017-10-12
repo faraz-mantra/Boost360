@@ -27,7 +27,7 @@
             android:padding="3dp"
             android:src="@drawable/ic_info_white_24dp"
             android:background="?android:selectableItemBackground"
-            android:tint="#E3E3E3"/>
+            android:tint="@color/light_gray"/>
     </LinearLayout>
     <TextView
         android:id="@+id/tv_address"

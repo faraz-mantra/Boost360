@@ -829,8 +829,8 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
 //        AppController.getInstance().clearApplicationData();
 //
-//        Date date = new Date(System.currentTimeMillis());
-//        String dateString = date.toString();
+//        Date DATE = new Date(System.currentTimeMillis());
+//        String dateString = DATE.toString();
 //
 //        MixPanelController.setProperties("LastLogoutDate", dateString);
 //

@@ -51,7 +51,7 @@ public class DbController implements IdbController {
                 update.setServerId(c.getString(c.getColumnIndex(DbConstants.Iupdates.serverId)));
                 update.setImageUrl(c.getString(c.getColumnIndex(DbConstants.Iupdates.imageUrl)));
                 update.setUpdateText(c.getString(c.getColumnIndex(DbConstants.Iupdates.updateText)));
-                update.setDate(c.getString(c.getColumnIndex(DbConstants.Iupdates.date)));
+                c.getString(c.getColumnIndex(DbConstants.Iupdates.date));
                 update.setTileImageUrl(c.getString(c.getColumnIndex(DbConstants.Iupdates.tileImageUrl)));
                 update.setType(c.getString(c.getColumnIndex(DbConstants.Iupdates.type)));
                 update.setUrl(c.getString(c.getColumnIndex(DbConstants.Iupdates.url)));

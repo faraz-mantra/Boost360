@@ -1148,8 +1148,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                             if (Sdate.contains("/Date")) {
                                 Sdate = Sdate.replace("/Date(", "").replace(")/", "");
                             }
-                            long date = Long.valueOf(Sdate);
-                            calendar.setTimeInMillis(date);
+                            long DATE = Long.valueOf(Sdate);
+                            calendar.setTimeInMillis(DATE);
                             calendar.add(Calendar.MONTH, Integer.parseInt(model.totalMonthsValidity));
 
                             float days = ((calendar.getTimeInMillis()-current) / (float)(1000 * 60 * 60 * 24));

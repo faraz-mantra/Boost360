@@ -27,6 +27,7 @@
             android:tint="@color/gray"/>
     </LinearLayout>
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_list"
         android:layout_width="match_parent"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"

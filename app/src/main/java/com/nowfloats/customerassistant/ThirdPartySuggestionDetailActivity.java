@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -14,11 +14,15 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nowfloats.customerassistant.adapters.ThirdPartySuggestionAdapter;
+import com.nowfloats.customerassistant.adapters.ThirdPartySharedItemAdapter;
 import com.nowfloats.customerassistant.callbacks.ThirdPartyCallbacks;
+import com.nowfloats.customerassistant.models.SharedSuggestionsDO;
 import com.nowfloats.customerassistant.models.SuggestionsDO;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Admin on 10-10-2017.
@@ -27,10 +31,11 @@ import com.thinksity.R;
 public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implements ThirdPartyCallbacks, View.OnClickListener {
 
     public static final int ADD_PRODUCTS = 0,ADD_UPDATES = 2, SHOW_MESSAGE = -1;
-    SuggestionsDO mSuggestionDO, shareSuggestionDo;
+    SuggestionsDO mSuggestionDO;
     LinearLayout messageLayout;
     FrameLayout fragmentLayout;
-    ThirdPartySuggestionAdapter mSuggestionAdapter;
+    List<SharedSuggestionsDO> sharedSuggestionsDOList = new ArrayList<>();
+    ThirdPartySharedItemAdapter mSuggestionAdapter;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +48,13 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
         }
         Intent intent = getIntent();
         mSuggestionDO = (SuggestionsDO) intent.getSerializableExtra("message");
+        /*try {
+            *//*shareSuggestionDo = (SuggestionsDO) mSuggestionDO.clone();
+            shareSuggestionDo.setUpdates(new ArrayList<SugUpdates>());
+            shareSuggestionDo.setProducts(new ArrayList<SugProducts>());*//*
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }*/
         init();
         addFragments(SHOW_MESSAGE);
     }
@@ -56,8 +68,8 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
         fragmentLayout = (FrameLayout) findViewById(R.id.layout_fragment);
         RecyclerView suggestionsRecyclerView = (RecyclerView) findViewById(R.id.rv_suggestions);
         suggestionsRecyclerView.setHasFixedSize(true);
-        suggestionsRecyclerView.setLayoutManager(new GridLayoutManager(ThirdPartySuggestionDetailActivity.this,2));
-        mSuggestionAdapter = new ThirdPartySuggestionAdapter(ThirdPartySuggestionDetailActivity.this);
+        suggestionsRecyclerView.setLayoutManager(new LinearLayoutManager(ThirdPartySuggestionDetailActivity.this));
+        mSuggestionAdapter = new ThirdPartySharedItemAdapter(ThirdPartySuggestionDetailActivity.this, sharedSuggestionsDOList);
         suggestionsRecyclerView.setAdapter(mSuggestionAdapter);
         findViewById(R.id.btn_add_updates).setOnClickListener(this);
         findViewById(R.id.btn_add_products).setOnClickListener(this);
@@ -72,13 +84,17 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
                 fragmentLayout.setVisibility(View.VISIBLE);
                 Bundle b= new Bundle();
                 b.putInt("type",screen);
+                b.putSerializable("message",mSuggestionDO);
                 manager.beginTransaction()
                         .replace(R.id.layout_fragment, ShowThirdPartyProductsFragment.getInstance(b))
                         .addToBackStack(null)
                         .commit();
                 break;
             case SHOW_MESSAGE:
-                fragmentLayout.setVisibility(View.GONE);
+                if (fragmentLayout.getVisibility() == View.VISIBLE){
+                    manager.popBackStack();
+                    fragmentLayout.setVisibility(View.GONE);
+                }
                 messageLayout.setVisibility(View.VISIBLE);
                 break;
 
@@ -88,24 +104,48 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
     }
 
     private void shareSuggestionToCustomer(){
-
+        //shareSuggestionDo share
     }
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if (fragmentLayout.getVisibility() == View.VISIBLE){
+            getSupportFragmentManager().popBackStack();
+            fragmentLayout.setVisibility(View.GONE);
+            messageLayout.setVisibility(View.VISIBLE);
+        }else{
+            super.onBackPressed();
+        }
+
     }
 
     @Override
-    public void addSuggestions(int type, int[] positions) {
+    public void addSuggestions(int type, ArrayList<Integer> positions) {
 
         switch (type){
-            case ADD_PRODUCTS:
 
+            case ADD_PRODUCTS:
+                for (int i : positions){
+                    SharedSuggestionsDO suggestionsDO =
+                            new SharedSuggestionsDO(mSuggestionDO.getProducts().get(i).getProductName(),
+                                    mSuggestionDO.getProducts().get(i).getProductUrl());
+                    if(!sharedSuggestionsDOList.contains(suggestionsDO))
+                        sharedSuggestionsDOList.add(suggestionsDO);
+                }
+                mSuggestionAdapter.notifyDataSetChanged();
                 break;
             case ADD_UPDATES:
 
+                for (int i : positions){
+                    SharedSuggestionsDO suggestionsDO =
+                            new SharedSuggestionsDO(mSuggestionDO.getUpdates().get(i).getName(),
+                                    mSuggestionDO.getUpdates().get(i).getUpdateUrl());
+                    if(!sharedSuggestionsDOList.contains(suggestionsDO))
+                        sharedSuggestionsDOList.add(suggestionsDO);
+                }
+                mSuggestionAdapter.notifyDataSetChanged();
                 break;
         }
+        addFragments(SHOW_MESSAGE);
     }
 
     @Override
