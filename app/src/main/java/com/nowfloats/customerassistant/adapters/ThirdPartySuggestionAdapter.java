@@ -2,6 +2,7 @@ package com.nowfloats.customerassistant.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,9 @@ import com.thinksity.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.nowfloats.customerassistant.ThirdPartySuggestionDetailActivity.ADD_PRODUCTS;
+import static com.nowfloats.customerassistant.ThirdPartySuggestionDetailActivity.ADD_UPDATES;
+
 /**
  * Created by Admin on 11-10-2017.
  */
@@ -28,6 +32,7 @@ public class ThirdPartySuggestionAdapter extends RecyclerView.Adapter<RecyclerVi
     private List<SugUpdates> updateList = new ArrayList<>();
     private List<SugProducts> productList = new ArrayList<>();
     private ListType listType;
+    ThirdPartyFragment callback;
     private ArrayList<Integer> checkList = new ArrayList<>();
 
     public enum ListType{
@@ -66,6 +71,15 @@ public class ThirdPartySuggestionAdapter extends RecyclerView.Adapter<RecyclerVi
         } else if (holder instanceof MyUpdatesViewHolder){
 
             MyUpdatesViewHolder updateHolder = (MyUpdatesViewHolder) holder;
+            if(!TextUtils.isEmpty(updateList.get(position).getImage())){
+                updateHolder.updateImage.setVisibility(View.VISIBLE);
+                Glide.with(mContext)
+                        .load(updateList.get(position).getImage())
+                        .into(updateHolder.updateImage);
+            }else{
+                updateHolder.updateImage.setVisibility(View.GONE);
+            }
+
             updateHolder.updateName.setText(updateList.get(position).getName());
             updateHolder.frameLayout.setVisibility(checkList.contains(position) ? View.VISIBLE : View.GONE);
         }
@@ -75,11 +89,13 @@ public class ThirdPartySuggestionAdapter extends RecyclerView.Adapter<RecyclerVi
         ((ThirdPartyCallbacks)mContext).addSuggestions(type,checkList);
     }
 
-    public void setProductList(List<SugProducts> list){
+    public void setProductList(List<SugProducts> list,ThirdPartyFragment callback){
         productList = list;
+        this.callback = callback;
     }
-    public void setUpdateList(List<SugUpdates> list){
+    public void setUpdateList(List<SugUpdates> list,ThirdPartyFragment callback){
         updateList = list;
+        this.callback = callback;
     }
     @Override
     public int getItemCount() {
@@ -110,6 +126,7 @@ public class ThirdPartySuggestionAdapter extends RecyclerView.Adapter<RecyclerVi
                         frameLayout.setVisibility(View.VISIBLE);
                         checkList.add(getAdapterPosition());
                     }
+                    callback.itemSelected(ADD_PRODUCTS, checkList.size());
                 }
             });
         }
@@ -120,11 +137,13 @@ public class ThirdPartySuggestionAdapter extends RecyclerView.Adapter<RecyclerVi
         int viewType;
         TextView updateName;
         FrameLayout frameLayout;
+        ImageView updateImage;
         public MyUpdatesViewHolder(View itemView) {
             super(itemView);
             this.viewType = getItemViewType();
             updateName = (TextView) itemView.findViewById(R.id.tv_name);
             frameLayout = (FrameLayout) itemView.findViewById(R.id.ll_selected);
+            updateImage = (ImageView) itemView.findViewById(R.id.imageView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -135,8 +154,13 @@ public class ThirdPartySuggestionAdapter extends RecyclerView.Adapter<RecyclerVi
                         frameLayout.setVisibility(View.VISIBLE);
                         checkList.add(getAdapterPosition());
                     }
+                    callback.itemSelected(ADD_UPDATES,checkList.size());
                 }
             });
         }
+    }
+
+    public interface ThirdPartyFragment{
+        void itemSelected(int type,int num);
     }
 }

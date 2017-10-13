@@ -59,11 +59,12 @@
             android:id="@+id/tv_response"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_yellow_selector_bg"
+            android:background="@drawable/yellow_btn_bg"
             android:gravity="center"
             android:padding="9dp"
-            android:text="Response"
-            android:textColor="@color/primary" />
+            android:text="Respond"
+            android:textAllCaps="true"
+            android:textColor="@drawable/yellow_btn_text_color" />
     </LinearLayout>
 
 </LinearLayout>

@@ -19,7 +19,7 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="160dp"
             android:layout_marginLeft="7dp"
             android:layout_marginRight="7dp"
@@ -27,7 +27,6 @@
             android:layout_weight="1"
             android:scaleType="centerCrop"
             android:src="@drawable/logo_default_image"
-            android:tag="image_tag"
             android:visibility="gone" />
 
             <com.nowfloats.CustomWidget.roboto_lt_45_505050

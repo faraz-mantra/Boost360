@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.nowfloats.customerassistant.adapters.ThirdPartySuggestionAdapter;
 import com.nowfloats.customerassistant.callbacks.ThirdPartyCallbacks;
@@ -24,11 +25,12 @@ import static com.nowfloats.customerassistant.ThirdPartySuggestionDetailActivity
  * Created by Admin on 10-10-2017.
  */
 
-public class ShowThirdPartyProductsFragment extends Fragment implements View.OnClickListener {
+public class ShowThirdPartyProductsFragment extends Fragment implements View.OnClickListener,ThirdPartySuggestionAdapter.ThirdPartyFragment {
 
     private Context mContext;
     private SuggestionsDO mSuggestionDO;
     int type = -1;
+    TextView addProductBtn;
     ThirdPartySuggestionAdapter adapter;
     public static Fragment getInstance(Bundle b){
         Fragment frag = new ShowThirdPartyProductsFragment();
@@ -65,23 +67,26 @@ public class ShowThirdPartyProductsFragment extends Fragment implements View.OnC
 
         RecyclerView suggestionsRecyclerView = (RecyclerView) view.findViewById(R.id.rv_list);
         suggestionsRecyclerView.setHasFixedSize(true);
-
+        addProductBtn = (TextView) view.findViewById(R.id.btn_send);
         switch (type){
             case ADD_UPDATES:
                 suggestionsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
                 adapter = new ThirdPartySuggestionAdapter(mContext, ThirdPartySuggestionAdapter.ListType.UPDATES);
-                adapter.setUpdateList(mSuggestionDO.getUpdates());
+                adapter.setUpdateList(mSuggestionDO.getUpdates(),this);
+                addProductBtn.setText("Add Updates");
                 break;
             case ADD_PRODUCTS:
                 suggestionsRecyclerView.setLayoutManager(new GridLayoutManager(mContext,2));
                 adapter = new ThirdPartySuggestionAdapter(mContext,ThirdPartySuggestionAdapter.ListType.PRODUCTS);
-                adapter.setProductList(mSuggestionDO.getProducts());
+                adapter.setProductList(mSuggestionDO.getProducts(),this);
+                addProductBtn.setText("Add Products");
                 break;
         }
 
         suggestionsRecyclerView.setAdapter(adapter);
         view.findViewById(R.id.btn_cancel).setOnClickListener(this);
-        view.findViewById(R.id.btn_send).setOnClickListener(this);
+        addProductBtn.setOnClickListener(this);
+
     }
 
     @Override
@@ -100,4 +105,12 @@ public class ShowThirdPartyProductsFragment extends Fragment implements View.OnC
     }
 
 
+    @Override
+    public void itemSelected(int type,int num) {
+        if(type == ADD_PRODUCTS) {
+            addProductBtn.setText("Add Products " + String.valueOf(num > 0 ? "(" + num + ")" : ""));
+        }else{
+            addProductBtn.setText("Add Updates " + String.valueOf(num > 0 ? "(" + num + ")" : ""));
+        }
+    }
 }

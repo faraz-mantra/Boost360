@@ -95,6 +95,12 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
 
         getMessages(customerApis);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     private void getMessages(CustomerAssistantApi api){
         showProgress();
         HashMap<String, String> offersParam = new HashMap<>();
@@ -118,8 +124,10 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
     }
     @Subscribe
     public void onMessagesReceived(SMSSuggestions smsSuggestions){
-        sort(smsSuggestions.getSuggestionList(),SortType.EXPIRE);
-        adapter.refreshListData(smsSuggestions.getSuggestionList());
+        if(smsSuggestions != null) {
+            sort(smsSuggestions.getSuggestionList(), SortType.EXPIRE);
+            adapter.refreshListData(smsSuggestions.getSuggestionList());
+        }
         hideProgress();
     }
 

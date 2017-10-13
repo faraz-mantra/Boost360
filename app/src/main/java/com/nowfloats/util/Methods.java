@@ -199,6 +199,30 @@ public class Methods {
         }
         return false;
     }
+
+    public static boolean isMyActivityAtTop(Context mContext){
+        ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+        if(taskInfo != null && taskInfo.size()>0) {
+            //Log.d("topActivity", "CURRENT Activity ::" + taskInfo.get(0).topActivity.getClassName());
+            return  mContext.getClass().getName().equalsIgnoreCase(taskInfo.get(0).topActivity.getClassName());
+//            return mContext.getPackageName().equalsIgnoreCase(componentInfo.getPackageName());
+        }
+        return false;
+    }
+
+    public static boolean isMyActivityInStack(Context mContext){
+        ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+        if(taskInfo != null && taskInfo.size()>0) {
+            //Log.d("topActivity", "CURRENT Activity ::" + taskInfo.get(0).topActivity.getClassName())
+            for (ActivityManager.RunningTaskInfo info :taskInfo)
+            return  mContext.getClass().getName().equalsIgnoreCase(info.topActivity.getClassName());
+//            return mContext.getPackageName().equalsIgnoreCase(componentInfo.getPackageName());
+        }
+        return false;
+    }
+
     public static void showSnackBar(View view, String message, int color) {
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
         snackbar.getView().setBackgroundColor(color);

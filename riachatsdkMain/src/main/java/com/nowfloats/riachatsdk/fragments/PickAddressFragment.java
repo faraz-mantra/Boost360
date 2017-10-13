@@ -115,6 +115,8 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
     private Map<String, String> mDataMap = new HashMap<>();
     private NFGeoCoder nfGeoCoder;
 
+    private boolean hasCitySelected = false;
+
     public static PickAddressFragment newInstance(PICK_TYPE pick_type) {
 
         PickAddressFragment fragment = new PickAddressFragment();
@@ -153,6 +155,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        hasCitySelected = false;
         if (getArguments() != null) {
             pick_type = (PICK_TYPE) getArguments().get(ARG_MAP_TYPE);
             mDataMap = (Map<String, String>) getArguments().get(ARG_MAP_DATA);
@@ -366,6 +369,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 
                 @Override
                 public void afterTextChanged(Editable s) {
+
                     if (etCity.getTag() != null && !(boolean) etCity.getTag()) {
 
                     } else {
@@ -375,7 +379,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
 //                                country_code = Country_CodeMap.get(etCity.getText().toString());
 //                            }
 //                            makeAutoCompleteFilter(country_code);
-
+                            hasCitySelected = false;
                             final PendingResult<AutocompletePredictionBuffer> result =
                                     Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, etCity.getText().toString().trim(),
                                             null, filter);
@@ -431,6 +435,7 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
                     etCity.setTag(false);
                     etCity.setText(city);
                     etCity.setTag(true);
+                    hasCitySelected = true;
 
                 }
             });
@@ -681,6 +686,12 @@ public class PickAddressFragment extends DialogFragment implements LocationListe
         if (!isAllFieldsValid) {
             Toast.makeText(getActivity(), "Please enter mandatory fields.", Toast.LENGTH_SHORT).show();
         }
+
+        if(!hasCitySelected){
+            isAllFieldsValid = false;
+            Toast.makeText(getActivity(), "Please enter valid city.", Toast.LENGTH_SHORT).show();
+        }
+
         return isAllFieldsValid;
     }
 
