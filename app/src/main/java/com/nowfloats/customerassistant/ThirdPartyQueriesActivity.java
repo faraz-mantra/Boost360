@@ -119,9 +119,15 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(adapter != null && adapter.isCounterStopped){
-            adapter.notifyDataSetChanged();
+        if(adapter != null && adapter.isCounterStopped) {
+            rvList.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    adapter.notifyDataSetChanged();
+                }
+            }, 1000);
         }
+
     }
 
     private void getNewMessages(){

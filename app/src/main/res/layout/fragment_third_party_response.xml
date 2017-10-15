@@ -80,10 +80,6 @@
             android:textSize="15sp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="15dp"/>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_suggestions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -117,6 +113,10 @@
                 android:gravity="center"
                 android:text="UPDATES"/>
         </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_suggestions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
     <TextView
         android:id="@+id/btn_send"

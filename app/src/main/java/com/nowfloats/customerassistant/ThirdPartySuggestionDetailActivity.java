@@ -79,6 +79,7 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
     private void init() {
         TextView addressText = (TextView) findViewById(R.id.tv_address);
         TextView timeText = (TextView) findViewById(R.id.tv_time);
+        addressText.setText(mSuggestionDO.getValue());
         timeText.setText(Methods.getFormattedDate(mSuggestionDO.getDate()));
         messageLayout = (LinearLayout) findViewById(R.id.layout_message);
         fragmentLayout = (FrameLayout) findViewById(R.id.layout_fragment);
@@ -116,7 +117,6 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
                     manager.popBackStack();
                     fragmentLayout.setVisibility(View.GONE);
                 }
-                //messageLayout.setVisibility(View.VISIBLE);
                 break;
 
             default:
@@ -130,7 +130,6 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
         } else if (mSuggestionDO.getType().equalsIgnoreCase(ACTION_TYPE_EMAIL)) {
             prepareMessageForShare(CallToActionFragment.SHARE_VIA.GMAIL);
         }
-        //shareSuggestionDo share
     }
 
     private void prepareMessageForShare(CallToActionFragment.SHARE_VIA share_via) {
