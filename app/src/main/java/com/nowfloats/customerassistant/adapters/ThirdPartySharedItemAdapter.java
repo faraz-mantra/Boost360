@@ -98,11 +98,15 @@ public class ThirdPartySharedItemAdapter extends RecyclerView.Adapter<ThirdParty
             cancelImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    mSuggestionsDO.remove(getAdapterPosition());
-                    notifyItemRemoved(getAdapterPosition());
+                    removeItem(getAdapterPosition());
                 }
             });
         }
+    }
+
+    private void removeItem(int position){
+        mSuggestionsDO.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position,mSuggestionsDO.size());
     }
 }

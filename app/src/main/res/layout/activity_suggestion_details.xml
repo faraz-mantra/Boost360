@@ -31,7 +31,9 @@
             android:textStyle="bold"
             android:textColor="@color/white"/>
     </android.support.v7.widget.Toolbar>
-
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <include
             android:id="@+id/layout_message"
             android:layout_height="match_parent"
@@ -44,5 +46,6 @@
             android:layout_height="match_parent">
 
         </FrameLayout>
+    </FrameLayout>
 
 </LinearLayout>

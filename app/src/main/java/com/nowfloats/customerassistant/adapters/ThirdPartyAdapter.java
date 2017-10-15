@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.nowfloats.customerassistant.ThirdPartySuggestionDetailActivity;
 import com.nowfloats.customerassistant.models.SuggestionsDO;
+import com.nowfloats.managecustomers.adapters.FacebookChatAdapter;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
@@ -25,13 +26,14 @@ import java.util.concurrent.TimeUnit;
  * Created by Admin on 09-10-2017.
  */
 
-public class ThirdPartyAdapter extends RecyclerView.Adapter<ThirdPartyAdapter.MySmsViewHolder> {
+public class ThirdPartyAdapter extends RecyclerView.Adapter {
 
 
     private Context mContext;
     private List<SuggestionsDO> rvList;
     public boolean isCounterStopped;
     private RecyclerView mRecyclerView;
+    final int EMPTY_LAYOUT = -1, MESSAGE_LAYOUT = -2;
 
     public ThirdPartyAdapter(Context context, List<SuggestionsDO> list){
         mContext = context;
@@ -39,10 +41,18 @@ public class ThirdPartyAdapter extends RecyclerView.Adapter<ThirdPartyAdapter.My
     }
 
     @Override
-    public MySmsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_third_party_sms_item,parent,false);
-        MySmsViewHolder mySmsViewHolder = new MySmsViewHolder(view);
-        return mySmsViewHolder;
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view;
+        switch (viewType){
+            case MESSAGE_LAYOUT:
+                view = LayoutInflater.from(mContext).inflate(R.layout.adapter_third_party_sms_item, parent, false);
+                return new MySmsViewHolder(view);
+            case EMPTY_LAYOUT:
+                view = LayoutInflater.from(mContext).inflate(R.layout.facebook_no_messages, parent, false);
+                return new FacebookChatAdapter.MyEmptyViewHolder(view);
+            default:
+                return null;
+        }
     }
 
     @Override
@@ -52,32 +62,50 @@ public class ThirdPartyAdapter extends RecyclerView.Adapter<ThirdPartyAdapter.My
     }
 
     @Override
-    public void onBindViewHolder(final MySmsViewHolder holder, final int position) {
-        final SuggestionsDO suggestionsDO = rvList.get(position);
-        holder.addressTextView.setText(suggestionsDO.getActualMessage());
-        holder.timeTextView.setText(Methods.getFormattedDate(suggestionsDO.getDate()));
-        holder.titleTextView.setText(suggestionsDO.getActualMessage());
+    public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, final int position) {
+        if(viewHolder instanceof MySmsViewHolder) {
+            MySmsViewHolder holder = (MySmsViewHolder) viewHolder;
+            final SuggestionsDO suggestionsDO = rvList.get(position);
+            holder.addressTextView.setText(suggestionsDO.getActualMessage());
+            holder.timeTextView.setText(Methods.getFormattedDate(suggestionsDO.getDate()));
+            holder.titleTextView.setText(suggestionsDO.getActualMessage());
 
-        long millis=suggestionsDO.getExpiryDate()-Calendar.getInstance().getTimeInMillis();
+            long millis = suggestionsDO.getExpiryDate() - Calendar.getInstance().getTimeInMillis();
 
-        if(holder.customTimer!=null){
-            holder.customTimer.cancel();
+            if (holder.customTimer != null) {
+                holder.customTimer.cancel();
+            }
+
+            holder.customTimer = (CustomTimer) new CustomTimer(millis, holder, position).start();
+        }else if( viewHolder instanceof FacebookChatAdapter.MyEmptyViewHolder){
+            FacebookChatAdapter.MyEmptyViewHolder holder = (FacebookChatAdapter.MyEmptyViewHolder) viewHolder;
+            holder.message.setText("You did not receive any query yet or queries may be expired");
+            holder.mainMessage.setText("ThirdParty queries");
         }
+    }
 
-        holder.customTimer = (CustomTimer) new CustomTimer(millis,holder,suggestionsDO,position).start();;
+    @Override
+    public int getItemViewType(int position) {
+        return rvList.get(position).isEmptyLayout? EMPTY_LAYOUT:MESSAGE_LAYOUT;
     }
 
     class CustomTimer extends CountDownTimer{
         private MySmsViewHolder holder;
-        private SuggestionsDO suggestionsDO;
         private  int mPosition;
 
-        CustomTimer(long millis,MySmsViewHolder holder,
-                    SuggestionsDO suggestionsDO,int position){
+        CustomTimer(long millis,MySmsViewHolder holder,int position){
             super(millis,1000);
             this.holder = holder;
-            this.suggestionsDO = suggestionsDO;
             this.mPosition = position;
+            if (millis<60*60*24*1000){
+                holder.responseTextView.setTextColor(ContextCompat.getColorStateList(mContext, R.color.red_btn_text_color));
+                holder.responseTextView.setBackgroundResource(R.drawable.red_btn_state_bg);
+            }else{
+                String days = TimeUnit.MILLISECONDS.toDays(millis) ==1?"day":" days";
+                holder.responseTextView.setText("Respond in " + days);
+                holder.responseTextView.setTextColor(ContextCompat.getColorStateList(mContext, R.color.yellow_btn_text_color));
+                holder.responseTextView.setBackgroundResource(R.drawable.yellow_btn_bg);
+            }
         }
 
         @Override
@@ -87,13 +115,14 @@ public class ThirdPartyAdapter extends RecyclerView.Adapter<ThirdPartyAdapter.My
                 String hms = String.format(Locale.ENGLISH,"%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
                         TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
                         TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
+                if(holder.responseTextView.getText().toString().endsWith("days")) {
+                    holder.responseTextView.setTextColor(ContextCompat.getColorStateList(mContext, R.color.red_btn_text_color));
+                    holder.responseTextView.setBackgroundResource(R.drawable.red_btn_state_bg);
+                }
                 holder.responseTextView.setText("Respond in "+hms);
-                holder.responseTextView.setTextColor(ContextCompat.getColorStateList(mContext,R.color.red_btn_text_color));
-                holder.responseTextView.setBackgroundResource(R.drawable.red_btn_state_bg);
             }else {
-                holder.responseTextView.setTextColor(ContextCompat.getColorStateList(mContext,R.color.yellow_btn_text_color));
-                holder.responseTextView.setBackgroundResource(R.drawable.yellow_btn_bg);
-                holder.responseTextView.setText("Respond in " + TimeUnit.MILLISECONDS.toDays(millisUntilFinished) +" days");
+                String days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished) ==1?"day":" days";
+                holder.responseTextView.setText("Respond in " + days);
             }
             if(!Methods.isMyActivityAtTop(mContext)) {
                 this.cancel();
@@ -103,8 +132,10 @@ public class ThirdPartyAdapter extends RecyclerView.Adapter<ThirdPartyAdapter.My
 
         @Override
         public void onFinish() {
+            holder.responseTextView.setTextColor(ContextCompat.getColorStateList(mContext,R.color.red_btn_text_color));
+            holder.responseTextView.setBackgroundResource(R.drawable.red_btn_state_bg);
             holder.responseTextView.setText("Expired");
-            finishTimer(mPosition);
+            //finishTimer(mPosition);
         }
     }
 

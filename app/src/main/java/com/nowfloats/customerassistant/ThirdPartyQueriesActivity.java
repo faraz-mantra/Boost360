@@ -13,12 +13,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.gson.Gson;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.customerassistant.adapters.ThirdPartyAdapter;
 import com.nowfloats.customerassistant.models.SMSSuggestions;
 import com.nowfloats.customerassistant.models.SuggestionsDO;
 import com.nowfloats.customerassistant.service.CustomerAssistantApi;
+import com.nowfloats.sync.DbController;
 import com.nowfloats.util.BusProvider;
+import com.nowfloats.util.Methods;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
@@ -44,6 +47,8 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
     private String appVersion = "";
     ProgressDialog progressBar;
     SwipeRefreshLayout mSwipeRefreshLayout;
+    private DbController mDbController;
+    private CustomerAssistantApi customerApis;
 
     private enum SortType{
         DATE,CHANNEL,EXPIRE
@@ -63,17 +68,21 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_layout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.primary_color);
         setSupportActionBar(toolbar);
+        setTitle("Third Party Queries");
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+        mDbController = DbController.getDbController(this);
         sessionManager = new UserSessionManager(this,this);
         mBus = BusProvider.getInstance().getBus();
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        final CustomerAssistantApi customerApis = new CustomerAssistantApi(mBus);
-        rvList.setHasFixedSize(true);
+        customerApis = new CustomerAssistantApi(mBus);
+
         progressBar = new ProgressDialog(this);
         progressBar.setIndeterminate(true);
+
+        rvList.setHasFixedSize(true);
+        LinearLayoutManager manager = new LinearLayoutManager(this);
         adapter= new ThirdPartyAdapter(this,queriesList);
         rvList.setLayoutManager(manager);
         rvList.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
@@ -89,23 +98,37 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 mSwipeRefreshLayout.setRefreshing(true);
-                getMessages(customerApis);
+                getNewMessages();
             }
         });
 
-        getMessages(customerApis);
+        loadDataFromDb();
     }
 
+    private void loadDataFromDb() {
+
+        String payloadStr = mDbController.getSamData();
+        SMSSuggestions suggestions = new Gson().fromJson(payloadStr, SMSSuggestions.class);
+        if(suggestions != null && suggestions.getSuggestionList() != null && suggestions.getSuggestionList().size()>0) {
+            sort(suggestions.getSuggestionList(), SortType.EXPIRE);
+            adapter.refreshListData(suggestions.getSuggestionList());
+        }else{
+            getNewMessages();
+        }
+    }
     @Override
     protected void onResume() {
         super.onResume();
+        if(adapter != null && adapter.isCounterStopped){
+            adapter.notifyDataSetChanged();
+        }
     }
 
-    private void getMessages(CustomerAssistantApi api){
+    private void getNewMessages(){
         showProgress();
         HashMap<String, String> offersParam = new HashMap<>();
         offersParam.put("fpId", sessionManager.getFPID());
-        api.getMessages(offersParam,sessionManager.getFPID(),appVersion);
+        customerApis.getMessages(offersParam,sessionManager.getFPID(),appVersion);
     }
 
     private void showProgress() {
@@ -124,9 +147,20 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
     }
     @Subscribe
     public void onMessagesReceived(SMSSuggestions smsSuggestions){
-        if(smsSuggestions != null) {
+        if(smsSuggestions.getSuggestionList() !=null) {
             sort(smsSuggestions.getSuggestionList(), SortType.EXPIRE);
             adapter.refreshListData(smsSuggestions.getSuggestionList());
+            String payloadStr = new Gson().toJson(smsSuggestions);
+            mDbController.postSamData(payloadStr);
+        }else{
+            if(!Methods.isOnline(this)) {
+                Methods.snackbarNoInternet(this);
+            }
+            List<SuggestionsDO> list = new ArrayList<>(1);
+            SuggestionsDO suggestionsDO = new SuggestionsDO();
+            suggestionsDO.setEmptyLayout(true);
+            list.add(suggestionsDO);
+            adapter.refreshListData(list);
         }
         hideProgress();
     }

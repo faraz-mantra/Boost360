@@ -661,6 +661,10 @@ public class Methods {
         callIntent.setData(Uri.parse("tel:" + number));
         mContext.startActivity(Intent.createChooser(callIntent, "Call by:"));
     }
+    public static void sendEmail( Context context, String email){
+        Intent shareIntent = new Intent(Intent.ACTION_SEND, Uri.parse("mailto:" + email));
+        context.startActivity(Intent.createChooser(shareIntent,"Email by:"));
+    }
     public static String getFormattedDate(long milliseconds) {
 
         Date date = new Date(milliseconds);

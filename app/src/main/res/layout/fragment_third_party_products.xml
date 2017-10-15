@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="#FAFAFA"
+    android:clickable="false"
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,9 +23,10 @@
             android:layout_weight="1"/>
         <ImageView
             android:id="@+id/btn_cancel"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:padding="8dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="10dp"
+            android:background="?android:selectableItemBackground"
             android:src="@drawable/gallery_cancel"
             android:tint="@color/gray"/>
     </LinearLayout>

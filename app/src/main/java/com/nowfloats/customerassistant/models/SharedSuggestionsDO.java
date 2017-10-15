@@ -5,11 +5,19 @@ package com.nowfloats.customerassistant.models;
  */
 
 public class SharedSuggestionsDO {
-    String name, url;
+    String name="", url="",image="";
 
     public SharedSuggestionsDO(String name, String url) {
         this.name = name;
         this.url = url;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getName() {
@@ -32,7 +40,7 @@ public class SharedSuggestionsDO {
     public boolean equals(Object obj) {
         if(obj instanceof  SharedSuggestionsDO){
             SharedSuggestionsDO data = (SharedSuggestionsDO) obj;
-            return getName().equals(data.getName()) && getUrl().equals(data.getUrl());
+            return getName().equals(data.getName()) && getUrl().equals(data.getUrl()) && getImage().equals(data.getImage());
         }else{
             return false;
         }
@@ -40,6 +48,6 @@ public class SharedSuggestionsDO {
 
     @Override
     public int hashCode() {
-        return getUrl().hashCode()+getName().hashCode();
+        return getUrl().hashCode()+getName().hashCode()+getImage().hashCode();
     }
 }

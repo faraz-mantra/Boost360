@@ -62,7 +62,7 @@
             android:background="@drawable/yellow_btn_bg"
             android:gravity="center"
             android:padding="9dp"
-            android:text="Respond"
+            android:text="Response in days"
             android:textAllCaps="true"
             android:textColor="@drawable/yellow_btn_text_color" />
     </LinearLayout>

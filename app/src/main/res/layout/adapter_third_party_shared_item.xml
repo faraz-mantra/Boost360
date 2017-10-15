@@ -24,7 +24,7 @@
     <ImageView
         android:id="@+id/img_cancel"
         android:layout_width="40dp"
-        android:layout_height="match_parent"
+        android:layout_height="45dp"
         android:src="@drawable/gallery_cancel"
         android:tint="@color/light_gray"
         android:padding="8dp"

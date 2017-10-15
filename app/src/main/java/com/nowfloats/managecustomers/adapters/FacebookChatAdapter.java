@@ -106,13 +106,13 @@ public class FacebookChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         return chatList.size();
     }
 
-    public class MyEmptyViewHolder extends RecyclerView.ViewHolder {
+    public static class MyEmptyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView userName, message;
+        public TextView mainMessage, message;
 
         public MyEmptyViewHolder(View itemView) {
             super(itemView);
-            userName = (TextView) itemView.findViewById(R.id.tv_main_message);
+            mainMessage = (TextView) itemView.findViewById(R.id.tv_main_message);
             message = (TextView) itemView.findViewById(R.id.tv_note_message);
 
         }

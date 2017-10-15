@@ -21,6 +21,15 @@ public class SuggestionsDO implements Serializable,Cloneable{
     public String shortText;
     public long expiryDate;
     public int status = -1;
+    public boolean isEmptyLayout;
+
+    public boolean isEmptyLayout() {
+        return isEmptyLayout;
+    }
+
+    public void setEmptyLayout(boolean emptyLayout) {
+        isEmptyLayout = emptyLayout;
+    }
 
     public String getExpiryTimeOfMessage() {
         return expiryTimeOfMessage;
