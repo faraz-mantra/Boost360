@@ -125,7 +125,6 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
-import com.thinksity.Specific;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -1886,7 +1885,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             progressDialog.setCancelable(false);
 
             API_Login apiLogin = new API_Login(HomeActivity.this, session, bus);
-            apiLogin.authenticate(bundle.getString("Username"), bundle.getString("Password"), Specific.clientId2);
+            apiLogin.authenticate(bundle.getString("Username"), bundle.getString("Password"), Constants.clientId);
 
         }
     }
