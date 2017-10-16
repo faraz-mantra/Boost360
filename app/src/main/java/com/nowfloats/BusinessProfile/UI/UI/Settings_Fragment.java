@@ -28,7 +28,6 @@ import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
 import com.nowfloats.Store.FlavourFivePlansActivity;
 import com.nowfloats.Store.PricingPlansActivity;
-import com.nowfloats.customerassistant.CustomerAssistantActivity;
 import com.nowfloats.riachatsdk.ChatManager;
 import com.nowfloats.sync.DbController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -318,7 +317,7 @@ public class Settings_Fragment extends Fragment {
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
-                        getActivity().stopService(new Intent(getActivity(), CustomerAssistantActivity.class));
+                        //getActivity().stopService(new Intent(getActivity(), CustomerAssistantActivity.class));
                         session.logoutUser();
                         DataBase db = new DataBase(activity);
                         DbController.getDbController(activity.getApplicationContext()).deleteDataBase();

@@ -17,11 +17,29 @@ public class SuggestionsDO implements Serializable,Cloneable{
     public String source;
     public String value;
     public String actualMessage;
+    public String enquiredProduct;
+    public String contactName;
     public String expiryTimeOfMessage;
     public String shortText;
     public long expiryDate;
     public int status = -1;
     public boolean isEmptyLayout;
+
+    public String getEnquiredProduct() {
+        return enquiredProduct;
+    }
+
+    public void setEnquiredProduct(String enquiredProduct) {
+        this.enquiredProduct = enquiredProduct;
+    }
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
 
     public boolean isEmptyLayout() {
         return isEmptyLayout;

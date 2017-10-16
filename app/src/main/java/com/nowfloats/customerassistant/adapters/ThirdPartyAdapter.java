@@ -6,11 +6,14 @@ import android.os.CountDownTimer;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.customerassistant.ThirdPartySuggestionDetailActivity;
 import com.nowfloats.customerassistant.models.SuggestionsDO;
 import com.nowfloats.managecustomers.adapters.FacebookChatAdapter;
@@ -66,9 +69,10 @@ public class ThirdPartyAdapter extends RecyclerView.Adapter {
         if(viewHolder instanceof MySmsViewHolder) {
             MySmsViewHolder holder = (MySmsViewHolder) viewHolder;
             final SuggestionsDO suggestionsDO = rvList.get(position);
-            holder.addressTextView.setText(suggestionsDO.getActualMessage());
-            holder.timeTextView.setText(Methods.getFormattedDate(suggestionsDO.getDate()));
-            holder.titleTextView.setText(suggestionsDO.getActualMessage());
+            String contactName = TextUtils.isEmpty(suggestionsDO.getContactName())?"":suggestionsDO.getContactName()+", ";
+            holder.addressTextView.setText(contactName+""+suggestionsDO.getValue());
+            holder.timeTextView.setText(Methods.getFormattedDate(suggestionsDO.getDate(),"dd MMM, hh:mm a"));
+            holder.titleTextView.setText(suggestionsDO.getEnquiredProduct());
 
             long millis = suggestionsDO.getExpiryDate() - Calendar.getInstance().getTimeInMillis();
 
@@ -121,8 +125,8 @@ public class ThirdPartyAdapter extends RecyclerView.Adapter {
                 }
                 holder.responseTextView.setText("Respond in "+hms);
             }else {
-                String days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished) ==1?"day":" days";
-                holder.responseTextView.setText("Respond in " + days);
+                String days = TimeUnit.MILLISECONDS.toDays(millisUntilFinished) ==1?" day":" days";
+                holder.responseTextView.setText("Respond in "+TimeUnit.MILLISECONDS.toDays(millisUntilFinished) + days);
             }
             if(!Methods.isMyActivityAtTop(mContext)) {
                 this.cancel();
@@ -203,6 +207,7 @@ public class ThirdPartyAdapter extends RecyclerView.Adapter {
 
         TextView addressTextView,titleTextView,timeTextView,responseTextView;
         CustomTimer customTimer;
+        ImageView infoImag;
 
         public MySmsViewHolder(View itemView) {
             super(itemView);
@@ -210,6 +215,13 @@ public class ThirdPartyAdapter extends RecyclerView.Adapter {
             titleTextView = (TextView) itemView.findViewById(R.id.tv_title);
             timeTextView = (TextView) itemView.findViewById(R.id.tv_time);
             responseTextView = (TextView) itemView.findViewById(R.id.tv_response);
+            infoImag = (ImageView) itemView.findViewById(R.id.img_info);
+            infoImag.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showActualMessage(getAdapterPosition());
+                }
+            });
             responseTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -221,7 +233,12 @@ public class ThirdPartyAdapter extends RecyclerView.Adapter {
         }
     }
 
-    private void showActualMessage(){
-
+    private void showActualMessage(int pos){
+        SuggestionsDO suggestionsDO = rvList.get(pos);
+        MaterialDialog dialog = new MaterialDialog.Builder(mContext)
+                .title("Full Text Message From "+suggestionsDO.getSource())
+                .content(suggestionsDO.getActualMessage())
+                .linkColorRes(R.color.primaryColor)
+                .show();
     }
 }

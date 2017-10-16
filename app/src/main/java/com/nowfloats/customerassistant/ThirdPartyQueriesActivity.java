@@ -1,8 +1,11 @@
 package com.nowfloats.customerassistant;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +15,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.RatingBar;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.customerassistant.adapters.ThirdPartyAdapter;
@@ -21,6 +29,8 @@ import com.nowfloats.customerassistant.models.SuggestionsDO;
 import com.nowfloats.customerassistant.service.CustomerAssistantApi;
 import com.nowfloats.sync.DbController;
 import com.nowfloats.util.BusProvider;
+import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -38,6 +48,7 @@ import java.util.List;
 
 public class ThirdPartyQueriesActivity extends AppCompatActivity {
 
+    private static final int MAX_RESPONDED = 3;
     Toolbar toolbar;
     RecyclerView rvList;
     ThirdPartyAdapter adapter;
@@ -49,6 +60,9 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
     SwipeRefreshLayout mSwipeRefreshLayout;
     private DbController mDbController;
     private CustomerAssistantApi customerApis;
+    private SharedPreferences pref;
+    private int noOfTimesResponded = 0;
+    private int noOfStars;
 
     private enum SortType{
         DATE,CHANNEL,EXPIRE
@@ -93,7 +107,7 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-
+        pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -103,6 +117,68 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
         });
 
         loadDataFromDb();
+        noOfTimesResponded = pref.getInt(Key_Preferences.NO_OF_TIMES_RESPONDED, 0);
+
+        if (noOfTimesResponded >= MAX_RESPONDED) {
+            //showRating();
+        }
+    }
+    private void showRating() {
+
+        noOfStars = 0;
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
+//                .title(getString(R.string.enjoying_feature))
+                .customView(R.layout.csp_fragment_rating, false)
+                .positiveText(getString(R.string.submit))
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                        pref.edit().putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, 0).apply();
+                        updateRating(noOfStars);
+                    }
+                })
+                .positiveColorRes(R.color.primaryColor);
+
+        if (!isFinishing()) {
+
+            final MaterialDialog materialDialog = builder.show();
+            materialDialog.setCancelable(false);
+
+            View mView = materialDialog.getCustomView();
+            final RatingBar mRatingBar = (RatingBar) mView.findViewById(R.id.ratingbar);
+            mRatingBar.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        float touchPositionX = event.getX();
+                        float width = mRatingBar.getWidth();
+                        float starsf = (touchPositionX / width) * 5.0f;
+                        int stars = (int) starsf + 1;
+                        mRatingBar.setRating(stars);
+                        noOfStars = stars;
+                        v.setPressed(false);
+                    }
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        v.setPressed(true);
+                    }
+
+                    if (event.getAction() == MotionEvent.ACTION_CANCEL) {
+                        v.setPressed(false);
+                    }
+
+                    return true;
+                }
+            });
+        }
+    }
+
+    public void updateRating(int rating) {
+
+        HashMap<String, String> offersParam = new HashMap<>();
+        offersParam.put("fpId", sessionManager.getFPID());
+        offersParam.put("rating", rating + "");
+        customerApis.updateRating(offersParam);
     }
 
     private void loadDataFromDb() {
@@ -154,8 +230,16 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
     @Subscribe
     public void onMessagesReceived(SMSSuggestions smsSuggestions){
         if(smsSuggestions.getSuggestionList() !=null) {
-            sort(smsSuggestions.getSuggestionList(), SortType.EXPIRE);
-            adapter.refreshListData(smsSuggestions.getSuggestionList());
+            if (smsSuggestions.getSuggestionList().size()>0) {
+                sort(smsSuggestions.getSuggestionList(), SortType.EXPIRE);
+                adapter.refreshListData(smsSuggestions.getSuggestionList());
+            }else{
+                List<SuggestionsDO> list = new ArrayList<>(1);
+                SuggestionsDO suggestionsDO = new SuggestionsDO();
+                suggestionsDO.setEmptyLayout(true);
+                list.add(suggestionsDO);
+                adapter.refreshListData(list);
+            }
             String payloadStr = new Gson().toJson(smsSuggestions);
             mDbController.postSamData(payloadStr);
         }else{
@@ -200,6 +284,13 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){

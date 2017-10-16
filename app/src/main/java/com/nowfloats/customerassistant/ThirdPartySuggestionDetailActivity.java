@@ -1,6 +1,9 @@
 package com.nowfloats.customerassistant;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -19,13 +22,21 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nowfloats.customerassistant.adapters.ThirdPartySharedItemAdapter;
 import com.nowfloats.customerassistant.callbacks.ThirdPartyCallbacks;
+import com.nowfloats.customerassistant.models.MessageDO;
 import com.nowfloats.customerassistant.models.SharedSuggestionsDO;
 import com.nowfloats.customerassistant.models.SuggestionsDO;
+import com.nowfloats.customerassistant.service.CustomerAssistantApi;
 import com.nowfloats.util.BoostLog;
+import com.nowfloats.util.BusProvider;
+import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
+import com.squareup.otto.Bus;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.thinksity.R;
@@ -48,6 +59,11 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
     FrameLayout fragmentLayout;
     List<SharedSuggestionsDO> sharedSuggestionsDOList = new ArrayList<>();
     ThirdPartySharedItemAdapter mSuggestionAdapter;
+    private String appVersion = "";
+    private SharedPreferences pref;
+    private int noOfTimesResponded = 0;
+    private Bus mBus;
+    private CustomerAssistantApi customerApis;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,13 +74,21 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
         TextView title = (TextView) findViewById(R.id.title);
         Intent intent = getIntent();
         mSuggestionDO = (SuggestionsDO) intent.getSerializableExtra("message");
+        mBus = BusProvider.getInstance().getBus();
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
-            title.setText(mSuggestionDO.getAction());
+            title.setText(mSuggestionDO.getEnquiredProduct());
         }
 
-
+        try {
+            appVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        customerApis = new CustomerAssistantApi(mBus);
+        pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+        noOfTimesResponded = pref.getInt(Key_Preferences.NO_OF_TIMES_RESPONDED, 0);
         /*try {
             *//*shareSuggestionDo = (SuggestionsDO) mSuggestionDO.clone();
             shareSuggestionDo.setUpdates(new ArrayList<SugUpdates>());
@@ -79,8 +103,9 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
     private void init() {
         TextView addressText = (TextView) findViewById(R.id.tv_address);
         TextView timeText = (TextView) findViewById(R.id.tv_time);
-        addressText.setText(mSuggestionDO.getValue());
-        timeText.setText(Methods.getFormattedDate(mSuggestionDO.getDate()));
+        String contactName = TextUtils.isEmpty(mSuggestionDO.getContactName())?"":mSuggestionDO.getContactName()+", ";
+        addressText.setText(contactName+""+mSuggestionDO.getValue());
+        timeText.setText(Methods.getFormattedDate(mSuggestionDO.getDate(),"dd MMM, hh:mm a"));
         messageLayout = (LinearLayout) findViewById(R.id.layout_message);
         fragmentLayout = (FrameLayout) findViewById(R.id.layout_fragment);
         RecyclerView suggestionsRecyclerView = (RecyclerView) findViewById(R.id.rv_suggestions);
@@ -88,12 +113,21 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
         suggestionsRecyclerView.setLayoutManager(new LinearLayoutManager(ThirdPartySuggestionDetailActivity.this));
         mSuggestionAdapter = new ThirdPartySharedItemAdapter(ThirdPartySuggestionDetailActivity.this, sharedSuggestionsDOList);
         suggestionsRecyclerView.setAdapter(mSuggestionAdapter);
-        findViewById(R.id.btn_add_updates).setOnClickListener(this);
-        findViewById(R.id.btn_add_products).setOnClickListener(this);
         findViewById(R.id.btn_send).setOnClickListener(this);
         TextView callBtn = (TextView) findViewById(R.id.btn_call);
         callBtn.setOnClickListener(this);
         callBtn.setText(mSuggestionDO.getType().equalsIgnoreCase(ACTION_TYPE_NUMBER)?"CALL":"MAIL");
+
+        if (mSuggestionDO.getProducts().size() == 0){
+            findViewById(R.id.btn_add_products).setVisibility(View.GONE);
+        }else{
+            findViewById(R.id.btn_add_products).setOnClickListener(this);
+        }
+        if (mSuggestionDO.getUpdates().size() == 0){
+            findViewById(R.id.btn_add_updates).setVisibility(View.GONE);
+        }else{
+            findViewById(R.id.btn_add_updates).setOnClickListener(this);
+        }
     }
 
     private void addFragments(int screen) {
@@ -106,6 +140,18 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
                 Bundle b = new Bundle();
                 b.putInt("type", screen);
                 b.putSerializable("message", mSuggestionDO);
+                if(screen == ADD_PRODUCTS)
+                {
+                    if(mSuggestionDO.getProducts().size()==0){
+                        Toast.makeText(ThirdPartySuggestionDetailActivity.this, "No product found for this query", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                }else if(mSuggestionDO.getUpdates().size()==0)
+                {
+                    Toast.makeText(ThirdPartySuggestionDetailActivity.this, "No updates found for this query", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+
                 manager.beginTransaction()
                         .setCustomAnimations(R.anim.slide_out_up1, R.anim.slide_to_down)
                         .replace(R.id.layout_fragment, ShowThirdPartyProductsFragment.getInstance(b))
@@ -125,13 +171,32 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
     }
 
     private void shareSuggestionToCustomer() {
+        FirebaseLogger.getInstance().logSAMEvent(mSuggestionDO.getMessageId(), FirebaseLogger.SAMSTATUS.ACTION_SHARE, mSuggestionDO.getFpId(), appVersion);
+        MixPanelController.track(MixPanelController.SAM_BUBBLE_ACTION_SHARE, null);
+
+        pref.edit().putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, ++noOfTimesResponded).apply();
+
+        mSuggestionDO.setStatus(1);
+        updateActionsToServer(mSuggestionDO);
+
         if (mSuggestionDO.getType().equalsIgnoreCase(ACTION_TYPE_NUMBER)) {
             prepareMessageForShare(CallToActionFragment.SHARE_VIA.SMS);
         } else if (mSuggestionDO.getType().equalsIgnoreCase(ACTION_TYPE_EMAIL)) {
             prepareMessageForShare(CallToActionFragment.SHARE_VIA.GMAIL);
         }
     }
+    public void updateActionsToServer(SuggestionsDO mSuggestionsDO) {
 
+        ArrayList<MessageDO> arrMessageDO = new ArrayList<>();
+
+        MessageDO messageDO = new MessageDO();
+        messageDO.setMessageId(mSuggestionsDO.getMessageId());
+        messageDO.setFpId(mSuggestionsDO.getFpId());
+        messageDO.setStatus(mSuggestionsDO.getStatus());
+        arrMessageDO.add(messageDO);
+
+        //customerApis.updateMessage(arrMessageDO);
+    }
     private void prepareMessageForShare(CallToActionFragment.SHARE_VIA share_via) {
 
             String selectedProducts = "";
@@ -234,6 +299,11 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
     @Override
     public void addSuggestions(int type, ArrayList<Integer> positions) {
 
+        if (type != SHOW_MESSAGE && positions.size() == 0) {
+            String item = type == ADD_PRODUCTS ? "product" : "update";
+            Toast.makeText(ThirdPartySuggestionDetailActivity.this, "Please select at least one " + item, Toast.LENGTH_SHORT).show();
+            return;
+        }
         switch (type) {
 
             case ADD_PRODUCTS:
@@ -259,6 +329,7 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
                 break;
         }
         addFragments(SHOW_MESSAGE);
+
     }
 
     @Override
@@ -279,23 +350,37 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
                 break;
             case R.id.btn_call:
 
-                    if (mSuggestionDO.getType().equalsIgnoreCase(ACTION_TYPE_NUMBER)) {
-                        if (!TextUtils.isEmpty(mSuggestionDO.getValue())) {
-                            Methods.makeCall(ThirdPartySuggestionDetailActivity.this, mSuggestionDO.getValue());
-                        }else {
-                            Methods.showSnackBarNegative(ThirdPartySuggestionDetailActivity.this, "Number is not valid");
-                        }
-                    }
-                    else
-                    {
-                        if(!TextUtils.isEmpty(mSuggestionDO.getValue())) {
-                            Methods.sendEmail(ThirdPartySuggestionDetailActivity.this, mSuggestionDO.getValue());
-                        }
-                        else{
-                            Methods.showSnackBarNegative(ThirdPartySuggestionDetailActivity.this,"Email is not valid");
-                        }
+                if (mSuggestionDO.getType().equalsIgnoreCase(ACTION_TYPE_NUMBER)) {
+                    if (!TextUtils.isEmpty(mSuggestionDO.getValue())) {
+                        FirebaseLogger.getInstance().logSAMEvent(mSuggestionDO.getMessageId(), FirebaseLogger.SAMSTATUS.ACTION_CALL, mSuggestionDO.getFpId(), appVersion);
+                        MixPanelController.track(MixPanelController.SAM_BUBBLE_ACTION_CALL, null);
 
+                        pref.edit().putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, ++noOfTimesResponded).apply();
+
+                        mSuggestionDO.setStatus(1);
+                        //updateActionsToServer(mSuggestionDO);
+                        Methods.makeCall(ThirdPartySuggestionDetailActivity.this, mSuggestionDO.getValue());
+                    }else {
+                        Methods.showSnackBarNegative(ThirdPartySuggestionDetailActivity.this, "Number is not valid");
                     }
+                }
+                else
+                {
+                    if(!TextUtils.isEmpty(mSuggestionDO.getValue())) {
+                        FirebaseLogger.getInstance().logSAMEvent(mSuggestionDO.getMessageId(), FirebaseLogger.SAMSTATUS.ACTION_CALL, mSuggestionDO.getFpId(), appVersion);
+                        MixPanelController.track(MixPanelController.SAM_BUBBLE_ACTION_CALL, null);
+
+                        pref.edit().putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, ++noOfTimesResponded).apply();
+
+                        mSuggestionDO.setStatus(1);
+                        //updateActionsToServer(mSuggestionDO);
+                        Methods.sendEmail(ThirdPartySuggestionDetailActivity.this, mSuggestionDO.getValue());
+                    }
+                    else{
+                        Methods.showSnackBarNegative(ThirdPartySuggestionDetailActivity.this,"Email is not valid");
+                    }
+
+                }
                break;
         }
     }

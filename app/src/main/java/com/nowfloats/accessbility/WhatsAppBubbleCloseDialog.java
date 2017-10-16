@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nowfloats.PreSignUp.SplashScreen_Activity;
 import com.nowfloats.bubble.BubblesService;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
@@ -36,7 +37,9 @@ public class WhatsAppBubbleCloseDialog extends AppCompatActivity {
                 stopService(new Intent(WhatsAppBubbleCloseDialog.this, BubblesService.class));
                 MixPanelController.track(MixPanelController.WHATSAPP_TO_BOOST,null);
                 try {
-                    Intent launchIntent = getPackageManager().getLaunchIntentForPackage(DataAccessibilityServiceV8.PK_NAME_NOWFLOATS);
+                    //Intent launchIntent = getPackageManager().getLaunchIntentForPackage(DataAccessibilityServiceV8.PK_NAME_NOWFLOATS);
+                    Intent launchIntent = new Intent(WhatsAppBubbleCloseDialog.this, SplashScreen_Activity.class);
+                    launchIntent.putExtra("url","com.biz2.nowfloats://"+getString(R.string.deeplink_manage_customer));
                     startActivity(launchIntent);
                 }catch(Exception e){
                     e.printStackTrace();

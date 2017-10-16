@@ -95,7 +95,6 @@ import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.Product_Gallery.Product_Detail_Activity_V45;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
-import com.nowfloats.RiaFCM.RiaFirebaseMessagingService;
 import com.nowfloats.SiteAppearance.SiteAppearanceFragment;
 import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.Model.StoreEvent;
@@ -1995,7 +1994,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         setContentView(R.layout.activity_home_v3);
         getNfxTokenData();
         BoostLog.d(TAG, "In on CreateView");
-        deepLinkUrl = RiaFirebaseMessagingService.deepLinkUrl;
+        //deepLinkUrl = RiaFirebaseMessagingService.deepLinkUrl;
         FPID = session.getFPID();
         MixPanelController.sendMixPanelProperties(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME),
                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),

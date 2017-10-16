@@ -454,6 +454,22 @@ public class Methods {
         return false;
     }
 
+    public static String getFormattedDate(String date, String format){
+        String formatted = "", dateTime = "";
+        if (TextUtils.isEmpty(date)) {
+            return "";
+        }
+        if (date.contains("/Date")) {
+            date = date.replace("/Date(", "").replace(")/", "");
+        }
+        return getFormattedDate(Long.valueOf(date),format);
+    }
+    public static String getFormattedDate(long epochTime, String format){
+        Date date1 = new Date(epochTime);
+        DateFormat format1 = new SimpleDateFormat(format, Locale.ENGLISH);//dd/MM/yyyy HH:mm:ss
+        format1.setTimeZone(TimeZone.getDefault());
+        return format1.format(date1);
+    }
     public static String getFormattedDate(String Sdate) {
         String formatted = "", dateTime = "";
         if (TextUtils.isEmpty(Sdate)) {
@@ -657,13 +673,23 @@ public class Methods {
     }
 
     public static void makeCall(Context mContext,String number) {
-        Intent callIntent = new Intent(Intent.ACTION_DIAL);
-        callIntent.setData(Uri.parse("tel:" + number));
-        mContext.startActivity(Intent.createChooser(callIntent, "Call by:"));
+        try {
+            Intent callIntent = new Intent(Intent.ACTION_DIAL);
+            callIntent.setData(Uri.parse("tel:" + number));
+            mContext.startActivity(Intent.createChooser(callIntent, "Call by:"));
+        }catch(Exception e){
+            Toast.makeText(mContext, "Unable to make call", Toast.LENGTH_SHORT).show();
+        }
+
     }
     public static void sendEmail( Context context, String email){
-        Intent shareIntent = new Intent(Intent.ACTION_SEND, Uri.parse("mailto:" + email));
-        context.startActivity(Intent.createChooser(shareIntent,"Email by:"));
+        try {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND, Uri.parse("mailto:" + email));
+            context.startActivity(Intent.createChooser(shareIntent,"Email by:"));
+        }catch(Exception e){
+            Toast.makeText(context, "Unable to send email", Toast.LENGTH_SHORT).show();
+        }
+
     }
     public static String getFormattedDate(long milliseconds) {
 

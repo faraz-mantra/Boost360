@@ -105,7 +105,7 @@ public class ThirdPartySuggestionAdapter extends RecyclerView.Adapter<RecyclerVi
     private class MyProductsViewHolder extends RecyclerView.ViewHolder{
 
         int viewType;
-        ImageView productImage;
+        ImageView productImage,selectedImg;
         TextView productName, productPrice;
         FrameLayout frameLayout;
 
@@ -116,14 +116,17 @@ public class ThirdPartySuggestionAdapter extends RecyclerView.Adapter<RecyclerVi
             productPrice = (TextView) itemView.findViewById(R.id.tv_price);
             productImage = (ImageView) itemView.findViewById(R.id.img_product);
             frameLayout = (FrameLayout) itemView.findViewById(R.id.ll_selected);
+            selectedImg = (ImageView) itemView.findViewById(R.id.img_selected);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(checkList.contains(getAdapterPosition())){
                         checkList.remove((Integer)getAdapterPosition());
                         frameLayout.setVisibility(View.GONE);
+                        selectedImg.setVisibility(View.GONE);
                     }else{
                         frameLayout.setVisibility(View.VISIBLE);
+                        selectedImg.setVisibility(View.VISIBLE);
                         checkList.add(getAdapterPosition());
                     }
                     callback.itemSelected(ADD_PRODUCTS, checkList.size());
@@ -137,21 +140,24 @@ public class ThirdPartySuggestionAdapter extends RecyclerView.Adapter<RecyclerVi
         int viewType;
         TextView updateName;
         FrameLayout frameLayout;
-        ImageView updateImage;
+        ImageView updateImage,selectedImg;
         public MyUpdatesViewHolder(View itemView) {
             super(itemView);
             this.viewType = getItemViewType();
             updateName = (TextView) itemView.findViewById(R.id.tv_name);
             frameLayout = (FrameLayout) itemView.findViewById(R.id.ll_selected);
             updateImage = (ImageView) itemView.findViewById(R.id.imageView);
+            selectedImg = (ImageView) itemView.findViewById(R.id.img_selected);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(checkList.contains(getAdapterPosition())){
                         checkList.remove((Integer)getAdapterPosition());
                         frameLayout.setVisibility(View.GONE);
+                        selectedImg.setVisibility(View.GONE);
                     }else{
                         frameLayout.setVisibility(View.VISIBLE);
+                        selectedImg.setVisibility(View.VISIBLE);
                         checkList.add(getAdapterPosition());
                     }
                     callback.itemSelected(ADD_UPDATES,checkList.size());

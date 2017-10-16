@@ -17,6 +17,8 @@ import com.nowfloats.customerassistant.callbacks.ThirdPartyCallbacks;
 import com.nowfloats.customerassistant.models.SuggestionsDO;
 import com.thinksity.R;
 
+import java.util.ArrayList;
+
 import static com.nowfloats.customerassistant.ThirdPartySuggestionDetailActivity.ADD_PRODUCTS;
 import static com.nowfloats.customerassistant.ThirdPartySuggestionDetailActivity.ADD_UPDATES;
 import static com.nowfloats.customerassistant.ThirdPartySuggestionDetailActivity.SHOW_MESSAGE;
@@ -97,7 +99,7 @@ public class ShowThirdPartyProductsFragment extends Fragment implements View.OnC
                 adapter.sendSuggestions(type);
                 break;
             case R.id.btn_cancel:
-                ((ThirdPartyCallbacks) mContext).addSuggestions(SHOW_MESSAGE,null);
+                ((ThirdPartyCallbacks) mContext).addSuggestions(SHOW_MESSAGE,new ArrayList<Integer>());
                 break;
             default:
                 break;

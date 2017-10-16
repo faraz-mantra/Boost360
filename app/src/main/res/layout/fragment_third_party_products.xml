@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:background="#FAFAFA"
-    android:clickable="false"
+    android:clickable="true"
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,8 +23,8 @@
             android:layout_weight="1"/>
         <ImageView
             android:id="@+id/btn_cancel"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:padding="10dp"
             android:background="?android:selectableItemBackground"
             android:src="@drawable/gallery_cancel"
@@ -42,7 +42,10 @@
         android:id="@+id/btn_send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/yellow_btn_bg"
         android:gravity="center"
         android:padding="12dp"
