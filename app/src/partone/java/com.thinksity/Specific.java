@@ -32,7 +32,9 @@ public class Specific {
     public static final String TWITTER_SEC 				= "4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9";
     public static final String FACEBOOK_URL = "https://www.facebook.com/nowfloats";
     public static final String PACKAGE_NAME = "com.biz2.nowfloats";
-    public static final String FACEBOOK_PAGEID = "fb://page/277931445614143";
+    public static final String[] FACEBOOK_READ_PERMISSIONS = {"email", "public_profile", "user_friends", "read_insights", "business_management", "pages_messaging"};
+    public static final String[] FACEBOOK_PUBLISH_PERMISSIONS = {"publish_actions", "publish_pages", "manage_pages"};
+    public static final String FACEBOOK_PAGE_ID = "fb://page/277931445614143";
     public static final String TWITTER_URL = "https://twitter.com/Nowfloats";
     public static final String TWITTER_ID_URL = "twitter://user?screen_name=nowfloats";
     public static final String TWILIO_AUTHY_API_KEY = "gXYHhTa0gJb6VlJxw0aEqWxHHrw5AEi5";

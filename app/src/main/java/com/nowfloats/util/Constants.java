@@ -78,9 +78,12 @@ public class Constants {
     public static ArrayList<String> currencyArray = new ArrayList<>();
     public static Activity app = null;
     public static Activity home = null;
+    public static final String[] FACEBOOK_READ_PERMISSIONS = Specific.FACEBOOK_READ_PERMISSIONS;
+    public static final String[] FACEBOOK_PUBLISH_PERMISSIONS = Specific.FACEBOOK_PUBLISH_PERMISSIONS;
     //public final static String NOW_FLOATS_API_URL		=	"http://api.nowfloatsdev.com";
     public final static String NOW_FLOATS_API_URL = "https://api.withfloats.com";
     public final static String TEST_API_URL = "http://api.nowfloatsdev.com";
+    public final static String CREATE_MESSAGE_URL = "http://api.nowfloatsdev.com/akash";
     public final static String BASE_IMAGE_URL = "https://content.withfloats.com";
     public final static String RIA_MEMORY_API_URL = "http://riamemory.withfloats.com";
     public final static String PLUGIN_API_URL = "https://plugin.withfloats.com";
@@ -112,8 +115,9 @@ public class Constants {
     public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg"))*/.build();
 
     public static final RestAdapter pluginSuggestionsAdapter = new RestAdapter.Builder().setEndpoint(Constants.SUGGESTIONS_API_URL)./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).*/build();
-    public static final RestAdapter testRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.TEST_API_URL).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response")).build();
-    public static final RestAdapter pluginRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.PLUGIN_API_URL)./*setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).*/build();
+    public static final RestAdapter testRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.TEST_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
+    public static final RestAdapter createMessageAdapter = new RestAdapter.Builder().setEndpoint(Constants.CREATE_MESSAGE_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
+    public static final RestAdapter pluginRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.PLUGIN_API_URL).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
     public static final RestAdapter riaRestAdapter = new RestAdapter.Builder().setEndpoint(Constants.RIA_API_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("Retrofit Response"))*/.build();
     public static final RestAdapter webActionAdapter = new RestAdapter.Builder().setEndpoint(WA_BASE_URL)/*.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("WebAction Response"))*/.build();
     //public static final RestAdapter restAdapter = new RestAdapter.Builder().setEndpoint(Constants.NOW_FLOATS_API_URL).setClient(getClient()).setLogLevel(RestAdapter.LogLevel.FULL).setLog(new AndroidLog("ggg")).build();
@@ -472,6 +476,6 @@ public class Constants {
     public static String SUPPORT_EMAIL_ID=Specific.CONTACT_EMAIL_ID;
 
     public static final String TWILIO_AUTHY_API_KEY = Specific.TWILIO_AUTHY_API_KEY;
-    public static final String FACEBOOK_PAGE_WITH_ID = Specific.FACEBOOK_PAGEID;
+    public static final String FACEBOOK_PAGE_WITH_ID = Specific.FACEBOOK_PAGE_ID;
 
 }

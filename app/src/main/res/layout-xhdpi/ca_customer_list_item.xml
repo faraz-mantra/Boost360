@@ -34,7 +34,7 @@
                     android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="J"
-                    android:textColor="@color/white"
+                    android:textColor="#80000000"
                     android:textSize="@dimen/medium_text_size" />
             </LinearLayout>
         </LinearLayout>
@@ -57,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
                     android:text="+91 84932987498"
-                    android:textColor="#ccffffff"
+                    android:textColor="#80000000"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -68,7 +68,7 @@
                     android:layout_marginLeft="@dimen/margin_2"
                     android:fontFamily="sans-serif-light"
                     android:text="fjilsdjkfgjfidjgkfjdkgjkdfjkgjdfkjgkdjfg"
-                    android:textColor="#ccffffff"
+                    android:textColor="#80000000"
                     android:textSize="12sp"
                     android:textStyle="italic" />
             </LinearLayout>
@@ -83,7 +83,7 @@
                 android:fontFamily="sans-serif-light"
                 android:maxLines="2"
                 android:text="fhsdhkjfhskjd nlkfnlksdjflk nlfkjlkjsdnf nfkjhsdjkfhnjkf fnksdjkf"
-                android:textColor="#d2d2d2"
+                android:textColor="#80000000"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -98,6 +98,7 @@
         android:fontFamily="sans-serif"
         android:gravity="right"
         android:text="VIEW DETAILS"
+        android:textStyle="bold"
         android:textColor="@color/primary"
         android:textSize="12sp" />
 </LinearLayout>

@@ -74,6 +74,7 @@ public class Constants {
 
     public interface DeepLinkUrl {
         String ASK_LOC_PERM = "asklocationpermission";
+        String FACEBOOK_AUTH = "facebookauth";
         String LOGIN = "login";
     }
 

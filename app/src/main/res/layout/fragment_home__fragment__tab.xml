@@ -51,20 +51,20 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="8dp"
-        android:gravity="right|top"
-        android:padding="6dp">
+        android:gravity="right|top">
 
         <TextView
             android:id="@+id/alert_count_textview"
             fontPath="Roboto-Bold.ttf"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:background="@drawable/alert_count_bg"
             android:gravity="center"
-            android:padding="2dp"
             android:text=""
+            android:padding="2dp"
             android:textColor="@color/white"
-            android:textSize="10sp"
+            android:textSize="9sp"
+            android:maxLines="1"
             android:visibility="gone"
             tools:ignore="MissingPrefix" />
     </LinearLayout>

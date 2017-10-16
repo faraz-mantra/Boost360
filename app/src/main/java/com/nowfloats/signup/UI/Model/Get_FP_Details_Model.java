@@ -1,11 +1,12 @@
 package com.nowfloats.signup.UI.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by NowFloatsDev on 25/05/2015.
  */
-public class Get_FP_Details_Model {
+public class Get_FP_Details_Model implements Serializable{
 
     public String AliasTag;
     public String City;
@@ -76,6 +77,15 @@ public class Get_FP_Details_Model {
     public String response;
     public String domainName;
     public String domainType;
+    public String DomainValidityInYears;
+
+    public String getDomainValidityInYears() {
+        return DomainValidityInYears;
+    }
+
+    public void setDomainValidityInYears(String domainValidityInYears) {
+        DomainValidityInYears = domainValidityInYears;
+    }
 
     public String getAliasTag() {
         return AliasTag;

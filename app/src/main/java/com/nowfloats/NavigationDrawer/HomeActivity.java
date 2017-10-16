@@ -66,7 +66,6 @@ import com.nowfloats.Analytics_Screen.SearchQueries;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
-import com.nowfloats.BusinessProfile.UI.UI.Business_Hours_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
 import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
@@ -105,6 +104,7 @@ import com.nowfloats.Store.StoreFragmentTab;
 import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.customerassistant.models.SMSSuggestions;
 import com.nowfloats.customerassistant.service.CustomerAssistantApi;
+import com.nowfloats.managecustomers.FacebookChatActivity;
 import com.nowfloats.managecustomers.FacebookChatDetailActivity;
 import com.nowfloats.managecustomers.ManageCustomerFragmentV1;
 import com.nowfloats.manageinventory.ManageInventoryFragment;
@@ -125,6 +125,9 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
+import com.thinksity.Specific;
+import com.webengage.sdk.android.User;
+import com.webengage.sdk.android.WebEngage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -233,8 +236,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
         session = new UserSessionManager(getApplicationContext(), HomeActivity.this);
         setHotlineUser();
-
-
+        WebEngage.get().setRegistrationID(FirebaseInstanceId.getInstance().getToken());
         Bundle bundle = getIntent().getExtras();
         if (bundle != null && bundle.containsKey("url")) {
             mDeepLinkUrl = bundle.getString("url");
@@ -382,11 +384,22 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
         Constants.GCM_Msg = false;
         if (!Util.isNullOrEmpty(url)) {
-            MixPanelController.track("$app_open",null);
+            if(!isFromRia)
+            {
+                MixPanelController.track("$app_open",null);
+            }
             if (url.contains(getString(R.string.facebook_chat))) {
                 Intent intent = new Intent(this, FacebookChatDetailActivity.class);
                 intent.putExtras(getIntent());
                 startActivity(intent);
+            }
+            if (url.contains(getString(R.string.facebook_chat_main))) {
+                Intent intent = new Intent(this, FacebookChatActivity.class);
+                startActivity(intent);
+            }else if (url.contains(getString(R.string.deeplink_manage_customer))) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageCustomerFragment, "ManageCustomers")
+                        .addToBackStack(null)
+                        .commit();
             } else if (url.contains(getString(R.string.feedback_chat))) {
                 MixPanelController.track("ChatFeedback", null);
                 ChatManager.getInstance(HomeActivity.this).startChat(ChatManager.ChatType.FEEDBACK);
@@ -496,7 +509,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 Intent queries = new Intent(HomeActivity.this, Business_Address_Activity.class);
                 startActivity(queries);
             } else if (url.contains(getResources().getString(R.string.deeplink_bizhours)) || url.contains("hours")) {
-                Intent queries = new Intent(HomeActivity.this, Business_Hours_Activity.class);
+                Intent queries = new Intent(HomeActivity.this, Business_Address_Activity.class);
                 startActivity(queries);
             } else if (url.contains(getResources().getString(R.string.deeplink_bizlogo)) || url.contains("logo")) {
                 Intent queries = new Intent(HomeActivity.this, Business_Logo_Activity.class);
@@ -522,7 +535,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.mainFrame, chatFragment, "chatFragment").commit();
             } else if(url.contains("assuredPurchase")){
-                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageCustomers")
+                getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageInventoryFragment, "ManageInventory")
                         .addToBackStack(null)
                         .commit();
             }
@@ -636,20 +649,18 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 .title(getString(R.string.app_update_available))
                 .content(getString(R.string.update_nowfloats_app))
                 .positiveText(getString(R.string.update))
-                .negativeText(getString(R.string.remind_me_later))
                 .positiveColorRes(R.color.primaryColor)
-                .negativeColorRes(R.color.primaryColor)
                 .cancelable(false)
                 .callback(new MaterialDialog.ButtonCallback() {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
+                        dialog.dismiss();
                         final String appPackageName = mContext.getPackageName(); // getPackageName() from Context or Activity object
                         try {
-                            dialog.dismiss();
+
                             mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
                         } catch (android.content.ActivityNotFoundException anfe) {
-                            dialog.dismiss();
                             mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                         }
                     }
@@ -1456,8 +1467,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     Hotline.showConversations(HomeActivity.this);
                     //Konotor.getInstance(getApplicationContext()).launchFeedbackScreen(HomeActivity.this);
                 } else if (nextScreen.equals(getString(R.string.call))) {
-                    String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
-                    if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats") || paymentState == null || !paymentState.equals("1")) {
+                    if (!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
                         Intent call = new Intent(Intent.ACTION_DIAL);
                         String callString = "tel:" + getString(R.string.contact_us_number);
                         call.setData(Uri.parse(callString));
@@ -1582,6 +1592,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     }
 
     private boolean get_VersionUpdate() {
+        if(BuildConfig.DEBUG){
+            return false;
+        }
         try {
             String new_version = Jsoup.connect("https://play.google.com/store/apps/details?id=" + getPackageName() + "&hl=it")
                     .timeout(30000)
@@ -1890,6 +1903,18 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }
     }
 
+    private void setWebEngageProperties(){
+
+        User weUser = WebEngage.get().user();
+        weUser.login(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
+        weUser.setAttribute("SALES_EXECUTIVE_EMAIL","reach@nowfloats.com");
+        weUser.setAttribute("fpTag",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
+        weUser.setAttribute("Status","");
+        weUser.setEmail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
+        weUser.setFirstName(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME));
+        weUser.setPhoneNumber(session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
+        weUser.setCompany(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME));
+    }
     @Override
     public void authenticationStatus(String value) {
         if (value.equals("Success")) {
@@ -1965,6 +1990,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     }
 
     private void createView() {
+
 
         setContentView(R.layout.activity_home_v3);
         getNfxTokenData();
@@ -2046,6 +2072,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         }).start();
 
         if (Constants.fromLogin) {
+            if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+                setWebEngageProperties();
+            }
             showOnBoardingScreens();
             // Constants.fromLogin = false ;
         }
@@ -2073,6 +2102,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         /*This button is used in the image gallery*/
         plusAddButton = (ImageView) toolbar.findViewById(R.id.image_gallery_add_image_button);
         shareButton = (ImageView) toolbar.findViewById(R.id.business_profile_share_button);
+        HomeActivity.shareButton.setImageResource(R.drawable.share_with_apps);
+        PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(ContextCompat.getColor(this,R.color.white), PorterDuff.Mode.SRC_IN);
+        HomeActivity.shareButton.setColorFilter(whiteLabelFilter_pop_ip);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         drawerFragment = (SidePanelFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);

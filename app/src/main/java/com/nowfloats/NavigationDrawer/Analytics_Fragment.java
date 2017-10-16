@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -51,6 +52,7 @@ import com.nowfloats.Analytics_Screen.SearchRankingActivity;
 import com.nowfloats.Analytics_Screen.SocialAnalytics;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
+import com.nowfloats.Analytics_Screen.VmnNumberRequestActivity;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.CustomWidget.VerticalTextView;
 import com.nowfloats.Login.UserSessionManager;
@@ -95,7 +97,7 @@ public class Analytics_Fragment extends Fragment {
     UserSessionManager session;
     private Context context;
     private Bus bus;
-    CardView cvRiaCard;
+    CardView cvRiaCard,vmnCallCard ;
     Button btnRiaCardLeft, btnRiaCrdRight, btnSingleResponse;
     TextView tvRiaCardHeader;
     RiaCardDeepLinkListener mRiaCardDeepLinkListener;
@@ -201,6 +203,7 @@ public class Analytics_Fragment extends Fragment {
         llTwoButtons = (LinearLayout) rootView.findViewById(R.id.ll_twobuttons);
         llSingleButtonLayout = (LinearLayout) rootView.findViewById(R.id.ll_single_button);
         btnSingleResponse = (Button) rootView.findViewById(R.id.btnSingleResponse);
+        vmnCallCard = (CardView) rootView.findViewById(R.id.card_view_vmn_call);
         queryLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -270,29 +273,7 @@ public class Analytics_Fragment extends Fragment {
                 // }
             }
         });
-        if ("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
-                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)) ||
-                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME))) {
-            CardView vmnCallCard = (CardView) rootView.findViewById(R.id.card_view_vmn_call);
-            vmnCallCard.setVisibility(View.VISIBLE);
-            vmnCallCard.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (vmnTotalCallCount.getVisibility() == View.VISIBLE) {
-                        Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
-                        i.putExtra("TotalCalls", vmnTotalCalls);
-                        i.putExtra("ReceivedCalls", vmnReceivedCalls);
-                        i.putExtra("MissedCalls", vmnMissedCalls);
-                        startActivity(i);
-                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    } else {
-                        Toast.makeText(context, getString(R.string.please_wait), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        }else if(Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")){
-            //request for it
-        }
+
         LinearLayout llSearchRanking = (LinearLayout) rootView.findViewById(R.id.analytics_screen_search_ranking);
         llSearchRanking.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -411,9 +392,40 @@ public class Analytics_Fragment extends Fragment {
             businessEnqProgress.setVisibility(View.VISIBLE);
             businessEnqCount.setVisibility(View.GONE);
         }
+        final boolean isVmnEnable = "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
+                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)) ||
+                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME));
+        String paymentState = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE);
+        if(!Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")){
+            vmnCallCard.setVisibility(View.GONE);
+        }else if(isVmnEnable){
+            setVmnTotalCallCount();
+            vmnCallCard.setVisibility(View.VISIBLE);
+        }else  if ((!TextUtils.isEmpty(paymentState) && "1".equalsIgnoreCase(paymentState))) {
+            vmnCallCard.setVisibility(View.VISIBLE);
+            //request
+        }
 
+        vmnCallCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isVmnEnable){
+                    if(vmnTotalCallCount.getVisibility() == View.VISIBLE){
+                        Intent i = new Intent(getActivity(), VmnCallCardsActivity.class);
+                        startActivity(i);
+                        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    } else {
+                        Toast.makeText(context, getString(R.string.please_wait), Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Intent i = new Intent(getActivity(), VmnNumberRequestActivity.class);
+                    startActivity(i);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+
+            }
+        });
         initRiaCard();
-        setVmnTotalCallCount();
         return rootView;
     }
 
@@ -799,7 +811,6 @@ public class Analytics_Fragment extends Fragment {
 
     private void setVmnTotalCallCount() {
         vmnProgressBar.setVisibility(View.VISIBLE);
-        vmnTotalCallCount.setVisibility(View.GONE);
         CallTrackerApis trackerApis = Constants.restAdapter.create(CallTrackerApis.class);
         String type = session.getISEnterprise().equals("true") ? "MULTI" : "SINGLE";
 
@@ -808,13 +819,17 @@ public class Analytics_Fragment extends Fragment {
             public void success(JsonObject jsonObject, Response response) {
                 vmnProgressBar.setVisibility(View.GONE);
                 vmnTotalCallCount.setVisibility(View.VISIBLE);
-                if (jsonObject == null || jsonObject.equals("null") || response.getStatus() != 200) {
+                if (jsonObject == null || response.getStatus() != 200) {
                     return;
                 }
-                vmnTotalCalls = jsonObject.get("TotalCalls").getAsString();
-                vmnMissedCalls = jsonObject.get("MissedCalls").getAsString();
-                vmnReceivedCalls = jsonObject.get("ReceivedCalls").getAsString();
-                vmnTotalCallCount.setText(vmnTotalCalls);
+                if(jsonObject.has("TotalCalls")) {
+                    vmnTotalCalls = jsonObject.get("TotalCalls").getAsString();
+                    vmnTotalCallCount.setText(vmnTotalCalls);
+                }
+                if(jsonObject.has("MissedCalls"))
+                    vmnMissedCalls = jsonObject.get("MissedCalls").getAsString();
+                if (jsonObject.has("ReceivedCalls"))
+                    vmnReceivedCalls = jsonObject.get("ReceivedCalls").getAsString();
             }
 
             @Override

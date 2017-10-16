@@ -3,7 +3,6 @@ package com.nowfloats.Image_Gallery;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ContentUris;
@@ -25,15 +24,11 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -48,7 +43,6 @@ import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.RoundCorners_image;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
-import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.MixPanelController;
@@ -64,22 +58,33 @@ public class Image_Gallery_Fragment extends Fragment implements
         UploadPictureAsyncTask.UploadPictureInterface,
         DeleteGalleryImages.DeleteGalleryInterface,
         GetGalleryImagesAsyncTask_Interface.getGalleryImagesInterface {
-    public static GridView grid;
-    OtherImagesAdapter gridViewAdapter;
-    Bitmap CameraBitmap;
-    Uri imageUri;
-    String imageUrl = "";
+
+    public GridView gvImages;
+
+    private OtherImagesAdapter otherImagesAdapter;
+
+    private Bitmap CameraBitmap;
+
+    private Uri imageUri;
+
+    private String imageUrl = "";
+
     public static String path = "";
+
     private static final int PICK_FROM_CAMERA = 1;
+
     private static final int PICK_FROM_GALLERY = 2;
-    Dialog imageDialog = null;
-    ImageAdapter adapter;
-    ViewPager viewPager;
-    FloatingActionButton fabGallery_Button;
-    UserSessionManager session;
-    Activity activity;
+
+    private FloatingActionButton fabGallery_Button;
+
+    private UserSessionManager session;
+
+    private Activity activity;
+
     private LinearLayout progressLayout, emptyGalleryLayout;
+
     private final int media_req_id = 5;
+
     private final int gallery_req_id = 6;
 
     @Override
@@ -87,195 +92,95 @@ public class Image_Gallery_Fragment extends Fragment implements
         super.onResume();
         HomeActivity.plusAddButton.setVisibility(View.GONE);
         HomeActivity.headerText.setText("Photo Gallery");
-        if (grid != null)
-            grid.invalidate();
-        if (gridViewAdapter != null)
-            gridViewAdapter.notifyDataSetChanged();
-        //getActivity().getActionBar().
+        if (gvImages != null)
+            gvImages.invalidate();
+        if (otherImagesAdapter != null)
+            otherImagesAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = getActivity();
-        session = new UserSessionManager(activity.getApplicationContext(), activity);
-        GetGalleryImagesAsyncTask_Interface gallery = new GetGalleryImagesAsyncTask_Interface(activity, session);
-        gallery.setGalleryInterfaceListener(this);
-        gallery.execute();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        BoostLog.d("Image_Gallery_Fragment", "onCreateView");
         return inflater.inflate(R.layout.fragment_image__gallery, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        BoostLog.d("Image_Gallery_Fragment", "onViewCreated");
-        grid = (GridView) view.findViewById(R.id.grid);
+        initializeControls(view);
+        bindControls();
+    }
+
+    private void initializeControls(View view) {
+        if (HomeActivity.plusAddButton != null)
+            HomeActivity.plusAddButton.setVisibility(View.GONE);
+        activity = getActivity();
+        session = new UserSessionManager(activity.getApplicationContext(), activity);
+        gvImages = (GridView) view.findViewById(R.id.grid);
         fabGallery_Button = (FloatingActionButton) view.findViewById(R.id.fab_gallery);
         emptyGalleryLayout = (LinearLayout) view.findViewById(R.id.emptygallerylayout);
         progressLayout = (LinearLayout) view.findViewById(R.id.progress_gallerylayout);
         progressLayout.setVisibility(View.VISIBLE);
-        new Thread(new Runnable() {
+        otherImagesAdapter = new OtherImagesAdapter(activity);
+        if (otherImagesAdapter.getCount() == 0) {
+            emptyGalleryLayout.setVisibility(View.VISIBLE);
+        } else {
+            emptyGalleryLayout.setVisibility(View.GONE);
+        }
+        gvImages.setAdapter(otherImagesAdapter);
+
+        GetGalleryImagesAsyncTask_Interface gallery = new GetGalleryImagesAsyncTask_Interface(activity, session);
+        gallery.setGalleryInterfaceListener(this);
+        gallery.execute();
+
+    }
+
+
+    private void bindControls() {
+
+        fabGallery_Button.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (!isAdded()) {
+                    return true;
+                }
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        selectImage();
+                        break;
+                    }
+                    case MotionEvent.ACTION_UP: {
+                        break;
+                    }
+                }
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public void imagesReceived() {
+        activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                if (progressLayout != null) {
+                    progressLayout.setVisibility(View.GONE);
                 }
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        gridViewAdapter = new OtherImagesAdapter(activity);
-                        if (gridViewAdapter.getCount() == 0) {
-                            emptyGalleryLayout.setVisibility(View.VISIBLE);
-                        } else {
-                            emptyGalleryLayout.setVisibility(View.GONE);
-                        }
-                        grid.setAdapter(gridViewAdapter);
-
-                        grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                Intent fullImage = new Intent(activity, FullScreen_Gallery_Image.class);
-                                fullImage.putExtra("currentPositon", position);
-                                startActivity(fullImage);
-                                activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                            }
-                        });
-
-                        HomeActivity.plusAddButton.setVisibility(View.GONE);
-
-                        fabGallery_Button.setOnTouchListener(new View.OnTouchListener() {
-                            @Override
-                            public boolean onTouch(View v, MotionEvent event) {
-                                if(!isAdded()){
-                                    return true;
-                                }
-                                switch (event.getAction()) {
-                                    case MotionEvent.ACTION_DOWN: {
-                                        selectImage();
-                                        break;
-                                    }
-                                    case MotionEvent.ACTION_UP: {
-                                        break;
-                                    }
-                                }
-                                return true;
-                            }
-                        });
-                        progressLayout.setVisibility(View.GONE);
-                    }
-                });
-            }
-        }).start();
-
-    }
-
-    private void showFullScaleImage(String imageFile, final int currentPos) {
-        BoostLog.d("full image", "image file : " + imageFile);
-        int selectedPOS = currentPos;
-
-        // File imgFile = new  File(imageFile);
-        Bitmap myBitmap = null;
-        String baseName = Constants.NOW_FLOATS_API_URL + "" + imageFile;
-
-
-        //  https://api.withfloats.com//FP/Tile/53ffff644ec0a40740921460.jpg
-
-        imageDialog = new Dialog(activity);
-        imageDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        imageDialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        imageDialog.getWindow().setLayout(500, 500);
-        WindowManager.LayoutParams lp = imageDialog.getWindow().getAttributes();
-        lp.dimAmount = 15.7f;
-        imageDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-
-        //  layout.setMinimumWidth((int)(displayRectangle.width() * 0.9f));
-        //  layout.setMinimumHeight((int)(displayRectangle.height() * 0.9f));
-
-        imageDialog.setContentView(R.layout.gallery_view_pager);
-
-        ImageView previousImageView = (ImageView) imageDialog.findViewById(R.id.previousImage);
-        ImageView nextImageView = (ImageView) imageDialog.findViewById(R.id.nextImage);
-        final TextView currentTextView = (TextView) imageDialog.findViewById(R.id.currentCountValue);
-        final TextView maxCountTextView = (TextView) imageDialog.findViewById(R.id.maxCount);
-        // ImageView fullImageView = (ImageView) imageDialog.findViewById(R.id.fullImageView);
-        // BoostLog.d("Base Name","imageLoader base name : "+baseName);
-        // imageLoader.displayImage(baseName, fullImageView);
-        //fullImageView.setImageBitmap(myBitmap);
-
-        viewPager = (ViewPager) imageDialog.findViewById(R.id.galleryImageViewpager);
-        adapter = new ImageAdapter(activity);
-        viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(selectedPOS);
-        final int maxNumberofImages = adapter.getCount();
-        currentTextView.setText(String.valueOf(selectedPOS + 1));
-        maxCountTextView.setText(String.valueOf(maxNumberofImages));
-        //currentTextView.setId(R.id.custom_view_pager);
-        // viewPager.setId(R.id.custom_view_pager);
-
-        previousImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // BoostLog.d("Image_Gallery_Fragment","Current POS : "+selectedPOS);
-                int selectedPosition = getItem(-1);
-                viewPager.setCurrentItem(selectedPosition, true);
-                currentTextView.setText(String.valueOf(selectedPosition));
-
             }
         });
+        if (gvImages != null) {
+            gvImages.invalidateViews();
+            if (otherImagesAdapter != null)
+                otherImagesAdapter.notifyDataSetChanged();
+            if (emptyGalleryLayout != null)
+                emptyGalleryLayout.setVisibility(View.GONE);
 
-        nextImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BoostLog.d("Image_Gallery_Fragment", "Current POS : " + currentPos);
-                int selectedPosition = getItem(+1);
-                viewPager.setCurrentItem(selectedPosition, true);
-                currentTextView.setText(String.valueOf(selectedPosition));
-            }
-        });
-
-
-        ImageView cancelDialogImageView = (ImageView) imageDialog.findViewById(R.id.galleryCancel);
-        cancelDialogImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imageDialog.cancel();
-            }
-        });
-
-        ImageView deleteImageView = (ImageView) imageDialog.findViewById
-
-                (R.id.deleteGalleryImage);
-        deleteImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MixPanelController.track(EventKeysWL.IMAGE_GALLERY_DELETE_IMAGE, null);
-                deleteImage(currentPos);
-            }
-        });
-
-        imageDialog.show();
-    }
-
-    private int getItem(int i) {
-        return viewPager.getCurrentItem() + i;
-    }
-
-    public void deleteImage(int deletePosition) {
-        DeleteGalleryImages task = new DeleteGalleryImages(activity, adapter, deletePosition);
-        task.setOnDeleteListener(this);
-        task.execute();
-
-//        UploadPictureAsyncTask upload = new UploadPictureAsyncTask(activity,imageUrl);
-//        upload.execute();
+        }
     }
 
     @Override
@@ -327,10 +232,10 @@ public class Image_Gallery_Fragment extends Fragment implements
         final MaterialDialog dialog = new MaterialDialog.Builder(activity)
                 .customView(R.layout.featuredimage_popup, true)
                 .show();
-        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(ContextCompat.getColor(getContext(),R.color.primaryColor), PorterDuff.Mode.SRC_IN);
+        final PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(ContextCompat.getColor(getContext(), R.color.primaryColor), PorterDuff.Mode.SRC_IN);
         MixPanelController.track("AddImage", null);
         View view = dialog.getCustomView();
-        if(view != null) {
+        if (view != null) {
             TextView header = (TextView) view.findViewById(R.id.textview_heading);
             header.setText(getString(R.string.add_photo));
             LinearLayout takeCamera = (LinearLayout) view.findViewById(R.id.cameraimage);
@@ -490,7 +395,7 @@ public class Image_Gallery_Fragment extends Fragment implements
             // For getting images from default gallery app.
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
             Cursor cursor = activity.getContentResolver().query(imgUri, filePathColumn, null, null, null);
-            if(cursor != null) {
+            if (cursor != null) {
                 cursor.moveToFirst();
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 filePath = cursor.getString(columnIndex);
@@ -522,7 +427,7 @@ public class Image_Gallery_Fragment extends Fragment implements
 
                     String filePath = "";
                     Cursor cursor = activity.getContentResolver().query(uri, filePathColumn, null, null, null);
-                    if(cursor != null) {
+                    if (cursor != null) {
                         cursor.moveToFirst();
                         int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                         filePath = cursor.getString(columnIndex);
@@ -548,7 +453,7 @@ public class Image_Gallery_Fragment extends Fragment implements
      * other file-based ContentProviders.
      *
      * @param context The context.
-     * @param uri The Uri to query.
+     * @param uri     The Uri to query.
      * @author paulburke
      */
     public static String getPath(final Context context, final Uri uri) {
@@ -594,7 +499,7 @@ public class Image_Gallery_Fragment extends Fragment implements
                 }
 
                 final String selection = "_id=?";
-                final String[] selectionArgs = new String[] {
+                final String[] selectionArgs = new String[]{
                         split[1]
                 };
 
@@ -617,9 +522,9 @@ public class Image_Gallery_Fragment extends Fragment implements
      * Get the value of the data column for this Uri. This is useful for
      * MediaStore Uris, and other file-based ContentProviders.
      *
-     * @param context The context.
-     * @param uri The Uri to query.
-     * @param selection (Optional) Filter used in the query.
+     * @param context       The context.
+     * @param uri           The Uri to query.
+     * @param selection     (Optional) Filter used in the query.
      * @param selectionArgs (Optional) Selection arguments used in the query.
      * @return The value of the _data column, which is typically a file path.
      */
@@ -675,7 +580,6 @@ public class Image_Gallery_Fragment extends Fragment implements
     public void uploadedPictureListener(String imageURL) {
         BoostLog.d("Image", "uploadPictureListener imageURL : " + imageURL);
         MixPanelController.track("AddImageSuccess", null);
-        // Toast.makeText(activity, "imageURL : " + imageURL, Toast.LENGTH_SHORT).show();
         if (progressLayout != null) {
             activity.runOnUiThread(new Runnable() {
                 @Override
@@ -694,46 +598,23 @@ public class Image_Gallery_Fragment extends Fragment implements
             }
         }, 6000);
 
-//        GetGalleryImagesAsyncTask_Interface gallery = new GetGalleryImagesAsyncTask_Interface(activity);
-//        gallery.setGalleryInterfaceListener(Image_Gallery_Fragment.this);
-//        gallery.execute();
+    }
 
-        // grid.invalidate();
-        //gridViewAdapter.notifyDataSetChanged();
-//        Bitmap img = BitmapFactory.decodeFile(imageURL);
-//        testImageView.setImageBitmap(img);
+    public void deleteSelectedImages() {
+        DeleteGalleryImages task = new DeleteGalleryImages(getActivity(),
+                otherImagesAdapter.getSelectedImages(), otherImagesAdapter);
+        task.setOnDeleteListener(Image_Gallery_Fragment.this);
+        task.execute();
+    }
 
+    public void clearSelectedImages() {
+        otherImagesAdapter.resetCheckers();
     }
 
     @Override
     public void galleryImageDeleted() {
-        grid.invalidate();
-        gridViewAdapter.notifyDataSetChanged();
+        gvImages.invalidate();
+        otherImagesAdapter.resetCheckers();
     }
 
-    @Override
-    public void imagesReceived() {
-        // BoostLog.d("Image_Gallery_Fragment","imagesREceived : "+Constants.storeSecondaryImages.size());
-        // gridViewAdapter = new OtherImagesAdapter(activity);
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (progressLayout != null) {
-                    progressLayout.setVisibility(View.GONE);
-                }
-            }
-        });
-        if (grid != null) {
-            grid.invalidateViews();
-            if (gridViewAdapter != null)
-                gridViewAdapter.notifyDataSetChanged();
-            if (emptyGalleryLayout != null)
-                emptyGalleryLayout.setVisibility(View.GONE);
-            // grid.setAdapter(gridViewAdapter);
-            //  grid.invalidate();
-
-        }
-        // BoostLog.d("Login_MainActivity","Constants.storeSecondaryImages : "+ Constants.storeSecondaryImages);
-        //session.storeGalleryImages(Constants.storeSecondaryImages.toString());
-    }
 }

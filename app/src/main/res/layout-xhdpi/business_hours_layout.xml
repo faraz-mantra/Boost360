@@ -1,0 +1,431 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="10dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="bottom">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Days"
+            android:textStyle="italic|bold"
+            android:gravity="center_vertical"
+            android:textSize="13sp"
+            android:layout_weight=".4"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight=".3"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:textStyle="italic|bold"
+            android:layout_marginRight="15dp"
+            android:text="Open" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight=".3"
+            android:layout_height="wrap_content"
+            android:text="Close"
+            android:textSize="13sp"
+            android:textStyle="italic|bold"
+            android:layout_marginRight="15dp"
+            android:gravity="center" />
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="close"
+            android:visibility="invisible"
+            android:textOn="open"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:gravity="bottom">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/monday"
+            android:gravity="center_vertical"
+            android:textSize="14sp"
+            android:layout_weight=".4"
+            android:textColor="#575757"/>
+
+        <EditText
+            android:id="@+id/et_mon_open"
+            android:layout_width="0dp"
+            android:layout_weight=".3"
+            android:inputType="none"
+            android:focusable="false"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:layout_marginRight="15dp"
+            android:text="00:00"/>
+
+        <EditText
+            android:id="@+id/et_mon_close"
+            android:layout_width="0dp"
+            android:layout_weight=".3"
+            android:focusableInTouchMode="true"
+            android:inputType="none"
+            android:focusable="false"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textSize="13sp"
+            android:layout_marginRight="15dp"
+            android:gravity="center" />
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/switch_mon"
+            android:textOff="close"
+            android:checked="true"
+            android:textOn="open"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:gravity="bottom">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/tuesday"
+            android:gravity="center_vertical"
+            android:textSize="14sp"
+            android:layout_weight=".4"
+            android:textColor="#575757"/>
+
+        <EditText
+            android:id="@+id/et_tue_open"
+            android:layout_width="0dp"
+            android:layout_weight=".3"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="none"
+            android:textSize="13sp"
+            android:focusable="false"
+            android:layout_marginRight="15dp"
+            android:text="00:00" />
+
+        <EditText
+            android:id="@+id/et_tue_close"
+            android:layout_width="0dp"
+            android:layout_weight=".3"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="none"
+            android:textSize="13sp"
+            android:focusable="false"
+            android:layout_marginRight="15dp"
+            android:text="00:00" />
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/switch_tue"
+            android:textOff="close"
+            android:checked="true"
+            android:textOn="open"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:gravity="bottom">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/wednesday"
+            android:gravity="center_vertical"
+            android:textSize="14sp"
+            android:layout_weight=".4"
+            android:textColor="#575757"/>
+
+        <EditText
+            android:id="@+id/et_wed_open"
+            android:layout_width="0dp"
+            android:layout_weight=".3"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:inputType="none"
+            android:focusable="false"
+            android:layout_marginRight="15dp"
+            android:text="00:00" />
+
+        <EditText
+            android:id="@+id/et_wed_close"
+            android:layout_width="0dp"
+            android:layout_weight=".3"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="none"
+            android:focusable="false"
+            android:textSize="13sp"
+            android:layout_marginRight="15dp"
+            android:text="00:00"/>
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/switch_wed"
+            android:textOff="close"
+            android:checked="true"
+            android:textOn="open"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:gravity="bottom">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/thursday"
+            android:gravity="center_vertical"
+            android:textSize="14sp"
+            android:layout_weight=".4"
+            android:textColor="#575757"/>
+
+        <EditText
+            android:id="@+id/et_thu_open"
+            android:layout_width="0dp"
+            android:layout_weight=".3"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="none"
+            android:textSize="13sp"
+            android:focusable="false"
+            android:layout_marginRight="15dp"
+            android:text="00:00" />
+
+        <EditText
+            android:id="@+id/et_thu_close"
+            android:layout_width="0dp"
+            android:layout_weight=".3"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="none"
+            android:focusable="false"
+            android:textSize="13sp"
+            android:layout_marginRight="15dp"
+            android:text="00:00" />
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/switch_thu"
+            android:checked="true"
+            android:textOff="close"
+            android:textOn="open"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:gravity="bottom">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/friday"
+            android:gravity="center_vertical"
+            android:textSize="14sp"
+            android:layout_weight=".4"
+            android:textColor="#575757"/>
+
+        <EditText
+            android:id="@+id/et_fri_open"
+            android:layout_width="0dp"
+            android:layout_weight=".3"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="none"
+            android:textSize="13sp"
+            android:focusable="false"
+            android:layout_marginRight="15dp"
+            android:text="00:00" />
+
+        <EditText
+            android:id="@+id/et_fri_close"
+            android:layout_width="0dp"
+            android:layout_weight=".3"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="none"
+            android:textSize="13sp"
+            android:focusable="false"
+            android:layout_marginRight="15dp"
+            android:text="00:00" />
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/switch_fri"
+            android:checked="true"
+            android:textOff="close"
+            android:textOn="open"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:gravity="bottom">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/saturday"
+            android:gravity="center_vertical"
+            android:textSize="14sp"
+            android:layout_weight=".4"
+            android:textColor="#575757"/>
+
+        <EditText
+            android:id="@+id/et_sat_open"
+            android:layout_width="0dp"
+            android:layout_weight=".3"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="none"
+            android:textSize="13sp"
+            android:focusable="false"
+            android:layout_marginRight="15dp"
+            android:text="00:00" />
+
+        <EditText
+            android:id="@+id/et_sat_close"
+            android:layout_width="0dp"
+            android:layout_weight=".3"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:inputType="none"
+            android:focusable="false"
+            android:layout_marginRight="15dp"
+            android:text="00:00"/>
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/switch_sat"
+            android:textOff="close"
+            android:checked="true"
+            android:textOn="open"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:gravity="bottom">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/sunday"
+            android:gravity="center_vertical"
+            android:textSize="14sp"
+            android:layout_weight=".4"/>
+
+        <EditText
+            android:id="@+id/et_sun_open"
+            android:layout_width="0dp"
+            android:layout_weight=".3"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="none"
+            android:textSize="13sp"
+            android:focusable="false"
+            android:layout_marginRight="15dp"
+            android:text="00:00" />
+
+        <EditText
+            android:id="@+id/et_sun_close"
+            android:layout_width="0dp"
+            android:layout_weight=".3"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:focusable="false"
+            android:textSize="13sp"
+            android:inputType="none"
+            android:layout_marginRight="15dp"
+            android:gravity="center" />
+        <android.support.v7.widget.SwitchCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/switch_sun"
+            android:textOff="close"
+            android:checked="true"
+            android:textOn="open"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <CheckBox
+            android:id="@+id/chbx_same_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTint="@color/primary"
+            android:text="Use same time for whole week"/>
+
+        <LinearLayout
+            android:id="@+id/ll_same_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+
+            <EditText
+                android:id="@+id/et_all_open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:inputType="none"
+                android:focusable="false"
+                android:layout_marginRight="30dp"
+                android:text="00:00" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="to"/>
+
+            <EditText
+                android:id="@+id/et_all_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:inputType="none"
+                android:layout_marginLeft="30dp"
+                android:focusable="false"
+                android:text="00:00"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
