@@ -7,16 +7,21 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RatingBar;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -46,7 +51,7 @@ import java.util.List;
  * Created by admin on 10/4/2017.
  */
 
-public class ThirdPartyQueriesActivity extends AppCompatActivity {
+public class ThirdPartyQueriesActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int MAX_RESPONDED = 3;
     Toolbar toolbar;
@@ -62,7 +67,11 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
     private CustomerAssistantApi customerApis;
     private SharedPreferences pref;
     private int noOfTimesResponded = 0;
+    private SortType currentSortType = SortType.EXPIRE;
     private int noOfStars;
+    private PopupWindow popup;
+
+
 
     private enum SortType{
         DATE,CHANNEL,EXPIRE
@@ -116,7 +125,8 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
             }
         });
 
-        loadDataFromDb();
+        //loadDataFromDb();
+        getNewMessages();
         noOfTimesResponded = pref.getInt(Key_Preferences.NO_OF_TIMES_RESPONDED, 0);
 
         if (noOfTimesResponded >= MAX_RESPONDED) {
@@ -240,8 +250,8 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
                 list.add(suggestionsDO);
                 adapter.refreshListData(list);
             }
-            String payloadStr = new Gson().toJson(smsSuggestions);
-            mDbController.postSamData(payloadStr);
+            /*String payloadStr = new Gson().toJson(smsSuggestions);
+            mDbController.postSamData(payloadStr);*/
         }else{
             if(!Methods.isOnline(this)) {
                 Methods.snackbarNoInternet(this);
@@ -287,8 +297,12 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        if (popup != null && popup.isShowing()){
+            popup.dismiss();
+        }else {
+            super.onBackPressed();
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        }
     }
 
     @Override
@@ -300,6 +314,7 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
             case R.id.action_search:
                 return true;
             case R.id.action_filter:
+                initiatePopupWindow(findViewById(R.id.action_filter));
                 return true;
             case R.id.action_menu:
                 return true;
@@ -307,6 +322,75 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+    private void initiatePopupWindow(View image) {
+
+        if (popup == null) {
+            try {
+
+                popup = new PopupWindow(this);
+                View layout = LayoutInflater.from(this).inflate(R.layout.third_party_pop_up, null);
+                layout.setAnimation(AnimationUtils.loadAnimation(this,R.anim.scale_from_centre));
+                popup.setContentView(layout);
+               /* int cx = (layout.getLeft() + layout.getRight() - Methods.dpToPx(80, this));
+                int cy = layout.getTop();
+                int radius = Math.max(layout.getWidth(), layout.getHeight());
+                Animator animator =
+                        ViewAnimationUtils.createCircularReveal(layout, cx, cy, 0, radius);
+                animator.setInterpolator(new AccelerateDecelerateInterpolator());
+                animator.setDuration(700);
+                animator.addListener(new SwipeAnimationUtils.AnimationEndListener() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+
+                    }
+                });
+                animator.start();*/
+                popup.setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
+                popup.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
+                popup.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.white_round_corner));
+                popup.setOutsideTouchable(true);
+                //popup.setAnimationStyle(R.anim.slide_out_up1);
+                popup.setFocusable(true);
+                popup.showAsDropDown(image, 0, 10);
+                layout.findViewById(R.id.tvDate).setOnClickListener(this);
+                layout.findViewById(R.id.tvExpire).setOnClickListener(this);
+                layout.findViewById(R.id.tvSource).setOnClickListener(this);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else if (popup.isShowing()){
+                popup.dismiss();
+        }else
+        {
+                popup.showAsDropDown(image,0,10);
+        }
+
+
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (popup != null && popup.isShowing()){
+            popup.dismiss();
+        }
+        switch (v.getId()){
+            case R.id.tvSource:
+                sort(queriesList,SortType.CHANNEL);
+                currentSortType = SortType.CHANNEL;
+                break;
+            case R.id.tvDate:
+                sort(queriesList,SortType.DATE);
+                currentSortType = SortType.DATE;
+                break;
+            case R.id.tvExpire:
+                sort(queriesList,SortType.EXPIRE);
+                currentSortType = SortType.EXPIRE;
+                break;
+        }
+        adapter.notifyDataSetChanged();
     }
 
     @Override

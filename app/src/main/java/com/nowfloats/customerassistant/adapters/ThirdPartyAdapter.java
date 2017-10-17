@@ -70,9 +70,9 @@ public class ThirdPartyAdapter extends RecyclerView.Adapter {
             MySmsViewHolder holder = (MySmsViewHolder) viewHolder;
             final SuggestionsDO suggestionsDO = rvList.get(position);
             String contactName = TextUtils.isEmpty(suggestionsDO.getContactName())?"":suggestionsDO.getContactName()+", ";
-            holder.addressTextView.setText(contactName+""+suggestionsDO.getValue());
+            holder.addressTextView.setText(contactName.trim()+""+suggestionsDO.getValue().trim());
             holder.timeTextView.setText(Methods.getFormattedDate(suggestionsDO.getDate(),"dd MMM, hh:mm a"));
-            holder.titleTextView.setText(suggestionsDO.getEnquiredProduct());
+            holder.titleTextView.setText(suggestionsDO.getEnquiredProduct().trim());
 
             long millis = suggestionsDO.getExpiryDate() - Calendar.getInstance().getTimeInMillis();
 
@@ -164,9 +164,9 @@ public class ThirdPartyAdapter extends RecyclerView.Adapter {
         }
         if(rvList.size()>0) {
             DiffUtil.DiffResult result = DiffUtil.calculateDiff(new SuggestionCallback(newList));
-            result.dispatchUpdatesTo(this);
             rvList.clear();
             rvList.addAll(newList);
+            result.dispatchUpdatesTo(this);
         }else{
             rvList.addAll(newList);
             notifyDataSetChanged();

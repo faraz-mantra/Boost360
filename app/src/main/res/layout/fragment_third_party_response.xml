@@ -75,7 +75,7 @@
             android:id="@+id/et_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Dear Shahjad, Thanks for getting in touch with us. Regarding your query, below are few options which you might like."
+            android:text="Hi, Thanks for getting in touch with us. Regarding your query, below are few options which you might like."
             android:fontFamily="sans-serif"
             android:scrollbars="vertical"
             android:scrollbarStyle="insideOverlay"

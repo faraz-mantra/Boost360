@@ -19,6 +19,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -103,8 +104,10 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
     private void init() {
         TextView addressText = (TextView) findViewById(R.id.tv_address);
         TextView timeText = (TextView) findViewById(R.id.tv_time);
+        EditText messageEdit = (EditText) findViewById(R.id.et_message);
+        messageEdit.setSelection(messageEdit.getText().length());
         String contactName = TextUtils.isEmpty(mSuggestionDO.getContactName())?"":mSuggestionDO.getContactName()+", ";
-        addressText.setText(contactName+""+mSuggestionDO.getValue());
+        addressText.setText(contactName.trim()+""+mSuggestionDO.getValue().trim());
         timeText.setText(Methods.getFormattedDate(mSuggestionDO.getDate(),"dd MMM, hh:mm a"));
         messageLayout = (LinearLayout) findViewById(R.id.layout_message);
         fragmentLayout = (FrameLayout) findViewById(R.id.layout_fragment);

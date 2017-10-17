@@ -3,6 +3,7 @@ package com.nowfloats.NavigationDrawer.API.twitter;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -110,13 +111,15 @@ public class FacebookFeedPullRegistrationAsyncTask {
                     if(!obj.getAutoPublish()){
                         fromPage.setVisibility(View.GONE);
                         Toast.makeText(appContext, "Auto Pull for Updates will be turned OFF", Toast.LENGTH_SHORT).show();
-                        ivFbPageAutoPull.setImageResource(R.drawable.facebookpage_icon_inactive);
+                        ivFbPageAutoPull.setImageDrawable(ContextCompat.getDrawable(appContext, R.drawable.facebookpage_icon_inactive));
+                        ivFbPageAutoPull.setColorFilter(ContextCompat.getColor(appContext, R.color.light_gray));
                     }
                     else{
                         fromPage.setVisibility(View.VISIBLE);
                         fromPage.setText(obj.getFacebookPageName());
                         Toast.makeText(appContext, "Auto Pull for Updates will be turned ON", Toast.LENGTH_SHORT).show();
-                        ivFbPageAutoPull.setImageResource(R.drawable.facebook_page);
+                        ivFbPageAutoPull.setImageDrawable(ContextCompat.getDrawable(appContext, R.drawable.facebook_page));
+                        ivFbPageAutoPull.setColorFilter(ContextCompat.getColor(appContext, R.color.primaryColor));
                     }
 
                     pref.edit().putBoolean("FBFeedPullAutoPublish", obj.getAutoPublish()).apply();
