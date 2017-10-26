@@ -1037,21 +1037,10 @@ public class Site_Meter_Fragment extends Fragment {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     tvPriceDef.setText(String.format(getString(R.string.price_of_domain), arrDomainExtensions.get(position)));
                     if (hmPrices.containsKey(arrDomainExtensions.get(position))) {
-                        tvPrice.setText(String.valueOf(hmPrices.get(arrDomainExtensions.get(position))*(spDomainYears.getSelectedItemPosition()+1)) + "*");
+                        tvPrice.setText(hmPrices.get(arrDomainExtensions.get(position))+ "*");
                     } else {
                         tvPrice.setText("");
                     }
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-
-                }
-            });
-            spDomainYears.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    tvPrice.setText(String.valueOf(hmPrices.get(arrDomainExtensions.get(spDomainTypes.getSelectedItemPosition()))*(position+1)) + "*");
                 }
 
                 @Override

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:padding="25dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Your domain testmanage.com has expired and unavailable for purchase."/>
+    <Button
+        android:id="@+id/btn_plan_expired"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:background="@drawable/ria_positive_btn"
+        android:text="NowFloats plan expired"
+        android:textColor="@color/white"
+        android:paddingLeft="25dp"
+        android:layout_marginTop="20dp"
+        android:paddingTop="5dp"
+        android:visibility="gone"
+        android:paddingBottom="5dp"
+        android:paddingRight="25dp"
+        android:textAllCaps="false"
+        android:layout_gravity="center"/>
+    <LinearLayout
+        android:id="@+id/ll_domain_expired"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:visibility="visible"
+        android:gravity="center">
+        <Button
+            android:id="@+id/btn_book_domain"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="36dp"
+            android:background="@drawable/ria_positive_btn"
+            android:textColor="@color/white"
+            android:paddingLeft="20dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingRight="20dp"
+            android:textAllCaps="false"
+            android:text="Book New Domain"/>
+        <Button
+            android:id="@+id/btn_link_domain"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="36dp"
+            android:background="@drawable/ria_positive_btn"
+            android:textColor="@color/white"
+            android:paddingLeft="20dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingRight="20dp"
+            android:layout_marginLeft="15dp"
+            android:textAllCaps="false"
+            android:text="Link another domain"/>
+    </LinearLayout>
+</LinearLayout>
