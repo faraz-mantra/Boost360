@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="android-easing-1.0.3">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.android/build-cache/4ac5d04cf0718e12dc92810dda9fbffa40b4971b/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/4ac5d04cf0718e12dc92810dda9fbffa40b4971b/output/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
