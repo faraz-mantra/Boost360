@@ -5,9 +5,9 @@
       <config>
         <devices>
           <device id="Nexus 5X" />
+          <device id="pixel_xl" />
           <device id="Nexus One" />
           <device id="Nexus S" />
-          <device id="pixel_xl" />
           <device id="Nexus 6P" />
           <device id="Galaxy Nexus" />
           <device id="pixel_c" />
@@ -24,11 +24,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4c10a27b-1139-40a0-9b3b-a934f039ab49" name="Default" comment="overlay changes..">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mixpanel/mixpanel.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ZoomImageLibrary/ZoomImageLibrary.iml" afterPath="$PROJECT_DIR$/ZoomImageLibrary/ZoomImageLibrary.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/libs/libraries/libraries.iml" afterPath="$PROJECT_DIR$/app/libs/libraries/libraries.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/libs/libraries/volley/volley.iml" afterPath="$PROJECT_DIR$/app/libs/libraries/volley/volley.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/libs/libs.iml" afterPath="$PROJECT_DIR$/app/libs/libs.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/API/DomainApiService.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/API/DomainApiService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/RiaFCM/RiaFirebaseMessagingService.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/RiaFCM/RiaFirebaseMessagingService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/ProductCheckoutActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/ProductCheckoutActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/domain/DomainDetailsActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/domain/DomainDetailsActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/util/Constants.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/util/Constants.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout-xhdpi/activity_domain_details.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout-xhdpi/activity_domain_details.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/dialog_book_a_domain.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/dialog_book_a_domain.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/layout_domain_details.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/layout_domain_details.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/layout_domain_plan_expired.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/layout_domain_plan_expired.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/boost.iml" afterPath="$PROJECT_DIR$/boost.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cropper/cropper.iml" afterPath="$PROJECT_DIR$/cropper/cropper.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/instamojoLib/instamojoLib.iml" afterPath="$PROJECT_DIR$/instamojoLib/instamojoLib.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/library/library.iml" afterPath="$PROJECT_DIR$/library/library.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local.properties" afterPath="$PROJECT_DIR$/local.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/riachatsdkMain/riachatsdkMain.iml" afterPath="$PROJECT_DIR$/riachatsdkMain/riachatsdkMain.iml" />
     </list>
     <list id="b31b51bd-bfd2-44ee-bbf7-29d44275a8a3" name="Failed commit: Default" comment="Merge branch 'floating_widget' of https://bitbucket.org/nfboost_android/boost into floating_widget&#10;&#10;# Conflicts:&#10;#&#9;app/src/main/java/com/nowfloats/Product_Gallery/Product_Gallery_Fragment.java&#10;#&#9;app/src/main/java/com/nowfloats/accessbility/BubbleDialog.java&#10;#&#9;app/src/main/java/com/nowfloats/accessbility/DataAccessbilityService.java&#10;#&#9;app/src/main/res/values/styles.xml&#10;" />
     <ignored path="boost.iws" />
@@ -193,24 +214,127 @@
       <file leaf-file-name="DomainDetailsActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/domain/DomainDetailsActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="894" column="62" selection-start-line="894" selection-start-column="62" selection-end-line="894" selection-end-column="62" />
+            <state relative-caret-position="463">
+              <caret line="492" column="14" selection-start-line="492" selection-start-column="14" selection-end-line="492" selection-end-column="14" />
               <folding>
-                <element signature="e#9101#9138#0" expanded="true" />
-                <element signature="e#9423#9465#0" expanded="true" />
-                <element signature="e#30853#30884#0" expanded="true" />
-                <marker date="1508993248731" expanded="false" signature="11411:11419" ph="&lt;~&gt;" />
-                <marker date="1508993248731" expanded="true" signature="18447:19117" ph="{...}" />
+                <element signature="e#4957#5021#0" expanded="true" />
+                <element signature="method#linkDomain#0;class#DomainDetailsActivity#0" expanded="false" />
+                <element signature="e#6669#6702#0" expanded="true" />
+                <element signature="e#6855#8259#0" expanded="true" />
+                <element signature="e#7443#7484#0" expanded="true" />
+                <element signature="e#7686#7726#0" expanded="true" />
+                <element signature="e#7966#7982#0" expanded="true" />
+                <element signature="e#8258#8259#0" expanded="true" />
+                <element signature="e#8301#8479#0" expanded="true" />
+                <element signature="e#8478#8479#0" expanded="true" />
+                <element signature="e#9267#9299#0" expanded="true" />
+                <element signature="e#9321#9380#0" expanded="true" />
+                <element signature="e#9402#9425#0" expanded="true" />
+                <element signature="e#9427#9449#0" expanded="true" />
+                <element signature="e#9590#9631#0" expanded="true" />
+                <element signature="e#9632#9676#0" expanded="true" />
+                <element signature="e#9699#9721#0" expanded="true" />
+                <element signature="e#10699#10736#0" expanded="true" />
+                <element signature="e#10758#10817#0" expanded="true" />
+                <element signature="e#10839#10862#0" expanded="true" />
+                <element signature="e#10864#10886#0" expanded="true" />
+                <element signature="e#11023#11065#0" expanded="true" />
+                <element signature="e#11184#11206#0" expanded="true" />
+                <element signature="e#11367#11407#0" expanded="true" />
+                <element signature="e#11502#11547#0" expanded="true" />
+                <element signature="e#11978#12009#0" expanded="true" />
+                <element signature="e#14174#14222#0" expanded="true" />
+                <element signature="e#18882#18922#0" expanded="true" />
+                <element signature="e#20366#20417#0" expanded="true" />
+                <element signature="e#20561#20601#0" expanded="true" />
+                <element signature="e#22118#22158#0" expanded="true" />
+                <element signature="e#24436#24470#0" expanded="true" />
+                <element signature="e#24507#24543#0" expanded="true" />
+                <element signature="e#24575#24617#0" expanded="true" />
+                <element signature="e#24651#24717#0" expanded="true" />
+                <element signature="e#24936#24975#0" expanded="true" />
+                <element signature="e#25009#25062#0" expanded="true" />
+                <element signature="e#25099#25135#0" expanded="true" />
+                <element signature="e#25172#25209#0" expanded="true" />
+                <element signature="e#25553#25587#0" expanded="true" />
+                <element signature="e#25624#25660#0" expanded="true" />
+                <element signature="e#25692#25732#0" expanded="true" />
+                <element signature="e#25766#25803#0" expanded="true" />
+                <element signature="e#26025#26059#0" expanded="true" />
+                <element signature="e#26096#26132#0" expanded="true" />
+                <element signature="e#26164#26204#0" expanded="true" />
+                <element signature="e#26288#26329#0" expanded="true" />
+                <element signature="e#26414#26455#0" expanded="true" />
+                <element signature="e#26604#26638#0" expanded="true" />
+                <element signature="e#26675#26711#0" expanded="true" />
+                <element signature="e#26743#26785#0" expanded="true" />
+                <element signature="e#26870#26917#0" expanded="true" />
+                <element signature="e#27002#27049#0" expanded="true" />
+                <element signature="e#27630#27888#0" expanded="true" />
+                <element signature="e#27887#27888#0" expanded="true" />
+                <element signature="e#27918#28428#0" expanded="true" />
+                <element signature="e#28427#28428#0" expanded="true" />
+                <element signature="e#29323#29726#0" expanded="true" />
+                <element signature="e#29725#29726#0" expanded="true" />
+                <element signature="e#29791#30025#0" expanded="true" />
+                <element signature="e#30024#30025#0" expanded="true" />
+                <element signature="e#30477#30508#0" expanded="true" />
+                <element signature="e#30762#30793#0" expanded="true" />
+                <element signature="e#34064#34099#0" expanded="true" />
+                <element signature="e#34195#34203#0" expanded="true" />
+                <element signature="e#35383#36878#0" expanded="true" />
+                <element signature="e#35856#35893#0" expanded="true" />
+                <element signature="e#36114#36148#0" expanded="true" />
+                <element signature="e#36231#36262#0" expanded="true" />
+                <element signature="e#36877#36878#0" expanded="true" />
+                <element signature="e#36921#37101#0" expanded="true" />
+                <element signature="e#37020#37021#0" expanded="false" />
+                <element signature="e#37086#37087#0" expanded="false" />
+                <element signature="e#37100#37101#0" expanded="true" />
+                <element signature="e#37381#37416#0" expanded="true" />
+                <element signature="e#40356#40372#0" expanded="true" />
+                <element signature="e#42215#42265#0" expanded="true" />
+                <element signature="e#42300#42342#0" expanded="true" />
+                <element signature="e#42364#42414#0" expanded="true" />
+                <element signature="e#42436#42458#0" expanded="true" />
+                <element signature="e#42580#42621#0" expanded="true" />
+                <element signature="e#42666#42703#0" expanded="true" />
+                <element signature="e#42755#42777#0" expanded="true" />
+                <marker date="1509013405925" expanded="false" signature="13052:13060" ph="&lt;~&gt;" />
+                <marker date="1509013405925" expanded="true" signature="20088:20889" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Site_Meter_Fragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java">
+      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="1218" column="49" selection-start-line="1218" selection-start-column="49" selection-end-line="1218" selection-end-column="49" />
+            <state relative-caret-position="294">
+              <caret line="790" column="96" selection-start-line="790" selection-start-column="50" selection-end-line="790" selection-end-column="96" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DomainApiService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/API/DomainApiService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="303">
+              <caret line="83" column="32" selection-start-line="83" selection-start-column="32" selection-end-line="83" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dialog_choose_domain.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_choose_domain.xml">
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="22" column="4" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -218,49 +342,29 @@
       </file>
       <file leaf-file-name="activity_domain_details.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-xhdpi/activity_domain_details.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="476">
+              <caret line="28" column="41" selection-start-line="28" selection-start-column="25" selection-end-line="28" selection-end-column="41" />
+              <folding>
+                <element signature="e#1804#13522#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="layout_email_details.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_email_details.xml">
           <provider editor-type-id="android-designer2">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="13" column="43" selection-start-line="13" selection-start-column="43" selection-end-line="13" selection-end-column="43" />
+            <state relative-caret-position="34">
+              <caret line="2" column="34" selection-start-line="2" selection-start-column="34" selection-end-line="2" selection-end-column="34" />
               <folding>
-                <element signature="e#1360#13078#0" expanded="false" />
-                <element signature="e#1831#1849#0" expanded="true" />
-                <element signature="e#2524#2542#0" expanded="true" />
-                <element signature="e#2576#2606#0" expanded="true" />
-                <element signature="e#2856#2874#0" expanded="true" />
-                <element signature="e#2907#2925#0" expanded="true" />
-                <element signature="e#3190#3208#0" expanded="true" />
-                <element signature="e#3288#3306#0" expanded="true" />
-                <element signature="e#3805#3821#0" expanded="true" />
-                <element signature="e#3863#3887#0" expanded="true" />
-                <element signature="e#4304#4331#0" expanded="true" />
-                <element signature="e#4482#4500#0" expanded="true" />
-                <element signature="e#4771#4789#0" expanded="true" />
-                <element signature="e#5150#5171#0" expanded="true" />
-                <element signature="e#5213#5237#0" expanded="true" />
-                <element signature="e#7072#7090#0" expanded="true" />
-                <element signature="e#7510#7534#0" expanded="true" />
-                <element signature="e#9275#9293#0" expanded="true" />
-                <element signature="e#9642#9667#0" expanded="true" />
-                <element signature="e#9709#9733#0" expanded="true" />
-                <element signature="e#10139#10164#0" expanded="true" />
-                <element signature="e#10546#10564#0" expanded="true" />
-                <element signature="e#10610#10628#0" expanded="true" />
-                <element signature="e#10662#10704#0" expanded="true" />
-                <element signature="e#10795#10819#0" expanded="true" />
-                <element signature="e#11214#11232#0" expanded="true" />
-                <element signature="e#11276#11294#0" expanded="true" />
-                <element signature="e#11336#11354#0" expanded="true" />
-                <element signature="e#11448#11475#0" expanded="true" />
-                <element signature="e#11926#11944#0" expanded="true" />
-                <element signature="e#11988#12006#0" expanded="true" />
-                <element signature="e#12048#12066#0" expanded="true" />
-                <element signature="e#12160#12182#0" expanded="true" />
-                <element signature="e#12634#12652#0" expanded="true" />
-                <element signature="e#12696#12714#0" expanded="true" />
-                <element signature="e#12756#12774#0" expanded="true" />
+                <element signature="e#785#803#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -268,49 +372,49 @@
       </file>
       <file leaf-file-name="layout_domain_details.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_domain_details.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="57" column="19" selection-start-line="19" selection-start-column="1" selection-end-line="57" selection-end-column="19" />
+              <folding>
+                <element signature="e#753#2363#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
           <provider editor-type-id="android-designer2">
             <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="229">
-              <caret line="33" column="47" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="47" />
-              <folding />
-            </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="layout_domain_plan_expired.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_domain_plan_expired.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="36" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
+            <state relative-caret-position="82">
+              <caret line="32" column="32" selection-start-line="32" selection-start-column="32" selection-end-line="32" selection-end-column="32" />
               <folding />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="layout_choose_domain_options.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_choose_domain_options.xml">
           <provider editor-type-id="android-designer2">
             <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
-              <caret line="43" column="30" selection-start-line="43" selection-start-column="30" selection-end-line="43" selection-end-column="30" />
-              <folding />
-            </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="Business_Profile_Fragment_V2.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="562" column="80" selection-start-line="562" selection-start-column="80" selection-end-line="562" selection-end-column="80" />
-              <folding />
+            <state relative-caret-position="242">
+              <caret line="541" column="0" selection-start-line="541" selection-start-column="0" selection-end-line="541" selection-end-column="0" />
+              <folding>
+                <element signature="e#17243#20044#0" expanded="true" />
+                <element signature="e#20043#20044#0" expanded="true" />
+                <element signature="e#29102#29144#0" expanded="true" />
+                <element signature="e#29174#29224#0" expanded="true" />
+                <element signature="e#30080#30112#0" expanded="true" />
+                <element signature="e#30155#30190#0" expanded="true" />
+                <element signature="e#30228#30250#0" expanded="true" />
+                <element signature="e#31985#32027#0" expanded="true" />
+                <marker date="1509007387783" expanded="false" signature="33216:33251" ph="&quot;You can drop us a line at &lt;b&gt;&lt;font color=##ffb900&gt;ria@no...&quot;" />
+                <marker date="1509007387783" expanded="false" signature="33289:33311" ph="&quot;OK&quot;" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -16683,11 +16787,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/adapter_product_third_party_item_v1.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_left_black_24dp.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/red_btn_state_ng.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/red_btn_text_color.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_suggestion_details.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/customerassistant/adapters/ThirdPartySharedItemAdapter.java" />
         <option value="$PROJECT_DIR$/riachatsdkMain/src/main/res/anim/slide_to_down.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/managecustomers/adapters/FacebookChatAdapter.java" />
@@ -16726,22 +16825,27 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_third_party_response.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/customerassistant/ThirdPartyQueriesActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/layout_choose_domain_options.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/layout_domain_details.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/dialog_book_a_domain.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/managecustomers/ManageCustomerFragmentV1.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/API/DomainApiService.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/dialog_link_layout.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/layout_domain_details.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/layout_domain_plan_expired.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout-xhdpi/activity_domain_details.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/layout_email_details.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/domain/DomainDetailsActivity.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
+    <option name="x" value="1358" />
     <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="784" />
+    <option name="width" value="1936" />
+    <option name="height" value="1096" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -16808,19 +16912,38 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane">
         <subPane />
       </pane>
-      <pane id="AndroidView" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop" />
     <property name="device.picker.selection" value="0123456789ABCDEF" />
-    <property name="SearchEverywhereHistoryKey" value="site&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java&#10;customer&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/managecustomers/ManageCustomerFragmentV1.java&#10;business&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java&#10;custo&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/managecustomers/ManageCustomerFragmentV1.java&#10;siteme&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java&#10;domain&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/domain/DomainDetailsActivity.java&#10;social&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/SocialSharingFragment.java&#10;socialshar&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/SocialSharingFragment.java&#10;thirdParty&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/layout/fragment_third_party_response.xml&#10;slide_up1&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/anim/slide_out_up1.xml&#10;thirdpart&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/customerassistant/ThirdPartyQueriesActivity.java&#10;presign&#9;PSI&#9;JAVA://com.nowfloats.signup.UI.UI.PreSignUpActivityRia&#10;const&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/util/Constants.java&#10;getfp&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/signup/UI/Service/Get_FP_Details_Service.java&#10;businessadd&#9;PSI&#9;JAVA://com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity&#10;order&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/manageinventory/OrderListActivity.java&#10;businessprofi&#9;PSI&#9;JAVA://com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2&#10;socialana&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/Analytics_Screen/SocialAnalytics.java&#10;thirdpa&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/customerassistant/ThirdPartySuggestionDetailActivity.java&#10;third&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/customerassistant/adapters/ThirdPartyAdapter.java&#10;thirdPart&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/customerassistant/ThirdPartyQueriesActivity.java&#10;socialanal&#9;PSI&#9;JAVA://com.nowfloats.Analytics_Screen.SocialAnalytics&#10;adapter&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/customerassistant/adapters/ThirdPartyAdapter.java&#10;method&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/util/Methods.java&#10;Sugges&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/customerassistant/models/SMSSuggestions.java&#10;seller&#9;PSI&#9;JAVA://com.nowfloats.manageinventory.SellerAnalyticsActivity&#10;facebookchat&#9;PSI&#9;JAVA://com.nowfloats.managecustomers.FacebookChatDetailActivity&#10;slide&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/anim/slide_in_up.xml&#10;slide_in_up&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/anim/slide_in_up.xml&#10;androidma&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/AndroidManifest.xml&#10;constant&#9;PSI&#9;JAVA://com.nowfloats.util.Constants&#10;card&#9;PSI&#9;JAVA://com.nowfloats.NavigationDrawer.CardAdapter_V3&#10;frag&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/customerassistant/ShowThirdPartyProductsFragment.java&#10;dialog_&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/layout/dialog_ca_enable.xml&#10;bubble&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/bubble/BubblesService.java&#10;whats&#9;PSI&#9;JAVA://com.nowfloats.accessbility.WhatsAppBubbleCloseDialog&#10;data&#9;PSI&#9;JAVA://com.nowfloats.accessbility.DataAccessibilityServiceV8&#10;custom&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/customerassistant/CustomerAssistantActivity.java&#10;chatlogg&#9;PSI&#9;JAVA://com.nowfloats.riachatsdk.helpers.ChatLogger&#10;domaindetail&#9;PSI&#9;JAVA://com.nowfloats.domain.DomainDetailsActivity&#10;riames&#9;PSI&#9;JAVA://com.nowfloats.RiaFCM.RiaFirebaseMessagingService&#10;thirdparty&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/customerassistant/ThirdPartyQueriesActivity.java&#10;create&#9;PSI&#9;JAVA://com.nowfloats.NavigationDrawer.Create_Message_Activity&#10;vmncall&#9;PSI&#9;JAVA://com.nowfloats.Analytics_Screen.VmnCallCardsActivity&#10;businessdetail&#9;PSI&#9;JAVA://com.nowfloats.NavigationDrawer.businessApps.BusinessAppDetailsFragment&#10;businessdet&#9;PSI&#9;JAVA://com.nowfloats.BusinessProfile.UI.UI.BusinessDetailsActivity&#10;facebook&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/managecustomers/FacebookChatActivity.java&#10;metho&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/util/Methods.java&#10;androi&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/AndroidManifest.xml&#10;red_btn&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/drawable/red_btn_bg.xml" />
+    <property name="SearchEverywhereHistoryKey" value="business&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java&#10;gitig&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/.gitignore&#10;site&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java&#10;customer&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/managecustomers/ManageCustomerFragmentV1.java&#10;custo&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/managecustomers/ManageCustomerFragmentV1.java&#10;siteme&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java&#10;domain&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/domain/DomainDetailsActivity.java&#10;social&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/SocialSharingFragment.java&#10;socialshar&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/SocialSharingFragment.java&#10;thirdParty&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/layout/fragment_third_party_response.xml&#10;slide_up1&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/anim/slide_out_up1.xml&#10;thirdpart&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/customerassistant/ThirdPartyQueriesActivity.java&#10;presign&#9;PSI&#9;JAVA://com.nowfloats.signup.UI.UI.PreSignUpActivityRia&#10;const&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/util/Constants.java&#10;getfp&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/signup/UI/Service/Get_FP_Details_Service.java&#10;businessadd&#9;PSI&#9;JAVA://com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity&#10;order&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/manageinventory/OrderListActivity.java&#10;businessprofi&#9;PSI&#9;JAVA://com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2&#10;socialana&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/Analytics_Screen/SocialAnalytics.java&#10;thirdpa&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/customerassistant/ThirdPartySuggestionDetailActivity.java&#10;third&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/customerassistant/adapters/ThirdPartyAdapter.java&#10;thirdPart&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/customerassistant/ThirdPartyQueriesActivity.java&#10;socialanal&#9;PSI&#9;JAVA://com.nowfloats.Analytics_Screen.SocialAnalytics&#10;adapter&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/customerassistant/adapters/ThirdPartyAdapter.java&#10;method&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/util/Methods.java&#10;Sugges&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/customerassistant/models/SMSSuggestions.java&#10;seller&#9;PSI&#9;JAVA://com.nowfloats.manageinventory.SellerAnalyticsActivity&#10;facebookchat&#9;PSI&#9;JAVA://com.nowfloats.managecustomers.FacebookChatDetailActivity&#10;slide&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/anim/slide_in_up.xml&#10;slide_in_up&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/anim/slide_in_up.xml&#10;androidma&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/AndroidManifest.xml&#10;constant&#9;PSI&#9;JAVA://com.nowfloats.util.Constants&#10;card&#9;PSI&#9;JAVA://com.nowfloats.NavigationDrawer.CardAdapter_V3&#10;frag&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/customerassistant/ShowThirdPartyProductsFragment.java&#10;dialog_&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/layout/dialog_ca_enable.xml&#10;bubble&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/bubble/BubblesService.java&#10;whats&#9;PSI&#9;JAVA://com.nowfloats.accessbility.WhatsAppBubbleCloseDialog&#10;data&#9;PSI&#9;JAVA://com.nowfloats.accessbility.DataAccessibilityServiceV8&#10;custom&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/customerassistant/CustomerAssistantActivity.java&#10;chatlogg&#9;PSI&#9;JAVA://com.nowfloats.riachatsdk.helpers.ChatLogger&#10;domaindetail&#9;PSI&#9;JAVA://com.nowfloats.domain.DomainDetailsActivity&#10;riames&#9;PSI&#9;JAVA://com.nowfloats.RiaFCM.RiaFirebaseMessagingService&#10;thirdparty&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/customerassistant/ThirdPartyQueriesActivity.java&#10;create&#9;PSI&#9;JAVA://com.nowfloats.NavigationDrawer.Create_Message_Activity&#10;vmncall&#9;PSI&#9;JAVA://com.nowfloats.Analytics_Screen.VmnCallCardsActivity&#10;businessdetail&#9;PSI&#9;JAVA://com.nowfloats.NavigationDrawer.businessApps.BusinessAppDetailsFragment&#10;businessdet&#9;PSI&#9;JAVA://com.nowfloats.BusinessProfile.UI.UI.BusinessDetailsActivity&#10;facebook&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/managecustomers/FacebookChatActivity.java&#10;metho&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/util/Methods.java&#10;androi&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/AndroidManifest.xml" />
     <property name="ExportApk.ApkPath" value="C:\NFSource\nowfloats\boost\app" />
     <property name="ExportApk.Flavors" value="partone" />
     <property name="ExportApk.BuildType" value="release" />
@@ -17248,24 +17371,24 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="false" />
+    <frame x="1358" y="-8" width="1936" height="1096" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32883817" sideWeight="0.49573562" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43251532" sideWeight="0.4307036" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1172466" sideWeight="0.68711656" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0836887" sideWeight="0.689834" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24693252" sideWeight="0.48773986" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6564417" sideWeight="0.5570362" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43040848" sideWeight="0.49516907" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43017057" sideWeight="0.49516907" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32780084" sideWeight="0.5788913" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.84647304" sideWeight="0.40405118" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27300614" sideWeight="0.42537314" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27300614" sideWeight="0.42537314" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32780084" sideWeight="0.42110875" order="11" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1172466" sideWeight="0.31288344" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0836887" sideWeight="0.31016597" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24413647" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26701966" sideWeight="0.5048309" order="9" side_tool="true" content_ui="tabs" />
@@ -17475,22 +17598,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/adapter_update_third_party_item.xml" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/adapter_product_third_party_item.xml" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/customerassistant/adapters/ThirdPartySuggestionAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="49" column="88" selection-start-line="49" selection-start-column="88" selection-end-line="49" selection-end-column="88" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/util/Methods.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6749">
-          <caret line="472" column="41" selection-start-line="472" selection-start-column="25" selection-end-line="472" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/anim/bubble_scale_up.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -17758,25 +17865,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/API/DomainApiService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_choose_domain.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_book_a_domain.xml">
       <provider editor-type-id="android-designer2">
         <state />
@@ -17793,16 +17881,8 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
+        <state relative-caret-position="731">
           <caret line="43" column="30" selection-start-line="43" selection-start-column="30" selection-end-line="43" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="562" column="80" selection-start-line="562" selection-start-column="80" selection-end-line="562" selection-end-column="80" />
           <folding />
         </state>
       </provider>
@@ -17815,13 +17895,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_domain_details.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/managecustomers/ManageCustomerFragmentV1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="300" column="70" selection-start-line="300" selection-start-column="70" selection-end-line="300" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_link_layout.xml">
       <provider editor-type-id="android-designer2">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="33" column="47" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="47" />
+        <state relative-caret-position="272">
+          <caret line="16" column="54" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="54" />
           <folding />
         </state>
       </provider>
@@ -17831,9 +17926,35 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="36" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
+        <state relative-caret-position="82">
+          <caret line="32" column="32" selection-start-line="32" selection-start-column="32" selection-end-line="32" selection-end-column="32" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_domain_details.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="57" column="19" selection-start-line="19" selection-start-column="1" selection-end-line="57" selection-end-column="19" />
+          <folding>
+            <element signature="e#753#2363#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_email_details.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="34" selection-start-line="2" selection-start-column="34" selection-end-line="2" selection-end-column="34" />
+          <folding>
+            <element signature="e#785#803#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -17842,75 +17963,158 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="13" column="43" selection-start-line="13" selection-start-column="43" selection-end-line="13" selection-end-column="43" />
+        <state relative-caret-position="476">
+          <caret line="28" column="41" selection-start-line="28" selection-start-column="25" selection-end-line="28" selection-end-column="41" />
           <folding>
-            <element signature="e#1360#13078#0" expanded="false" />
-            <element signature="e#1831#1849#0" expanded="true" />
-            <element signature="e#2524#2542#0" expanded="true" />
-            <element signature="e#2576#2606#0" expanded="true" />
-            <element signature="e#2856#2874#0" expanded="true" />
-            <element signature="e#2907#2925#0" expanded="true" />
-            <element signature="e#3190#3208#0" expanded="true" />
-            <element signature="e#3288#3306#0" expanded="true" />
-            <element signature="e#3805#3821#0" expanded="true" />
-            <element signature="e#3863#3887#0" expanded="true" />
-            <element signature="e#4304#4331#0" expanded="true" />
-            <element signature="e#4482#4500#0" expanded="true" />
-            <element signature="e#4771#4789#0" expanded="true" />
-            <element signature="e#5150#5171#0" expanded="true" />
-            <element signature="e#5213#5237#0" expanded="true" />
-            <element signature="e#7072#7090#0" expanded="true" />
-            <element signature="e#7510#7534#0" expanded="true" />
-            <element signature="e#9275#9293#0" expanded="true" />
-            <element signature="e#9642#9667#0" expanded="true" />
-            <element signature="e#9709#9733#0" expanded="true" />
-            <element signature="e#10139#10164#0" expanded="true" />
-            <element signature="e#10546#10564#0" expanded="true" />
-            <element signature="e#10610#10628#0" expanded="true" />
-            <element signature="e#10662#10704#0" expanded="true" />
-            <element signature="e#10795#10819#0" expanded="true" />
-            <element signature="e#11214#11232#0" expanded="true" />
-            <element signature="e#11276#11294#0" expanded="true" />
-            <element signature="e#11336#11354#0" expanded="true" />
-            <element signature="e#11448#11475#0" expanded="true" />
-            <element signature="e#11926#11944#0" expanded="true" />
-            <element signature="e#11988#12006#0" expanded="true" />
-            <element signature="e#12048#12066#0" expanded="true" />
-            <element signature="e#12160#12182#0" expanded="true" />
-            <element signature="e#12634#12652#0" expanded="true" />
-            <element signature="e#12696#12714#0" expanded="true" />
-            <element signature="e#12756#12774#0" expanded="true" />
+            <element signature="e#1804#13522#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/managecustomers/ManageCustomerFragmentV1.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="300" column="70" selection-start-line="300" selection-start-column="70" selection-end-line="300" selection-end-column="70" />
+        <state relative-caret-position="294">
+          <caret line="790" column="96" selection-start-line="790" selection-start-column="50" selection-end-line="790" selection-end-column="96" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_choose_domain.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" column="4" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="1218" column="49" selection-start-line="1218" selection-start-column="49" selection-end-line="1218" selection-end-column="49" />
+        <state relative-caret-position="361">
+          <caret line="896" column="74" selection-start-line="896" selection-start-column="61" selection-end-line="896" selection-end-column="74" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/API/DomainApiService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="83" column="32" selection-start-line="83" selection-start-column="32" selection-end-line="83" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="541" column="0" selection-start-line="541" selection-start-column="0" selection-end-line="541" selection-end-column="0" />
+          <folding>
+            <element signature="e#17243#20044#0" expanded="true" />
+            <element signature="e#20043#20044#0" expanded="true" />
+            <element signature="e#29102#29144#0" expanded="true" />
+            <element signature="e#29174#29224#0" expanded="true" />
+            <element signature="e#30080#30112#0" expanded="true" />
+            <element signature="e#30155#30190#0" expanded="true" />
+            <element signature="e#30228#30250#0" expanded="true" />
+            <element signature="e#31985#32027#0" expanded="true" />
+            <marker date="1509007387783" expanded="false" signature="33216:33251" ph="&quot;You can drop us a line at &lt;b&gt;&lt;font color=##ffb900&gt;ria@no...&quot;" />
+            <marker date="1509007387783" expanded="false" signature="33289:33311" ph="&quot;OK&quot;" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/domain/DomainDetailsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="894" column="62" selection-start-line="894" selection-start-column="62" selection-end-line="894" selection-end-column="62" />
+        <state relative-caret-position="463">
+          <caret line="492" column="14" selection-start-line="492" selection-start-column="14" selection-end-line="492" selection-end-column="14" />
           <folding>
-            <element signature="e#9101#9138#0" expanded="true" />
-            <element signature="e#9423#9465#0" expanded="true" />
-            <element signature="e#30853#30884#0" expanded="true" />
-            <marker date="1508993248731" expanded="false" signature="11411:11419" ph="&lt;~&gt;" />
-            <marker date="1508993248731" expanded="true" signature="18447:19117" ph="{...}" />
+            <element signature="e#4957#5021#0" expanded="true" />
+            <element signature="method#linkDomain#0;class#DomainDetailsActivity#0" expanded="false" />
+            <element signature="e#6669#6702#0" expanded="true" />
+            <element signature="e#6855#8259#0" expanded="true" />
+            <element signature="e#7443#7484#0" expanded="true" />
+            <element signature="e#7686#7726#0" expanded="true" />
+            <element signature="e#7966#7982#0" expanded="true" />
+            <element signature="e#8258#8259#0" expanded="true" />
+            <element signature="e#8301#8479#0" expanded="true" />
+            <element signature="e#8478#8479#0" expanded="true" />
+            <element signature="e#9267#9299#0" expanded="true" />
+            <element signature="e#9321#9380#0" expanded="true" />
+            <element signature="e#9402#9425#0" expanded="true" />
+            <element signature="e#9427#9449#0" expanded="true" />
+            <element signature="e#9590#9631#0" expanded="true" />
+            <element signature="e#9632#9676#0" expanded="true" />
+            <element signature="e#9699#9721#0" expanded="true" />
+            <element signature="e#10699#10736#0" expanded="true" />
+            <element signature="e#10758#10817#0" expanded="true" />
+            <element signature="e#10839#10862#0" expanded="true" />
+            <element signature="e#10864#10886#0" expanded="true" />
+            <element signature="e#11023#11065#0" expanded="true" />
+            <element signature="e#11184#11206#0" expanded="true" />
+            <element signature="e#11367#11407#0" expanded="true" />
+            <element signature="e#11502#11547#0" expanded="true" />
+            <element signature="e#11978#12009#0" expanded="true" />
+            <element signature="e#14174#14222#0" expanded="true" />
+            <element signature="e#18882#18922#0" expanded="true" />
+            <element signature="e#20366#20417#0" expanded="true" />
+            <element signature="e#20561#20601#0" expanded="true" />
+            <element signature="e#22118#22158#0" expanded="true" />
+            <element signature="e#24436#24470#0" expanded="true" />
+            <element signature="e#24507#24543#0" expanded="true" />
+            <element signature="e#24575#24617#0" expanded="true" />
+            <element signature="e#24651#24717#0" expanded="true" />
+            <element signature="e#24936#24975#0" expanded="true" />
+            <element signature="e#25009#25062#0" expanded="true" />
+            <element signature="e#25099#25135#0" expanded="true" />
+            <element signature="e#25172#25209#0" expanded="true" />
+            <element signature="e#25553#25587#0" expanded="true" />
+            <element signature="e#25624#25660#0" expanded="true" />
+            <element signature="e#25692#25732#0" expanded="true" />
+            <element signature="e#25766#25803#0" expanded="true" />
+            <element signature="e#26025#26059#0" expanded="true" />
+            <element signature="e#26096#26132#0" expanded="true" />
+            <element signature="e#26164#26204#0" expanded="true" />
+            <element signature="e#26288#26329#0" expanded="true" />
+            <element signature="e#26414#26455#0" expanded="true" />
+            <element signature="e#26604#26638#0" expanded="true" />
+            <element signature="e#26675#26711#0" expanded="true" />
+            <element signature="e#26743#26785#0" expanded="true" />
+            <element signature="e#26870#26917#0" expanded="true" />
+            <element signature="e#27002#27049#0" expanded="true" />
+            <element signature="e#27630#27888#0" expanded="true" />
+            <element signature="e#27887#27888#0" expanded="true" />
+            <element signature="e#27918#28428#0" expanded="true" />
+            <element signature="e#28427#28428#0" expanded="true" />
+            <element signature="e#29323#29726#0" expanded="true" />
+            <element signature="e#29725#29726#0" expanded="true" />
+            <element signature="e#29791#30025#0" expanded="true" />
+            <element signature="e#30024#30025#0" expanded="true" />
+            <element signature="e#30477#30508#0" expanded="true" />
+            <element signature="e#30762#30793#0" expanded="true" />
+            <element signature="e#34064#34099#0" expanded="true" />
+            <element signature="e#34195#34203#0" expanded="true" />
+            <element signature="e#35383#36878#0" expanded="true" />
+            <element signature="e#35856#35893#0" expanded="true" />
+            <element signature="e#36114#36148#0" expanded="true" />
+            <element signature="e#36231#36262#0" expanded="true" />
+            <element signature="e#36877#36878#0" expanded="true" />
+            <element signature="e#36921#37101#0" expanded="true" />
+            <element signature="e#37020#37021#0" expanded="false" />
+            <element signature="e#37086#37087#0" expanded="false" />
+            <element signature="e#37100#37101#0" expanded="true" />
+            <element signature="e#37381#37416#0" expanded="true" />
+            <element signature="e#40356#40372#0" expanded="true" />
+            <element signature="e#42215#42265#0" expanded="true" />
+            <element signature="e#42300#42342#0" expanded="true" />
+            <element signature="e#42364#42414#0" expanded="true" />
+            <element signature="e#42436#42458#0" expanded="true" />
+            <element signature="e#42580#42621#0" expanded="true" />
+            <element signature="e#42666#42703#0" expanded="true" />
+            <element signature="e#42755#42777#0" expanded="true" />
+            <marker date="1509013405925" expanded="false" signature="13052:13060" ph="&lt;~&gt;" />
+            <marker date="1509013405925" expanded="true" signature="20088:20889" ph="{...}" />
           </folding>
         </state>
       </provider>

@@ -64,10 +64,12 @@ import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
 
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 
@@ -740,19 +742,36 @@ public class Site_Meter_Fragment extends Fragment {
         if (domainDetails != null && domainDetails.response) {
             if(TextUtils.isDigitsOnly(domainDetails.getProcessingStatus()))
             {
+                int domainExpiryDays = -1;
+                if(!TextUtils.isEmpty(domainDetails.getActivatedOn())) {
+                    long activatedDate = Long.parseLong(domainDetails.getActivatedOn().replace("/Date(", "").replace(")/", ""));
+                    Calendar dbCalender = Calendar.getInstance();
+                    dbCalender.setTimeInMillis(activatedDate);
+
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd yyyy", Locale.ENGLISH);
+                    dateFormat.setCalendar(dbCalender);
+                    dbCalender.add(Calendar.YEAR, domainDetails.getValidityInYears());
+                    long totalNoOfDays = 1000 * 60 * 60 * 24;
+
+                    long currentTime = System.currentTimeMillis();
+                    domainExpiryDays = (int) ((dbCalender.getTimeInMillis() - currentTime) / totalNoOfDays);
+                }
                 if( !TextUtils.isEmpty(domainDetails.getErrorMessage()) && domainDetails.getIsProcessingFailed()){
                     showCustomDialog(getString(R.string.buy_a_domain),
                             Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
                             getString(R.string.ok), null, DialogFrom.DEFAULT);
-                }else if (Integer.parseInt(domainDetails.getProcessingStatus())>16) {
+                }else if ( domainExpiryDays>=0 && Integer.parseInt(domainDetails.getProcessingStatus())>16) {
                     showCustomDialog(getString(R.string.domain_booking_successful),
                             String.format(getString(R.string.domain_booking_successful_message), domainDetails.getDomainName()),
                             getString(R.string.ok), null, DialogFrom.DEFAULT);
 
-                }else{
+                }else if(Integer.parseInt(domainDetails.getProcessingStatus())<=16){
                     showCustomDialog(getString(R.string.domain_booking_process),
                             getString(R.string.domain_booking_process_message),
                             getString(R.string.ok), null,DialogFrom.DEFAULT);
+                }else{
+                    chooseDomain();
+                    // renew your domain
                 }
             }
             else
@@ -1019,7 +1038,7 @@ public class Site_Meter_Fragment extends Fragment {
                                 get_fp_details_model.setDomainValidityInYears(String.valueOf(spDomainYears.getSelectedItemPosition()+1));
                                 get_fp_details_model.setDomainType(spDomainTypes.getSelectedItem().toString());
                                 get_fp_details_model.setPinCode(edtZip.getText().toString());
-                                domainApiService.checkDomainAvailability(domainName, getDomainAvailabilityParam((String) spDomainTypes.getSelectedItem()));
+                                domainApiService.checkDomainAvailability(domainName, getDomainAvailabilityParam((String) spDomainTypes.getSelectedItem()), DomainApiService.DomainAPI.CHECK_DOMAIN);
                             }
                         }
                     });

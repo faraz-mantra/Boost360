@@ -525,6 +525,10 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                 showCustomDialog("Domain Details", "You have linked your domain to " +
                                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI) + " successfully.",
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
+            }else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1")) {
+                showCustomDialog(getString(R.string.buy_a_domain),
+                        Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
+                        getString(R.string.ok), null, DialogFrom.DEFAULT);
             }else if (Methods.isOnline(activity)){
                 showLoader(getString(R.string.please_wait));
                 domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
@@ -548,10 +552,9 @@ public class Business_Profile_Fragment_V2 extends Fragment {
         this.get_fp_details_model = get_fp_details_model;
         if (TextUtils.isEmpty(get_fp_details_model.response)) {
 
-            if (TextUtils.isEmpty(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI))||
-                    (get_fp_details_model.getPaymentState().equalsIgnoreCase(PAYMENT_STATE_SUCCESS)
+            /*if (get_fp_details_model.getPaymentState().equalsIgnoreCase(PAYMENT_STATE_SUCCESS)
                     && get_fp_details_model.getFPWebWidgets() != null
-                    && get_fp_details_model.getFPWebWidgets().contains(FP_WEB_WIDGET_DOMAIN))) {
+                    && get_fp_details_model.getFPWebWidgets().contains(FP_WEB_WIDGET_DOMAIN)) {*/
 
                 if (TextUtils.isEmpty(get_fp_details_model.getEmail())
                         || get_fp_details_model.getContacts() == null) {
@@ -575,13 +578,13 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                 } else {
                     showDomainDetails();
                 }
-            }
+           /* }
             else
             {
                 showCustomDialog(getString(R.string.buy_a_domain),
                         Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
-            }
+            }*/
 
         } else {
             Methods.showSnackBarNegative(getActivity(), get_fp_details_model.response);

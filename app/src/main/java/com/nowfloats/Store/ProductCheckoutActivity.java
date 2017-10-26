@@ -60,7 +60,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
     Toolbar toolbar;
     MaterialDialog materialProgress;
     TextView headerText, tvUserName, tvUserEmail, tvPhoneNumber, tvNetTotal, tvTaxes,
-            tvAmountToBePaid, tvTanNo, tvTdsAmount;
+             tvAmountToBePaid, tvTanNo, tvTdsAmount;
     RecyclerView rvItems;
     Button btnPayNow, btnOpcApply;
     EditText etOpc;
@@ -227,20 +227,6 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             return;
         }
         try {
-            /*SendDraftInvoiceModel sendDraftInvoiceModel = new SendDraftInvoiceModel();
-            //PurchaseDetail purchaseDetail = new PurchaseDetail();
-            DataBase dataBase = new DataBase(this);
-
-            Cursor cursor = dataBase.getLoginStatus();
-            if (cursor!=null && cursor.moveToFirst()){
-                //System.out.println(cursor.getString(cursor.getColumnIndex("title"));
-                sendDraftInvoiceModel.setFpUserProfileId(cursor.getString(cursor.getColumnIndex(DataBase.colloginId)));
-                sendDraftInvoiceModel.setOpc(OPCCode);
-            }else {
-                Toast.makeText(this, R.string.login_status_error, Toast.LENGTH_SHORT).show();
-                return;
-            }
-            sendDraftInvoiceModel.setPurchaseDetails(null);*/
             DataBase dataBase = new DataBase(ProductCheckoutActivity.this);
             Cursor cursor = dataBase.getLoginStatus();
             String fpUserProfileId;
@@ -409,7 +395,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
 
             double totalTax = 0;
             if(StoreDataActivity.product.Taxes != null) {
-                for (TaxDetail taxData : StoreDataActivity.product.Taxes/*taxes*/) {
+                for (TaxDetail taxData : StoreDataActivity.product.Taxes) {
                     totalTax += taxData.getValue();
                 }
             }
@@ -421,7 +407,7 @@ public class ProductCheckoutActivity extends AppCompatActivity {
             purchaseDetail.setMRPCurrencyCode(StoreDataActivity.product.CurrencyCode);
             purchaseDetail.setPackageId(StoreDataActivity.product._id);
             purchaseDetail.setPackageName(StoreDataActivity.product.Name);
-            purchaseDetail.setTaxDetails(StoreDataActivity.product.Taxes/*taxes*/);
+            purchaseDetail.setTaxDetails(StoreDataActivity.product.Taxes);
 
             List<PurchaseDetail> purchaseDetailList = new ArrayList<PurchaseDetail>();
             purchaseDetailList.add(purchaseDetail);
@@ -452,17 +438,6 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                         }
                         initializeVal(receiveDraftInvoice.getResult(), false);
                         mInvoiceId = receiveDraftInvoice.getResult().getInvoiceId();
-                        /*if(!Util.isNullOrEmpty(mNewPackage) && !Util.isNullOrEmpty(mFinalAmount)) {
-                            Intent i = new Intent(ProductCheckoutActivity.this, InstaMojoMainActivity.class);
-                            mOrderData = new OrderDataModel(mSessionManager.getFpTag(), mSessionManager.getFpTag(),
-                                    mSessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
-                                    mFinalAmount, mNewPackage.substring(0, mNewPackage.length() - 4),
-                                    mSessionManager.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM),
-                                    "NowFloats Package", StoreDataActivity.product.CurrencyCode);
-                            i.putExtra(com.romeo.mylibrary.Constants.PARCEL_IDENTIFIER, mOrderData);
-                            initiatePaymentProcess(i, mInvoiceId);
-                        }*/
-
                     }else {
                         if(materialProgress!=null){
                             materialProgress.dismiss();
@@ -514,7 +489,6 @@ public class ProductCheckoutActivity extends AppCompatActivity {
                 NumberFormat.getIntegerInstance(Locale.US).format(netAmount)+ " /-");
         float taxVal = 0;
         StringBuilder taxNames= new StringBuilder();
-        //double taxAmount = 0;
 
         for (TaxDetail taxData : invoiceData.getPurchaseDetails().get(0).getTaxDetails()) {
             taxVal += taxData.getValue();

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     android:orientation="vertical">
     <include
         android:id="@+id/app_bar_site_appearance"
@@ -21,6 +22,15 @@
         android:visibility="gone"
         android:layout_height="wrap_content">
         <include layout="@layout/layout_domain_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_email_details"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="wrap_content">
+        <include layout="@layout/layout_email_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </android.support.v7.widget.CardView>

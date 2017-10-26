@@ -2,22 +2,49 @@
 <items version="2" >
 
     <item
-        is-multidex="false"
-        jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\ZoomImageLibrary\build\intermediates\bundles\debug\classes.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\libs\libraries\AF-Android-SDK-v2.3.1.17.jar"
+        jumboMode="true"
         optimize="true"
-        revision="25.0.0"
-        sha1="ac3f3c053823a25975839f307dde1b31f8e2d9e7">
-        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\ZoomImageLibrary\build\intermediates\pre-dexed\androidTest\debug\classes_429ee7068fb167e9df5854fb385e9d99078db183.jar" />
+        revision="25.0.2"
+        sha1="fc4960d15a15fa450ceab2f52996cf345e771b0f">
+        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\2\AF-Android-SDK-v2.3.1.17_3d5de43f6546be6ccc6a79ee206a286d37e4b3df\classes.dex" />
     </item>
     <item
-        is-multidex="false"
-        jar="C:\Users\NowFloats\.android\build-cache\675b9a8fa7b64b1754fef7ddd6e3793160bf685f\output\jars\classes.jar"
-        jumboMode="false"
+        is-multidex="true"
+        jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\incremental-runtime-classes\partone\debug\instant-run.jar"
+        jumboMode="true"
         optimize="true"
-        revision="25.0.0"
-        sha1="90c8cd98f8c1cd37285d7bf9ea5a9ec6df3a99b6">
-        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\ZoomImageLibrary\build\intermediates\pre-dexed\androidTest\debug\classes_950ef1b575dfcb6beb62310e95d0050cfe05e78a.jar" />
+        revision="25.0.2"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10000\instant-run_027338dc8cbd7fdc2a846323bb9b72279e4b82ea\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\libs\libraries\signpost-commonshttp4-1.2.1.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="731e05de30cfeb1f41d417f886277f9597fe0f36">
+        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\2\signpost-commonshttp4-1.2.1.2_ded1be0021330c90cbdde551dbda426814038c9d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\libs\libraries\signpost-core-1.2.1.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bf95955dcf3d5a78c201e49b0c336787ea73f161">
+        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\2\signpost-core-1.2.1.2_f2e2496261a74b815eaf93cc8ecd006950445f78\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\incremental-classes\partone\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b22ff0b856147881977899082fb04f14f3cf4a17">
+        <dex dex="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app\build\intermediates\transforms\dex\partone\debug\folders\1000\10000\instant-run-bootstrap_dbaf4d8d8798a2af32d7d472c9f6ee7807211edd\classes.dex" />
     </item>
 
 </items>

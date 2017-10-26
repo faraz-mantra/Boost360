@@ -71,6 +71,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
     private static final int DOMAIN_EXPIRY_GRACE_PERIOD = 30;
 
     private static final int PLAN_EXPIRY_GRACE_PERIOD = 90;
+    private static final String FP_WEB_WIDGET_DOMAIN = "DOMAINPURCHASE";
 
     private int domainExpiryDays = 0, planExpiryDays = 0;
 
@@ -87,8 +88,8 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
     SharedPreferences pref;
     private int domainYears = 0, bookedYears = 0;
     private boolean isDomainBookFailed = false;
-    TextView domainNameTv, domainCreatedTv, domainExpiredTv, statusTv;
-    CardView domainDetailsCard;
+    TextView domainNameTv, domainCreatedTv, domainExpiredTv, statusTv,expireMsgTv;
+    CardView domainDetailsCard, emailDetailsCard;
     LinearLayout chooseDomainLayout, expiredLayout;
     Button proceedBtn;
     RadioButton chooseBtn, linkBtn;
@@ -122,8 +123,10 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         domainNameTv = (TextView) findViewById(R.id.tv_domain_name);
         statusTv = (TextView) findViewById(R.id.tv_status);
         domainDetailsCard = (CardView) findViewById(R.id.cv_domain_details);
+        emailDetailsCard = (CardView) findViewById(R.id.cv_email_details);
         chooseDomainLayout = (LinearLayout) findViewById(R.id.ll_choose_domain);
         expiredLayout = (LinearLayout) findViewById(R.id.ll_plan_expired);
+        expireMsgTv = (TextView) expiredLayout.findViewById(R.id.tv_expire_msg);
         proceedBtn = (Button) findViewById(R.id.btn_proceed);
         chooseBtn = (RadioButton) findViewById(R.id.rb_book_a_domain);
         linkBtn = (RadioButton) findViewById(R.id.rb_link_a_domain);
@@ -222,11 +225,34 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
     @Subscribe
     public void domainAvailabilityStatus(DomainApiService.DomainAPI domainAPI) {
         hideLoader();
-        if (domainAPI == DomainApiService.DomainAPI.CHECK_DOMAIN) {
+        if (domainAPI == DomainApiService.DomainAPI.RENEW_DOMAIN){
+
+            showCustomDialog(getString(R.string.renew_domain),
+                    getString(R.string.are_you_sure_do_you_want_to_book_domain),
+                    getString(R.string.yes), getString(R.string.no), DialogFrom.DOMAIN_AVAILABLE);
+
+        }else if(domainAPI == DomainApiService.DomainAPI.RENEW_NOT_AVAILABLE){
+            showCustomDialog(getString(R.string.domain_booking_failed),getString(R.string.drop_us_on_email_or_call) ,
+                    getString(R.string.ok), null, DialogFrom.DEFAULT);
+            /*expireMsgTv.setText(String.format(getString(R.string.renew_domain_not_available_message),domainNameTv.getText().toString(),session.getFpTag()+getString(R.string.nowfloats_com)));
+            expiredLayout.findViewById(R.id.btn_renew_domain).setVisibility(View.GONE);
+            expiredLayout.findViewById(R.id.btn_book_domain).setVisibility(View.VISIBLE);
+            expiredLayout.findViewById(R.id.btn_book_domain).setOnClickListener(this);*/
+
+            /*if (domainBookDialog != null)
+                 Methods.showSnackBarNegative(domainBookDialog.getView(), getString(R.string.domain_not_available));
+            else{
+                Methods.showSnackBarNegative(this, getString(R.string.domain_not_available));
+            }*/
+
+        } else if (domainAPI == DomainApiService.DomainAPI.CHECK_DOMAIN) {
             Methods.showSnackBarPositive(DomainDetailsActivity.this, "Domain is available");
+
             showCustomDialog(getString(R.string.book_a_new_domain),
                     getString(R.string.are_you_sure_do_you_want_to_book_domain),
                     getString(R.string.yes), getString(R.string.no), DialogFrom.DOMAIN_AVAILABLE);
+
+
         } else if (domainAPI == DomainApiService.DomainAPI.LINK_DOMAIN) {
             showCustomDialog(getString(R.string.domain_booking_process),"You have successfully requested to link a domain, Our team will contact you with in 48 hours." ,
                     getString(R.string.ok), null, DialogFrom.DEFAULT);
@@ -275,7 +301,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
 
             arrDomainExtensions.remove(".CA");
             arrDomainExtensions.remove(".CO.ZA");
-            bookDomain(null,null);
+            bookDomain(null,null, DomainApiService.DomainAPI.CHECK_DOMAIN);
             /*ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(DomainDetailsActivity.this,
                     android.R.layout.simple_spinner_item, arrDomainExtensions);
             spDomainTypes.setAdapter(arrayAdapter);*/
@@ -417,113 +443,59 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
     private void applyDomainLogic() {
          if (planExpiryDays <= 0) {
              domainDetailsCard.setVisibility(View.VISIBLE);
-             domainDetailsCard.setBackgroundColor(ContextCompat.getColor(this,R.color.light_gray));
-             statusTv.setText("NowFloats Plan Expired");
+
              expiredLayout.setVisibility(View.VISIBLE);
+             if(domainExpiryDays <= 0){
+                 setDomainDetailsCard(false,"NowFloats Plan and Domain Expired");
+                 expireMsgTv.setText(getString(R.string.renew_nowfloats_and_domain_plan));
+             }
+             else{
+                 setDomainDetailsCard(true,"NowFloats Plan Expired");
+                 expireMsgTv.setText(getString(R.string.renew_nowfloats_plan));
+             }
              expiredLayout.findViewById(R.id.btn_plan_expired).setVisibility(View.VISIBLE);
              expiredLayout.findViewById(R.id.btn_plan_expired).setOnClickListener(this);
             //card background light_gray
             // nowfloats plan expired
-            // renew button
-
-            /*edtDomainName.setEnabled(false);
-            edtDomainName.setFocusable(false);*/
 
         } else if(isDomainBookFailed){
-            /*tvDomainStatus.setText("Status: Your Domain request is failed. Please try again");
-            spDomainTypes.setEnabled(true);
-            spDomainTypes.setClickable(true);
-            edtDomainName.setEnabled(true);
-            edtDomainName.setFocusable(true);
-            btnRenewDomain.setVisibility(View.VISIBLE);
-            btnBookDomain.setVisibility(View.GONE);
-            tvDomainStatus.setTextColor(Color.RED);*/
+             // will not come here
         } else if(TextUtils.isEmpty(domainType)){
              // first domain purchase widget exist
             if(planExpiryDays <=90){
                 showExpiryDialog(LIGHT_HOUSE_EXPIRE, planExpiryDays);
             }
-            chooseDomainLayout.setVisibility(View.VISIBLE);
-            /*tvDomainStatus.setText("Status: You have not booked any domain yet.");
-            btnBookDomain.setVisibility(View.VISIBLE);
-            btnRenewDomain.setVisibility(View.GONE);
-            spDomainTypes.setEnabled(true);
-            spDomainTypes.setClickable(true);
-            edtDomainName.setEnabled(true);
-            edtDomainName.setFocusable(true);*/
+            if(get_fp_details_model.getFPWebWidgets() != null && get_fp_details_model.getFPWebWidgets().contains(FP_WEB_WIDGET_DOMAIN)){
+                chooseDomainLayout.setVisibility(View.VISIBLE);
+            }else{
+                // do not have option to buy
+            }
+
         }else if (domainExpiryDays <= 0) {
+             // renew button
              //first check domain purchase widget exist
              if(planExpiryDays <=90){
                  showExpiryDialog(LIGHT_HOUSE_EXPIRE, planExpiryDays);
              }
-             statusTv.setText("Domain Expired");
-             expiredLayout.setVisibility(View.VISIBLE);
-             expiredLayout.findViewById(R.id.ll_domain_expired).setVisibility(View.VISIBLE);
-             expiredLayout.findViewById(R.id.btn_book_domain).setOnClickListener(this);
-             expiredLayout.findViewById(R.id.btn_link_domain).setOnClickListener(this);
-             // first renew after that book new domain
-           /* tvDomainStatus.setText("Status: Your domain expired on " + domainExpiryDate);
-            tvDomainStatus.setTextColor(Color.RED);
-            renewDomain();*/
-        }else{
-             domainDetailsCard.setVisibility(View.VISIBLE);
-             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                     LinearLayout.LayoutParams.WRAP_CONTENT);
-             int margins = Methods.dpToPx(10, this);
-             params.setMargins(margins, margins, margins, margins);
-             domainDetailsCard.setLayoutParams(params);
-             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                 domainDetailsCard.setElevation(3);
+             if(get_fp_details_model.getFPWebWidgets() != null && get_fp_details_model.getFPWebWidgets().contains(FP_WEB_WIDGET_DOMAIN)) {
+                 setDomainDetailsCard(false,"Domain Expired");
+                 expiredLayout.setVisibility(View.VISIBLE);
+                 expiredLayout.findViewById(R.id.ll_domain_expired).setVisibility(View.VISIBLE);
+                 expireMsgTv.setText(String.format(getString(R.string.renew_domain_message),domainNameTv.getText().toString(),session.getFpTag()+getString(R.string.nowfloats_com)));
+                 expiredLayout.findViewById(R.id.btn_renew_domain).setOnClickListener(this);
+                 expiredLayout.findViewById(R.id.btn_link_domain).setOnClickListener(this);
+             }else{
+                 // do not have option to renew
              }
+
+             // first renew after that book new domain
+
+        }else{
+
+             setDomainDetailsCard(true,null);
              // margin 10
              //elevation 3
          }
-        /*else if (domainExpiryDays <= 0 && planExpiryDays < PLAN_EXPIRY_GRACE_PERIOD) {
-
-            tvDomainStatus.setText("Status: Your domain expired on " + domainExpiryDate);
-            tvDomainStatus.setTextColor(Color.RED);
-            if(planExpiryDays < 60){
-                edtDomainName.setEnabled(false);
-                edtDomainName.setFocusable(false);
-                showExpiryDialog(LIGHT_HOUSE_EXPIRE, planExpiryDays);
-            }else{
-                buyDomain();
-            }
-
-        } else if (domainExpiryDays < DOMAIN_EXPIRY_GRACE_PERIOD &&
-                planExpiryDays <= domainExpiryDays && planExpiryDays < PLAN_EXPIRY_GRACE_PERIOD) {
-            tvDomainStatus.setText("Status: Your domain will expire on " + domainExpiryDate);
-            edtDomainName.setEnabled(false);
-            edtDomainName.setFocusable(false);
-            showExpiryDialog(LIGHT_HOUSE_DAYS_LEFT, planExpiryDays);
-        } else if (domainExpiryDays < DOMAIN_EXPIRY_GRACE_PERIOD && planExpiryDays < PLAN_EXPIRY_GRACE_PERIOD) {
-            tvDomainStatus.setText("Status: Your domain will expire on " + domainExpiryDate);
-            if( planExpiryDays - domainExpiryDays < 60){
-                showExpiryDialog(LIGHT_HOUSE_EXPIRE, planExpiryDays);
-            }else{
-                renewDomain();
-            }
-
-        } else if (domainExpiryDays < DOMAIN_EXPIRY_GRACE_PERIOD && planExpiryDays >= PLAN_EXPIRY_GRACE_PERIOD) {
-            tvDomainStatus.setText("Status: Your domain will expire on " + domainExpiryDate);
-            renewDomain();
-        } else {
-            tvDomainStatus.setText("Status: Your domain will expire on " + domainExpiryDate);
-            edtDomainName.setEnabled(false);
-            edtDomainName.setFocusable(false);
-        }*/
-
-        if(processingStatus >=0 && processingStatus<=16)
-        {
-            // auto renew is happening wait
-            /*tvDomainStatus.setText("Status: Your domain request is pending.");
-            edtDomainName.setEnabled(false);
-            edtDomainName.setFocusable(false);
-            spDomainYears.setEnabled(false);
-            spDomainYears.setClickable(false);
-            btnBookDomain.setVisibility(View.GONE);
-            btnRenewDomain.setVisibility(View.GONE);*/
-        }
     }
 
     private static final int LIGHT_HOUSE_EXPIRE = 0;
@@ -532,6 +504,30 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
     private static final int DEMO_DAYS_LEFT = 4;
     private static final int LIGHT_HOUSE_DAYS_LEFT = 5;
 
+    private void setDomainDetailsCard(boolean active,String statusMessage){
+        domainDetailsCard.setVisibility(View.VISIBLE);
+        emailDetailsCard.setVisibility(View.VISIBLE);
+        if(active){
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            int margins = Methods.dpToPx(10, this);
+            params.setMargins(margins, margins, margins, margins);
+            domainDetailsCard.setLayoutParams(params);
+            emailDetailsCard.setLayoutParams(params);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                domainDetailsCard.setElevation(3);
+                emailDetailsCard.setElevation(3);
+            }
+        }else{
+            domainDetailsCard.setBackgroundColor(ContextCompat.getColor(this,R.color.light_gray));
+            emailDetailsCard.setBackgroundColor(ContextCompat.getColor(this,R.color.light_gray));
+        }
+
+        if (!TextUtils.isEmpty(statusMessage)){
+            statusTv.setVisibility(View.VISIBLE);
+            statusTv.setText(statusMessage);
+        }
+    }
     private void showExpiryDialog(int showDialog, float days) {
 
         String callUsButtonText, cancelButtonText, dialogTitle, dialogMessage;
@@ -691,6 +687,10 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                 showLoader(getString(R.string.please_wait));
                 domainApiService.getDomainSupportedTypes(getDomainDetailsParam());
                 break;
+            case R.id.btn_renew_domain:
+                bookDomain(domainNameTv.getText().toString(),domainType, DomainApiService.DomainAPI.RENEW_DOMAIN);
+
+                break;
             case R.id.btn_link_domain:
                 linkDomain();
                 break;
@@ -704,7 +704,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-    private void bookDomain(String domainName, String domainType) {
+    private void bookDomain(String domainName, String domainType, final DomainApiService.DomainAPI domainApi) {
         MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
                 //.title(getString(R.string.book_a_new_domain))
                 .customView(R.layout.dialog_book_a_domain, false)
@@ -732,13 +732,11 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
             Button btnBack = (Button) maView.findViewById(R.id.btnBack);
 //            btnActivateDomain.setEnabled(false);
 //            btnActivateDomain.setClickable(false);
-            tvPriceDef.setText(String.format(getString(R.string.price_of_domain), arrDomainExtensions.get(0)));
-            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(DomainDetailsActivity.this,
-                    android.R.layout.simple_spinner_item, arrDomainExtensions);
-            spDomainTypes.setAdapter(arrayAdapter);
+
             if(!TextUtils.isEmpty(domainName)) {
+                arrDomainExtensions = new ArrayList<>();
+                arrDomainExtensions.add(domainType);
                 edtDomainName.setText(domainName);
-                spDomainTypes.setSelection(arrayAdapter.getPosition(domainType));
                 spDomainTypes.setEnabled(false);
                 edtDomainName.setEnabled(false);
                 if (hmPrices.containsKey(domainType)) {
@@ -747,12 +745,12 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                     tvPrice.setText("");
                 }
             }
-
+            tvPriceDef.setText(String.format(getString(R.string.price_of_domain), arrDomainExtensions.get(0)));
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(DomainDetailsActivity.this,
+                    android.R.layout.simple_spinner_item, arrDomainExtensions);
+            spDomainTypes.setAdapter(arrayAdapter);
 
             spDomainTypes.setSelection(0);
-            if (get_fp_details_model == null) {
-                get_fp_details_model = new Get_FP_Details_Model();
-            }
 
             tvTag.setText(get_fp_details_model.getAliasTag());
             tvCompanyName.setText(get_fp_details_model.getTag());
@@ -788,7 +786,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                                 get_fp_details_model.setDomainValidityInYears("1");
                                 get_fp_details_model.setDomainType(spDomainTypes.getSelectedItem().toString());
                                 get_fp_details_model.setPinCode(edtZip.getText().toString());
-                                domainApiService.checkDomainAvailability(domainName, getDomainAvailabilityParam((String) spDomainTypes.getSelectedItem()));
+                                domainApiService.checkDomainAvailability(domainName, getDomainAvailabilityParam((String) spDomainTypes.getSelectedItem()),domainApi);
                             }
                         }
                     });

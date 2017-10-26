@@ -6,15 +6,16 @@
     android:background="@color/white"
     android:padding="25dp">
     <TextView
+        android:id="@+id/tv_expire_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Your domain testmanage.com has expired and unavailable for purchase."/>
+        android:text="Your domain has expired and unavailable for purchase."/>
     <Button
         android:id="@+id/btn_plan_expired"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
         android:background="@drawable/ria_positive_btn"
-        android:text="NowFloats plan expired"
+        android:text="Renew NowFloats Plan"
         android:textColor="@color/white"
         android:paddingLeft="25dp"
         android:layout_marginTop="20dp"
@@ -29,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:visibility="visible"
+        android:visibility="gone"
         android:gravity="center">
         <Button
             android:id="@+id/btn_book_domain"
@@ -40,10 +41,24 @@
             android:textColor="@color/white"
             android:paddingLeft="20dp"
             android:paddingTop="5dp"
+            android:visibility="gone"
             android:paddingBottom="5dp"
             android:paddingRight="20dp"
             android:textAllCaps="false"
             android:text="Book New Domain"/>
+        <Button
+            android:id="@+id/btn_renew_domain"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="36dp"
+            android:background="@drawable/ria_positive_btn"
+            android:textColor="@color/white"
+            android:paddingLeft="25dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingRight="25dp"
+            android:textAllCaps="false"
+            android:text="Renew Domain"/>
         <Button
             android:id="@+id/btn_link_domain"
             android:layout_width="0dp"
@@ -53,6 +68,7 @@
             android:textColor="@color/white"
             android:paddingLeft="20dp"
             android:paddingTop="5dp"
+            android:visibility="visible"
             android:paddingBottom="5dp"
             android:paddingRight="20dp"
             android:layout_marginLeft="15dp"

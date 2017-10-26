@@ -1898,7 +1898,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             progressDialog.setCancelable(false);
 
             API_Login apiLogin = new API_Login(HomeActivity.this, session, bus);
-            apiLogin.authenticate(bundle.getString("Username"), bundle.getString("Password"), Specific.clientId2);
+            apiLogin.authenticate(bundle.getString("Username"), bundle.getString("Password"), Constants.clientId);
 
         }
     }

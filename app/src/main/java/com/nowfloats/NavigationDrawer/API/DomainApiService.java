@@ -30,7 +30,9 @@ public class DomainApiService {
         CHECK_DOMAIN,
         LINK_DOMAIN,
         ERROR_DOMAIN,
-        DOMAIN_NOT_AVAILABLE
+        DOMAIN_NOT_AVAILABLE,
+        RENEW_DOMAIN,
+        RENEW_NOT_AVAILABLE
     }
 
     public DomainApiService(Bus bus) {
@@ -79,15 +81,19 @@ public class DomainApiService {
 
     }
 
-    public void checkDomainAvailability(String domainName, HashMap<String, String> data) {
+    public void checkDomainAvailability(String domainName, HashMap<String, String> data, final DomainAPI domainApi) {
         DomainInterface domainInterface = Constants.pluginRestAdapter.create(DomainInterface.class);
         domainInterface.checkDomainAvailability(domainName, data, new Callback<Boolean>() {
             @Override
             public void success(Boolean flag, Response response) {
-                if (flag)
-                    mBus.post(DomainAPI.CHECK_DOMAIN);
-                else
-                    mBus.post(DomainAPI.DOMAIN_NOT_AVAILABLE);
+                switch (domainApi){
+                    case RENEW_DOMAIN:
+                        mBus.post(flag ? DomainAPI.RENEW_DOMAIN:DomainAPI.RENEW_NOT_AVAILABLE);
+                        break;
+                    default:
+                        mBus.post(flag ? DomainAPI.CHECK_DOMAIN:DomainAPI.DOMAIN_NOT_AVAILABLE);
+                        break;
+                }
             }
 
             @Override
