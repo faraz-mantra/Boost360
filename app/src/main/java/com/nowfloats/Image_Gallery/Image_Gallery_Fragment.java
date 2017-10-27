@@ -117,8 +117,8 @@ public class Image_Gallery_Fragment extends Fragment implements
     }
 
     private void initializeControls(View view) {
-
-        HomeActivity.plusAddButton.setVisibility(View.GONE);
+        if (HomeActivity.plusAddButton != null)
+            HomeActivity.plusAddButton.setVisibility(View.GONE);
         activity = getActivity();
         session = new UserSessionManager(activity.getApplicationContext(), activity);
         gvImages = (GridView) view.findViewById(R.id.grid);

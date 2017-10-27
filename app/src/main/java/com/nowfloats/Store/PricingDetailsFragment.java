@@ -2,7 +2,14 @@ package com.nowfloats.Store;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.BoolRes;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,42 +18,39 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.nowfloats.Store.Adapters.AllPlansRvAdapter;
+import com.nowfloats.Store.Model.PackageDetails;
+import com.squareup.picasso.Picasso;
 import com.thinksity.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PricingDetailsFragment extends Fragment {
 
     private static final String PRICING_TYPE = "pricing_type";
 
-    ImageView ivPackageLogo, ivCheckDictate, ivCheckWildFire, ivCheckApp;
-    CheckBox cbDictate, cbWildFire, cbApp;
-    TextView tvDictate, tvWildFire, tvApp;
-
-    public enum PricingType {
-        BOOST_LITE, BOOST_PRO, BOOST_CUSTOM
-    }
+    ImageView ivPackageLogo;
+    RecyclerView rvAllPlanDetails;
+    private PackageDetails mBasePackage;
+    private List<PackageDetails> mTopUps;
+    private AllPlansRvAdapter mRvAdapter;
 
     public PricingDetailsFragment() {
-
     }
 
-    private PricingType mPricingType;
 
-
-    public static PricingDetailsFragment newInstance(PricingType pricingType) {
+    public static PricingDetailsFragment newInstance(PackageDetails basePackage, List<PackageDetails> topUps) {
         PricingDetailsFragment fragment = new PricingDetailsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt(PRICING_TYPE, pricingType.ordinal());
-        fragment.setArguments(bundle);
+        fragment.mBasePackage = basePackage;
+        fragment.mTopUps = topUps;
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle bundle = getArguments();
-        if(bundle!=null && bundle.containsKey(PRICING_TYPE)){
-            mPricingType = PricingType.values()[bundle.getInt(PRICING_TYPE)];
-        }
+
     }
 
     @Override
@@ -54,42 +58,57 @@ public class PricingDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View pricingView =  inflater.inflate(R.layout.fragment_pricing_details, container, false);
-
+        rvAllPlanDetails = (RecyclerView) pricingView.findViewById(R.id.rv_all_plan_details);
         ivPackageLogo = (ImageView) pricingView.findViewById(R.id.iv_package_logo);
-        ivCheckDictate = (ImageView) pricingView.findViewById(R.id.iv_check_dictate);
-        ivCheckWildFire = (ImageView) pricingView.findViewById(R.id.iv_check_wildfire);
-        ivCheckApp = (ImageView) pricingView.findViewById(R.id.iv_check_app);
-        cbDictate = (CheckBox) pricingView.findViewById(R.id.cb_dictate);
-        cbWildFire = (CheckBox) pricingView.findViewById(R.id.cb_wild_fire);
-        cbApp = (CheckBox) pricingView.findViewById(R.id.cb_app);
-        tvDictate = (TextView) pricingView.findViewById(R.id.tv_dictate);
-        tvWildFire = (TextView) pricingView.findViewById(R.id.tv_wildfire);
-        tvApp = (TextView) pricingView.findViewById(R.id.tv_app);
+        Picasso.with(getActivity()).load(mBasePackage.getPrimaryImageUri()).into(ivPackageLogo);
+        prepareBasePackageDetails();
 
-        tvDictate.setText(Html.fromHtml(getString(R.string.text_dictate)));
-        tvWildFire.setText(Html.fromHtml(getString(R.string.text_wildfire)));
-        tvApp.setText(Html.fromHtml(getString(R.string.text_app)));
-
-        switch (mPricingType){
-            case BOOST_LITE:
-                ivPackageLogo.setImageResource(R.drawable.boost_lite_logo);
-                tvDictate.setTextColor(Color.parseColor("#A6A6A6"));
-                tvWildFire.setTextColor(Color.parseColor("#A6A6A6"));
-                tvApp.setTextColor(Color.parseColor("#A6A6A6"));
-                break;
-            case BOOST_PRO:
-                ivPackageLogo.setImageResource(R.drawable.boost_pro_logo);
-                ivCheckDictate.setVisibility(View.VISIBLE);
-                ivCheckWildFire.setVisibility(View.VISIBLE);
-                ivCheckApp.setVisibility(View.VISIBLE);
-                break;
-            case BOOST_CUSTOM:
-                ivPackageLogo.setImageResource(R.drawable.boost_custom_logo);
-                cbDictate.setVisibility(View.VISIBLE);
-                cbWildFire.setVisibility(View.VISIBLE);
-                cbApp.setVisibility(View.VISIBLE);
-        }
-
+        mRvAdapter = new AllPlansRvAdapter(new ArrayList<Pair<String, Boolean>>());
+        rvAllPlanDetails.setAdapter(mRvAdapter);
+        rvAllPlanDetails.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         return pricingView;
     }
+
+    private void prepareBasePackageDetails() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final List<Pair<String, Boolean>> packageDetails = new ArrayList<>();
+                packageDetails.add(new Pair<>(mBasePackage.getValidityInMths() + " MONTHS PLAN", true));
+                StringBuilder mainPackageFeatures = new StringBuilder("A DYNAMIC WEBSITE WITH:<br/>");
+                int i = 0;
+                int counter = 0;
+                for(; counter<4 && i<mBasePackage.getWidgetPacks().size(); i++){
+                    if(mBasePackage.getWidgetPacks().get(i).Name != null) {
+                        mainPackageFeatures.append("- " + mBasePackage.getWidgetPacks().get(i).Name.toUpperCase() + "<br/>");
+                        counter++;
+                    }
+                }
+                packageDetails.add(new Pair<>(mainPackageFeatures.toString(), true));
+                for(; counter<8 && i<mBasePackage.getWidgetPacks().size(); i++){
+                    if(mBasePackage.getWidgetPacks().get(i).Name!=null) {
+                        packageDetails.add(new Pair<>(mBasePackage.getWidgetPacks().get(i).Name.toUpperCase(), true));
+                        counter++;
+                    }
+                }
+                if(mBasePackage.getName().toLowerCase().contains("pro")) {
+                    packageDetails.add(new Pair<>("<b>DICTATE</b> - WEBSITE CONTENT SERVICE", true));
+                    packageDetails.add(new Pair<>("<b>WILDFIRE</b> - Rs. 60000 OF ADWORDS & FACEBOOK MARKETING", true));
+                    packageDetails.add(new Pair<>("<b>YOUR APP</b> - YOUR OWN BUSINESS APP FOR GOOGLE PLAYSTORE", true));
+                }else {
+                    packageDetails.add(new Pair<>("<b>DICTATE</b> - WEBSITE CONTENT SERVICE", false));
+                    packageDetails.add(new Pair<>("<b>WILDFIRE</b> - Rs. 60000 OF ADWORDS & FACEBOOK MARKETING", false));
+                    packageDetails.add(new Pair<>("<b>YOUR APP</b> - YOUR OWN BUSINESS APP FOR GOOGLE PLAYSTORE", false));
+                }
+
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRvAdapter.setPlanDetails(packageDetails);
+                    }
+                });
+            }
+        }).start();
+    }
+
 }

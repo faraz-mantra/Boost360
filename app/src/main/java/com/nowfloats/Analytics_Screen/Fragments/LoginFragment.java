@@ -185,7 +185,7 @@ public class LoginFragment extends Fragment implements NfxRequestClient.NfxCallB
 
         try
         {
-            if(pages == null || items == null) {
+            if(pages == null || items == null || items.size() == 0) {
                 // no pages found on something wrong
                 onFBPageError();
                 NfxRequestClient requestClient = new NfxRequestClient(LoginFragment.this)

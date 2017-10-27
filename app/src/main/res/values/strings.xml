@@ -66,7 +66,56 @@
         <item>10:00</item>
         <item>11:00</item>
     </string-array>
-
+    <string-array name="business_hours_arrays">
+        <item>12:00AM</item>
+        <item>12:30AM</item>
+        <item>01:00AM</item>
+        <item>01:30AM</item>
+        <item>02:00AM</item>
+        <item>02:30AM</item>
+        <item>03:00AM</item>
+        <item>03:30AM</item>
+        <item>04:00AM</item>
+        <item>04:30AM</item>
+        <item>05:00AM</item>
+        <item>05:30AM</item>
+        <item>06:00AM</item>
+        <item>06:30AM</item>
+        <item>07:00AM</item>
+        <item>07:30AM</item>
+        <item>08:00AM</item>
+        <item>08:30AM</item>
+        <item>09:00AM</item>
+        <item>09:30AM</item>
+        <item>10:00AM</item>
+        <item>10:30AM</item>
+        <item>11:00AM</item>
+        <item>11:30AM</item>
+        <item>12:00PM</item>
+        <item>12:30PM</item>
+        <item>01:00PM</item>
+        <item>01:30PM</item>
+        <item>02:00PM</item>
+        <item>02:30PM</item>
+        <item>03:00PM</item>
+        <item>03:30PM</item>
+        <item>04:00PM</item>
+        <item>04:30PM</item>
+        <item>05:00PM</item>
+        <item>05:30PM</item>
+        <item>06:00PM</item>
+        <item>06:30PM</item>
+        <item>07:00PM</item>
+        <item>07:30PM</item>
+        <item>08:00PM</item>
+        <item>08:30PM</item>
+        <item>09:00PM</item>
+        <item>09:30PM</item>
+        <item>10:00PM</item>
+        <item>10:30PM</item>
+        <item>11:00PM</item>
+        <item>11:30PM</item>
+    </string-array>
     <string name="facebook_app_id">539836972828386</string>
 
 
@@ -79,6 +128,7 @@
     <string name="side_panel_row_two">Manage Website</string>
     <string name="side_panel_site_appearance">Site Appearance</string>
     <string name="side_panel_row_csp">Custom Pages</string>
+    <string name="side_panel_row_domain_details">Domain Details</string>
     <string name="side_panel_row_three">Enquiries</string>
     <string name="side_panel_row_four">Photo Gallery</string>
     <string name="side_panel_row_five">Settings</string>
@@ -648,12 +698,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="buy_in_capital">BUY</string>
     <string name="later_in_capital">LATER</string>
     <string name="renew_light_house_plan">Renew Lighthouse plan to get all the features</string>
+    <string name="buy_light_house">Your current plan is demo which does not have all features, to get all features buy Lighthouse plan.</string>
     <string name="light_house_plan_expired_some_features_visible">Your Lighthouse plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others</string>
     <string name="renew_wildfire_plan">Renew Wildfire plan</string>
     <string name="continue_auto_promoting_on_google">Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.</string>
     <string name="renew_in_capital">RENEW</string>
     <string name="ignore_in_capital">IGNORE</string>
-    <string name="buy_light_house_plan">Buy Lighthouse plan to get all the features</string>
+    <string name="buy_light_house_plan">Buy BoostLite plan to get all the features</string>
     <string name="demo_plan_expired">Your demo plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
     <string name="demo_plan_will_expire"><Data><![CDATA[Your Demo plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
     <string name="light_house_pla_will_expire"><Data><![CDATA[Your Lighthouse plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
@@ -959,11 +1010,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="product_detail_free_shipping">Free Shipping</string>
     <string name="product_detail_delete_btn_text">Delete product</string>
     <string name="book_a_new_domain">Book a new domain</string>
+    <string name="renew_domain">Renew domain</string>
     <string name="have_an_existing_domain">Have an existing domain? </string>
     <string name="enjoying_feature">Is this helpful in managing your leads? </string>
     <string name="tap_a_star_to_rate_it">Tap a star to rate it</string>
     <string name="link_a_domain_nf">Link a domain (included in your NowFloats Package)</string>
     <string name="already_have_a_domain">Already have a domain</string>
+    <string name="already_have_a_domain2"><u>Already have a domain?</u></string>
     <string name="pop_up_create_msg_title">Are you sure?</string>
     <string name="graph_fragment2_title">Visits</string>
     <string name="graph_custom_visit_page_title">VISITS</string>
@@ -1318,6 +1371,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="terms_n_cond_toast">You must agree with the terms and conditions to proceed</string>
     <string name="deeplink_business_app">businessapp</string>
     <string name="about_app">About app</string>
+    <string name="domain_details_title">One of the most important steps to establish your brand online is to get a great website address. A custom domain ensures that your business has its own identity and also a positive impact on SEO.</string>
     <string name="fb_page_creation_message">Gather more leads and drive more\ntraffic to your website through a\nFacebook Page</string>
     <string name="get_facebook_page">Get a Facebook page</string>
     <string name="fb_page_creation_title">Looks like you don’t have a\nFacebook page</string>

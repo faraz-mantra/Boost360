@@ -1,40 +1,45 @@
 package com.nowfloats.Store.Adapters;
 
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.nowfloats.Store.Model.PackageDetails;
 import com.nowfloats.Store.PricingDetailsFragment;
+
+import java.util.List;
 
 /**
  * Created by NowFloats on 20-09-2017.
  */
 
-public class PricingPlansPagerAdapter extends FragmentPagerAdapter {
+public class PricingPlansPagerAdapter extends FragmentStatePagerAdapter {
 
-    public PricingPlansPagerAdapter(FragmentManager fm) {
+    List<PackageDetails> mBasePackages, mTopUps;
+
+    public PricingPlansPagerAdapter(FragmentManager fm, List<PackageDetails> basePackages, List<PackageDetails> topUps) {
         super(fm);
+
+        this.mBasePackages = basePackages;
+        this.mTopUps = topUps;
     }
 
     @Override
     public Fragment getItem(int position) {
-        switch (position){
-            case 0:
-                return PricingDetailsFragment.newInstance(PricingDetailsFragment.PricingType.BOOST_LITE);
-            case 1:
-                return PricingDetailsFragment.newInstance(PricingDetailsFragment.PricingType.BOOST_PRO);
-            case 2:
-                return PricingDetailsFragment.newInstance(PricingDetailsFragment.PricingType.BOOST_CUSTOM);
-            default:
-                return PricingDetailsFragment.newInstance(PricingDetailsFragment.PricingType.BOOST_PRO);
+        return PricingDetailsFragment.newInstance(mBasePackages.get(position), mTopUps);
+    }
 
-        }
-
+    @Override
+    public Parcelable saveState() {
+        return null;
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return mBasePackages==null? 0 : mBasePackages.size();
     }
+
 
 }

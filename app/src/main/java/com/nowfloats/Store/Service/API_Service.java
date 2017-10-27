@@ -42,20 +42,7 @@ public class API_Service {
             params.put("country",country.toLowerCase());
             //Log.i("STORE data", "API call Started");
             StoreInterface storeInterface = Constants.restAdapter.create(StoreInterface.class);
-            storeInterface.getStoreList(params,new Callback<StoreMainModel>() {
-                @Override
-                public void success(StoreMainModel data, Response response) {
-                    //Log.d("TestForStoreModel",""+response);
-                    bus.post(new StoreEvent(data));
-                }
 
-                @Override
-                public void failure(RetrofitError error) {
-                    Methods.showSnackBarNegative(activity,activity.getString(R.string.something_went_wrong));
-                    //Log.i("store list Error",""+error);
-
-                }
-            });
 
         } catch (Exception e) {
             Log.i("STORE data","API Exception:"+e);

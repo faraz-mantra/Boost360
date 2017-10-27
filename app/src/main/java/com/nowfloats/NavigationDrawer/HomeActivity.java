@@ -66,7 +66,6 @@ import com.nowfloats.Analytics_Screen.SearchQueries;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Analytics_Screen.model.NfxGetTokensResponse;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
-import com.nowfloats.BusinessProfile.UI.UI.Business_Hours_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2;
 import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
@@ -99,8 +98,10 @@ import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
 import com.nowfloats.RiaFCM.RiaFirebaseMessagingService;
 import com.nowfloats.SiteAppearance.SiteAppearanceFragment;
 import com.nowfloats.Store.DomainLookup;
+import com.nowfloats.Store.FlavourFivePlansActivity;
 import com.nowfloats.Store.Model.StoreEvent;
 import com.nowfloats.Store.Model.StoreModel;
+import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.StoreFragmentTab;
 import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.customerassistant.models.SMSSuggestions;
@@ -510,7 +511,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 Intent queries = new Intent(HomeActivity.this, Business_Address_Activity.class);
                 startActivity(queries);
             } else if (url.contains(getResources().getString(R.string.deeplink_bizhours)) || url.contains("hours")) {
-                Intent queries = new Intent(HomeActivity.this, Business_Hours_Activity.class);
+                Intent queries = new Intent(HomeActivity.this, Business_Address_Activity.class);
                 startActivity(queries);
             } else if (url.contains(getResources().getString(R.string.deeplink_bizlogo)) || url.contains("logo")) {
                 Intent queries = new Intent(HomeActivity.this, Business_Logo_Activity.class);
@@ -1651,12 +1652,14 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             mExpireDailog.dismiss();
         }
         try {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            Bundle bundle = new Bundle();
-            bundle.putBoolean(StoreFragmentTab.IS_FROM_WILD_FIRE_MINI, false);
-            storeFragment.setArguments(bundle);
-            ft.replace(R.id.mainFrame, storeFragment)
-                    .commit();
+            Intent intent;
+            if(BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.capture")) {
+                intent = new Intent(activity, FlavourFivePlansActivity.class);
+            }else {
+                intent = new Intent(activity, NewPricingPlansActivity.class);
+            }
+            activity.startActivity(intent);
+            activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1899,7 +1902,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             progressDialog.setCancelable(false);
 
             API_Login apiLogin = new API_Login(HomeActivity.this, session, bus);
-            apiLogin.authenticate(bundle.getString("Username"), bundle.getString("Password"), Specific.clientId2);
+            apiLogin.authenticate(bundle.getString("Username"), bundle.getString("Password"), Constants.clientId);
 
         }
     }
@@ -1910,7 +1913,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         weUser.login(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
         weUser.setAttribute("SALES_EXECUTIVE_EMAIL","reach@nowfloats.com");
         weUser.setAttribute("fpTag",session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
-        weUser.setAttribute("Status","MEETING_REQUESTED");
+        weUser.setAttribute("Status","");
         weUser.setEmail(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL));
         weUser.setFirstName(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CONTACTNAME));
         weUser.setPhoneNumber(session.getFPDetails(Key_Preferences.MAIN_PRIMARY_CONTACT_NUM));
@@ -2103,6 +2106,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         /*This button is used in the image gallery*/
         plusAddButton = (ImageView) toolbar.findViewById(R.id.image_gallery_add_image_button);
         shareButton = (ImageView) toolbar.findViewById(R.id.business_profile_share_button);
+        HomeActivity.shareButton.setImageResource(R.drawable.share_with_apps);
+        PorterDuffColorFilter whiteLabelFilter_pop_ip = new PorterDuffColorFilter(ContextCompat.getColor(this,R.color.white), PorterDuff.Mode.SRC_IN);
+        HomeActivity.shareButton.setColorFilter(whiteLabelFilter_pop_ip);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         drawerFragment = (SidePanelFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);

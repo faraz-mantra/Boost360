@@ -28,7 +28,6 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity;
-import com.nowfloats.BusinessProfile.UI.UI.Business_Hours_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Business_Logo_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Contact_Info_Activity;
 import com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity;
@@ -39,6 +38,9 @@ import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
+import com.nowfloats.Store.Model.StoreEvent;
+import com.nowfloats.Store.Model.StoreModel;
+import com.nowfloats.Store.Service.API_Service;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.twitter.TwitterConnection;
@@ -56,6 +58,7 @@ import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -95,6 +98,7 @@ public class Site_Meter_Fragment extends Fragment {
     private DomainApiService domainApiService;
     private Bus mBus;
     private ProgressDialog progressDialog;
+    private int domainYears = 0;
     //private ScaleInAnimationAdapter scaleAdapter;
 
     @Override
@@ -114,7 +118,7 @@ public class Site_Meter_Fragment extends Fragment {
         initializePrices();
     }
 
-    HashMap<String, String> hmPrices = new HashMap<String, String>();
+    HashMap<String, Integer> hmPrices = new HashMap<String, Integer>();
 
     private void showLoader(final String message) {
 
@@ -145,11 +149,13 @@ public class Site_Meter_Fragment extends Fragment {
         });
     }
 
+
     private void initializePrices() {
-        hmPrices.put(".COM", "680");
-        hmPrices.put(".NET", "865");
-        hmPrices.put(".CO.IN", "375");
-        hmPrices.put(".IN", "490");
+        hmPrices.put(".COM", 680);
+        hmPrices.put(".NET", 865);
+        hmPrices.put(".CO.IN", 375);
+        hmPrices.put(".IN", 490);
+        hmPrices.put(".ORG", 500);
     }
 
     @Override
@@ -551,7 +557,7 @@ public class Site_Meter_Fragment extends Fragment {
                 break;
             case businessHours:
                 if (session.getFPDetails(Key_Preferences.GET_FP_DETAILS_WIDGET_IMAGE_TIMINGS).equals("TIMINGS")) {
-                    Intent businessHoursIntent = new Intent(activity, Business_Hours_Activity.class);
+                    Intent businessHoursIntent = new Intent(activity, Business_Address_Activity.class);
                     startActivity(businessHoursIntent);
                     activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 } else {
@@ -650,32 +656,73 @@ public class Site_Meter_Fragment extends Fragment {
 
 
         if (domainDetails != null && domainDetails.response) {
+            if(TextUtils.isDigitsOnly(domainDetails.getProcessingStatus()))
+            {
+                if (Integer.parseInt(domainDetails.getProcessingStatus())>16) {
+                    showCustomDialog(getString(R.string.domain_booking_successful),
+                            String.format(getString(R.string.domain_booking_successful_message), domainDetails.getDomainName()),
+                            getString(R.string.ok), null, DialogFrom.DEFAULT);
 
-            if (domainDetails.getProcessingStatus().equalsIgnoreCase(DOMAIN_SUCCESS_STATUS) &&
-                    domainDetails.getIsProcessingFailed().equalsIgnoreCase("true")) {
-                showCustomDialog(getString(R.string.domain_booking_successful),
-                        String.format(getString(R.string.domain_booking_successful_message), domainDetails.getDomainName()),
-                        getString(R.string.ok), null, DialogFrom.DEFAULT);
-
-            } else if (!domainDetails.getProcessingStatus().equalsIgnoreCase(DOMAIN_SUCCESS_STATUS) &&
-                    domainDetails.getIsProcessingFailed().equalsIgnoreCase("true")) {
-
-                showCustomDialog(getString(R.string.domain_booking_process),
-                        getString(R.string.domain_booking_process_message),
-                        getString(R.string.ok), null, DialogFrom.DEFAULT);
-            } else {
+                }else{
+                    showCustomDialog(getString(R.string.domain_booking_process),
+                            getString(R.string.domain_booking_process_message),
+                            getString(R.string.ok), null,DialogFrom.DEFAULT);
+                }
+            }
+            else
+            {
                 showCustomDialog(getString(R.string.buy_a_domain),
                         Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
             }
         } else {
             showLoader(getString(R.string.please_wait));
-            domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
+            new API_Service(getActivity(), session.getSourceClientId(), session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY),
+                    session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session.getFPID(), mBus);
         }
 
     }
 
+    @Subscribe
+    public void getStoreList(StoreEvent response) {
+        ArrayList<StoreModel> allModels = response.model.AllPackages;
+        ArrayList<StoreModel> activeIdArray = response.model.ActivePackages;
+        ArrayList<StoreModel> additionalPlans = response.model.AllPackages;
+        if (allModels != null && activeIdArray != null) {
+            long storeExpiryDays = 0;
+            for (StoreModel storeModel : activeIdArray) {
+                float validity = storeModel.TotalMonthsValidity;
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+                cal.setTimeInMillis(Long.parseLong(storeModel.ToBeActivatedOn.replace("/Date(", "").replace(")/", "")));
+                cal.add(Calendar.MONTH, (int) validity);
+                cal.add(Calendar.DATE, (int) ((validity - Math.floor((double) validity)) * 30));
 
+                long tempExpiryDays = cal.getTimeInMillis();
+                if (tempExpiryDays > storeExpiryDays) {
+                    storeExpiryDays = tempExpiryDays;
+                    domainYears = 0;
+                    if(cal.get(Calendar.YEAR)>= year){
+                        domainYears = cal.get(Calendar.YEAR)-year;
+                        if(cal.get(Calendar.MONTH)>month){
+                            domainYears+=1;
+                        }else if(cal.get(Calendar.MONTH) == month){
+                            if(cal.get(Calendar.DAY_OF_MONTH)>day){
+                                domainYears+=1;
+                            }
+                        }
+                    }
+                }
+            }
+            domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
+
+        } else {
+            hideLoader();
+            Methods.showSnackBarNegative(getActivity(), getString(R.string.something_went_wrong));
+        }
+    }
     private static final String PAYMENT_STATE_SUCCESS = "1";
     private static final String ROOT_ALIAS_URI = "nowfloats";
     private static final String FP_WEB_WIDGET_DOMAIN = "DOMAINPURCHASE";
@@ -713,6 +760,7 @@ public class Site_Meter_Fragment extends Fragment {
                             Methods.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
                             getString(R.string.ok), null, DialogFrom.ADDRESS_REQUIRED);
                 } else {
+
                     chooseDomain();
                 }
             } else {
@@ -810,6 +858,7 @@ public class Site_Meter_Fragment extends Fragment {
             View maView = domainBookDialog.getCustomView();
             final EditText edtDomainName = (EditText) maView.findViewById(R.id.edtDomainName);
             final Spinner spDomainTypes = (Spinner) maView.findViewById(R.id.spDomainTypes);
+            final Spinner spDomainYears = (Spinner) maView.findViewById(R.id.spDomainYears);
             TextView tvCompanyName = (TextView) maView.findViewById(R.id.tvCompanyName);
             TextView tvTag = (TextView) maView.findViewById(R.id.tvTag);
             TextView tvAddress = (TextView) maView.findViewById(R.id.tvAddress);
@@ -830,6 +879,16 @@ public class Site_Meter_Fragment extends Fragment {
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),
                     android.R.layout.simple_spinner_item, arrDomainExtensions);
             spDomainTypes.setAdapter(arrayAdapter);
+
+            if(domainYears > 0){
+                Integer[] array = new Integer[domainYears];
+                for (int i=1;i<=domainYears;i++){
+                    array[i-1] = i;
+                }
+                ArrayAdapter<Integer> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_spinner_item,array);
+                spDomainYears.setAdapter(adapter);
+            }
+
             spDomainTypes.setSelection(0);
             if (get_fp_details_model == null) {
                 get_fp_details_model = new Get_FP_Details_Model();
@@ -866,6 +925,7 @@ public class Site_Meter_Fragment extends Fragment {
                             } else {
                                 showLoader(getString(R.string.please_wait));
                                 get_fp_details_model.setDomainName(domainName);
+                                get_fp_details_model.setDomainValidityInYears(String.valueOf(spDomainYears.getSelectedItemPosition()+1));
                                 get_fp_details_model.setDomainType(spDomainTypes.getSelectedItem().toString());
                                 get_fp_details_model.setPinCode(edtZip.getText().toString());
                                 domainApiService.checkDomainAvailability(domainName, getDomainAvailabilityParam((String) spDomainTypes.getSelectedItem()));
@@ -886,10 +946,21 @@ public class Site_Meter_Fragment extends Fragment {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     tvPriceDef.setText(String.format(getString(R.string.price_of_domain), arrDomainExtensions.get(position)));
                     if (hmPrices.containsKey(arrDomainExtensions.get(position))) {
-                        tvPrice.setText(hmPrices.get(arrDomainExtensions.get(position)) + "*");
+                        tvPrice.setText(String.valueOf(hmPrices.get(arrDomainExtensions.get(position))*(spDomainYears.getSelectedItemPosition()+1)) + "*");
                     } else {
                         tvPrice.setText("");
                     }
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+            spDomainYears.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    tvPrice.setText(String.valueOf(hmPrices.get(arrDomainExtensions.get(spDomainTypes.getSelectedItemPosition()))*(position+1)) + "*");
                 }
 
                 @Override
@@ -1067,6 +1138,7 @@ public class Site_Meter_Fragment extends Fragment {
         hashMap.put("email", get_fp_details_model.getEmail());
         hashMap.put("lat", get_fp_details_model.getLat());
         hashMap.put("lng", get_fp_details_model.getLng());
+        hashMap.put("validityInYears",get_fp_details_model.getDomainValidityInYears());
         hashMap.put("phoneISDCode", get_fp_details_model.getCountryPhoneCode());
         if (get_fp_details_model.getCategory() != null && get_fp_details_model.getCategory().size() > 0)
             hashMap.put("primaryCategory", get_fp_details_model.getCategory().get(0).getKey());

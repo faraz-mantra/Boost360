@@ -100,10 +100,12 @@ public class HelpAndSupportFragment extends Fragment {
 
                     if (riaSupportModel.getGender() == 1) {
                         tvConsultantName.setText("Ms. " + riaSupportModel.getName());
+                        if(getActivity()!=null)
                         ivHelpAvatar.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.help_female_avatar));
                         btnCall.setText("CALL HER");
                     } else {
                         tvConsultantName.setText("Mr. " + riaSupportModel.getName());
+                        if(getActivity()!=null)
                         ivHelpAvatar.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.help_male_avatar));
                         btnCall.setText("CALL HIM");
                     }

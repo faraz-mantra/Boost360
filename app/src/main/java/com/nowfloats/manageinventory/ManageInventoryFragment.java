@@ -90,6 +90,7 @@ public class ManageInventoryFragment extends Fragment {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
+                        if(getActivity() != null)
                         Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
                     }
                 });

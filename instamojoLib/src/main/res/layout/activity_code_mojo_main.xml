@@ -233,6 +233,7 @@
             android:id="@+id/iv_package"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginBottom="10dp"
             android:layout_alignParentBottom="true"
             android:src="@drawable/lighthouse"/>

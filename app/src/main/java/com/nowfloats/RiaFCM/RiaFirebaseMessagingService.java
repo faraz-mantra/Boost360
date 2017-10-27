@@ -49,12 +49,8 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         if (Hotline.isHotlineNotification(remoteMessage)) {
             Hotline.getInstance(this).handleFcmMessage(remoteMessage);
         } else {
-            //Calling method to generate notification
             sendNotification(remoteMessage.getData());
-            /*Log.v("notif",remoteMessage.getData().get("title"));
-            Log.v("notif",remoteMessage.getSentTime()+"  "+String.valueOf(System.currentTimeMillis()));*/
             Constants.GCM_Msg = true;
-            //Handle notifications with data payload for your app
         }
         Log.v("Message", "received bubble");
     }
@@ -85,7 +81,6 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
             } else {
 
                 deepLinkUrl = message.get("url");
-                //Log.v("ggg","notif "+deepLinkUrl);
                 if (deepLinkUrl != null && !deepLinkUrl.contains(Constants.PACKAGE_NAME)) {
                     return;
                 }
@@ -112,16 +107,6 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                                 return;
                             }
                         }
-
-                       /* ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-                        List<ActivityManager.RunningTaskInfo> allTasks = am.getRunningTasks(1);
-                        for (ActivityManager.RunningTaskInfo task : allTasks){
-                            if(task.topActivity.getClassName().equals(FacebookChatDetailActivity.class.getName())){
-                                if(message.get("user_data").contains(pref.getString("facebookChatUser",""))){
-                                    return;
-                                }
-                            }
-                        }*/
 
                     }
 
