@@ -6,11 +6,12 @@ package com.nowfloats.BusinessProfile.UI.API;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.SharedPreferences;
 
 import com.google.gson.JsonArray;
 import com.nowfloats.BusinessProfile.UI.Model.BusinessAddressUpdateModel;
+import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 
 import java.util.ArrayList;
@@ -26,9 +27,11 @@ import retrofit.http.POST;
 
 public class BusinessAddressUpdateApi {
 
-	private Activity appContext = null;
-	ProgressDialog pd 	= null;
-	SharedPreferences sharedpreferences;
+    private Activity appContext = null;
+    ProgressDialog pd 	= null;
+    UserSessionManager session;
+    String city,pincode,address;
+    double latitude,longitude;
 
     BusinessAddressUpdateModel addressModel=new BusinessAddressUpdateModel();
     List<BusinessAddressUpdateModel.Update> list=new ArrayList<>();
@@ -43,6 +46,11 @@ public class BusinessAddressUpdateApi {
         String location = latitude+","+longitude;
 //Log.v("ggg","constructor geocoordinate "+location);
         if(addressAdd){
+            this.city= city;
+            this.latitude =latitude;
+            this.longitude = longitude;
+            this.address = address;
+            this.pincode = pincode;
             BusinessAddressUpdateModel.Update update1=new BusinessAddressUpdateModel().new Update();
             update1.setKey("ADDRESS");
             update1.setValue(address);
@@ -63,6 +71,7 @@ public class BusinessAddressUpdateApi {
         addressModel.setClientId(Constants.clientId);
         addressModel.setUpdates(list);
         addressModel.setFpTag(fpTag);
+        session = new UserSessionManager(appContext,context);
 
     }
     public void update(){
@@ -80,8 +89,14 @@ public class BusinessAddressUpdateApi {
                 if(pd!=null && pd.isShowing())
                     pd.dismiss();
                 if(response.getStatus()!=200 ||jsonElements==null) return;
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CITY, city);
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PINCODE, pincode);
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS, address);
+                session.storeFPDetails(Key_Preferences.LATITUDE, String.valueOf(latitude));
+                session.storeFPDetails(Key_Preferences.LONGITUDE, String.valueOf(longitude));
                 Methods.showSnackBarPositive(appContext,"Update Address successful");
                 NewMapViewDialogBusinessAddress.updatingPostionFromMap = true;
+
             }
 
             @Override
