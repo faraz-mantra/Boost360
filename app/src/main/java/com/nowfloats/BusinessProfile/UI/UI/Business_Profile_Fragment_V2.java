@@ -324,11 +324,9 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                                     }else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1") &&
                                             session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL).equalsIgnoreCase("0")){
                                         showExpiryDialog(DEMO_EXPIRED);
-                                    } else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1")){
-                                        showExpiryDialog(LIGHT_HOUSE_EXPIRED);
                                     } else if (Utils.isNetworkConnected(getActivity())) {
                                         showLoader(getString(R.string.please_wait));
-                                        domainApiService.getDomainDetails(session.getFpTag(), getDomainDetailsParam());
+                                        domainApiService.getDomainDetails(activity,session.getFpTag(), getDomainDetailsParam());
                                     } else {
                                         Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
                                     }
@@ -509,7 +507,13 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                     showCustomDialog(getString(R.string.buy_a_domain),
                             Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
                             getString(R.string.ok), null, DialogFrom.DEFAULT);
-                }else {
+                }else if(TextUtils.isDigitsOnly(domainDetails.getProcessingStatus()) && Integer.parseInt(domainDetails.getProcessingStatus())<=16){
+
+                    showCustomDialog(getString(R.string.domain_booking_process),
+                            getString(R.string.domain_booking_process_message),
+                            getString(R.string.ok), null, DialogFrom.DEFAULT);
+                }else
+                {
                     showLoader(getString(R.string.please_wait));
                     domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
                 }
@@ -519,10 +523,13 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                 showCustomDialog("Domain Details", "You have linked your domain to " +
                                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI) + " successfully.",
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
-            } else {
-                chooseDomain();
-               /* showLoader(getString(R.string.please_wait));
-                domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());*/
+            }else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1")) {
+                showExpiryDialog(LIGHT_HOUSE_EXPIRED);
+            }else if (Methods.isOnline(activity)){
+                showLoader(getString(R.string.please_wait));
+                domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
+            }else{
+                Methods.snackbarNoInternet(activity);
             }
         }
 
@@ -541,9 +548,9 @@ public class Business_Profile_Fragment_V2 extends Fragment {
         this.get_fp_details_model = get_fp_details_model;
         if (TextUtils.isEmpty(get_fp_details_model.response)) {
 
-            if (get_fp_details_model.getPaymentState().equalsIgnoreCase(PAYMENT_STATE_SUCCESS)
+            /*if (get_fp_details_model.getPaymentState().equalsIgnoreCase(PAYMENT_STATE_SUCCESS)
                     && get_fp_details_model.getFPWebWidgets() != null
-                    && get_fp_details_model.getFPWebWidgets().contains(FP_WEB_WIDGET_DOMAIN)) {
+                    && get_fp_details_model.getFPWebWidgets().contains(FP_WEB_WIDGET_DOMAIN)) {*/
 
                 if (TextUtils.isEmpty(get_fp_details_model.getEmail())
                         || get_fp_details_model.getContacts() == null) {
@@ -567,13 +574,13 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                 } else {
                     showDomainDetails();
                 }
-            }
+           /* }
             else
             {
                 showCustomDialog(getString(R.string.buy_a_domain),
                         Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
-            }
+            }*/
 
         } else {
             Methods.showSnackBarNegative(getActivity(), get_fp_details_model.response);

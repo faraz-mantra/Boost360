@@ -19,6 +19,7 @@
         android:id="@+id/tv_note_message"
         android:layout_width="wrap_content"
         android:gravity="center"
+        android:autoLink="all"
         android:layout_marginTop="10dp"
         android:textSize="15sp"
         android:text="@string/facebook_chat_note"

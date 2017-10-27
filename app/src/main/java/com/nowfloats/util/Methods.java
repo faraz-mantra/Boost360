@@ -632,7 +632,11 @@ public class Methods {
         void verifySmsCode(@QueryMap Map hashMap, Callback<SmsVerifyModel> response);
     }
 
-
+    public static void makeCall(Context mContext,String number) {
+        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+        callIntent.setData(Uri.parse("tel:" + number));
+        mContext.startActivity(Intent.createChooser(callIntent, "Call by:"));
+    }
     public static String getFormattedDate(long milliseconds) {
 
         Date date = new Date(milliseconds);

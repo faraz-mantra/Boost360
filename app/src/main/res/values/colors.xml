@@ -19,7 +19,7 @@
     <color name="screen_bg">#E3E3E3</color>
     <color name="greenDark">#458b00</color>
     <color name="product_delete_btn">#ff3f3f</color>
-
+    <color name="e0e0e0">#e0e0e0</color>
     <color name="accentColor">#615b5b</color>
 
     <color name="mdtp_accent_color">#ffb900</color>

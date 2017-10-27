@@ -331,6 +331,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
                             manageCustomerHolder.tvOne.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+                                    //startActivity(new Intent(getActivity(), ThirdPartyQueriesActivity.class));
                                     enableCustomerAssistant();
                                 }
                             });

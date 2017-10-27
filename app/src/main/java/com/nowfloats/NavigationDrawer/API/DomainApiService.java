@@ -1,5 +1,6 @@
 package com.nowfloats.NavigationDrawer.API;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
@@ -30,14 +31,51 @@ public class DomainApiService {
         CHECK_DOMAIN,
         LINK_DOMAIN,
         ERROR_DOMAIN,
-        DOMAIN_NOT_AVAILABLE
+        DOMAIN_NOT_AVAILABLE,
+        RENEW_DOMAIN,
+        RENEW_NOT_AVAILABLE
     }
 
     public DomainApiService(Bus bus) {
         this.mBus = bus;
     }
 
-    public void getDomainDetails(String fpTag, HashMap<String, String> data) {
+    public void getDomainDetails(final Context context, String fpTag, HashMap<String, String> data) {
+        /*new Handler().postDelayed(new Runnable() {
+                                      @Override
+                                      public void run() {
+            DomainDetails domainDetails = null;
+            try {
+                InputStream is = context.getResources().getAssets().open("domain.json");
+                Writer writer = new StringWriter();
+                char[] buffer = new char[1024];
+                try {
+                    Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+                    int n;
+                    while ((n = reader.read(buffer)) != -1) {
+                        writer.write(buffer, 0, n);
+                    }
+                } finally {
+                    is.close();
+                }
+
+                String jsonString = writer.toString();
+                domainDetails = new Gson().fromJson(jsonString,DomainDetails.class);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }finally {
+
+                        if (domainDetails != null) {
+                            domainDetails.response = true;
+                        } else {
+                            domainDetails = new DomainDetails();
+                            domainDetails.response = false;
+                        }
+                        mBus.post(domainDetails);
+                }
+            }
+        },1000);*/
+
         DomainInterface domainInterface = Constants.pluginRestAdapter.create(DomainInterface.class);
         domainInterface.getDomainDetailsForFloatingPoint(fpTag, data, new Callback<DomainDetails>() {
             @Override
@@ -79,15 +117,19 @@ public class DomainApiService {
 
     }
 
-    public void checkDomainAvailability(String domainName, HashMap<String, String> data) {
+    public void checkDomainAvailability(String domainName, HashMap<String, String> data, final DomainAPI domainApi) {
         DomainInterface domainInterface = Constants.pluginRestAdapter.create(DomainInterface.class);
         domainInterface.checkDomainAvailability(domainName, data, new Callback<Boolean>() {
             @Override
             public void success(Boolean flag, Response response) {
-                if (flag)
-                    mBus.post(DomainAPI.CHECK_DOMAIN);
-                else
-                    mBus.post(DomainAPI.DOMAIN_NOT_AVAILABLE);
+                switch (domainApi){
+                    case RENEW_DOMAIN:
+                        mBus.post(flag ? DomainAPI.RENEW_DOMAIN:DomainAPI.RENEW_NOT_AVAILABLE);
+                        break;
+                    default:
+                        mBus.post(flag ? DomainAPI.CHECK_DOMAIN:DomainAPI.DOMAIN_NOT_AVAILABLE);
+                        break;
+                }
             }
 
             @Override

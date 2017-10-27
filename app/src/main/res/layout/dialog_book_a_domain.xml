@@ -112,7 +112,7 @@
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/ll_domain_year"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginTop="@dimen/margin_20"
@@ -125,6 +125,7 @@
                     android:layout_weight="0.6"
                     android:text="Validity Years:"
                     android:textSize="@dimen/large_text_size"
+                    android:visibility="gone"
                     tools:ignore="MissingPrefix" />
 
 
@@ -133,6 +134,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="3dp"
                     android:layout_weight=".4"
+                    android:visibility="gone"
                     android:background="@drawable/spinner_background"
                     android:orientation="horizontal">
 

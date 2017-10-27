@@ -135,7 +135,7 @@
                                 android:hint="@string/pin_area_code"
                                 android:textSize="14sp"
                                 android:gravity="bottom"
-                                android:inputType="number"
+                                android:inputType="text"
                                 android:textColor="#575757"
                                 />
 

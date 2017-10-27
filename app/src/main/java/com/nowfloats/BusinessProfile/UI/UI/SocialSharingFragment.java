@@ -670,7 +670,7 @@ public class SocialSharingFragment extends Fragment implements NfxRequestClient.
                                                             session.storeFacebookPageID(FACEBOOK_PAGE_ID);
                                                             if (Util.isNullOrEmpty(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))
                                                                     || !pref.getBoolean("FBFeedPullAutoPublish", false)
-                                                                    || !strName.equals(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))) {
+                                                                    || !FACEBOOK_PAGE_ID.equals(session.getFPDetails(Key_Preferences.FB_PULL_PAGE_NAME))) {
                                                                 pageSeleted(mNewPosition, strName, session.getFacebookPageID(), session.getPageAccessToken());
                                                             } else {
                                                                 //facebookPageCheckBox.setChecked(false);

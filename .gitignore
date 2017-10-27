@@ -2,6 +2,7 @@
 /*/local.properties
 .DS_Store
 /*/build
+.idea
 /*/library/build
 /*/mobihelp_sdk_android_v1.3.1/build
 

@@ -47,7 +47,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 2017100021
+        versionCode 2017100027
         multiDexEnabled true
     }
     buildTypes {

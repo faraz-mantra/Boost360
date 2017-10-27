@@ -40,6 +40,7 @@ public class CustomerAssistantApi {
                 MixPanelController.track(MixPanelController.SAM_BUBBLE_CLICKED_SERVER_ERROR, null);
                 FirebaseLogger.getInstance().logSAMEvent("", FirebaseLogger.SAMSTATUS.SERVER_ERROR,
                         fpId, appVersion);
+                mBus.post(new SMSSuggestions());
             }
         });
 
