@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="multipicker-1.1.31">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.android/build-cache/4e9973a1dba62cce6d283a80d479debacadadc35/output/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.android/build-cache/4e9973a1dba62cce6d283a80d479debacadadc35/output/res" />
+      <root url="file://$USER_HOME$/.android/build-cache/d8a41343f041f01e17430d7461e0b9f0d9afa8c4/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/d8a41343f041f01e17430d7461e0b9f0d9afa8c4/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

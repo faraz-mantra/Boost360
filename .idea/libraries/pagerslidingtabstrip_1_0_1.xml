@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="pagerslidingtabstrip-1.0.1">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.android/build-cache/e781ea7c531006f52a43527278aef84528b563b2/output/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.android/build-cache/e781ea7c531006f52a43527278aef84528b563b2/output/res" />
+      <root url="file://$USER_HOME$/.android/build-cache/c6b10b04640f4f5e75f55460cf4c5f1d9a76fbe3/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/c6b10b04640f4f5e75f55460cf4c5f1d9a76fbe3/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

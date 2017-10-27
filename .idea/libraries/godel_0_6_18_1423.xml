@@ -4,8 +4,8 @@
       <root url="jar://$PROJECT_DIR$/instamojoLib/build/intermediates/exploded-aar/in.juspay/godel/0.6.18.1423/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="file://$USER_HOME$/.android/build-cache/f11d410b5691177db72f3723d854225d73d8d466/output/res" />
-      <root url="jar://$USER_HOME$/.android/build-cache/f11d410b5691177db72f3723d854225d73d8d466/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/880503dbfc922ca6373f4d39690e2a82844bd349/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/880503dbfc922ca6373f4d39690e2a82844bd349/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

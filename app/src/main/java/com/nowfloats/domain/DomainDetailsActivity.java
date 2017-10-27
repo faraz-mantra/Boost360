@@ -32,8 +32,9 @@ import com.nowfloats.CustomWidget.roboto_md_60_212121;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DomainApiService;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
-import com.nowfloats.Store.Model.StoreEvent;
-import com.nowfloats.Store.Model.StoreModel;
+import com.nowfloats.Store.Model.ActivePackage;
+import com.nowfloats.Store.Model.AllPackage;
+import com.nowfloats.Store.Model.PricingPlansModel;
 import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.Store.Service.API_Service;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
@@ -50,6 +51,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -367,14 +369,16 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
             domainType = domainDetails.getDomainType();
             domainName = domainDetails.getDomainName();
             domainNameTv.setText(domainName+domainType);
+            domainCreatedTv.setText(Methods.fromHtml("Purchase Date: <b>"+domainCreatedDate+"</b>"));
+            domainExpiredTv.setText(Methods.fromHtml("Valid Till: <b>"+domainExpiryDate+"</b>"));
             if( !TextUtils.isEmpty(domainDetails.getErrorMessage()) && domainDetails.getIsProcessingFailed()){
                 //error domain failed
                 isDomainBookFailed = true;
             }
 
         }
-        new API_Service(DomainDetailsActivity.this, session.getSourceClientId(), session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY),
-                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session.getFPID(), mBus);
+        new API_Service(DomainDetailsActivity.this, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID), session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY),
+                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session.getFPID(),session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY), mBus);
     }
 
    /* private void setDomainYearsAdapter(int length){
@@ -390,22 +394,21 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
     }*/
 
     @Subscribe
-    public void getStoreList(StoreEvent response) {
+    public void getStoreList(PricingPlansModel response) {
         hideLoader();
-        ArrayList<StoreModel> allModels = response.model.AllPackages;
-        ArrayList<StoreModel> activeIdArray = response.model.ActivePackages;
-        ArrayList<StoreModel> additionalPlans = response.model.AllPackages;
+        List<AllPackage> allModels = response.allPackages;
+        List<ActivePackage> activeIdArray = response.activePackages;
         if (allModels != null && activeIdArray != null) {
             long storeExpiryDays = 0;
-            for (StoreModel storeModel : activeIdArray) {
-                float validity = storeModel.TotalMonthsValidity;
+            for (ActivePackage storeModel : activeIdArray) {
+                Double validity = storeModel.getTotalMonthsValidity();
                 Calendar cal = Calendar.getInstance();
                 int year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
-                cal.setTimeInMillis(Long.parseLong(storeModel.ToBeActivatedOn.replace("/Date(", "").replace(")/", "")));
-                cal.add(Calendar.MONTH, (int) validity);
-                cal.add(Calendar.DATE, (int) ((validity - Math.floor((double) validity)) * 30));
+                cal.setTimeInMillis(Long.parseLong(storeModel.getToBeActivatedOn().replace("/Date(", "").replace(")/", "")));
+                cal.add(Calendar.MONTH, (int)Math.floor(validity));
+                cal.add(Calendar.DATE, (int) ((validity-Math.floor(validity))*30));
 
                 long tempExpiryDays = cal.getTimeInMillis();
                 if (tempExpiryDays > storeExpiryDays) {

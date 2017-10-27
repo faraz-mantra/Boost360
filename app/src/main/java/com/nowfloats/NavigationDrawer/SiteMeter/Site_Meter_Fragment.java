@@ -855,13 +855,13 @@ public class Site_Meter_Fragment extends Fragment {
             if (TextUtils.isEmpty(get_fp_details_model.getEmail())
                     || get_fp_details_model.getContacts() == null) {
                 showCustomDialog(getString(R.string.domain_detail_required),
-                        Methods.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
-                        getString(R.string.ok), null, DialogFrom.CONTACTS_AND_EMAIL_REQUIRED);
+                        Methods.fromHtml("Email address is not provided, you can add email inside <b>Manage Website -> contact Information</b>.").toString(),
+                        "Take Me There", null, DialogFrom.CONTACTS_AND_EMAIL_REQUIRED);
 
             } else if (get_fp_details_model.getCategory() == null || get_fp_details_model.getCategory().size() == 0) {
                 showCustomDialog(getString(R.string.domain_detail_required),
-                        Methods.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
-                        getString(R.string.ok), null,DialogFrom.CATEGORY_REQUIRED);
+                        Methods.fromHtml("Business category id is not provided, you can add category inside <b>Manage Website -> Edit basic info</b>.").toString(),
+                        "Take Me There", null, DialogFrom.CATEGORY_REQUIRED);
             } else if (TextUtils.isEmpty(get_fp_details_model.getAddress())
                     || TextUtils.isEmpty(get_fp_details_model.getLat())
                     || TextUtils.isEmpty(get_fp_details_model.getLng())
@@ -869,8 +869,8 @@ public class Site_Meter_Fragment extends Fragment {
                     || get_fp_details_model.getLng().equalsIgnoreCase("0")
                     ||TextUtils.isEmpty(get_fp_details_model.getPinCode())) {
                 showCustomDialog(getString(R.string.domain_detail_required),
-                        Methods.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
-                        getString(R.string.ok), null, DialogFrom.ADDRESS_REQUIRED);
+                        Methods.fromHtml("Business address is not provided, you can add address inside <b>Manage Website -> Business Address</b>.").toString(),
+                        "Take Me There", null, DialogFrom.ADDRESS_REQUIRED);
             } else {
                 showDomainDetails();
             }
