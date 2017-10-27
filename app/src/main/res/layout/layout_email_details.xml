@@ -8,24 +8,25 @@
         android:layout_height="wrap_content"
         android:padding="5dp">
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            android:padding="15dp"
-            android:src="@drawable/ic_email"/>
+            android:id="@+id/img_email"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:src="@drawable/domain_email"/>
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/margin_10">
+            android:padding="10dp">
 
             <TextView
                 android:id="@+id/tv_domain_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Your Business emails (coming soon...)"
-                android:textSize="15sp"
-                android:layout_marginTop="10dp"
+                android:textSize="14sp"
+                android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:textColor="@color/gray"/>
             <TextView

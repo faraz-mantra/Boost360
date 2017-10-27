@@ -1010,6 +1010,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="product_detail_free_shipping">Free Shipping</string>
     <string name="product_detail_delete_btn_text">Delete product</string>
     <string name="book_a_new_domain">Book a new domain</string>
+    <string name="book_a_new_domain_included">Book new domain <i>(included in your package)</i></string>
     <string name="renew_domain">Renew domain</string>
     <string name="have_an_existing_domain">Have an existing domain? </string>
     <string name="enjoying_feature">Is this helpful in managing your leads? </string>
@@ -1511,8 +1512,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 </string>
     <string name="manage_multichannel_customers">You can track all your online customers from a single interface. You can interact with your customers on platforms like WhatsApp and SMS. We read through your SMS data to fetch relevant enquiries.</string>
     <string name="deeplink_manage_customer">managecustomer</string>
-    <string name="renew_domain_not_available_message">Your domain \'%s\' has expired and unavailable for purchase. Your website is currently running on \'%s\'. Please book a new domain or link another domain to avail the advantages of having a personal domain.</string>
-    <string name="renew_domain_message">Your domain \'%s\' has expired. Your website is currently running on \'%s\'. Please renew your domain or link another domain to avail the advantages of having a personal domain.</string>
+    <string name="renew_domain_not_available_message" formatted="false">Your domain \'%s\' has expired and unavailable for purchase. Your website is currently running on \'%s\'. Please book a new domain or link another domain to avail the advantages of having a personal domain.</string>
+    <string name="renew_domain_message" formatted="false">Your domain \'%s\' has expired. Your website is currently running on \'%s\'. Please renew your domain or link another domain to avail the advantages of having a personal domain.</string>
     <string name="renew_nowfloats_plan">Your NowFloats account has expired. Please renew your account to continue with service.</string>
     <string name="renew_nowfloats_and_domain_plan">Your NowFloats account and your domain has expired. Please renew your account and domain to continue with service.</string>
 

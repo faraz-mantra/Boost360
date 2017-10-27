@@ -50,7 +50,6 @@ import com.nowfloats.accessbility.DataAccessibilityServiceV8;
 import com.nowfloats.bubble.BubblesService;
 import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.customerassistant.CustomerAssistantActivity;
-import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
@@ -332,14 +331,14 @@ public class ManageCustomerFragmentV1 extends Fragment {
                             manageCustomerHolder.tvOne.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    startActivity(new Intent(getActivity(), ThirdPartyQueriesActivity.class));
-                                    //enableCustomerAssistant();
+                                    //startActivity(new Intent(getActivity(), ThirdPartyQueriesActivity.class));
+                                    enableCustomerAssistant();
                                 }
                             });
                             manageCustomerHolder.llBackground.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    //enableCustomerAssistant();
+                                    enableCustomerAssistant();
                                 }
                             });
                         }

@@ -324,11 +324,9 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                                     }else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1") &&
                                             session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTLEVEL).equalsIgnoreCase("0")){
                                         showExpiryDialog(DEMO_EXPIRED);
-                                    } /*else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1")){
-                                        showExpiryDialog(LIGHT_HOUSE_EXPIRED);
-                                    } */else if (Utils.isNetworkConnected(getActivity())) {
+                                    } else if (Utils.isNetworkConnected(getActivity())) {
                                         showLoader(getString(R.string.please_wait));
-                                        domainApiService.getDomainDetails(session.getFpTag(), getDomainDetailsParam());
+                                        domainApiService.getDomainDetails(activity,session.getFpTag(), getDomainDetailsParam());
                                     } else {
                                         Methods.showSnackBarNegative(getActivity(), getString(R.string.noInternet));
                                     }
@@ -526,9 +524,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ROOTALIASURI) + " successfully.",
                         getString(R.string.ok), null, DialogFrom.DEFAULT);
             }else if(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equalsIgnoreCase("-1")) {
-                showCustomDialog(getString(R.string.buy_a_domain),
-                        Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
-                        getString(R.string.ok), null, DialogFrom.DEFAULT);
+                showExpiryDialog(LIGHT_HOUSE_EXPIRED);
             }else if (Methods.isOnline(activity)){
                 showLoader(getString(R.string.please_wait));
                 domainApiService.getDomainFPDetails(session.getFPID(), getDomainDetailsParam());
