@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="libary-2.3.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.android/build-cache/d5c79e8fc544ad5dac949f78d2113465ca23093e/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/d5c79e8fc544ad5dac949f78d2113465ca23093e/output/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.alhazmy13.MediaPicker/libary/2.3.1/75aca4edb4499b9d8b06a78705c884146edc35cc/libary-2.3.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

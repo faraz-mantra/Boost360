@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="godel-osd-0.6.14">
+    <ANNOTATIONS>
+      <root url="jar://$PROJECT_DIR$/instamojoLib/build/intermediates/exploded-aar/in.juspay/godel-osd/0.6.14/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="file://$USER_HOME$/.android/build-cache/dc1a0969a15a5aa0843317d8c8828735cb729d67/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/dc1a0969a15a5aa0843317d8c8828735cb729d67/output/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
