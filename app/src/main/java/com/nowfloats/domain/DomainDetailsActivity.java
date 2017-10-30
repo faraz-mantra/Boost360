@@ -403,9 +403,6 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
             for (ActivePackage storeModel : activeIdArray) {
                 Double validity = storeModel.getTotalMonthsValidity();
                 Calendar cal = Calendar.getInstance();
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
                 cal.setTimeInMillis(Long.parseLong(storeModel.getToBeActivatedOn().replace("/Date(", "").replace(")/", "")));
                 cal.add(Calendar.MONTH, (int)Math.floor(validity));
                 cal.add(Calendar.DATE, (int) ((validity-Math.floor(validity))*30));
@@ -413,17 +410,6 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                 long tempExpiryDays = cal.getTimeInMillis();
                 if (tempExpiryDays > storeExpiryDays) {
                     storeExpiryDays = tempExpiryDays;
-                    domainYears = 0;
-                    if(cal.get(Calendar.YEAR)>= year){
-                        domainYears = cal.get(Calendar.YEAR)-year;
-                        if(cal.get(Calendar.MONTH)>month){
-                            domainYears+=1;
-                        }else if(cal.get(Calendar.MONTH) == month){
-                            if(cal.get(Calendar.DAY_OF_MONTH)>day){
-                                domainYears+=1;
-                            }
-                        }
-                    }
                 }
             }
 
@@ -435,16 +421,6 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-
-    //------------------|--------- PlanExpiry<=0 ---------------PlanExpiry<90 --------|----- PlanExpiry>=90--------|
-    //                  |                                |    p<60     plan renew     |                            |
-    //-DomainExpiry<0-- |          Plan Expired          |    p>= 60  Renew Domain    |      Expired Renew Domain  |
-    //                  |                                |                            |                            |
-    //-DomainExpiry<30--|          Plan Expired          |       P<=D  renew plan     |      TBE-Renew Domain      |
-    //                  |                                |     P-D>=60  renew domain  |                            |
-    //                  |                                |     P-D<60  renew plan                        |                            |
-    //-DomainExpiry>=30-|          Plan Expired          |    Do nothing(show domain) |    Do nothing(show domain) |
-    //------------------|--------------------------------|----------------------------|----------------------------|
 
     private void applyDomainLogic() {
          if (planExpiryDays <= 0) {

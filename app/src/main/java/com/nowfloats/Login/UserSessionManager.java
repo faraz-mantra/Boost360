@@ -943,7 +943,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
             @Override
             public void failure(RetrofitError error) {
-                if(pd != null )
+                if(pd.isShowing())
                 pd.dismiss();
                 Methods.showSnackBarNegative(activity,activity.getString(R.string.unable_to_logout));
             }
