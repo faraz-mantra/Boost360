@@ -321,9 +321,7 @@ public class Settings_Fragment extends Fragment {
                     public void onPositive(MaterialDialog dialog) {
                         getActivity().stopService(new Intent(getActivity(), CustomerAssistantActivity.class));
                         session.logoutUser();
-                        DataBase db = new DataBase(activity);
-                        DbController.getDbController(activity.getApplicationContext()).deleteDataBase();
-                        db.deleteLoginStatus();
+
                         //Constants.IS_LOGIN = false;
 
                         //      SharedPreferences.Editor editor;

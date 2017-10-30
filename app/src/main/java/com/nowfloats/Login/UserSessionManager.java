@@ -17,6 +17,7 @@ import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.Chat.ChatModel;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.Volley.AppController;
+import com.nowfloats.sync.DbController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.DataMap;
 import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
@@ -885,7 +886,9 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 Log.d("Valid Email", "Valid Email Response: " + response);
                 if(pd.isShowing())
                 pd.dismiss();
-
+                DataBase db = new DataBase(activity);
+                DbController.getDbController(activity.getApplicationContext()).deleteDataBase();
+                db.deleteLoginStatus();
                 SharedPreferences.Editor editor = pref.edit();
                 editor.clear();
                 editor.apply();

@@ -57,7 +57,7 @@
                     android:background="@drawable/et_bg"
                     android:inputType="textNoSuggestions"
                     android:digits="@string/domain_characters"
-                    android:maxLines="1"
+                    android:maxLines="2"
                     android:padding="@dimen/margin_10"
                     tools:ignore="MissingPrefix" />
 

@@ -23,7 +23,7 @@ public class PackageDetails implements Comparable<PackageDetails>{
     private Double expiryInMths;
     @SerializedName("ExternalApplicationDetails")
     @Expose
-    private String externalApplicationDetails;
+    private Object externalApplicationDetails;
     @SerializedName("Name")
     @Expose
     private String name;
@@ -134,11 +134,11 @@ public class PackageDetails implements Comparable<PackageDetails>{
         this.expiryInMths = expiryInMths;
     }
 
-    public String getExternalApplicationDetails() {
+    public Object getExternalApplicationDetails() {
         return externalApplicationDetails;
     }
 
-    public void setExternalApplicationDetails(String externalApplicationDetails) {
+    public void setExternalApplicationDetails(Object externalApplicationDetails) {
         this.externalApplicationDetails = externalApplicationDetails;
     }
 

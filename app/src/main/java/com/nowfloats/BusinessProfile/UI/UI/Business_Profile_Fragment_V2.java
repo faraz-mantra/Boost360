@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -409,6 +410,8 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                         } finally {
                             progressLayout.setVisibility(View.GONE);
                             profileLayout.setVisibility(View.VISIBLE);
+                            ScrollView scrollView = (ScrollView) mainView.findViewById(R.id.scrollView);
+                            scrollView.fullScroll(ScrollView.FOCUS_DOWN);
                         }
                     }
                 });

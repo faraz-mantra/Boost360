@@ -5,12 +5,12 @@
       <config>
         <devices>
           <device id="Nexus 5X" />
+          <device id="Nexus S" />
           <device id="Nexus One" />
           <device id="pixel" />
           <device id="pixel_xl" />
           <device id="Nexus 5" />
           <device id="Galaxy Nexus" />
-          <device id="Nexus S" />
           <device id="Nexus 6" />
           <device id="pixel_c" />
           <device id="Nexus 7" />
@@ -19,145 +19,27 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="Test" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="verbose" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="64338892-f1d1-4b71-803b-dc419093e118" name="Default" comment="Merge branch 'development' of https://bitbucket.org/nfboost_android/boost into development&#10;&#10;# Conflicts:&#10;#&#9;app/app-partone-release.apk&#10;#&#9;app/libs/libraries/volley/build/intermediates/bundles/release/classes.jar&#10;#&#9;app/libs/libraries/volley/build/intermediates/incremental/mergeReleaseJniLibFolders/merger.xml&#10;#&#9;app/libs/libraries/volley/build/outputs/aar/volley-release.aar&#10;">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/android_sdk_2_7_1.xml" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Boost.iml" afterPath="$PROJECT_DIR$/boost.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Android_SpinKit_1_1_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Android_SpinKit_1_1_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/CircularReveal_2_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/CircularReveal_2_0_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/MultipleImageSelect_v0_0_4.xml" afterPath="$PROJECT_DIR$/.idea/libraries/MultipleImageSelect_v0_0_4.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/android_easing_1_0_3.xml" afterPath="$PROJECT_DIR$/.idea/libraries/android_easing_1_0_3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/android_sdk_1_2_6.xml" afterPath="$PROJECT_DIR$/.idea/libraries/android_sdk_1_2_6.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/animated_vector_drawable_25_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/animated_vector_drawable_25_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_25_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_25_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/calligraphy_2_2_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/calligraphy_2_2_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/cardview_v7_23_4_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/cardview_v7_23_4_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/cardview_v7_25_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/cardview_v7_25_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/constraint_layout_1_0_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/constraint_layout_1_0_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/constraint_layout_solver_1_0_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/constraint_layout_solver_1_0_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/core_0_9_4_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/core_0_9_4_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/customtabs_23_4_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/customtabs_23_4_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/design_23_4_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/design_23_4_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/design_25_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/design_25_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/espresso_core_2_2_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/espresso_core_2_2_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/espresso_idling_resource_2_2_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/espresso_idling_resource_2_2_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/exposed_instrumentation_api_publish_0_5.xml" afterPath="$PROJECT_DIR$/.idea/libraries/exposed_instrumentation_api_publish_0_5.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/fab_1_6_4.xml" afterPath="$PROJECT_DIR$/.idea/libraries/fab_1_6_4.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/facebook_android_sdk_4_16_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/facebook_android_sdk_4_16_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/firebase_analytics_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_analytics_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/firebase_analytics_impl_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_analytics_impl_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/firebase_auth_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_auth_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/firebase_auth_common_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_auth_common_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/firebase_auth_module_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_auth_module_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/firebase_common_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_common_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/firebase_config_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_config_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/firebase_core_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_core_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/firebase_crash_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_crash_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/firebase_database_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_database_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/firebase_database_connection_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_database_connection_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/firebase_iid_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_iid_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/firebase_messaging_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_messaging_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/firebase_storage_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_storage_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/firebase_storage_common_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/firebase_storage_common_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/floatingactionbutton_1_1_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/floatingactionbutton_1_1_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/godel_0_6_18_1423.xml" afterPath="$PROJECT_DIR$/.idea/libraries/godel_0_6_18_1423.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/godel_osd_0_6_14.xml" afterPath="$PROJECT_DIR$/.idea/libraries/godel_osd_0_6_14.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/gridlayout_v7_25_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/gridlayout_v7_25_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/hotline_android_1_2_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/hotline_android_1_2_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/libary_2_3_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/libary_2_3_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/library_1_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/library_1_0_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/library_1_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/library_1_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/library_1_1_3.xml" afterPath="$PROJECT_DIR$/.idea/libraries/library_1_1_3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/library_1_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/library_1_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/library_2_1_4.xml" afterPath="$PROJECT_DIR$/.idea/libraries/library_2_1_4.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/materialdatetimepicker_1_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/materialdatetimepicker_1_0_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/materialsearchview_1_4_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/materialsearchview_1_4_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/mediarouter_v7_24_0_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/mediarouter_v7_24_0_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/mixpanel_android_5_2_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/mixpanel_android_5_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/multidex_1_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/multidex_1_0_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/multidex_instrumentation_1_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/multidex_instrumentation_1_0_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/multipicker_1_1_31.xml" afterPath="$PROJECT_DIR$/.idea/libraries/multipicker_1_1_31.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/multistatetogglebutton_0_2_2.xml" afterPath="$PROJECT_DIR$/.idea/libraries/multistatetogglebutton_0_2_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/org_apache_http_legacy_android_25.xml" afterPath="$PROJECT_DIR$/.idea/libraries/org_apache_http_legacy_android_25.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/pageindicatorview_0_2_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/pageindicatorview_0_2_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/pagerslidingtabstrip_1_0_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/pagerslidingtabstrip_1_0_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/palette_v7_24_0_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/palette_v7_24_0_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_ads_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_ads_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_ads_lite_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_ads_lite_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_analytics_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_analytics_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_analytics_impl_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_analytics_impl_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_appindexing_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_appindexing_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_appinvite_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_appinvite_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_auth_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_auth_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_auth_base_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_auth_base_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_awareness_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_awareness_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_base_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_base_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_basement_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_basement_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_cast_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_cast_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_cast_framework_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_cast_framework_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_clearcut_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_clearcut_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_drive_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_drive_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_fitness_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_fitness_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_games_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_games_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_gass_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_gass_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_gcm_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_gcm_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_identity_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_identity_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_iid_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_iid_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_instantapps_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_instantapps_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_location_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_location_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_maps_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_maps_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_nearby_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_nearby_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_panorama_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_panorama_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_places_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_places_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_plus_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_plus_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_safetynet_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_safetynet_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_tagmanager_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_tagmanager_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_tagmanager_api_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_tagmanager_api_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_tasks_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_tasks_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_vision_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_vision_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_wallet_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_wallet_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_wearable_9_8_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_wearable_9_8_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/recyclerview_animators_1_2_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/recyclerview_animators_1_2_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/recyclerview_v7_23_4_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/recyclerview_v7_23_4_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/recyclerview_v7_25_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/recyclerview_v7_25_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/richeditor_android_1_2_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/richeditor_android_1_2_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/roundedimageview_1_5_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/roundedimageview_1_5_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/rules_0_5.xml" afterPath="$PROJECT_DIR$/.idea/libraries/rules_0_5.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/runner_0_5.xml" afterPath="$PROJECT_DIR$/.idea/libraries/runner_0_5.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_annotations_25_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_annotations_25_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_compat_25_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_compat_25_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_core_ui_25_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_core_ui_25_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_core_utils_25_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_core_utils_25_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_fragment_25_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_fragment_25_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_media_compat_25_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_media_compat_25_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_v13_25_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_v13_25_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_v4_18_0_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_18_0_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_v4_25_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_25_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_vector_drawable_25_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_vector_drawable_25_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/tedpermission_1_0_3.xml" afterPath="$PROJECT_DIR$/.idea/libraries/tedpermission_1_0_3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/transition_25_3_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/transition_25_3_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/twitter_core_3_0_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/twitter_core_3_0_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/volley_1_0_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/volley_1_0_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app-partone-release.apk" afterPath="$PROJECT_DIR$/app/app-partone-release.apk" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ZoomImageLibrary/ZoomImageLibrary.iml" afterPath="$PROJECT_DIR$/ZoomImageLibrary/ZoomImageLibrary.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/libs/libraries/volley/volley.iml" afterPath="$PROJECT_DIR$/app/libs/libraries/volley/volley.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Settings_Fragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Settings_Fragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Login/UserSessionManager.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Login/UserSessionManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/PackageDetails.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/PackageDetails.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Service/API_Service.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Service/API_Service.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/StoreFragmentTab.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/StoreFragmentTab.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/domain/DomainDetailsActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/domain/DomainDetailsActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout-xhdpi/fragment_business_profile_v3.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout-xhdpi/fragment_business_profile_v3.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/dialog_book_a_domain.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/dialog_book_a_domain.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/layout_choose_domain_options.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/layout_choose_domain_options.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/layout_domain_details.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/layout_domain_details.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/layout_domain_plan_expired.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/layout_domain_plan_expired.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cropper/cropper.iml" afterPath="$PROJECT_DIR$/cropper/cropper.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/instamojoLib/instamojoLib.iml" afterPath="$PROJECT_DIR$/instamojoLib/instamojoLib.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/library/library.iml" afterPath="$PROJECT_DIR$/library/library.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local.properties" afterPath="$PROJECT_DIR$/local.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/messagelibrary/messagelibrary.iml" afterPath="$PROJECT_DIR$/messagelibrary/messagelibrary.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/riachatsdkMain/riachatsdkMain.iml" afterPath="$PROJECT_DIR$/riachatsdkMain/riachatsdkMain.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/layout_email_details.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/layout_email_details.xml" />
     </list>
     <ignored path="Boost.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -190,45 +72,98 @@
     <favorites_list name="Boost" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+    <leaf>
       <file leaf-file-name="DomainDetailsActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/domain/DomainDetailsActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="369" column="48" selection-start-line="369" selection-start-column="48" selection-end-line="369" selection-end-column="48" />
+            <state relative-caret-position="327">
+              <caret line="768" column="45" selection-start-line="768" selection-start-column="45" selection-end-line="768" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dialog_book_a_domain.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_book_a_domain.xml">
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="208">
+              <caret line="41" column="25" selection-start-line="41" selection-start-column="25" selection-end-line="41" selection-end-column="25" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#20899#20950#0" expanded="true" />
+                <element signature="e#2410#2437#0" expanded="true" />
+                <element signature="e#2515#2533#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Business_Profile_Fragment_V2.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java">
+      <file leaf-file-name="activity_domain_details.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-xhdpi/activity_domain_details.xml">
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="554" column="34" selection-start-line="554" selection-start-column="34" selection-end-line="554" selection-end-column="34" />
-              <folding>
-                <element signature="e#31184#31226#0" expanded="true" />
-                <element signature="e#31643#31685#0" expanded="true" />
-                <element signature="e#32446#32488#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="289">
+              <caret line="17" column="38" selection-start-line="17" selection-start-column="38" selection-end-line="17" selection-end-column="38" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Site_Meter_Fragment.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java">
+      <file leaf-file-name="layout_email_details.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_email_details.xml">
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="884" column="16" selection-start-line="884" selection-start-column="16" selection-end-line="884" selection-end-column="16" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#42200#42242#0" expanded="true" />
-                <element signature="e#42643#42685#0" expanded="true" />
-                <element signature="e#43410#43452#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="595">
+              <caret line="35" column="56" selection-start-line="35" selection-start-column="56" selection-end-line="35" selection-end-column="56" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="layout_choose_domain_options.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_choose_domain_options.xml">
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="218">
+              <caret line="20" column="42" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Settings_Fragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Settings_Fragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="322" column="38" selection-start-line="322" selection-start-column="38" selection-end-line="322" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserSessionManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Login/UserSessionManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="271">
+              <caret line="924" column="61" selection-start-line="924" selection-start-column="61" selection-end-line="924" selection-end-column="61" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="218">
+              <caret line="1012" column="91" selection-start-line="1012" selection-start-column="46" selection-end-line="1012" selection-end-column="91" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -249,7 +184,7 @@
     </option>
   </component>
   <component name="GenerateSignedApkSettings">
-    <option name="KEY_STORE_PATH" value="D:\NFProjects\NFProject\Boost v4.4.8\Boost\keystore\boost\my-release-key.keystore" />
+    <option name="KEY_STORE_PATH" value="C:\NFSource\nowfloats\boost\keystore\boost\my-release-key.keystore" />
     <option name="KEY_ALIAS" value="nfmanage" />
     <option name="REMEMBER_PASSWORDS" value="true" />
   </component>
@@ -14734,7 +14669,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="C:\NFSource\nowfloats\boost" value="15022672106783" />
+        <entry key="C:\NFSource\nowfloats\boost" value="15022676774353" />
         <entry key="D:\NFProjects\NFProject\Boost v4.4.8\Boost" value="15008647831954" />
       </map>
     </option>
@@ -15972,13 +15907,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/ProductClassification.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/AllPackage.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Service/StoreInterface.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/add_features_btn_bg.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/PricingPlansModel.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/features_list_row.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/anim/expand.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/anim/collapse.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_pricing_details.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Adapters/PricingPlansPagerAdapter.java" />
@@ -16009,28 +15937,35 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java" />
         <option value="$PROJECT_DIR$/app/src/partone/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/messagelibrary/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/PackageDetails.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/ProductCheckoutActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/NewPricingPlansActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/ActivePlansFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/util/Constants.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Service/API_Service.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/StoreFragmentTab.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/domain/DomainDetailsActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/layout_domain_plan_expired.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/layout_domain_details.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout-xhdpi/fragment_business_profile_v3.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/PackageDetails.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Service/API_Service.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Settings_Fragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Login/UserSessionManager.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/layout_domain_plan_expired.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/layout_email_details.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/layout_choose_domain_options.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/domain/DomainDetailsActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/dialog_book_a_domain.xml" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
+    <option name="x" value="1358" />
     <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="784" />
+    <option name="width" value="1936" />
+    <option name="height" value="1096" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -16142,6 +16077,12 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane">
+        <subPane />
+      </pane>
+      <pane id="Scratches">
+        <subPane />
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -16150,19 +16091,231 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="partone" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="partone" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com.thinksity" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nowfloats" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nowfloats" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Store" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="boost" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nowfloats" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Store" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Model" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Problems" />
-      </pane>
-      <pane id="Scratches">
-        <subPane />
-      </pane>
-      <pane id="PackagesPane">
-        <subPane />
       </pane>
       <pane id="AndroidView">
         <subPane />
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Problems" />
       </pane>
     </panes>
   </component>
@@ -16170,12 +16323,12 @@
     <property name="android.sdk.path" value="D:/AndroidSDK" />
     <property name="settings.editor.selected.configurable" value="instant.run" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="last_opened_file_path" value="$USER_HOME$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlPreviewForm.SHOW" value="false" />
     <property name="two.files.diff.last.used.folder" value="$PROJECT_DIR$/../../BoostRepo v4.4.5/Boost/app/src/main/res" />
-    <property name="device.picker.selection" value="0123456789ABCDEF" />
-    <property name="SearchEverywhereHistoryKey" value="site&#9;PSI&#9;JAVA://com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment&#10;businesspro&#9;PSI&#9;JAVA://com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2&#10;choose&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/layout/layout_choose_domain_options.xml&#10;layout_plan&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/layout/layout_domain_plan_expired.xml&#10;pricing&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/Store/NewPricingPlansActivity.java&#10;Consta&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/util/Constants.java&#10;Checkout&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/ProductCheckoutActivity.java&#10;Package&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/Model/PackageDetails.java&#10;Const&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/util/Constants.java&#10;Settings&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Settings_Fragment.java&#10;HomeAc&#9;PSI&#9;JAVA://com.nowfloats.NavigationDrawer.HomeActivity&#10;All&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/AllPlansFragment.java&#10;AllP&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/AllPlansFragment.java&#10;Pro&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/ProductCheckoutActivity.java&#10;Settin&#9;PSI&#9;JAVA://com.nowfloats.BusinessProfile.UI.UI.Settings_Fragment&#10;Con&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/util/Constants.java&#10;Acti&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/ActivePlansFragment.java&#10;Create&#9;PSI&#9;JAVA://com.nowfloats.NavigationDrawer.Create_Message_Activity&#10;Cons&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/util/Constants.java&#10;HomeAct&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java&#10;ProductChe&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/ProductCheckoutActivity.java&#10;Constant&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/util/Constants.java&#10;Checkou&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/ProductCheckoutActivity.java&#10;rIAf&#9;PSI&#9;JAVA://com.nowfloats.RiaFCM.RiaFirebaseMessagingService&#10;Edit&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Edit_Profile_Activity.java&#10;BusinessPro&#9;PSI&#9;JAVA://com.nowfloats.signup.UI.UI.BusinessProfileActivity&#10;Business&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java&#10;Pri&#9;PSI&#9;JAVA://com.nowfloats.Store.PricingPlansActivity&#10;Notif&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/NotificationCenter/NotificationInterface.java&#10;activi&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/res/layout/activity_payment_settings.xml&#10;CardVie&#9;PSI&#9;JAVA://com.nowfloats.riachatsdk.adapters.RvChatAdapter.CardViewHolder&#10;Notifica&#9;PSI&#9;JAVA://com.nowfloats.NotificationCenter.NotificationFragment&#10;activity_order&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/res/layout/activity_order_list.xml&#10;activity_se&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/res/layout/activity_seller_analytics.xml&#10;ChatL&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/riachatsdkMain/src/main/java/com/nowfloats/riachatsdk/helpers/ChatLogger.java&#10;ChatLo&#9;PSI&#9;JAVA://com.nowfloats.riachatsdk.helpers.ChatLogger&#10;home&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java&#10;Seller&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/manageinventory/SellerAnalyticsActivity.java&#10;SideP&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/res/layout/fragment_side_panel2.xml&#10;Payment&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/manageinventory/PaymentSettingsActivity.java&#10;settings&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/res/layout/fragment_settings.xml&#10;Setting&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/res/layout/activity_payment_settings.xml&#10;ManageIn&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/manageinventory/ManageInventoryFragment.java&#10;edit&#9;PSI&#9;JAVA://com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity&#10;facebookchatde&#9;PSI&#9;JAVA://com.nowfloats.managecustomers.FacebookChatDetailActivity&#10;Home&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java&#10;Side&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/NavigationDrawer/SidePanelFragment.java&#10;paymentSett&#9;PSI&#9;JAVA://com.nowfloats.manageinventory.PaymentSettingsActivity&#10;SidePa&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/NavigationDrawer/SidePanelFragment.java&#10;OrderDet&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/manageinventory/adapters/OrderDetailsRvAdapter.java" />
-    <property name="ExportApk.ApkPath" value="D:\NFProjects\NFProject\Boost v4.4.8\Boost\app" />
+    <property name="device.picker.selection" value="ZX1D623C97" />
+    <property name="SearchEverywhereHistoryKey" value="setting&#9;PSI&#9;JAVA://com.nowfloats.BusinessProfile.UI.UI.Settings_Fragment&#10;businessprofi&#9;PSI&#9;JAVA://com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2&#10;domainde&#9;PSI&#9;JAVA://com.nowfloats.domain.DomainDetailsActivity&#10;choose&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/layout/dialog_choose_domain.xml&#10;build&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/build.gradle&#10;site&#9;PSI&#9;JAVA://com.nowfloats.NavigationDrawer.SiteMeter.Site_Meter_Fragment&#10;businesspro&#9;PSI&#9;JAVA://com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2&#10;layout_plan&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/layout/layout_domain_plan_expired.xml&#10;pricing&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/Store/NewPricingPlansActivity.java&#10;Consta&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/util/Constants.java&#10;Checkout&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/ProductCheckoutActivity.java&#10;Package&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/Model/PackageDetails.java&#10;Const&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/util/Constants.java&#10;Settings&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Settings_Fragment.java&#10;HomeAc&#9;PSI&#9;JAVA://com.nowfloats.NavigationDrawer.HomeActivity&#10;All&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/AllPlansFragment.java&#10;AllP&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/AllPlansFragment.java&#10;Pro&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/ProductCheckoutActivity.java&#10;Settin&#9;PSI&#9;JAVA://com.nowfloats.BusinessProfile.UI.UI.Settings_Fragment&#10;Con&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/util/Constants.java&#10;Acti&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/ActivePlansFragment.java&#10;Create&#9;PSI&#9;JAVA://com.nowfloats.NavigationDrawer.Create_Message_Activity&#10;Cons&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/util/Constants.java&#10;HomeAct&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java&#10;ProductChe&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/ProductCheckoutActivity.java&#10;Constant&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/util/Constants.java&#10;Checkou&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/ProductCheckoutActivity.java&#10;rIAf&#9;PSI&#9;JAVA://com.nowfloats.RiaFCM.RiaFirebaseMessagingService&#10;Edit&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Edit_Profile_Activity.java&#10;BusinessPro&#9;PSI&#9;JAVA://com.nowfloats.signup.UI.UI.BusinessProfileActivity&#10;Business&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java&#10;Pri&#9;PSI&#9;JAVA://com.nowfloats.Store.PricingPlansActivity&#10;Notif&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/NotificationCenter/NotificationInterface.java&#10;activi&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/res/layout/activity_payment_settings.xml&#10;CardVie&#9;PSI&#9;JAVA://com.nowfloats.riachatsdk.adapters.RvChatAdapter.CardViewHolder&#10;Notifica&#9;PSI&#9;JAVA://com.nowfloats.NotificationCenter.NotificationFragment&#10;activity_order&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/res/layout/activity_order_list.xml&#10;activity_se&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/res/layout/activity_seller_analytics.xml&#10;ChatL&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/riachatsdkMain/src/main/java/com/nowfloats/riachatsdk/helpers/ChatLogger.java&#10;ChatLo&#9;PSI&#9;JAVA://com.nowfloats.riachatsdk.helpers.ChatLogger&#10;home&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java&#10;Seller&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/manageinventory/SellerAnalyticsActivity.java&#10;SideP&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/res/layout/fragment_side_panel2.xml&#10;Payment&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/manageinventory/PaymentSettingsActivity.java&#10;settings&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/res/layout/fragment_settings.xml&#10;Setting&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/res/layout/activity_payment_settings.xml&#10;ManageIn&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/manageinventory/ManageInventoryFragment.java&#10;edit&#9;PSI&#9;JAVA://com.nowfloats.BusinessProfile.UI.UI.Edit_Profile_Activity&#10;facebookchatde&#9;PSI&#9;JAVA://com.nowfloats.managecustomers.FacebookChatDetailActivity&#10;Home&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java" />
+    <property name="ExportApk.ApkPath" value="C:\NFSource\nowfloats\boost\app" />
     <property name="ExportApk.Flavors" value="partone" />
     <property name="ExportApk.BuildType" value="release" />
     <property name="android.project.structure.last.selected" value="library" />
@@ -16184,7 +16337,7 @@
     <property name="ChangesBrowser.SHOW_FLATTEN" value="true" />
     <property name="ExportApk.SignV2" value="true" />
     <property name="ExportApk.SignV1" value="true" />
-    <property name="DEBUGGABLE_DEVICE" value="lenovo-lenovo_tab_2_a7_30hc-0123456789ABCDEF" />
+    <property name="DEBUGGABLE_DEVICE" value="motorola-xt1068-ZX1D623C97" />
     <property name="DEBUGGABLE_PROCESS" value="com.biz2.nowfloats" />
     <property name="SHOW_ALL_PROCESSES" value="true" />
     <property name="DEBUGGER_ID" value="Auto" />
@@ -16607,29 +16760,30 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
+    <frame x="1358" y="-8" width="1936" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32962137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2208589" sideWeight="0.5191898" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22012103" sideWeight="0.39723927" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22012103" sideWeight="0.41411042" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2638037" sideWeight="0.5869894" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5256125" sideWeight="0.66897655" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2344932" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20643154" sideWeight="0.66897655" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22014925" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32850778" sideWeight="0.49573562" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3363029" sideWeight="0.48081023" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2638037" sideWeight="0.4130106" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2634855" sideWeight="0.4130106" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.4941349" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5077951" sideWeight="0.48933902" order="11" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22012103" sideWeight="0.60276073" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15511727" sideWeight="0.5858896" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3062361" sideWeight="0.4184435" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.4887324" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.52300614" sideWeight="0.5090618" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3973029" sideWeight="0.5090618" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22115384" sideWeight="0.30232558" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -16644,7 +16798,6 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="612" y="527" width="516" height="49" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3062361" sideWeight="0.4184435" order="2" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -16891,430 +17044,229 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://D:/AndroidSDK/sources/android-25/java/util/concurrent/TimeUnit.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_active_plans.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="35" column="44" selection-start-line="35" selection-start-column="44" selection-end-line="35" selection-end-column="44" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_choose_domain.xml">
+      <provider selected="true" editor-type-id="android-designer2">
         <state />
       </provider>
-    </entry>
-    <entry file="jar://D:/AndroidSDK/extras/android/m2repository/com/android/support/support-fragment/25.2.0/support-fragment-25.2.0-sources.jar!/android/support/v4/app/FragmentStatePagerAdapter.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_settings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="89" column="74" selection-start-line="89" selection-start-column="74" selection-end-line="89" selection-end-column="74" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_product_checkout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="461">
-          <caret line="204" column="55" selection-start-line="204" selection-start-column="55" selection-end-line="204" selection-end-column="55" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/library/src/main/java/com/viewpagerindicator/PageIndicator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="25" column="17" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/CustomWidget/CirclePageIndicator.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/tab_indicator_default.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="35" selection-start-line="6" selection-start-column="35" selection-end-line="6" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/tab_selector.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/drawable/tab_indicator_selected.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="35" selection-start-line="6" selection-start-column="35" selection-end-line="6" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_new_pricing_plans.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1071">
-          <caret line="63" column="38" selection-start-line="63" selection-start-column="38" selection-end-line="63" selection-end-column="38" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_all_plans.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="35" column="41" selection-start-line="35" selection-start-column="41" selection-end-line="35" selection-end-column="41" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/top_dialog_row_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Adapters/TopUpDialogRvAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="42" column="95" selection-start-line="42" selection-start-column="95" selection-end-line="42" selection-end-column="95" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/active_plans_row_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="36" column="53" selection-start-line="36" selection-start-column="53" selection-end-line="36" selection-end-column="53" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/ActiveWidget.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/AllPackage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="27" column="21" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/MaxDiscount.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="29" column="31" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/TaxDetail.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/ProductClassification.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Settings_Fragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2125">
-          <caret line="168" column="76" selection-start-line="168" selection-start-column="76" selection-end-line="168" selection-end-column="76" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/AndroidSDK/sources/android-25/android/content/Context.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/partone/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9333">
-          <caret line="549" column="54" selection-start-line="549" selection-start-column="54" selection-end-line="549" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Service/StoreInterface.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="36" column="10" selection-start-line="36" selection-start-column="10" selection-end-line="36" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27591">
-          <caret line="1782" column="33" selection-start-line="1782" selection-start-column="33" selection-end-line="1782" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#64991#64992#0" expanded="false" />
-            <element signature="e#65023#65024#0" expanded="false" />
-            <element signature="e#79050#79051#0" expanded="false" />
-            <element signature="e#79090#79091#0" expanded="false" />
-            <element signature="e#90781#90782#0" expanded="false" />
-            <element signature="e#90850#90851#0" expanded="false" />
-            <element signature="e#97023#97024#0" expanded="false" />
-            <element signature="e#97078#97079#0" expanded="false" />
-            <element signature="e#97757#97758#0" expanded="false" />
-            <element signature="e#97860#97861#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/PackageDetails.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3978">
-          <caret line="335" column="0" selection-start-line="335" selection-start-column="0" selection-end-line="335" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/ProductCheckoutActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2703">
-          <caret line="212" column="95" selection-start-line="212" selection-start-column="95" selection-end-line="212" selection-end-column="95" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#9670#9671#0" expanded="false" />
-            <element signature="e#9735#9736#0" expanded="false" />
-            <element signature="e#13751#13752#0" expanded="false" />
-            <element signature="e#13823#13824#0" expanded="false" />
-            <element signature="e#14567#14568#0" expanded="false" />
-            <element signature="e#14639#14640#0" expanded="false" />
-            <element signature="e#31147#31148#0" expanded="false" />
-            <element signature="e#31195#31196#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/ActivePlansFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3859">
-          <caret line="231" column="0" selection-start-line="231" selection-start-column="0" selection-end-line="231" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build/intermediates/res/merged/partone/debug/layout/layout_choose_domain_options.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="32" column="26" selection-start-line="32" selection-start-column="26" selection-end-line="32" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25534">
-          <caret line="1502" column="0" selection-start-line="1502" selection-start-column="0" selection-end-line="1502" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/util/Constants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1683">
-          <caret line="126" column="75" selection-start-line="126" selection-start-column="75" selection-end-line="126" selection-end-column="75" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/messagelibrary/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
+      <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
+        <state relative-caret-position="323">
+          <caret line="400" column="109" selection-start-line="400" selection-start-column="86" selection-end-line="400" selection-end-column="109" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit/retrofit/1.9.0/f3908d76273ad2498add8bb89d7fb787f3061b1d/retrofit-1.9.0-sources.jar!/retrofit/RestAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="643">
+          <caret line="197" column="68" selection-start-line="197" selection-start-column="68" selection-end-line="197" selection-end-column="68" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/AllPackage.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
-          <caret line="49" column="30" selection-start-line="49" selection-start-column="30" selection-end-line="49" selection-end-column="30" />
+          <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup/otto/1.3.7/1ddf410fa200d87c61f5100eb498438988a6a076/otto-1.3.7-sources.jar!/com/squareup/otto/EventHandler.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/PackageDetails.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="97" column="0" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/StoreMainModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/StoreEvent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="31" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/PricingPlansModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/ActivePackage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-17">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Login/UserSessionManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="278" column="18" selection-start-line="278" selection-start-column="18" selection-end-line="278" selection-end-column="18" />
-          <folding>
-            <element signature="e#8825#8826#0" expanded="false" />
-            <element signature="e#8885#8886#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/AllPlansFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
-          <folding>
-            <element signature="e#3985#3986#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Adapters/ActivePlansRvAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="117" column="0" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
+        <state relative-caret-position="55">
+          <caret line="115" column="0" selection-start-line="115" selection-start-column="0" selection-end-line="115" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/NewPricingPlansActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="366" column="85" selection-start-line="366" selection-start-column="85" selection-end-line="366" selection-end-column="85" />
+        <state relative-caret-position="745">
+          <caret line="157" column="5" selection-start-line="157" selection-start-column="5" selection-end-line="157" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Service/StoreInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="37" column="18" selection-start-line="37" selection-start-column="18" selection-end-line="37" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Service/API_Service.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="18" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
+        <state relative-caret-position="252">
+          <caret line="35" column="45" selection-start-line="35" selection-start-column="45" selection-end-line="35" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/PricingPlansModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="13" column="32" selection-start-line="13" selection-start-column="32" selection-end-line="13" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Android/sdk/sources/android-25/android/content/Context.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="474" column="24" selection-start-line="474" selection-start-column="24" selection-end-line="474" selection-end-column="24" />
           <folding>
-            <element signature="imports" expanded="false" />
+            <element signature="e#21024#21025#0" expanded="false" />
+            <element signature="e#21078#21079#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/StoreFragmentTab.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Settings_Fragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="110" column="29" selection-start-line="110" selection-start-column="29" selection-end-line="110" selection-end-column="29" />
+        <state relative-caret-position="255">
+          <caret line="322" column="38" selection-start-line="322" selection-start-column="38" selection-end-line="322" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/Login/UserSessionManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="924" column="61" selection-start-line="924" selection-start-column="61" selection-end-line="924" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-xhdpi/fragment_business_profile_v3.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="493">
+          <caret line="29" column="55" selection-start-line="29" selection-start-column="55" selection-end-line="29" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="218">
+          <caret line="1012" column="91" selection-start-line="1012" selection-start-column="46" selection-end-line="1012" selection-end-column="91" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_link_domain.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="413">
+          <caret line="108" column="68" selection-start-line="108" selection-start-column="41" selection-end-line="108" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_domain_plan_expired.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="16" column="55" selection-start-line="16" selection-start-column="55" selection-end-line="16" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_domain_details.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="697">
+          <caret line="68" column="32" selection-start-line="68" selection-start-column="32" selection-end-line="68" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_email_details.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="595">
+          <caret line="35" column="56" selection-start-line="35" selection-start-column="56" selection-end-line="35" selection-end-column="56" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_choose_domain_options.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="42" column="4" selection-start-line="42" selection-start-column="4" selection-end-line="42" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
       <provider editor-type-id="android-designer2">
         <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="218">
+          <caret line="20" column="42" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/layout_domain_plan_expired.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="25" column="31" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
+        <state relative-caret-position="255">
+          <caret line="15" column="30" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
           <folding />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/partone/res/values/colors.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="43" selection-start-line="9" selection-start-column="43" selection-end-line="9" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout-xhdpi/activity_domain_details.xml">
       <provider editor-type-id="android-designer2">
         <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="38" selection-start-line="17" selection-start-column="38" selection-end-line="17" selection-end-column="38" />
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/domain/DomainDetailsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="369" column="48" selection-start-line="369" selection-start-column="48" selection-end-line="369" selection-end-column="48" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#20899#20950#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="327">
+          <caret line="768" column="45" selection-start-line="768" selection-start-column="45" selection-end-line="768" selection-end-column="45" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="554" column="34" selection-start-line="554" selection-start-column="34" selection-end-line="554" selection-end-column="34" />
-          <folding>
-            <element signature="e#31184#31226#0" expanded="true" />
-            <element signature="e#31643#31685#0" expanded="true" />
-            <element signature="e#32446#32488#0" expanded="true" />
-          </folding>
-        </state>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_book_a_domain.xml">
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="884" column="16" selection-start-line="884" selection-start-column="16" selection-end-line="884" selection-end-column="16" />
+        <state relative-caret-position="208">
+          <caret line="41" column="25" selection-start-line="41" selection-start-column="25" selection-end-line="41" selection-end-column="25" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#42200#42242#0" expanded="true" />
-            <element signature="e#42643#42685#0" expanded="true" />
-            <element signature="e#43410#43452#0" expanded="true" />
+            <element signature="e#2410#2437#0" expanded="true" />
+            <element signature="e#2515#2533#0" expanded="true" />
           </folding>
         </state>
       </provider>

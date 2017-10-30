@@ -93,7 +93,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
     TextView domainNameTv, domainCreatedTv, domainExpiredTv, statusTv,expireMsgTv;
     CardView domainDetailsCard, emailDetailsCard;
     LinearLayout chooseDomainLayout, expiredLayout,emptyLayout;
-    Button proceedBtn;
+    TextView proceedBtn;
     RadioButton chooseBtn, linkBtn;
     private MaterialDialog domainBookDialog;
 
@@ -130,9 +130,9 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         emptyLayout = (LinearLayout) findViewById(R.id.ll_empty_view);
         expiredLayout = (LinearLayout) findViewById(R.id.ll_plan_expired);
         expireMsgTv = (TextView) expiredLayout.findViewById(R.id.tv_expire_msg);
-        proceedBtn = (Button) findViewById(R.id.btn_proceed);
+        proceedBtn = (TextView) findViewById(R.id.btn_proceed);
         chooseBtn = (RadioButton) findViewById(R.id.rb_book_a_domain);
-        chooseBtn.setText(Methods.fromHtml(getString(R.string.book_a_new_domain_included)));
+        chooseBtn.setText(Methods.fromHtml("Book new domain <i>(included in your package)</i>"));
         linkBtn = (RadioButton) findViewById(R.id.rb_link_a_domain);
         setSupportActionBar(toolbar);
         headerText.setText(getResources().getString(R.string.side_panel_row_domain_details));
@@ -457,6 +457,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                  setDomainDetailsCard(true,"NowFloats Plan Expired");
                  expireMsgTv.setText(getString(R.string.renew_nowfloats_plan));
              }
+             expiredLayout.setVisibility(View.VISIBLE);
              expiredLayout.findViewById(R.id.btn_plan_expired).setVisibility(View.VISIBLE);
              expiredLayout.findViewById(R.id.ll_domain_expired).setVisibility(View.GONE);
              expiredLayout.findViewById(R.id.btn_plan_expired).setOnClickListener(this);
@@ -526,6 +527,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         emailDetailsCard.setVisibility(View.VISIBLE);
         ImageView domainImg = (ImageView) domainDetailsCard.findViewById(R.id.img_domain);
         ImageView emailImg = (ImageView) emailDetailsCard.findViewById(R.id.img_email);
+        TextView domainMessageTv = (TextView) domainDetailsCard.findViewById(R.id.tv_domain_message);
         switch (domainType){
             case ".IN":
                 domainImg.setImageResource(R.drawable.domain_in);
@@ -547,9 +549,9 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         }
 
         if(active){
-
+            domainMessageTv.setVisibility(View.VISIBLE);
             domainImg.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
-            emailImg.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
+            emailImg.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
             int margins = Methods.dpToPx(10, this);
@@ -562,6 +564,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                 emailDetailsCard.setElevation(3);
             }
         }else{
+            domainMessageTv.setVisibility(View.GONE);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
             int margins = Methods.dpToPx(1, this);
@@ -573,11 +576,11 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                 emailDetailsCard.setElevation(0);
             }
             domainDetailsCard.setBackgroundColor(ContextCompat.getColor(this,R.color.e0e0e0));
-            emailDetailsCard.setBackgroundColor(ContextCompat.getColor(this,R.color.e0e0e0));
+            //emailDetailsCard.setBackgroundColor(ContextCompat.getColor(this,R.color.e0e0e0));
             domainImg.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
             emailImg.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
         }
-
+        emailDetailsCard.setBackgroundColor(ContextCompat.getColor(this,R.color.e0e0e0));
         if (!TextUtils.isEmpty(statusMessage)){
             statusTv.setVisibility(View.VISIBLE);
             statusTv.setText(statusMessage);

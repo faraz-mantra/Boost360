@@ -24,7 +24,7 @@
                 android:id="@+id/tv_domain_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Your Business emails (coming soon...)"
+                android:text="Your Business emails \n(coming soon...)"
                 android:textSize="14sp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"

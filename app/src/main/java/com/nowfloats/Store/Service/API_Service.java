@@ -38,6 +38,8 @@ public class API_Service {
                 public void success(PricingPlansModel storeMainModel, Response response) {
                     if(storeMainModel != null){
                         bus.post(storeMainModel);
+                    }else{
+                        bus.post(new PricingPlansModel());
                     }
                 }
 
