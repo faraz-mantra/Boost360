@@ -95,7 +95,6 @@ import com.nowfloats.NavigationDrawer.businessApps.BusinessAppsFragment;
 import com.nowfloats.NavigationDrawer.model.RiaNodeDataModel;
 import com.nowfloats.Product_Gallery.Product_Detail_Activity_V45;
 import com.nowfloats.Product_Gallery.Product_Gallery_Fragment;
-import com.nowfloats.RiaFCM.RiaFirebaseMessagingService;
 import com.nowfloats.SiteAppearance.SiteAppearanceFragment;
 import com.nowfloats.Store.DomainLookup;
 import com.nowfloats.Store.FlavourFivePlansActivity;
@@ -127,7 +126,6 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
-import com.thinksity.Specific;
 import com.webengage.sdk.android.User;
 import com.webengage.sdk.android.WebEngage;
 
@@ -191,7 +189,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
     public static TextView headerText;
     public static ImageView plusAddButton;
     public static ImageView shareButton;
-    public String deepLinkUrl = null;
     private boolean isExpiredCheck = false;
     public static ArrayList<FloatsMessageModel> StorebizFloats = new ArrayList<FloatsMessageModel>();
     private boolean showLookupDomain = false;
@@ -243,6 +240,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         if (bundle != null && bundle.containsKey("url")) {
             mDeepLinkUrl = bundle.getString("url");
         }
+
         if (bundle != null && bundle.containsKey("Username")) {
         } else {
             createView();
@@ -545,7 +543,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             }
 
         }
-        deepLinkUrl = null;
+        mDeepLinkUrl = null;
     }
 
     private String getCountryCode() {
@@ -1620,6 +1618,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
 
     @Override
     public void deepLink(String url) {
+
         DeepLinkPage(url, false);
     }
 
@@ -1999,7 +1998,6 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         setContentView(R.layout.activity_home_v3);
         getNfxTokenData();
         BoostLog.d(TAG, "In on CreateView");
-        deepLinkUrl = RiaFirebaseMessagingService.deepLinkUrl;
         FPID = session.getFPID();
         MixPanelController.sendMixPanelProperties(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_BUSINESS_NAME),
                 session.getFPDetails(Key_Preferences.GET_FP_DETAILS_EMAIL),
@@ -2123,7 +2121,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.mainFrame, homeFragment, "homeFragment");
         ft.commit();
-        deepLink(deepLinkUrl);
+        deepLink(mDeepLinkUrl);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

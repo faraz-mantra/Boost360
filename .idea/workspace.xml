@@ -25,18 +25,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="64338892-f1d1-4b71-803b-dc419093e118" name="Default" comment="Merge branch 'development' of https://bitbucket.org/nfboost_android/boost into development&#10;&#10;# Conflicts:&#10;#&#9;app/app-partone-release.apk&#10;#&#9;app/libs/libraries/volley/build/intermediates/bundles/release/classes.jar&#10;#&#9;app/libs/libraries/volley/build/intermediates/incremental/mergeReleaseJniLibFolders/merger.xml&#10;#&#9;app/libs/libraries/volley/build/outputs/aar/volley-release.aar&#10;">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app-partone-release.apk" afterPath="$PROJECT_DIR$/app/app-partone-release.apk" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Login/UserSessionManager.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Login/UserSessionManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/PackageDetails.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/PackageDetails.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/domain/DomainDetailsActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/domain/DomainDetailsActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_new_pricing_plans.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_new_pricing_plans.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/partone/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/partone/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/riachatsdkMain/riachatsdkMain.iml" afterPath="$PROJECT_DIR$/riachatsdkMain/riachatsdkMain.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java" />
     </list>
     <ignored path="Boost.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -69,15 +59,13 @@
     <favorites_list name="Boost" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="DomainDetailsActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/domain/DomainDetailsActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
+            <state relative-caret-position="13583">
               <caret line="855" column="15" selection-start-line="855" selection-start-column="15" selection-end-line="855" selection-end-column="15" />
-              <folding>
-                <element signature="e#29217#29264#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -85,16 +73,10 @@
       <file leaf-file-name="Business_Profile_Fragment_V2.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="310">
-              <caret line="498" column="100" selection-start-line="498" selection-start-column="100" selection-end-line="498" selection-end-column="100" />
+            <state relative-caret-position="223">
+              <caret line="522" column="21" selection-start-line="522" selection-start-column="19" selection-end-line="522" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#27513#27554#0" expanded="true" />
-                <element signature="e#27601#27636#0" expanded="true" />
-                <element signature="e#29942#29984#0" expanded="true" />
-                <element signature="e#31152#31194#0" expanded="true" />
-                <element signature="e#38306#38346#0" expanded="true" />
-                <element signature="e#38380#38417#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -103,23 +85,162 @@
       <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
+            <state relative-caret-position="391">
               <caret line="23" column="22" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Site_Meter_Fragment.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Site_Meter_Fragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="739" column="0" selection-start-line="739" selection-start-column="0" selection-end-line="739" selection-end-column="0" />
+            <state relative-caret-position="493">
+              <caret line="742" column="35" selection-start-line="742" selection-start-column="35" selection-end-line="742" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#4975#5204#0" expanded="true" />
+                <element signature="e#5203#5204#0" expanded="true" />
+                <element signature="e#5301#5318#0" expanded="true" />
+                <element signature="e#5445#5835#0" expanded="true" />
+                <element signature="e#5834#5835#0" expanded="true" />
+                <element signature="e#5914#6148#0" expanded="true" />
+                <element signature="e#6147#6148#0" expanded="true" />
+                <element signature="e#7974#9005#0" expanded="true" />
+                <element signature="e#8257#8979#0" expanded="true" />
+                <element signature="e#8978#8979#0" expanded="true" />
+                <element signature="e#9004#9005#0" expanded="true" />
+                <element signature="e#9623#9683#0" expanded="true" />
+                <element signature="e#10197#10252#0" expanded="true" />
+                <element signature="e#10421#10478#0" expanded="true" />
+                <element signature="e#10646#10708#0" expanded="true" />
+                <element signature="e#10873#10932#0" expanded="true" />
+                <element signature="e#11086#11144#0" expanded="true" />
+                <element signature="e#11300#11365#0" expanded="true" />
+                <element signature="e#11533#11585#0" expanded="true" />
+                <element signature="e#11883#11934#0" expanded="true" />
+                <element signature="e#12072#12128#0" expanded="true" />
+                <element signature="e#12437#12488#0" expanded="true" />
+                <element signature="e#12638#12687#0" expanded="true" />
+                <element signature="e#12874#12890#0" expanded="true" />
+                <element signature="e#13818#13875#0" expanded="true" />
+                <element signature="e#14388#14450#0" expanded="true" />
+                <element signature="e#14984#15043#0" expanded="true" />
+                <element signature="e#15573#15631#0" expanded="true" />
+                <element signature="e#16185#16250#0" expanded="true" />
+                <element signature="e#17553#17606#0" expanded="true" />
+                <element signature="e#18131#18182#0" expanded="true" />
+                <element signature="e#19292#19342#0" expanded="true" />
+                <element signature="e#20222#20833#0" expanded="true" />
+                <element signature="e#20765#20807#0" expanded="true" />
+                <element signature="e#20832#20833#0" expanded="true" />
+                <element signature="e#23616#23667#0" expanded="true" />
+                <element signature="e#25551#25573#0" expanded="true" />
+                <element signature="e#25681#25967#0" expanded="true" />
+                <element signature="e#25966#25967#0" expanded="true" />
+                <element signature="e#26627#26658#0" expanded="true" />
+                <element signature="e#26859#26889#0" expanded="true" />
+                <element signature="e#29406#29463#0" expanded="true" />
+                <element signature="e#29502#29565#0" expanded="true" />
+                <element signature="e#29609#29654#0" expanded="true" />
+                <element signature="e#29698#29739#0" expanded="true" />
+                <element signature="e#31222#31256#0" expanded="true" />
+                <element signature="e#31293#31329#0" expanded="true" />
+                <element signature="e#31361#31403#0" expanded="true" />
+                <element signature="e#31437#31503#0" expanded="true" />
+                <element signature="e#31844#31878#0" expanded="true" />
+                <element signature="e#31915#31951#0" expanded="true" />
+                <element signature="e#31983#32023#0" expanded="true" />
+                <element signature="e#32057#32092#0" expanded="true" />
+                <element signature="e#32312#32346#0" expanded="true" />
+                <element signature="e#32383#32419#0" expanded="true" />
+                <element signature="e#32451#32491#0" expanded="true" />
+                <element signature="e#32525#32562#0" expanded="true" />
+                <element signature="e#32973#33231#0" expanded="true" />
+                <element signature="e#33230#33231#0" expanded="true" />
+                <element signature="e#33261#33656#0" expanded="true" />
+                <element signature="e#33655#33656#0" expanded="true" />
                 <element signature="e#36393#36434#0" expanded="true" />
                 <element signature="e#36481#36516#0" expanded="true" />
+                <element signature="e#36558#36580#0" expanded="true" />
+                <element signature="e#36795#36837#0" expanded="true" />
+                <element signature="e#36867#36917#0" expanded="true" />
+                <element signature="e#36947#36969#0" expanded="true" />
+                <element signature="e#37069#37100#0" expanded="true" />
+                <element signature="e#37576#37598#0" expanded="true" />
+                <element signature="e#37873#37904#0" expanded="true" />
+                <element signature="e#40031#40071#0" expanded="true" />
+                <element signature="e#41011#41053#0" expanded="true" />
+                <element signature="e#41427#41469#0" expanded="true" />
+                <element signature="e#42169#42211#0" expanded="true" />
+                <element signature="e#43833#44219#0" expanded="true" />
+                <element signature="e#44043#44074#0" expanded="true" />
+                <element signature="e#44218#44219#0" expanded="true" />
+                <element signature="e#44338#44598#0" expanded="true" />
+                <element signature="e#44597#44598#0" expanded="true" />
+                <element signature="e#44797#45045#0" expanded="true" />
+                <element signature="e#44962#45011#0" expanded="true" />
+                <element signature="e#45044#45045#0" expanded="true" />
+                <element signature="e#45993#46041#0" expanded="true" />
+                <element signature="e#48149#48184#0" expanded="true" />
+                <element signature="e#48280#48288#0" expanded="true" />
+                <element signature="e#49973#51514#0" expanded="true" />
+                <element signature="e#50420#50457#0" expanded="true" />
+                <element signature="e#50665#50699#0" expanded="true" />
+                <element signature="e#50782#50813#0" expanded="true" />
+                <element signature="e#51513#51514#0" expanded="true" />
+                <element signature="e#51557#51773#0" expanded="true" />
+                <element signature="e#51772#51773#0" expanded="true" />
+                <element signature="e#52053#52088#0" expanded="true" />
+                <element signature="e#52864#52901#0" expanded="true" />
+                <element signature="e#52923#52982#0" expanded="true" />
+                <element signature="e#53004#53027#0" expanded="true" />
+                <element signature="e#53029#53051#0" expanded="true" />
+                <element signature="e#53536#53576#0" expanded="true" />
+                <element signature="e#53669#53714#0" expanded="true" />
+                <element signature="e#54718#54751#0" expanded="true" />
+                <element signature="e#54904#56282#0" expanded="true" />
+                <element signature="e#55479#55520#0" expanded="true" />
+                <element signature="e#55709#55749#0" expanded="true" />
+                <element signature="e#55989#56005#0" expanded="true" />
+                <element signature="e#56281#56282#0" expanded="true" />
+                <element signature="e#56324#56538#0" expanded="true" />
+                <element signature="e#56537#56538#0" expanded="true" />
+                <element signature="e#57869#57917#0" expanded="true" />
+                <element signature="e#58143#58188#0" expanded="true" />
+                <element signature="e#58413#58465#0" expanded="true" />
+                <element signature="e#59753#59769#0" expanded="true" />
+                <element signature="e#61723#61773#0" expanded="true" />
+                <element signature="e#61808#61850#0" expanded="true" />
+                <element signature="e#61872#61922#0" expanded="true" />
+                <element signature="e#61944#61966#0" expanded="true" />
+                <element signature="e#62088#62129#0" expanded="true" />
+                <element signature="e#62174#62211#0" expanded="true" />
+                <element signature="e#62263#62285#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="HomeActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="229">
+              <caret line="238" column="27" selection-start-line="238" selection-start-column="24" selection-end-line="238" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+          <provider editor-type-id="android-manifest">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="236">
+              <caret line="214" column="42" selection-start-line="214" selection-start-column="42" selection-end-line="214" selection-end-column="42" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -127,7 +248,7 @@
       <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
+            <state relative-caret-position="13447">
               <caret line="791" column="39" selection-start-line="791" selection-start-column="18" selection-end-line="791" selection-end-column="39" />
               <folding />
             </state>
@@ -14635,7 +14756,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="C:\NFSource\nowfloats\boost" value="15022902435950" />
+        <entry key="C:\NFSource\nowfloats\boost" value="15022906094429" />
         <entry key="D:\NFProjects\NFProject\Boost v4.4.8\Boost" value="15008647831954" />
       </map>
     </option>
@@ -15899,7 +16020,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/ActivePackage.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/Model/MaxDiscount.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/AllPlansFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java" />
         <option value="$PROJECT_DIR$/messagelibrary/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/ProductCheckoutActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/Store/NewPricingPlansActivity.java" />
@@ -15924,6 +16044,7 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java" />
       </list>
     </option>
   </component>
@@ -16043,11 +16164,11 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane />
-      </pane>
       <pane id="Scratches">
         <subPane />
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Problems" />
       </pane>
       <pane id="ProjectPane">
         <subPane>
@@ -16081,207 +16202,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boost" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boost" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boost" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boost" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="partone" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boost" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boost" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="partone" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com.thinksity" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boost" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boost" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boost" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boost" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nowfloats" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boost" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boost" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nowfloats" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Store" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boost" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="boost" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="nowfloats" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Store" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Model" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
+      </pane>
+      <pane id="PackagesPane">
+        <subPane />
       </pane>
       <pane id="AndroidView">
         <subPane />
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Problems" />
       </pane>
     </panes>
   </component>
@@ -16292,8 +16219,8 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/app" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlPreviewForm.SHOW" value="false" />
     <property name="two.files.diff.last.used.folder" value="$PROJECT_DIR$/../../BoostRepo v4.4.5/Boost/app/src/main/res" />
-    <property name="device.picker.selection" value="ZX1D623C97" />
-    <property name="SearchEverywhereHistoryKey" value="site&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java&#10;build&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/build.gradle&#10;business&#9;PSI&#9;JAVA://com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity&#10;newp&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/Store/NewPricingPlansActivity.java&#10;specifi&#9;PSI&#9;JAVA://com.thinksity.Specific&#10;cons&#9;PSI&#9;JAVA://com.nowfloats.util.Constants&#10;string&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/values/strings.xml&#10;String&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/values/strings.xml&#10;home&#9;PSI&#9;JAVA://com.nowfloats.NavigationDrawer.HomeActivity&#10;setting&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Settings_Fragment.java&#10;pricing&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/Store/Model/PricingPlansModel.java&#10;businessprofi&#9;PSI&#9;JAVA://com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2&#10;domainde&#9;PSI&#9;JAVA://com.nowfloats.domain.DomainDetailsActivity&#10;choose&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/layout/dialog_choose_domain.xml&#10;businesspro&#9;PSI&#9;JAVA://com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2&#10;layout_plan&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/layout/layout_domain_plan_expired.xml&#10;Consta&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/util/Constants.java&#10;Checkout&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/ProductCheckoutActivity.java&#10;Package&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/Model/PackageDetails.java&#10;Const&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/util/Constants.java&#10;Settings&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Settings_Fragment.java&#10;HomeAc&#9;PSI&#9;JAVA://com.nowfloats.NavigationDrawer.HomeActivity&#10;All&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/AllPlansFragment.java&#10;AllP&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/AllPlansFragment.java&#10;Pro&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/ProductCheckoutActivity.java&#10;Settin&#9;PSI&#9;JAVA://com.nowfloats.BusinessProfile.UI.UI.Settings_Fragment&#10;Con&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/util/Constants.java&#10;Acti&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/ActivePlansFragment.java&#10;Create&#9;PSI&#9;JAVA://com.nowfloats.NavigationDrawer.Create_Message_Activity&#10;Cons&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/util/Constants.java&#10;HomeAct&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java&#10;ProductChe&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/ProductCheckoutActivity.java&#10;Constant&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/util/Constants.java&#10;Checkou&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/ProductCheckoutActivity.java&#10;rIAf&#9;PSI&#9;JAVA://com.nowfloats.RiaFCM.RiaFirebaseMessagingService&#10;Edit&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Edit_Profile_Activity.java&#10;BusinessPro&#9;PSI&#9;JAVA://com.nowfloats.signup.UI.UI.BusinessProfileActivity&#10;Business&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java&#10;Pri&#9;PSI&#9;JAVA://com.nowfloats.Store.PricingPlansActivity&#10;Notif&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/NotificationCenter/NotificationInterface.java&#10;activi&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/res/layout/activity_payment_settings.xml&#10;CardVie&#9;PSI&#9;JAVA://com.nowfloats.riachatsdk.adapters.RvChatAdapter.CardViewHolder&#10;Notifica&#9;PSI&#9;JAVA://com.nowfloats.NotificationCenter.NotificationFragment&#10;activity_order&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/res/layout/activity_order_list.xml&#10;activity_se&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/res/layout/activity_seller_analytics.xml&#10;ChatL&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/riachatsdkMain/src/main/java/com/nowfloats/riachatsdk/helpers/ChatLogger.java&#10;ChatLo&#9;PSI&#9;JAVA://com.nowfloats.riachatsdk.helpers.ChatLogger&#10;Seller&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/manageinventory/SellerAnalyticsActivity.java&#10;SideP&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/res/layout/fragment_side_panel2.xml&#10;Payment&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/manageinventory/PaymentSettingsActivity.java" />
+    <property name="device.picker.selection" value="0123456789ABCDEF" />
+    <property name="SearchEverywhereHistoryKey" value="androidmani&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/AndroidManifest.xml&#10;homeac&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java&#10;site&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java&#10;build&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/build.gradle&#10;business&#9;PSI&#9;JAVA://com.nowfloats.BusinessProfile.UI.UI.Business_Address_Activity&#10;newp&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/Store/NewPricingPlansActivity.java&#10;specifi&#9;PSI&#9;JAVA://com.thinksity.Specific&#10;cons&#9;PSI&#9;JAVA://com.nowfloats.util.Constants&#10;string&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/values/strings.xml&#10;String&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/values/strings.xml&#10;home&#9;PSI&#9;JAVA://com.nowfloats.NavigationDrawer.HomeActivity&#10;setting&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Settings_Fragment.java&#10;pricing&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/java/com/nowfloats/Store/Model/PricingPlansModel.java&#10;businessprofi&#9;PSI&#9;JAVA://com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2&#10;domainde&#9;PSI&#9;JAVA://com.nowfloats.domain.DomainDetailsActivity&#10;choose&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/layout/dialog_choose_domain.xml&#10;businesspro&#9;PSI&#9;JAVA://com.nowfloats.BusinessProfile.UI.UI.Business_Profile_Fragment_V2&#10;layout_plan&#9;FILE&#9;file://C:/NFSource/nowfloats/boost/app/src/main/res/layout/layout_domain_plan_expired.xml&#10;Consta&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/util/Constants.java&#10;Checkout&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/ProductCheckoutActivity.java&#10;Package&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/Model/PackageDetails.java&#10;Const&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/util/Constants.java&#10;Settings&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Settings_Fragment.java&#10;HomeAc&#9;PSI&#9;JAVA://com.nowfloats.NavigationDrawer.HomeActivity&#10;All&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/AllPlansFragment.java&#10;AllP&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/AllPlansFragment.java&#10;Pro&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/ProductCheckoutActivity.java&#10;Settin&#9;PSI&#9;JAVA://com.nowfloats.BusinessProfile.UI.UI.Settings_Fragment&#10;Con&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/util/Constants.java&#10;Acti&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/ActivePlansFragment.java&#10;Create&#9;PSI&#9;JAVA://com.nowfloats.NavigationDrawer.Create_Message_Activity&#10;Cons&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/util/Constants.java&#10;HomeAct&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java&#10;ProductChe&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/ProductCheckoutActivity.java&#10;Constant&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/util/Constants.java&#10;Checkou&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/Store/ProductCheckoutActivity.java&#10;rIAf&#9;PSI&#9;JAVA://com.nowfloats.RiaFCM.RiaFirebaseMessagingService&#10;Edit&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Edit_Profile_Activity.java&#10;BusinessPro&#9;PSI&#9;JAVA://com.nowfloats.signup.UI.UI.BusinessProfileActivity&#10;Business&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java&#10;Pri&#9;PSI&#9;JAVA://com.nowfloats.Store.PricingPlansActivity&#10;Notif&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/NotificationCenter/NotificationInterface.java&#10;activi&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/res/layout/activity_payment_settings.xml&#10;CardVie&#9;PSI&#9;JAVA://com.nowfloats.riachatsdk.adapters.RvChatAdapter.CardViewHolder&#10;Notifica&#9;PSI&#9;JAVA://com.nowfloats.NotificationCenter.NotificationFragment&#10;activity_order&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/res/layout/activity_order_list.xml&#10;activity_se&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/res/layout/activity_seller_analytics.xml&#10;ChatL&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/riachatsdkMain/src/main/java/com/nowfloats/riachatsdk/helpers/ChatLogger.java&#10;ChatLo&#9;PSI&#9;JAVA://com.nowfloats.riachatsdk.helpers.ChatLogger&#10;Seller&#9;FILE&#9;file://D:/NFProjects/NFProject/Boost v4.4.8/Boost/app/src/main/java/com/nowfloats/manageinventory/SellerAnalyticsActivity.java" />
     <property name="ExportApk.ApkPath" value="C:\NFSource\nowfloats\boost\app" />
     <property name="ExportApk.Flavors" value="partone" />
     <property name="ExportApk.BuildType" value="release" />
@@ -16303,7 +16230,7 @@
     <property name="ChangesBrowser.SHOW_FLATTEN" value="true" />
     <property name="ExportApk.SignV2" value="true" />
     <property name="ExportApk.SignV1" value="true" />
-    <property name="DEBUGGABLE_DEVICE" value="motorola-xt1068-ZX1D623C97" />
+    <property name="DEBUGGABLE_DEVICE" value="lenovo-lenovo_tab_2_a7_30hc-0123456789ABCDEF" />
     <property name="DEBUGGABLE_PROCESS" value="com.biz2.nowfloats" />
     <property name="SHOW_ALL_PROCESSES" value="true" />
     <property name="DEBUGGER_ID" value="Auto" />
@@ -16727,30 +16654,27 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1358" y="-8" width="1936" height="1096" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32962137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21991701" sideWeight="0.5191898" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22012103" sideWeight="0.41411042" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21991701" sideWeight="0.5191898" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15511727" sideWeight="0.42065868" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2638037" sideWeight="0.5869894" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20643154" sideWeight="0.66897655" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22014925" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32850778" sideWeight="0.49573562" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3363029" sideWeight="0.48081023" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23340249" sideWeight="0.4130106" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.4941349" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5077951" sideWeight="0.48933902" order="11" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15511727" sideWeight="0.5858896" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3062361" sideWeight="0.4184435" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15511727" sideWeight="0.5793413" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Dynamic Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.4887324" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3973029" sideWeight="0.5090618" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30705395" sideWeight="0.5090618" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22115384" sideWeight="0.30232558" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -16760,10 +16684,13 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find Sample Code" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32962137" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Dynamic Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="612" y="527" width="516" height="49" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22014925" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3062361" sideWeight="0.4184435" order="2" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -16865,7 +16792,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java</url>
-          <line>1337</line>
+          <line>1335</line>
           <properties />
           <option name="timeStamp" value="231" />
         </line-breakpoint>
@@ -16913,13 +16840,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java</url>
-          <line>1433</line>
+          <line>1431</line>
           <properties />
           <option name="timeStamp" value="270" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java</url>
-          <line>1385</line>
+          <line>1383</line>
           <properties />
           <option name="timeStamp" value="271" />
         </line-breakpoint>
@@ -17001,15 +16928,189 @@
           <properties />
           <option name="timeStamp" value="340" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java</url>
+          <line>227</line>
+          <properties />
+          <option name="timeStamp" value="341" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java</url>
+          <line>238</line>
+          <properties />
+          <option name="timeStamp" value="342" />
+        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="341" />
+      <option name="time" value="343" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/domain/DomainDetailsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13583">
+          <caret line="855" column="15" selection-start-line="855" selection-start-column="15" selection-end-line="855" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8466">
+          <caret line="498" column="100" selection-start-line="498" selection-start-column="100" selection-end-line="498" selection-end-column="100" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="22" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4975#5204#0" expanded="true" />
+            <element signature="e#5203#5204#0" expanded="true" />
+            <element signature="e#5301#5318#0" expanded="true" />
+            <element signature="e#5445#5835#0" expanded="true" />
+            <element signature="e#5834#5835#0" expanded="true" />
+            <element signature="e#5914#6148#0" expanded="true" />
+            <element signature="e#6147#6148#0" expanded="true" />
+            <element signature="e#7974#9005#0" expanded="true" />
+            <element signature="e#8257#8979#0" expanded="true" />
+            <element signature="e#8978#8979#0" expanded="true" />
+            <element signature="e#9004#9005#0" expanded="true" />
+            <element signature="e#9623#9683#0" expanded="true" />
+            <element signature="e#10197#10252#0" expanded="true" />
+            <element signature="e#10421#10478#0" expanded="true" />
+            <element signature="e#10646#10708#0" expanded="true" />
+            <element signature="e#10873#10932#0" expanded="true" />
+            <element signature="e#11086#11144#0" expanded="true" />
+            <element signature="e#11300#11365#0" expanded="true" />
+            <element signature="e#11533#11585#0" expanded="true" />
+            <element signature="e#11883#11934#0" expanded="true" />
+            <element signature="e#12072#12128#0" expanded="true" />
+            <element signature="e#12437#12488#0" expanded="true" />
+            <element signature="e#12638#12687#0" expanded="true" />
+            <element signature="e#12874#12890#0" expanded="true" />
+            <element signature="e#13818#13875#0" expanded="true" />
+            <element signature="e#14388#14450#0" expanded="true" />
+            <element signature="e#14984#15043#0" expanded="true" />
+            <element signature="e#15573#15631#0" expanded="true" />
+            <element signature="e#16185#16250#0" expanded="true" />
+            <element signature="e#17553#17606#0" expanded="true" />
+            <element signature="e#18131#18182#0" expanded="true" />
+            <element signature="e#19292#19342#0" expanded="true" />
+            <element signature="e#20222#20833#0" expanded="true" />
+            <element signature="e#20765#20807#0" expanded="true" />
+            <element signature="e#20832#20833#0" expanded="true" />
+            <element signature="e#23616#23667#0" expanded="true" />
+            <element signature="e#25551#25573#0" expanded="true" />
+            <element signature="e#25681#25967#0" expanded="true" />
+            <element signature="e#25966#25967#0" expanded="true" />
+            <element signature="e#26627#26658#0" expanded="true" />
+            <element signature="e#26859#26889#0" expanded="true" />
+            <element signature="e#29406#29463#0" expanded="true" />
+            <element signature="e#29502#29565#0" expanded="true" />
+            <element signature="e#29609#29654#0" expanded="true" />
+            <element signature="e#29698#29739#0" expanded="true" />
+            <element signature="e#31222#31256#0" expanded="true" />
+            <element signature="e#31293#31329#0" expanded="true" />
+            <element signature="e#31361#31403#0" expanded="true" />
+            <element signature="e#31437#31503#0" expanded="true" />
+            <element signature="e#31844#31878#0" expanded="true" />
+            <element signature="e#31915#31951#0" expanded="true" />
+            <element signature="e#31983#32023#0" expanded="true" />
+            <element signature="e#32057#32092#0" expanded="true" />
+            <element signature="e#32312#32346#0" expanded="true" />
+            <element signature="e#32383#32419#0" expanded="true" />
+            <element signature="e#32451#32491#0" expanded="true" />
+            <element signature="e#32525#32562#0" expanded="true" />
+            <element signature="e#32973#33231#0" expanded="true" />
+            <element signature="e#33230#33231#0" expanded="true" />
+            <element signature="e#33261#33656#0" expanded="true" />
+            <element signature="e#33655#33656#0" expanded="true" />
+            <element signature="e#36393#36434#0" expanded="true" />
+            <element signature="e#36481#36516#0" expanded="true" />
+            <element signature="e#36558#36580#0" expanded="true" />
+            <element signature="e#36795#36837#0" expanded="true" />
+            <element signature="e#36867#36917#0" expanded="true" />
+            <element signature="e#36947#36969#0" expanded="true" />
+            <element signature="e#37069#37100#0" expanded="true" />
+            <element signature="e#37576#37598#0" expanded="true" />
+            <element signature="e#37873#37904#0" expanded="true" />
+            <element signature="e#40031#40071#0" expanded="true" />
+            <element signature="e#41011#41053#0" expanded="true" />
+            <element signature="e#41427#41469#0" expanded="true" />
+            <element signature="e#42169#42211#0" expanded="true" />
+            <element signature="e#43833#44219#0" expanded="true" />
+            <element signature="e#44043#44074#0" expanded="true" />
+            <element signature="e#44218#44219#0" expanded="true" />
+            <element signature="e#44338#44598#0" expanded="true" />
+            <element signature="e#44597#44598#0" expanded="true" />
+            <element signature="e#44797#45045#0" expanded="true" />
+            <element signature="e#44962#45011#0" expanded="true" />
+            <element signature="e#45044#45045#0" expanded="true" />
+            <element signature="e#45993#46041#0" expanded="true" />
+            <element signature="e#48149#48184#0" expanded="true" />
+            <element signature="e#48280#48288#0" expanded="true" />
+            <element signature="e#49973#51514#0" expanded="true" />
+            <element signature="e#50420#50457#0" expanded="true" />
+            <element signature="e#50665#50699#0" expanded="true" />
+            <element signature="e#50782#50813#0" expanded="true" />
+            <element signature="e#51513#51514#0" expanded="true" />
+            <element signature="e#51557#51773#0" expanded="true" />
+            <element signature="e#51772#51773#0" expanded="true" />
+            <element signature="e#52053#52088#0" expanded="true" />
+            <element signature="e#52864#52901#0" expanded="true" />
+            <element signature="e#52923#52982#0" expanded="true" />
+            <element signature="e#53004#53027#0" expanded="true" />
+            <element signature="e#53029#53051#0" expanded="true" />
+            <element signature="e#53536#53576#0" expanded="true" />
+            <element signature="e#53669#53714#0" expanded="true" />
+            <element signature="e#54718#54751#0" expanded="true" />
+            <element signature="e#54904#56282#0" expanded="true" />
+            <element signature="e#55479#55520#0" expanded="true" />
+            <element signature="e#55709#55749#0" expanded="true" />
+            <element signature="e#55989#56005#0" expanded="true" />
+            <element signature="e#56281#56282#0" expanded="true" />
+            <element signature="e#56324#56538#0" expanded="true" />
+            <element signature="e#56537#56538#0" expanded="true" />
+            <element signature="e#57869#57917#0" expanded="true" />
+            <element signature="e#58143#58188#0" expanded="true" />
+            <element signature="e#58413#58465#0" expanded="true" />
+            <element signature="e#59753#59769#0" expanded="true" />
+            <element signature="e#61723#61773#0" expanded="true" />
+            <element signature="e#61808#61850#0" expanded="true" />
+            <element signature="e#61872#61922#0" expanded="true" />
+            <element signature="e#61944#61966#0" expanded="true" />
+            <element signature="e#62088#62129#0" expanded="true" />
+            <element signature="e#62174#62211#0" expanded="true" />
+            <element signature="e#62263#62285#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13447">
+          <caret line="791" column="39" selection-start-line="791" selection-start-column="18" selection-end-line="791" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/dialog_choose_domain.xml">
       <provider selected="true" editor-type-id="android-designer2">
         <state />
@@ -17025,7 +17126,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="643">
           <caret line="197" column="68" selection-start-line="197" selection-start-column="68" selection-end-line="197" selection-end-column="68" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -17107,7 +17207,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="595">
           <caret line="35" column="56" selection-start-line="35" selection-start-column="56" selection-end-line="35" selection-end-column="56" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -17142,7 +17241,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-221">
           <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -17161,7 +17259,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -17177,7 +17274,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="314" column="65" selection-start-line="314" selection-start-column="65" selection-end-line="314" selection-end-column="65" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -17199,7 +17295,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="19" column="22" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -17210,17 +17305,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="17" column="38" selection-start-line="17" selection-start-column="38" selection-end-line="17" selection-end-column="38" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/domain/DomainDetailsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
+        <state relative-caret-position="13583">
           <caret line="855" column="15" selection-start-line="855" selection-start-column="15" selection-end-line="855" selection-end-column="15" />
-          <folding>
-            <element signature="e#29217#29264#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -17228,14 +17320,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="232">
           <caret line="140" column="20" selection-start-line="140" selection-start-column="20" selection-end-line="140" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1358">
-          <caret line="1389" column="50" selection-start-line="1389" selection-start-column="50" selection-end-line="1389" selection-end-column="50" />
           <folding />
         </state>
       </provider>
@@ -17309,7 +17393,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="16" column="47" selection-start-line="16" selection-start-column="47" selection-end-line="16" selection-end-column="47" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -17323,31 +17406,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
+        <state relative-caret-position="13447">
           <caret line="791" column="39" selection-start-line="791" selection-start-column="18" selection-end-line="791" selection-end-column="39" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="498" column="100" selection-start-line="498" selection-start-column="100" selection-end-line="498" selection-end-column="100" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#27513#27554#0" expanded="true" />
-            <element signature="e#27601#27636#0" expanded="true" />
-            <element signature="e#29942#29984#0" expanded="true" />
-            <element signature="e#31152#31194#0" expanded="true" />
-            <element signature="e#38306#38346#0" expanded="true" />
-            <element signature="e#38380#38417#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
+        <state relative-caret-position="391">
           <caret line="23" column="22" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="22" />
           <folding />
         </state>
@@ -17363,13 +17430,158 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/SiteMeter/Site_Meter_Fragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="739" column="0" selection-start-line="739" selection-start-column="0" selection-end-line="739" selection-end-column="0" />
+        <state relative-caret-position="493">
+          <caret line="742" column="35" selection-start-line="742" selection-start-column="35" selection-end-line="742" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#4975#5204#0" expanded="true" />
+            <element signature="e#5203#5204#0" expanded="true" />
+            <element signature="e#5301#5318#0" expanded="true" />
+            <element signature="e#5445#5835#0" expanded="true" />
+            <element signature="e#5834#5835#0" expanded="true" />
+            <element signature="e#5914#6148#0" expanded="true" />
+            <element signature="e#6147#6148#0" expanded="true" />
+            <element signature="e#7974#9005#0" expanded="true" />
+            <element signature="e#8257#8979#0" expanded="true" />
+            <element signature="e#8978#8979#0" expanded="true" />
+            <element signature="e#9004#9005#0" expanded="true" />
+            <element signature="e#9623#9683#0" expanded="true" />
+            <element signature="e#10197#10252#0" expanded="true" />
+            <element signature="e#10421#10478#0" expanded="true" />
+            <element signature="e#10646#10708#0" expanded="true" />
+            <element signature="e#10873#10932#0" expanded="true" />
+            <element signature="e#11086#11144#0" expanded="true" />
+            <element signature="e#11300#11365#0" expanded="true" />
+            <element signature="e#11533#11585#0" expanded="true" />
+            <element signature="e#11883#11934#0" expanded="true" />
+            <element signature="e#12072#12128#0" expanded="true" />
+            <element signature="e#12437#12488#0" expanded="true" />
+            <element signature="e#12638#12687#0" expanded="true" />
+            <element signature="e#12874#12890#0" expanded="true" />
+            <element signature="e#13818#13875#0" expanded="true" />
+            <element signature="e#14388#14450#0" expanded="true" />
+            <element signature="e#14984#15043#0" expanded="true" />
+            <element signature="e#15573#15631#0" expanded="true" />
+            <element signature="e#16185#16250#0" expanded="true" />
+            <element signature="e#17553#17606#0" expanded="true" />
+            <element signature="e#18131#18182#0" expanded="true" />
+            <element signature="e#19292#19342#0" expanded="true" />
+            <element signature="e#20222#20833#0" expanded="true" />
+            <element signature="e#20765#20807#0" expanded="true" />
+            <element signature="e#20832#20833#0" expanded="true" />
+            <element signature="e#23616#23667#0" expanded="true" />
+            <element signature="e#25551#25573#0" expanded="true" />
+            <element signature="e#25681#25967#0" expanded="true" />
+            <element signature="e#25966#25967#0" expanded="true" />
+            <element signature="e#26627#26658#0" expanded="true" />
+            <element signature="e#26859#26889#0" expanded="true" />
+            <element signature="e#29406#29463#0" expanded="true" />
+            <element signature="e#29502#29565#0" expanded="true" />
+            <element signature="e#29609#29654#0" expanded="true" />
+            <element signature="e#29698#29739#0" expanded="true" />
+            <element signature="e#31222#31256#0" expanded="true" />
+            <element signature="e#31293#31329#0" expanded="true" />
+            <element signature="e#31361#31403#0" expanded="true" />
+            <element signature="e#31437#31503#0" expanded="true" />
+            <element signature="e#31844#31878#0" expanded="true" />
+            <element signature="e#31915#31951#0" expanded="true" />
+            <element signature="e#31983#32023#0" expanded="true" />
+            <element signature="e#32057#32092#0" expanded="true" />
+            <element signature="e#32312#32346#0" expanded="true" />
+            <element signature="e#32383#32419#0" expanded="true" />
+            <element signature="e#32451#32491#0" expanded="true" />
+            <element signature="e#32525#32562#0" expanded="true" />
+            <element signature="e#32973#33231#0" expanded="true" />
+            <element signature="e#33230#33231#0" expanded="true" />
+            <element signature="e#33261#33656#0" expanded="true" />
+            <element signature="e#33655#33656#0" expanded="true" />
             <element signature="e#36393#36434#0" expanded="true" />
             <element signature="e#36481#36516#0" expanded="true" />
+            <element signature="e#36558#36580#0" expanded="true" />
+            <element signature="e#36795#36837#0" expanded="true" />
+            <element signature="e#36867#36917#0" expanded="true" />
+            <element signature="e#36947#36969#0" expanded="true" />
+            <element signature="e#37069#37100#0" expanded="true" />
+            <element signature="e#37576#37598#0" expanded="true" />
+            <element signature="e#37873#37904#0" expanded="true" />
+            <element signature="e#40031#40071#0" expanded="true" />
+            <element signature="e#41011#41053#0" expanded="true" />
+            <element signature="e#41427#41469#0" expanded="true" />
+            <element signature="e#42169#42211#0" expanded="true" />
+            <element signature="e#43833#44219#0" expanded="true" />
+            <element signature="e#44043#44074#0" expanded="true" />
+            <element signature="e#44218#44219#0" expanded="true" />
+            <element signature="e#44338#44598#0" expanded="true" />
+            <element signature="e#44597#44598#0" expanded="true" />
+            <element signature="e#44797#45045#0" expanded="true" />
+            <element signature="e#44962#45011#0" expanded="true" />
+            <element signature="e#45044#45045#0" expanded="true" />
+            <element signature="e#45993#46041#0" expanded="true" />
+            <element signature="e#48149#48184#0" expanded="true" />
+            <element signature="e#48280#48288#0" expanded="true" />
+            <element signature="e#49973#51514#0" expanded="true" />
+            <element signature="e#50420#50457#0" expanded="true" />
+            <element signature="e#50665#50699#0" expanded="true" />
+            <element signature="e#50782#50813#0" expanded="true" />
+            <element signature="e#51513#51514#0" expanded="true" />
+            <element signature="e#51557#51773#0" expanded="true" />
+            <element signature="e#51772#51773#0" expanded="true" />
+            <element signature="e#52053#52088#0" expanded="true" />
+            <element signature="e#52864#52901#0" expanded="true" />
+            <element signature="e#52923#52982#0" expanded="true" />
+            <element signature="e#53004#53027#0" expanded="true" />
+            <element signature="e#53029#53051#0" expanded="true" />
+            <element signature="e#53536#53576#0" expanded="true" />
+            <element signature="e#53669#53714#0" expanded="true" />
+            <element signature="e#54718#54751#0" expanded="true" />
+            <element signature="e#54904#56282#0" expanded="true" />
+            <element signature="e#55479#55520#0" expanded="true" />
+            <element signature="e#55709#55749#0" expanded="true" />
+            <element signature="e#55989#56005#0" expanded="true" />
+            <element signature="e#56281#56282#0" expanded="true" />
+            <element signature="e#56324#56538#0" expanded="true" />
+            <element signature="e#56537#56538#0" expanded="true" />
+            <element signature="e#57869#57917#0" expanded="true" />
+            <element signature="e#58143#58188#0" expanded="true" />
+            <element signature="e#58413#58465#0" expanded="true" />
+            <element signature="e#59753#59769#0" expanded="true" />
+            <element signature="e#61723#61773#0" expanded="true" />
+            <element signature="e#61808#61850#0" expanded="true" />
+            <element signature="e#61872#61922#0" expanded="true" />
+            <element signature="e#61944#61966#0" expanded="true" />
+            <element signature="e#62088#62129#0" expanded="true" />
+            <element signature="e#62174#62211#0" expanded="true" />
+            <element signature="e#62263#62285#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/BusinessProfile/UI/UI/Business_Profile_Fragment_V2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="522" column="21" selection-start-line="522" selection-start-column="19" selection-end-line="522" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="214" column="42" selection-start-line="214" selection-start-column="42" selection-end-line="214" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/nowfloats/NavigationDrawer/HomeActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="238" column="27" selection-start-line="238" selection-start-column="24" selection-end-line="238" selection-end-column="35" />
+          <folding />
         </state>
       </provider>
     </entry>
