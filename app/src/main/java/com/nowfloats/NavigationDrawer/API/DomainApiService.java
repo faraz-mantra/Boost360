@@ -81,10 +81,10 @@ public class DomainApiService {
             @Override
             public void success(DomainDetails domainDetails, Response response) {
                 if (domainDetails != null) {
-                    domainDetails.response = true;
+                    domainDetails.response = DomainDetails.DOMAIN_RESPONSE.DATA;
                 } else {
                     domainDetails = new DomainDetails();
-                    domainDetails.response = false;
+                    domainDetails.response = DomainDetails.DOMAIN_RESPONSE.NO_DATA;
                 }
                 mBus.post(domainDetails);
             }
@@ -93,7 +93,7 @@ public class DomainApiService {
             public void failure(RetrofitError error) {
                 BoostLog.d("DomainApiService", error.getMessage());
                 DomainDetails domainDetails = new DomainDetails();
-                domainDetails.response = false;
+                domainDetails.response = DomainDetails.DOMAIN_RESPONSE.ERROR;
                 mBus.post(domainDetails);
             }
         });
@@ -196,7 +196,7 @@ public class DomainApiService {
             public void failure(RetrofitError error) {
                 BoostLog.d("DomainApiService", error.getMessage());
                 Get_FP_Details_Model get_fp_details_model = new Get_FP_Details_Model();
-                get_fp_details_model.response = error.getMessage() + "";
+                get_fp_details_model.response = "Unable to connect with server";
                 mBus.post(get_fp_details_model);
             }
         });

@@ -2,29 +2,18 @@ package com.nowfloats.manageinventory.fragments;
 
 import android.app.Activity;
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -33,15 +22,13 @@ import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.Product_Gallery.ProductGalleryActivity;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
-import com.nowfloats.Store.PricingPlansActivity;
-import com.nowfloats.manageinventory.SellerAnalyticsActivity;
+import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.manageinventory.models.APIResponseModel;
 import com.nowfloats.manageinventory.models.CountModel;
 import com.nowfloats.manageinventory.models.WebActionModel;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.thinksity.R;
-import com.twitter.sdk.android.core.models.VideoInfo;
 
 import java.io.IOException;
 
@@ -364,7 +351,7 @@ public class APEligibilityCheckerFragment extends DialogFragment implements View
                 startActivity(baActivity);
                 break;
             case R.id.ll_subscription_status:
-                Intent ppActivity = new Intent(getActivity(), PricingPlansActivity.class);
+                Intent ppActivity = new Intent(getActivity(), NewPricingPlansActivity.class);
                 startActivity(ppActivity);
                 break;
             case R.id.ll_custom_domain:

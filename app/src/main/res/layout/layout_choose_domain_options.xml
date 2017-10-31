@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="15dp"
+    android:background="@color/white"
     android:paddingRight="15dp"
     android:gravity="center">
 
@@ -46,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:padding="12dp"
+        android:padding="8dp"
         android:background="@drawable/rounded_corner_button"
         android:layout_marginTop="15dp"
         android:textColor="@drawable/yellow_btn_hover_text_color"

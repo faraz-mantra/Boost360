@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    android:background="#eee"
     android:orientation="vertical">
     <include
         android:id="@+id/app_bar_site_appearance"
@@ -20,7 +20,6 @@
         android:id="@+id/cv_domain_details"
         android:layout_width="match_parent"
         android:visibility="gone"
-        app:cardElevation="0dp"
         android:layout_height="wrap_content">
         <include layout="@layout/layout_domain_details"
             android:layout_width="match_parent"
@@ -39,7 +38,8 @@
     <include
         android:visibility="gone"
         android:id="@+id/ll_plan_expired"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_width="match_parent"
         layout="@layout/layout_domain_plan_expired"/>
     <include

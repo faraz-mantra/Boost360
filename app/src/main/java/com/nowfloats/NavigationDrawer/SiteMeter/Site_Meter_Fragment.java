@@ -47,7 +47,7 @@ import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.Store.Model.StoreEvent;
 import com.nowfloats.Store.Model.StoreModel;
-import com.nowfloats.Store.PricingPlansActivity;
+import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.domain.DomainDetailsActivity;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -655,7 +655,7 @@ public class Site_Meter_Fragment extends Fragment {
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent(activity, PricingPlansActivity.class);
+                        Intent intent = new Intent(activity, NewPricingPlansActivity.class);
                         startActivity(intent);
                         dialog.dismiss();
                     }
@@ -741,7 +741,9 @@ public class Site_Meter_Fragment extends Fragment {
 
         if(!isAlreadyCalled) {
             isAlreadyCalled = true;
-            if (domainDetails != null && domainDetails.response) {
+            if (domainDetails != null && domainDetails.response == DomainDetails.DOMAIN_RESPONSE.ERROR){
+                Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong));
+            } else if (domainDetails != null && domainDetails.response == DomainDetails.DOMAIN_RESPONSE.DATA) {
 
                 if( !TextUtils.isEmpty(domainDetails.getErrorMessage()) && domainDetails.getIsProcessingFailed()){
                     showCustomDialog(getString(R.string.domain_booking_failed),

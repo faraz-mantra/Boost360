@@ -37,7 +37,7 @@ import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
-import com.nowfloats.Store.PricingPlansActivity;
+import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.domain.DomainDetailsActivity;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -408,10 +408,17 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                         } catch (Exception e) {
                             e.printStackTrace();
                         } finally {
-                            progressLayout.setVisibility(View.GONE);
-                            profileLayout.setVisibility(View.VISIBLE);
-                            ScrollView scrollView = (ScrollView) mainView.findViewById(R.id.scrollView);
-                            scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+
+                            final ScrollView scrollView = (ScrollView) mainView.findViewById(R.id.scrollView);
+                            scrollView.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    progressLayout.setVisibility(View.GONE);
+                                    profileLayout.setVisibility(View.VISIBLE);
+                                    scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                                }
+                            },500);
+
                         }
                     }
                 });
@@ -482,7 +489,9 @@ public class Business_Profile_Fragment_V2 extends Fragment {
         hideLoader();
 
         if(!isAlreadyCalled) {
-            if (domainDetails != null && domainDetails.response) {
+            if (domainDetails != null && domainDetails.response == DomainDetails.DOMAIN_RESPONSE.ERROR){
+                Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong));
+            } else if (domainDetails != null && domainDetails.response == DomainDetails.DOMAIN_RESPONSE.DATA) {
 
                 if( !TextUtils.isEmpty(domainDetails.getErrorMessage()) && domainDetails.getIsProcessingFailed()){
                     showCustomDialog(getString(R.string.domain_booking_failed),
@@ -718,7 +727,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent(activity, PricingPlansActivity.class);
+                        Intent intent = new Intent(activity, NewPricingPlansActivity.class);
                         startActivity(intent);
                         dialog.dismiss();
                     }
