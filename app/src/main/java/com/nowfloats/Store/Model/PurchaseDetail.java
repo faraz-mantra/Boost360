@@ -23,7 +23,7 @@ public class PurchaseDetail {
     private Discount discount;
     @SerializedName("DurationInMnths")
     @Expose
-    private Float durationInMnths;
+    private Double durationInMnths;
     @SerializedName("FPId")
     @Expose
     private String fPId;
@@ -90,7 +90,7 @@ public class PurchaseDetail {
      * @return
      * The durationInMnths
      */
-    public Float getDurationInMnths() {
+    public Double getDurationInMnths() {
         return durationInMnths;
     }
 
@@ -99,7 +99,7 @@ public class PurchaseDetail {
      * @param durationInMnths
      * The DurationInMnths
      */
-    public void setDurationInMnths(Float durationInMnths) {
+    public void setDurationInMnths(Double durationInMnths) {
         this.durationInMnths = durationInMnths;
     }
 

@@ -17,6 +17,7 @@ import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.Chat.ChatModel;
 import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.Volley.AppController;
+import com.nowfloats.sync.DbController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.DataMap;
 import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
@@ -25,6 +26,7 @@ import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
+import com.webengage.sdk.android.WebEngage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -632,16 +634,22 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         return pref.getBoolean(packageId, false);
     }
 
+    public void storeBooleanDetails(String key,boolean value){
+        editor.putBoolean(key.trim(), value).apply();
+    }
+    public boolean getBooleanDetails(String key){
+        return pref.getBoolean(key,false);
+    }
     public void storeFPDetails(String key,String value)
     {   try{
-            editor.putString(key,value);
+            editor.putString(key.trim(),value.trim());
             editor.commit();
         }catch(Exception e){e.printStackTrace();}
     }
 
     public String getFPDetails(String key)
     {
-        return pref.getString(key,"");
+        return pref.getString(key.trim(),"");
     }
 
     public boolean isBoostBubbleEnabled() {
@@ -661,6 +669,9 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
     public void setBubbleTime(long time) {
         pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, time).apply();
+    }
+    public void setBubbleShareProducts(boolean flag) {
+        pref.edit().putBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, flag).apply();
     }
     public Long getBubbleTime() {
         return pref.getLong(Key_Preferences.SHOW_BUBBLE_TIME, 0);
@@ -867,7 +878,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("clientId", Constants.clientId);
         params.put("fpId",fpID);
-
+        WebEngage.get().user().logout();
         Login_Interface api_login_request = Constants.restAdapter.create(Login_Interface.class);
         api_login_request.logoutUnsubcribeRIA(params,new Callback<String>() {
             @Override
@@ -875,7 +886,9 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 Log.d("Valid Email", "Valid Email Response: " + response);
                 if(pd.isShowing())
                 pd.dismiss();
-
+                DataBase db = new DataBase(activity);
+                DbController.getDbController(activity.getApplicationContext()).deleteDataBase();
+                db.deleteLoginStatus();
                 SharedPreferences.Editor editor = pref.edit();
                 editor.clear();
                 editor.apply();
@@ -930,7 +943,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
 
             @Override
             public void failure(RetrofitError error) {
-                if(pd != null )
+                if(pd.isShowing())
                 pd.dismiss();
                 Methods.showSnackBarNegative(activity,activity.getString(R.string.unable_to_logout));
             }

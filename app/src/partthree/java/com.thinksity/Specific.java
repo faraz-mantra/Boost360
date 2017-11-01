@@ -32,8 +32,10 @@ public class Specific {
 
     public static String PACKAGE_NAME = "com.kitsune.biz";
     public static String FACEBOOK_URL = "https://www.facebook.com/getkitsune";
-    public static String FACEBOOK_PAGEID = "fb://page/713199095512917";
+    public static String FACEBOOK_PAGE_ID = "fb://page/713199095512917";
     public static String CONTACT_EMAIL_ID = "assist@getkitsune.com";
+    public static final String[] FACEBOOK_READ_PERMISSIONS = {"email", "public_profile", "user_friends", "read_insights", "business_management"};
+    public static final String[] FACEBOOK_PUBLISH_PERMISSIONS = {"publish_actions", "publish_pages", "manage_pages"};
     public static final String TWITTER_URL = "https://twitter.com/getkitsune";
     public static final String TWITTER_ID_URL = "twitter://user?screen_name=getkitsune";
 

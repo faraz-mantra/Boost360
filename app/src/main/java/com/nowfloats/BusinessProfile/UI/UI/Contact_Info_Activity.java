@@ -135,7 +135,39 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
         protocolSpinner = (Spinner) findViewById(R.id.sp_web_address);
         protocolSpinner.setAdapter(new ArrayAdapter<>(this, R.layout.protocol_spinner_bg, mProtoCols));
         initializeData();
-        facebookPage.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FBPAGENAME));
+        if ("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
+                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)) ||
+                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME))) {
+            alternateNumber_2.setInputType(InputType.TYPE_NULL);
+            alternateNumber_3.setInputType(InputType.TYPE_NULL);
+            alternateNumber_1.setInputType(InputType.TYPE_NULL);
+            alternateNumber_1.setOnTouchListener(this);
+            alternateNumber_2.setOnTouchListener(this);
+            alternateNumber_3.setOnTouchListener(this);
+            VMN_Dialog = true;
+        }
+
+        if (alternateNumber_2.getText().toString().trim().length() == 0) {
+            alternateTextView2.setText(getString(R.string.alternate_number2));
+        } else {
+
+            alternateTextView2.setText(getString(R.string.alternate_number2) + " (" + getString(R.string.to_be_displayed_on_website) + ")");
+        }
+
+        if (alternateNumber_3.getText().toString().trim().length() == 0) {
+            alternateTextView3.setText(getString(R.string.alternate_number3));
+        } else {
+
+            alternateTextView3.setText(getString(R.string.alternate_number3) + " (" + getString(R.string.to_be_displayed_on_website) + ")");
+        }
+
+
+        if (alternateNumber_1.getText().toString().trim().length() == 0) {
+            alternateTextView1.setText(getString(R.string.alternate_number1));
+        } else {
+
+            alternateTextView1.setText(getString(R.string.alternate_number1) + " (" + getString(R.string.to_be_displayed_on_website) + ")");
+        }
 
         ivProtoColSpinner = (ImageView) findViewById(R.id.iv_protocol_spinner);
         ivProtoColSpinner.setOnClickListener(new View.OnClickListener() {
@@ -849,7 +881,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
 
             try {
                 obj2.put("key", "FB");
-                obj2.put("value", session.getFacebookPageID());
+                obj2.put("value", facebookPage.getText().toString().trim());
 
                 String webWidgets = "";
                 for (int j = 0; j < Constants.StoreWidgets.size(); j++) {
@@ -867,7 +899,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
 //                    websiteAddress.setText(session.getFPDetails(""));
 //                    facebookPage.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FACEBOOK_PAGE));
 
-                session.storeFacebookPage(msgtxt4fbpage);
+                session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FBPAGENAME,msgtxt4fbpage);
             } catch (Exception ex) {
                 System.out.println();
             }
@@ -1067,39 +1099,6 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
     @Override
     protected void onResume() {
         super.onResume();
-        if ("VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
-                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_3)) ||
-                "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PRIMARY_NAME))) {
-            alternateNumber_2.setInputType(InputType.TYPE_NULL);
-            alternateNumber_3.setInputType(InputType.TYPE_NULL);
-            alternateNumber_1.setInputType(InputType.TYPE_NULL);
-            alternateNumber_1.setOnTouchListener(this);
-            alternateNumber_2.setOnTouchListener(this);
-            alternateNumber_3.setOnTouchListener(this);
-            VMN_Dialog = true;
-        }
-
-        if (alternateNumber_2.getText().toString().trim().length() == 0) {
-            alternateTextView2.setText(getString(R.string.alternate_number2));
-        } else {
-
-            alternateTextView2.setText(getString(R.string.alternate_number2) + " (" + getString(R.string.to_be_displayed_on_website) + ")");
-        }
-
-        if (alternateNumber_3.getText().toString().trim().length() == 0) {
-            alternateTextView3.setText(getString(R.string.alternate_number3));
-        } else {
-
-            alternateTextView3.setText(getString(R.string.alternate_number3) + " (" + getString(R.string.to_be_displayed_on_website) + ")");
-        }
-
-
-        if (alternateNumber_1.getText().toString().trim().length() == 0) {
-            alternateTextView1.setText(getString(R.string.alternate_number1));
-        } else {
-
-            alternateTextView1.setText(getString(R.string.alternate_number1) + " (" + getString(R.string.to_be_displayed_on_website) + ")");
-        }
 
         // initializeData();
         bus.register(this);
@@ -1163,7 +1162,7 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
                 websiteAddress.setText(websiteAddr);
             }
         }
-        facebookPage.setText(session.getFacebookPage());
+        facebookPage.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_FBPAGENAME));
 
 
 //      try {

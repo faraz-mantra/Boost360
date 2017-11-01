@@ -38,7 +38,9 @@ public class Specific {
     public static String FACEBOOK_URL = "https://www.facebook.com/sibername";
     public static String PACKAGE_NAME = "com.sibername";
     public static  String CONTACT_EMAIL_ID="support@sibername.com";
-    public static String FACEBOOK_PAGEID = "fb://page/35829503050";
+    public static String FACEBOOK_PAGE_ID = "fb://page/35829503050";
+    public static final String[] FACEBOOK_READ_PERMISSIONS = {"email", "public_profile", "user_friends", "read_insights", "business_management"};
+    public static final String[] FACEBOOK_PUBLISH_PERMISSIONS = {"publish_actions", "publish_pages", "manage_pages"};
     public static final String TWITTER_URL = "https://twitter.com/sibername";
     public static final String TWITTER_ID_URL = "twitter://user?screen_name=sibername";
     public static final String TWILIO_AUTHY_API_KEY = "";

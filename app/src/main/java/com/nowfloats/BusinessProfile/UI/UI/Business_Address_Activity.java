@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -211,7 +212,18 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
 
 
 
-
+        cityAutoText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                citytext = adapter.getItem(position);
+            }
+        });
+        cityAutoText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                cityAutoText.setText(citytext);
+            }
+        });
         cityAutoText.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -228,7 +240,7 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
             @Override
             public void afterTextChanged(Editable s) {
                 try {
-                    citytext = cityAutoText.getText().toString().trim();
+                    String citytext = cityAutoText.getText().toString().trim();
 
                     int len = citytext.length();
                     if (len > 0) {
@@ -249,6 +261,12 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
                             AutocompletePredictionBuffer a=result.await();
                             //Log.v("ggg","ok");
                             citys.clear();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
                             for (int i=0;i<a.getCount();i++){
                                 //Log.v("ggg",a.get(i).getFullText(new StyleSpan(Typeface.NORMAL)).toString()+" length "+citys.size());
                                 citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString());
@@ -322,6 +340,7 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
 
         businessAddress.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS));
         cityAutoText.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY));
+        citytext = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY);
         country.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY));
         areaCode.setText(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PINCODE));
         saveTextView.setVisibility(View.GONE);
@@ -330,8 +349,8 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
         String[] locales = Locale.getISOCountries();
         for (String countryCode : locales) {
             Locale obj = new Locale("", countryCode);
-           if(obj.getDisplayCountry().trim().toLowerCase().equals(country.getText().toString().toLowerCase().trim()))
-             return obj.getCountry();
+            if(obj.getDisplayCountry().trim().toLowerCase().equals(country.getText().toString().toLowerCase().trim()))
+                return obj.getCountry();
         }
         return null;
     }
@@ -342,7 +361,7 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
             imm.hideSoftInputFromWindow(state.getWindowToken(), 0);
             text1 = adresslinetext;
             profilesattr[i] = "ADDRESS";
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS, text1);
+            //session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS, text1);
             i++;
         } else {
             text1 = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ADDRESS);
@@ -352,7 +371,7 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
             imm.hideSoftInputFromWindow(cityAutoText.getWindowToken(), 0);
             text2 = citytext;
             profilesattr[i] = "CITY";
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CITY, text2);
+            //session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_CITY, text2);
             i++;
         } else {
             text2 = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CITY);
@@ -361,7 +380,7 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
             InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(areaCode.getWindowToken(), 0);
             text3 = pincodetext;
-            session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PINCODE, text3);
+            //session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PINCODE, text3);
             i++;
         } else {
             text3 = session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PINCODE);
@@ -389,7 +408,7 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
 
         String url = "http://maps.google.com/maps/api/staticmap?center=" + Constants.latitude + "," + Constants.longitude + "&zoom=14&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + Constants.latitude + "," + Constants.longitude + "&key=" +getString(R.string.google_map_key); //AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg
         //holderItem.chatImage.setVisibility(View.VISIBLE);
-       // Log.d("Map Urlggg:", url);
+        // Log.d("Map Urlggg:", url);
         try {
             Picasso.with(this)
                     .load(url)
@@ -483,7 +502,7 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
                 }
 
                 BusinessAddressUpdateApi Task = new BusinessAddressUpdateApi( Constants.latitude,
-                        Constants.longitude, Business_Address_Activity.this,cityAutoText.getText().toString()
+                        Constants.longitude, Business_Address_Activity.this,citytext
                         ,areaCode.getText().toString(),businessAddress.getText().toString(),
                         saveAddressFlag,session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
                 Task.update();

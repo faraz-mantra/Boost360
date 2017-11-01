@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.freshdesk.hotline.Hotline;
@@ -48,12 +49,8 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         if (Hotline.isHotlineNotification(remoteMessage)) {
             Hotline.getInstance(this).handleFcmMessage(remoteMessage);
         } else {
-            //Calling method to generate notification
             sendNotification(remoteMessage.getData());
-            /*Log.v("notif",remoteMessage.getData().get("title"));
-            Log.v("notif",remoteMessage.getSentTime()+"  "+String.valueOf(System.currentTimeMillis()));*/
             Constants.GCM_Msg = true;
-            //Handle notifications with data payload for your app
         }
         Log.v("Message", "received bubble");
     }
@@ -74,6 +71,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                     || (message.containsKey("mp_message_key") && message.get("mp_message_key").equalsIgnoreCase(SAM_BUBBLE_MSG_KEY))) {
                 MixPanelController.track(MixPanelController.SAM_BUBBLE_NOTIFICATION, null);
                 pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).apply();
+                pref.edit().putBoolean(Key_Preferences.IS_CUSTOMER_ASSISTANT_ENABLED, true).apply();
                 if (Methods.hasOverlayPerm(this)) {
                     if (!Methods.isMyServiceRunning(this, CustomerAssistantService.class)) {
                         Intent bubbleIntent = new Intent(this, CustomerAssistantService.class);
@@ -83,7 +81,6 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
             } else {
 
                 deepLinkUrl = message.get("url");
-                //Log.v("ggg","notif "+deepLinkUrl);
                 if (deepLinkUrl != null && !deepLinkUrl.contains(Constants.PACKAGE_NAME)) {
                     return;
                 }
@@ -105,20 +102,11 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                         messageIntent.putExtra("user_data", message.get("user_data"));
                         messageIntent.putExtra("message", message.get("message"));
                         if (LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent)) {
-                            if (message.get("user_data").contains(pref.getString("facebookChatUser", ""))) {
+                            if (!TextUtils.isEmpty(pref.getString("facebookChatUser", "")) &&
+                                    message.get("user_data").contains(pref.getString("facebookChatUser", ""))) {
                                 return;
                             }
                         }
-
-                       /* ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-                        List<ActivityManager.RunningTaskInfo> allTasks = am.getRunningTasks(1);
-                        for (ActivityManager.RunningTaskInfo task : allTasks){
-                            if(task.topActivity.getClassName().equals(FacebookChatDetailActivity.class.getName())){
-                                if(message.get("user_data").contains(pref.getString("facebookChatUser",""))){
-                                    return;
-                                }
-                            }
-                        }*/
 
                     }
 
@@ -127,9 +115,6 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                 if (intent != null) {
                     pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
                 }
-
-        /*intent.putExtra("payload", payload);
-        intent.putExtra("notification", notificationClick);*/
 
                 Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                 NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
@@ -154,7 +139,9 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 if (!Util.isNullOrEmpty(deepLinkUrl) && deepLinkUrl.contains(getString(R.string.facebook_chat))) {
                     FacebookChatDataModel.UserData data = new Gson().fromJson(message.get("user_data"), FacebookChatDataModel.UserData.class);
-                    notificationManager.notify(data.getId().hashCode(), notificationBuilder.build());
+                    if(data.getId() != null) {
+                        notificationManager.notify(data.getId().hashCode(), notificationBuilder.build());
+                    }
                 } else {
                     notificationManager.notify(0, notificationBuilder.build());
                 }

@@ -99,6 +99,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         String user_data = getIntent().getStringExtra("user_data");
         FacebookChatDataModel.UserData userData = new Gson().fromJson(user_data,FacebookChatDataModel.UserData.class);
         if(userData == null){
+            title.setText("Unknown");
             return;
         }
         pref = getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
@@ -114,7 +115,13 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
                 .into(imgUser);
 
         userId = userData.getId();
-        String userName = userData.getFirstName()+" "+userData.getLastName();
+        String userName = "Unknown";
+        userName = TextUtils.isEmpty(userData.getFirstName())?
+                userName : userData.getFirstName();
+        if(!userName.equals("Unknown")){
+            userName = TextUtils.isEmpty(userData.getLastName())?
+                    userName : userName +" "+userData.getLastName();
+        }
         title.setText(userName);
 
         progressDialog = new ProgressDialog(this);
@@ -245,12 +252,6 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
 
         }
     }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, new IntentFilter(INTENT_FILTER));
-
-    }
 
     @Override
     protected void onResume() {
@@ -259,7 +260,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
             pref.edit().putBoolean("IsNewFacebookMessage",false).apply();
             getChatData();
         }
-
+        LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, new IntentFilter(INTENT_FILTER));
     }
 
     @Override
@@ -268,7 +269,7 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
         if(pref != null) {
             pref.edit().putString("facebookChatUser", "").apply();
         }
-            LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReceiver);
     }
 
     BroadcastReceiver messageReceiver = new BroadcastReceiver() {
@@ -380,7 +381,6 @@ public class FacebookChatDetailActivity extends AppCompatActivity implements Vie
                         response.getStatus() != 200){
                     chatModelList.get(currPos).setSender(FacebookChatDetailAdapter.ERROR);
                     adapter.notifyItemChanged(currPos);
-                    return;
                 }else if("success".equalsIgnoreCase(jsonObject.get("message").getAsString())){
 
                     chatModelList.get(currPos).setSender(FacebookChatDetailAdapter.MERCHANT);

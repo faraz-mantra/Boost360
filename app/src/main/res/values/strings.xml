@@ -66,7 +66,56 @@
         <item>10:00</item>
         <item>11:00</item>
     </string-array>
-
+    <string-array name="business_hours_arrays">
+        <item>12:00AM</item>
+        <item>12:30AM</item>
+        <item>01:00AM</item>
+        <item>01:30AM</item>
+        <item>02:00AM</item>
+        <item>02:30AM</item>
+        <item>03:00AM</item>
+        <item>03:30AM</item>
+        <item>04:00AM</item>
+        <item>04:30AM</item>
+        <item>05:00AM</item>
+        <item>05:30AM</item>
+        <item>06:00AM</item>
+        <item>06:30AM</item>
+        <item>07:00AM</item>
+        <item>07:30AM</item>
+        <item>08:00AM</item>
+        <item>08:30AM</item>
+        <item>09:00AM</item>
+        <item>09:30AM</item>
+        <item>10:00AM</item>
+        <item>10:30AM</item>
+        <item>11:00AM</item>
+        <item>11:30AM</item>
+        <item>12:00PM</item>
+        <item>12:30PM</item>
+        <item>01:00PM</item>
+        <item>01:30PM</item>
+        <item>02:00PM</item>
+        <item>02:30PM</item>
+        <item>03:00PM</item>
+        <item>03:30PM</item>
+        <item>04:00PM</item>
+        <item>04:30PM</item>
+        <item>05:00PM</item>
+        <item>05:30PM</item>
+        <item>06:00PM</item>
+        <item>06:30PM</item>
+        <item>07:00PM</item>
+        <item>07:30PM</item>
+        <item>08:00PM</item>
+        <item>08:30PM</item>
+        <item>09:00PM</item>
+        <item>09:30PM</item>
+        <item>10:00PM</item>
+        <item>10:30PM</item>
+        <item>11:00PM</item>
+        <item>11:30PM</item>
+    </string-array>
     <string name="facebook_app_id">539836972828386</string>
 
 
@@ -79,6 +128,7 @@
     <string name="side_panel_row_two">Manage Website</string>
     <string name="side_panel_site_appearance">Site Appearance</string>
     <string name="side_panel_row_csp">Custom Pages</string>
+    <string name="side_panel_row_domain_details">Domain Details</string>
     <string name="side_panel_row_three">Enquiries</string>
     <string name="side_panel_row_four">Photo Gallery</string>
     <string name="side_panel_row_five">Settings</string>
@@ -580,6 +630,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="page_selected">PAGE SELECTED</string>
     <string name="are_you_sure_want_to_delete">Are you sure?</string>
     <string name="are_you_sure_do_you_want_to_book_domain">Are you sure do you want to book this domain?</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="ca_disable_msg">You will not be able to share products &amp; updates with your customers</string>
     <string name="page_will_deleted">Page will be deleted</string>
     <string name="deleted_in_capital">DELETE</string>
     <string name="cancel_in_capital">@android:string/cancel</string>
@@ -645,16 +697,17 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
     <string name="buy_in_capital">BUY</string>
     <string name="later_in_capital">LATER</string>
-    <string name="renew_light_house_plan">Renew Lighthouse plan to get all the features</string>
-    <string name="light_house_plan_expired_some_features_visible">Your Lighthouse plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others</string>
+    <string name="renew_light_house_plan">Renew Boost plan to get all the features</string>
+    <string name="buy_light_house">Your current plan is demo which does not have all features, to get all features buy Boost plan.</string>
+    <string name="light_house_plan_expired_some_features_visible">Your Boost plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others</string>
     <string name="renew_wildfire_plan">Renew Wildfire plan</string>
     <string name="continue_auto_promoting_on_google">Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.</string>
     <string name="renew_in_capital">RENEW</string>
     <string name="ignore_in_capital">IGNORE</string>
-    <string name="buy_light_house_plan">Buy Lighthouse plan to get all the features</string>
+    <string name="buy_light_house_plan">Buy Boost plan to get all the features</string>
     <string name="demo_plan_expired">Your demo plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
     <string name="demo_plan_will_expire"><Data><![CDATA[Your Demo plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
-    <string name="light_house_pla_will_expire"><Data><![CDATA[Your Lighthouse plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
+    <string name="light_house_pla_will_expire"><Data><![CDATA[Your Boost plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
 
     <string name="wildfire_will_expire">Wildfire plan will expire in</string>
     <string name="days">days</string>
@@ -736,7 +789,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="domain_booking_successful">Domain Booking Successful</string>
     <string name="domain_booking_process">Domain Booking In Process</string>
     <string name="domain_booking_process_message">Your Domain will be activated within 48 hours.</string>
-    <string name="domain_booking_failed">Domain booking falied.</string>
+    <string name="domain_booking_failed">Domain booking failed</string>
     <string name="domain_booking_successful_message">Your Domain: \n %s \n has been registered to the DNS server and successfully mapped.</string>
     <string name="drop_us_contact"><![CDATA[You can drop us a line at <b><font color=#ffb900>ria@nowfloats.com</font></b> or call us at <b><font color=#ffb900>1860-123-1233 </font></b> if you\'d like to enable this feature.]]></string>
     <string name="hello_do_you_want_this">Hello Do you want to set this</string>
@@ -908,9 +961,11 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="using_camera">Using camera</string>
     <string name="from_gallery">From gallery</string>
     <string name="category_blog">Category Blog</string>
+    <string name="to_buy_pricing_plans_please_contact">If you are interested in buying a plan, please drop a line at support@aecasiainc.com or call us at +917034427427.</string>
     <string name="this_page_contain_info_about_business_contact_social">This space contains information about the Business Profile, Contact information, Business Logo and Social Sharing.</string>
     <string name="values">Values</string>
     <string name="date">date</string>
+    <string name="webengage_license_code">14507d748</string>
     <string name="add_logo">Add Logo</string>
     <string name="choose_your_location">Choose your location</string>
     <string name="drag_to_map_your_location">Drag the map to the location of your Store.</string>
@@ -955,11 +1010,14 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="product_detail_free_shipping">Free Shipping</string>
     <string name="product_detail_delete_btn_text">Delete product</string>
     <string name="book_a_new_domain">Book a new domain</string>
+    <string name="book_a_new_domain_included">Book new domain <i>(included in your package)</i></string>
+    <string name="renew_domain">Renew domain</string>
     <string name="have_an_existing_domain">Have an existing domain? </string>
     <string name="enjoying_feature">Is this helpful in managing your leads? </string>
     <string name="tap_a_star_to_rate_it">Tap a star to rate it</string>
     <string name="link_a_domain_nf">Link a domain (included in your NowFloats Package)</string>
     <string name="already_have_a_domain">Already have a domain</string>
+    <string name="already_have_a_domain2"><u>Already have a domain?</u></string>
     <string name="pop_up_create_msg_title">Are you sure?</string>
     <string name="graph_fragment2_title">Visits</string>
     <string name="graph_custom_visit_page_title">VISITS</string>
@@ -1038,6 +1096,8 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="submit_request">Submit Request</string>
     <string name="submiting_request">Submitting your request</string>
     <string name="book_your_domain">Book your Domain</string>
+    <string name="enable_bubble_msg">Open WhatsApp to share products with your potential customers.</string>
+    <string name="enable_customer_assistant_msg">Open Customer Assistant to view your potential customers.</string>
     <string name="already_included_in_your_package">*Already included in your package</string>
     <string name="link_comments">I would like to map my existing domain to my Nowfloats site %s.nowfloats.com\nplease reach out to me to discuss this in detail.</string>
     <string name="content_link_domain">
@@ -1312,6 +1372,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="terms_n_cond_toast">You must agree with the terms and conditions to proceed</string>
     <string name="deeplink_business_app">businessapp</string>
     <string name="about_app">About app</string>
+    <string name="domain_details_title">One of the most important steps to establish your brand online is to get a great website address. A custom domain ensures that your business has its own identity and also a positive impact on SEO.</string>
     <string name="fb_page_creation_message">Gather more leads and drive more\ntraffic to your website through a\nFacebook Page</string>
     <string name="get_facebook_page">Get a Facebook page</string>
     <string name="fb_page_creation_title">Looks like you don’t have a\nFacebook page</string>
@@ -1411,7 +1472,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
         <item>You become a verified seller on NowFloats platform. Your potential buyers will see Assured Purchase badge on your website as a mark of trust and a guarantee from NowFloats.</item>
         <item>You can assure reliable and speedy delivery of your products to your buyers.</item>
         <item>Your money is safe with NowFloats and will be duly transferred with each payment cycle (Delivery + 15 working days) *.</item>
-        <item>By enabling Assured Purchase you agree to all terms and policies listed on <a href ="http://assuredpurchase.com/">AssuredPurchase.com</a>.</item>
+        <item>By enabling Assured Purchase you agree to all terms and policies listed on <a href="http://assuredpurchase.com/">AssuredPurchase.com</a>.</item>
         <item>Transaction charges will be at rate of %s per transaction. Transaction charges can change without prior notice but we always strive to make it reasonable.</item>
     </string-array>
     <string-array name="delivery_points">
@@ -1451,6 +1512,13 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 </string>
     <string name="manage_multichannel_customers">You can track all your online customers from a single interface. You can interact with your customers on platforms like WhatsApp and SMS. We read through your SMS data to fetch relevant enquiries.</string>
     <string name="deeplink_manage_customer">managecustomer</string>
-
+    <string name="pp_business_category">Business Category:</string>
+    <string name="text_dictate"><![CDATA[<b>DICTATE</b> - WEBSITE CONTENT SERVICE]]></string>
+    <string name="text_wildfire"><![CDATA[<b>WILDFIRE</b> - Rs. 60000 OF ADWORDS AND FACEBOOK MARKETING]]></string>
+    <string name="text_app"><![CDATA[<b>YOUR APP</b> - YOUR OWN BUSINESS APP FOR APPLE APP STORE AND GOOGLE PLAY STORE]]></string>
+    <string name="renew_domain_not_available_message" formatted="false">Your domain \'%s\' has expired and unavailable for purchase. Your website is currently running on \'%s\'. Please book a new domain or link another domain to avail the advantages of having a personal domain.</string>
+    <string name="renew_domain_message" formatted="false">Your domain \'%s\' has expired. Your website is currently running on \'%s\'. Please renew your domain or link another domain to avail the advantages of having a personal domain.</string>
+    <string name="renew_nowfloats_plan">Your NowFloats account has expired. Please renew your account to continue with service.</string>
+    <string name="renew_nowfloats_and_domain_plan">Your NowFloats account and your domain has expired. Please renew your account and domain to continue with service.</string>
 
 </resources>

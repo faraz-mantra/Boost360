@@ -98,7 +98,6 @@ public class Home_Fragment_Tab extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-
         bus.unregister(this);
 
     }
@@ -126,7 +125,12 @@ public class Home_Fragment_Tab extends Fragment {
     @Subscribe
     public void getalertCountEvent(AlertCountEvent ev) {
         if (alertCountVal != null && alertCountVal.trim().length() > 0 && !alertCountVal.equals("0") && alertCountTv != null) {
-            alertCountTv.setText(alertCountVal);
+            if (Integer.parseInt(alertCountVal)>99){
+                alertCountTv.setText("99+");
+            }else{
+                alertCountTv.setText(alertCountVal);
+            }
+
             alertCountTv.setVisibility(View.VISIBLE);
         } else if (alertCountTv != null) {
             alertCountTv.setText("0");
@@ -242,7 +246,11 @@ public class Home_Fragment_Tab extends Fragment {
         tabs.setViewPager(viewPager,ContextCompat.getColorStateList(getActivity(),R.color.selector));
 
         if (alertCountVal != null && alertCountVal.trim().length() > 0 && !alertCountVal.equals("0")) {
-            alertCountTv.setText(alertCountVal);
+            if (Integer.parseInt(alertCountVal)>99){
+                alertCountTv.setText("99+");
+            }else{
+                alertCountTv.setText(alertCountVal);
+            }
             alertCountTv.setVisibility(View.VISIBLE);
         }
         progressLayout.setVisibility(View.GONE);
@@ -483,7 +491,12 @@ public class Home_Fragment_Tab extends Fragment {
     public void onStart() {
         super.onStart();
         if (alertCountVal != null && alertCountVal.trim().length() > 0 && !alertCountVal.equals("0") && alertCountTv != null) {
-            alertCountTv.setText(alertCountVal);
+            if (Integer.parseInt(alertCountVal)>99){
+                alertCountTv.setText("99+");
+            }else{
+                alertCountTv.setText(alertCountVal);
+            }
+
             alertCountTv.setVisibility(View.VISIBLE);
         } else if (alertCountTv != null) {
             alertCountTv.setText("0");

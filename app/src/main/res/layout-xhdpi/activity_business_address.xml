@@ -94,9 +94,8 @@
                                 android:hint="@string/town_city"
                                 android:textSize="14sp"
                                 android:gravity="bottom"
-                                android:inputType="textCapWords"
-                                android:textColor="#575757"
-                                />
+                                android:inputType="textCapWords|textNoSuggestions"
+                                android:textColor="#575757"/>
 
                         </LinearLayout>
 
@@ -104,19 +103,14 @@
                             android:layout_width="2dp"
                             android:background="#ececec"
                             android:layout_marginBottom="5dp"
-                            android:layout_height="match_parent"
-                            />
-
-
-
+                            android:layout_height="match_parent" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="52dp"
                             android:orientation="vertical"
                             android:gravity="bottom"
-                            android:layout_weight="1"
-                            >
+                            android:layout_weight="1">
 
                             <TextView
                                 android:id="@+id/business_address_pincodetext"
@@ -135,9 +129,8 @@
                                 android:hint="@string/pin_area_code"
                                 android:textSize="14sp"
                                 android:gravity="bottom"
-                                android:inputType="number"
-                                android:textColor="#575757"
-                                />
+                                android:inputType="text"
+                                android:textColor="#575757"/>
 
                         </LinearLayout>
 
@@ -195,14 +188,12 @@
                             android:gravity="bottom"
                             android:hint="@string/country"
                             android:textSize="14sp"
-                            android:textColor="@color/light_gray"
-                            />
+                            android:textColor="@color/light_gray"/>
 
                     </LinearLayout>
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
-
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -219,8 +210,6 @@
                     android:layout_height="match_parent"/>
 
             </android.support.v7.widget.CardView>
-
-
 
         </LinearLayout>
     </ScrollView>

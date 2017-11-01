@@ -71,6 +71,7 @@
                 android:src="@drawable/logo_grey"
 
                 />
+
             <ImageView
                 android:id="@+id/sixth_ImageView_ProfileV2"
                 android:layout_width="@dimen/icon_size"
@@ -80,6 +81,7 @@
                 android:padding="5dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/site_appearance" />
+
             <ImageView
                 android:id="@+id/eight_ImageView_ProfileV2"
                 android:layout_width="@dimen/icon_size"
@@ -99,6 +101,17 @@
                 android:padding="5dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/custom_page_icon" />
+
+            <ImageView
+                android:id="@+id/nine_ImageView_ProfileV2"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/textview_height_business_profile"
+                android:layout_marginLeft="@dimen/icon_left_margin"
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:padding="10dp"
+                android:scaleType="fitCenter"
+                android:tint="@color/gray"
+                android:src="@drawable/insert_link" />
 
             <ImageView
                 android:id="@+id/fifth_ImageView_ProfileV2"
@@ -209,11 +222,13 @@
                 android:text="@string/title_activity_business__logo_"
                 android:textColor="@color/cell_text_color"
                 android:textSize="@dimen/cell_text_size" />
+
             <LinearLayout
                 android:id="@+id/layout_site_appearance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <View
                     android:layout_width="288dp"
                     android:layout_height="1dp"
@@ -229,6 +244,7 @@
                     android:textColor="@color/cell_text_color"
                     android:textSize="@dimen/cell_text_size" />
             </LinearLayout>
+
             <View
                 android:layout_width="288dp"
                 android:layout_height="1dp"
@@ -259,8 +275,20 @@
                 android:textColor="@color/cell_text_color"
                 android:textSize="@dimen/cell_text_size" />
 
+            <View
+                android:layout_width="288dp"
+                android:layout_height="1dp"
+                android:background="#d3d3d3" />
 
-
+            <TextView
+                android:id="@+id/tvDomainDetails"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/textview_height_business_profile"
+                android:background="?android:selectableItemBackground"
+                android:gravity="center_vertical"
+                android:text="@string/side_panel_row_domain_details"
+                android:textColor="@color/cell_text_color"
+                android:textSize="@dimen/cell_text_size" />
 
             <TextView
                 android:id="@+id/socialSharing_Layout_ProfileV2"

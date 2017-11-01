@@ -26,13 +26,12 @@ import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
-import com.nowfloats.Store.PricingPlansActivity;
+import com.nowfloats.Store.FlavourFivePlansActivity;
+import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.customerassistant.CustomerAssistantActivity;
 import com.nowfloats.riachatsdk.ChatManager;
-import com.nowfloats.sync.DbController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.DataBase;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
@@ -163,7 +162,12 @@ public class Settings_Fragment extends Fragment {
         flPricingPlans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity, PricingPlansActivity.class);
+                Intent intent;
+                if(Constants.PACKAGE_NAME.equalsIgnoreCase("com.capture")) {
+                    intent = new Intent(activity, FlavourFivePlansActivity.class);
+                }else {
+                    intent = new Intent(activity, NewPricingPlansActivity.class);
+                }
                 activity.startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
@@ -314,9 +318,7 @@ public class Settings_Fragment extends Fragment {
                     public void onPositive(MaterialDialog dialog) {
                         getActivity().stopService(new Intent(getActivity(), CustomerAssistantActivity.class));
                         session.logoutUser();
-                        DataBase db = new DataBase(activity);
-                        DbController.getDbController(activity.getApplicationContext()).deleteDataBase();
-                        db.deleteLoginStatus();
+
                         //Constants.IS_LOGIN = false;
 
                         //      SharedPreferences.Editor editor;

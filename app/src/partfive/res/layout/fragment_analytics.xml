@@ -629,17 +629,15 @@
 
         <android.support.v7.widget.CardView
             android:id="@+id/card_view_serach_ranking"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="70dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            card_view:cardBackgroundColor="#FFFFFF"
-            card_view:cardCornerRadius="3dp"
+            android:layout_marginTop="10dp"
             android:elevation="3dp"
-            android:layout_marginBottom="15dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp">
+            card_view:cardBackgroundColor="#FFFFFF"
+            card_view:cardCornerRadius="3dp">
 
             <LinearLayout
                 android:id="@+id/analytics_screen_search_ranking"
@@ -663,24 +661,26 @@
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:tint="@color/white"
                         android:layout_gravity="center"
-                        android:src="@drawable/analytics_search_ranking" />
+                        android:src="@drawable/analytics_search_ranking"
+                        android:tint="@color/white" />
                 </FrameLayout>
 
                 <com.nowfloats.CustomWidget.roboto_lt_24_212121
+                    android:id="@+id/roboto_lt_24_212121"
                     android:layout_width="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="16dp"
                     android:text="@string/search_ranking" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
                     android:layout_gravity="center_vertical"
-                    android:gravity="right">
+                    android:gravity="right"
+                    android:orientation="horizontal">
+
                     <ImageView
                         android:layout_width="34dp"
                         android:layout_height="wrap_content"
@@ -696,15 +696,15 @@
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_marginLeft="10dp"
-            android:visibility="gone"
+            android:visibility="visible"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             card_view:cardBackgroundColor="#FFFFFF"
             card_view:cardCornerRadius="3dp"
             android:elevation="3dp"
 
             android:layout_marginBottom="15dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp">
+            android:layout_gravity="center_horizontal">
 
             <LinearLayout
                 android:id="@+id/facebook_analytics_layout"

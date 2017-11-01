@@ -1,0 +1,118 @@
+package com.nowfloats.Analytics_Screen;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.nowfloats.Analytics_Screen.API.CallTrackerApis;
+import com.nowfloats.Login.UserSessionManager;
+import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
+import com.nowfloats.util.Methods;
+import com.thinksity.R;
+
+import java.util.HashMap;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
+/**
+ * Created by Admin on 13-09-2017.
+ */
+
+public class VmnNumberRequestActivity extends AppCompatActivity {
+
+    SharedPreferences pref;
+    Button mButton;
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_request_vmn);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+
+        setTitle("Call Tracker");
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
+        UserSessionManager manager = new UserSessionManager(this,this);
+        final String fpTag = manager.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG);
+        ImageView imageView = (ImageView) findViewById(R.id.create_update_img);
+        TextView mMainText  = (TextView) findViewById(R.id.create_update_text_bold);
+        TextView mDescriptionText  = (TextView) findViewById(R.id.message);
+        mButton = (Button) findViewById(R.id.create_update_button);
+        if(pref.getBoolean("Call_tracker_requested",false)){
+            mButton.setText("Requested");
+            mButton.setBackgroundResource(R.drawable.gray_round_corner);
+        }else{
+            mButton.setText("Enable");
+            mButton.setBackgroundResource(R.drawable.rounded_corner_button);
+            mButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    requestVmn(fpTag);
+                }
+            });
+        }
+        imageView.setImageResource(R.drawable.icon_no_vmn_number);
+        mMainText.setText("Call Tracking is not Enabled");
+        mDescriptionText.setText("With call tracking you have a list of all your customer calls, " +
+                "including any missed ones. You can also listen to call recordings to ensure that" +
+                " you have not missed out on any details.");
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void requestVmn(String fpTag){
+        HashMap<String, String> hashMap = new HashMap<String, String>();
+        hashMap.put("Subject", "Assign VMN to FPTAG: [" + fpTag + "]");
+        hashMap.put("Mesg","Please assign the customer with fpTag "+ fpTag +" VMN, call tracker number.");
+        CallTrackerApis apis = Constants.riaRestAdapter.create(CallTrackerApis.class);
+        apis.requestVmn(hashMap,Constants.clientId,fpTag , new Callback<Boolean>() {
+            @Override
+            public void success(Boolean aBoolean, Response response) {
+                if(aBoolean){
+                    pref.edit().putBoolean("Call_tracker_requested",true).apply();
+                    mButton.setText("Requested");
+                    mButton.setBackgroundResource(R.drawable.gray_round_corner);
+                    Methods.showSnackBarPositive(VmnNumberRequestActivity.this,"Your request has been submitted successfully");
+                }else{
+                    Methods.showSnackBarNegative(VmnNumberRequestActivity.this,"Your request is not submitted");
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Methods.showSnackBarNegative(VmnNumberRequestActivity.this,getString(R.string.something_went_wrong_try_again));
+            }
+        });
+    }
+}

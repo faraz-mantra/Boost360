@@ -5,8 +5,11 @@ package com.nowfloats.NavigationDrawer.model;
  */
 
 public class DomainDetails {
+    public enum DOMAIN_RESPONSE{
+        ERROR,NO_DATA,DATA
+    };
     private String primaryNumber;
-    public boolean response;
+    public DOMAIN_RESPONSE response;
     private String DomainOwnerId;
 
     private String state;
@@ -18,8 +21,6 @@ public class DomainDetails {
     private String _id;
 
     private String DomainContactId;
-
-    private String ExternalNameServers;
 
     private String lat;
 
@@ -55,6 +56,26 @@ public class DomainDetails {
 
     private String DomainRegService;
 
+    private String ActivatedOn;
+
+    private Integer validityInYears;
+
+    public String getActivatedOn() {
+        return ActivatedOn;
+    }
+
+    public void setActivatedOn(String activatedOn) {
+        ActivatedOn = activatedOn;
+    }
+
+    public int getValidityInYears() {
+        return validityInYears;
+    }
+
+    public void setValidityInYears(int validityInYears) {
+        this.validityInYears = validityInYears;
+    }
+
     private String DomainRegistrationOrderId;
 
     private String contactName;
@@ -65,7 +86,7 @@ public class DomainDetails {
 
     private String phoneISDCode;
 
-    private String isProcessingFailed;
+    private boolean isProcessingFailed;
 
     public String getPrimaryNumber() {
         return primaryNumber;
@@ -121,14 +142,6 @@ public class DomainDetails {
 
     public void setDomainContactId(String DomainContactId) {
         this.DomainContactId = DomainContactId;
-    }
-
-    public String getExternalNameServers() {
-        return ExternalNameServers;
-    }
-
-    public void setExternalNameServers(String ExternalNameServers) {
-        this.ExternalNameServers = ExternalNameServers;
     }
 
     public String getLat() {
@@ -307,16 +320,16 @@ public class DomainDetails {
         this.phoneISDCode = phoneISDCode;
     }
 
-    public String getIsProcessingFailed() {
+    public boolean getIsProcessingFailed() {
         return isProcessingFailed;
     }
 
-    public void setIsProcessingFailed(String isProcessingFailed) {
+    public void setIsProcessingFailed(boolean isProcessingFailed) {
         this.isProcessingFailed = isProcessingFailed;
     }
 
     @Override
     public String toString() {
-        return "ClassPojo [primaryNumber = " + primaryNumber + ", DomainOwnerId = " + DomainOwnerId + ", state = " + state + ", lng = " + lng + ", city = " + city + ", _id = " + _id + ", DomainContactId = " + DomainContactId + ", ExternalNameServers = " + ExternalNameServers + ", lat = " + lat + ", fpTag = " + fpTag + ", zip = " + zip + ", regService = " + regService + ", primaryCategory = " + primaryCategory + ", ExternalHostedZoneId = " + ExternalHostedZoneId + ", countryCode = " + countryCode + ", domainName = " + domainName + ", existingFPTag = " + existingFPTag + ", companyName = " + companyName + ", addressLine1 = " + addressLine1 + ", clientId = " + clientId + ", country = " + country + ", domainType = " + domainType + ", ErrorMessage = " + ErrorMessage + ", email = " + email + ", DomainRegService = " + DomainRegService + ", DomainRegistrationOrderId = " + DomainRegistrationOrderId + ", contactName = " + contactName + ", CreatedOn = " + CreatedOn + ", ProcessingStatus = " + ProcessingStatus + ", phoneISDCode = " + phoneISDCode + ", isProcessingFailed = " + isProcessingFailed + "]";
+        return "ClassPojo [primaryNumber = " + primaryNumber + ", DomainOwnerId = " + DomainOwnerId + ", state = " + state + ", lng = " + lng + ", city = " + city + ", _id = " + _id + ", DomainContactId = " + DomainContactId + ", lat = " + lat + ", fpTag = " + fpTag + ", zip = " + zip + ", regService = " + regService + ", primaryCategory = " + primaryCategory + ", ExternalHostedZoneId = " + ExternalHostedZoneId + ", countryCode = " + countryCode + ", domainName = " + domainName + ", existingFPTag = " + existingFPTag + ", companyName = " + companyName + ", addressLine1 = " + addressLine1 + ", clientId = " + clientId + ", country = " + country + ", domainType = " + domainType + ", ErrorMessage = " + ErrorMessage + ", email = " + email + ", DomainRegService = " + DomainRegService + ", DomainRegistrationOrderId = " + DomainRegistrationOrderId + ", contactName = " + contactName + ", CreatedOn = " + CreatedOn + ", ProcessingStatus = " + ProcessingStatus + ", phoneISDCode = " + phoneISDCode + ", isProcessingFailed = " + isProcessingFailed + "]";
     }
 }

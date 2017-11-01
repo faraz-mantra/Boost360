@@ -4,6 +4,7 @@ import com.nowfloats.Store.Model.EnablePackageResponse;
 import com.nowfloats.Store.Model.MailModel;
 import com.nowfloats.Store.Model.OPCModels.UpdateDraftInvoiceModel;
 import com.nowfloats.Store.Model.PaymentTokenResult;
+import com.nowfloats.Store.Model.PricingPlansModel;
 import com.nowfloats.Store.Model.ReceivedDraftInvoice;
 import com.nowfloats.Store.Model.SendDraftInvoiceModel;
 import com.nowfloats.Store.Model.StoreMainModel;
@@ -33,8 +34,8 @@ public interface StoreInterface {
     // identifier={IDENTIFIER}&clientId={CLIENTID}&fpId={FPID}&country={COUNTRY}
     ///Support/v1/floatingpoint/getpackages?identifier=524304ad4ec0a40d1c9a93f3&clientId=217FF5B9CE214CDDAC4985C853AE7F75AAFA11AF2C4B47CB877BCA26EC217E6D
 //    @GET("/Support/v1/GetFloatingPointPackages")
-    @GET("/Support/v2/floatingpoint/getpackages")
-    void getStoreList(@QueryMap Map<String,String> map, Callback<StoreMainModel> callback);
+    @GET("/Support/v4/floatingpoint/getpackages")
+    void getStoreList(@QueryMap Map<String,String> map, Callback<PricingPlansModel> callback);
 
     //https://api.withfloats.com/Discover/v1/floatingPoint/5406bd254ec0a40d409f2b2b/requestplan?
     // clientId=2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21&plantype=mach3
