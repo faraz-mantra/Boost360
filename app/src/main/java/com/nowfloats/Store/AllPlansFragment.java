@@ -32,7 +32,6 @@ public class AllPlansFragment extends Fragment {
 
     ViewPager vpPricingPlans;
     PricingPlansPagerAdapter pricingPagerAdapter;
-    private UserSessionManager mSession;
     private List<PackageDetails> mBasePlans;
     private List<PackageDetails> mTopUps;
     TextView tvPrice, tvCurrency;
@@ -45,17 +44,17 @@ public class AllPlansFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_all_plans, container, false);
 
-        vpPricingPlans = (ViewPager) view.findViewById(R.id.vp_pricing_plans);
-        llPurchasePlan = (LinearLayout) view.findViewById(R.id.ll_purchase_plan);
-        tvPrice = (TextView) view.findViewById(R.id.tv_price);
-        tvCurrency = (TextView) view.findViewById(R.id.tv_currency);
+        vpPricingPlans = view.findViewById(R.id.vp_pricing_plans);
+        llPurchasePlan = view.findViewById(R.id.ll_purchase_plan);
+        tvPrice = view.findViewById(R.id.tv_price);
+        tvCurrency = view.findViewById(R.id.tv_currency);
         vpPricingPlans.setClipToPadding(false);
         vpPricingPlans.setPageMargin(24);
         vpPricingPlans.setPadding(68, 8, 68, 8);
         vpPricingPlans.setOffscreenPageLimit(3);
         pricingPagerAdapter = new PricingPlansPagerAdapter(getActivity().getSupportFragmentManager(), mBasePlans, mTopUps);
         vpPricingPlans.setAdapter(pricingPagerAdapter);
-        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabDots);
+        TabLayout tabLayout = view.findViewById(R.id.tabDots);
         tabLayout.setupWithViewPager(vpPricingPlans, true);
         pricingPagerAdapter.notifyDataSetChanged();
         if(mBasePlans!=null) {
