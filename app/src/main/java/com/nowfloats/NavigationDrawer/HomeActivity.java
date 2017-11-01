@@ -242,6 +242,7 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
         Bundle bundle = getIntent().getExtras();
         if (bundle != null && bundle.containsKey("url")) {
             mDeepLinkUrl = bundle.getString("url");
+            DeepLinkPage(mDeepLinkUrl, false);
         }
         if (bundle != null && bundle.containsKey("Username")) {
         } else {
@@ -259,30 +260,9 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             startService(intent);
             // start the service to send data to firebase
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // if user deny the permissions
-           /* if(shouldShowRequestPermissionRationale(Manifest.permission.READ_SMS)||
-                    shouldShowRequestPermissionRationale(Manifest.permission.READ_PHONE_STATE)){
 
-                Snackbar.make(parent_layout, com.nfx.leadmessages.R.string.required_permission_to_show, Snackbar.LENGTH_INDEFINITE)
-                        .setAction(com.nfx.leadmessages.R.string.enable, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent = new Intent();
-                                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                intent.addCategory(Intent.CATEGORY_DEFAULT);
-                                intent.setData(Uri.parse("package:" + getPackageName()));
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-                                startActivity(intent);
-                            }
-                        })  // action text on the right side of snackbar
-                        .setActionTextColor(ContextCompat.getColor(this,android.R.color.holo_green_light))
-                        .show();
-            }
-            else{*/
             requestPermissions(permission, READ_MESSAGES_ID);
-            // }
+
 
         }
     }

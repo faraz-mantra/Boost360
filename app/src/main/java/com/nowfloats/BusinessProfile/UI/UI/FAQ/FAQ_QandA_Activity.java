@@ -3,8 +3,8 @@ package com.nowfloats.BusinessProfile.UI.UI.FAQ;
 import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.SpannableString;
@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.thinksity.R;
 
 
-public class FAQ_QandA_Activity extends ActionBarActivity {
+public class FAQ_QandA_Activity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private TextView headerText;

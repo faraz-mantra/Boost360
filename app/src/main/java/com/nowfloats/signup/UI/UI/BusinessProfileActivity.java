@@ -1,14 +1,14 @@
 package com.nowfloats.signup.UI.UI;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
-public class BusinessProfileActivity extends ActionBarActivity {
+public class BusinessProfileActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
