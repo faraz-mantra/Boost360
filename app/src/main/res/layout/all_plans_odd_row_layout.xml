@@ -13,10 +13,20 @@
         android:layout_weight="1"
         android:layout_gravity="center_vertical"
         android:layout_height="wrap_content" />
-    <ImageView
-        android:id="@+id/iv_tick"
-        android:src="@drawable/tick_gray"
-        android:layout_gravity="center_vertical"
-        android:layout_width="20dp"
-        android:layout_height="20dp" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_centerInParent="true"
+            android:id="@+id/iv_tick"
+            android:src="@drawable/tick_gray"
+            android:layout_gravity="center_vertical"
+            android:layout_width="20dp"
+            android:layout_height="20dp" />
+        <CheckBox
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
 </LinearLayout>
