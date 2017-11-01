@@ -5,8 +5,11 @@ package com.nowfloats.NavigationDrawer.model;
  */
 
 public class DomainDetails {
+    public enum DOMAIN_RESPONSE{
+        ERROR,NO_DATA,DATA
+    };
     private String primaryNumber;
-    public boolean response;
+    public DOMAIN_RESPONSE response;
     private String DomainOwnerId;
 
     private String state;

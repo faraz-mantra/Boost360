@@ -35,7 +35,7 @@ public class PackageDetails implements Comparable<PackageDetails>{
     private String primaryImageUri;
     @SerializedName("Priority")
     @Expose
-    private Integer priority;
+    private Long priority;
     @SerializedName("Screenshots")
     @Expose
     private List<Screenshots> screenshots;
@@ -166,11 +166,11 @@ public class PackageDetails implements Comparable<PackageDetails>{
         this.primaryImageUri = primaryImageUri;
     }
 
-    public Integer getPriority() {
+    public Long getPriority() {
         return priority;
     }
 
-    public void setPriority(Integer priority) {
+    public void setPriority(Long priority) {
         this.priority = priority;
     }
 
@@ -344,6 +344,6 @@ public class PackageDetails implements Comparable<PackageDetails>{
 
     @Override
     public int compareTo(@NonNull PackageDetails o) {
-        return (this.getPriority() > o.getPriority()) ? -1 : ((this.getPriority() == o.getPriority()) ? 0 : 1);
+        return (this.getPriority() > o.getPriority()) ? -1 : ((this.getPriority().equals(o.getPriority())) ? 0 : 1);
     }
 }

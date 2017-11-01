@@ -57,7 +57,7 @@
                     android:background="@drawable/et_bg"
                     android:inputType="textNoSuggestions"
                     android:digits="@string/domain_characters"
-                    android:maxLines="1"
+                    android:maxLines="2"
                     android:padding="@dimen/margin_10"
                     tools:ignore="MissingPrefix" />
 
@@ -476,7 +476,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@color/primary_color"
+            android:background="@color/primary_color_dark"
             android:elevation="5dp"
             android:padding="@dimen/margin_10"
             android:text="@string/back"
@@ -493,7 +493,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@color/primary_color_dark"
+            android:background="@color/primary"
             android:elevation="5dp"
             android:padding="@dimen/margin_10"
             android:text="@string/activate_your_domain"

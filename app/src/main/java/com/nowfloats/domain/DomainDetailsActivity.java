@@ -32,14 +32,13 @@ import com.nowfloats.CustomWidget.roboto_md_60_212121;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.DomainApiService;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
-import com.nowfloats.Store.Model.StoreEvent;
-import com.nowfloats.Store.Model.StoreModel;
-import com.nowfloats.Store.PricingPlansActivity;
-import com.nowfloats.Store.Service.API_Service;
+import com.nowfloats.Store.Model.ActivePackage;
+import com.nowfloats.Store.Model.AllPackage;
+import com.nowfloats.Store.Model.PricingPlansModel;
+import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
-import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
@@ -50,6 +49,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -91,7 +91,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
     TextView domainNameTv, domainCreatedTv, domainExpiredTv, statusTv,expireMsgTv;
     CardView domainDetailsCard, emailDetailsCard;
     LinearLayout chooseDomainLayout, expiredLayout,emptyLayout;
-    Button proceedBtn;
+    TextView proceedBtn;
     RadioButton chooseBtn, linkBtn;
     private MaterialDialog domainBookDialog;
 
@@ -128,9 +128,9 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         emptyLayout = (LinearLayout) findViewById(R.id.ll_empty_view);
         expiredLayout = (LinearLayout) findViewById(R.id.ll_plan_expired);
         expireMsgTv = (TextView) expiredLayout.findViewById(R.id.tv_expire_msg);
-        proceedBtn = (Button) findViewById(R.id.btn_proceed);
+        proceedBtn = (TextView) findViewById(R.id.btn_proceed);
         chooseBtn = (RadioButton) findViewById(R.id.rb_book_a_domain);
-        chooseBtn.setText(Methods.fromHtml(getString(R.string.book_a_new_domain_included)));
+        chooseBtn.setText(Methods.fromHtml("Book new domain <i>(included in your package)</i>"));
         linkBtn = (RadioButton) findViewById(R.id.rb_link_a_domain);
         setSupportActionBar(toolbar);
         headerText.setText(getResources().getString(R.string.side_panel_row_domain_details));
@@ -342,8 +342,10 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
     }*/
     @Subscribe
     public void getDomainDetails(DomainDetails domainDetails) {
-
-        if (domainDetails != null && domainDetails.response) {
+        hideLoader();
+        if (domainDetails != null && domainDetails.response == DomainDetails.DOMAIN_RESPONSE.ERROR){
+            Methods.showSnackBarNegative(this,getString(R.string.something_went_wrong));
+        } else if (domainDetails != null && domainDetails.response == DomainDetails.DOMAIN_RESPONSE.DATA) {
 
             if(TextUtils.isDigitsOnly(domainDetails.getProcessingStatus())){
                 processingStatus = Integer.parseInt(domainDetails.getProcessingStatus());
@@ -364,17 +366,27 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
             /*tvDomainStatus.setVisibility(View.VISIBLE);
             edtDomainName.setText(domainDetails.getDomainName());*/
 
-            domainType = domainDetails.getDomainType();
-            domainName = domainDetails.getDomainName();
+            domainType = domainDetails.getDomainType().toLowerCase();
+            domainName = domainDetails.getDomainName().toLowerCase();
             domainNameTv.setText(domainName+domainType);
+            domainCreatedTv.setText(Methods.fromHtml("Purchase Date: <b>"+domainCreatedDate+"</b>"));
+            domainExpiredTv.setText(Methods.fromHtml("Valid Till: <b>"+domainExpiryDate+"</b>"));
             if( !TextUtils.isEmpty(domainDetails.getErrorMessage()) && domainDetails.getIsProcessingFailed()){
                 //error domain failed
                 isDomainBookFailed = true;
             }
 
+        }else if (!Methods.isOnline(this)){
+            Methods.snackbarNoInternet(this);
+            return;
         }
-        new API_Service(DomainDetailsActivity.this, session.getSourceClientId(), session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY),
-                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session.getFPID(), mBus);
+        if(!TextUtils.isEmpty(get_fp_details_model.getExpiryDate())) {
+            setPricingPlansDays(Long.valueOf(get_fp_details_model.getExpiryDate().replace("/Date(", "").replace(")/", "")));
+        }else{
+            applyDomainLogic();
+        }
+       /* new API_Service(DomainDetailsActivity.this, session.getFPDetails(Key_Preferences.GET_FP_DETAILS_APPLICATION_ID), session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY),
+                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID), session.getFPID(),session.getFPDetails(Key_Preferences.GET_FP_DETAILS_CATEGORY), mBus);*/
     }
 
    /* private void setDomainYearsAdapter(int length){
@@ -389,74 +401,55 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         spDomainYears.setAdapter(adapter);
     }*/
 
+
     @Subscribe
-    public void getStoreList(StoreEvent response) {
-        hideLoader();
-        ArrayList<StoreModel> allModels = response.model.AllPackages;
-        ArrayList<StoreModel> activeIdArray = response.model.ActivePackages;
-        ArrayList<StoreModel> additionalPlans = response.model.AllPackages;
+    public void getStoreList(PricingPlansModel response) {
+
+        List<AllPackage> allModels = response.allPackages;
+        List<ActivePackage> activeIdArray = response.activePackages;
         if (allModels != null && activeIdArray != null) {
             long storeExpiryDays = 0;
-            for (StoreModel storeModel : activeIdArray) {
-                float validity = storeModel.TotalMonthsValidity;
+            for (ActivePackage storeModel : activeIdArray) {
+                Double validity = storeModel.getTotalMonthsValidity();
                 Calendar cal = Calendar.getInstance();
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
-                cal.setTimeInMillis(Long.parseLong(storeModel.ToBeActivatedOn.replace("/Date(", "").replace(")/", "")));
-                cal.add(Calendar.MONTH, (int) validity);
-                cal.add(Calendar.DATE, (int) ((validity - Math.floor((double) validity)) * 30));
+                cal.setTimeInMillis(Long.parseLong(storeModel.getToBeActivatedOn().replace("/Date(", "").replace(")/", "")));
+                cal.add(Calendar.MONTH, (int)Math.floor(validity));
+                cal.add(Calendar.DATE, (int) ((validity-Math.floor(validity))*30));
 
                 long tempExpiryDays = cal.getTimeInMillis();
                 if (tempExpiryDays > storeExpiryDays) {
                     storeExpiryDays = tempExpiryDays;
-                    domainYears = 0;
-                    if(cal.get(Calendar.YEAR)>= year){
-                        domainYears = cal.get(Calendar.YEAR)-year;
-                        if(cal.get(Calendar.MONTH)>month){
-                            domainYears+=1;
-                        }else if(cal.get(Calendar.MONTH) == month){
-                            if(cal.get(Calendar.DAY_OF_MONTH)>day){
-                                domainYears+=1;
-                            }
-                        }
-                    }
                 }
             }
 
-            planExpiryDays = (int) ((storeExpiryDays - currentTime) / totalNoOfDays);
-            applyDomainLogic();
+            setPricingPlansDays(storeExpiryDays);
             //domainApiService.getDomainSupportedTypes(getDomainDetailsParam());
         } else {
             Methods.showSnackBarNegative(DomainDetailsActivity.this, getString(R.string.something_went_wrong));
         }
     }
 
+    private void setPricingPlansDays(long storeExpiryDays) {
+        planExpiryDays = (int) ((storeExpiryDays - currentTime) / totalNoOfDays);
+        applyDomainLogic();
+    }
 
-    //------------------|--------- PlanExpiry<=0 ---------------PlanExpiry<90 --------|----- PlanExpiry>=90--------|
-    //                  |                                |    p<60     plan renew     |                            |
-    //-DomainExpiry<0-- |          Plan Expired          |    p>= 60  Renew Domain    |      Expired Renew Domain  |
-    //                  |                                |                            |                            |
-    //-DomainExpiry<30--|          Plan Expired          |       P<=D  renew plan     |      TBE-Renew Domain      |
-    //                  |                                |     P-D>=60  renew domain  |                            |
-    //                  |                                |     P-D<60  renew plan                        |                            |
-    //-DomainExpiry>=30-|          Plan Expired          |    Do nothing(show domain) |    Do nothing(show domain) |
-    //------------------|--------------------------------|----------------------------|----------------------------|
 
     private void applyDomainLogic() {
-         if (planExpiryDays <= 0) {
+        if (planExpiryDays <= 0) {
 
              if(domainExpiryDays <= 0){
                  setDomainDetailsCard(false,"NowFloats Plan and Domain Expired");
+                 expiredLayout.setVisibility(View.VISIBLE);
                  expireMsgTv.setText(getString(R.string.renew_nowfloats_and_domain_plan));
+                 expiredLayout.findViewById(R.id.btn_plan_expired).setVisibility(View.VISIBLE);
+                 expiredLayout.findViewById(R.id.ll_domain_expired).setVisibility(View.GONE);
+                 expiredLayout.findViewById(R.id.btn_plan_expired).setOnClickListener(this);
              }
              else{
-                 setDomainDetailsCard(true,"NowFloats Plan Expired");
-                 expireMsgTv.setText(getString(R.string.renew_nowfloats_plan));
+                 setDomainDetailsCard(true,null);
              }
-             expiredLayout.findViewById(R.id.btn_plan_expired).setVisibility(View.VISIBLE);
-             expiredLayout.findViewById(R.id.ll_domain_expired).setVisibility(View.GONE);
-             expiredLayout.findViewById(R.id.btn_plan_expired).setOnClickListener(this);
+
             //card background light_gray
             // nowfloats plan expired
 
@@ -479,7 +472,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                 TextView mainMessage = (TextView) emptyLayout.findViewById(R.id.tv_main_message);
                 TextView description = (TextView) emptyLayout.findViewById(R.id.tv_note_message);
                 mainMessage.setText("No Domain Feature Available");
-                description.setText("Your plan does not include domain purchase. To get domain, please buy NowFloats plan");
+                description.setText("Your plan does not include domain purchase. To get domain, please buy Boost plan");
                 //  your package does not have option to buy
             }
 
@@ -493,7 +486,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                  setDomainDetailsCard(false,"Domain Expired");
                  expiredLayout.setVisibility(View.VISIBLE);
                  expiredLayout.findViewById(R.id.ll_domain_expired).setVisibility(View.VISIBLE);
-                 expireMsgTv.setText(String.format(getString(R.string.renew_domain_message),domainNameTv.getText().toString(),session.getFpTag()+getString(R.string.nowfloats_com)));
+                 expireMsgTv.setText(String.format(getString(R.string.renew_domain_message),domainNameTv.getText().toString(),session.getFpTag().toLowerCase()+getString(R.string.nowfloats_com)));
                  expiredLayout.findViewById(R.id.btn_plan_expired).setVisibility(View.GONE);
                  expiredLayout.findViewById(R.id.btn_renew_domain).setOnClickListener(this);
                  expiredLayout.findViewById(R.id.btn_link_domain).setOnClickListener(this);
@@ -502,7 +495,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                  TextView mainMessage = (TextView) emptyLayout.findViewById(R.id.tv_main_message);
                  TextView description = (TextView) emptyLayout.findViewById(R.id.tv_note_message);
                  mainMessage.setText("No Domain Feature Available");
-                 description.setText("Your plan does not include domain purchase. To get domain, please buy NowFloats plan");
+                 description.setText("Your plan does not include domain purchase. To get domain, please buy Boost plan");
              }
 
              // first renew after that book new domain
@@ -523,20 +516,21 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         emailDetailsCard.setVisibility(View.VISIBLE);
         ImageView domainImg = (ImageView) domainDetailsCard.findViewById(R.id.img_domain);
         ImageView emailImg = (ImageView) emailDetailsCard.findViewById(R.id.img_email);
-        switch (domainType){
-            case ".IN":
+        TextView domainMessageTv = (TextView) domainDetailsCard.findViewById(R.id.tv_domain_message);
+        switch (domainType.toLowerCase()){
+            case ".in":
                 domainImg.setImageResource(R.drawable.domain_in);
                 break;
-            case ".COM":
+            case ".com":
                 domainImg.setImageResource(R.drawable.domain_com);
                 break;
-            case ".CO.IN":
+            case ".co.in":
                 domainImg.setImageResource(R.drawable.domain_co_in);
                 break;
-            case ".NET":
+            case ".net":
                 domainImg.setImageResource(R.drawable.domain_net);
                 break;
-            case ".ORG":
+            case ".org":
                 domainImg.setImageResource(R.drawable.domain_org);
                 break;
             default:
@@ -544,39 +538,39 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         }
 
         if(active){
-
+            domainMessageTv.setVisibility(View.VISIBLE);
             domainImg.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
-            emailImg.setColorFilter(ContextCompat.getColor(this, R.color.primaryColor));
+            emailImg.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
-            int margins = Methods.dpToPx(10, this);
-            params.setMargins(margins, margins, margins, 0);
+            int margins = Methods.dpToPx(15, this);
+            params.setMargins(margins, Methods.dpToPx(10, this), margins, 0);
             domainDetailsCard.setLayoutParams(params);
-            params.setMargins(margins, Methods.dpToPx(5, this), margins, margins);
-            emailDetailsCard.setLayoutParams(params);
+            LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            params1.setMargins(margins, Methods.dpToPx(10, this), margins, margins);
+            emailDetailsCard.setLayoutParams(params1);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 domainDetailsCard.setElevation(3);
                 emailDetailsCard.setElevation(3);
             }
         }else{
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
-            int margins = Methods.dpToPx(1, this);
-            params.setMargins(0, 0, 0, margins);
-            domainDetailsCard.setLayoutParams(params);
-            emailDetailsCard.setLayoutParams(params);
+            domainMessageTv.setVisibility(View.GONE);
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 domainDetailsCard.setElevation(0);
                 emailDetailsCard.setElevation(0);
             }
             domainDetailsCard.setBackgroundColor(ContextCompat.getColor(this,R.color.e0e0e0));
-            emailDetailsCard.setBackgroundColor(ContextCompat.getColor(this,R.color.e0e0e0));
+            //emailDetailsCard.setBackgroundColor(ContextCompat.getColor(this,R.color.e0e0e0));
+            emailDetailsCard.findViewById(R.id.view_divider).setVisibility(View.VISIBLE);
             domainImg.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
             emailImg.setColorFilter(ContextCompat.getColor(this, R.color.light_gray));
         }
-
+        emailDetailsCard.setBackgroundColor(ContextCompat.getColor(this,R.color.e0e0e0));
         if (!TextUtils.isEmpty(statusMessage)){
             statusTv.setVisibility(View.VISIBLE);
+            domainDetailsCard.setContentPadding(0,Methods.dpToPx(5,this),0,0);
             statusTv.setText(statusMessage);
         }
     }
@@ -654,7 +648,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent(DomainDetailsActivity.this, PricingPlansActivity.class);
+                        Intent intent = new Intent(DomainDetailsActivity.this, NewPricingPlansActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         dialog.dismiss();
@@ -748,7 +742,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                 linkDomain();
                 break;
             case R.id.btn_plan_expired:
-                Intent intent = new Intent(DomainDetailsActivity.this, PricingPlansActivity.class);
+                Intent intent = new Intent(DomainDetailsActivity.this, NewPricingPlansActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;

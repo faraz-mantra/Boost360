@@ -261,6 +261,12 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
                             AutocompletePredictionBuffer a=result.await();
                             //Log.v("ggg","ok");
                             citys.clear();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
                             for (int i=0;i<a.getCount();i++){
                                 //Log.v("ggg",a.get(i).getFullText(new StyleSpan(Typeface.NORMAL)).toString()+" length "+citys.size());
                                 citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString());

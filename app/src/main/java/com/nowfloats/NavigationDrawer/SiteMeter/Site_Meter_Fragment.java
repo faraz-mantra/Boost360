@@ -47,7 +47,7 @@ import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
 import com.nowfloats.Store.Model.StoreEvent;
 import com.nowfloats.Store.Model.StoreModel;
-import com.nowfloats.Store.PricingPlansActivity;
+import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.domain.DomainDetailsActivity;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -655,7 +655,7 @@ public class Site_Meter_Fragment extends Fragment {
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent(activity, PricingPlansActivity.class);
+                        Intent intent = new Intent(activity, NewPricingPlansActivity.class);
                         startActivity(intent);
                         dialog.dismiss();
                     }
@@ -741,32 +741,12 @@ public class Site_Meter_Fragment extends Fragment {
 
         if(!isAlreadyCalled) {
             isAlreadyCalled = true;
-            if (domainDetails != null && domainDetails.response) {
-            /*if(TextUtils.isDigitsOnly(domainDetails.getProcessingStatus()))
-            {
-                if (Integer.parseInt(domainDetails.getProcessingStatus())>16) {
+            if (domainDetails != null && domainDetails.response == DomainDetails.DOMAIN_RESPONSE.ERROR){
+                Methods.showSnackBarNegative(activity,getString(R.string.something_went_wrong));
+            } else if (domainDetails != null && domainDetails.response == DomainDetails.DOMAIN_RESPONSE.DATA) {
 
-                    showCustomDialog(getString(R.string.domain_booking_successful),
-                            String.format(getString(R.string.domain_booking_successful_message), domainDetails.getDomainName()),
-                            getString(R.string.ok), null, DialogFrom.DEFAULT);
-
-                }else{
-                    showCustomDialog(getString(R.string.domain_booking_process),
-                            getString(R.string.domain_booking_process_message),
-                            getString(R.string.ok), null, DialogFrom.DEFAULT);
-                }
-            }
-            else
-            {*/
-              /*  if (TextUtils.isEmpty(domainDetails.getActivatedOn())) {
-                    showCustomDialog(getString(R.string.buy_a_domain),
-                            Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
-                            getString(R.string.ok), null, DialogFrom.DEFAULT);
-                } else {*/
-                //showDomainDetails();
-                //}
                 if( !TextUtils.isEmpty(domainDetails.getErrorMessage()) && domainDetails.getIsProcessingFailed()){
-                    showCustomDialog(getString(R.string.buy_a_domain),
+                    showCustomDialog(getString(R.string.domain_booking_failed),
                             Methods.fromHtml(getString(R.string.drop_us_contact)).toString(),
                             getString(R.string.ok), null, DialogFrom.DEFAULT);
                 }else if(TextUtils.isDigitsOnly(domainDetails.getProcessingStatus()) && Integer.parseInt(domainDetails.getProcessingStatus())<=16){
@@ -855,13 +835,13 @@ public class Site_Meter_Fragment extends Fragment {
             if (TextUtils.isEmpty(get_fp_details_model.getEmail())
                     || get_fp_details_model.getContacts() == null) {
                 showCustomDialog(getString(R.string.domain_detail_required),
-                        Methods.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
-                        getString(R.string.ok), null, DialogFrom.CONTACTS_AND_EMAIL_REQUIRED);
+                        Methods.fromHtml("Insufficient data to book domain. Please update your Email Address.").toString(),
+                        "Update Email Address", null, DialogFrom.CONTACTS_AND_EMAIL_REQUIRED);
 
             } else if (get_fp_details_model.getCategory() == null || get_fp_details_model.getCategory().size() == 0) {
                 showCustomDialog(getString(R.string.domain_detail_required),
-                        Methods.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
-                        getString(R.string.ok), null,DialogFrom.CATEGORY_REQUIRED);
+                        Methods.fromHtml("Insufficient data to book domain. Please update your Business Category.").toString(),
+                        "Update Business Category", null, DialogFrom.CATEGORY_REQUIRED);
             } else if (TextUtils.isEmpty(get_fp_details_model.getAddress())
                     || TextUtils.isEmpty(get_fp_details_model.getLat())
                     || TextUtils.isEmpty(get_fp_details_model.getLng())
@@ -869,8 +849,8 @@ public class Site_Meter_Fragment extends Fragment {
                     || get_fp_details_model.getLng().equalsIgnoreCase("0")
                     ||TextUtils.isEmpty(get_fp_details_model.getPinCode())) {
                 showCustomDialog(getString(R.string.domain_detail_required),
-                        Methods.fromHtml(getString(R.string.please_fill_details_to_proceed)).toString(),
-                        getString(R.string.ok), null, DialogFrom.ADDRESS_REQUIRED);
+                        Methods.fromHtml("Insufficient data to book domain. Please update you Business Address.").toString(),
+                        "Update Business Address", null, DialogFrom.ADDRESS_REQUIRED);
             } else {
                 showDomainDetails();
             }
