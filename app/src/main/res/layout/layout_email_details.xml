@@ -68,7 +68,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Choose your email address through which your customers can contact you. You can select upto 3 email address with you domain."
+                android:text="Choose your email address through which your customers can contact you. You can select upto 3 email address with your domain."
                 android:textSize="12sp"/>
 
         </LinearLayout>

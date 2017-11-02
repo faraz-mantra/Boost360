@@ -17,6 +17,7 @@ import com.nowfloats.NavigationDrawer.SlidingTabLayout;
 import com.nowfloats.Store.Adapters.StorePagerAdapter;
 import com.nowfloats.Store.Model.StoreEvent;
 import com.nowfloats.Store.Model.StoreModel;
+import com.nowfloats.Store.Service.API_Service;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.EventKeysWL;
@@ -99,8 +100,8 @@ public class StoreFragmentTab extends Fragment {
         tabs = (SlidingTabLayout) view.findViewById(R.id.tabs);
         viewPager = (ViewPager) view.findViewById(R.id.homeTabViewpager);
 
-       /* new API_Service(activity, session.getSourceClientId(),session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY),
-                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID),session.getFPID(),bus);*/
+        new API_Service().oldPricingPlans(activity, session.getSourceClientId(),session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY),
+                session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ACCOUNTMANAGERID),session.getFPID(),bus);
         BoostLog.d("StoreFragmentTab", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY));
         /*new Thread(new Runnable() {
             @Override

@@ -36,6 +36,7 @@ import com.nowfloats.Store.Model.ActivePackage;
 import com.nowfloats.Store.Model.AllPackage;
 import com.nowfloats.Store.Model.PricingPlansModel;
 import com.nowfloats.Store.NewPricingPlansActivity;
+import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
@@ -43,6 +44,7 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import java.text.SimpleDateFormat;
@@ -463,7 +465,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         } else if(TextUtils.isEmpty(domainType)){
              // first domain purchase widget exist
             if(planExpiryDays <=90){
-                showExpiryDialog(LIGHT_HOUSE_EXPIRE, planExpiryDays);
+                showExpiryDialog(LIGHT_HOUSE_DAYS_LEFT, planExpiryDays);
             }
             if(get_fp_details_model.getFPWebWidgets() != null && get_fp_details_model.getFPWebWidgets().contains(FP_WEB_WIDGET_DOMAIN)){
                 chooseDomainLayout.setVisibility(View.VISIBLE);
@@ -480,7 +482,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
              // renew button
              //first check domain purchase widget exist
              if(planExpiryDays <=90){
-                 showExpiryDialog(LIGHT_HOUSE_EXPIRE, planExpiryDays);
+                 showExpiryDialog(LIGHT_HOUSE_DAYS_LEFT, planExpiryDays);
              }
              if(get_fp_details_model.getFPWebWidgets() != null && get_fp_details_model.getFPWebWidgets().contains(FP_WEB_WIDGET_DOMAIN)) {
                  setDomainDetailsCard(false,"Domain Expired");
@@ -648,7 +650,8 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                 .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        Intent intent = new Intent(DomainDetailsActivity.this, NewPricingPlansActivity.class);
+                        Intent intent = new Intent(DomainDetailsActivity.this, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
+                                ?NewPricingPlansActivity.class: PricingPlansActivity.class);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         dialog.dismiss();
@@ -742,7 +745,8 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
                 linkDomain();
                 break;
             case R.id.btn_plan_expired:
-                Intent intent = new Intent(DomainDetailsActivity.this, NewPricingPlansActivity.class);
+                Intent intent = new Intent(DomainDetailsActivity.this, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
+                        ?NewPricingPlansActivity.class: PricingPlansActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;

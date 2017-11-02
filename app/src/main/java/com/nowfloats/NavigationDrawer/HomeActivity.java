@@ -101,6 +101,7 @@ import com.nowfloats.Store.FlavourFivePlansActivity;
 import com.nowfloats.Store.Model.StoreEvent;
 import com.nowfloats.Store.Model.StoreModel;
 import com.nowfloats.Store.NewPricingPlansActivity;
+import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.Store.StoreFragmentTab;
 import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.customerassistant.models.SMSSuggestions;
@@ -1635,7 +1636,8 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
             if(BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.capture")) {
                 intent = new Intent(activity, FlavourFivePlansActivity.class);
             }else {
-                intent = new Intent(activity, NewPricingPlansActivity.class);
+                intent = new Intent(activity, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
+                        ?NewPricingPlansActivity.class: PricingPlansActivity.class);
             }
             activity.startActivity(intent);
             activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

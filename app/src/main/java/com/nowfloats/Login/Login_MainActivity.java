@@ -401,10 +401,8 @@ public class Login_MainActivity extends AppCompatActivity implements
 
         if(id==android.R.id.home){
             //NavUtils.navigateUpFromSameTask(this);
-
-//
-            finish();
-            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

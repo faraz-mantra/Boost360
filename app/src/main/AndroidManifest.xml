@@ -146,7 +146,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
                 <data
-                    android:host="com.riasdk.skip"
+                    android:host="${applicationId}.riasdk.skip"
                     android:pathPrefix="/"
                     android:scheme="nowfloats" />
             </intent-filter>
@@ -278,7 +278,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
                 <data
-                    android:host="com.riasdk.login"
+                    android:host="${applicationId}.riasdk.login"
                     android:pathPrefix="/"
                     android:scheme="nowfloats" />
             </intent-filter>
@@ -297,7 +297,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
                 <data
-                    android:host="com.riasdk.presignup"
+                    android:host="${applicationId}.riasdk.presignup"
                     android:pathPrefix="/"
                     android:scheme="nowfloats" />
             </intent-filter>

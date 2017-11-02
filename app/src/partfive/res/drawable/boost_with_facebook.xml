@@ -19,7 +19,7 @@
         android:fillColor="#C9C9C9"
         android:pathData="M188.5,105.8h52.6c2,0 3.6,1.6 3.6,3.6v0c0,2 -1.6,3.6 -3.6,3.6h-52.6c-2,0 -3.6,-1.6 -3.6,-3.6v0C184.9,107.4 186.5,105.8 188.5,105.8z"/>
     <path
-        android:fillColor="#009EDF"
+        android:fillColor="@color/primary"
         android:pathData="M8.8,0.2C4,0.2 0.2,3.9 0,8.6v140.9c0,4.8 3.9,8.8 8.8,8.8c0,0 0,0 0,0l0,0l141.4,0.6c4.9,0 8.8,-3.9 8.8,-8.8c0,0 0,0 0,0l0,0V8.6c0,-4.8 -3.9,-8.8 -8.8,-8.8l0,0l0,0L8.8,0.2z"/>
     <path
         android:fillColor="#FFFFFF"

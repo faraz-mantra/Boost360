@@ -28,6 +28,7 @@ import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
 import com.nowfloats.Store.FlavourFivePlansActivity;
 import com.nowfloats.Store.NewPricingPlansActivity;
+import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.customerassistant.CustomerAssistantActivity;
 import com.nowfloats.riachatsdk.ChatManager;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
@@ -35,6 +36,7 @@ import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import org.json.JSONException;
@@ -166,7 +168,8 @@ public class Settings_Fragment extends Fragment {
                 if(Constants.PACKAGE_NAME.equalsIgnoreCase("com.capture")) {
                     intent = new Intent(activity, FlavourFivePlansActivity.class);
                 }else {
-                    intent = new Intent(activity, NewPricingPlansActivity.class);
+                    intent = new Intent(activity, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
+                            ?NewPricingPlansActivity.class: PricingPlansActivity.class);
                 }
                 activity.startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

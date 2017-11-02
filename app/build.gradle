@@ -89,7 +89,11 @@ android {
             applicationId "com.capture"
             dimension "default"
         }
-
+        partsix{
+            versionName "1.0.0"
+            applicationId "com.trivone.assist"
+            dimension "default"
+        }
         partone {
             versionName "4.8.5"
             applicationId "com.biz2.nowfloats"

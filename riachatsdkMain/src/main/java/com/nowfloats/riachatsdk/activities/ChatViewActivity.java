@@ -660,7 +660,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         switch (chatType) {
             case CREATE_WEBSITE:
                 Intent intent = new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("nowfloats://com.riasdk.presignup/riachat"));
+                        Uri.parse("nowfloats://com.biz2.nowfloats.riasdk.presignup/riachat"));
                 intent.addCategory(Intent.CATEGORY_BROWSABLE);
                 intent.setAction(Intent.ACTION_VIEW);
                 if (intent.resolveActivity(getPackageManager()) != null) {
@@ -1209,7 +1209,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
         mBundle.putString(Save_Lng, mDataMap.get("[~LNG]"));
 
         Intent intent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("nowfloats://com.riasdk.skip/riachat"));
+                Uri.parse("nowfloats://com.biz2.nowfloats.riasdk.skip/riachat"));
         intent.putExtra("mBundle", mBundle);
         intent.addCategory(Intent.CATEGORY_BROWSABLE);
         intent.setAction(Intent.ACTION_VIEW);
@@ -1226,7 +1226,7 @@ public class ChatViewActivity extends AppCompatActivity implements RvButtonsAdap
             mHandler.removeCallbacksAndMessages(null);
 
         Intent intent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("com.biz2.nowfloats://com.riasdk.skip/riachat"));
+                Uri.parse("nowfloats://com.biz2.nowfloats.riasdk.skip/riachat"));
         intent.addCategory(Intent.CATEGORY_BROWSABLE);
         intent.setAction(Intent.ACTION_VIEW);
 
