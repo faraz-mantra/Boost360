@@ -1,18 +1,22 @@
 package com.nowfloats.NavigationDrawer.API;
 
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
+import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.http.Body;
+import retrofit.http.Field;
 import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Path;
+import retrofit.http.Query;
 import retrofit.http.QueryMap;
 
 /**
@@ -43,4 +47,11 @@ public interface DomainInterface {
     @GET("/Discover/v3/floatingPoint/nf-app/{fpid}")
     public void getFPDetails(@Path("fpid") String fpid,@QueryMap Map<String,String> map, Callback<Get_FP_Details_Model> callback);
 
+    // Email booking apis
+    @Headers({"Content-Type: application/json"})
+    @POST("/EmailService/v1/emailswithdomain/create")
+    void bookEmails(@Query("clientId") String clientId, @Body EmailBookingModel model, Callback<EmailBookingModel.EmailBookingIds> response);
+
+    @GET("/EmailService/v1/emailswithdomain/getEmailBookingStatus")
+    void emailStatus(@Field("clientId") String clientId, @Field("fpTag") String fpTag, Callback<ArrayList<EmailBookingModel.EmailBookingStatus>> response);
 }

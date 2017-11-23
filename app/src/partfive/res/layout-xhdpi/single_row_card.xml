@@ -41,7 +41,6 @@
         <LinearLayout
             android:id="@+id/analytics_row_Layout"
             android:layout_width="match_parent"
-            android:visibility="gone"
             android:layout_height="@dimen/sidepanel_cell_height"
             android:background="@color/cell_background_color"
             android:gravity="center_vertical"

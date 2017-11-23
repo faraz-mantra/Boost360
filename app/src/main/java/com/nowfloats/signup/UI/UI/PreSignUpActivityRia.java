@@ -64,6 +64,7 @@ import com.nowfloats.CustomWidget.MaterialProgressBar;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.GetVisitorsAndSubscribersCountAsyncTask;
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.NavigationDrawer.Mobile_Site_Activity;
 import com.nowfloats.riachatsdk.activities.ChatWebViewActivity;
 import com.nowfloats.riachatsdk.utils.NFGeoCoder;
 import com.nowfloats.signup.UI.API.API_Layer;
@@ -94,6 +95,7 @@ import com.nowfloats.util.SmsVerifyModel;
 import com.nowfloats.util.Utils;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import org.apache.http.HttpResponse;
@@ -410,7 +412,7 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    Methods.showSnackBarNegative(PreSignUpActivityRia.this,"Please select city from list");
+                    Methods.showSnackBarNegative(PreSignUpActivityRia.this,"Please select city with suggested country");
                 }
                 return true;
 
@@ -534,7 +536,10 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             if (Code_PhoneMap.containsKey(country_code))
                 data_country_code = Code_PhoneMap.get(country_code);
         }
-        phoneEditText.setText("");
+        if (phoneEditText.getText().toString().trim().length() != 0) {
+            phoneEditText.setText("");
+            ivPhoneStatus.setBackgroundResource(R.drawable.warning);
+        }
     }
 
     private boolean isFirstCheck = true;
@@ -677,9 +682,14 @@ public class PreSignUpActivityRia extends AppCompatActivity implements
             ClickableSpan clickableSpan = new ClickableSpan() {
                 public void onClick(View view) {
                     Log.e("urlSpan", urlSpan.getURL());
-
-                    Intent intent = new Intent(PreSignUpActivityRia.this, ChatWebViewActivity.class);
-                    intent.putExtra(ChatWebViewActivity.KEY_URL, urlSpan.getURL());
+                    Intent intent;
+                    if (BuildConfig.APPLICATION_ID.equals("com.biz2.nowfloats")) {
+                        intent = new Intent(PreSignUpActivityRia.this, ChatWebViewActivity.class);
+                        intent.putExtra(ChatWebViewActivity.KEY_URL, urlSpan.getURL());
+                    }else{
+                        intent = new Intent(PreSignUpActivityRia.this, Mobile_Site_Activity.class);
+                        intent.putExtra("WEBSITE_NAME",urlSpan.getURL());
+                    }
                     startActivity(intent);
 
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

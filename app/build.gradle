@@ -47,7 +47,7 @@ android {
         applicationId 'com.biz2.nowfloats'
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 2017100031
+        versionCode 2017110020
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
@@ -61,9 +61,9 @@ android {
 //    signingConfigs {
 //        debug {
 //            storeFile file(System.properties['user.home']+"/.android/custom_debug.keystore")
-//            storePassword 'NowFloatsManage2013'
+//            storePassword ''
 //            keyAlias 'nfmanage'
-//            keyPassword 'NowFloatsManage2013'
+//            keyPassword ''
 //        }
 //    }
     flavorDimensions "default"
@@ -95,7 +95,7 @@ android {
             dimension "default"
         }
         partone {
-            versionName "4.8.5"
+            versionName "4.8.6"
             applicationId "com.biz2.nowfloats"
             dimension "default"
         }
@@ -144,7 +144,6 @@ dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
     compile 'com.makeramen:roundedimageview:1.5.0'
     compile 'com.afollestad.material-dialogs:core:0.9.4.2'
-    compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'com.facebook.android:facebook-android-sdk:4.16.1'
     compile 'com.twitter.sdk.android:twitter-core:3.0.0'
     compile 'com.wdullaer:materialdatetimepicker:1.0.1'

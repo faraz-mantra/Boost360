@@ -6,7 +6,7 @@ package com.thinksity;
 
 public class Specific {
 
-    public static String clientId2 	= "5B9FD26322EF3B1514D39A6CF92B9CC982E28BD79188D4AF449D80FB7861FEBA";
+    public static String clientId2 	= "829828C3BD22EF3B1514D39A6CF6CF92B9CC9BD79188D4A61FEBAB78641FEBA";
     public static String client_ID_1 = "39EB5FD120DC4394A10301B108030CB70FA553E91F984C829AB6ADE23B6767B7";
     public static String client_ID_2_webcreatorservice = "DA92AD580F614449B2B7B8B62DFC7AE72D201733A6D74E73B8050C541579A26C";
     public static String client_ID_3_imagechunkprocessor = "BFFEB94156C24961BBF4D4B4CC3663BB883E2EFA875148CE9C08BAB702663FAE";
@@ -25,13 +25,13 @@ public class Specific {
 
     public static String access_level = "20";
     public static final String CONTACT_EMAIL_ID = "contact@trivone.com";
-    public static final String FACEBOOK_API_KEY 	= "768028443377125";
+    public static final String FACEBOOK_API_KEY 	= "539836972828386";
 
 //    public static String TWITTER_TOK 				= "h5lB3rvjU66qOXHgrZK41Q";
 //    public static String TWITTER_SEC 				= "L0Bo08aevt2U1fLjuuYAMtANSAzWWi8voGuvbrdtcY4";
 
-    public static final String TWITTER_TOK 				= "CSFV2FjjKBxrQ3MJFXLqhKgMV";
-    public static final String TWITTER_SEC 				= "o6jyVudLU6DjyfQ9vfrIijm8SHkJOGoY5Hbv0IJKbswliAJY8E";
+    public static final String TWITTER_TOK 				= "4CiUg5gcIbvYre8XjGd8GsElV";
+    public static final String TWITTER_SEC 				= "4kNsAsyM2w4F3fAEqyIK4xTcIUgoq2CtRpkH5Z7U4WW5T2ucC9";
     public static final String FACEBOOK_URL = "https://www.facebook.com/digitaltrivone";
     public static final String PACKAGE_NAME = "com.trivone.assist";
     public static final String[] FACEBOOK_READ_PERMISSIONS = {"email", "public_profile", "user_friends", "read_insights", "business_management"};

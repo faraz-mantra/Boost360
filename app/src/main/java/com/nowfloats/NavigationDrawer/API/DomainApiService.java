@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
+import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.util.BoostLog;
 import com.nowfloats.util.Constants;
@@ -24,7 +25,7 @@ import retrofit.client.Response;
  */
 
 public class DomainApiService {
-    Bus mBus;
+    private Bus mBus;
 
     public enum DomainAPI {
 
@@ -36,6 +37,19 @@ public class DomainApiService {
         RENEW_NOT_AVAILABLE
     }
 
+    public enum EmailAPI{
+        BOOKING_ERROR,
+    }
+
+    public enum EmailBookingStatus{
+        NOT_INITIATED,
+        VALIDATED,
+        ORDER_COMPLETED,
+        USERADD_COMPLETED ,
+        DNSFETCH_COMPLETED,
+        DNSUPDATE_COMPLETED,
+        COMPLETED;
+    }
     public DomainApiService(Bus bus) {
         this.mBus = bus;
     }
@@ -141,6 +155,42 @@ public class DomainApiService {
 
     }
 
+    public void bookEmail(String clientId, EmailBookingModel model){
+        DomainInterface domainInterface = Constants.riaRestAdapter.create(DomainInterface.class);
+        domainInterface.bookEmails(clientId, model,new Callback<EmailBookingModel.EmailBookingIds>() {
+            @Override
+            public void success(EmailBookingModel.EmailBookingIds emailBookingIds, Response response) {
+                if (emailBookingIds != null) {
+                    mBus.post(emailBookingIds);
+                }else{
+                    mBus.post(new EmailBookingModel.EmailBookingIds());
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                mBus.post(new EmailBookingModel.EmailBookingIds());
+            }
+        });
+    }
+    public void emailsStatus(String clientId, String fpTag){
+        DomainInterface domainInterface = Constants.riaRestAdapter.create(DomainInterface.class);
+        domainInterface.emailStatus(clientId, fpTag, new Callback<ArrayList<EmailBookingModel.EmailBookingStatus>>() {
+            @Override
+            public void success(ArrayList<EmailBookingModel.EmailBookingStatus> emailBookingStatuses, Response response) {
+                if (emailBookingStatuses != null){
+                    mBus.post(emailBookingStatuses);
+                }else{
+                    mBus.post(new ArrayList<EmailBookingModel.EmailBookingStatus>(0));
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                mBus.post(new ArrayList<EmailBookingModel.EmailBookingStatus>(0));
+            }
+        });
+    }
     public void linkDomain(HashMap<String, String> bodyData, HashMap<String, String> data) {
         DomainInterface domainInterface = Constants.riaRestAdapter.create(DomainInterface.class);
         domainInterface.linkDomain(data, bodyData, new Callback<Boolean>() {

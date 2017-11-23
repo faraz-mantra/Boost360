@@ -25,6 +25,8 @@
     <string name="title_activity_social__sharing_">Social Sharing</string>
     <string name="title_activity_login__main">Welcome Back</string>
     <string name="title_activity_pre_sign_up__main">PreSignUp_MainActivity</string>
+    <string name="primary_number">Primary Number (To communicate with Kitsune)</string>
+    <string name="to_communicate_with_nowfloats">To communicate with Kitsune</string>
     <string name="ps_create_lbl">CREATE</string>
     <string name="ps_login_lbl">LOG IN</string>
     <string name="ps_create_lbl_tag">a website with NowFloats</string>

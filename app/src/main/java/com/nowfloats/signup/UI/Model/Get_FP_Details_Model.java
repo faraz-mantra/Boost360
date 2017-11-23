@@ -77,7 +77,16 @@ public class Get_FP_Details_Model implements Serializable{
     public String response;
     public String domainName;
     public String domainType;
+    public String ProductCategoryVerb;
     public String DomainValidityInYears;
+
+    public String getProductCategoryVerb() {
+        return ProductCategoryVerb;
+    }
+
+    public void setProductCategoryVerb(String productCategoryVerb) {
+        ProductCategoryVerb = productCategoryVerb;
+    }
 
     public String getDomainValidityInYears() {
         return DomainValidityInYears;

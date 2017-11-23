@@ -1,55 +1,34 @@
 package com.nowfloats.NavigationDrawer;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.model.AlertCountEvent;
 import com.nowfloats.NavigationDrawer.model.RiaCardModel;
 import com.nowfloats.NotificationCenter.NotificationFragment;
-import com.nowfloats.Product_Gallery.Model.ProductListModel;
-import com.nowfloats.Product_Gallery.Service.ProductGalleryInterface;
-import com.nowfloats.bubble.BubblesService;
-import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
-import com.nowfloats.util.Methods;
-import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 import static com.nowfloats.bubble.BubblesService.ACTION_KILL_DIALOG;
 
@@ -300,64 +279,30 @@ public class Home_Fragment_Tab extends Fragment {
     public void onStop() {
         super.onStop();
 
-        if (getActivity() == null) return;
-        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
-            getActivity().stopService(new Intent(getActivity(), BubblesService.class));
-            getActivity().unregisterReceiver(clickReceiver);
-        }
-
-    }
-
-    private void getProducts() {
-        HashMap<String, String> values = new HashMap<>();
-        values.put("clientId", Constants.clientId);
-        values.put("skipBy", "0");
-        values.put("fpTag", session.getFPDetails(Key_Preferences.GET_FP_DETAILS_TAG));
-        //invoke getProduct api
-        ProductGalleryInterface productInterface = Constants.restAdapter.create(ProductGalleryInterface.class);
-        productInterface.getProducts(values, new Callback<ArrayList<ProductListModel>>() {
-            @Override
-            public void success(ArrayList<ProductListModel> productListModels, Response response) {
-
-
-                if (productListModels == null || productListModels.size() == 0 || response.getStatus() != 200) {
-                    pref.edit().putBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, false).apply();
-                    return;
-                }
-
-                pref.edit().putBoolean(Key_Preferences.HAS_BUBBLE_SHARE_PRODUCTS, true).apply();
-//                isProductAvaiable = true;
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        checkOverlay(DrawOverLay.FromTab);
-//                    }
-//                }, 5000);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
-    }
-
-    private void showBubble() {
-
-//        if (!pref.getBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, false)) {
-        addOverlay();
-        pref.edit().putBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, true).apply();
+//        if (getActivity() == null) return;
+//        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+//            getActivity().stopService(new Intent(getActivity(), BubblesService.class));
+//            getActivity().unregisterReceiver(clickReceiver);
 //        }
 
-        int px = Methods.dpToPx(80, getActivity());
-        Intent intent = new Intent(getActivity(), BubblesService.class);
-        intent.putExtra(Key_Preferences.BUBBLE_POS_Y, px);
-        intent.putExtra(Key_Preferences.DIALOG_FROM, BubblesService.FROM.HOME_ACTIVITY);
-        activity.startService(intent);
-
     }
 
-    public void checkOverlay(DrawOverLay from) {
+//    private void showBubble() {
+//
+////        if (!pref.getBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, false)) {
+//        addOverlay();
+//        pref.edit().putBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, true).apply();
+////        }
+//
+//        int px = Methods.dpToPx(80, getActivity());
+//        Intent intent = new Intent(getActivity(), BubblesService.class);
+//        intent.putExtra(Key_Preferences.BUBBLE_POS_Y, px);
+//        intent.putExtra(Key_Preferences.DIALOG_FROM, BubblesService.FROM.HOME_ACTIVITY);
+//        activity.startService(intent);
+//
+//    }
+
+    /*public void checkOverlay(DrawOverLay from) {
         if (!isAdded() || getActivity() == null) {
             return;
         }
@@ -433,11 +378,11 @@ public class Home_Fragment_Tab extends Fragment {
             startActivity(new Intent(Settings.ACTION_SETTINGS));
         }
     }
-
+*/
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PERM_REQUEST_CODE_DRAW_OVERLAYS) {
+       /* if (requestCode == PERM_REQUEST_CODE_DRAW_OVERLAYS) {
 
             new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
                 @Override
@@ -455,10 +400,10 @@ public class Home_Fragment_Tab extends Fragment {
                     }
                 }
             }, 1000);
-        }
+        }*/
     }
 
-    private void checkCustomerAssistantService() {
+   /* private void checkCustomerAssistantService() {
 
         if (!Methods.isMyServiceRunning(getActivity(), CustomerAssistantService.class)) {
             Intent bubbleIntent = new Intent(getActivity(), CustomerAssistantService.class);
@@ -485,7 +430,7 @@ public class Home_Fragment_Tab extends Fragment {
                 //layout.setOnClickListener(null);
             }
         });
-    }
+    }*/
 
     @Override
     public void onStart() {
@@ -505,20 +450,20 @@ public class Home_Fragment_Tab extends Fragment {
         } else {
             alertCountVal = "0";
         }
-        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
-            getActivity().registerReceiver(clickReceiver, clickIntentFilters);
-        }
+//        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+//            getActivity().registerReceiver(clickReceiver, clickIntentFilters);
+//        }
     }
 
-    BroadcastReceiver clickReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            Log.v("ggg", "clicked");
-            bubbleOverlay.removeAllViews();
-            bubbleOverlay.setVisibility(View.GONE);
-            //bubbleOverlay.setOnClickListener(null);
-        }
-
-    };
+//    BroadcastReceiver clickReceiver = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context context, Intent intent) {
+//            Log.v("ggg", "clicked");
+//            bubbleOverlay.removeAllViews();
+//            bubbleOverlay.setVisibility(View.GONE);
+//            //bubbleOverlay.setOnClickListener(null);
+//        }
+//
+//    };
 
 }

@@ -1,7 +1,6 @@
 package com.nowfloats.accessbility;
 
 import android.accessibilityservice.AccessibilityService;
-import android.accessibilityservice.AccessibilityServiceInfo;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
@@ -9,9 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Build;
-import android.provider.Settings;
 import android.support.annotation.RequiresApi;
-import android.text.TextUtils;
 import android.view.accessibility.AccessibilityEvent;
 
 import com.nowfloats.bubble.BubblesService;
@@ -46,7 +43,7 @@ public class DataAccessibilityServiceV8 extends AccessibilityService {
 //        if (!Constants.PACKAGE_NAME.equals(PK_NAME_NOWFLOATS)) {
 //            return;
 //        }
-        pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
+      /*  pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         if (!TextUtils.isEmpty(pref.getString(Key_Preferences.GET_FP_DETAILS_TAG, ""))
                 && pref.getBoolean(Key_Preferences.SHOW_WHATS_APP_DIALOG, true)) {
             showWhatsAppDialog();
@@ -59,7 +56,7 @@ public class DataAccessibilityServiceV8 extends AccessibilityService {
         info.notificationTimeout = 100;
         info.flags = 91;
         info.feedbackType = 16;
-        setServiceInfo(info);
+        setServiceInfo(info);*/
     }
 
     private void showWhatsAppDialog() {
@@ -83,7 +80,7 @@ public class DataAccessibilityServiceV8 extends AccessibilityService {
         if (!Constants.PACKAGE_NAME.equals(PK_NAME_NOWFLOATS)) {
             return;
         }
-        if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
+        /*if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
 
             if (!TextUtils.isEmpty(event.getPackageName()) &&
                     (event.getPackageName().toString().equalsIgnoreCase(PK_NAME_WHATSAPP)
@@ -138,7 +135,7 @@ public class DataAccessibilityServiceV8 extends AccessibilityService {
                     stopService(new Intent(DataAccessibilityServiceV8.this, BubblesService.class));
                 }
             }
-        }
+        }*/
     }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {

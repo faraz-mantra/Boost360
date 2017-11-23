@@ -23,7 +23,7 @@
             android:layout_weight="1"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:maxLines="1"
+            android:singleLine="true"
             android:layout_marginEnd="5dp"
             android:ellipsize="marquee"
             fontPath="Roboto-Medium.ttf"
@@ -55,12 +55,12 @@
             android:layout_height="match_parent"
             android:padding="8dp"
             android:background="@drawable/button_click_effect"
-            android:src="@drawable/ic_search_white"
+            app:srcCompat="@drawable/ic_search_white"
             android:layout_gravity="end"
             android:visibility="visible"/>
 
         <ImageView
-            android:id="@+id/delete_image"
+            android:id="@+id/img_delete"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:src="@drawable/ic_add_white_24dp"

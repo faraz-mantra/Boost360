@@ -58,6 +58,7 @@ import com.nowfloats.util.TwoWayView;
 import com.romeo.mylibrary.Models.OrderDataModel;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import org.json.JSONException;
@@ -163,7 +164,7 @@ public class StoreDataActivity extends AppCompatActivity {
 //                if (("91").equals(countryPhoneCode)){
                  if (/*true*//*product.ExternalApplicationDetails==null || product.ExternalApplicationDetails.equals("null")
                         || product.ExternalApplicationDetails.size()==0*/!sessionManager.getFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY).equalsIgnoreCase("India")
-                         ||Constants.PACKAGE_NAME.equalsIgnoreCase("com.digitalseoz")||Constants.PACKAGE_NAME.equalsIgnoreCase("com.sibername")){
+                         ||!BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")){
                     materialProgress.dismiss();
                     ProductPrice.setText(getString(R.string.interest));
                     product_validity.setVisibility(View.GONE);

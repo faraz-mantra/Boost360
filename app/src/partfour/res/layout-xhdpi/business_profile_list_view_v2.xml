@@ -101,9 +101,7 @@
                 android:padding="5dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/share_grey"
-                android:visibility="gone"
-
-                />
+                android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/sixth_ImageView_ProfileV2"
@@ -115,6 +113,18 @@
                 android:visibility="gone"
                 android:scaleType="fitCenter"
                 android:src="@drawable/site_appearance" />
+
+            <ImageView
+                android:id="@+id/nine_ImageView_ProfileV2"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/textview_height_business_profile"
+                android:layout_marginLeft="@dimen/icon_left_margin"
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:padding="10dp"
+                android:visibility="gone"
+                android:scaleType="fitCenter"
+                android:tint="@color/gray"
+                android:src="@drawable/insert_link" />
 
         </LinearLayout>
 
@@ -241,6 +251,7 @@
                 android:text="@string/side_panel_row_csp"
                 android:textColor="@color/cell_text_color"
                 android:textSize="@dimen/cell_text_size" />
+
             <LinearLayout
                 android:id="@+id/layout_site_appearance"
                 android:layout_width="match_parent"
@@ -263,7 +274,6 @@
                     android:textSize="@dimen/cell_text_size" />
             </LinearLayout>
 
-
             <TextView
                 android:id="@+id/socialSharing_Layout_ProfileV2"
                 android:layout_width="match_parent"
@@ -274,6 +284,17 @@
                 android:textColor="@color/cell_text_color"
                 android:textSize="@dimen/cell_text_size"
                 android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tvDomainDetails"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/textview_height_business_profile"
+                android:background="?android:selectableItemBackground"
+                android:gravity="center_vertical"
+                android:text="@string/side_panel_row_domain_details"
+                android:visibility="gone"
+                android:textColor="@color/cell_text_color"
+                android:textSize="@dimen/cell_text_size" />
 
         </LinearLayout>
 

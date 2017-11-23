@@ -8,8 +8,9 @@
         android:layout_height="wrap_content">
         <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/spinner_all_open"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="36dp"
+            android:layout_weight="1"
             android:gravity="center"
             android:inputType="none"
             android:focusable="false"
@@ -22,15 +23,15 @@
             android:layout_height="wrap_content"
             android:text="To"
             android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:layout_gravity="center_vertical"
             android:textColor="@color/black" />
 
         <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/spinner_all_close"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="36dp"
+            android:layout_weight="1"
             android:gravity="center"
             android:inputType="none"
             android:backgroundTint="@color/gray"

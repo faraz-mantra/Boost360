@@ -17,7 +17,6 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -30,7 +29,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -408,40 +406,40 @@ public class SidePanelFragment extends Fragment {
         bubbleSwitch = (Switch) bubbleLayout.findViewById(R.id.ninethRow_Switch);
         //tvSiteAppearance = (TextView) llSiteAppearance.findViewById(R.id.tv_site_appearance);
 
-        if (!Methods.isAccessibilitySettingsOn(getActivity())) {
-//            if(session.isBoostBubbleEnabled()){
-//                session.setBubbleTime(-1);
-//                ((OnItemClickListener) mainActivity).onClick(getString(R.string.home));
+//        if (!Methods.isAccessibilitySettingsOn(getActivity())) {
+////            if(session.isBoostBubbleEnabled()){
+////                session.setBubbleTime(-1);
+////                ((OnItemClickListener) mainActivity).onClick(getString(R.string.home));
+////            }
+//            session.setBubbleStatus(false);
+//        }
+//
+//        bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
+//
+//        bubbleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (!isChecked) {
+//                    session.setBubbleStatus(isChecked);
+//                } else {
+//
+//                    if ((android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity()))
+//                            || (!Methods.isAccessibilitySettingsOn(getActivity()))) {
+//
+////                        if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1")) {
+////                            showAlertMaterialDialog();
+////                            bubbleSwitch.setChecked(false);
+////                        } else {
+//                        session.setBubbleTime(-1);
+//                        ((OnItemClickListener) mainActivity).onClick(getString(R.string.home));
+////                        }
+//                    } else {
+//                        session.setBubbleStatus(isChecked);
+//                    }
+//
+//                }
 //            }
-            session.setBubbleStatus(false);
-        }
-
-        bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
-
-        bubbleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!isChecked) {
-                    session.setBubbleStatus(isChecked);
-                } else {
-
-                    if ((android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity()))
-                            || (!Methods.isAccessibilitySettingsOn(getActivity()))) {
-
-//                        if (!session.getFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE).equals("1")) {
-//                            showAlertMaterialDialog();
-//                            bubbleSwitch.setChecked(false);
-//                        } else {
-                        session.setBubbleTime(-1);
-                        ((OnItemClickListener) mainActivity).onClick(getString(R.string.home));
-//                        }
-                    } else {
-                        session.setBubbleStatus(isChecked);
-                    }
-
-                }
-            }
-        });
+//        });
 
         lockWidgetImageView = (ImageView) imageGalleryLayout.findViewById(R.id.lock_widget);
         businessLockImage = (ImageView) businessAppsLayout.findViewById(R.id.business_lock_widget);
@@ -805,7 +803,7 @@ public class SidePanelFragment extends Fragment {
 //                        Constants.showStoreScreen = true ;
 //                        getActivity().getSupportFragmentManager().popBackStack();
                         if (!getString(R.string.goto_store).equalsIgnoreCase("ok"))//this condition added for flavor check
-                            ((OnItemClickListener) mainActivity).onClick("store");
+                            ((OnItemClickListener) mainActivity).onClick("Store");
 
                         dialog.dismiss();
                     }
@@ -1296,7 +1294,7 @@ public class SidePanelFragment extends Fragment {
             chatLayout.setVisibility(View.GONE);
             siteMeter.setVisibility(View.GONE);
         }
-        bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
+       // bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
 
         // mDrawerLayout.openDrawer(Gravity.LEFT);
     }

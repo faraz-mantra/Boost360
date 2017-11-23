@@ -75,7 +75,11 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
             public void onClick(View v) {
 
                 MixPanelController.track(EventKeysWL.SAVE_CONTACT_INFO, null);
-                uploadbusinessTimingsInfo();
+                if (Methods.isOnline(BusinessHoursActivity.this)) {
+                    uploadbusinessTimingsInfo();
+                }else{
+                    Methods.snackbarNoInternet(BusinessHoursActivity.this);
+                }
             }
         });
         etSunOpen = (EditText) findViewById(R.id.et_sun_open);
@@ -329,7 +333,7 @@ public class BusinessHoursActivity extends AppCompatActivity implements View.OnT
         openSpinner.setOnItemSelectedListener(this);
         closeSpinner.setOnItemSelectedListener(this);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.business_hours_arrays, android.R.layout.simple_spinner_item);
+                R.array.business_hours_arrays, R.layout.layout_simple_text_item);
         openSpinner.setAdapter(adapter);
         closeSpinner.setAdapter(adapter);
         MaterialDialog dialog  = new MaterialDialog.Builder(this)

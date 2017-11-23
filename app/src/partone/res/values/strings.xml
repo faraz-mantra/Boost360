@@ -23,6 +23,8 @@
     <string name="title_activity_business__logo_">Business Logo</string>
     <string name="title_activity_social__sharing_">Social Sharing</string>
     <string name="title_activity_login__main">Welcome Back</string>
+    <string name="primary_number">Primary Number (To communicate with NowFloats)</string>
+    <string name="to_communicate_with_nowfloats">To communicate with NowFloats</string>
     <string name="title_activity_pre_sign_up__main">PreSignUp_MainActivity</string>
     <string name="ps_create_lbl">CREATE</string>
     <string name="ps_login_lbl">LOG IN</string>
@@ -51,8 +53,7 @@
     <string name="ps_sc1_lbl2_tf">HN53exd.ttf</string>
     <string name="ps_create_lbl_tf">HN75Bold.ttf</string>
     <string name="ps_create_tag_tf">HN56IT.ttf</string>
-    <string name="to_buy_pricing_plans_please_contact">If you are interested in buying a plan,
-        please drop a line at support@aecasiainc.com or call us at +917034427427.</string>
+    <string name="to_buy_pricing_plans_please_contact">If you are interested in buying a plan, please drop a line at ria@nowfloats.com or call us at 1860&#8211;123&#8211;1233.</string>
 
     <string-array name="time_arrays">
         <item>01:00</item>

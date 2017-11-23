@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="55dp"
     style="@style/white_label_style"
-    app:theme="@style/MyCustomToolBarTheme"
+    app:theme="@style/CustomToolbarTheme"
     tools:context=".PreSignUpActivity">
 
     <com.nowfloats.CustomWidget.roboto_md_48_white

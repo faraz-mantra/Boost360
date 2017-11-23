@@ -2,26 +2,24 @@ package com.nowfloats.NavigationDrawer;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
-import android.text.method.LinkMovementMethod;
+import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.URLSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.freshdesk.hotline.Hotline;
 import com.nowfloats.Login.UserSessionManager;
@@ -32,25 +30,30 @@ import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import retrofit.Callback;
-import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static com.nowfloats.NavigationDrawer.HelpAndSupportFragment.MemberType.CHC;
+import static com.nowfloats.NavigationDrawer.HelpAndSupportFragment.MemberType.WEB;
 
-public class HelpAndSupportFragment extends Fragment {
 
-    Toolbar toolbar;
-    TextView headerText, tvConsultantName, tvConsultantNumber, tvEmail, tvTextHelp, tvTextRia,
-            tvTextFaq1, tvTextFaq2, tvRia;
-    Button btnSendEmail, btnCall, btnSchedule, btnChat;
+public class HelpAndSupportFragment extends Fragment implements View.OnClickListener {
+
+    TextView tvConsultantName, tvConsultantNumber, tvEmail, tvNextMember,tvFaq,
+            tvTextRia, tvConsultantDes;
     ImageView ivHelpAvatar;
     ProgressDialog pd;
-
     UserSessionManager sessionManager;
-    RiaSupportModel mRiaSupportModel;
+    List<RiaSupportModel> mRiaSupportModelList;
+    private Context mContext;
+    private MemberType nextMember = CHC;
+    enum MemberType{
+       CHC,WEB;
+    }
 
     private static final String CHAT_INTENT_URI = "com.biz2.nowfloats://com.riachat.start";
 
@@ -63,78 +66,51 @@ public class HelpAndSupportFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.activity_help_and_support, container, false);
+        View view =  inflater.inflate(R.layout.fragment_help_and_support, container, false);
         tvConsultantName = (TextView) view.findViewById(R.id.tv_consultant_name);
         tvConsultantNumber = (TextView) view.findViewById(R.id.tv_contact_number);
+        tvConsultantDes = view.findViewById(R.id.tv_member_description);
         tvEmail = (TextView) view.findViewById(R.id.tv_consultant_email);
-        tvRia = (TextView) view.findViewById(R.id.tvRia);
-        tvTextHelp = (TextView) view.findViewById(R.id.tv_text_help);
         tvTextRia = (TextView) view.findViewById(R.id.tv_ria_text);
-        tvTextFaq1 = (TextView) view.findViewById(R.id.tv_text_faq1);
-        tvTextFaq2 = (TextView) view.findViewById(R.id.tv_text_faq2);
-
+        tvFaq = (TextView) view.findViewById(R.id.tv_faq);
+        tvNextMember = (TextView) view.findViewById(R.id.tv_next_member);
         ivHelpAvatar = (ImageView) view.findViewById(R.id.iv_help_avatar);
-
-        btnSendEmail = (Button) view.findViewById(R.id.btn_send_mail);
-        btnCall = (Button) view.findViewById(R.id.btn_call);
-        btnSchedule = (Button) view.findViewById(R.id.btn_schedule);
-        btnChat = (Button) view.findViewById(R.id.btnChat);
-
+        tvNextMember.setOnClickListener(this);
+        tvFaq.setOnClickListener(this);
         sessionManager = new UserSessionManager(getActivity().getApplicationContext(), getActivity());
+        tvConsultantNumber.setPaintFlags(tvConsultantNumber.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint("https://ria.withfloats.com")
-                .build();
-        final RiaNetworkInterface riaNetworkInterface = restAdapter.create(RiaNetworkInterface.class);
+        final RiaNetworkInterface riaNetworkInterface = Constants.riaRestAdapter.create(RiaNetworkInterface.class);
         Map<String, String> param = new HashMap<>();
         param.put("clientId", Constants.clientId);
         param.put("fpTag", sessionManager.getFpTag());
-        riaNetworkInterface.getMemberForFp(param, new Callback<RiaSupportModel>() {
+        riaNetworkInterface.getAllMemberForFp(param, new Callback<List<RiaSupportModel>>() {
             @Override
-            public void success(final RiaSupportModel riaSupportModel, Response response) {
+            public void success(List<RiaSupportModel> list, Response response) {
                 if (pd != null && pd.isShowing()) {
                     pd.dismiss();
                 }
-                if (riaSupportModel != null) {
-                    mRiaSupportModel = riaSupportModel;
-
-                    if (riaSupportModel.getGender() == 1) {
-                        tvConsultantName.setText("Ms. " + riaSupportModel.getName());
-                        if(getActivity()!=null)
-                        ivHelpAvatar.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.help_female_avatar));
-                        btnCall.setText("CALL HER");
-                    } else {
-                        tvConsultantName.setText("Mr. " + riaSupportModel.getName());
-                        if(getActivity()!=null)
-                        ivHelpAvatar.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.help_male_avatar));
-                        btnCall.setText("CALL HIM");
-                    }
-                    tvConsultantNumber.setText(Methods.fromHtml("<a href=\"\">" + riaSupportModel.getPhoneNumber() + "</a>"));
-                    tvConsultantNumber.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent i = new Intent();
-                            i.setAction(Intent.ACTION_DIAL);
-                            i.setData(Uri.parse("tel:" + riaSupportModel.getPhoneNumber()));
-                            startActivity(i);
-
+                mRiaSupportModelList = list;
+                if (list == null){
+                    tvNextMember.setVisibility(View.GONE);
+                }else if(list.size() == 1){
+                    tvNextMember.setVisibility(View.GONE);
+                    setMember(list.get(0), WEB);
+                }else if(list.size() > 1) {
+                    for (RiaSupportModel riaSupportModel:list) {
+                         if (!TextUtils.isEmpty(riaSupportModel.getType()) && MemberType.valueOf(riaSupportModel.getType()) == CHC) {
+                             setMember(riaSupportModel, CHC);
+                             break;
                         }
-                    });
-                    tvEmail.setText(Methods.fromHtml("<a href=\"mail:" + riaSupportModel.getEmail() + "\">" + riaSupportModel.getEmail() + "</a>"));
-                    String genderVal = (riaSupportModel.getGender() == 1) ? "her" : "him";
-                    tvTextHelp.setText(Methods.fromHtml(riaSupportModel.getName() + " is your dedicated web consultant who will be assisting you with all your queries related to your NowFloats website. You can call " + genderVal + " anytime from <b>9.30 am to 6.30 pm</b> on all working days."));
-                } else {
+                    }
+
+                }
 //                    finish();
 //                    Intent call = new Intent(Intent.ACTION_DIAL);
 //                    String callString = "tel:" + getString(R.string.contact_us_number);
 //                    call.setData(Uri.parse(callString));
 //                    startActivity(call);
-                    tvTextRia.setVisibility(View.GONE);
-                    tvTextFaq1.setVisibility(View.GONE);
-                    tvTextHelp.setText(Methods.fromHtml("Ria" + " is your dedicated web consultant who will be assisting you with all your queries related to your NowFloats website. You can call " + "her" + " anytime from <b>9.30 am to 6.30 pm</b> on all working days."));
-                    tvTextFaq2.setText(Methods.fromHtml("For Product related queries, please refer to our <a href=\"" + getString(R.string.faqs_url) + "\">FAQs</a>"));
 
-                }
             }
 
             @Override
@@ -142,78 +118,48 @@ public class HelpAndSupportFragment extends Fragment {
                 if (pd != null && pd.isShowing()) {
                     pd.dismiss();
                 }
-                AlertDialog dialog = new AlertDialog.Builder(getActivity())
-                        .setMessage("Error while getting dedicated web consultant")
-                        .setCancelable(false)
-                        .show();
+                tvNextMember.setVisibility(View.GONE);
+                //tvTextRia.setVisibility(View.GONE);
+                Methods.showSnackBarNegative(getActivity(),getString(R.string.something_went_wrong));
 
             }
         });
 
-        btnCall.setOnClickListener(new View.OnClickListener() {
+        tvConsultantNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent i = new Intent();
                 i.setAction(Intent.ACTION_DIAL);
-                if (mRiaSupportModel != null) {
-                    i.setData(Uri.parse("tel:" + mRiaSupportModel.getPhoneNumber()));
-                } else {
-                    i.setData(Uri.parse("tel:" + tvConsultantNumber.getText().toString()));
-                }
+                i.setData(Uri.parse("tel:" + tvConsultantNumber.getText().toString()));
                 startActivity(i);
             }
         });
 
-        btnChat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Hotline.showConversations(getActivity());
-            }
-        });
-
-        btnSendEmail.setOnClickListener(new View.OnClickListener() {
+        tvEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent emailIntent = new Intent(Intent.ACTION_SEND);
                 emailIntent.setData(Uri.parse("mailto:"));
                 emailIntent.setType("text/plain");
-                if (mRiaSupportModel != null) {
-                    emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{mRiaSupportModel.getEmail()});
-                } else {
-                    emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{tvEmail.getText().toString()});
-                }
-
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{tvEmail.getText().toString()});
                 if (emailIntent.resolveActivity(getActivity().getPackageManager()) != null) {
                     startActivity(emailIntent);
                 }
             }
         });
 
-        btnSchedule.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "This feature will be available soon", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        tvTextRia.setText(Methods.fromHtml("If your query is unanswered, please contact us at"));
-
-
-        CharSequence charSequence = Methods.fromHtml("<a href=\"mailto:" + getString(R.string.settings_feedback_link) + "\">" + getString(R.string.settings_feedback_link) + "</a> " +
-                "or call at " + getString(R.string.contact_us_number) +
-                " or <a href=\"" + CHAT_INTENT_URI + "\"><u>CHAT</u></a>.");
+        CharSequence charSequence = Methods.fromHtml("If your query is still unanswered, please contact us at <a href=\"mailto:" + getString(R.string.settings_feedback_link) + "\">" + getString(R.string.settings_feedback_link) + "</a> " +
+                "or call at <a href=tel:"+ getString(R.string.contact_us_number)+">"+getString(R.string.contact_us_number)+"</a> " +
+                "or <a href=\"" + CHAT_INTENT_URI + "\"><u>CHAT</u></a>.");
 
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(charSequence);
         makeLinkClickable(spannableStringBuilder, charSequence);
+        tvTextRia.setText(spannableStringBuilder);
+        //tvTextRia.setMovementMethod(LinkMovementMethod.getInstance());
 
-        tvTextFaq1.setMovementMethod(LinkMovementMethod.getInstance());
-        tvTextFaq1.setText(spannableStringBuilder);
-
-
-        tvTextFaq2.setText(Methods.fromHtml("Product related queries, please refer to our <a href=\"" + getString(R.string.faqs_url) + "\">FAQs</a>"));
-        tvTextFaq2.setMovementMethod(LinkMovementMethod.getInstance());
+        /*tvTextFaq2.setText(Methods.fromHtml("Product related queries, please refer to our <a href=\"" + getString(R.string.faqs_url) + "\">FAQs</a>"));
+        tvTextFaq2.setMovementMethod(LinkMovementMethod.getInstance());*/
 
         pd = ProgressDialog.show(getActivity(), "", getString(R.string.please_wait));
 
@@ -240,7 +186,61 @@ public class HelpAndSupportFragment extends Fragment {
         }
 
     }
+    @Override
+    public void onClick(View view){
+            switch (view.getId()){
+                case R.id.tv_next_member:
+                    for (RiaSupportModel model:mRiaSupportModelList){
+                        if (TextUtils.isEmpty(model.getType()) && nextMember == WEB){
+                            setMember(model,nextMember);
+                            break;
+                        }
+                        else if (!TextUtils.isEmpty(model.getType()) && nextMember == MemberType.valueOf(model.getType())){
+                            setMember(model,nextMember);
+                            break;
+                        }
+                    }
 
+                    break;
+                case R.id.tv_faq:
+                    Intent i = new Intent(getActivity(), Mobile_Site_Activity.class);
+                    i.putExtra("WEBSITE_NAME",getString(R.string.faqs_url));
+                    startActivity(i);
+                    break;
+            }
+    }
+
+    private void setMember(final RiaSupportModel riaSupportModel, MemberType memberType){
+        switch (memberType){
+            case CHC:
+                nextMember = WEB;
+                tvNextMember.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(mContext,R.drawable.right_arrow), null );
+                tvNextMember.setText("Instant Web Support");
+                tvConsultantDes.setText("Your Personal Account Manager");
+                break;
+            case WEB:
+                nextMember = CHC;
+                tvNextMember.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(mContext,R.drawable.left_arrow), null, null, null );
+                tvNextMember.setText("Personal Account Manager");
+                tvConsultantDes.setText("Instant Web Support");
+                break;
+            default:
+                break;
+        }
+
+        // check if next member exist add arrow if not hide it
+        if (riaSupportModel.getGender() == 1) {
+            tvConsultantName.setText("Ms. " + riaSupportModel.getName());
+            if(getActivity()!=null)
+                ivHelpAvatar.setImageDrawable(ContextCompat.getDrawable(getActivity(), memberType == WEB?R.drawable.help_web_support:R.drawable.help_female_avatar));
+        } else {
+            tvConsultantName.setText("Mr. " + riaSupportModel.getName());
+            if(getActivity()!=null)
+                ivHelpAvatar.setImageDrawable(ContextCompat.getDrawable(getActivity(), memberType == CHC?R.drawable.help_product_support:R.drawable.help_male_avatar));
+        }
+        tvConsultantNumber.setText(Methods.fromHtml("<a href=\"\">" + riaSupportModel.getPhoneNumber() + "</a>"));
+        tvEmail.setText(Methods.fromHtml("<a href=\"mail:" + riaSupportModel.getEmail() + "\">" + riaSupportModel.getEmail() + "</a>"));
+    }
     @Override
     public void onResume() {
         super.onResume();
@@ -248,6 +248,11 @@ public class HelpAndSupportFragment extends Fragment {
             HomeActivity.headerText.setText("Help And Support");
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {

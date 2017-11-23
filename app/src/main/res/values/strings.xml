@@ -15,6 +15,7 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+    <string name="hotline_file_provider_authority">com.biz2.nowfloats.provider</string>
     <string name="title_activity_business_profile__home">Business Profile</string>
     <string name="business__address">Business Address</string>
     <string name="contact__info">Contact Information</string>
@@ -45,7 +46,7 @@
     <string name="ps_sc6_lbl2">Opportunities</string>
     <string name="ps_sc6_lbl3">Let customers contact you directly \nand reply to them instantly!</string>
     <string name="ps_sc8_lbl1">Premium features in</string>
-    <string name="ps_sc8_lbl2">NOWFLOATS</string>
+    <string name="ps_sc8_lbl2">NowFloats</string>
     <string name="ps_sc8_lbl3">Get additional features \nfor your business website \nfrom the in-app Store.</string>
     <string name="ps_sc8_lbl4">Store</string>
     <string name="ps_sc1_lbl1_tf">HN53exd.ttf</string>
@@ -782,7 +783,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="domain_lookup">Domain LookUp</string>
     <string name="enter_domain_nmae_to_continue">Enter domain name to continue</string>
     <string name="domain_is_available">Domain is available..</string>
-    <string name="domain_not_available">Domain not available. Please try another name.</string>
+    <string name="domain_not_available">Domain is not available. Please try another name.</string>
     <string name="link_domain_not_available">Domain link failure. Please try again.</string>
     <string name="domain_booking_confirmation">Domain Booking Confirmation</string>
     <string name="domain_configuration">Domain Configuration</string>
@@ -1099,7 +1100,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="enable_bubble_msg">Open WhatsApp to share products with your potential customers.</string>
     <string name="enable_customer_assistant_msg">Open Customer Assistant to view your potential customers.</string>
     <string name="already_included_in_your_package">*Already included in your package</string>
-    <string name="link_comments">I would like to map my existing domain to my Nowfloats site %s.nowfloats.com\nplease reach out to me to discuss this in detail.</string>
+    <string name="link_comments">I would like to map my existing domain to my NowFloats site %s.nowfloats.com\nplease reach out to me to discuss this in detail.</string>
     <string name="content_link_domain">
         If you have an existing domain, we strongly recommend that you use it for your NowFloats Website.
         Online discovery will be faster as search engines already recognize your domain.
@@ -1520,5 +1521,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="renew_domain_message" formatted="false">Your domain \'%s\' has expired. Your website is currently running on \'%s\'. Please renew your domain or link another domain to avail the advantages of having a personal domain.</string>
     <string name="renew_nowfloats_plan">Your NowFloats account has expired. Please renew your account to continue with service.</string>
     <string name="renew_nowfloats_and_domain_plan">Your NowFloats account and your domain has expired. Please renew your account and domain to continue with service.</string>
+    <string name="contact_us_message">If your query is still unanswered, please contact us at ria@nowfloats.com or call our toll-free number 1860&#8211;123&#8211;1233.</string>
 
 </resources>

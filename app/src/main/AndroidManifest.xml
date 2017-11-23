@@ -194,13 +194,23 @@
                 android:value="com.nowfloats.Business_Enquiries.BusinessEnquiryActivity" />
         </activity>
 
-        <service android:name="com.nowfloats.bubble.BubblesService" />
+       <!-- <service android:name="com.nowfloats.bubble.BubblesService" />
         <service
             android:name="com.nowfloats.bubble.CustomerAssistantService"
             android:enabled="true"
             android:exported="true"
-            android:stopWithTask="false" />
+            android:stopWithTask="false" />-->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            android:authorities="${applicationId}.provider">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                tools:replace="android:resource"
+                android:resource="@xml/hotline_provider_paths"/>
 
+        </provider>
         <activity
             android:name="com.nowfloats.NavigationDrawer.HomeActivity"
             android:label="@string/title_activity_home"
@@ -357,7 +367,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity">
+        <activity android:name="com.nowfloats.BusinessProfile.UI.UI.BusinessHoursActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -501,7 +512,7 @@
 
         <provider
             android:name="com.nowfloats.sync.ContentProvider.BoostContentProvider"
-            android:authorities="${applicationId}.provider" />
+            android:authorities="${applicationId}.boost.provider" />
         <provider
             android:name="com.nowfloats.riachatsdk.database.ChatContentProvider"
             android:authorities="${applicationId}.riachatsdk.provider" />
@@ -534,12 +545,12 @@
         <activity
             android:name="com.nowfloats.PreSignUp.KitsunePreSignUpActivity"
             android:launchMode="singleInstance" />
-        <activity android:name="com.nowfloats.NavigationDrawer.HelpAndSupportActivity" />
+
         <activity android:name="com.nowfloats.Store.ProductCheckoutActivity" />
         <activity android:name="com.nowfloats.NavigationDrawer.RiaWebViewActivity" />
         <activity android:name="com.nowfloats.Analytics_Screen.SearchRankingActivity" />
 
-        <service
+      <!--  <service
             android:name="com.nowfloats.accessbility.DataAccessibilityServiceV8"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter android:priority="2147483647">
@@ -549,7 +560,7 @@
             <meta-data
                 android:name="android.accessibilityservice"
                 android:resource="@xml/accessibility_service" />
-        </service>
+        </service>-->
 
         <activity
             android:name="com.nowfloats.accessbility.BubbleDialog"
@@ -636,7 +647,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name="com.nowfloats.Store.NewPricingPlansActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
