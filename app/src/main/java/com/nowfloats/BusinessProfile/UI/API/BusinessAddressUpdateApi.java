@@ -27,9 +27,9 @@ import retrofit.http.POST;
 
 public class BusinessAddressUpdateApi {
 
-	private Activity appContext = null;
-	ProgressDialog pd 	= null;
-	UserSessionManager session;
+    private Activity appContext = null;
+    ProgressDialog pd 	= null;
+    UserSessionManager session;
     String city,pincode,address;
     double latitude,longitude;
 

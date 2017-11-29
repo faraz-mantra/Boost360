@@ -14,9 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
 import com.nowfloats.customerassistant.ThirdPartySuggestionDetailActivity;
 import com.nowfloats.customerassistant.models.SuggestionsDO;
-import com.nowfloats.managecustomers.adapters.FacebookChatAdapter;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
@@ -38,6 +38,7 @@ public class ThirdPartyAdapter extends RecyclerView.Adapter {
     private RecyclerView mRecyclerView;
     final int EMPTY_LAYOUT = -1, MESSAGE_LAYOUT = -2;
 
+
     public ThirdPartyAdapter(Context context, List<SuggestionsDO> list){
         mContext = context;
         rvList = list;
@@ -51,8 +52,8 @@ public class ThirdPartyAdapter extends RecyclerView.Adapter {
                 view = LayoutInflater.from(mContext).inflate(R.layout.adapter_third_party_sms_item, parent, false);
                 return new MySmsViewHolder(view);
             case EMPTY_LAYOUT:
-                view = LayoutInflater.from(mContext).inflate(R.layout.facebook_no_messages, parent, false);
-                return new FacebookChatAdapter.MyEmptyViewHolder(view);
+                view = LayoutInflater.from(mContext).inflate(R.layout.empty_screen_layout, parent, false);
+                return new MyEmptyHolder(view);
             default:
                 return null;
         }
@@ -69,10 +70,19 @@ public class ThirdPartyAdapter extends RecyclerView.Adapter {
         if(viewHolder instanceof MySmsViewHolder) {
             MySmsViewHolder holder = (MySmsViewHolder) viewHolder;
             final SuggestionsDO suggestionsDO = rvList.get(position);
-            String contactName = TextUtils.isEmpty(suggestionsDO.getContactName())?"":suggestionsDO.getContactName()+", ";
-            holder.addressTextView.setText(contactName.trim()+""+suggestionsDO.getValue().trim());
+            holder.addressTextView.setText(suggestionsDO.getValue());
+            holder.titleTextView.setText(suggestionsDO.getActualMessage());
             holder.timeTextView.setText(Methods.getFormattedDate(suggestionsDO.getDate(),"dd MMM, hh:mm a"));
-            holder.titleTextView.setText(suggestionsDO.getEnquiredProduct().trim());
+            //suggestionsDO.setShortText("https://s3-ap-southeast-1.amazonaws.com/nfcontent-cdn/boostBubbleLogos/JD.png");
+            if (!TextUtils.isEmpty(suggestionsDO.getLogoUrl()) && suggestionsDO.getLogoUrl().contains("http")){
+                holder.sourceImg.setVisibility(View.VISIBLE);
+                Glide.with(mContext)
+                        .load(suggestionsDO.getLogoUrl())
+                        .into(holder.sourceImg);
+
+            }else{
+                holder.sourceImg.setVisibility(View.GONE);
+            }
 
             long millis = suggestionsDO.getExpiryDate() - Calendar.getInstance().getTimeInMillis();
 
@@ -81,10 +91,11 @@ public class ThirdPartyAdapter extends RecyclerView.Adapter {
             }
 
             holder.customTimer = (CustomTimer) new CustomTimer(millis, holder, position).start();
-        }else if( viewHolder instanceof FacebookChatAdapter.MyEmptyViewHolder){
-            FacebookChatAdapter.MyEmptyViewHolder holder = (FacebookChatAdapter.MyEmptyViewHolder) viewHolder;
-            holder.message.setText("You did not receive any query yet or queries may be expired");
-            holder.mainMessage.setText("ThirdParty queries");
+        }else if( viewHolder instanceof MyEmptyHolder){
+            MyEmptyHolder holder = (MyEmptyHolder) viewHolder;
+            holder.mainText.setVisibility(View.GONE);
+            holder.mainImg.setImageResource(R.drawable.enquiry_icon);
+            holder.descriptionText.setText("You do not have any active enquiries from third party platforms.");
         }
     }
 
@@ -95,12 +106,10 @@ public class ThirdPartyAdapter extends RecyclerView.Adapter {
 
     class CustomTimer extends CountDownTimer{
         private MySmsViewHolder holder;
-        private  int mPosition;
 
         CustomTimer(long millis,MySmsViewHolder holder,int position){
             super(millis,1000);
             this.holder = holder;
-            this.mPosition = position;
             if (millis<60*60*24*1000){
                 holder.responseTextView.setTextColor(ContextCompat.getColorStateList(mContext, R.color.red_btn_text_color));
                 holder.responseTextView.setBackgroundResource(R.drawable.red_btn_state_bg);
@@ -203,23 +212,44 @@ public class ThirdPartyAdapter extends RecyclerView.Adapter {
             return false;
         }
     }
+    class MyEmptyHolder extends RecyclerView.ViewHolder{
+
+        ImageView mainImg;
+        TextView mainText, descriptionText;
+        MyEmptyHolder(View view){
+            super(view);
+            mainImg = view.findViewById(R.id.image_item);
+            mainText = view.findViewById(R.id.main_text);
+            descriptionText = view.findViewById(R.id.description_text);
+
+        }
+    }
     class MySmsViewHolder extends RecyclerView.ViewHolder{
 
         TextView addressTextView,titleTextView,timeTextView,responseTextView;
         CustomTimer customTimer;
-        ImageView infoImag;
+        ImageView infoImag,sourceImg;
 
         public MySmsViewHolder(View itemView) {
             super(itemView);
             addressTextView = (TextView) itemView.findViewById(R.id.tv_address);
             titleTextView = (TextView) itemView.findViewById(R.id.tv_title);
             timeTextView = (TextView) itemView.findViewById(R.id.tv_time);
+            sourceImg = itemView.findViewById(R.id.img_source);
             responseTextView = (TextView) itemView.findViewById(R.id.tv_response);
             infoImag = (ImageView) itemView.findViewById(R.id.img_info);
             infoImag.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     showActualMessage(getAdapterPosition());
+                }
+            });
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(mContext, ThirdPartySuggestionDetailActivity.class);
+                    i.putExtra("message",rvList.get(getAdapterPosition()));
+                    mContext.startActivity(i);
                 }
             });
             responseTextView.setOnClickListener(new View.OnClickListener() {

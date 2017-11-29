@@ -1,12 +1,16 @@
 package com.nowfloats.customerassistant;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -19,20 +23,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RatingBar;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.gson.Gson;
+import com.nfx.leadmessages.ReadMessages;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.customerassistant.adapters.ThirdPartyAdapter;
 import com.nowfloats.customerassistant.models.SMSSuggestions;
 import com.nowfloats.customerassistant.models.SuggestionsDO;
 import com.nowfloats.customerassistant.service.CustomerAssistantApi;
-import com.nowfloats.sync.DbController;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
@@ -63,12 +65,14 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
     private String appVersion = "";
     ProgressDialog progressBar;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    private DbController mDbController;
     private CustomerAssistantApi customerApis;
     private SharedPreferences pref;
     private int noOfTimesResponded = 0;
     private SortType currentSortType = SortType.EXPIRE;
     private int noOfStars;
+    private String[] permission = new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS
+            , Manifest.permission.READ_PHONE_STATE};
+    private final static int READ_MESSAGES_ID = 221;
     private PopupWindow popup;
 
 
@@ -96,12 +100,13 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-        mDbController = DbController.getDbController(this);
+
         sessionManager = new UserSessionManager(this,this);
         mBus = BusProvider.getInstance().getBus();
         customerApis = new CustomerAssistantApi(mBus);
 
         progressBar = new ProgressDialog(this);
+        progressBar.setMessage(getString(R.string.please_wait));
         progressBar.setIndeterminate(true);
 
         rvList.setHasFixedSize(true);
@@ -130,9 +135,48 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
         noOfTimesResponded = pref.getInt(Key_Preferences.NO_OF_TIMES_RESPONDED, 0);
 
         if (noOfTimesResponded >= MAX_RESPONDED) {
-            //showRating();
+            showRating();
         }
     }
+
+    private void getPermissions() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_GRANTED) {
+            Intent intent = new Intent(this, ReadMessages.class);
+            startService(intent);
+            // start the service to send data to firebase
+        }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            requestPermissions(permission, READ_MESSAGES_ID);
+
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == READ_MESSAGES_ID) {
+
+            List<Integer> intList = new ArrayList<Integer>();
+            for (int i : grantResults) {
+                intList.add(i);
+            }
+            if (!intList.contains(PackageManager.PERMISSION_DENIED)) {
+                Intent intent = new Intent(this, ReadMessages.class);
+                startService(intent);
+            }else if (ActivityCompat.shouldShowRequestPermissionRationale(ThirdPartyQueriesActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                //Show permission explanation dialog...
+            }else{
+                //Never ask again selected, or device policy prohibits the app from having that permission.
+                //So, disable that feature, or fall back to another situation...
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
     private void showRating() {
 
         noOfStars = 0;
@@ -160,7 +204,9 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
             mRatingBar.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
+
                     if (event.getAction() == MotionEvent.ACTION_UP) {
+
                         float touchPositionX = event.getX();
                         float width = mRatingBar.getWidth();
                         float starsf = (touchPositionX / width) * 5.0f;
@@ -191,17 +237,17 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
         customerApis.updateRating(offersParam);
     }
 
-    private void loadDataFromDb() {
-
-        String payloadStr = mDbController.getSamData();
-        SMSSuggestions suggestions = new Gson().fromJson(payloadStr, SMSSuggestions.class);
-        if(suggestions != null && suggestions.getSuggestionList() != null && suggestions.getSuggestionList().size()>0) {
-            sort(suggestions.getSuggestionList(), SortType.EXPIRE);
-            adapter.refreshListData(suggestions.getSuggestionList());
-        }else{
-            getNewMessages();
-        }
-    }
+//    private void loadDataFromDb() {
+//
+//        String payloadStr = mDbController.getSamData();
+//        SMSSuggestions suggestions = new Gson().fromJson(payloadStr, SMSSuggestions.class);
+//        if(suggestions != null && suggestions.getSuggestionList() != null && suggestions.getSuggestionList().size()>0) {
+//            sort(suggestions.getSuggestionList(), SortType.EXPIRE);
+//            adapter.refreshListData(suggestions.getSuggestionList());
+//        }else{
+//            getNewMessages();
+//        }
+//    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -274,11 +320,11 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
                         return o1.getSource().compareToIgnoreCase(o2.getSource());
                     case DATE:
                         if(o1.getDate()<o2.getDate()){
-                            return -1;
+                            return 1;
                         }else if (o1.getDate() == o2.getDate()){
                             return 0;
                         }else{
-                            return 1;
+                            return -1;
                         }
                     case EXPIRE:
                     default:
@@ -330,7 +376,7 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
 
                 popup = new PopupWindow(this);
                 View layout = LayoutInflater.from(this).inflate(R.layout.third_party_pop_up, null);
-                layout.setAnimation(AnimationUtils.loadAnimation(this,R.anim.scale_from_centre));
+                //layout.setAnimation(AnimationUtils.loadAnimation(this,R.anim.scale_from_centre));
                 popup.setContentView(layout);
                /* int cx = (layout.getLeft() + layout.getRight() - Methods.dpToPx(80, this));
                 int cy = layout.getTop();

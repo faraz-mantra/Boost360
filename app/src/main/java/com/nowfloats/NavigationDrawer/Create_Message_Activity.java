@@ -427,8 +427,8 @@ public class Create_Message_Activity extends AppCompatActivity {
 
         cameraButton = (ImageView) findViewById(R.id.create_mee_activity_facebokhome_button);
         imageIconButton = (ImageView) findViewById(R.id.imageIcon);
-        deleteButton = (ImageView) findViewById(R.id.delete_image);
-        editButton = (ImageView) findViewById(R.id.edit_image);
+        deleteButton = (ImageView) findViewById(R.id.img_delete);
+        editButton = (ImageView) findViewById(R.id.img_edit);
         image_card = (CardView)findViewById(R.id.image_card);
 
         deleteButton.setOnClickListener(new View.OnClickListener() {

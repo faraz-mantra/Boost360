@@ -20,15 +20,18 @@ public interface NotificationInterface {
     @GET("/Discover/v1/floatingpoint/getnotifications")
     public void getAlerts(@QueryMap Map<String,String> map,Callback<ArrayList<AlertModel>> callback);
 
+
     //https://api.withfloats.com/Discover/v1/floatingpoint/notification/notificationStatus?
     // fpId=5406bd254ec0a40d409f2b2b&clientId=2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21&notificationId=558415374ec0a42df8ca0937&isRead=FALSE
     @POST("/Discover/v1/floatingpoint/notification/notificationStatus")
     public void setRead(@QueryMap Map<String,String> map,Callback<String> callback);
 
+
     //https://api.withfloats.com/Discover/v1/floatingpoint/notificationscount?
     // clientId=2FA76D4AFCD84494BD609FDB4B3D76782F56AE790A3744198E6F517708CAAA21&fpId=5406bd254ec0a40d409f2b2b&isRead=false
     @GET("/Discover/v1/floatingpoint/notificationscount")
     public void getAlertCount(@QueryMap Map<String,String> map,Callback<String> callback);
+
 
     @POST("/Discover/v1/floatingpoint/notification/changenotificationstatus")
     public void archiveAlert(@QueryMap Map<String,String> map,Callback<String> callback);

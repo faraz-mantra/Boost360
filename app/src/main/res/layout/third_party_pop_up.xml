@@ -9,20 +9,20 @@
         android:layout_width="match_parent"
         android:background="?android:selectableItemBackground"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="date"/>
+        android:padding="15dp"
+        android:text="Date"/>
     <TextView
         android:id="@+id/tvExpire"
         android:layout_width="match_parent"
         android:background="?android:selectableItemBackground"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="expire"/>
+        android:padding="15dp"
+        android:text="Expiry"/>
     <TextView
         android:id="@+id/tvSource"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:selectableItemBackground"
-        android:padding="10dp"
-        android:text="source"/>
+        android:padding="15dp"
+        android:text="Source"/>
 </LinearLayout>

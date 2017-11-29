@@ -70,18 +70,20 @@ public class ShowThirdPartyProductsFragment extends Fragment implements View.OnC
         RecyclerView suggestionsRecyclerView = (RecyclerView) view.findViewById(R.id.rv_list);
         suggestionsRecyclerView.setHasFixedSize(true);
         addProductBtn = (TextView) view.findViewById(R.id.btn_send);
+        TextView messageTv = view.findViewById(R.id.tv_message);
         switch (type){
             case ADD_UPDATES:
                 suggestionsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
                 adapter = new ThirdPartySuggestionAdapter(mContext, ThirdPartySuggestionAdapter.ListType.UPDATES);
                 adapter.setUpdateList(mSuggestionDO.getUpdates(),this);
                 addProductBtn.setText("Add Updates");
+                messageTv.setText("Select update to share...");
                 break;
             case ADD_PRODUCTS:
                 suggestionsRecyclerView.setLayoutManager(new GridLayoutManager(mContext,2));
                 adapter = new ThirdPartySuggestionAdapter(mContext,ThirdPartySuggestionAdapter.ListType.PRODUCTS);
                 adapter.setProductList(mSuggestionDO.getProducts(),this);
-                addProductBtn.setText("Add Products");
+                addProductBtn.setText("Select products to share...");
                 break;
         }
 

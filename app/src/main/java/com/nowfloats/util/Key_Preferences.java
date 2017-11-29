@@ -28,6 +28,7 @@ public class Key_Preferences {
     public static final String ABOUT_BUSINESS_APP = "AboutBusinessApp";
     public static final String GET_FP_WEBTEMPLATE_ID = "GET_FP_WEBTEMPLATE_ID";
     public static final String IS_BUSINESS_TIME_AVAILABLE = "IS_BUSINESS_TIME_AVAILABLE";
+    public static final String PRODUCT_CATEGORY = "GET_PRODUCT_CATEGORY_VERB";
     public static  String GET_FP_DETAILS_CITY = "GET_FP_DETAILS_CITY";
     public static  String GET_FP_DETAILS_TAG = "GET_FP_DETAILS_TAG";
     public static  String IS_BOOST_BUBBLE_ENABLED = "IS_BOOST_BUBBLE_ENABLED";

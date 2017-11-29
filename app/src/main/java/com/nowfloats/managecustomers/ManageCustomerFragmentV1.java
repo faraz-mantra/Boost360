@@ -3,25 +3,18 @@ package com.nowfloats.managecustomers;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,17 +26,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
 import com.nowfloats.Analytics_Screen.VmnCallCardsActivity;
 import com.nowfloats.Analytics_Screen.VmnNumberRequestActivity;
 import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
-import com.nowfloats.bubble.BubblesService;
-import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
 import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
@@ -53,8 +41,6 @@ import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.thinksity.R;
-
-import java.util.Calendar;
 
 import io.codetail.animation.ViewAnimationUtils;
 import io.codetail.widget.RevealFrameLayout;
@@ -128,21 +114,21 @@ public class ManageCustomerFragmentV1 extends Fragment {
         super.onStop();
         bus.unregister(this);
 
-        if (getActivity() == null) return;
+        /*if (getActivity() == null) return;
         if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
             getActivity().stopService(new Intent(getActivity(), BubblesService.class));
             getActivity().unregisterReceiver(clickReceiver);
-        }
+        }*/
     }
 
     @Override
     public void onStart() {
         super.onStart();
         bus.register(this);
-        if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
+       /* if (Constants.PACKAGE_NAME.equals("com.biz2.nowfloats")) {
             getActivity().registerReceiver(clickReceiver, clickIntentFilters);
         }
-
+*/
         if (manageCustomerAdapter != null)
             manageCustomerAdapter.notifyDataSetChanged();
     }
@@ -291,27 +277,35 @@ public class ManageCustomerFragmentV1 extends Fragment {
                         //manageCustomerHolder.tvOne.setText(getString(R.string.enable_customer_assistant));
                         manageCustomerHolder.tvInfoTitle.setText(getString(R.string.cross_platform));
                         manageCustomerHolder.tvOne.setGravity(Gravity.LEFT);
-                        manageCustomerHolder.tvTwo.setVisibility(View.VISIBLE);
-                        manageCustomerHolder.tvTwo.setText("Whats app Bubble");
+                        manageCustomerHolder.tvOne.setVisibility(View.VISIBLE);
+                        manageCustomerHolder.tvOne.setText("WhatsApp Bubble");
                         manageCustomerHolder.tvInfo.setText(getString(R.string.manage_multichannel_customers));
 
 //                        manageCustomerHolder.llBackground.setBackgroundResource(R.drawable.mcp_bg);
-                        manageCustomerHolder.tvTwo.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                checkOverlay(Home_Fragment_Tab.DrawOverLay.FromHome);
-                            }
-                        });
+
                         params.gravity = Gravity.CENTER;
                         manageCustomerHolder.iconImage.setLayoutParams(params);
                         manageCustomerHolder.iconImage.setImageResource(R.drawable.ic_cross_platform);
-                        manageCustomerHolder.tvOne.setText("ThirdParty Queries");
-                        manageCustomerHolder.tvOne.setOnClickListener(new View.OnClickListener() {
+                        manageCustomerHolder.tvTwo.setText("Third Party Queries");
+                        manageCustomerHolder.tvTwo.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 startActivity(new Intent(getActivity(), ThirdPartyQueriesActivity.class));
                                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                                 //enableCustomerAssistant();
+                            }
+                        });
+                        manageCustomerHolder.tvOne.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialogThirdPartyMessage();
+                            }
+                        });
+                        manageCustomerHolder.llBackground.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                startActivity(new Intent(getActivity(), ThirdPartyQueriesActivity.class));
+                                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                             }
                         });
                        /* if (session.isBoostBubbleEnabled() || Methods.hasOverlayPerm(getActivity())) {
@@ -330,15 +324,23 @@ public class ManageCustomerFragmentV1 extends Fragment {
                             });
                         } else {
                             manageCustomerHolder.tvOne.setText(getString(R.string.enable_customer_assistant));
-
-                            manageCustomerHolder.llBackground.setOnClickListener(new View.OnClickListener() {
+                            manageCustomerHolder.tvOne.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+                                    startActivity(new Intent(getActivity(), ThirdPartyQueriesActivity.class));
                                     //enableCustomerAssistant();
                                 }
                             });
-                        }
-*/
+                            manageCustomerHolder.llBackground.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // show dialog for message coming soon
+                                    //enableCustomerAssistant();
+                                    dialogThirdPartyMessage();
+                                }
+                            });
+                        }*/
+
                         break;
 
                 }
@@ -368,6 +370,14 @@ public class ManageCustomerFragmentV1 extends Fragment {
             }
         }
 
+        private void dialogThirdPartyMessage(){
+            new MaterialDialog.Builder(getContext())
+                    .content("We are currently reworking this feature to enhance your experience of sharing. For now, you can share your products from Product Gallery.")
+                    .title("WhatsApp Bubble")
+                    .positiveText("Ok")
+                    .show();
+        }
+
         private void openCallLog() {
 
             final boolean isVmnEnable = "VMN".equals(session.getFPDetails(Key_Preferences.GET_FP_DETAILS_ALTERNATE_NAME_1)) ||
@@ -388,35 +398,35 @@ public class ManageCustomerFragmentV1 extends Fragment {
                 // show first buy lighthouse
             }
         }
-
-        private void openCrossPlatform() {
-            MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
-                    .title(getString(R.string.are_you_sure))
-                    .content(getString(R.string.ca_disable_msg))
-                    .positiveText(getString(R.string.ok))
-                    .negativeText(getString(R.string.cancel))
-                    .positiveColorRes(R.color.primaryColor)
-                    .negativeColorRes(R.color.primaryColor)
-                    .callback(new MaterialDialog.ButtonCallback() {
-                        @Override
-                        public void onPositive(MaterialDialog dialog) {
-                            super.onPositive(dialog);
-                            //disableCustomerAssistant();
-                            notifyDataSetChanged();
-                        }
-
-                        @Override
-                        public void onNegative(MaterialDialog dialog) {
-                            super.onNegative(dialog);
-
-                        }
-                    });
-
-            if (!activity.isFinishing()) {
-                final MaterialDialog materialDialog = builder.show();
-                materialDialog.setCancelable(false);
-            }
-        }
+//
+//        private void openCrossPlatform() {
+//            MaterialDialog.Builder builder = new MaterialDialog.Builder(activity)
+//                    .title(getString(R.string.are_you_sure))
+//                    .content(getString(R.string.ca_disable_msg))
+//                    .positiveText(getString(R.string.ok))
+//                    .negativeText(getString(R.string.cancel))
+//                    .positiveColorRes(R.color.primaryColor)
+//                    .negativeColorRes(R.color.primaryColor)
+//                    .callback(new MaterialDialog.ButtonCallback() {
+//                        @Override
+//                        public void onPositive(MaterialDialog dialog) {
+//                            super.onPositive(dialog);
+//                            disableCustomerAssistant();
+//                            notifyDataSetChanged();
+//                        }
+//
+//                        @Override
+//                        public void onNegative(MaterialDialog dialog) {
+//                            super.onNegative(dialog);
+//
+//                        }
+//                    });
+//
+//            if (!activity.isFinishing()) {
+//                final MaterialDialog materialDialog = builder.show();
+//                materialDialog.setCancelable(false);
+//            }
+//        }
 
         @Override
         public int getItemCount() {
@@ -523,7 +533,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
      *  Enable Customer Assistant Steps
      */
 
-    /*private void enableCustomerAssistant() {
+   /* private void enableCustomerAssistant() {
 
         MixPanelController.track(EventKeysWL.SIDE_PANEL_WHATSAPP_BUBBLE, null);
         MixPanelController.track(EventKeysWL.SIDE_PANEL_CUSTOMER_ASSISTANT, null);
@@ -625,18 +635,18 @@ public class ManageCustomerFragmentV1 extends Fragment {
         }
 
 
-    }*/
+    }
 
-  /*  private void disableCustomerAssistant() {
+    private void disableCustomerAssistant() {
         MixPanelController.track(EventKeysWL.SIDE_PANEL_WHATSAPP_BUBBLE_OFF, null);
         MixPanelController.track(EventKeysWL.SIDE_PANEL_CUSTOMER_ASSISTANT_OFF, null);
 
         session.setBubbleStatus(false);
         session.setCustomerAssistantStatus(false);
         activity.stopService(new Intent(activity, CustomerAssistantService.class));
-    }*/
+    }
 
-   /* private void getProducts() {
+    private void getProducts() {
         HashMap<String, String> values = new HashMap<>();
         values.put("clientId", Constants.clientId);
         values.put("skipBy", "0");
@@ -662,7 +672,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
 
             }
         });
-    }*/
+    }
 
     public void checkOverlay(Home_Fragment_Tab.DrawOverLay from) {
         if (!isAdded() || getActivity() == null) {
@@ -700,10 +710,10 @@ public class ManageCustomerFragmentV1 extends Fragment {
 
         pref.edit().putLong(Key_Preferences.SHOW_BUBBLE_TIME, Calendar.getInstance().getTimeInMillis()).apply();
 
-        if (!pref.getBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, false)) {
-            addOverlay();
-            pref.edit().putBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, true).apply();
-        }
+//        if (!pref.getBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, false)) {
+        addOverlay();
+        pref.edit().putBoolean(Key_Preferences.SHOW_BUBBLE_COACH_MARK, true).apply();
+//        }
 
         int px = Methods.dpToPx(80, getActivity());
         Intent intent = new Intent(getActivity(), BubblesService.class);
@@ -773,33 +783,33 @@ public class ManageCustomerFragmentV1 extends Fragment {
         } else {
             startActivity(new Intent(Settings.ACTION_SETTINGS));
         }
-    }
+    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PERM_REQUEST_CODE_DRAW_OVERLAYS) {
-
-            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (android.os.Build.VERSION.SDK_INT >= 23) {
-
-                        if (getActivity() != null && Settings.canDrawOverlays(getActivity())) {
-
+//        if (requestCode == PERM_REQUEST_CODE_DRAW_OVERLAYS) {
+//
+//            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    if (android.os.Build.VERSION.SDK_INT >= 23) {
+//
+//                        if (getActivity() != null && Settings.canDrawOverlays(getActivity())) {
+//
 //                            if (pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
-//                                //checkCustomerAssistantService();
+//                                checkCustomerAssistantService();
 //                            }
-
-                            checkForAccessibility();
-                        }
-                    }
-                }
-            }, 1000);
-        }
+//
+//                            checkForAccessibility();
+//                        }
+//                    }
+//                }
+//            }, 1000);
+//        }
     }
 
-    private void checkCustomerAssistantService() {
+    /*private void checkCustomerAssistantService() {
 
         if (!Methods.isMyServiceRunning(getActivity(), CustomerAssistantService.class)) {
             Intent bubbleIntent = new Intent(getActivity(), CustomerAssistantService.class);
@@ -817,7 +827,7 @@ public class ManageCustomerFragmentV1 extends Fragment {
             //bubbleOverlay.setOnClickListener(null);
         }
 
-    };
+    };*/
 
 
 }

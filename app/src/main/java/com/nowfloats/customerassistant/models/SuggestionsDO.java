@@ -18,12 +18,21 @@ public class SuggestionsDO implements Serializable,Cloneable{
     public String value;
     public String actualMessage;
     public String enquiredProduct;
+    public String logoUrl;
     public String contactName;
     public String expiryTimeOfMessage;
     public String shortText;
     public long expiryDate;
     public int status = -1;
     public boolean isEmptyLayout;
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
 
     public String getEnquiredProduct() {
         return enquiredProduct;

@@ -27,23 +27,23 @@ import retrofit.http.POST;
 
 public class FacebookFeedPullRegistrationAsyncTask {
 
-	private SharedPreferences pref = null;
-	private Activity appContext = null;
-	ProgressDialog pd = null;
-	TextView fromPage;
-	CheckBox checkBox;
-	UserSessionManager sessionManager;
-	ImageView ivFbPageAutoPull;
+    private SharedPreferences pref = null;
+    private Activity appContext = null;
+    ProgressDialog pd = null;
+    TextView fromPage;
+    CheckBox checkBox;
+    UserSessionManager sessionManager;
+    ImageView ivFbPageAutoPull;
 
 
-	public FacebookFeedPullRegistrationAsyncTask(Activity context, TextView FromPage, ImageView ivFbPageAutoPull, CheckBox Checkbox, UserSessionManager sessionManager) {
-		this.appContext = context;
-		this.fromPage = FromPage;
-		this.checkBox = Checkbox;
-		this.sessionManager = sessionManager;
-		this.ivFbPageAutoPull = ivFbPageAutoPull;
-	}
-	public void autoRegister(final FacebookFeedPullModel.Registration obj) {
+    public FacebookFeedPullRegistrationAsyncTask(Activity context, TextView FromPage, ImageView ivFbPageAutoPull, CheckBox Checkbox, UserSessionManager sessionManager) {
+        this.appContext = context;
+        this.fromPage = FromPage;
+        this.checkBox = Checkbox;
+        this.sessionManager = sessionManager;
+        this.ivFbPageAutoPull = ivFbPageAutoPull;
+    }
+    public void autoRegister(final FacebookFeedPullModel.Registration obj) {
         pd = ProgressDialog.show(appContext, null, "Please wait");
         pd.setCancelable(true);
         pd.show();
@@ -142,14 +142,14 @@ public class FacebookFeedPullRegistrationAsyncTask {
             }
         });
 
-	}
+    }
 
-	interface pullRegistration{
-		@POST("/Discover/v1/FloatingPoint/AutoPublishMessages")
-		void autoRegistration(@Body FacebookFeedPullModel.Registration obj, Callback<String> response);
+    interface pullRegistration{
+        @POST("/Discover/v1/FloatingPoint/AutoPublishMessages")
+        void autoRegistration(@Body FacebookFeedPullModel.Registration obj, Callback<String> response);
 
         @POST("/Discover/v1/FloatingPoint/UpdateFacebookPullRegistration/")
-		void autoUpdate(@Body FacebookFeedPullModel.Update obj, Callback<String> response);
-	}
+        void autoUpdate(@Body FacebookFeedPullModel.Update obj, Callback<String> response);
+    }
 
 }

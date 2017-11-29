@@ -40,9 +40,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.PricingPlansActivity;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.squareup.okhttp.OkHttpClient;
+import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
 import java.io.ByteArrayOutputStream;
@@ -283,7 +285,8 @@ public class Methods {
                     @Override
                     public void onPositive(MaterialDialog dialog) {
                         super.onPositive(dialog);
-                        context.startActivity(new Intent(context, PricingPlansActivity.class));
+                        context.startActivity(new Intent(context, BuildConfig.APPLICATION_ID.equalsIgnoreCase("com.biz2.nowfloats")
+                                ?NewPricingPlansActivity.class: PricingPlansActivity.class));
                     }
                 }).show();
     }

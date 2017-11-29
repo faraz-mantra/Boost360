@@ -1,6 +1,7 @@
 package com.nowfloats.RiaFCM;
 
 import android.app.Activity;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -47,12 +48,8 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         if (Hotline.isHotlineNotification(remoteMessage)) {
             Hotline.getInstance(this).handleFcmMessage(remoteMessage);
         } else {
-            //Calling method to generate notification
             sendNotification(remoteMessage.getData());
-            /*Log.v("notif",remoteMessage.getData().get("title"));
-            Log.v("notif",remoteMessage.getSentTime()+"  "+String.valueOf(System.currentTimeMillis()));*/
             Constants.GCM_Msg = true;
-            //Handle notifications with data payload for your app
         }
         Log.v("Message", "received bubble");
     }
@@ -71,7 +68,7 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
         } else {
             if ((message.containsKey("mp_message") && message.get("mp_message").equalsIgnoreCase(SAM_BUBBLE_MSG))
                     || (message.containsKey("mp_message_key") && message.get("mp_message_key").equalsIgnoreCase(SAM_BUBBLE_MSG_KEY))) {
-              /*  MixPanelController.track(MixPanelController.SAM_BUBBLE_NOTIFICATION, null);
+                /*MixPanelController.track(MixPanelController.SAM_BUBBLE_NOTIFICATION, null);
                 pref.edit().putBoolean(Key_Preferences.HAS_SUGGESTIONS, true).apply();
                 pref.edit().putBoolean(Key_Preferences.IS_CUSTOMER_ASSISTANT_ENABLED, true).apply();
                 if (Methods.hasOverlayPerm(this)) {
@@ -83,11 +80,10 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
             } else {
 
                 deepLinkUrl = message.get("url");
-                //Log.v("ggg","notif "+deepLinkUrl);
                 if (deepLinkUrl != null && !deepLinkUrl.contains(Constants.PACKAGE_NAME)) {
                     return;
                 }
-                if(Methods.isUserLoggedIn(this) && Methods.isMyAppOpen(this)) {
+                if (Methods.isUserLoggedIn(this) && Methods.isMyAppOpen(this)) {
                     MixPanelController.track("$campaign_received", null);
                 }
                 String title = message.get("title");
@@ -111,16 +107,6 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                             }
                         }
 
-                       /* ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-                        List<ActivityManager.RunningTaskInfo> allTasks = am.getRunningTasks(1);
-                        for (ActivityManager.RunningTaskInfo task : allTasks){
-                            if(task.topActivity.getClassName().equals(FacebookChatDetailActivity.class.getName())){
-                                if(message.get("user_data").contains(pref.getString("facebookChatUser",""))){
-                                    return;
-                                }
-                            }
-                        }*/
-
                     }
 
                 }
@@ -128,9 +114,6 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
                 if (intent != null) {
                     pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
                 }
-
-        /*intent.putExtra("payload", payload);
-        intent.putExtra("notification", notificationClick);*/
 
                 Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
                 NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
@@ -153,13 +136,21 @@ public class RiaFirebaseMessagingService extends FirebaseMessagingService {
 
                 NotificationManager notificationManager =
                         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                if (!Util.isNullOrEmpty(deepLinkUrl) && deepLinkUrl.contains(getString(R.string.facebook_chat))) {
-                    FacebookChatDataModel.UserData data = new Gson().fromJson(message.get("user_data"), FacebookChatDataModel.UserData.class);
-                    if(data.getId() != null) {
-                        notificationManager.notify(data.getId().hashCode(), notificationBuilder.build());
+                NotificationChannel channel = null;
+                if (notificationManager != null) {
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        channel = new NotificationChannel("0001", getString(R.string.app_name), NotificationManager.IMPORTANCE_DEFAULT);
+                        notificationManager.createNotificationChannel(channel);
                     }
-                } else {
-                    notificationManager.notify(0, notificationBuilder.build());
+
+                    if (!Util.isNullOrEmpty(deepLinkUrl) && deepLinkUrl.contains(getString(R.string.facebook_chat))) {
+                        FacebookChatDataModel.UserData data = new Gson().fromJson(message.get("user_data"), FacebookChatDataModel.UserData.class);
+                        if (data.getId() != null) {
+                            notificationManager.notify(data.getId().hashCode(), notificationBuilder.build());
+                        }
+                    } else {
+                        notificationManager.notify(0, notificationBuilder.build());
+                    }
                 }
             }
         }

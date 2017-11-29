@@ -108,7 +108,12 @@ public class Contact_Info_Activity extends AppCompatActivity implements View.OnT
             @Override
             public void onClick(View v) {
                 MixPanelController.track(EventKeysWL.SAVE_CONTACT_INFO, null);
-                uploadContactInfo();
+                if (Methods.isOnline(Contact_Info_Activity.this)){
+                    uploadContactInfo();
+                }else{
+                    Methods.snackbarNoInternet(Contact_Info_Activity.this);
+                }
+
             }
         });
 

@@ -1,8 +1,8 @@
 package com.nowfloats.BusinessProfile.UI.UI.FAQ;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,7 +14,7 @@ import android.support.v7.widget.Toolbar;
 import com.thinksity.R;
 
 
-public class FAQMainAcivity extends ActionBarActivity {
+public class FAQMainAcivity extends AppCompatActivity {
 
     private ListView lv_faq_main;
     private Toolbar toolbar;

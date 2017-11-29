@@ -21,23 +21,22 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.nowfloats.customerassistant.adapters.ThirdPartySharedItemAdapter;
 import com.nowfloats.customerassistant.callbacks.ThirdPartyCallbacks;
 import com.nowfloats.customerassistant.models.MessageDO;
 import com.nowfloats.customerassistant.models.SharedSuggestionsDO;
 import com.nowfloats.customerassistant.models.SuggestionsDO;
-import com.nowfloats.customerassistant.service.CustomerAssistantApi;
 import com.nowfloats.util.BoostLog;
-import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
-import com.squareup.otto.Bus;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.thinksity.R;
@@ -63,8 +62,8 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
     private String appVersion = "";
     private SharedPreferences pref;
     private int noOfTimesResponded = 0;
-    private Bus mBus;
-    private CustomerAssistantApi customerApis;
+    //private Bus mBus;
+    //private CustomerAssistantApi customerApis;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,11 +74,11 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
         TextView title = (TextView) findViewById(R.id.title);
         Intent intent = getIntent();
         mSuggestionDO = (SuggestionsDO) intent.getSerializableExtra("message");
-        mBus = BusProvider.getInstance().getBus();
+        //mBus = BusProvider.getInstance().getBus();
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
-            title.setText(mSuggestionDO.getEnquiredProduct());
+            title.setText(mSuggestionDO.getActualMessage());
         }
 
         try {
@@ -87,7 +86,7 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        customerApis = new CustomerAssistantApi(mBus);
+        //customerApis = new CustomerAssistantApi(mBus);
         pref = getSharedPreferences(Constants.PREF_NAME, Context.MODE_PRIVATE);
         noOfTimesResponded = pref.getInt(Key_Preferences.NO_OF_TIMES_RESPONDED, 0);
         /*try {
@@ -105,9 +104,9 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
         TextView addressText = (TextView) findViewById(R.id.tv_address);
         TextView timeText = (TextView) findViewById(R.id.tv_time);
         EditText messageEdit = (EditText) findViewById(R.id.et_message);
+        ImageView sourceImg = findViewById(R.id.img_source);
         messageEdit.setSelection(messageEdit.getText().length());
-        String contactName = TextUtils.isEmpty(mSuggestionDO.getContactName())?"":mSuggestionDO.getContactName()+", ";
-        addressText.setText(contactName.trim()+""+mSuggestionDO.getValue().trim());
+        addressText.setText(mSuggestionDO.getValue());
         timeText.setText(Methods.getFormattedDate(mSuggestionDO.getDate(),"dd MMM, hh:mm a"));
         messageLayout = (LinearLayout) findViewById(R.id.layout_message);
         fragmentLayout = (FrameLayout) findViewById(R.id.layout_fragment);
@@ -119,8 +118,16 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
         findViewById(R.id.btn_send).setOnClickListener(this);
         TextView callBtn = (TextView) findViewById(R.id.btn_call);
         callBtn.setOnClickListener(this);
+        timeText.setText(Methods.getFormattedDate(mSuggestionDO.getDate(),"dd MMM, hh:mm a"));
         callBtn.setText(mSuggestionDO.getType().equalsIgnoreCase(ACTION_TYPE_NUMBER)?"CALL":"MAIL");
+        if (!TextUtils.isEmpty(mSuggestionDO.getLogoUrl()) && mSuggestionDO.getLogoUrl().contains("http")){
+            Glide.with(this)
+                    .load(mSuggestionDO.getLogoUrl())
+                    .into(sourceImg);
+        }else{
+            sourceImg.setVisibility(View.GONE);
 
+        }
         if (mSuggestionDO.getProducts().size() == 0){
             findViewById(R.id.btn_add_products).setVisibility(View.GONE);
         }else{
@@ -177,8 +184,6 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
         FirebaseLogger.getInstance().logSAMEvent(mSuggestionDO.getMessageId(), FirebaseLogger.SAMSTATUS.ACTION_SHARE, mSuggestionDO.getFpId(), appVersion);
         MixPanelController.track(MixPanelController.SAM_BUBBLE_ACTION_SHARE, null);
 
-        pref.edit().putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, ++noOfTimesResponded).apply();
-
         mSuggestionDO.setStatus(1);
         updateActionsToServer(mSuggestionDO);
 
@@ -224,6 +229,16 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
                                         mSuggestionDO.getValue()));
                         final String finalSelectedProducts = selectedProducts;
                         if(TextUtils.isEmpty(imageUrl)){
+                            shareIntent.putExtra(Intent.EXTRA_TEXT, finalSelectedProducts);
+                            shareIntent.setType("text/plain");
+
+                            pref.edit().putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, ++noOfTimesResponded).apply();
+                            if (shareIntent.resolveActivity(ThirdPartySuggestionDetailActivity.this.getPackageManager()) != null) {
+                                startActivity(shareIntent);
+                            } else {
+                                Methods.showSnackBarNegative(ThirdPartySuggestionDetailActivity.this,
+                                        getString(R.string.no_app_available_for_action));
+                            }
                             return;
                         }
                         Picasso.with(ThirdPartySuggestionDetailActivity.this)
@@ -242,7 +257,7 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
                                             shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
                                             shareIntent.setType("image/*");
 
-
+                                            pref.edit().putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, ++noOfTimesResponded).apply();
                                             if (shareIntent.resolveActivity(ThirdPartySuggestionDetailActivity.this.getPackageManager()) != null) {
                                                 startActivity(shareIntent);
                                             } else {
@@ -277,7 +292,7 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
                             smsIntent.putExtra("address", mSuggestionDO.getValue());
                             smsIntent.putExtra("sms_body", selectedProducts);
                             startActivity(smsIntent);
-
+                            pref.edit().putInt(Key_Preferences.NO_OF_TIMES_RESPONDED, ++noOfTimesResponded).apply();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

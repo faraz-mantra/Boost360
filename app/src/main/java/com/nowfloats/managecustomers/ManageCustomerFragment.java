@@ -7,15 +7,12 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.nowfloats.Analytics_Screen.SubscribersActivity;
@@ -23,10 +20,8 @@ import com.nowfloats.Business_Enquiries.BusinessEnquiryActivity;
 import com.nowfloats.Image_Gallery.FullScreenImage;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.HomeActivity;
-import com.nowfloats.bubble.CustomerAssistantService;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
-import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
@@ -127,28 +122,28 @@ public class ManageCustomerFragment extends Fragment {
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             });
-            bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
-            customerAssistantSwitch.setChecked(pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false));
+//            bubbleSwitch.setChecked(session.isBoostBubbleEnabled());
+//            customerAssistantSwitch.setChecked(pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false));
 
-            customerAssistantSwitch.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MixPanelController.track(EventKeysWL.SIDE_PANEL_CUSTOMER_ASSISTANT, null);
-                    if (!pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
-                        customerAssistantSwitch.setChecked(false);
-                        Toast.makeText(activity, "This feature is not available for you.", Toast.LENGTH_SHORT).show();
-                    } else {
-                        if (customerAssistantSwitch.isChecked()) {
-                            if (!Methods.isMyServiceRunning(activity, CustomerAssistantService.class)) {
-                                activity.startService(new Intent(activity, CustomerAssistantService.class));
-                            }
-                        } else {
-                            MixPanelController.track(EventKeysWL.SIDE_PANEL_CUSTOMER_ASSISTANT_OFF, null);
-                            activity.stopService(new Intent(activity, CustomerAssistantService.class));
-                        }
-                    }
-                }
-            });
+//            customerAssistantSwitch.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    MixPanelController.track(EventKeysWL.SIDE_PANEL_CUSTOMER_ASSISTANT, null);
+//                    if (!pref.getBoolean(Key_Preferences.HAS_SUGGESTIONS, false)) {
+//                        customerAssistantSwitch.setChecked(false);
+//                        Toast.makeText(activity, "This feature is not available for you.", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        if (customerAssistantSwitch.isChecked()) {
+//                            if (!Methods.isMyServiceRunning(activity, CustomerAssistantService.class)) {
+//                                activity.startService(new Intent(activity, CustomerAssistantService.class));
+//                            }
+//                        } else {
+//                            MixPanelController.track(EventKeysWL.SIDE_PANEL_CUSTOMER_ASSISTANT_OFF, null);
+//                            activity.stopService(new Intent(activity, CustomerAssistantService.class));
+//                        }
+//                    }
+//                }
+//            });
 
             tvBubbleInfo.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -172,26 +167,26 @@ public class ManageCustomerFragment extends Fragment {
                 }
             });
 
-            bubbleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                    MixPanelController.track(EventKeysWL.SIDE_PANEL_WHATSAPP_BUBBLE, null);
-
-                    if (!isChecked) {
-                        session.setBubbleStatus(isChecked);
-                    } else {
-
-                        if ((android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity()))
-                                || (!Methods.isAccessibilitySettingsOn(getActivity()))) {
-                            session.setBubbleTime(-1);
-                        } else {
-                            session.setBubbleStatus(isChecked);
-                        }
-
-                    }
-                }
-            });
+//            bubbleSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                @Override
+//                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//
+//                    MixPanelController.track(EventKeysWL.SIDE_PANEL_WHATSAPP_BUBBLE, null);
+//
+//                    if (!isChecked) {
+//                        session.setBubbleStatus(isChecked);
+//                    } else {
+//
+//                        if ((android.os.Build.VERSION.SDK_INT >= 23 && getActivity() != null && !Settings.canDrawOverlays(getActivity()))
+//                                || (!Methods.isAccessibilitySettingsOn(getActivity()))) {
+//                            session.setBubbleTime(-1);
+//                        } else {
+//                            session.setBubbleStatus(isChecked);
+//                        }
+//
+//                    }
+//                }
+//            });
 
 
         } catch (Exception e) {

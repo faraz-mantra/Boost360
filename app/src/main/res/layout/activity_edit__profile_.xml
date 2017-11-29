@@ -173,7 +173,56 @@
                         android:textSize="14sp"/>
         -->
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_height="58dp"
+                    style="@style/SignUp_LinearLayout_Style"
+                    android:layout_marginTop="10dp">
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:scaleType="fitXY"
+                        android:layout_gravity="top"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/category_icon" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="24dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:textSize="17sp"
+                            android:textColor="#383838"
+                            android:text="Product Category"/>
+                        <RadioGroup
+                            android:id="@+id/rbgroup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:orientation="horizontal">
+                            <RadioButton
+                                android:id="@+id/rb_products"
+                                android:layout_width="wrap_content"
+                                android:layout_weight="1"
+                                android:buttonTint="@color/light_gray"
+                                android:layout_height="wrap_content"
+                                android:text="Products" />
 
+                            <RadioButton
+                                android:id="@+id/rb_services"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:buttonTint="@color/light_gray"
+                                android:text="Services" />
+                        </RadioGroup>
+                    </LinearLayout>
+
+                </LinearLayout>
                 <LinearLayout android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:gravity="bottom"

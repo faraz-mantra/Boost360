@@ -552,7 +552,7 @@ public class Product_Detail_Activity extends AppCompatActivity{
         TextView header = (TextView) view.findViewById(R.id.textview_heading);
         header.setText(getString(R.string.select_action));
         LinearLayout replace = (LinearLayout) view.findViewById(R.id.replace_image);
-        final LinearLayout delete = (LinearLayout) view.findViewById(R.id.delete_image);
+        final LinearLayout delete = (LinearLayout) view.findViewById(R.id.img_delete);
         ImageView   replaceImg = (ImageView) view.findViewById(R.id.pop_up_replace_img);
         ImageView deleteImg = (ImageView) view.findViewById(R.id.pop_up_delete_img);
         replaceImg.setColorFilter(whiteLabelFilter_pop_ip);

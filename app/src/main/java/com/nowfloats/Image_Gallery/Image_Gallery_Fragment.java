@@ -177,7 +177,7 @@ public class Image_Gallery_Fragment extends Fragment implements
             gvImages.invalidateViews();
             if (otherImagesAdapter != null)
                 otherImagesAdapter.notifyDataSetChanged();
-            if (emptyGalleryLayout != null)
+            if (emptyGalleryLayout != null && otherImagesAdapter.getCount() != 0)
                 emptyGalleryLayout.setVisibility(View.GONE);
 
         }

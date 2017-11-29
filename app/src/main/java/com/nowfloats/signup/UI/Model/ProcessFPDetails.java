@@ -84,6 +84,7 @@ public class ProcessFPDetails {
             }
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_FBPAGENAME, get_fp_details_model.FBPageName);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PARENTID, get_fp_details_model.ParentId);
+            session.storeFPDetails(Key_Preferences.PRODUCT_CATEGORY, get_fp_details_model.getProductCategoryVerb());
             MixPanelController.setProperties("_id",get_fp_details_model.ParentId);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_COUNTRY, get_fp_details_model.Country);
             MixPanelController.setProperties("FPCountry",get_fp_details_model.Country);

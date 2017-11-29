@@ -69,7 +69,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
         toolbar = (Toolbar) findViewById(R.id.app_bar);
         titleTextView = (TextView) toolbar.findViewById(R.id.titleTextView);
         searchEditText = (AutoCompleteTextView) findViewById(R.id.search_edittext);
-        deleteImage = (ImageView) findViewById(R.id.delete_image);
+        deleteImage = (ImageView) findViewById(R.id.img_delete);
         searchImage = (ImageView) findViewById(R.id.search_image);
 
         //autoCompleteAdapter = new SpinnerAdapter(this,searchList);
@@ -245,7 +245,7 @@ public class SubscribersActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch(v.getId()){
 
-            case R.id.delete_image:
+            case R.id.img_delete:
                 subscriberDialog();
                 break;
             case R.id.search_image:

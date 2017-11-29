@@ -67,6 +67,7 @@ public class ThirdPartySuggestionAdapter extends RecyclerView.Adapter<RecyclerVi
                     .into(productHolder.productImage);
             productHolder.productName.setText(productList.get(position).getProductName());
             productHolder.frameLayout.setVisibility(checkList.contains(position) ? View.VISIBLE : View.GONE);
+            productHolder.selectedImg.setVisibility(checkList.contains(position) ? View.VISIBLE : View.GONE);
 
         } else if (holder instanceof MyUpdatesViewHolder){
 
@@ -82,6 +83,7 @@ public class ThirdPartySuggestionAdapter extends RecyclerView.Adapter<RecyclerVi
 
             updateHolder.updateName.setText(updateList.get(position).getName());
             updateHolder.frameLayout.setVisibility(checkList.contains(position) ? View.VISIBLE : View.GONE);
+            updateHolder.selectedImg.setVisibility(checkList.contains(position) ? View.VISIBLE : View.GONE);
         }
     }
 

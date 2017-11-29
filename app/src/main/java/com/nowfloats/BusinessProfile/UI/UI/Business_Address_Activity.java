@@ -261,6 +261,12 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
                             AutocompletePredictionBuffer a=result.await();
                             //Log.v("ggg","ok");
                             citys.clear();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    adapter.notifyDataSetChanged();
+                                }
+                            });
                             for (int i=0;i<a.getCount();i++){
                                 //Log.v("ggg",a.get(i).getFullText(new StyleSpan(Typeface.NORMAL)).toString()+" length "+citys.size());
                                 citys.add(a.get(i).getPrimaryText(new StyleSpan(Typeface.NORMAL)).toString());
@@ -343,8 +349,8 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
         String[] locales = Locale.getISOCountries();
         for (String countryCode : locales) {
             Locale obj = new Locale("", countryCode);
-           if(obj.getDisplayCountry().trim().toLowerCase().equals(country.getText().toString().toLowerCase().trim()))
-             return obj.getCountry();
+            if(obj.getDisplayCountry().trim().toLowerCase().equals(country.getText().toString().toLowerCase().trim()))
+                return obj.getCountry();
         }
         return null;
     }
@@ -402,7 +408,7 @@ public class Business_Address_Activity extends AppCompatActivity implements Goog
 
         String url = "http://maps.google.com/maps/api/staticmap?center=" + Constants.latitude + "," + Constants.longitude + "&zoom=14&size=400x400&sensor=false" + "&markers=color:red%7Clabel:C%7C" + Constants.latitude + "," + Constants.longitude + "&key=" +getString(R.string.google_map_key); //AIzaSyBl66AnJ4_icH3gxI_ATc8031pveSTGWcg
         //holderItem.chatImage.setVisibility(View.VISIBLE);
-       // Log.d("Map Urlggg:", url);
+        // Log.d("Map Urlggg:", url);
         try {
             Picasso.with(this)
                     .load(url)

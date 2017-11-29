@@ -81,9 +81,11 @@ public class InstaMojoMainActivity extends AppCompatActivity {
         tvPhoneNumber = (TextView) findViewById(R.id.tv_payer_ph_no);
 
         ivPackageType = (ImageView) findViewById(R.id.iv_package);
-        if(mOrderData.getExpires().contains("Wildfire") ||
-                mOrderData.getExpires().contains("wildfire") ||
-                mOrderData.getExpires().contains("WildFire")){
+        if(mOrderData.getExpires().toLowerCase().contains("lite")){
+            ivPackageType.setImageDrawable(getResources().getDrawable(R.drawable.boost_lite_logo));
+        }else if(mOrderData.getExpires().toLowerCase().contains("pro")) {
+            ivPackageType.setImageDrawable(getResources().getDrawable(R.drawable.boost_pro_logo));
+        }else if(mOrderData.getExpires().toLowerCase().contains("wildfire")){
             ivPackageType.setImageDrawable(getResources().getDrawable(R.drawable.wildfire));
         }
 

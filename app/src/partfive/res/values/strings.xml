@@ -24,6 +24,8 @@
     <string name="title_activity_social__sharing_">Social Sharing</string>
     <string name="title_activity_login__main">Welcome Back</string>
     <string name="title_activity_pre_sign_up__main">PreSignUp_MainActivity</string>
+    <string name="primary_number">Primary Number (To communicate with Capture)</string>
+    <string name="to_communicate_with_nowfloats">To communicate with Capture</string>
     <string name="ps_create_lbl">CREATE</string>
     <string name="ps_login_lbl">LOG IN</string>
     <string name="ps_create_lbl_tag">a website with Capture</string>
@@ -82,7 +84,7 @@
     <string name="title_activity_card__full__view__main">Home</string>
     <string name="title_activity_create__message_">Post an update</string>
     <string name="side_panel_row_one">Dashboard</string>
-    <string name="side_panel_row_two">My Business Profile</string>
+    <string name="side_panel_row_two">Manage Website</string>
     <string name="side_panel_row_tenth">Manage Customers</string>
     <string name="manage_inventory">Manage Inventory</string>
     <string name="side_panel_site_appearance">Site Appearance</string>

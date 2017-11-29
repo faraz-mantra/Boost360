@@ -16,7 +16,9 @@ import com.nowfloats.Login.Model.FloatsMessageModel;
 import com.nowfloats.NavigationDrawer.Chat.ChatFragment;
 import com.nowfloats.NavigationDrawer.Chat.ChatModel;
 import com.nowfloats.NavigationDrawer.HomeActivity;
+import com.nowfloats.PreSignUp.SplashScreen_Activity;
 import com.nowfloats.Volley.AppController;
+import com.nowfloats.sync.DbController;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.DataMap;
 import com.nowfloats.twitter.TwitterConnection;
 import com.nowfloats.util.Constants;
@@ -641,7 +643,7 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
     }
     public void storeFPDetails(String key,String value)
     {   try{
-            editor.putString(key.trim(),value.trim());
+            editor.putString(key.trim(),value == null ?"":value.trim());
             editor.commit();
         }catch(Exception e){e.printStackTrace();}
     }
@@ -885,7 +887,9 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 Log.d("Valid Email", "Valid Email Response: " + response);
                 if(pd.isShowing())
                 pd.dismiss();
-
+                DataBase db = new DataBase(activity);
+                DbController.getDbController(activity.getApplicationContext()).deleteDataBase();
+                db.deleteLoginStatus();
                 SharedPreferences.Editor editor = pref.edit();
                 editor.clear();
                 editor.apply();
@@ -927,20 +931,20 @@ public class UserSessionManager implements Fetch_Home_Data.Fetch_Home_Data_Inter
                 }
                 MixPanelController.track("LogoutSuccess", null);
                 //activity.finish();
-                /*Intent i = new Intent(activity, Login_MainActivity.class);
+                Intent i = new Intent(activity, SplashScreen_Activity.class);
                 // Closing all the Activities
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
                 // Staring Login Activity
-                activity.startActivity(i);*/
-                activity.finish();
+                activity.startActivity(i);
+                //activity.finish();
                 System.gc();
                 System.exit(0);
             }
 
             @Override
             public void failure(RetrofitError error) {
-                if(pd != null )
+                if(pd.isShowing())
                 pd.dismiss();
                 Methods.showSnackBarNegative(activity,activity.getString(R.string.unable_to_logout));
             }

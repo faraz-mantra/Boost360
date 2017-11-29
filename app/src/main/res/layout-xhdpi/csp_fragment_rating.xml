@@ -38,6 +38,8 @@
         android:layout_marginTop="@dimen/margin_20"
         android:isIndicator="true"
         android:numStars="5"
+        android:secondaryProgressTint="@color/light_gray"
+        android:progressBackgroundTint="#ddd"
         android:rating="1" />
 
 

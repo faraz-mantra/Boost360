@@ -15,6 +15,7 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+    <string name="hotline_file_provider_authority">com.biz2.nowfloats.provider</string>
     <string name="title_activity_business_profile__home">Business Profile</string>
     <string name="business__address">Business Address</string>
     <string name="contact__info">Contact Information</string>
@@ -45,7 +46,7 @@
     <string name="ps_sc6_lbl2">Opportunities</string>
     <string name="ps_sc6_lbl3">Let customers contact you directly \nand reply to them instantly!</string>
     <string name="ps_sc8_lbl1">Premium features in</string>
-    <string name="ps_sc8_lbl2">NOWFLOATS</string>
+    <string name="ps_sc8_lbl2">NowFloats</string>
     <string name="ps_sc8_lbl3">Get additional features \nfor your business website \nfrom the in-app Store.</string>
     <string name="ps_sc8_lbl4">Store</string>
     <string name="ps_sc1_lbl1_tf">HN53exd.ttf</string>
@@ -697,17 +698,17 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
 
     <string name="buy_in_capital">BUY</string>
     <string name="later_in_capital">LATER</string>
-    <string name="renew_light_house_plan">Renew Lighthouse plan to get all the features</string>
-    <string name="buy_light_house">Your current plan is demo which does not have all features, to get all features buy Lighthouse plan.</string>
-    <string name="light_house_plan_expired_some_features_visible">Your Lighthouse plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others</string>
+    <string name="renew_light_house_plan">Renew Boost plan to get all the features</string>
+    <string name="buy_light_house">Your current plan is demo which does not have all features, to get all features buy Boost plan.</string>
+    <string name="light_house_plan_expired_some_features_visible">Your Boost plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others</string>
     <string name="renew_wildfire_plan">Renew Wildfire plan</string>
     <string name="continue_auto_promoting_on_google">Continue auto-promoting your website using digital marketing channels like Google. Please renew your plan to ensure that your business messages spread like wildfire.</string>
     <string name="renew_in_capital">RENEW</string>
     <string name="ignore_in_capital">IGNORE</string>
-    <string name="buy_light_house_plan">Buy Lighthouse plan to get all the features</string>
+    <string name="buy_light_house_plan">Buy Boost plan to get all the features</string>
     <string name="demo_plan_expired">Your demo plan has expired and even though your customers will be able to see your website, some main features have been deactivated. These include product catalogue, business enquiries, and the ability to update the site, among others.</string>
-    <string name="demo_plan_will_expire"><Data><![CDATA[Your Demo plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
-    <string name="light_house_pla_will_expire"><Data><![CDATA[Your Lighthouse plan will expire in <b>%s days</b>. Even though your customers will be able to see your website, some main features have been deactivated.]]></Data></string>
+    <string name="demo_plan_will_expire"><Data><![CDATA[Your Demo plan will expire in <b>%s days</b>. Even though your customers will be able to see your website but some of the main features will be deactivated.]]></Data></string>
+    <string name="light_house_pla_will_expire"><Data><![CDATA[Your Boost plan will expire in <b>%s days</b>. Even though your customers will be able to see your website but some of the main features will be deactivated.]]></Data></string>
 
     <string name="wildfire_will_expire">Wildfire plan will expire in</string>
     <string name="days">days</string>
@@ -782,14 +783,14 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="domain_lookup">Domain LookUp</string>
     <string name="enter_domain_nmae_to_continue">Enter domain name to continue</string>
     <string name="domain_is_available">Domain is available..</string>
-    <string name="domain_not_available">Domain not available. Please try another name.</string>
+    <string name="domain_not_available">Domain is not available. Please try another name.</string>
     <string name="link_domain_not_available">Domain link failure. Please try again.</string>
     <string name="domain_booking_confirmation">Domain Booking Confirmation</string>
     <string name="domain_configuration">Domain Configuration</string>
     <string name="domain_booking_successful">Domain Booking Successful</string>
     <string name="domain_booking_process">Domain Booking In Process</string>
     <string name="domain_booking_process_message">Your Domain will be activated within 48 hours.</string>
-    <string name="domain_booking_failed">Domain booking falied.</string>
+    <string name="domain_booking_failed">Domain booking failed</string>
     <string name="domain_booking_successful_message">Your Domain: \n %s \n has been registered to the DNS server and successfully mapped.</string>
     <string name="drop_us_contact"><![CDATA[You can drop us a line at <b><font color=#ffb900>ria@nowfloats.com</font></b> or call us at <b><font color=#ffb900>1860-123-1233 </font></b> if you\'d like to enable this feature.]]></string>
     <string name="hello_do_you_want_this">Hello Do you want to set this</string>
@@ -1010,10 +1011,11 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="product_detail_free_shipping">Free Shipping</string>
     <string name="product_detail_delete_btn_text">Delete product</string>
     <string name="book_a_new_domain">Book a new domain</string>
+    <string name="book_a_new_domain_included">Book new domain <i>(included in your package)</i></string>
     <string name="renew_domain">Renew domain</string>
     <string name="have_an_existing_domain">Have an existing domain? </string>
     <string name="enjoying_feature">Is this helpful in managing your leads? </string>
-    <string name="tap_a_star_to_rate_it">Tap a star to rate it</string>
+    <string name="tap_a_star_to_rate_it">Tap to rate it</string>
     <string name="link_a_domain_nf">Link a domain (included in your NowFloats Package)</string>
     <string name="already_have_a_domain">Already have a domain</string>
     <string name="already_have_a_domain2"><u>Already have a domain?</u></string>
@@ -1098,7 +1100,7 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="enable_bubble_msg">Open WhatsApp to share products with your potential customers.</string>
     <string name="enable_customer_assistant_msg">Open Customer Assistant to view your potential customers.</string>
     <string name="already_included_in_your_package">*Already included in your package</string>
-    <string name="link_comments">I would like to map my existing domain to my Nowfloats site %s.nowfloats.com\nplease reach out to me to discuss this in detail.</string>
+    <string name="link_comments">I would like to map my existing domain to my NowFloats site %s.nowfloats.com\nplease reach out to me to discuss this in detail.</string>
     <string name="content_link_domain">
         If you have an existing domain, we strongly recommend that you use it for your NowFloats Website.
         Online discovery will be faster as search engines already recognize your domain.
@@ -1509,8 +1511,16 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="manage_website_customers">Track how many customers you have received from your website. This is your organic traffic coming from search engines, and repeat visitors. These are your most important customers, and will grow over time. </string>
     <string name="manage_social_customers">Your social media pages are an easy way for customers on those platforms to interact with you. Currently, you can chat with customers who are reaching out to you on your Facebook Page.
 </string>
-    <string name="manage_multichannel_customers">You can track all your online customers from a single interface. You can interact with your customers on platforms like WhatsApp and SMS. We read through your SMS data to fetch relevant enquiries.</string>
+    <string name="manage_multichannel_customers">Interact with your customers and reply to their enquiries from across platforms through a single interface. We read through your SMS data to fetch relevant enquiries.</string>
     <string name="deeplink_manage_customer">managecustomer</string>
-
+    <string name="pp_business_category">Business Category:</string>
+    <string name="text_dictate"><![CDATA[<b>DICTATE</b> - WEBSITE CONTENT SERVICE]]></string>
+    <string name="text_wildfire"><![CDATA[<b>WILDFIRE</b> - Rs. 60000 OF ADWORDS AND FACEBOOK MARKETING]]></string>
+    <string name="text_app"><![CDATA[<b>YOUR APP</b> - YOUR OWN BUSINESS APP FOR APPLE APP STORE AND GOOGLE PLAY STORE]]></string>
+    <string name="renew_domain_not_available_message" formatted="false">Your domain \'%s\' has expired and unavailable for purchase. Your website is currently running on \'%s\'. Please book a new domain or link another domain to avail the advantages of having a personal domain.</string>
+    <string name="renew_domain_message" formatted="false">Your domain \'%s\' has expired. Your website is currently running on \'%s\'. Please renew your domain or link another domain to avail the advantages of having a personal domain.</string>
+    <string name="renew_nowfloats_plan">Your NowFloats account has expired. Please renew your account to continue with service.</string>
+    <string name="renew_nowfloats_and_domain_plan">Your NowFloats account and your domain has expired. Please renew your account and domain to continue with service.</string>
+    <string name="contact_us_message">If your query is still unanswered, please contact us at ria@nowfloats.com or call our toll-free number 1860&#8211;123&#8211;1233.</string>
 
 </resources>
