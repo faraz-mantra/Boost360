@@ -1385,7 +1385,12 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame, manageCustomerFragment, "ManageCustomers")
                             .addToBackStack(null)
                             .commit();
-                } else if (nextScreen.equals(getResources().getString(R.string.my_business_apps))) {
+                }else if(nextScreen.equals("wildfire")){
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,new WildFireFragment(),"WildFireFrag")
+                            .addToBackStack(null)
+                            .commit();
+                }
+                else if (nextScreen.equals(getResources().getString(R.string.my_business_apps))) {
                     startBusinessApp();
                 } else if (nextScreen.equals(getResources().getString(R.string.side_panel_site_appearance))) {
                     Intent i = new Intent(HomeActivity.this, SiteAppearanceActivity.class);

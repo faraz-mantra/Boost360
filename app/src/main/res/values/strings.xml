@@ -464,6 +464,22 @@
         <item>Facebook</item>
         <item>Quikr</item>
     </string-array>
+    <string-array name="wildfire_parent_0">
+        <item>WildFire is the fastest way to get your potential customers to notice your brand, product or services. It is an inorganic boost provided to the organic website, in form of targeted digital advertising that ensures customer calls and website visits.</item>
+    </string-array>
+    <string-array name="wildfire_parent_1">
+        <item>If you already have a NowFloats LightHouse plan (organic SEO), you can simply activate WildFire for your category (prices vary because of difference in supply &amp; demand for keywords by category).</item>
+        <item>A mix of advertising tools, such as Google AdWords, Facebook Ads, etc. are used to automatically create the most optimised ads &amp; targeting for your website. Which ensure people searching for what’s being advertised end up calling your business number or on your website first.</item>
+        <item><![CDATA[<b>Note:</b> A minimum of three messages are required on your website for the WildFire plan to start.]]></item>
+    </string-array>
+    <string-array name="wildfire_parent_2">
+        <item><![CDATA[NowFloats WildFire is NowFloats LightHouse with Targeted online marketing that spurs leads and calls from potential customers from the get go. Advertising vehicles like Google Adwords<sup><small>TM</small></sup> or Facebook<sup><small>TM</small></sup> ads, etc. are used to target your potential customers. The content of these ads are created using the keywords and messages updated from the NowFloats Business Website.]]></item>
+    </string-array>
+    <string-array name="wildfire_parents">
+        <item>OVERVIEW</item>
+        <item>HOW IT WORKS</item>
+        <item>FAQs</item>
+    </string-array>
     <string name="business_enquiries_title">Business Enquiries</string>
     <string name="enquiries_title">Enquiries</string>
     <string name="payment_setting">Payment Settings</string>
@@ -1522,5 +1538,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="renew_nowfloats_plan">Your NowFloats account has expired. Please renew your account to continue with service.</string>
     <string name="renew_nowfloats_and_domain_plan">Your NowFloats account and your domain has expired. Please renew your account and domain to continue with service.</string>
     <string name="contact_us_message">If your query is still unanswered, please contact us at ria@nowfloats.com or call our toll-free number 1860&#8211;123&#8211;1233.</string>
+    <string name="wildfire_definition"><![CDATA[WildFire is a way for your business to <b>quickly</b> reach your <b>target</b> audience and get more customers to your store! It uses inorganic discovery to get you discovered in the top ranking ad spots of Google Search and Facebook Feed - getting you more and <b>more phone calls</b>.]]></string>
 
 </resources>

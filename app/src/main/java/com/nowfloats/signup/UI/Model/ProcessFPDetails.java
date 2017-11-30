@@ -39,6 +39,7 @@ public class ProcessFPDetails {
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_EXPIRY_DATE, get_fp_details_model.ExpiryDate);
             session.storeFPDetails(Key_Preferences.GET_FP_DETAILS_PAYMENTSTATE, get_fp_details_model.PaymentState);
             session.storeFPDetails(Key_Preferences.LANGUAGE_CODE, get_fp_details_model.LanguageCode);
+            session.storeFPDetails(Key_Preferences.EXTERNAL_SOURCE_ID, get_fp_details_model.ExternalSourceId);
             MixPanelController.setProperties("PaymentState",get_fp_details_model.PaymentState);
             MixPanelController.setProperties("PaymentLevel",get_fp_details_model.PaymentLevel);
             if("0".equals(get_fp_details_model.lat) &&"0".equals(get_fp_details_model.lng)){

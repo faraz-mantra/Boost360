@@ -86,7 +86,7 @@ public class SidePanelFragment extends Fragment {
     TextView StoreTextView;
     TextView cspTextView;
     //TextView enqCount;
-    TextView settingsText, chatText, callText, shareText, tvBoostBubble, analyticsText /*tvSiteAppearance*/;
+    TextView settingsText, chatText, callText, shareText, wildFireText,tvBoostBubble, analyticsText /*tvSiteAppearance*/;
     public static TextView fpNameTextView;
     UserSessionManager session;
     public static ImageView iconImage;
@@ -109,7 +109,7 @@ public class SidePanelFragment extends Fragment {
 
     LinearLayout homeLayout, profileLayout, businessAppsLayout, storeLayout, /*customerQueriesLayout,*/
             imageGalleryLayout, cspLayout,
-            productGalleryLayout, Store_Layout, settingsLayout, chatLayout, callLayout, shareLayout,
+            productGalleryLayout, Store_Layout, settingsLayout, chatLayout, callLayout, shareLayout, wildFireLayout,
             llGetInTouch, bubbleLayout /*llSiteAppearance*/, manageCustomersLayout,socialLayout,manageInventoryLayout, analyticsLayout;
     private RelativeLayout siteMeter;
     private int siteMeterTotalWeight;
@@ -127,7 +127,7 @@ public class SidePanelFragment extends Fragment {
     private Button newButton;
     private static HashMap<String, Integer> backgroundImages = new HashMap<String, Integer>();
     private ImageView shareImageView, businessProfileImageView, dasbBoardImageView, callImageView, chatImageView, cspImageView,
-            settingsImageView, StoreImageView, productGalleryImageView, businessappImageView,
+            settingsImageView, StoreImageView, productGalleryImageView, businessappImageView,wildFireImg,
             imageGalleryImageView/*, customerQueriesImageView*/ /*ivSiteAppearance*/, manageCustomerImageView,
             socialImageView,manageInventoryImageView, analyticsImageView;
     private PorterDuffColorFilter defaultLabelFilter, whiteLabelFilter;
@@ -363,6 +363,7 @@ public class SidePanelFragment extends Fragment {
         callLayout = (LinearLayout) card.findViewById(R.id.seventhRow_Layout);
         shareLayout = (LinearLayout) card.findViewById(R.id.eigthRow_Layout);
         llGetInTouch = (LinearLayout) card.findViewById(R.id.ll_get_in_touch);
+        wildFireLayout = (LinearLayout) card.findViewById(R.id.wildfire_layout);
         bubbleLayout = (LinearLayout) card.findViewById(R.id.ninethRow_Layout);
         analyticsLayout = (LinearLayout) card.findViewById(R.id.analytics_row_Layout);
         //llSiteAppearance = (LinearLayout) card.findViewById(R.id.ll_site_appearance);
@@ -376,6 +377,7 @@ public class SidePanelFragment extends Fragment {
         if (session.getISEnterprise().equals("true")) {
             profileLayout.setVisibility(View.GONE);
             cspLayout.setVisibility(View.GONE);
+            wildFireLayout.setVisibility(View.GONE);
             imageGalleryLayout.setVisibility(View.GONE);
             businessAppsLayout.setVisibility(View.GONE);
             chatLayout.setVisibility(View.GONE);
@@ -402,6 +404,7 @@ public class SidePanelFragment extends Fragment {
         chatText = (TextView) chatLayout.findViewById(R.id.sixthRow_TextView);
         callText = (TextView) callLayout.findViewById(R.id.seventhRow_TextView);
         shareText = (TextView) shareLayout.findViewById(R.id.eighthRow_TextView);
+        wildFireText = (TextView) wildFireLayout.findViewById(R.id.wildfire_text);
         tvBoostBubble = (TextView) bubbleLayout.findViewById(R.id.ninethRow_TextView);
         bubbleSwitch = (Switch) bubbleLayout.findViewById(R.id.ninethRow_Switch);
         //tvSiteAppearance = (TextView) llSiteAppearance.findViewById(R.id.tv_site_appearance);
@@ -491,6 +494,7 @@ public class SidePanelFragment extends Fragment {
         chatImageView = (ImageView) chatLayout.findViewById(R.id.sixthRow_ImageView);
         callImageView = (ImageView) callLayout.findViewById(R.id.seventhRow_ImageView);
         shareImageView = (ImageView) shareLayout.findViewById(R.id.eigthRow_ImageView);
+        wildFireImg = (ImageView) wildFireLayout.findViewById(R.id.wildfire_img);
         analyticsImageView = (ImageView) analyticsLayout.findViewById(R.id.analytics_row_ImageView);
         //ivSiteAppearance = (ImageView) llSiteAppearance.findViewById(R.id.iv_site_appearance);
 
@@ -524,7 +528,14 @@ public class SidePanelFragment extends Fragment {
                 MixPanelController.track(EventKeysWL.ANALYTICS_FRAGMENT, null);
             }
         });
-
+        wildFireText.setTypeface(robotoMedium);
+        wildFireLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((OnItemClickListener) mainActivity).onClick("wildfire");
+                onclickColorChange(wildFireImg, wildFireText, wildFireLayout);
+            }
+        });
         /*tvSiteAppearance.setTypeface(robotoMedium);
         llSiteAppearance.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1424,6 +1435,7 @@ public class SidePanelFragment extends Fragment {
         tvSocialSharing.setTextColor(getResources().getColor(R.color.cell_text_color));
         tvManageInventory.setTextColor(getResources().getColor(R.color.cell_text_color));
         analyticsText.setTextColor(getResources().getColor(R.color.cell_text_color));
+        wildFireText.setTextColor(getResources().getColor(R.color.cell_text_color));
         //tvSiteAppearance.setTextColor(getResources().getColor(R.color.cell_text_color));
 
         shareImageView.setColorFilter(defaultLabelFilter);
@@ -1441,6 +1453,7 @@ public class SidePanelFragment extends Fragment {
         socialImageView.setColorFilter(defaultLabelFilter);
         manageInventoryImageView.setColorFilter(defaultLabelFilter);
         analyticsImageView.setColorFilter(defaultLabelFilter);
+        wildFireImg.setColorFilter(defaultLabelFilter);
         //ivSiteAppearance.setColorFilter(defaultLabelFilter);
 
 
@@ -1463,6 +1476,7 @@ public class SidePanelFragment extends Fragment {
         shareLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         llGetInTouch.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
         analyticsLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
+        wildFireLayout.setBackgroundColor(getResources().getColor(R.color.cell_background_color));
 
 
         if (tv != null) {

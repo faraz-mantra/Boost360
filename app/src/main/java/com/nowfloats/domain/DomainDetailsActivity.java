@@ -104,7 +104,7 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
     CardView domainDetailsCard, emailDetailsCard;
     LinearLayout chooseDomainLayout, expiredLayout,emptyLayout;
     TextView proceedBtn, confirmRequestTv, addEmail;
-    RadioButton chooseBtn, linkBtn;
+    RadioButton chooseBtn;
     private MaterialDialog domainBookDialog;
     public enum EmailType{
         ADDED, ADD_EMAIL;
@@ -154,7 +154,6 @@ public class DomainDetailsActivity extends AppCompatActivity implements View.OnC
         proceedBtn = (TextView) findViewById(R.id.btn_proceed);
         chooseBtn = (RadioButton) findViewById(R.id.rb_book_a_domain);
         chooseBtn.setText(Methods.fromHtml("Book new domain <i>(included in your package)</i>"));
-        linkBtn = (RadioButton) findViewById(R.id.rb_link_a_domain);
         addEmail = emailDetailsCard.findViewById(R.id.tv_add_email);
         addEmail.setPaintFlags(addEmail.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         confirmRequestTv = emailDetailsCard.findViewById(R.id.tv_confirm_request);
