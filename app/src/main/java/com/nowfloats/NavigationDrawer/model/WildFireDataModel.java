@@ -73,7 +73,7 @@ public class WildFireDataModel {
     private String primaryNumber;
     @SerializedName("Radius")
     @Expose
-    private Integer radius;
+    private String radius;
     @SerializedName("StartDate")
     @Expose
     private String startDate;
@@ -253,11 +253,11 @@ public class WildFireDataModel {
         this.primaryNumber = primaryNumber;
     }
 
-    public Integer getRadius() {
+    public String getRadius() {
         return radius;
     }
 
-    public void setRadius(Integer radius) {
+    public void setRadius(String radius) {
         this.radius = radius;
     }
 
@@ -384,35 +384,35 @@ public class WildFireDataModel {
 
         @SerializedName("Key")
         @Expose
-        private Integer key;
+        private Long key;
         @SerializedName("Value")
         @Expose
-        private Integer value;
+        private Long value;
         @SerializedName("Weight")
         @Expose
-        private Integer weight;
+        private Long weight;
 
-        public Integer getKey() {
+        public Long getKey() {
             return key;
         }
 
-        public void setKey(Integer key) {
+        public void setKey(Long key) {
             this.key = key;
         }
 
-        public Integer getValue() {
+        public Long getValue() {
             return value;
         }
 
-        public void setValue(Integer value) {
+        public void setValue(Long value) {
             this.value = value;
         }
 
-        public Integer getWeight() {
+        public Long getWeight() {
             return weight;
         }
 
-        public void setWeight(Integer weight) {
+        public void setWeight(Long weight) {
             this.weight = weight;
         }
 

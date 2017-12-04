@@ -22,7 +22,11 @@ import com.nowfloats.NavigationDrawer.API.RiaNetworkInterface;
 import com.nowfloats.NavigationDrawer.model.RiaSupportModel;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.thinksity.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -123,7 +127,13 @@ public class HelpAndSupportFragment extends Fragment implements View.OnClickList
         tvConsultantNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                JSONObject json = new JSONObject();
+                try {
+                    json.put("value",nextMember == CHC?"WEB":"CHC");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                MixPanelController.track("CallToConsultant",json);
                 Intent i = new Intent();
                 i.setAction(Intent.ACTION_DIAL);
                 i.setData(Uri.parse("tel:" + tvConsultantNumber.getText().toString()));
@@ -134,6 +144,13 @@ public class HelpAndSupportFragment extends Fragment implements View.OnClickList
         tvEmail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                JSONObject json = new JSONObject();
+                try {
+                    json.put("value",nextMember == CHC?"WEB":"CHC");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                MixPanelController.track("EmailToConsultant",json);
                 Intent emailIntent = new Intent(Intent.ACTION_SEND);
                 emailIntent.setData(Uri.parse("mailto:"));
                 emailIntent.setType("text/plain");
@@ -233,8 +250,8 @@ public class HelpAndSupportFragment extends Fragment implements View.OnClickList
             if(getActivity()!=null)
                 ivHelpAvatar.setImageDrawable(ContextCompat.getDrawable(getActivity(), memberType == CHC?R.drawable.help_product_support:R.drawable.help_male_avatar));
         }
-        tvConsultantNumber.setText(Methods.fromHtml("<a href=\"\">" + riaSupportModel.getPhoneNumber() + "</a>"));
-        tvEmail.setText(Methods.fromHtml("<a href=\"mail:" + riaSupportModel.getEmail() + "\">" + riaSupportModel.getEmail() + "</a>"));
+        tvConsultantNumber.setText(riaSupportModel.getPhoneNumber());
+        tvEmail.setText(riaSupportModel.getEmail());
     }
     @Override
     public void onResume() {

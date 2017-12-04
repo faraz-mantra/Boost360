@@ -578,6 +578,7 @@
             android:id="@+id/wildfire_layout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/sidepanel_cell_height"
+            android:visibility="gone"
             android:background="@color/cell_background_color"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -598,6 +599,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="WildFire"
+                android:textColor="@color/cell_text_color"
+                android:textSize="@dimen/cell_text_size" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/dictate_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/sidepanel_cell_height"
+            android:visibility="gone"
+            android:background="@color/cell_background_color"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/dictate_img"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:layout_marginLeft="@dimen/icon_left_margin"
+                android:layout_marginRight="@dimen/icon_right_margin"
+                android:padding="6dp"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/wild_fire_expire"
+                android:tint="#808080" />
+
+            <TextView
+                android:id="@+id/dictate_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dictate"
                 android:textColor="@color/cell_text_color"
                 android:textSize="@dimen/cell_text_size" />
 

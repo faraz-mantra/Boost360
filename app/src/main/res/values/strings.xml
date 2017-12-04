@@ -475,6 +475,15 @@
     <string-array name="wildfire_parent_2">
         <item><![CDATA[NowFloats WildFire is NowFloats LightHouse with Targeted online marketing that spurs leads and calls from potential customers from the get go. Advertising vehicles like Google Adwords<sup><small>TM</small></sup> or Facebook<sup><small>TM</small></sup> ads, etc. are used to target your potential customers. The content of these ads are created using the keywords and messages updated from the NowFloats Business Website.]]></item>
     </string-array>
+    <string-array name="dictate_parent_0">
+        <item>A dedicated NowFloats representative gets in touch with you regularly, to know your business properly and updates your website 2&#8211;3 times a week on your behalf, thereby saving your time.</item>
+    </string-array>
+    <string-array name="dictate_parent_1">
+        <item><![CDATA[Our representative will first understand your business so that the updates are highly relevant. More so because we fine-tune the messages to search trends yielding higher traffic per message.<br />Then the dedicated NowFloats Dictate representative will be provided access to your website through the Manage Portal to update it regularly.]]></item>
+    </string-array>
+    <string-array name="dictate_parent_2">
+        <item><![CDATA[<b>For which plans can the NowFloats Dictate be used?</b><br />NowFloats Dictate can be used for Boost Lite customers.]]></item>
+    </string-array>
     <string-array name="wildfire_parents">
         <item>OVERVIEW</item>
         <item>HOW IT WORKS</item>
@@ -1539,5 +1548,6 @@ free exclusively for you.\n\nIt will help your customers spend more time on your
     <string name="renew_nowfloats_and_domain_plan">Your NowFloats account and your domain has expired. Please renew your account and domain to continue with service.</string>
     <string name="contact_us_message">If your query is still unanswered, please contact us at ria@nowfloats.com or call our toll-free number 1860&#8211;123&#8211;1233.</string>
     <string name="wildfire_definition"><![CDATA[WildFire is a way for your business to <b>quickly</b> reach your <b>target</b> audience and get more customers to your store! It uses inorganic discovery to get you discovered in the top ranking ad spots of Google Search and Facebook Feed - getting you more and <b>more phone calls</b>.]]></string>
+    <string name="dictate_definition">To get maximum value from your NowFloats business website, we advise businesses to update content, in form of business updates, offers or product catalogs, 2&#8211;3 times a week regularly. When you opt for the NowFloats Dictate, a service by which, a NowFloats representative gets in touch with you and understands your business well enough, and then regularly contacts you or designated associate to get the latest updates.</string>
 
 </resources>

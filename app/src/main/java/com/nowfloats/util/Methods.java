@@ -12,7 +12,9 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -25,8 +27,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.Layout;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.LeadingMarginSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -440,6 +444,47 @@ public class Methods {
             e.printStackTrace();
         }
         return value;
+    }
+
+    public static class MyLeadingMarginSpan2 implements LeadingMarginSpan.LeadingMarginSpan2 {
+        private int margin;
+        private int lines;
+
+        public MyLeadingMarginSpan2(int lines, int margin) {
+            this.margin = margin;
+            this.lines = lines;
+        }
+
+        /* Возвращает значение, на которе должен быть добавлен отступ */
+        @Override
+        public int getLeadingMargin(boolean first) {
+            if (first) {
+            /*
+             * Данный отступ будет применен к количеству строк
+             * возвращаемых getLeadingMarginLineCount()
+             */
+                return margin;
+            } else {
+                // Отступ для всех остальных строк
+                return 0;
+            }
+        }
+
+        @Override
+        public void drawLeadingMargin(Canvas c, Paint p, int x, int dir,
+                                      int top, int baseline, int bottom, CharSequence text,
+                                      int start, int end, boolean first, Layout layout) {}
+
+        /*
+         * Возвращает количество строк, к которым должен быть
+         * применен отступ возвращаемый методом getLeadingMargin(true)
+         * Замечание:
+         * Отступ применяется только к N строкам первого параграфа.
+         */
+        @Override
+        public int getLeadingMarginLineCount() {
+            return lines;
+        }
     }
 
     public static boolean compareDate(Date one, Date cur_date) {

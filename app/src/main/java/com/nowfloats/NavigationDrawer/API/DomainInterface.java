@@ -10,7 +10,6 @@ import java.util.Map;
 
 import retrofit.Callback;
 import retrofit.http.Body;
-import retrofit.http.Field;
 import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;
@@ -50,8 +49,8 @@ public interface DomainInterface {
     // Email booking apis
     @Headers({"Content-Type: application/json"})
     @POST("/EmailService/v1/emailswithdomain/create")
-    void bookEmails(@Query("clientId") String clientId, @Body EmailBookingModel model, Callback<EmailBookingModel.EmailBookingIds> response);
+    void bookEmails(@Query("clientId") String clientId, @Body EmailBookingModel model, Callback<ArrayList<String>> response);
 
     @GET("/EmailService/v1/emailswithdomain/getEmailBookingStatus")
-    void emailStatus(@Field("clientId") String clientId, @Field("fpTag") String fpTag, Callback<ArrayList<EmailBookingModel.EmailBookingStatus>> response);
+    void emailStatus(@Query("clientId") String clientId, @Query("fpTag") String fpTag, Callback<ArrayList<EmailBookingModel.EmailBookingStatus>> response);
 }

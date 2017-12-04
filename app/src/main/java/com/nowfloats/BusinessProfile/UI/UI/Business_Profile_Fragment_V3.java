@@ -77,7 +77,7 @@ public class Business_Profile_Fragment_V3 extends Fragment implements View.OnCli
         prefsEditor = pref.edit();
         mBus = BusProvider.getInstance().getBus();
         session = new UserSessionManager(mContext.getApplicationContext(), getActivity());
-        domainApiService = new DomainApiService(mBus);
+        //domainApiService = new DomainApiService(mBus);
     }
 
     @Override

@@ -41,8 +41,15 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.thinksity.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.nowfloats.util.MixPanelController.THIRD_PARTY_ACTION_CALL;
+import static com.nowfloats.util.MixPanelController.THIRD_PARTY_ACTION_SHARE;
+import static com.nowfloats.util.MixPanelController.THIRD_PARTY_DATA_DETAIL;
 
 /**
  * Created by Admin on 10-10-2017.
@@ -98,6 +105,7 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
         }*/
         init();
         addFragments(SHOW_MESSAGE);
+        MixPanelController.track(THIRD_PARTY_DATA_DETAIL,null);
     }
 
     private void init() {
@@ -182,11 +190,19 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
 
     private void shareSuggestionToCustomer() {
         FirebaseLogger.getInstance().logSAMEvent(mSuggestionDO.getMessageId(), FirebaseLogger.SAMSTATUS.ACTION_SHARE, mSuggestionDO.getFpId(), appVersion);
-        MixPanelController.track(MixPanelController.SAM_BUBBLE_ACTION_SHARE, null);
+
 
         mSuggestionDO.setStatus(1);
         updateActionsToServer(mSuggestionDO);
+        JSONObject json = new JSONObject();
 
+        try {
+            json.put("sharedData",sharedSuggestionsDOList.size());
+            json.put("messageId",mSuggestionDO.getMessageId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        MixPanelController.track(THIRD_PARTY_ACTION_SHARE,json);
         if (mSuggestionDO.getType().equalsIgnoreCase(ACTION_TYPE_NUMBER)) {
             prepareMessageForShare(CallToActionFragment.SHARE_VIA.SMS);
         } else if (mSuggestionDO.getType().equalsIgnoreCase(ACTION_TYPE_EMAIL)) {
@@ -367,7 +383,14 @@ public class ThirdPartySuggestionDetailActivity extends AppCompatActivity implem
                 addFragments(ADD_UPDATES);
                 break;
             case R.id.btn_call:
+                JSONObject json = new JSONObject();
 
+                try {
+                    json.put("messageId",mSuggestionDO.getMessageId());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                MixPanelController.track(THIRD_PARTY_ACTION_CALL,json);
                 if (mSuggestionDO.getType().equalsIgnoreCase(ACTION_TYPE_NUMBER)) {
                     if (!TextUtils.isEmpty(mSuggestionDO.getValue())) {
                         FirebaseLogger.getInstance().logSAMEvent(mSuggestionDO.getMessageId(), FirebaseLogger.SAMSTATUS.ACTION_CALL, mSuggestionDO.getFpId(), appVersion);

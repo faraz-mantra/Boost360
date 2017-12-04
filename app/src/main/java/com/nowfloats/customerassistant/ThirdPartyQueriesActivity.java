@@ -39,15 +39,21 @@ import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
+import com.nowfloats.util.MixPanelController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.thinksity.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+
+import static com.nowfloats.util.MixPanelController.THIRD_PARTY_RATING;
 
 /**
  * Created by admin on 10/4/2017.
@@ -86,7 +92,6 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_third_party_queries);
         init();
-
     }
 
     private void init(){
@@ -234,6 +239,7 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
         HashMap<String, String> offersParam = new HashMap<>();
         offersParam.put("fpId", sessionManager.getFPID());
         offersParam.put("rating", rating + "");
+        MixPanelController.track(THIRD_PARTY_RATING,null);
         customerApis.updateRating(offersParam);
     }
 
@@ -285,8 +291,10 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
     }
     @Subscribe
     public void onMessagesReceived(SMSSuggestions smsSuggestions){
+        JSONObject json = new JSONObject();
         if(smsSuggestions.getSuggestionList() !=null) {
             if (smsSuggestions.getSuggestionList().size()>0) {
+
                 sort(smsSuggestions.getSuggestionList(), SortType.EXPIRE);
                 adapter.refreshListData(smsSuggestions.getSuggestionList());
             }else{
@@ -296,9 +304,21 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
                 list.add(suggestionsDO);
                 adapter.refreshListData(list);
             }
+
+            try {
+                json.put("value",smsSuggestions.getSuggestionList().size());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
             /*String payloadStr = new Gson().toJson(smsSuggestions);
             mDbController.postSamData(payloadStr);*/
         }else{
+            try {
+                json.put("value",-1);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             if(!Methods.isOnline(this)) {
                 Methods.snackbarNoInternet(this);
             }
@@ -309,6 +329,7 @@ public class ThirdPartyQueriesActivity extends AppCompatActivity implements View
             adapter.refreshListData(list);
         }
         hideProgress();
+        MixPanelController.track(MixPanelController.THIRD_PARTY_DATA,json);
     }
 
     private void sort(List<SuggestionsDO> smsSuggestionsList, final SortType sortType){

@@ -36,6 +36,7 @@ import com.nowfloats.NavigationDrawer.HomeActivity;
 import com.nowfloats.NavigationDrawer.Home_Fragment_Tab;
 import com.nowfloats.NavigationDrawer.SidePanelFragment;
 import com.nowfloats.NavigationDrawer.model.DomainDetails;
+import com.nowfloats.NavigationDrawer.model.EmailBookingModel;
 import com.nowfloats.SiteAppearance.SiteAppearanceActivity;
 import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.PricingPlansActivity;
@@ -43,25 +44,23 @@ import com.nowfloats.domain.DomainDetailsActivity;
 import com.nowfloats.signup.UI.Model.Get_FP_Details_Model;
 import com.nowfloats.test.com.nowfloatsui.buisness.util.Util;
 import com.nowfloats.util.BoostLog;
-import com.nowfloats.util.BusProvider;
 import com.nowfloats.util.Constants;
 import com.nowfloats.util.EventKeysWL;
 import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.nowfloats.util.MixPanelController;
 import com.nowfloats.util.Utils;
-import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 import com.thinksity.BuildConfig;
 import com.thinksity.R;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
  */
-public class Business_Profile_Fragment_V2 extends Fragment {
+public class Business_Profile_Fragment_V2 extends Fragment implements DomainApiService.DomainCallback {
     TextView businessAddressLayout, contactInformationLayout, businessHoursLayout, businessLogoLayout, socialSharingLayout,
             tvCustomPages, tvPhotoGallery, tvSiteAppearance, tvDomainDetails;
     public static ImageView businessProfileImageView;
@@ -75,7 +74,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
     private Activity activity;
     private DomainApiService domainApiService;
     private final static int LIGHT_HOUSE_EXPIRED =-1,DEMO =0,DEMO_EXPIRED=-2;
-    private Bus mBus;
+
 
     private ProgressDialog progressDialog;
 
@@ -83,7 +82,6 @@ public class Business_Profile_Fragment_V2 extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activity = getActivity();
-        mBus = BusProvider.getInstance().getBus();
     }
 
     @Override
@@ -94,7 +92,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
         pref = activity.getSharedPreferences(Constants.PREF_NAME, Activity.MODE_PRIVATE);
         prefsEditor = pref.edit();
         session = new UserSessionManager(activity.getApplicationContext(), activity);
-        domainApiService = new DomainApiService(mBus);
+        domainApiService = new DomainApiService(this);
         return mainView;
     }
 
@@ -433,12 +431,12 @@ public class Business_Profile_Fragment_V2 extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        mBus.register(this);
+
     }
 
     @Override
     public void onStop() {
-        mBus.unregister(this);
+
         super.onStop();
     }
 
@@ -484,7 +482,7 @@ public class Business_Profile_Fragment_V2 extends Fragment {
 
     private static final String DOMAIN_SUCCESS_STATUS = "17";
 
-    @Subscribe
+    @Override
     public void getDomainDetails(DomainDetails domainDetails) {
 //        domainDetails = null;
         hideLoader();
@@ -527,6 +525,31 @@ public class Business_Profile_Fragment_V2 extends Fragment {
 
     }
 
+    @Override
+    public void emailBookingStatus(ArrayList<EmailBookingModel.EmailBookingStatus> bookingStatuses) {
+
+    }
+
+    @Override
+    public void getEmailBookingList(ArrayList<String> ids) {
+
+    }
+
+    @Override
+    public void getDomainSupportedTypes(ArrayList<String> arrExtensions) {
+
+    }
+
+    @Override
+    public void domainAvailabilityStatus(DomainApiService.DomainAPI domainAPI) {
+
+    }
+
+    @Override
+    public void domainBookStatus(String response) {
+
+    }
+
     private static final String PAYMENT_STATE_SUCCESS = "1";
     private static final String ROOT_ALIAS_URI = "nowfloats";
     private static final String FP_WEB_WIDGET_DOMAIN = "DOMAINPURCHASE";
@@ -534,8 +557,8 @@ public class Business_Profile_Fragment_V2 extends Fragment {
     private boolean isAlreadyCalled = false;
     private boolean isDomainDetailsAvali = false;
 
-    @Subscribe
-    public void setFpDetails(Get_FP_Details_Model get_fp_details_model) {
+    @Override
+    public void getFpDetails(Get_FP_Details_Model get_fp_details_model) {
         hideLoader();
         this.get_fp_details_model = get_fp_details_model;
         if (TextUtils.isEmpty(get_fp_details_model.response)) {

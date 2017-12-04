@@ -1,22 +1,15 @@
 package com.nowfloats.Store.Adapters;
 
-import android.animation.LayoutTransition;
 import android.content.Context;
 import android.graphics.Color;
-import android.media.Image;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.nowfloats.Store.Model.ActivePackage;
@@ -26,11 +19,9 @@ import com.thinksity.R;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by NowFloats on 17-10-2017.
@@ -166,7 +157,6 @@ public class ActivePlansRvAdapter extends RecyclerView.Adapter<ActivePlansRvAdap
             tvRenewUpgrade = (TextView) itemView.findViewById(R.id.tv_renew_upgrade);
             tvAddFeatures = (TextView) itemView.findViewById(R.id.tv_add_features);
             tvPlanDetails = (TextView ) itemView.findViewById(R.id.tv_package_details);
-            tvSeePlanDetails = (TextView) itemView.findViewById(R.id.tv_see_plan_details);
             llPlanDetails = (LinearLayout) itemView.findViewById(R.id.ll_plan_details);
 
             tvRenewUpgrade.setOnClickListener(new View.OnClickListener() {

@@ -102,6 +102,7 @@ import com.nowfloats.Store.Model.StoreEvent;
 import com.nowfloats.Store.Model.StoreModel;
 import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.Store.PricingPlansActivity;
+import com.nowfloats.customerassistant.ThirdPartyQueriesActivity;
 import com.nowfloats.managecustomers.FacebookChatActivity;
 import com.nowfloats.managecustomers.FacebookChatDetailActivity;
 import com.nowfloats.managecustomers.ManageCustomerFragmentV1;
@@ -365,8 +366,11 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                 Intent intent = new Intent(this, FacebookChatDetailActivity.class);
                 intent.putExtras(getIntent());
                 startActivity(intent);
+            }else if(url.contains("thirdPartyQueries")){
+                Intent intent = new Intent(this, ThirdPartyQueriesActivity.class);
+                startActivity(intent);
             }
-            if (url.contains(getString(R.string.facebook_chat_main))) {
+            else if (url.contains(getString(R.string.facebook_chat_main))) {
                 Intent intent = new Intent(this, FacebookChatActivity.class);
                 startActivity(intent);
             }else if (url.contains(getString(R.string.deeplink_manage_customer))) {
@@ -1387,6 +1391,11 @@ public class HomeActivity extends AppCompatActivity implements SidePanelFragment
                             .commit();
                 }else if(nextScreen.equals("wildfire")){
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,new WildFireFragment(),"WildFireFrag")
+                            .addToBackStack(null)
+                            .commit();
+                }
+                else if(nextScreen.equals("dictate")){
+                    getSupportFragmentManager().beginTransaction().replace(R.id.mainFrame,new DictateFragment(),"DictateFrag")
                             .addToBackStack(null)
                             .commit();
                 }

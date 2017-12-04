@@ -55,6 +55,13 @@ public class MixPanelController {
     public static final String SAM_BUBBLE_ACTION_CALL = "SAMBubbleActionCall";
     public static final String SAM_BUBBLE_ACTION_SHARE = "SAMBubbleActionShare";
 
+
+    public static final String THIRD_PARTY_DATA = "ThirdPartyData";
+    public static final String THIRD_PARTY_RATING = "ThirdPartyRating";
+    public static final String THIRD_PARTY_DATA_DETAIL = "ThirdPartyDataDetail";
+    public static final String THIRD_PARTY_ACTION_CALL = "ThirdPartyActionCall";
+    public static final String THIRD_PARTY_ACTION_SHARE = "ThirdPartyActionShare";
+
     private static MixpanelAPI mixPanel;
 	public static String Bhours = "bhours", Signup = "SignUpActivity",
 			landingPage = "LandingPage",

@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +18,12 @@ import android.widget.TextView;
 import com.nowfloats.Login.UserSessionManager;
 import com.nowfloats.NavigationDrawer.API.WildFireApis;
 import com.nowfloats.NavigationDrawer.Adapter.TextExpandableAdapter;
+import com.nowfloats.NavigationDrawer.Adapter.WildFireAdapter;
 import com.nowfloats.NavigationDrawer.model.WildFireDataModel;
 import com.nowfloats.NavigationDrawer.model.WildFireKeyStatsModel;
 import com.nowfloats.Store.NewPricingPlansActivity;
 import com.nowfloats.util.Constants;
+import com.nowfloats.util.Key_Preferences;
 import com.nowfloats.util.Methods;
 import com.thinksity.R;
 
@@ -35,10 +40,11 @@ import static com.nowfloats.NavigationDrawer.HomeActivity.headerText;
  * Created by Admin on 29-11-2017.
  */
 
-public class WildFireFragment extends Fragment implements View.OnClickListener {
+public class WildFireFragment extends Fragment implements View.OnClickListener,WildFireAdapter.ItemClick{
 
     private Context mContext;
     private ProgressDialog progressDialog;
+    private ArrayList<WildFireKeyStatsModel> wildFireList;
 
     @Nullable
     @Override
@@ -63,10 +69,23 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage(getString(R.string.please_wait));
         UserSessionManager manager = new UserSessionManager(mContext,getActivity());
-        //getWildFireData(manager.getFPDetails(Key_Preferences.EXTERNAL_SOURCE_ID));
-        showDefaultPage(view);
+        getWildFireData(manager.getFPDetails(Key_Preferences.EXTERNAL_SOURCE_ID),view);
     }
 
+    private void showKeywordsList(View view){
+
+        if (wildFireList != null && wildFireList.size()>0){
+            ConstraintLayout defaultLayout = view.findViewById(R.id.default_layout);
+            defaultLayout.setVisibility(View.GONE);
+            RecyclerView keywordRv = view.findViewById(R.id.keyword_list);
+            keywordRv.setHasFixedSize(true);
+            keywordRv.setVisibility(View.VISIBLE);
+            keywordRv.setLayoutManager(new LinearLayoutManager(mContext));
+            keywordRv.setAdapter(new WildFireAdapter(this,mContext,wildFireList));
+        }else{
+            showDefaultPage(view);
+        }
+    }
     private void showDefaultPage(View view){
         TextView wildfireDefinitionTv = view.findViewById(R.id.wildfire_definition);
         view.findViewById(R.id.tv_wildfire).setOnClickListener(this);
@@ -91,36 +110,37 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
                 progressDialog.dismiss();
             }
     }
-    private void getKeyWordStats(String accId){
+    private void getKeyWordStats(String accId, final View view){
         WildFireApis apis = WildFireApis.adapter.create(WildFireApis.class);
         apis.getKeyWordsStats(Constants.clientId, accId, new Callback<ArrayList<WildFireKeyStatsModel>>() {
             @Override
             public void success(ArrayList<WildFireKeyStatsModel> wildFireKeyStatsModels, Response response) {
                 hideProgress();
                 if (wildFireKeyStatsModels != null){
-
-                }else{
-                    // show default page
+                    wildFireList = wildFireKeyStatsModels;
                 }
+                showKeywordsList(view);
             }
 
             @Override
             public void failure(RetrofitError error) {
                 hideProgress();
+                showKeywordsList(view);
             }
         });
     }
 
-    private void getWildFireData(String sourceId){
+    private void getWildFireData(String sourceId, final View view){
         showProgress();
         WildFireApis apis = Constants.restAdapter.create(WildFireApis.class);
         apis.getWildFireData(sourceId, Constants.clientId, new Callback<WildFireDataModel>() {
             @Override
             public void success(WildFireDataModel wildFireDataModel, Response response) {
                 if (wildFireDataModel != null){
-                    getKeyWordStats(wildFireDataModel.getId());
+                    getKeyWordStats(wildFireDataModel.getId(),view);
                 }else{
                     hideProgress();
+                   showDefaultPage(view);
                     // show default page
                 }
             }
@@ -128,6 +148,7 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
             @Override
             public void failure(RetrofitError error) {
                 hideProgress();
+                showDefaultPage(view);
             }
         });
     }
@@ -150,5 +171,10 @@ public class WildFireFragment extends Fragment implements View.OnClickListener {
 
                 break;
         }
+    }
+
+    @Override
+    public void onItemSelected(int data) {
+        //startActivity(new );
     }
 }
